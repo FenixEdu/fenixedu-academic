@@ -14,30 +14,30 @@ public class RoleTypeGroup extends Group {
     private RoleType roleType;
 
     public RoleTypeGroup(RoleType roleType) {
-        this.roleType = roleType;
+	this.roleType = roleType;
     }
 
     public RoleType getRoleType() {
-        return this.roleType;
+	return this.roleType;
     }
 
     @Override
     public Set<Person> getElements() {
-        return new HashSet<Person>(Role.getRoleByRoleType(getRoleType()).getAssociatedPersons());
+	return new HashSet<Person>(Role.getRoleByRoleType(getRoleType()).getAssociatedPersons());
     }
-    
+
     @Override
     public boolean isMember(Person person) {
-        return (person == null) ? false : person.hasRole(getRoleType());
+	return (person == null) ? false : person.hasRole(getRoleType());
     }
 
     public String getExpression() {
-        return new RoleGroup(Role.getRoleByRoleType(getRoleType())).getExpression();
+	return new RoleGroup(Role.getRoleByRoleType(getRoleType())).getExpression();
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return null;
+	return null;
     }
-    
+
 }

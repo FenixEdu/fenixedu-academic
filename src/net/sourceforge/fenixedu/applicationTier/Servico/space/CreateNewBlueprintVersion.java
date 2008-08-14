@@ -11,18 +11,17 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CreateNewBlueprintVersion extends BlueprintVersionManagmentService {
 
-    public Blueprint run(CreateBlueprintSubmissionBean blueprintSubmissionBean)
-            throws IOException, FenixServiceException {
+    public Blueprint run(CreateBlueprintSubmissionBean blueprintSubmissionBean) throws IOException, FenixServiceException {
 
-        final Space space = getSpace(blueprintSubmissionBean);
+	final Space space = getSpace(blueprintSubmissionBean);
 
-        final Person person = AccessControl.getPerson();
+	final Person person = AccessControl.getPerson();
 
-        final Blueprint blueprint = new Blueprint(space, person);
+	final Blueprint blueprint = new Blueprint(space, person);
 
-        editBlueprintVersion(blueprintSubmissionBean, space, person, blueprint);
+	editBlueprintVersion(blueprintSubmissionBean, space, person, blueprint);
 
-        return blueprint;
+	return blueprint;
     }
 
 }

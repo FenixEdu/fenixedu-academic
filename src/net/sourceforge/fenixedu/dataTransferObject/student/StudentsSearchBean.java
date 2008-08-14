@@ -68,8 +68,7 @@ public class StudentsSearchBean implements Serializable {
     }
 
     public boolean hasSearchParameters() {
-	return getNumber() != null
-		|| (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null)
+	return getNumber() != null || (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null)
 		|| !StringUtils.isEmpty(getName()) || !StringUtils.isEmpty(getUsername());
     }
 
@@ -87,8 +86,7 @@ public class StudentsSearchBean implements Serializable {
 	    }
 
 	} else if (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null) {
-	    final Person person = Person.readByDocumentIdNumberAndIdDocumentType(
-		    getIdentificationNumber(), getDocumentType());
+	    final Person person = Person.readByDocumentIdNumberAndIdDocumentType(getIdentificationNumber(), getDocumentType());
 	    if (person != null && person.hasStudent()) {
 		students.add(person.getStudent());
 	    }

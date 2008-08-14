@@ -12,14 +12,14 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class FenixSelectedRoomsContextAction extends FenixContextAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+	ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
-        ContextUtils.setSelectedRoomsContext(request);
+	ContextUtils.setSelectedRoomsContext(request);
 
-        return actionForward;
+	return actionForward;
     }
 
 }

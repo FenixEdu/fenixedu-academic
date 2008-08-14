@@ -15,34 +15,34 @@ public class FenixDomainException extends Exception {
      * @return
      */
     public int getErrorType() {
-        return this.errorType;
+	return this.errorType;
     }
 
     public FenixDomainException() {
     }
 
     public FenixDomainException(int errorType) {
-        this.errorType = errorType;
+	this.errorType = errorType;
     }
 
     public FenixDomainException(String s) {
-        super(s);
+	super(s);
     }
 
     public FenixDomainException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public FenixDomainException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + "\n";
-        result += "message " + this.getMessage() + "\n";
-        result += "cause " + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[" + this.getClass().getName() + "\n";
+	result += "message " + this.getMessage() + "\n";
+	result += "cause " + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

@@ -11,19 +11,19 @@ public class InvalidStudentNumberServiceException extends FenixServiceException 
     }
 
     public InvalidStudentNumberServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public InvalidStudentNumberServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[InvalidStudentNumberServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[InvalidStudentNumberServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

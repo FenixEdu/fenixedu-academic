@@ -4,19 +4,19 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class Portal extends Portal_Base {
-    
+
     public Portal() {
-        super();
+	super();
     }
-    
+
     public DomainObject getContext() {
-        return null;
+	return null;
     }
 
     public static Portal getRootPortal() {
 	return RootDomainObject.getInstance().getRootPortal();
     }
-    
+
     public void setFirstParent(Container container) {
 	container.addChild(this);
     }
@@ -27,10 +27,10 @@ public class Portal extends Portal_Base {
 	    super.appendReversePathPart(stringBuilder);
 	}
     }
-    
+
     @Override
     protected Node createChildNode(Content childContent) {
-        return new ExplicitOrderNode(this, childContent);
+	return new ExplicitOrderNode(this, childContent);
     }
 
     @Override

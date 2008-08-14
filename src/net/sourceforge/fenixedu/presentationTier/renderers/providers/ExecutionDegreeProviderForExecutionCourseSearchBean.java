@@ -15,16 +15,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExecutionDegreeProviderForExecutionCourseSearchBean implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        final ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) source;
-        final ExecutionSemester executionSemester = executionCourseSearchBean.getExecutionPeriod();
-        final ExecutionYear executionYear = executionSemester.getExecutionYear();
-        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(executionYear.getExecutionDegreesSet());
-        Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-        return executionDegrees; 
+	final ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) source;
+	final ExecutionSemester executionSemester = executionCourseSearchBean.getExecutionPeriod();
+	final ExecutionYear executionYear = executionSemester.getExecutionYear();
+	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(executionYear.getExecutionDegreesSet());
+	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+	return executionDegrees;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

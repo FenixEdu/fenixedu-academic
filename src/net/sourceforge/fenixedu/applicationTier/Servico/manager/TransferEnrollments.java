@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class TransferEnrollments extends Service {
 
-    public void run(final Integer destinationStudentCurricularPlanId,
-	    final Integer[] enrollmentIDsToTransfer, final Integer destinationCurriculumGroupID) {
+    public void run(final Integer destinationStudentCurricularPlanId, final Integer[] enrollmentIDsToTransfer,
+	    final Integer destinationCurriculumGroupID) {
 
 	if (destinationCurriculumGroupID != null) {
 
@@ -18,8 +18,7 @@ public class TransferEnrollments extends Service {
 	    StudentCurricularPlan studentCurricularPlan = curriculumGroup.getStudentCurricularPlan();
 
 	    for (final Integer enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-		Enrolment enrolment = (Enrolment) rootDomainObject
-			.readCurriculumModuleByOID(enrollmentIDToTransfer);
+		Enrolment enrolment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrollmentIDToTransfer);
 
 		fixEnrolmentCurricularCourse(studentCurricularPlan, enrolment);
 
@@ -32,8 +31,7 @@ public class TransferEnrollments extends Service {
 	    final StudentCurricularPlan studentCurricularPlan = rootDomainObject
 		    .readStudentCurricularPlanByOID(destinationStudentCurricularPlanId);
 	    for (final Integer enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-		final Enrolment enrollment = (Enrolment) rootDomainObject
-			.readCurriculumModuleByOID(enrollmentIDToTransfer);
+		final Enrolment enrollment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrollmentIDToTransfer);
 
 		fixEnrolmentCurricularCourse(studentCurricularPlan, enrollment);
 
@@ -46,12 +44,10 @@ public class TransferEnrollments extends Service {
 	}
     }
 
-    private void fixEnrolmentCurricularCourse(final StudentCurricularPlan studentCurricularPlan,
-	    final Enrolment enrollment) {
-	if (enrollment.getCurricularCourse().getDegreeCurricularPlan() != studentCurricularPlan
-		.getDegreeCurricularPlan()) {
-	    CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan()
-		    .getCurricularCourseByCode(enrollment.getCurricularCourse().getCode());
+    private void fixEnrolmentCurricularCourse(final StudentCurricularPlan studentCurricularPlan, final Enrolment enrollment) {
+	if (enrollment.getCurricularCourse().getDegreeCurricularPlan() != studentCurricularPlan.getDegreeCurricularPlan()) {
+	    CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(
+		    enrollment.getCurricularCourse().getCode());
 	    if (curricularCourse != null) {
 		enrollment.setCurricularCourse(curricularCourse);
 	    }

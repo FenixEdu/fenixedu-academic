@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class InfoCredits extends DataTranferObject {
     private Double degreeFinalProjectStudents;
@@ -28,66 +28,66 @@ public class InfoCredits extends DataTranferObject {
      * @return
      */
     private String format(Double number) {
-        if (number == null || number.doubleValue() == 0) {
-            return "0";
-        }
+	if (number == null || number.doubleValue() == 0) {
+	    return "0";
+	}
 
-        return String.valueOf(number.doubleValue());
+	return String.valueOf(number.doubleValue());
     }
 
     /**
      * @return Returns the degreeFinalProjectStudents.
      */
     public Double getDegreeFinalProjectStudents() {
-        return degreeFinalProjectStudents;
+	return degreeFinalProjectStudents;
     }
 
     public String getDegreeFinalProjectStudentsFormatted() {
-        return format(this.getDegreeFinalProjectStudents());
+	return format(this.getDegreeFinalProjectStudents());
     }
 
     /**
      * @return Returns the institutionWorkTime.
      */
     public Double getInstitutionWorkTime() {
-        return institutionWorkTime;
+	return institutionWorkTime;
     }
 
     public String getInstitutionWorkTimeFormatted() {
-        return format(this.getInstitutionWorkTime());
+	return format(this.getInstitutionWorkTime());
     }
 
     /**
      * @return Returns the lessons.
      */
     public Double getLessons() {
-        return lessons;
+	return lessons;
     }
 
     public String getLessonsFormatted() {
-        return format(this.getLessons());
+	return format(this.getLessons());
     }
 
     /**
      * @return Returns the otherTypeCredits.
      */
     public Double getOtherTypeCredits() {
-        return otherTypeCredits;
+	return otherTypeCredits;
     }
 
     public String getOtherTypeCreditsFormatted() {
-        return format(this.getOtherTypeCredits());
+	return format(this.getOtherTypeCredits());
     }
 
     /**
      * @return Returns the supportLessons.
      */
     public Double getSupportLessons() {
-        return supportLessons;
+	return supportLessons;
     }
 
     public String getSupportLessonsFormatted() {
-        return format(this.getSupportLessons());
+	return format(this.getSupportLessons());
     }
 
     /**
@@ -95,7 +95,7 @@ public class InfoCredits extends DataTranferObject {
      *            The degreeFinalProjectStudents to set.
      */
     public void setDegreeFinalProjectStudents(Double degreeFinalProjectStudents) {
-        this.degreeFinalProjectStudents = degreeFinalProjectStudents;
+	this.degreeFinalProjectStudents = degreeFinalProjectStudents;
     }
 
     /**
@@ -103,7 +103,7 @@ public class InfoCredits extends DataTranferObject {
      *            The institutionWorkTime to set.
      */
     public void setInstitutionWorkTime(Double institutionWorkTime) {
-        this.institutionWorkTime = institutionWorkTime;
+	this.institutionWorkTime = institutionWorkTime;
     }
 
     /**
@@ -111,7 +111,7 @@ public class InfoCredits extends DataTranferObject {
      *            The lessons to set.
      */
     public void setLessons(Double lessons) {
-        this.lessons = lessons;
+	this.lessons = lessons;
     }
 
     /**
@@ -119,7 +119,7 @@ public class InfoCredits extends DataTranferObject {
      *            The otherTypeCredits to set.
      */
     public void setOtherTypeCredits(Double otherTypeCredits) {
-        this.otherTypeCredits = otherTypeCredits;
+	this.otherTypeCredits = otherTypeCredits;
     }
 
     /**
@@ -127,14 +127,14 @@ public class InfoCredits extends DataTranferObject {
      *            The supportLessons to set.
      */
     public void setSupportLessons(Double supportLessons) {
-        this.supportLessons = supportLessons;
+	this.supportLessons = supportLessons;
     }
 
     /**
      * @return Returns the containsServiceExemptionsSituations.
      */
     public Boolean getContainsServiceExemptionsSituations() {
-        return containsServiceExemptionsSituations;
+	return containsServiceExemptionsSituations;
     }
 
     /**
@@ -142,22 +142,22 @@ public class InfoCredits extends DataTranferObject {
      *            The containsServiceExemptionsSituations to set.
      */
     public void setContainsServiceExemptionsSituations(Boolean containsServiceExemptionsSituations) {
-        this.containsServiceExemptionsSituations = containsServiceExemptionsSituations;
+	this.containsServiceExemptionsSituations = containsServiceExemptionsSituations;
     }
 
     public Boolean getContainsManagementPositions() {
-        return containsManagementPositions;
+	return containsManagementPositions;
     }
 
     public void setContainsManagementPositions(Boolean containsManagementPositions) {
-        this.containsManagementPositions = containsManagementPositions;
+	this.containsManagementPositions = containsManagementPositions;
     }
 
     /**
      * @return Returns the masterDegreeCredits.
      */
     public Double getMasterDegreeCredits() {
-        return masterDegreeCredits;
+	return masterDegreeCredits;
     }
 
     /**
@@ -165,10 +165,10 @@ public class InfoCredits extends DataTranferObject {
      *            The masterDegreeCredits to set.
      */
     public void setMasterDegreeCredits(Double masterDegreeCredits) {
-        this.masterDegreeCredits = masterDegreeCredits;
+	this.masterDegreeCredits = masterDegreeCredits;
     }
 
     public String getMasterDegreeCreditsFormatted() {
-        return format(this.getMasterDegreeCredits());
+	return format(this.getMasterDegreeCredits());
     }
 }

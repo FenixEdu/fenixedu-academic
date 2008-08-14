@@ -9,9 +9,9 @@ import org.joda.time.YearMonthDay;
 public class RoomsPunctualSchedulingHistoryBean extends ResourceAllocationBean {
 
     private Partial year;
-    
+
     private Partial month;
-    
+
     public RoomsPunctualSchedulingHistoryBean() {
 	setYear(new Partial(DateTimeFieldType.year(), new YearMonthDay().getYear()));
 	setMonth(new Partial(DateTimeFieldType.monthOfYear(), new YearMonthDay().getMonthOfYear()));
@@ -20,24 +20,24 @@ public class RoomsPunctualSchedulingHistoryBean extends ResourceAllocationBean {
     public AllocatableSpace getAllocatableSpace() {
 	return (AllocatableSpace) getResource();
     }
-    
+
     public void setAllocatableSpace(AllocatableSpace resource) {
 	setResource(resource);
     }
-        
+
     public Partial getMonth() {
-        return month;
+	return month;
     }
 
     public void setMonth(Partial month) {
-        this.month = month;
+	this.month = month;
     }
 
     public Partial getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(Partial year) {
-        this.year = year;
+	this.year = year;
     }
 }

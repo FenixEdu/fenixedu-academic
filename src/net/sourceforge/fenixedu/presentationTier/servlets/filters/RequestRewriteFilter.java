@@ -46,7 +46,7 @@ public class RequestRewriteFilter implements Filter {
 	protected int findSrcBodyEnd(final StringBuilder source, final int offset) {
 	    int i = offset;
 	    char delimiter = source.charAt(offset - 1);
-	    if(delimiter == '"' || delimiter == '\'') {
+	    if (delimiter == '"' || delimiter == '\'') {
 		for (char c = source.charAt(i); c != delimiter; c = source.charAt(i)) {
 		    if (++i == source.length()) {
 			return -1;
@@ -115,7 +115,7 @@ public class RequestRewriteFilter implements Filter {
 
 	if (LogLevel.DEBUG) {
 	    continueChainAndWriteResponseWithTimeLog(filterChain, httpServletRequest, responseWrapper);
-	} else {	    
+	} else {
 	    continueChainAndWriteResponse(filterChain, httpServletRequest, responseWrapper);
 	}
     }
@@ -126,8 +126,9 @@ public class RequestRewriteFilter implements Filter {
 	writeResponse(filterChain, httpServletRequest, responseWrapper);
     }
 
-    private void continueChainAndWriteResponseWithTimeLog(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
-	    final ResponseWrapper responseWrapper) throws IOException, ServletException {
+    private void continueChainAndWriteResponseWithTimeLog(final FilterChain filterChain,
+	    final HttpServletRequest httpServletRequest, final ResponseWrapper responseWrapper) throws IOException,
+	    ServletException {
 	final long start1 = System.currentTimeMillis();
 	filterChain.doFilter(httpServletRequest, responseWrapper);
 	final long end1 = System.currentTimeMillis();
@@ -145,7 +146,8 @@ public class RequestRewriteFilter implements Filter {
 
     private void writeResponse(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
 	    final ResponseWrapper responseWrapper) throws IOException, ServletException {
-	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(httpServletRequest));
+	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(
+		httpServletRequest));
     }
 
 }

@@ -21,159 +21,155 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
 
     private static KeepParticipationNumberAdapter KEEP_PARTICIPATION_NUMBER_ADAPTER = new KeepParticipationNumberAdapter();
     static {
-        ThesisHasParticipations.addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
+	ThesisHasParticipations.addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
     }
-    
+
     public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
     static {
-        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
-    
-    public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator("thesis.student.number");
+
+    public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator(
+	    "thesis.student.number");
 
     public ThesisEvaluationParticipant(Thesis thesis, Person person, ThesisParticipationType type) {
-        super();
+	super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
-        
-        setType(type);
-        setThesis(thesis);
-        setPerson(person);
-        setPersonName(person.getName());
+	setRootDomainObject(RootDomainObject.getInstance());
+
+	setType(type);
+	setThesis(thesis);
+	setPerson(person);
+	setPersonName(person.getName());
     }
 
     public String getPersonNameWithLogin() {
-        Person person = getPerson();
-        
-        if (person == null || person.hasExternalContract()) {
-            return getPersonName() + " (Externa)";
-        }
-        else {
-            return getPersonName() + " (" + person.getMostImportantAlias() + ")";
-        }
+	Person person = getPerson();
+
+	if (person == null || person.hasExternalContract()) {
+	    return getPersonName() + " (Externa)";
+	} else {
+	    return getPersonName() + " (" + person.getMostImportantAlias() + ")";
+	}
     }
 
     @Override
     public void setPerson(Person person) {
-        super.setPerson(person);
-        
-        if (person != null) { // consider remove
-            updateParticipantInformation(person);
-        }
+	super.setPerson(person);
+
+	if (person != null) { // consider remove
+	    updateParticipantInformation(person);
+	}
     }
 
     protected void updateParticipantInformation(Person person) {
-        Teacher teacher = person.getTeacher();
-        
-        if (teacher != null) {
-            if(teacher.getCategory() == null) {
-        	setCategory("-");
-            } else {
-        	setCategory(teacher.getCategory().getName().getContent());
-            }
-            Department currentWorkingDepartment = teacher.getCurrentWorkingDepartment();
-            if(currentWorkingDepartment != null) {
-        	setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
-            }
-        }
-        else {
-            ExternalContract contract = person.getExternalContract();
-            if (contract != null) {
-                setAffiliation(contract.getInstitutionUnit().getName());
-            }
-            else {
-                Employee employee = person.getEmployee();
-                if (employee != null) {
-                    Unit currentWorkingPlace = employee.getCurrentWorkingPlace();                    
-                    if (currentWorkingPlace != null) {
-                        setAffiliation(currentWorkingPlace.getNameWithAcronym());
-                    }
-                }
-            }
-        }
+	Teacher teacher = person.getTeacher();
+
+	if (teacher != null) {
+	    if (teacher.getCategory() == null) {
+		setCategory("-");
+	    } else {
+		setCategory(teacher.getCategory().getName().getContent());
+	    }
+	    Department currentWorkingDepartment = teacher.getCurrentWorkingDepartment();
+	    if (currentWorkingDepartment != null) {
+		setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
+	    }
+	} else {
+	    ExternalContract contract = person.getExternalContract();
+	    if (contract != null) {
+		setAffiliation(contract.getInstitutionUnit().getName());
+	    } else {
+		Employee employee = person.getEmployee();
+		if (employee != null) {
+		    Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
+		    if (currentWorkingPlace != null) {
+			setAffiliation(currentWorkingPlace.getNameWithAcronym());
+		    }
+		}
+	    }
+	}
     }
-    
+
     public double getParticipationCredits() {
-		return Thesis.getCredits() * getCreditsDistribution() / 100;
+	return Thesis.getCredits() * getCreditsDistribution() / 100;
     }
-    
+
     public double getCreditsDistribution() {
-    	Thesis thesis = getThesis();
-    	
-		if (!thesis.hasCredits()) {
-			return (double) 0.0;
-		}
+	Thesis thesis = getThesis();
 
-		ThesisParticipationType type = this.getType();
+	if (!thesis.hasCredits()) {
+	    return (double) 0.0;
+	}
 
-		if (type.equals(ThesisParticipationType.ORIENTATOR)) {
-		    if (thesis.getOrientatorCreditsDistribution() != null) {
-			return thesis.getOrientatorCreditsDistribution();
-		    }
-		}
+	ThesisParticipationType type = this.getType();
 
-		if (type.equals(ThesisParticipationType.COORIENTATOR)) {
-		    if (thesis.getCoorientatorCreditsDistribution() != null) {
-			return thesis.getCoorientatorCreditsDistribution();
-		    }
-		}
+	if (type.equals(ThesisParticipationType.ORIENTATOR)) {
+	    if (thesis.getOrientatorCreditsDistribution() != null) {
+		return thesis.getOrientatorCreditsDistribution();
+	    }
+	}
 
-		
-		
-		return (double) 0.0;
+	if (type.equals(ThesisParticipationType.COORIENTATOR)) {
+	    if (thesis.getCoorientatorCreditsDistribution() != null) {
+		return thesis.getCoorientatorCreditsDistribution();
+	    }
+	}
+
+	return (double) 0.0;
     }
-    
+
     public void delete() {
-        removeRootDomainObject();
-        removePerson();
-        removeThesis();
-        
-        deleteDomainObject();
+	removeRootDomainObject();
+	removePerson();
+	removeThesis();
+
+	deleteDomainObject();
     }
- 
+
     @Override
     public void setType(ThesisParticipationType type) {
-        super.setType(type);
-        
-        KEEP_PARTICIPATION_NUMBER_ADAPTER.changedType(this);
+	super.setType(type);
+
+	KEEP_PARTICIPATION_NUMBER_ADAPTER.changedType(this);
     }
-    
+
     public static class KeepParticipationNumberAdapter extends RelationAdapter<ThesisEvaluationParticipant, Thesis> {
 
-        @Override
-        public void beforeAdd(ThesisEvaluationParticipant o1, Thesis o2) {
-            super.beforeAdd(o1, o2);
-            
-            if (o1 != null && o2 != null) {
-                keepTypeCount(o1, o2);
-            }
-        }
+	@Override
+	public void beforeAdd(ThesisEvaluationParticipant o1, Thesis o2) {
+	    super.beforeAdd(o1, o2);
 
-        public void changedType(ThesisEvaluationParticipant participant) {
-            keepTypeCount(participant, participant.getThesis());
-        }
-        
-        private void keepTypeCount(ThesisEvaluationParticipant participant, Thesis thesis) {
-            if (thesis == null) {
-                return;
-            }
-            
-            ThesisParticipationType type = participant.getType();
-            
-            if (type == null) {
-                return;
-            }
-            
-            if (type.isSingle()) {
-                ThesisEvaluationParticipant existing = thesis.getParticipant(type);
-                
-                if (existing != null && existing != participant) {
-                    existing.delete();
-                }
-            }
-        }
-        
+	    if (o1 != null && o2 != null) {
+		keepTypeCount(o1, o2);
+	    }
+	}
+
+	public void changedType(ThesisEvaluationParticipant participant) {
+	    keepTypeCount(participant, participant.getThesis());
+	}
+
+	private void keepTypeCount(ThesisEvaluationParticipant participant, Thesis thesis) {
+	    if (thesis == null) {
+		return;
+	    }
+
+	    ThesisParticipationType type = participant.getType();
+
+	    if (type == null) {
+		return;
+	    }
+
+	    if (type.isSingle()) {
+		ThesisEvaluationParticipant existing = thesis.getParticipant(type);
+
+		if (existing != null && existing != participant) {
+		    existing.delete();
+		}
+	    }
+	}
+
     }
 
 }

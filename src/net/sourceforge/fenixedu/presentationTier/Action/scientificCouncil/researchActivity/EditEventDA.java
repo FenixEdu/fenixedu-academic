@@ -20,16 +20,16 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class EditEventDA extends EditResearchActivityDA {
-    
+
     @Override
     protected List getObjects() {
 	List<ResearchEvent> events = new ArrayList<ResearchEvent>(rootDomainObject.getEvents());
 	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
-        return events;
+	return events;
     }
-    
-    public ActionForward prepareChooseEventEditionToMerge(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward prepareChooseEventEditionToMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
 	RenderUtils.invalidateViewState();
 

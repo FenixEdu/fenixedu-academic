@@ -26,21 +26,21 @@ public class SearchPeopleDA extends FenixDispatchAction {
 	return mapping.findForward("search");
     }
 
-    public ActionForward downloadActiveStudentList(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) throws IOException {
+    public ActionForward downloadActiveStudentList(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
-        final String filename = "Students_" + new DateTime().toString("yyyyMMddHHmm");
-        response.setContentType("text/plain");
-        response.setHeader("Content-disposition", "attachment; filename=" + filename + ".tsv");
+	final String filename = "Students_" + new DateTime().toString("yyyyMMddHHmm");
+	response.setContentType("text/plain");
+	response.setHeader("Content-disposition", "attachment; filename=" + filename + ".tsv");
 
-        final Spreadsheet spreadsheet = new Spreadsheet("ControloMetodosAvaliacao");
-        downloadActiveStudentList(spreadsheet);
+	final Spreadsheet spreadsheet = new Spreadsheet("ControloMetodosAvaliacao");
+	downloadActiveStudentList(spreadsheet);
 
-        final ServletOutputStream outputStream = response.getOutputStream();
-        spreadsheet.exportToCSV(outputStream, "\t");
-        outputStream.flush();
-        response.flushBuffer();
-        outputStream.close();
+	final ServletOutputStream outputStream = response.getOutputStream();
+	spreadsheet.exportToCSV(outputStream, "\t");
+	outputStream.flush();
+	response.flushBuffer();
+	outputStream.close();
 
 	return null;
     }

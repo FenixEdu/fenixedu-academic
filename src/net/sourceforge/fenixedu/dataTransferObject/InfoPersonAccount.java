@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.PersonAccount;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class InfoPersonAccount extends InfoObject {
 
@@ -21,19 +21,19 @@ public class InfoPersonAccount extends InfoObject {
     }
 
     public static InfoPersonAccount copyFromDomain(PersonAccount personAccount) {
-        InfoPersonAccount infoPersonAccount = new InfoPersonAccount();
+	InfoPersonAccount infoPersonAccount = new InfoPersonAccount();
 
-        infoPersonAccount.setIdInternal(personAccount.getIdInternal());
-        infoPersonAccount.setBalance(personAccount.getBalance());
+	infoPersonAccount.setIdInternal(personAccount.getIdInternal());
+	infoPersonAccount.setBalance(personAccount.getBalance());
 
-        return infoPersonAccount;
+	return infoPersonAccount;
     }
 
     /**
      * @return Returns the balance.
      */
     public Double getBalance() {
-        return balance;
+	return balance;
     }
 
     /**
@@ -41,14 +41,14 @@ public class InfoPersonAccount extends InfoObject {
      *            The balance to set.
      */
     public void setBalance(Double balance) {
-        this.balance = balance;
+	this.balance = balance;
     }
 
     /**
      * @return Returns the infoPerson.
      */
     public InfoPerson getInfoPerson() {
-        return infoPerson;
+	return infoPerson;
     }
 
     /**
@@ -56,14 +56,14 @@ public class InfoPersonAccount extends InfoObject {
      *            The infoPerson to set.
      */
     public void setInfoPerson(InfoPerson infoPerson) {
-        this.infoPerson = infoPerson;
+	this.infoPerson = infoPerson;
     }
 
     /**
      * @return Returns the infoTransactions.
      */
     public List getInfoTransactions() {
-        return InfoTransactions;
+	return InfoTransactions;
     }
 
     /**
@@ -71,6 +71,6 @@ public class InfoPersonAccount extends InfoObject {
      *            The infoTransactions to set.
      */
     public void setInfoTransactions(List infoTransactions) {
-        InfoTransactions = infoTransactions;
+	InfoTransactions = infoTransactions;
     }
 }

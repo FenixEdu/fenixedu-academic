@@ -16,8 +16,8 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
  */
 public class EditFilePermissions extends FileContentService {
 
-    public void run(Site site, FileContent fileContent, Group group) throws FenixServiceException,
-	    DomainException, FileManagerException {
+    public void run(Site site, FileContent fileContent, Group group) throws FenixServiceException, DomainException,
+	    FileManagerException {
 
 	fileContent.setPermittedGroup(group);
 	FileManagerFactory.getFactoryInstance().getFileManager().changeFilePermissions(

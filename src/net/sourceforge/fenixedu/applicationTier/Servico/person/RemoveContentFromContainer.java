@@ -9,6 +9,5 @@ public class RemoveContentFromContainer extends Service {
     public void run(Container container, Content content) {
 	content.getParentNode(container).delete();
     }
-    
-    
+
 }

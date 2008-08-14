@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
     protected SpaceOccupation() {
-	super();	
+	super();
     }
-            
+
     public abstract Group getAccessGroup();
 
     public void checkPermissionsToManageSpaceOccupations() {
-	
+
 	Person loggedPerson = AccessControl.getPerson();
 	if (getSpace().personHasPermissionsToManageSpace(loggedPerson)) {
 	    return;
@@ -25,35 +25,35 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 	if (group != null && group.isMember(loggedPerson)) {
 	    return;
 	}
-	
+
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
 
     public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
-	
-	Person loggedPerson = AccessControl.getPerson();	
+
+	Person loggedPerson = AccessControl.getPerson();
 	final Group group = getAccessGroup();
 	if (group != null && group.isMember(loggedPerson)) {
 	    return;
-	}	
-	
+	}
+
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
-    } 
-    
+    }
+
     public Space getSpace() {
 	return (Space) getResource();
     }
 
     @Override
-    public void setResource(Resource resource) {	
+    public void setResource(Resource resource) {
 	super.setResource(resource);
 	if (!resource.isSpace()) {
 	    throw new DomainException("error.allocation.invalid.resource.type");
 	}
     }
-          
+
     @Override
     public boolean isSpaceOccupation() {
-        return true;
-    }       
+	return true;
+    }
 }

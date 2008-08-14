@@ -19,22 +19,22 @@ public class GrantOrientationTeacherPeriodNotWithinContractPeriodException exten
     }
 
     public GrantOrientationTeacherPeriodNotWithinContractPeriodException(String message) {
-        super(message);
+	super(message);
     }
 
     public GrantOrientationTeacherPeriodNotWithinContractPeriodException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public GrantOrientationTeacherPeriodNotWithinContractPeriodException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[GrantOrientationTeacherPeriodNotWithinContractPeriodException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[GrantOrientationTeacherPeriodNotWithinContractPeriodException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

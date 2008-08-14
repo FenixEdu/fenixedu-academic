@@ -29,7 +29,7 @@ public class DetailedProfessorship extends DataTranferObject {
      * @return Returns the executionCourseCurricularCoursesList.
      */
     public List getExecutionCourseCurricularCoursesList() {
-        return this.executionCourseCurricularCoursesList;
+	return this.executionCourseCurricularCoursesList;
     }
 
     /**
@@ -37,14 +37,14 @@ public class DetailedProfessorship extends DataTranferObject {
      *            The executionCourseCurricularCoursesList to set.
      */
     public void setExecutionCourseCurricularCoursesList(List executionCourseCurricularCoursesList) {
-        this.executionCourseCurricularCoursesList = executionCourseCurricularCoursesList;
+	this.executionCourseCurricularCoursesList = executionCourseCurricularCoursesList;
     }
 
     /**
      * @return Returns the infoProfessorship.
      */
     public InfoProfessorship getInfoProfessorship() {
-        return this.infoProfessorship;
+	return this.infoProfessorship;
     }
 
     /**
@@ -52,28 +52,28 @@ public class DetailedProfessorship extends DataTranferObject {
      *            The infoProfessorship to set.
      */
     public void setInfoProfessorship(InfoProfessorship infoProfessorship) {
-        this.infoProfessorship = infoProfessorship;
+	this.infoProfessorship = infoProfessorship;
     }
 
     public List getInfoDegreeList() {
 
-        List infoDegreeList = new ArrayList();
-        Iterator iter = executionCourseCurricularCoursesList.iterator();
-        while (iter.hasNext()) {
-            InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter.next();
-            InfoDegree infoDegree = infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree();
-            if (!infoDegreeList.contains(infoDegree)) {
-                infoDegreeList.add(infoDegree);
-            }
-        }
-        return infoDegreeList;
+	List infoDegreeList = new ArrayList();
+	Iterator iter = executionCourseCurricularCoursesList.iterator();
+	while (iter.hasNext()) {
+	    InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter.next();
+	    InfoDegree infoDegree = infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree();
+	    if (!infoDegreeList.contains(infoDegree)) {
+		infoDegreeList.add(infoDegree);
+	    }
+	}
+	return infoDegreeList;
     }
 
     /**
      * @return Returns the responsibleFor.
      */
     public Boolean getResponsibleFor() {
-        return this.responsibleFor;
+	return this.responsibleFor;
     }
 
     /**
@@ -81,14 +81,14 @@ public class DetailedProfessorship extends DataTranferObject {
      *            The responsibleFor to set.
      */
     public void setResponsibleFor(Boolean responsibleFor) {
-        this.responsibleFor = responsibleFor;
+	this.responsibleFor = responsibleFor;
     }
 
     /**
      * @return Returns the masterDegreeOnly.
      */
     public Boolean getMasterDegreeOnly() {
-        return masterDegreeOnly;
+	return masterDegreeOnly;
     }
 
     /**
@@ -96,6 +96,6 @@ public class DetailedProfessorship extends DataTranferObject {
      *            The masterDegreeOnly to set.
      */
     public void setMasterDegreeOnly(Boolean masterDegreeOnly) {
-        this.masterDegreeOnly = masterDegreeOnly;
+	this.masterDegreeOnly = masterDegreeOnly;
     }
 }

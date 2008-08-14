@@ -28,60 +28,54 @@ import org.apache.commons.collections.CollectionUtils;
  */
 public class CreateMasterDegreeThesis extends Service {
 
-    public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
-            List<Integer> guidersNumbers, List<Integer> assistentGuidersNumbers,
-            List<Integer> externalGuidersIDs, List<Integer> externalAssistentGuidersIDs)
-            throws FenixServiceException{
+    public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle, List<Integer> guidersNumbers,
+	    List<Integer> assistentGuidersNumbers, List<Integer> externalGuidersIDs, List<Integer> externalAssistentGuidersIDs)
+	    throws FenixServiceException {
 
-        // check duplicate guiders and assistent guiders
-        if (CollectionUtils.intersection(guidersNumbers, assistentGuidersNumbers).size() > 0) {
-            throw new GuiderAlreadyChosenServiceException(
-                    "error.exception.masterDegree.guiderAlreadyChosen");
-        }
+	// check duplicate guiders and assistent guiders
+	if (CollectionUtils.intersection(guidersNumbers, assistentGuidersNumbers).size() > 0) {
+	    throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.guiderAlreadyChosen");
+	}
 
-        // check duplicate external guiders and external assistent guiders
-        if (CollectionUtils.intersection(externalGuidersIDs, externalAssistentGuidersIDs).size() > 0) {
-            throw new GuiderAlreadyChosenServiceException(
-                    "error.exception.masterDegree.externalGuiderAlreadyChosen");
-        }
+	// check duplicate external guiders and external assistent guiders
+	if (CollectionUtils.intersection(externalGuidersIDs, externalAssistentGuidersIDs).size() > 0) {
+	    throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.externalGuiderAlreadyChosen");
+	}
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                .readStudentCurricularPlanByOID(studentCurricularPlanID);
-        MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
-        if (storedMasterDegreeThesis != null) {
-            throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");
-        }
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+	MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
+	if (storedMasterDegreeThesis != null) {
+	    throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");
+	}
 
-        MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = MasterDegreeThesisDataVersion
-                .readActiveByDissertationTitle(dissertationTitle);
-        if ((storedMasterDegreeThesisDataVersion != null)
-                && (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis()
-                        .getStudentCurricularPlan().getIdInternal().equals(studentCurricularPlanID))) {
-            throw new ExistingServiceException(
-                    "error.exception.masterDegree.dissertationTitleAlreadyChosen");
-        }
+	MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = MasterDegreeThesisDataVersion
+		.readActiveByDissertationTitle(dissertationTitle);
+	if ((storedMasterDegreeThesisDataVersion != null)
+		&& (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().getIdInternal()
+			.equals(studentCurricularPlanID))) {
+	    throw new ExistingServiceException("error.exception.masterDegree.dissertationTitleAlreadyChosen");
+	}
 
-        Employee employee = userView.getPerson().getEmployee();
+	Employee employee = userView.getPerson().getEmployee();
 
-        MasterDegreeThesis masterDegreeThesis = new MasterDegreeThesis();
-        masterDegreeThesis.setStudentCurricularPlan(studentCurricularPlan);
+	MasterDegreeThesis masterDegreeThesis = new MasterDegreeThesis();
+	masterDegreeThesis.setStudentCurricularPlan(studentCurricularPlan);
 
-        // write data version
-        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(
-                masterDegreeThesis, employee, dissertationTitle, new Date(), new State(State.ACTIVE));
+	// write data version
+	MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(masterDegreeThesis,
+		employee, dissertationTitle, new Date(), new State(State.ACTIVE));
 
-        Collection<Teacher> guiders = Teacher.readByNumbers(guidersNumbers);
-        Collection<Teacher> assistentGuiders = Teacher.readByNumbers(assistentGuidersNumbers);
-        Collection<ExternalContract> externalGuiders = ExternalContract.readByIDs(externalGuidersIDs);
-        Collection<ExternalContract> externalAssistentGuiders = ExternalContract
-                .readByIDs(externalAssistentGuidersIDs);
+	Collection<Teacher> guiders = Teacher.readByNumbers(guidersNumbers);
+	Collection<Teacher> assistentGuiders = Teacher.readByNumbers(assistentGuidersNumbers);
+	Collection<ExternalContract> externalGuiders = ExternalContract.readByIDs(externalGuidersIDs);
+	Collection<ExternalContract> externalAssistentGuiders = ExternalContract.readByIDs(externalAssistentGuidersIDs);
 
-        masterDegreeThesisDataVersion.getGuiders().addAll(guiders);
-        masterDegreeThesisDataVersion.getAssistentGuiders().addAll(assistentGuiders);
-        masterDegreeThesisDataVersion.getExternalGuiders().addAll(externalGuiders);
-        masterDegreeThesisDataVersion.getExternalAssistentGuiders().addAll(externalAssistentGuiders);
+	masterDegreeThesisDataVersion.getGuiders().addAll(guiders);
+	masterDegreeThesisDataVersion.getAssistentGuiders().addAll(assistentGuiders);
+	masterDegreeThesisDataVersion.getExternalGuiders().addAll(externalGuiders);
+	masterDegreeThesisDataVersion.getExternalAssistentGuiders().addAll(externalAssistentGuiders);
 
-        masterDegreeThesis.getMasterDegreeThesisDataVersions().add(masterDegreeThesisDataVersion);
+	masterDegreeThesis.getMasterDegreeThesisDataVersions().add(masterDegreeThesisDataVersion);
 
     }
 

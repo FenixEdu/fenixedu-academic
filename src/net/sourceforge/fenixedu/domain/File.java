@@ -20,9 +20,8 @@ public abstract class File extends File_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected void init(String filename, String displayName, String mimeType, String checksum,
-	    String checksumAlgorithm, Integer size, String externalStorageIdentification,
-	    Group permittedGroup) {
+    protected void init(String filename, String displayName, String mimeType, String checksum, String checksumAlgorithm,
+	    Integer size, String externalStorageIdentification, Group permittedGroup) {
 	setFilename(FileUtils.getFilenameOnly(filename));
 	setDisplayName(FileUtils.getFilenameOnly(displayName));
 	setMimeType(mimeType);
@@ -35,29 +34,30 @@ public abstract class File extends File_Base {
     }
 
     public boolean isPersonAllowedToAccess(Person person) {
-        final Group group = this.getPermittedGroup();
-        return group == null || group.isMember(person);
+	final Group group = this.getPermittedGroup();
+	return group == null || group.isMember(person);
     }
 
     /**
-         * @return returns a public url that can be used by a client to download
-         *         the associated file from the external file storage
-         */
+     * @return returns a public url that can be used by a client to download the
+     *         associated file from the external file storage
+     */
     public String getDownloadUrl() {
-        // TODO: remove the dependancy between the domain and the dspace infrastructure
-        return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(), getFilename());
+	// TODO: remove the dependancy between the domain and the dspace
+	// infrastructure
+	return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(),
+		getFilename());
     }
 
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
-   public static File readByExternalStorageIdentification(String externalStorageIdentification) {
+    public static File readByExternalStorageIdentification(String externalStorageIdentification) {
 	// For performance reasons...
 	PreparedStatement stmt = null;
 	try {
 	    final Connection connection = Transaction.getNewJdbcConnection();
-	    stmt = connection
-		    .prepareStatement("SELECT ID_INTERNAL FROM FILE WHERE EXTERNAL_STORAGE_IDENTIFICATION = ?");
+	    stmt = connection.prepareStatement("SELECT ID_INTERNAL FROM FILE WHERE EXTERNAL_STORAGE_IDENTIFICATION = ?");
 
 	    stmt.setString(1, externalStorageIdentification);
 	    final ResultSet resultSet = stmt.executeQuery();

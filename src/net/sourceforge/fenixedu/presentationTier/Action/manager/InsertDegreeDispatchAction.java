@@ -30,42 +30,41 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class InsertDegreeDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareInsert(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        return mapping.findForward("insertDegree");
+	return mapping.findForward("insertDegree");
     }
 
-    public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm dynaForm = (DynaValidatorForm) form;
-        String code = (String) dynaForm.get("code");
-        String name = (String) dynaForm.get("name");
-                String nameEn = (String) dynaForm.get("nameEn");
-        String degreeTypeInt = (String) dynaForm.get("degreeType");
-        String gradeTypeString = (String) dynaForm.get("gradeType");
+	DynaActionForm dynaForm = (DynaValidatorForm) form;
+	String code = (String) dynaForm.get("code");
+	String name = (String) dynaForm.get("name");
+	String nameEn = (String) dynaForm.get("nameEn");
+	String degreeTypeInt = (String) dynaForm.get("degreeType");
+	String gradeTypeString = (String) dynaForm.get("gradeType");
 
-        DegreeType degreeType = DegreeType.valueOf(degreeTypeInt);
-        GradeScale gradeScale = null;
-        if(gradeTypeString != null && gradeTypeString.length() > 0) {
-        	gradeScale = GradeScale.valueOf(gradeTypeString);
-        }
+	DegreeType degreeType = DegreeType.valueOf(degreeTypeInt);
+	GradeScale gradeScale = null;
+	if (gradeTypeString != null && gradeTypeString.length() > 0) {
+	    gradeScale = GradeScale.valueOf(gradeTypeString);
+	}
 
-        Object args[] = { code, name, nameEn, degreeType, gradeScale };
+	Object args[] = { code, name, nameEn, degreeType, gradeScale };
 
-        try {
-            ServiceUtils.executeService("InsertDegree", args);
+	try {
+	    ServiceUtils.executeService("InsertDegree", args);
 
-        } catch (ExistingServiceException ex) {
-            throw new ExistingActionException("message.already.existing.degree", mapping
-                    .findForward("readDegrees"));
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e.getMessage());
-        }
+	} catch (ExistingServiceException ex) {
+	    throw new ExistingActionException("message.already.existing.degree", mapping.findForward("readDegrees"));
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e.getMessage());
+	}
 
-        return mapping.findForward("readDegrees");
+	return mapping.findForward("readDegrees");
     }
 }

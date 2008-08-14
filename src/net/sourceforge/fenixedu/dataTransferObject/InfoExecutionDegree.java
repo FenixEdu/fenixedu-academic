@@ -37,18 +37,16 @@ public class InfoExecutionDegree extends InfoObject {
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return executionDegreeDomainReference == null ? null : executionDegreeDomainReference
-		.getObject();
+	return executionDegreeDomainReference == null ? null : executionDegreeDomainReference.getObject();
     }
 
     public InfoExecutionYear getInfoExecutionYear() {
-	return InfoExecutionYear.newInfoFromDomain(getNextExecutionYear ? getExecutionDegree()
-		.getExecutionYear().getNextExecutionYear() : getExecutionDegree().getExecutionYear());
+	return InfoExecutionYear.newInfoFromDomain(getNextExecutionYear ? getExecutionDegree().getExecutionYear()
+		.getNextExecutionYear() : getExecutionDegree().getExecutionYear());
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-	return InfoDegreeCurricularPlan
-		.newInfoFromDomain(getExecutionDegree().getDegreeCurricularPlan());
+	return InfoDegreeCurricularPlan.newInfoFromDomain(getExecutionDegree().getDegreeCurricularPlan());
     }
 
     public Boolean getTemporaryExamMap() {
@@ -99,8 +97,7 @@ public class InfoExecutionDegree extends InfoObject {
 	return getExecutionDegree().toString();
     }
 
-    public static List buildLabelValueBeansForList(List executionDegrees,
-	    MessageResources messageResources) {
+    public static List buildLabelValueBeansForList(List executionDegrees, MessageResources messageResources) {
 	List copyExecutionDegrees = new ArrayList();
 	copyExecutionDegrees.addAll(executionDegrees);
 	List result = new ArrayList();
@@ -110,10 +107,8 @@ public class InfoExecutionDegree extends InfoObject {
 	    List equalDegrees = (List) CollectionUtils.select(copyExecutionDegrees, new Predicate() {
 		public boolean evaluate(Object arg0) {
 		    InfoExecutionDegree infoExecutionDegreeElem = (InfoExecutionDegree) arg0;
-		    if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla()
-			    .equals(
-				    infoExecutionDegreeElem.getInfoDegreeCurricularPlan()
-					    .getInfoDegree().getSigla())) {
+		    if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals(
+			    infoExecutionDegreeElem.getInfoDegreeCurricularPlan().getInfoDegree().getSigla())) {
 			return true;
 		    }
 		    return false;
@@ -124,30 +119,28 @@ public class InfoExecutionDegree extends InfoObject {
 
 		String degreeType = null;
 		if (messageResources != null) {
-		    degreeType = messageResources.getMessage(infoExecutionDegree
-			    .getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString());
+		    degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+			    .getTipoCurso().toString());
 		}
 		if (degreeType == null)
-		    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-			    .getTipoCurso().toString();
+		    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
 
 		result.add(new LabelValueBean(degreeType + "  "
-			+ infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
-			infoExecutionDegree.getIdInternal().toString()));
+			+ infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), infoExecutionDegree
+			.getIdInternal().toString()));
 	    } else {
 		String degreeType = null;
 		if (messageResources != null) {
-		    degreeType = messageResources.getMessage(infoExecutionDegree
-			    .getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString());
+		    degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+			    .getTipoCurso().toString());
 		}
 		if (degreeType == null)
-		    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-			    .getTipoCurso().toString();
+		    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
 
 		result.add(new LabelValueBean(degreeType + "  "
-			+ infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome()
-			+ " - " + infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
-			infoExecutionDegree.getIdInternal().toString()));
+			+ infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome() + " - "
+			+ infoExecutionDegree.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree.getIdInternal()
+			.toString()));
 	    }
 	}
 	return result;

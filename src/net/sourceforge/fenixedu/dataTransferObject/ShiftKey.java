@@ -19,34 +19,34 @@ public class ShiftKey extends InfoObject {
     }
 
     public ShiftKey(String shiftName, InfoExecutionCourse infoExecutionCourse) {
-        setShiftName(shiftName);
-        setInfoExecutionCourse(infoExecutionCourse);
+	setShiftName(shiftName);
+	setInfoExecutionCourse(infoExecutionCourse);
     }
 
     public String getShiftName() {
-        return shiftName;
+	return shiftName;
     }
 
     public void setShiftName(String nomeTurno) {
-        shiftName = nomeTurno;
+	shiftName = nomeTurno;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof ShiftKey) {
-            ShiftKey keyTurno = (ShiftKey) obj;
+	boolean resultado = false;
+	if (obj instanceof ShiftKey) {
+	    ShiftKey keyTurno = (ShiftKey) obj;
 
-            resultado = (getShiftName().equals(keyTurno.getShiftName()));
-        }
+	    resultado = (getShiftName().equals(keyTurno.getShiftName()));
+	}
 
-        return resultado;
+	return resultado;
     }
 
     public String toString() {
-        String result = "[KEYTURNO";
-        result += ", turno=" + shiftName;
-        result += "]";
-        return result;
+	String result = "[KEYTURNO";
+	result += ", turno=" + shiftName;
+	result += "]";
+	return result;
     }
 
     /**
@@ -55,7 +55,7 @@ public class ShiftKey extends InfoObject {
      * @return InfoExecutionCourse
      */
     public InfoExecutionCourse getInfoExecutionCourse() {
-        return infoExecutionCourse;
+	return infoExecutionCourse;
     }
 
     /**
@@ -65,7 +65,7 @@ public class ShiftKey extends InfoObject {
      *            The infoExecutionCourse to set
      */
     public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-        this.infoExecutionCourse = infoExecutionCourse;
+	this.infoExecutionCourse = infoExecutionCourse;
     }
 
 }

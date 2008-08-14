@@ -18,20 +18,21 @@ public class CourseGroupPredicates {
 
     public static final AccessControlPredicate<CourseGroup> curricularPlanMemberWritePredicate = new AccessControlPredicate<CourseGroup>() {
 
-        public boolean evaluate(CourseGroup cg) {
-            
-            final DegreeCurricularPlan parentDegreeCurricularPlan = cg.getParentDegreeCurricularPlan();
-            if (!parentDegreeCurricularPlan.isBolonhaDegree()) {
-                return true;
-            }
+	public boolean evaluate(CourseGroup cg) {
 
-            final Person person = AccessControl.getPerson();
-            if(person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                return true;
-            }
-            
-            return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person);
-        }
+	    final DegreeCurricularPlan parentDegreeCurricularPlan = cg.getParentDegreeCurricularPlan();
+	    if (!parentDegreeCurricularPlan.isBolonhaDegree()) {
+		return true;
+	    }
+
+	    final Person person = AccessControl.getPerson();
+	    if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || person.hasRole(RoleType.MANAGER)
+		    || person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+		return true;
+	    }
+
+	    return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person);
+	}
 
     };
 

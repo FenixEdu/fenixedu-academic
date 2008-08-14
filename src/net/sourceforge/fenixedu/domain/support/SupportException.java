@@ -16,10 +16,11 @@ public class SupportException extends SupportException_Base {
     }
 
     private void checkParameters(ErrorLog errorLog) {
-// FIXME: in jsp exceptions, there is no errorLog creation
-//	if (errorLog == null) {
-//	    throw new DomainException("error.domain.support.SupportError.errorLog.null");
-//	}
+	// FIXME: in jsp exceptions, there is no errorLog creation
+	// if (errorLog == null) {
+	// throw new
+	// DomainException("error.domain.support.SupportError.errorLog.null");
+	// }
     }
 
 }

@@ -18,88 +18,88 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 
-	public void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException{
-		final Campus campus = (Campus) rootDomainObject.readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
-		if (campus == null) {
-			throw new NonExistingServiceException("message.nonExistingCampus", null);
-		}
-
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
-		if (degreeCurricularPlan == null) {
-			throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
-		}
-
-        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
-		if (executionYear == null) {
-			throw new NonExistingServiceException("message.non.existing.execution.year", null);
-		}
-
-		ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus, infoExecutionDegree.getTemporaryExamMap());
-		setPeriods(executionDegree, infoExecutionDegree);
+    public void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
+	final Campus campus = (Campus) rootDomainObject.readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
+	if (campus == null) {
+	    throw new NonExistingServiceException("message.nonExistingCampus", null);
 	}
 
-	private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegreeEditor infoExecutionDegree) {
-		InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
-		setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
-
-		InfoPeriod infoPeriodExamsSecondSemester = infoExecutionDegree.getInfoPeriodExamsSecondSemester();
-		setCompositePeriod(executionDegree, infoPeriodExamsSecondSemester, 12);
-
-		InfoPeriod infoPeriodLessonsFirstSemester = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
-		setCompositePeriod(executionDegree, infoPeriodLessonsFirstSemester, 21);
-
-		InfoPeriod infoPeriodLessonsSecondSemester = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
-		setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree
+		.getInfoDegreeCurricularPlan().getIdInternal());
+	if (degreeCurricularPlan == null) {
+	    throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
 	}
 
-	private void setCompositePeriod(ExecutionDegree executionDegree, InfoPeriod infoPeriod, int periodToAssociateExecutionDegree) {
-		List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
-
-		infoPeriodList.add(infoPeriod);
-
-		while (infoPeriod.getNextPeriod() != null) {
-			infoPeriodList.add(infoPeriod.getNextPeriod());
-			infoPeriod = infoPeriod.getNextPeriod();
-		}
-
-		// inicializacao
-		int infoPeriodListSize = infoPeriodList.size();
-		InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
-
-		OccupationPeriod period = OccupationPeriod.readByDates(
-                infoPeriodNew.getStartDate().getTime(), 
-                infoPeriodNew.getEndDate().getTime());
-		if (period == null) {
-			Calendar startDate = infoPeriodNew.getStartDate();
-			Calendar endDate = infoPeriodNew.getEndDate();
-			period = new OccupationPeriod(startDate.getTime(), endDate.getTime());
-		}
-
-		// iteracoes
-		for (int i = infoPeriodListSize - 2; i >= 0; i--) {
-            infoPeriodNew = infoPeriodList.get(i);
-            
-            OccupationPeriod nextPeriod = period;
-			period = OccupationPeriod.readByDates(
-                    infoPeriodNew.getStartDate().getTime(), 
-                    infoPeriodNew.getEndDate().getTime());
-			if (period == null) {
-				Calendar startDate = infoPeriodNew.getStartDate();
-				Calendar endDate = infoPeriodNew.getEndDate();
-				period = new OccupationPeriod(startDate.getTime(), endDate.getTime());
-				period.setNextPeriod(nextPeriod);
-			}
-		}
-
-		if (periodToAssociateExecutionDegree == 11) {
-			executionDegree.setPeriodExamsFirstSemester(period);
-		} else if (periodToAssociateExecutionDegree == 12) {
-			executionDegree.setPeriodExamsSecondSemester(period);
-		} else if (periodToAssociateExecutionDegree == 21) {
-			executionDegree.setPeriodLessonsFirstSemester(period);
-		} else if (periodToAssociateExecutionDegree == 22) {
-			executionDegree.setPeriodLessonsSecondSemester(period);
-		}
+	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear()
+		.getIdInternal());
+	if (executionYear == null) {
+	    throw new NonExistingServiceException("message.non.existing.execution.year", null);
 	}
+
+	ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus, infoExecutionDegree
+		.getTemporaryExamMap());
+	setPeriods(executionDegree, infoExecutionDegree);
+    }
+
+    private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegreeEditor infoExecutionDegree) {
+	InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
+	setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
+
+	InfoPeriod infoPeriodExamsSecondSemester = infoExecutionDegree.getInfoPeriodExamsSecondSemester();
+	setCompositePeriod(executionDegree, infoPeriodExamsSecondSemester, 12);
+
+	InfoPeriod infoPeriodLessonsFirstSemester = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
+	setCompositePeriod(executionDegree, infoPeriodLessonsFirstSemester, 21);
+
+	InfoPeriod infoPeriodLessonsSecondSemester = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
+	setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
+    }
+
+    private void setCompositePeriod(ExecutionDegree executionDegree, InfoPeriod infoPeriod, int periodToAssociateExecutionDegree) {
+	List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
+
+	infoPeriodList.add(infoPeriod);
+
+	while (infoPeriod.getNextPeriod() != null) {
+	    infoPeriodList.add(infoPeriod.getNextPeriod());
+	    infoPeriod = infoPeriod.getNextPeriod();
+	}
+
+	// inicializacao
+	int infoPeriodListSize = infoPeriodList.size();
+	InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
+
+	OccupationPeriod period = OccupationPeriod.readByDates(infoPeriodNew.getStartDate().getTime(), infoPeriodNew.getEndDate()
+		.getTime());
+	if (period == null) {
+	    Calendar startDate = infoPeriodNew.getStartDate();
+	    Calendar endDate = infoPeriodNew.getEndDate();
+	    period = new OccupationPeriod(startDate.getTime(), endDate.getTime());
+	}
+
+	// iteracoes
+	for (int i = infoPeriodListSize - 2; i >= 0; i--) {
+	    infoPeriodNew = infoPeriodList.get(i);
+
+	    OccupationPeriod nextPeriod = period;
+	    period = OccupationPeriod.readByDates(infoPeriodNew.getStartDate().getTime(), infoPeriodNew.getEndDate().getTime());
+	    if (period == null) {
+		Calendar startDate = infoPeriodNew.getStartDate();
+		Calendar endDate = infoPeriodNew.getEndDate();
+		period = new OccupationPeriod(startDate.getTime(), endDate.getTime());
+		period.setNextPeriod(nextPeriod);
+	    }
+	}
+
+	if (periodToAssociateExecutionDegree == 11) {
+	    executionDegree.setPeriodExamsFirstSemester(period);
+	} else if (periodToAssociateExecutionDegree == 12) {
+	    executionDegree.setPeriodExamsSecondSemester(period);
+	} else if (periodToAssociateExecutionDegree == 21) {
+	    executionDegree.setPeriodLessonsFirstSemester(period);
+	} else if (periodToAssociateExecutionDegree == 22) {
+	    executionDegree.setPeriodLessonsSecondSemester(period);
+	}
+    }
 
 }

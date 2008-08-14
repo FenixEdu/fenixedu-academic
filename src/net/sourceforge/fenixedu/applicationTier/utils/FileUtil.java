@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public abstract class FileUtil {
 
@@ -23,31 +23,31 @@ public abstract class FileUtil {
     protected static BufferedReader bufferedReader;
 
     public void processFile() {
-        String outputBuffer = generateHeader();
+	String outputBuffer = generateHeader();
 
-        try {
-            bufferedReader = new BufferedReader(new FileReader(inputFile));
-            String line = new String();
-            int i = 0;
-            while (line != null) {
-                line = bufferedReader.readLine();
-                outputBuffer += processLine(new Integer(++i), line);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	try {
+	    bufferedReader = new BufferedReader(new FileReader(inputFile));
+	    String line = new String();
+	    int i = 0;
+	    while (line != null) {
+		line = bufferedReader.readLine();
+		outputBuffer += processLine(new Integer(++i), line);
+	    }
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
 
-        outputBuffer += generateFooter();
+	outputBuffer += generateFooter();
 
-        try {
-            FileWriter fileWriter = new FileWriter(outputFile);
-            fileWriter.write(outputBuffer);
-            fileWriter.close();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+	try {
+	    FileWriter fileWriter = new FileWriter(outputFile);
+	    fileWriter.write(outputBuffer);
+	    fileWriter.close();
+	} catch (IOException e1) {
+	    e1.printStackTrace();
+	}
     }
 
     /**

@@ -29,21 +29,20 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class CreateFileContent extends FileContentService {
 
     public void run(Site site, Container container, File file, String originalFilename, String displayName, Group permittedGroup,
-	    Person person, EducationalResourceType type) throws FenixServiceException, DomainException,
-	    IOException {
+	    Person person, EducationalResourceType type) throws FenixServiceException, DomainException, IOException {
 
-	final VirtualPath filePath = getVirtualPath(site,container);
+	final VirtualPath filePath = getVirtualPath(site, container);
 
 	Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName, site.getAuthorName(), type);
 
 	final FileDescriptor fileDescriptor = saveFile(filePath, originalFilename, !isPublic(permittedGroup), metaData, file);
 
 	checkSiteQuota(site, fileDescriptor.getSize());
-	
-	FileContent fileContent = new FileContent(fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(displayName),
-		fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
-			.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
-	
+
+	FileContent fileContent = new FileContent(fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils
+		.getFilenameOnly(displayName), fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
+		.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
+
 	container.addFile(fileContent);
     }
 
@@ -72,17 +71,18 @@ public class CreateFileContent extends FileContentService {
     }
 
     private VirtualPath getVirtualPath(Site site, Container container) {
-	
+
 	List<Content> contents = site.getPathTo(container);
-	
+
 	final VirtualPath filePath = new VirtualPath();
 
 	for (Content content : contents.subList(1, contents.size())) {
-	    filePath.addNode(0,new VirtualPathNode(content.getClass().getSimpleName().substring(0, 1) + content.getIdInternal(), content.getName().getContent()));
+	    filePath.addNode(0, new VirtualPathNode(content.getClass().getSimpleName().substring(0, 1) + content.getIdInternal(),
+		    content.getName().getContent()));
 	}
 
 	String authorName = site.getAuthorName();
-	filePath.addNode(0,new VirtualPathNode("Site" + site.getIdInternal(), authorName == null ? "Site" + site.getIdInternal()
+	filePath.addNode(0, new VirtualPathNode("Site" + site.getIdInternal(), authorName == null ? "Site" + site.getIdInternal()
 		: authorName));
 
 	ExecutionSemester executionSemester = site.getExecutionPeriod();

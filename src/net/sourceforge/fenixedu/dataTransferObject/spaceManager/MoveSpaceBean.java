@@ -9,55 +9,55 @@ import net.sourceforge.fenixedu.domain.space.SpaceState;
 public class MoveSpaceBean implements Serializable {
 
     private DomainReference<Space> selectedParentSpaceReference;
-        
+
     private DomainReference<Space> spaceReference;
-  
+
     private SpaceState spaceState;
-    
+
     private String spaceName;
-    
+
     public MoveSpaceBean() {
     }
-    
+
     public MoveSpaceBean(Space thisSpace) {
 	setSpace(thisSpace);
 	setSpaceState(SpaceState.ACTIVE);
-    }     
-    
+    }
+
     public MoveSpaceBean(Space fromSpace, Space destinationSpace) {
 	setSpace(fromSpace);
 	setSelectedParentSpace(destinationSpace);
     }
-    
+
     public void setSelectedParentSpace(Space parentSpace) {
-        this.selectedParentSpaceReference = (parentSpace != null) ? new DomainReference<Space>(parentSpace) : null;
+	this.selectedParentSpaceReference = (parentSpace != null) ? new DomainReference<Space>(parentSpace) : null;
     }
-    
+
     public Space getSelectedParentSpace() {
-        return (this.selectedParentSpaceReference != null) ? this.selectedParentSpaceReference.getObject() : null;
+	return (this.selectedParentSpaceReference != null) ? this.selectedParentSpaceReference.getObject() : null;
     }
-    
+
     public void setSpace(Space thisSpace) {
-        this.spaceReference = (thisSpace != null) ? new DomainReference<Space>(thisSpace) : null;
+	this.spaceReference = (thisSpace != null) ? new DomainReference<Space>(thisSpace) : null;
     }
-    
+
     public Space getSpace() {
-        return (this.spaceReference != null) ? this.spaceReference.getObject() : null;
+	return (this.spaceReference != null) ? this.spaceReference.getObject() : null;
     }
 
     public SpaceState getSpaceState() {
-        return spaceState;
+	return spaceState;
     }
 
     public void setSpaceState(SpaceState spaceState) {
-        this.spaceState = spaceState;
+	this.spaceState = spaceState;
     }
 
     public String getSpaceName() {
-        return spaceName;
+	return spaceName;
     }
 
     public void setSpaceName(String spaceName) {
-        this.spaceName = spaceName;
+	this.spaceName = spaceName;
     }
 }

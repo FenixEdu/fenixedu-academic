@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 27, 2006,2:35:49 PM
  * 
  */
@@ -22,27 +22,27 @@ public class MonthAnnouncementArchiveEntry {
     final private Collection<Announcement> announcements = new ArrayList<Announcement>();
 
     public int getAnnouncementCount() {
-        return announcements.size();
+	return announcements.size();
     }
 
     public MonthAnnouncementArchiveEntry(Integer month) {
-        this.month = month;
+	this.month = month;
     }
 
     public Integer getMonth() {
-        return month;
+	return month;
     }
 
     public void setMonth(Integer month) {
-        this.month = month;
+	this.month = month;
     }
 
     public Collection<Announcement> getAnnouncements() {
-        return announcements;
+	return announcements;
     }
 
     public void addAnnouncement(Announcement announcement) {
-        this.announcements.add(announcement);
+	this.announcements.add(announcement);
     }
 
 }

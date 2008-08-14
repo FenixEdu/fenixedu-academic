@@ -8,9 +8,9 @@ public abstract class AnswerTypeRenderer extends InputRenderer {
     protected final NewAtomicQuestion atomicQuestion;
 
     public AnswerTypeRenderer(NewAtomicQuestion atomicQuestion) {
-        super();
+	super();
 
-       this.atomicQuestion = atomicQuestion;
+	this.atomicQuestion = atomicQuestion;
     }
-    
+
 }

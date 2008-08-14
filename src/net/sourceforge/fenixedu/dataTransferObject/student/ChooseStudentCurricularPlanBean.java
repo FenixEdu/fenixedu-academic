@@ -60,8 +60,8 @@ public class ChooseStudentCurricularPlanBean implements Serializable {
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = studentCurricularPlan == null ? null
-		: new DomainReference<StudentCurricularPlan>(studentCurricularPlan);
+	this.studentCurricularPlan = studentCurricularPlan == null ? null : new DomainReference<StudentCurricularPlan>(
+		studentCurricularPlan);
     }
 
     public Integer getNumber() {
@@ -71,8 +71,7 @@ public class ChooseStudentCurricularPlanBean implements Serializable {
     public void setNumber(Integer number) {
 	this.number = number;
 	if (number != null) {
-	    setStudent(Registration.readRegistrationByNumberAndDegreeTypes(getNumber(),
-		    DegreeType.DEGREE).getStudent());
+	    setStudent(Registration.readRegistrationByNumberAndDegreeTypes(getNumber(), DegreeType.DEGREE).getStudent());
 	}
     }
 

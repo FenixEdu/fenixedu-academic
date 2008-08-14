@@ -4,48 +4,48 @@ import java.io.Serializable;
 
 public class TestsGrade implements Serializable {
 
-	double value;
+    double value;
 
-	double scale;
+    double scale;
 
-	public TestsGrade() {
-		super();
-	}
+    public TestsGrade() {
+	super();
+    }
 
-	public TestsGrade(double value, double scale) {
-		this();
+    public TestsGrade(double value, double scale) {
+	this();
 
-		this.setValue(value);
-		this.setScale(scale);
-	}
+	this.setValue(value);
+	this.setScale(scale);
+    }
 
-	public double getScale() {
-		return scale;
-	}
+    public double getScale() {
+	return scale;
+    }
 
-	private void setScale(double scale) {
-		this.scale = scale;
-	}
+    private void setScale(double scale) {
+	this.scale = scale;
+    }
 
-	public double getValue() {
-		return value;
-	}
+    public double getValue() {
+	return value;
+    }
 
-	private void setValue(double value) {
-		this.value = value;
-	}
+    private void setValue(double value) {
+	this.value = value;
+    }
 
-	public double getPercentage() {
-		return this.getValue() / this.getScale() * 100;
-	}
+    public double getPercentage() {
+	return this.getValue() / this.getScale() * 100;
+    }
 
-	public TestsGrade add(TestsGrade gradeToAdd) {
-		double convertedValue = gradeToAdd.getValue() * this.getScale() / gradeToAdd.getScale();
+    public TestsGrade add(TestsGrade gradeToAdd) {
+	double convertedValue = gradeToAdd.getValue() * this.getScale() / gradeToAdd.getScale();
 
-		return new TestsGrade(convertedValue + this.getValue(), this.getScale());
-	}
+	return new TestsGrade(convertedValue + this.getValue(), this.getScale());
+    }
 
-	public TestsGrade multiply(Double factor) {
-		return new TestsGrade(factor * this.getValue(), this.getScale());
-	}
+    public TestsGrade multiply(Double factor) {
+	return new TestsGrade(factor * this.getValue(), this.getScale());
+    }
 }

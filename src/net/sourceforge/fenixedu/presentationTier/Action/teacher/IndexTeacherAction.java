@@ -15,11 +15,10 @@ import org.apache.struts.action.ActionMapping;
 
 public class IndexTeacherAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(getUserView(request).getPerson()
-		.getTeacher());
+	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(getUserView(request).getPerson().getTeacher());
 
 	// TODO: see why this needs to be in session
 	getSession(request).setAttribute(SessionConstants.INFO_TEACHER, infoTeacher);

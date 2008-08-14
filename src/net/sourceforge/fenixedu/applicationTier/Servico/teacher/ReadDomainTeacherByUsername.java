@@ -23,13 +23,12 @@ public class ReadDomainTeacherByUsername extends Service {
 	    }
 	});
 
-	Person person = (Person) CollectionUtils.find(teacherRole.getAssociatedPersons(),
-		new Predicate() {
-		    public boolean evaluate(Object object) {
-			Person tempPerson = (Person) object;
-			return tempPerson.hasUsername(username);
-		    }
-		});
+	Person person = (Person) CollectionUtils.find(teacherRole.getAssociatedPersons(), new Predicate() {
+	    public boolean evaluate(Object object) {
+		Person tempPerson = (Person) object;
+		return tempPerson.hasUsername(username);
+	    }
+	});
 	return person.getTeacher();
     }
 

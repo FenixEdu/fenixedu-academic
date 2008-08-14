@@ -5,66 +5,64 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class UnitFunctionsTreeRenderer extends AbstractUnitFunctionsTreeRenderer {
 
-	private String addFunctionLink;
-	private String orderFunctionsLink;
-	private String editFunctionLink;
-	private String deleteFunctionLink;
-	
-	public String getAddFunctionLink() {
-		return addFunctionLink;
-	}
+    private String addFunctionLink;
+    private String orderFunctionsLink;
+    private String editFunctionLink;
+    private String deleteFunctionLink;
 
-	public void setAddFunctionLink(String addFunctionLink) {
-		this.addFunctionLink = addFunctionLink;
-	}
+    public String getAddFunctionLink() {
+	return addFunctionLink;
+    }
 
-	public String getDeleteFunctionLink() {
-		return deleteFunctionLink;
-	}
+    public void setAddFunctionLink(String addFunctionLink) {
+	this.addFunctionLink = addFunctionLink;
+    }
 
-	public void setDeleteFunctionLink(String deleteFunctionLink) {
-		this.deleteFunctionLink = deleteFunctionLink;
-	}
+    public String getDeleteFunctionLink() {
+	return deleteFunctionLink;
+    }
 
-	public String getEditFunctionLink() {
-		return editFunctionLink;
-	}
+    public void setDeleteFunctionLink(String deleteFunctionLink) {
+	this.deleteFunctionLink = deleteFunctionLink;
+    }
 
-	public void setEditFunctionLink(String editFunctionLink) {
-		this.editFunctionLink = editFunctionLink;
-	}
+    public String getEditFunctionLink() {
+	return editFunctionLink;
+    }
 
-	public String getOrderFunctionsLink() {
-		return orderFunctionsLink;
-	}
+    public void setEditFunctionLink(String editFunctionLink) {
+	this.editFunctionLink = editFunctionLink;
+    }
 
-	public void setOrderFunctionsLink(String orderFunctionsLink) {
-		this.orderFunctionsLink = orderFunctionsLink;
-	}
+    public String getOrderFunctionsLink() {
+	return orderFunctionsLink;
+    }
 
-	@Override
-	protected String getLinkSequenceFor(Unit unit) {
-		return createLinkSequence(getAddFunctionLink(), unit.getFunctions().size() > 1 ? getOrderFunctionsLink() : null);
+    public void setOrderFunctionsLink(String orderFunctionsLink) {
+	this.orderFunctionsLink = orderFunctionsLink;
+    }
+
+    @Override
+    protected String getLinkSequenceFor(Unit unit) {
+	return createLinkSequence(getAddFunctionLink(), unit.getFunctions().size() > 1 ? getOrderFunctionsLink() : null);
+    }
+
+    @Override
+    protected String getLinkSequenceFor(Function function) {
+	if (function.isVirtual()) {
+	    return createLinkSequence(getEditFunctionLink(), getDeleteFunctionLink());
+	} else {
+	    return null;
 	}
-	
-	@Override
-	protected String getLinkSequenceFor(Function function) {
-		if (function.isVirtual()) {
-			return createLinkSequence(getEditFunctionLink(), getDeleteFunctionLink());
-		}
-		else {
-			return null;
-		}
+    }
+
+    @Override
+    protected String getNoChildrenFor(Object object) {
+	if (object instanceof Function) {
+	    return "true";
+	} else {
+	    return super.getNoChildrenFor(object);
 	}
-	
-	@Override
-	protected String getNoChildrenFor(Object object) {
-		if (object instanceof Function) {
-			return "true";
-		}
-		else {
-			return super.getNoChildrenFor(object);
-		}
-	}
+    }
 
 }

@@ -14,9 +14,10 @@ public class RemoveProfessorship extends DeleteProfessorship {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Servico.teacher.DeleteTeacher#canDeleteResponsibleFor()
+     * @see
+     * ServidorAplicacao.Servico.teacher.DeleteTeacher#canDeleteResponsibleFor()
      */
     protected boolean canDeleteResponsibleFor() {
-        return true;
+	return true;
     }
 }

@@ -8,22 +8,22 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CooperationParticipation extends CooperationParticipation_Base {
-    
-    public  CooperationParticipation(Party party, ResearchActivityParticipationRole role, Cooperation cooperation, MultiLanguageString roleMessage) {
-        super();
-        if(alreadyHasParticipation(party, role, cooperation)) {
+
+    public CooperationParticipation(Party party, ResearchActivityParticipationRole role, Cooperation cooperation,
+	    MultiLanguageString roleMessage) {
+	super();
+	if (alreadyHasParticipation(party, role, cooperation)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
-        super.setParty(party);
-        super.setRole(role);
-        super.setCooperation(cooperation);
-        super.setRoleMessage(roleMessage);
+	super.setParty(party);
+	super.setRole(role);
+	super.setCooperation(cooperation);
+	super.setRoleMessage(roleMessage);
     }
 
-
     protected boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, Cooperation cooperation) {
-	for(CooperationParticipation participation : party.getCooperationParticipations()) {
-	    if(participation.match(party,role,cooperation)) {
+	for (CooperationParticipation participation : party.getCooperationParticipations()) {
+	    if (participation.match(party, role, cooperation)) {
 		return true;
 	    }
 	}
@@ -31,23 +31,22 @@ public class CooperationParticipation extends CooperationParticipation_Base {
     }
 
     public boolean match(Party party, ResearchActivityParticipationRole role, Cooperation cooperation) {
-	return this.getParty().equals(party) && this.getRole().equals(role) && this.getCooperation().equals(cooperation); 
+	return this.getParty().equals(party) && this.getRole().equals(role) && this.getCooperation().equals(cooperation);
     }
-
 
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
-    	switch(this.getCooperation().getCooperationType()) {
-    	case ScientificOrganizationsAndNetworks:
-    		return ResearchActivityParticipationRole.getAllScientificOrganizationsAndNetworksRoles();
-    	case BilateralCooperation:
-    		return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
-    	case Commission:
-    		return ResearchActivityParticipationRole.getAllCommissionRoles();
-    	default:
-    		return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
-    	}
-    	
+	switch (this.getCooperation().getCooperationType()) {
+	case ScientificOrganizationsAndNetworks:
+	    return ResearchActivityParticipationRole.getAllScientificOrganizationsAndNetworksRoles();
+	case BilateralCooperation:
+	    return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
+	case Commission:
+	    return ResearchActivityParticipationRole.getAllCommissionRoles();
+	default:
+	    return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
+	}
+
     }
 
     @Override
@@ -59,8 +58,8 @@ public class CooperationParticipation extends CooperationParticipation_Base {
     public boolean isLastParticipation() {
 	return this.getCooperation().getParticipationsFor(this.getParty()).size() == 1;
     }
-    
-    @Override 
+
+    @Override
     public void delete() {
 	removeCooperation();
 	super.delete();
@@ -76,5 +75,4 @@ public class CooperationParticipation extends CooperationParticipation_Base {
 	return false;
     }
 
-    
 }

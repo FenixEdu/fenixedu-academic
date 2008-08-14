@@ -25,32 +25,30 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ChooseStudentDispatchAction extends FenixDispatchAction {
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = getUserView(request);
-        DynaActionForm studentForm = (DynaActionForm) form;
+	IUserView userView = getUserView(request);
+	DynaActionForm studentForm = (DynaActionForm) form;
 
-        Integer studentNumber = (Integer) studentForm.get("number");
+	Integer studentNumber = (Integer) studentForm.get("number");
 
-        List result = null;
+	List result = null;
 
-        try {
-            Object args[] = { studentNumber, DegreeType.MASTER_DEGREE};
-            result = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadStudentCurricularPlansByNumberAndDegreeType", args);
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException("O Aluno");
-        }
+	try {
+	    Object args[] = { studentNumber, DegreeType.MASTER_DEGREE };
+	    result = (List) ServiceManagerServiceFactory.executeService("ReadStudentCurricularPlansByNumberAndDegreeType", args);
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException("O Aluno");
+	}
 
-        if (result.size() == 1) {
-            request.setAttribute("studentCPID", ((InfoStudentCurricularPlan) result.get(0))
-                    .getIdInternal());
-            return mapping.findForward("StudentCurricularPlanChosen");
-        }
+	if (result.size() == 1) {
+	    request.setAttribute("studentCPID", ((InfoStudentCurricularPlan) result.get(0)).getIdInternal());
+	    return mapping.findForward("StudentCurricularPlanChosen");
+	}
 
-        request.setAttribute("studentCurricularPlans", result);
-        return mapping.findForward("ShowCurricularPlans");
+	request.setAttribute("studentCurricularPlans", result);
+	return mapping.findForward("ShowCurricularPlans");
     }
 
 }

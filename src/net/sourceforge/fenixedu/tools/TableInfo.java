@@ -24,7 +24,7 @@ public class TableInfo {
 
     /**
      * Default Constructor
-     *  
+     * 
      */
     public TableInfo() {
 
@@ -36,10 +36,10 @@ public class TableInfo {
      * @param columns
      */
     public TableInfo(String tableName, String primaryKey, String columns) {
-        this.tableName = tableName;
-        this.primaryKey = primaryKey;
-        this.columns = columns;
-        this.idsToSelect = new ArrayList();
+	this.tableName = tableName;
+	this.primaryKey = primaryKey;
+	this.columns = columns;
+	this.idsToSelect = new ArrayList();
     }
 
     /**
@@ -49,17 +49,17 @@ public class TableInfo {
      * @param idsToSelect
      */
     public TableInfo(String tableName, String primaryKey, String columns, List idsToSelect) {
-        this.tableName = tableName;
-        this.primaryKey = primaryKey;
-        this.columns = columns;
-        this.idsToSelect = idsToSelect;
+	this.tableName = tableName;
+	this.primaryKey = primaryKey;
+	this.columns = columns;
+	this.idsToSelect = idsToSelect;
     }
 
     /**
      * @return Returns the columns.
      */
     public String getColumns() {
-        return columns;
+	return columns;
     }
 
     /**
@@ -67,14 +67,14 @@ public class TableInfo {
      *            The columns to set.
      */
     public void setColumns(String columns) {
-        this.columns = columns;
+	this.columns = columns;
     }
 
     /**
      * @return Returns the primaryKey.
      */
     public String getPrimaryKey() {
-        return primaryKey;
+	return primaryKey;
     }
 
     /**
@@ -82,14 +82,14 @@ public class TableInfo {
      *            The primaryKey to set.
      */
     public void setPrimaryKey(String primaryKey) {
-        this.primaryKey = primaryKey;
+	this.primaryKey = primaryKey;
     }
 
     /**
      * @return Returns the tableName.
      */
     public String getTableName() {
-        return tableName;
+	return tableName;
     }
 
     /**
@@ -97,14 +97,14 @@ public class TableInfo {
      *            The tableName to set.
      */
     public void setTableName(String tableName) {
-        this.tableName = tableName;
+	this.tableName = tableName;
     }
 
     /**
      * @return Returns the idsToSelect.
      */
     public List getIdsToSelect() {
-        return idsToSelect;
+	return idsToSelect;
     }
 
     /**
@@ -112,7 +112,7 @@ public class TableInfo {
      *            The idsToSelect to set.
      */
     public void setIdsToSelect(List idsToSelect) {
-        this.idsToSelect = idsToSelect;
+	this.idsToSelect = idsToSelect;
     }
 
     /**
@@ -121,9 +121,9 @@ public class TableInfo {
      * @param id
      */
     public void addIdToSelect(Integer id) {
-        if (this.idsToSelect.contains(id) == false) {
-            this.idsToSelect.add(id);
-        }
+	if (this.idsToSelect.contains(id) == false) {
+	    this.idsToSelect.add(id);
+	}
     }
 
     /**
@@ -132,50 +132,49 @@ public class TableInfo {
      * @param idsToSelect
      */
     public void IntersectIdsToSelect(List idsToSelect) {
-        for (Iterator iter = idsToSelect.iterator(); iter.hasNext();) {
-            Integer id = (Integer) iter.next();
-            if (this.idsToSelect.contains(id) == false) {
-                this.idsToSelect.add(id);
-            }
-        }
+	for (Iterator iter = idsToSelect.iterator(); iter.hasNext();) {
+	    Integer id = (Integer) iter.next();
+	    if (this.idsToSelect.contains(id) == false) {
+		this.idsToSelect.add(id);
+	    }
+	}
     }
 
     public String toSql() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("SELECT " + this.columns);
-        sb.append(" FROM " + this.tableName);
+	StringBuilder sb = new StringBuilder();
+	sb.append("SELECT " + this.columns);
+	sb.append(" FROM " + this.tableName);
 
-        if (this.idsToSelect.size() <= 0) {
-            return sb.toString();
-        }
+	if (this.idsToSelect.size() <= 0) {
+	    return sb.toString();
+	}
 
-        sb.append(" WHERE " + this.primaryKey + " IN (");
-        for (int i = 0; i < this.idsToSelect.size(); i++) {
-            Integer id = (Integer) this.idsToSelect.get(i);
-            sb.append(id);
-            if (i != (this.idsToSelect.size() - 1)) {
-                sb.append(",");
-            }
-        }
-        sb.append(")");
+	sb.append(" WHERE " + this.primaryKey + " IN (");
+	for (int i = 0; i < this.idsToSelect.size(); i++) {
+	    Integer id = (Integer) this.idsToSelect.get(i);
+	    sb.append(id);
+	    if (i != (this.idsToSelect.size() - 1)) {
+		sb.append(",");
+	    }
+	}
+	sb.append(")");
 
-        return sb.toString();
+	return sb.toString();
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
+	boolean result = false;
 
-        if (obj instanceof TableInfo) {
-            TableInfo tableInfo = (TableInfo) obj;
-            if ((this.columns.equals(tableInfo.getColumns()))
-                    && (this.tableName.equals(tableInfo.getTableName()))
-                    && (this.primaryKey.equals(tableInfo.getPrimaryKey()))
-                    && (this.idsToSelect.equals(tableInfo.getIdsToSelect()))) {
-                result = true;
-            }
-        }
+	if (obj instanceof TableInfo) {
+	    TableInfo tableInfo = (TableInfo) obj;
+	    if ((this.columns.equals(tableInfo.getColumns())) && (this.tableName.equals(tableInfo.getTableName()))
+		    && (this.primaryKey.equals(tableInfo.getPrimaryKey()))
+		    && (this.idsToSelect.equals(tableInfo.getIdsToSelect()))) {
+		result = true;
+	    }
+	}
 
-        return result;
+	return result;
     }
 
 }

@@ -64,7 +64,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     @Override
     protected UnitSite getSite(HttpServletRequest request) {
-	
+
 	Integer oid = getId(request.getParameter("oid"));
 
 	if (oid == null) {
@@ -79,13 +79,13 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return site == null ? null : site.getUnit();
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("start");
     }
 
-    public ActionForward introduction(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward introduction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	IViewState viewState = RenderUtils.getViewState();
 	if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
 	    request.setAttribute("successful", true);
@@ -94,8 +94,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editIntroduction");
     }
 
-    public ActionForward sideBanner(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward sideBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	IViewState viewState = RenderUtils.getViewState();
 	if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
 	    request.setAttribute("successful", true);
@@ -104,13 +104,13 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editSideBanner");
     }
 
-    public ActionForward manageConfiguration(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward manageConfiguration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("editConfiguration");
     }
 
-    public ActionForward updateInstitutionLogo(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward updateInstitutionLogo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	IViewState viewState = RenderUtils.getViewState("institutionLogo");
 	if (viewState != null && viewState.isValid()) {
 	    request.setAttribute("institutionLogoChanged", true);
@@ -120,8 +120,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editLogo");
     }
 
-    public ActionForward updateI18n(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward updateI18n(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	IViewState viewState = RenderUtils.getViewState("i18n");
 	if (viewState != null && viewState.isValid()) {
 	    request.setAttribute("i18nChanged", true);
@@ -130,8 +130,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editConfiguration");
     }
 
-    public ActionForward updateConfiguration(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward updateConfiguration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	IViewState viewState = RenderUtils.getViewState("visualization");
 	if (viewState != null && viewState.isValid()) {
 	    request.setAttribute("visualizationChanged", true);
@@ -140,8 +140,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editConfiguration");
     }
 
-    public ActionForward changeLayout(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward changeLayout(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	String layoutParamenter = request.getParameter("layout");
 
@@ -155,8 +155,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editConfiguration");
     }
 
-    public ActionForward chooseLogo(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseLogo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	IViewState viewState = RenderUtils.getViewState("personalizedLogo");
 	if (viewState != null && viewState.isValid()) {
 	    request.setAttribute("successful", true);
@@ -166,13 +166,12 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editLogo");
     }
 
-    public ActionForward uploadLogo(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward uploadLogo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 
 	IViewState viewState = RenderUtils.getViewState("logoUpload");
-	SimpleFileBean bean = (SimpleFileBean) ((MetaSlot) viewState.getMetaObject()).getMetaObject()
-	.getObject();
+	SimpleFileBean bean = (SimpleFileBean) ((MetaSlot) viewState.getMetaObject()).getMetaObject().getObject();
 
 	if (bean == null || bean.getFile() == null) {
 	    return chooseLogo(mapping, actionForm, request, response);
@@ -189,8 +188,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return chooseLogo(mapping, actionForm, request, response);
     }
 
-    public ActionForward manageBanners(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward manageBanners(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	request.setAttribute("banners", site.getBanners());
 
@@ -198,8 +197,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editBanners");
     }
 
-    public ActionForward editBanner(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSiteBanner banner = getBanner(request);
 
 	if (banner != null) {
@@ -223,8 +222,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return null;
     }
 
-    public ActionForward updateBanner(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward updateBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	BannerBean bean = (BannerBean) getRenderedObject("editBanner");
 
@@ -239,9 +238,9 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	File backgroundFile = back.getFile() == null ? null : FileUtils.copyToTemporaryFile(back.getFile());
 
 	try {
-	    executeService("UpdateUnitSiteBanner", site, banner, mainFile, main.getName(), backgroundFile, back.getName(), bean.getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight());
-	}
-	finally {
+	    executeService("UpdateUnitSiteBanner", site, banner, mainFile, main.getName(), backgroundFile, back.getName(), bean
+		    .getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight());
+	} finally {
 	    if (mainFile != null) {
 		mainFile.delete();
 	    }
@@ -256,8 +255,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return manageBanners(mapping, actionForm, request, response);
     }
 
-    public ActionForward removeBanner(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	Integer bannerId = getId(request.getParameter("bannerID"));
 
@@ -271,8 +270,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return manageBanners(mapping, actionForm, request, response);
     }
 
-    public ActionForward addBanner(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	BannerBean bean = (BannerBean) getRenderedObject("newBanner");
 
@@ -287,8 +286,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	File mainFile = FileUtils.copyToTemporaryFile(main.getFile());
 	File backgroundFile = background.getFile() == null ? null : FileUtils.copyToTemporaryFile(background.getFile());
 	try {
-	    executeService("CreateUnitSiteBanner", site, mainFile, main.getName(), backgroundFile,
-		    background.getName(), bean.getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight());
+	    executeService("CreateUnitSiteBanner", site, mainFile, main.getName(), backgroundFile, background.getName(), bean
+		    .getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight());
 	} finally {
 	    if (mainFile != null) {
 		mainFile.delete();
@@ -301,22 +300,22 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return manageBanners(mapping, actionForm, request, response);
     }
 
-    public ActionForward topNavigation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward topNavigation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	request.setAttribute("customLinks", site.getSortedTopLinks());
 
 	return mapping.findForward("editTopNavigation");
     }
 
-    public ActionForward editTopLink(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("editLink" + request.getParameter("linkID"), true);
 	return topNavigation(mapping, actionForm, request, response);
     }
 
-    public ActionForward removeTopLink(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	Integer linkId = getId(request.getParameter("linkID"));
 
@@ -330,28 +329,28 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return topNavigation(mapping, actionForm, request, response);
     }
 
-    public ActionForward createTopLink(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward createTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	RenderUtils.invalidateViewState();
 	return topNavigation(mapping, actionForm, request, response);
     }
 
-    public ActionForward footerNavigation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward footerNavigation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	request.setAttribute("customLinks", site.getSortedFooterLinks());
 
 	return mapping.findForward("editFooterNavigation");
     }
 
-    public ActionForward editFooterLink(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("editLink" + request.getParameter("linkID"), true);
 	return footerNavigation(mapping, actionForm, request, response);
     }
 
-    public ActionForward removeFooterLink(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	Integer linkId = getId(request.getParameter("linkID"));
 
@@ -365,49 +364,48 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return footerNavigation(mapping, actionForm, request, response);
     }
 
-    public ActionForward createFooterLink(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward createFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	RenderUtils.invalidateViewState();
 	return footerNavigation(mapping, actionForm, request, response);
     }
 
-    public ActionForward organizeTopLinks(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward organizeTopLinks(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	request.setAttribute("customLinks", site.getSortedTopLinks());
 
 	return mapping.findForward("organizeTopLinks");
     }
 
-    public ActionForward organizeFooterLinks(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward organizeFooterLinks(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	request.setAttribute("customLinks", site.getSortedFooterLinks());
 
 	return mapping.findForward("organizeFooterLinks");
     }
 
-    public ActionForward saveTopLinksOrder(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward saveTopLinksOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	RenderUtils.invalidateViewState();
 	saveLinksOrder(request, true);
 	return topNavigation(mapping, actionForm, request, response);
     }
 
-    public ActionForward saveFooterLinksOrder(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward saveFooterLinksOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	RenderUtils.invalidateViewState();
 	saveLinksOrder(request, false);
 	return footerNavigation(mapping, actionForm, request, response);
     }
 
-    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws FenixFilterException,
-    FenixServiceException {
+    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws FenixFilterException, FenixServiceException {
 	UnitSite site = getSite(request);
 	String orderString = request.getParameter("linksOrder");
 
-	List<UnitSiteLink> initialLinks = new ArrayList<UnitSiteLink>(top ? site.getSortedTopLinks()
-		: site.getSortedFooterLinks());
+	List<UnitSiteLink> initialLinks = new ArrayList<UnitSiteLink>(top ? site.getSortedTopLinks() : site
+		.getSortedFooterLinks());
 	List<UnitSiteLink> orderedLinks = new ArrayList<UnitSiteLink>();
 
 	String[] nodes = orderString.split(",");
@@ -418,11 +416,11 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	    orderedLinks.add(initialLinks.get(itemIndex - 1));
 	}
 
-	ServiceUtils.executeService("RearrangeUnitSiteLinks", site, top,
-		orderedLinks);
+	ServiceUtils.executeService("RearrangeUnitSiteLinks", site, top, orderedLinks);
     }
 
-    public ActionForward chooseIntroductionSections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseIntroductionSections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	IViewState viewState = RenderUtils.getViewState();
 	if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
 	    request.setAttribute("successful", true);
@@ -430,21 +428,23 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	UnitSite site = getSite(request);
 	Section sideSection = site.getSideSection();
-	
+
 	if (sideSection != null && sideSection.hasAnyChildren()) {
 	    request.setAttribute("canChoose", true);
 	}
 
 	return mapping.findForward("chooseIntroductionSections");
     }
-    
-    public ActionForward functionalitySection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    public ActionForward functionalitySection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	section(mapping, actionForm, request, response);
 
 	return mapping.findForward("functionalitySection");
     }
 
-    public ActionForward editFunctionalitySection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editFunctionalitySection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	selectSection(request);
 
 	return mapping.findForward("editFunctionalitySection");
@@ -453,7 +453,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     //
     // Functions
     //
-    public ActionForward manageFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward manageFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Unit unit = getUnit(request);
 
 	SortedSet<Person> persons = collectFunctionPersons(unit, new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID));
@@ -464,14 +465,14 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("manageFunctions");
     }
 
-    public ActionForward managePersonFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward managePersonFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Person person = getSelectedPerson(request);
 
 	if (person != null) {
 	    request.setAttribute("personBean", new PersonFunctionsBean(person, getUnit(request)));
 	    return mapping.findForward("changePersonFunctions");
-	}
-	else {
+	} else {
 	    return manageFunctions(mapping, actionForm, request, response);
 	}
     }
@@ -498,7 +499,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return login.getUser().getPerson();
     }
 
-    public ActionForward manageExistingFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward manageExistingFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("tree", Collections.singleton(getUnit(request)));
 	return mapping.findForward("manageExistingFunctions");
     }
@@ -516,10 +518,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     private SortedSet<Person> collectFunctionPersons(Unit unit, TreeSet<Person> persons) {
 	YearMonthDay today = new YearMonthDay();
 
-	AccountabilityTypeEnum[] types = new AccountabilityTypeEnum[] {
-		AccountabilityTypeEnum.WORKING_CONTRACT, 
-		AccountabilityTypeEnum.RESEARCH_CONTRACT	
-	};
+	AccountabilityTypeEnum[] types = new AccountabilityTypeEnum[] { AccountabilityTypeEnum.WORKING_CONTRACT,
+		AccountabilityTypeEnum.RESEARCH_CONTRACT };
 
 	List<Contract> contacts = unit.getContracts(today, null, types);
 	for (Contract contract : contacts) {
@@ -541,7 +541,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return persons;
     }
 
-    public ActionForward addFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Unit unit = getTargetUnit(request);
 
 	request.setAttribute("target", unit);
@@ -550,7 +551,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("addFunction");
     }
 
-    public ActionForward createFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward createFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 	Unit unit = getTargetUnit(request);
 
@@ -567,7 +569,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
     }
 
-    public ActionForward prepareEditFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Function function = getTargetFunction(request);
 
 	VariantBean bean = new VariantBean();
@@ -579,7 +582,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("editFunction");
     }
 
-    public ActionForward editFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Function function = getTargetFunction(request);
 
 	VariantBean bean = (VariantBean) getRenderedObject("edit");
@@ -590,14 +594,16 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return manageExistingFunctions(mapping, actionForm, request, response);
     }
 
-    public ActionForward deleteFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Function function = getTargetFunction(request);
 	request.setAttribute("function", function);
 
 	return mapping.findForward("confirmDeleteFunction");
     }
 
-    public ActionForward confirmDeleteFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward confirmDeleteFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	if (request.getParameter("cancel") == null) {
 	    executeService("DeleteVirtualFunction", getSite(request), getTargetFunction(request));
 	}
@@ -610,16 +616,18 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(id);
     }
 
-    public ActionForward organizeFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward organizeFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Unit unit = getTargetUnit(request);
 
-    request.setAttribute("target", unit);
-    request.setAttribute("functions", unit.getOrderedActiveFunctions());
-    
+	request.setAttribute("target", unit);
+	request.setAttribute("functions", unit.getOrderedActiveFunctions());
+
 	return mapping.findForward("organizeFunctions");
     }
 
-    public ActionForward changeFunctionsOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward changeFunctionsOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	String orderString = request.getParameter("functionsOrder");
 	Unit unit = getTargetUnit(request);
 
@@ -642,7 +650,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return manageExistingFunctions(mapping, actionForm, request, response);
     }
 
-    public ActionForward addPersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addPersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Person person = getSelectedPerson(request);
 	Function function = getTargetFunction(request);
 
@@ -652,7 +661,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("createPersonFunction");
     }
 
-    public ActionForward editPersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editPersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	PersonFunction function = getPersonFunction(request);
 	request.setAttribute("personFunction", function);
 
@@ -664,7 +674,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(id);
     }
 
-    public ActionForward removePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	PersonFunction personFunction = getPersonFunction(request);
 	executeService("DeleteUnitSitePersonFunction", getSite(request), personFunction);
 
@@ -675,7 +686,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     // Unit site managers
     //
 
-    public ActionForward chooseManagers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseManagers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 
 	request.setAttribute("managersBean", new UnitSiteManagerBean());
@@ -684,7 +696,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return mapping.findForward("chooseManagers");
     }
 
-    public ActionForward removeManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
 
 	Integer managerId = getId(request.getParameter("managerID"));
@@ -701,7 +714,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	return chooseManagers(mapping, actionForm, request, response);
     }
 
-    public ActionForward addManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	UnitSiteManagerBean bean = (UnitSiteManagerBean) getRenderedObject("add");
 
 	if (bean == null) {
@@ -717,8 +731,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	    if (person == null) {
 		addActionMessage("addError", request, "error.site.managers.add.alias.notFound");
 	    }
-	}
-	else {
+	} else {
 	    String documentId = bean.getIdNumber();
 
 	    if (documentId != null) {
@@ -726,8 +739,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 		if (persons.isEmpty()) {
 		    person = null;
-		}
-		else {
+		} else {
 		    // TODO: show a selection list
 		    person = persons.get(new Random().nextInt() % persons.size());
 		}
@@ -774,26 +786,26 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	if (unit != null) {
 	    return unit.getName();
-	}
-	else {
+	} else {
 	    return getLoggedPerson(request).getName();
 	}
     }
 
-    public ActionForward analytics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IViewState viewState = RenderUtils.getViewState("siteAnalytics");
-        
-        if (viewState != null && viewState.isValid()) {
-            UnitSite site = getSite(request);
-            
-            if (site.getGoogleAnalyticsCode() != null) {
-                request.setAttribute("codeAccepted", true);
-            } else {
-                request.setAttribute("codeRemoved", true);
-            }
-        }
-        
-        return mapping.findForward("analytics");
+    public ActionForward analytics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IViewState viewState = RenderUtils.getViewState("siteAnalytics");
+
+	if (viewState != null && viewState.isValid()) {
+	    UnitSite site = getSite(request);
+
+	    if (site.getGoogleAnalyticsCode() != null) {
+		request.setAttribute("codeAccepted", true);
+	    } else {
+		request.setAttribute("codeRemoved", true);
+	    }
+	}
+
+	return mapping.findForward("analytics");
     }
-    
+
 }

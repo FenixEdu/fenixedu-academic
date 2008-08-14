@@ -17,11 +17,9 @@ public class GetCandidateRegistrationInformation extends Service {
 
     public InfoCandidateRegistration run(Integer candidateID) {
 
-	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject
-		.readMasterDegreeCandidateByOID(candidateID);
+	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
-	Registration registration = masterDegreeCandidate.getPerson().readStudentByDegreeType(
-		DegreeType.MASTER_DEGREE);
+	Registration registration = masterDegreeCandidate.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
 
 	StudentCurricularPlan studentCurricularPlan = null;
 	if (registration != null) {
@@ -32,8 +30,8 @@ public class GetCandidateRegistrationInformation extends Service {
 
 	infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
 		.newInfoFromDomain(masterDegreeCandidate));
-	infoCandidateRegistration.setInfoStudentCurricularPlan(InfoStudentCurricularPlan
-		.newInfoFromDomain(studentCurricularPlan));
+	infoCandidateRegistration
+		.setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
 
 	if (studentCurricularPlan.getEnrolmentsCount() == 0) {
 	    infoCandidateRegistration.setEnrolments(null);
@@ -41,8 +39,7 @@ public class GetCandidateRegistrationInformation extends Service {
 	} else {
 	    infoCandidateRegistration.setEnrolments(new ArrayList());
 	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		infoCandidateRegistration.getEnrolments()
-			.add(InfoEnrolment.newInfoFromDomain(enrolment));
+		infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
 	    }
 	}
 

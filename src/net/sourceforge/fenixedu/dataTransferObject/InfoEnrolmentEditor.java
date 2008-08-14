@@ -44,18 +44,18 @@ public class InfoEnrolmentEditor extends InfoObject {
     private String enrollmentTypeResourceKey;
 
     // this variable is used for in the interface for changing a students
-        // degree
+    // degree
     // check
-        // net.sourceforge.fenixedu.presentationTier.backBeans.degreeAdministrativeOffice.ChangeDegree.EnrolementOperation
+    // net.sourceforge.fenixedu.presentationTier.backBeans.
+    // degreeAdministrativeOffice.ChangeDegree.EnrolementOperation
     // for possible valies
     private String changeDegreeOperation;
 
     public InfoEnrolmentEditor() {
     }
 
-    public InfoEnrolmentEditor(InfoStudentCurricularPlan infoStudentCurricularPlan,
-	    InfoCurricularCourse infoCurricularCourse, EnrollmentState state,
-	    InfoExecutionPeriod infoExecutionPeriod) {
+    public InfoEnrolmentEditor(InfoStudentCurricularPlan infoStudentCurricularPlan, InfoCurricularCourse infoCurricularCourse,
+	    EnrollmentState state, InfoExecutionPeriod infoExecutionPeriod) {
 	this();
 	setInfoCurricularCourse(infoCurricularCourse);
 	setInfoStudentCurricularPlan(infoStudentCurricularPlan);
@@ -151,12 +151,9 @@ public class InfoEnrolmentEditor extends InfoObject {
 	    setEnrollmentState(enrollment.getEnrollmentState());
 	    setAccumulatedWeight(enrollment.getAccumulatedWeight());
 	    setCondition(enrollment.getEnrolmentCondition());
-	    setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrollment
-		    .getCurricularCourse()));
-	    setInfoExecutionPeriod(InfoExecutionPeriod
-		    .newInfoFromDomain(enrollment.getExecutionPeriod()));
-	    setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment
-		    .getStudentCurricularPlan()));
+	    setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrollment.getCurricularCourse()));
+	    setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(enrollment.getExecutionPeriod()));
+	    setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment.getStudentCurricularPlan()));
 
 	    setEnrollmentTypeResourceKey(enrollment.getEnrolmentTypeName());
 	}
@@ -184,8 +181,7 @@ public class InfoEnrolmentEditor extends InfoObject {
 	return infoImprovmentEnrolmentEvaluation;
     }
 
-    public void setInfoImprovmentEnrolmentEvaluation(
-	    InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation) {
+    public void setInfoImprovmentEnrolmentEvaluation(InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation) {
 	this.infoImprovmentEnrolmentEvaluation = infoImprovmentEnrolmentEvaluation;
     }
 
@@ -201,8 +197,7 @@ public class InfoEnrolmentEditor extends InfoObject {
 	return infoSpecialSeasonEnrolmentEvaluation;
     }
 
-    public void setInfoSpecialSeasonEnrolmentEvaluation(
-	    InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation) {
+    public void setInfoSpecialSeasonEnrolmentEvaluation(InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation) {
 	this.infoSpecialSeasonEnrolmentEvaluation = infoSpecialSeasonEnrolmentEvaluation;
     }
 
@@ -210,8 +205,7 @@ public class InfoEnrolmentEditor extends InfoObject {
 	return infoEquivalenceEnrolmentEvaluation;
     }
 
-    public void setInfoEquivalenceEnrolmentEvaluation(
-	    InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation) {
+    public void setInfoEquivalenceEnrolmentEvaluation(InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation) {
 	this.infoEquivalenceEnrolmentEvaluation = infoEquivalenceEnrolmentEvaluation;
     }
 
@@ -233,19 +227,19 @@ public class InfoEnrolmentEditor extends InfoObject {
 	if (obj instanceof InfoEnrolmentEditor) {
 	    InfoEnrolmentEditor enrolment = (InfoEnrolmentEditor) obj;
 	    // these kind of tests are necessary for the new cloner
-                // philosophy
-	    resultado = ((this.getInfoStudentCurricularPlan() == null && enrolment
-		    .getInfoStudentCurricularPlan() == null) || (this.getInfoStudentCurricularPlan() != null
-		    && enrolment.getInfoStudentCurricularPlan() != null && this
-		    .getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan())))
+	    // philosophy
+	    resultado = ((this.getInfoStudentCurricularPlan() == null && enrolment.getInfoStudentCurricularPlan() == null) || (this
+		    .getInfoStudentCurricularPlan() != null
+		    && enrolment.getInfoStudentCurricularPlan() != null && this.getInfoStudentCurricularPlan().equals(
+		    enrolment.getInfoStudentCurricularPlan())))
 		    && ((this.getInfoCurricularCourse() == null && enrolment.getInfoCurricularCourse() == null) || (this
 			    .getInfoCurricularCourse() != null
-			    && enrolment.getInfoCurricularCourse() != null && this
-			    .getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse())))
+			    && enrolment.getInfoCurricularCourse() != null && this.getInfoCurricularCourse().equals(
+			    enrolment.getInfoCurricularCourse())))
 		    && ((this.getInfoExecutionPeriod() == null && enrolment.getInfoExecutionPeriod() == null) || (this
 			    .getInfoExecutionPeriod() != null
-			    && enrolment.getInfoExecutionPeriod() != null && this
-			    .getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod())));
+			    && enrolment.getInfoExecutionPeriod() != null && this.getInfoExecutionPeriod().equals(
+			    enrolment.getInfoExecutionPeriod())));
 	}
 	return resultado;
     }

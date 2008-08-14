@@ -20,69 +20,64 @@ public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
 
     private DomainReference<ExecutionSemester> executionPeriodReference;
 
-    public CurricularCourseStudentsByExecutionPeriodGroup(CurricularCourse curricularCourse,
-            ExecutionSemester executionSemester) {
-        this.curricularCourseReference = new DomainReference<CurricularCourse>(curricularCourse);
-        this.executionPeriodReference = new DomainReference<ExecutionSemester>(executionSemester);
+    public CurricularCourseStudentsByExecutionPeriodGroup(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
+	this.curricularCourseReference = new DomainReference<CurricularCourse>(curricularCourse);
+	this.executionPeriodReference = new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public CurricularCourse getCurricularCourse() {
-        return this.curricularCourseReference.getObject();
+	return this.curricularCourseReference.getObject();
     }
 
     public ExecutionSemester getExecutionPeriod() {
-        return this.executionPeriodReference.getObject();
+	return this.executionPeriodReference.getObject();
     }
 
     @Override
     public Set<Person> getElements() {
-        Set<Person> elements = super.buildSet();
-        List<Enrolment> enrolments = getCurricularCourse().getEnrolmentsByExecutionPeriod(
-                getExecutionPeriod());
+	Set<Person> elements = super.buildSet();
+	List<Enrolment> enrolments = getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod());
 
-        for (Enrolment enrolment : enrolments) {
-            elements.add(enrolment.getStudentCurricularPlan().getRegistration().getPerson());
-        }
+	for (Enrolment enrolment : enrolments) {
+	    elements.add(enrolment.getStudentCurricularPlan().getRegistration().getPerson());
+	}
 
-        return super.freezeSet(elements);
+	return super.freezeSet(elements);
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] {
-                new IdOperator(getCurricularCourse()),
-                new IdOperator(getExecutionPeriod())
-        };
+	return new Argument[] { new IdOperator(getCurricularCourse()), new IdOperator(getExecutionPeriod()) };
     }
 
     public static class Builder implements GroupBuilder {
 
-        public Group build(Object[] arguments) {
-            CurricularCourse course;
-            ExecutionSemester period;
+	public Group build(Object[] arguments) {
+	    CurricularCourse course;
+	    ExecutionSemester period;
 
-            try {
-                course = (CurricularCourse) arguments[0];
-            } catch (ClassCastException e) {
-                throw new WrongTypeOfArgumentException(0, CurricularCourse.class, arguments[0].getClass());
-            }
-            
-            try {
-                period = (ExecutionSemester) arguments[1];
-            } catch (ClassCastException e) {
-                throw new WrongTypeOfArgumentException(1, ExecutionSemester.class, arguments[1].getClass());
-            }
-            
-            return new CurricularCourseStudentsByExecutionPeriodGroup(course, period);
-        }
+	    try {
+		course = (CurricularCourse) arguments[0];
+	    } catch (ClassCastException e) {
+		throw new WrongTypeOfArgumentException(0, CurricularCourse.class, arguments[0].getClass());
+	    }
 
-        public int getMinArguments() {
-            return 2;
-        }
+	    try {
+		period = (ExecutionSemester) arguments[1];
+	    } catch (ClassCastException e) {
+		throw new WrongTypeOfArgumentException(1, ExecutionSemester.class, arguments[1].getClass());
+	    }
 
-        public int getMaxArguments() {
-            return 2;
-        }
-        
+	    return new CurricularCourseStudentsByExecutionPeriodGroup(course, period);
+	}
+
+	public int getMinArguments() {
+	    return 2;
+	}
+
+	public int getMaxArguments() {
+	    return 2;
+	}
+
     }
 }

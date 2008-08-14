@@ -26,16 +26,15 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
     }
 
     /**
-         * Checks if the Master Degree Registration has finished his scholar
-         * part. <br/> All his credits are added and compared to the ones
-         * required by his Degree Curricular Plan.
-         * 
-         * @param The
-         *                Registration's Curricular Plan
-         * @return A boolean indicating if he has fineshed it or not.
-         */
-    public boolean checkEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
-	    {
+     * Checks if the Master Degree Registration has finished his scholar part.
+     * <br/> All his credits are added and compared to the ones required by his
+     * Degree Curricular Plan.
+     * 
+     * @param The
+     *            Registration's Curricular Plan
+     * @return A boolean indicating if he has fineshed it or not.
+     */
+    public boolean checkEndOfScholarship(StudentCurricularPlan studentCurricularPlan) {
 	double studentCredits = 0;
 
 	DegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
@@ -63,8 +62,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 	return true;
     }
 
-    public Date dateOfEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
-	    {
+    public Date dateOfEndOfScholarship(StudentCurricularPlan studentCurricularPlan) {
 
 	Date date = null;
 	InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;

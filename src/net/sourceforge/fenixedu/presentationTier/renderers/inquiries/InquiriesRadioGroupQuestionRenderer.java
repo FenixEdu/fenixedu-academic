@@ -51,7 +51,7 @@ public class InquiriesRadioGroupQuestionRenderer extends InputRenderer {
 			button.setChecked(true);
 		    }
 		}
-		
+
 		return group;
 	    }
 

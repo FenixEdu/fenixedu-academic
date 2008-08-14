@@ -19,80 +19,80 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjecti
 public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
 
     public StringBuilder render(String context, LessonSlot lessonSlot) {
-	
-        StringBuilder strBuffer = new StringBuilder();        
-        InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
-        if (showOccupation instanceof InfoLesson) {
+	StringBuilder strBuffer = new StringBuilder();
+	InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
-            InfoLesson lesson = (InfoLesson) showOccupation;
+	if (showOccupation instanceof InfoLesson) {
 
-            InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            
+	    InfoLesson lesson = (InfoLesson) showOccupation;
+
+	    InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+
 	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            if (site.isPublic()) {
+	    if (site.isPublic()) {
 		strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 	    } else {
 		strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 	    }
 	    strBuffer.append("<a href=\"").append(context);
-	    strBuffer.append(site.getReversePath());	    
-	    strBuffer.append("\">");	    
+	    strBuffer.append(site.getReversePath());
+	    strBuffer.append("\">");
 	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
-	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(
+		    ")&nbsp;");
 
-            if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
-                strBuffer.append("&nbsp;&nbsp;[Q]");
-            }
+	    if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
+		strBuffer.append("&nbsp;&nbsp;[Q]");
+	    }
 
-        } else if (showOccupation instanceof InfoLessonInstance) {
-            
-            InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+	} else if (showOccupation instanceof InfoLessonInstance) {
 
-            InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();            
+	    InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+
+	    InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
 	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            if (site.isPublic()) {
+	    if (site.isPublic()) {
 		strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 	    } else {
 		strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 	    }
 	    strBuffer.append("<a href=\"").append(context);
-	    strBuffer.append(site.getReversePath());	    
-	    strBuffer.append("\">");	    
+	    strBuffer.append(site.getReversePath());
+	    strBuffer.append("\">");
 	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
-	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
-           
-                        
-        } else if (showOccupation instanceof InfoExam) {
-            InfoExam infoExam = (InfoExam) showOccupation;
-            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam
-                        .getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append("ª época");
-            
-        } else if (showOccupation instanceof InfoWrittenTest) {
-            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = (InfoExecutionCourse) infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoWrittenTest.getDescription());
-        }
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(
+		    ")&nbsp;");
 
-        return strBuffer;
+	} else if (showOccupation instanceof InfoExam) {
+	    InfoExam infoExam = (InfoExam) showOccupation;
+	    for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
+		InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam.getAssociatedExecutionCourse().get(iterEC);
+		if (iterEC != 0) {
+		    strBuffer.append(", ");
+		}
+		strBuffer.append(infoEC.getSigla());
+	    }
+	    strBuffer.append(" - ");
+	    strBuffer.append(infoExam.getSeason().getSeason());
+	    strBuffer.append("ª época");
+
+	} else if (showOccupation instanceof InfoWrittenTest) {
+	    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
+	    for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
+		InfoExecutionCourse infoEC = (InfoExecutionCourse) infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
+		if (iterEC != 0) {
+		    strBuffer.append(", ");
+		}
+		strBuffer.append(infoEC.getSigla());
+	    }
+	    strBuffer.append(" - ");
+	    strBuffer.append(infoWrittenTest.getDescription());
+	}
+
+	return strBuffer;
     }
 
 }

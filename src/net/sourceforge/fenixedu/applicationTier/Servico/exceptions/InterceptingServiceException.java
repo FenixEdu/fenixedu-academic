@@ -17,11 +17,11 @@ public class InterceptingServiceException extends FenixServiceException {
     }
 
     public InterceptingServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public InterceptingServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
 }

@@ -10,19 +10,20 @@ import net.sourceforge.fenixedu.domain.Degree;
  */
 public class CourseOfTheExpectedDegree extends Service {
 
-	public Boolean run(Integer curricularCourseCode, String degreeCode) throws FenixServiceException {
-		return Boolean.valueOf(CurricularCourseDegree(curricularCourseCode, degreeCode) && CurricularCourseNotBasic(curricularCourseCode));
-	}
+    public Boolean run(Integer curricularCourseCode, String degreeCode) throws FenixServiceException {
+	return Boolean.valueOf(CurricularCourseDegree(curricularCourseCode, degreeCode)
+		&& CurricularCourseNotBasic(curricularCourseCode));
+    }
 
-	private boolean CurricularCourseDegree(Integer curricularCourseCode, String degreeCode)  {
-		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-		Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
-		return degree.getSigla().equals(degreeCode);
-	}
+    private boolean CurricularCourseDegree(Integer curricularCourseCode, String degreeCode) {
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+	Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
+	return degree.getSigla().equals(degreeCode);
+    }
 
-	private boolean CurricularCourseNotBasic(Integer curricularCourseCode) {
-		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-		return curricularCourse.getBasic() == Boolean.FALSE;
-	}
+    private boolean CurricularCourseNotBasic(Integer curricularCourseCode) {
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+	return curricularCourse.getBasic() == Boolean.FALSE;
+    }
 
 }

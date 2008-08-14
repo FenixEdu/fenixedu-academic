@@ -22,7 +22,7 @@ public class CoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -31,6 +31,6 @@ public class CoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.COORDINATOR;
+	return RoleType.COORDINATOR;
     }
 }

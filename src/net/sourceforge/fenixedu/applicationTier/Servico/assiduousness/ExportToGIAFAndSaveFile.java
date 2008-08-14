@@ -15,13 +15,12 @@ import org.apache.struts.action.ActionMessage;
 
 public class ExportToGIAFAndSaveFile extends Service {
 
-    public ActionMessage run(ClosedMonth closedMonth, String fileName,
-	    ClosedMonthDocumentType closedMonthDocumentType, String file) throws FileNotFoundException {
+    public ActionMessage run(ClosedMonth closedMonth, String fileName, ClosedMonthDocumentType closedMonthDocumentType,
+	    String file) throws FileNotFoundException {
 
 	ByteArrayInputStream inputStream = new ByteArrayInputStream(file.getBytes());
-	ClosedMonthDocument closedMonthDocument = closedMonth.addFile(inputStream, fileName,
-		closedMonthDocumentType);
-		GiafInterface giafInterface = new GiafInterface();
+	ClosedMonthDocument closedMonthDocument = closedMonth.addFile(inputStream, fileName, closedMonthDocumentType);
+	GiafInterface giafInterface = new GiafInterface();
 	try {
 	    giafInterface.exportToGIAF(file);
 	} catch (SQLException e) {

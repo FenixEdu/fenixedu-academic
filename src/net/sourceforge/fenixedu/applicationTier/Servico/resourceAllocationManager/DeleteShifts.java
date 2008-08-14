@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteShifts extends Service {
 
-    public void run(final List<Integer> shiftOIDs) throws FenixServiceException{
+    public void run(final List<Integer> shiftOIDs) throws FenixServiceException {
 	final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
 	for (final Integer shiftID : shiftOIDs) {

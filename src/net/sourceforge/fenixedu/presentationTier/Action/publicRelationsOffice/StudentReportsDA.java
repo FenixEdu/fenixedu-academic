@@ -19,13 +19,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 @Mapping(path = "/studentReports", module = "publicRelations")
-@Forwards( {
-	@Forward(name = "search", path = "publicRelationsOffice-studentReportsSearch")
-})
+@Forwards( { @Forward(name = "search", path = "publicRelationsOffice-studentReportsSearch") })
 public class StudentReportsDA extends FenixDispatchAction {
 
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	StudentReportPredicate studentReportPredicate = (StudentReportPredicate) getRenderedObject();
 	if (studentReportPredicate == null) {
 	    studentReportPredicate = new StudentReportPredicate();
@@ -34,8 +32,8 @@ public class StudentReportsDA extends FenixDispatchAction {
 	return mapping.findForward("search");
     }
 
-    public ActionForward download(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward download(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	final String executionYearIdString = request.getParameter("executionYearId");
 	final Integer executionYearId = Integer.valueOf(executionYearIdString);
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
@@ -61,7 +59,7 @@ public class StudentReportsDA extends FenixDispatchAction {
 	response.setHeader("Content-disposition", "attachment; filename=listagem.xls");
 
 	final ServletOutputStream writer = response.getOutputStream();
-	spreadsheet.exportToXLSSheet(writer);	
+	spreadsheet.exportToXLSSheet(writer);
 	writer.flush();
 	response.flushBuffer();
 

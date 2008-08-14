@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoProfessionalCareer extends InfoCareer {
     private String entity;
@@ -22,14 +22,14 @@ public class InfoProfessionalCareer extends InfoCareer {
      *  
      */
     public InfoProfessionalCareer() {
-        setCareerType(CareerType.PROFESSIONAL);
+	setCareerType(CareerType.PROFESSIONAL);
     }
 
     /**
      * @return Returns the entity.
      */
     public String getEntity() {
-        return entity;
+	return entity;
     }
 
     /**
@@ -37,14 +37,14 @@ public class InfoProfessionalCareer extends InfoCareer {
      *            The entity to set.
      */
     public void setEntity(String entity) {
-        this.entity = entity;
+	this.entity = entity;
     }
 
     /**
      * @return Returns the function.
      */
     public String getFunction() {
-        return function;
+	return function;
     }
 
     /**
@@ -52,30 +52,32 @@ public class InfoProfessionalCareer extends InfoCareer {
      *            The function to set.
      */
     public void setFunction(String function) {
-        this.function = function;
+	this.function = function;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain(Dominio.teacher.Career)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain
+     * (Dominio.teacher.Career)
      */
     public void copyFromDomain(ProfessionalCareer professionalCareer) {
-        super.copyFromDomain(professionalCareer);
-        if (professionalCareer != null) {
-            setEntity(professionalCareer.getEntity());
-            setFunction(professionalCareer.getFunction());
-			setInfoTeacher(InfoTeacher.newInfoFromDomain(professionalCareer.getTeacher()));
-        }
+	super.copyFromDomain(professionalCareer);
+	if (professionalCareer != null) {
+	    setEntity(professionalCareer.getEntity());
+	    setFunction(professionalCareer.getFunction());
+	    setInfoTeacher(InfoTeacher.newInfoFromDomain(professionalCareer.getTeacher()));
+	}
     }
 
     public static InfoProfessionalCareer newInfoFromDomain(ProfessionalCareer professionalCareer) {
-        InfoProfessionalCareer infoProfessionalCareer = null;
-        if (professionalCareer != null) {
-            infoProfessionalCareer = new InfoProfessionalCareer();
-            infoProfessionalCareer.copyFromDomain(professionalCareer);
-        }
+	InfoProfessionalCareer infoProfessionalCareer = null;
+	if (professionalCareer != null) {
+	    infoProfessionalCareer = new InfoProfessionalCareer();
+	    infoProfessionalCareer.copyFromDomain(professionalCareer);
+	}
 
-        return infoProfessionalCareer;
+	return infoProfessionalCareer;
     }
 }

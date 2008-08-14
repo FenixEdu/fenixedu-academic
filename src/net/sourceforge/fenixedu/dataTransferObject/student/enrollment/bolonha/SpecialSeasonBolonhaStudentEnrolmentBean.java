@@ -10,21 +10,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SpecialSeasonBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
-    
+
     public SpecialSeasonBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
-	super(studentCurricularPlan, executionSemester, 
-		new SpecialSeasonStudentCurriculumGroupBean(studentCurricularPlan.getRoot(), executionSemester), CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT);
+	super(studentCurricularPlan, executionSemester, new SpecialSeasonStudentCurriculumGroupBean(studentCurricularPlan
+		.getRoot(), executionSemester), CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT);
     }
-    
+
     @Override
     public Converter getDegreeModulesToEvaluateConverter() {
-        return new CurriculumModuleEnroledWrapperConverter();
+	return new CurriculumModuleEnroledWrapperConverter();
     }
 
     public String getFuncionalityTitle() {
 	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 	return resourceBundle.getString("label.special.season.enrolment");
     }
-    
+
 }

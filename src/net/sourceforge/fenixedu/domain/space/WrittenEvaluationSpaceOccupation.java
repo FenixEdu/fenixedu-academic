@@ -19,7 +19,9 @@ import org.joda.time.YearMonthDay;
 
 public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccupation_Base {
 
-    // @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
+    // @Checked(
+    // "SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations"
+    // )
     public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace) {
 
 	super();
@@ -33,7 +35,9 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 	setResource(allocatableSpace);
     }
 
-    // @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
+    // @Checked(
+    // "SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations"
+    // )
     public void edit(WrittenEvaluation writtenEvaluation) {
 
 	if (hasWrittenEvaluations(writtenEvaluation)) {

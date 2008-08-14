@@ -16,24 +16,23 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class ReadExecutionCoursesByTeacherResponsibility extends Service {
 
-    public List run(Integer teacherNumber) throws FenixServiceException{
+    public List run(Integer teacherNumber) throws FenixServiceException {
 
-        final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-       
-        Teacher teacher = Teacher.readByNumber(teacherNumber);        
-        
-        final List<Professorship> responsibilities = teacher.responsibleFors();
-        
-        if (responsibilities != null) {
-            for (final Professorship professorship : responsibilities) {
-                infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(professorship
-                        .getExecutionCourse()));
-            }
-        }
-        return infoExecutionCourses;
+	final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
+
+	Teacher teacher = Teacher.readByNumber(teacherNumber);
+
+	final List<Professorship> responsibilities = teacher.responsibleFors();
+
+	if (responsibilities != null) {
+	    for (final Professorship professorship : responsibilities) {
+		infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(professorship.getExecutionCourse()));
+	    }
+	}
+	return infoExecutionCourses;
     }
 }

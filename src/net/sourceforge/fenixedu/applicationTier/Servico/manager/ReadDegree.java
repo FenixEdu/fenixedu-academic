@@ -15,16 +15,17 @@ public class ReadDegree extends Service {
 
     /**
      * Executes the service. Returns the current infodegree.
-     * @throws ExcepcaoPersistencia 
+     * 
+     * @throws ExcepcaoPersistencia
      */
-    public InfoDegree run(Integer idInternal) throws FenixServiceException{
-		final Degree degree = rootDomainObject.readDegreeByOID(idInternal);
+    public InfoDegree run(Integer idInternal) throws FenixServiceException {
+	final Degree degree = rootDomainObject.readDegreeByOID(idInternal);
 
-		if (degree == null) {
-            throw new NonExistingServiceException();
-        }
+	if (degree == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        return InfoDegree.newInfoFromDomain(degree);
+	return InfoDegree.newInfoFromDomain(degree);
     }
 
 }

@@ -11,10 +11,9 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 31, 2006,4:09:13 PM
  * 
  */
@@ -37,12 +36,12 @@ public class AnnouncementDTO {
     private String place;
     private String visible;
     private String id;
-    
+
     public AnnouncementDTO() {
     }
 
     public AnnouncementDTO(final Announcement announcement, final Language language) {
-	
+
 	setCreationDate(getFormattedDate(announcement.getCreationDate()));
 	setLastModification(getFormattedDate(announcement.getLastModification()));
 
@@ -64,133 +63,136 @@ public class AnnouncementDTO {
 	setVisible(announcement.getVisible().toString());
 	setId(announcement.getIdInternal().toString());
     }
-    
+
     private String getFormattedDate(final DateTime dateTime) {
 	return dateTime == null ? null : dateTime.toString(DATE_TIME_FORMAT);
     }
-    
+
     private String getContentFrom(final MultiLanguageString multiLanguageString, final Language language) {
-	if (multiLanguageString == null) { return null;	}
-	return multiLanguageString.hasLanguage(language) ? multiLanguageString.getContent(language) : multiLanguageString.getContent();
+	if (multiLanguageString == null) {
+	    return null;
+	}
+	return multiLanguageString.hasLanguage(language) ? multiLanguageString.getContent(language) : multiLanguageString
+		.getContent();
     }
 
     public String getId() {
-        return id;
+	return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+	this.id = id;
     }
 
     public String getAuthor() {
-        return author;
+	return author;
     }
 
     public void setAuthor(String author) {
-        this.author = author;
+	this.author = author;
     }
 
     public String getAuthorEmail() {
-        return authorEmail;
+	return authorEmail;
     }
 
     public void setAuthorEmail(String authorEmail) {
-        this.authorEmail = authorEmail;
+	this.authorEmail = authorEmail;
     }
 
     public String getBody() {
-        return body;
+	return body;
     }
 
     public void setBody(String body) {
-        this.body = body;
+	this.body = body;
     }
 
     public String getCreationDate() {
-        return creationDate;
+	return creationDate;
     }
 
     public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+	this.creationDate = creationDate;
     }
 
     public String getExcerpt() {
-        return excerpt;
+	return excerpt;
     }
 
     public void setExcerpt(String excerpt) {
-        this.excerpt = excerpt;
+	this.excerpt = excerpt;
     }
 
     public String getKeywords() {
-        return keywords;
+	return keywords;
     }
 
     public void setKeywords(String keywords) {
-        this.keywords = keywords;
+	this.keywords = keywords;
     }
 
     public String getLastModification() {
-        return lastModification;
+	return lastModification;
     }
 
     public void setLastModification(String lastModification) {
-        this.lastModification = lastModification;
+	this.lastModification = lastModification;
     }
 
     public String getPlace() {
-        return place;
+	return place;
     }
 
     public void setPlace(String place) {
-        this.place = place;
+	this.place = place;
     }
 
     public String getPublicationBegin() {
-        return publicationBegin;
+	return publicationBegin;
     }
 
     public void setPublicationBegin(String publicationBegin) {
-        this.publicationBegin = publicationBegin;
+	this.publicationBegin = publicationBegin;
     }
 
     public String getPublicationEnd() {
-        return publicationEnd;
+	return publicationEnd;
     }
 
     public void setPublicationEnd(String publicationEnd) {
-        this.publicationEnd = publicationEnd;
+	this.publicationEnd = publicationEnd;
     }
 
     public String getReferedSubjectBegin() {
-        return referedSubjectBegin;
+	return referedSubjectBegin;
     }
 
     public void setReferedSubjectBegin(String referedSubjectBegin) {
-        this.referedSubjectBegin = referedSubjectBegin;
+	this.referedSubjectBegin = referedSubjectBegin;
     }
 
     public String getReferedSubjectEnd() {
-        return referedSubjectEnd;
+	return referedSubjectEnd;
     }
 
     public void setReferedSubjectEnd(String referedSubjectEnd) {
-        this.referedSubjectEnd = referedSubjectEnd;
+	this.referedSubjectEnd = referedSubjectEnd;
     }
 
     public String getSubject() {
-        return subject;
+	return subject;
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+	this.subject = subject;
     }
 
     public String getVisible() {
-        return visible;
+	return visible;
     }
 
     public void setVisible(String visible) {
-        this.visible = visible;
+	this.visible = visible;
     }
 }

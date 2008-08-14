@@ -35,43 +35,43 @@ public class State extends FenixUtil {
     }
 
     public State(int validation) {
-        this.state = new Integer(validation);
+	this.state = new Integer(validation);
     }
 
     public State(Integer validation) {
-        this.state = validation;
+	this.state = validation;
     }
 
     public State(String validation) {
-        if (validation.equals(State.ACTIVE_STRING))
-            this.state = new Integer(State.ACTIVE);
-        if (validation.equals(State.INACTIVE_STRING))
-            this.state = new Integer(State.INACTIVE);
+	if (validation.equals(State.ACTIVE_STRING))
+	    this.state = new Integer(State.ACTIVE);
+	if (validation.equals(State.INACTIVE_STRING))
+	    this.state = new Integer(State.INACTIVE);
     }
 
     public boolean equals(Object o) {
-        if (o instanceof State) {
-            State aux = (State) o;
-            return this.state.equals(aux.getState());
-        }
+	if (o instanceof State) {
+	    State aux = (State) o;
+	    return this.state.equals(aux.getState());
+	}
 
-        return false;
+	return false;
 
     }
 
     public List toArrayList() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(State.ACTIVE_STRING, State.ACTIVE_STRING));
-        result.add(new LabelValueBean(State.INACTIVE_STRING, State.INACTIVE_STRING));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(State.ACTIVE_STRING, State.ACTIVE_STRING));
+	result.add(new LabelValueBean(State.INACTIVE_STRING, State.INACTIVE_STRING));
+	return result;
     }
 
     public String toString() {
-        if (state.intValue() == State.ACTIVE)
-            return State.ACTIVE_STRING;
-        if (state.intValue() == State.INACTIVE)
-            return State.INACTIVE_STRING;
-        return "ERROR!";
+	if (state.intValue() == State.ACTIVE)
+	    return State.ACTIVE_STRING;
+	if (state.intValue() == State.INACTIVE)
+	    return State.INACTIVE_STRING;
+	return "ERROR!";
     }
 
     /**
@@ -80,7 +80,7 @@ public class State extends FenixUtil {
      * @return Integer
      */
     public Integer getState() {
-        return state;
+	return state;
     }
 
     /**
@@ -90,7 +90,7 @@ public class State extends FenixUtil {
      *            The state to set
      */
     public void setState(Integer candidateSituationValidation) {
-        this.state = candidateSituationValidation;
+	this.state = candidateSituationValidation;
     }
 
 }

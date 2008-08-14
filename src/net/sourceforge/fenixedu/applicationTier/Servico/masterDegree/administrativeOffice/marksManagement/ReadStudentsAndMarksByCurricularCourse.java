@@ -33,14 +33,14 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ReadStudentsAndMarksByCurricularCourse extends Service {
 
-    public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString)
-	    throws FenixServiceException {
+    public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
 
 	List infoEnrolmentEvaluations = new ArrayList();
 	Date lastEvaluationDate = null;
 
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-	final List<Enrolment> enrolments = (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
+	final List<Enrolment> enrolments = (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString)
+		: curricularCourse.getEnrolments();
 
 	final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
 	for (final Enrolment enrolment : enrolments) {
@@ -48,11 +48,11 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 		enrolmentEvaluations.add(enrolment.getEvaluations().get(enrolment.getEvaluationsCount() - 1));
 	    }
 	}
-	
+
 	InfoTeacher infoTeacher = null;
 
 	if (!enrolmentEvaluations.isEmpty()) {
-	    
+
 	    final List<EnrolmentEvaluation> temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations,
 		    new Predicate() {
 			public boolean evaluate(Object arg0) {
@@ -72,7 +72,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 			    return enrolEval.getPersonResponsibleForGrade() != null;
 			}
 		    });
-	    
+
 	    if (enrolmentEvaluationsWithResponsiblePerson.size() > 0) {
 		Person person = ((EnrolmentEvaluation) enrolmentEvaluationsWithResponsiblePerson.get(0))
 			.getPersonResponsibleForGrade();
@@ -88,8 +88,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 			.newInfoFromDomain(elem);
 		infoEnrolmentEvaluation.setIdInternal(elem.getIdInternal());
 
-		infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem
-			.getEnrolment()));
+		infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem.getEnrolment()));
 		infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 	    }
 	}
@@ -102,8 +101,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 	if (((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getExamDate() == null) {
 	    lastEvaluationDate = getLastEvaluationDate(yearString, curricularCourse);
 	} else {
-	    lastEvaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0))
-		    .getExamDate();
+	    lastEvaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getExamDate();
 	}
 
 	InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
@@ -121,17 +119,16 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 	    ExecutionCourse executionCourse = (ExecutionCourse) iterator.next();
 	    if (executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(yearString)) {
 
-		if (executionCourse.getAssociatedEvaluations() != null
-			&& executionCourse.getAssociatedEvaluations().size() > 0) {
-		    List evaluationsWithoutFinal = (List) CollectionUtils.select(executionCourse
-			    .getAssociatedEvaluations(), new Predicate() {
-			public boolean evaluate(Object input) {
-			    // for now returns only exams
-			    if (input instanceof Exam)
-				return true;
-			    return false;
-			}
-		    });
+		if (executionCourse.getAssociatedEvaluations() != null && executionCourse.getAssociatedEvaluations().size() > 0) {
+		    List evaluationsWithoutFinal = (List) CollectionUtils.select(executionCourse.getAssociatedEvaluations(),
+			    new Predicate() {
+				public boolean evaluate(Object input) {
+				    // for now returns only exams
+				    if (input instanceof Exam)
+					return true;
+				    return false;
+				}
+			    });
 
 		    ComparatorChain comparatorChain = new ComparatorChain();
 		    comparatorChain.addComparator(new BeanComparator("day.time"));
@@ -139,8 +136,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 		    Collections.sort(evaluationsWithoutFinal, comparatorChain);
 
 		    if (evaluationsWithoutFinal.get(evaluationsWithoutFinal.size() - 1) instanceof Exam) {
-			Exam lastEvaluation = (Exam) (evaluationsWithoutFinal
-				.get(evaluationsWithoutFinal.size() - 1));
+			Exam lastEvaluation = (Exam) (evaluationsWithoutFinal.get(evaluationsWithoutFinal.size() - 1));
 			if (lastEvaluationDate != null) {
 			    if (lastEvaluationDate.before(lastEvaluation.getDay().getTime())) {
 				lastEvaluationDate = lastEvaluation.getDay().getTime();

@@ -27,23 +27,21 @@ import com.thoughtworks.xstream.XStream;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 31, 2006,3:31:26 PM
  * 
  */
 public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
-    public ActionForward getAnnouncements(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getAnnouncements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	String responseCode = SERVICE_NOT_EXECUTED;
 	String responseString = String.valueOf("");
 
-	if (HostAccessControl.isAllowed(this, request)
-		&& getRequestedAnnouncementBoard(request).getReaders() == null) {
+	if (HostAccessControl.isAllowed(this, request) && getRequestedAnnouncementBoard(request).getReaders() == null) {
 	    final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-	    responseString = buildInfo(buildDTOCollection((List<Announcement>) board
-		    .getVisibleAnnouncements(), request));
+	    responseString = buildInfo(buildDTOCollection((List<Announcement>) board.getVisibleAnnouncements(), request));
 	    responseCode = SUCCESS_CODE;
 
 	} else {
@@ -54,7 +52,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
 	return null;
     }
-    
+
     protected Integer getAnnouncementBoardId(final HttpServletRequest request) {
 	return getRequestParameterAsInteger(request, "announcementBoardId");
     }
@@ -66,10 +64,10 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
     protected String getRequestedLanguageString(HttpServletRequest request) {
 	return request.getParameter("language");
     }
-    
+
     protected Language getRequestedLanguage(HttpServletRequest request) {
 	final String language = getRequestedLanguageString(request);
-	return (language == null) ? Language.pt : Language.valueOf(getRequestedLanguageString(request)); 
+	return (language == null) ? Language.pt : Language.valueOf(getRequestedLanguageString(request));
     }
 
     private Integer getSelectedMonth(HttpServletRequest request) {
@@ -90,7 +88,8 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 	}
     };
 
-    private Collection<AnnouncementDTO> buildDTOCollection(final List<Announcement> announcements, final HttpServletRequest request) {
+    private Collection<AnnouncementDTO> buildDTOCollection(final List<Announcement> announcements,
+	    final HttpServletRequest request) {
 
 	Collections.sort(announcements, EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST);
 
@@ -100,9 +99,9 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
 	final Collection<AnnouncementDTO> result = new ArrayList<AnnouncementDTO>(announcements.size());
 	for (final Announcement announcement : announcements) {
-	    
+
 	    if (selectedYear == null || selectedMonth == null || (announcement.isActiveIn(selectedYear, selectedMonth))) {
-		
+
 		result.add(new AnnouncementDTO(announcement, language));
 	    }
 	}

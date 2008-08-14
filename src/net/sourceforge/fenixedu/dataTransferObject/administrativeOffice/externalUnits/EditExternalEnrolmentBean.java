@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 public class EditExternalEnrolmentBean extends CreateExternalEnrolmentBean {
 
     private DomainReference<ExternalEnrolment> externalEnrolment;
-    
+
     public EditExternalEnrolmentBean(final ExternalEnrolment externalEnrolment) {
 	setExternalCurricularCourse(externalEnrolment.getExternalCurricularCourse());
 	setExecutionPeriod(externalEnrolment.getExecutionPeriod());
@@ -16,7 +16,7 @@ public class EditExternalEnrolmentBean extends CreateExternalEnrolmentBean {
 	setExternalEnrolment(externalEnrolment);
 	setEctsCredits(externalEnrolment.getEctsCredits());
     }
-    
+
     public ExternalEnrolment getExternalEnrolment() {
 	return (this.externalEnrolment != null) ? this.externalEnrolment.getObject() : null;
     }
@@ -24,5 +24,5 @@ public class EditExternalEnrolmentBean extends CreateExternalEnrolmentBean {
     public void setExternalEnrolment(ExternalEnrolment externalEnrolment) {
 	this.externalEnrolment = (externalEnrolment != null) ? new DomainReference<ExternalEnrolment>(externalEnrolment) : null;
     }
-    
+
 }

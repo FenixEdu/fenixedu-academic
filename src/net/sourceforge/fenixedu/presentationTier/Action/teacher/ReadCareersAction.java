@@ -22,40 +22,40 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class ReadCareersAction extends FenixAction {
 
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
+     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+     * ActionMapping, org.apache.struts.action.ActionForm,
+     * javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        String string = request.getParameter("careerType");
-        CareerType careerType = null;
-        IUserView userView = UserView.getUser();
+	String string = request.getParameter("careerType");
+	CareerType careerType = null;
+	IUserView userView = UserView.getUser();
 
-        if ((string != null)) {
-            careerType = CareerType.valueOf(string);
+	if ((string != null)) {
+	    careerType = CareerType.valueOf(string);
 
-            Object[] args = { careerType, userView.getUtilizador() };
-            SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCareers", args);
+	    Object[] args = { careerType, userView.getUtilizador() };
+	    SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCareers", args);
 
-            request.setAttribute("siteView", siteView);
-        }
-        ActionForward actionForward = null;
+	    request.setAttribute("siteView", siteView);
+	}
+	ActionForward actionForward = null;
 
-        if (careerType.equals(CareerType.PROFESSIONAL)) {
-            actionForward = mapping.findForward("show-professional-form");
-        } else {
-            actionForward = mapping.findForward("show-teaching-form");
-        }
-        return actionForward;
+	if (careerType.equals(CareerType.PROFESSIONAL)) {
+	    actionForward = mapping.findForward("show-professional-form");
+	} else {
+	    actionForward = mapping.findForward("show-teaching-form");
+	}
+	return actionForward;
     }
 }

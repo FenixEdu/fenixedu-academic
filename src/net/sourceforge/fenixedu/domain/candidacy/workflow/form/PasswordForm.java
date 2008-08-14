@@ -27,8 +27,7 @@ public class PasswordForm extends Form {
 	super();
     }
 
-    private PasswordForm(final String username, final String storedOldPassword,
-	    final String documentIdNumber) {
+    private PasswordForm(final String username, final String storedOldPassword, final String documentIdNumber) {
 	this.username = username;
 	this.storedOldPassword = storedOldPassword;
 	this.documentIdNumber = documentIdNumber;
@@ -84,27 +83,20 @@ public class PasswordForm extends Form {
 
 	if (PasswordEncryptor.encryptPassword(this.newPassword).equals(this.storedOldPassword)
 		|| this.newPassword.equals(this.documentIdNumber)) {
-	    return Collections
-		    .singletonList(new LabelFormatter()
-			    .appendLabel(
-				    "error.candidacy.workflow.passwordForm.newPassword.cannot.be.equal.to.old.or.documentIdNumber",
-				    "application"));
+	    return Collections.singletonList(new LabelFormatter()
+		    .appendLabel("error.candidacy.workflow.passwordForm.newPassword.cannot.be.equal.to.old.or.documentIdNumber",
+			    "application"));
 	}
 
 	if (!this.newPassword.equals(this.confirmationPassword)) {
-	    return Collections
-		    .singletonList(new LabelFormatter()
-			    .appendLabel(
-				    "error.candidacy.workflow.passwordForm.newPassword.and.confirmationPassword.does.not.match",
-				    "application"));
+	    return Collections.singletonList(new LabelFormatter().appendLabel(
+		    "error.candidacy.workflow.passwordForm.newPassword.and.confirmationPassword.does.not.match", "application"));
 	}
 
 	if (!PasswordVerifierUtil.isValid(this.newPassword)) {
-	    return Collections
-		    .singletonList(new LabelFormatter()
-			    .appendLabel(
-				    "error.candidacy.workflow.passwordForm.newPassword.must.have.three.characters.of.classes.and.minLength",
-				    "application"));
+	    return Collections.singletonList(new LabelFormatter().appendLabel(
+		    "error.candidacy.workflow.passwordForm.newPassword.must.have.three.characters.of.classes.and.minLength",
+		    "application"));
 	}
 
 	return Collections.EMPTY_LIST;

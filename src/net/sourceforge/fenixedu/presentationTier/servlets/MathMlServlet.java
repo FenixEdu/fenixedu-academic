@@ -18,40 +18,37 @@ import org.apache.tools.ant.filters.StringInputStream;
 
 public class MathMlServlet extends HttpServlet {
 
-	RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		this.process(request, response);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	this.process(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	this.process(request, response);
+    }
+
+    protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	String oid = request.getParameter("oid");
+
+	if (oid == null) {
+	    return;
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		this.process(request, response);
-	}
+	int mathMlMaterialId = Integer.parseInt(oid);
 
-	protected void process(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String oid = request.getParameter("oid");
+	NewMathMlMaterial mathMlMaterial = (NewMathMlMaterial) rootDomainObject
+		.readNewPresentationMaterialByOID(mathMlMaterialId);
 
-		if (oid == null) {
-			return;
-		}
+	response.setContentType("image/gif");
 
-		int mathMlMaterialId = Integer.parseInt(oid);
+	InputStream inputStream = new StringInputStream(mathMlMaterial.getMathMl());
 
-		NewMathMlMaterial mathMlMaterial = (NewMathMlMaterial) rootDomainObject
-				.readNewPresentationMaterialByOID(mathMlMaterialId);
+	OutputStream outputStream = response.getOutputStream();
 
-		response.setContentType("image/gif");
-
-		InputStream inputStream = new StringInputStream(mathMlMaterial.getMathMl());
-
-		OutputStream outputStream = response.getOutputStream();
-
-		Converter.convert(inputStream, outputStream, Converter.TYPE_GIF, new NullLogger());
-	}
+	Converter.convert(inputStream, outputStream, Converter.TYPE_GIF, new NullLogger());
+    }
 
 }

@@ -9,25 +9,25 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Fernanda Quitério 5/Dez/2003
- *  
+ * 
  */
 public class ReadInfoTeacherByTeacherNumber extends Service {
 
-    public InfoTeacher run(Integer teacherNumber) throws FenixServiceException{
-        if (teacherNumber == null) {
-            throw new FenixServiceException("error.readInfoTeacherByTeacherNumber.nullTeacherNumber");
-        }
+    public InfoTeacher run(Integer teacherNumber) throws FenixServiceException {
+	if (teacherNumber == null) {
+	    throw new FenixServiceException("error.readInfoTeacherByTeacherNumber.nullTeacherNumber");
+	}
 
-        final Teacher teacher = Teacher.readByNumber(teacherNumber);
-        if (teacher == null) {
-            throw new NonExistingServiceException("error.readInfoTeacherByTeacherNumber.noTeacher");
-        }
-        
-        if (teacher.getProfessorshipsCount() == 0) {
-            throw new NonExistingServiceException("error.readInfoTeacherByTeacherNumber.noProfessorshipsOrNoResp");
-        }
+	final Teacher teacher = Teacher.readByNumber(teacherNumber);
+	if (teacher == null) {
+	    throw new NonExistingServiceException("error.readInfoTeacherByTeacherNumber.noTeacher");
+	}
 
-        return InfoTeacher.newInfoFromDomain(teacher);
+	if (teacher.getProfessorshipsCount() == 0) {
+	    throw new NonExistingServiceException("error.readInfoTeacherByTeacherNumber.noProfessorshipsOrNoResp");
+	}
+
+	return InfoTeacher.newInfoFromDomain(teacher);
     }
 
 }

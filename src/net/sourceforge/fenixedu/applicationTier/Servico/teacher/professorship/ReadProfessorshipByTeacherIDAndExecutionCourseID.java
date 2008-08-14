@@ -16,12 +16,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadProfessorshipByTeacherIDAndExecutionCourseID extends Service {
 
-    public Professorship run(final Integer teacherID, final Integer executionCourseID)
-            {
-        Teacher teacher = rootDomainObject.readTeacherByOID(
-                teacherID);
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
+    public Professorship run(final Integer teacherID, final Integer executionCourseID) {
+	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-        return teacher.getProfessorshipByExecutionCourse(executionCourse);
+	return teacher.getProfessorshipByExecutionCourse(executionCourse);
     }
 }

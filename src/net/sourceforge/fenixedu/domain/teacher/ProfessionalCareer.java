@@ -16,43 +16,43 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class ProfessionalCareer extends ProfessionalCareer_Base {
 
     public ProfessionalCareer() {
-        super();
-    }
-	
-    public ProfessionalCareer(Teacher teacher, InfoProfessionalCareer infoProfessionalCareer) {
-		if(teacher == null)
-			throw new DomainException("The teacher should not be null!");
-		setTeacher(teacher);
-		setBasicProperties(infoProfessionalCareer);
+	super();
     }
 
-	public void edit(InfoProfessionalCareer infoProfessionalCareer) {
-		
-		setBasicProperties(infoProfessionalCareer);
-	}
-	
-	private void setBasicProperties(InfoProfessionalCareer infoProfessionalCareer) {
-		this.setBeginYear(infoProfessionalCareer.getBeginYear());
-		this.setEndYear(infoProfessionalCareer.getEndYear());
-    	this.setEntity(infoProfessionalCareer.getEntity());
-    	this.setFunction(infoProfessionalCareer.getFunction());
-		
-	}
+    public ProfessionalCareer(Teacher teacher, InfoProfessionalCareer infoProfessionalCareer) {
+	if (teacher == null)
+	    throw new DomainException("The teacher should not be null!");
+	setTeacher(teacher);
+	setBasicProperties(infoProfessionalCareer);
+    }
+
+    public void edit(InfoProfessionalCareer infoProfessionalCareer) {
+
+	setBasicProperties(infoProfessionalCareer);
+    }
+
+    private void setBasicProperties(InfoProfessionalCareer infoProfessionalCareer) {
+	this.setBeginYear(infoProfessionalCareer.getBeginYear());
+	this.setEndYear(infoProfessionalCareer.getEndYear());
+	this.setEntity(infoProfessionalCareer.getEntity());
+	this.setFunction(infoProfessionalCareer.getFunction());
+
+    }
 
     @Override
     public void setFunction(String function) {
-        if (function != null && function.length() > 50) {
-            throw new DomainException("error.function.max.length.exceeded");
-        }
-        super.setFunction(function);
+	if (function != null && function.length() > 50) {
+	    throw new DomainException("error.function.max.length.exceeded");
+	}
+	super.setFunction(function);
     }
 
     @Override
     public void setEntity(String entity) {
-        if (entity != null && entity.length() > 50) {
-            throw new DomainException("error.entity.max.length.exceeded");
-        }
-        super.setEntity(entity);
+	if (entity != null && entity.length() > 50) {
+	    throw new DomainException("error.entity.max.length.exceeded");
+	}
+	super.setEntity(entity);
     }
 
 }

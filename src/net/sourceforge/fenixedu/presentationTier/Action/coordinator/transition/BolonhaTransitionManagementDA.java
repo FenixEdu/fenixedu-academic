@@ -12,9 +12,8 @@ public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionMana
 
     @Override
     protected List<Registration> getRegistrations(final HttpServletRequest request) {
-	return getStudent(request)
-		.getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(
-			getLoggedPerson(request));
+	return getStudent(request).getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(
+		getLoggedPerson(request));
 
     }
 

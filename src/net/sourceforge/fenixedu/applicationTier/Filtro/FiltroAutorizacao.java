@@ -20,10 +20,10 @@ public class FiltroAutorizacao extends Filtro {
     }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView requester = getRemoteUser(request);
-        if (requester == null || !(Authenticate.isValidUserView(requester))) {
-            throw new NotAuthorizedFilterException("Invalid user ID");
-        }
+	IUserView requester = getRemoteUser(request);
+	if (requester == null || !(Authenticate.isValidUserView(requester))) {
+	    throw new NotAuthorizedFilterException("Invalid user ID");
+	}
 
     }
 }

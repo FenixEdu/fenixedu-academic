@@ -30,7 +30,8 @@ import bibtex.dom.BibtexString;
  */
 public class Thesis extends Thesis_Base {
 
-	private static final String usedSchema="result.publication.presentation.Thesis";
+    private static final String usedSchema = "result.publication.presentation.Thesis";
+
     public enum ThesisType {
 	PhD_Thesis, Masters_Thesis, Graduation_Thesis;
     }
@@ -39,35 +40,35 @@ public class Thesis extends Thesis_Base {
 	super();
     }
 
-    public Thesis(Person participator, ThesisType thesisType, String title, MultiLanguageString keywords, String school, Integer year,
-	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
+    public Thesis(Person participator, ThesisType thesisType, String title, MultiLanguageString keywords, String school,
+	    Integer year, String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
 	this();
-	super.checkRequiredParameters(keywords,note);
+	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(thesisType, title, school, year);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(thesisType, title, keywords, school, year, address, note, numberPages, language, month,
-		yearBegin, monthBegin, url);
+	fillAllAttributes(thesisType, title, keywords, school, year, address, note, numberPages, language, month, yearBegin,
+		monthBegin, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
     public void setEditAll(ThesisType thesisType, String title, MultiLanguageString keywords, String school, Integer year,
-	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
-	    Integer yearBegin, Month monthBegin, String url) {
-    super.checkRequiredParameters(keywords,note);
-    checkRequiredParameters(thesisType, title, school, year);
-	fillAllAttributes(thesisType, title, keywords, school, year, address, note, numberPages, language, month,
-		yearBegin, monthBegin, url);
+	    String address, MultiLanguageString note, Integer numberPages, String language, Month month, Integer yearBegin,
+	    Month monthBegin, String url) {
+	super.checkRequiredParameters(keywords, note);
+	checkRequiredParameters(thesisType, title, school, year);
+	fillAllAttributes(thesisType, title, keywords, school, year, address, note, numberPages, language, month, yearBegin,
+		monthBegin, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(ThesisType thesisType, String title, MultiLanguageString keywords, String school, Integer year,
-	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
+    private void fillAllAttributes(ThesisType thesisType, String title, MultiLanguageString keywords, String school,
+	    Integer year, String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
-	if(yearBegin!=null && (year<yearBegin || (year.compareTo(yearBegin)==0 && month.ordinal()<monthBegin.ordinal()))) {
-		throw new DomainException("error.researcher.Thesis.dateBeginBeforeDateEnd");
+	if (yearBegin != null && (year < yearBegin || (year.compareTo(yearBegin) == 0 && month.ordinal() < monthBegin.ordinal()))) {
+	    throw new DomainException("error.researcher.Thesis.dateBeginBeforeDateEnd");
 	}
-    super.setTitle(title);
+	super.setTitle(title);
 	super.setThesisType(thesisType);
 	super.setOrganization(school);
 	super.setYear(year);
@@ -207,82 +208,82 @@ public class Thesis extends Thesis_Base {
     public void setCountry(Country country) {
 	throw new DomainException("error.researcher.Thesis.call", "setCountry");
     }
-    
+
     public String getSchema() {
-    	return usedSchema;
+	return usedSchema;
     }
-    
+
     @Override
     public boolean isDeletableByCurrentUser() {
-    	return !hasThesis() && super.isDeletableByCurrentUser();
+	return !hasThesis() && super.isDeletableByCurrentUser();
     }
-    
+
     @Override
     public boolean isEditableByCurrentUser() {
-    	return !hasThesis() && super.isEditableByCurrentUser();
+	return !hasThesis() && super.isEditableByCurrentUser();
     }
-    
+
     @Override
     public String getScientificArea() {
-    	String customArea = super.getScientificArea();
-    	
-    	if (customArea != null) {
-    		return customArea;
-    	}
+	String customArea = super.getScientificArea();
 
-    	CurricularCourse curricularCourse = getThesis().getEnrolment().getCurricularCourse();
-		ScientificArea scientificArea = curricularCourse.getScientificArea();
-    	if (scientificArea != null) {
-    		return scientificArea.getName();
-    	}
-        	
-    	return null;
+	if (customArea != null) {
+	    return customArea;
+	}
+
+	CurricularCourse curricularCourse = getThesis().getEnrolment().getCurricularCourse();
+	ScientificArea scientificArea = curricularCourse.getScientificArea();
+	if (scientificArea != null) {
+	    return scientificArea.getName();
+	}
+
+	return null;
     }
 
-	public boolean isLibraryDetailsConfirmed() {
-		Boolean confirmation = getLibraryConfirmation();
-		return confirmation != null && confirmation;
+    public boolean isLibraryDetailsConfirmed() {
+	Boolean confirmation = getLibraryConfirmation();
+	return confirmation != null && confirmation;
+    }
+
+    public boolean isLibraryDetailsExported() {
+	Boolean exported = getLibraryExported();
+	return exported != null && exported;
+    }
+
+    /**
+     * Verifies if this publication was the result of an internal thesis
+     * evaluation process, that is, if this thesis result is connected to the
+     * theses from the evaluation process.
+     * 
+     * @return <code>true</code> if the result is connected to a process thesis
+     */
+    public boolean isInternalThesis() {
+	return hasThesis() && getThesis().isFinalAndApprovedThesis();
+    }
+
+    public String getSubtitle() {
+	if (!hasThesis()) {
+	    return null;
+	} else {
+	    return getThesis().getFinalSubtitle().getContent(getThesis().getLanguage());
+	}
+    }
+
+    public String getAuthorsNames() {
+	StringBuilder builder = new StringBuilder();
+
+	for (Person person : getAuthors()) {
+	    if (builder.length() > 0) {
+		builder.append(", ");
+	    }
+
+	    builder.append(person.getName());
 	}
 
-	public boolean isLibraryDetailsExported() {
-		Boolean exported = getLibraryExported();
-		return exported != null && exported;
-	}
+	return builder.toString();
+    }
 
-	/**
-	 * Verifies if this publication was the result of an internal thesis evaluation process, that is,
-	 * if this thesis result is connected to the theses from the evaluation process.
-	 * 
-	 * @return <code>true</code> if the result is connected to a process thesis
-	 */
-	public boolean isInternalThesis() {
-		return hasThesis() && getThesis().isFinalAndApprovedThesis();
-	}
-
-	public String getSubtitle() {
-		if (! hasThesis()) {
-			return null;
-		}
-		else {
-			return getThesis().getFinalSubtitle().getContent(getThesis().getLanguage());
-		}
-	}
-	
-	public String getAuthorsNames() {
-		StringBuilder builder = new StringBuilder();
-		
-		for (Person person : getAuthors()) {
-			if (builder.length() > 0) {
-				builder.append(", ");
-			}
-			
-			builder.append(person.getName());
-		}
-		
-		return builder.toString();
-	}
-	
-	public YearMonthDay getYearMonth() {
-		return new YearMonthDay(getYear(), getMonth().getNumberOfMonth(), 1);
-	}
+    public YearMonthDay getYearMonth() {
+	return new YearMonthDay(getYear(), getMonth().getNumberOfMonth(), 1);
+    }
 }

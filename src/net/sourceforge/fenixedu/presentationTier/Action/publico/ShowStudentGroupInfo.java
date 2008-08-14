@@ -34,20 +34,18 @@ import org.apache.struts.action.ActionMapping;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 10/Set/2003, 18:36:21
+ *         Created at 10/Set/2003, 18:36:21
  * 
  */
 
 public class ShowStudentGroupInfo extends Action {
-    public String buildInfo(Integer executionCourseID, String username, String password,
-	    String requestURL) {
+    public String buildInfo(Integer executionCourseID, String username, String password, String requestURL) {
 	String result = new String();
 	if (username == null)
 	    return new String();
 
 	try {
-	    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-		    executionCourseID);
+	    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
 	    Collection<Grouping> groupings = executionCourse.getGroupings();
 
 	    if (executionCourse == null || groupings == null)
@@ -62,8 +60,7 @@ public class ShowStudentGroupInfo extends Action {
 			for (Attends searchingAttendsSet : studentGroup.getAttends()) {
 			    if (searchingAttendsSet.getRegistration().getPerson().hasUsername(username)) {
 				result = executionCourse.getNome() + "(";
-				Collection<CurricularCourse> curricularCourses = executionCourse
-					.getAssociatedCurricularCourses();
+				Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
 				boolean firstCurricularCourse = true;
 				for (CurricularCourse course : curricularCourses) {
 				    if (!firstCurricularCourse)
@@ -86,8 +83,7 @@ public class ShowStudentGroupInfo extends Action {
 				    result += "N/A\n";
 				}
 
-				result += studentGroup.getGroupNumber() + "\n"
-					+ studentGroup.getShift().getNome() + "\n";
+				result += studentGroup.getGroupNumber() + "\n" + studentGroup.getShift().getNome() + "\n";
 				for (Lesson lesson : studentGroup.getShift().getAssociatedLessons()) {
 				    result += lesson.getDiaSemana().toString() + " "
 					    + lesson.getInicio().get(Calendar.HOUR_OF_DAY);
@@ -111,8 +107,8 @@ public class ShowStudentGroupInfo extends Action {
 	return result;
     }
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException {
 
 	String result = new String();
 

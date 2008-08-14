@@ -131,7 +131,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     private void calculateMarksToSubmit(final HttpServletRequest request, final MarkSheetTeacherGradeSubmissionBean submissionBean) {
 	final Collection<MarkSheetTeacherMarkBean> marksToSubmit = new HashSet<MarkSheetTeacherMarkBean>();
 	final List<Student> studentsWithImpossibleEnrolments = new ArrayList<Student>();
-	
+
 	for (final Enrolment enrolment : getEnrolmentsNotInAnyMarkSheet(submissionBean)) {
 	    if (enrolment.isImpossible()) {
 		final Student student = enrolment.getStudentCurricularPlan().getRegistration().getStudent();
@@ -145,7 +145,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
 			    getEnrolmentEvaluationType(submissionBean, enrolment), getMark(attends).length() != 0));
 		}
 	    }
-	    
+
 	}
 
 	submissionBean.setMarksToSubmit(marksToSubmit);

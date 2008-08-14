@@ -25,23 +25,23 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class GenerateUserUID extends FenixDispatchAction {
 
-    public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("personBean", new PersonBean());
 	return mapping.findForward("prepareSearchPerson");
     }
 
-    public ActionForward searchPerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward searchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	PersonBean personBean = (PersonBean) getRenderedObject("personBeanID");
 	readAndSetResultPersons(request, personBean);
 	return mapping.findForward("prepareSearchPerson");
     }
 
-    public ActionForward generateUserUID(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward generateUserUID(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Person person = getPersonFromParameter(request);
 	Login login = person.getLoginIdentification();
@@ -64,8 +64,7 @@ public class GenerateUserUID extends FenixDispatchAction {
 	    addActionMessage(request, "error.person.without.login.identification");
 	}
 
-	PersonBean personBean = new PersonBean(person.getName(), person.getUsername(), person
-		.getDocumentIdNumber().toString());
+	PersonBean personBean = new PersonBean(person.getName(), person.getUsername(), person.getDocumentIdNumber().toString());
 	readAndSetResultPersons(request, personBean);
 
 	return mapping.findForward("prepareSearchPerson");
@@ -73,16 +72,15 @@ public class GenerateUserUID extends FenixDispatchAction {
 
     // Private Methods
 
-    private void readAndSetResultPersons(HttpServletRequest request, PersonBean personBean)
-	    throws FenixFilterException, FenixServiceException {
+    private void readAndSetResultPersons(HttpServletRequest request, PersonBean personBean) throws FenixFilterException,
+	    FenixServiceException {
 
-	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null,
-		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null,
-		null, null, null, null);
+	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null, personBean.getUsername(),
+		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson",
-		new Object[] { parameters, predicate });
+	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters,
+		predicate });
 
 	request.setAttribute("resultPersons", persons.getCollection());
 	request.setAttribute("personBean", personBean);
@@ -90,7 +88,7 @@ public class GenerateUserUID extends FenixDispatchAction {
 
     private Person getPersonFromParameter(HttpServletRequest request) {
 	String personIDString = request.getParameter("personID");
-	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject
-		.readPartyByOID(Integer.valueOf(personIDString)));
+	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
+		.valueOf(personIDString)));
     }
 }

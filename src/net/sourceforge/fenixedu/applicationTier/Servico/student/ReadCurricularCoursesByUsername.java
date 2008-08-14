@@ -21,32 +21,31 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
- * This service reads all the Curricular Courses for this student's curricular
- * plans, and not only the Curricular Courses currently in execution. For this
- * case use ReadDisciplinesByStudent Created at 3/Ago/2003, 21:37:27
+ *         This service reads all the Curricular Courses for this student's
+ *         curricular plans, and not only the Curricular Courses currently in
+ *         execution. For this case use ReadDisciplinesByStudent Created at
+ *         3/Ago/2003, 21:37:27
  * 
  */
 public class ReadCurricularCoursesByUsername extends Service {
 
-	public List run(String username) throws BDException, NonExistingServiceException {
-		List curricularCourses = new LinkedList();
+    public List run(String username) throws BDException, NonExistingServiceException {
+	List curricularCourses = new LinkedList();
 
-    	Registration registration = Registration.readByUsername(username);
-    	if(registration == null) {
-    		throw new NonExistingServiceException();
-    	}
-		List<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
-		for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
-			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
-			for (Iterator curricularCoursesIterator = studentCurricularPlan.getDegreeCurricularPlan()
-					.getCurricularCourses().iterator(); curricularCoursesIterator.hasNext();) {
-				CurricularCourse curricularCourse = (CurricularCourse) curricularCoursesIterator
-						.next();
-				curricularCourses.add(InfoCurricularCourse
-						.newInfoFromDomain(curricularCourse));
-			}
-		}
-
-		return curricularCourses;
+	Registration registration = Registration.readByUsername(username);
+	if (registration == null) {
+	    throw new NonExistingServiceException();
 	}
+	List<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
+	for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
+	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
+	    for (Iterator curricularCoursesIterator = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses()
+		    .iterator(); curricularCoursesIterator.hasNext();) {
+		CurricularCourse curricularCourse = (CurricularCourse) curricularCoursesIterator.next();
+		curricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+	    }
+	}
+
+	return curricularCourses;
+    }
 }

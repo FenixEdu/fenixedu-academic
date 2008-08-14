@@ -26,11 +26,10 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
 	super();
     }
 
-    public DfaRegistrationPR(DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount,
-	    Money fixedAmountPenalty) {
-	super.init(EntryType.REGISTRATION_FEE, EventType.DFA_REGISTRATION, startDate, endDate,
-		serviceAgreementTemplate, fixedAmount, fixedAmountPenalty);
+    public DfaRegistrationPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+	    Money fixedAmount, Money fixedAmountPenalty) {
+	super.init(EntryType.REGISTRATION_FEE, EventType.DFA_REGISTRATION, startDate, endDate, serviceAgreementTemplate,
+		fixedAmount, fixedAmountPenalty);
 
     }
 
@@ -58,14 +57,12 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
 
 	deactivate();
 
-	return new DfaRegistrationPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
-		fixedAmount, penaltyAmount);
+	return new DfaRegistrationPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount, penaltyAmount);
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    Event event, Account fromAccount, Account toAccount,
-	    AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	checkPreconditionsToProcess(event);
 	return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);
     }

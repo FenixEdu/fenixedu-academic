@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.State;
  * 
  * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
  * (jccm@rnl.ist.utl.pt)
- *  
+ * 
  */
 
 public class InfoCandidateSituation extends InfoObject {
@@ -30,31 +30,31 @@ public class InfoCandidateSituation extends InfoObject {
     private State validation = null;
 
     public InfoCandidateSituation() {
-        situation = null;
-        date = null;
-        remarks = null;
-        validation = null;
+	situation = null;
+	date = null;
+	remarks = null;
+	validation = null;
     }
 
     public InfoCandidateSituation(Date date, String remarks, String situation) {
-        setSituation(new SituationName(situation));
-        setDate(date);
-        setRemarks(remarks);
+	setSituation(new SituationName(situation));
+	setDate(date);
+	setRemarks(remarks);
     }
 
     public InfoCandidateSituation(CandidateSituation candidateSituation) {
-        setSituation(candidateSituation.getSituation());
-        setDate(candidateSituation.getDate());
-        setRemarks(candidateSituation.getRemarks());
+	setSituation(candidateSituation.getSituation());
+	setDate(candidateSituation.getDate());
+	setRemarks(candidateSituation.getRemarks());
     }
 
     public String toString() {
-        String result = "DataBean Situacao do Candidato:\n";
-        result += "\n  - Data : " + date;
-        result += "\n  - Observacoes : " + remarks;
-        result += "\n  - Situacao : " + situation;
+	String result = "DataBean Situacao do Candidato:\n";
+	result += "\n  - Data : " + date;
+	result += "\n  - Observacoes : " + remarks;
+	result += "\n  - Situacao : " + situation;
 
-        return result;
+	return result;
     }
 
     /**
@@ -63,7 +63,7 @@ public class InfoCandidateSituation extends InfoObject {
      * @return Date
      */
     public Date getDate() {
-        return date;
+	return date;
     }
 
     /**
@@ -72,11 +72,11 @@ public class InfoCandidateSituation extends InfoObject {
      * @return String
      */
     public String getRemarks() {
-        return remarks;
+	return remarks;
     }
 
     public SituationName getSituation() {
-        return situation;
+	return situation;
     }
 
     /**
@@ -86,7 +86,7 @@ public class InfoCandidateSituation extends InfoObject {
      *            The date to set
      */
     public void setDate(Date date) {
-        this.date = date;
+	this.date = date;
     }
 
     /**
@@ -96,7 +96,7 @@ public class InfoCandidateSituation extends InfoObject {
      *            The remarks to set
      */
     public void setRemarks(String remarks) {
-        this.remarks = remarks;
+	this.remarks = remarks;
     }
 
     /**
@@ -106,39 +106,39 @@ public class InfoCandidateSituation extends InfoObject {
      *            The situation to set
      */
     public void setSituation(SituationName situation) {
-        this.situation = situation;
+	this.situation = situation;
     }
 
     /**
      * @return
      */
     public State getValidation() {
-        return validation;
+	return validation;
     }
 
     /**
      * @param validation
      */
     public void setValidation(State validation) {
-        this.validation = validation;
+	this.validation = validation;
     }
 
     public void copyFromDomain(CandidateSituation candidateSituation) {
-        super.copyFromDomain(candidateSituation);
-        if (candidateSituation != null) {
-            setDate(candidateSituation.getDate());
-            setRemarks(candidateSituation.getRemarks());
-            setSituation(candidateSituation.getSituation());
-            setValidation(candidateSituation.getValidation());
-        }
+	super.copyFromDomain(candidateSituation);
+	if (candidateSituation != null) {
+	    setDate(candidateSituation.getDate());
+	    setRemarks(candidateSituation.getRemarks());
+	    setSituation(candidateSituation.getSituation());
+	    setValidation(candidateSituation.getValidation());
+	}
     }
 
     public static InfoCandidateSituation newInfoFromDomain(CandidateSituation candidateSituation) {
-        InfoCandidateSituation infoCandidateSituation = null;
-        if (candidateSituation != null) {
-            infoCandidateSituation = new InfoCandidateSituation();
-            infoCandidateSituation.copyFromDomain(candidateSituation);
-        }
-        return infoCandidateSituation;
+	InfoCandidateSituation infoCandidateSituation = null;
+	if (candidateSituation != null) {
+	    infoCandidateSituation = new InfoCandidateSituation();
+	    infoCandidateSituation.copyFromDomain(candidateSituation);
+	}
+	return infoCandidateSituation;
     }
 }

@@ -48,8 +48,8 @@ public class SetEmail extends Service {
     }
 
     public static boolean isAllowed(final String host, final String ip, final String password) {
-	return SetEmail.password != null && SetEmail.password.equals(password) &&
-		(allowedHosts.contains(host) || allowedHosts.contains(ip));
+	return SetEmail.password != null && SetEmail.password.equals(password)
+		&& (allowedHosts.contains(host) || allowedHosts.contains(ip));
     }
 
     private void set(final String userUId, final String email) throws FenixServiceException {
@@ -61,12 +61,12 @@ public class SetEmail extends Service {
 	if (person == null) {
 	    throw new UserDoesNotExistException();
 	}
-        final String newEmail = StringUtils.isEmpty(email) ? null : email; 
+	final String newEmail = StringUtils.isEmpty(email) ? null : email;
 	person.updateInstitutionalEmail(newEmail);
     }
 
     public void run(final String host, final String ip, final String password, final String userUId, final String email)
-    		throws FenixServiceException {
+	    throws FenixServiceException {
 	if (isAllowed(host, ip, password)) {
 	    set(userUId, email);
 	} else {

@@ -18,10 +18,10 @@ public class MetaDomainObjectPortalProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	List<MetaDomainObjectPortal> portals = new ArrayList<MetaDomainObjectPortal>();
-	
-	for(MetaDomainObject metaDomainObject : RootDomainObject.getInstance().getMetaDomainObjects()) {
-	    if(metaDomainObject.isPortalAvailable()) {
-		portals.add((MetaDomainObjectPortal)metaDomainObject.getAssociatedPortal());
+
+	for (MetaDomainObject metaDomainObject : RootDomainObject.getInstance().getMetaDomainObjects()) {
+	    if (metaDomainObject.isPortalAvailable()) {
+		portals.add((MetaDomainObjectPortal) metaDomainObject.getAssociatedPortal());
 	    }
 	}
 	return portals;

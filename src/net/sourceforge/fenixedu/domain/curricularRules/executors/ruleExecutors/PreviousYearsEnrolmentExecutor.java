@@ -479,10 +479,11 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	    // ((OptionalCurricularCourse) curricularCourse)
 	    // .getMinEctsCredits(enrolmentContext.getExecutionPeriod())
 	    // :
-	    // curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod());
+	    //curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod
+	    // ());
 	    // if
-                // (collectContext.hasCreditsToSpent(creditsRequiredToApprove))
-                // {
+	    // (collectContext.hasCreditsToSpent(creditsRequiredToApprove))
+	    // {
 	    // collectContext.useCredits(creditsRequiredToApprove);
 	    // iterator.remove();
 	    //

@@ -24,7 +24,7 @@ public class SearchActionMapping extends ActionMapping {
      * @return Returns the listAttribute.
      */
     public String getListAttribute() {
-        return this.listAttribute;
+	return this.listAttribute;
     }
 
     /**
@@ -32,14 +32,14 @@ public class SearchActionMapping extends ActionMapping {
      *            The listAttribute to set.
      */
     public void setListAttribute(String listAttribute) {
-        this.listAttribute = listAttribute;
+	this.listAttribute = listAttribute;
     }
 
     /**
      * @return Returns the objectAttribute.
      */
     public String getObjectAttribute() {
-        return this.objectAttribute;
+	return this.objectAttribute;
     }
 
     /**
@@ -47,14 +47,14 @@ public class SearchActionMapping extends ActionMapping {
      *            The objectAttribute to set.
      */
     public void setObjectAttribute(String objectAttribute) {
-        this.objectAttribute = objectAttribute;
+	this.objectAttribute = objectAttribute;
     }
 
     /**
      * @return Returns the serviceName.
      */
     public String getServiceName() {
-        return this.serviceName;
+	return this.serviceName;
     }
 
     /**
@@ -62,14 +62,14 @@ public class SearchActionMapping extends ActionMapping {
      *            The serviceName to set.
      */
     public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+	this.serviceName = serviceName;
     }
 
     /**
      * @return Returns the notFoundMessageKey.
      */
     public String getNotFoundMessageKey() {
-        return this.notFoundMessageKey;
+	return this.notFoundMessageKey;
     }
 
     /**
@@ -77,14 +77,14 @@ public class SearchActionMapping extends ActionMapping {
      *            The notFoundMessageKey to set.
      */
     public void setNotFoundMessageKey(String notFoundMessageKey) {
-        this.notFoundMessageKey = notFoundMessageKey;
+	this.notFoundMessageKey = notFoundMessageKey;
     }
 
     /**
      * @return Returns the defaultSortBy.
      */
     public String getDefaultSortBy() {
-        return this.defaultSortBy;
+	return this.defaultSortBy;
     }
 
     /**
@@ -92,6 +92,6 @@ public class SearchActionMapping extends ActionMapping {
      *            The defaultSortBy to set.
      */
     public void setDefaultSortBy(String defaultSortBy) {
-        this.defaultSortBy = defaultSortBy;
+	this.defaultSortBy = defaultSortBy;
     }
 }

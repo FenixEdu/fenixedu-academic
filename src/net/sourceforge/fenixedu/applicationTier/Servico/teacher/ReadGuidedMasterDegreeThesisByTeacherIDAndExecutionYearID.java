@@ -14,21 +14,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID extends Service {
 
-    public List<MasterDegreeThesisDataVersion> run(Integer teacherID, Integer executionYearID)
-            throws FenixServiceException {
-        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-        List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions;
+    public List<MasterDegreeThesisDataVersion> run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
+	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions;
 
-        if (executionYearID == null) {
-            masterDegreeThesisDataVersions = teacher.getAllGuidedMasterDegreeThesis();
-        } else {
-            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+	if (executionYearID == null) {
+	    masterDegreeThesisDataVersions = teacher.getAllGuidedMasterDegreeThesis();
+	} else {
+	    ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-            masterDegreeThesisDataVersions = teacher
-                    .getGuidedMasterDegreeThesisByExecutionYear(executionYear);
-        }
+	    masterDegreeThesisDataVersions = teacher.getGuidedMasterDegreeThesisByExecutionYear(executionYear);
+	}
 
-        return masterDegreeThesisDataVersions;
+	return masterDegreeThesisDataVersions;
 
     }
 }

@@ -19,23 +19,22 @@ public class InfoViewExam extends InfoObject {
     }
 
     public InfoViewExam(List infoViewExamsByDayAndShift) {
-        this.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShift);
+	this.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShift);
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof InfoViewExam) {
-            InfoViewExam infoViewExam = (InfoViewExam) obj;
-            return this.getInfoViewExamsByDayAndShift().size() == infoViewExam
-                            .getInfoViewExamsByDayAndShift().size();
-        }
-        return false;
+	if (obj instanceof InfoViewExam) {
+	    InfoViewExam infoViewExam = (InfoViewExam) obj;
+	    return this.getInfoViewExamsByDayAndShift().size() == infoViewExam.getInfoViewExamsByDayAndShift().size();
+	}
+	return false;
     }
 
     public List getInfoViewExamsByDayAndShift() {
-        return infoViewExamsByDayAndShift;
+	return infoViewExamsByDayAndShift;
     }
 
     public void setInfoViewExamsByDayAndShift(List list) {
-        infoViewExamsByDayAndShift = list;
+	infoViewExamsByDayAndShift = list;
     }
 }

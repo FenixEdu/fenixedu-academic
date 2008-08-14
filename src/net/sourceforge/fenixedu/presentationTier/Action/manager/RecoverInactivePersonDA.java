@@ -23,34 +23,34 @@ import org.apache.struts.action.ActionMapping;
 public class RecoverInactivePersonDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-    	return mapping.findForward("showSearchForm");
+	return mapping.findForward("showSearchForm");
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws FenixFilterException, FenixServiceException {
-    	final FindPersonFactory findPersonFactory = (FindPersonFactory) executeFactoryMethod(request);
-    	for (final Iterator<Person> personIterator = findPersonFactory.getPeople().iterator(); personIterator.hasNext(); ) {
-    		final Person person = personIterator.next();
-    		if (!person.getPersonRolesSet().isEmpty()) {
-    			personIterator.remove();
-    		}
-    	}
-    	request.setAttribute("findPersonFactory", findPersonFactory);
-    	return prepare(mapping, form, request, response);
+	    throws FenixFilterException, FenixServiceException {
+	final FindPersonFactory findPersonFactory = (FindPersonFactory) executeFactoryMethod(request);
+	for (final Iterator<Person> personIterator = findPersonFactory.getPeople().iterator(); personIterator.hasNext();) {
+	    final Person person = personIterator.next();
+	    if (!person.getPersonRolesSet().isEmpty()) {
+		personIterator.remove();
+	    }
+	}
+	request.setAttribute("findPersonFactory", findPersonFactory);
+	return prepare(mapping, form, request, response);
     }
 
     public ActionForward activate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixFilterException, FenixServiceException {
-    	final String personIDString = request.getParameter("personID");
-    	if (personIDString != null && StringUtils.isNumeric(personIDString)) {
-    		final Integer personID = Integer.valueOf(personIDString);
-    		final Person person = (Person) rootDomainObject.readPartyByOID(personID);
-    		final Set<Role> roles = new HashSet<Role>();
-    		roles.add(Role.getRoleByRoleType(RoleType.PERSON));
-    		final Object[] args = { person, roles };
-    		executeService(request, "SetPersonRoles", args);
-    	}
-    	return prepare(mapping, form, request, response);
+	    throws FenixFilterException, FenixServiceException {
+	final String personIDString = request.getParameter("personID");
+	if (personIDString != null && StringUtils.isNumeric(personIDString)) {
+	    final Integer personID = Integer.valueOf(personIDString);
+	    final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+	    final Set<Role> roles = new HashSet<Role>();
+	    roles.add(Role.getRoleByRoleType(RoleType.PERSON));
+	    final Object[] args = { person, roles };
+	    executeService(request, "SetPersonRoles", args);
+	}
+	return prepare(mapping, form, request, response);
     }
 
 }

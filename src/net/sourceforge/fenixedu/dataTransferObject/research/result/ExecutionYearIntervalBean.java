@@ -36,7 +36,7 @@ public class ExecutionYearIntervalBean extends ExecutionYearBean implements Seri
     public ExecutionYear getFinalExecutionYear() {
 	return this.finalExecutionYear.getObject();
     }
-    
+
     public ExecutionYear getFirstNonNullExecutionYear() {
 	return getFirstExecutionYear() != null ? getFirstExecutionYear() : ExecutionYear.readFirstExecutionYear();
     }
@@ -46,11 +46,11 @@ public class ExecutionYearIntervalBean extends ExecutionYearBean implements Seri
     }
 
     public ResultPublicationType getPublicationType() {
-        return publicationType;
+	return publicationType;
     }
 
     public void setPublicationType(ResultPublicationType publicationType) {
-        this.publicationType = publicationType;
+	this.publicationType = publicationType;
     }
-   
+
 }

@@ -4,10 +4,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 
 /**
  * @author jpvl
- *  
+ * 
  */
 public class InfoLessonWrapper implements Comparable {
-    //private InfoLesson infoLesson;
+    // private InfoLesson infoLesson;
     private InfoShowOccupation infoShowOccupation;
 
     private boolean locked;
@@ -22,19 +22,19 @@ public class InfoLessonWrapper implements Comparable {
     private boolean secondRowAlreadyAppended = false;
 
     public boolean isFirstRowAlreadyAppended() {
-        return firstRowAlreadyAppended;
+	return firstRowAlreadyAppended;
     }
 
     public void setFirstRowAlreadyAppended(boolean firstRowAlreadyAppended) {
-        this.firstRowAlreadyAppended = firstRowAlreadyAppended;
+	this.firstRowAlreadyAppended = firstRowAlreadyAppended;
     }
 
     public boolean isSecondRowAlreadyAppended() {
-        return secondRowAlreadyAppended;
+	return secondRowAlreadyAppended;
     }
 
     public void setSecondRowAlreadyAppended(boolean secondRowAlreadyAppended) {
-        this.secondRowAlreadyAppended = secondRowAlreadyAppended;
+	this.secondRowAlreadyAppended = secondRowAlreadyAppended;
     }
 
     /*
@@ -42,8 +42,8 @@ public class InfoLessonWrapper implements Comparable {
      * infoLesson; this.locked = false; }
      */
     public InfoLessonWrapper(InfoShowOccupation infoShowOccupation) {
-        this.infoShowOccupation = infoShowOccupation;
-        this.locked = false;
+	this.infoShowOccupation = infoShowOccupation;
+	this.locked = false;
     }
 
     /**
@@ -52,11 +52,11 @@ public class InfoLessonWrapper implements Comparable {
      * @return boolean
      */
     public boolean isLocked() {
-        return locked;
+	return locked;
     }
 
     public int getSlotIndex() {
-        return slotIndex;
+	return slotIndex;
     }
 
     /**
@@ -66,8 +66,8 @@ public class InfoLessonWrapper implements Comparable {
      *            The locked to set
      */
     public void setLocked(boolean locked, int slotIndex) {
-        this.locked = locked;
-        this.slotIndex = slotIndex;
+	this.locked = locked;
+	this.slotIndex = slotIndex;
     }
 
     /**
@@ -79,11 +79,11 @@ public class InfoLessonWrapper implements Comparable {
      * public InfoLesson getInfoLesson() { return infoLesson; }
      */
     public InfoShowOccupation getInfoShowOccupation() {
-        return infoShowOccupation;
+	return infoShowOccupation;
     }
 
     protected void setLessonSlot(LessonSlot lessonSlot) {
-        this.lessonSlot = lessonSlot;
+	this.lessonSlot = lessonSlot;
     }
 
     /**
@@ -92,36 +92,36 @@ public class InfoLessonWrapper implements Comparable {
      * @return LessonSlot
      */
     public LessonSlot getLessonSlot() {
-        return lessonSlot;
+	return lessonSlot;
     }
 
     public int getSpan() {
-        int startIndex = lessonSlot.getStartIndex();
-        int endIndex = lessonSlot.getEndIndex();
-        return endIndex - startIndex;
+	int startIndex = lessonSlot.getStartIndex();
+	int endIndex = lessonSlot.getEndIndex();
+	return endIndex - startIndex;
     }
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(Object toCompareWith) {
-        int compareResult = 0;
-        if (toCompareWith instanceof InfoLessonWrapper) {
-            InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) toCompareWith;
-            compareResult = infoLessonWrapper.getSpan() - getSpan();
-        }
-        return compareResult;
+	int compareResult = 0;
+	if (toCompareWith instanceof InfoLessonWrapper) {
+	    InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) toCompareWith;
+	    compareResult = infoLessonWrapper.getSpan() - getSpan();
+	}
+	return compareResult;
     }
 
     /**
      * @return Integer
      */
     public Integer getNumberOfCollisions() {
-        return numberOfCollisions;
+	return numberOfCollisions;
     }
 
     public void addCollision() {
-        this.numberOfCollisions = new Integer(this.numberOfCollisions.intValue() + 1);
+	this.numberOfCollisions = new Integer(this.numberOfCollisions.intValue() + 1);
     }
 
     /**
@@ -131,8 +131,8 @@ public class InfoLessonWrapper implements Comparable {
      *            The numberOfCollisions to set
      */
     public void setNumberOfCollisions(Integer numberOfCollisions) {
-        if (numberOfCollisions.intValue() > this.numberOfCollisions.intValue())
-            this.numberOfCollisions = numberOfCollisions;
+	if (numberOfCollisions.intValue() > this.numberOfCollisions.intValue())
+	    this.numberOfCollisions = numberOfCollisions;
     }
 
 }

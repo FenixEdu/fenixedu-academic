@@ -11,27 +11,27 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
 
     @Override
     protected void removePreviousFile(Thesis thesis) {
-        ThesisFile dissertation = thesis.getDissertation();
-        if (dissertation != null) {
-            if (AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
-        	dissertation.deleteWithoutStateCheck();
-            } else {
-        	dissertation.delete();
-            }
-        }
+	ThesisFile dissertation = thesis.getDissertation();
+	if (dissertation != null) {
+	    if (AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+		dissertation.deleteWithoutStateCheck();
+	    } else {
+		dissertation.delete();
+	    }
+	}
     }
 
     @Override
     protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language) {
-        if (title == null || subTitle == null) {
-            throw new DomainException("thesis.files.dissertation.title.required");
-        }
-        
-        file.setTitle(title);
-        file.setSubTitle(subTitle);
-        file.setLanguage(language);
-        
-        thesis.setDissertation(file);
+	if (title == null || subTitle == null) {
+	    throw new DomainException("thesis.files.dissertation.title.required");
+	}
+
+	file.setTitle(title);
+	file.setSubTitle(subTitle);
+	file.setLanguage(language);
+
+	thesis.setDissertation(file);
     }
 
 }

@@ -106,7 +106,7 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     public Person getPerson() {
 	return getRegistration().getPerson();
     }
-    
+
     public Student getStudent() {
 	return getRegistration().getStudent();
     }

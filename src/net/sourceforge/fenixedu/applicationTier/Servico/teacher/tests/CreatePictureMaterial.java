@@ -22,42 +22,40 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreatePictureMaterial extends Service {
 
-	public NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline,
-			File mainFile, String originalFilename, String displayName) throws FenixServiceException,
-			  DomainException, IOException {
+    public NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline, File mainFile,
+	    String originalFilename, String displayName) throws FenixServiceException, DomainException, IOException {
 
-		final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-		final VirtualPath filePath = getVirtualPath();
+	final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+	final VirtualPath filePath = getVirtualPath();
 
-		InputStream is = null;
-		final FileDescriptor fileDescriptor;
-		try {
-			is = new FileInputStream(mainFile);
-			fileDescriptor = fileManager.saveFile(filePath, originalFilename, false, teacher.getPerson()
-					.getName(), displayName == null ? originalFilename : displayName, is);
-		} catch (FileNotFoundException e) {
-			throw new FenixServiceException(e.getMessage());
-		} finally {
-			if (is != null) {
-				is.close();
-			}
-		}
-		final PictureMaterialFile pictureMaterialFile = new PictureMaterialFile(fileDescriptor
-				.getFilename(), displayName, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(),
-				fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
-						.getUniqueId(), null);
-
-		return new NewPictureMaterial(testElement, inline, pictureMaterialFile);
-
+	InputStream is = null;
+	final FileDescriptor fileDescriptor;
+	try {
+	    is = new FileInputStream(mainFile);
+	    fileDescriptor = fileManager.saveFile(filePath, originalFilename, false, teacher.getPerson().getName(),
+		    displayName == null ? originalFilename : displayName, is);
+	} catch (FileNotFoundException e) {
+	    throw new FenixServiceException(e.getMessage());
+	} finally {
+	    if (is != null) {
+		is.close();
+	    }
 	}
+	final PictureMaterialFile pictureMaterialFile = new PictureMaterialFile(fileDescriptor.getFilename(), displayName,
+		fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
+			.getSize(), fileDescriptor.getUniqueId(), null);
 
-	private VirtualPath getVirtualPath() {
-		final VirtualPath filePath = new VirtualPath();
-		filePath.addNode(new VirtualPathNode("tests", "Online tests"));
-		filePath.addNode(new VirtualPathNode("materials", "Presentation materials"));
-		filePath.addNode(new VirtualPathNode("pictures", "Pictures"));
+	return new NewPictureMaterial(testElement, inline, pictureMaterialFile);
 
-		return filePath;
-	}
+    }
+
+    private VirtualPath getVirtualPath() {
+	final VirtualPath filePath = new VirtualPath();
+	filePath.addNode(new VirtualPathNode("tests", "Online tests"));
+	filePath.addNode(new VirtualPathNode("materials", "Presentation materials"));
+	filePath.addNode(new VirtualPathNode("pictures", "Pictures"));
+
+	return filePath;
+    }
 
 }

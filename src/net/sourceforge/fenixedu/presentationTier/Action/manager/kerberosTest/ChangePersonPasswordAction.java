@@ -26,25 +26,25 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ChangePersonPasswordAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-            DynaActionForm changePasswordForm = (DynaActionForm) form;
-            
-            IUserView userView = new MockUserView((String) changePasswordForm.get("user"), new ArrayList(), null);
-            String oldPassword = (String) changePasswordForm.get("oldPassword");
-            String newPassword = (String) changePasswordForm.get("newPassword");
+	DynaActionForm changePasswordForm = (DynaActionForm) form;
 
-            ServiceUtils.executeService("SetUserUID", new Object[] { userView.getPerson() } );
+	IUserView userView = new MockUserView((String) changePasswordForm.get("user"), new ArrayList(), null);
+	String oldPassword = (String) changePasswordForm.get("oldPassword");
+	String newPassword = (String) changePasswordForm.get("newPassword");
 
-            // Check the old Password
-            Object args[] = { userView, oldPassword, newPassword };
-            try {
-                ServiceUtils.executeService("ChangePasswordKerberosTest", args);
-            } catch (InvalidPasswordServiceException e) {
-                throw new InvalidPasswordActionException(e);
-            }
-            return mapping.findForward("Success");
+	ServiceUtils.executeService("SetUserUID", new Object[] { userView.getPerson() });
+
+	// Check the old Password
+	Object args[] = { userView, oldPassword, newPassword };
+	try {
+	    ServiceUtils.executeService("ChangePasswordKerberosTest", args);
+	} catch (InvalidPasswordServiceException e) {
+	    throw new InvalidPasswordActionException(e);
+	}
+	return mapping.findForward("Success");
 
     }
 

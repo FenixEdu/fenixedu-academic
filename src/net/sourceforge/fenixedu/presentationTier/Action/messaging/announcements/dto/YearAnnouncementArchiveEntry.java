@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 27, 2006,3:06:08 PM
  * 
  */
@@ -22,42 +22,43 @@ public class YearAnnouncementArchiveEntry {
     final private Map<Integer, MonthAnnouncementArchiveEntry> entries = new TreeMap<Integer, MonthAnnouncementArchiveEntry>();
 
     public Map<Integer, MonthAnnouncementArchiveEntry> getEntries() {
-        return entries;
+	return entries;
     }
 
     public YearAnnouncementArchiveEntry(Integer year) {
-        this.year = year;
+	this.year = year;
     }
 
     public void addAnnouncement(Announcement announcement) {
-       int monthOfYear = announcement.getReferedSubjectBegin() != null ? announcement.getReferedSubjectBegin().getMonthOfYear() : announcement.getCreationDate().getMonthOfYear();
+	int monthOfYear = announcement.getReferedSubjectBegin() != null ? announcement.getReferedSubjectBegin().getMonthOfYear()
+		: announcement.getCreationDate().getMonthOfYear();
 	MonthAnnouncementArchiveEntry month = entries.get(monthOfYear);
-        if (month == null) {
-            month = new MonthAnnouncementArchiveEntry(monthOfYear);
-            entries.put(monthOfYear, month);
-        }
-        month.addAnnouncement(announcement);
+	if (month == null) {
+	    month = new MonthAnnouncementArchiveEntry(monthOfYear);
+	    entries.put(monthOfYear, month);
+	}
+	month.addAnnouncement(announcement);
 
     }
 
     public Integer getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(int year) {
-        this.year = year;
+	this.year = year;
     }
 
     public int getMonthsCount() {
-        return this.entries.size();
+	return this.entries.size();
     }
 
     public Integer getFirstPostMonth() {
-        Integer firstMonth = null;
-        if (this.entries.size() != 0) {
-            firstMonth = this.entries.keySet().iterator().next();
-        }
+	Integer firstMonth = null;
+	if (this.entries.size() != 0) {
+	    firstMonth = this.entries.keySet().iterator().next();
+	}
 
-        return firstMonth;
+	return firstMonth;
     }
 }

@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class InfoSiteExamMap extends DataTranferObject implements ISiteComponent {
 
@@ -20,28 +20,28 @@ public class InfoSiteExamMap extends DataTranferObject implements ISiteComponent
      * @return
      */
     public InfoExamsMap getInfoExamsMap() {
-        return infoExamsMap;
+	return infoExamsMap;
     }
 
     /**
      * @param map
      */
     public void setInfoExamsMap(InfoExamsMap map) {
-        infoExamsMap = map;
+	infoExamsMap = map;
     }
 
     /**
      * @return
      */
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return infoExecutionDegree;
+	return infoExecutionDegree;
     }
 
     /**
      * @param degree
      */
     public void setInfoExecutionDegree(InfoExecutionDegree degree) {
-        infoExecutionDegree = degree;
+	infoExecutionDegree = degree;
     }
 
 }

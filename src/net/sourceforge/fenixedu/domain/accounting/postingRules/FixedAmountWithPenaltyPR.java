@@ -16,8 +16,7 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount,
-	    Money fixedAmountPenalty) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount, Money fixedAmountPenalty) {
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
 	checkParameters(fixedAmountPenalty);
 	super.setFixedAmountPenalty(fixedAmountPenalty);
@@ -25,8 +24,7 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
 
     private void checkParameters(Money fixedAmountPenalty) {
 	if (fixedAmountPenalty == null) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty.cannot.be.null");
+	    throw new DomainException("error.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty.cannot.be.null");
 	}
     }
 
@@ -38,10 +36,8 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
 
     @Override
     public void setFixedAmountPenalty(Money fixedAmountPenalty) {
-	throw new DomainException(
-		"error.accounting.postingRules.FixedAmountWithPenaltyPR.cannot.modify.fixedAmountPenalty");
+	throw new DomainException("error.accounting.postingRules.FixedAmountWithPenaltyPR.cannot.modify.fixedAmountPenalty");
     }
-
 
     abstract protected boolean hasPenalty(Event event, DateTime when);
 

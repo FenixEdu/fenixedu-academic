@@ -14,8 +14,8 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
  * 
  * @author Nuno & Joana
  * 
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ *         To change the template for this generated type comment go to
+ *         Window>Preferences>Java>Code Generation>Code and Comments
  */
 
 public class JavaState2SQLStateFieldConversion implements FieldConversion {
@@ -24,12 +24,12 @@ public class JavaState2SQLStateFieldConversion implements FieldConversion {
      * @see FieldConversion#javaToSql(Object)
      */
     public Object javaToSql(Object source) {
-        if (source instanceof State) {
-            State s = (State) source;
-            return s.getState();
-        }
+	if (source instanceof State) {
+	    State s = (State) source;
+	    return s.getState();
+	}
 
-        return source;
+	return source;
 
     }
 
@@ -37,12 +37,12 @@ public class JavaState2SQLStateFieldConversion implements FieldConversion {
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new State(src);
-        }
+	if (source instanceof Integer) {
+	    Integer src = (Integer) source;
+	    return new State(src);
+	}
 
-        return source;
+	return source;
 
     }
 }

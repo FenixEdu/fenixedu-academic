@@ -1,6 +1,6 @@
 /**
-* Nov 30, 2005
-*/
+ * Nov 30, 2005
+ */
 package net.sourceforge.fenixedu.dataTransferObject.teacher.professorship;
 
 import java.util.ArrayList;
@@ -12,37 +12,34 @@ import net.sourceforge.fenixedu.domain.Professorship;
 
 /**
  * @author Ricardo Rodrigues
- *
+ * 
  */
 
 public class ProfessorshipDTO {
-    
+
     public ProfessorshipDTO(Professorship professorship) {
-        setProfessorship(professorship);
+	setProfessorship(professorship);
     }
 
     Professorship professorship;
 
     public Professorship getProfessorship() {
-        return professorship;
+	return professorship;
     }
 
     public void setProfessorship(Professorship professorship) {
-        this.professorship = professorship;
+	this.professorship = professorship;
     }
 
     public List<String> getDegreeSiglas() {
-        List<String> degreeSiglas = new ArrayList();
-        for (Iterator iter = getProfessorship().getExecutionCourse()
-                .getAssociatedCurricularCourses().iterator(); iter.hasNext();) {
-            CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-            String degreeSigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
-            if (!degreeSiglas.contains(degreeSigla)) {
-                degreeSiglas.add(degreeSigla);
-            }
-        }
-        return degreeSiglas;
+	List<String> degreeSiglas = new ArrayList();
+	for (Iterator iter = getProfessorship().getExecutionCourse().getAssociatedCurricularCourses().iterator(); iter.hasNext();) {
+	    CurricularCourse curricularCourse = (CurricularCourse) iter.next();
+	    String degreeSigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+	    if (!degreeSiglas.contains(degreeSigla)) {
+		degreeSiglas.add(degreeSigla);
+	    }
+	}
+	return degreeSiglas;
     }
 }
-
-

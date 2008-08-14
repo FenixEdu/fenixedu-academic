@@ -35,11 +35,10 @@ public class ResidenceInformationForm extends Form {
 	super();
     }
 
-    private ResidenceInformationForm(final String address, final String areaCode,
-	    final String areaOfAreaCode, final String area, final String parishOfResidence,
-	    final String districtSubdivisionOfResidence, final String districtOfResidence,
+    private ResidenceInformationForm(final String address, final String areaCode, final String areaOfAreaCode, final String area,
+	    final String parishOfResidence, final String districtSubdivisionOfResidence, final String districtOfResidence,
 	    final Country countryOfResidence) {
-	
+
 	setAddress(address);
 	setAreaCode(areaCode);
 	setAreaOfAreaCode(areaOfAreaCode);
@@ -55,15 +54,9 @@ public class ResidenceInformationForm extends Form {
 	    final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
 	    final Country country = getCountryOfResidenceFromPhysicalAddress(physicalAddress);
 
-	    return new ResidenceInformationForm(
-		    physicalAddress.getAddress(),
-		    physicalAddress.getAreaCode(),
-		    physicalAddress.getAreaOfAreaCode(),
-		    physicalAddress.getArea(),
-		    physicalAddress.getParishOfResidence(),
-		    physicalAddress.getDistrictSubdivisionOfResidence(),
-		    physicalAddress.getDistrictOfResidence(),
-		    country);
+	    return new ResidenceInformationForm(physicalAddress.getAddress(), physicalAddress.getAreaCode(), physicalAddress
+		    .getAreaOfAreaCode(), physicalAddress.getArea(), physicalAddress.getParishOfResidence(), physicalAddress
+		    .getDistrictSubdivisionOfResidence(), physicalAddress.getDistrictOfResidence(), country);
 	} else {
 	    final ResidenceInformationForm residenceInformationForm = new ResidenceInformationForm();
 	    residenceInformationForm.setCountryOfResidence(RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID));
@@ -72,8 +65,8 @@ public class ResidenceInformationForm extends Form {
     }
 
     private static Country getCountryOfResidenceFromPhysicalAddress(final PhysicalAddress physicalAddress) {
-	return physicalAddress.hasCountryOfResidence() ? physicalAddress.getCountryOfResidence()
-		: RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID);
+	return physicalAddress.hasCountryOfResidence() ? physicalAddress.getCountryOfResidence() : RootDomainObject.getInstance()
+		.readCountryByOID(DEFAULT_COUNTRY_ID);
     }
 
     public String getAddress() {
@@ -137,8 +130,7 @@ public class ResidenceInformationForm extends Form {
     }
 
     public void setCountryOfResidence(Country countryOfResidence) {
-	this.countryOfResidence = (countryOfResidence != null) ? new DomainReference<Country>(
-		countryOfResidence) : null;
+	this.countryOfResidence = (countryOfResidence != null) ? new DomainReference<Country>(countryOfResidence) : null;
     }
 
     @Override

@@ -86,8 +86,8 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
 	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
-		"enum").appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ").appendLabel(
-		getExecutionYear().getYear()).appendLabel(")");
+		"enum").appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent())
+		.appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
 	return labelFormatter;
     }

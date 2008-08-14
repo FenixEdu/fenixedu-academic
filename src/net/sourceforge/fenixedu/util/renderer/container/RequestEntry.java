@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class RequestEntry {
     private String requestPath = null;
@@ -24,42 +24,42 @@ public class RequestEntry {
     private List executionTimes = new ArrayList();
 
     public RequestEntry(String requestPath) {
-        super();
-        this.requestPath = requestPath;
+	super();
+	this.requestPath = requestPath;
     }
 
     public int getExecutionTime() {
-        return executionTime;
+	return executionTime;
     }
 
     public int getNumberCalls() {
-        return numberCalls;
+	return numberCalls;
     }
 
     public int getAverageExecutionTime() {
-        if (numberCalls != 0) {
-            return executionTime / numberCalls;
-        }
-        return 0;
+	if (numberCalls != 0) {
+	    return executionTime / numberCalls;
+	}
+	return 0;
 
     }
 
     public String getRequestPath() {
-        return requestPath;
+	return requestPath;
     }
 
     public List getLogTimes() {
-        return logTimes;
+	return logTimes;
     }
 
     public List getExecutionTimes() {
-        return executionTimes;
+	return executionTimes;
     }
 
     public void addEntry(Integer executionTime, Date logTime) {
-        executionTimes.add(executionTime);
-        logTimes.add(logTime);
-        this.executionTime = this.executionTime + executionTime.intValue();
-        this.numberCalls++;
+	executionTimes.add(executionTime);
+	logTimes.add(logTime);
+	this.executionTime = this.executionTime + executionTime.intValue();
+	this.numberCalls++;
     }
 }

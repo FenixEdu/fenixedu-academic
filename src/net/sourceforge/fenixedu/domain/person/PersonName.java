@@ -88,17 +88,16 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
     public boolean match(String[] parts) {
 	return containsAll(getName(), parts);
     }
-    
-    public static void find(final PersonNameLimitedOrderedSet personNameLimitedOrderedSet, final String name,
-	    final int size) {
+
+    public static void find(final PersonNameLimitedOrderedSet personNameLimitedOrderedSet, final String name, final int size) {
 	final String[] nameParts = PersonNamePart.getNameParts(name);
 	if (nameParts.length > 0) {
 	    final PersonNamePart personNamePart = PersonNamePart.find(nameParts[0]);
 	    if (personNamePart != null && nameParts.length == 1) {
 		personNameLimitedOrderedSet.addAll(personNamePart.getPersonNameSet());
 	    } else {
-		final Set<PersonName> personNames = personNamePart == null ? RootDomainObject.getInstance()
-			.getPersonNameSet() : personNamePart.getPersonNameSet();
+		final Set<PersonName> personNames = personNamePart == null ? RootDomainObject.getInstance().getPersonNameSet()
+			: personNamePart.getPersonNameSet();
 		for (final PersonName personName : personNames) {
 		    final String normalizedPersonName = personName.getName();
 		    if (containsAll(normalizedPersonName, nameParts)) {
@@ -116,15 +115,13 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
     }
 
     public static Collection<PersonName> findInternalPerson(final String name, final int size) {
-	final InternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new InternalPersonNameLimitedOrderedSet(
-		size);
+	final InternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new InternalPersonNameLimitedOrderedSet(size);
 	find(personNameLimitedOrderedSet, name, size);
 	return personNameLimitedOrderedSet;
     }
-    
+
     public static Collection<PersonName> findExternalPerson(final String name, final int size) {
-	final ExternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new ExternalPersonNameLimitedOrderedSet(
-		size);
+	final ExternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new ExternalPersonNameLimitedOrderedSet(size);
 	find(personNameLimitedOrderedSet, name, size);
 	return personNameLimitedOrderedSet;
     }
@@ -158,12 +155,12 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
     }
 
     private void appendText(final StringBuilder stringBuilder, final String string) {
-		if (string != null) {
-			stringBuilder.append(" (");
-			stringBuilder.append(string);
-			stringBuilder.append(")");
-		}
+	if (string != null) {
+	    stringBuilder.append(" (");
+	    stringBuilder.append(string);
+	    stringBuilder.append(")");
 	}
+    }
 
     public void delete() {
 	final Set<PersonNamePart> personNameParts = new HashSet<PersonNamePart>(getPersonNamePartSet());

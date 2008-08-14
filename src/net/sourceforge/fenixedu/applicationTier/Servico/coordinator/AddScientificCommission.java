@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.ScientificCommission;
 public class AddScientificCommission extends Service {
 
     public void run(Integer executionDegreeId, Person person) {
-        ExecutionDegree execution = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
-        
-        new ScientificCommission(execution, person);
+	ExecutionDegree execution = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+
+	new ScientificCommission(execution, person);
     }
-    
+
 }

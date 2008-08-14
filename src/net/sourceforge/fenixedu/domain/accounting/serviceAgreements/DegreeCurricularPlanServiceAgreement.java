@@ -27,10 +27,9 @@ public class DegreeCurricularPlanServiceAgreement extends DegreeCurricularPlanSe
 	return (DegreeCurricularPlanServiceAgreementTemplate) super.getServiceAgreementTemplate();
     }
 
-    public GratuityPaymentPlan getGratuityPaymentPlanFor(
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-	return getServiceAgreementTemplate().getGratuityPaymentPlanFor(studentCurricularPlan,
-		executionYear);
+    public GratuityPaymentPlan getGratuityPaymentPlanFor(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear) {
+	return getServiceAgreementTemplate().getGratuityPaymentPlanFor(studentCurricularPlan, executionYear);
     }
 
     public List<GratuityPaymentPlan> getGratuityPaymentPlans() {

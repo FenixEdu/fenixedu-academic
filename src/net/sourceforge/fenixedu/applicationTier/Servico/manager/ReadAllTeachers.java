@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllTeachers extends Service {
 
-    public List<InfoTeacher> run() throws FenixServiceException{
-        final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+    public List<InfoTeacher> run() throws FenixServiceException {
+	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
-        for (final Teacher teacher : rootDomainObject.getTeachers()) {
-            result.add(InfoTeacher.newInfoFromDomain(teacher));
-        }
-        return result;
+	for (final Teacher teacher : rootDomainObject.getTeachers()) {
+	    result.add(InfoTeacher.newInfoFromDomain(teacher));
+	}
+	return result;
     }
-    
+
 }

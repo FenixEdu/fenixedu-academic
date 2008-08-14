@@ -7,57 +7,52 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 
 public class FileContent extends FileContent_Base {
-    
-    protected FileContent(Attachment attachment) {
-        super();
 
-        setAttachment(attachment);
+    protected FileContent(Attachment attachment) {
+	super();
+
+	setAttachment(attachment);
     }
 
     public FileContent(Attachment attachment, String filename, String displayName, String mimeType, String checksum,
-            String checksumAlgorithm, Integer size, String externalStorageIdentification,
-            Group permittedGroup) {
-        this(attachment);
-        init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
-                externalStorageIdentification, permittedGroup);
-    }
-    
-    public FileContent(String filename, String displayName, String mimeType, String checksum,
-            String checksumAlgorithm, Integer size, String externalStorageIdentification,
-            Group permittedGroup) {
-        init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
-                externalStorageIdentification, permittedGroup);
+	    String checksumAlgorithm, Integer size, String externalStorageIdentification, Group permittedGroup) {
+	this(attachment);
+	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
     }
 
+    public FileContent(String filename, String displayName, String mimeType, String checksum, String checksumAlgorithm,
+	    Integer size, String externalStorageIdentification, Group permittedGroup) {
+	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
+    }
 
     public void delete() {
 	Attachment attachment = getAttachment();
-	if(attachment != null) {
+	if (attachment != null) {
 	    setAttachment(null);
 	    attachment.delete();
 	}
 	removeRootDomainObject();
-        super.deleteDomainObject();
+	super.deleteDomainObject();
     }
 
     public static FileContent readByOID(Integer idInternal) {
-        return (FileContent) RootDomainObject.getInstance().readFileByOID(idInternal);
+	return (FileContent) RootDomainObject.getInstance().readFileByOID(idInternal);
     }
 
     public static List<FileContent> readAllFileItems() {
-        List<FileContent> fileItems = new ArrayList<FileContent>();
-        
-        for (File file : RootDomainObject.getInstance().getFiles()) {
-            if (file instanceof FileContent) {
-                fileItems.add((FileContent) file);
-            }
-        }
-        
-        return fileItems;
+	List<FileContent> fileItems = new ArrayList<FileContent>();
+
+	for (File file : RootDomainObject.getInstance().getFiles()) {
+	    if (file instanceof FileContent) {
+		fileItems.add((FileContent) file);
+	    }
+	}
+
+	return fileItems;
     }
-    
+
     public Site getSite() {
 	return getAttachment().getSite();
     }
-    
+
 }

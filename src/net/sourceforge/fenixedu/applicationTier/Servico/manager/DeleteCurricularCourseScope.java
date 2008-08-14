@@ -15,15 +15,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteCurricularCourseScope extends Service {
 
-	public void run(Integer scopeId) throws FenixServiceException{
-		CurricularCourseScope scope = rootDomainObject.readCurricularCourseScopeByOID(scopeId);
-		if (scope != null) {
+    public void run(Integer scopeId) throws FenixServiceException {
+	CurricularCourseScope scope = rootDomainObject.readCurricularCourseScopeByOID(scopeId);
+	if (scope != null) {
 
-			try {
-				scope.delete();
-			} catch (DomainException e) {
-				throw new CantDeleteServiceException();
-			}
-		}
+	    try {
+		scope.delete();
+	    } catch (DomainException e) {
+		throw new CantDeleteServiceException();
+	    }
 	}
+    }
 }

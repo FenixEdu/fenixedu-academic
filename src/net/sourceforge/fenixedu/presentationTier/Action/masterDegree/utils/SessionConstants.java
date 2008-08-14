@@ -4,14 +4,16 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils;
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public abstract class SessionConstants {
 
-    // -------------------------------------------------------------------------------
-    //    Master Degree Constants - For Master Degree
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // Master Degree Constants - For Master Degree
+    //--------------------------------------------------------------------------
+    // -----
 
     public static final String STUDENT = "student";
 

@@ -9,15 +9,15 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 public class EditExecutionCourseInfo extends Service {
 
     public InfoExecutionCourse run(InfoExecutionCourseEditor infoExecutionCourse) throws InvalidArgumentsServiceException {
-	
+
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-        if (executionCourse == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+	if (executionCourse == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        executionCourse.editInformation(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
-        	infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission(), infoExecutionCourse.getEntryPhase());
+	executionCourse.editInformation(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), infoExecutionCourse
+		.getComment(), infoExecutionCourse.getAvailableGradeSubmission(), infoExecutionCourse.getEntryPhase());
 
-        return new InfoExecutionCourse(executionCourse);
+	return new InfoExecutionCourse(executionCourse);
     }
 }

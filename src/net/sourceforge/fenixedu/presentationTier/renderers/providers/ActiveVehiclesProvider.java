@@ -12,6 +12,6 @@ public class ActiveVehiclesProvider implements DataProvider {
     }
 
     public Object provide(Object source, Object currentValue) {
-	return Vehicle.getAllActiveVehicles();	
+	return Vehicle.getAllActiveVehicles();
     }
 }

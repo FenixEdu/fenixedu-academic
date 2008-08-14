@@ -210,8 +210,7 @@ public class UIDataRepeater extends UIData {
 
     @Override
     public Object getValue() {
-	return super.getValue() instanceof Collection ? new ArrayList((Collection) super.getValue())
-		: super.getValue();
+	return super.getValue() instanceof Collection ? new ArrayList((Collection) super.getValue()) : super.getValue();
     }
 
 }

@@ -11,17 +11,17 @@ import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
 public class PublishAprovedFinalDegreeWorkProposals extends Service {
 
-    public void run(Integer executionDegreeOID) throws FenixServiceException{
-        if (executionDegreeOID != null) {
-        	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
-            Set<Proposal> aprovedFinalDegreeWorkProposals = executionDegree.getScheduling().findApprovedProposals();
+    public void run(Integer executionDegreeOID) throws FenixServiceException {
+	if (executionDegreeOID != null) {
+	    final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+	    Set<Proposal> aprovedFinalDegreeWorkProposals = executionDegree.getScheduling().findApprovedProposals();
 
-            if (aprovedFinalDegreeWorkProposals != null && !aprovedFinalDegreeWorkProposals.isEmpty()) {
-                for (Proposal proposal : aprovedFinalDegreeWorkProposals) {
-                    proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
-                }
-            }
-        }
+	    if (aprovedFinalDegreeWorkProposals != null && !aprovedFinalDegreeWorkProposals.isEmpty()) {
+		for (Proposal proposal : aprovedFinalDegreeWorkProposals) {
+		    proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
+		}
+	    }
+	}
     }
 
 }

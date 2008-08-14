@@ -9,16 +9,16 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.
 
 public class UnitEventsRSS extends AnnouncementRSS {
 
-	@Override
-	protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
-		UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) board;
-		return unitBoard.getUnit().getNameWithAcronym() + ": " + board.getName();
-	}
+    @Override
+    protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
+	UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) board;
+	return unitBoard.getUnit().getNameWithAcronym() + ": " + board.getName();
+    }
 
-	@Override
-	protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
-		String unitId = request.getParameter("unitID");
-		return "/publico/units/events.do?method=viewEvent&unitID=" + unitId;
-	}
-	
+    @Override
+    protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
+	String unitId = request.getParameter("unitID");
+	return "/publico/units/events.do?method=viewEvent&unitID=" + unitId;
+    }
+
 }

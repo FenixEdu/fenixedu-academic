@@ -18,8 +18,8 @@ public class ExecutionYearsForCandidacyProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	final DFACandidacyBean candidacyBean = ((DFACandidacyBean) source);
-	return candidacyBean.getDegreeCurricularPlan() == null ? Collections.EMPTY_SET : candidacyBean
-		.getDegreeCurricularPlan().getCandidacyPeriodsExecutionYears();
+	return candidacyBean.getDegreeCurricularPlan() == null ? Collections.EMPTY_SET : candidacyBean.getDegreeCurricularPlan()
+		.getCandidacyPeriodsExecutionYears();
     }
 
     public Converter getConverter() {

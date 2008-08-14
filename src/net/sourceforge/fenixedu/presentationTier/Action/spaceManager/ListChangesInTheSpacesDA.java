@@ -21,14 +21,15 @@ public class ListChangesInTheSpacesDA extends FenixDispatchAction {
 
     public ActionForward changesList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	Set<DomainObjectActionLog> listOfChangesInSpaces = Space.getListOfChangesInSpacesOrderedByInstant();
-	CollectionPager<DomainObjectActionLog> collectionPager = 
-	    new CollectionPager<DomainObjectActionLog>(listOfChangesInSpaces != null ? listOfChangesInSpaces : new ArrayList(), 50);
+	CollectionPager<DomainObjectActionLog> collectionPager = new CollectionPager<DomainObjectActionLog>(
+		listOfChangesInSpaces != null ? listOfChangesInSpaces : new ArrayList(), 50);
 
 	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1); 
-	
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
+		.valueOf(1);
+
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("domainObjectActionLogs", collectionPager.getPage(pageNumber.intValue()));
 	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));

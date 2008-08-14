@@ -26,45 +26,44 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteGroupingMembersByExecutionCourseID extends Service {
 
-    public boolean run(Integer executionCourseCode, Integer groupingCode)
-            throws FenixServiceException{
-        Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
-        
-        if (grouping == null) {
-            throw new ExistingServiceException();
-        }
+    public boolean run(Integer executionCourseCode, Integer groupingCode) throws FenixServiceException {
+	Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-       
-        if (executionCourse == null) {
-            throw new InvalidSituationServiceException();
-        }
+	if (grouping == null) {
+	    throw new ExistingServiceException();
+	}
 
-        List executionCourseStudentNumbers = new ArrayList();
-        final List<Attends> attends = executionCourse.getAttends();
-        for (final Attends attend : attends) {
-            final Registration registration = attend.getRegistration();
-            executionCourseStudentNumbers.add(registration.getNumber());
-        }
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
-        List attendsElements = new ArrayList();
-        attendsElements.addAll(grouping.getAttends());
-        Iterator iterator = attendsElements.iterator();
-        while (iterator.hasNext()) {            
-            Attends attend = (Attends) iterator.next();            
-            if (executionCourseStudentNumbers.contains(attend.getRegistration().getNumber())) {
-                boolean found = false;
-                Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
-                while (iterStudentsGroups.hasNext() && !found) {
-                    final StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
-                    if (studentGroup != null) {
-                        studentGroup.removeAttends(attend);                                               
-                        found = true;
-                    }
-                }
-                grouping.removeAttends(attend);
-            }
-        }
-        return true;
+	if (executionCourse == null) {
+	    throw new InvalidSituationServiceException();
+	}
+
+	List executionCourseStudentNumbers = new ArrayList();
+	final List<Attends> attends = executionCourse.getAttends();
+	for (final Attends attend : attends) {
+	    final Registration registration = attend.getRegistration();
+	    executionCourseStudentNumbers.add(registration.getNumber());
+	}
+
+	List attendsElements = new ArrayList();
+	attendsElements.addAll(grouping.getAttends());
+	Iterator iterator = attendsElements.iterator();
+	while (iterator.hasNext()) {
+	    Attends attend = (Attends) iterator.next();
+	    if (executionCourseStudentNumbers.contains(attend.getRegistration().getNumber())) {
+		boolean found = false;
+		Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
+		while (iterStudentsGroups.hasNext() && !found) {
+		    final StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
+		    if (studentGroup != null) {
+			studentGroup.removeAttends(attend);
+			found = true;
+		    }
+		}
+		grouping.removeAttends(attend);
+	    }
+	}
+	return true;
     }
 }

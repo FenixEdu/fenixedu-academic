@@ -69,7 +69,7 @@ import org.apache.commons.beanutils.BeanComparator;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
  * 
- * Created at 2:40:27 PM, Mar 11, 2005
+ *         Created at 2:40:27 PM, Mar 11, 2005
  */
 public class ReadStudentExternalInformation extends Service {
 

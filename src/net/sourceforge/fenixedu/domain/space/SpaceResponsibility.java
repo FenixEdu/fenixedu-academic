@@ -21,17 +21,17 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     public static final Comparator<SpaceResponsibility> COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("unit.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("unit.name",
+		Collator.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Created space responsibility", parameters = {
-	    "space", "unit", "begin", "end" })
-    public SpaceResponsibility(final Space space, final Unit unit, final YearMonthDay begin,
-	    final YearMonthDay end) {
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created space responsibility", parameters = { "space", "unit", "begin",
+	    "end" })
+    public SpaceResponsibility(final Space space, final Unit unit, final YearMonthDay begin, final YearMonthDay end) {
 
-	super();	
+	super();
 	setSpace(space);
 	setUnit(unit);
 	checkSpaceResponsabilityIntersection(begin, end, getUnit(), getSpace());
@@ -40,8 +40,7 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Edited space responsibility", parameters = {
-	    "begin", "end" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited space responsibility", parameters = { "begin", "end" })
     public void setSpaceResponsibilityInterval(final YearMonthDay begin, final YearMonthDay end) {
 	checkSpaceResponsabilityIntersection(begin, end, getUnit(), getSpace());
 	super.setBegin(begin);
@@ -50,15 +49,15 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted space responsibility", parameters = {})
-    public void delete() {	
+    public void delete() {
 	super.delete();
     }
 
     @Override
     public boolean isSpaceResponsibility() {
-        return true;
+	return true;
     }
-    
+
     @Override
     public void setBegin(YearMonthDay begin) {
 	throw new DomainException("error.invalid.operation");
@@ -71,20 +70,20 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
 
     @Override
     public void setResource(Resource resource) {
-        if(resource == null || !resource.isSpace()) {
-            throw new DomainException("error.space.responsability.no.space");
-        }
+	if (resource == null || !resource.isSpace()) {
+	    throw new DomainException("error.space.responsability.no.space");
+	}
 	super.setResource(resource);
     }
-    
+
     @Override
     public void setParty(Party party) {
-        if(party == null || !party.isUnit() || party.isAggregateUnit()) {
-            throw new DomainException("error.space.responsability.no.unit");
-        }
+	if (party == null || !party.isUnit() || party.isAggregateUnit()) {
+	    throw new DomainException("error.space.responsability.no.unit");
+	}
 	super.setParty(party);
     }
-    
+
     public void setUnit(Unit unit) {
 	setParty(unit);
     }
@@ -92,15 +91,15 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     public Unit getUnit() {
 	return (Unit) getParty();
     }
-    
+
     public void setSpace(Space space) {
 	setResource(space);
     }
-    
+
     public Space getSpace() {
 	return (Space) getResource();
     }
-  
+
     private boolean checkIntersections(YearMonthDay begin, YearMonthDay end) {
 	return ((end == null || !getBegin().isAfter(end)) && (getEnd() == null || !getEnd().isBefore(begin)));
     }
@@ -117,9 +116,9 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     private void checkSpaceResponsabilityIntersection(final YearMonthDay begin, final YearMonthDay end, Unit unit, Space space) {
 	checkBeginDateAndEndDate(begin, end);
 	for (ResourceResponsibility resourceResponsibility : space.getResourceResponsibility()) {
-	    if (resourceResponsibility.isSpaceResponsibility() &&
-		    !resourceResponsibility.equals(this) && resourceResponsibility.getParty().equals(unit)
-		    && ((SpaceResponsibility)resourceResponsibility).checkIntersections(begin, end)) {
+	    if (resourceResponsibility.isSpaceResponsibility() && !resourceResponsibility.equals(this)
+		    && resourceResponsibility.getParty().equals(unit)
+		    && ((SpaceResponsibility) resourceResponsibility).checkIntersections(begin, end)) {
 		throw new DomainException("error.spaceResponsibility.unit.intersection");
 	    }
 	}

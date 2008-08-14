@@ -7,7 +7,8 @@ import org.joda.time.YearMonthDay;
 
 public class ReceivedAcademicServiceRequestFromExternalEntity extends Service {
 
-    public void run(final AcademicServiceRequest academicServiceRequest, final YearMonthDay receivedDate, final String justification) {
+    public void run(final AcademicServiceRequest academicServiceRequest, final YearMonthDay receivedDate,
+	    final String justification) {
 	academicServiceRequest.receivedFromExternalEntity(receivedDate, justification);
     }
 

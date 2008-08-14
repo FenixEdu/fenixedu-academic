@@ -22,12 +22,12 @@ public class ShowApplicationDocumentDispatchAction extends FenixDispatchAction {
     /** request * */
     public static final String REQUEST_DOCUMENT_TYPE = "documentType";
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        request.setAttribute("candidateID", request.getParameter("candidateID"));
-        
-        return mapping.findForward("showApplicationDocumentsList");
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
+	request.setAttribute("candidateID", request.getParameter("candidateID"));
+
+	return mapping.findForward("showApplicationDocumentsList");
     }
 
     /**
@@ -38,27 +38,24 @@ public class ShowApplicationDocumentDispatchAction extends FenixDispatchAction {
      * @param mapping
      * @return
      */
-    private InfoPerson readPersonByUsername(IUserView userView, ActionErrors actionErrors,
-            HttpServletRequest request, ActionMapping mapping) {
-        InfoPerson result = null;
+    private InfoPerson readPersonByUsername(IUserView userView, ActionErrors actionErrors, HttpServletRequest request,
+	    ActionMapping mapping) {
+	InfoPerson result = null;
 
-        try {
-            Object[] args = { userView.getUtilizador() };
-            result = (InfoPerson) ServiceUtils.executeService("ReadPersonByUsername", args);
-            return result;
-        } catch (ExcepcaoInexistente e) {
-            actionErrors.add("unknownPerson", new ActionError("error.exception.nonExisting", userView
-                    .getUtilizador()));
-            saveErrors(request, actionErrors);
-        } catch (FenixServiceException e) {
-            actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", userView
-                    .getUtilizador()));
-            saveErrors(request, actionErrors);
-        } catch (FenixFilterException e) {
-            actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", userView
-                    .getUtilizador()));
-            saveErrors(request, actionErrors);
-        }
-        return null;
+	try {
+	    Object[] args = { userView.getUtilizador() };
+	    result = (InfoPerson) ServiceUtils.executeService("ReadPersonByUsername", args);
+	    return result;
+	} catch (ExcepcaoInexistente e) {
+	    actionErrors.add("unknownPerson", new ActionError("error.exception.nonExisting", userView.getUtilizador()));
+	    saveErrors(request, actionErrors);
+	} catch (FenixServiceException e) {
+	    actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", userView.getUtilizador()));
+	    saveErrors(request, actionErrors);
+	} catch (FenixFilterException e) {
+	    actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", userView.getUtilizador()));
+	    saveErrors(request, actionErrors);
+	}
+	return null;
     }
 }

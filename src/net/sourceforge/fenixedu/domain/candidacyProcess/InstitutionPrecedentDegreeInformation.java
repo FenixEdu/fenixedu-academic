@@ -80,7 +80,7 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
     public void edit(CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 	throw new DomainException("error.InstitutionPrecedentDegreeInformation.cannot.edit");
     }
-    
+
     @Override
     public void editCurricularCoursesInformation(CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 	throw new DomainException("error.InstitutionPrecedentDegreeInformation.cannot.edit");

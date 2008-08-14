@@ -14,49 +14,50 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObjectKey;
 public class CreationDomainMetaObject extends DomainMetaObject {
 
     public CreationDomainMetaObject(Class type) {
-        super();
-        
-        setType(type);
-        setOid(0);
-        
-        setService("CreateObjects");
+	super();
+
+	setType(type);
+	setOid(0);
+
+	setService("CreateObjects");
     }
 
     public MetaObjectKey getKey() {
-        return new CreationMetaObjectKey(getType());
+	return new CreationMetaObjectKey(getType());
     }
-    
+
     @Override
     protected Object callService(List<ObjectChange> changes) {
-        List<ObjectChange> newChanges = new ArrayList<ObjectChange>(changes);
-        
-        InstanceCreator instanceCreator = getInstanceCreator();
-        if (instanceCreator != null) {
-            ObjectKey key = new ObjectKey(getOid(), getType());
-            
-            try {
-                newChanges.add(0, new ObjectChange(key, instanceCreator.getConstructor(), instanceCreator.getArgumentValues()));
-            } catch (Exception e) {
-                throw new RuntimeException("could not find constructor for '" + getType().getName() + "' with arguments " + Arrays.asList(instanceCreator.getArgumentTypes()), e);
-            }
-        }
-        
-        Collection created = (Collection) super.callService(newChanges);
-        
-        // heuristic, does not work so well if multiple objects are created
-        for (Object object : created) {
-            if (getType().isAssignableFrom(object.getClass())) {
-                setObject(object);
-                break;
-            }
-        }
-        
-        return created;
+	List<ObjectChange> newChanges = new ArrayList<ObjectChange>(changes);
+
+	InstanceCreator instanceCreator = getInstanceCreator();
+	if (instanceCreator != null) {
+	    ObjectKey key = new ObjectKey(getOid(), getType());
+
+	    try {
+		newChanges.add(0, new ObjectChange(key, instanceCreator.getConstructor(), instanceCreator.getArgumentValues()));
+	    } catch (Exception e) {
+		throw new RuntimeException("could not find constructor for '" + getType().getName() + "' with arguments "
+			+ Arrays.asList(instanceCreator.getArgumentTypes()), e);
+	    }
+	}
+
+	Collection created = (Collection) super.callService(newChanges);
+
+	// heuristic, does not work so well if multiple objects are created
+	for (Object object : created) {
+	    if (getType().isAssignableFrom(object.getClass())) {
+		setObject(object);
+		break;
+	    }
+	}
+
+	return created;
     }
 
     @Override
     protected Object classServiceInstance(List<ObjectChange> changes) throws Exception {
-        return new CreateObjects().run(changes);
+	return new CreateObjects().run(changes);
     }
-    
+
 }

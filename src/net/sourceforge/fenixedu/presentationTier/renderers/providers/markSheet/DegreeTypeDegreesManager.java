@@ -15,13 +15,13 @@ public class DegreeTypeDegreesManager implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
-	if(markSheetManagementBean.getExecutionPeriod() != null) {
+	if (markSheetManagementBean.getExecutionPeriod() != null) {
 	    List<Degree> res = new ArrayList<Degree>();
 	    res.addAll(RootDomainObject.getInstance().getDegreesSet());
 	    Collections.sort(res, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	    return res;
 	}
-	
+
 	return Collections.emptySet();
 
     }

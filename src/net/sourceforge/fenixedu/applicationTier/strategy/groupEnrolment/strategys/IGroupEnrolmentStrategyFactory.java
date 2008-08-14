@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 
 /**
  * @author scpo and asnr
- *  
+ * 
  */
 public interface IGroupEnrolmentStrategyFactory {
     public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping);

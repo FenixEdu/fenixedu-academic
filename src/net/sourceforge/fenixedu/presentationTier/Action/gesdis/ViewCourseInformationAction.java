@@ -31,37 +31,37 @@ public class ViewCourseInformationAction extends FenixAction {
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
+     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+     * ActionMapping, org.apache.struts.action.ActionForm,
+     * javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
-        IUserView userView = UserView.getUser();
-        String executionCourseId = request.getParameter("executionCourseId");
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ActionErrors errors = new ActionErrors();
+	IUserView userView = UserView.getUser();
+	String executionCourseId = request.getParameter("executionCourseId");
+	Integer degreeCurricularPlanID = null;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
 
-        SiteView siteView = null;
-        Object[] args = { new Integer(executionCourseId) };
-        try {
-            siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation", args);
-        } catch (NotAuthorizedFilterException e) {
-            errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
-            saveErrors(request, errors);
+	SiteView siteView = null;
+	Object[] args = { new Integer(executionCourseId) };
+	try {
+	    siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation", args);
+	} catch (NotAuthorizedFilterException e) {
+	    errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
+	    saveErrors(request, errors);
 
-            throw new FenixActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	    throw new FenixActionException(e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("siteView", siteView);
-        return mapping.findForward("successfull-read");
+	request.setAttribute("siteView", siteView);
+	return mapping.findForward("successfull-read");
     }
 
 }

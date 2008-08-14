@@ -15,15 +15,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class GetEndOfScholarshipDate extends Service {
 
     public Date run(Integer studentCurricularPlanID) {
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
-        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
-                .getInstance();
+	IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+		.getInstance();
 
-        IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
-                .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
+	IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+		.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-        return masterDegreeCurricularPlanStrategy.dateOfEndOfScholarship(studentCurricularPlan);
+	return masterDegreeCurricularPlanStrategy.dateOfEndOfScholarship(studentCurricularPlan);
 
     }
 

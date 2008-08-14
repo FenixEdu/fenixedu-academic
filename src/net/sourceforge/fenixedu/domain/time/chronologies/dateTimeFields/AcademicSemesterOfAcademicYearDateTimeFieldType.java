@@ -14,8 +14,7 @@ public class AcademicSemesterOfAcademicYearDateTimeFieldType extends DateTimeFie
     private static final AcademicSemesterOfAcademicYearDateTimeFieldType ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
     static {
 	ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR = new AcademicSemesterOfAcademicYearDateTimeFieldType(
-		"academicSemesterOfAcademicYear",
-		AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE,
+		"academicSemesterOfAcademicYear", AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE,
 		AcademicYearsDurationFieldType.ACADEMIC_YEARS_TYPE);
     }
 
@@ -26,26 +25,26 @@ public class AcademicSemesterOfAcademicYearDateTimeFieldType extends DateTimeFie
     public static DateTimeFieldType academicSemesterOfAcademicYear() {
 	return ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
     }
-    
+
     @Override
     public DateTimeField getField(Chronology chronology) {
-	if(chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology)chronology).academicSemesterOfAcademicYear();
-	}	
+	if (chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology) chronology).academicSemesterOfAcademicYear();
+	}
 	throw unsupported();
-    }  
-    
+    }
+
     @Override
     public DurationFieldType getDurationType() {
 	return AcademicSemestersDurationFieldType.academicSemesters();
     }
-    
+
     @Override
     public DurationFieldType getRangeDurationType() {
 	return AcademicYearsDurationFieldType.academicYears();
     }
-    
+
     private UnsupportedOperationException unsupported() {
-        return new UnsupportedOperationException(ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR + " field is unsupported");
+	return new UnsupportedOperationException(ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR + " field is unsupported");
     }
 }

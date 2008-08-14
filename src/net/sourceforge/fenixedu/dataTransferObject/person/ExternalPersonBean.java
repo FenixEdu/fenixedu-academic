@@ -12,48 +12,48 @@ public class ExternalPersonBean extends PersonBean {
     private DomainReference<UnitName> unitNameDomainReference;
 
     private DomainReference<PersonName> personName;
-    
+
     private String unitName;
 
     public ExternalPersonBean() {
-        super();
+	super();
     }
 
     public String getUnitName() {
-        return unitName;
+	return unitName;
     }
 
     public void setUnitName(String unitName) {
-        this.unitName = unitName;
+	this.unitName = unitName;
     }
 
     public Unit getUnit() {
-        return unitDomainReference == null ? null : unitDomainReference.getObject();
+	return unitDomainReference == null ? null : unitDomainReference.getObject();
     }
 
     public void setUnit(Unit unit) {
-        this.unitDomainReference = unit != null ? new DomainReference<Unit>(unit) : null;
+	this.unitDomainReference = unit != null ? new DomainReference<Unit>(unit) : null;
     }
 
     public UnitName getUnitNameDomainReference() {
-        return unitNameDomainReference == null ? null : unitNameDomainReference.getObject();
+	return unitNameDomainReference == null ? null : unitNameDomainReference.getObject();
     }
 
     public void setUnitNameDomainReference(UnitName unitName) {
-        if (unitName != null) {
-            this.unitNameDomainReference = new DomainReference<UnitName>(unitName);
-            setUnit(unitName.getUnit());
-        }
+	if (unitName != null) {
+	    this.unitNameDomainReference = new DomainReference<UnitName>(unitName);
+	    setUnit(unitName.getUnit());
+	}
     }
 
     public PersonName getPersonName() {
-        return personName != null ? personName.getObject() : null;
+	return personName != null ? personName.getObject() : null;
     }
 
     public void setPersonName(PersonName personName) {
-        if(personName != null) {
-            this.personName = new DomainReference<PersonName>(personName);
-            setPerson(personName.getPerson());
-        }
+	if (personName != null) {
+	    this.personName = new DomainReference<PersonName>(personName);
+	    setPerson(personName.getPerson());
+	}
     }
 }

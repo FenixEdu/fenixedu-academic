@@ -14,8 +14,7 @@ public class DeleteItem extends Service {
 	if (item != null) {
 	    item.delete();
 	}
-        return Boolean.TRUE;
+	return Boolean.TRUE;
     }
 
 }
-

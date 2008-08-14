@@ -57,11 +57,9 @@ public class PhDGratuityEvent extends PhDGratuityEvent_Base {
 	return result;
     }
 
-    private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO,
-	    final Student student) {
+    private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student) {
 	return AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
-		calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO
-			.getAmountToPay(), student);
+		calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), student);
     }
 
     private YearMonthDay calculateFullPaymentCodeEndDate() {
@@ -85,16 +83,15 @@ public class PhDGratuityEvent extends PhDGratuityEvent_Base {
 		continue;
 	    }
 
-	    paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO
-		    .getAmountToPay(), entryDTO.getAmountToPay());
+	    paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO.getAmountToPay(), entryDTO
+		    .getAmountToPay());
 	    result.add(paymentCode);
 	}
 
 	return result;
     }
 
-    private EntryDTO findEntryDTOForPaymentCode(List<EntryDTO> entryDTOs,
-	    AccountingEventPaymentCode paymentCode) {
+    private EntryDTO findEntryDTOForPaymentCode(List<EntryDTO> entryDTOs, AccountingEventPaymentCode paymentCode) {
 	for (EntryDTO entryDto : entryDTOs) {
 	    if (paymentCode.getAccountingEvent().equals(entryDto.getEvent())) {
 		return entryDto;
@@ -111,8 +108,7 @@ public class PhDGratuityEvent extends PhDGratuityEvent_Base {
 	while (true) {
 	    List<Interval> interruptions = getInterruptions(actualDate.toDateTimeAtMidnight());
 	    if (!interruptions.isEmpty()) {
-		YearMonthDay lastEnd = interruptions.get(interruptions.size() - 1).getEnd()
-			.toYearMonthDay();
+		YearMonthDay lastEnd = interruptions.get(interruptions.size() - 1).getEnd().toYearMonthDay();
 		YearMonthDay extendedDate = getPaymentDeadLine(lastEnd);
 		if (!extendedDate.equals(actualDate)) {
 		    actualDate = extendedDate;
@@ -139,8 +135,7 @@ public class PhDGratuityEvent extends PhDGratuityEvent_Base {
 	List<Interval> interruptions = new ArrayList<Interval>();
 
 	DateTime creationDate = getCreationDate().toDateTimeAtMidnight();
-	for (RegistrationState registrationState : getRegistration().getRegistrationStates(
-		RegistrationStateType.INTERRUPTED)) {
+	for (RegistrationState registrationState : getRegistration().getRegistrationStates(RegistrationStateType.INTERRUPTED)) {
 	    DateTime start = registrationState.getStateDate();
 	    DateTime end = registrationState.getEndDate();
 	    if (start.isAfter(creationDate) && (until == null || start.isBefore(until))) {
@@ -167,11 +162,9 @@ public class PhDGratuityEvent extends PhDGratuityEvent_Base {
 
     public static void generatePhDGratuities() {
 
-	for (DegreeCurricularPlan degreeCurricularPlan : ExecutionYear.readCurrentExecutionYear()
-		.getDegreeCurricularPlans()) {
+	for (DegreeCurricularPlan degreeCurricularPlan : ExecutionYear.readCurrentExecutionYear().getDegreeCurricularPlans()) {
 	    if (degreeCurricularPlan.getDegreeType().equals(DegreeType.BOLONHA_PHD_PROGRAM)) {
-		for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-			.getStudentCurricularPlans()) {
+		for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
 		    if (studentCurricularPlan.isActive()) {
 			process(studentCurricularPlan);
 		    }
@@ -181,22 +174,22 @@ public class PhDGratuityEvent extends PhDGratuityEvent_Base {
     }
 
     private static void process(StudentCurricularPlan studentCurricularPlan) {
-	
+
 	Registration registration = studentCurricularPlan.getRegistration();
-	if(registration == null) {
+	if (registration == null) {
 	    return;
 	}
-	
+
 	Person person = registration.getPerson();
 	System.out.println("Processing " + person.getName());
-	
+
 	YearMonthDay start = registration.getStartDate();
 	YearMonthDay today = new YearMonthDay();
 
 	int totalDays = Days.daysBetween(start, today).getDays();
 
-	Set<PhDGratuityEvent> gratuities = (Set<PhDGratuityEvent>) person.getEventsByEventTypeAndClass(
-		EventType.GRATUITY, PhDGratuityEvent.class);
+	Set<PhDGratuityEvent> gratuities = (Set<PhDGratuityEvent>) person.getEventsByEventTypeAndClass(EventType.GRATUITY,
+		PhDGratuityEvent.class);
 
 	for (PhDGratuityEvent event : gratuities) {
 	    totalDays -= event.getNumberOfInterruptedDaysInEvent(today.toDateTimeAtMidnight());
@@ -205,8 +198,8 @@ public class PhDGratuityEvent extends PhDGratuityEvent_Base {
 	int roundYears = totalDays / 365;
 	if (roundYears >= gratuities.size()) {
 	    System.out.println("Added new PhDGratuityEvent");
-	    new PhDGratuityEvent(studentCurricularPlan.getAdministrativeOffice(), person, studentCurricularPlan,
-		    ExecutionYear.readCurrentExecutionYear());
+	    new PhDGratuityEvent(studentCurricularPlan.getAdministrativeOffice(), person, studentCurricularPlan, ExecutionYear
+		    .readCurrentExecutionYear());
 	}
     }
 }

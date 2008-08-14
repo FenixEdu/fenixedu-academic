@@ -11,19 +11,19 @@ public class NonValidChangeServiceException extends FenixServiceException {
     }
 
     public NonValidChangeServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public NonValidChangeServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[NonValidChangeServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[NonValidChangeServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

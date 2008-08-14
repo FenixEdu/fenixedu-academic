@@ -21,7 +21,6 @@ public class EditContextFromCurricularCourse extends Service {
 	/*
 	 * TODO: Important - change this code (must be generic to support
 	 * several curricularPeriodInfoDTOs, instead of year and semester)
-	 * 
 	 */
 	CurricularPeriod curricularPeriod = null;
 	CurricularPeriodInfoDTO curricularPeriodInfoYear = null;

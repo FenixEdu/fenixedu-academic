@@ -111,13 +111,13 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
 	addParameter("name", getDocumentRequest().getRegistration().getPerson().getName());
 	addParameter("studentNumber", getStudentNumber());
     }
-    
+
     private String getStudentNumber() {
 	final Registration registration = getDocumentRequest().getRegistration();
 	if (ExamDateCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
 	    final String agreementInformation = registration.getAgreementInformation();
 	    if (!StringUtils.isEmpty(agreementInformation)) {
-		return registration.getRegistrationAgreement().toString() + " "  + agreementInformation;
+		return registration.getRegistrationAgreement().toString() + " " + agreementInformation;
 	    }
 	}
 	return registration.getStudent().getNumber().toString();

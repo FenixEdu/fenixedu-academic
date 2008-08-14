@@ -17,7 +17,7 @@ public class CourseGroupsProviderForRegistrationAcademicServiceRequest implement
 	final Set<CourseGroup> courseGroups = degreeCurricularPlan.getAllCoursesGroups();
 	courseGroups.removeAll(degreeCurricularPlan.getRoot().getCycleCourseGroups());
 	courseGroups.remove(degreeCurricularPlan.getRoot());
-	return courseGroups;	
+	return courseGroups;
     }
 
     public Converter getConverter() {

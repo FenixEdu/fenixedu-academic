@@ -13,41 +13,42 @@ import org.apache.commons.collections.Transformer;
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse_Base {
+public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends
+	RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse_Base {
 
-	public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse() {
-        super();
+    public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse() {
+	super();
     }
-	
-	public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
-		super();
-		
-		setPrecedence(precedence);
-        setPrecedentCurricularCourse(precedentCurricularCourse);
-	}
-	
+
+    public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse(Integer number, Precedence precedence,
+	    CurricularCourse precedentCurricularCourse) {
+	super();
+
+	setPrecedence(precedence);
+	setPrecedentCurricularCourse(precedentCurricularCourse);
+    }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        CurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
-        CurricularCourseEnrollmentType result1 = null;
-        CurricularCourseEnrollmentType result2 = null;
+	CurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
+	CurricularCourseEnrollmentType result1 = null;
+	CurricularCourseEnrollmentType result2 = null;
 
-        List curricularCoursesWhereStudentCanBeEnrolled = (List) CollectionUtils.collect(
-                precedenceContext.getCurricularCourses2Enroll(), new Transformer() {
-                    public Object transform(Object obj) {
-                        CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
-                        return curricularCourse2Enroll.getCurricularCourse();
-                    }
-                });
+	List curricularCoursesWhereStudentCanBeEnrolled = (List) CollectionUtils.collect(precedenceContext
+		.getCurricularCourses2Enroll(), new Transformer() {
+	    public Object transform(Object obj) {
+		CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
+		return curricularCourse2Enroll.getCurricularCourse();
+	    }
+	});
 
-        if (curricularCoursesWhereStudentCanBeEnrolled.contains(curricularCourse)) {
-            result1 = CurricularCourseEnrollmentType.DEFINITIVE;
-        } else {
-            result1 = CurricularCourseEnrollmentType.NOT_ALLOWED;
-        }
+	if (curricularCoursesWhereStudentCanBeEnrolled.contains(curricularCourse)) {
+	    result1 = CurricularCourseEnrollmentType.DEFINITIVE;
+	} else {
+	    result1 = CurricularCourseEnrollmentType.NOT_ALLOWED;
+	}
 
-        result2 = super.evaluate(precedenceContext);
+	result2 = super.evaluate(precedenceContext);
 
-        return result1.or(result2);
+	return result1.or(result2);
     }
 }

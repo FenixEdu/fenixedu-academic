@@ -100,7 +100,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     public BigDecimal getNumberOfAllocationHours() {
 	return getNumberOfAllocationHours(getBeginDateTime(), getEndDateTime());
     }
-    
+
     public static BigDecimal getNumberOfAllocationHours(DateTime begin, DateTime end) {
 	int minutes = Minutes.minutesBetween(begin, end).getMinutes();
 	BigDecimal hours = BigDecimal.valueOf(minutes).divide(BigDecimal.valueOf(Lesson.NUMBER_OF_MINUTES_IN_HOUR), 2,

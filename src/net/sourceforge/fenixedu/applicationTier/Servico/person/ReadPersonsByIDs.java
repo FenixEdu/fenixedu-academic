@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.Person;
 public class ReadPersonsByIDs extends Service {
 
     public List<InfoPerson> run(final List<Integer> personIds) {
-	
-        final List<InfoPerson> result= new ArrayList<InfoPerson>(personIds.size());
-        for (final Integer personId : personIds) {
-            result.add(InfoPerson.newInfoFromDomain((Person) rootDomainObject.readPartyByOID(personId)));
-        }
-        return result;
+
+	final List<InfoPerson> result = new ArrayList<InfoPerson>(personIds.size());
+	for (final Integer personId : personIds) {
+	    result.add(InfoPerson.newInfoFromDomain((Person) rootDomainObject.readPartyByOID(personId)));
+	}
+	return result;
     }
 
 }

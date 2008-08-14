@@ -4,25 +4,24 @@
 
 package net.sourceforge.fenixedu.domain.studentCurricularPlan;
 
-
 /**
  * @author Nuno Nunes & Joana Mota
  */
 public enum StudentCurricularPlanState {
 
     ACTIVE,
-    
+
     CONCLUDED,
-    
+
     INCOMPLETE,
-    
+
     SCHOOLPARTCONCLUDED,
-    
+
     INACTIVE,
-    
+
     PAST;
-    
+
     public String getName() {
-        return name();
+	return name();
     }
 }

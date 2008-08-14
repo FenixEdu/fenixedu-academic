@@ -16,6 +16,6 @@ public class OutOfCurricularCourseEnrolmentPeriod extends OutOfPeriodException {
      * @param endDate
      */
     public OutOfCurricularCourseEnrolmentPeriod(Date startDate, Date endDate) {
-        super("message.out.curricular.course.enrolment.period", startDate, endDate);
+	super("message.out.curricular.course.enrolment.period", startDate, endDate);
     }
 }

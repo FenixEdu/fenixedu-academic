@@ -7,31 +7,27 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 public enum AccountabilityTypeEnum {
 
     MANAGEMENT_FUNCTION,
-    
-    ORGANIZATIONAL_STRUCTURE,
-    ACADEMIC_STRUCTURE,     
-    ADMINISTRATIVE_STRUCTURE,
-    
+
+    ORGANIZATIONAL_STRUCTURE, ACADEMIC_STRUCTURE, ADMINISTRATIVE_STRUCTURE,
+
     GEOGRAPHIC,
-    
-    //Contracts
-    WORKING_CONTRACT,
-    MAILING_CONTRACT,         
-    INVITATION,
-         
+
+    // Contracts
+    WORKING_CONTRACT, MAILING_CONTRACT, INVITATION,
+
     RESEARCH_CONTRACT,
-    
+
     ASSIDUOUSNESS_STRUCTURE;
-    
+
     public String getName() {
-        return name();
+	return name();
     }
 
     public String getQualifiedName() {
-        return AccountabilityTypeEnum.class.getSimpleName() + "." + name();
+	return AccountabilityTypeEnum.class.getSimpleName() + "." + name();
     }
 
     public String getFullyQualifiedName() {
-        return AccountabilityTypeEnum.class.getName() + "." + name();
+	return AccountabilityTypeEnum.class.getName() + "." + name();
     }
 }

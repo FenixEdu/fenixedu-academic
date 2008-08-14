@@ -17,18 +17,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExamCoordinatorsForGivenGroup implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        VigilantGroupBean bean = (VigilantGroupBean) source;
-        VigilantGroup group = bean.getSelectedVigilantGroup();
+	VigilantGroupBean bean = (VigilantGroupBean) source;
+	VigilantGroup group = bean.getSelectedVigilantGroup();
 
-        List<ExamCoordinator> coordinators = new ArrayList<ExamCoordinator>(group.getExamCoordinators());
+	List<ExamCoordinator> coordinators = new ArrayList<ExamCoordinator>(group.getExamCoordinators());
 
-        Collections.sort(coordinators, new BeanComparator("person.name"));
-        return coordinators;
+	Collections.sort(coordinators, new BeanComparator("person.name"));
+	return coordinators;
 
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 
 }

@@ -41,15 +41,15 @@ public interface FunctionalityContext {
     public User getLoggedUser();
 
     public Content getSelectedContent();
-    
+
     public Container getSelectedContainer();
-    
+
     public Container getSelectedTopLevelContainer();
-    
+
     public Content getLastContentInPath(Class type);
 
     public String getCurrentContextPath();
 
     public List<Content> getSelectedContents();
-    
+
 }

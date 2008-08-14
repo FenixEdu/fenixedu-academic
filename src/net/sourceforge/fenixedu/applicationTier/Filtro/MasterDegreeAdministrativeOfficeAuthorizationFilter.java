@@ -22,7 +22,7 @@ public class MasterDegreeAdministrativeOfficeAuthorizationFilter extends Authori
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -31,6 +31,6 @@ public class MasterDegreeAdministrativeOfficeAuthorizationFilter extends Authori
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE;
+	return RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE;
     }
 }

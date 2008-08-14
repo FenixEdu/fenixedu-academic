@@ -1,6 +1,6 @@
 /**
-* Nov 24, 2005
-*/
+ * Nov 24, 2005
+ */
 package net.sourceforge.fenixedu.dataTransferObject.teacher.workTime;
 
 import java.util.Date;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.util.WeekDay;
 
 /**
  * @author Ricardo Rodrigues
- *
+ * 
  */
 
 public class InstitutionWorkTimeDTO extends InfoObject {
@@ -18,25 +18,28 @@ public class InstitutionWorkTimeDTO extends InfoObject {
     private WeekDay weekDay;
     private Date startTime;
     private Date endTime;
-    
+
     public Date getEndTime() {
-        return endTime;
+	return endTime;
     }
+
     public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+	this.endTime = endTime;
     }
+
     public Date getStartTime() {
-        return startTime;
+	return startTime;
     }
+
     public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+	this.startTime = startTime;
     }
+
     public WeekDay getWeekDay() {
-        return weekDay;
+	return weekDay;
     }
+
     public void setWeekDay(WeekDay weekDay) {
-        this.weekDay = weekDay;
+	this.weekDay = weekDay;
     }
 }
-
-

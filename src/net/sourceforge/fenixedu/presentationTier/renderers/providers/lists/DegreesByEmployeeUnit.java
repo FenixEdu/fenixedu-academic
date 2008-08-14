@@ -9,8 +9,7 @@ public class DegreesByEmployeeUnit implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-	return AccessControl.getPerson().getEmployee().getAdministrativeOffice()
-		.getAdministratedDegrees();
+	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegrees();
     }
 
     public Converter getConverter() {

@@ -9,9 +9,8 @@ public class DeleteVigilantGroupByOID extends Service {
 
     public void run(Integer idInternal) {
 
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(
-                VigilantGroup.class, idInternal);
-        group.delete();
+	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, idInternal);
+	group.delete();
 
     }
 

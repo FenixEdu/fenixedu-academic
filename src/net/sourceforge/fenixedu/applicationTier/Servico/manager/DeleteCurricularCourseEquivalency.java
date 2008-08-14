@@ -7,8 +7,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCurricularCourseEquivalency extends Service {
 
     public void run(final Integer curricularCourseEquivalencyID) {
-        final CurricularCourseEquivalence curricularCourseEquivalence = rootDomainObject.readCurricularCourseEquivalenceByOID(curricularCourseEquivalencyID);
-        curricularCourseEquivalence.delete();
+	final CurricularCourseEquivalence curricularCourseEquivalence = rootDomainObject
+		.readCurricularCourseEquivalenceByOID(curricularCourseEquivalencyID);
+	curricularCourseEquivalence.delete();
     }
 
 }

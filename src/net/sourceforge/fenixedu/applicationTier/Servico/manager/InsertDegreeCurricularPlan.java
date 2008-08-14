@@ -9,33 +9,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertDegreeCurricularPlan extends Service {
 
-    public void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException{
+    public void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException {
 
-        if (infoDcp.getInfoDegree().getIdInternal() == null 
-                || infoDcp.getName() == null
-                || infoDcp.getInitialDate() == null 
-                || infoDcp.getDegreeDuration() == null
-                || infoDcp.getMinimalYearForOptionalCourses() == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+	if (infoDcp.getInfoDegree().getIdInternal() == null || infoDcp.getName() == null || infoDcp.getInitialDate() == null
+		|| infoDcp.getDegreeDuration() == null || infoDcp.getMinimalYearForOptionalCourses() == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        final Degree degree = rootDomainObject.readDegreeByOID(infoDcp.getInfoDegree().getIdInternal());
-        if (degree == null) {
-            throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
-        }
+	final Degree degree = rootDomainObject.readDegreeByOID(infoDcp.getInfoDegree().getIdInternal());
+	if (degree == null) {
+	    throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
+	}
 
-        degree.createPreBolonhaDegreeCurricularPlan(
-                infoDcp.getName(), 
-                infoDcp.getState(),
-                infoDcp.getInitialDate(), 
-                infoDcp.getEndDate(), 
-                infoDcp.getDegreeDuration(), 
-                infoDcp.getMinimalYearForOptionalCourses(), 
-                infoDcp.getNeededCredits(), 
-                infoDcp.getMarkType(), 
-                infoDcp.getNumerusClausus(), 
-                infoDcp.getAnotation(), 
-                infoDcp.getGradeScale());
+	degree.createPreBolonhaDegreeCurricularPlan(infoDcp.getName(), infoDcp.getState(), infoDcp.getInitialDate(), infoDcp
+		.getEndDate(), infoDcp.getDegreeDuration(), infoDcp.getMinimalYearForOptionalCourses(), infoDcp
+		.getNeededCredits(), infoDcp.getMarkType(), infoDcp.getNumerusClausus(), infoDcp.getAnotation(), infoDcp
+		.getGradeScale());
     }
 
 }

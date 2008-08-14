@@ -19,10 +19,10 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends Coordin
 
     @Override
     protected ExecutionYear getSpecificExecutionYear(ServiceRequest request, ServiceResponse response) {
-        Integer id = (Integer) request.getServiceParameters().getParameter(0);
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(id);
-        
-        return executionCourse.getExecutionYear();
+	Integer id = (Integer) request.getServiceParameters().getParameter(0);
+	ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(id);
+
+	return executionCourse.getExecutionYear();
     }
-    
+
 }

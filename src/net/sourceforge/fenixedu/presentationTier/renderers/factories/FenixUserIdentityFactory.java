@@ -10,9 +10,9 @@ public class FenixUserIdentityFactory extends UserIdentityFactory {
 
     @Override
     public UserIdentity createUserIdentity(HttpServletRequest request) {
-        IUserView userView = (IUserView) request.getSession().getAttribute("UserView");
-        
-        return new FenixUserIdentity(userView);
+	IUserView userView = (IUserView) request.getSession().getAttribute("UserView");
+
+	return new FenixUserIdentity(userView);
     }
 
 }

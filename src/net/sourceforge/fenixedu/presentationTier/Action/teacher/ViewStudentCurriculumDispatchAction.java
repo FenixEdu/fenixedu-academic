@@ -11,27 +11,27 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Fernanda Quitério 05/Fev/2004
- *  
+ * 
  */
 public class ViewStudentCurriculumDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        getExecutionDegreeId(request);
-        
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
-        
-        return mapping.findForward("prepareViewStudentCurriculumChooseStudent");
+	    HttpServletResponse response) throws Exception {
+	getExecutionDegreeId(request);
+
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
+
+	return mapping.findForward("prepareViewStudentCurriculumChooseStudent");
     }
 
     private void getExecutionDegreeId(HttpServletRequest request) {
-        String executionDegreeId = request.getParameter("executionDegreeId");
-        if (executionDegreeId == null) {
-            executionDegreeId = (String) request.getAttribute("executionDegreeId");
-        }
-        request.setAttribute("executionDegreeId", executionDegreeId);
+	String executionDegreeId = request.getParameter("executionDegreeId");
+	if (executionDegreeId == null) {
+	    executionDegreeId = (String) request.getAttribute("executionDegreeId");
+	}
+	request.setAttribute("executionDegreeId", executionDegreeId);
     }
 }

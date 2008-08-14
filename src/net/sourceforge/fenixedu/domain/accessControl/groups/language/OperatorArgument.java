@@ -18,23 +18,23 @@ public abstract class OperatorArgument extends DynamicArgument {
     private ArgumentList arguments;
 
     public OperatorArgument() {
-        super();
+	super();
 
-        this.arguments = new ArgumentList();
+	this.arguments = new ArgumentList();
     }
 
     /**
      * @return the list of arguments available to this dynamic group
      */
     protected List<Argument> getArguments() {
-        return this.arguments;
+	return this.arguments;
     }
 
     /**
      * @return the internal argument list
      */
     protected ArgumentList getArgumentList() {
-        return this.arguments;
+	return this.arguments;
     }
 
     /**
@@ -45,16 +45,16 @@ public abstract class OperatorArgument extends DynamicArgument {
      *            the argument to be added
      */
     public void addArgument(Argument argument) {
-        argument.setContextProvider(this);
+	argument.setContextProvider(this);
 
-        this.arguments.add(argument);
+	this.arguments.add(argument);
     }
 
     @Override
     protected Object getMainValue() {
-        checkOperatorArguments();
+	checkOperatorArguments();
 
-        return execute();
+	return execute();
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class OperatorArgument extends DynamicArgument {
      *                if one of the arguments is not valid
      */
     protected void checkOperatorArguments() {
-        // do nothing
+	// do nothing
     }
 
     /**
@@ -84,18 +84,18 @@ public abstract class OperatorArgument extends DynamicArgument {
      * @return the requested argument
      */
     protected Argument argument(int index) {
-        return getArgumentList().get(index);
+	return getArgumentList().get(index);
     }
 
     @Override
     public boolean isDynamic() {
-        for (Argument argument : getArguments()) {
-            if (argument.isDynamic()) {
-                return true;
-            }
-        }
-        
-        return false;
+	for (Argument argument : getArguments()) {
+	    if (argument.isDynamic()) {
+		return true;
+	    }
+	}
+
+	return false;
     }
-    
+
 }

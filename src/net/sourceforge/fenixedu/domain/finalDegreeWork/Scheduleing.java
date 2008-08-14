@@ -101,15 +101,12 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(
-		getExecutionDegrees());
-	Collections.sort(executionDegrees,
-		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 	return executionDegrees;
     }
 
-    public Set<Proposal> findProposalsByStatus(
-	    final FinalDegreeWorkProposalStatus finalDegreeWorkProposalStatus) {
+    public Set<Proposal> findProposalsByStatus(final FinalDegreeWorkProposalStatus finalDegreeWorkProposalStatus) {
 	final Set<Proposal> proposals = new HashSet<Proposal>();
 	for (final Proposal proposal : getProposalsSet()) {
 	    if (finalDegreeWorkProposalStatus.equals(proposal.getStatus())) {
@@ -128,7 +125,8 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public SortedSet<FinalDegreeWorkGroup> getGroupsSortedByStudentNumbers() {
-	final SortedSet<FinalDegreeWorkGroup> groups = new TreeSet<FinalDegreeWorkGroup>(FinalDegreeWorkGroup.COMPARATOR_BY_STUDENT_NUMBERS);
+	final SortedSet<FinalDegreeWorkGroup> groups = new TreeSet<FinalDegreeWorkGroup>(
+		FinalDegreeWorkGroup.COMPARATOR_BY_STUDENT_NUMBERS);
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    groups.addAll(executionDegree.getAssociatedFinalDegreeWorkGroupsSet());
 	}
@@ -136,7 +134,8 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public SortedSet<FinalDegreeWorkGroup> getGroupsWithProposalsSortedByStudentNumbers() {
-	final SortedSet<FinalDegreeWorkGroup> groups = new TreeSet<FinalDegreeWorkGroup>(FinalDegreeWorkGroup.COMPARATOR_BY_STUDENT_NUMBERS);
+	final SortedSet<FinalDegreeWorkGroup> groups = new TreeSet<FinalDegreeWorkGroup>(
+		FinalDegreeWorkGroup.COMPARATOR_BY_STUDENT_NUMBERS);
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    for (final FinalDegreeWorkGroup group : executionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
 		if (!group.getGroupProposalsSet().isEmpty()) {

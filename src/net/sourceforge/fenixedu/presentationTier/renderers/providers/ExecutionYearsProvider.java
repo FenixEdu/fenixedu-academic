@@ -17,15 +17,16 @@ public class ExecutionYearsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-    	final List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>(RootDomainObject.getInstance().getExecutionYears());
-    	
-    	Collections.sort(executionYears, new ReverseComparator());
-    	
-        return executionYears; 
+	final List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>(RootDomainObject.getInstance()
+		.getExecutionYears());
+
+	Collections.sort(executionYears, new ReverseComparator());
+
+	return executionYears;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

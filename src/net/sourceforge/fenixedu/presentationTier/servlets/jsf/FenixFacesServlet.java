@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class FenixFacesServlet implements Servlet {
 
@@ -27,49 +27,49 @@ public class FenixFacesServlet implements Servlet {
     final FacesServlet facesServlet;
 
     public FenixFacesServlet() {
-        super();
-        facesServlet = new FacesServlet();
+	super();
+	facesServlet = new FacesServlet();
     }
 
     public void init(ServletConfig config) throws ServletException {
-        facesServlet.init(config);
-        this.servletConfig = config;
+	facesServlet.init(config);
+	this.servletConfig = config;
     }
 
     public ServletConfig getServletConfig() {
-        return facesServlet.getServletConfig();
+	return facesServlet.getServletConfig();
     }
 
     public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-        try {
-            facesServlet.service(request, response);
-        } catch (IOException e) {
-            e.printStackTrace();
-            handleException(request, response, e);
-            throw e;            
-        } catch (ServletException e) {
-            e.printStackTrace();
-            int index = e.getMessage().indexOf("IllegalDataAccessException");
-            if(index > -1){
-                String message = e.getMessage().substring(index);
-                throw new IllegalDataAccessException(message);
-            }
-            handleException(request, response, e);
-            throw e;
-        }
+	try {
+	    facesServlet.service(request, response);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    handleException(request, response, e);
+	    throw e;
+	} catch (ServletException e) {
+	    e.printStackTrace();
+	    int index = e.getMessage().indexOf("IllegalDataAccessException");
+	    if (index > -1) {
+		String message = e.getMessage().substring(index);
+		throw new IllegalDataAccessException(message);
+	    }
+	    handleException(request, response, e);
+	    throw e;
+	}
     }
 
     private void handleException(ServletRequest request, ServletResponse response, Exception e) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        httpServletRequest.getSession(false).setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
+	HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+	httpServletRequest.getSession(false).setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
     }
 
     public String getServletInfo() {
-        return facesServlet.getServletInfo();
+	return facesServlet.getServletInfo();
     }
 
     public void destroy() {
-        facesServlet.destroy();
+	facesServlet.destroy();
     }
 
 }

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
-    
+
     private DomainReference<Unit> unit;
 
     public ExternalUnitResultBean(final Unit unit, final PartyTypeEnum parentUnitType) {
@@ -17,7 +17,7 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 	setUnit(unit);
 	setParentUnitType(parentUnitType);
     }
-    
+
     public ExternalUnitResultBean(final Unit unit) {
 	this(unit, null);
     }
@@ -32,9 +32,9 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
     }
 
     public PartyTypeEnum getType() {
-        return getUnit().getType();
+	return getUnit().getType();
     }
-    
+
     @Override
     public List<LinkObject> getFullPath() {
 	final List<LinkObject> result = new ArrayList<LinkObject>();
@@ -47,28 +47,27 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 	}
 	return result;
     }
-    
+
     @Override
     public String getName() {
-        return getUnit().getName();
+	return getUnit().getName();
     }
-    
+
     public String getNumberOfUniversities() {
-	return getUnit().isCountryUnit() ? 
-		String.valueOf(getUnit().getSubUnits(PartyTypeEnum.UNIVERSITY).size()) : super.getNumberOfUniversities(); 
-    }
-    
-    public String getNumberOfSchools() {	
-	return (getUnit().isCountryUnit() || getUnit().isUniversityUnit()) ? 
-		String.valueOf(countNumberOfUnitsWithType(getUnit(), PartyTypeEnum.SCHOOL)) : super.getNumberOfSchools();
+	return getUnit().isCountryUnit() ? String.valueOf(getUnit().getSubUnits(PartyTypeEnum.UNIVERSITY).size()) : super
+		.getNumberOfUniversities();
     }
 
-    public String getNumberOfDepartments() {	
-	return (getUnit().isUniversityUnit() || getUnit().isSchoolUnit()) ? 
-		String.valueOf(countNumberOfUnitsWithType(getUnit(), PartyTypeEnum.DEPARTMENT)) : super.getNumberOfDepartments();
+    public String getNumberOfSchools() {
+	return (getUnit().isCountryUnit() || getUnit().isUniversityUnit()) ? String.valueOf(countNumberOfUnitsWithType(getUnit(),
+		PartyTypeEnum.SCHOOL)) : super.getNumberOfSchools();
     }
 
-    
+    public String getNumberOfDepartments() {
+	return (getUnit().isUniversityUnit() || getUnit().isSchoolUnit()) ? String.valueOf(countNumberOfUnitsWithType(getUnit(),
+		PartyTypeEnum.DEPARTMENT)) : super.getNumberOfDepartments();
+    }
+
     private int countNumberOfUnitsWithType(final Unit unit, final PartyTypeEnum unitTypeToSearch) {
 
 	int result = unit.getSubUnits(unitTypeToSearch).size();
@@ -89,10 +88,11 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 	default:
 	    break;
 	}
-	return result;	
+	return result;
     }
-    
-    private int countNumberOfUnitsWithType(final Unit unit, final PartyTypeEnum parentUnitType, final PartyTypeEnum unitTypeToSearch) {
+
+    private int countNumberOfUnitsWithType(final Unit unit, final PartyTypeEnum parentUnitType,
+	    final PartyTypeEnum unitTypeToSearch) {
 	int result = 0;
 	if (unitTypeToSearch != parentUnitType) {
 	    for (final Unit each : unit.getSubUnits(parentUnitType)) {
@@ -103,9 +103,10 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
     }
 
     public String getNumberOfExternalCurricularCourses() {
-	return !getUnit().isCountryUnit() ? String.valueOf(countNumberOfExternalCurricularCourses(getUnit())) : super.getNumberOfExternalCurricularCourses();
+	return !getUnit().isCountryUnit() ? String.valueOf(countNumberOfExternalCurricularCourses(getUnit())) : super
+		.getNumberOfExternalCurricularCourses();
     }
-    
+
     private int countNumberOfExternalCurricularCourses(final Unit unit) {
 
 	int result = unit.getExternalCurricularCoursesCount();
@@ -126,9 +127,9 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 	default:
 	    break;
 	}
-	return result;	
+	return result;
     }
-    
+
     private int countNumberOfExternalCurricularCourses(final Unit unit, final PartyTypeEnum parentUnitType) {
 	int result = 0;
 	for (final Unit each : unit.getSubUnits(parentUnitType)) {
@@ -142,7 +143,7 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 	getChildsWithType(result, unit, type);
 	return result;
     }
-    
+
     static private void getChildsWithType(final List<Unit> result, final Unit unit, final PartyTypeEnum subUnitTypeToSearch) {
 
 	result.addAll(unit.getSubUnits(subUnitTypeToSearch));
@@ -164,16 +165,16 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 	    break;
 	}
     }
-    
-    static private void addSubUnits(final List<Unit> result, final Unit unit,
-	    final PartyTypeEnum parentUnitType, final PartyTypeEnum subUnitType) {
+
+    static private void addSubUnits(final List<Unit> result, final Unit unit, final PartyTypeEnum parentUnitType,
+	    final PartyTypeEnum subUnitType) {
 	if (subUnitType != parentUnitType) {
 	    for (final Unit each : unit.getSubUnits(parentUnitType)) {
 		getChildsWithType(result, each, subUnitType);
 	    }
 	}
     }
-    
+
     static public List<ExternalUnitResultBean> buildFrom(final Unit unit, final PartyTypeEnum type) {
 	final List<ExternalUnitResultBean> result = new ArrayList<ExternalUnitResultBean>();
 	for (final Unit each : getChildUnitsFor(unit, type)) {

@@ -21,14 +21,15 @@ public class SectionProviderForContents implements DataProvider {
 	} else {
 	    Section section = (Section) source;
 	    Container container = getParent(section);
-	    return container == null ? Collections.EMPTY_LIST : container.getOrderedChildren(new Class[] {Section.class, MetaDomainObjectPortal.class});
+	    return container == null ? Collections.EMPTY_LIST : container.getOrderedChildren(new Class[] { Section.class,
+		    MetaDomainObjectPortal.class });
 	}
     }
 
     private Container getParent(Section section) {
-	for(Node node : section.getParents()) {
+	for (Node node : section.getParents()) {
 	    Container container = node.getParent();
-	    if(!(container instanceof Module)) {
+	    if (!(container instanceof Module)) {
 		return container;
 	    }
 	}

@@ -17,7 +17,7 @@ public enum DocumentReason {
     PUBLIC_CONTEST;
 
     public String getName() {
-        return name();
+	return name();
     }
-    
+
 }

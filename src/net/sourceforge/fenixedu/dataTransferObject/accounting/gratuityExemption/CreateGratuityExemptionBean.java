@@ -52,8 +52,7 @@ public class CreateGratuityExemptionBean implements Serializable {
     }
 
     public void setGratuityEvent(GratuityEvent gratuityEvent) {
-	this.gratuityEvent = (gratuityEvent != null) ? new DomainReference<GratuityEvent>(gratuityEvent)
-		: null;
+	this.gratuityEvent = (gratuityEvent != null) ? new DomainReference<GratuityEvent>(gratuityEvent) : null;
     }
 
     public BigDecimal getPercentage() {

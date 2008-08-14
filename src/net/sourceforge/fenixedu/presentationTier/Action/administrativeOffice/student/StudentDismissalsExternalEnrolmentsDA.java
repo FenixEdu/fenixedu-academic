@@ -11,28 +11,29 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class StudentDismissalsExternalEnrolmentsDA extends StudentExternalEnrolmentsDA {
-    
-   
+
     @Override
-    public ActionForward backToMainPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward backToMainPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
 	return mapping.findForward("manageDismissals");
     }
-    
+
     @Override
-    public ActionForward cancelExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward cancelExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("registration", getRegistration(request, actionForm));
 	return mapping.findForward("visualizeRegistration");
     }
-    
+
     @Override
     public String getContextInformation() {
 	return "/studentDismissalsExternalEnrolments.do?";
     }
-    
+
     @Override
     protected String getParameters(final HttpServletRequest request) {
-        return "scpID=" + getIntegerFromRequest(request, "scpID");
+	return "scpID=" + getIntegerFromRequest(request, "scpID");
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {

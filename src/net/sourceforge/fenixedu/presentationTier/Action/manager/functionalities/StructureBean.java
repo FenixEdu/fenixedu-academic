@@ -6,20 +6,20 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 /**
- * This bean is used to receive a file from the user with the
- * structure to import.
+ * This bean is used to receive a file from the user with the structure to
+ * import.
  * 
  * @author cfgi
  */
 public class StructureBean implements Serializable {
 
     /**
-     * Serialization id. 
+     * Serialization id.
      */
     private static final long serialVersionUID = 1L;
-    
+
     private transient InputStream stream;
-    
+
     /**
      * This property chooses if the principal attribute of the imported
      * functionalities should be preserved or if all the imported
@@ -32,45 +32,45 @@ public class StructureBean implements Serializable {
 
     private boolean uuidUsed;
     private boolean currentParentUsed;
-    
+
     public StructureBean() {
-        super();
-        
-        setPrincipalPreserved(true);
-        setUuidUsed(false);
-        setCurrentParentUsed(true);
+	super();
+
+	setPrincipalPreserved(true);
+	setUuidUsed(false);
+	setCurrentParentUsed(true);
     }
 
     public InputStream getStream() {
-        return this.stream;
+	return this.stream;
     }
 
     public void setStream(InputStream stream) {
-        this.stream = stream;
+	this.stream = stream;
     }
 
     public boolean isPrincipalPreserved() {
-        return this.principalPreserved;
+	return this.principalPreserved;
     }
 
     public void setPrincipalPreserved(boolean principalPreserved) {
-        this.principalPreserved = principalPreserved;
+	this.principalPreserved = principalPreserved;
     }
 
     public boolean isUuidUsed() {
-        return this.uuidUsed;
+	return this.uuidUsed;
     }
 
     public void setUuidUsed(boolean uuidUsed) {
-        this.uuidUsed = uuidUsed;
+	this.uuidUsed = uuidUsed;
     }
 
     public boolean isCurrentParentUsed() {
-        return this.currentParentUsed;
+	return this.currentParentUsed;
     }
 
     public void setCurrentParentUsed(boolean currentParentUsed) {
-        this.currentParentUsed = currentParentUsed;
+	this.currentParentUsed = currentParentUsed;
     }
 
 }

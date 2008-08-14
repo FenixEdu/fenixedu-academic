@@ -31,108 +31,111 @@ public class InfoSummaryPTEReportLine extends InfoReportLine {
     private Double total;
 
     public Double getExpense() {
-        return expense;
+	return expense;
     }
 
     public void setExpense(Double expense) {
-        this.expense = expense;
+	this.expense = expense;
     }
 
     public Integer getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public Double getRevenue() {
-        return revenue;
+	return revenue;
     }
 
     public void setRevenue(Double revenue) {
-        this.revenue = revenue;
+	this.revenue = revenue;
     }
 
     public Double getTax() {
-        return tax;
+	return tax;
     }
 
     public void setTax(Double tax) {
-        this.tax = tax;
+	this.tax = tax;
     }
 
     public Double getTotal() {
-        return total;
+	return total;
     }
 
     public void setTotal(Double total) {
-        this.total = total;
+	this.total = total;
     }
 
     public void copyFromDomain(ISummaryPTEReportLine summaryPTEReportLine) {
-        if (summaryPTEReportLine != null) {
-            setProjectCode(summaryPTEReportLine.getProjectCode());
-            setExpense(summaryPTEReportLine.getExpense());
-            setRevenue(summaryPTEReportLine.getRevenue());
-            setTax(summaryPTEReportLine.getTax());
-            setTotal(summaryPTEReportLine.getTotal());
-        }
+	if (summaryPTEReportLine != null) {
+	    setProjectCode(summaryPTEReportLine.getProjectCode());
+	    setExpense(summaryPTEReportLine.getExpense());
+	    setRevenue(summaryPTEReportLine.getRevenue());
+	    setTax(summaryPTEReportLine.getTax());
+	    setTotal(summaryPTEReportLine.getTotal());
+	}
     }
 
     public static InfoSummaryPTEReportLine newInfoFromDomain(ISummaryPTEReportLine summaryPTEReportLine) {
-        InfoSummaryPTEReportLine infoSummaryPTEReportLine = null;
-        if (summaryPTEReportLine != null) {
-            infoSummaryPTEReportLine = new InfoSummaryPTEReportLine();
-            infoSummaryPTEReportLine.copyFromDomain(summaryPTEReportLine);
-        }
-        return infoSummaryPTEReportLine;
+	InfoSummaryPTEReportLine infoSummaryPTEReportLine = null;
+	if (summaryPTEReportLine != null) {
+	    infoSummaryPTEReportLine = new InfoSummaryPTEReportLine();
+	    infoSummaryPTEReportLine.copyFromDomain(summaryPTEReportLine);
+	}
+	return infoSummaryPTEReportLine;
     }
 
     public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-        int nextRow = sheet.getLastRowNum() + 2;
-        HSSFRow row = sheet.createRow(nextRow);
-        HSSFCell cell = row.createCell((short) 0);
-        cell.setCellValue(StringAppender.append(getString("link.revenue"), " ", getString("label.pte"), ":"));
-        cell.setCellStyle(excelStyle.getLabelStyle());
-//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
-        cell = row.createCell((short) 3);
-        cell.setCellValue(getRevenue().doubleValue());
-        if (getRevenue().doubleValue() < 0)
-            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-        else
-            cell.setCellStyle(excelStyle.getDoubleStyle());
-        nextRow++;
-        row = sheet.createRow(nextRow);
-        cell = row.createCell((short) 0);
-        cell.setCellValue(StringAppender.append(getString("link.expenses"), " ", getString("label.pte"), ":"));
-//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
-        cell.setCellStyle(excelStyle.getLabelStyle());
-        cell = row.createCell((short) 3);
-        cell.setCellValue(getExpense().doubleValue());
-        if (getExpense().doubleValue() < 0)
-            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-        else
-            cell.setCellStyle(excelStyle.getDoubleStyle());
-        nextRow++;
-        row = sheet.createRow(nextRow);
-        cell = row.createCell((short) 0);
-        cell.setCellValue(StringAppender.append(getString("label.tax"), " ", getString("label.pte"), ":"));
-        //sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
-        cell.setCellStyle(excelStyle.getLabelStyle());
-        cell = row.createCell((short) 3);
-        cell.setCellValue(getTax().doubleValue());
-        if (getTax().doubleValue() < 0)
-            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-        else
-            cell.setCellStyle(excelStyle.getDoubleStyle());
-        row = sheet.createRow(nextRow++);
-        cell = row.createCell((short) 3);
-        cell.setCellValue(getTotal().doubleValue());
-        if (getTotal().doubleValue() < 0)
-            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-        else
-            cell.setCellStyle(excelStyle.getDoubleStyle());
+	int nextRow = sheet.getLastRowNum() + 2;
+	HSSFRow row = sheet.createRow(nextRow);
+	HSSFCell cell = row.createCell((short) 0);
+	cell.setCellValue(StringAppender.append(getString("link.revenue"), " ", getString("label.pte"), ":"));
+	cell.setCellStyle(excelStyle.getLabelStyle());
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum(), (short) 2));
+	cell = row.createCell((short) 3);
+	cell.setCellValue(getRevenue().doubleValue());
+	if (getRevenue().doubleValue() < 0)
+	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+	else
+	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	nextRow++;
+	row = sheet.createRow(nextRow);
+	cell = row.createCell((short) 0);
+	cell.setCellValue(StringAppender.append(getString("link.expenses"), " ", getString("label.pte"), ":"));
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum(), (short) 2));
+	cell.setCellStyle(excelStyle.getLabelStyle());
+	cell = row.createCell((short) 3);
+	cell.setCellValue(getExpense().doubleValue());
+	if (getExpense().doubleValue() < 0)
+	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+	else
+	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	nextRow++;
+	row = sheet.createRow(nextRow);
+	cell = row.createCell((short) 0);
+	cell.setCellValue(StringAppender.append(getString("label.tax"), " ", getString("label.pte"), ":"));
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum(), (short) 2));
+	cell.setCellStyle(excelStyle.getLabelStyle());
+	cell = row.createCell((short) 3);
+	cell.setCellValue(getTax().doubleValue());
+	if (getTax().doubleValue() < 0)
+	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+	else
+	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	row = sheet.createRow(nextRow++);
+	cell = row.createCell((short) 3);
+	cell.setCellValue(getTotal().doubleValue());
+	if (getTotal().doubleValue() < 0)
+	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+	else
+	    cell.setCellStyle(excelStyle.getDoubleStyle());
     }
 
 }

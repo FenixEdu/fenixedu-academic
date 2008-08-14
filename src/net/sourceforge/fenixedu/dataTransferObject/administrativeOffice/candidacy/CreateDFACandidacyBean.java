@@ -15,7 +15,7 @@ public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializ
     private IDDocumentType idDocumentType;
 
     private String contributorNumber;
-    
+
     private YearMonthDay candidacyDate = new YearMonthDay();
 
     public IDDocumentType getIdDocumentType() {
@@ -51,11 +51,11 @@ public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializ
     }
 
     public YearMonthDay getCandidacyDate() {
-        return candidacyDate;
+	return candidacyDate;
     }
 
     public void setCandidacyDate(YearMonthDay startDate) {
-        this.candidacyDate = startDate;
+	this.candidacyDate = startDate;
     }
-   
+
 }

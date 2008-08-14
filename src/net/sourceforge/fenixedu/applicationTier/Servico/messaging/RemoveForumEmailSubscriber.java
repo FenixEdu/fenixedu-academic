@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.messaging.Forum;
 public class RemoveForumEmailSubscriber extends Service {
 
     public void run(Forum forum, Person person) {
-        forum.removeEmailSubscriber(person);
+	forum.removeEmailSubscriber(person);
     }
 
 }

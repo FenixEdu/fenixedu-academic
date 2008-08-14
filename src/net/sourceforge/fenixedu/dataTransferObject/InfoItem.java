@@ -41,65 +41,63 @@ public class InfoItem extends InfoObject implements Comparable {
      */
     public InfoItem(String information, String name, Integer itemOrder, InfoSection infoSection) {
 
-        this.information = information;
-        this.name = name;
-        this.itemOrder = itemOrder;
-        this.infoSection = infoSection;
+	this.information = information;
+	this.name = name;
+	this.itemOrder = itemOrder;
+	this.infoSection = infoSection;
     }
 
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoItem) {
-            InfoItem infoItem = (InfoItem) obj;
-            resultado = getInformation().equals(infoItem.getInformation())
-                    && getName().equals(infoItem.getName())
-                    && getItemOrder().equals(infoItem.getItemOrder())
-                    && getInfoSection().equals(infoItem.getInfoSection());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoItem) {
+	    InfoItem infoItem = (InfoItem) obj;
+	    resultado = getInformation().equals(infoItem.getInformation()) && getName().equals(infoItem.getName())
+		    && getItemOrder().equals(infoItem.getItemOrder()) && getInfoSection().equals(infoItem.getInfoSection());
+	}
+	return resultado;
     }
 
     /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String result = "[INFOITEM";
-        result += ", name=" + name;
-        result += ", itemOrder=" + itemOrder;
-        result += ", infoSection=" + infoSection;
-        result += "]";
-        return result;
+	String result = "[INFOITEM";
+	result += ", name=" + name;
+	result += ", itemOrder=" + itemOrder;
+	result += ", infoSection=" + infoSection;
+	result += "]";
+	return result;
     }
 
     /**
      * @return String
      */
     public String getInformation() {
-        return information;
+	return information;
     }
 
     /**
      * @return String
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
      * @return Integer
      */
     public Integer getItemOrder() {
-        return itemOrder;
+	return itemOrder;
     }
 
     /**
      * @return InfoSection
      */
     public InfoSection getInfoSection() {
-        return infoSection;
+	return infoSection;
     }
 
     /**
@@ -109,7 +107,7 @@ public class InfoItem extends InfoObject implements Comparable {
      *            The information to set
      */
     public void setInformation(String information) {
-        this.information = information;
+	this.information = information;
     }
 
     /**
@@ -119,7 +117,7 @@ public class InfoItem extends InfoObject implements Comparable {
      *            The name to set
      */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     /**
@@ -129,7 +127,7 @@ public class InfoItem extends InfoObject implements Comparable {
      *            The itemOrder to set
      */
     public void setItemOrder(Integer itemOrder) {
-        this.itemOrder = itemOrder;
+	this.itemOrder = itemOrder;
     }
 
     /**
@@ -139,30 +137,30 @@ public class InfoItem extends InfoObject implements Comparable {
      *            The infoSection to set
      */
     public void setInfoSection(InfoSection infoSection) {
-        this.infoSection = infoSection;
+	this.infoSection = infoSection;
     }
 
     public int compareTo(Object arg0) {
 
-        return this.getItemOrder().intValue() - ((InfoItem) arg0).getItemOrder().intValue();
+	return this.getItemOrder().intValue() - ((InfoItem) arg0).getItemOrder().intValue();
     }
 
     public void copyFromDomain(Item item) {
-        super.copyFromDomain(item);
-        if (item != null) {
-            setInformation(item.getBody().getContent(Language.pt));
-            setItemOrder(item.getItemOrder());
-            setName(item.getName().getContent(Language.pt));
+	super.copyFromDomain(item);
+	if (item != null) {
+	    setInformation(item.getBody().getContent(Language.pt));
+	    setItemOrder(item.getItemOrder());
+	    setName(item.getName().getContent(Language.pt));
 
-            List<InfoFileContent> infoFileItems = new ArrayList<InfoFileContent>();
+	    List<InfoFileContent> infoFileItems = new ArrayList<InfoFileContent>();
 
-            for (FileContent fileItem : item.getFileItems()) {
-                infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
-            }
+	    for (FileContent fileItem : item.getFileItems()) {
+		infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
+	    }
 
-            Collections.sort(infoFileItems, new BeanComparator("displayName"));
-            setInfoFileItems(infoFileItems);
-        }
+	    Collections.sort(infoFileItems, new BeanComparator("displayName"));
+	    setInfoFileItems(infoFileItems);
+	}
     }
 
     /**
@@ -170,19 +168,19 @@ public class InfoItem extends InfoObject implements Comparable {
      * @return
      */
     public static InfoItem newInfoFromDomain(Item item) {
-        InfoItem infoItem = null;
-        if (item != null) {
-            infoItem = new InfoItem();
-            infoItem.copyFromDomain(item);
-        }
-        return infoItem;
+	InfoItem infoItem = null;
+	if (item != null) {
+	    infoItem = new InfoItem();
+	    infoItem.copyFromDomain(item);
+	}
+	return infoItem;
     }
 
     public void setInfoFileItems(List<InfoFileContent> infoFileItems) {
-        this.infoFileItems = infoFileItems;
+	this.infoFileItems = infoFileItems;
     }
 
     public List<InfoFileContent> getInfoFileItems() {
-        return this.infoFileItems;
+	return this.infoFileItems;
     }
 }

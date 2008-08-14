@@ -18,11 +18,11 @@ public class CardGenerationContext implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-        return executionYear == null ? null : executionYear.getObject();
+	return executionYear == null ? null : executionYear.getObject();
     }
 
     public void setExecutionYear(final ExecutionYear executionYear) {
-        this.executionYear = executionYearDR(executionYear);
+	this.executionYear = executionYearDR(executionYear);
     }
 
     private DomainReference<ExecutionYear> executionYearDR(final ExecutionYear executionYear) {

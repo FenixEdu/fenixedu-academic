@@ -166,7 +166,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	}
 	return degreeModuleScopeCurricularCourseScope;
     }
-    
+
     public boolean hasEndYearMonthDay() {
 	return getEndYearMonthDay() != null;
     }
@@ -236,5 +236,5 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	    return curricularCourseScope.hashCode();
 	}
     }
-    
+
 }

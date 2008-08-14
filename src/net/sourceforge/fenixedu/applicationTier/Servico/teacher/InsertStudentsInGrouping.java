@@ -23,33 +23,33 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertStudentsInGrouping extends Service {
 
     public Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final String[] selected)
-            throws FenixServiceException{
+	    throws FenixServiceException {
 
 	if (selected == null) {
-            return Boolean.TRUE;
-        }
+	    return Boolean.TRUE;
+	}
 
-        final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-        if (groupProperties == null) {
-            throw new ExistingServiceException();
-        }
+	final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+	if (groupProperties == null) {
+	    throw new ExistingServiceException();
+	}
 
-        final List<ExecutionCourse> executionCourses = groupProperties.getExecutionCourses();
+	final List<ExecutionCourse> executionCourses = groupProperties.getExecutionCourses();
 
-        for (final String number : selected) {
-            if (number.equals("Todos os Alunos")) {
-            } else {
-                Registration registration = rootDomainObject.readRegistrationByOID(new Integer(number));
-                if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
-                    final Attends attends = findAttends(registration, executionCourses);
-                    if (attends != null) {
-                	groupProperties.addAttends(attends);
-                    }
-                }
-            }
-        }
+	for (final String number : selected) {
+	    if (number.equals("Todos os Alunos")) {
+	    } else {
+		Registration registration = rootDomainObject.readRegistrationByOID(new Integer(number));
+		if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
+		    final Attends attends = findAttends(registration, executionCourses);
+		    if (attends != null) {
+			groupProperties.addAttends(attends);
+		    }
+		}
+	    }
+	}
 
-        return Boolean.TRUE;
+	return Boolean.TRUE;
     }
 
     public static boolean studentHasSomeAttendsInGrouping(final Registration registration, final Grouping groupProperties) {

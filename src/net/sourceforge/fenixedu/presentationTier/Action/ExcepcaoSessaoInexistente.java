@@ -8,7 +8,7 @@ public class ExcepcaoSessaoInexistente extends FenixActionException {
      * Constructor for SessaoInexistente.
      */
     public ExcepcaoSessaoInexistente() {
-        super();
+	super();
     }
 
     /**
@@ -17,7 +17,7 @@ public class ExcepcaoSessaoInexistente extends FenixActionException {
      * @param message
      */
     public ExcepcaoSessaoInexistente(String message) {
-        super(message);
+	super(message);
     }
 
     /**
@@ -27,7 +27,7 @@ public class ExcepcaoSessaoInexistente extends FenixActionException {
      * @param cause
      */
     public ExcepcaoSessaoInexistente(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     /**
@@ -36,6 +36,6 @@ public class ExcepcaoSessaoInexistente extends FenixActionException {
      * @param cause
      */
     public ExcepcaoSessaoInexistente(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 }

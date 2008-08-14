@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
 public class DeleteExternalActivity extends Service {
 
-	public void run(Integer externalActivityId) {
-		ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
-		externalActivity.delete();		
-	}
+    public void run(Integer externalActivityId) {
+	ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
+	externalActivity.delete();
+    }
 
 }

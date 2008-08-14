@@ -42,21 +42,21 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 
 	Integer idPerson = null;
 
-	if (idQualification != null && request.getParameter("load") != null) //Edit
+	if (idQualification != null && request.getParameter("load") != null) // Edit
 	{
 	    try {
-		//Read the qualification
+		// Read the qualification
 		Object[] args = { idQualification };
 		InfoQualification infoGrantQualification = (InfoQualification) ServiceUtils.executeService("ReadQualification",
 			args);
 
-		//Populate the form
+		// Populate the form
 		setFormGrantQualification(grantQualificationForm, infoGrantQualification);
 		idPerson = infoGrantQualification.getInfoPerson().getIdInternal();
 	    } catch (FenixServiceException e) {
 		return setError(request, mapping, "errors.grant.qualification.read", "manage-grant-qualification", null);
 	    }
-	} else //New
+	} else // New
 	{
 	    if (verifyParameterInRequest(request, "idPerson")) {
 		idPerson = new Integer(request.getParameter("idPerson"));
@@ -64,7 +64,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	    grantQualificationForm.set("idPerson", idPerson);
 	}
 
-	//Setting request values
+	// Setting request values
 	request.setAttribute("idPerson", idPerson);
 	request.setAttribute("username", request.getParameter("username"));
 	request.setAttribute("idGrantOwner", request.getParameter("idGrantOwner"));
@@ -73,7 +73,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	List countryList = null;
 	countryList = (List) ServiceUtils.executeService("ReadAllCountries");
 
-	//Adding a select country line to the list (presentation reasons)
+	// Adding a select country line to the list (presentation reasons)
 	InfoCountryEditor selectCountry = new InfoCountryEditor();
 	selectCountry.setIdInternal(null);
 	selectCountry.setName("[Escolha um país]");
@@ -89,16 +89,16 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	    throws Exception {
 	DynaValidatorForm editGrantQualificationForm = (DynaValidatorForm) form;
 
-	//Populate info from Form Bean
+	// Populate info from Form Bean
 	InfoQualification infoGrantQualification = populateInfoFromForm(editGrantQualificationForm);
 
-	//Setting request
+	// Setting request
 	request.setAttribute("idInternal", editGrantQualificationForm.get("idGrantOwner"));
 	request.setAttribute("idPerson", editGrantQualificationForm.get("idPerson"));
 	request.setAttribute("grantOwnerNumber", request.getParameter("grantOwnerNumber"));
 	request.setAttribute("username", request.getParameter("username"));
 
-	//Run Service
+	// Run Service
 	Object[] args = { infoGrantQualification.getIdInternal(), infoGrantQualification };
 	ServiceUtils.executeService("EditQualification", args);
 	return mapping.findForward("manage-grant-qualification");
@@ -111,13 +111,13 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	    throws Exception {
 	Integer idQualification = new Integer(request.getParameter("idQualification"));
 
-	//Setting request
+	// Setting request
 	request.setAttribute("idInternal", request.getParameter("idGrantOwner"));
 	request.setAttribute("idPerson", request.getParameter("idPerson"));
 	request.setAttribute("grantOwnerNumber", request.getParameter("grantOwnerNumber"));
 	request.setAttribute("username", request.getParameter("username"));
 
-	//Run Service
+	// Run Service
 	Object[] args = { idQualification };
 	ServiceUtils.executeService("DeleteQualification", args);
 	return mapping.findForward("manage-grant-qualification");
@@ -176,11 +176,11 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	if (verifyStringParameterInForm(editGrantQualificationForm, "equivalenceDate"))
 	    infoQualification.setEquivalenceDate(sdf.parse((String) editGrantQualificationForm.get("equivalenceDate")));
 
-	//Setting person
+	// Setting person
 	final Person person = (Person) rootDomainObject.readPartyByOID((Integer) editGrantQualificationForm.get("idPerson"));
 	infoQualification.setInfoPerson(InfoPerson.newInfoFromDomain(person));
 
-	//Setting country
+	// Setting country
 	InfoCountryEditor infoCountry = new InfoCountryEditor();
 	if (((Integer) editGrantQualificationForm.get("country")).equals(new Integer(0))) {
 	    infoCountry.setIdInternal(null);

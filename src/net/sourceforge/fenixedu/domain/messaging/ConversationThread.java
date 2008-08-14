@@ -40,7 +40,7 @@ public class ConversationThread extends ConversationThread_Base implements IDate
 	}
 
 	if (getParents().isEmpty()) {
-	    new DateOrderedNode(forum, this,Boolean.FALSE);
+	    new DateOrderedNode(forum, this, Boolean.FALSE);
 	} else {
 	    getParents().get(0).setParent(forum);
 	}
@@ -86,14 +86,12 @@ public class ConversationThread extends ConversationThread_Base implements IDate
 	for (ConversationMessage conversationMessage : getConversationMessages()) {
 	    if (lastConversationMessage == null) {
 		lastConversationMessage = conversationMessage;
-	    } else if (conversationMessage.getCreationDate().compareTo(
-		    lastConversationMessage.getCreationDate()) > 1) {
+	    } else if (conversationMessage.getCreationDate().compareTo(lastConversationMessage.getCreationDate()) > 1) {
 		nextToLastConversationMessage = lastConversationMessage;
 		lastConversationMessage = conversationMessage;
 	    } else if (nextToLastConversationMessage == null) {
 		nextToLastConversationMessage = conversationMessage;
-	    } else if (conversationMessage.getCreationDate().compareTo(
-		    nextToLastConversationMessage.getCreationDate()) > 1) {
+	    } else if (conversationMessage.getCreationDate().compareTo(nextToLastConversationMessage.getCreationDate()) > 1) {
 		nextToLastConversationMessage = conversationMessage;
 	    }
 	}

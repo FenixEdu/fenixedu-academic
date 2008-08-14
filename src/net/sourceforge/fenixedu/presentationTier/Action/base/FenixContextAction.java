@@ -22,46 +22,50 @@ import org.apache.struts.util.LabelValueBean;
 
 public abstract class FenixContextAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        ContextUtils.setExecutionPeriodContext(request);
+	ContextUtils.setExecutionPeriodContext(request);
 
-        ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+	ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
 
-        return super.execute(mapping, actionForm, request, response);
+	return super.execute(mapping, actionForm, request, response);
     }
-    
-    protected List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId) throws FenixActionException {
-        List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-        try {
-            final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-            infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
-        } catch (Exception e) {
-            throw new FenixActionException(e);
-        } 
 
-        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
-            Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
-            try {
-                List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService("ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
+    protected List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId)
+	    throws FenixActionException {
+	List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
+	try {
+	    final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
+	    infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID",
+		    argsLerLicenciaturas);
+	} catch (Exception e) {
+	    throw new FenixActionException(e);
+	}
 
-                for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
-                    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - " + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), 
-                            infoExecutionPeriodIter.getIdInternal().toString()));
-                }
-            } catch (Exception e) {
-                throw new FenixActionException(e);
-            }
-        }
+	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+	for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
+	    Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
+	    try {
+		List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
+			"ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
 
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("value"));
-        Collections.sort(result, comparatorChain);
-        Collections.reverse(result);
-        
-        return result;
+		for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
+		    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - "
+			    + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getIdInternal()
+			    .toString()));
+		}
+	    } catch (Exception e) {
+		throw new FenixActionException(e);
+	    }
+	}
+
+	ComparatorChain comparatorChain = new ComparatorChain();
+	comparatorChain.addComparator(new BeanComparator("value"));
+	Collections.sort(result, comparatorChain);
+	Collections.reverse(result);
+
+	return result;
     }
-    
+
 }

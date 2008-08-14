@@ -15,11 +15,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExternalPersonsByIDs extends Service {
 
-    public Collection<InfoExternalPerson> run(Collection<Integer> externalPersonsIDs)
-	    {
+    public Collection<InfoExternalPerson> run(Collection<Integer> externalPersonsIDs) {
 
-	Collection<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(
-		externalPersonsIDs.size());
+	Collection<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersonsIDs.size());
 
 	Collection<ExternalContract> externalPersons = ExternalContract.readByIDs(externalPersonsIDs);
 

@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.domain.person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
-    
+
     public IdDocumentTypeObject() {
-        super();
+	super();
     }
 
     public static IdDocumentTypeObject readByIDDocumentType(final IDDocumentType documentType) {
@@ -16,5 +16,5 @@ public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
 	}
 	return null;
     }
-    
+
 }

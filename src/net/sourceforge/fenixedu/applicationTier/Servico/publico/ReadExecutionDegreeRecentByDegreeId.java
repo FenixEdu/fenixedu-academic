@@ -23,17 +23,17 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class ReadExecutionDegreeRecentByDegreeId extends Service {
 
     public InfoExecutionDegree run(final Integer degreeId) {
-        List<ExecutionDegree> listExecutionDegrees = new ArrayList<ExecutionDegree>();
-        
-        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-        for (DegreeCurricularPlan curricularPlan : degree.getDegreeCurricularPlans()) {
-            listExecutionDegrees.addAll(curricularPlan.getExecutionDegrees());
-        }
-        
-        ComparatorChain chain = new ComparatorChain(new BeanComparator("degreeCurricularPlan.initialDate"));
-        chain.addComparator(new BeanComparator("executionYear.year"));
-        ExecutionDegree executionDegree = (ExecutionDegree) Collections.max(listExecutionDegrees, chain);
-        
-        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	List<ExecutionDegree> listExecutionDegrees = new ArrayList<ExecutionDegree>();
+
+	Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+	for (DegreeCurricularPlan curricularPlan : degree.getDegreeCurricularPlans()) {
+	    listExecutionDegrees.addAll(curricularPlan.getExecutionDegrees());
+	}
+
+	ComparatorChain chain = new ComparatorChain(new BeanComparator("degreeCurricularPlan.initialDate"));
+	chain.addComparator(new BeanComparator("executionYear.year"));
+	ExecutionDegree executionDegree = (ExecutionDegree) Collections.max(listExecutionDegrees, chain);
+
+	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 }

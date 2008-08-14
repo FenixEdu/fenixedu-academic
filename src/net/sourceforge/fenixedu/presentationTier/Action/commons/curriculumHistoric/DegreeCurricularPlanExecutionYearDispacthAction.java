@@ -29,13 +29,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispatchAction {
 
-    public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
+    public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
 	request.setAttribute("executionDegreeBean", new ExecutionDegreeListBean());
 
 	return mapping.findForward("chooseExecutionYear");
     }
 
-    public ActionForward chooseDegreeCurricularPlan(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
+    public ActionForward chooseDegreeCurricularPlan(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject();
 	executionDegreeBean.setDegreeCurricularPlan(null);
 
@@ -43,34 +45,33 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 
 	request.setAttribute("executionDegreeBean", executionDegreeBean);
 
-        return mapping.findForward("chooseExecutionYear");
+	return mapping.findForward("chooseExecutionYear");
     }
 
     @SuppressWarnings("unchecked")
-    public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+    public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
 	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("executionYear");
 
-	final Object[] args = {
-			executionDegreeBean.getDegreeCurricularPlan().getIdInternal(),
-			executionDegreeBean.getExecutionYear().getIdInternal() };
+	final Object[] args = { executionDegreeBean.getDegreeCurricularPlan().getIdInternal(),
+		executionDegreeBean.getExecutionYear().getIdInternal() };
 
-	final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>)
-                executeService(request, "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
+	final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>) executeService(request,
+		"ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
 
-        final ActionErrors errors = new ActionErrors();
-        if (degreeModuleScopes.isEmpty()) {
-            errors.add("noDegreeCurricularPlan", new ActionError("error.nonExisting.AssociatedCurricularCourses"));
-            saveErrors(request, errors);            
-        } else {
-            request.setAttribute("degreeModuleScopes", degreeModuleScopes);
-        }
+	final ActionErrors errors = new ActionErrors();
+	if (degreeModuleScopes.isEmpty()) {
+	    errors.add("noDegreeCurricularPlan", new ActionError("error.nonExisting.AssociatedCurricularCourses"));
+	    saveErrors(request, errors);
+	} else {
+	    request.setAttribute("degreeModuleScopes", degreeModuleScopes);
+	}
 
-        request.setAttribute("executionYearID", executionDegreeBean.getExecutionYear().getIdInternal());
-        request.setAttribute("degreeCurricularPlan", executionDegreeBean.getDegreeCurricularPlan());
+	request.setAttribute("executionYearID", executionDegreeBean.getExecutionYear().getIdInternal());
+	request.setAttribute("degreeCurricularPlan", executionDegreeBean.getDegreeCurricularPlan());
 
-        return mapping.findForward("showActiveCurricularCourses");
+	return mapping.findForward("showActiveCurricularCourses");
     }
 
 }

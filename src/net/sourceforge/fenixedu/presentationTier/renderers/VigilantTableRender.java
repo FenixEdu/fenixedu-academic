@@ -235,12 +235,10 @@ public class VigilantTableRender extends OutputRenderer {
 	}
 
 	if (isShowUnavailables()) {
-	    schema.addSlotDescription(getSlot("unavailablePeriodsAsString",
-		    "label.vigilancy.unavailablePeriodsShortLabel"));
+	    schema.addSlotDescription(getSlot("unavailablePeriodsAsString", "label.vigilancy.unavailablePeriodsShortLabel"));
 	}
 	if (isShowIncompatibilities()) {
-	    schema.addSlotDescription(getSlot("incompatiblePersonName",
-		    "label.vigilancy.displayIncompatibleInformation"));
+	    schema.addSlotDescription(getSlot("incompatiblePersonName", "label.vigilancy.displayIncompatibleInformation"));
 	}
 	if (isShowBoundsJustification()) {
 	    schema.addSlotDescription(getSlot("boundsAsString", "label.vigilancy.boundsJustification"));
@@ -399,8 +397,7 @@ public class VigilantTableRender extends OutputRenderer {
 
 	    List<Vigilancy> convokes = getConvokes(vigilant);
 	    int size = convokes.size();
-	    int numberOfColumns = (this.getNumberOfColumns() - this.getNumberOfVigilantsSlots())
-		    / this.getNumberOfConvokeSlots();
+	    int numberOfColumns = (this.getNumberOfColumns() - this.getNumberOfVigilantsSlots()) / this.getNumberOfConvokeSlots();
 
 	    if (numberOfColumns - size <= index) {
 		Vigilancy oneConvoke = convokes.get(numberOfColumns - index - 1);
@@ -416,8 +413,7 @@ public class VigilantTableRender extends OutputRenderer {
 	private MetaObject getConvokeMetaObject(MetaObject vigilantMetaObject) {
 
 	    if (convokeMetaObjectCache == null) {
-		List<Vigilancy> convokes = ((Vigilant) getVigilantWithConvokes().getObject())
-			.getVigilancies();
+		List<Vigilancy> convokes = ((Vigilant) getVigilantWithConvokes().getObject()).getVigilancies();
 		Vigilancy oneConvoke = convokes.get(0);
 
 		convokeMetaObjectCache = MetaObjectFactory.createObject(oneConvoke, this.convokeSchema);
@@ -447,8 +443,8 @@ public class VigilantTableRender extends OutputRenderer {
 	    } else {
 		int index = getConvokeSlotIndex(one, columnIndex);
 		MetaObject convokeMetaObject = getConvokeMetaObject(one);
-		return (convokeMetaObject == null) ? findVigilantWithConvokesToGetLabels(index)
-			: new HtmlText(getConvokeMetaObject(one).getSlots().get(index).getLabel());
+		return (convokeMetaObject == null) ? findVigilantWithConvokesToGetLabels(index) : new HtmlText(
+			getConvokeMetaObject(one).getSlots().get(index).getLabel());
 	    }
 	}
 
@@ -484,8 +480,7 @@ public class VigilantTableRender extends OutputRenderer {
 		if (convokes.isEmpty()) {
 		    return numberOfConvokeSlotCache = 0;
 		} else {
-		    MetaObject convokeMetaObject = MetaObjectFactory.createObject(convokes.get(0),
-			    this.convokeSchema);
+		    MetaObject convokeMetaObject = MetaObjectFactory.createObject(convokes.get(0), this.convokeSchema);
 		    return numberOfConvokeSlotCache = convokeMetaObject.getSlots().size();
 		}
 	    }

@@ -47,13 +47,12 @@ public class ManageStudentStatuteBean implements Serializable {
     }
 
     public void setBeginExecutionPeriod(ExecutionSemester beginExecutionPeriod) {
-	this.beginExecutionPeriod = beginExecutionPeriod != null ? new DomainReference<ExecutionSemester>(
-		beginExecutionPeriod) : null;
+	this.beginExecutionPeriod = beginExecutionPeriod != null ? new DomainReference<ExecutionSemester>(beginExecutionPeriod)
+		: null;
     }
 
     public void setEndExecutionPeriod(ExecutionSemester endExecutionPeriod) {
-	this.endExecutionPeriod = endExecutionPeriod != null ? new DomainReference<ExecutionSemester>(
-		endExecutionPeriod) : null;
+	this.endExecutionPeriod = endExecutionPeriod != null ? new DomainReference<ExecutionSemester>(endExecutionPeriod) : null;
     }
 
     public void setStatuteType(StudentStatuteType statuteType) {

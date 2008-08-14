@@ -87,13 +87,13 @@ public abstract class Content extends Content_Base {
     }
 
     /**
-         * Checks is this item is available in the given context, that is, if
-         * the person hold in the context may click the item to start an
-         * activity or usecase.
-         * 
-         * @return <code>true</code> if the item is available for the person
-         *         hold in the context
-         */
+     * Checks is this item is available in the given context, that is, if the
+     * person hold in the context may click the item to start an activity or
+     * usecase.
+     * 
+     * @return <code>true</code> if the item is available for the person hold in
+     *         the context
+     */
     public boolean isAvailable(FunctionalityContext context) {
 	if (context == null) {
 	    return true;
@@ -114,23 +114,23 @@ public abstract class Content extends Content_Base {
     public abstract List<Content> getPathTo(Content target);
 
     /**
-         * Deletes this object.
-         * 
-         * <p>
-         * This delete method is a template method for all contents. First
-         * {@link #checkDeletion()} is called. If the object is not deletable
-         * then a subclass must throw a {@link DomainException} explaining why.
-         * If no exception is thrown then {@link #disconnect()} is called to
-         * allow the object to remove any specific relations. After that
-         * {@link #deleteSelf()} is called to allow object finalization.
-         * 
-         * <p>
-         * After all this the standard relations of a functionality are removed
-         * and the object is marked for deletion in the database.
-         * 
-         * @throws DomainException
-         *                 if the content cannot be deleted
-         */
+     * Deletes this object.
+     * 
+     * <p>
+     * This delete method is a template method for all contents. First
+     * {@link #checkDeletion()} is called. If the object is not deletable then a
+     * subclass must throw a {@link DomainException} explaining why. If no
+     * exception is thrown then {@link #disconnect()} is called to allow the
+     * object to remove any specific relations. After that {@link #deleteSelf()}
+     * is called to allow object finalization.
+     * 
+     * <p>
+     * After all this the standard relations of a functionality are removed and
+     * the object is marked for deletion in the database.
+     * 
+     * @throws DomainException
+     *             if the content cannot be deleted
+     */
     public void delete() {
 	checkDeletion();
 	disconnect();
@@ -138,21 +138,21 @@ public abstract class Content extends Content_Base {
     }
 
     /**
-         * Verifies if this content can be deleted.
-         * 
-         * @return <code>true</code> by default
-         */
+     * Verifies if this content can be deleted.
+     * 
+     * @return <code>true</code> by default
+     */
     public boolean isDeletable() {
 	return true;
     }
 
     /**
-         * Checks if this content can be deleted and throws and exception if it
-         * can't.
-         * 
-         * @throws DomainException
-         *                 if this item cannot be deleted
-         */
+     * Checks if this content can be deleted and throws and exception if it
+     * can't.
+     * 
+     * @throws DomainException
+     *             if this item cannot be deleted
+     */
     protected void checkDeletion() {
 	if (!isDeletable()) {
 	    throw new DomainException("content.delete.notAvailable");
@@ -160,14 +160,13 @@ public abstract class Content extends Content_Base {
     }
 
     /**
-         * Removes any specific relations the item has. Subclasses that override
-         * this method <strong>must</strong> call super to remove all
-         * relations.
-         * 
-         * <p>
-         * If other objects should be deleted because of this object beeing
-         * deleted, this is the place to do it.
-         */
+     * Removes any specific relations the item has. Subclasses that override
+     * this method <strong>must</strong> call super to remove all relations.
+     * 
+     * <p>
+     * If other objects should be deleted because of this object beeing deleted,
+     * this is the place to do it.
+     */
     protected void disconnect() {
 	disconnectContent();
     }
@@ -180,8 +179,8 @@ public abstract class Content extends Content_Base {
 	for (Node node : getParents()) {
 	    node.delete();
 	}
-	
-	for(Container container : getInitialContainer()) {
+
+	for (Container container : getInitialContainer()) {
 	    container.setInitialContent(null);
 	}
 
@@ -192,10 +191,10 @@ public abstract class Content extends Content_Base {
     }
 
     /**
-         * Finalizes the state of this content, that is, does the last
-         * finalization after beeing disconnected but before being marked for
-         * deleting from the persistent storage.
-         */
+     * Finalizes the state of this content, that is, does the last finalization
+     * after beeing disconnected but before being marked for deleting from the
+     * persistent storage.
+     */
     protected void deleteSelf() {
 	// do nothing
     }
@@ -204,7 +203,8 @@ public abstract class Content extends Content_Base {
 	return isAvailable(Functionality.getCurrentContext());
     }
 
-    // This method is to determine if the content is publicly available in the contents' structure,
+    // This method is to determine if the content is publicly available in the
+    // contents' structure,
     // i.e., whether it should be subjected to checksum verification.
     public boolean isPublic() {
 	if (this instanceof Module) {
@@ -226,14 +226,14 @@ public abstract class Content extends Content_Base {
     }
 
     private boolean isPublicGroup(final Group group) {
-	    return group instanceof EveryoneGroup
-	    		|| (group instanceof ExpressionGroup && isPublicGroup(((ExpressionGroup) group).getGroup()));
+	return group instanceof EveryoneGroup
+		|| (group instanceof ExpressionGroup && isPublicGroup(((ExpressionGroup) group).getGroup()));
     }
 
     public Boolean getPublicAvailable() {
 	return isPublic();
     }
-    
+
     public abstract Collection<MenuEntry> getMenu();
 
     public String getPath() {
@@ -241,9 +241,8 @@ public abstract class Content extends Content_Base {
     }
 
     /*
-         * Code that came from SiteElement
-         * 
-         */
+     * Code that came from SiteElement
+     */
 
     protected boolean isNameUnique(List<? extends Content> siblings, MultiLanguageString name) {
 	Map<Language, Set<String>> names = new Hashtable<Language, Set<String>>();
@@ -387,17 +386,17 @@ public abstract class Content extends Content_Base {
     }
 
     @Override
-    public void setAvailabilityPolicy(AvailabilityPolicy availabilityPolicy) {       
-        AvailabilityPolicy currentAvailabilityPolicy = getAvailabilityPolicy();
-        if(currentAvailabilityPolicy != null) {
-            currentAvailabilityPolicy.delete();
-        }
-        super.setAvailabilityPolicy(availabilityPolicy);
+    public void setAvailabilityPolicy(AvailabilityPolicy availabilityPolicy) {
+	AvailabilityPolicy currentAvailabilityPolicy = getAvailabilityPolicy();
+	if (currentAvailabilityPolicy != null) {
+	    currentAvailabilityPolicy.delete();
+	}
+	super.setAvailabilityPolicy(availabilityPolicy);
     }
 
     @Override
     public void setName(final MultiLanguageString name) {
-	if(!isNameValid(name)) {
+	if (!isNameValid(name)) {
 	    throw new DomainException("label.error.content.invalid.name");
 	}
 	super.setName(name);
@@ -405,8 +404,8 @@ public abstract class Content extends Content_Base {
     }
 
     private boolean isNameValid(MultiLanguageString name) {
-	for(String content : name.getAllContents()) {
-	    if(content.indexOf('?') >= 0 || content.indexOf('/') > 0) {
+	for (String content : name.getAllContents()) {
+	    if (content.indexOf('?') >= 0 || content.indexOf('/') > 0) {
 		return false;
 	    }
 	}
@@ -432,7 +431,7 @@ public abstract class Content extends Content_Base {
     public static String normalize(final String string) {
 	return string == null ? null : StringNormalizer.normalize(string).replace(' ', '-');
     }
-    
+
     public boolean isUnitSite() {
 	return false;
     }

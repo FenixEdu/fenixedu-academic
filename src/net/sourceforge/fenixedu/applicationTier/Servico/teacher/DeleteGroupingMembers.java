@@ -26,35 +26,33 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteGroupingMembers extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupingCode, List<String> studentUsernames)
-            throws FenixServiceException{
+	    throws FenixServiceException {
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
-        if (grouping == null) {
-            throw new ExistingServiceException();
-        }
+	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+	if (grouping == null) {
+	    throw new ExistingServiceException();
+	}
 
-        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                .getInstance();
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                .getGroupEnrolmentStrategyInstance(grouping);
+	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+	IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
-        if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
-            throw new InvalidSituationServiceException();
-        }
+	if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
+	    throw new InvalidSituationServiceException();
+	}
 
-        for (final String studentUsername : (List<String>) studentUsernames) {
-            Attends attend = grouping.getStudentAttend(studentUsername);
-            removeAttendFromStudentGroups(grouping, attend);
-            grouping.removeAttends(attend);
-        }        
-        return true;
+	for (final String studentUsername : (List<String>) studentUsernames) {
+	    Attends attend = grouping.getStudentAttend(studentUsername);
+	    removeAttendFromStudentGroups(grouping, attend);
+	    grouping.removeAttends(attend);
+	}
+	return true;
     }
 
     private void removeAttendFromStudentGroups(final Grouping grouping, Attends attend) {
-        if (attend != null) {
-            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
-                studentGroup.removeAttends(attend);
-            }
-        }
+	if (attend != null) {
+	    for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+		studentGroup.removeAttends(attend);
+	    }
+	}
     }
 }

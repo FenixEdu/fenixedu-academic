@@ -26,18 +26,19 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
-    
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String unitId = request.getParameter("unitId");
-		if (unitId != null) {
-			ResearchUnit unit = (ResearchUnit) RootDomainObject.readDomainObjectByOID(ResearchUnit.class, Integer.valueOf(unitId));
-			request.setAttribute("unit",unit);
-		}
-		return super.execute(mapping, form, request, response);
+
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	String unitId = request.getParameter("unitId");
+	if (unitId != null) {
+	    ResearchUnit unit = (ResearchUnit) RootDomainObject
+		    .readDomainObjectByOID(ResearchUnit.class, Integer.valueOf(unitId));
+	    request.setAttribute("unit", unit);
 	}
-	
-	public ActionForward backToResult(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	return super.execute(mapping, form, request, response);
+    }
+
+    public ActionForward backToResult(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final ResearchResult result = getResultFromRequest(request);
 	if (result == null) {
@@ -66,42 +67,43 @@ public class ResultsManagementAction extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward associatePrize(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		
-		final ResearchResult result = (ResearchResult) getResultByIdFromRequest(request);
-		request.setAttribute("publication",result);
-		
-		return mapping.findForward("associatePrize");
-	
+    public ActionForward associatePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final ResearchResult result = (ResearchResult) getResultByIdFromRequest(request);
+	request.setAttribute("publication", result);
+
+	return mapping.findForward("associatePrize");
+
+    }
+
+    public ActionForward deletePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	String prizeID = request.getParameter("oid");
+	Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+	if (prize.isDeletableByUser((getLoggedPerson(request)))) {
+	    try {
+		executeService("DeletePrize", new Object[] { prize });
+	    } catch (DomainException e) {
+		addActionMessage(request, e.getMessage());
+	    }
 	}
-	public ActionForward deletePrize(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	
-		String prizeID = request.getParameter("oid");
-		Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
-		if(prize.isDeletableByUser((getLoggedPerson(request)))) {
-			try {
-				executeService("DeletePrize", new Object[] { prize } );
-			}catch(DomainException e) {
-				addActionMessage(request, e.getMessage());
-			}
-		}
-		return associatePrize(mapping, form, request, response);
-	} 
-	
-	public ActionForward editPrize(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		
-		String prizeID = request.getParameter("oid");
-		Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
-		if(prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
-			request.setAttribute("prize",prize);
-		}
-		request.setAttribute("result", getResultByIdFromRequest(request));
-		return mapping.findForward("editPrize");
+	return associatePrize(mapping, form, request, response);
+    }
+
+    public ActionForward editPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	String prizeID = request.getParameter("oid");
+	Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+	if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
+	    request.setAttribute("prize", prize);
 	}
-	
+	request.setAttribute("result", getResultByIdFromRequest(request));
+	return mapping.findForward("editPrize");
+    }
+
     protected ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
 	final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
 
@@ -156,8 +158,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward processException(HttpServletRequest request, ActionMapping mapping,
-	    ActionForward input, Exception e) {
+    public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
 	if (e instanceof DomainException) {
 	    final DomainException ex = (DomainException) e;
 

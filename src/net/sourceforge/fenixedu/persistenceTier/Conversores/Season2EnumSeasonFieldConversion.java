@@ -21,12 +21,12 @@ public class Season2EnumSeasonFieldConversion implements FieldConversion {
      */
     public Object javaToSql(Object source) {
 
-        if (source instanceof Season) {
-            Season s = (Season) source;
-            return s.getseason();
-        }
+	if (source instanceof Season) {
+	    Season s = (Season) source;
+	    return s.getseason();
+	}
 
-        return source;
+	return source;
 
     }
 
@@ -34,12 +34,12 @@ public class Season2EnumSeasonFieldConversion implements FieldConversion {
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new Season(src);
-        }
+	if (source instanceof Integer) {
+	    Integer src = (Integer) source;
+	    return new Season(src);
+	}
 
-        return source;
+	return source;
 
     }
 

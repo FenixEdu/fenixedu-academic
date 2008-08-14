@@ -53,8 +53,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	return mapping.findForward("showDegreeCodesAndLabels");
     }
 
-    public ActionForward editDegree(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) {
+    public ActionForward editDegree(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) {
 	final Degree degree = getDegree(request);
 	request.setAttribute("degree", degree);
 	return mapping.findForward("editDegree");
@@ -125,35 +125,36 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     public ActionForward downloadCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
-        try {
-            final ServletOutputStream writer = response.getOutputStream();
-            response.setHeader("Content-disposition", "attachment; filename=identificationCardsIST" + cardGenerationBatch.getCreated().toString("yyyyMMddHHmmss") + ".txt");
-            response.setContentType("text/plain");
-            writeFile(cardGenerationBatch, writer);
-            writer.flush();
-            response.flushBuffer();
-        } catch (IOException e1) {
-            throw new FenixActionException();
-        }
-        return null;
+	try {
+	    final ServletOutputStream writer = response.getOutputStream();
+	    response.setHeader("Content-disposition", "attachment; filename=identificationCardsIST"
+		    + cardGenerationBatch.getCreated().toString("yyyyMMddHHmmss") + ".txt");
+	    response.setContentType("text/plain");
+	    writeFile(cardGenerationBatch, writer);
+	    writer.flush();
+	    response.flushBuffer();
+	} catch (IOException e1) {
+	    throw new FenixActionException();
+	}
+	return null;
     }
 
     private void writeFile(final CardGenerationBatch cardGenerationBatch, final ServletOutputStream writer) throws IOException {
 	for (final CardGenerationEntry cardGenerationEntry : cardGenerationBatch.getCardGenerationEntriesSet()) {
 	    writer.print(cardGenerationEntry.getLine());
-//	    writer.print("\r\n");
+	    // writer.print("\r\n");
 	}
-//	writer.print(fillLeftString("", ' ', 262));
-//        writer.print("\r\n");
+	// writer.print(fillLeftString("", ' ', 262));
+	// writer.print("\r\n");
     }
 
     private String fillLeftString(final String uppered, final char c, final int fillTo) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (int i = uppered.length(); i < fillTo; i++) {
-            stringBuilder.append(c);
-        }
-        stringBuilder.append(uppered);
-        return stringBuilder.toString();
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (int i = uppered.length(); i < fillTo; i++) {
+	    stringBuilder.append(c);
+	}
+	stringBuilder.append(uppered);
+	return stringBuilder.toString();
     }
 
     protected Degree getDegree(final HttpServletRequest request) {
@@ -209,7 +210,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected boolean checkHasProblem(final Degree degree) {
 	final DegreeType degreeType = degree.getDegreeType();
-	if (degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+	if (degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE
+		|| degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 	    if (degree.getMinistryCode() == null) {
 		return true;
 	    }
@@ -224,32 +226,37 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	CardGenerationContext cardGenerationContext = (CardGenerationContext) getRenderedObject("cardGenerationContext");
 	if (cardGenerationContext == null) {
 	    final ExecutionYear executionYear = getExecutionYear(request);
-	    cardGenerationContext = executionYear == null ? new CardGenerationContext() : new CardGenerationContext(executionYear);
+	    cardGenerationContext = executionYear == null ? new CardGenerationContext()
+		    : new CardGenerationContext(executionYear);
 	}
 	request.setAttribute("cardGenerationContext", cardGenerationContext);
     }
 
     private ExecutionYear getExecutionYear(final HttpServletRequest request) {
 	final String executionYearParam = request.getParameter("executionYearID");
-	final Integer executionYearID = executionYearParam == null || executionYearParam.length() == 0 ? null : Integer.valueOf(executionYearParam);
+	final Integer executionYearID = executionYearParam == null || executionYearParam.length() == 0 ? null : Integer
+		.valueOf(executionYearParam);
 	return executionYearID == null ? null : rootDomainObject.readExecutionYearByOID(executionYearID);
     }
 
     protected CardGenerationBatch getCardGenerationBatch(final HttpServletRequest request) {
 	final String cardGenerationBatchParam = request.getParameter("cardGenerationBatchID");
-	final Integer cardGenerationBatchID = cardGenerationBatchParam == null || cardGenerationBatchParam.length() == 0 ? null : Integer.valueOf(cardGenerationBatchParam);
-	return cardGenerationBatchID == null ? null : rootDomainObject.readCardGenerationBatchByOID(cardGenerationBatchID);	
+	final Integer cardGenerationBatchID = cardGenerationBatchParam == null || cardGenerationBatchParam.length() == 0 ? null
+		: Integer.valueOf(cardGenerationBatchParam);
+	return cardGenerationBatchID == null ? null : rootDomainObject.readCardGenerationBatchByOID(cardGenerationBatchID);
     }
 
     private CardGenerationEntry getCardGenerationEntry(HttpServletRequest request) {
 	final String cardGenerationEntryParam = request.getParameter("cardGenerationEntryID");
-	final Integer cardGenerationEntryID = cardGenerationEntryParam == null || cardGenerationEntryParam.length() == 0 ? null : Integer.valueOf(cardGenerationEntryParam);
-	return cardGenerationEntryID == null ? null : rootDomainObject.readCardGenerationEntryByOID(cardGenerationEntryID);	
+	final Integer cardGenerationEntryID = cardGenerationEntryParam == null || cardGenerationEntryParam.length() == 0 ? null
+		: Integer.valueOf(cardGenerationEntryParam);
+	return cardGenerationEntryID == null ? null : rootDomainObject.readCardGenerationEntryByOID(cardGenerationEntryID);
     }
 
     protected CardGenerationProblem getCardGenerationProblem(final HttpServletRequest request) {
 	final String cardGenerationProblemParam = request.getParameter("cardGenerationProblemID");
-	final Integer cardGenerationProblemID = cardGenerationProblemParam == null || cardGenerationProblemParam.length() == 0 ? null : Integer.valueOf(cardGenerationProblemParam);
+	final Integer cardGenerationProblemID = cardGenerationProblemParam == null || cardGenerationProblemParam.length() == 0 ? null
+		: Integer.valueOf(cardGenerationProblemParam);
 	return cardGenerationProblemID == null ? null : rootDomainObject.readCardGenerationProblemByOID(cardGenerationProblemID);
     }
 

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.util.Month;
 
-public class CreateIssueBean implements Serializable{
+public class CreateIssueBean implements Serializable {
 
     private DomainReference<ScientificJournal> journal;
     private String journalName = null;
@@ -16,7 +16,7 @@ public class CreateIssueBean implements Serializable{
     private Integer year;
     private String issn;
     private String magazineUrl;
-    
+
     private Month month;
     private String volume;
     private String number;
@@ -25,144 +25,144 @@ public class CreateIssueBean implements Serializable{
     private Boolean specialIssue;
     private String specialIssueComment;
     private Boolean createNewJournal;
-    
+
     public Boolean getCreateNewJournal() {
-        return createNewJournal;
+	return createNewJournal;
     }
 
     public void setCreateNewJournal(Boolean createNewIssue) {
-        this.createNewJournal = createNewIssue;
+	this.createNewJournal = createNewIssue;
     }
 
     public CreateIssueBean() {
-	journal = new DomainReference<ScientificJournal> (null);
+	journal = new DomainReference<ScientificJournal>(null);
     }
 
     public ScientificJournal getJournal() {
-        return journal.getObject();
+	return journal.getObject();
     }
 
     public void setJournal(ScientificJournal journal) {
-        this.journal = new DomainReference<ScientificJournal>(journal);
+	this.journal = new DomainReference<ScientificJournal>(journal);
     }
 
     public String getJournalName() {
-        return journalName;
+	return journalName;
     }
 
     public void setJournalName(String journalName) {
-        this.journalName = journalName;
+	this.journalName = journalName;
     }
-    
+
     public Boolean getJournalAlreadyChosen() {
-	return journal.getObject() != null ;
+	return journal.getObject() != null;
     }
-    
+
     public Boolean getIssueAlreadyChosen() {
 	return getVolume() != null;
     }
-    
+
     public Month getMonth() {
-        return month;
+	return month;
     }
 
     public void setMonth(Month month) {
-        this.month = month;
+	this.month = month;
     }
 
     public String getNumber() {
-        return number;
+	return number;
     }
 
     public void setNumber(String number) {
-        this.number = number;
+	this.number = number;
     }
 
     public String getPublisher() {
-        return publisher;
+	return publisher;
     }
 
     public void setPublisher(String publisher) {
-        this.publisher = publisher;
+	this.publisher = publisher;
     }
 
     public String getUrl() {
-        return url;
+	return url;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+	this.url = url;
     }
 
     public String getVolume() {
-        return volume;
+	return volume;
     }
 
     public void setVolume(String volume) {
-        this.volume = volume;
+	this.volume = volume;
     }
 
     public Integer getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(Integer year) {
-        this.year = year;
+	this.year = year;
     }
 
     public ScopeType getLocation() {
-        return location;
+	return location;
     }
 
     public void setLocation(ScopeType location) {
-        this.location = location;
+	this.location = location;
     }
 
     public String getScientificJournalName() {
-        return scientificJournalName;
+	return scientificJournalName;
     }
 
     public void setScientificJournalName(String scientificJournalName) {
-        this.scientificJournalName = scientificJournalName;
+	this.scientificJournalName = scientificJournalName;
     }
-     
+
     public String getJournalAsString() {
-	return (getJournal()!=null) ? getJournal().getName() : getJournalName();
+	return (getJournal() != null) ? getJournal().getName() : getJournalName();
     }
 
     public String getIssn() {
-        return issn;
+	return issn;
     }
 
     public void setIssn(String issn) {
-        this.issn = issn;
+	this.issn = issn;
     }
 
     public String getMagazineUrl() {
-        return magazineUrl;
+	return magazineUrl;
     }
 
     public void setMagazineUrl(String magazineUrl) {
-        this.magazineUrl = magazineUrl;
+	this.magazineUrl = magazineUrl;
     }
 
     public Boolean getSpecialIssue() {
-        return specialIssue;
+	return specialIssue;
     }
 
     public void setSpecialIssue(Boolean specialIssue) {
-        this.specialIssue = specialIssue;
+	this.specialIssue = specialIssue;
     }
 
     public String getSpecialIssueComment() {
-        return specialIssueComment;
+	return specialIssueComment;
     }
 
     public void setSpecialIssueComment(String specialIssueComment) {
-        this.specialIssueComment = specialIssueComment;
+	this.specialIssueComment = specialIssueComment;
     }
-    
+
     public boolean isJournalFormValid() {
-	return getJournal()!=null || (getScientificJournalName()!=null && getLocation()!=null);
+	return getJournal() != null || (getScientificJournalName() != null && getLocation() != null);
     }
 }

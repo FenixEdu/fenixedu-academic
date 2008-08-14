@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadAllInstitutions extends Service {
 
-    public Object run() throws FenixServiceException{
-        return UnitUtils.readAllExternalInstitutionUnits();        
+    public Object run() throws FenixServiceException {
+	return UnitUtils.readAllExternalInstitutionUnits();
     }
 }

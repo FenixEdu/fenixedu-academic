@@ -18,7 +18,7 @@ public class ApplyStructureModifications extends Service {
 	    Node node = bean.getContent().getParentNode(bean.getCurrentParent());
 
 	    if (!parentContainer.equals(newContainer)) {
-		node = changeParent(node,newContainer);
+		node = changeParent(node, newContainer);
 	    }
 
 	    if (node instanceof ExplicitOrderNode) {
@@ -29,21 +29,21 @@ public class ApplyStructureModifications extends Service {
 	    }
 	}
     }
-    
+
     private Node changeParent(Node node, Container parent) {
-	if(node instanceof ExplicitOrderNode) {
+	if (node instanceof ExplicitOrderNode) {
 	    ExplicitOrderNode oldNode = (ExplicitOrderNode) node;
-	    ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(parent,oldNode.getChild(),oldNode.isAscending(),oldNode.getNodeOrder());
+	    ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(parent, oldNode.getChild(), oldNode.isAscending(),
+		    oldNode.getNodeOrder());
 	    oldNode.deleteWithoutReOrdering();
 	    return explicitOrderNode;
-	}
-	else if(node instanceof DateOrderedNode) {
+	} else if (node instanceof DateOrderedNode) {
 	    DateOrderedNode oldNode = (DateOrderedNode) node;
-	    DateOrderedNode dateOrderedNode = new DateOrderedNode(parent,oldNode.getChild(),oldNode.getAscending());
+	    DateOrderedNode dateOrderedNode = new DateOrderedNode(parent, oldNode.getChild(), oldNode.getAscending());
 	    oldNode.delete();
 	    return dateOrderedNode;
 	}
 	return null;
     }
-    
+
 }

@@ -13,28 +13,28 @@ public class CreatePermissionUnit extends CreateObjects {
 
     @Override
     protected void afterRun(Collection<Object> touchedObjects) {
-        for(Object touchedObject : touchedObjects) {
-            if(touchedObject instanceof NewPermissionUnit) {
-                doIntegrityChecks((NewPermissionUnit) touchedObject);
-            }
-        }
+	for (Object touchedObject : touchedObjects) {
+	    if (touchedObject instanceof NewPermissionUnit) {
+		doIntegrityChecks((NewPermissionUnit) touchedObject);
+	    }
+	}
     }
-    
+
     private void doIntegrityChecks(NewPermissionUnit permissionUnit) {
-        Party party = permissionUnit.getParty();
-        NewQuestion question = permissionUnit.getQuestion();
-        
-        if(question.getOwner().equals(party)) {
-            throw new DomainException("could.not.add.owner");
-        }
-        
-        List<NewPermissionUnit> permissionUnits = question.getPermissionUnits();
-        
-        for(NewPermissionUnit oldPermissionUnit : permissionUnits) {
-            if(!oldPermissionUnit.equals(permissionUnit) && oldPermissionUnit.getParty().equals(party)) {
-                oldPermissionUnit.delete();
-            }
-        }
+	Party party = permissionUnit.getParty();
+	NewQuestion question = permissionUnit.getQuestion();
+
+	if (question.getOwner().equals(party)) {
+	    throw new DomainException("could.not.add.owner");
+	}
+
+	List<NewPermissionUnit> permissionUnits = question.getPermissionUnits();
+
+	for (NewPermissionUnit oldPermissionUnit : permissionUnits) {
+	    if (!oldPermissionUnit.equals(permissionUnit) && oldPermissionUnit.getParty().equals(party)) {
+		oldPermissionUnit.delete();
+	    }
+	}
     }
 
 }

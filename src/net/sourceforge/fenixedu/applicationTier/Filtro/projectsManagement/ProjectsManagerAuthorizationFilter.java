@@ -29,51 +29,49 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
     protected RoleType roleToAuthorize = RoleType.PROJECTS_MANAGER;
 
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-            Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
-        final IUserView userView = getRemoteUser(request);
-        String costCenter = (String) request.getServiceParameters().parametersArray()[1];
+	final IUserView userView = getRemoteUser(request);
+	String costCenter = (String) request.getServiceParameters().parametersArray()[1];
 
-        ServiceParameters s = request.getServiceParameters();
+	ServiceParameters s = request.getServiceParameters();
 
-        final Person person = userView.getPerson();
-        final Teacher teacher = person == null ? null : person.getTeacher();
-        Integer userNumber = null;
-        if (teacher != null)
-            userNumber = teacher.getTeacherNumber();
-        else {
-            Employee employee = userView.getPerson().getEmployee();
-            if (employee != null)
-                userNumber = employee.getEmployeeNumber();
-        }
-        if (userNumber == null)
-            throw new NotAuthorizedFilterException();
-        s.addParameter("userNumber", userNumber.toString(), s.parametersArray().length);
+	final Person person = userView.getPerson();
+	final Teacher teacher = person == null ? null : person.getTeacher();
+	Integer userNumber = null;
+	if (teacher != null)
+	    userNumber = teacher.getTeacherNumber();
+	else {
+	    Employee employee = userView.getPerson().getEmployee();
+	    if (employee != null)
+		userNumber = employee.getEmployeeNumber();
+	}
+	if (userNumber == null)
+	    throw new NotAuthorizedFilterException();
+	s.addParameter("userNumber", userNumber.toString(), s.parametersArray().length);
 
-        if (costCenter != null && !costCenter.equals("")) {
-            Role role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
-            if (!costCenter.equals(role.getPortalSubApplication())) {
-                PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
-                if (p.getIPersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber,
-                        new Integer(costCenter)) != null) {
-                    s.addParameter("userNumber", costCenter, s.parametersArray().length - 1);
-                }
-            }
-            roleToAuthorize = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
-        } else {
-            roleToAuthorize = RoleType.PROJECTS_MANAGER;
-            s.addParameter("costCenter", "", 1);
-        }
-        super.execute(request, response);
-        request.setServiceParameters(s);
+	if (costCenter != null && !costCenter.equals("")) {
+	    Role role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+	    if (!costCenter.equals(role.getPortalSubApplication())) {
+		PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+		if (p.getIPersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter)) != null) {
+		    s.addParameter("userNumber", costCenter, s.parametersArray().length - 1);
+		}
+	    }
+	    roleToAuthorize = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
+	} else {
+	    roleToAuthorize = RoleType.PROJECTS_MANAGER;
+	    s.addParameter("costCenter", "", 1);
+	}
+	super.execute(request, response);
+	request.setServiceParameters(s);
     }
 
     protected RoleType getRoleType() {
-        return roleToAuthorize;
+	return roleToAuthorize;
     }
 
 }

@@ -14,7 +14,7 @@ public class EmptyRequiredFieldServiceException extends FenixServiceException {
      *  
      */
     public EmptyRequiredFieldServiceException() {
-        super();
+	super();
 
     }
 
@@ -22,7 +22,7 @@ public class EmptyRequiredFieldServiceException extends FenixServiceException {
      * @param s
      */
     public EmptyRequiredFieldServiceException(String s) {
-        super(s);
+	super(s);
 
     }
 
@@ -30,7 +30,7 @@ public class EmptyRequiredFieldServiceException extends FenixServiceException {
      * @param cause
      */
     public EmptyRequiredFieldServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
 
     }
 
@@ -39,7 +39,7 @@ public class EmptyRequiredFieldServiceException extends FenixServiceException {
      * @param cause
      */
     public EmptyRequiredFieldServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
 
     }
 }

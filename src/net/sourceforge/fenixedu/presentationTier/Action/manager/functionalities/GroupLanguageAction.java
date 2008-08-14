@@ -21,18 +21,19 @@ import pt.utl.ist.fenix.tools.util.Pair;
 public class GroupLanguageAction extends Action {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Map<String, Pair<Class, GroupBuilder>> registeredBuilders = GroupBuilderRegistry.getRegisteredBuilders();
-        
-        List<GroupBuilderBean> result = new ArrayList<GroupBuilderBean>();
-        for (String name : registeredBuilders.keySet()) {
-            result.add(new GroupBuilderBean(name, registeredBuilders.get(name).getValue()));
-        }
-        
-        Collections.sort(result);
-        
-        request.setAttribute("builders", result);
-        return mapping.findForward("show");
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	Map<String, Pair<Class, GroupBuilder>> registeredBuilders = GroupBuilderRegistry.getRegisteredBuilders();
+
+	List<GroupBuilderBean> result = new ArrayList<GroupBuilderBean>();
+	for (String name : registeredBuilders.keySet()) {
+	    result.add(new GroupBuilderBean(name, registeredBuilders.get(name).getValue()));
+	}
+
+	Collections.sort(result);
+
+	request.setAttribute("builders", result);
+	return mapping.findForward("show");
     }
 
 }

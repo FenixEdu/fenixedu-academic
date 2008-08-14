@@ -28,52 +28,50 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 public class ViewShiftsAndGroupsAction extends FenixContextAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
-        Integer groupPropertiesCode = Integer.valueOf(groupPropertiesCodeString);
-        
-        String username = userView.getUtilizador();
+	Integer groupPropertiesCode = Integer.valueOf(groupPropertiesCodeString);
 
-        List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.
-                executeService( "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
-        request.setAttribute("infoExportGroupings", infoExportGroupings);
+	String username = userView.getUtilizador();
 
-        InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
-        Object[] args = { groupPropertiesCode, username};
-        try {
-            infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(
-                    "ReadShiftsAndGroups", args);
+	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.executeService(
+		"ReadExportGroupingsByGrouping", new Object[] { groupPropertiesCode });
+	request.setAttribute("infoExportGroupings", infoExportGroupings);
 
-        } catch (InvalidSituationServiceException e)
-        {
-            ActionErrors actionErrors2 = new ActionErrors();
-            ActionError error2 = null;
-            error2 = new ActionError("error.noProject");
-            actionErrors2.add("error.noProject", error2);
-            saveErrors(request, actionErrors2);
-            return mapping.findForward("viewExecutionCourseProjects");
-        }catch (NotAuthorizedException e) {
-			ActionErrors actionErrors2 = new ActionErrors();
-			ActionError error2 = null;
-			error2 = new ActionError("errors.noStudentInAttendsSet");
-			actionErrors2.add("errors.noStudentInAttendsSet", error2);
-			saveErrors(request, actionErrors2);
-			return mapping.findForward("insucess");
-		}catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
+	Object[] args = { groupPropertiesCode, username };
+	try {
+	    infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService("ReadShiftsAndGroups", args);
 
-        request.setAttribute("infoSiteShiftsAndGroups", infoSiteShiftsAndGroups);
+	} catch (InvalidSituationServiceException e) {
+	    ActionErrors actionErrors2 = new ActionErrors();
+	    ActionError error2 = null;
+	    error2 = new ActionError("error.noProject");
+	    actionErrors2.add("error.noProject", error2);
+	    saveErrors(request, actionErrors2);
+	    return mapping.findForward("viewExecutionCourseProjects");
+	} catch (NotAuthorizedException e) {
+	    ActionErrors actionErrors2 = new ActionErrors();
+	    ActionError error2 = null;
+	    error2 = new ActionError("errors.noStudentInAttendsSet");
+	    actionErrors2.add("errors.noStudentInAttendsSet", error2);
+	    saveErrors(request, actionErrors2);
+	    return mapping.findForward("insucess");
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        return mapping.findForward("sucess");
+	request.setAttribute("infoSiteShiftsAndGroups", infoSiteShiftsAndGroups);
+
+	return mapping.findForward("sucess");
     }
 }

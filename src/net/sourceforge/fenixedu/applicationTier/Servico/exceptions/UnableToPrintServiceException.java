@@ -21,7 +21,7 @@ public class UnableToPrintServiceException extends FenixServiceException {
      * @param s
      */
     public UnableToPrintServiceException(String s) {
-        super(s);
+	super(s);
 
     }
 
@@ -29,7 +29,7 @@ public class UnableToPrintServiceException extends FenixServiceException {
      * @param cause
      */
     public UnableToPrintServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
 
     }
 
@@ -38,15 +38,15 @@ public class UnableToPrintServiceException extends FenixServiceException {
      * @param cause
      */
     public UnableToPrintServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
 
     }
 
     public String toString() {
-        String result = "[UnableToPrintServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[UnableToPrintServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

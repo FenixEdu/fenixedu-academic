@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadCategories extends Service {
 
-    public List run() throws FenixServiceException{
+    public List run() throws FenixServiceException {
 	List<InfoCategory> result = new ArrayList<InfoCategory>();
 
 	for (Category category : Category.readTeacherCategories()) {

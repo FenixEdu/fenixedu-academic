@@ -15,7 +15,7 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 
     public void init(YearMonthDay beginDate, YearMonthDay endDate, ProfessionalSituationType type, RegimeType regimenType,
 	    Employee employee, Category category) {
-	
+
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
 	setSituationType(type);
@@ -48,7 +48,7 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 	}
 	super.setRegimeType(regimeType);
     }
-    
+
     @Override
     public void setSituationType(ProfessionalSituationType situationType) {
 	if (situationType == null) {
@@ -56,7 +56,7 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 	}
 	super.setSituationType(situationType);
     }
-    
+
     @Override
     public void setEmployee(Employee employee) {
 	if (employee == null) {

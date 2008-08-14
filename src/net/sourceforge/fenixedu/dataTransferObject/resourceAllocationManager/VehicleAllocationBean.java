@@ -22,24 +22,23 @@ public class VehicleAllocationBean implements Serializable {
     private DomainReference<Vehicle> vehicleReference;
 
     private BigDecimal distance;
-    
+
     private BigDecimal amountCharged;
 
-        
     public VehicleAllocationBean() {
-	
+
     }
-    
+
     public BigDecimal getAmountCharged() {
-        return amountCharged;
+	return amountCharged;
     }
 
     public void setAmountCharged(BigDecimal amountCharged) {
-        this.amountCharged = amountCharged;
+	this.amountCharged = amountCharged;
     }
-    
+
     public Party getRequestor() {
-	return (this.partyReference != null) ? this.partyReference.getObject() : null;	
+	return (this.partyReference != null) ? this.partyReference.getObject() : null;
     }
 
     public void setRequestor(Party requestor) {
@@ -79,10 +78,10 @@ public class VehicleAllocationBean implements Serializable {
     }
 
     public BigDecimal getDistance() {
-        return distance;
+	return distance;
     }
 
     public void setDistance(BigDecimal distance) {
-        this.distance = distance;
-    }  
+	this.distance = distance;
+    }
 }

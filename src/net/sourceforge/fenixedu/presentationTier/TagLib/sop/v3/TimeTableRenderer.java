@@ -231,12 +231,12 @@ public class TimeTableRenderer {
     /**
      * 
      * @param infoLessonWrapper
-     *                may be null
+     *            may be null
      * @param hourIndex
      * @param dayIndex
      * @param timeTableGrid
      * @param slotColisions
-     *                may be null
+     *            may be null
      * @param slotIndex
      * @return String
      */

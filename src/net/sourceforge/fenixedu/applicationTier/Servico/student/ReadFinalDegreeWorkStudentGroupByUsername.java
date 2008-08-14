@@ -19,7 +19,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(final Person personUser, final ExecutionYear executionYear) {
 	final FinalDegreeWorkGroup finalDegreeWorkGroup = findFinalDegreeWorkGroup(personUser, executionYear);
-        return InfoGroup.newInfoFromDomain(finalDegreeWorkGroup);
+	return InfoGroup.newInfoFromDomain(finalDegreeWorkGroup);
     }
 
     private FinalDegreeWorkGroup findFinalDegreeWorkGroup(final Person personUser, final ExecutionYear executionYear) {
@@ -39,7 +39,8 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
     private FinalDegreeWorkGroup find(final Person personUser, final ExecutionYear executionYear, final DegreeType degreeType) {
 	for (final Registration registration : personUser.getStudent().getRegistrationsSet()) {
 	    if (registration.getDegreeType() == degreeType) {
-		final FinalDegreeWorkGroup finalDegreeWorkGroup = registration.findFinalDegreeWorkGroupForExecutionYear(executionYear);
+		final FinalDegreeWorkGroup finalDegreeWorkGroup = registration
+			.findFinalDegreeWorkGroupForExecutionYear(executionYear);
 		if (finalDegreeWorkGroup != null) {
 		    return finalDegreeWorkGroup;
 		}

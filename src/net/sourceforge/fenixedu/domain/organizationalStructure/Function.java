@@ -19,41 +19,43 @@ import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
 
-    public static final Comparator<Function> COMPARATOR_BY_ORDER = new Comparator<Function>() {        
-        private ComparatorChain chain = null;        
-        public int compare(Function one, Function other) {
-            if (this.chain == null) {
-                chain = new ComparatorChain();                
-                chain.addComparator(new BeanComparator("functionOrder", new NullComparator()));
-                chain.addComparator(new BeanComparator("functionType", new NullComparator()));
-                chain.addComparator(new BeanComparator("name"));
-                chain.addComparator(DomainObject.COMPARATOR_BY_ID);
-            }           
-            return chain.compare(one, other);
-        }        
+    public static final Comparator<Function> COMPARATOR_BY_ORDER = new Comparator<Function>() {
+	private ComparatorChain chain = null;
+
+	public int compare(Function one, Function other) {
+	    if (this.chain == null) {
+		chain = new ComparatorChain();
+		chain.addComparator(new BeanComparator("functionOrder", new NullComparator()));
+		chain.addComparator(new BeanComparator("functionType", new NullComparator()));
+		chain.addComparator(new BeanComparator("name"));
+		chain.addComparator(DomainObject.COMPARATOR_BY_ID);
+	    }
+	    return chain.compare(one, other);
+	}
     };
-	
+
     public Function(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit) {
 	super();
-	edit(functionName, beginDate, endDate, type);	
+	edit(functionName, beginDate, endDate, type);
 	setUnit(unit);
 	setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
-    
-    public Function(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit, AccountabilityTypeEnum accountabilityTypeEnum) {
+
+    public Function(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit,
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	super();
-	edit(functionName, beginDate, endDate, type);	
+	edit(functionName, beginDate, endDate, type);
 	setUnit(unit);
 	setType(accountabilityTypeEnum);
     }
-        
+
     public void edit(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type) {
 	setTypeName(functionName);
 	setFunctionType(type);
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
     }
-             
+
     @Override
     public void setUnit(Unit unit) {
 	if (unit == null) {
@@ -61,26 +63,26 @@ public class Function extends Function_Base {
 	}
 	super.setUnit(unit);
     }
-    
+
     public boolean isActive(YearMonthDay currentDate) {
 	return belongsToPeriod(currentDate, currentDate);
     }
 
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
-	return ((endDate == null || !getBeginDateYearMonthDay().isAfter(endDate)) 
-		&& (getEndDateYearMonthDay() == null || !getEndDateYearMonthDay().isBefore(beginDate)));
+	return ((endDate == null || !getBeginDateYearMonthDay().isAfter(endDate)) && (getEndDateYearMonthDay() == null || !getEndDateYearMonthDay()
+		.isBefore(beginDate)));
     }
 
     public void delete() {
-	if(!canBeDeleted()) {
+	if (!canBeDeleted()) {
 	    throw new DomainException("error.delete.function");
-	}	
+	}
 	removeParentInherentFunction();
 	super.setUnit(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
     private boolean canBeDeleted() {
 	return !hasAnyAccountabilities() && !hasAnyInherentFunctions();
     }
@@ -96,14 +98,14 @@ public class Function extends Function_Base {
     }
 
     public List<PersonFunction> getActivePersonFunctions() {
-    	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-    	YearMonthDay currentDate = new YearMonthDay();
-    	for (Accountability accountability : getAccountabilities()) {
-    		if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
-    			personFunctions.add((PersonFunction) accountability);
-    		}
-    	}
-    	return personFunctions;
+	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
+	YearMonthDay currentDate = new YearMonthDay();
+	for (Accountability accountability : getAccountabilities()) {
+	    if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
+		personFunctions.add((PersonFunction) accountability);
+	    }
+	}
+	return personFunctions;
     }
 
     public boolean isInherentFunction() {
@@ -117,64 +119,63 @@ public class Function extends Function_Base {
 	removeParentInherentFunction();
 	setParentInherentFunction(parentInherentFunction);
     }
-    
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
 	final YearMonthDay start = getBeginDateYearMonthDay();
-	final YearMonthDay end = getEndDateYearMonthDay();	
+	final YearMonthDay end = getEndDateYearMonthDay();
 	return start != null && (end == null || !start.isAfter(end));
     }
 
     public static Function createVirtualFunction(Unit unit, MultiLanguageString name) {
-    	return new Function(name, new YearMonthDay(), null, FunctionType.VIRTUAL, unit);
+	return new Function(name, new YearMonthDay(), null, FunctionType.VIRTUAL, unit);
     }
-    
+
     public boolean isVirtual() {
 	FunctionType type = getFunctionType();
 	return type != null && type.equals(FunctionType.VIRTUAL);
     }
-    
-	@Override
-	public boolean isFunction() {
-		return true;
+
+    @Override
+    public boolean isFunction() {
+	return true;
+    }
+
+    public static Set<Function> readAllActiveFunctionsByType(FunctionType functionType) {
+	Set<Function> result = new HashSet<Function>();
+	YearMonthDay currentDate = new YearMonthDay();
+	List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+	for (AccountabilityType accountabilityType : accountabilityTypes) {
+	    if (accountabilityType.isFunction() && ((Function) accountabilityType).getFunctionType() != null
+		    && ((Function) accountabilityType).getFunctionType().equals(functionType)
+		    && ((Function) accountabilityType).isActive(currentDate)) {
+		result.add((Function) accountabilityType);
+	    }
 	}
-	
-	public static Set<Function> readAllActiveFunctionsByType(FunctionType functionType){
-		Set<Function> result = new HashSet<Function>();
-		YearMonthDay currentDate = new YearMonthDay();
-		List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
-		for (AccountabilityType accountabilityType : accountabilityTypes) {
-			if(accountabilityType.isFunction() && ((Function)accountabilityType).getFunctionType() != null 
-					&& ((Function)accountabilityType).getFunctionType().equals(functionType)
-					&& ((Function)accountabilityType).isActive(currentDate)) {
-				result.add((Function) accountabilityType);
-			}
-		}
-		return result;
-	}
-	
-	public static Set<Function> readAllFunctionsByType(FunctionType functionType){
-		Set<Function> result = new HashSet<Function>();
-		List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
-		for (AccountabilityType accountabilityType : accountabilityTypes) {
-	    if (accountabilityType.isFunction()
-		    && ((Function) accountabilityType).getFunctionType() != null
+	return result;
+    }
+
+    public static Set<Function> readAllFunctionsByType(FunctionType functionType) {
+	Set<Function> result = new HashSet<Function>();
+	List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+	for (AccountabilityType accountabilityType : accountabilityTypes) {
+	    if (accountabilityType.isFunction() && ((Function) accountabilityType).getFunctionType() != null
 		    && ((Function) accountabilityType).getFunctionType().equals(functionType)) {
-				result.add((Function) accountabilityType);
-			}
-		}
-		return result;
+		result.add((Function) accountabilityType);
+	    }
 	}
-	
-	public List<PersonFunction> getActivePersonFunctionsStartingIn(ExecutionYear executionYear) {
-    	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-    	YearMonthDay currentDate = new YearMonthDay();
-    	for (Accountability accountability : getAccountabilities()) {
-    		if (accountability.isPersonFunction() && accountability.isActive(currentDate) &&
-    				accountability.getBeginDate().isAfter(executionYear.getBeginDateYearMonthDay())) {
-    			personFunctions.add((PersonFunction) accountability);
-    		}
-    	}
-    	return personFunctions;
+	return result;
+    }
+
+    public List<PersonFunction> getActivePersonFunctionsStartingIn(ExecutionYear executionYear) {
+	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
+	YearMonthDay currentDate = new YearMonthDay();
+	for (Accountability accountability : getAccountabilities()) {
+	    if (accountability.isPersonFunction() && accountability.isActive(currentDate)
+		    && accountability.getBeginDate().isAfter(executionYear.getBeginDateYearMonthDay())) {
+		personFunctions.add((PersonFunction) accountability);
+	    }
+	}
+	return personFunctions;
     }
 }

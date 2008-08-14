@@ -34,87 +34,81 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
-        ActionErrors actionErrors = new ActionErrors();
-        Object args[] = {};
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
+	ActionErrors actionErrors = new ActionErrors();
+	Object args[] = {};
 
-        try {
-            List infoInstitutions = (List) ServiceUtils.executeService(
-                    "ReadAllInstitutions", args);
+	try {
+	    List infoInstitutions = (List) ServiceUtils.executeService("ReadAllInstitutions", args);
 
-            if (infoInstitutions != null) {
-                if (infoInstitutions.isEmpty() == false) {
-                    Collections.sort(infoInstitutions, new BeanComparator("name"));
-                    List infoInstitutionsValueBeanList = new ArrayList();
-                    Iterator it = infoInstitutions.iterator();
-                    Unit infoInstitution = null;
+	    if (infoInstitutions != null) {
+		if (infoInstitutions.isEmpty() == false) {
+		    Collections.sort(infoInstitutions, new BeanComparator("name"));
+		    List infoInstitutionsValueBeanList = new ArrayList();
+		    Iterator it = infoInstitutions.iterator();
+		    Unit infoInstitution = null;
 
-                    while (it.hasNext()) {
-                        infoInstitution = (Unit) it.next();
-                        infoInstitutionsValueBeanList
-                                .add(new LabelValueBean(infoInstitution.getName(), infoInstitution
-                                        .getIdInternal().toString()));
-                    }
+		    while (it.hasNext()) {
+			infoInstitution = (Unit) it.next();
+			infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
+				.getIdInternal().toString()));
+		    }
 
-                    request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST,
-                            infoInstitutionsValueBeanList);
-                }
-            }
+		    request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
+		}
+	    }
 
-            if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
-                actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions",
-                        new ActionError(
-                                "label.masterDegree.administrativeOffice.nonExistingInstitutions"));
+	    if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
+		actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions", new ActionError(
+			"label.masterDegree.administrativeOffice.nonExistingInstitutions"));
 
-                saveErrors(request, actionErrors);
-                return mapping.findForward("error");
-            }
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        }
+		saveErrors(request, actionErrors);
+		return mapping.findForward("error");
+	    }
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+	}
 
-        return mapping.findForward("start");
+	return mapping.findForward("start");
 
     }
 
     public ActionForward visualize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
-        Integer institutionId = (Integer) visualizeExternalPersonsForm.get("institutionId");
+	DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
+	Integer institutionId = (Integer) visualizeExternalPersonsForm.get("institutionId");
 
-        List infoExternalPersons = null;
+	List infoExternalPersons = null;
 
-        ActionErrors actionErrors = new ActionErrors();
-        Object args[] = { institutionId };
+	ActionErrors actionErrors = new ActionErrors();
+	Object args[] = { institutionId };
 
-        try {
+	try {
 
-            infoExternalPersons = (List) ServiceUtils.executeService(
-                    "ReadExternalPersonsByInstitution", args);
+	    infoExternalPersons = (List) ServiceUtils.executeService("ReadExternalPersonsByInstitution", args);
 
-            if ((infoExternalPersons == null) || (infoExternalPersons.isEmpty())) {
-                actionErrors.add("label.masterDegree.administrativeOffice.nonExistingExternalPersons",
-                        new ActionError(
-                                "label.masterDegree.administrativeOffice.nonExistingExternalPersons"));
+	    if ((infoExternalPersons == null) || (infoExternalPersons.isEmpty())) {
+		actionErrors.add("label.masterDegree.administrativeOffice.nonExistingExternalPersons", new ActionError(
+			"label.masterDegree.administrativeOffice.nonExistingExternalPersons"));
 
-                saveErrors(request, actionErrors);
-                return mapping.findForward("error");
-            }
+		saveErrors(request, actionErrors);
+		return mapping.findForward("error");
+	    }
 
-            request.setAttribute(SessionConstants.EXTERNAL_PERSONS_LIST, infoExternalPersons);
+	    request.setAttribute(SessionConstants.EXTERNAL_PERSONS_LIST, infoExternalPersons);
 
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        }
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+	}
 
-        return mapping.findForward("success");
+	return mapping.findForward("success");
     }
 }

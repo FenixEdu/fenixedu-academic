@@ -355,7 +355,7 @@ public class Employee extends Employee_Base {
 	EmployeeProfessionalSituation regimen = getLastEmployeeProfessionalSituation();
 	return (regimen != null) ? regimen.getCategory() : null;
     }
-    
+
     public boolean isActive() {
 	return getCurrentEmployeeProfessionalSituation() != null;
     }

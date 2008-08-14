@@ -1,6 +1,6 @@
 /**
-* Dec 13, 2005
-*/
+ * Dec 13, 2005
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.credits;
 
 import java.util.Iterator;
@@ -25,28 +25,26 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ricardo Rodrigues
- *
+ * 
  */
 
 public class ShowAllTeacherCreditsResumeAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
-        
-        Teacher teacher = userView.getPerson().getTeacher();
-        request.setAttribute("teacher", teacher);
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
 
-        Object[] args = new Object[] {teacher.getIdInternal()};
-        List<CreditLine> creditsLines = (List) ServiceUtils.executeService("ReadAllTeacherCredits", args);        
-        request.setAttribute("creditsLinesSize",creditsLines.size());
-        
-        BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");        
-        Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(),dateComparator);
-        
-        request.setAttribute("creditsLines", orderedCreditsLines);
-        return mapping.findForward("show-all-credits-resume");
+	Teacher teacher = userView.getPerson().getTeacher();
+	request.setAttribute("teacher", teacher);
+
+	Object[] args = new Object[] { teacher.getIdInternal() };
+	List<CreditLine> creditsLines = (List) ServiceUtils.executeService("ReadAllTeacherCredits", args);
+	request.setAttribute("creditsLinesSize", creditsLines.size());
+
+	BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
+	Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
+
+	request.setAttribute("creditsLines", orderedCreditsLines);
+	return mapping.findForward("show-all-credits-resume");
     }
 }
-
-

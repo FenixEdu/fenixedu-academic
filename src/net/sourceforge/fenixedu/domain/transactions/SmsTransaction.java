@@ -13,30 +13,28 @@ import net.sourceforge.fenixedu.domain.PersonAccount;
  */
 public class SmsTransaction extends SmsTransaction_Base {
 
-	/**
-	 * @param value
-	 * @param transactionDate
-	 * @param remarks
-	 * @param paymentType
-	 * @param transactionType
-	 * @param wasInternalBalance
-	 * @param responsiblePerson
-	 * @param personAccount
-	 * @param guideEntry
-	 */
-	public SmsTransaction(Double value, Timestamp transactionDate,
-			String remarks, PaymentType paymentType,
-			TransactionType transactionType, Boolean wasInternalBalance,
-			Person responsiblePerson, PersonAccount personAccount,
-			GuideEntry guideEntry) {
-		setValue(value);
-		setTransactionDate(transactionDate);
-		setRemarks(remarks);
-		setPaymentType(paymentType);
-		setTransactionType(transactionType);
-		setWasInternalBalance(wasInternalBalance);
-		setResponsiblePerson(responsiblePerson);
-		setPersonAccount(personAccount);
-        setGuideEntry(guideEntry);
-	}
+    /**
+     * @param value
+     * @param transactionDate
+     * @param remarks
+     * @param paymentType
+     * @param transactionType
+     * @param wasInternalBalance
+     * @param responsiblePerson
+     * @param personAccount
+     * @param guideEntry
+     */
+    public SmsTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+	    TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+	    GuideEntry guideEntry) {
+	setValue(value);
+	setTransactionDate(transactionDate);
+	setRemarks(remarks);
+	setPaymentType(paymentType);
+	setTransactionType(transactionType);
+	setWasInternalBalance(wasInternalBalance);
+	setResponsiblePerson(responsiblePerson);
+	setPersonAccount(personAccount);
+	setGuideEntry(guideEntry);
+    }
 }

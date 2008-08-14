@@ -53,92 +53,84 @@ public class EstadoCivil extends FenixUtil {
     }
 
     public EstadoCivil(int estadoCivil) {
-        this.estadoCivil = new Integer(estadoCivil);
+	this.estadoCivil = new Integer(estadoCivil);
     }
 
     public EstadoCivil(Integer estadoCivil) {
-        this.estadoCivil = estadoCivil;
+	this.estadoCivil = estadoCivil;
     }
 
     public boolean equals(Object o) {
-        if (o instanceof EstadoCivil) {
-            EstadoCivil aux = (EstadoCivil) o;
-            return this.estadoCivil.equals(aux.getEstadoCivil());
-        }
+	if (o instanceof EstadoCivil) {
+	    EstadoCivil aux = (EstadoCivil) o;
+	    return this.estadoCivil.equals(aux.getEstadoCivil());
+	}
 
-        return false;
+	return false;
 
     }
 
     public EstadoCivil(String estadoCivil) {
-        if (estadoCivil.equals(EstadoCivil.SOLTEIRO_STRING))
-            this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
-        else if (estadoCivil.equals(EstadoCivil.CASADO_STRING))
-            this.estadoCivil = new Integer(EstadoCivil.CASADO);
-        else if (estadoCivil.equals(EstadoCivil.DIVORCIADO_STRING))
-            this.estadoCivil = new Integer(EstadoCivil.DIVORCIADO);
-        else if (estadoCivil.equals(EstadoCivil.VIUVO_STRING))
-            this.estadoCivil = new Integer(EstadoCivil.VIUVO);
-        else if (estadoCivil.equals(EstadoCivil.SEPARADO_STRING))
-            this.estadoCivil = new Integer(EstadoCivil.SEPARADO);
-        else if (estadoCivil.equals(EstadoCivil.UNIAO_DE_FACTO_STRING))
-            this.estadoCivil = new Integer(EstadoCivil.UNIAO_DE_FACTO);
-        else if (estadoCivil.equals(EstadoCivil.DESCONHECIDO_STRING))
-            this.estadoCivil = new Integer(EstadoCivil.DESCONHECIDO);
-        else
-            this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
+	if (estadoCivil.equals(EstadoCivil.SOLTEIRO_STRING))
+	    this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
+	else if (estadoCivil.equals(EstadoCivil.CASADO_STRING))
+	    this.estadoCivil = new Integer(EstadoCivil.CASADO);
+	else if (estadoCivil.equals(EstadoCivil.DIVORCIADO_STRING))
+	    this.estadoCivil = new Integer(EstadoCivil.DIVORCIADO);
+	else if (estadoCivil.equals(EstadoCivil.VIUVO_STRING))
+	    this.estadoCivil = new Integer(EstadoCivil.VIUVO);
+	else if (estadoCivil.equals(EstadoCivil.SEPARADO_STRING))
+	    this.estadoCivil = new Integer(EstadoCivil.SEPARADO);
+	else if (estadoCivil.equals(EstadoCivil.UNIAO_DE_FACTO_STRING))
+	    this.estadoCivil = new Integer(EstadoCivil.UNIAO_DE_FACTO);
+	else if (estadoCivil.equals(EstadoCivil.DESCONHECIDO_STRING))
+	    this.estadoCivil = new Integer(EstadoCivil.DESCONHECIDO);
+	else
+	    this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
     }
 
     public List toArrayList() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(EstadoCivil.DEFAULT, null));
-        result.add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, EstadoCivil.SOLTEIRO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.CASADO_STRING, EstadoCivil.CASADO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.DIVORCIADO_STRING, EstadoCivil.DIVORCIADO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, EstadoCivil.VIUVO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.SEPARADO_STRING, EstadoCivil.SEPARADO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.UNIAO_DE_FACTO_STRING,
-                EstadoCivil.UNIAO_DE_FACTO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.DESCONHECIDO_STRING, EstadoCivil.DESCONHECIDO_STRING));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(EstadoCivil.DEFAULT, null));
+	result.add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, EstadoCivil.SOLTEIRO_STRING));
+	result.add(new LabelValueBean(EstadoCivil.CASADO_STRING, EstadoCivil.CASADO_STRING));
+	result.add(new LabelValueBean(EstadoCivil.DIVORCIADO_STRING, EstadoCivil.DIVORCIADO_STRING));
+	result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, EstadoCivil.VIUVO_STRING));
+	result.add(new LabelValueBean(EstadoCivil.SEPARADO_STRING, EstadoCivil.SEPARADO_STRING));
+	result.add(new LabelValueBean(EstadoCivil.UNIAO_DE_FACTO_STRING, EstadoCivil.UNIAO_DE_FACTO_STRING));
+	result.add(new LabelValueBean(EstadoCivil.DESCONHECIDO_STRING, EstadoCivil.DESCONHECIDO_STRING));
+	return result;
     }
 
     public static List toIntegerArrayList() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(EstadoCivil.DEFAULT, null));
-        result
-                .add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, String
-                        .valueOf(EstadoCivil.SOLTEIRO)));
-        result.add(new LabelValueBean(EstadoCivil.CASADO_STRING, String.valueOf(EstadoCivil.CASADO)));
-        result.add(new LabelValueBean(EstadoCivil.DIVORCIADO_STRING, String
-                .valueOf(EstadoCivil.DIVORCIADO)));
-        result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, String.valueOf(EstadoCivil.VIUVO)));
-        result
-                .add(new LabelValueBean(EstadoCivil.SEPARADO_STRING, String
-                        .valueOf(EstadoCivil.SEPARADO)));
-        result.add(new LabelValueBean(EstadoCivil.UNIAO_DE_FACTO_STRING, String
-                .valueOf(EstadoCivil.UNIAO_DE_FACTO)));
-        result.add(new LabelValueBean(EstadoCivil.DESCONHECIDO_STRING, String
-                .valueOf(EstadoCivil.DESCONHECIDO)));
-        return (ArrayList) result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(EstadoCivil.DEFAULT, null));
+	result.add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, String.valueOf(EstadoCivil.SOLTEIRO)));
+	result.add(new LabelValueBean(EstadoCivil.CASADO_STRING, String.valueOf(EstadoCivil.CASADO)));
+	result.add(new LabelValueBean(EstadoCivil.DIVORCIADO_STRING, String.valueOf(EstadoCivil.DIVORCIADO)));
+	result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, String.valueOf(EstadoCivil.VIUVO)));
+	result.add(new LabelValueBean(EstadoCivil.SEPARADO_STRING, String.valueOf(EstadoCivil.SEPARADO)));
+	result.add(new LabelValueBean(EstadoCivil.UNIAO_DE_FACTO_STRING, String.valueOf(EstadoCivil.UNIAO_DE_FACTO)));
+	result.add(new LabelValueBean(EstadoCivil.DESCONHECIDO_STRING, String.valueOf(EstadoCivil.DESCONHECIDO)));
+	return (ArrayList) result;
     }
 
     public String toString() {
-        if (estadoCivil.intValue() == EstadoCivil.SOLTEIRO)
-            return EstadoCivil.SOLTEIRO_STRING;
-        if (estadoCivil.intValue() == EstadoCivil.CASADO)
-            return EstadoCivil.CASADO_STRING;
-        if (estadoCivil.intValue() == EstadoCivil.DIVORCIADO)
-            return EstadoCivil.DIVORCIADO_STRING;
-        if (estadoCivil.intValue() == EstadoCivil.VIUVO)
-            return EstadoCivil.VIUVO_STRING;
-        if (estadoCivil.intValue() == EstadoCivil.SEPARADO)
-            return EstadoCivil.SEPARADO_STRING;
-        if (estadoCivil.intValue() == EstadoCivil.UNIAO_DE_FACTO)
-            return EstadoCivil.UNIAO_DE_FACTO_STRING;
-        if (estadoCivil.intValue() == EstadoCivil.DESCONHECIDO)
-            return EstadoCivil.DESCONHECIDO_STRING;
-        return null;
+	if (estadoCivil.intValue() == EstadoCivil.SOLTEIRO)
+	    return EstadoCivil.SOLTEIRO_STRING;
+	if (estadoCivil.intValue() == EstadoCivil.CASADO)
+	    return EstadoCivil.CASADO_STRING;
+	if (estadoCivil.intValue() == EstadoCivil.DIVORCIADO)
+	    return EstadoCivil.DIVORCIADO_STRING;
+	if (estadoCivil.intValue() == EstadoCivil.VIUVO)
+	    return EstadoCivil.VIUVO_STRING;
+	if (estadoCivil.intValue() == EstadoCivil.SEPARADO)
+	    return EstadoCivil.SEPARADO_STRING;
+	if (estadoCivil.intValue() == EstadoCivil.UNIAO_DE_FACTO)
+	    return EstadoCivil.UNIAO_DE_FACTO_STRING;
+	if (estadoCivil.intValue() == EstadoCivil.DESCONHECIDO)
+	    return EstadoCivil.DESCONHECIDO_STRING;
+	return null;
     }
 
     /**
@@ -147,7 +139,7 @@ public class EstadoCivil extends FenixUtil {
      * @return Value of property estadoCivil.
      */
     public java.lang.Integer getEstadoCivil() {
-        return estadoCivil;
+	return estadoCivil;
     }
 
     /**
@@ -157,7 +149,7 @@ public class EstadoCivil extends FenixUtil {
      *            New value of property estadoCivil.
      */
     public void setEstadoCivil(java.lang.Integer estadoCivil) {
-        this.estadoCivil = estadoCivil;
+	this.estadoCivil = estadoCivil;
     }
 
 }

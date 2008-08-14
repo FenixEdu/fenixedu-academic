@@ -28,27 +28,25 @@ public class SeparatorListRenderer extends OutputRenderer {
     private String param;
 
     private String link;
-    
+
     private String emptyLabel;
 
     private Boolean targetBlank;
-  
-    
-    
+
     public Boolean getTargetBlank() {
-        return targetBlank;
+	return targetBlank;
     }
 
     public void setTargetBlank(Boolean targetBlank) {
-        this.targetBlank = targetBlank;
+	this.targetBlank = targetBlank;
     }
 
     public String getEmptyLabel() {
-        return emptyLabel;
+	return emptyLabel;
     }
 
     public void setEmptyLabel(String emptyLabel) {
-        this.emptyLabel = emptyLabel;
+	this.emptyLabel = emptyLabel;
     }
 
     public String getSeparator() {
@@ -95,7 +93,6 @@ public class SeparatorListRenderer extends OutputRenderer {
 	this.link = link;
     }
 
- 
     @Override
     protected Layout getLayout(Object object, Class type) {
 	return new Layout() {
@@ -106,25 +103,25 @@ public class SeparatorListRenderer extends OutputRenderer {
 		final HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 
 		final Collection<Object> objects = (Collection<Object>) object;
-		
+
 		final Iterator<Object> iterator = objects.iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 
 		    final Object each = iterator.next();
-		    Schema schema = RenderKit.getInstance().findSchema(getEachSchema());		    		    
+		    Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
 		    HtmlComponent htmlComponent = renderValue(each, each.getClass(), schema, getEachLayout(), null);
 
-		    if(htmlComponent != null && getLink() != null && !StringUtils.isEmpty(getLink().trim())) {
-			if(getParam() != null && !StringUtils.isEmpty(getParam().trim())) {
-			    htmlComponent = getHtmlLink(each, htmlComponent);			      			   			    
-			} 		
+		    if (htmlComponent != null && getLink() != null && !StringUtils.isEmpty(getLink().trim())) {
+			if (getParam() != null && !StringUtils.isEmpty(getParam().trim())) {
+			    htmlComponent = getHtmlLink(each, htmlComponent);
+			}
 		    }
 
 		    blockContainer.addChild(htmlComponent);
 		    blockContainer.addChild(iterator.hasNext() ? new HtmlText(getSeparator()) : new HtmlText());
 		}
-		
-		if(objects.isEmpty() && getEmptyLabel() != null && !StringUtils.isEmpty(getEmptyLabel())) {
+
+		if (objects.isEmpty() && getEmptyLabel() != null && !StringUtils.isEmpty(getEmptyLabel())) {
 		    blockContainer.addChild(new HtmlText(getEmptyLabel()));
 		}
 
@@ -139,35 +136,36 @@ public class SeparatorListRenderer extends OutputRenderer {
 		String slotValue = getSlotValue(object, slotName);
 
 		HtmlLink htmlLink = new HtmlLink();
-		htmlLink.setUrl(getLink().trim());			
+		htmlLink.setUrl(getLink().trim());
 		htmlLink.setModuleRelative(false);
-		
-		if(getTargetBlank() != null && getTargetBlank()) {
+
+		if (getTargetBlank() != null && getTargetBlank()) {
 		    htmlLink.setTarget(HtmlLink.Target.BLANK);
 		}
-		
+
 		htmlLink.setBody(htmlComponent);
 
-		if(slotValue != null) {
+		if (slotValue != null) {
 		    htmlLink.setParameter(paramName, slotValue);
 		}
-		
+
 		return htmlLink;
 	    }
 
 	    private String getSlotValue(Object object, String slotName) {
-		
-		String slotValue = null;		
-		
+
+		String slotValue = null;
+
 		try {
 		    slotValue = String.valueOf(PropertyUtils.getProperty(object, slotName));
 
 		} catch (Exception e) {
-		    throw new RuntimeException("could not set param name by reading property '" + slotName + "' from object " + object, e);
+		    throw new RuntimeException("could not set param name by reading property '" + slotName + "' from object "
+			    + object, e);
 		}
-		
+
 		return slotValue;
 	    }
-	};  
+	};
     }
 }

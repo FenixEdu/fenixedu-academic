@@ -38,13 +38,12 @@ public class CreditLineDTO {
 
     private double balanceOfCredits = 0;
 
-    private int mandatoryLessonHours = 0;       
+    private int mandatoryLessonHours = 0;
 
     private ExecutionSemester executionSemester;
 
-    public CreditLineDTO(ExecutionSemester executionSemester, TeacherService teacherService,
-	    double managementCredits, double exemptionCredits, int lessonHours, Teacher teacher,
-	    double thesesCredits) throws ParseException {
+    public CreditLineDTO(ExecutionSemester executionSemester, TeacherService teacherService, double managementCredits,
+	    double exemptionCredits, int lessonHours, Teacher teacher, double thesesCredits) throws ParseException {
 
 	setExecutionPeriod(executionSemester);
 	if (teacherService != null) {
@@ -55,8 +54,8 @@ public class CreditLineDTO {
 	    setThesesCredits(thesesCredits);
 	    setOtherCredits(teacherService.getOtherServiceCredits());
 	    setInstitutionWorkingHours(teacherService.getInstitutionWorkingHours());
-	    setPastServiceCredits(teacherService.getPastServiceCredits());            
-	}       
+	    setPastServiceCredits(teacherService.getPastServiceCredits());
+	}
 	setBalanceOfCredits(teacher.getBalanceOfCreditsUntil(executionSemester.getPreviousExecutionPeriod()));
 	setMandatoryLessonHours(lessonHours);
 	setManagementCredits(managementCredits);
@@ -64,13 +63,12 @@ public class CreditLineDTO {
     }
 
     public double getTotalCredits() {
-	double totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits()
-	+ getTfcAdviseCredits() + getThesesCredits() + getOtherCredits()
-	+ getManagementCredits() + getServiceExemptionCredits();
+	double totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits() + getTfcAdviseCredits() + getThesesCredits()
+		+ getOtherCredits() + getManagementCredits() + getServiceExemptionCredits();
 	return round(totalCredits);
     }
 
-    private Double round(double n) {        
+    private Double round(double n) {
 	return Math.round((n * 100.0)) / 100.0;
     }
 

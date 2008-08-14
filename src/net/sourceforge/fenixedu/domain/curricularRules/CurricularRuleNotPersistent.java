@@ -60,7 +60,8 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
     }
 
     public boolean isValid(ExecutionSemester executionSemester) {
-	return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd().isAfterOrEquals(executionSemester)));
+	return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd()
+		.isAfterOrEquals(executionSemester)));
     }
 
     public boolean isValid(ExecutionYear executionYear) {
@@ -75,9 +76,9 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
     public boolean isVisible() {
 	return false;
     }
-    
+
     public boolean isActive() {
-        return getEnd() == null || getEnd().containsDay(new YearMonthDay());
+	return getEnd() == null || getEnd().containsDay(new YearMonthDay());
     }
 
     public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {

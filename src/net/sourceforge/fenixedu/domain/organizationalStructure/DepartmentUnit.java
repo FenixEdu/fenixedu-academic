@@ -32,28 +32,34 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	super.setType(PartyTypeEnum.DEPARTMENT);
     }
 
-    public static DepartmentUnit createNewInternalDepartmentUnit(MultiLanguageString departmentName, Integer costCenterCode, String departmentAcronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-	    String webAddress, Department department, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static DepartmentUnit createNewInternalDepartmentUnit(MultiLanguageString departmentName, Integer costCenterCode,
+	    String departmentAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    AccountabilityType accountabilityType, String webAddress, Department department, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(departmentName, costCenterCode, departmentAcronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
+	departmentUnit.init(departmentName, costCenterCode, departmentAcronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces, campus);
 	departmentUnit.setDepartment(department);
-	departmentUnit.addParentUnit(parentUnit, accountabilityType);		
-	
+	departmentUnit.addParentUnit(parentUnit, accountabilityType);
+
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(departmentUnit);
 
 	return departmentUnit;
-    }    
+    }
 
-    public static DepartmentUnit createNewOfficialExternalDepartmentUnit(final String departmentName, final String departmentAcronym, final Unit parentUnit) {							
+    public static DepartmentUnit createNewOfficialExternalDepartmentUnit(final String departmentName,
+	    final String departmentAcronym, final Unit parentUnit) {
 
 	final DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, departmentAcronym, new YearMonthDay(), null, null, null, null, null);
-	if(parentUnit.isCountryUnit()) {
-	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
+	departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, departmentAcronym,
+		new YearMonthDay(), null, null, null, null, null);
+	if (parentUnit.isCountryUnit()) {
+	    departmentUnit.addParentUnit(parentUnit, AccountabilityType
+		    .readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else {
-	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	    departmentUnit.addParentUnit(parentUnit, AccountabilityType
+		    .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	}
 
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(departmentUnit);
@@ -68,11 +74,12 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
     @Override
     public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, 
-	    Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
+	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
-	if(isInternal()) {
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
+		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	if (isInternal()) {
 	    setDepartment(department);
 	}
 
@@ -82,7 +89,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     public List<CompetenceCourse> getCompetenceCourses() {
 	return getCompetenceCourses(null);
     }
-    
+
     public List<CompetenceCourse> getCompetenceCourses(CurricularStage curricularStage) {
 	List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
 	for (ScientificAreaUnit scientificAreaUnit : getScientificAreaUnits()) {
@@ -92,7 +99,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 			result.add(competenceCourse);
 		    }
 		}
-	    }	   
+	    }
 	}
 	return result;
     }
@@ -105,27 +112,27 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	    }
 	}
 	return new ArrayList<ScientificAreaUnit>(result);
-    }   
+    }
 
     @Override
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
 	if (getDepartment() == null) {
 	    if (parentUnit != null
-		    && (!parentUnit.isOfficialExternal() || (!parentUnit.isCountryUnit()
-			    && !parentUnit.isSchoolUnit() && !parentUnit.isUniversityUnit()))) {
+		    && (!parentUnit.isOfficialExternal() || (!parentUnit.isCountryUnit() && !parentUnit.isSchoolUnit() && !parentUnit
+			    .isUniversityUnit()))) {
 		throw new DomainException("error.unit.invalid.parentUnit");
-	    }	   
+	    }
 	} else {
-	    if(parentUnit != null && !parentUnit.isInternal()) {
+	    if (parentUnit != null && !parentUnit.isInternal()) {
 		throw new DomainException("error.unit.invalid.parentUnit");
-	    }	    
+	    }
 	}
 	return super.addParentUnit(parentUnit, accountabilityType);
     }
 
     @Override
     public void setAcronym(String acronym) {
-	if(StringUtils.isEmpty(acronym)) {
+	if (StringUtils.isEmpty(acronym)) {
 	    throw new DomainException("error.unit.empty.acronym");
 	}
 	super.setAcronym(acronym);
@@ -133,7 +140,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
     @Override
     public void setDepartment(Department department) {
-	if(department == null) {
+	if (department == null) {
 	    throw new DomainException("error.departmentUnit.empty.department");
 	}
 	super.setDepartment(department);
@@ -152,7 +159,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
 	for (Unit subUnit : getSubUnits()) {
-	    if(subUnit.hasCompetenceCourses(competenceCourse)) {
+	    if (subUnit.hasCompetenceCourses(competenceCourse)) {
 		return true;
 	    }
 	}
@@ -161,10 +168,12 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
     @Override
     public void delete() {
-	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules().get(0).delete());		
-	super.setDepartment(null);	
-	super.delete();	
-    }    
+	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
+		.get(0).delete())
+	    ;
+	super.setDepartment(null);
+	super.delete();
+    }
 
     private static void checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(DepartmentUnit departmentUnit) {
 	if (departmentUnit.getDepartment() == null) {
@@ -172,47 +181,49 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 		for (Unit subUnit : parentUnit.getAllSubUnits()) {
 		    if (!subUnit.equals(departmentUnit)
 			    && subUnit.isDepartmentUnit()
-			    && (departmentUnit.getName().equalsIgnoreCase(subUnit.getName()) || departmentUnit
-				    .getAcronym().equalsIgnoreCase(subUnit.getAcronym()))) {
+			    && (departmentUnit.getName().equalsIgnoreCase(subUnit.getName()) || departmentUnit.getAcronym()
+				    .equalsIgnoreCase(subUnit.getAcronym()))) {
 			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
 		    }
-		}  
-	    }	   	  
+		}
+	    }
 	} else {
 	    for (Unit unit : UnitUtils.readInstitutionUnit().getAllSubUnits()) {
-		if (!unit.equals(departmentUnit) && unit.isDepartmentUnit() &&
-			(departmentUnit.getAcronym().equalsIgnoreCase(unit.getAcronym()) || 
-				departmentUnit.getName().equalsIgnoreCase(unit.getName()))) {
+		if (!unit.equals(departmentUnit)
+			&& unit.isDepartmentUnit()
+			&& (departmentUnit.getAcronym().equalsIgnoreCase(unit.getAcronym()) || departmentUnit.getName()
+				.equalsIgnoreCase(unit.getName()))) {
 		    throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
 		}
 	    }
 	}
     }
-    
-	@Override
-	public List<IGroup> getDefaultGroups() {
-		List<IGroup> groups = super.getDefaultGroups();
-		
-		ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-		Department department = this.getDepartment();
-		
-		groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
-		//groups.add(new DepartmentStudentsByExecutionYearGroup(currentYear, department));
-		groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
-		
-		SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		degrees.addAll(getDepartment().getDegrees());
-		
-		for (Degree degree : degrees) {
-			groups.add(new DegreeStudentsGroup(degree));
-		}
-		
-		return groups;
+
+    @Override
+    public List<IGroup> getDefaultGroups() {
+	List<IGroup> groups = super.getDefaultGroups();
+
+	ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+	Department department = this.getDepartment();
+
+	groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
+	// groups.add(new DepartmentStudentsByExecutionYearGroup(currentYear,
+	// department));
+	groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
+
+	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	degrees.addAll(getDepartment().getDegrees());
+
+	for (Degree degree : degrees) {
+	    groups.add(new DegreeStudentsGroup(degree));
 	}
 
-	@Override
-	protected UnitSite createSite() {
-		return new DepartmentSite(this);
-	}
-	
+	return groups;
+    }
+
+    @Override
+    protected UnitSite createSite() {
+	return new DepartmentSite(this);
+    }
+
 }

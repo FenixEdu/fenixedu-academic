@@ -13,42 +13,36 @@ import org.joda.time.DateTime;
 
 public class CreateUnavailablePeriod extends Service {
 
-	public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification)
-			{
+    public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification) {
 
-		CreateUnavailable(vigilant, begin, end,justification);
-		for(VigilantGroup group : vigilant.getVigilantGroups()) {
-			sendEmail(vigilant, begin, end, justification, group);
-		}
+	CreateUnavailable(vigilant, begin, end, justification);
+	for (VigilantGroup group : vigilant.getVigilantGroups()) {
+	    sendEmail(vigilant, begin, end, justification, group);
 	}
+    }
 
-	public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification,
-			VigilantGroup group) {
-		CreateUnavailable(vigilant, begin, end,justification);
-		sendEmail(vigilant, begin, end, justification, group);
-	}
+    public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification, VigilantGroup group) {
+	CreateUnavailable(vigilant, begin, end, justification);
+	sendEmail(vigilant, begin, end, justification, group);
+    }
 
-	private void CreateUnavailable(Vigilant vigilant, DateTime begin, DateTime end, String justification) {
-		new UnavailablePeriod(begin, end, justification, vigilant);
-	}
-	
-	private void sendEmail(Vigilant vigilant, DateTime begin, DateTime end, String justification,
-			VigilantGroup group) {
-		ArrayList<String> replyTos = new ArrayList<String>();
-		replyTos.add(group.getContactEmail());
-		String[] contactArray = { group.getContactEmail() };
+    private void CreateUnavailable(Vigilant vigilant, DateTime begin, DateTime end, String justification) {
+	new UnavailablePeriod(begin, end, justification, vigilant);
+    }
 
-		String beginDate = begin.getDayOfMonth() + "/" + begin.getMonthOfYear() + "/" + begin.getYear()
-				+ " - " + String.format("%02d", begin.getHourOfDay()) + ":"
-				+ String.format("%02d", begin.getMinuteOfHour()) + "h";
-		String endDate = end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear() + " - "
-				+ String.format("%02d", end.getHourOfDay()) + ":"
-				+ String.format("%02d", end.getMinuteOfHour()) + "h";
+    private void sendEmail(Vigilant vigilant, DateTime begin, DateTime end, String justification, VigilantGroup group) {
+	ArrayList<String> replyTos = new ArrayList<String>();
+	replyTos.add(group.getContactEmail());
+	String[] contactArray = { group.getContactEmail() };
 
-		String message = "A seguinte indisponilidade foi adicionada:\n\n" + vigilant.getPerson().getName()
-				+ " " + beginDate + " a " + endDate + "\nJustificação: " + justification;
+	String beginDate = begin.getDayOfMonth() + "/" + begin.getMonthOfYear() + "/" + begin.getYear() + " - "
+		+ String.format("%02d", begin.getHourOfDay()) + ":" + String.format("%02d", begin.getMinuteOfHour()) + "h";
+	String endDate = end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear() + " - "
+		+ String.format("%02d", end.getHourOfDay()) + ":" + String.format("%02d", end.getMinuteOfHour()) + "h";
 
-		new Email(group.getName(), group.getContactEmail(), contactArray, replyTos, null, null,
-				"Indisponibilidade", message);
-	}
+	String message = "A seguinte indisponilidade foi adicionada:\n\n" + vigilant.getPerson().getName() + " " + beginDate
+		+ " a " + endDate + "\nJustificação: " + justification;
+
+	new Email(group.getName(), group.getContactEmail(), contactArray, replyTos, null, null, "Indisponibilidade", message);
+    }
 }

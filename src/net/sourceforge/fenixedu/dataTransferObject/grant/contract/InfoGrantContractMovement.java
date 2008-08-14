@@ -28,7 +28,7 @@ public class InfoGrantContractMovement extends InfoObject {
      * @return Returns the arrivalDate.
      */
     public Date getArrivalDate() {
-        return this.arrivalDate;
+	return this.arrivalDate;
     }
 
     /**
@@ -36,14 +36,14 @@ public class InfoGrantContractMovement extends InfoObject {
      *            The arrivalDate to set.
      */
     public void setArrivalDate(Date arrivalDate) {
-        this.arrivalDate = arrivalDate;
+	this.arrivalDate = arrivalDate;
     }
 
     /**
      * @return Returns the departureDate.
      */
     public Date getDepartureDate() {
-        return this.departureDate;
+	return this.departureDate;
     }
 
     /**
@@ -51,14 +51,14 @@ public class InfoGrantContractMovement extends InfoObject {
      *            The departureDate to set.
      */
     public void setDepartureDate(Date departureDate) {
-        this.departureDate = departureDate;
+	this.departureDate = departureDate;
     }
 
     /**
      * @return Returns the infoGrantContract.
      */
     public InfoGrantContract getInfoGrantContract() {
-        return this.infoGrantContract;
+	return this.infoGrantContract;
     }
 
     /**
@@ -66,14 +66,14 @@ public class InfoGrantContractMovement extends InfoObject {
      *            The infoGrantContract to set.
      */
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
-        this.infoGrantContract = infoGrantContract;
+	this.infoGrantContract = infoGrantContract;
     }
 
     /**
      * @return Returns the location.
      */
     public String getLocation() {
-        return this.location;
+	return this.location;
     }
 
     /**
@@ -81,19 +81,19 @@ public class InfoGrantContractMovement extends InfoObject {
      *            The location to set.
      */
     public void setLocation(String location) {
-        this.location = location;
+	this.location = location;
     }
 
     /**
      * @param GrantMovement
      */
     public void copyFromDomain(GrantContractMovement grantMovement) {
-        super.copyFromDomain(grantMovement);
-        if (grantMovement != null) {
-            setLocation(grantMovement.getLocation());
-            setArrivalDate(grantMovement.getArrivalDate());
-            setDepartureDate(grantMovement.getDepartureDate());
-        }
+	super.copyFromDomain(grantMovement);
+	if (grantMovement != null) {
+	    setLocation(grantMovement.getLocation());
+	    setArrivalDate(grantMovement.getArrivalDate());
+	    setDepartureDate(grantMovement.getDepartureDate());
+	}
     }
 
     /**
@@ -101,25 +101,24 @@ public class InfoGrantContractMovement extends InfoObject {
      * @return
      */
     public static InfoGrantContractMovement newInfoFromDomain(GrantContractMovement grantMovement) {
-        InfoGrantContractMovement infoGrantMovement = null;
-        if (grantMovement != null) {
-            infoGrantMovement = new InfoGrantContractMovement();
-            infoGrantMovement.copyFromDomain(grantMovement);
-        }
-        return infoGrantMovement;
+	InfoGrantContractMovement infoGrantMovement = null;
+	if (grantMovement != null) {
+	    infoGrantMovement = new InfoGrantContractMovement();
+	    infoGrantMovement.copyFromDomain(grantMovement);
+	}
+	return infoGrantMovement;
     }
 
     /**
      * @param grantMovement
      * @throws ExcepcaoPersistencia
      */
-    public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement,
-            GrantContractMovement grantContractMovement) {
-        super.copyToDomain(infoGrantContractMovement, grantContractMovement);
+    public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement, GrantContractMovement grantContractMovement) {
+	super.copyToDomain(infoGrantContractMovement, grantContractMovement);
 
-        grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
-        grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
-        grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
+	grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
+	grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
+	grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
     }
 
 }

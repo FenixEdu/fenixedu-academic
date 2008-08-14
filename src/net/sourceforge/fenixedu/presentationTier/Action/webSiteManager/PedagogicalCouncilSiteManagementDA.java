@@ -6,7 +6,7 @@ public class PedagogicalCouncilSiteManagementDA extends CustomUnitSiteManagement
 
     @Override
     protected String getAuthorNameForFile(HttpServletRequest request) {
-        return getUserView(request).getPerson().getName();
+	return getUserView(request).getPerson().getName();
     }
 
 }

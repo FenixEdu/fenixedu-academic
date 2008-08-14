@@ -22,17 +22,15 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion_Base {
 
-    final static Comparator<MasterDegreeThesisDataVersion> LAST_MODIFICATION_COMPARATOR = new BeanComparator(
-	    "lastModification");
+    final static Comparator<MasterDegreeThesisDataVersion> LAST_MODIFICATION_COMPARATOR = new BeanComparator("lastModification");
 
     public MasterDegreeThesisDataVersion() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public MasterDegreeThesisDataVersion(MasterDegreeThesis masterDegreeThesis,
-	    Employee responsibleEmployee, String dissertationTitle, Date lastModification,
-	    State currentState) {
+    public MasterDegreeThesisDataVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee,
+	    String dissertationTitle, Date lastModification, State currentState) {
 	this();
 	this.setMasterDegreeThesis(masterDegreeThesis);
 	this.setResponsibleEmployee(responsibleEmployee);
@@ -42,8 +40,8 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     }
 
     public static MasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) {
-	for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : RootDomainObject
-		.getInstance().getMasterDegreeThesisDataVersions()) {
+	for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : RootDomainObject.getInstance()
+		.getMasterDegreeThesisDataVersions()) {
 	    if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)
 		    && masterDegreeThesisDataVersion.getDissertationTitle().equals(dissertationTitle)) {
 		return masterDegreeThesisDataVersion;

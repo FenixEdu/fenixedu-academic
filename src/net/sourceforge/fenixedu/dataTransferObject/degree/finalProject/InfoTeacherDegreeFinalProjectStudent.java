@@ -26,28 +26,28 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject {
      * @return Returns the infoExecutionYear.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return this.infoExecutionPeriod;
+	return this.infoExecutionPeriod;
     }
 
     /**
      * @return Returns the infoStudent.
      */
     public InfoStudent getInfoStudent() {
-        return this.infoStudent;
+	return this.infoStudent;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return this.infoTeacher;
+	return this.infoTeacher;
     }
 
     /**
      * @return Returns the percentage.
      */
     public Double getPercentage() {
-        return this.percentage;
+	return this.percentage;
     }
 
     /**
@@ -55,7 +55,7 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject {
      *            The infoExecutionYear to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
@@ -63,7 +63,7 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject {
      *            The infoStudent to set.
      */
     public void setInfoStudent(InfoStudent infoStudent) {
-        this.infoStudent = infoStudent;
+	this.infoStudent = infoStudent;
     }
 
     /**
@@ -71,7 +71,7 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
@@ -79,23 +79,23 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject {
      *            The percentage to set.
      */
     public void setPercentage(Double percentage) {
-        this.percentage = percentage;
+	this.percentage = percentage;
     }
 
     public void copyFromDomain(final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
-        super.copyFromDomain(teacherDegreeFinalProjectStudent);
-        if (teacherDegreeFinalProjectStudent != null) {
-            setPercentage(teacherDegreeFinalProjectStudent.getPercentage());
-        }
+	super.copyFromDomain(teacherDegreeFinalProjectStudent);
+	if (teacherDegreeFinalProjectStudent != null) {
+	    setPercentage(teacherDegreeFinalProjectStudent.getPercentage());
+	}
     }
 
     public static InfoTeacherDegreeFinalProjectStudent newInfoFromDomain(
-            final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
-        if (teacherDegreeFinalProjectStudent != null) {
-            InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
-            infoTeacherDegreeFinalProjectStudent.copyFromDomain(teacherDegreeFinalProjectStudent);
-            return infoTeacherDegreeFinalProjectStudent;
-        }
-        return null;
+	    final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
+	if (teacherDegreeFinalProjectStudent != null) {
+	    InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
+	    infoTeacherDegreeFinalProjectStudent.copyFromDomain(teacherDegreeFinalProjectStudent);
+	    return infoTeacherDegreeFinalProjectStudent;
+	}
+	return null;
     }
 }

@@ -37,21 +37,22 @@ public class TimeTable {
      * @param numberOfHours
      * @param numberOfDays
      */
-    public TimeTable(Integer numberOfHours, Integer numberOfDays, Calendar minimumHour, Integer slotSize,Locale locale, PageContext pageContext) {
-        this.minimumHourInMinutes = getMinutes(minimumHour);
-        this.slotSize = slotSize;
+    public TimeTable(Integer numberOfHours, Integer numberOfDays, Calendar minimumHour, Integer slotSize, Locale locale,
+	    PageContext pageContext) {
+	this.minimumHourInMinutes = getMinutes(minimumHour);
+	this.slotSize = slotSize;
 
-        this.numberOfDays = numberOfDays;
-        this.numberOfHours = numberOfHours;
+	this.numberOfDays = numberOfDays;
+	this.numberOfHours = numberOfHours;
 
-        this.infoLessonWrapperMap = new HashMap();
+	this.infoLessonWrapperMap = new HashMap();
 
-        days = new ArrayList(numberOfDays.intValue());
-        for (int day = 0; day < numberOfDays.intValue(); day++) {
-            DayColumn column = new DayColumn(day, getDiaSemanaLabel(day,locale, pageContext));
-            days.add(day, column);
-        }
-        timeTableGrid = new TimeTableSlot[numberOfDays.intValue()][numberOfHours.intValue()];
+	days = new ArrayList(numberOfDays.intValue());
+	for (int day = 0; day < numberOfDays.intValue(); day++) {
+	    DayColumn column = new DayColumn(day, getDiaSemanaLabel(day, locale, pageContext));
+	    days.add(day, column);
+	}
+	timeTableGrid = new TimeTableSlot[numberOfDays.intValue()][numberOfHours.intValue()];
     }
 
     /**
@@ -60,31 +61,31 @@ public class TimeTable {
      * @param day
      */
     private String getDiaSemanaLabel(int day, Locale locale, PageContext pageContext) {
-        switch (day) {
-        case 0:
-            return getMessageResource(pageContext, "public.degree.information.label.monday", locale);
-        case 1:
-            return getMessageResource(pageContext, "public.degree.information.label.tusday", locale);
-        case 2:
-            return getMessageResource(pageContext, "public.degree.information.label.wednesday", locale);
-        case 3:
-            return getMessageResource(pageContext, "public.degree.information.label.thursday", locale);
-        case 4:
-            return getMessageResource(pageContext, "public.degree.information.label.friday", locale);
-        case 5:
-            return getMessageResource(pageContext, "public.degree.information.label.saturday", locale);
-        default:
-            return getMessageResource(pageContext, "public.degree.information.label.invalid", locale) + day;
+	switch (day) {
+	case 0:
+	    return getMessageResource(pageContext, "public.degree.information.label.monday", locale);
+	case 1:
+	    return getMessageResource(pageContext, "public.degree.information.label.tusday", locale);
+	case 2:
+	    return getMessageResource(pageContext, "public.degree.information.label.wednesday", locale);
+	case 3:
+	    return getMessageResource(pageContext, "public.degree.information.label.thursday", locale);
+	case 4:
+	    return getMessageResource(pageContext, "public.degree.information.label.friday", locale);
+	case 5:
+	    return getMessageResource(pageContext, "public.degree.information.label.saturday", locale);
+	default:
+	    return getMessageResource(pageContext, "public.degree.information.label.invalid", locale) + day;
 
-        }
+	}
     }
 
     private String getMessageResource(PageContext pageContext, String key, Locale locale) {
-        try {
-            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
-        } catch (JspException e) {
-            return "???" + key + "???"; 
-        }
+	try {
+	    return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
+	} catch (JspException e) {
+	    return "???" + key + "???";
+	}
     }
 
     /**
@@ -94,33 +95,33 @@ public class TimeTable {
      */
     public void addLesson(InfoShowOccupation infoShowOccupation) {
 
-        int dayIndex = getDayIndex(infoShowOccupation.getDiaSemana());
+	int dayIndex = getDayIndex(infoShowOccupation.getDiaSemana());
 
-        DayColumn dayColumn = (DayColumn) this.days.get(dayIndex);
+	DayColumn dayColumn = (DayColumn) this.days.get(dayIndex);
 
-        int startIndex = getHourIndex(infoShowOccupation.getInicio(), this.minimumHourInMinutes, this.slotSize.intValue());
-        int endIndex = getHourIndex(infoShowOccupation.getFim(), this.minimumHourInMinutes, this.slotSize.intValue());
+	int startIndex = getHourIndex(infoShowOccupation.getInicio(), this.minimumHourInMinutes, this.slotSize.intValue());
+	int endIndex = getHourIndex(infoShowOccupation.getFim(), this.minimumHourInMinutes, this.slotSize.intValue());
 
-        /* break lesson in slots */
-        for (int hourIndex = startIndex; hourIndex < endIndex; hourIndex++) {
-            LessonSlot lessonSlot = new LessonSlot(getInfoLessonWrapper(infoShowOccupation), startIndex, endIndex - 1);
-            TimeTableSlot timeTableSlot = getTimeTableSlot(dayColumn, hourIndex);
-            timeTableSlot.addLessonSlot(lessonSlot);
-        }
+	/* break lesson in slots */
+	for (int hourIndex = startIndex; hourIndex < endIndex; hourIndex++) {
+	    LessonSlot lessonSlot = new LessonSlot(getInfoLessonWrapper(infoShowOccupation), startIndex, endIndex - 1);
+	    TimeTableSlot timeTableSlot = getTimeTableSlot(dayColumn, hourIndex);
+	    timeTableSlot.addLessonSlot(lessonSlot);
+	}
     }
 
     /**
      * Method getInfoLessonWrapper.
      * 
      * @param infoLesson
-     */    
+     */
     private InfoLessonWrapper getInfoLessonWrapper(InfoShowOccupation infoShowOccupation) {
-        InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) this.infoLessonWrapperMap.get(infoShowOccupation);
-        if (infoLessonWrapper == null) {
-            infoLessonWrapper = new InfoLessonWrapper(infoShowOccupation);
-            this.infoLessonWrapperMap.put(infoShowOccupation, infoLessonWrapper);
-        }
-        return infoLessonWrapper;
+	InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) this.infoLessonWrapperMap.get(infoShowOccupation);
+	if (infoLessonWrapper == null) {
+	    infoLessonWrapper = new InfoLessonWrapper(infoShowOccupation);
+	    this.infoLessonWrapperMap.put(infoShowOccupation, infoLessonWrapper);
+	}
+	return infoLessonWrapper;
     }
 
     /**
@@ -131,48 +132,48 @@ public class TimeTable {
      * @return TimeTableSlot
      */
     private TimeTableSlot getTimeTableSlot(DayColumn day, int hourIndex) {
-        TimeTableSlot timeTableSlot = timeTableGrid[day.getIndex()][hourIndex];
+	TimeTableSlot timeTableSlot = timeTableGrid[day.getIndex()][hourIndex];
 
-        if (timeTableSlot == null) {
-            timeTableSlot = new TimeTableSlot(day, new Integer(hourIndex));
-            timeTableGrid[day.getIndex()][hourIndex] = timeTableSlot;
-        }
-        return timeTableSlot;
+	if (timeTableSlot == null) {
+	    timeTableSlot = new TimeTableSlot(day, new Integer(hourIndex));
+	    timeTableGrid[day.getIndex()][hourIndex] = timeTableSlot;
+	}
+	return timeTableSlot;
     }
 
     private int getDayIndex(DiaSemana day) {
-        int dayIndex = -1;
-        if (day != null) {
-            switch (day.getDiaSemana().intValue()) {
-            case DiaSemana.SEGUNDA_FEIRA:
-                dayIndex = 0;
-                break;
-            case DiaSemana.TERCA_FEIRA:
-                dayIndex = 1;
-                break;
-            case DiaSemana.QUARTA_FEIRA:
-                dayIndex = 2;
-                break;
-            case DiaSemana.QUINTA_FEIRA:
-                dayIndex = 3;
-                break;
-            case DiaSemana.SEXTA_FEIRA:
-                dayIndex = 4;
-                break;
-            case DiaSemana.SABADO:
-                dayIndex = 5;
-                break;
-            default:
-                dayIndex = -1;
-                break;
-            }
-        }
-        return dayIndex;
+	int dayIndex = -1;
+	if (day != null) {
+	    switch (day.getDiaSemana().intValue()) {
+	    case DiaSemana.SEGUNDA_FEIRA:
+		dayIndex = 0;
+		break;
+	    case DiaSemana.TERCA_FEIRA:
+		dayIndex = 1;
+		break;
+	    case DiaSemana.QUARTA_FEIRA:
+		dayIndex = 2;
+		break;
+	    case DiaSemana.QUINTA_FEIRA:
+		dayIndex = 3;
+		break;
+	    case DiaSemana.SEXTA_FEIRA:
+		dayIndex = 4;
+		break;
+	    case DiaSemana.SABADO:
+		dayIndex = 5;
+		break;
+	    default:
+		dayIndex = -1;
+		break;
+	    }
+	}
+	return dayIndex;
     }
 
     public static int getHourIndex(Calendar time, int minimumHourInMinutes, int slotSize) {
-        int hourInMinutes = getMinutes(time);
-        return (hourInMinutes - minimumHourInMinutes) / slotSize;
+	int hourInMinutes = getMinutes(time);
+	return (hourInMinutes - minimumHourInMinutes) / slotSize;
     }
 
     /**
@@ -182,7 +183,7 @@ public class TimeTable {
      * @return int
      */
     public static int getMinutes(Calendar time) {
-        return time.get(Calendar.HOUR_OF_DAY) * 60 + time.get(Calendar.MINUTE);
+	return time.get(Calendar.HOUR_OF_DAY) * 60 + time.get(Calendar.MINUTE);
     }
 
     /**
@@ -191,7 +192,7 @@ public class TimeTable {
      * @return TimeTableSlot[][]
      */
     public TimeTableSlot[][] getTimeTableGrid() {
-        return timeTableGrid;
+	return timeTableGrid;
     }
 
     /**
@@ -200,7 +201,7 @@ public class TimeTable {
      * @return Integer
      */
     public Integer getNumberOfDays() {
-        return numberOfDays;
+	return numberOfDays;
     }
 
     /**
@@ -209,7 +210,7 @@ public class TimeTable {
      * @return Integer
      */
     public Integer getNumberOfHours() {
-        return numberOfHours;
+	return numberOfHours;
     }
 
     /**
@@ -219,7 +220,7 @@ public class TimeTable {
      * @return DayColumn
      */
     public DayColumn getDayColumn(int dayIndex) {
-        return (DayColumn) this.days.get(dayIndex);
+	return (DayColumn) this.days.get(dayIndex);
     }
 
     /**
@@ -228,7 +229,7 @@ public class TimeTable {
      * @return int
      */
     public int getMinimumHourInMinutes() {
-        return minimumHourInMinutes;
+	return minimumHourInMinutes;
     }
 
     /**
@@ -237,7 +238,7 @@ public class TimeTable {
      * @return Integer
      */
     public Integer getSlotSize() {
-        return slotSize;
+	return slotSize;
     }
 
 }

@@ -18,11 +18,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentCurricularPlansByNumberAndDegreeType extends Service {
 
-    public List<StudentCurricularPlan> run(Integer studentNumber, DegreeType degreeType)
-	    throws NonExistingServiceException {
+    public List<StudentCurricularPlan> run(Integer studentNumber, DegreeType degreeType) throws NonExistingServiceException {
 
-	List<Registration> registrations = Registration.readByNumberAndDegreeType(studentNumber,
-		degreeType);
+	List<Registration> registrations = Registration.readByNumberAndDegreeType(studentNumber, degreeType);
 
 	if (registrations.isEmpty()) {
 	    throw new NonExistingServiceException();

@@ -13,24 +13,21 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
  */
 public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGrantPart {
     public void copyFromDomain(GrantPart grantPart) {
-        super.copyFromDomain(grantPart);
-        if (grantPart != null) {
-            setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantPart
-                    .getGrantPaymentEntity()));
-            setInfoResponsibleTeacher(InfoTeacher.newInfoFromDomain(grantPart
-                    .getResponsibleTeacher()));
-            setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantPart
-                    .getGrantSubsidy()));
-        }
+	super.copyFromDomain(grantPart);
+	if (grantPart != null) {
+	    setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantPart.getGrantPaymentEntity()));
+	    setInfoResponsibleTeacher(InfoTeacher.newInfoFromDomain(grantPart.getResponsibleTeacher()));
+	    setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantPart.getGrantSubsidy()));
+	}
     }
 
     public static InfoGrantPart newInfoFromDomain(GrantPart grantPart) {
-        InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = null;
-        if (grantPart != null) {
-            infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = new InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity();
-            infoGrantPartWithSubsidyAndTeacherAndPaymentEntity.copyFromDomain(grantPart);
-        }
-        return infoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
+	InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = null;
+	if (grantPart != null) {
+	    infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = new InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity();
+	    infoGrantPartWithSubsidyAndTeacherAndPaymentEntity.copyFromDomain(grantPart);
+	}
+	return infoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
     }
 
 }

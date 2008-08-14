@@ -17,15 +17,16 @@ public class SpecialSeasonCodesProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-    	final List<SpecialSeasonCode> specialSeasonCodes = new ArrayList<SpecialSeasonCode>(RootDomainObject.getInstance().getSpecialSeasonCodesSet());
-    	
-    	Collections.sort(specialSeasonCodes, new BeanComparator("code"));
-    	
-        return specialSeasonCodes; 
+	final List<SpecialSeasonCode> specialSeasonCodes = new ArrayList<SpecialSeasonCode>(RootDomainObject.getInstance()
+		.getSpecialSeasonCodesSet());
+
+	Collections.sort(specialSeasonCodes, new BeanComparator("code"));
+
+	return specialSeasonCodes;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

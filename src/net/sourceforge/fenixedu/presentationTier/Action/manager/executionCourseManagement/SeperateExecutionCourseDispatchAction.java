@@ -31,125 +31,114 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * 
  * @author Luis Cruz
- *  
+ * 
  */
 public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory
-                .executeService( "ReadExecutionCourseWithShiftsAndCurricularCoursesByOID",
-                        new Object[] { executionCourseId });
-        request.setAttribute("infoExecutionCourse", infoExecutionCourse);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
+		"ReadExecutionCourseWithShiftsAndCurricularCoursesByOID", new Object[] { executionCourseId });
+	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-        List executionDegrees = (List) ServiceManagerServiceFactory.executeService(
-                "ReadExecutionDegreesByExecutionPeriodId", new Object[] { infoExecutionCourse
-                        .getInfoExecutionPeriod().getIdInternal() });
-        transformExecutionDegreesIntoLabelValueBean(executionDegrees);
-        request.setAttribute("executionDegrees", executionDegrees);
+	List executionDegrees = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByExecutionPeriodId",
+		new Object[] { infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() });
+	transformExecutionDegreesIntoLabelValueBean(executionDegrees);
+	request.setAttribute("executionDegrees", executionDegrees);
 
-        List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
-        request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
+	List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
+	request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
 
-        return mapping.findForward("showSeperationPage");
+	return mapping.findForward("showSeperationPage");
     }
 
     private void transformExecutionDegreesIntoLabelValueBean(List executionDegreeList) {
-        CollectionUtils.transform(executionDegreeList, new Transformer() {
+	CollectionUtils.transform(executionDegreeList, new Transformer() {
 
-            public Object transform(Object arg0) {
-                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
-                StringBuilder label = new StringBuilder(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                        .getInfoDegree().getTipoCurso().toString());
-                label.append(" em ");
-                label
-                        .append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                                .getNome());
+	    public Object transform(Object arg0) {
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
+		StringBuilder label = new StringBuilder(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+			.getTipoCurso().toString());
+		label.append(" em ");
+		label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 
-                return new LabelValueBean(label.toString(), infoExecutionDegree.getIdInternal()
-                        .toString());
-            }
+		return new LabelValueBean(label.toString(), infoExecutionDegree.getIdInternal().toString());
+	    }
 
-        });
+	});
 
-        Collections.sort(executionDegreeList, new BeanComparator("label"));
-        executionDegreeList.add(0, new LabelValueBean("escolher", ""));
+	Collections.sort(executionDegreeList, new BeanComparator("label"));
+	executionDegreeList.add(0, new LabelValueBean("escolher", ""));
     }
 
-    public ActionForward changeDestinationContext(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward changeDestinationContext(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        prepareTransfer(mapping, form, request, response);
+	prepareTransfer(mapping, form, request, response);
 
-        DynaActionForm dynaActionForm = (DynaActionForm) form;
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        String destinationExecutionDegreeId = (String) dynaActionForm
-                .get("destinationExecutionDegreeId");
-        String destinationCurricularYear = (String) dynaActionForm.get("destinationCurricularYear");
+	String destinationExecutionDegreeId = (String) dynaActionForm.get("destinationExecutionDegreeId");
+	String destinationCurricularYear = (String) dynaActionForm.get("destinationCurricularYear");
 
-        if (isSet(destinationExecutionDegreeId) && isSet(destinationCurricularYear)) {
-            IUserView userView = UserView.getUser();
+	if (isSet(destinationExecutionDegreeId) && isSet(destinationCurricularYear)) {
+	    IUserView userView = UserView.getUser();
 
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
-                    .getAttribute("infoExecutionCourse");
+	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute("infoExecutionCourse");
 
-            Object args[] = { new Integer(destinationExecutionDegreeId),
-                    infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(),
-                    new Integer(destinationCurricularYear) };
-            List executionCourses = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
-            Collections.sort(executionCourses, new BeanComparator("nome"));
-            request.setAttribute("executionCourses", executionCourses);
-        }
+	    Object args[] = { new Integer(destinationExecutionDegreeId),
+		    infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(), new Integer(destinationCurricularYear) };
+	    List executionCourses = (List) ServiceManagerServiceFactory.executeService(
+		    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
+	    Collections.sort(executionCourses, new BeanComparator("nome"));
+	    request.setAttribute("executionCourses", executionCourses);
+	}
 
-        return mapping.findForward("showSeperationPage");
+	return mapping.findForward("showSeperationPage");
     }
 
-    public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixServiceException, FenixFilterException {
 
-        DynaActionForm dynaActionForm = (DynaActionForm) form;
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-        String destinationExecutionCourseIDString = (String) dynaActionForm
-                .get("destinationExecutionCourseID");
-        String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
-        String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm
-                .get("curricularCourseIdsToTransfer");
+	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+	String destinationExecutionCourseIDString = (String) dynaActionForm.get("destinationExecutionCourseID");
+	String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
+	String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm.get("curricularCourseIdsToTransfer");
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer destinationExecutionCourseID = null;
-        if (destinationExecutionCourseIDString != null
-                && destinationExecutionCourseIDString.length() > 0
-                && StringUtils.isNumeric(destinationExecutionCourseIDString)) {
-            destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
-        }
+	Integer destinationExecutionCourseID = null;
+	if (destinationExecutionCourseIDString != null && destinationExecutionCourseIDString.length() > 0
+		&& StringUtils.isNumeric(destinationExecutionCourseIDString)) {
+	    destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
+	}
 
-        ServiceManagerServiceFactory.executeService( "SeperateExecutionCourse", new Object[] {
-                executionCourseId, destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
-                makeIntegerArray(curricularCourseIdsToTransfer) });
+	ServiceManagerServiceFactory.executeService("SeperateExecutionCourse", new Object[] { executionCourseId,
+		destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
+		makeIntegerArray(curricularCourseIdsToTransfer) });
 
-        return mapping.findForward("returnFromTransfer");
+	return mapping.findForward("returnFromTransfer");
     }
 
     private Integer[] makeIntegerArray(String[] stringArray) {
-        Integer[] integerArray = new Integer[stringArray.length];
+	Integer[] integerArray = new Integer[stringArray.length];
 
-        for (int i = 0; i < stringArray.length; i++) {
-            integerArray[i] = new Integer(stringArray[i]);
-        }
+	for (int i = 0; i < stringArray.length; i++) {
+	    integerArray[i] = new Integer(stringArray[i]);
+	}
 
-        return integerArray;
+	return integerArray;
     }
 
     private boolean isSet(String parameter) {
-        return parameter != null && parameter.length() > 0 && StringUtils.isNumeric(parameter);
+	return parameter != null && parameter.length() > 0 && StringUtils.isNumeric(parameter);
     }
 
 }

@@ -29,57 +29,51 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class CreateMasterDegreeCandidate extends Service {
 
-    public InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID,
-            String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType)
-            throws Exception {
+    public InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID, String name,
+	    String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
 
-        // Read the Execution of this degree in the current execution Year
-        final ExecutionDegree executionDegree = rootDomainObject
-                .readExecutionDegreeByOID(executionDegreeID);
-        Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
-                identificationDocumentType);
+	// Read the Execution of this degree in the current execution Year
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+	Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
 
-        if (person == null) {
-            // Create the new Person
-            person = new Person(name, identificationDocumentNumber,
-                    identificationDocumentType, Gender.MALE);
-        } else {
-            MasterDegreeCandidate existingMasterDegreeCandidate = person
-                    .getMasterDegreeCandidateByExecutionDegree(executionDegree);
-            if (existingMasterDegreeCandidate != null) {
-                throw new ExistingServiceException();
-            }
-        }
+	if (person == null) {
+	    // Create the new Person
+	    person = new Person(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
+	} else {
+	    MasterDegreeCandidate existingMasterDegreeCandidate = person
+		    .getMasterDegreeCandidateByExecutionDegree(executionDegree);
+	    if (existingMasterDegreeCandidate != null) {
+		throw new ExistingServiceException();
+	    }
+	}
 
-        person.addPersonRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
-        person.addPersonRoleByRoleType(RoleType.PERSON);
-        
+	person.addPersonRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
+	person.addPersonRoleByRoleType(RoleType.PERSON);
 
-        // Set the Candidate's Situation
-        CandidateSituation candidateSituation = new CandidateSituation();
-        // First candidate situation
-        candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
-        candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
-        candidateSituation.setValidation(new State(State.ACTIVE));
-        Calendar actualDate = Calendar.getInstance();
-        candidateSituation.setDate(actualDate.getTime());
+	// Set the Candidate's Situation
+	CandidateSituation candidateSituation = new CandidateSituation();
+	// First candidate situation
+	candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
+	candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
+	candidateSituation.setValidation(new State(State.ACTIVE));
+	Calendar actualDate = Calendar.getInstance();
+	candidateSituation.setDate(actualDate.getTime());
 
-        // Create the Candidate
-        MasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
-        masterDegreeCandidate.addSituations(candidateSituation);
-        masterDegreeCandidate.setSpecialization(degreeType);
-        masterDegreeCandidate.setExecutionDegree(executionDegree);
-        masterDegreeCandidate.setCandidateNumber(executionDegree
-                .generateCandidateNumberForSpecialization(degreeType));
+	// Create the Candidate
+	MasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
+	masterDegreeCandidate.addSituations(candidateSituation);
+	masterDegreeCandidate.setSpecialization(degreeType);
+	masterDegreeCandidate.setExecutionDegree(executionDegree);
+	masterDegreeCandidate.setCandidateNumber(executionDegree.generateCandidateNumberForSpecialization(degreeType));
 
-        masterDegreeCandidate.setPerson(person);
+	masterDegreeCandidate.setPerson(person);
 
-        // Return the new Candidate
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-                .newInfoFromDomain(masterDegreeCandidate);
-        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-                .newInfoFromDomain(masterDegreeCandidate.getExecutionDegree());
-        infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
-        return infoMasterDegreeCandidate;
+	// Return the new Candidate
+	InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+		.newInfoFromDomain(masterDegreeCandidate);
+	InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(masterDegreeCandidate
+		.getExecutionDegree());
+	infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+	return infoMasterDegreeCandidate;
     }
 }

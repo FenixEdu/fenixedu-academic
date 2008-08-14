@@ -8,6 +8,5 @@ package net.sourceforge.fenixedu.domain.thesis;
  * @author cfgi
  */
 public enum ThesisVisibilityType {
-    PUBLIC,
-    INTRANET
+    PUBLIC, INTRANET
 }

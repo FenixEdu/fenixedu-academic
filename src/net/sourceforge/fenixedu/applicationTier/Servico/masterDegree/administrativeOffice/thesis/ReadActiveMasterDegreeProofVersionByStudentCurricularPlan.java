@@ -20,29 +20,24 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends Service {
 
-    public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID)
-            throws FenixServiceException{
+    public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID) throws FenixServiceException {
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                .readStudentCurricularPlanByOID(studentCurricularPlanID);
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
-        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
-                .getInstance();
-        IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
-                .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
+	IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+		.getInstance();
+	IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+		.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-        if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan))
-            throw new ScholarshipNotFinishedServiceException(
-                    "error.exception.masterDegree.scholarshipNotFinished");
+	if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan))
+	    throw new ScholarshipNotFinishedServiceException("error.exception.masterDegree.scholarshipNotFinished");
 
-        MasterDegreeProofVersion masterDegreeProofVersion = studentCurricularPlan
-                .readActiveMasterDegreeProofVersion();
+	MasterDegreeProofVersion masterDegreeProofVersion = studentCurricularPlan.readActiveMasterDegreeProofVersion();
 
-        if (masterDegreeProofVersion == null)
-            throw new NonExistingServiceException(
-                    "error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
+	if (masterDegreeProofVersion == null)
+	    throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
 
-        return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
+	return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
 
     }
 

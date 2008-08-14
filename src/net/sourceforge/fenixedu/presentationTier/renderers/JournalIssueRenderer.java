@@ -14,37 +14,37 @@ public class JournalIssueRenderer extends OutputRenderer {
     private boolean moduleRelative;
     private boolean contextRelative;
     private boolean blankTarget;
-    
+
     public boolean isBlankTarget() {
-        return blankTarget;
+	return blankTarget;
     }
 
     public void setBlankTarget(boolean blankTarget) {
-        this.blankTarget = blankTarget;
+	this.blankTarget = blankTarget;
     }
 
     public boolean isContextRelative() {
-        return contextRelative;
+	return contextRelative;
     }
 
     public void setContextRelative(boolean contextRelative) {
-        this.contextRelative = contextRelative;
+	this.contextRelative = contextRelative;
     }
 
     public String getLinkFormat() {
-        return linkFormat;
+	return linkFormat;
     }
 
     public void setLinkFormat(String linkFormat) {
-        this.linkFormat = linkFormat;
+	this.linkFormat = linkFormat;
     }
 
     public boolean isModuleRelative() {
-        return moduleRelative;
+	return moduleRelative;
     }
 
     public void setModuleRelative(boolean moduleRelative) {
-        this.moduleRelative = moduleRelative;
+	this.moduleRelative = moduleRelative;
     }
 
     @Override
@@ -59,28 +59,28 @@ public class JournalIssueRenderer extends OutputRenderer {
 	    JournalIssue issue = (JournalIssue) object;
 	    StringBuilder presentationText = new StringBuilder();
 	    presentationText.append(issue.getScientificJournal().getName()).append(" - ").append(issue.getVolume());
-	    if(issue.getNumber()!=null && issue.getNumber().length()>0) {
+	    if (issue.getNumber() != null && issue.getNumber().length() > 0) {
 		presentationText.append(" (").append(issue.getNumber()).append(")");
 	    }
-	    
+
 	    presentationText.append(" ");
-	    
-	    if(issue.getYear()!=null) {
+
+	    if (issue.getYear() != null) {
 		presentationText.append(issue.getYear());
 	    }
-	    
+
 	    HtmlLink link = new HtmlLink();
 	    link.setModuleRelative(isModuleRelative());
-            link.setContextRelative(isContextRelative());
-            if(isBlankTarget()) {
-        	link.setTarget(Target.BLANK);
-            }
+	    link.setContextRelative(isContextRelative());
+	    if (isBlankTarget()) {
+		link.setTarget(Target.BLANK);
+	    }
 	    link.setText(presentationText.toString());
 	    link.setUrl(RenderUtils.getFormattedProperties(getLinkFormat(), issue));
-	    
+
 	    return link;
-	
+
 	}
-	
+
     }
 }

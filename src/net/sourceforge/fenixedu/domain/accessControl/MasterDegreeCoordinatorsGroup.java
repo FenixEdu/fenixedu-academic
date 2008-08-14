@@ -19,14 +19,14 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 13, 2006,4:59:49 PM
  * 
  */
 public class MasterDegreeCoordinatorsGroup extends Group {
-    
+
     private static final long serialVersionUID = 5928255128153111582L;
-    
+
     @Override
     public Set<Person> getElements() {
 	final Set<Person> elements = super.buildSet();
@@ -52,13 +52,12 @@ public class MasterDegreeCoordinatorsGroup extends Group {
     @Override
     public boolean isMember(Person person) {
 	return person != null && person.hasTeacher()
-		&& person.isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(
-			ExecutionYear.readCurrentExecutionYear());
+		&& person.isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear.readCurrentExecutionYear());
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[0];
+	return new Argument[0];
     }
 
 }

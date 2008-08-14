@@ -21,25 +21,24 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 26/Nov/2003
- *  
+ * 
  */
 public class ViewGaugingTestsResults extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        Object[] args = { userView };
-        try {
-            InfoGaugingTestResult result = (InfoGaugingTestResult) ServiceUtils.executeService(
-                    "readGaugingTestsResults", args);
-            request.setAttribute("gaugingTestResult", result);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	Object[] args = { userView };
+	try {
+	    InfoGaugingTestResult result = (InfoGaugingTestResult) ServiceUtils.executeService("readGaugingTestsResults", args);
+	    request.setAttribute("gaugingTestResult", result);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        return mapping.findForward("viewGaugingTestsResults");
+	return mapping.findForward("viewGaugingTestsResults");
     }
 
 }

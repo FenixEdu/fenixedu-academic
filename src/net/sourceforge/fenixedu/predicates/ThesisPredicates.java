@@ -11,28 +11,27 @@ public class ThesisPredicates {
 
     public static final AccessControlPredicate<Thesis> waitingConfirmation = new AccessControlPredicate<Thesis>() {
 
-        public boolean evaluate(Thesis thesis) {
-            return thesis.isWaitingConfirmation();
-        }
-        
+	public boolean evaluate(Thesis thesis) {
+	    return thesis.isWaitingConfirmation();
+	}
+
     };
-    
+
     public static final AccessControlPredicate<Thesis> isScientificCouncil = new AccessControlPredicate<Thesis>() {
 
-        public boolean evaluate(Thesis thesis) {
-            return new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL).isMember(AccessControl.getPerson());
-        }
-        
+	public boolean evaluate(Thesis thesis) {
+	    return new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL).isMember(AccessControl.getPerson());
+	}
+
     };
-    
+
     public static final AccessControlPredicate<Thesis> student = new AccessControlPredicate<Thesis>() {
 
-        public boolean evaluate(Thesis thesis) {
-            Person person = AccessControl.getPerson();
-            
-            return person.getStudent() == thesis.getStudent()
-                    && thesis.isWaitingConfirmation();
-        }
-        
+	public boolean evaluate(Thesis thesis) {
+	    Person person = AccessControl.getPerson();
+
+	    return person.getStudent() == thesis.getStudent() && thesis.isWaitingConfirmation();
+	}
+
     };
 }

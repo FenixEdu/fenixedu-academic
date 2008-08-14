@@ -10,13 +10,13 @@ public class UISelectOneTag extends SelectOneMenuTag {
 
     @Override
     protected void setProperties(UIComponent component) {
-        super.setProperties(component);
+	super.setProperties(component);
 
     }
 
     @Override
     public String getComponentType() {
-        return COMPONENT_TYPE;
+	return COMPONENT_TYPE;
     }
 
 }

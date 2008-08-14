@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadAllDistricts extends Service {
 
     public List<InfoDistrict> run() {
-        List<InfoDistrict> result = new ArrayList<InfoDistrict>();
-        
-        for (District district : rootDomainObject.getDistricts()) {
-            result.add(InfoDistrict.newInfoFromDomain(district));
-        }
-        
-        return result;
+	List<InfoDistrict> result = new ArrayList<InfoDistrict>();
+
+	for (District district : rootDomainObject.getDistricts()) {
+	    result.add(InfoDistrict.newInfoFromDomain(district));
+	}
+
+	return result;
     }
 
 }

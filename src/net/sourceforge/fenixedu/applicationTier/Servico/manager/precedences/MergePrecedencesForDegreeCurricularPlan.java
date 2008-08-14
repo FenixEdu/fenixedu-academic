@@ -8,16 +8,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class MergePrecedencesForDegreeCurricularPlan extends Service {
 
-	public void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException{
+    public void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException {
 
-		if (firstPrecedenceID.intValue() == secondPrecedenceID.intValue()) {
-			throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
-		}
-
-		Precedence firstPrecedence = rootDomainObject.readPrecedenceByOID(firstPrecedenceID);
-		Precedence secondPrecedence = rootDomainObject.readPrecedenceByOID(secondPrecedenceID);
-
-		firstPrecedence.mergePrecedences(secondPrecedence);
+	if (firstPrecedenceID.intValue() == secondPrecedenceID.intValue()) {
+	    throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
 	}
+
+	Precedence firstPrecedence = rootDomainObject.readPrecedenceByOID(firstPrecedenceID);
+	Precedence secondPrecedence = rootDomainObject.readPrecedenceByOID(secondPrecedenceID);
+
+	firstPrecedence.mergePrecedences(secondPrecedence);
+    }
 
 }

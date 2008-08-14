@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class InfoRoomExamsMap extends InfoObject {
 
@@ -26,91 +26,91 @@ public class InfoRoomExamsMap extends InfoObject {
     Calendar endSeason2;
 
     public InfoRoomExamsMap() {
-        super();
+	super();
     }
 
     /**
      * @return
      */
     public Calendar getEndSeason1() {
-        return endSeason1;
+	return endSeason1;
     }
 
     /**
      * @return
      */
     public Calendar getEndSeason2() {
-        return endSeason2;
+	return endSeason2;
     }
 
     /**
      * @return
      */
     public Calendar getStartSeason1() {
-        return startSeason1;
+	return startSeason1;
     }
 
     /**
      * @return
      */
     public Calendar getStartSeason2() {
-        return startSeason2;
+	return startSeason2;
     }
 
     /**
      * @param calendar
      */
     public void setEndSeason1(Calendar calendar) {
-        endSeason1 = calendar;
+	endSeason1 = calendar;
     }
 
     /**
      * @param calendar
      */
     public void setEndSeason2(Calendar calendar) {
-        endSeason2 = calendar;
+	endSeason2 = calendar;
     }
 
     /**
      * @param calendar
      */
     public void setStartSeason1(Calendar calendar) {
-        startSeason1 = calendar;
+	startSeason1 = calendar;
     }
 
     /**
      * @param calendar
      */
     public void setStartSeason2(Calendar calendar) {
-        startSeason2 = calendar;
+	startSeason2 = calendar;
     }
 
     /**
      * @return
      */
     public List getExams() {
-        return exams;
+	return exams;
     }
 
     /**
      * @param exams
      */
     public void setExams(List exams) {
-        this.exams = exams;
+	this.exams = exams;
     }
 
     /**
      * @return
      */
     public InfoRoom getInfoRoom() {
-        return infoRoom;
+	return infoRoom;
     }
 
     /**
      * @param room
      */
     public void setInfoRoom(InfoRoom room) {
-        infoRoom = room;
+	infoRoom = room;
     }
 
 }

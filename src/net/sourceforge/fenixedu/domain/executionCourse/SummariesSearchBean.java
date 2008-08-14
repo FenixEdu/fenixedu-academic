@@ -31,24 +31,31 @@ public class SummariesSearchBean implements Serializable {
     public Professorship getProfessorship() {
 	return professorshipDomainReference == null ? null : professorshipDomainReference.getObject();
     }
+
     public void setProfessorship(final Professorship professorship) {
 	professorshipDomainReference = new DomainReference<Professorship>(professorship);
     }
+
     public Shift getShift() {
 	return shiftDomainReference == null ? null : shiftDomainReference.getObject();
     }
+
     public void setShift(final Shift shift) {
 	shiftDomainReference = new DomainReference<Shift>(shift);
     }
+
     public ShiftType getShiftType() {
 	return shiftType;
     }
+
     public void setShiftType(ShiftType shiftType) {
 	this.shiftType = shiftType;
     }
+
     public Boolean getShowOtherProfessors() {
 	return showOtherProfessors;
     }
+
     public void setShowOtherProfessors(final Boolean showOtherProfessors) {
 	this.showOtherProfessors = showOtherProfessors;
     }
@@ -64,7 +71,8 @@ public class SummariesSearchBean implements Serializable {
 			summaries.add(summary);
 		    } else if (professorship == null && showOtherProfessors != null && showOtherProfessors.booleanValue()) {
 			summaries.add(summary);
-		    } else if (showOtherProfessors == null && ((getProfessorship() == null && professorship != null) || getProfessorship() == professorship)) {
+		    } else if (showOtherProfessors == null
+			    && ((getProfessorship() == null && professorship != null) || getProfessorship() == professorship)) {
 			summaries.add(summary);
 		    }
 		}

@@ -12,20 +12,20 @@ public class RegistrationAgreementTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-    	return Arrays.asList(RegistrationAgreement.values());
+	return Arrays.asList(RegistrationAgreement.values());
     }
 
     public Converter getConverter() {
-    	return new Converter() {
-    	    @Override
-    	    public Object convert(Class type, Object value) {
-    		final List<RegistrationAgreement> registrationAgreements = new ArrayList<RegistrationAgreement>();
-    		for (final String o : (String[]) value) {
-    			registrationAgreements.add(RegistrationAgreement.valueOf(o));
-    		}
-    		return registrationAgreements;
-    	    }
-    	};
+	return new Converter() {
+	    @Override
+	    public Object convert(Class type, Object value) {
+		final List<RegistrationAgreement> registrationAgreements = new ArrayList<RegistrationAgreement>();
+		for (final String o : (String[]) value) {
+		    registrationAgreements.add(RegistrationAgreement.valueOf(o));
+		}
+		return registrationAgreements;
+	    }
+	};
     }
 
 }

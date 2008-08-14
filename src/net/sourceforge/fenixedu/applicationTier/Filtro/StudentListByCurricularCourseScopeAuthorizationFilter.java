@@ -25,24 +25,25 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
     }
 
     /*
-         * (non-Javadoc)
-         * 
-         * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-         *      pt.utl.ist.berserk.ServiceResponse)
-         */
+     * (non-Javadoc)
+     * 
+     * @see
+     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	IUserView id = getRemoteUser(request);
 	Object[] argumentos = getServiceCallArguments(request);
 	if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-		|| (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos))
-		|| (id == null) || (id.getRoleTypes() == null)) {
+		|| (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+		|| (id.getRoleTypes() == null)) {
 	    throw new NotAuthorizedFilterException();
 	}
     }
 
     /**
-         * @return The Needed Roles to Execute The Service
-         */
+     * @return The Needed Roles to Execute The Service
+     */
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
 	List<RoleType> roles = new ArrayList<RoleType>();
@@ -52,25 +53,23 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
     }
 
     /**
-         * @param id
-         * @param argumentos
-         * @return
-         */
+     * @param id
+     * @param argumentos
+     * @return
+     */
     private boolean hasPrivilege(IUserView id, Object[] arguments) {
 	Integer curricularCourseScopeID = (Integer) arguments[1];
 
-	CurricularCourseScope curricularCourseScope = rootDomainObject
-		.readCurricularCourseScopeByOID(curricularCourseScopeID);
+	CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(curricularCourseScopeID);
 
 	if (curricularCourseScope == null) {
 	    return false;
 	}
 
 	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-	    DegreeType degreeType = curricularCourseScope.getCurricularCourse()
-		    .getDegreeCurricularPlan().getDegree().getTipoCurso();
-	    if (degreeType.equals(DegreeType.MASTER_DEGREE)
-		    || degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+	    DegreeType degreeType = curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree()
+		    .getTipoCurso();
+	    if (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		return true;
 	    }
 	    return false;
@@ -78,16 +77,14 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 	}
 
 	if (id.hasRoleType(RoleType.COORDINATOR)) {
-	    List executionDegrees = curricularCourseScope.getCurricularCourse()
-		    .getDegreeCurricularPlan().getExecutionDegrees();
+	    List executionDegrees = curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getExecutionDegrees();
 	    if (executionDegrees == null) {
 		return false;
 	    }
 	    // IMPORTANT: It's assumed that the coordinator for a Degree is
 	    // ALWAYS the same
 	    // modified by Tânia Pousão
-	    List<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.get(0))
-		    .getCoordinatorsList();
+	    List<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.get(0)).getCoordinatorsList();
 	    if (coodinatorsList == null) {
 		return false;
 	    }

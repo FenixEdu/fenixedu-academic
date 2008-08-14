@@ -54,8 +54,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
 	Object argsReadExecutionPeriods[] = {};
-	List executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService(
-		"ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
+	List executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionPeriods",
+		argsReadExecutionPeriods);
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
 	chainComparator.addComparator(new BeanComparator("semester"));
@@ -124,8 +124,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 	}
 
 	Object argsReadExecutionPeriods[] = {};
-	List executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService(
-		"ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
+	List executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionPeriods",
+		argsReadExecutionPeriods);
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
 	chainComparator.addComparator(new BeanComparator("semester"));
@@ -152,8 +152,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 	Integer roomId = request.getParameter(SessionConstants.ROOM_OID) != null ? new Integer(request
 		.getParameter(SessionConstants.ROOM_OID)) : null;
 
-	InfoRoom infoRoom = roomId != null ? InfoRoom.newInfoFromDomain((AllocatableSpace) rootDomainObject.readResourceByOID(roomId))
-		: null;
+	InfoRoom infoRoom = roomId != null ? InfoRoom.newInfoFromDomain((AllocatableSpace) rootDomainObject
+		.readResourceByOID(roomId)) : null;
 
 	request.setAttribute(SessionConstants.ROOM, infoRoom);
 	request.setAttribute(SessionConstants.ROOM_OID, infoRoom.getIdInternal());

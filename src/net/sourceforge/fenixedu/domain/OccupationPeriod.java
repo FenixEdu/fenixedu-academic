@@ -21,28 +21,28 @@ import org.joda.time.YearMonthDay;
 public class OccupationPeriod extends OccupationPeriod_Base {
 
     private OccupationPeriod() {
-    	super();
-    	setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public OccupationPeriod(Date startDate, Date endDate) {
-    	this();
-        if (startDate == null || endDate == null || startDate.after(endDate)) {
-            throw new DomainException("error.occupationPeriod.invalid.dates");
-        }
-        this.setStart(startDate);
-        this.setEnd(endDate);
+	this();
+	if (startDate == null || endDate == null || startDate.after(endDate)) {
+	    throw new DomainException("error.occupationPeriod.invalid.dates");
+	}
+	this.setStart(startDate);
+	this.setEnd(endDate);
     }
-    
+
     public OccupationPeriod(YearMonthDay startDate, YearMonthDay endDate) {
-        this();
-        if (startDate == null || endDate == null || startDate.isAfter(endDate)) {
-            throw new DomainException("error.occupationPeriod.invalid.dates");
-        }
-        setStartYearMonthDay(startDate);
-        setEndYearMonthDay(endDate);
-    }   
-  
+	this();
+	if (startDate == null || endDate == null || startDate.isAfter(endDate)) {
+	    throw new DomainException("error.occupationPeriod.invalid.dates");
+	}
+	setStartYearMonthDay(startDate);
+	setEndYearMonthDay(endDate);
+    }
+
     public void setNextPeriodWithoutChecks(OccupationPeriod nextPeriod) {
 	if (nextPeriod != null && !nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
 	    throw new DomainException("error.occupationPeriod.invalid.nextPeriod");
@@ -67,7 +67,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	}
 	super.setNextPeriod(nextPeriod);
     }
-           
+
     @Override
     public void setPreviousPeriod(OccupationPeriod previousPeriod) {
 	if (!allNestedPeriodsAreEmpty()) {
@@ -78,182 +78,177 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	}
 	super.setPreviousPeriod(previousPeriod);
     }
-    
+
     public Calendar getStartDate() {
-        if (this.getStart() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getStart());
-            return result;
-        }
-        return null;
+	if (this.getStart() != null) {
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(this.getStart());
+	    return result;
+	}
+	return null;
     }
 
     public void setEndDate(Calendar calendar) {
-        if (calendar != null) {
-            this.setEnd(calendar.getTime());
-        } else {
-            this.setEnd(null);
-        }
+	if (calendar != null) {
+	    this.setEnd(calendar.getTime());
+	} else {
+	    this.setEnd(null);
+	}
     }
 
     public Calendar getEndDate() {
-        if (this.getEnd() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getEnd());
-            return result;
-        }
-        return null;
+	if (this.getEnd() != null) {
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(this.getEnd());
+	    return result;
+	}
+	return null;
     }
 
     public void setStartDate(Calendar calendar) {
-        if (calendar != null) {
-            this.setStart(calendar.getTime());
-        } else {
-            this.setStart(null);
-        }
+	if (calendar != null) {
+	    this.setStart(calendar.getTime());
+	} else {
+	    this.setStart(null);
+	}
     }
 
     public Calendar getEndDateOfComposite() {
-        Calendar end = this.getEndDate();
-        OccupationPeriod period = this.getNextPeriod();
-        while (period != null) {
-            end = period.getEndDate();
-            period = period.getNextPeriod();
-        }
-        return end;
-    }    
-   
+	Calendar end = this.getEndDate();
+	OccupationPeriod period = this.getNextPeriod();
+	while (period != null) {
+	    end = period.getEndDate();
+	    period = period.getNextPeriod();
+	}
+	return end;
+    }
+
     private boolean intersectPeriods(final Calendar start, final Calendar end) {
-        return CalendarUtil.intersectDates(start, end, getStartDate(), getEndDate());
+	return CalendarUtil.intersectDates(start, end, getStartDate(), getEndDate());
     }
-         
+
     private boolean intersectPeriods(YearMonthDay start, YearMonthDay end) {
-        return !getStartYearMonthDay().isAfter(end) && !getEndYearMonthDay().isBefore(start);
+	return !getStartYearMonthDay().isAfter(end) && !getEndYearMonthDay().isBefore(start);
     }
-  
+
     private boolean containsDay(YearMonthDay day) {
-        return intersectPeriods(day, day);
+	return intersectPeriods(day, day);
     }
-               
-    public void delete() {	       
-	if (allNestedPeriodsAreEmpty()) {            	    	    	               	    
+
+    public void delete() {
+	if (allNestedPeriodsAreEmpty()) {
 	    OccupationPeriod first = getFirstOccupationPeriodOfNestedPeriods();
-	    first.deleteAllNestedPeriods();	    	    	    
-        }
-    }   
-    
+	    first.deleteAllNestedPeriods();
+	}
+    }
+
     private void deleteAllNestedPeriods() {
 	OccupationPeriod nextPeriod = getNextPeriod();
-	
+
 	super.setNextPeriod(null);
 	super.setPreviousPeriod(null);
 	removeRootDomainObject();
 	deleteDomainObject();
-	
-	if(nextPeriod != null) {
-	    nextPeriod.delete();   
-	}	
+
+	if (nextPeriod != null) {
+	    nextPeriod.delete();
+	}
     }
-    
-    public boolean allNestedPeriodsAreEmpty() {	
+
+    public boolean allNestedPeriodsAreEmpty() {
 	OccupationPeriod firstOccupationPeriod = getFirstOccupationPeriodOfNestedPeriods();
-	if(!firstOccupationPeriod.isEmpty()) {
+	if (!firstOccupationPeriod.isEmpty()) {
 	    return false;
-	}	
-	while(firstOccupationPeriod.getNextPeriod() != null) {
-	    if(!firstOccupationPeriod.getNextPeriod().isEmpty()) {
+	}
+	while (firstOccupationPeriod.getNextPeriod() != null) {
+	    if (!firstOccupationPeriod.getNextPeriod().isEmpty()) {
 		return false;
 	    }
 	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
-	}	
-	return true;   
+	}
+	return true;
     }
-    
+
     private boolean isEmpty() {
-        return getLessons().isEmpty()
-        	&& getExecutionDegreesForExamsSpecialSeason().isEmpty()
-                && getExecutionDegreesForExamsFirstSemester().isEmpty()
-                && getExecutionDegreesForExamsSecondSemester().isEmpty()
-                && getExecutionDegreesForLessonsFirstSemester().isEmpty()
-                && getExecutionDegreesForLessonsSecondSemester().isEmpty()
-                && getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester().isEmpty()
-                && getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester().isEmpty()
-                && getExecutionDegreesForGradeSubmissionSpecialSeason().isEmpty();
+	return getLessons().isEmpty() && getExecutionDegreesForExamsSpecialSeason().isEmpty()
+		&& getExecutionDegreesForExamsFirstSemester().isEmpty() && getExecutionDegreesForExamsSecondSemester().isEmpty()
+		&& getExecutionDegreesForLessonsFirstSemester().isEmpty()
+		&& getExecutionDegreesForLessonsSecondSemester().isEmpty()
+		&& getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester().isEmpty()
+		&& getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester().isEmpty()
+		&& getExecutionDegreesForGradeSubmissionSpecialSeason().isEmpty();
     }
-    
+
     public OccupationPeriod getLastOccupationPeriodOfNestedPeriods() {
 	OccupationPeriod occupationPeriod = this;
-	while(occupationPeriod.getNextPeriod() != null) {	    
+	while (occupationPeriod.getNextPeriod() != null) {
 	    occupationPeriod = occupationPeriod.getNextPeriod();
 	}
 	return occupationPeriod;
     }
-    
-    private OccupationPeriod getFirstOccupationPeriodOfNestedPeriods() {		
+
+    private OccupationPeriod getFirstOccupationPeriodOfNestedPeriods() {
 	OccupationPeriod occupationPeriod = this;
-	while(occupationPeriod.getPreviousPeriod() != null) {	    
+	while (occupationPeriod.getPreviousPeriod() != null) {
 	    occupationPeriod = occupationPeriod.getPreviousPeriod();
 	}
 	return occupationPeriod;
     }
-               
-    public static OccupationPeriod readByDates(Date startDate, Date endDate) {
-        for (OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriods()) {
-            if (occupationPeriod.getNextPeriod() == null 
-        	    && occupationPeriod.getPreviousPeriod() == null 
-        	    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getStart(), startDate)
-                    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate)) {
-        	return occupationPeriod;
-            }
-        }
-        return null;
-    }
 
-    public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end) {
-	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
-	    if (occupationPeriod.getNextPeriod() == null 
-		    && occupationPeriod.getPreviousPeriod() == null 
-		    && occupationPeriod.getStartYearMonthDay().equals(start)
-		    && occupationPeriod.getEndYearMonthDay().equals(end)) {
+    public static OccupationPeriod readByDates(Date startDate, Date endDate) {
+	for (OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriods()) {
+	    if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
+		    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getStart(), startDate)
+		    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate)) {
 		return occupationPeriod;
 	    }
 	}
 	return null;
-    }    
-    
-    public boolean nestedOccupationPeriodsIntersectDates(Calendar start, Calendar end) {	
+    }
+
+    public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end) {
+	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+	    if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
+		    && occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
+		return occupationPeriod;
+	    }
+	}
+	return null;
+    }
+
+    public boolean nestedOccupationPeriodsIntersectDates(Calendar start, Calendar end) {
 	OccupationPeriod firstOccupationPeriod = this;
-	while(firstOccupationPeriod != null) {
-	    if(firstOccupationPeriod.intersectPeriods(start, end)) {
+	while (firstOccupationPeriod != null) {
+	    if (firstOccupationPeriod.intersectPeriods(start, end)) {
 		return true;
 	    }
 	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
-	}	        
+	}
 	return false;
     }
-    
-    public boolean nestedOccupationPeriodsIntersectDates(YearMonthDay start, YearMonthDay end) {	
+
+    public boolean nestedOccupationPeriodsIntersectDates(YearMonthDay start, YearMonthDay end) {
 	OccupationPeriod firstOccupationPeriod = this;
-	while(firstOccupationPeriod != null) {
-	    if(firstOccupationPeriod.intersectPeriods(start, end)) {
+	while (firstOccupationPeriod != null) {
+	    if (firstOccupationPeriod.intersectPeriods(start, end)) {
 		return true;
 	    }
 	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
-	}	        
+	}
 	return false;
     }
-    
+
     public boolean nestedOccupationPeriodsContainsDay(YearMonthDay day) {
 	OccupationPeriod firstOccupationPeriod = this;
-	while(firstOccupationPeriod != null) {
-	    if(firstOccupationPeriod.containsDay(day)) {
+	while (firstOccupationPeriod != null) {
+	    if (firstOccupationPeriod.containsDay(day)) {
 		return true;
 	    }
 	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
-	}	        
+	}
 	return false;
     }
-    
+
     public boolean isGreater(OccupationPeriod period) {
 	int periodDays = Days.daysBetween(period.getStartYearMonthDay(), period.getEndYearMonthDay()).getDays();
 	int thisDays = Days.daysBetween(getStartYearMonthDay(), getEndYearMonthDay()).getDays();

@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * @author - Ângela Almeida (argelina@ist.utl.pt)
- *
+ * 
  */
 public class AcademicAdministrativeOfficeAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public final static AcademicAdministrativeOfficeAuthorizationFilter instance = new AcademicAdministrativeOfficeAuthorizationFilter(); 
-    
+    public final static AcademicAdministrativeOfficeAuthorizationFilter instance = new AcademicAdministrativeOfficeAuthorizationFilter();
+
     /**
      * The singleton access method of this class.
      * 
@@ -19,9 +19,9 @@ public class AcademicAdministrativeOfficeAuthorizationFilter extends Authorizati
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
-    
+
     @Override
     protected RoleType getRoleType() {
 	return RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE;

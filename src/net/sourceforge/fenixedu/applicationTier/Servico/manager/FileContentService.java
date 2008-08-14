@@ -25,15 +25,15 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 public abstract class FileContentService extends Service {
 
     protected boolean isPublic(Group permittedGroup) {
-        if (permittedGroup == null) {
-            return true;
-        }
-        
-        if (permittedGroup instanceof EveryoneGroup) {
-            return true;
-        }
-        
-        return false;
+	if (permittedGroup == null) {
+	    return true;
+	}
+
+	if (permittedGroup instanceof EveryoneGroup) {
+	    return true;
+	}
+
+	return false;
     }
 
     protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,

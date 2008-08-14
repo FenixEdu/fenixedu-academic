@@ -16,15 +16,13 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.util.Money;
 
-public class BuildInformationForDegreeGratuityLetters extends
-	BuildInformationForDegreeAdministrativeOfficeDebts {
+public class BuildInformationForDegreeGratuityLetters extends BuildInformationForDegreeAdministrativeOfficeDebts {
 
     public BuildInformationForDegreeGratuityLetters() {
 	super();
     }
 
-    public List<DegreeGratuityLetterDTO> run(final ExecutionYear executionYear)
-	    throws FenixServiceException {
+    public List<DegreeGratuityLetterDTO> run(final ExecutionYear executionYear) throws FenixServiceException {
 	throw new RuntimeException(
 		"Rewrite service to consider event.isLetterSent and to set whenSentLetter and support more than one gratuity events");
 
@@ -43,13 +41,11 @@ public class BuildInformationForDegreeGratuityLetters extends
 
     protected DegreeGratuityLetterDTO buildDTO(final Person person, final List<Event> eventsForPerson,
 	    final ExecutionYear executionYear) throws FenixServiceException {
-	final DegreeGratuityLetterDTO gratuityLetterDTO = new DegreeGratuityLetterDTO(person,
-		executionYear, ENTITY_CODE);
+	final DegreeGratuityLetterDTO gratuityLetterDTO = new DegreeGratuityLetterDTO(person, executionYear, ENTITY_CODE);
 
 	for (final Event event : eventsForPerson) {
 	    if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
-		fillInsuranceAndAdminOfficeFeeDebtInformation(gratuityLetterDTO,
-			(AdministrativeOfficeFeeAndInsuranceEvent) event);
+		fillInsuranceAndAdminOfficeFeeDebtInformation(gratuityLetterDTO, (AdministrativeOfficeFeeAndInsuranceEvent) event);
 	    } else if (event instanceof GratuityEventWithPaymentPlan) {
 		fillGratuityDebtInformation(gratuityLetterDTO, (GratuityEventWithPaymentPlan) event);
 	    }
@@ -58,39 +54,31 @@ public class BuildInformationForDegreeGratuityLetters extends
 	return gratuityLetterDTO;
     }
 
-    private void fillGratuityDebtInformation(DegreeGratuityLetterDTO gratuityLetterDTO,
-	    GratuityEventWithPaymentPlan event) {
+    private void fillGratuityDebtInformation(DegreeGratuityLetterDTO gratuityLetterDTO, GratuityEventWithPaymentPlan event) {
 	Money totalAmount = Money.ZERO;
-	for (final Installment installment : event.getGratuityPaymentPlan()
-		.getInstallmentsSortedByEndDate()) {
+	for (final Installment installment : event.getGratuityPaymentPlan().getInstallmentsSortedByEndDate()) {
 	    totalAmount = totalAmount.add(installment.getAmount());
-	    final InstallmentPaymentCode installmentPaymentCode = event
-		    .getInstallmentPaymentCodeFor(installment);
+	    final InstallmentPaymentCode installmentPaymentCode = event.getInstallmentPaymentCodeFor(installment);
 	    if (installmentPaymentCode != null) {
-		gratuityLetterDTO.addGratuityDebtInstallments(new InstallmentDebtDTO(installment
-			.getEndDate(), installmentPaymentCode.getFormattedCode(), installment
-			.getAmount(), installment));
+		gratuityLetterDTO.addGratuityDebtInstallments(new InstallmentDebtDTO(installment.getEndDate(),
+			installmentPaymentCode.getFormattedCode(), installment.getAmount(), installment));
 	    }
 	}
 
 	final AccountingEventPaymentCode totalPaymentCode = event.getTotalPaymentCode();
 
 	if (totalPaymentCode != null) {
-	    gratuityLetterDTO
-		    .setTotalGratuityDebt(new DebtDTO(event.getGratuityPaymentPlan()
-			    .getLastInstallment().getEndDate(), totalPaymentCode.getFormattedCode(),
-			    totalAmount));
+	    gratuityLetterDTO.setTotalGratuityDebt(new DebtDTO(event.getGratuityPaymentPlan().getLastInstallment().getEndDate(),
+		    totalPaymentCode.getFormattedCode(), totalAmount));
 	}
 
     }
 
-    private void fillInsuranceAndAdminOfficeFeeDebtInformation(
-	    DegreeGratuityLetterDTO gratuityLetterDTO, AdministrativeOfficeFeeAndInsuranceEvent event) {
-	final Money totalAmount = event.getInsuranceAmount().add(
-		event.getAdministrativeOfficeFeeAmount());
+    private void fillInsuranceAndAdminOfficeFeeDebtInformation(DegreeGratuityLetterDTO gratuityLetterDTO,
+	    AdministrativeOfficeFeeAndInsuranceEvent event) {
+	final Money totalAmount = event.getInsuranceAmount().add(event.getAdministrativeOfficeFeeAmount());
 	gratuityLetterDTO.setAdministrativeOfficeAndInsuranceFeeDebt(new DebtDTO(event
-		.getAdministrativeOfficeFeePaymentLimitDate(), event.calculatePaymentCode()
-		.getFormattedCode(), totalAmount));
+		.getAdministrativeOfficeFeePaymentLimitDate(), event.calculatePaymentCode().getFormattedCode(), totalAmount));
 
     }
 

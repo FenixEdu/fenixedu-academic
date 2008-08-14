@@ -10,56 +10,56 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import org.apache.commons.lang.StringUtils;
 
 public class PersistentGroupMembers extends PersistentGroupMembers_Base {
-        
+
     @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public PersistentGroupMembers(String name, PersistentGroupMembersType type) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());	
+	setRootDomainObject(RootDomainObject.getInstance());
 	setName(name);
 	setType(type);
 	checkIfPersistenGroupAlreadyExists(name, type);
     }
-    
+
     @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void edit(String name, PersistentGroupMembersType type) {
 	setName(name);
 	setType(type);
 	checkIfPersistenGroupAlreadyExists(name, type);
     }
-    
+
     @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void delete() {
 	getPersons().clear();
-	if(hasUnit()) {
+	if (hasUnit()) {
 	    getUnit().removeGroupFromUnitFiles(this);
 	}
 	removeUnit();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
     @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void setNewPersonToMembersList(Person person) {
-	if(person == null) {
+	if (person == null) {
 	    throw new DomainException("error.PersistentGroupMembers.empty.person");
 	}
 	addPersons(person);
     }
-    
+
     @Override
     @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void removePersons(Person person) {
 	super.removePersons(person);
     }
-    
-    //This method is only used for Renderers
+
+    // This method is only used for Renderers
     public Person getNewPersonToMembersList() {
 	return null;
     }
-            
+
     @Override
     public void setName(String name) {
-	if(StringUtils.isEmpty(name)) {
+	if (StringUtils.isEmpty(name)) {
 	    throw new DomainException("error.PersistentGroupMembers.empty.name");
 	}
 	super.setName(name);
@@ -67,19 +67,19 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
 
     @Override
     public void setType(PersistentGroupMembersType type) {
-	if(type == null) {
+	if (type == null) {
 	    throw new DomainException("error.PersistentGroupMembers.empty.type");
 	}
 	super.setType(type);
     }
-    
+
     private void checkIfPersistenGroupAlreadyExists(String name, PersistentGroupMembersType type) {
 	List<PersistentGroupMembers> persistentGroupMembers = RootDomainObject.getInstance().getPersistentGroupMembers();
 	for (PersistentGroupMembers persistentGroup : persistentGroupMembers) {
-	    if(!persistentGroup.equals(this) && persistentGroup.getName().equalsIgnoreCase(name) 
+	    if (!persistentGroup.equals(this) && persistentGroup.getName().equalsIgnoreCase(name)
 		    && persistentGroup.getType().equals(type)) {
 		throw new DomainException("error.PersistentGroupMembers.group.already.exists");
 	    }
 	}
-    }    
+    }
 }

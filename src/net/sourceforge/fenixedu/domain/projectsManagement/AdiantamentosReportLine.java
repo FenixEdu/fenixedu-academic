@@ -21,34 +21,34 @@ public class AdiantamentosReportLine implements Serializable, IAdiantamentosRepo
     private Double total;
 
     public Double getAdiantamentos() {
-        return adiantamentos;
+	return adiantamentos;
     }
 
     public void setAdiantamentos(Double adiantamentos) {
-        this.adiantamentos = adiantamentos;
+	this.adiantamentos = adiantamentos;
     }
 
     public Double getJustifications() {
-        return justifications;
+	return justifications;
     }
 
     public void setJustifications(Double justifications) {
-        this.justifications = justifications;
+	this.justifications = justifications;
     }
 
     public Integer getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public Double getTotal() {
-        return total;
+	return total;
     }
 
     public void setTotal(Double total) {
-        this.total = total;
+	this.total = total;
     }
 }

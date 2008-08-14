@@ -21,8 +21,8 @@ public class DocumentRequestTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-	AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee()
-		.getAdministrativeOffice().getAdministrativeOfficeType();
+	AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee().getAdministrativeOffice()
+		.getAdministrativeOfficeType();
 
 	final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
 
@@ -32,7 +32,7 @@ public class DocumentRequestTypeProvider implements DataProvider {
 		result.add(documentRequestType);
 	    }
 	}
-	
+
 	return result;
     }
 

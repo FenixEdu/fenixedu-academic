@@ -10,19 +10,19 @@ public class NonExistingContributorServiceException extends FenixServiceExceptio
     }
 
     public NonExistingContributorServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public NonExistingContributorServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[NonExistingContributorServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[NonExistingContributorServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

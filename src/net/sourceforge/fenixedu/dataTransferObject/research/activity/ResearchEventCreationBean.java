@@ -17,65 +17,65 @@ public class ResearchEventCreationBean implements Serializable {
     private ScopeType locationType;
     private String url;
     private MultiLanguageString roleMessage;
-    
-    public MultiLanguageString getRoleMessage() {
-		return roleMessage;
-	}
 
-	public void setRoleMessage(MultiLanguageString roleMessage) {
-		this.roleMessage = roleMessage;
-	}
-    
-	public ResearchEventCreationBean() {
-    	setEvent(null);
+    public MultiLanguageString getRoleMessage() {
+	return roleMessage;
     }
-    
+
+    public void setRoleMessage(MultiLanguageString roleMessage) {
+	this.roleMessage = roleMessage;
+    }
+
+    public ResearchEventCreationBean() {
+	setEvent(null);
+    }
+
     public ResearchActivityParticipationRole getRole() {
-        return role;
+	return role;
     }
 
     public void setRole(ResearchActivityParticipationRole role) {
-        this.role = role;
+	this.role = role;
     }
-    
+
     public ScopeType getLocationType() {
-        return locationType;
+	return locationType;
     }
 
     public void setLocationType(ScopeType locationType) {
-        this.locationType = locationType;
+	this.locationType = locationType;
     }
-    
+
     public String getEventName() {
-        return eventName;
+	return eventName;
     }
-    
+
     public void setEventName(String eventName) {
-        this.eventName = eventName;
+	this.eventName = eventName;
     }
 
     public EventType getEventType() {
-        return eventType;
+	return eventType;
     }
 
     public void setEventType(EventType eventType) {
-        this.eventType = eventType;
+	this.eventType = eventType;
     }
 
     public ResearchEvent getEvent() {
-		return event.getObject();
-	}
+	return event.getObject();
+    }
 
-	public void setEvent(ResearchEvent event) {
-		this.event = new DomainReference<ResearchEvent>(event);
-	}
-	
-	public String getUrl() {
-        return url;
+    public void setEvent(ResearchEvent event) {
+	this.event = new DomainReference<ResearchEvent>(event);
     }
-    
+
+    public String getUrl() {
+	return url;
+    }
+
     public void setUrl(String url) {
-        this.url = url;
+	this.url = url;
     }
-    
+
 }

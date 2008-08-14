@@ -46,7 +46,7 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
 
     protected static List<AcademicalInstitutionUnit> readOfficialUnits() {
 	final List<AcademicalInstitutionUnit> officialUnits = new ArrayList<AcademicalInstitutionUnit>();
-	
+
 	for (final UnitName unitName : RootDomainObject.getInstance().getUnitName()) {
 	    if (unitName.getUnit().isOfficial()) {
 		officialUnits.add((AcademicalInstitutionUnit) unitName.getUnit());
@@ -86,7 +86,7 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
 	}
 	return otherUnits;
     }
-    
+
     public Boolean hasAnyOfficialChilds() {
 	for (final AcademicalInstitutionUnit unit : readOfficialUnits()) {
 	    if (unit.hasParentUnit(this)) {

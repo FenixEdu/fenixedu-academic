@@ -32,9 +32,8 @@ import pt.utl.ist.fenix.tools.util.Pair;
 public abstract class ExecutionCourseSendMail extends ContextualGroupMailSenderAction {
 
     @Override
-    protected EMailAddress getFromAddress(IUserView userView, SendMailForm form,
-	    Map previousRequestParameters) throws FenixFilterException, FenixServiceException,
-	    FenixActionException {
+    protected EMailAddress getFromAddress(IUserView userView, SendMailForm form, Map previousRequestParameters)
+	    throws FenixFilterException, FenixServiceException, FenixActionException {
 
 	ExecutionCourse executionCourse = getExecutionCourse(previousRequestParameters);
 
@@ -48,10 +47,8 @@ public abstract class ExecutionCourseSendMail extends ContextualGroupMailSenderA
     }
 
     private ExecutionCourse getExecutionCourse(Map previousRequestParameters) {
-	String executionCourseIdString = (String) ((String[]) previousRequestParameters
-		.get("objectCode"))[0];
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer
-		.valueOf(executionCourseIdString));
+	String executionCourseIdString = (String) ((String[]) previousRequestParameters.get("objectCode"))[0];
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseIdString));
 	return executionCourse;
     }
 
@@ -59,7 +56,7 @@ public abstract class ExecutionCourseSendMail extends ContextualGroupMailSenderA
     protected void sendMail(HttpServletRequest request, MessageResources resources, IUserView userView,
 	    SendEMailParameters parameters, Map previousRequestParameters) throws FenixActionException {
 	ExecutionCourse executionCourse = getExecutionCourse(previousRequestParameters);
-	if(executionCourse != null) {
+	if (executionCourse != null) {
 	    parameters.subject = "[" + executionCourse.getSigla() + "] " + parameters.subject;
 	    parameters.message = parameters.message + "\n\n ----- \n" + executionCourse.getNome();
 	}
@@ -67,14 +64,11 @@ public abstract class ExecutionCourseSendMail extends ContextualGroupMailSenderA
     }
 
     @Override
-    protected Pair<String, Object>[] getStateRequestAttributes(IUserView userView,
-	    ActionForm actionForm, Map previousRequestParameters) throws FenixActionException,
-	    FenixFilterException, FenixServiceException {
-	String executionCourseIdString = (String) ((String[]) previousRequestParameters
-		.get("objectCode"))[0];
+    protected Pair<String, Object>[] getStateRequestAttributes(IUserView userView, ActionForm actionForm,
+	    Map previousRequestParameters) throws FenixActionException, FenixFilterException, FenixServiceException {
+	String executionCourseIdString = (String) ((String[]) previousRequestParameters.get("objectCode"))[0];
 	Integer executionCourseId = new Integer(executionCourseIdString);
-	SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation",
-		new Object[] { executionCourseId });
+	SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation", new Object[] { executionCourseId });
 
 	Pair<String, Object> pair = new Pair<String, Object>("siteView", siteView);
 

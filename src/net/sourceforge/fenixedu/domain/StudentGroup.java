@@ -26,8 +26,7 @@ public class StudentGroup extends StudentGroup_Base {
 	@Override
 	public void beforeRemove(StudentGroup studentGroup, Attends attends) {
 	    if (!studentGroup.getProjectSubmissions().isEmpty()) {
-		throw new DomainException(
-		"error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
+		throw new DomainException("error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
 	    }
 
 	    super.beforeRemove(studentGroup, attends);
@@ -73,8 +72,8 @@ public class StudentGroup extends StudentGroup_Base {
 
     public boolean isPersonInStudentGroup(Person person) {
 
-	for(Attends attend : getAttends()) {
-	    if(attend.getRegistration().getStudent().getPerson().equals(person)) {
+	for (Attends attend : getAttends()) {
+	    if (attend.getRegistration().getStudent().getPerson().equals(person)) {
 		return true;
 	    }
 	}

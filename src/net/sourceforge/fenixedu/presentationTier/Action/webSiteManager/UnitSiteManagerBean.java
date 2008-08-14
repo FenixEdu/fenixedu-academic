@@ -13,27 +13,27 @@ public class UnitSiteManagerBean implements Serializable {
     private String idNumber;
 
     public String getAlias() {
-        return this.alias;
+	return this.alias;
     }
 
     public void setAlias(String alias) {
-        this.alias = alias == null ? null : alias.trim();
-        
-        if (this.alias.length() == 0) {
-            this.alias = null;
-        }
+	this.alias = alias == null ? null : alias.trim();
+
+	if (this.alias.length() == 0) {
+	    this.alias = null;
+	}
     }
 
     public String getIdNumber() {
-        return this.idNumber;
+	return this.idNumber;
     }
 
     public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber == null ? null : idNumber.trim();
-        
-        if (this.idNumber.length() == 0) {
-            this.idNumber = null;
-        }
+	this.idNumber = idNumber == null ? null : idNumber.trim();
+
+	if (this.idNumber.length() == 0) {
+	    this.idNumber = null;
+	}
     }
 
 }

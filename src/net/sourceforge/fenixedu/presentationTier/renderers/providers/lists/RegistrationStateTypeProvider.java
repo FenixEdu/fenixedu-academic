@@ -11,27 +11,29 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class RegistrationStateTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-//        List<RegistrationAgreement> types = new ArrayList<RegistrationAgreement>();
-//
-//        for (RegistrationAgreement typeToDisplay : RegistrationAgreement.values()) {
-//            types.add(typeToDisplay);
-//        }
-//
-//        return types;
-    	return Arrays.asList(RegistrationStateType.values());
+	// List<RegistrationAgreement> types = new
+	// ArrayList<RegistrationAgreement>();
+	//
+	// for (RegistrationAgreement typeToDisplay :
+	// RegistrationAgreement.values()) {
+	// types.add(typeToDisplay);
+	// }
+	//
+	// return types;
+	return Arrays.asList(RegistrationStateType.values());
     }
 
     public Converter getConverter() {
-    	return new Converter() {
-    	    @Override
-    	    public Object convert(Class type, Object value) {
-    		final List<RegistrationStateType> registrationStateTypes = new ArrayList<RegistrationStateType>();
-    		for (final String o : (String[]) value) {
-    			registrationStateTypes.add(RegistrationStateType.valueOf(o));
-    		}
-    		return registrationStateTypes;
-    	    }
-    	};
+	return new Converter() {
+	    @Override
+	    public Object convert(Class type, Object value) {
+		final List<RegistrationStateType> registrationStateTypes = new ArrayList<RegistrationStateType>();
+		for (final String o : (String[]) value) {
+		    registrationStateTypes.add(RegistrationStateType.valueOf(o));
+		}
+		return registrationStateTypes;
+	    }
+	};
     }
 
 }

@@ -11,19 +11,19 @@ public class NoActiveStudentCurricularPlanServiceException extends FenixServiceE
     }
 
     public NoActiveStudentCurricularPlanServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public NoActiveStudentCurricularPlanServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[NoActiveStudentCurricularPlanServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[NoActiveStudentCurricularPlanServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

@@ -22,32 +22,31 @@ public class ListStudentThesis {
     }
 
     public Integer getDegreeCurricularPlanID() {
-        return degreeCurricularPlanID;
+	return degreeCurricularPlanID;
     }
 
     public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
-        this.degreeCurricularPlanID = degreeCurricularPlanID;
+	this.degreeCurricularPlanID = degreeCurricularPlanID;
 
-        ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
-                .setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).setAttribute(
+		"degreeCurricularPlanID", degreeCurricularPlanID);
 
     }
 
     public List getMasterDegreeThesisDataVersions() {
 
-        Object[] args = { degreeCurricularPlanID };
-        try {
-            return (List) ServiceUtils.executeService(
-                    "ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan", args);
-        } catch (FenixFilterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	Object[] args = { degreeCurricularPlanID };
+	try {
+	    return (List) ServiceUtils.executeService("ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan", args);
+	} catch (FenixFilterException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 
-        return null;
+	return null;
 
     }
 

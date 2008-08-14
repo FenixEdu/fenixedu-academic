@@ -22,27 +22,26 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends Service {
 
-    public List run(IUserView userView) throws FenixServiceException{
+    public List run(IUserView userView) throws FenixServiceException {
 
-        final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-        final Person person = userView.getPerson();
-        final Teacher teacher = person != null ? person.getTeacher() : null;
-        final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
+	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
+	final Person person = userView.getPerson();
+	final Teacher teacher = person != null ? person.getTeacher() : null;
+	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 
-        for (final Professorship professorship : teacher.getProfessorshipsSet()) {
-            final ExecutionSemester executionSemester = professorship.getExecutionCourse()
-                    .getExecutionPeriod();
-            final PeriodState periodState = executionSemester.getState();
-            if (!executionSemesters.contains(executionSemester)
-                    && (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
-                executionSemesters.add(executionSemester);
-            }
-        }
+	for (final Professorship professorship : teacher.getProfessorshipsSet()) {
+	    final ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
+	    final PeriodState periodState = executionSemester.getState();
+	    if (!executionSemesters.contains(executionSemester)
+		    && (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
+		executionSemesters.add(executionSemester);
+	    }
+	}
 
-        for (final ExecutionSemester executionSemester : executionSemesters) {
-            result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
-        }
-        return result;
+	for (final ExecutionSemester executionSemester : executionSemesters) {
+	    result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+	}
+	return result;
     }
 
 }

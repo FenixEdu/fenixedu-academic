@@ -14,15 +14,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br><br>
- * Created on Jul 18, 2006,11:12:24 AM
- *
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
+ * <br>
+ *         Created on Jul 18, 2006,11:12:24 AM
+ * 
  */
-public class NotAvailableYet extends FenixAction{
+public class NotAvailableYet extends FenixAction {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("notAvailable");
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("notAvailable");
     }
-    
+
 }

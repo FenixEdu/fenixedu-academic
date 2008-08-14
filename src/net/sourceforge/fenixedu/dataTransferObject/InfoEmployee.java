@@ -15,21 +15,21 @@ import net.sourceforge.fenixedu.domain.Employee;
 public class InfoEmployee extends InfoObject {
 
     private final DomainReference<Employee> employeeDomainReference;
-    
+
     public InfoEmployee(final Employee employee) {
 	employeeDomainReference = new DomainReference<Employee>(employee);
     }
-    
+
     public static InfoEmployee newInfoFromDomain(final Employee employee) {
 	return employee == null ? null : new InfoEmployee(employee);
     }
-    
+
     private Employee getEmployee() {
 	return employeeDomainReference == null ? null : employeeDomainReference.getObject();
     }
-    
+
     public boolean equals(Object obj) {
-        return obj instanceof InfoEmployee && getEmployee() == ((InfoEmployee) obj).getEmployee();
+	return obj instanceof InfoEmployee && getEmployee() == ((InfoEmployee) obj).getEmployee();
     }
 
     @Override
@@ -47,11 +47,13 @@ public class InfoEmployee extends InfoObject {
     }
 
     public InfoUnit getWorkingUnit() {
-        return InfoUnit.newInfoFromDomain((getEmployee().getCurrentWorkingPlace() != null) ? getEmployee().getCurrentWorkingPlace() : null);
+	return InfoUnit.newInfoFromDomain((getEmployee().getCurrentWorkingPlace() != null) ? getEmployee()
+		.getCurrentWorkingPlace() : null);
     }
 
     public InfoUnit getMailingUnit() {
-	return InfoUnit.newInfoFromDomain((getEmployee().getCurrentMailingPlace() != null) ? getEmployee().getCurrentMailingPlace() : null);
+	return InfoUnit.newInfoFromDomain((getEmployee().getCurrentMailingPlace() != null) ? getEmployee()
+		.getCurrentMailingPlace() : null);
     }
 
     public InfoPerson getPerson() {
@@ -59,7 +61,7 @@ public class InfoEmployee extends InfoObject {
     }
 
     public String toString() {
-        return getEmployee().toString();
+	return getEmployee().toString();
     }
 
 }

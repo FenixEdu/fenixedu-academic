@@ -18,7 +18,7 @@ public class InfoDegreeCurricularPlanWithCurricularCourseScopes extends DataTran
      * @return Returns the infoDegreeCurricularPlan.
      */
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-        return infoDegreeCurricularPlan;
+	return infoDegreeCurricularPlan;
     }
 
     /**
@@ -26,14 +26,14 @@ public class InfoDegreeCurricularPlanWithCurricularCourseScopes extends DataTran
      *            The infoDegreeCurricularPlan to set.
      */
     public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+	this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
     }
 
     /**
      * @return Returns the scopes.
      */
     public List getScopes() {
-        return scopes;
+	return scopes;
     }
 
     /**
@@ -41,6 +41,6 @@ public class InfoDegreeCurricularPlanWithCurricularCourseScopes extends DataTran
      *            The scopes to set.
      */
     public void setScopes(List scopes) {
-        this.scopes = scopes;
+	this.scopes = scopes;
     }
 }

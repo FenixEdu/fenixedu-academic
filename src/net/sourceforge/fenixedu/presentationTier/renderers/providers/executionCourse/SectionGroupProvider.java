@@ -11,12 +11,12 @@ public class SectionGroupProvider extends SectionProvider {
 
     @Override
     public Object provideForContext(Site site, Section superiorSection, Section self) {
-        return UnmodifiableList.decorate(site.getContextualPermissionGroups());
+	return UnmodifiableList.decorate(site.getContextualPermissionGroups());
     }
 
     @Override
     public Converter getConverter() {
-        return null;
+	return null;
     }
 
 }

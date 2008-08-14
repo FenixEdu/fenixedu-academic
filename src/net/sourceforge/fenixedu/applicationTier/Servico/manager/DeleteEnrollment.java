@@ -19,22 +19,21 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 public class DeleteEnrollment extends Service {
 
     public void run(final Integer studentNumber, final DegreeType degreeType, final Integer enrollmentId) {
-	for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber,
-		degreeType)) {
+	for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
 	    final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrollmentId);
 	    if (enrollment != null) {
 		for (EnrolmentEvaluation evaluation : enrollment.getEvaluations()) {
 		    evaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 		}
-		
+
 		final CurriculumGroup parentCurriculumGroup = enrollment.getCurriculumGroup();
-		
+
 		enrollment.delete();
-		
-		if(parentCurriculumGroup != null && parentCurriculumGroup.canBeDeleted()){
+
+		if (parentCurriculumGroup != null && parentCurriculumGroup.canBeDeleted()) {
 		    parentCurriculumGroup.delete();
 		}
-		
+
 		return;
 	    }
 	}

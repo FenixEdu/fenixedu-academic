@@ -10,15 +10,16 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class GEPAuthorizationFilter extends AuthorizationByRoleFilter {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
+     * @seeServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#
+     * getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.GEP;
+	return RoleType.GEP;
     }
 }

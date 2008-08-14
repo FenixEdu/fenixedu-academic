@@ -41,11 +41,9 @@ public class PersonalInformationForm extends Form {
 	super();
     }
 
-    private PersonalInformationForm(YearMonthDay documentIdEmissionDate,
-	    String documentIdEmissionLocation, YearMonthDay documentIdExpirationDate,
-	    String documentIdNumber, IDDocumentType documentType, Gender gender,
-	    MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber,
-	    String username) {
+    private PersonalInformationForm(YearMonthDay documentIdEmissionDate, String documentIdEmissionLocation,
+	    YearMonthDay documentIdExpirationDate, String documentIdNumber, IDDocumentType documentType, Gender gender,
+	    MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber, String username) {
 	this();
 	this.documentIdEmissionDate = documentIdEmissionDate;
 	this.documentIdEmissionLocation = documentIdEmissionLocation;
@@ -62,10 +60,9 @@ public class PersonalInformationForm extends Form {
 
     public static PersonalInformationForm createFromPerson(final Person person) {
 	return new PersonalInformationForm(person.getEmissionDateOfDocumentIdYearMonthDay(), person
-		.getEmissionLocationOfDocumentId(), person.getExpirationDateOfDocumentIdYearMonthDay(),
-		person.getDocumentIdNumber(), person.getIdDocumentType(), person.getGender(), person
-			.getMaritalStatus(), person.getName(), person.getProfession(), person
-			.getSocialSecurityNumber(), person.getUsername());
+		.getEmissionLocationOfDocumentId(), person.getExpirationDateOfDocumentIdYearMonthDay(), person
+		.getDocumentIdNumber(), person.getIdDocumentType(), person.getGender(), person.getMaritalStatus(), person
+		.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername());
     }
 
     public YearMonthDay getDocumentIdEmissionDate() {

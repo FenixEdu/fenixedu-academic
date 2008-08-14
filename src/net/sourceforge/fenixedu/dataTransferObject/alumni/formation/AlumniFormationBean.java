@@ -30,7 +30,7 @@ public class AlumniFormationBean implements Serializable {
     public void setAlumniFormation(AlumniFormation alumniFormation) {
 	this.alumniFormation = alumniFormation;
     }
-    
+
     public int getSize() {
 	return this.alumni.getObject().getFormations().size();
     }

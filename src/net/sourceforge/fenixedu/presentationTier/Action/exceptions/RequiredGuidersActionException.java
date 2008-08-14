@@ -10,37 +10,37 @@ import org.apache.struts.action.ActionForward;
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class RequiredGuidersActionException extends FenixActionException {
     public static String key = "error.exception.masterDegree.noGuidersSelected";
 
     public RequiredGuidersActionException(Throwable cause) {
-        super(key, cause);
+	super(key, cause);
     }
 
     public RequiredGuidersActionException(Object value, Throwable cause) {
-        super(key, value, cause);
+	super(key, value, cause);
     }
 
     public RequiredGuidersActionException(Object[] values, Throwable cause) {
-        super(key, values, cause);
+	super(key, values, cause);
     }
 
     public RequiredGuidersActionException(String text) {
-        super(text);
+	super(text);
     }
 
     public RequiredGuidersActionException(String text, ActionForward actionForward) {
-        super(actionForward);
-        error = new ActionError(text);
+	super(actionForward);
+	error = new ActionError(text);
     }
 
     /**
      * @return String
      */
     public static String getKey() {
-        return key;
+	return key;
     }
 
     /**
@@ -50,15 +50,15 @@ public class RequiredGuidersActionException extends FenixActionException {
      *            The key to set
      */
     public static void setKey(String key) {
-        RequiredGuidersActionException.key = key;
+	RequiredGuidersActionException.key = key;
     }
 
     public String toString() {
-        String result = "[" + getClass().getName() + "n";
-        result += "property" + this.getProperty() + "\n";
-        result += "error" + this.getError() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[" + getClass().getName() + "n";
+	result += "property" + this.getProperty() + "\n";
+	result += "error" + this.getError() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

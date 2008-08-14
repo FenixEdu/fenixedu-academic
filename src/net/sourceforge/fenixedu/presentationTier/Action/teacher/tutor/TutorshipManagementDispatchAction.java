@@ -10,16 +10,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-
 public class TutorshipManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	
-    	final Person person = getLoggedPerson(request);    	
-    	  	
-    	request.setAttribute("tutor", person);
-    	return mapping.findForward("tutorMenu");
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	final Person person = getLoggedPerson(request);
+
+	request.setAttribute("tutor", person);
+	return mapping.findForward("tutorMenu");
     }
 }
-

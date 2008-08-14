@@ -22,26 +22,25 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGrantSubsidy extends Service {
 
-	protected InfoGrantSubsidy newInfoFromDomain(DomainObject domainObject) {
-		return InfoGrantSubsidyWithContract.newInfoFromDomain((GrantSubsidy) domainObject);
-	}
+    protected InfoGrantSubsidy newInfoFromDomain(DomainObject domainObject) {
+	return InfoGrantSubsidyWithContract.newInfoFromDomain((GrantSubsidy) domainObject);
+    }
 
-	public InfoObject run(Integer objectId) throws FenixServiceException{
-		final GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(objectId);
-		InfoGrantSubsidy infoGrantSubsidy = newInfoFromDomain(grantSubsidy);
+    public InfoObject run(Integer objectId) throws FenixServiceException {
+	final GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(objectId);
+	InfoGrantSubsidy infoGrantSubsidy = newInfoFromDomain(grantSubsidy);
 
-		InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
-				.newInfoFromDomain(rootDomainObject.readGrantContractByOID(infoGrantSubsidy
-						.getInfoGrantContract().getIdInternal()));
+	InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(rootDomainObject
+		.readGrantContractByOID(infoGrantSubsidy.getInfoGrantContract().getIdInternal()));
 
-		// this section of code is temporary!!!! (see above the reason)
-		if (infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
-			infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
+	// this section of code is temporary!!!! (see above the reason)
+	if (infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
+	    infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
 
-		infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().setIdInternal(
-				infoGrantContract.getGrantOwnerInfo().getIdInternal());
+	infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().setIdInternal(
+		infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
-		return infoGrantSubsidy;
-	}
+	return infoGrantSubsidy;
+    }
 
 }

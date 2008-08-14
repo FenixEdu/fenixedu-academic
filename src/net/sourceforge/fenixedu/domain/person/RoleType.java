@@ -14,12 +14,12 @@ public enum RoleType {
     TEACHER("Teacher"),
 
     RESEARCHER("Researcher"),
-    
+
     DEPARTMENT_MEMBER("Department Member"),
 
-    RESOURCE_ALLOCATION_MANAGER ("Rersource Allocation Management"),
-    
-    RESOURCE_MANAGER("Resource Management"),    
+    RESOURCE_ALLOCATION_MANAGER("Rersource Allocation Management"),
+
+    RESOURCE_MANAGER("Resource Management"),
 
     MASTER_DEGREE_CANDIDATE("Master Degree Candidate"),
 
@@ -76,7 +76,7 @@ public enum RoleType {
     CMS_MANAGER("Content Management"),
 
     SPACE_MANAGER("Space Management"),
-    
+
     SPACE_MANAGER_SUPER_USER("Space Management (Super User)"),
 
     ALUMNI("Alumni"),
@@ -90,9 +90,9 @@ public enum RoleType {
     ACADEMIC_ADMINISTRATIVE_OFFICE("Academic Administrative Office"),
 
     PARKING_MANAGER("Parking Manager"),
-    
+
     LIBRARY("Library"),
-    
+
     INTERNATIONAL_RELATION_OFFICE("International Relation Office"),
 
     IDENTIFICATION_CARD_MANAGER("Gestão de Cartões");

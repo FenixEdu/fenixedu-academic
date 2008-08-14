@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.research.Prize;
 
 public class RemovePartyFromPrize extends Service {
 
-	public void run(Party party, Prize prize) {
-		prize.getParties().remove(party);
-	}
+    public void run(Party party, Prize prize) {
+	prize.getParties().remove(party);
+    }
 }

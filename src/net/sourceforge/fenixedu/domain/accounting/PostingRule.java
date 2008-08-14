@@ -302,7 +302,7 @@ public abstract class PostingRule extends PostingRule_Base {
     public AccountingTransaction depositAmount(final User responsibleUser, final Event event, final Account fromAcount,
 	    final Account toAccount, final Money amount, final EntryType entryType,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
-	
+
 	checkEntryTypeForDeposit(event, entryType);
 
 	return makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, entryType, amount, transactionDetailDTO);

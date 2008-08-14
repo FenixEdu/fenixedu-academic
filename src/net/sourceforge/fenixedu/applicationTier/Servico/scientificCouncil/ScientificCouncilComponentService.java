@@ -15,22 +15,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author João Mota
  * 
- * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
- *  
+ *         23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
+ * 
  */
 public class ScientificCouncilComponentService extends Service {
 
-    public SiteView run(ISiteComponent bodyComponent, Integer degreeId, Integer curricularYear,
-            Integer degreeCurricularPlanId) throws FenixServiceException{
+    public SiteView run(ISiteComponent bodyComponent, Integer degreeId, Integer curricularYear, Integer degreeCurricularPlanId)
+	    throws FenixServiceException {
 
-        ScientificCouncilComponentBuilder componentBuilder = ScientificCouncilComponentBuilder
-                .getInstance();
-        bodyComponent = componentBuilder.getComponent(bodyComponent, degreeId, curricularYear,
-                degreeCurricularPlanId);
-        SiteView siteView = new SiteView();
-        siteView.setComponent(bodyComponent);
+	ScientificCouncilComponentBuilder componentBuilder = ScientificCouncilComponentBuilder.getInstance();
+	bodyComponent = componentBuilder.getComponent(bodyComponent, degreeId, curricularYear, degreeCurricularPlanId);
+	SiteView siteView = new SiteView();
+	siteView.setComponent(bodyComponent);
 
-        return siteView;
+	return siteView;
     }
 
 }

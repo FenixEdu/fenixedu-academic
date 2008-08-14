@@ -52,120 +52,117 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      * @return Returns the infoProfessorshipList.
      */
     public List getDetailedProfessorshipList() {
-        BeanComparator executionCourseName = new BeanComparator(
-                "infoProfessorship.infoExecutionCourse.nome");
-        Collections.sort(this.detailedProfessorshipList, executionCourseName);
-        return this.detailedProfessorshipList;
+	BeanComparator executionCourseName = new BeanComparator("infoProfessorship.infoExecutionCourse.nome");
+	Collections.sort(this.detailedProfessorshipList, executionCourseName);
+	return this.detailedProfessorshipList;
     }
 
     public List getExecutionCourseShiftProfessorship(final String executionCourseCode) {
-        List executionCourseShiftProfessorships = (List) CollectionUtils.select(this
-                .getInfoShiftProfessorshipList(), new Predicate() {
+	List executionCourseShiftProfessorships = (List) CollectionUtils.select(this.getInfoShiftProfessorshipList(),
+		new Predicate() {
 
-            public boolean evaluate(Object input) {
-                InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) input;
-                return infoShiftProfessorship.getInfoProfessorship().getInfoExecutionCourse().getSigla()
-                        .equals(executionCourseCode);
-            }
-        });
-        return executionCourseShiftProfessorships;
+		    public boolean evaluate(Object input) {
+			InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) input;
+			return infoShiftProfessorship.getInfoProfessorship().getInfoExecutionCourse().getSigla().equals(
+				executionCourseCode);
+		    }
+		});
+	return executionCourseShiftProfessorships;
     }
 
     public List getExecutionCourseSupportLessons(final String executionCourseCode) {
-        List executionCourseSupportLessons = (List) CollectionUtils.select(this
-                .getInfoSupportLessonList(), new Predicate() {
+	List executionCourseSupportLessons = (List) CollectionUtils.select(this.getInfoSupportLessonList(), new Predicate() {
 
-            public boolean evaluate(Object input) {
-                InfoSupportLesson infoSupportLesson = (InfoSupportLesson) input;
-                return infoSupportLesson.getInfoProfessorship().getInfoExecutionCourse().getSigla()
-                        .equals(executionCourseCode);
-            }
-        });
-        return executionCourseSupportLessons;
+	    public boolean evaluate(Object input) {
+		InfoSupportLesson infoSupportLesson = (InfoSupportLesson) input;
+		return infoSupportLesson.getInfoProfessorship().getInfoExecutionCourse().getSigla().equals(executionCourseCode);
+	    }
+	});
+	return executionCourseSupportLessons;
     }
 
     /**
      * @return Returns the infoCreditLineList.
      */
     public List getInfoCreditLineList() {
-        return this.infoCreditLineList;
+	return this.infoCreditLineList;
     }
 
     /**
      * @return Returns the infoCredits.
      */
     public InfoCredits getInfoCredits() {
-        return infoCredits;
+	return infoCredits;
     }
 
     /**
      * @return Returns the infoExecutionPeriod.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return this.infoExecutionPeriod;
+	return this.infoExecutionPeriod;
     }
 
     /**
      * @return Returns the infoManagementPositions.
      */
     public List getInfoManagementPositions() {
-        return infoManagementPositions;
+	return infoManagementPositions;
     }
 
     /**
      * @return Returns the infoMasterDegreeProfessorships.
      */
     public List getInfoMasterDegreeProfessorships() {
-        return this.infoMasterDegreeProfessorships;
+	return this.infoMasterDegreeProfessorships;
     }
 
     /**
      * @return Returns the infoServiceExemptions.
      */
     public List getInfoServiceExemptions() {
-        return infoServiceExemptions;
+	return infoServiceExemptions;
     }
 
     /**
      * @return Returns the infoShiftProfessorshipList.
      */
     public List getInfoShiftProfessorshipList() {
-        return this.infoShiftProfessorshipList;
+	return this.infoShiftProfessorshipList;
     }
 
     /**
      * @return Returns the infoSupportLessonList.
      */
     public List getInfoSupportLessonList() {
-        return this.infoSupportLessonList;
+	return this.infoSupportLessonList;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return this.infoTeacher;
+	return this.infoTeacher;
     }
 
     /**
      * @return Returns the infoTeacherDegreeFinalProjectStudentList.
      */
     public List getInfoTeacherDegreeFinalProjectStudentList() {
-        return this.infoTeacherDegreeFinalProjectStudentList;
+	return this.infoTeacherDegreeFinalProjectStudentList;
     }
 
     /**
      * @return Returns the infoTeacherInstitutionWorkingTimeList.
      */
     public List getInfoTeacherInstitutionWorkingTimeList() {
-        return this.infoTeacherInstitutionWorkingTimeList;
+	return this.infoTeacherInstitutionWorkingTimeList;
     }
 
     /**
      * @return Returns the infoTeacherOtherTypeCreditLineList.
      */
     public List getInfoTeacherOtherTypeCreditLineList() {
-        return infoTeacherOtherTypeCreditLineList;
+	return infoTeacherOtherTypeCreditLineList;
     }
 
     /**
@@ -173,7 +170,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoProfessorshipList to set.
      */
     public void setDetailedProfessorshipList(List detailedProfessorshipList) {
-        this.detailedProfessorshipList = detailedProfessorshipList;
+	this.detailedProfessorshipList = detailedProfessorshipList;
     }
 
     /**
@@ -181,7 +178,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoCreditLineList to set.
      */
     public void setInfoCreditLineList(List infoCreditLineList) {
-        this.infoCreditLineList = infoCreditLineList;
+	this.infoCreditLineList = infoCreditLineList;
     }
 
     /**
@@ -189,7 +186,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoCredits to set.
      */
     public void setInfoCredits(InfoCredits infoCredits) {
-        this.infoCredits = infoCredits;
+	this.infoCredits = infoCredits;
     }
 
     /**
@@ -197,14 +194,14 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoExecutionPeriod to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
      * @param infoManagementPositions
      */
     public void setInfoManagementPositions(List infoManagementPositions) {
-        this.infoManagementPositions = infoManagementPositions;
+	this.infoManagementPositions = infoManagementPositions;
     }
 
     /**
@@ -212,14 +209,14 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoMasterDegreeProfessorships to set.
      */
     public void setInfoMasterDegreeProfessorships(List infoMasterDegreeProfessorships) {
-        this.infoMasterDegreeProfessorships = infoMasterDegreeProfessorships;
+	this.infoMasterDegreeProfessorships = infoMasterDegreeProfessorships;
     }
 
     /**
      * @param infoServiceExemptions
      */
     public void setInfoServiceExemptions(List infoServiceExemptions) {
-        this.infoServiceExemptions = infoServiceExemptions;
+	this.infoServiceExemptions = infoServiceExemptions;
     }
 
     /**
@@ -227,7 +224,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoShiftProfessorshipList to set.
      */
     public void setInfoShiftProfessorshipList(List infoShiftProfessorshipList) {
-        this.infoShiftProfessorshipList = infoShiftProfessorshipList;
+	this.infoShiftProfessorshipList = infoShiftProfessorshipList;
     }
 
     /**
@@ -235,7 +232,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoSupportLessonList to set.
      */
     public void setInfoSupportLessonList(List infoSupportLessonList) {
-        this.infoSupportLessonList = infoSupportLessonList;
+	this.infoSupportLessonList = infoSupportLessonList;
     }
 
     /**
@@ -243,7 +240,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
@@ -251,7 +248,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoTeacherDegreeFinalProjectStudentList to set.
      */
     public void setInfoTeacherDegreeFinalProjectStudentList(List infoTeacherDegreeFinalProjectStudentList) {
-        this.infoTeacherDegreeFinalProjectStudentList = infoTeacherDegreeFinalProjectStudentList;
+	this.infoTeacherDegreeFinalProjectStudentList = infoTeacherDegreeFinalProjectStudentList;
     }
 
     /**
@@ -259,7 +256,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoTeacherInstitutionWorkingTimeList to set.
      */
     public void setInfoTeacherInstitutionWorkingTimeList(List infoTeacherInstitutionWorkingTimeList) {
-        this.infoTeacherInstitutionWorkingTimeList = infoTeacherInstitutionWorkingTimeList;
+	this.infoTeacherInstitutionWorkingTimeList = infoTeacherInstitutionWorkingTimeList;
     }
 
     /**
@@ -267,7 +264,7 @@ public class TeacherCreditsSheetDTO extends DataTranferObject {
      *            The infoTeacherOtherTypeCreditLineList to set.
      */
     public void setInfoTeacherOtherTypeCreditLineList(List infoTeacherOtherTypeCreditLineList) {
-        this.infoTeacherOtherTypeCreditLineList = infoTeacherOtherTypeCreditLineList;
+	this.infoTeacherOtherTypeCreditLineList = infoTeacherOtherTypeCreditLineList;
     }
 
 }

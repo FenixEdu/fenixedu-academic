@@ -10,5 +10,5 @@ public class EditPortal extends Service {
 	portal.setName(name);
 	portal.setPrefix(prefix);
     }
-    
+
 }

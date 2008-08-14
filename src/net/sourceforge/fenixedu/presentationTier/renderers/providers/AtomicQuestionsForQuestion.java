@@ -14,31 +14,31 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AtomicQuestionsForQuestion implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		List<NewAtomicQuestion> atomicQuestions = new ArrayList<NewAtomicQuestion>();
-		Stack<NewAllGroup> allGroups = new Stack<NewAllGroup>();
+    public Object provide(Object source, Object currentValue) {
+	List<NewAtomicQuestion> atomicQuestions = new ArrayList<NewAtomicQuestion>();
+	Stack<NewAllGroup> allGroups = new Stack<NewAllGroup>();
 
-		PredicateBean predicateBean = (PredicateBean) source;
+	PredicateBean predicateBean = (PredicateBean) source;
 
-		allGroups.add(predicateBean.getQuestion().getTopAllGroup());
+	allGroups.add(predicateBean.getQuestion().getTopAllGroup());
 
-		while (allGroups.size() > 0) {
-			NewAllGroup allGroup = allGroups.pop();
+	while (allGroups.size() > 0) {
+	    NewAllGroup allGroup = allGroups.pop();
 
-			for (NewQuestion question : allGroup.getChildAtomicQuestions()) {
-				if (NewAllGroup.ALL_GROUP_PREDICATE.evaluate(question)) {
-					allGroups.add((NewAllGroup) question);
-				} else {
-					atomicQuestions.add((NewAtomicQuestion) question);
-				}
-			}
+	    for (NewQuestion question : allGroup.getChildAtomicQuestions()) {
+		if (NewAllGroup.ALL_GROUP_PREDICATE.evaluate(question)) {
+		    allGroups.add((NewAllGroup) question);
+		} else {
+		    atomicQuestions.add((NewAtomicQuestion) question);
 		}
-
-		return atomicQuestions;
+	    }
 	}
 
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+	return atomicQuestions;
+    }
+
+    public Converter getConverter() {
+	return new DomainObjectKeyConverter();
+    }
 
 }

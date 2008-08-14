@@ -21,7 +21,7 @@ public class ScientificCouncilAuthorizationFilter extends AuthorizationByRoleFil
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -30,7 +30,7 @@ public class ScientificCouncilAuthorizationFilter extends AuthorizationByRoleFil
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.SCIENTIFIC_COUNCIL;
+	return RoleType.SCIENTIFIC_COUNCIL;
     }
 
 }

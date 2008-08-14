@@ -15,187 +15,183 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class TSDFactory {
-	
-	private static TSDFactory instance = new TSDFactory();
+
+    private static TSDFactory instance = new TSDFactory();
 
     private TSDFactory() {
-	
-    }
-    
-    public static TSDFactory getInstance() {
-        return instance;
+
     }
 
-    
+    public static TSDFactory getInstance() {
+	return instance;
+    }
+
     public void createTSDTreeStructure(TSDProcessPhase tsdPhase) {
-    	createRootTSD(tsdPhase);
-    	createSubGroupings(tsdPhase);
+	createRootTSD(tsdPhase);
+	createSubGroupings(tsdPhase);
     }
 
     private TeacherServiceDistribution createRootTSD(TSDProcessPhase tsdPhase) {
-    	
-    	TSDProcess tsdProcess= tsdPhase.getTSDProcess();
-    	
-    	List<TSDTeacher> tsdTeachers = createTSDTeacher(tsdProcess.getDepartment(), tsdProcess.getExecutionPeriods());
-    	
-    	List<TSDCourse> tsdCourses = createTSDCompetenceCourses(tsdProcess);
 
-    	return new TeacherServiceDistribution(tsdPhase, tsdProcess.getDepartment().getAcronym(), null,
-    			tsdTeachers, tsdCourses, null, null,null,null);
+	TSDProcess tsdProcess = tsdPhase.getTSDProcess();
+
+	List<TSDTeacher> tsdTeachers = createTSDTeacher(tsdProcess.getDepartment(), tsdProcess.getExecutionPeriods());
+
+	List<TSDCourse> tsdCourses = createTSDCompetenceCourses(tsdProcess);
+
+	return new TeacherServiceDistribution(tsdPhase, tsdProcess.getDepartment().getAcronym(), null, tsdTeachers, tsdCourses,
+		null, null, null, null);
     }
 
     private void createSubGroupings(TSDProcessPhase tsdPhase) {
-		HashMap<Unit, TeacherServiceDistribution> unitTeachersNewGrouping = new HashMap<Unit, TeacherServiceDistribution>();
-		TeacherServiceDistribution rootTSD = tsdPhase.getRootTSD();
-	
-		for (TSDTeacher tsdTeacher : rootTSD.getTSDTeachers()) {
-		    Teacher teacher = ((TSDRealTeacher)tsdTeacher).getTeacher();
-		    if (teacher.getCurrentWorkingUnit() != null) {
-			createChildUnitsGroupingsForTeachers(tsdPhase, tsdTeacher, teacher.getCurrentWorkingUnit(),
-				null, rootTSD, unitTeachersNewGrouping);
-		    }
+	HashMap<Unit, TeacherServiceDistribution> unitTeachersNewGrouping = new HashMap<Unit, TeacherServiceDistribution>();
+	TeacherServiceDistribution rootTSD = tsdPhase.getRootTSD();
+
+	for (TSDTeacher tsdTeacher : rootTSD.getTSDTeachers()) {
+	    Teacher teacher = ((TSDRealTeacher) tsdTeacher).getTeacher();
+	    if (teacher.getCurrentWorkingUnit() != null) {
+		createChildUnitsGroupingsForTeachers(tsdPhase, tsdTeacher, teacher.getCurrentWorkingUnit(), null, rootTSD,
+			unitTeachersNewGrouping);
+	    }
+	}
+
+	HashMap<Unit, TeacherServiceDistribution> unitCoursesNewGrouping = new HashMap<Unit, TeacherServiceDistribution>();
+
+	for (TSDCourse course : rootTSD.getTSDCourses()) {
+	    if (course.getCompetenceCourse().getCompetenceCourseGroupUnit() != null) {
+		createChildCompetenceCourseGroupUnits(tsdPhase, course, rootTSD, unitCoursesNewGrouping);
+	    }
+	}
+
+	HashMap<Unit, TeacherServiceDistribution> unitScientificAreaGrouping = new HashMap<Unit, TeacherServiceDistribution>();
+
+	for (Unit courseUnit : unitCoursesNewGrouping.keySet()) {
+	    Iterator<Unit> iter = courseUnit.getParentUnits().iterator();
+	    Unit scientificAreaUnit = (!iter.hasNext()) ? null : iter.next();
+	    TeacherServiceDistribution scientificAreaGrouping = unitScientificAreaGrouping.get(scientificAreaUnit);
+	    TeacherServiceDistribution teachersNewGrouping = unitTeachersNewGrouping.get(scientificAreaUnit);
+	    TeacherServiceDistribution coursesNewGrouping = unitCoursesNewGrouping.get(courseUnit);
+
+	    if (scientificAreaGrouping == null) {
+		if (teachersNewGrouping == null) {
+		    scientificAreaGrouping = new TeacherServiceDistribution(tsdPhase, scientificAreaUnit.getName(), rootTSD,
+			    new ArrayList<TSDTeacher>(), new ArrayList<TSDCourse>(), rootTSD.getCoursesValuationManagers(),
+			    rootTSD.getTeachersValuationManagers(), rootTSD.getCoursesManagementGroup(), rootTSD
+				    .getTeachersValuationManagers());
+		} else {
+		    scientificAreaGrouping = teachersNewGrouping;
 		}
-	
-		HashMap<Unit, TeacherServiceDistribution> unitCoursesNewGrouping = new HashMap<Unit, TeacherServiceDistribution>();
-	
-		for (TSDCourse course : rootTSD.getTSDCourses()) {
-		    if (course.getCompetenceCourse().getCompetenceCourseGroupUnit() != null) {
-		    	createChildCompetenceCourseGroupUnits(tsdPhase, course, rootTSD,
-		    		unitCoursesNewGrouping);
-		    }
-		}
-	
-		HashMap<Unit, TeacherServiceDistribution> unitScientificAreaGrouping = new HashMap<Unit, TeacherServiceDistribution>();
-	
-		for (Unit courseUnit : unitCoursesNewGrouping.keySet()) {
-		    Iterator<Unit> iter = courseUnit.getParentUnits().iterator();
-		    Unit scientificAreaUnit = (!iter.hasNext()) ? null : iter.next();
-		    TeacherServiceDistribution scientificAreaGrouping = unitScientificAreaGrouping
-			    .get(scientificAreaUnit);
-		    TeacherServiceDistribution teachersNewGrouping = unitTeachersNewGrouping.get(scientificAreaUnit);
-		    TeacherServiceDistribution coursesNewGrouping = unitCoursesNewGrouping.get(courseUnit);
-	
-		    if (scientificAreaGrouping == null) {
-				if (teachersNewGrouping == null) {
-				    scientificAreaGrouping = new TeacherServiceDistribution(tsdPhase, scientificAreaUnit.getName(),
-					    rootTSD, new ArrayList<TSDTeacher>(),
-					    new ArrayList<TSDCourse>(), rootTSD.getCoursesValuationManagers(),
-					    	rootTSD.getTeachersValuationManagers(),
-					    	rootTSD.getCoursesManagementGroup(),
-					    	rootTSD.getTeachersValuationManagers());
-				} else {
-				    scientificAreaGrouping = teachersNewGrouping;
-				}
-	
-				unitScientificAreaGrouping.put(scientificAreaUnit, scientificAreaGrouping);
-		    }
-		    
-		    scientificAreaGrouping.getTSDCoursesSet().addAll(coursesNewGrouping.getTSDCourses());
-		    		    
-		    coursesNewGrouping.setParent(scientificAreaGrouping);
-		}
+
+		unitScientificAreaGrouping.put(scientificAreaUnit, scientificAreaGrouping);
+	    }
+
+	    scientificAreaGrouping.getTSDCoursesSet().addAll(coursesNewGrouping.getTSDCourses());
+
+	    coursesNewGrouping.setParent(scientificAreaGrouping);
+	}
     }
 
-    private void createChildUnitsGroupingsForTeachers(TSDProcessPhase tsdPhase, TSDTeacher tsdTeacher, Unit unit, 
-    		TeacherServiceDistribution childTSD, TeacherServiceDistribution rootTSD, HashMap<Unit, TeacherServiceDistribution> unitNewTSD) {
+    private void createChildUnitsGroupingsForTeachers(TSDProcessPhase tsdPhase, TSDTeacher tsdTeacher, Unit unit,
+	    TeacherServiceDistribution childTSD, TeacherServiceDistribution rootTSD,
+	    HashMap<Unit, TeacherServiceDistribution> unitNewTSD) {
 
-		if (unit.isDepartmentUnit()) {
-		    if (childTSD != null) {
-				childTSD.setParent(rootTSD);
-		    }
-		    return;
-		}
-	
-		TeacherServiceDistribution newTSD = unitNewTSD.get(unit);
-	
-		if (newTSD == null) {
-		    List<TSDTeacher> teachersList = new ArrayList<TSDTeacher>();
-		    teachersList.add(tsdTeacher);
-		    List<TSDCourse> emptyCourseList = new ArrayList<TSDCourse>();
-	
-		    newTSD = new TeacherServiceDistribution(tsdPhase, unit.getName(), null, teachersList, 
-		    		emptyCourseList, null, null,null,null);
-		    
-		    unitNewTSD.put(unit, newTSD);
-	
-		    if (childTSD != null) {
-		    	childTSD.setParent(newTSD);
-		    }
-	
-		    for (Unit parentUnit : unit.getParentUnitsByOrganizationalStructureAccountabilityType()) {
-				for (Unit grandParentUnit : parentUnit.getParentUnitsByOrganizationalStructureAccountabilityType()) {
-				    if (!grandParentUnit.getParentUnitsByOrganizationalStructureAccountabilityType().isEmpty()) {
-				    	createChildUnitsGroupingsForTeachers(tsdPhase, tsdTeacher, parentUnit, newTSD, rootTSD, unitNewTSD);
-				    }
-				}
-		    }
-		} else {
-		    newTSD.addTSDTeachers(tsdTeacher);
-	
-		    for (TeacherServiceDistribution parentGrouping = newTSD.getParent(); parentGrouping != null
-			    && parentGrouping != rootTSD; parentGrouping = parentGrouping.getParent()) {
-			parentGrouping.addTSDTeachers(tsdTeacher);
+	if (unit.isDepartmentUnit()) {
+	    if (childTSD != null) {
+		childTSD.setParent(rootTSD);
+	    }
+	    return;
+	}
+
+	TeacherServiceDistribution newTSD = unitNewTSD.get(unit);
+
+	if (newTSD == null) {
+	    List<TSDTeacher> teachersList = new ArrayList<TSDTeacher>();
+	    teachersList.add(tsdTeacher);
+	    List<TSDCourse> emptyCourseList = new ArrayList<TSDCourse>();
+
+	    newTSD = new TeacherServiceDistribution(tsdPhase, unit.getName(), null, teachersList, emptyCourseList, null, null,
+		    null, null);
+
+	    unitNewTSD.put(unit, newTSD);
+
+	    if (childTSD != null) {
+		childTSD.setParent(newTSD);
+	    }
+
+	    for (Unit parentUnit : unit.getParentUnitsByOrganizationalStructureAccountabilityType()) {
+		for (Unit grandParentUnit : parentUnit.getParentUnitsByOrganizationalStructureAccountabilityType()) {
+		    if (!grandParentUnit.getParentUnitsByOrganizationalStructureAccountabilityType().isEmpty()) {
+			createChildUnitsGroupingsForTeachers(tsdPhase, tsdTeacher, parentUnit, newTSD, rootTSD, unitNewTSD);
 		    }
 		}
+	    }
+	} else {
+	    newTSD.addTSDTeachers(tsdTeacher);
+
+	    for (TeacherServiceDistribution parentGrouping = newTSD.getParent(); parentGrouping != null
+		    && parentGrouping != rootTSD; parentGrouping = parentGrouping.getParent()) {
+		parentGrouping.addTSDTeachers(tsdTeacher);
+	    }
+	}
     }
 
-    private void createChildCompetenceCourseGroupUnits(TSDProcessPhase tsdPhase, TSDCourse tsdCourse, 
-    		TeacherServiceDistribution rootTSD, HashMap<Unit, TeacherServiceDistribution> unitNewGrouping) {
+    private void createChildCompetenceCourseGroupUnits(TSDProcessPhase tsdPhase, TSDCourse tsdCourse,
+	    TeacherServiceDistribution rootTSD, HashMap<Unit, TeacherServiceDistribution> unitNewGrouping) {
 
-    	CompetenceCourse competenceCourse = tsdCourse.getCompetenceCourse();
-		TeacherServiceDistribution newGrouping = unitNewGrouping.get(competenceCourse.getCompetenceCourseGroupUnit());
-	
-		if (newGrouping == null) {
-		    List<TSDCourse> courseList = new ArrayList<TSDCourse>();
-		    courseList.add(new TSDCompetenceCourse(competenceCourse, tsdCourse.getExecutionPeriod()));
-		    List<TSDTeacher> emptyTSDTeacherList = new ArrayList<TSDTeacher>();
-	
-		    newGrouping = new TeacherServiceDistribution(tsdPhase, competenceCourse.getCompetenceCourseGroupUnit()
-			    .getName(), rootTSD, emptyTSDTeacherList, courseList, null, null,null,null);
-		    unitNewGrouping.put(competenceCourse.getCompetenceCourseGroupUnit(), newGrouping);
-	
-		} else {
-		    newGrouping.addTSDCourses(tsdCourse);
-		}
+	CompetenceCourse competenceCourse = tsdCourse.getCompetenceCourse();
+	TeacherServiceDistribution newGrouping = unitNewGrouping.get(competenceCourse.getCompetenceCourseGroupUnit());
+
+	if (newGrouping == null) {
+	    List<TSDCourse> courseList = new ArrayList<TSDCourse>();
+	    courseList.add(new TSDCompetenceCourse(competenceCourse, tsdCourse.getExecutionPeriod()));
+	    List<TSDTeacher> emptyTSDTeacherList = new ArrayList<TSDTeacher>();
+
+	    newGrouping = new TeacherServiceDistribution(tsdPhase, competenceCourse.getCompetenceCourseGroupUnit().getName(),
+		    rootTSD, emptyTSDTeacherList, courseList, null, null, null, null);
+	    unitNewGrouping.put(competenceCourse.getCompetenceCourseGroupUnit(), newGrouping);
+
+	} else {
+	    newGrouping.addTSDCourses(tsdCourse);
+	}
     }
 
     private List<TSDCourse> createTSDCompetenceCourses(TSDProcess tsdProcess) {
-		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
-		List<ExecutionSemester> periods = tsdProcess.getExecutionPeriods();
-		
-		for (CompetenceCourse competenceCourse : tsdProcess.getAllCompetenceCourses()) {
-			courseList.addAll(createTSDCompetenceCourses(competenceCourse, periods));
-		}
-	
-		return courseList; 
+	List<TSDCourse> courseList = new ArrayList<TSDCourse>();
+	List<ExecutionSemester> periods = tsdProcess.getExecutionPeriods();
+
+	for (CompetenceCourse competenceCourse : tsdProcess.getAllCompetenceCourses()) {
+	    courseList.addAll(createTSDCompetenceCourses(competenceCourse, periods));
+	}
+
+	return courseList;
     }
-    
+
     private List<TSDCourse> createTSDCompetenceCourses(CompetenceCourse course, List<ExecutionSemester> periods) {
-		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
-		
-		for(ExecutionSemester period : periods){
-			if(course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).size() > 0)
-				courseList.add(new TSDCompetenceCourse(course, period));
-		}
-	
-		return courseList; 
+	List<TSDCourse> courseList = new ArrayList<TSDCourse>();
+
+	for (ExecutionSemester period : periods) {
+	    if (course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).size() > 0)
+		courseList.add(new TSDCompetenceCourse(course, period));
+	}
+
+	return courseList;
     }
 
     private List<TSDTeacher> createTSDTeacher(Department department, List<ExecutionSemester> executionPeriodList) {
-	    	
-		List<TSDTeacher> tsdTeacherList = new ArrayList<TSDTeacher>();
-		Set<Teacher> teacherSet = new HashSet<Teacher>();
-	
-		for (ExecutionSemester executionSemester : executionPeriodList) {
-		    teacherSet.addAll(department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
-			    executionSemester.getEndDateYearMonthDay()));
-		}
-	
-		for (Teacher teacher : teacherSet) {
-		    tsdTeacherList.add(new TSDRealTeacher(teacher));
-		}
-	
-		return tsdTeacherList;
+
+	List<TSDTeacher> tsdTeacherList = new ArrayList<TSDTeacher>();
+	Set<Teacher> teacherSet = new HashSet<Teacher>();
+
+	for (ExecutionSemester executionSemester : executionPeriodList) {
+	    teacherSet.addAll(department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(), executionSemester
+		    .getEndDateYearMonthDay()));
+	}
+
+	for (Teacher teacher : teacherSet) {
+	    tsdTeacherList.add(new TSDRealTeacher(teacher));
+	}
+
+	return tsdTeacherList;
     }
 
 }

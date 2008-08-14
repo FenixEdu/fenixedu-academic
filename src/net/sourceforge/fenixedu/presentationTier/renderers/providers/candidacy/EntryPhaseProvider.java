@@ -11,8 +11,7 @@ public class EntryPhaseProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) source;
-	if (ingressionInformationBean.getIngression() != null
-		&& ingressionInformationBean.getIngression().hasEntryPhase()) {
+	if (ingressionInformationBean.getIngression() != null && ingressionInformationBean.getIngression().hasEntryPhase()) {
 	    return EntryPhase.getAll();
 	}
 	return new ArrayList<EntryPhase>();

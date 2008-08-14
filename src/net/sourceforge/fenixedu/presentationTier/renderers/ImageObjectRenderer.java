@@ -59,11 +59,10 @@ public class ImageObjectRenderer extends OutputRenderer {
 	public HtmlComponent createComponent(Object object, Class type) {
 	    HtmlImage image = new HtmlImage();
 	    String link = RenderUtils.getFormattedProperties(getImageFormat(), getTargetObject(object));
-	    if(isModuleRelative()) {
-		link = RenderUtils.getModuleRelativePath("") + link; 
-	    }
-	    else if(isContextRelative()) {
-		 link = RenderUtils.getContextRelativePath("") + link;
+	    if (isModuleRelative()) {
+		link = RenderUtils.getModuleRelativePath("") + link;
+	    } else if (isContextRelative()) {
+		link = RenderUtils.getContextRelativePath("") + link;
 	    }
 	    image.setSource(link);
 	    return image;

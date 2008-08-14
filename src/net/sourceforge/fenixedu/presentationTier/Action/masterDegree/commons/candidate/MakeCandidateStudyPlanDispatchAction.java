@@ -58,67 +58,63 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
      * @return
      * @throws Exception
      */
-    public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
-        Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID",
-                request));
-        Integer executionDegreeID = Integer.valueOf(getFromRequest("executionDegreeID", request));        
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-        
-        ActionErrors errors = new ActionErrors();
-        if(executionDegree == null){
-            errors.add("nonExisting", new ActionError(
-            "error.exception.masterDegree.nonExistingExecutionDegree"));
-        }
+	IUserView userView = getUserView(request);
+	Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID", request));
+	Integer executionDegreeID = Integer.valueOf(getFromRequest("executionDegreeID", request));
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
 
-        String degree = getFromRequest("degree", request);
-        String executionYear = executionDegree.getExecutionYear().getYear();
+	ActionErrors errors = new ActionErrors();
+	if (executionDegree == null) {
+	    errors.add("nonExisting", new ActionError("error.exception.masterDegree.nonExistingExecutionDegree"));
+	}
 
-        if (degree == null) {
-            degree = executionDegree.getDegreeCurricularPlan().getName();
-        }
+	String degree = getFromRequest("degree", request);
+	String executionYear = executionDegree.getExecutionYear().getYear();
 
-        List candidateList = null;
+	if (degree == null) {
+	    degree = executionDegree.getDegreeCurricularPlan().getName();
+	}
 
-        List admitedSituations = new ArrayList();
-        admitedSituations.add(new SituationName(SituationName.ADMITIDO));
-        admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_CURRICULAR));
-        admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_FINALIST));
-        admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_OTHER));
+	List candidateList = null;
 
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	List admitedSituations = new ArrayList();
+	admitedSituations.add(new SituationName(SituationName.ADMITIDO));
+	admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_CURRICULAR));
+	admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_FINALIST));
+	admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_OTHER));
 
-        Object args1[] = { executionDegreeID, admitedSituations };
+	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
-        try {
-            candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(
-                    "ReadCandidatesForSelection", args1);
-        } catch (NonExistingServiceException e) {
-            errors.add("nonExisting", new ActionError(
-                    "error.masterDegree.administrativeOffice.nonExistingAdmitedCandidates"));
-            saveErrors(request, errors);
-            // return mapping.getInputForward();
+	Object args1[] = { executionDegreeID, admitedSituations };
 
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e);
-        }
+	try {
+	    candidateList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadCandidatesForSelection", args1);
+	} catch (NonExistingServiceException e) {
+	    errors.add("nonExisting", new ActionError("error.masterDegree.administrativeOffice.nonExistingAdmitedCandidates"));
+	    saveErrors(request, errors);
+	    // return mapping.getInputForward();
 
-        if (!errors.isEmpty()) {
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        }
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException(e);
+	}
 
-        BeanComparator nameComparator = new BeanComparator("infoPerson.nome");
-        Collections.sort(candidateList, nameComparator);
+	if (!errors.isEmpty()) {
+	    saveErrors(request, errors);
+	    return mapping.getInputForward();
+	}
 
-        request.setAttribute("executionYear", executionYear);
-        request.setAttribute("degree", degree);
-        request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegreeID));
-        request.setAttribute("candidateList", candidateList);
+	BeanComparator nameComparator = new BeanComparator("infoPerson.nome");
+	Collections.sort(candidateList, nameComparator);
 
-        return mapping.findForward("PrepareSuccess");
+	request.setAttribute("executionYear", executionYear);
+	request.setAttribute("degree", degree);
+	request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegreeID));
+	request.setAttribute("candidateList", candidateList);
+
+	return mapping.findForward("PrepareSuccess");
     }
 
     /**
@@ -129,48 +125,46 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
      * @return
      * @throws Exception
      */
-    public ActionForward prepareSecondChooseMasterDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareSecondChooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        DynaActionForm chooseSecondMasterDegreeForm = (DynaActionForm) form;
+	DynaActionForm chooseSecondMasterDegreeForm = (DynaActionForm) form;
 
-        String executionYear = getFromRequest("executionYear", request);
+	String executionYear = getFromRequest("executionYear", request);
 
-        String candidateID = getFromRequest("candidateID", request);
-        chooseSecondMasterDegreeForm.set("candidateID", Integer.valueOf(candidateID));
-        chooseSecondMasterDegreeForm.set("masterDegree", null);
+	String candidateID = getFromRequest("candidateID", request);
+	chooseSecondMasterDegreeForm.set("candidateID", Integer.valueOf(candidateID));
+	chooseSecondMasterDegreeForm.set("masterDegree", null);
 
-        request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-        request.setAttribute("executionYear", executionYear);
+	request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
+	request.setAttribute("executionYear", executionYear);
 
-        // Get the Master Degree List
-        Object args[] = { executionYear };
-        IUserView userView = getUserView(request);
-        List masterDegreeList = null;
-        try {
+	// Get the Master Degree List
+	Object args[] = { executionYear };
+	IUserView userView = getUserView(request);
+	List masterDegreeList = null;
+	try {
 
-            masterDegreeList = (ArrayList) ServiceManagerServiceFactory.executeService(
-                    "ReadMasterDegrees", args);
-        } catch (NonExistingServiceException e) {
-            ActionErrors errors = new ActionErrors();
-            errors.add("nonExisting", new ActionError("message.masterDegree.notfound.degrees",
-                    executionYear));
-            saveErrors(request, errors);
-            return mapping.getInputForward();
+	    masterDegreeList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadMasterDegrees", args);
+	} catch (NonExistingServiceException e) {
+	    ActionErrors errors = new ActionErrors();
+	    errors.add("nonExisting", new ActionError("message.masterDegree.notfound.degrees", executionYear));
+	    saveErrors(request, errors);
+	    return mapping.getInputForward();
 
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e);
-        }
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException(e);
+	}
 
-        // Collections.sort(
-        // masterDegreeList,
-        // new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
-        Collections.sort(masterDegreeList, new ComparatorByNameForInfoExecutionDegree());
-        List newDegreeList = masterDegreeList;
-        List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
-        request.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
+	// Collections.sort(
+	// masterDegreeList,
+	// new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+	Collections.sort(masterDegreeList, new ComparatorByNameForInfoExecutionDegree());
+	List newDegreeList = masterDegreeList;
+	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
+	request.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
 
-        return mapping.findForward("PrepareSecondChooseMasterDegreeReady");
+	return mapping.findForward("PrepareSecondChooseMasterDegreeReady");
     }
 
     /**
@@ -181,21 +175,21 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
      * @return
      * @throws Exception
      */
-    public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        DynaActionForm chooseMDForm = (DynaActionForm) form;
+	DynaActionForm chooseMDForm = (DynaActionForm) form;
 
-        request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-        request.setAttribute("executionYear", getFromRequest("executionYear", request));
-        request.setAttribute("candidateID", chooseMDForm.get("candidateID"));
-        request.setAttribute("degreeCurricularPlanID", chooseMDForm.get("degreeCurricularPlanID"));
+	request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
+	request.setAttribute("executionYear", getFromRequest("executionYear", request));
+	request.setAttribute("candidateID", chooseMDForm.get("candidateID"));
+	request.setAttribute("degreeCurricularPlanID", chooseMDForm.get("degreeCurricularPlanID"));
 
-        String degree = (String) chooseMDForm.get("masterDegree");
+	String degree = (String) chooseMDForm.get("masterDegree");
 
-        request.setAttribute("degree", degree);
+	request.setAttribute("degree", degree);
 
-        return mapping.findForward("ChooseSuccess");
+	return mapping.findForward("ChooseSuccess");
     }
 
     /**
@@ -206,159 +200,154 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
      * @return
      * @throws Exception
      */
-    public ActionForward prepareSelectCourseList(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareSelectCourseList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
+	HttpSession session = request.getSession();
 
-        DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
+	DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
-        String executionYear = getFromRequest("executionYear", request);
-        Integer degreeCurricularPlanID = null;
-        if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
+	String executionYear = getFromRequest("executionYear", request);
+	Integer degreeCurricularPlanID = null;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
 
-        String degree = getFromRequest("degree", request);
-        String candidateID = getFromRequest("candidateID", request);
+	String degree = getFromRequest("degree", request);
+	String candidateID = getFromRequest("candidateID", request);
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
-        if (((degree == null) || (degree.length() == 0)) && infoExecutionDegree != null) {
-            degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
-        }
+	if (((degree == null) || (degree.length() == 0)) && infoExecutionDegree != null) {
+	    degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
+	}
 
-        if (((executionYear == null) || (executionYear.length() == 0)) && infoExecutionDegree != null) {
-            executionYear = infoExecutionDegree.getInfoExecutionYear().getYear();
-        }
-        request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-        request.setAttribute("executionYear", executionYear);
-        request.setAttribute("degree", degree);
-        // Get the Curricular Course List
+	if (((executionYear == null) || (executionYear.length() == 0)) && infoExecutionDegree != null) {
+	    executionYear = infoExecutionDegree.getInfoExecutionYear().getYear();
+	}
+	request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
+	request.setAttribute("executionYear", executionYear);
+	request.setAttribute("degree", degree);
+	// Get the Curricular Course List
 
-        IUserView userView = getUserView(request);
-        List curricularCourseList = null;
-        try {
+	IUserView userView = getUserView(request);
+	List curricularCourseList = null;
+	try {
 
-            Object args[] = { degreeCurricularPlanID };
-            curricularCourseList = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadCurricularCoursesByDegree", args);
+	    Object args[] = { degreeCurricularPlanID };
+	    curricularCourseList = (List) ServiceManagerServiceFactory.executeService("ReadCurricularCoursesByDegree", args);
 
-        }
+	}
 
-        catch (NonExistingServiceException e) {
-            ActionErrors errors = new ActionErrors();
-            errors.add("nonExisting", new ActionError("message.public.notfound.curricularCourses"));
-            saveErrors(request, errors);
-            return mapping.getInputForward();
+	catch (NonExistingServiceException e) {
+	    ActionErrors errors = new ActionErrors();
+	    errors.add("nonExisting", new ActionError("message.public.notfound.curricularCourses"));
+	    saveErrors(request, errors);
+	    return mapping.getInputForward();
 
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e);
-        }
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException(e);
+	}
 
-        List candidateEnrolments = null;
+	List candidateEnrolments = null;
 
-        try {
-            Object args[] = { new Integer(candidateID) };
-            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadCandidateEnrolmentsByCandidateID", args);
+	try {
+	    Object args[] = { new Integer(candidateID) };
+	    candidateEnrolments = (List) ServiceManagerServiceFactory
+		    .executeService("ReadCandidateEnrolmentsByCandidateID", args);
 
-        } catch (NotAuthorizedException e) {
-            throw new NotAuthorizedActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	} catch (NotAuthorizedException e) {
+	    throw new NotAuthorizedActionException(e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        initForm(request, chooseCurricularCoursesForm, candidateID, curricularCourseList,
-                candidateEnrolments);
+	initForm(request, chooseCurricularCoursesForm, candidateID, curricularCourseList, candidateEnrolments);
 
-        // orderCourseList(curricularCourseList);
+	// orderCourseList(curricularCourseList);
 
-        orderCandidateEnrolments(candidateEnrolments);
+	orderCandidateEnrolments(candidateEnrolments);
 
-        request.setAttribute("curricularCourses", curricularCourseList);
+	request.setAttribute("curricularCourses", curricularCourseList);
 
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
-        try {
-            Object args[] = { new Integer(candidateID) };
-            infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService( "GetCandidatesByID", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        request.setAttribute("candidate", infoMasterDegreeCandidate);
+	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+	try {
+	    Object args[] = { new Integer(candidateID) };
+	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
+		    "GetCandidatesByID", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	request.setAttribute("candidate", infoMasterDegreeCandidate);
 
-        if (infoExecutionDegree == null) {
-            try {
-                Object args[] = { new Integer(candidateID) };
-                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadExecutionDegreeByCandidateID", args);
-            } catch (NotAuthorizedException e) {
-                throw new NotAuthorizedActionException(e);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-        }
-        request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+	if (infoExecutionDegree == null) {
+	    try {
+		Object args[] = { new Integer(candidateID) };
+		infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
+			"ReadExecutionDegreeByCandidateID", args);
+	    } catch (NotAuthorizedException e) {
+		throw new NotAuthorizedActionException(e);
+	    } catch (FenixServiceException e) {
+		throw new FenixActionException(e);
+	    }
+	}
+	request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 
-        //
-        // generateToken(request);
-        // saveToken(request);
+	//
+	// generateToken(request);
+	// saveToken(request);
 
-        return mapping.findForward("PrepareSuccess");
+	return mapping.findForward("PrepareSuccess");
     }
 
     private void orderCandidateEnrolments(List candidateEnrolments) {
-        BeanComparator nameCourse = new BeanComparator("infoCurricularCourse.name");
-        Collections.sort(candidateEnrolments, nameCourse);
+	BeanComparator nameCourse = new BeanComparator("infoCurricularCourse.name");
+	Collections.sort(candidateEnrolments, nameCourse);
     }
 
-    private void initForm(HttpServletRequest request, DynaActionForm chooseCurricularCoursesForm,
-            String candidateID, List curricularCourseList, List candidateEnrolments) {
-        Integer selection[] = new Integer[curricularCourseList.size() + candidateEnrolments.size()];
-        InfoCandidateEnrolment infoCandidateEnrolment = null;
+    private void initForm(HttpServletRequest request, DynaActionForm chooseCurricularCoursesForm, String candidateID,
+	    List curricularCourseList, List candidateEnrolments) {
+	Integer selection[] = new Integer[curricularCourseList.size() + candidateEnrolments.size()];
+	InfoCandidateEnrolment infoCandidateEnrolment = null;
 
-        if ((candidateEnrolments != null) && (candidateEnrolments.size() != 0)) {
-            infoCandidateEnrolment = (InfoCandidateEnrolment) candidateEnrolments.get(0);
+	if ((candidateEnrolments != null) && (candidateEnrolments.size() != 0)) {
+	    infoCandidateEnrolment = (InfoCandidateEnrolment) candidateEnrolments.get(0);
 
-            if ((infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCredits() == null)
-                    || (infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCredits()
-                            .equals(new Double(0)))) {
-                chooseCurricularCoursesForm.set("attributedCredits", null);
-            } else {
-                chooseCurricularCoursesForm.set("attributedCredits", infoCandidateEnrolment
-                        .getInfoMasterDegreeCandidate().getGivenCredits().toString());
-            }
+	    if ((infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCredits() == null)
+		    || (infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCredits().equals(new Double(0)))) {
+		chooseCurricularCoursesForm.set("attributedCredits", null);
+	    } else {
+		chooseCurricularCoursesForm.set("attributedCredits", infoCandidateEnrolment.getInfoMasterDegreeCandidate()
+			.getGivenCredits().toString());
+	    }
 
-            if ((infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCreditsRemarks() == null)
-                    || (infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCreditsRemarks()
-                            .length() == 0)) {
-                chooseCurricularCoursesForm.set("givenCreditsRemarks", null);
-            } else {
-                chooseCurricularCoursesForm.set("givenCreditsRemarks", infoCandidateEnrolment
-                        .getInfoMasterDegreeCandidate().getGivenCreditsRemarks());
-            }
+	    if ((infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCreditsRemarks() == null)
+		    || (infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCreditsRemarks().length() == 0)) {
+		chooseCurricularCoursesForm.set("givenCreditsRemarks", null);
+	    } else {
+		chooseCurricularCoursesForm.set("givenCreditsRemarks", infoCandidateEnrolment.getInfoMasterDegreeCandidate()
+			.getGivenCreditsRemarks());
+	    }
 
-            for (int i = 0; i < selection.length; i++) {
-                if (i < candidateEnrolments.size()) {
-                    selection[i] = ((InfoCandidateEnrolment) candidateEnrolments.get(i))
-                    // .getInfoCurricularCourseScope()
-                            .getInfoCurricularCourse().getIdInternal();
-                } else {
-                    selection[i] = null;
-                }
-            }
-            request.setAttribute("candidateEnrolments", candidateEnrolments);
-        } else if ((candidateEnrolments == null) || (candidateEnrolments.size() == 0)) {
-            candidateEnrolments = new ArrayList();
-            chooseCurricularCoursesForm.set("givenCreditsRemarks", null);
-            chooseCurricularCoursesForm.set("attributedCredits", null);
-        }
+	    for (int i = 0; i < selection.length; i++) {
+		if (i < candidateEnrolments.size()) {
+		    selection[i] = ((InfoCandidateEnrolment) candidateEnrolments.get(i))
+		    // .getInfoCurricularCourseScope()
+			    .getInfoCurricularCourse().getIdInternal();
+		} else {
+		    selection[i] = null;
+		}
+	    }
+	    request.setAttribute("candidateEnrolments", candidateEnrolments);
+	} else if ((candidateEnrolments == null) || (candidateEnrolments.size() == 0)) {
+	    candidateEnrolments = new ArrayList();
+	    chooseCurricularCoursesForm.set("givenCreditsRemarks", null);
+	    chooseCurricularCoursesForm.set("attributedCredits", null);
+	}
 
-        chooseCurricularCoursesForm.set("candidateID", Integer.valueOf(candidateID));
-        chooseCurricularCoursesForm.set("selection", selection);
+	chooseCurricularCoursesForm.set("candidateID", Integer.valueOf(candidateID));
+	chooseCurricularCoursesForm.set("selection", selection);
     }
 
     // /**
@@ -390,96 +379,95 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
      * @throws Exception
      */
 
-    public ActionForward chooseCurricularCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
+	DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
-        Integer[] selection = (Integer[]) chooseCurricularCoursesForm.get("selection");
-        Integer degreeCurricularPlanID = (Integer) chooseCurricularCoursesForm
-                .get("degreeCurricularPlanID");
+	Integer[] selection = (Integer[]) chooseCurricularCoursesForm.get("selection");
+	Integer degreeCurricularPlanID = (Integer) chooseCurricularCoursesForm.get("degreeCurricularPlanID");
 
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
-        if (!validChoice(selection)) {
-            throw new NoChoiceMadeActionException(null);
-        }
+	if (!validChoice(selection)) {
+	    throw new NoChoiceMadeActionException(null);
+	}
 
-        Integer candidateID = (Integer) chooseCurricularCoursesForm.get("candidateID");
+	Integer candidateID = (Integer) chooseCurricularCoursesForm.get("candidateID");
 
-        String attributedCreditsString = (String) chooseCurricularCoursesForm.get("attributedCredits");
+	String attributedCreditsString = (String) chooseCurricularCoursesForm.get("attributedCredits");
 
-        Double attributedCredits = null;
-        if ((attributedCreditsString == null) || (attributedCreditsString.length() == 0)) {
-            attributedCredits = new Double(0);
-        } else {
-            attributedCredits = Double.valueOf(attributedCreditsString);
-        }
+	Double attributedCredits = null;
+	if ((attributedCreditsString == null) || (attributedCreditsString.length() == 0)) {
+	    attributedCredits = new Double(0);
+	} else {
+	    attributedCredits = Double.valueOf(attributedCreditsString);
+	}
 
-        String givenCreditsRemarks = (String) chooseCurricularCoursesForm.get("givenCreditsRemarks");
-        
-        Set<Integer> selectedCurricularCourses = convertIntegerArrayToSet(selection);
+	String givenCreditsRemarks = (String) chooseCurricularCoursesForm.get("givenCreditsRemarks");
 
-        try {
+	Set<Integer> selectedCurricularCourses = convertIntegerArrayToSet(selection);
 
-            Object args[] = { selectedCurricularCourses, candidateID, attributedCredits, givenCreditsRemarks };
-            ServiceManagerServiceFactory.executeService( "WriteCandidateEnrolments", args);
-        } catch (NotAuthorizedException e) {
-            throw new NotAuthorizedActionException(e);
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(e);
-        }
+	try {
 
-        List candidateEnrolments = null;
+	    Object args[] = { selectedCurricularCourses, candidateID, attributedCredits, givenCreditsRemarks };
+	    ServiceManagerServiceFactory.executeService("WriteCandidateEnrolments", args);
+	} catch (NotAuthorizedException e) {
+	    throw new NotAuthorizedActionException(e);
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException(e);
+	}
 
-        try {
-            Object args[] = { candidateID };
-            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadCandidateEnrolmentsByCandidateID", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	List candidateEnrolments = null;
 
-        Iterator coursesIter = candidateEnrolments.iterator();
-        float credits = attributedCredits.floatValue();
+	try {
+	    Object args[] = { candidateID };
+	    candidateEnrolments = (List) ServiceManagerServiceFactory
+		    .executeService("ReadCandidateEnrolmentsByCandidateID", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        while (coursesIter.hasNext()) {
-            InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) coursesIter.next();
+	Iterator coursesIter = candidateEnrolments.iterator();
+	float credits = attributedCredits.floatValue();
 
-            credits += infoCandidateEnrolment.getInfoCurricularCourse().getCredits().floatValue();
-        }
+	while (coursesIter.hasNext()) {
+	    InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) coursesIter.next();
 
-        request.setAttribute("givenCredits", new Double(credits));
+	    credits += infoCandidateEnrolment.getInfoCurricularCourse().getCredits().floatValue();
+	}
 
-        if ((candidateEnrolments != null) && (candidateEnrolments.size() != 0)) {
-            orderCandidateEnrolments(candidateEnrolments);
-            request.setAttribute("candidateEnrolments", candidateEnrolments);
-        }
+	request.setAttribute("givenCredits", new Double(credits));
 
-        InfoExecutionDegree infoExecutionDegree = null;
+	if ((candidateEnrolments != null) && (candidateEnrolments.size() != 0)) {
+	    orderCandidateEnrolments(candidateEnrolments);
+	    request.setAttribute("candidateEnrolments", candidateEnrolments);
+	}
 
-        try {
-            Object args[] = { candidateID };
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadExecutionDegreeByCandidateID", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	InfoExecutionDegree infoExecutionDegree = null;
 
-        request.setAttribute("executionDegree", infoExecutionDegree);
-        request.setAttribute("candidateID", candidateID);
+	try {
+	    Object args[] = { candidateID };
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
+		    "ReadExecutionDegreeByCandidateID", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        return mapping.findForward("ChooseSuccess");
+	request.setAttribute("executionDegree", infoExecutionDegree);
+	request.setAttribute("candidateID", candidateID);
+
+	return mapping.findForward("ChooseSuccess");
     }
 
     private Set<Integer> convertIntegerArrayToSet(Integer[] values) {
-        Set<Integer> selectedCurricularCourses = new HashSet<Integer>();
-        for (int i = 0; i < values.length; i++) {
-            selectedCurricularCourses.add(values[i]);
-        }
-        return selectedCurricularCourses;
+	Set<Integer> selectedCurricularCourses = new HashSet<Integer>();
+	for (int i = 0; i < values.length; i++) {
+	    selectedCurricularCourses.add(values[i]);
+	}
+	return selectedCurricularCourses;
     }
 
     /**
@@ -488,115 +476,112 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
      */
     private boolean validChoice(Integer[] selection) {
 
-        if ((selection != null) && (selection.length == 0) || (selection[0] == null)) {
-            return false;
-        }
+	if ((selection != null) && (selection.length == 0) || (selection[0] == null)) {
+	    return false;
+	}
 
-        for (int i = 0; i < selection.length; i++) {
-            if (selection[i] == null) {
-                return false;
-            }
-        }
-        return true;
+	for (int i = 0; i < selection.length; i++) {
+	    if (selection[i] == null) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
+	String parameterString = request.getParameter(parameter);
+	if (parameterString == null) {
+	    parameterString = (String) request.getAttribute(parameter);
+	}
+	return parameterString;
     }
 
-    public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        HttpSession session = request.getSession(false);
-        IUserView userView = getUserView(request);
+	HttpSession session = request.getSession(false);
+	IUserView userView = getUserView(request);
 
-        Integer candidateID = new Integer(request.getParameter("candidateID"));
+	Integer candidateID = new Integer(request.getParameter("candidateID"));
 
-        List candidateEnrolments = null;
-        try {
-            Object args[] = { candidateID };
-            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadCandidateEnrolmentsByCandidateID", args);
-        } catch (NonExistingServiceException e) {
+	List candidateEnrolments = null;
+	try {
+	    Object args[] = { candidateID };
+	    candidateEnrolments = (List) ServiceManagerServiceFactory
+		    .executeService("ReadCandidateEnrolmentsByCandidateID", args);
+	} catch (NonExistingServiceException e) {
 
-        }
+	}
 
-        orderCandidateEnrolments(candidateEnrolments);
+	orderCandidateEnrolments(candidateEnrolments);
 
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
-        try {
-            Object args[] = { candidateID };
-            infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService( "GetCandidatesByID", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+	try {
+	    Object args[] = { candidateID };
+	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
+		    "GetCandidatesByID", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("infoMasterDegreeCandidate", infoMasterDegreeCandidate);
+	request.setAttribute("infoMasterDegreeCandidate", infoMasterDegreeCandidate);
 
-        Iterator coursesIter = candidateEnrolments.iterator();
-        float credits = infoMasterDegreeCandidate.getGivenCredits().floatValue();
+	Iterator coursesIter = candidateEnrolments.iterator();
+	float credits = infoMasterDegreeCandidate.getGivenCredits().floatValue();
 
-        while (coursesIter.hasNext()) {
-            InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) coursesIter.next();
-            credits += infoCandidateEnrolment.getInfoCurricularCourse().getCredits().floatValue();
-        }
+	while (coursesIter.hasNext()) {
+	    InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) coursesIter.next();
+	    credits += infoCandidateEnrolment.getInfoCurricularCourse().getCredits().floatValue();
+	}
 
-        request.setAttribute("totalCredits", new Double(credits));
+	request.setAttribute("totalCredits", new Double(credits));
 
-        if ((candidateEnrolments != null) && (candidateEnrolments.size() != 0)) {
-            request.setAttribute("candidateEnrolments", candidateEnrolments);
-        }
+	if ((candidateEnrolments != null) && (candidateEnrolments.size() != 0)) {
+	    request.setAttribute("candidateEnrolments", candidateEnrolments);
+	}
 
-        InfoExecutionDegree infoExecutionDegree = null;
-        try {
-            Object args[] = { candidateID };
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadExecutionDegreeByCandidateID", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	InfoExecutionDegree infoExecutionDegree = null;
+	try {
+	    Object args[] = { candidateID };
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
+		    "ReadExecutionDegreeByCandidateID", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+	request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 
-        return mapping.findForward("PrintReady");
+	return mapping.findForward("PrintReady");
     }
 
     private List buildExecutionDegreeLabelValueBean(List executionDegreeList) {
-        List executionDegreeLabels = new ArrayList();
-        Iterator iterator = executionDegreeList.iterator();
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+	List executionDegreeLabels = new ArrayList();
+	Iterator iterator = executionDegreeList.iterator();
+	while (iterator.hasNext()) {
+	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                    .toString()
-                    + " em " + name;
+	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
 
-            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
+		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree
-                    .getInfoDegreeCurricularPlan().getName()));
-        }
-        return executionDegreeLabels;
+	    executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getName()));
+	}
+	return executionDegreeLabels;
     }
 
     private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        Iterator iterator = executionDegreeList.iterator();
+	InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+	Iterator iterator = executionDegreeList.iterator();
 
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
-                return true;
+	while (iterator.hasNext()) {
+	    InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+	    if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+		    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
+		return true;
 
-        }
-        return false;
+	}
+	return false;
     }
 }

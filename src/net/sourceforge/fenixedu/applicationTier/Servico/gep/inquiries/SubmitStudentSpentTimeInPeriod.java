@@ -19,7 +19,8 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class SubmitStudentSpentTimeInPeriod extends Service {
 
-    public void run(Student student, List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours, ExecutionSemester executionSemester) {
+    public void run(Student student, List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
+	    ExecutionSemester executionSemester) {
 
 	if (!checkTotalPercentageDistribution(courses)) {
 	    throw new DomainException("error.weeklyHoursSpentPercentage.is.not.100.percent");
@@ -29,7 +30,8 @@ public class SubmitStudentSpentTimeInPeriod extends Service {
 	    throw new DomainException("error.studyDaysSpentInExamsSeason.exceedsMaxDaysLimit");
 	}
 
-	InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = student.getInquiriesStudentExecutionPeriod(executionSemester);
+	InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = student
+		.getInquiriesStudentExecutionPeriod(executionSemester);
 	if (inquiriesStudentExecutionPeriod == null) {
 	    inquiriesStudentExecutionPeriod = new InquiriesStudentExecutionPeriod(student, executionSemester);
 	}
@@ -52,7 +54,7 @@ public class SubmitStudentSpentTimeInPeriod extends Service {
 
 	return totalPercentage == 100;
     }
-    
+
     private boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
 	double totalDays = 0;
 	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {

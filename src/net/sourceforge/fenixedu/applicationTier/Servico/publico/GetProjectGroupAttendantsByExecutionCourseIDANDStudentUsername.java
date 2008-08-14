@@ -20,39 +20,38 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 10/Set/2003, 20:47:24
+ *         Created at 10/Set/2003, 20:47:24
  * 
  */
 public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername extends Service {
 
-    public StudentGroupAttendacyInformation run(Integer executionCourseID, String username)
-            throws BDException{
-        
-        Registration registration = Registration.readByUsername(username);
+    public StudentGroupAttendacyInformation run(Integer executionCourseID, String username) throws BDException {
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	Registration registration = Registration.readByUsername(username);
 
-        Attends attendacy = registration.readAttendByExecutionCourse(executionCourse);
-        if (attendacy == null)
-            return null; // the student is not enrolled on this course
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-        List<StudentGroup> attendStudentGroup = attendacy.getStudentGroups();
-        StudentGroup studentGroup = (attendStudentGroup.isEmpty()) ? null : attendStudentGroup.get(0);
+	Attends attendacy = registration.readAttendByExecutionCourse(executionCourse);
+	if (attendacy == null)
+	    return null; // the student is not enrolled on this course
 
-        if (studentGroup == null)
-            return null; // the student has not a group, at least at this
-                            // course
+	List<StudentGroup> attendStudentGroup = attendacy.getStudentGroups();
+	StudentGroup studentGroup = (attendStudentGroup.isEmpty()) ? null : attendStudentGroup.get(0);
 
-        StudentGroupAttendacyInformation info = new StudentGroupAttendacyInformation();
-        info.setShiftName(studentGroup.getShift().getNome());
-        List lessons = studentGroup.getShift().getAssociatedLessons();
-        info.setDegreesNames(executionCourse.getAssociatedCurricularCourses());
-        info.setLessons(lessons);
-        info.setGroupNumber(studentGroup.getGroupNumber());
+	if (studentGroup == null)
+	    return null; // the student has not a group, at least at this
+	// course
 
-        List groupAttends = studentGroup.getAttends();
-        info.setGroupAttends(groupAttends);
+	StudentGroupAttendacyInformation info = new StudentGroupAttendacyInformation();
+	info.setShiftName(studentGroup.getShift().getNome());
+	List lessons = studentGroup.getShift().getAssociatedLessons();
+	info.setDegreesNames(executionCourse.getAssociatedCurricularCourses());
+	info.setLessons(lessons);
+	info.setGroupNumber(studentGroup.getGroupNumber());
 
-        return info;
+	List groupAttends = studentGroup.getAttends();
+	info.setGroupAttends(groupAttends);
+
+	return info;
     }
 }

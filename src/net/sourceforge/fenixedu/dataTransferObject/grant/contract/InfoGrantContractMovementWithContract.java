@@ -13,20 +13,19 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 public class InfoGrantContractMovementWithContract extends InfoGrantContractMovement {
 
     public void copyFromDomain(GrantContractMovement grantMovement) {
-        super.copyFromDomain(grantMovement);
-        if (grantMovement != null) {
-            setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
-                    .newInfoFromDomain(grantMovement.getGrantContract()));
-        }
+	super.copyFromDomain(grantMovement);
+	if (grantMovement != null) {
+	    setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantMovement.getGrantContract()));
+	}
     }
 
     public static InfoGrantContractMovement newInfoFromDomain(GrantContractMovement grantMovement) {
-        InfoGrantContractMovementWithContract infoGrantContractMovementWithContract = null;
-        if (grantMovement != null) {
-            infoGrantContractMovementWithContract = new InfoGrantContractMovementWithContract();
-            infoGrantContractMovementWithContract.copyFromDomain(grantMovement);
-        }
-        return infoGrantContractMovementWithContract;
+	InfoGrantContractMovementWithContract infoGrantContractMovementWithContract = null;
+	if (grantMovement != null) {
+	    infoGrantContractMovementWithContract = new InfoGrantContractMovementWithContract();
+	    infoGrantContractMovementWithContract.copyFromDomain(grantMovement);
+	}
+	return infoGrantContractMovementWithContract;
     }
 
 }

@@ -29,8 +29,7 @@ public class PaymentCodeGenerator {
 
     public static boolean canGenerateNewCode(final PaymentCodeType paymentCodeType, final Student student) {
 	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType, student);
-	return (lastPaymentCode == null) ? true
-		: (getSignificantNumberForCodeGeneration(lastPaymentCode) + 1 <= 99);
+	return (lastPaymentCode == null) ? true : (getSignificantNumberForCodeGeneration(lastPaymentCode) + 1 <= 99);
     }
 
     public static String generateNewCodeFor(final PaymentCodeType paymentCodeType, final Student student) {
@@ -42,12 +41,10 @@ public class PaymentCodeGenerator {
 
     private static PaymentCode findLastPaymentCode(final PaymentCodeType paymentCodeType, Student student) {
 	final List<PaymentCode> paymentCodes = student.getPaymentCodesBy(paymentCodeType);
-	return paymentCodes.isEmpty() ? null : Collections.max(paymentCodes,
-		PaymentCode.COMPARATOR_BY_CODE);
+	return paymentCodes.isEmpty() ? null : Collections.max(paymentCodes, PaymentCode.COMPARATOR_BY_CODE);
     }
 
-    private static String generateFirstCodeForType(final PaymentCodeType paymentCodeType,
-	    final Student student) {
+    private static String generateFirstCodeForType(final PaymentCodeType paymentCodeType, final Student student) {
 	return generateFinalCode(paymentCodeType, student, 0);
     }
 
@@ -57,17 +54,15 @@ public class PaymentCodeGenerator {
     }
 
     private static int getSignificantNumberForCodeGeneration(final PaymentCode lastPaymentCode) {
-	return Integer.valueOf(lastPaymentCode.getCode().substring(
-		lastPaymentCode.getCode().length() - 2));
+	return Integer.valueOf(lastPaymentCode.getCode().substring(lastPaymentCode.getCode().length() - 2));
     }
 
-    private static String generateNewCodeBasedOnSignificantNumber(final PaymentCodeType paymentCodeType,
-	    final Student student, int number) {
+    private static String generateNewCodeBasedOnSignificantNumber(final PaymentCodeType paymentCodeType, final Student student,
+	    int number) {
 	return generateFinalCode(paymentCodeType, student, number + 1);
     }
 
-    private static String generateFinalCode(final PaymentCodeType paymentCodeType,
-	    final Student student, int digits) {
+    private static String generateFinalCode(final PaymentCodeType paymentCodeType, final Student student, int digits) {
 	final String finalCode = getCodePrefix(paymentCodeType, student)
 		+ StringUtils.leftPad(String.valueOf(digits), CONTROL_DIGITS_LENGTH, CODE_FILLER);
 

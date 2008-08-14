@@ -17,17 +17,17 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class CreateSitesAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        final IUserView userView = UserView.getUser();
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
+	final IUserView userView = UserView.getUser();
 
-        final Integer executionCourseId = Integer.valueOf((request.getParameter("executionPeriodID")));
-        final Integer numberCreatedSites = (Integer) ServiceManagerServiceFactory.executeService(
-                userView, "CreateSites", new Object[] { executionCourseId });
+	final Integer executionCourseId = Integer.valueOf((request.getParameter("executionPeriodID")));
+	final Integer numberCreatedSites = (Integer) ServiceManagerServiceFactory.executeService(userView, "CreateSites",
+		new Object[] { executionCourseId });
 
-        request.setAttribute("numberCreatedSites", numberCreatedSites);
+	request.setAttribute("numberCreatedSites", numberCreatedSites);
 
-        return mapping.findForward("ShowCreatedSites");
+	return mapping.findForward("ShowCreatedSites");
     }
 
 }

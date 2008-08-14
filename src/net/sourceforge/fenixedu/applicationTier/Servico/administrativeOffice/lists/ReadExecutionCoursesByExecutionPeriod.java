@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionCoursesByExecutionPeriod extends Service {
 
-    public List run(Integer executionPeriodId) throws FenixServiceException{
+    public List run(Integer executionPeriodId) throws FenixServiceException {
 	List allExecutionCoursesFromExecutionPeriod = null;
 	List<InfoExecutionCourse> allExecutionCourses = null;
 

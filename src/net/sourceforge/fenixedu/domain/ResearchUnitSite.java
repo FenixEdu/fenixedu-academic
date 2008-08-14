@@ -19,23 +19,21 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 	super();
     }
 
-	public ResearchUnitSite(ResearchUnit unit) {
-		this();
-		if (unit.hasSite()) {
-			throw new DomainException("site.department.unit.already.has.site");
-		}
-		if (StringUtils.isEmpty(unit.getAcronym())) {
-			throw new DomainException("unit.acronym.cannot.be.null");
-		}
-		this.setUnit(unit);
+    public ResearchUnitSite(ResearchUnit unit) {
+	this();
+	if (unit.hasSite()) {
+	    throw new DomainException("site.department.unit.already.has.site");
+	}
 	if (StringUtils.isEmpty(unit.getAcronym())) {
 	    throw new DomainException("unit.acronym.cannot.be.null");
 	}
 	this.setUnit(unit);
-	new Section(this, new MultiLanguageString().new I18N().add("pt", "Lateral").add("en", "Side")
-		.finish());
-	new Section(this, new MultiLanguageString().new I18N().add("pt", "Topo").add("en", "Top")
-		.finish());
+	if (StringUtils.isEmpty(unit.getAcronym())) {
+	    throw new DomainException("unit.acronym.cannot.be.null");
+	}
+	this.setUnit(unit);
+	new Section(this, new MultiLanguageString().new I18N().add("pt", "Lateral").add("en", "Side").finish());
+	new Section(this, new MultiLanguageString().new I18N().add("pt", "Topo").add("en", "Top").finish());
     }
 
     @Override
@@ -54,7 +52,7 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 	List<Unit> units = unit.getParentUnitsPath(false);
 	units.add(unit);
 	StringBuffer buffer = new StringBuffer("");
-	
+
 	for (Unit unitInPath : units) {
 	    if (unitInPath.getType() != PartyTypeEnum.AGGREGATE_UNIT) {
 		if (buffer.length() > 0) {
@@ -63,8 +61,8 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 		buffer.append(unitInPath.getAcronym());
 	    }
 	}
-	
-	return MultiLanguageString.i18n().add("pt",  buffer.toString()).finish();
+
+	return MultiLanguageString.i18n().add("pt", buffer.toString()).finish();
     }
 
     @Override

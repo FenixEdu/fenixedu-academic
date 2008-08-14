@@ -86,8 +86,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 		.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 	if (infoExecutionPeriod == null) {
 	    IUserView userView = UserView.getUser();
-	    infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod",
-		    new Object[0]);
+	    infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod", new Object[0]);
 	    request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 	}
 	return infoExecutionPeriod;
@@ -121,8 +120,8 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	/* Cria o form bean com as licenciaturas em execucao. */
 	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
-		argsLerLicenciaturas);
+	List executionDegreeList = (List) ServiceUtils
+		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
 	List<LabelValueBean> licenciaturas = new ArrayList<LabelValueBean>();
 

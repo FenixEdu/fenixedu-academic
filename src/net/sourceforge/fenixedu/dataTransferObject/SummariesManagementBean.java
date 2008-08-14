@@ -23,11 +23,11 @@ import org.joda.time.YearMonthDay;
 public class SummariesManagementBean implements Serializable {
 
     private DomainReference<ExecutionCourse> executionCourseReference;
-    
+
     private SummaryType summaryType;
 
     private ShiftType lessonType;
-    
+
     private DomainReference<Lesson> lessonReference;
 
     private DomainReference<Shift> shiftReference;
@@ -41,238 +41,232 @@ public class SummariesManagementBean implements Serializable {
     private DomainReference<Teacher> teacherReference;
 
     private String teacherName;
-    
+
     private DomainReference<AllocatableSpace> roomReference;
 
     private Integer studentsNumber;
-    
+
     private MultiLanguageString title;
 
     private MultiLanguageString summaryText;
-    
-    private DomainReference<LessonPlanning> lessonPlannigReference;
-    
-    private DomainReference<Summary> lastSummaryReference;
-    
-    private DomainReference<Summary> summaryReference;
-    
-    private DomainReference<Professorship> professorshipLoggedReference;
-    
-    private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
-    
 
-    protected SummariesManagementBean() {}
-    
-    public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship, List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {        
-        setSummaryType(summaryType);
-        setExecutionCourse(executionCourse);
-        setProfessorship(professorship);                    
-        setProfessorshipLogged(professorship);
-        setNextPossibleSummaryLessonsAndDatesBean(nextPossibleSummaryLessonsAndDatesBean);
+    private DomainReference<LessonPlanning> lessonPlannigReference;
+
+    private DomainReference<Summary> lastSummaryReference;
+
+    private DomainReference<Summary> summaryReference;
+
+    private DomainReference<Professorship> professorshipLoggedReference;
+
+    private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
+
+    protected SummariesManagementBean() {
     }
-    
-    public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, SummaryType summaryType,
-            Professorship professorship, String teacherName, Teacher teacher, Shift shift,
-            Lesson lesson, YearMonthDay summaryDate, AllocatableSpace summaryRoom, Partial summaryTime, Summary summary,
-            Professorship professorshipLogged, ShiftType lessonType) {
-        
-        setTitle(title);
-        setSummaryText(summaryText);
-        setSummaryType(summaryType);
-        setShift(shift);
-        setLesson(lesson);
-        setProfessorship(professorship);
-        setTeacher(teacher);
-        setTeacherName(teacherName);
-        setSummary(summary);
-        setSummaryDate(summaryDate);
-        setSummaryRoom(summaryRoom);  
-        setSummaryTime(summaryTime);
-        setStudentsNumber(studentsNumber);
-        setExecutionCourse(shift.getExecutionCourse());
-        setProfessorshipLogged(professorshipLogged);
-        setLessonType(lessonType);
+
+    public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship,
+	    List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
+	setSummaryType(summaryType);
+	setExecutionCourse(executionCourse);
+	setProfessorship(professorship);
+	setProfessorshipLogged(professorship);
+	setNextPossibleSummaryLessonsAndDatesBean(nextPossibleSummaryLessonsAndDatesBean);
+    }
+
+    public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
+	    SummaryType summaryType, Professorship professorship, String teacherName, Teacher teacher, Shift shift,
+	    Lesson lesson, YearMonthDay summaryDate, AllocatableSpace summaryRoom, Partial summaryTime, Summary summary,
+	    Professorship professorshipLogged, ShiftType lessonType) {
+
+	setTitle(title);
+	setSummaryText(summaryText);
+	setSummaryType(summaryType);
+	setShift(shift);
+	setLesson(lesson);
+	setProfessorship(professorship);
+	setTeacher(teacher);
+	setTeacherName(teacherName);
+	setSummary(summary);
+	setSummaryDate(summaryDate);
+	setSummaryRoom(summaryRoom);
+	setSummaryTime(summaryTime);
+	setStudentsNumber(studentsNumber);
+	setExecutionCourse(shift.getExecutionCourse());
+	setProfessorshipLogged(professorshipLogged);
+	setLessonType(lessonType);
     }
 
     public String getTeacherName() {
-        return teacherName;
+	return teacherName;
     }
 
     public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+	this.teacherName = teacherName;
     }
 
     public Integer getStudentsNumber() {
-        return studentsNumber;
+	return studentsNumber;
     }
 
     public void setStudentsNumber(Integer studentsNumber) {
-        this.studentsNumber = studentsNumber;
+	this.studentsNumber = studentsNumber;
     }
-    
+
     public Summary getSummary() {
-        return (this.summaryReference != null) ? this.summaryReference.getObject() : null;
+	return (this.summaryReference != null) ? this.summaryReference.getObject() : null;
     }
 
     public void setSummary(Summary summary) {
-        this.summaryReference = (summary != null) ? new DomainReference<Summary>(
-                summary) : null;
+	this.summaryReference = (summary != null) ? new DomainReference<Summary>(summary) : null;
     }
 
     public ExecutionCourse getExecutionCourse() {
-        return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
+	return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-        this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(
-                executionCourse) : null;
+	this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
     }
-    
+
     public Teacher getTeacher() {
-        return (this.teacherReference != null) ? this.teacherReference.getObject() : null;
+	return (this.teacherReference != null) ? this.teacherReference.getObject() : null;
     }
 
     public void setTeacher(Teacher teacher) {
-        this.teacherReference = (teacher != null) ? new DomainReference<Teacher>(
-                teacher) : null;
+	this.teacherReference = (teacher != null) ? new DomainReference<Teacher>(teacher) : null;
     }
-    
+
     public Professorship getProfessorshipLogged() {
-        return (this.professorshipLoggedReference != null) ? this.professorshipLoggedReference.getObject() : null;
+	return (this.professorshipLoggedReference != null) ? this.professorshipLoggedReference.getObject() : null;
     }
 
     public void setProfessorshipLogged(Professorship professorship) {
-        this.professorshipLoggedReference = (professorship != null) ? new DomainReference<Professorship>(
-        	professorship) : null;
+	this.professorshipLoggedReference = (professorship != null) ? new DomainReference<Professorship>(professorship) : null;
     }
-    
+
     public Summary getLastSummary() {
-        return (this.lastSummaryReference != null) ? this.lastSummaryReference.getObject() : null;
+	return (this.lastSummaryReference != null) ? this.lastSummaryReference.getObject() : null;
     }
 
     public void setLastSummary(Summary summary) {
-        this.lastSummaryReference = (summary != null) ? new DomainReference<Summary>(
-                summary) : null;
+	this.lastSummaryReference = (summary != null) ? new DomainReference<Summary>(summary) : null;
     }
-    
+
     public LessonPlanning getLessonPlanning() {
-        return (this.lessonPlannigReference != null) ? this.lessonPlannigReference.getObject() : null;
+	return (this.lessonPlannigReference != null) ? this.lessonPlannigReference.getObject() : null;
     }
 
     public void setLessonPlanning(LessonPlanning lessonPlanning) {
-        this.lessonPlannigReference = (lessonPlanning != null) ? new DomainReference<LessonPlanning>(
-                lessonPlanning) : null;
+	this.lessonPlannigReference = (lessonPlanning != null) ? new DomainReference<LessonPlanning>(lessonPlanning) : null;
     }
 
     public Professorship getProfessorship() {
-        return (this.professorshipReference != null) ? this.professorshipReference.getObject() : null;
+	return (this.professorshipReference != null) ? this.professorshipReference.getObject() : null;
     }
 
     public void setProfessorship(Professorship professorship) {
-        this.professorshipReference = (professorship != null) ? new DomainReference<Professorship>(
-                professorship) : null;
+	this.professorshipReference = (professorship != null) ? new DomainReference<Professorship>(professorship) : null;
     }
 
     public Lesson getLesson() {
-        return (this.lessonReference != null) ? this.lessonReference.getObject() : null;
+	return (this.lessonReference != null) ? this.lessonReference.getObject() : null;
     }
 
     public void setLesson(Lesson lesson) {
-        this.lessonReference = (lesson != null) ? new DomainReference<Lesson>(lesson) : null;
+	this.lessonReference = (lesson != null) ? new DomainReference<Lesson>(lesson) : null;
     }
 
     public Shift getShift() {
-        return (this.shiftReference != null) ? this.shiftReference.getObject() : null;
+	return (this.shiftReference != null) ? this.shiftReference.getObject() : null;
     }
 
     public void setShift(Shift shift) {
-        this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
+	this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
     }
 
     public AllocatableSpace getSummaryRoom() {
-        return (this.roomReference != null) ? this.roomReference.getObject() : null;
+	return (this.roomReference != null) ? this.roomReference.getObject() : null;
     }
 
     public void setSummaryRoom(AllocatableSpace room) {
-        this.roomReference = (room != null) ? new DomainReference<AllocatableSpace>(room) : null;
+	this.roomReference = (room != null) ? new DomainReference<AllocatableSpace>(room) : null;
     }
-    
+
     public SummaryType getSummaryType() {
-        return summaryType;
+	return summaryType;
     }
 
     public void setSummaryType(SummaryType summaryType) {
-        this.summaryType = summaryType;
+	this.summaryType = summaryType;
     }
 
     public YearMonthDay getSummaryDate() {
-        return summaryDate;
+	return summaryDate;
     }
 
     public void setSummaryDate(YearMonthDay date) {
-        this.summaryDate = date;
+	this.summaryDate = date;
     }
 
     public MultiLanguageString getSummaryText() {
-        return summaryText;
+	return summaryText;
     }
 
     public void setSummaryText(MultiLanguageString summary) {
-        this.summaryText = summary;
+	this.summaryText = summary;
     }
 
     public MultiLanguageString getTitle() {
-        return title;
+	return title;
     }
 
     public void setTitle(MultiLanguageString title) {
-        this.title = title;
+	this.title = title;
     }
 
     public Partial getSummaryTime() {
-        return summaryTime;
+	return summaryTime;
     }
 
     public void setSummaryTime(Partial hour) {
-        this.summaryTime = hour;
-    }           
-           
+	this.summaryTime = hour;
+    }
+
     public String getTeacherChoose() {
-        if (getProfessorship() != null) {
-           return getProfessorship().getIdInternal().toString();
-        } else if (!StringUtils.isEmpty(getTeacherName())) {
-           return "-1";
-        } else if (getTeacher() != null) {
-           return "0";
-        }  
-        return "";
+	if (getProfessorship() != null) {
+	    return getProfessorship().getIdInternal().toString();
+	} else if (!StringUtils.isEmpty(getTeacherName())) {
+	    return "-1";
+	} else if (getTeacher() != null) {
+	    return "0";
+	}
+	return "";
     }
 
     public static enum SummaryType {
-        NORMAL_SUMMARY, EXTRA_SUMMARY;
-        public String getName() {
-            return name();
-        }
+	NORMAL_SUMMARY, EXTRA_SUMMARY;
+	public String getName() {
+	    return name();
+	}
     }
 
     public boolean isNewSummary() {
-        return getSummary() == null;
+	return getSummary() == null;
     }
 
     public List<NextPossibleSummaryLessonsAndDatesBean> getNextPossibleSummaryLessonsAndDatesBean() {
-        return nextPossibleSummaryLessonsAndDatesBean;
+	return nextPossibleSummaryLessonsAndDatesBean;
     }
 
     public void setNextPossibleSummaryLessonsAndDatesBean(
-    	List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
-        this.nextPossibleSummaryLessonsAndDatesBean = nextPossibleSummaryLessonsAndDatesBean;
+	    List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
+	this.nextPossibleSummaryLessonsAndDatesBean = nextPossibleSummaryLessonsAndDatesBean;
     }
 
     public ShiftType getLessonType() {
-        return lessonType;
+	return lessonType;
     }
 
     public void setLessonType(ShiftType lessonType) {
-        this.lessonType = lessonType;
+	this.lessonType = lessonType;
     }
 }

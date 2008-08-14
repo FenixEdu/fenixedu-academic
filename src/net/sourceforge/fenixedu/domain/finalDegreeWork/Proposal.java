@@ -51,13 +51,11 @@ public class Proposal extends Proposal_Base {
 	if (getStatus() != null && getStatus().equals(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS)) {
 	    return true;
 	}
-	if (getOrientator() != null && getOrientator() != null
-		&& userView != null
+	if (getOrientator() != null && getOrientator() != null && userView != null
 		&& getOrientator().getUsername().equals(userView.getUtilizador())) {
 	    return true;
 	}
-	if (getCoorientator() != null && getCoorientator() != null
-		&& userView != null
+	if (getCoorientator() != null && getCoorientator() != null && userView != null
 		&& getCoorientator().getUsername().equals(userView.getUtilizador())) {
 	    return true;
 	}
@@ -75,7 +73,7 @@ public class Proposal extends Proposal_Base {
 		    final Department department = employee.getCurrentDepartmentWorkingPlace();
 		    final Set<CompetenceCourse> competenceCourses = department.getCompetenceCoursesSet();
 		    if (hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourses)
-		    	|| hasDissertationCompetenceCourseForDepartment(executionDegree, department.getDepartmentUnit())) {
+			    || hasDissertationCompetenceCourseForDepartment(executionDegree, department.getDepartmentUnit())) {
 			return true;
 		    }
 		}
@@ -88,12 +86,12 @@ public class Proposal extends Proposal_Base {
 	    final Set<CompetenceCourse> competenceCourses) {
 	for (final CompetenceCourse competenceCourse : competenceCourses) {
 	    for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
-	        if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
-	            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-	            if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
-	                return true;
-	            }
-	        }
+		if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
+		    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+		    if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
+			return true;
+		    }
+		}
 	    }
 	}
 	return false;

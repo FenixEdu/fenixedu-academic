@@ -21,32 +21,30 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateStudentGroup extends Service {
 
-  
-    private List buildStudentList(List<String> studentUserNames, Grouping grouping)
-            throws FenixServiceException{
-      
-        List studentList = new ArrayList();
-        for (final String studantUserName : studentUserNames) {
-            Attends attend = grouping.getStudentAttend(studantUserName);
-            Registration registration = attend.getRegistration();
-            studentList.add(registration);
-        }
-        return studentList;
+    private List buildStudentList(List<String> studentUserNames, Grouping grouping) throws FenixServiceException {
+
+	List studentList = new ArrayList();
+	for (final String studantUserName : studentUserNames) {
+	    Attends attend = grouping.getStudentAttend(studantUserName);
+	    Registration registration = attend.getRegistration();
+	    studentList.add(registration);
+	}
+	return studentList;
     }
 
-    public boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID,
-            Integer shiftID, List studentUserNames) throws FenixServiceException{
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
-        
-        if (grouping == null)
-            throw new FenixServiceException();
-        
-        Shift shift = rootDomainObject.readShiftByOID(shiftID);
-        
-        List studentList = buildStudentList(studentUserNames, grouping);
-        
-        grouping.createStudentGroup(shift, groupNumber, studentList);
-                
-        return true;
+    public boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID, Integer shiftID, List studentUserNames)
+	    throws FenixServiceException {
+	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+
+	if (grouping == null)
+	    throw new FenixServiceException();
+
+	Shift shift = rootDomainObject.readShiftByOID(shiftID);
+
+	List studentList = buildStudentList(studentUserNames, grouping);
+
+	grouping.createStudentGroup(shift, groupNumber, studentList);
+
+	return true;
     }
 }

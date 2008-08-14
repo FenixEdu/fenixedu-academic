@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class StandByFilledDataCandidacySituation extends StandByFilledDataCandidacySituation_Base {
 
     public StandByFilledDataCandidacySituation(Candidacy candidacy) {
-        this(candidacy, AccessControl.getPerson());
+	this(candidacy, AccessControl.getPerson());
     }
 
     public StandByFilledDataCandidacySituation(Candidacy candidacy, Person person) {
 	super();
-        init(candidacy, person);
+	init(candidacy, person);
     }
 
     @Override
@@ -33,12 +33,12 @@ public class StandByFilledDataCandidacySituation extends StandByFilledDataCandid
     }
 
     public Collection<Operation> getOperationsForPerson(Person person) {
-        // TODO Auto-generated method stub
-        return null;
+	// TODO Auto-generated method stub
+	return null;
     }
 
     @Override
     public boolean canExecuteOperationAutomatically() {
-        return false;
+	return false;
     }
 }

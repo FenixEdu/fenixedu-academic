@@ -13,16 +13,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExportGroupingsByGrouping extends Service {
 
     public List<InfoExportGrouping> run(Integer groupingOID) {
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingOID);
-        final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
+	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingOID);
+	final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
 
-        final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());
-        for (final ExportGrouping exportGrouping : exportGroupings) {
-            final InfoExportGrouping infoExportGrouping = new InfoExportGrouping();
-            infoExportGrouping.setIdInternal(exportGrouping.getIdInternal());
-            infoExportGrouping.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exportGrouping.getExecutionCourse()));
-            infoExportGroupings.add(infoExportGrouping);
-        }
-        return infoExportGroupings;
+	final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());
+	for (final ExportGrouping exportGrouping : exportGroupings) {
+	    final InfoExportGrouping infoExportGrouping = new InfoExportGrouping();
+	    infoExportGrouping.setIdInternal(exportGrouping.getIdInternal());
+	    infoExportGrouping.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exportGrouping.getExecutionCourse()));
+	    infoExportGroupings.add(infoExportGrouping);
+	}
+	return infoExportGroupings;
     }
 }

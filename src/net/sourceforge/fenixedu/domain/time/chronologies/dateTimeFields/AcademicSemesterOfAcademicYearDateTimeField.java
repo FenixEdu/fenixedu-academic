@@ -57,22 +57,22 @@ public class AcademicSemesterOfAcademicYearDateTimeField extends DateTimeField {
 
     @Override
     public int get(long instant) {
-	if(chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology)chronology).getAcademicSemesterOfAcademicYear(instant);
+	if (chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology) chronology).getAcademicSemesterOfAcademicYear(instant);
 	}
 	throw unsupported();
     }
 
     @Override
-    public String getAsShortText(long instant) {		
-	
-	throw unsupported();	
+    public String getAsShortText(long instant) {
+
+	throw unsupported();
     }
 
     @Override
-    public String getAsShortText(long instant, Locale locale) {		
-	
-	throw unsupported();		
+    public String getAsShortText(long instant, Locale locale) {
+
+	throw unsupported();
     }
 
     @Override
@@ -167,18 +167,18 @@ public class AcademicSemesterOfAcademicYearDateTimeField extends DateTimeField {
 
     @Override
     public int getMaximumValue() {
-	if(chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology)chronology).getMaximumValueForAcademicSemesterOfAcademicYear();
+	if (chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology) chronology).getMaximumValueForAcademicSemesterOfAcademicYear();
 	}
-	throw unsupported();	
+	throw unsupported();
     }
 
     @Override
     public int getMaximumValue(long instant) {
-	if(chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology)chronology).getMaximumValueForAcademicSemesterOfAcademicYear(instant);
+	if (chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology) chronology).getMaximumValueForAcademicSemesterOfAcademicYear(instant);
 	}
-	throw unsupported();	
+	throw unsupported();
     }
 
     @Override
@@ -323,6 +323,7 @@ public class AcademicSemesterOfAcademicYearDateTimeField extends DateTimeField {
     }
 
     private UnsupportedOperationException unsupported() {
-	return new UnsupportedOperationException(AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear() + " field is unsupported");
+	return new UnsupportedOperationException(AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear()
+		+ " field is unsupported");
     }
 }

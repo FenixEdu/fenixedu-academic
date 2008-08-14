@@ -8,8 +8,7 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class GetStudentTest extends Service {
-	public NewTest run(Person person, NewTestGroup testGroup) throws FenixServiceException,
-			ExcepcaoPersistencia {
-		return testGroup.getOrAssignTest(person);
-	}
+    public NewTest run(Person person, NewTestGroup testGroup) throws FenixServiceException, ExcepcaoPersistencia {
+	return testGroup.getOrAssignTest(person);
+    }
 }

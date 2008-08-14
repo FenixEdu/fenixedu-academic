@@ -43,7 +43,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     public LabelFormatter getDescription() {
 	return getDescriptionForEntryType(EntryType.RESIDENCE_FEE);
     }
-    
+
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
@@ -74,11 +74,11 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     public ResidenceManagementUnit getManagementUnit() {
 	return getResidenceMonth().getManagementUnit();
     }
-    
+
     public DateTime getPaymentStartDate() {
 	return getResidenceMonth().getPaymentStartDate();
     }
-    
+
     public DateTime getPaymentLimitDate() {
 	return getResidenceMonth().getPaymentLimitDateTime();
     }
@@ -89,41 +89,42 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	super.cancel(responsibleEmployee);
     }
 
-    
     public DateTime getPaymentDate() {
-	return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail().getWhenRegistered();
+	return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
+		.getWhenRegistered();
     }
-    
+
     public PaymentMode getPaymentMode() {
-	return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail().getPaymentMode();
+	return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
+		.getPaymentMode();
     }
-    
+
     public Money getAmountToPay() {
 	return calculateAmountToPay(new DateTime());
     }
-    
+
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE,
-		new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(),
-		entryDTO.getAmountToPay(), getPerson().getStudent()));
+	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE, new YearMonthDay(),
+		getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()
+			.getStudent()));
     }
-    
+
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-	getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(),  getPaymentLimitDate().toYearMonthDay(),
+	getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
 		entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 
 	return getNonProcessedPaymentCodes();
     }
-    
+
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
-	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(
-		EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections
+		.singletonList(new EntryDTO(EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);
     }
 }

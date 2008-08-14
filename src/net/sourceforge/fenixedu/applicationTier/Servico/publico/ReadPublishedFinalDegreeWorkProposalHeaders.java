@@ -34,5 +34,5 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders extends Service {
 
 	return result;
     }
-    
+
 }

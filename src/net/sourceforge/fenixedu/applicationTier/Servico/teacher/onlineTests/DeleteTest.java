@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteTest extends Service {
 
     public void run(final Integer executionCourseId, final Integer testId) throws InvalidArgumentsServiceException {
-        Test test = rootDomainObject.readTestByOID(testId);
-        test.delete();
+	Test test = rootDomainObject.readTestByOID(testId);
+	test.delete();
     }
 
 }

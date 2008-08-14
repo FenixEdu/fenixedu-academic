@@ -72,7 +72,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     public Person getOrCreatePersonFromBean() {
 	return getPersonBean().hasPerson() ? getPersonBean().getPerson().edit(getPersonBean()) : new Person(getPersonBean());
     }
-    
+
     protected ExecutionInterval getCandidacyExecutionInterval() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
     }

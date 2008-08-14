@@ -16,14 +16,14 @@ import org.apache.struts.action.ActionMessages;
 
 public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 
-    public ActionForward showAssiduousnessStructure(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showAssiduousnessStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	AssiduousnessStructureSearch assiduousnessStructureSearch = (AssiduousnessStructureSearch) getRenderedObject("assiduousnessStructureSearch");
 	if (assiduousnessStructureSearch == null) {
 	    String personFunctionId = request.getParameter("personFunctionId");
 	    if (personFunctionId != null) {
-		PersonFunction personFunction = (PersonFunction) rootDomainObject
-			.readAccountabilityByOID(new Integer(personFunctionId));
+		PersonFunction personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(new Integer(
+			personFunctionId));
 		assiduousnessStructureSearch = new AssiduousnessStructureSearch(personFunction);
 	    } else {
 		assiduousnessStructureSearch = new AssiduousnessStructureSearch();
@@ -33,8 +33,7 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 		    || request.getParameter("addPersons") != null) {
 		AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = new AssiduousnessPersonFunctionFactory(
 			assiduousnessStructureSearch, request.getParameter("addPersons") != null);
-		request.setAttribute("assiduousnessPersonFunctionFactory",
-			assiduousnessPersonFunctionFactory);
+		request.setAttribute("assiduousnessPersonFunctionFactory", assiduousnessPersonFunctionFactory);
 		return mapping.findForward("create-assiduousness-person-function");
 	    }
 	    assiduousnessStructureSearch.setSearch();
@@ -43,18 +42,16 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("show-assiduousness-structure");
     }
 
-    public ActionForward prepareEditPersonFunction(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditPersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	String idInternalString = request.getParameter("idInternal");
-	PersonFunction personFunction = (PersonFunction) rootDomainObject
-		.readAccountabilityByOID(new Integer(idInternalString));
+	PersonFunction personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(new Integer(idInternalString));
 	request.setAttribute("personFunction", personFunction);
 	return mapping.findForward("edit-assiduousness-person-function");
     }
 
-    public ActionForward prepareCreateAssiduousnessPersonFunction(ActionMapping mapping,
-	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+    public ActionForward prepareCreateAssiduousnessPersonFunction(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) getRenderedObject();
 	request.setAttribute("assiduousnessPersonFunctionFactory", assiduousnessPersonFunctionFactory);
 	return mapping.findForward("create-assiduousness-person-function");
@@ -64,19 +61,18 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) getRenderedObject();
 	if (!isCancelled(request)) {
-	    Object result = executeService(request, "ExecuteFactoryMethod",
-		    new Object[] { assiduousnessPersonFunctionFactory });
+	    Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { assiduousnessPersonFunctionFactory });
 	    if (result != null) {
 		ActionMessages actionMessages = new ActionMessages();
 		actionMessages.add("errorMessage", (ActionMessage) result);
 		saveMessages(request, actionMessages);
-		request.setAttribute("assiduousnessPersonFunctionFactory",
-			assiduousnessPersonFunctionFactory);
+		request.setAttribute("assiduousnessPersonFunctionFactory", assiduousnessPersonFunctionFactory);
 		return mapping.findForward("create-assiduousness-person-function");
 	    }
 	}
-	request.setAttribute("assiduousnessStructureSearch", new AssiduousnessStructureSearch(
-		assiduousnessPersonFunctionFactory));
+	request
+		.setAttribute("assiduousnessStructureSearch",
+			new AssiduousnessStructureSearch(assiduousnessPersonFunctionFactory));
 	return mapping.findForward("show-assiduousness-structure");
     }
 }

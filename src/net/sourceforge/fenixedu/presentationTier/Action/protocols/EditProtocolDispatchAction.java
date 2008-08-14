@@ -163,7 +163,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 		protocolFactory = new ProtocolFactory(protocol);
 	    }
 	}
-	
+
 	request.setAttribute("protocolFactory", protocolFactory);
 	return mapping.findForward("edit-protocol-responsibles");
     }

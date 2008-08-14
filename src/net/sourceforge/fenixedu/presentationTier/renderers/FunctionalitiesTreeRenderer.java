@@ -21,112 +21,110 @@ public class FunctionalitiesTreeRenderer extends TreeRenderer {
     private String disabledClass;
 
     private boolean moduleOnly;
-    
-    public FunctionalitiesTreeRenderer() {
-        super();
 
-        setChildrenFor(Module.class.getName(), "orderedFunctionalities");
-        setDisabledClass("fDisabled");
+    public FunctionalitiesTreeRenderer() {
+	super();
+
+	setChildrenFor(Module.class.getName(), "orderedFunctionalities");
+	setDisabledClass("fDisabled");
     }
 
     public String getDisabledClass() {
-        return this.disabledClass;
+	return this.disabledClass;
     }
 
     public void setDisabledClass(String disabledClass) {
-        this.disabledClass = disabledClass;
+	this.disabledClass = disabledClass;
     }
 
     public String getEnabledClass() {
-        return this.enabledClass;
+	return this.enabledClass;
     }
 
     public void setEnabledClass(String enabledClass) {
-        this.enabledClass = enabledClass;
+	this.enabledClass = enabledClass;
     }
 
     public String getFunctionalityDisabledImage() {
-        return this.functionalityDisabledImage;
+	return this.functionalityDisabledImage;
     }
 
     public void setFunctionalityDisabledImage(String functionalityDisabledImage) {
-        this.functionalityDisabledImage = functionalityDisabledImage;
+	this.functionalityDisabledImage = functionalityDisabledImage;
     }
 
     public String getFunctionalityEnabledImage() {
-        return this.functionalityEnabledImage;
+	return this.functionalityEnabledImage;
     }
 
     public void setFunctionalityEnabledImage(String functionalityEnabledImage) {
-        this.functionalityEnabledImage = functionalityEnabledImage;
+	this.functionalityEnabledImage = functionalityEnabledImage;
     }
 
     public String getModuleDisabledImage() {
-        return this.moduleDisabledImage;
+	return this.moduleDisabledImage;
     }
 
     public void setModuleDisabledImage(String moduleDisabledImage) {
-        this.moduleDisabledImage = moduleDisabledImage;
+	this.moduleDisabledImage = moduleDisabledImage;
     }
 
     public String getModuleEnabledImage() {
-        return this.moduleEnabledImage;
+	return this.moduleEnabledImage;
     }
 
     public void setModuleEnabledImage(String moduleEnabledImage) {
-        this.moduleEnabledImage = moduleEnabledImage;
+	this.moduleEnabledImage = moduleEnabledImage;
     }
 
     public boolean isModuleOnly() {
-		return moduleOnly;
-	}
+	return moduleOnly;
+    }
 
-	public void setModuleOnly(boolean moduleOnly) {
-		this.moduleOnly = moduleOnly;
-	}
+    public void setModuleOnly(boolean moduleOnly) {
+	this.moduleOnly = moduleOnly;
+    }
 
-	@Override
+    @Override
     public boolean isIncludeImage() {
-        return super.isIncludeImage() && getModuleEnabledImage() == null
-                && getModuleDisabledImage() == null && getFunctionalityEnabledImage() == null
-                && getFunctionalityEnabledImage() == null;
+	return super.isIncludeImage() && getModuleEnabledImage() == null && getModuleDisabledImage() == null
+		&& getFunctionalityEnabledImage() == null && getFunctionalityEnabledImage() == null;
     }
 
     @Override
     protected String getClassFor(Object object) {
-        String classes = chooseIfEnabled(object, getEnabledClass(), getDisabledClass(),
-                getEnabledClass(), getDisabledClass());
+	String classes = chooseIfEnabled(object, getEnabledClass(), getDisabledClass(), getEnabledClass(), getDisabledClass());
 
-        if (classes != null) {
-            return classes;
-        } else {
-            return super.getClassFor(object);
-        }
+	if (classes != null) {
+	    return classes;
+	} else {
+	    return super.getClassFor(object);
+	}
     }
 
     @Override
     protected String getImageFor(Object object) {
-        String image = chooseIfEnabled(object, getModuleEnabledImage(), getModuleDisabledImage(),
-                getFunctionalityEnabledImage(), getFunctionalityDisabledImage());
+	String image = chooseIfEnabled(object, getModuleEnabledImage(), getModuleDisabledImage(), getFunctionalityEnabledImage(),
+		getFunctionalityDisabledImage());
 
-        if (image != null) {
-            return image;
-        } else {
-            return super.getImageFor(object);
-        }
+	if (image != null) {
+	    return image;
+	} else {
+	    return super.getImageFor(object);
+	}
     }
 
-    private String chooseIfEnabled(Object object, String moduleEnabled, String moduleDisabled,
-            String functionalityEnabled, String functionalityDisabled) {
-        if (object instanceof Module) {
-            return moduleEnabled;
-        } else {
-            return functionalityEnabled;
-        }
+    private String chooseIfEnabled(Object object, String moduleEnabled, String moduleDisabled, String functionalityEnabled,
+	    String functionalityDisabled) {
+	if (object instanceof Module) {
+	    return moduleEnabled;
+	} else {
+	    return functionalityEnabled;
+	}
     }
 
     @Override
     protected boolean isIgnored(Object object) {
-    	return isModuleOnly() && !(object instanceof Module);
+	return isModuleOnly() && !(object instanceof Module);
     }
 }

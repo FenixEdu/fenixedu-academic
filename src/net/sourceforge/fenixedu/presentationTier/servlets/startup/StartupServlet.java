@@ -31,7 +31,7 @@ import pt.ist.fenixframework.pstm.Transaction;
 public class StartupServlet extends HttpServlet {
 
     public void init(ServletConfig config) throws ServletException {
-	//        Custodian.registerPID();
+	// Custodian.registerPID();
 
 	super.init(config);
 

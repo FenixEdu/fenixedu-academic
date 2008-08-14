@@ -257,10 +257,9 @@ public class InfoGrantContractRegime extends InfoObject {
 	    setDateSendDispatchCD(grantContractRegime.getDateSendDispatchCD());
 	    if (grantContractRegime.getGrantContract().getGrantCostCenter() != null) {
 
-		setCostCenterKey(grantContractRegime.getGrantContract().getGrantCostCenter()
-			.getIdInternal());
-		setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime
-			.getGrantContract().getGrantCostCenter()));
+		setCostCenterKey(grantContractRegime.getGrantContract().getGrantCostCenter().getIdInternal());
+		setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime.getGrantContract()
+			.getGrantCostCenter()));
 
 	    }
 
@@ -286,8 +285,7 @@ public class InfoGrantContractRegime extends InfoObject {
     }
 
     public void setGrantContract(GrantContract grantContract) {
-	this.grantContract = grantContract != null ? new DomainReference<GrantContract>(grantContract)
-		: null;
+	this.grantContract = grantContract != null ? new DomainReference<GrantContract>(grantContract) : null;
     }
 
 }

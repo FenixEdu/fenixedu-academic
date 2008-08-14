@@ -41,22 +41,22 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward prepareEditShift(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	InfoShift infoShiftToEdit = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
 	DynaActionForm editShiftForm = (DynaActionForm) form;
 	editShiftForm.set("courseInitials", infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
-	editShiftForm.set("nome", infoShiftToEdit.getNome());        
+	editShiftForm.set("nome", infoShiftToEdit.getNome());
 	editShiftForm.set("lotacao", infoShiftToEdit.getLotacao());
 
 	List<ShiftType> shiftTypes = infoShiftToEdit.getShift().getTypes();
-	String[] selectedshiftTypesArray = new String[shiftTypes.size()];        
+	String[] selectedshiftTypesArray = new String[shiftTypes.size()];
 
 	for (int i = 0; i < shiftTypes.size(); i++) {
 	    ShiftType shiftType = shiftTypes.get(i);
@@ -67,35 +67,36 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	SessionUtils.getExecutionCourses(request);
 
-	readAndSetShiftTypes(request, infoShiftToEdit.getInfoDisciplinaExecucao());    
+	readAndSetShiftTypes(request, infoShiftToEdit.getInfoDisciplinaExecucao());
 
 	return mapping.findForward("EditShift");
     }
 
-    public ActionForward listExecutionCourseCourseLoads(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {    
+    public ActionForward listExecutionCourseCourseLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm editShiftForm = (DynaActionForm) form;
 	InfoShift infoShiftToEdit = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
-	InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request, (String) editShiftForm.get("courseInitials"));
+	InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request, (String) editShiftForm
+		.get("courseInitials"));
 
-	if(infoShiftToEdit.getInfoDisciplinaExecucao().getExecutionCourse().equals(infoExecutionCourse.getExecutionCourse())) {
+	if (infoShiftToEdit.getInfoDisciplinaExecucao().getExecutionCourse().equals(infoExecutionCourse.getExecutionCourse())) {
 	    editShiftForm.set("courseInitials", infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
-	    editShiftForm.set("nome", infoShiftToEdit.getNome());                       
+	    editShiftForm.set("nome", infoShiftToEdit.getNome());
 
 	    List<ShiftType> shiftTypes = infoShiftToEdit.getShift().getTypes();
-	    String[] selectedshiftTypesArray = new String[shiftTypes.size()];        
+	    String[] selectedshiftTypesArray = new String[shiftTypes.size()];
 	    for (int i = 0; i < shiftTypes.size(); i++) {
 		ShiftType shiftType = shiftTypes.get(i);
 		selectedshiftTypesArray[i] = shiftType.getName();
-	    }        
-	    editShiftForm.set("shiftTiposAula", selectedshiftTypesArray);                        
+	    }
+	    editShiftForm.set("shiftTiposAula", selectedshiftTypesArray);
 	    editShiftForm.set("lotacao", infoShiftToEdit.getLotacao());
 
 	} else {
 	    editShiftForm.set("shiftTiposAula", new String[] {});
-	    editShiftForm.set("lotacao", Integer.valueOf(0));            
-	    editShiftForm.set("nome", ""); 
+	    editShiftForm.set("lotacao", Integer.valueOf(0));
+	    editShiftForm.set("nome", "");
 	}
 
 	SessionUtils.getExecutionCourses(request);
@@ -114,9 +115,10 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	InfoShift infoShiftOld = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-	InfoExecutionCourse infoExecutionCourseNew = RequestUtils.getExecutionCourseBySigla(request, (String) editShiftForm.get("courseInitials"));
-	InfoShiftEditor infoShiftNew = new InfoShiftEditor();                   
-	infoShiftNew.setIdInternal(infoShiftOld.getIdInternal());	    
+	InfoExecutionCourse infoExecutionCourseNew = RequestUtils.getExecutionCourseBySigla(request, (String) editShiftForm
+		.get("courseInitials"));
+	InfoShiftEditor infoShiftNew = new InfoShiftEditor();
+	infoShiftNew.setIdInternal(infoShiftOld.getIdInternal());
 	infoShiftNew.setInfoDisciplinaExecucao(infoExecutionCourseNew);
 	infoShiftNew.setInfoLessons(infoShiftOld.getInfoLessons());
 	infoShiftNew.setLotacao((Integer) editShiftForm.get("lotacao"));
@@ -149,7 +151,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	}
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourseNew);        
+	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourseNew);
 	ContextUtils.setShiftContext(request);
 
 	return prepareEditShift(mapping, form, request, response);
@@ -173,8 +175,8 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	return prepareEditShift(mapping, form, request, response);
     }
 
-    public ActionForward removeClasses(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm removeClassesForm = (DynaActionForm) form;
 	String[] selectedClasses = (String[]) removeClassesForm.get("selectedItems");
@@ -200,8 +202,8 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
     }
 
-    public ActionForward deleteLessons(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteLessons(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm deleteLessonsForm = (DynaActionForm) form;
 	String[] selectedLessons = (String[]) deleteLessonsForm.get("selectedItems");
@@ -225,9 +227,10 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	    ServiceUtils.executeService("DeleteLessons", args);
 
 	} catch (FenixServiceMultipleException e) {
-	    final ActionErrors actionErrors = new ActionErrors();            
-	    for (final DomainException domainException: e.getExceptionList()) {
-		actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
+	    final ActionErrors actionErrors = new ActionErrors();
+	    for (final DomainException domainException : e.getExceptionList()) {
+		actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException
+			.getArgs()));
 	    }
 	    saveErrors(request, actionErrors);
 	}
@@ -235,16 +238,15 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	return mapping.findForward("EditShift");
     }
 
-    public ActionForward viewStudentsEnroled(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewStudentsEnroled(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
 	ShiftKey shiftKey = new ShiftKey(infoShift.getNome(), infoShift.getInfoDisciplinaExecucao());
 
 	Object args[] = { shiftKey };
-	List<InfoStudent> students = (List<InfoStudent>) ServiceUtils.executeService(
-		"LerAlunosDeTurno", args);
+	List<InfoStudent> students = (List<InfoStudent>) ServiceUtils.executeService("LerAlunosDeTurno", args);
 
 	Collections.sort(students, new BeanComparator("number"));
 
@@ -252,12 +254,10 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	    request.setAttribute(SessionConstants.STUDENT_LIST, students);
 	}
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
-	.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
 	Object args2[] = { infoExecutionCourse };
-	List<InfoShift> shifts = (List<InfoShift>) ServiceUtils.executeService(
-		"LerTurnosDeDisciplinaExecucao", args2);
+	List<InfoShift> shifts = (List<InfoShift>) ServiceUtils.executeService("LerTurnosDeDisciplinaExecucao", args2);
 
 	if (shifts != null && !shifts.isEmpty()) {
 	    request.setAttribute(SessionConstants.SHIFTS, shifts);
@@ -266,8 +266,8 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	return mapping.findForward("ViewStudentsEnroled");
     }
 
-    public ActionForward changeStudentsShift(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward changeStudentsShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -275,7 +275,8 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	Integer oldShiftId = new Integer((String) dynaActionForm.get("oldShiftId"));
 	final String newShiftIdString = (String) dynaActionForm.get("newShiftId");
-	Integer newShiftId = newShiftIdString == null || newShiftIdString.length() == 0 ? null : Integer.valueOf(newShiftIdString);
+	Integer newShiftId = newShiftIdString == null || newShiftIdString.length() == 0 ? null : Integer
+		.valueOf(newShiftIdString);
 
 	final String[] studentIDs = (String[]) dynaActionForm.get("studentIDs");
 	final Set<Registration> registrations = new HashSet<Registration>();
@@ -293,7 +294,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	return mapping.findForward("Continue");
     }
 
-    private void readAndSetShiftTypes(HttpServletRequest request, InfoExecutionCourse infoExecutionCourse) {	           
+    private void readAndSetShiftTypes(HttpServletRequest request, InfoExecutionCourse infoExecutionCourse) {
 	final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", request.getLocale());
 	for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {

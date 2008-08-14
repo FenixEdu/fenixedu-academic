@@ -20,23 +20,25 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 public class DocumentRequestTypeForStudentTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
+	DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
 
-        DegreeType degreeType = documentRequestCreateBean.getRegistration().getDegreeType();
+	DegreeType degreeType = documentRequestCreateBean.getRegistration().getDegreeType();
 
-        final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
-        if (DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE.getAdministrativeOfficeTypes().contains(degreeType.getAdministrativeOfficeType())){
-            result.add(DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE);
-        }
-        if (DocumentRequestType.ENROLMENT_CERTIFICATE.getAdministrativeOfficeTypes().contains(degreeType.getAdministrativeOfficeType())) {
-            result.add(DocumentRequestType.ENROLMENT_CERTIFICATE);
-        }
+	final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
+	if (DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE.getAdministrativeOfficeTypes().contains(
+		degreeType.getAdministrativeOfficeType())) {
+	    result.add(DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE);
+	}
+	if (DocumentRequestType.ENROLMENT_CERTIFICATE.getAdministrativeOfficeTypes().contains(
+		degreeType.getAdministrativeOfficeType())) {
+	    result.add(DocumentRequestType.ENROLMENT_CERTIFICATE);
+	}
 
-        return result;
+	return result;
     }
 
     public Converter getConverter() {
-        return new EnumConverter();
+	return new EnumConverter();
     }
 
 }

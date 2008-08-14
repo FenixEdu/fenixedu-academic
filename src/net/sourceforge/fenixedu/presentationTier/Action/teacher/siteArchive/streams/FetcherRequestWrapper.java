@@ -23,59 +23,57 @@ public class FetcherRequestWrapper extends HttpServletRequestWrapper {
 
     private String encoding;
     private Map<String, Object> attributes;
-    
+
     public FetcherRequestWrapper(HttpServletRequest request) {
-        super(request);
-        
-        this.attributes = new HashMap<String, Object>();
-        
-        Enumeration names = request.getAttributeNames();
-        while (names.hasMoreElements()) {
-            String name = (String) names.nextElement();
-            this.attributes.put(name, request.getAttribute(name));
-        }
+	super(request);
+
+	this.attributes = new HashMap<String, Object>();
+
+	Enumeration names = request.getAttributeNames();
+	while (names.hasMoreElements()) {
+	    String name = (String) names.nextElement();
+	    this.attributes.put(name, request.getAttribute(name));
+	}
     }
 
     @Override
     public Object getAttribute(String name) {
-        if (this.attributes.containsKey(name)) {
-            return this.attributes.get(name);
-        }
-        else {
-            return super.getAttribute(name);
-        }
+	if (this.attributes.containsKey(name)) {
+	    return this.attributes.get(name);
+	} else {
+	    return super.getAttribute(name);
+	}
     }
 
     @Override
     public Enumeration getAttributeNames() {
-        List<String> names = new ArrayList<String>();
-        names.addAll(this.attributes.keySet());
-        
-        return new IteratorEnumeration(names.iterator());
+	List<String> names = new ArrayList<String>();
+	names.addAll(this.attributes.keySet());
+
+	return new IteratorEnumeration(names.iterator());
     }
 
     @Override
     public void removeAttribute(String name) {
-       this.attributes.remove(name);
+	this.attributes.remove(name);
     }
 
     @Override
     public void setAttribute(String name, Object o) {
-        this.attributes.put(name, o);
+	this.attributes.put(name, o);
     }
 
     @Override
     public String getCharacterEncoding() {
-        if (this.encoding != null) {
-            return this.encoding;
-        }
-        else {
-            return super.getCharacterEncoding();
-        }
+	if (this.encoding != null) {
+	    return this.encoding;
+	} else {
+	    return super.getCharacterEncoding();
+	}
     }
 
     @Override
     public void setCharacterEncoding(String encoding) throws UnsupportedEncodingException {
-        this.encoding = encoding;
+	this.encoding = encoding;
     }
 }

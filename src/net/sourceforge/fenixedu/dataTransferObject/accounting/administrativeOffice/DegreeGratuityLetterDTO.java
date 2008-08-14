@@ -14,8 +14,7 @@ public class DegreeGratuityLetterDTO extends GratuityLetterDTO {
 
     private List<InstallmentDebtDTO> gratuityDebtInstallments;
 
-    public DegreeGratuityLetterDTO(final Person person, final ExecutionYear executionYear,
-	    final String entityCode) {
+    public DegreeGratuityLetterDTO(final Person person, final ExecutionYear executionYear, final String entityCode) {
 	super(person, executionYear, entityCode);
 	this.gratuityDebtInstallments = new ArrayList<InstallmentDebtDTO>();
     }
@@ -24,8 +23,7 @@ public class DegreeGratuityLetterDTO extends GratuityLetterDTO {
 	return administrativeOfficeAndInsuranceFeeDebt;
     }
 
-    public void setAdministrativeOfficeAndInsuranceFeeDebt(
-	    DebtDTO administrativeOfficeAndInsuranceFeeDebt) {
+    public void setAdministrativeOfficeAndInsuranceFeeDebt(DebtDTO administrativeOfficeAndInsuranceFeeDebt) {
 	this.administrativeOfficeAndInsuranceFeeDebt = administrativeOfficeAndInsuranceFeeDebt;
     }
 

@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.domain.tests;
 
 public enum NewPermission {
-    READ, 
-    WRITE;
-    
+    READ, WRITE;
+
     public String getName() {
-        return name();
+	return name();
     }
 }

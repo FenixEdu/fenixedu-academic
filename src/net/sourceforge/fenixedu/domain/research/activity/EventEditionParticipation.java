@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EventEditionParticipation extends EventEditionParticipation_Base {
-    
-   
-    public EventEditionParticipation(Party party, ResearchActivityParticipationRole role, EventEdition eventEdition, MultiLanguageString roleMessage) {
+
+    public EventEditionParticipation(Party party, ResearchActivityParticipationRole role, EventEdition eventEdition,
+	    MultiLanguageString roleMessage) {
 	super();
-	if(alreadyHasParticipation(party, role, eventEdition)) {
+	if (alreadyHasParticipation(party, role, eventEdition)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setParty(party);
@@ -20,23 +20,23 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
 	super.setEventEdition(eventEdition);
 	super.setRoleMessage(roleMessage);
     }
-    
+
     private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, EventEdition eventEdition) {
-	for(EventEditionParticipation participation : party.getEventEditionParticipations()) {
-	    if(participation.match(party,role,eventEdition)) {
+	for (EventEditionParticipation participation : party.getEventEditionParticipations()) {
+	    if (participation.match(party, role, eventEdition)) {
 		return true;
 	    }
 	}
-	return false;	
+	return false;
     }
-    
+
     public boolean match(Party party, ResearchActivityParticipationRole role, EventEdition eventEdition) {
 	return this.getParty().equals(party) && this.getRole().equals(role) && this.getEventEdition().equals(eventEdition);
     }
 
     @Override
     public void setEventEdition(EventEdition eventEdition) {
-	if(alreadyHasParticipation(getParty(), getRole(), eventEdition)) {
+	if (alreadyHasParticipation(getParty(), getRole(), eventEdition)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setEventEdition(eventEdition);
@@ -44,7 +44,7 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
 
     @Override
     public void setParty(Party party) {
-	if(alreadyHasParticipation(party, getRole(), getEventEdition())) {
+	if (alreadyHasParticipation(party, getRole(), getEventEdition())) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setParty(party);
@@ -52,7 +52,7 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
 
     @Override
     public void setRole(ResearchActivityParticipationRole role) {
-	if(alreadyHasParticipation(getParty(), role, getEventEdition())) {
+	if (alreadyHasParticipation(getParty(), role, getEventEdition())) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setRole(role);
@@ -72,7 +72,7 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
     public boolean isLastParticipation() {
 	return this.getEventEdition().getParticipationsFor(this.getParty()).size() == 1;
     }
-    
+
     @Override
     public void delete() {
 	removeEventEdition();
@@ -88,5 +88,5 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
     public boolean scopeMatches(ScopeType type) {
 	return this.getEventEdition().getEvent().getLocationType().equals(type);
     }
-        
+
 }

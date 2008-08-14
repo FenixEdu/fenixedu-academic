@@ -9,11 +9,11 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class GradeRenderer extends OutputRenderer {
-    
+
     private boolean showGradeScale = true;
-    
+
     private String gradeClasses;
-    
+
     private String gradeScaleClasses;
 
     @Override
@@ -23,48 +23,48 @@ public class GradeRenderer extends OutputRenderer {
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
 		Grade grade = (Grade) object;
-		if(grade == null || grade.isEmpty()) {
+		if (grade == null || grade.isEmpty()) {
 		    return new HtmlText();
 		}
-		
+
 		HtmlInlineContainer container = new HtmlInlineContainer();
 		HtmlText gradeValue = new HtmlText(grade.getValue());
 		gradeValue.setClasses(getGradeClasses());
 		container.addChild(gradeValue);
-		if(isShowGradeScale()) {
+		if (isShowGradeScale()) {
 		    HtmlText gradeScale = new HtmlText("(" + RenderUtils.getEnumString(grade.getGradeScale()) + ")");
 		    gradeScale.setClasses(getGradeScaleClasses());
 		    container.addChild(gradeScale);
 		}
-		
+
 		return container;
 	    }
-	    
+
 	};
     }
 
     public boolean isShowGradeScale() {
-        return showGradeScale;
+	return showGradeScale;
     }
 
     public void setShowGradeScale(boolean showGradeScale) {
-        this.showGradeScale = showGradeScale;
+	this.showGradeScale = showGradeScale;
     }
 
     public String getGradeClasses() {
-        return gradeClasses;
+	return gradeClasses;
     }
 
     public void setGradeClasses(String gradeClasses) {
-        this.gradeClasses = gradeClasses;
+	this.gradeClasses = gradeClasses;
     }
 
     public String getGradeScaleClasses() {
-        return gradeScaleClasses;
+	return gradeScaleClasses;
     }
 
     public void setGradeScaleClasses(String gradeScaleClasses) {
-        this.gradeScaleClasses = gradeScaleClasses;
+	this.gradeScaleClasses = gradeScaleClasses;
     }
 
 }

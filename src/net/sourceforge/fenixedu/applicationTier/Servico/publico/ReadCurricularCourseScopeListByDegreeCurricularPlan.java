@@ -15,38 +15,37 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service {
 
-    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException{
-        
-        List allCurricularCourseScope = new ArrayList();
+    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
-        List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
+	List allCurricularCourseScope = new ArrayList();
 
-        if (allCurricularCourses == null || allCurricularCourses.isEmpty())
-            return allCurricularCourses;
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
+	List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-        // build the result of this service, ie, curricular course scope's
-        // list
-        // for each curricular course, add it scopes in the result list
-        Iterator iterator = allCurricularCourses.iterator();
+	if (allCurricularCourses == null || allCurricularCourses.isEmpty())
+	    return allCurricularCourses;
 
-        CurricularCourse curricularCourse = null;
-        ListIterator iteratorScopes = null;
-        while (iterator.hasNext()) {
-            curricularCourse = (CurricularCourse) iterator.next();
+	// build the result of this service, ie, curricular course scope's
+	// list
+	// for each curricular course, add it scopes in the result list
+	Iterator iterator = allCurricularCourses.iterator();
 
-            List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopes();
+	CurricularCourse curricularCourse = null;
+	ListIterator iteratorScopes = null;
+	while (iterator.hasNext()) {
+	    curricularCourse = (CurricularCourse) iterator.next();
 
-            if (curricularCourseScopes != null) {
-                iteratorScopes = curricularCourseScopes.listIterator();
-                while (iteratorScopes.hasNext()) {
-                    allCurricularCourseScope
-                            .add(InfoCurricularCourseScope
-                                    .newInfoFromDomain((CurricularCourseScope) iteratorScopes.next()));
-                }
-            }
-        }
+	    List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopes();
 
-        return allCurricularCourseScope;
+	    if (curricularCourseScopes != null) {
+		iteratorScopes = curricularCourseScopes.listIterator();
+		while (iteratorScopes.hasNext()) {
+		    allCurricularCourseScope.add(InfoCurricularCourseScope
+			    .newInfoFromDomain((CurricularCourseScope) iteratorScopes.next()));
+		}
+	    }
+	}
+
+	return allCurricularCourseScope;
     }
 }

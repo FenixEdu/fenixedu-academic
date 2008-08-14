@@ -9,8 +9,7 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 public class PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	return PenaltyExemptionJustificationType.getValuesFor(((CreatePenaltyExemptionBean) source).getEvent()
-		.getEventType());
+	return PenaltyExemptionJustificationType.getValuesFor(((CreatePenaltyExemptionBean) source).getEvent().getEventType());
     }
 
     public Converter getConverter() {

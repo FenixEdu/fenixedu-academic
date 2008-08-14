@@ -11,7 +11,7 @@ public class CreateExtraEnrolment extends Service {
 
     public void run(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
 	    CurricularCourse curricularCourse, NoCourseGroupCurriculumGroupType groupType) throws FenixServiceException {
-	studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(curricularCourse, executionSemester, groupType);	
+	studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(curricularCourse, executionSemester, groupType);
     }
 
 }

@@ -7,13 +7,14 @@ import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ChangeSpecialSeasonCode extends Service {
-	
-	public void run(Registration registration, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) throws FenixServiceException {
-		if(executionYear == null) {
-			throw new FenixServiceException("executionYear.invalid.argument");
-		}
 
-		registration.setSpecialSeasonCode(executionYear, specialSeasonCode);
+    public void run(Registration registration, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode)
+	    throws FenixServiceException {
+	if (executionYear == null) {
+	    throw new FenixServiceException("executionYear.invalid.argument");
 	}
+
+	registration.setSpecialSeasonCode(executionYear, specialSeasonCode);
+    }
 
 }

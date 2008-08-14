@@ -60,7 +60,6 @@ public class DefineContentPathTag extends BodyTagSupport {
 	this.toScope = toScope;
     }
 
-
     public int doStartTag() throws JspException {
 	return (BodyTagSupport.EVAL_BODY_TAG);
     }

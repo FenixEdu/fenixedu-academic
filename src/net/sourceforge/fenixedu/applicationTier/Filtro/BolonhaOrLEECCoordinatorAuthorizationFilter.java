@@ -1,4 +1,3 @@
-
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.ArrayList;
@@ -15,44 +14,44 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
     protected RoleType getRoleType() {
-        return RoleType.COORDINATOR;
+	return RoleType.COORDINATOR;
     }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Person person = getRemoteUser(request).getPerson();
-        
-        if(!person.hasRole(getRoleType()))
-        	throw new NotAuthorizedFilterException();
-        
-        Object[] args = getServiceCallArguments(request);
-        Integer executionDegreeID = (Integer)args[0];
+	Person person = getRemoteUser(request).getPerson();
 
-        if(!(executionDegreeIsBolonhaOrLEEC(executionDegreeID) || isCoordinatorOfExecutionDegree(person, executionDegreeID)))
-        	throw new NotAuthorizedFilterException();
+	if (!person.hasRole(getRoleType()))
+	    throw new NotAuthorizedFilterException();
+
+	Object[] args = getServiceCallArguments(request);
+	Integer executionDegreeID = (Integer) args[0];
+
+	if (!(executionDegreeIsBolonhaOrLEEC(executionDegreeID) || isCoordinatorOfExecutionDegree(person, executionDegreeID)))
+	    throw new NotAuthorizedFilterException();
     }
 
-    private boolean executionDegreeIsBolonhaOrLEEC(Integer executionDegreeID) {    
-    	if(executionDegreeID == null)
-    		return false;
-    	
-    	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-    	
-        if(executionDegree.isBolonhaDegree() && executionDegree.getDegree().getSigla().equals("LEEC-pB"))
-        	return true;
-        
-        return false;
+    private boolean executionDegreeIsBolonhaOrLEEC(Integer executionDegreeID) {
+	if (executionDegreeID == null)
+	    return false;
+
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+
+	if (executionDegree.isBolonhaDegree() && executionDegree.getDegree().getSigla().equals("LEEC-pB"))
+	    return true;
+
+	return false;
     }
-    
-    private boolean isCoordinatorOfExecutionDegree(Person person, Integer executionDegreeID){
-    	if(executionDegreeID == null)
-    		return false;
-    	
-    	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
 
-    	List<Coordinator> coordinators = new ArrayList<Coordinator>();
-		coordinators.addAll(person.getCoordinators());
-		coordinators.retainAll(executionDegree.getCoordinatorsList());
+    private boolean isCoordinatorOfExecutionDegree(Person person, Integer executionDegreeID) {
+	if (executionDegreeID == null)
+	    return false;
 
-		return !coordinators.isEmpty();
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+
+	List<Coordinator> coordinators = new ArrayList<Coordinator>();
+	coordinators.addAll(person.getCoordinators());
+	coordinators.retainAll(executionDegree.getCoordinatorsList());
+
+	return !coordinators.isEmpty();
     }
 }

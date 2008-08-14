@@ -10,130 +10,129 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PresentationMaterialBean implements Serializable {
 
-	private NewPresentationMaterialType presentationMaterialType;
+    private NewPresentationMaterialType presentationMaterialType;
 
-	private DomainReference<NewTestElement> testElement;
+    private DomainReference<NewTestElement> testElement;
 
-	private String returnPath;
+    private String returnPath;
 
-	private Integer returnId;
+    private Integer returnId;
 
-	private String contextKey;
+    private String contextKey;
 
-	private transient InputStream inputStream;
-	
-	private String originalFileName;
-	
-	private String fileContentType;
-	
-	private String fileName;
-	
-	private boolean inline;
+    private transient InputStream inputStream;
 
-	public PresentationMaterialBean(NewTestElement testElement) {
-		presentationMaterialType = null;
-		this.setTestElement(testElement);
-	}
+    private String originalFileName;
 
-	public PresentationMaterialBean(NewTestElement testElement, String returnPath, Integer returnId,
-			String contextKey) {
-		this(testElement);
+    private String fileContentType;
 
-		this.setReturnPath(returnPath);
-		this.setReturnId(returnId);
-		this.setContextKey(contextKey);
-	}
+    private String fileName;
 
-	public PresentationMaterialBean(PresentationMaterialBean bean) {
-		this(bean.getTestElement(), bean.getReturnPath(), bean.getReturnId(), bean.getContextKey());
-	}
+    private boolean inline;
 
-	public NewPresentationMaterialType getPresentationMaterialType() {
-		return presentationMaterialType;
-	}
+    public PresentationMaterialBean(NewTestElement testElement) {
+	presentationMaterialType = null;
+	this.setTestElement(testElement);
+    }
 
-	public void setPresentationMaterialType(NewPresentationMaterialType presentationMaterialType) {
-		this.presentationMaterialType = presentationMaterialType;
-	}
+    public PresentationMaterialBean(NewTestElement testElement, String returnPath, Integer returnId, String contextKey) {
+	this(testElement);
 
-	public NewTestElement getTestElement() {
-		return testElement.getObject();
-	}
+	this.setReturnPath(returnPath);
+	this.setReturnId(returnId);
+	this.setContextKey(contextKey);
+    }
 
-	public void setTestElement(NewTestElement testElement) {
-		this.testElement = new DomainReference<NewTestElement>(testElement);
-	}
+    public PresentationMaterialBean(PresentationMaterialBean bean) {
+	this(bean.getTestElement(), bean.getReturnPath(), bean.getReturnId(), bean.getContextKey());
+    }
 
-	public String getContextKey() {
-		return contextKey;
-	}
+    public NewPresentationMaterialType getPresentationMaterialType() {
+	return presentationMaterialType;
+    }
 
-	public void setContextKey(String contextKey) {
-		this.contextKey = contextKey;
-	}
+    public void setPresentationMaterialType(NewPresentationMaterialType presentationMaterialType) {
+	this.presentationMaterialType = presentationMaterialType;
+    }
 
-	public Integer getReturnId() {
-		return returnId;
-	}
+    public NewTestElement getTestElement() {
+	return testElement.getObject();
+    }
 
-	public void setReturnId(Integer returnId) {
-		this.returnId = returnId;
-	}
+    public void setTestElement(NewTestElement testElement) {
+	this.testElement = new DomainReference<NewTestElement>(testElement);
+    }
 
-	public String getReturnPath() {
-		return returnPath;
-	}
+    public String getContextKey() {
+	return contextKey;
+    }
 
-	public void setReturnPath(String returnPath) {
-		this.returnPath = returnPath;
-	}
+    public void setContextKey(String contextKey) {
+	this.contextKey = contextKey;
+    }
 
-	public InputStream getInputStream() {
-		return inputStream;
-	}
+    public Integer getReturnId() {
+	return returnId;
+    }
 
-	public void setInputStream(InputStream fileInputStream) {
-		this.inputStream = fileInputStream;
-	}
+    public void setReturnId(Integer returnId) {
+	this.returnId = returnId;
+    }
 
-	public String getOriginalFileName() {
-		return originalFileName;
-	}
+    public String getReturnPath() {
+	return returnPath;
+    }
 
-	public void setOriginalFileName(String originalFileName) {
-		this.originalFileName = originalFileName;
-	}
+    public void setReturnPath(String returnPath) {
+	this.returnPath = returnPath;
+    }
 
-	public String getFileContentType() {
-		return fileContentType;
-	}
+    public InputStream getInputStream() {
+	return inputStream;
+    }
 
-	public void setFileContentType(String fileContentType) {
-		this.fileContentType = fileContentType;
-	}
+    public void setInputStream(InputStream fileInputStream) {
+	this.inputStream = fileInputStream;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getOriginalFileName() {
+	return originalFileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setOriginalFileName(String originalFileName) {
+	this.originalFileName = originalFileName;
+    }
 
-	public boolean isInline() {
-		return inline;
-	}
+    public String getFileContentType() {
+	return fileContentType;
+    }
 
-	public void setInline(boolean inline) {
-		this.inline = inline;
-	}
+    public void setFileContentType(String fileContentType) {
+	this.fileContentType = fileContentType;
+    }
 
-	public LabelFormatter getContextLabel() {
-		LabelFormatter formatter = new LabelFormatter();
+    public String getFileName() {
+	return fileName;
+    }
 
-		formatter.appendLabel(this.getContextKey(), "TESTS_RESOURCES");
+    public void setFileName(String fileName) {
+	this.fileName = fileName;
+    }
 
-		return formatter;
-	}
+    public boolean isInline() {
+	return inline;
+    }
+
+    public void setInline(boolean inline) {
+	this.inline = inline;
+    }
+
+    public LabelFormatter getContextLabel() {
+	LabelFormatter formatter = new LabelFormatter();
+
+	formatter.appendLabel(this.getContextKey(), "TESTS_RESOURCES");
+
+	return formatter;
+    }
 
 }

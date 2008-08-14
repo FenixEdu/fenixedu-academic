@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
  * 
- * Created at 11:23, February the 28th, 2005
+ *         Created at 11:23, February the 28th, 2005
  */
 public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername extends Service {
     public Collection run(Integer executionCourseID, String username) {
@@ -41,8 +41,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 		infoGroupProperties.setGroup(foundGroup);
 		infoGroupProperties.setMaxCapacity(new Integer(group.getMaximumCapacity().intValue()));
 		infoGroupProperties.setMinCapacity(new Integer(group.getMinimumCapacity().intValue()));
-		infoGroupProperties.setRecomendedCapacity(new Integer(group.getIdealCapacity()
-			.intValue()));
+		infoGroupProperties.setRecomendedCapacity(new Integer(group.getIdealCapacity().intValue()));
 		infoGroupProperties.setName(new String(group.getName()));
 		result.add(infoGroupProperties);
 	    }
@@ -51,8 +50,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 
     }
 
-    private InfoExternalStudentGroup searchForStudentInGrouping(Grouping group, String username)
-	    {
+    private InfoExternalStudentGroup searchForStudentInGrouping(Grouping group, String username) {
 	InfoExternalStudentGroup result = null;
 	Collection studentGroups = group.getStudentGroups();
 
@@ -74,11 +72,11 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     }
 
     /**
-         * @param iterator
-         * @param info
-         * @return
-         * @throws ExcepcaoPersistencia
-         */
+     * @param iterator
+     * @param info
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
     private Collection buildStudentInfos(Iterator iterator) {
 	Collection result = new ArrayList();
 	for (Iterator iter = iterator; iter.hasNext();) {
@@ -92,17 +90,16 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     }
 
     /**
-         * @param studentGroupAttend
-         * @param infoExternalStudentGroup
-         * @throws ExcepcaoPersistencia
-         * @throws ExcepcaoPersistencia
-         */
+     * @param studentGroupAttend
+     * @param infoExternalStudentGroup
+     * @throws ExcepcaoPersistencia
+     * @throws ExcepcaoPersistencia
+     */
     private InfoExternalStudentInfo getStudentInformation(Attends attend) {
 	InfoExternalStudentInfo student = new InfoExternalStudentInfo();
-	student.setCourse(InfoExternalExecutionCourseInfo.newFromExecutionCourse(attend
-		.getExecutionCourse()));
-	student.setDegree(InfoExternalDegreeCurricularPlanInfo.newFromDegreeCurricularPlan(attend
-		.getRegistration().getActiveStudentCurricularPlan().getDegreeCurricularPlan()));
+	student.setCourse(InfoExternalExecutionCourseInfo.newFromExecutionCourse(attend.getExecutionCourse()));
+	student.setDegree(InfoExternalDegreeCurricularPlanInfo.newFromDegreeCurricularPlan(attend.getRegistration()
+		.getActiveStudentCurricularPlan().getDegreeCurricularPlan()));
 	student.setName(new String(attend.getRegistration().getPerson().getName()));
 	student.setNumber(new Integer(attend.getRegistration().getNumber().intValue()));
 
@@ -113,9 +110,9 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     }
 
     /**
-         * @param shifts
-         * @param student
-         */
+     * @param shifts
+     * @param student
+     */
     private Collection buildShiftsInfo(Collection shifts) {
 	ArrayList result = new ArrayList();
 	for (Iterator iter = shifts.iterator(); iter.hasNext();) {
@@ -126,8 +123,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 	return result;
     }
 
-    private Collection findShifts(Registration aluno, ExecutionCourse disciplinaExecucao)
-	    {
+    private Collection findShifts(Registration aluno, ExecutionCourse disciplinaExecucao) {
 	List<Shift> shifts = aluno.getShifts();
 	List result = new ArrayList();
 	for (Shift shift : shifts) {
@@ -140,23 +136,23 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     }
 
     /**
-         * @param studentGroupAttend
-         * @return
-         */
+     * @param studentGroupAttend
+     * @return
+     */
     private InfoExternalGroupInfo buildInfoExternalGroupInfo(StudentGroup studentGroup) {
 	InfoExternalGroupInfo infoExternalGroupInfo = new InfoExternalGroupInfo();
 	infoExternalGroupInfo.setNumber(new Integer(studentGroup.getGroupNumber().intValue()));
 	infoExternalGroupInfo.setShift(InfoExternalShiftInfo.newFromShift(studentGroup.getShift()));
-	infoExternalGroupInfo.setExecutionCourses(this.buildExecutionCoursesCollection(studentGroup
-		.getGrouping().getExecutionCourses()));
+	infoExternalGroupInfo.setExecutionCourses(this.buildExecutionCoursesCollection(studentGroup.getGrouping()
+		.getExecutionCourses()));
 
 	return infoExternalGroupInfo;
     }
 
     /**
-         * @param executionCourses
-         * @return
-         */
+     * @param executionCourses
+     * @return
+     */
     private Collection buildExecutionCoursesCollection(List executionCourses) {
 	Collection result = new ArrayList();
 	for (Iterator iter = executionCourses.iterator(); iter.hasNext();) {

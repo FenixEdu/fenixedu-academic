@@ -17,30 +17,30 @@ public class OutOfPeriodException extends FenixServiceException {
     private Date endDate;
 
     public OutOfPeriodException(String messageKey, Date startDate, Date endDate) {
-        this.messageKey = messageKey;
-        this.startDate = startDate;
-        this.endDate = endDate;
+	this.messageKey = messageKey;
+	this.startDate = startDate;
+	this.endDate = endDate;
     }
 
     /**
      * @return
      */
     public Date getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     /**
      * @return
      */
     public String getMessageKey() {
-        return messageKey;
+	return messageKey;
     }
 
     /**
      * @return
      */
     public Date getStartDate() {
-        return startDate;
+	return startDate;
     }
 
 }

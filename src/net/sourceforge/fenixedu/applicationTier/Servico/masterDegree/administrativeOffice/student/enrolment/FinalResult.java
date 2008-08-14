@@ -15,31 +15,32 @@ public class FinalResult extends Service {
 
     public InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws Exception {
 
-        boolean result = false;
+	boolean result = false;
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan
+		.getIdInternal());
 
-        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
+	IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+		.getInstance();
 
-        IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
-                .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
+	IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+		.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-        // verify if the school part is concluded
-        if (studentCurricularPlan.getDegreeCurricularPlan().getNeededCredits() == null) {
-            return null;
-        }
+	// verify if the school part is concluded
+	if (studentCurricularPlan.getDegreeCurricularPlan().getNeededCredits() == null) {
+	    return null;
+	}
 
-        result = masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan);
+	result = masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan);
 
-        if (result == true) {
-            InfoFinalResult infoFinalResult = new InfoFinalResult();
+	if (result == true) {
+	    InfoFinalResult infoFinalResult = new InfoFinalResult();
 
-            masterDegreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan,
-                    infoFinalResult);
+	    masterDegreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan, infoFinalResult);
 
-            return infoFinalResult;
-        }
+	    return infoFinalResult;
+	}
 
-        return null;
+	return null;
     }
 }

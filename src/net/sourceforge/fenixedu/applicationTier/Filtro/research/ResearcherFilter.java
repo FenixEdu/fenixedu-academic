@@ -7,6 +7,6 @@ public class ResearcherFilter extends AuthorizationByRoleFilter {
 
     @Override
     protected RoleType getRoleType() {
-        return RoleType.RESEARCHER;
+	return RoleType.RESEARCHER;
     }
 }

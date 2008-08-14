@@ -9,12 +9,11 @@ import net.sourceforge.fenixedu.domain.UnitSiteLink;
 public class RearrangeUnitSiteLinks extends Service {
 
     public void run(UnitSite site, Boolean top, List<UnitSiteLink> links) {
-        if (top) {
-            site.setTopLinksOrder(links);
-        }
-        else  {
-            site.setFooterLinksOrder(links);
-        }
+	if (top) {
+	    site.setTopLinksOrder(links);
+	} else {
+	    site.setFooterLinksOrder(links);
+	}
     }
-    
+
 }

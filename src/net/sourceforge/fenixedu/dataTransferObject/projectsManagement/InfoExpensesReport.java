@@ -80,7 +80,8 @@ public class InfoExpensesReport extends InfoProjectReport {
 	HSSFSheet sheet = wb.getSheetAt(0);
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 3);
 
-	//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 3));
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum(), (short) 3));
 	HSSFCell cell = row.createCell((short) 0);
 	cell.setCellValue(getString("label.treasury"));
 	cell.setCellStyle(excelStyle.getTitleStyle());
@@ -89,7 +90,8 @@ public class InfoExpensesReport extends InfoProjectReport {
 	row = sheet.createRow(sheet.getLastRowNum() + 3);
 	cell = row.createCell((short) 0);
 	cell.setCellValue(StringAppender.append(getString("label.treasuryBalance"), "(a)(b)", ":"));
-	//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum(), (short) 2));
 	cell.setCellStyle(excelStyle.getLabelStyle());
 	cell = row.createCell((short) 3);
 	Double total = (summaryPTEReport.getTotal() / 200.482 + summaryEURReport.getTotal());
@@ -101,13 +103,16 @@ public class InfoExpensesReport extends InfoProjectReport {
 	row = sheet.createRow(sheet.getLastRowNum() + 3);
 	cell = row.createCell((short) 0);
 	cell.setCellValue(getString("label.adiantamentos"));
-	//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 3));
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum(), (short) 3));
 	cell.setCellStyle(excelStyle.getTitleStyle());
 	adiantamentosReport.getLineToExcel(sheet, excelStyle, reportType);
 	row = sheet.createRow(sheet.getLastRowNum() + 1);
 	cell = row.createCell((short) 0);
-	//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum() + 1, (short) ((IReportLine) getLines().get(0))
-	//                .getNumberOfColumns()));
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum() + 1, (short) ((IReportLine)
+	// getLines().get(0))
+	// .getNumberOfColumns()));
 	cell.setCellValue(getString("message.extraInformation.a"));
 
 	HSSFCellStyle valueStyleNoWrap = excelStyle.getValueStyle();
@@ -116,13 +121,16 @@ public class InfoExpensesReport extends InfoProjectReport {
 	row = sheet.createRow(sheet.getLastRowNum() + 4);
 	cell = row.createCell((short) 0);
 	cell.setCellValue(getString("label.cabimentos"));
-	//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 3));
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum(), (short) 3));
 	cell.setCellStyle(excelStyle.getTitleStyle());
 	cabimentosReport.getLineToExcel(sheet, excelStyle, reportType);
 	row = sheet.createRow(sheet.getLastRowNum() + 1);
 	cell = row.createCell((short) 0);
-	//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum() + 1, (short) ((IReportLine) getLines().get(0))
-	//                .getNumberOfColumns()));
+	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+	// (short) row.getRowNum() + 1, (short) ((IReportLine)
+	// getLines().get(0))
+	// .getNumberOfColumns()));
 	cell.setCellValue(getString("message.extraInformation.b"));
 	cell.setCellStyle(valueStyleNoWrap);
     }

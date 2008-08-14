@@ -19,211 +19,203 @@ import org.joda.time.DateTime;
 public class Project extends Project_Base {
 
     private Project() {
-        super();
+	super();
     }
 
-    public Project(String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Grouping grouping,
-            ExecutionCourse executionCourse) {
-        this();
-        if (name == null || begin == null || end == null || executionCourse == null) {
-            throw new NullPointerException();
-        }
-        if (begin.after(end)) {
-            throw new DomainException("error.evaluation.begin.sooner.end");
-        }
+    public Project(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
+	    Integer maxSubmissionsToKeep, Grouping grouping, ExecutionCourse executionCourse) {
+	this();
+	if (name == null || begin == null || end == null || executionCourse == null) {
+	    throw new NullPointerException();
+	}
+	if (begin.after(end)) {
+	    throw new DomainException("error.evaluation.begin.sooner.end");
+	}
 
-        this.setName(name);
-        this.setBegin(begin);
-        this.setEnd(end);
-        this.setDescription(description != null ? description : "");
-        this.addAssociatedExecutionCourses(executionCourse);
+	this.setName(name);
+	this.setBegin(begin);
+	this.setEnd(end);
+	this.setDescription(description != null ? description : "");
+	this.addAssociatedExecutionCourses(executionCourse);
 
-        setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
+	setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
     }
 
-    public void edit(String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Grouping grouping) {
-        if (name == null || begin == null || end == null) {
-            throw new NullPointerException();
-        }
-        if (begin.after(end)) {
-            throw new DomainException("error.evaluation.begin.sooner.end");
-        }
-        setName(name);
-        setBegin(begin);
-        setEnd(end);
-        setDescription((description != null) ? description : "");
+    public void edit(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
+	    Integer maxSubmissionsToKeep, Grouping grouping) {
+	if (name == null || begin == null || end == null) {
+	    throw new NullPointerException();
+	}
+	if (begin.after(end)) {
+	    throw new DomainException("error.evaluation.begin.sooner.end");
+	}
+	setName(name);
+	setBegin(begin);
+	setEnd(end);
+	setDescription((description != null) ? description : "");
 
-        if (!getProjectSubmissions().isEmpty()) {
-            if (!getGrouping().equals(grouping)
-                    || !getOnlineSubmissionsAllowed().equals(onlineSubmissionsAllowed)
-                    || !getMaxSubmissionsToKeep().equals(maxSubmissionsToKeep)) {
-                throw new DomainException(
-                        "error.project.onlineSubmissionOptionsCannotBeChangedBecauseSubmissionsAlreadyExist");
-            }
+	if (!getProjectSubmissions().isEmpty()) {
+	    if (!getGrouping().equals(grouping) || !getOnlineSubmissionsAllowed().equals(onlineSubmissionsAllowed)
+		    || !getMaxSubmissionsToKeep().equals(maxSubmissionsToKeep)) {
+		throw new DomainException("error.project.onlineSubmissionOptionsCannotBeChangedBecauseSubmissionsAlreadyExist");
+	    }
 
-        }
+	}
 
-        setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
+	setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
     }
 
-    private void setOnlineSubmissionProperties(Boolean onlineSubmissionsAllowed,
-            Integer maxSubmissionsToKeep, Grouping grouping) {
+    private void setOnlineSubmissionProperties(Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Grouping grouping) {
 
-        setOnlineSubmissionsAllowed(onlineSubmissionsAllowed);
+	setOnlineSubmissionsAllowed(onlineSubmissionsAllowed);
 
-        if (onlineSubmissionsAllowed == true) {
-            if ((maxSubmissionsToKeep == null) || (maxSubmissionsToKeep == 0) || (grouping == null)) {
-                throw new DomainException(
-                        "error.project.maxSubmissionsAndGroupingRequiredForOnlineSubmissions");
-            } else {
-                setMaxSubmissionsToKeep(maxSubmissionsToKeep);
-                setGrouping(grouping);
-            }
-        } else {
-            setMaxSubmissionsToKeep(null);
-            setGrouping(null);
+	if (onlineSubmissionsAllowed == true) {
+	    if ((maxSubmissionsToKeep == null) || (maxSubmissionsToKeep == 0) || (grouping == null)) {
+		throw new DomainException("error.project.maxSubmissionsAndGroupingRequiredForOnlineSubmissions");
+	    } else {
+		setMaxSubmissionsToKeep(maxSubmissionsToKeep);
+		setGrouping(grouping);
+	    }
+	} else {
+	    setMaxSubmissionsToKeep(null);
+	    setGrouping(null);
 
-        }
+	}
     }
 
     public EvaluationType getEvaluationType() {
-        return EvaluationType.PROJECT_TYPE;
+	return EvaluationType.PROJECT_TYPE;
     }
 
     @Deprecated
     public java.util.Date getBegin() {
-        org.joda.time.DateTime dt = getProjectBeginDateTime();
-        return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	org.joda.time.DateTime dt = getProjectBeginDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
     }
 
     @Deprecated
     public void setBegin(java.util.Date date) {
-        setProjectBeginDateTime(new org.joda.time.DateTime(date.getTime()));
+	setProjectBeginDateTime(new org.joda.time.DateTime(date.getTime()));
     }
 
     @Deprecated
     public java.util.Date getEnd() {
-        org.joda.time.DateTime dt = getProjectEndDateTime();
-        return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	org.joda.time.DateTime dt = getProjectEndDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
     }
 
     @Deprecated
     public void setEnd(java.util.Date date) {
-        setProjectEndDateTime(new org.joda.time.DateTime(date.getTime()));
+	setProjectEndDateTime(new org.joda.time.DateTime(date.getTime()));
     }
 
     @Override
     public void setMaxSubmissionsToKeep(Integer maxSubmissionsToKeep) {
-        if (maxSubmissionsToKeep != null && maxSubmissionsToKeep > 99) {
-            throw new DomainException("error.project.maxSubmissionsToKeepMustBeLessThan", "99");
-        }
+	if (maxSubmissionsToKeep != null && maxSubmissionsToKeep > 99) {
+	    throw new DomainException("error.project.maxSubmissionsToKeepMustBeLessThan", "99");
+	}
 
-        super.setMaxSubmissionsToKeep(maxSubmissionsToKeep);
+	super.setMaxSubmissionsToKeep(maxSubmissionsToKeep);
     }
 
     public boolean canAddNewSubmissionWithoutExceedLimit(StudentGroup studentGroup) {
-        return (countProjectSubmissionsForStudentGroup(studentGroup) + 1) <= getMaxSubmissionsToKeep();
+	return (countProjectSubmissionsForStudentGroup(studentGroup) + 1) <= getMaxSubmissionsToKeep();
     }
 
     public int countProjectSubmissionsForStudentGroup(StudentGroup studentGroup) {
-        int count = 0;
+	int count = 0;
 
-        for (ProjectSubmission projectSubmission : getProjectSubmissions()) {
-            if (projectSubmission.getStudentGroup() == studentGroup) {
-                count++;
-            }
-        }
+	for (ProjectSubmission projectSubmission : getProjectSubmissions()) {
+	    if (projectSubmission.getStudentGroup() == studentGroup) {
+		count++;
+	    }
+	}
 
-        return count;
+	return count;
     }
 
     public boolean isSubmissionPeriodOpen() {
-        DateTime currentDateTime = new DateTime();
+	DateTime currentDateTime = new DateTime();
 
-        if ((currentDateTime.compareTo(getProjectBeginDateTime()) < 0)
-                || (currentDateTime.compareTo(getProjectEndDateTime()) > 0)) {
-            return false;
-        } else {
-            return true;
-        }
+	if ((currentDateTime.compareTo(getProjectBeginDateTime()) < 0)
+		|| (currentDateTime.compareTo(getProjectEndDateTime()) > 0)) {
+	    return false;
+	} else {
+	    return true;
+	}
     }
 
     @Override
     public void delete() {
-        if (!getProjectSubmissions().isEmpty()) {
-            throw new DomainException("error.project.cannotDeleteBecauseHasSubmissionsAssociated");
-        }
+	if (!getProjectSubmissions().isEmpty()) {
+	    throw new DomainException("error.project.cannotDeleteBecauseHasSubmissionsAssociated");
+	}
 
-        removeGrouping();
-        super.delete();
+	removeGrouping();
+	super.delete();
     }
 
     public List<ProjectSubmission> getProjectSubmissionsByStudentGroup(StudentGroup studentGroup) {
-        List<ProjectSubmission> result = new ArrayList<ProjectSubmission>();
+	List<ProjectSubmission> result = new ArrayList<ProjectSubmission>();
 
-        for (ProjectSubmission projectSubmission : getProjectSubmissions()) {
-            if (projectSubmission.getStudentGroup() == studentGroup) {
-                result.add(projectSubmission);
-            }
-        }
+	for (ProjectSubmission projectSubmission : getProjectSubmissions()) {
+	    if (projectSubmission.getStudentGroup() == studentGroup) {
+		result.add(projectSubmission);
+	    }
+	}
 
-        return result;
+	return result;
     }
 
     public ProjectSubmission getOldestProjectSubmissionForStudentGroup(StudentGroup studentGroup) {
-        ProjectSubmission oldestProjectSubmission = null;
-        for (ProjectSubmission projectSubmission : getProjectSubmissionsByStudentGroup(studentGroup)) {
-            if (oldestProjectSubmission == null) {
-                oldestProjectSubmission = projectSubmission;
-            } else if (projectSubmission.getSubmissionDateTime().compareTo(
-                    oldestProjectSubmission.getSubmissionDateTime()) < 0) {
-                oldestProjectSubmission = projectSubmission;
-            }
-        }
+	ProjectSubmission oldestProjectSubmission = null;
+	for (ProjectSubmission projectSubmission : getProjectSubmissionsByStudentGroup(studentGroup)) {
+	    if (oldestProjectSubmission == null) {
+		oldestProjectSubmission = projectSubmission;
+	    } else if (projectSubmission.getSubmissionDateTime().compareTo(oldestProjectSubmission.getSubmissionDateTime()) < 0) {
+		oldestProjectSubmission = projectSubmission;
+	    }
+	}
 
-        return oldestProjectSubmission;
+	return oldestProjectSubmission;
     }
 
     public Collection<ProjectSubmission> getLastProjectSubmissionForEachStudentGroup() {
-        final Map<StudentGroup, ProjectSubmission> lastProjectSubmissionByStudentGroup = new HashMap<StudentGroup, ProjectSubmission>();
+	final Map<StudentGroup, ProjectSubmission> lastProjectSubmissionByStudentGroup = new HashMap<StudentGroup, ProjectSubmission>();
 
-        for (final ProjectSubmission projectSubmission : getProjectSubmissions()) {
-            final StudentGroup studentGroup = projectSubmission.getStudentGroup();
-            final ProjectSubmission lastProjectSubmission = lastProjectSubmissionByStudentGroup
-                    .get(studentGroup);
+	for (final ProjectSubmission projectSubmission : getProjectSubmissions()) {
+	    final StudentGroup studentGroup = projectSubmission.getStudentGroup();
+	    final ProjectSubmission lastProjectSubmission = lastProjectSubmissionByStudentGroup.get(studentGroup);
 
-            if (lastProjectSubmission == null) {
-                lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
-            } else if (projectSubmission.getSubmissionDateTime().compareTo(
-                    lastProjectSubmission.getSubmissionDateTime()) > 0) {
-                lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
-            }
-        }
+	    if (lastProjectSubmission == null) {
+		lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
+	    } else if (projectSubmission.getSubmissionDateTime().compareTo(lastProjectSubmission.getSubmissionDateTime()) > 0) {
+		lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
+	    }
+	}
 
-        return lastProjectSubmissionByStudentGroup.values();
+	return lastProjectSubmissionByStudentGroup.values();
     }
 
     public ProjectSubmission getLastProjectSubmissionForStudentGroup(StudentGroup group) {
-	for(ProjectSubmission projectSubmission : getLastProjectSubmissionForEachStudentGroup()) {
-	    if(projectSubmission.getStudentGroup().equals(group)) {
+	for (ProjectSubmission projectSubmission : getLastProjectSubmissionForEachStudentGroup()) {
+	    if (projectSubmission.getStudentGroup().equals(group)) {
 		return projectSubmission;
 	    }
 	}
 	return null;
     }
-    
+
     public List<ProjectSubmissionLog> getProjectSubmissionLogsByStudentGroup(StudentGroup studentGroup) {
-        List<ProjectSubmissionLog> result = new ArrayList<ProjectSubmissionLog>();
+	List<ProjectSubmissionLog> result = new ArrayList<ProjectSubmissionLog>();
 
-        for (ProjectSubmissionLog projectSubmissionLog : getProjectSubmissionLogs()) {
-            if (projectSubmissionLog.getStudentGroup() == studentGroup) {
-                result.add(projectSubmissionLog);
-            }
-        }
+	for (ProjectSubmissionLog projectSubmissionLog : getProjectSubmissionLogs()) {
+	    if (projectSubmissionLog.getStudentGroup() == studentGroup) {
+		result.add(projectSubmissionLog);
+	    }
+	}
 
-        return result;
+	return result;
     }
 
 }

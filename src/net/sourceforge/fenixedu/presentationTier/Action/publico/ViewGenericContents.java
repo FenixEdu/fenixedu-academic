@@ -27,12 +27,12 @@ import org.apache.struts.action.ActionMapping;
 /**
  * 
  * @author pcma
- *
+ * 
  */
 public class ViewGenericContents extends FenixDispatchAction {
 
-    public ActionForward viewSection(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewSection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Section section = getSection(request);
 	request.setAttribute("section", section);
 	String type = getType(request);
@@ -53,19 +53,18 @@ public class ViewGenericContents extends FenixDispatchAction {
 
     }
 
-    public ActionForward viewItem(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewItem(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	Section section = (Section) getLastContentInPathWithClass(request,Section.class);
+	Section section = (Section) getLastContentInPathWithClass(request, Section.class);
 	request.setAttribute("section", section);
-	
+
 	Item item = getItem(request);
 	request.setAttribute("item", item);
 
 	String type = getType(request);
 
-	return mapping.findForward("viewItem-"
-		+ type.substring(type.lastIndexOf(".") + 1, type.length()));
+	return mapping.findForward("viewItem-" + type.substring(type.lastIndexOf(".") + 1, type.length()));
 
     }
 
@@ -83,7 +82,7 @@ public class ViewGenericContents extends FenixDispatchAction {
 	FilterFunctionalityContext context = getContext(request);
 	return context.getLastContentInPath(clazz);
     }
-    
+
     private Content getLastContentInPath(HttpServletRequest request) {
 	FilterFunctionalityContext context = getContext(request);
 	List<Content> contents = context.getSelectedContents();
@@ -99,14 +98,13 @@ public class ViewGenericContents extends FenixDispatchAction {
     }
 
     private MetaDomainObjectPortal getPortal(HttpServletRequest request) {
-	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext
-		.getCurrentContext(request);
+	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
 	return (MetaDomainObjectPortal) MetaDomainObject.getMeta(context.getLastContentInPath(Site.class).getClass())
 		.getAssociatedPortal();
     }
 
-    private void prepareProtectedItems(HttpServletRequest request, IUserView userView,
-	    Collection<Item> items, FunctionalityContext context) {
+    private void prepareProtectedItems(HttpServletRequest request, IUserView userView, Collection<Item> items,
+	    FunctionalityContext context) {
 	List<ProtectedItem> protectedItems = setupItems(request, context, items);
 
 	if (!isAuthenticated(userView) && hasRestrictedItems(protectedItems)) {
@@ -124,8 +122,7 @@ public class ViewGenericContents extends FenixDispatchAction {
 	return false;
     }
 
-    private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context,
-	    Collection<Item> items) {
+    private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context, Collection<Item> items) {
 	List<ProtectedItem> protectedItems = new ArrayList<ProtectedItem>();
 	for (Item item : items) {
 	    if (item.getVisible()) {

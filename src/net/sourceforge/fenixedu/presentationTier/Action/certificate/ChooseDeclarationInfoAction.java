@@ -34,18 +34,17 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
 	return mapping.findForward("PrepareReady");
     }
 
-    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer number = new Integer((String) ((DynaActionForm) form).get("requesterNumber"));
-	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number,
-		DegreeType.MASTER_DEGREE));
+	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE));
 
 	request.setAttribute(SessionConstants.DOCUMENT_REASON, DocumentReason.values());
 
@@ -53,12 +52,12 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
     }
 
     /**
-         * @param mapping
-         * @param form
-         * @param request
-         * @param response
-         * @return
-         */
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     */
     public ActionForward chooseFinal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -74,18 +73,15 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 	    request.setAttribute(SessionConstants.DOCUMENT_REASON_LIST, destination);
 	}
 
-	InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan
-		.newInfoFromDomain(rootDomainObject
-			.readStudentCurricularPlanByOID(studentCurricularPlanID));
+	InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan.newInfoFromDomain(rootDomainObject
+		.readStudentCurricularPlanByOID(studentCurricularPlanID));
 
-	InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear
-		.readCurrentExecutionYear());
+	InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
 
 	List enrolmentList = null;
 	Object argsEnrolment[] = { infoStudentCurricularPlan.getIdInternal() };
 	try {
-	    enrolmentList = (List) ServiceManagerServiceFactory.executeService(
-		    "GetEnrolmentList", argsEnrolment);
+	    enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", argsEnrolment);
 
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("Inscrição", e);
@@ -95,14 +91,12 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 	if (enrolmentList.size() == 0) {
 	    anoLectivo = infoExecutionYear.getYear();
 	} else {
-	    anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod()
-		    .getInfoExecutionYear().getYear();
+	    anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
 	}
 
 	Locale locale = new Locale("pt", "PT");
 	Date date = new Date();
-	String formatedDate = "Lisboa, "
-		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+	String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 	request.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
 	request.setAttribute(SessionConstants.DATE, formatedDate);
 	request.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);

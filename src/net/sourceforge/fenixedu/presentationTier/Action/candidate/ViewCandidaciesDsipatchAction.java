@@ -28,8 +28,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("view");
     }
 
@@ -37,8 +36,7 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	final Candidacy candidacy = getCandidacy(request);
-	request.setAttribute("canChangePersonalData", candidacy.getActiveCandidacySituation()
-		.canChangePersonalData());
+	request.setAttribute("canChangePersonalData", candidacy.getActiveCandidacySituation().canChangePersonalData());
 	request.setAttribute("candidacy", candidacy);
 
 	return mapping.findForward("viewDetail");
@@ -55,32 +53,31 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward prepareUploadDocuments(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareUploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	fillRequest(request, getCandidacy(request));
 
 	return mapping.findForward("uploadDocuments");
     }
 
-    public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils
-		.getViewState("candidacyDocuments").getMetaObject().getObject();
+	List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils.getViewState(
+		"candidacyDocuments").getMetaObject().getObject();
 
-	for(CandidacyDocumentUploadBean bean : beans) {
+	for (CandidacyDocumentUploadBean bean : beans) {
 	    bean.createTemporaryFile();
 	}
-	
+
 	Object[] args = { beans };
 	executeService("SaveCandidacyDocumentFiles", args);
 
-	for(CandidacyDocumentUploadBean bean : beans) {
+	for (CandidacyDocumentUploadBean bean : beans) {
 	    bean.deleteTemporaryFile();
 	}
-	
+
 	fillRequest(request, getCandidacy(beans));
 
 	return mapping.findForward("uploadDocuments");

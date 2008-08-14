@@ -114,18 +114,18 @@ public abstract class AbstractOptionalCurricularCoursesLocationManagementDA exte
 	}
 	return null;
     }
-    
+
     static public class OptionalCurricularCoursesLocationForm extends FenixActionForm {
-	    
-        private String[] enrolmentsToChange;
-    
-        public String[] getEnrolmentsToChange() {
-            return enrolmentsToChange;
-        }
-    
-        public void setEnrolmentsToChange(String[] enrolmentsToChange) {
-            this.enrolmentsToChange = enrolmentsToChange;
-        }
+
+	private String[] enrolmentsToChange;
+
+	public String[] getEnrolmentsToChange() {
+	    return enrolmentsToChange;
+	}
+
+	public void setEnrolmentsToChange(String[] enrolmentsToChange) {
+	    this.enrolmentsToChange = enrolmentsToChange;
+	}
     }
 
     abstract public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,

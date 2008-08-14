@@ -25,84 +25,79 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 public class ReadExamsByDate extends Service {
 
     public InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {
-        
-        final List<Exam> filteredExams = Exam.getAllByDate(examDay, examStartTime, examEndTime);
 
-        final InfoViewExam infoViewExam = new InfoViewExam();
-        List<InfoViewExamByDayAndShift> infoViewExamsByDayAndShiftList = new ArrayList<InfoViewExamByDayAndShift>();
-        infoViewExam.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShiftList);
+	final List<Exam> filteredExams = Exam.getAllByDate(examDay, examStartTime, examEndTime);
 
-        for (final Exam exam : filteredExams) {
-            final InfoViewExamByDayAndShift viewExamByDayAndShift = new InfoViewExamByDayAndShift();
+	final InfoViewExam infoViewExam = new InfoViewExam();
+	List<InfoViewExamByDayAndShift> infoViewExamsByDayAndShiftList = new ArrayList<InfoViewExamByDayAndShift>();
+	infoViewExam.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShiftList);
 
-            final InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
-                    .newInfoFromDomain(exam);
-            
-            final List<InfoExecutionCourse> infoExecutionCourses = readInfoExecutionCourses(exam);
-            final List<InfoDegree> infoDegrees = readInfoDegrees(exam, viewExamByDayAndShift);
-            final Integer availableRoomOccupation = calculateAvailableRoomOccupation(exam,
-                    viewExamByDayAndShift.getNumberStudentesAttendingCourse());
+	for (final Exam exam : filteredExams) {
+	    final InfoViewExamByDayAndShift viewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-            viewExamByDayAndShift.setInfoExam(infoExam);
-            viewExamByDayAndShift.setInfoExecutionCourses(infoExecutionCourses);
-            viewExamByDayAndShift.setInfoDegrees(infoDegrees);
-            viewExamByDayAndShift.setAvailableRoomOccupation(availableRoomOccupation);
-            infoViewExamsByDayAndShiftList.add(viewExamByDayAndShift);
-        }
-        return infoViewExam;
+	    final InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
+		    .newInfoFromDomain(exam);
+
+	    final List<InfoExecutionCourse> infoExecutionCourses = readInfoExecutionCourses(exam);
+	    final List<InfoDegree> infoDegrees = readInfoDegrees(exam, viewExamByDayAndShift);
+	    final Integer availableRoomOccupation = calculateAvailableRoomOccupation(exam, viewExamByDayAndShift
+		    .getNumberStudentesAttendingCourse());
+
+	    viewExamByDayAndShift.setInfoExam(infoExam);
+	    viewExamByDayAndShift.setInfoExecutionCourses(infoExecutionCourses);
+	    viewExamByDayAndShift.setInfoDegrees(infoDegrees);
+	    viewExamByDayAndShift.setAvailableRoomOccupation(availableRoomOccupation);
+	    infoViewExamsByDayAndShiftList.add(viewExamByDayAndShift);
+	}
+	return infoViewExam;
     }
 
-    private Integer calculateAvailableRoomOccupation(final Exam exam,
-            final Integer numberStudentesAttendingCourse) {
-        int totalExamCapacity = 0;
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : exam.getWrittenEvaluationSpaceOccupations()) {
-            totalExamCapacity += ((AllocatableSpace)roomOccupation.getRoom()).getCapacidadeExame().intValue();
-        }
-        return Integer.valueOf(numberStudentesAttendingCourse.intValue() - totalExamCapacity);
+    private Integer calculateAvailableRoomOccupation(final Exam exam, final Integer numberStudentesAttendingCourse) {
+	int totalExamCapacity = 0;
+	for (final WrittenEvaluationSpaceOccupation roomOccupation : exam.getWrittenEvaluationSpaceOccupations()) {
+	    totalExamCapacity += ((AllocatableSpace) roomOccupation.getRoom()).getCapacidadeExame().intValue();
+	}
+	return Integer.valueOf(numberStudentesAttendingCourse.intValue() - totalExamCapacity);
     }
 
-    private List<InfoDegree> readInfoDegrees(final Exam exam,
-            InfoViewExamByDayAndShift viewExamByDayAndShift) {
+    private List<InfoDegree> readInfoDegrees(final Exam exam, InfoViewExamByDayAndShift viewExamByDayAndShift) {
 
-        final List<InfoDegree> result = new ArrayList<InfoDegree>();
-        final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
+	final List<InfoDegree> result = new ArrayList<InfoDegree>();
+	final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
 
-        // Select an ExecutionPeriod from any ExecutionCourses
-        final ExecutionSemester executionSemester = exam.getAssociatedExecutionCourses().get(0)
-                .getExecutionPeriod();
-        int numberStudentes = 0;
+	// Select an ExecutionPeriod from any ExecutionCourses
+	final ExecutionSemester executionSemester = exam.getAssociatedExecutionCourses().get(0).getExecutionPeriod();
+	int numberStudentes = 0;
 
-        for (final DegreeModuleScope degreeModuleScope : exam.getDegreeModuleScopes()) {
-            final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
-            if (!curricularCourseIDs.contains(curricularCourse.getIdInternal())) {
-                curricularCourseIDs.add(curricularCourse.getIdInternal());
-                result.add(InfoDegree.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()
-                        .getDegree()));
-                numberStudentes += calculateNumberOfEnrolmentStudents(curricularCourse, executionSemester);
-            }
-        }
-        viewExamByDayAndShift.setNumberStudentesAttendingCourse(Integer.valueOf(numberStudentes));
+	for (final DegreeModuleScope degreeModuleScope : exam.getDegreeModuleScopes()) {
+	    final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
+	    if (!curricularCourseIDs.contains(curricularCourse.getIdInternal())) {
+		curricularCourseIDs.add(curricularCourse.getIdInternal());
+		result.add(InfoDegree.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan().getDegree()));
+		numberStudentes += calculateNumberOfEnrolmentStudents(curricularCourse, executionSemester);
+	    }
+	}
+	viewExamByDayAndShift.setNumberStudentesAttendingCourse(Integer.valueOf(numberStudentes));
 
-        return result;
+	return result;
     }
 
     private Integer calculateNumberOfEnrolmentStudents(final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester) {
-        int numberOfStudents = 0;
-        for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
-            if (enrolment.getExecutionPeriod() == executionSemester) {
-                numberOfStudents++;
-            }
-        }
-        return Integer.valueOf(numberOfStudents);
+	    final ExecutionSemester executionSemester) {
+	int numberOfStudents = 0;
+	for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
+	    if (enrolment.getExecutionPeriod() == executionSemester) {
+		numberOfStudents++;
+	    }
+	}
+	return Integer.valueOf(numberOfStudents);
     }
 
     private List<InfoExecutionCourse> readInfoExecutionCourses(final Exam exam) {
-        final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam
-                .getAssociatedExecutionCoursesCount());
-        for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
-            result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-        }
-        return result;
+	final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCoursesCount());
+	for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
+	    result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+	}
+	return result;
     }
 }

@@ -20,18 +20,17 @@ public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
     protected Collection<MenuEntry> getEntries(Object object) {
 	UnitSite site = (UnitSite) getSite(object);
 	Container container = getTargetSection(site);
-	List<MenuEntry> defaultEntries = getDefaultEntries(site); 
+	List<MenuEntry> defaultEntries = getDefaultEntries(site);
 	if (container != null) {
 	    defaultEntries.addAll(container.getMenu());
 	}
 	return defaultEntries;
     }
 
-    protected List<MenuEntry> getDefaultEntries(Site site) { 
-	return new ArrayList<MenuEntry>(site.getTemplate()
-		.getOrderedChildrenNodes());
+    protected List<MenuEntry> getDefaultEntries(Site site) {
+	return new ArrayList<MenuEntry>(site.getTemplate().getOrderedChildrenNodes());
     }
-    
+
     protected Section getTargetSection(Site site) {
 	MultiLanguageString name = getTargetSectionName();
 
@@ -63,7 +62,7 @@ public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
     protected boolean equalInAnyLanguage(MultiLanguageString target, MultiLanguageString sub) {
 	return target.equalInAnyLanguage(sub);
     }
-    
+
     protected boolean isTemplatedContent(Site site, Content content) {
 	return site.getTemplate().getChildrenAsContent().contains(content);
     }

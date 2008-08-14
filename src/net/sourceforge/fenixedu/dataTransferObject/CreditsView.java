@@ -21,28 +21,28 @@ public class CreditsView extends InfoObject {
      * @return
      */
     public InfoCredits getInfoCredits() {
-        return this.infoCredits;
+	return this.infoCredits;
     }
 
     /**
      * @param infoCredits
      */
     public void setInfoCredits(InfoCredits infoCredits) {
-        this.infoCredits = infoCredits;
+	this.infoCredits = infoCredits;
     }
 
     /**
      * @return
      */
     public List getInfoProfessorshipList() {
-        return this.infoProfessorshipList;
+	return this.infoProfessorshipList;
     }
 
     /**
      * @param infoProfessorshipList
      */
     public void setInfoProfessorshipList(List infoProfessorshipList) {
-        this.infoProfessorshipList = infoProfessorshipList;
+	this.infoProfessorshipList = infoProfessorshipList;
     }
 
 }

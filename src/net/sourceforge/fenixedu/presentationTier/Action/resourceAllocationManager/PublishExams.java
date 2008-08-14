@@ -21,16 +21,16 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class PublishExams extends FenixContextDispatchAction {
 
     public ActionForward switchPublishedState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = UserView.getUser();
+	    HttpServletResponse response) throws Exception {
+	final IUserView userView = UserView.getUser();
 
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final Integer executionPeriodOID = new Integer((String) dynaActionForm.get("executionPeriodOID"));
+	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+	final Integer executionPeriodOID = new Integer((String) dynaActionForm.get("executionPeriodOID"));
 
-        Object[] args = new Object[] { executionPeriodOID };
-        ServiceManagerServiceFactory.executeService( "SwitchPublishedExamsFlag", args);
+	Object[] args = new Object[] { executionPeriodOID };
+	ServiceManagerServiceFactory.executeService("SwitchPublishedExamsFlag", args);
 
-        return mapping.findForward("switch");
+	return mapping.findForward("switch");
     }
 
 }

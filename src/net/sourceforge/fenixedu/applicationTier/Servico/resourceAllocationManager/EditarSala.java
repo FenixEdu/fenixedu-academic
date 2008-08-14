@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditarSala extends Service {
 
-    public void run(InfoRoomEditor salaNova) throws ExistingServiceException{
-	if(salaNova != null) {
+    public void run(InfoRoomEditor salaNova) throws ExistingServiceException {
+	if (salaNova != null) {
 	    AllocatableSpace room = salaNova.getRoom();
-            if(room != null) {        	
-        	room.editCapacities(salaNova.getCapacidadeNormal(), salaNova.getCapacidadeExame());
-            }	
+	    if (room != null) {
+		room.editCapacities(salaNova.getCapacidadeNormal(), salaNova.getCapacidadeExame());
+	    }
 	}
     }
 }

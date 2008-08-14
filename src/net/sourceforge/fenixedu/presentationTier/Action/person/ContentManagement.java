@@ -43,30 +43,30 @@ public class ContentManagement extends FenixDispatchAction {
 
 	Content content = getContent(request);
 
-	return (content.isContainer()) ? viewContainer(mapping, form, request, response) : viewElement(
-		mapping, form, request, response);
+	return (content.isContainer()) ? viewContainer(mapping, form, request, response) : viewElement(mapping, form, request,
+		response);
     }
 
-    public ActionForward activateLogging(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	
-	if(!FenixStatementInterceptor.isLogging()) {
+    public ActionForward activateLogging(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	if (!FenixStatementInterceptor.isLogging()) {
 	    FenixStatementInterceptor.startLogging();
 	}
 	return viewContainer(mapping, form, request, response);
     }
-    
-    public ActionForward deactivateLogging(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	if(FenixStatementInterceptor.isLogging()) {
+
+    public ActionForward deactivateLogging(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	if (FenixStatementInterceptor.isLogging()) {
 	    FenixStatementInterceptor.stopLogging();
 	}
-	
+
 	return viewContainer(mapping, form, request, response);
     }
-    
-    public ActionForward viewContainer(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward viewContainer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	Container container = getContainer(request);
 	request.setAttribute("content", container);
@@ -75,25 +75,23 @@ public class ContentManagement extends FenixDispatchAction {
 	return mapping.findForward("viewContainer");
     }
 
-    public ActionForward prepareEditAvailabilityPolicy(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareEditAvailabilityPolicy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	Content content = getContent(request);
 	Group permittedGroup = content.getPermittedGroup();
 	request.setAttribute("content", content);
-	request.setAttribute("expressionBean", new ExpressionBean(permittedGroup != null ? content
-		.getPermittedGroup().getExpression() : null));
+	request.setAttribute("expressionBean", new ExpressionBean(permittedGroup != null ? content.getPermittedGroup()
+		.getExpression() : null));
 
 	return mapping.findForward("editAvailabilityPolicy");
     }
 
-    public ActionForward editAvailabilityPolicy(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward editAvailabilityPolicy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	Content content = getContent(request);
-	ExpressionBean bean = (ExpressionBean) RenderUtils.getViewState("expressionBean")
-		.getMetaObject().getObject();
+	ExpressionBean bean = (ExpressionBean) RenderUtils.getViewState("expressionBean").getMetaObject().getObject();
 
 	try {
 	    executeService("CreateGroupAvailability", new Object[] { content, bean.getExpression() });
@@ -108,8 +106,8 @@ public class ContentManagement extends FenixDispatchAction {
 	return viewContent(mapping, form, request, response);
     }
 
-    public ActionForward viewParentContainer(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewParentContainer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	Container container = getParentContainer(request);
 	request.setAttribute("content", container);
@@ -127,8 +125,8 @@ public class ContentManagement extends FenixDispatchAction {
 	return mapping.findForward("viewElement");
     }
 
-    private ActionForward createContent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response, String forwardTo) {
+    private ActionForward createContent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, String forwardTo) {
 
 	Container container = getContainer(request);
 	request.setAttribute("container", container);
@@ -136,8 +134,8 @@ public class ContentManagement extends FenixDispatchAction {
 	return mapping.findForward(forwardTo);
     }
 
-    public ActionForward prepareAddPortal(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareAddPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	PortalBean bean = new PortalBean(getContainer(request));
 	request.setAttribute("bean", bean);
@@ -159,19 +157,18 @@ public class ContentManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward prepareCreateSection(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	SectionBean bean = new SectionBean(getContainer(request));
 	request.setAttribute("bean", bean);
 	return createContent(mapping, form, request, response, "createSection");
     }
 
-    public ActionForward createSection(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward createSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	SectionBean bean = (SectionBean) RenderUtils.getViewState("createSection").getMetaObject()
-		.getObject();
+	SectionBean bean = (SectionBean) RenderUtils.getViewState("createSection").getMetaObject().getObject();
 	Object[] args = { bean.getContainer(), bean.getName(), bean.isVisible(), bean.getNextSection() };
 
 	try {
@@ -182,22 +179,22 @@ public class ContentManagement extends FenixDispatchAction {
 	return viewContainer(mapping, form, request, response);
     }
 
-    public ActionForward prepareAddFunctionality(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareAddFunctionality(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("rootModule", rootDomainObject.getRootModule());
 	return createContent(mapping, form, request, response, "addFunctionality");
     }
 
-    public ActionForward prepareEditPool(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareEditPool(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("rootModule", rootDomainObject.getRootModule());
 	return createContent(mapping, form, request, response, "editPool");
     }
 
-    public ActionForward addFunctionality(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward addFunctionality(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	Functionality functionality = (Functionality) getElement(request);
 	Container container = getParentContainer(request);
@@ -229,8 +226,8 @@ public class ContentManagement extends FenixDispatchAction {
 	return viewParentContainer(mapping, form, request, response);
     }
 
-    public ActionForward deleteContent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward deleteContent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Content content = getContent(request);
 	Container parent = getParentContainer(request);
 	Node node = content.getParentNode(parent);
@@ -251,8 +248,8 @@ public class ContentManagement extends FenixDispatchAction {
 	return mapping.findForward("editContent");
     }
 
-    public ActionForward addInitialContentToSection(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward addInitialContentToSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	Content content = getContent(request);
 	if (content instanceof Section) {
@@ -263,8 +260,8 @@ public class ContentManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward organizeStructure(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward organizeStructure(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Container container = getContainer(request);
 	String structure = request.getParameter("tree");
 
@@ -282,7 +279,7 @@ public class ContentManagement extends FenixDispatchAction {
 
 	return viewContainer(mapping, form, request, response);
     }
-   
+
     public List<ModifiedContentBean> getModifiedContent(Container container, String structure) {
 
 	List<Content> flatContent = flatten(Collections.singletonList((Content) container));
@@ -324,15 +321,13 @@ public class ContentManagement extends FenixDispatchAction {
 	    Container parentContainer = (Container) flatContent.get(parentIndex);
 	    Content content = flatContent.get(childIndex);
 	    Container currentContainer = (Container) flatContent.get(currentParentIndex);
-	    modifiedContent.add(new ModifiedContentBean(currentContainer, content, parentContainer,
-		    orderForParent));
+	    modifiedContent.add(new ModifiedContentBean(currentContainer, content, parentContainer, orderForParent));
 	}
 
 	return modifiedContent;
 
     }
 
-    
     private Integer getId(String id) {
 	if (id == null) {
 	    return null;
@@ -348,8 +343,7 @@ public class ContentManagement extends FenixDispatchAction {
 
     protected Content getContent(HttpServletRequest request) {
 	String contentId = request.getParameter("contentId");
-	return (contentId == null) ? null : rootDomainObject
-		.readContentByOID(Integer.valueOf(contentId));
+	return (contentId == null) ? null : rootDomainObject.readContentByOID(Integer.valueOf(contentId));
     }
 
     protected Element getElement(HttpServletRequest request) {
@@ -359,14 +353,13 @@ public class ContentManagement extends FenixDispatchAction {
 
     protected Container getContainer(HttpServletRequest request) {
 	Content content = getContent(request);
-	return content == null ? Portal.getRootPortal() : Container.class.isAssignableFrom(content
-		.getClass()) ? (Container) content : null;
+	return content == null ? Portal.getRootPortal()
+		: Container.class.isAssignableFrom(content.getClass()) ? (Container) content : null;
     }
 
     protected Container getParentContainer(HttpServletRequest request) {
 	String containerId = request.getParameter("contentParentId");
-	return containerId == null ? null : (Container) rootDomainObject.readContentByOID(Integer
-		.valueOf(containerId));
+	return containerId == null ? null : (Container) rootDomainObject.readContentByOID(Integer.valueOf(containerId));
     }
 
     private List<Content> flatten(Collection<Content> contents) {
@@ -394,8 +387,7 @@ public class ContentManagement extends FenixDispatchAction {
 	saveMessages(request, messages);
     }
 
-    private void createParserReport(HttpServletRequest request, GroupExpressionException e,
-	    ExpressionBean bean) {
+    private void createParserReport(HttpServletRequest request, GroupExpressionException e, ExpressionBean bean) {
 	createMessage(request, "error", e);
 
 	if (e.hasLineInformation()) {

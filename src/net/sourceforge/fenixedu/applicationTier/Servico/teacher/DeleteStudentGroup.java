@@ -16,17 +16,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteStudentGroup extends Service {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode)
-            throws FenixServiceException{
-        StudentGroup deletedStudentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-        
-        if (deletedStudentGroup == null) {
-            throw new ExistingServiceException();
-        }
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode) throws FenixServiceException {
+	StudentGroup deletedStudentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
-        deletedStudentGroup.delete();
+	if (deletedStudentGroup == null) {
+	    throw new ExistingServiceException();
+	}
 
-        return Boolean.TRUE;
+	deletedStudentGroup.delete();
+
+	return Boolean.TRUE;
     }
-    
+
 }

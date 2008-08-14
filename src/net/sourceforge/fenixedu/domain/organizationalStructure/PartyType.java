@@ -7,24 +7,24 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PartyType extends PartyType_Base {
-    
+
     public PartyType(final PartyTypeEnum partyTypeEnum) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setType(partyTypeEnum);
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setType(partyTypeEnum);
     }
-    
+
     @Override
     public void setType(final PartyTypeEnum type) {
-	if(type == null) {
+	if (type == null) {
 	    throw new DomainException("error.PartyType.empty.type");
 	}
 	super.setType(type);
-    }   
-    
+    }
+
     public static PartyType readPartyTypeByType(final PartyTypeEnum partyTypeEnum) {
 	for (final PartyType partyType : RootDomainObject.getInstance().getPartyTypes()) {
-	    if(partyType.getType() == partyTypeEnum) {
+	    if (partyType.getType() == partyTypeEnum) {
 		return partyType;
 	    }
 	}

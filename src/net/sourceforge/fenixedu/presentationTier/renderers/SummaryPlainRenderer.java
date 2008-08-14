@@ -26,23 +26,23 @@ public class SummaryPlainRenderer extends OutputRenderer {
 		Summary summary = (Summary) object;
 		StringBuilder builder = new StringBuilder();
 		Lesson lesson = null;
-		
+
 		builder.append(summary.getSummaryDateYearMonthDay().getDayOfMonth()).append("/");
 		builder.append(summary.getSummaryDateYearMonthDay().getMonthOfYear()).append("/");
 		builder.append(summary.getSummaryDateYearMonthDay().getYear());
 		builder.append(" - ").append(RenderUtils.getResourceString("DEFAULT", "label.lesson") + ": ");
 
 		if (summary.isExtraSummary()) {
-		    
+
 		    builder.append(RenderUtils.getEnumString(SummaryType.EXTRA_SUMMARY, null)).append(" ");
 		    builder.append(" (").append(summary.getSummaryHourHourMinuteSecond().getHour());
 		    builder.append(":").append(summary.getSummaryHourHourMinuteSecond().getMinuteOfHour()).append(") ");
-		    
+
 		} else {
-		    
-		    lesson = summary.getLesson();		    		   
+
+		    lesson = summary.getLesson();
 		    if (lesson != null) {
-			
+
 			builder.append(lesson.getDiaSemana().toString()).append(" (");
 			builder.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime()));
 			builder.append("-").append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime()));
@@ -50,7 +50,7 @@ public class SummaryPlainRenderer extends OutputRenderer {
 		    }
 		}
 		if (lesson != null && lesson.hasSala()) {
-		    builder.append(((AllocatableSpace)lesson.getSala()).getName().toString());
+		    builder.append(((AllocatableSpace) lesson.getSala()).getName().toString());
 		}
 
 		return new HtmlText(builder.toString());

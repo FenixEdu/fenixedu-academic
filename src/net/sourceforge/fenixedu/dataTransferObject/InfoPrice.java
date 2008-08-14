@@ -23,91 +23,90 @@ public class InfoPrice extends InfoObject {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoPrice) {
-            InfoPrice infoPrice = (InfoPrice) obj;
-            resultado = this.getGraduationType().equals(infoPrice.getGraduationType())
-                    && this.getPrice().equals(infoPrice.getPrice())
-                    && this.getDescription().equals(infoPrice.getDescription())
-                    && this.getDocumentType().equals(infoPrice.getDocumentType());
+	boolean resultado = false;
+	if (obj instanceof InfoPrice) {
+	    InfoPrice infoPrice = (InfoPrice) obj;
+	    resultado = this.getGraduationType().equals(infoPrice.getGraduationType())
+		    && this.getPrice().equals(infoPrice.getPrice()) && this.getDescription().equals(infoPrice.getDescription())
+		    && this.getDocumentType().equals(infoPrice.getDocumentType());
 
-        }
-        return resultado;
+	}
+	return resultado;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "graduationType = " + this.graduationType + "; ";
-        result += "price = " + this.price + "]";
-        result += "description = " + this.description + "]";
-        result += "documentType = " + this.documentType + "]";
-        return result;
+	String result = "[" + this.getClass().getName() + ": ";
+	result += "graduationType = " + this.graduationType + "; ";
+	result += "price = " + this.price + "]";
+	result += "description = " + this.description + "]";
+	result += "documentType = " + this.documentType + "]";
+	return result;
     }
 
     /**
      * @return
      */
     public String getDescription() {
-        return description;
+	return description;
     }
 
     /**
      * @return
      */
     public DocumentType getDocumentType() {
-        return documentType;
+	return documentType;
     }
 
     /**
      * @return
      */
     public GraduationType getGraduationType() {
-        return graduationType;
+	return graduationType;
     }
 
     /**
      * @return
      */
     public Double getPrice() {
-        return price;
+	return price;
     }
 
     /**
      * @param string
      */
     public void setDescription(String string) {
-        description = string;
+	description = string;
     }
 
     /**
      * @param type
      */
     public void setDocumentType(DocumentType type) {
-        documentType = type;
+	documentType = type;
     }
 
     /**
      * @param type
      */
     public void setGraduationType(GraduationType type) {
-        graduationType = type;
+	graduationType = type;
     }
 
     /**
      * @param double1
      */
     public void setPrice(Double double1) {
-        price = double1;
+	price = double1;
     }
 
     public static InfoPrice newInfoFromDoaim(Price price2) {
-        InfoPrice infoPrice = new InfoPrice();
-        infoPrice.setDescription(price2.getDescription());
-        infoPrice.setDocumentType(price2.getDocumentType());
-        infoPrice.setGraduationType(price2.getGraduationType());
-        infoPrice.setIdInternal(price2.getIdInternal());
-        infoPrice.setPrice(price2.getPrice());
-        return infoPrice;
+	InfoPrice infoPrice = new InfoPrice();
+	infoPrice.setDescription(price2.getDescription());
+	infoPrice.setDocumentType(price2.getDocumentType());
+	infoPrice.setGraduationType(price2.getGraduationType());
+	infoPrice.setIdInternal(price2.getIdInternal());
+	infoPrice.setPrice(price2.getPrice());
+	return infoPrice;
     }
 
 }

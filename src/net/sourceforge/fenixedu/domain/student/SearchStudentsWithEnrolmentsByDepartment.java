@@ -16,46 +16,46 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
 
-    private DomainReference<Department> departmentDomainReference; 
+    private DomainReference<Department> departmentDomainReference;
     private Set<DomainReference<Degree>> degreeDomainReferences;
     private DomainReference<ExecutionYear> executionYearDomainReference;
 
     public SearchStudentsWithEnrolmentsByDepartment(final Department department) {
-        departmentDomainReference = department == null ? null : new DomainReference<Department>(department);
+	departmentDomainReference = department == null ? null : new DomainReference<Department>(department);
     }
 
     public Department getDepartment() {
-        return departmentDomainReference == null ? null : departmentDomainReference.getObject();
+	return departmentDomainReference == null ? null : departmentDomainReference.getObject();
     }
 
     public List<Degree> getDegrees() {
-        final List<Degree> degrees = new ArrayList<Degree>();
-        if (degreeDomainReferences != null) {
-            for (final DomainReference<Degree> degreeDomainReference : degreeDomainReferences) {
-                degrees.add(degreeDomainReference.getObject());
-            }
-        }
-        Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        return degrees;
+	final List<Degree> degrees = new ArrayList<Degree>();
+	if (degreeDomainReferences != null) {
+	    for (final DomainReference<Degree> degreeDomainReference : degreeDomainReferences) {
+		degrees.add(degreeDomainReference.getObject());
+	    }
+	}
+	Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	return degrees;
     }
 
     public void setDegrees(List<Degree> degrees) {
-        if (degrees != null) {
-            degreeDomainReferences = new HashSet<DomainReference<Degree>>();
-            for (final Degree degree : degrees) {
-                degreeDomainReferences.add(new DomainReference<Degree>(degree));
-            }
-        } else {
-            degreeDomainReferences = null;
-        }
+	if (degrees != null) {
+	    degreeDomainReferences = new HashSet<DomainReference<Degree>>();
+	    for (final Degree degree : degrees) {
+		degreeDomainReferences.add(new DomainReference<Degree>(degree));
+	    }
+	} else {
+	    degreeDomainReferences = null;
+	}
     }
 
     public ExecutionYear getExecutionYear() {
-        return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
+	return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
     }
 
     public void setExecutionYear(final ExecutionYear executionYear) {
-        executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
     }
 
     public Set<StudentCurricularPlan> search() {
@@ -66,7 +66,8 @@ public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
 		final Degree degree = degreeDomainReference.getObject();
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
 		    if (degreeCurricularPlan.isActive()) {
-			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
+			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
+				.getStudentCurricularPlansSet()) {
 			    if (studentCurricularPlan.hasEnrolments(executionYear)) {
 				studentCurricularPlans.add(studentCurricularPlan);
 			    }
@@ -75,7 +76,7 @@ public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
 		}
 	    }
 	}
-        return studentCurricularPlans;
+	return studentCurricularPlans;
     }
 
     public Set<StudentCurricularPlan> getSearch() {

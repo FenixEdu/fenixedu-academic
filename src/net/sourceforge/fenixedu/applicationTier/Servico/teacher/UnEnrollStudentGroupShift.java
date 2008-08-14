@@ -21,30 +21,28 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class UnEnrollStudentGroupShift extends Service {
 
-	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
-			throws FenixServiceException{
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
+	    throws FenixServiceException {
 
-		Grouping groupProperties = rootDomainObject.readGroupingByOID(
-				groupPropertiesCode);
+	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
-		if (groupProperties == null) {
-			throw new ExistingServiceException();
-		}
-
-		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-
-		if (studentGroup == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-
-		if (!(studentGroup.getShift() != null && groupProperties.getShiftType() == null)
-				|| studentGroup.getShift() == null) {
-			throw new InvalidChangeServiceException();
-		}
-
-		Shift shift = null;
-		studentGroup.setShift(shift);
-
-		return new Boolean(true);
+	if (groupProperties == null) {
+	    throw new ExistingServiceException();
 	}
+
+	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+
+	if (studentGroup == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
+
+	if (!(studentGroup.getShift() != null && groupProperties.getShiftType() == null) || studentGroup.getShift() == null) {
+	    throw new InvalidChangeServiceException();
+	}
+
+	Shift shift = null;
+	studentGroup.setShift(shift);
+
+	return new Boolean(true);
+    }
 }

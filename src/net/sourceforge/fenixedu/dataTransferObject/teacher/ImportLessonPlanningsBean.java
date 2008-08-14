@@ -10,50 +10,50 @@ import net.sourceforge.fenixedu.domain.Shift;
 public class ImportLessonPlanningsBean extends ImportContentBean implements Serializable {
 
     private ImportType importType;
-    
+
     private DomainReference<Shift> shiftReference;
-    
+
     private DomainReference<ExecutionCourse> executionCourseToReference;
 
     public ImportLessonPlanningsBean(ExecutionCourse executionCourse) {
-        super();
+	super();
 	setExecutionCourseTo(executionCourse);
 	setShift(null);
     }
-    
+
     public ExecutionCourse getExecutionCourseTo() {
-        return this.executionCourseToReference.getObject();
+	return this.executionCourseToReference.getObject();
     }
-    
+
     public void setExecutionCourseTo(ExecutionCourse executionCourse) {
-        this.executionCourseToReference = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourseToReference = new DomainReference<ExecutionCourse>(executionCourse);
     }
-    
+
     public ImportType getImportType() {
-        return importType;
+	return importType;
     }
 
     public void setImportType(ImportType importType) {
-        this.importType = importType;
-    }    
-    
+	this.importType = importType;
+    }
+
     public Shift getShift() {
-        return this.shiftReference.getObject();
+	return this.shiftReference.getObject();
     }
 
     public void setShift(Shift shift) {
-        this.shiftReference = new DomainReference<Shift>(shift);
+	this.shiftReference = new DomainReference<Shift>(shift);
     }
-    
-    public static enum ImportType{
-        
-        SUMMARIES,
-        
-        PLANNING;
-        
-        public String getName() {
-            return name();
-        }           
+
+    public static enum ImportType {
+
+	SUMMARIES,
+
+	PLANNING;
+
+	public String getName() {
+	    return name();
+	}
     }
-    
+
 }

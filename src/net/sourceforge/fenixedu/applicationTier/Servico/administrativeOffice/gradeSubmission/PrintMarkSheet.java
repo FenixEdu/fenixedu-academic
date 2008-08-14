@@ -3,10 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gr
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
+public class PrintMarkSheet extends AbstractPrintMarkSheet {
 
-public class PrintMarkSheet extends AbstractPrintMarkSheet{
-	
-	public void run(MarkSheet markSheet, String printerName) throws FenixServiceException {
-	    print(markSheet, printerName);
-	}
+    public void run(MarkSheet markSheet, String printerName) throws FenixServiceException {
+	print(markSheet, printerName);
+    }
 }

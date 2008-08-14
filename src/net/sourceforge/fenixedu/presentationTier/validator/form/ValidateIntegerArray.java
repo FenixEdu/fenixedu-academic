@@ -13,30 +13,30 @@ import org.apache.struts.validator.Resources;
 public class ValidateIntegerArray {
 
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
-            HttpServletRequest request, ServletContext application) {
+	    HttpServletRequest request, ServletContext application) {
 
-        try {
-            DynaActionForm form = (DynaActionForm) bean;
+	try {
+	    DynaActionForm form = (DynaActionForm) bean;
 
-            String sProperty = field.getProperty();
-            String[] integerArray = (String[]) form.get(sProperty);
+	    String sProperty = field.getProperty();
+	    String[] integerArray = (String[]) form.get(sProperty);
 
-            if ((integerArray == null) || (integerArray.length <= 0)) {
-                errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
-                return true;
-            }
-            for (int i = 0; i < integerArray.length; i++) {
-                if (integerArray[i].equals("") || !StringUtils.isNumeric(integerArray[i])) {
-                    errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
-                    return true;
-                }
-            }
-            return false;
+	    if ((integerArray == null) || (integerArray.length <= 0)) {
+		errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
+		return true;
+	    }
+	    for (int i = 0; i < integerArray.length; i++) {
+		if (integerArray[i].equals("") || !StringUtils.isNumeric(integerArray[i])) {
+		    errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
+		    return true;
+		}
+	    }
+	    return false;
 
-        } catch (Exception e) {
-            errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
-            return true;
-        }
+	} catch (Exception e) {
+	    errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
+	    return true;
+	}
 
     }
 }

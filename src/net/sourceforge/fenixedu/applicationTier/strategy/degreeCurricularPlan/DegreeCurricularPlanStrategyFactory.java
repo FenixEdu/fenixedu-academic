@@ -20,32 +20,31 @@ public class DegreeCurricularPlanStrategyFactory implements IDegreeCurricularPla
     }
 
     public static synchronized DegreeCurricularPlanStrategyFactory getInstance() {
-        if (instance == null) {
-            instance = new DegreeCurricularPlanStrategyFactory();
-        }
-        return instance;
+	if (instance == null) {
+	    instance = new DegreeCurricularPlanStrategyFactory();
+	}
+	return instance;
     }
 
     public static synchronized void resetInstance() {
-        if (instance != null) {
-            instance = null;
-        }
+	if (instance != null) {
+	    instance = null;
+	}
     }
 
-    public IDegreeCurricularPlanStrategy getDegreeCurricularPlanStrategy(
-            DegreeCurricularPlan degreeCurricularPlan) {
+    public IDegreeCurricularPlanStrategy getDegreeCurricularPlanStrategy(DegreeCurricularPlan degreeCurricularPlan) {
 
-        IDegreeCurricularPlanStrategy strategyInstance = null;
+	IDegreeCurricularPlanStrategy strategyInstance = null;
 
-        if (degreeCurricularPlan == null)
-            throw new IllegalArgumentException("Must initialize Degree Curricular Plan!");
+	if (degreeCurricularPlan == null)
+	    throw new IllegalArgumentException("Must initialize Degree Curricular Plan!");
 
-        if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
-            strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
-        } else if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
-            strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan);
-        }
-        return strategyInstance;
+	if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+	    strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
+	} else if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+	    strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan);
+	}
+	return strategyInstance;
     }
 
 }

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 
 public class AddDefaultDocumentToResearchResult extends Service {
 
-	public void run(ResearchResult result) {
-		ResearchResultMetaDataManager.addDefaultDocument(result);
-	}
+    public void run(ResearchResult result) {
+	ResearchResultMetaDataManager.addDefaultDocument(result);
+    }
 }

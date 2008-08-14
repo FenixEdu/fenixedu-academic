@@ -20,8 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author David Santos in Mar 1, 2004
  */
 
-public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
-	AuthorizationByManyRolesFilter {
+public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
     private static DegreeType DEGREE_TYPE = DegreeType.MASTER_DEGREE;
 
     @Override
@@ -61,16 +60,15 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
     private boolean verifyStudentIsFromMasterDegree(Object[] arguments) {
 	Object object = (Object) arguments[0];
 	DegreeType degreeType = null;
-	if(object instanceof Registration) {
+	if (object instanceof Registration) {
 	    Registration registration = (Registration) object;
 	    degreeType = registration.getDegreeType();
 	}
-	if(object instanceof StudentCurricularPlan) {
+	if (object instanceof StudentCurricularPlan) {
 	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) object;
 	    degreeType = studentCurricularPlan.getDegreeType();
 	}
-	
-	
+
 	return (degreeType != null && (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
 		.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)));
     }

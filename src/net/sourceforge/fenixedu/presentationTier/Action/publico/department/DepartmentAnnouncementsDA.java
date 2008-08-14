@@ -9,7 +9,7 @@ public class DepartmentAnnouncementsDA extends DepartmentBoardsDA {
 
     @Override
     protected MultiLanguageString getBoardName(HttpServletRequest request) {
-        return UnitSiteBoardsDA.ANNOUNCEMENTS;
+	return UnitSiteBoardsDA.ANNOUNCEMENTS;
     }
 
 }

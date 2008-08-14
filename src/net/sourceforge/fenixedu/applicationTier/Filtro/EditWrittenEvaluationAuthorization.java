@@ -11,25 +11,25 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class EditWrittenEvaluationAuthorization extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        final IUserView userView = getRemoteUser(request);
+	final IUserView userView = getRemoteUser(request);
 
-        if (!userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
-            
-            final Object[] arguments = getServiceCallArguments(request);
-            final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
+	if (!userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
 
-            if (writtenEvaluation.getWrittenEvaluationSpaceOccupations().size() > 0) {
-                throw new NotAuthorizedFilterException("written.evaluation.has.alocated.rooms");
-            }
-        }
+	    final Object[] arguments = getServiceCallArguments(request);
+	    final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
+
+	    if (writtenEvaluation.getWrittenEvaluationSpaceOccupations().size() > 0) {
+		throw new NotAuthorizedFilterException("written.evaluation.has.alocated.rooms");
+	    }
+	}
     }
 
     private WrittenEvaluation readWrittenEvaluation(final Object[] arguments) {
-        final Integer writtenEvaluationID = getWrittenEvaluationID(arguments);
-        return (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
+	final Integer writtenEvaluationID = getWrittenEvaluationID(arguments);
+	return (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
     }
 
     private Integer getWrittenEvaluationID(final Object[] arguments) {
-        return (Integer) ((arguments.length == 2) ? arguments[1] : arguments[7]);
+	return (Integer) ((arguments.length == 2) ? arguments[1] : arguments[7]);
     }
 }

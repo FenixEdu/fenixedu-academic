@@ -21,32 +21,31 @@ import org.apache.struts.action.ActionMapping;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 25/Ago/2003, 14:36:59
- *  
+ *         Created at 25/Ago/2003, 14:36:59
+ * 
  */
 public class CancelCandidacy extends FenixAction {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
-        String candidacyIDString = request.getParameter("objectCode");
-        Integer candidacyID;
-        if (candidacyIDString == null)
-            throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        try {
-            candidacyID = new Integer(candidacyIDString);
-        } catch (Exception ex) {
-            throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        }
-        ActionForward destiny = null;
-        try {
-            Object[] argsReadSeminary = { candidacyID };
-            ServiceManagerServiceFactory.executeService( "Seminaries.DeleteCandidacy",
-                    argsReadSeminary);
-        } catch (Exception e) {
-            throw new FenixActionException();
-        }
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException {
+	IUserView userView = getUserView(request);
+	String candidacyIDString = request.getParameter("objectCode");
+	Integer candidacyID;
+	if (candidacyIDString == null)
+	    throw new FenixActionException(mapping.findForward("invalidQueryString"));
+	try {
+	    candidacyID = new Integer(candidacyIDString);
+	} catch (Exception ex) {
+	    throw new FenixActionException(mapping.findForward("invalidQueryString"));
+	}
+	ActionForward destiny = null;
+	try {
+	    Object[] argsReadSeminary = { candidacyID };
+	    ServiceManagerServiceFactory.executeService("Seminaries.DeleteCandidacy", argsReadSeminary);
+	} catch (Exception e) {
+	    throw new FenixActionException();
+	}
 
-        destiny = mapping.findForward("candidacyCanceled");
-        return destiny;
+	destiny = mapping.findForward("candidacyCanceled");
+	return destiny;
     }
 }

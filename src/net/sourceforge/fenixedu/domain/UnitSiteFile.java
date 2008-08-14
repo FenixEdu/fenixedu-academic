@@ -1,20 +1,20 @@
 package net.sourceforge.fenixedu.domain;
 
 public class UnitSiteFile extends UnitSiteFile_Base {
-    
+
     public UnitSiteFile() {
-        super();
+	super();
     }
 
     public UnitSiteFile(String uniqueId, String name) {
-        init(name, name, null, null, null, null, uniqueId, null);
+	init(name, name, null, null, null, null, uniqueId, null);
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeUnitSite();
+	removeRootDomainObject();
+	removeUnitSite();
 
-        deleteDomainObject();
+	deleteDomainObject();
     }
-    
+
 }

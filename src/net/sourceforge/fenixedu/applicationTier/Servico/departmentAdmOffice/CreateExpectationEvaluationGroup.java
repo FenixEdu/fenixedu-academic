@@ -8,6 +8,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 public class CreateExpectationEvaluationGroup extends Service {
 
     public void run(Teacher appraiser, Teacher evaluated, ExecutionYear executionYear) {
-	new ExpectationEvaluationGroup(appraiser, evaluated, executionYear);	
+	new ExpectationEvaluationGroup(appraiser, evaluated, executionYear);
     }
 }

@@ -17,19 +17,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteExecutionCourses extends Service {
 
-    public List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException{
-        final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
+    public List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException {
+	final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
-        for (final Integer executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	for (final Integer executionCourseID : executionCourseIDs) {
+	    final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-            if (!executionCourse.canBeDeleted()) {
-                undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
-            } else {
-                executionCourse.delete();
-            }
-        }
-        return undeletedExecutionCoursesCodes;
+	    if (!executionCourse.canBeDeleted()) {
+		undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
+	    } else {
+		executionCourse.delete();
+	    }
+	}
+	return undeletedExecutionCoursesCodes;
     }
 
 }

@@ -74,7 +74,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	} else {
 	    hasBeenForwarded = true;
 	}
-	
+
 	return path;
     }
 

@@ -15,22 +15,22 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 public class CorrectionFormula2EnumCorrectionFormulaFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object arg0) throws ConversionException {
-        if (arg0 instanceof CorrectionFormula) {
-            CorrectionFormula cf = (CorrectionFormula) arg0;
-            return cf.getFormula();
-        }
+	if (arg0 instanceof CorrectionFormula) {
+	    CorrectionFormula cf = (CorrectionFormula) arg0;
+	    return cf.getFormula();
+	}
 
-        return arg0;
+	return arg0;
 
     }
 
     public Object sqlToJava(Object arg0) throws ConversionException {
-        if (arg0 instanceof Integer) {
-            Integer formula = (Integer) arg0;
-            return new CorrectionFormula(formula);
-        }
+	if (arg0 instanceof Integer) {
+	    Integer formula = (Integer) arg0;
+	    return new CorrectionFormula(formula);
+	}
 
-        return arg0;
+	return arg0;
 
     }
 

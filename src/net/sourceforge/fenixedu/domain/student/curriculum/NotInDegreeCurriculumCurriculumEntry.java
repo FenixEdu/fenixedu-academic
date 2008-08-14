@@ -37,7 +37,7 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
     public Grade getGrade() {
 	return getEnrolment().getGrade();
     }
-    
+
     @Override
     final public ExecutionSemester getExecutionPeriod() {
 	return getEnrolment().getExecutionPeriod();

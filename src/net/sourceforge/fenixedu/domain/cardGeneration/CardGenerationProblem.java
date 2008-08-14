@@ -22,13 +22,14 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
 	}
     }
 
-    public CardGenerationProblem(final CardGenerationBatch cardGenerationBatch, final String descriptionKey, final String arg, final Person person) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setCardGenerationBatch(cardGenerationBatch);
-        setDescriptionKey(descriptionKey);
-        setArg(arg);
-        setPerson(person);
+    public CardGenerationProblem(final CardGenerationBatch cardGenerationBatch, final String descriptionKey, final String arg,
+	    final Person person) {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setCardGenerationBatch(cardGenerationBatch);
+	setDescriptionKey(descriptionKey);
+	setArg(arg);
+	setPerson(person);
     }
 
     public void delete() {
@@ -37,5 +38,5 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
 }

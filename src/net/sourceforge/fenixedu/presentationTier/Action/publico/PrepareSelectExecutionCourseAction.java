@@ -26,34 +26,33 @@ import org.apache.struts.action.ActionMapping;
  */
 public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        try {
-            super.execute(mapping, form, request, response);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
+	try {
+	    super.execute(mapping, form, request, response);
+	} catch (Exception e1) {
+	    e1.printStackTrace();
+	}
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        InfoExecutionDegree infoExecutionDegree = RequestUtils.getExecutionDegreeFromRequest(request,
-                infoExecutionPeriod.getInfoExecutionYear());
+	InfoExecutionDegree infoExecutionDegree = RequestUtils.getExecutionDegreeFromRequest(request, infoExecutionPeriod
+		.getInfoExecutionYear());
 
-        Integer curricularYear = (Integer) request.getAttribute("curYear");
+	Integer curricularYear = (Integer) request.getAttribute("curYear");
 
-        Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
+	Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
 
-        List infoExecutionCourses;
-        try {
-            infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(
-                    "SelectExecutionCourse", argsSelectExecutionCourse);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
-        request.setAttribute("exeCourseList", infoExecutionCourses);
-        return mapping.findForward("sucess");
+	List infoExecutionCourses;
+	try {
+	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService("SelectExecutionCourse",
+		    argsSelectExecutionCourse);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
+	request.setAttribute("exeCourseList", infoExecutionCourses);
+	return mapping.findForward("sucess");
     }
 
 }

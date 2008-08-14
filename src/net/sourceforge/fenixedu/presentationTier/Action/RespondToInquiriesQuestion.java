@@ -14,15 +14,16 @@ import org.apache.struts.action.ActionMapping;
 
 public class RespondToInquiriesQuestion extends FenixDispatchAction {
 
-    public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws Exception {
+    public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("executionPeriod", ExecutionSemester.readActualExecutionSemester());
 	return mapping.findForward("respondToInquiriesQuestion");
     }
 
-    private void registerResponse(final HttpServletRequest request, Boolean dontWantToRespond) throws FenixFilterException, FenixServiceException {
+    private void registerResponse(final HttpServletRequest request, Boolean dontWantToRespond) throws FenixFilterException,
+	    FenixServiceException {
 	final Object[] args = { getUserView(request).getPerson(), dontWantToRespond };
-	executeService("RegisterStudentInquiryResponseIntention", args);	
+	executeService("RegisterStudentInquiryResponseIntention", args);
     }
 
     private ActionForward forward(final String path) {
@@ -32,20 +33,20 @@ public class RespondToInquiriesQuestion extends FenixDispatchAction {
 	return actionForward;
     }
 
-    public final ActionForward registerStudentResponseDontWantToRespond(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+    public final ActionForward registerStudentResponseDontWantToRespond(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	registerResponse(request, Boolean.TRUE);
 	return forward("/home.do");
     }
 
-    public final ActionForward registerStudentResponseRespondLater(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+    public final ActionForward registerStudentResponseRespondLater(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	registerResponse(request, Boolean.FALSE);
 	return forward("/home.do");
-}
+    }
 
-    public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+    public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	registerResponse(request, Boolean.FALSE);
 	return forward("/student/fillInquiries.do?method=prepareCourses&page=0");
     }

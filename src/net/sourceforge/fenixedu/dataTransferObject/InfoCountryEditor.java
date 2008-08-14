@@ -12,33 +12,33 @@ public class InfoCountryEditor extends InfoObject {
     }
 
     public InfoCountryEditor(String name, String code, String nationality) {
-        setName(name);
-        setCode(code);
-        setNationality(nationality);
+	setName(name);
+	setCode(code);
+	setNationality(nationality);
     }
 
     public String getCode() {
-        return code;
+	return code;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setCode(String code) {
-        this.code = code;
+	this.code = code;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public String getNationality() {
-        return nationality;
+	return nationality;
     }
 
     public void setNationality(String nationality) {
-        this.nationality = nationality;
+	this.nationality = nationality;
     }
 
 }

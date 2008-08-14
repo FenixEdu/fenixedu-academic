@@ -23,7 +23,8 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	final Double totalEctsCredits = getTotalEctsCredits(enrolmentContext.getStudentCurricularPlan().getRoot(), enrolmentContext.getExecutionPeriod().getExecutionYear());
+	final Double totalEctsCredits = getTotalEctsCredits(enrolmentContext.getStudentCurricularPlan().getRoot(),
+		enrolmentContext.getExecutionPeriod().getExecutionYear());
 
 	if (rule.allowCredits(totalEctsCredits)) {
 	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
@@ -38,9 +39,9 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 
     private Double getTotalEctsCredits(final RootCurriculumGroup rootCurriculumGroup, ExecutionYear executionYear) {
 	Double res = 0d;
-	for(CycleType cycleType : rootCurriculumGroup.getDegreeType().getOrderedCycleTypes()) {
+	for (CycleType cycleType : rootCurriculumGroup.getDegreeType().getOrderedCycleTypes()) {
 	    CycleCurriculumGroup cycleCurriculumGroup = rootCurriculumGroup.getCycleCurriculumGroup(cycleType);
-	    if(cycleCurriculumGroup == null) {
+	    if (cycleCurriculumGroup == null) {
 		res += cycleType.getDefaultEcts();
 	    } else {
 		res += rootCurriculumGroup.getCreditsConcluded(executionYear);

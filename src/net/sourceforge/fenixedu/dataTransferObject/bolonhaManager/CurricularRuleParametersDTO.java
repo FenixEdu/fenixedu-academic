@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class CurricularRuleParametersDTO extends DataTranferObject {
-    
+
     private Integer selectedDegreeModuleID;
     private Integer contextCourseGroupID;
     private Integer selectedDegreeID;
     private Integer selectedDepartmentUnitID;
-    private CurricularPeriodInfoDTO curricularPeriodInfoDTO;    
+    private CurricularPeriodInfoDTO curricularPeriodInfoDTO;
     private Double minimumCredits;
     private Double maximumCredits;
     private Integer minimumLimit;
@@ -23,90 +23,118 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     private Double credits;
     private DegreeType degreeType;
     private Boolean even;
-    
+
     public CurricularRuleParametersDTO() {
     }
+
     public Integer getContextCourseGroupID() {
-        return contextCourseGroupID;
+	return contextCourseGroupID;
     }
+
     public void setContextCourseGroupID(Integer contextCourseGroup) {
-        this.contextCourseGroupID = contextCourseGroup;
+	this.contextCourseGroupID = contextCourseGroup;
     }
+
     public CurricularPeriodInfoDTO getCurricularPeriodInfoDTO() {
-        return curricularPeriodInfoDTO;
+	return curricularPeriodInfoDTO;
     }
+
     public void setCurricularPeriodInfoDTO(CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
-        this.curricularPeriodInfoDTO = curricularPeriodInfoDTO;
+	this.curricularPeriodInfoDTO = curricularPeriodInfoDTO;
     }
+
     public Double getMaximumCredits() {
-        return maximumCredits;
+	return maximumCredits;
     }
+
     public void setMaximumCredits(Double maxDouble) {
-        this.maximumCredits = maxDouble;
+	this.maximumCredits = maxDouble;
     }
+
     public Double getMinimumCredits() {
-        return minimumCredits;
+	return minimumCredits;
     }
+
     public void setMinimumCredits(Double minDouble) {
-        this.minimumCredits = minDouble;
+	this.minimumCredits = minDouble;
     }
+
     public Integer getSelectedDegreeModuleID() {
-        return selectedDegreeModuleID;
+	return selectedDegreeModuleID;
     }
+
     public void setSelectedDegreeModuleID(Integer precedenceDegreeModule) {
-        this.selectedDegreeModuleID = precedenceDegreeModule;
+	this.selectedDegreeModuleID = precedenceDegreeModule;
     }
+
     public Integer getMinimumLimit() {
-        return minimumLimit;
+	return minimumLimit;
     }
+
     public void setMinimumLimit(Integer minimumLimit) {
-        this.minimumLimit = minimumLimit;
+	this.minimumLimit = minimumLimit;
     }
+
     public Integer getMaximumLimit() {
-        return maximumLimit;
+	return maximumLimit;
     }
+
     public void setMaximumLimit(Integer maximumLimit) {
-        this.maximumLimit = maximumLimit;
+	this.maximumLimit = maximumLimit;
     }
+
     public Integer getSelectedDegreeID() {
-        return selectedDegreeID;
+	return selectedDegreeID;
     }
+
     public void setSelectedDegreeID(Integer selectedDegreeID) {
-        this.selectedDegreeID = selectedDegreeID;
+	this.selectedDegreeID = selectedDegreeID;
     }
+
     public Integer getSelectedDepartmentUnitID() {
-        return selectedDepartmentUnitID;
+	return selectedDepartmentUnitID;
     }
+
     public void setSelectedDepartmentUnitID(Integer departmentUnitID) {
-        this.selectedDepartmentUnitID = departmentUnitID;
+	this.selectedDepartmentUnitID = departmentUnitID;
     }
+
     public Integer getMaximumYear() {
-        return maximumYear;
+	return maximumYear;
     }
+
     public void setMaximumYear(Integer maximumYear) {
-        this.maximumYear = maximumYear;
+	this.maximumYear = maximumYear;
     }
+
     public Integer getMinimumYear() {
-        return minimumYear;
+	return minimumYear;
     }
+
     public void setMinimumYear(Integer minimumYear) {
-        this.minimumYear = minimumYear;
+	this.minimumYear = minimumYear;
     }
+
     public Double getCredits() {
-        return credits;
+	return credits;
     }
+
     public void setCredits(Double credits) {
-        this.credits = credits;
+	this.credits = credits;
     }
+
     public DegreeType getDegreeType() {
-        return degreeType;
+	return degreeType;
     }
+
     public void setDegreeType(DegreeType degreeType) {
-        this.degreeType = degreeType;
+	this.degreeType = degreeType;
     }
+
     public Boolean getEven() {
 	return even;
     }
+
     public void setEven(Boolean even) {
 	this.even = even;
     }

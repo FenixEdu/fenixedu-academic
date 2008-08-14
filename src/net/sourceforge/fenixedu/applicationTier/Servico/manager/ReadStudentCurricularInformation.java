@@ -20,24 +20,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadStudentCurricularInformation extends Service {
 
-    public List run(final Integer studentNumber, final DegreeType degreeType)
-	    {
+    public List run(final Integer studentNumber, final DegreeType degreeType) {
 
 	final List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
 
-	for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber,
-		degreeType)) {
+	for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
 	    for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
-		infoStudentCurricularPlans
-			.add(constructInfoStudentCurricularPlan(studentCurricularPlan));
+		infoStudentCurricularPlans.add(constructInfoStudentCurricularPlan(studentCurricularPlan));
 	    }
 	}
 
 	return infoStudentCurricularPlans;
     }
 
-    protected InfoStudentCurricularPlan constructInfoStudentCurricularPlan(
-	    final StudentCurricularPlan studentCurricularPlan) {
+    protected InfoStudentCurricularPlan constructInfoStudentCurricularPlan(final StudentCurricularPlan studentCurricularPlan) {
 	return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
     }
 

@@ -10,15 +10,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionYearsService extends Service {
 
-	public List run() {
-		final List<InfoExecutionYear> infoExecutionYears = new ArrayList<InfoExecutionYear>();
-		for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
-			infoExecutionYears.add(InfoExecutionYear.newInfoFromDomain(executionYear));
-		}
-		return infoExecutionYears;
+    public List run() {
+	final List<InfoExecutionYear> infoExecutionYears = new ArrayList<InfoExecutionYear>();
+	for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+	    infoExecutionYears.add(InfoExecutionYear.newInfoFromDomain(executionYear));
 	}
-	
-	public ExecutionYear run(Integer executionYearID) {
-		return rootDomainObject.readExecutionYearByOID(executionYearID);
-	}
+	return infoExecutionYears;
+    }
+
+    public ExecutionYear run(Integer executionYearID) {
+	return rootDomainObject.readExecutionYearByOID(executionYearID);
+    }
 }

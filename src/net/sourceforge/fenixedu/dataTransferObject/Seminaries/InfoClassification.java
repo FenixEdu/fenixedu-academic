@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- *  
+ * 
  */
 public class InfoClassification extends DataTranferObject {
     private String aritmeticClassification;
@@ -29,42 +29,42 @@ public class InfoClassification extends DataTranferObject {
      * @return
      */
     public String getAritmeticClassification() {
-        return aritmeticClassification;
+	return aritmeticClassification;
     }
 
     /**
      * @return
      */
     public String getClassification() {
-        return classification;
+	return classification;
     }
 
     /**
      * @param f
      */
     public void setAritmeticClassification(String f) {
-        aritmeticClassification = f;
+	aritmeticClassification = f;
     }
 
     /**
      * @param f
      */
     public void setClassification(String f) {
-        classification = f;
+	classification = f;
     }
 
     /**
      * @return
      */
     public String getCompletedCourses() {
-        return completedCourses;
+	return completedCourses;
     }
 
     /**
      * @param f
      */
     public void setCompletedCourses(String f) {
-        completedCourses = f;
+	completedCourses = f;
     }
 
 }

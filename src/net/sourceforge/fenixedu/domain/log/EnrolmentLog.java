@@ -17,17 +17,18 @@ import org.joda.time.DateTime;
  */
 public class EnrolmentLog extends EnrolmentLog_Base {
 
-    public EnrolmentLog(EnrolmentAction action, Registration registration, CurricularCourse curricularCourse, ExecutionSemester executionSemester, String who) {
-    	super();
-    	setRootDomainObject(RootDomainObject.getInstance());
-        this.setDateDateTime(new DateTime());
-        this.setAction(action);
-        this.setStudent(registration);        
-        this.setCurricularCourse(curricularCourse);
-        this.setExecutionPeriod(executionSemester);
-        this.setWho(who);
+    public EnrolmentLog(EnrolmentAction action, Registration registration, CurricularCourse curricularCourse,
+	    ExecutionSemester executionSemester, String who) {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	this.setDateDateTime(new DateTime());
+	this.setAction(action);
+	this.setStudent(registration);
+	this.setCurricularCourse(curricularCourse);
+	this.setExecutionPeriod(executionSemester);
+	this.setWho(who);
     }
-    
+
     public void delete() {
 	removeRootDomainObject();
 	removeStudent();

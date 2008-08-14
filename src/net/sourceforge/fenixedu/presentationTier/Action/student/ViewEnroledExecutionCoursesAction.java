@@ -17,30 +17,32 @@ import org.apache.struts.action.ActionMapping;
 
 public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final Student student = getLoggedPerson(request).getStudent();
 	final List<Registration> registrations = student.getActiveRegistrations();
-	
+
 	if (registrations.size() == 1) {
-	    request.setAttribute("executionCourses", executeService("ReadEnroledExecutionCourses", new Object[] {registrations.get(0)}));
+	    request.setAttribute("executionCourses", executeService("ReadEnroledExecutionCourses", new Object[] { registrations
+		    .get(0) }));
 	    return mapping.findForward("showEnroledExecutionCourses");
-	    
+
 	} else {
 	    request.setAttribute("registrations", registrations);
 	    return mapping.findForward("showActiveRegistrations");
 	}
     }
-    
-    public ActionForward select(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final Registration registration = getRegistrationByID(getLoggedPerson(request).getStudent(), getIntegerFromRequest(request, "registrationId"));
-	request.setAttribute("executionCourses", executeService("ReadEnroledExecutionCourses", new Object[] {registration}));
+    public ActionForward select(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final Registration registration = getRegistrationByID(getLoggedPerson(request).getStudent(), getIntegerFromRequest(
+		request, "registrationId"));
+	request.setAttribute("executionCourses", executeService("ReadEnroledExecutionCourses", new Object[] { registration }));
 	return mapping.findForward("showEnroledExecutionCourses");
     }
-    
+
     private Registration getRegistrationByID(final Student student, final Integer registrationId) {
 	for (final Registration registration : student.getActiveRegistrations()) {
 	    if (registration.getIdInternal().equals(registrationId)) {

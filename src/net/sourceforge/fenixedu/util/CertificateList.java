@@ -40,8 +40,7 @@ public class CertificateList extends FenixUtil {
 
     public static final CertificateList MATRICULA_TYPE = new CertificateList(MATRICULA);
 
-    public static final CertificateList MATRICULA_INSCRICAO_TYPE = new CertificateList(
-            MATRICULA_INSCRICAO);
+    public static final CertificateList MATRICULA_INSCRICAO_TYPE = new CertificateList(MATRICULA_INSCRICAO);
 
     public static final CertificateList DURACAO_CURSO_TYPE = new CertificateList(DURACAO_CURSO);
 
@@ -50,23 +49,22 @@ public class CertificateList extends FenixUtil {
     public static final CertificateList APROVEITAMENTO_TYPE = new CertificateList(APROVEITAMENTO);
 
     public static final CertificateList APROVEITAMENTO_EXTRA_CURRICULAR_TYPE = new CertificateList(
-            APROVEITAMENTO_EXTRA_CURRICULAR);
+	    APROVEITAMENTO_EXTRA_CURRICULAR);
 
-    public static final CertificateList FIM_PARTE_ESCOLAR_SIMPLES_TYPE = new CertificateList(
-            FIM_PARTE_ESCOLAR_SIMPLES);
+    public static final CertificateList FIM_PARTE_ESCOLAR_SIMPLES_TYPE = new CertificateList(FIM_PARTE_ESCOLAR_SIMPLES);
 
     public static final CertificateList FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_TYPE = new CertificateList(
-            FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA);
+	    FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA);
 
     public static final CertificateList FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_TYPE = new CertificateList(
-            FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA);
+	    FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA);
 
     public static final CertificateList DIPLOMA_TYPE = new CertificateList(DIPLOMA);
 
     public static final CertificateList FIM_CURSO_SIMPLES_TYPE = new CertificateList(FIM_CURSO_SIMPLES);
 
     public static final CertificateList FIM_CURSO_DISCRIMINADA_COM_MEDIA_TYPE = new CertificateList(
-            FIM_CURSO_DISCRIMINADA_COM_MEDIA);
+	    FIM_CURSO_DISCRIMINADA_COM_MEDIA);
 
     public static final CertificateList CARTA_DE_CURSO_TYPE = new CertificateList(CARTA_DE_CURSO);
 
@@ -93,7 +91,7 @@ public class CertificateList extends FenixUtil {
     public static final String FIM_CURSO_SIMPLES_STRING = "Fim de curso de Mestrado simples";
 
     public static final String FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING = "Fim de curso de Mestrado discriminada com média";
-    
+
     public static final String CARTA_DE_CURSO_STRING = "Carta de Curso";
 
     public static final String DEFAULT = "[Escolha um Tipo de Documento]";
@@ -104,97 +102,89 @@ public class CertificateList extends FenixUtil {
     }
 
     public CertificateList(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public CertificateList(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof CertificateList) {
-            CertificateList ds = (CertificateList) obj;
-            resultado = this.getType().equals(ds.getType());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof CertificateList) {
+	    CertificateList ds = (CertificateList) obj;
+	    resultado = this.getType().equals(ds.getType());
+	}
+	return resultado;
     }
 
     public List toArrayList() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(CertificateList.DEFAULT, null));
-        result
-                .add(new LabelValueBean(CertificateList.MATRICULA_STRING,
-                        CertificateList.MATRICULA_STRING));
-        result.add(new LabelValueBean(CertificateList.MATRICULA_INSCRICAO_STRING,
-                CertificateList.MATRICULA_INSCRICAO_STRING));
-        result.add(new LabelValueBean(CertificateList.DURACAO_CURSO_STRING,
-                CertificateList.DURACAO_CURSO_STRING));
-        result
-                .add(new LabelValueBean(CertificateList.INSCRICAO_STRING,
-                        CertificateList.INSCRICAO_STRING));
-        result.add(new LabelValueBean(CertificateList.APROVEITAMENTO_STRING,
-                CertificateList.APROVEITAMENTO_STRING));
-        result.add(new LabelValueBean(CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR_STRING,
-                CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR_STRING));
-        result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING,
-                CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING));
-        result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING,
-                CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING));
-        result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING,
-                CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING));
-        result.add(new LabelValueBean(CertificateList.FIM_CURSO_SIMPLES_STRING,
-                CertificateList.FIM_CURSO_SIMPLES_STRING));
-        result.add(new LabelValueBean(CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING,
-                CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING));
-        result.add(new LabelValueBean(CertificateList.DIPLOMA_STRING, CertificateList.DIPLOMA_STRING));
-        result.add(new LabelValueBean(CertificateList.CARTA_DE_CURSO_STRING, CertificateList.CARTA_DE_CURSO_STRING));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(CertificateList.DEFAULT, null));
+	result.add(new LabelValueBean(CertificateList.MATRICULA_STRING, CertificateList.MATRICULA_STRING));
+	result.add(new LabelValueBean(CertificateList.MATRICULA_INSCRICAO_STRING, CertificateList.MATRICULA_INSCRICAO_STRING));
+	result.add(new LabelValueBean(CertificateList.DURACAO_CURSO_STRING, CertificateList.DURACAO_CURSO_STRING));
+	result.add(new LabelValueBean(CertificateList.INSCRICAO_STRING, CertificateList.INSCRICAO_STRING));
+	result.add(new LabelValueBean(CertificateList.APROVEITAMENTO_STRING, CertificateList.APROVEITAMENTO_STRING));
+	result.add(new LabelValueBean(CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR_STRING,
+		CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR_STRING));
+	result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING,
+		CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING));
+	result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING,
+		CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING));
+	result.add(new LabelValueBean(CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING,
+		CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING));
+	result.add(new LabelValueBean(CertificateList.FIM_CURSO_SIMPLES_STRING, CertificateList.FIM_CURSO_SIMPLES_STRING));
+	result.add(new LabelValueBean(CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING,
+		CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING));
+	result.add(new LabelValueBean(CertificateList.DIPLOMA_STRING, CertificateList.DIPLOMA_STRING));
+	result.add(new LabelValueBean(CertificateList.CARTA_DE_CURSO_STRING, CertificateList.CARTA_DE_CURSO_STRING));
+	return result;
     }
 
     public String toString() {
-        if (type.intValue() == CertificateList.MATRICULA)
-            return CertificateList.MATRICULA_STRING;
-        if (type.intValue() == CertificateList.MATRICULA_INSCRICAO)
-            return CertificateList.MATRICULA_INSCRICAO_STRING;
-        if (type.intValue() == CertificateList.DURACAO_CURSO)
-            return CertificateList.DURACAO_CURSO_STRING;
-        if (type.intValue() == CertificateList.INSCRICAO)
-            return CertificateList.INSCRICAO_STRING;
-        if (type.intValue() == CertificateList.APROVEITAMENTO)
-            return CertificateList.APROVEITAMENTO_STRING;
-        if (type.intValue() == CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR)
-            return CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR_STRING;
-        if (type.intValue() == CertificateList.FIM_PARTE_ESCOLAR_SIMPLES)
-            return CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING;
-        if (type.intValue() == CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA)
-            return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING;
-        if (type.intValue() == CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA)
-            return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING;
-        if (type.intValue() == CertificateList.FIM_CURSO_SIMPLES)
-            return CertificateList.FIM_CURSO_SIMPLES_STRING;
-        if (type.intValue() == CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA)
-            return CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING;
-        if (type.intValue() == CertificateList.DIPLOMA)
-            return CertificateList.DIPLOMA_STRING;
-        if (type.intValue() == CertificateList.CARTA_DE_CURSO)
-            return CertificateList.CARTA_DE_CURSO_STRING;
+	if (type.intValue() == CertificateList.MATRICULA)
+	    return CertificateList.MATRICULA_STRING;
+	if (type.intValue() == CertificateList.MATRICULA_INSCRICAO)
+	    return CertificateList.MATRICULA_INSCRICAO_STRING;
+	if (type.intValue() == CertificateList.DURACAO_CURSO)
+	    return CertificateList.DURACAO_CURSO_STRING;
+	if (type.intValue() == CertificateList.INSCRICAO)
+	    return CertificateList.INSCRICAO_STRING;
+	if (type.intValue() == CertificateList.APROVEITAMENTO)
+	    return CertificateList.APROVEITAMENTO_STRING;
+	if (type.intValue() == CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR)
+	    return CertificateList.APROVEITAMENTO_EXTRA_CURRICULAR_STRING;
+	if (type.intValue() == CertificateList.FIM_PARTE_ESCOLAR_SIMPLES)
+	    return CertificateList.FIM_PARTE_ESCOLAR_SIMPLES_STRING;
+	if (type.intValue() == CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA)
+	    return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING;
+	if (type.intValue() == CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA)
+	    return CertificateList.FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING;
+	if (type.intValue() == CertificateList.FIM_CURSO_SIMPLES)
+	    return CertificateList.FIM_CURSO_SIMPLES_STRING;
+	if (type.intValue() == CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA)
+	    return CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING;
+	if (type.intValue() == CertificateList.DIPLOMA)
+	    return CertificateList.DIPLOMA_STRING;
+	if (type.intValue() == CertificateList.CARTA_DE_CURSO)
+	    return CertificateList.CARTA_DE_CURSO_STRING;
 
-        return "ERRO!"; // Nunca e atingido
+	return "ERRO!"; // Nunca e atingido
     }
 
     /**
      * @return
      */
     public Integer getType() {
-        return type;
+	return type;
     }
 
     /**
      * @param integer
      */
     public void setType(Integer integer) {
-        type = integer;
+	type = integer;
     }
 
 }

@@ -26,10 +26,9 @@ public class ExternalRegistrationDataBean implements Serializable {
 
     public ExternalRegistrationDataBean(ExternalRegistrationData externalRegistrationData) {
 	super();
-	this.externalRegistrationData = new DomainReference<ExternalRegistrationData>(
-		externalRegistrationData);
-	this.institution = (externalRegistrationData.getInstitution() == null) ? null
-		: new DomainReference<Unit>(externalRegistrationData.getInstitution());
+	this.externalRegistrationData = new DomainReference<ExternalRegistrationData>(externalRegistrationData);
+	this.institution = (externalRegistrationData.getInstitution() == null) ? null : new DomainReference<Unit>(
+		externalRegistrationData.getInstitution());
 	setCoordinatorName(externalRegistrationData.getCoordinatorName());
     }
 
@@ -54,8 +53,7 @@ public class ExternalRegistrationDataBean implements Serializable {
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institution == null) ? null : new DomainReference<Unit>(institutionUnitName
-		.getUnit());
+	this.institution = (institution == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
     }
 
     public String getInstitutionName() {

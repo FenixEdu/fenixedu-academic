@@ -15,58 +15,58 @@ public final class GroupIntersection extends NodeGroup {
     private static final long serialVersionUID = 1L;
 
     public GroupIntersection(IGroup... groups) {
-        super(groups);
+	super(groups);
     }
 
     public GroupIntersection(Collection<IGroup> groups) {
-        super(groups);
+	super(groups);
     }
 
     @Override
     public Set<Person> getElements() {
-        Collection<Person> elementsCollection = null;
+	Collection<Person> elementsCollection = null;
 
-        for (Iterator iter = getChildren().iterator(); iter.hasNext();) {
-            IGroup group = (IGroup) iter.next();
+	for (Iterator iter = getChildren().iterator(); iter.hasNext();) {
+	    IGroup group = (IGroup) iter.next();
 
-            if (elementsCollection == null) {
-                elementsCollection = new ArrayList<Person>(group.getElements());
-            } else {
-                elementsCollection = CollectionUtils.intersection(elementsCollection, group.getElements());
-            }
-        }
+	    if (elementsCollection == null) {
+		elementsCollection = new ArrayList<Person>(group.getElements());
+	    } else {
+		elementsCollection = CollectionUtils.intersection(elementsCollection, group.getElements());
+	    }
+	}
 
-        Set<Person> elements = buildSet();
-        if (elementsCollection != null) {
-            elements.addAll(elementsCollection);
-        }
+	Set<Person> elements = buildSet();
+	if (elementsCollection != null) {
+	    elements.addAll(elementsCollection);
+	}
 
-        return freezeSet(elements);
+	return freezeSet(elements);
     }
 
     @Override
     public boolean allows(IUserView userView) {
-        for (IGroup group : getChildren()) {
-            if (!group.allows(userView)) {
-        	return false;
-            }
-        }
-        return !getChildren().isEmpty();
+	for (IGroup group : getChildren()) {
+	    if (!group.allows(userView)) {
+		return false;
+	    }
+	}
+	return !getChildren().isEmpty();
     }
 
     @Override
     public boolean isMember(Person person) {
-        for (IGroup group : getChildren()) {
-            if (! group.isMember(person)) {
-                return false;
-            }
-        }
+	for (IGroup group : getChildren()) {
+	    if (!group.isMember(person)) {
+		return false;
+	    }
+	}
 
-        return true;
+	return true;
     }
-    
+
     @Override
     protected String getExpressionOperator() {
-        return "&&";
+	return "&&";
     }
 }

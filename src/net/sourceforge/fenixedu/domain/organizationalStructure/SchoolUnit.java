@@ -105,11 +105,11 @@ public class SchoolUnit extends SchoolUnit_Base {
 	return result;
     }
 
-
     @Override
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
 	if (parentUnit != null
-		&& (!parentUnit.isOfficialExternal() || (!parentUnit.isPlanetUnit() && !parentUnit.isCountryUnit() && !parentUnit.isUniversityUnit()))) {
+		&& (!parentUnit.isOfficialExternal() || (!parentUnit.isPlanetUnit() && !parentUnit.isCountryUnit() && !parentUnit
+			.isUniversityUnit()))) {
 	    throw new DomainException("error.unit.invalid.parentUnit");
 	}
 	return super.addParentUnit(parentUnit, accountabilityType);

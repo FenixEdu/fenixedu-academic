@@ -37,15 +37,15 @@ public class Spreadsheet {
 	public void setCell(final String cellValue) {
 	    cells.add(cellValue);
 	}
-	
+
 	public void setCell(final Integer cellValue) {
 	    cells.add((cellValue != null) ? cellValue.toString() : "");
 	}
-	
+
 	public void setCell(final Double cellValue) {
 	    cells.add((cellValue != null) ? cellValue.toString() : "");
 	}
-	
+
 	public void setCell(final BigDecimal cellValue) {
 	    cells.add((cellValue != null) ? cellValue.toPlainString() : "");
 	}

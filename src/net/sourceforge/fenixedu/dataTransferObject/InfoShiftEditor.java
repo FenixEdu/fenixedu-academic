@@ -9,7 +9,7 @@ public class InfoShiftEditor extends InfoObject {
     protected String nome;
 
     protected ShiftType tipo;
-    
+
     protected List<ShiftType> tipos;
 
     protected Integer lotacao;
@@ -102,11 +102,11 @@ public class InfoShiftEditor extends InfoObject {
     }
 
     public List<ShiftType> getTipos() {
-        return tipos;
+	return tipos;
     }
 
     public void setTipos(List<ShiftType> tipos) {
-        this.tipos = tipos;
+	this.tipos = tipos;
     }
 
 }

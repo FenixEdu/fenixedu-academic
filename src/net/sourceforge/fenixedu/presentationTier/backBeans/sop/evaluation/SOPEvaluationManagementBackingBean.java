@@ -227,7 +227,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	stringBuffer.append(enumerations.getMessage(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getDegreeType()
 		.toString()));
 	stringBuffer.append(" em ");
-	stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getNameFor(executionDegreeSelected.getExecutionYear()).getContent());
+	stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getNameFor(
+		executionDegreeSelected.getExecutionYear()).getContent());
 
 	return stringBuffer.toString();
     }
@@ -431,8 +432,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     // BEGIN Drop down menu logic
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
-	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
-		"ReadNotClosedExecutionPeriods");
+	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
+		.executeService("ReadNotClosedExecutionPeriods");
 
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
@@ -754,8 +755,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    for (final Integer curricularYearID : curricularYears) {
 		final Object args[] = { degreeCurricularPlan.getIdInternal(), this.getExecutionPeriodID(), curricularYearID };
 		final Collection<ExecutionCourse> executionCourses = (Collection<ExecutionCourse>) ServiceManagerServiceFactory
-			.executeService(
-				"ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args);
+			.executeService("ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args);
 		for (final ExecutionCourse executionCourse : executionCourses) {
 		    final Set<WrittenEvaluation> writtenEvaluations = new TreeSet<WrittenEvaluation>(
 			    WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
@@ -958,8 +958,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
 		null, null, Boolean.FALSE };
 
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(
-		"ReadAvailableRoomsForExam", args);
+	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
 
 	if (this.getEvaluationID() != null) {
 	    for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
@@ -1056,7 +1055,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	final Object[] args = { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
 		executionCourseIDs, degreeModuleScopeIDs, roomsIDs, season, this.getDescription() };
 	try {
-	    ServiceUtils.executeService( "CreateWrittenEvaluation", args);
+	    ServiceUtils.executeService("CreateWrittenEvaluation", args);
 
 	} catch (Exception e) {
 	    String errorMessage = e.getMessage();
@@ -1118,7 +1117,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	final Object[] args = { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
 		executionCourseIDs, degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription() };
 	try {
-	    ServiceUtils.executeService( "EditWrittenEvaluation", args);
+	    ServiceUtils.executeService("EditWrittenEvaluation", args);
 
 	} catch (Exception e) {
 	    String errorMessage = e.getMessage();
@@ -1398,7 +1397,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	try {
 	    Object argsDefineComment[] = { this.getExecutionCourse().getSigla(),
 		    this.getExecutionCourse().getExecutionPeriod().getIdInternal(), this.getComment() };
-	    ServiceUtils.executeService( "DefineExamComment", argsDefineComment);
+	    ServiceUtils.executeService("DefineExamComment", argsDefineComment);
 	} catch (FenixFilterException e) {
 	    this.setErrorMessage(e.getMessage());
 	    return "";

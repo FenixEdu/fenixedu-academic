@@ -18,22 +18,22 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        return super.execute(mapping, actionForm, request, response);
+	return super.execute(mapping, actionForm, request, response);
     }
 
     protected HttpSession getSession(HttpServletRequest request) throws ExcepcaoSessaoInexistente {
-        HttpSession result = request.getSession(false);
-        if (result == null)
-            throw new ExcepcaoSessaoInexistente();
+	HttpSession result = request.getSession(false);
+	if (result == null)
+	    throw new ExcepcaoSessaoInexistente();
 
-        return result;
+	return result;
     }
-    
+
     protected static IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+	return UserView.getUser();
     }
 
     /**
@@ -41,7 +41,7 @@ public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
      * 
      * x - is a message resource identifier y - is the name of the method which
      * will be implemented within the subclasses
-     *  
+     * 
      */
     protected abstract Map getKeyMethodMap();
 

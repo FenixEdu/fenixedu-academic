@@ -129,7 +129,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	try {
 	    String filename;
 
-	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getNameFor(executionYear) + "_" + executionYear.getYear();
+	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getNameFor(executionYear) + "_"
+		    + executionYear.getYear();
 
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -153,8 +154,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("AlunosPorCurso");
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getNextYearsYearString() + " - " + year + " Ano "
-		+ semester + " Semestre");
+	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getNextYearsYearString() + " - " + year
+		+ " Ano " + semester + " Semestre");
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " Alunos");

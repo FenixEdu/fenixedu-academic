@@ -11,7 +11,7 @@ public class RegistrationSelectExecutionYearBean implements Serializable {
 
     private DomainReference<Registration> registration;
     private DomainReference<ExecutionYear> executionYear;
-    
+
     protected RegistrationSelectExecutionYearBean() {
     }
 
@@ -25,8 +25,7 @@ public class RegistrationSelectExecutionYearBean implements Serializable {
     }
 
     protected void setRegistration(Registration registration) {
-	this.registration = (registration != null) ? new DomainReference<Registration>(registration)
-		: null;
+	this.registration = (registration != null) ? new DomainReference<Registration>(registration) : null;
     }
 
     public ExecutionYear getExecutionYear() {
@@ -34,8 +33,7 @@ public class RegistrationSelectExecutionYearBean implements Serializable {
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear)
-		: null;
+	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
     }
 
     public Student getStudent() {

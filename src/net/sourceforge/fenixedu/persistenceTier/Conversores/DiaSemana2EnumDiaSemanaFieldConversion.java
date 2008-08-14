@@ -21,12 +21,12 @@ public class DiaSemana2EnumDiaSemanaFieldConversion implements FieldConversion {
      */
     public Object javaToSql(Object source) {
 
-        if (source instanceof DiaSemana) {
-            DiaSemana dia = (DiaSemana) source;
-            return dia.getDiaSemana();
-        }
+	if (source instanceof DiaSemana) {
+	    DiaSemana dia = (DiaSemana) source;
+	    return dia.getDiaSemana();
+	}
 
-        return source;
+	return source;
 
     }
 
@@ -34,12 +34,12 @@ public class DiaSemana2EnumDiaSemanaFieldConversion implements FieldConversion {
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new DiaSemana(src);
-        }
+	if (source instanceof Integer) {
+	    Integer src = (Integer) source;
+	    return new DiaSemana(src);
+	}
 
-        return source;
+	return source;
 
     }
 

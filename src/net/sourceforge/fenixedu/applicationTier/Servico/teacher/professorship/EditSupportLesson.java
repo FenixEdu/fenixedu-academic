@@ -14,22 +14,20 @@ public class EditSupportLesson extends Service {
 
     public void run(SupportLessonDTO supportLessonDTO, RoleType roleType) {
 
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLessonDTO
-                .getProfessorshipID());
-        ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
-        Teacher teacher = professorship.getTeacher();
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+	Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLessonDTO.getProfessorshipID());
+	ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
+	Teacher teacher = professorship.getTeacher();
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 
-        if (teacherService == null) {
-            new TeacherService(teacher, executionSemester);
-        }
+	if (teacherService == null) {
+	    new TeacherService(teacher, executionSemester);
+	}
 
-        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonDTO
-                .getIdInternal());
-        if (supportLesson == null) {
-            supportLesson = new SupportLesson(supportLessonDTO, professorship, roleType);
-        } else {
-            supportLesson.update(supportLessonDTO, roleType);
-        }
+	SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonDTO.getIdInternal());
+	if (supportLesson == null) {
+	    supportLesson = new SupportLesson(supportLessonDTO, professorship, roleType);
+	} else {
+	    supportLesson.update(supportLessonDTO, roleType);
+	}
     }
 }

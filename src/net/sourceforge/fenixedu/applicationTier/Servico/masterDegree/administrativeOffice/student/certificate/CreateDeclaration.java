@@ -20,103 +20,98 @@ public class CreateDeclaration extends Service {
 
     public List run(InfoStudent infoStudent, Specialization specialization) throws Exception {
 
-        List infoStudentCurricularPlanList = new ArrayList();
+	List infoStudentCurricularPlanList = new ArrayList();
 
-        Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
-        if(registration == null) {
-        	return null;
-        }
-        
-        List<StudentCurricularPlan> studentCurricularPlanList = registration.getStudentCurricularPlansBySpecialization(specialization);
+	Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent
+		.getDegreeType());
+	if (registration == null) {
+	    return null;
+	}
 
+	List<StudentCurricularPlan> studentCurricularPlanList = registration
+		.getStudentCurricularPlansBySpecialization(specialization);
 
-        if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
-            return null;
-        }
+	if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
+	    return null;
+	}
 
-        for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
-            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
+	for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
+	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
-            if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
-                infoStudentCurricularPlanList
-                        .add(InfoStudentCurricularPlan
-                                .newInfoFromDomain(studentCurricularPlan));
-            }
+	    if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
+		infoStudentCurricularPlanList.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+	    }
 
-        }
+	}
 
-        return infoStudentCurricularPlanList;
+	return infoStudentCurricularPlanList;
 
     }
 
-    public List run(InfoStudent infoStudent, Specialization specialization,
-            StudentCurricularPlanState state) throws Exception {
+    public List run(InfoStudent infoStudent, Specialization specialization, StudentCurricularPlanState state) throws Exception {
 
+	List infoStudentCurricularPlanList = new ArrayList();
 
-        List infoStudentCurricularPlanList = new ArrayList();
+	Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent
+		.getDegreeType());
+	if (registration == null) {
+	    return null;
+	}
+	List studentCurricularPlanList = registration.getStudentCurricularPlansBySpecialization(specialization);
 
-        Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
-        if(registration == null) {
-        	return null;
-        }
-        List studentCurricularPlanList = registration.getStudentCurricularPlansBySpecialization(specialization);   	
+	if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
+	    return null;
+	}
 
-        if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
-        	return null;
-        }
+	for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
+	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
-        for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
-        	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
+	    if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
+		infoStudentCurricularPlanList.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+	    }
 
-        	if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
-        		infoStudentCurricularPlanList
-        		.add(InfoStudentCurricularPlan
-        				.newInfoFromDomain(studentCurricularPlan));
-        	}
+	}
 
-        }
-
-        return infoStudentCurricularPlanList;
+	return infoStudentCurricularPlanList;
     }
 
     // FIXME change paraemter states to List type, when berserk's reflection bug
     // is fixed
-    public List run(InfoStudent infoStudent, Specialization specialization, ArrayList states)
-            throws Exception {
+    public List run(InfoStudent infoStudent, Specialization specialization, ArrayList states) throws Exception {
 
-        List studentCurricularPlanList = new ArrayList();
-        List infoStudentCurricularPlanList = new ArrayList();
+	List studentCurricularPlanList = new ArrayList();
+	List infoStudentCurricularPlanList = new ArrayList();
 
-        Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
-        if(registration == null) {
-        	return null;
-        }
-        for (Iterator iter = states.iterator(); iter.hasNext();) {
-        	StudentCurricularPlanState state = (StudentCurricularPlanState) iter.next();
-        	List<StudentCurricularPlan> studentCurricularPlanListTmp = registration.getStudentCurricularPlansBySpecialization(specialization);
-        	for (Iterator iterator = studentCurricularPlanListTmp.iterator(); iterator.hasNext();) {
-        		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
+	Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent
+		.getDegreeType());
+	if (registration == null) {
+	    return null;
+	}
+	for (Iterator iter = states.iterator(); iter.hasNext();) {
+	    StudentCurricularPlanState state = (StudentCurricularPlanState) iter.next();
+	    List<StudentCurricularPlan> studentCurricularPlanListTmp = registration
+		    .getStudentCurricularPlansBySpecialization(specialization);
+	    for (Iterator iterator = studentCurricularPlanListTmp.iterator(); iterator.hasNext();) {
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
-        		studentCurricularPlanList.add(studentCurricularPlan);
-        	}
+		studentCurricularPlanList.add(studentCurricularPlan);
+	    }
 
-        }
+	}
 
-        if (studentCurricularPlanList.isEmpty()) {
-        	return null;
-        }
+	if (studentCurricularPlanList.isEmpty()) {
+	    return null;
+	}
 
-        for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
-        	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
+	for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
+	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
-        	if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
-        		infoStudentCurricularPlanList
-        		.add(InfoStudentCurricularPlan
-        				.newInfoFromDomain(studentCurricularPlan));
-        	}
+	    if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
+		infoStudentCurricularPlanList.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+	    }
 
-        }
-        	
-        return infoStudentCurricularPlanList;
+	}
+
+	return infoStudentCurricularPlanList;
     }
 }

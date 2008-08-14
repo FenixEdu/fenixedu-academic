@@ -21,60 +21,60 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
 
 public abstract class ThesisServiceWithMailNotification extends Service {
-    
+
     public SendMailReport run(Thesis thesis) throws FenixServiceException, SenderNotAllowed {
-        process(thesis);
-        return sendEmail(thesis);
+	process(thesis);
+	return sendEmail(thesis);
     }
-    
+
     abstract void process(Thesis thesis);
 
     private SendMailReport sendEmail(Thesis thesis) throws SenderNotAllowed {
-        MailBean bean = createMailBean(thesis);
-        
-        SendEMail sendEmailService = new SendEMail();
-        return sendEmailService.run(bean.getEmailParameters());
+	MailBean bean = createMailBean(thesis);
+
+	SendEMail sendEmailService = new SendEMail();
+	return sendEmailService.run(bean.getEmailParameters());
     }
 
     private MailBean createMailBean(Thesis thesis) {
-        MailBean bean = new MailBean();
+	MailBean bean = new MailBean();
 
-        Person person = AccessControl.getPerson();
-        bean.setFromName(person.getNickname());
-        bean.setFromAddress(person.getEmail());
-        
-        setMessage(thesis, bean);
-        setReceivers(thesis, bean);
-        
-        return bean;
+	Person person = AccessControl.getPerson();
+	bean.setFromName(person.getNickname());
+	bean.setFromAddress(person.getEmail());
+
+	setMessage(thesis, bean);
+	setReceivers(thesis, bean);
+
+	return bean;
     }
 
     protected abstract void setMessage(Thesis thesis, MailBean bean);
-    
-    protected String getMessage(String key, Object ... args) {
-        return getMessage(key, new Locale("pt"), args);
+
+    protected String getMessage(String key, Object... args) {
+	return getMessage(key, new Locale("pt"), args);
     }
 
-    protected String getMessage(String key, Locale locale, Object ... args) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.MessagingResources", locale);
-        
-        String message = bundle.getString(key);
-        return MessageFormat.format(message, args);
+    protected String getMessage(String key, Locale locale, Object... args) {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.MessagingResources", locale);
+
+	String message = bundle.getString(key);
+	return MessageFormat.format(message, args);
     }
-    
+
     private void setReceivers(Thesis thesis, MailBean bean) {
-        Collection<Person> receivers = getReceivers(thesis);
+	Collection<Person> receivers = getReceivers(thesis);
 
-        Iterator<Person> iterator = receivers.iterator();
-        while (iterator.hasNext()) {
-            Person person = iterator.next();
-            
-            if (person.getEmail() == null) {
-                iterator.remove();
-            }
-        }
-        
-        bean.addReceiversGroup(new FixedSetGroup(receivers));
+	Iterator<Person> iterator = receivers.iterator();
+	while (iterator.hasNext()) {
+	    Person person = iterator.next();
+
+	    if (person.getEmail() == null) {
+		iterator.remove();
+	    }
+	}
+
+	bean.addReceiversGroup(new FixedSetGroup(receivers));
     }
 
     protected abstract Collection<Person> getReceivers(Thesis thesis);
@@ -82,26 +82,25 @@ public abstract class ThesisServiceWithMailNotification extends Service {
     //
     // Utility methods
     //
-    
-    protected static Set<Person> personSet(Person ... persons) {
-        Set<Person> result = new HashSet<Person>();
-        
-        for (Person person : persons) {
-            if (person != null) {
-                result.add(person);
-            }
-        }
-        
-        return result;
+
+    protected static Set<Person> personSet(Person... persons) {
+	Set<Person> result = new HashSet<Person>();
+
+	for (Person person : persons) {
+	    if (person != null) {
+		result.add(person);
+	    }
+	}
+
+	return result;
     }
 
     protected static Person getPerson(ThesisEvaluationParticipant participant) {
-        if (participant == null) {
-            return null;
-        }
-        else {
-            return participant.getPerson();
-        }
+	if (participant == null) {
+	    return null;
+	} else {
+	    return participant.getPerson();
+	}
     }
-    
+
 }

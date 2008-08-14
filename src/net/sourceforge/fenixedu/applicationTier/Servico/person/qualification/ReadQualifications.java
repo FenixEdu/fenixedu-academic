@@ -22,13 +22,13 @@ public class ReadQualifications extends Service {
 
 	final Person person = Person.readPersonByUsername(user);
 
-	final List<InfoQualification> infoQualifications = (List) CollectionUtils.collect(person
-		.getAssociatedQualifications(), new Transformer() {
-	    public Object transform(Object o) {
-		Qualification qualification = (Qualification) o;
-		return InfoQualificationWithPersonAndCountry.newInfoFromDomain(qualification);
-	    }
-	});
+	final List<InfoQualification> infoQualifications = (List) CollectionUtils.collect(person.getAssociatedQualifications(),
+		new Transformer() {
+		    public Object transform(Object o) {
+			Qualification qualification = (Qualification) o;
+			return InfoQualificationWithPersonAndCountry.newInfoFromDomain(qualification);
+		    }
+		});
 	Collections.sort(infoQualifications, new Comparator() {
 
 	    public int compare(Object o1, Object o2) {

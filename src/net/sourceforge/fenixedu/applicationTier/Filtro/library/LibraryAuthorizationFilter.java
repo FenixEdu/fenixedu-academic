@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class LibraryAuthorizationFilter extends AuthorizationByRoleFilter {
 
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.LIBRARY;
-	}
+    @Override
+    protected RoleType getRoleType() {
+	return RoleType.LIBRARY;
+    }
 
 }

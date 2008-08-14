@@ -5,7 +5,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
- * Library operation of marking a thesis pending with an optional code explaining why.
+ * Library operation of marking a thesis pending with an optional code
+ * explaining why.
  * 
  * @author Pedro Santos (pmrsa)
  */

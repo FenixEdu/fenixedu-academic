@@ -45,33 +45,33 @@ public class RubricType extends FenixUtil {
     private String rubricTableName;
 
     public RubricType(String rubricType) {
-        if (rubricType.equals(REVENUE_RUBRIC_TYPE))
-            this.rubricTableName = REVENUE_RUBRIC_TABLE_NAME;
-        else if (rubricType.equals(EXPENSES_RUBRIC_TYPE))
-            this.rubricTableName = EXPENSES_RUBRIC_TABLE_NAME;
-        else if (rubricType.equals(PROJECT_TYPE_RUBRIC_TYPE))
-            this.rubricTableName = PROJECT_TYPE_RUBRIC_TABLE_NAME;
-        else if (rubricType.equals(EXPLORATION_UNITS_RUBRIC_TYPE))
-            this.rubricTableName = EXPLORATION_UNITS_RUBRIC_TABLE_NAME;
-        else if (rubricType.equals(OVERHEAD_TYPE_RUBRIC_TYPE))
-            this.rubricTableName = OVERHEAD_TYPE_RUBRIC_TABLE_NAME;
+	if (rubricType.equals(REVENUE_RUBRIC_TYPE))
+	    this.rubricTableName = REVENUE_RUBRIC_TABLE_NAME;
+	else if (rubricType.equals(EXPENSES_RUBRIC_TYPE))
+	    this.rubricTableName = EXPENSES_RUBRIC_TABLE_NAME;
+	else if (rubricType.equals(PROJECT_TYPE_RUBRIC_TYPE))
+	    this.rubricTableName = PROJECT_TYPE_RUBRIC_TABLE_NAME;
+	else if (rubricType.equals(EXPLORATION_UNITS_RUBRIC_TYPE))
+	    this.rubricTableName = EXPLORATION_UNITS_RUBRIC_TABLE_NAME;
+	else if (rubricType.equals(OVERHEAD_TYPE_RUBRIC_TYPE))
+	    this.rubricTableName = OVERHEAD_TYPE_RUBRIC_TABLE_NAME;
     }
 
     public static RubricType getRubricType(String rubricType) {
-        if (rubricType.equals(REVENUE_RUBRIC_TYPE))
-            return REVENUE_RUBRIC;
-        else if (rubricType.equals(EXPENSES_RUBRIC_TYPE))
-            return EXPENSES_RUBRIC;
-        else if (rubricType.equals(PROJECT_TYPE_RUBRIC_TYPE))
-            return PROJECT_TYPE_RUBRIC;
-        else if (rubricType.equals(EXPLORATION_UNITS_RUBRIC_TYPE))
-            return EXPLORATION_UNITS_RUBRIC;
-        else if (rubricType.equals(OVERHEAD_TYPE_RUBRIC_TYPE))
-            return OVERHEAD_TYPE_RUBRIC;
-        return null;
+	if (rubricType.equals(REVENUE_RUBRIC_TYPE))
+	    return REVENUE_RUBRIC;
+	else if (rubricType.equals(EXPENSES_RUBRIC_TYPE))
+	    return EXPENSES_RUBRIC;
+	else if (rubricType.equals(PROJECT_TYPE_RUBRIC_TYPE))
+	    return PROJECT_TYPE_RUBRIC;
+	else if (rubricType.equals(EXPLORATION_UNITS_RUBRIC_TYPE))
+	    return EXPLORATION_UNITS_RUBRIC;
+	else if (rubricType.equals(OVERHEAD_TYPE_RUBRIC_TYPE))
+	    return OVERHEAD_TYPE_RUBRIC;
+	return null;
     }
 
     public String getRubricTableName() {
-        return rubricTableName;
+	return rubricTableName;
     }
 }

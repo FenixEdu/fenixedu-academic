@@ -14,14 +14,15 @@ public class OriginDegreeModuleForEquivalencePlanEntryProvider implements DataPr
 
     public Object provide(Object source, Object currentValue) {
 	final EquivalencePlanEntryCreator equivalencePlanEntryCreator = (EquivalencePlanEntryCreator) source;
-	final DegreeCurricularPlanEquivalencePlan equivalencePlan = (DegreeCurricularPlanEquivalencePlan) equivalencePlanEntryCreator.getEquivalencePlan();
+	final DegreeCurricularPlanEquivalencePlan equivalencePlan = (DegreeCurricularPlanEquivalencePlan) equivalencePlanEntryCreator
+		.getEquivalencePlan();
 	final DegreeCurricularPlan degreeCurricularPlan = equivalencePlan.getSourceDegreeCurricularPlan();
 	final Set<DegreeModule> degreeModules = degreeCurricularPlan.getAllDegreeModules();
 	return degreeModules;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

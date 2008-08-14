@@ -11,51 +11,51 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class ResultPredicates {
 
-	/**
-	 * Predicates to access Result objects.
-	 */
-	public static final AccessControlPredicate<ResearchResult> createPredicate = new AccessControlPredicate<ResearchResult>() {
-		public boolean evaluate(ResearchResult result) {
-			final IUserView userView = AccessControl.getUserView();
-			if (userView != null && (userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
-				|| (userView.hasRoleType(RoleType.RESEARCHER)
-					&& !result.hasAnyResultParticipations()))) {
-				return true;
-			}
-			return false;
-		}
-	};
+    /**
+     * Predicates to access Result objects.
+     */
+    public static final AccessControlPredicate<ResearchResult> createPredicate = new AccessControlPredicate<ResearchResult>() {
+	public boolean evaluate(ResearchResult result) {
+	    final IUserView userView = AccessControl.getUserView();
+	    if (userView != null
+		    && (userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL) || (userView.hasRoleType(RoleType.RESEARCHER) && !result
+			    .hasAnyResultParticipations()))) {
+		return true;
+	    }
+	    return false;
+	}
+    };
 
-	public static final AccessControlPredicate<ResearchResult> writePredicate = new AccessControlPredicate<ResearchResult>() {
-		public boolean evaluate(ResearchResult result) {
-			return result.isEditableByCurrentUser();
-		}
-	};
+    public static final AccessControlPredicate<ResearchResult> writePredicate = new AccessControlPredicate<ResearchResult>() {
+	public boolean evaluate(ResearchResult result) {
+	    return result.isEditableByCurrentUser();
+	}
+    };
 
-	/**
-	 * Predicates to access ResultUnitAssociation objects.
-	 */
-	public static final AccessControlPredicate<ResultUnitAssociation> unitWritePredicate = new AccessControlPredicate<ResultUnitAssociation>() {
-		public boolean evaluate(ResultUnitAssociation association) {
-			return writePredicate.evaluate(association.getResult());
-		}
-	};
+    /**
+     * Predicates to access ResultUnitAssociation objects.
+     */
+    public static final AccessControlPredicate<ResultUnitAssociation> unitWritePredicate = new AccessControlPredicate<ResultUnitAssociation>() {
+	public boolean evaluate(ResultUnitAssociation association) {
+	    return writePredicate.evaluate(association.getResult());
+	}
+    };
 
-	/**
-	 * Predicates to access ResultParticipation objects.
-	 */
-	public static final AccessControlPredicate<ResultParticipation> participationWritePredicate = new AccessControlPredicate<ResultParticipation>() {
-		public boolean evaluate(ResultParticipation participation) {
-			return writePredicate.evaluate(participation.getResult());
-		}
-	};
+    /**
+     * Predicates to access ResultParticipation objects.
+     */
+    public static final AccessControlPredicate<ResultParticipation> participationWritePredicate = new AccessControlPredicate<ResultParticipation>() {
+	public boolean evaluate(ResultParticipation participation) {
+	    return writePredicate.evaluate(participation.getResult());
+	}
+    };
 
-	/**
-	 * Predicates to access ResultDocumentFile objects.
-	 */
-	public static final AccessControlPredicate<ResearchResultDocumentFile> documentFileWritePredicate = new AccessControlPredicate<ResearchResultDocumentFile>() {
-		public boolean evaluate(ResearchResultDocumentFile documentFile) {
-			return writePredicate.evaluate(documentFile.getResult());
-		}
-	};
+    /**
+     * Predicates to access ResultDocumentFile objects.
+     */
+    public static final AccessControlPredicate<ResearchResultDocumentFile> documentFileWritePredicate = new AccessControlPredicate<ResearchResultDocumentFile>() {
+	public boolean evaluate(ResearchResultDocumentFile documentFile) {
+	    return writePredicate.evaluate(documentFile.getResult());
+	}
+    };
 }

@@ -53,7 +53,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	if (degree == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
 	}
-	
+
 	if (personHasDegree(person, degree)) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", degree.getName());
 	}
@@ -103,7 +103,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	if (selectedDegree == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
 	}
-	
+
 	if (personHasDegree(getPerson(), selectedDegree)) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", selectedDegree.getName());
 	}

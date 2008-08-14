@@ -24,21 +24,21 @@ public class TeacherExecutionCourseProfessorshipShiftsDTO extends DataTranferObj
      * @return Returns the infoExecutionCourse.
      */
     public InfoExecutionCourse getInfoExecutionCourse() {
-        return this.infoExecutionCourse;
+	return this.infoExecutionCourse;
     }
 
     /**
      * @return Returns the infoShiftPercentage.
      */
     public List getInfoShiftPercentageList() {
-        return this.infoShiftPercentageList;
+	return this.infoShiftPercentageList;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return this.infoTeacher;
+	return this.infoTeacher;
     }
 
     /**
@@ -46,7 +46,7 @@ public class TeacherExecutionCourseProfessorshipShiftsDTO extends DataTranferObj
      *            The infoExecutionCourse to set.
      */
     public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-        this.infoExecutionCourse = infoExecutionCourse;
+	this.infoExecutionCourse = infoExecutionCourse;
     }
 
     /**
@@ -54,7 +54,7 @@ public class TeacherExecutionCourseProfessorshipShiftsDTO extends DataTranferObj
      *            The infoShiftPercentage to set.
      */
     public void setInfoShiftPercentageList(List infoShiftPercentage) {
-        this.infoShiftPercentageList = infoShiftPercentage;
+	this.infoShiftPercentageList = infoShiftPercentage;
     }
 
     /**
@@ -62,7 +62,7 @@ public class TeacherExecutionCourseProfessorshipShiftsDTO extends DataTranferObj
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
 }

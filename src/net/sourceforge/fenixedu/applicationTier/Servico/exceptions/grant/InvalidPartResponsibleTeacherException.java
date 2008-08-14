@@ -17,22 +17,22 @@ public class InvalidPartResponsibleTeacherException extends FenixServiceExceptio
     }
 
     public InvalidPartResponsibleTeacherException(String message) {
-        super(message);
+	super(message);
     }
 
     public InvalidPartResponsibleTeacherException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public InvalidPartResponsibleTeacherException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[InvalidProjectResponsibleTeacherException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[InvalidProjectResponsibleTeacherException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

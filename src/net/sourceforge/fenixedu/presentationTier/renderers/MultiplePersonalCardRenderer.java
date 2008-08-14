@@ -40,16 +40,15 @@ public class MultiplePersonalCardRenderer extends OutputRenderer {
     private String eachSchema;
 
     private String divClasses;
-    
+
     private String sortBy;
 
-    
     public String getDivClasses() {
-        return divClasses;
+	return divClasses;
     }
 
     public void setDivClasses(String divClasses) {
-        this.divClasses = divClasses;
+	this.divClasses = divClasses;
     }
 
     public String getClasses() {
@@ -158,8 +157,8 @@ public class MultiplePersonalCardRenderer extends OutputRenderer {
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-	List<Person> people = (getSortBy() == null) ? (List<Person>) object : RenderUtils
-		.sortCollectionWithCriteria((List<Person>) object, getSortBy());
+	List<Person> people = (getSortBy() == null) ? (List<Person>) object : RenderUtils.sortCollectionWithCriteria(
+		(List<Person>) object, getSortBy());
 	return new MultiplePersonalCardLayout(people);
     }
 
@@ -192,16 +191,14 @@ public class MultiplePersonalCardRenderer extends OutputRenderer {
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
 	    HtmlBlockContainer container = new HtmlBlockContainer();
-	    
-	    PresentationContext newContext = getContext().createSubContext(
-			getContext().getMetaObject());
+
+	    PresentationContext newContext = getContext().createSubContext(getContext().getMetaObject());
 	    newContext.setProperties(new Properties());
 	    newContext.setRenderMode(RenderMode.getMode("output"));
 	    PersonalCardRenderer renderer = getCardRenderer();
-	   
-	    for(Person person : people) {
-		container.addChild(RenderKit.getInstance().renderUsing(renderer, newContext, person,
-			Person.class));
+
+	    for (Person person : people) {
+		container.addChild(RenderKit.getInstance().renderUsing(renderer, newContext, person, Person.class));
 	    }
 	    return container;
 	}

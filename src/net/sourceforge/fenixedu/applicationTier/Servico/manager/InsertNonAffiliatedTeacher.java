@@ -17,22 +17,21 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertNonAffiliatedTeacher extends Service {
 
-    public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws
-            NotExistingServiceException {
-        final Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
-        if (institution == null) {
-            throw new NotExistingServiceException("no.institution");
-        }
+    public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws NotExistingServiceException {
+	final Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
+	if (institution == null) {
+	    throw new NotExistingServiceException("no.institution");
+	}
 
-        if (institution.findNonAffiliatedTeacherByName(nonAffiliatedTeacherName) != null) {
-            throw new NotExistingServiceException("teacher.already.exists");
-        }
+	if (institution.findNonAffiliatedTeacherByName(nonAffiliatedTeacherName) != null) {
+	    throw new NotExistingServiceException("teacher.already.exists");
+	}
 
-        final NonAffiliatedTeacher nonAffiliatedTeacher = new NonAffiliatedTeacher();
-        nonAffiliatedTeacher.setName(nonAffiliatedTeacherName);
-        nonAffiliatedTeacher.setInstitutionUnit(institution);
-        
-        return nonAffiliatedTeacher;
+	final NonAffiliatedTeacher nonAffiliatedTeacher = new NonAffiliatedTeacher();
+	nonAffiliatedTeacher.setName(nonAffiliatedTeacherName);
+	nonAffiliatedTeacher.setInstitutionUnit(institution);
+
+	return nonAffiliatedTeacher;
     }
 
 }

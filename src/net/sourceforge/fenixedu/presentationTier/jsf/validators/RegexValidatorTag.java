@@ -13,22 +13,22 @@ public class RegexValidatorTag extends ValidatorTag {
     private String regex;
 
     public RegexValidatorTag() {
-        super();
-        super.setValidatorId("regexValidator");
+	super();
+	super.setValidatorId("regexValidator");
     }
 
     protected Validator createValidator() throws JspException {
-        RegexValidator result = (RegexValidator) super.createValidator();
-        result.setRegex(regex);
-        return result;
+	RegexValidator result = (RegexValidator) super.createValidator();
+	result.setRegex(regex);
+	return result;
     }
 
     public String getRegex() {
-        return regex;
+	return regex;
     }
 
     public void setRegex(String regex) {
-        this.regex = regex;
+	this.regex = regex;
     }
 
 }

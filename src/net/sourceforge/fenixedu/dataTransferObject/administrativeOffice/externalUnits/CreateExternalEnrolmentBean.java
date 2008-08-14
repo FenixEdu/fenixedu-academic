@@ -18,28 +18,29 @@ public class CreateExternalEnrolmentBean implements Serializable {
     private Grade grade;
     private YearMonthDay evaluationDate;
     private Double ectsCredits;
-    
+
     public CreateExternalEnrolmentBean() {
     }
-    
+
     public CreateExternalEnrolmentBean(final ExternalCurricularCourse externalCurricularCourse) {
 	setExternalCurricularCourse(externalCurricularCourse);
     }
-    
+
     public ExternalCurricularCourse getExternalCurricularCourse() {
 	return (this.externalCurricularCourse != null) ? this.externalCurricularCourse.getObject() : null;
     }
 
     public void setExternalCurricularCourse(ExternalCurricularCourse externalCurricularCourse) {
-	this.externalCurricularCourse = (externalCurricularCourse != null) ? new DomainReference<ExternalCurricularCourse>(externalCurricularCourse) : null;
+	this.externalCurricularCourse = (externalCurricularCourse != null) ? new DomainReference<ExternalCurricularCourse>(
+		externalCurricularCourse) : null;
     }
 
     public Integer getStudentNumber() {
-        return studentNumber;
+	return studentNumber;
     }
 
     public void setStudentNumber(Integer studentNumber) {
-        this.studentNumber = studentNumber;
+	this.studentNumber = studentNumber;
     }
 
     public ExecutionSemester getExecutionPeriod() {
@@ -51,26 +52,26 @@ public class CreateExternalEnrolmentBean implements Serializable {
     }
 
     public YearMonthDay getEvaluationDate() {
-        return evaluationDate;
+	return evaluationDate;
     }
 
     public void setEvaluationDate(YearMonthDay evaluationDate) {
-        this.evaluationDate = evaluationDate;
+	this.evaluationDate = evaluationDate;
     }
 
     public Grade getGrade() {
-        return grade;
+	return grade;
     }
 
     public void setGrade(Grade grade) {
-        this.grade = grade;
+	this.grade = grade;
     }
 
     public Double getEctsCredits() {
-        return ectsCredits;
+	return ectsCredits;
     }
 
     public void setEctsCredits(Double ectsCredits) {
-        this.ectsCredits = ectsCredits;
+	this.ectsCredits = ectsCredits;
     }
 }

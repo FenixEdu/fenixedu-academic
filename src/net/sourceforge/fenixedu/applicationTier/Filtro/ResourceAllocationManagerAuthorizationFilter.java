@@ -20,7 +20,7 @@ public class ResourceAllocationManagerAuthorizationFilter extends AuthorizationB
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -29,7 +29,7 @@ public class ResourceAllocationManagerAuthorizationFilter extends AuthorizationB
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.RESOURCE_ALLOCATION_MANAGER;
+	return RoleType.RESOURCE_ALLOCATION_MANAGER;
     }
 
 }

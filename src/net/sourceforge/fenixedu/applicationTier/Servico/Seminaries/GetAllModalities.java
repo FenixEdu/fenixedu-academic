@@ -19,23 +19,23 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 3/Set/2003, 15:10:43
+ *         Created at 3/Set/2003, 15:10:43
  * 
  */
 public class GetAllModalities extends Service {
 
-	public List run() throws BDException{
-		List infoCases = new LinkedList();
+    public List run() throws BDException {
+	List infoCases = new LinkedList();
 
-		List cases = Modality.getAllModalities();
+	List cases = Modality.getAllModalities();
 
-		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-			Modality modality = (Modality) iterator.next();
+	for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+	    Modality modality = (Modality) iterator.next();
 
-			infoCases.add(InfoModality.newInfoFromDomain(modality));
-		}
-
-		return infoCases;
+	    infoCases.add(InfoModality.newInfoFromDomain(modality));
 	}
+
+	return infoCases;
+    }
 
 }

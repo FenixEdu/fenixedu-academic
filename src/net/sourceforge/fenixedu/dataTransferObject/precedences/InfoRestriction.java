@@ -11,11 +11,11 @@ public abstract class InfoRestriction extends InfoObject {
     protected String restrictionKindResourceKey;
 
     public String getRestrictionKindResourceKey() {
-        return restrictionKindResourceKey;
+	return restrictionKindResourceKey;
     }
 
     public void setRestrictionKindResourceKey(String restrictionKindResourceKey) {
-        this.restrictionKindResourceKey = restrictionKindResourceKey;
+	this.restrictionKindResourceKey = restrictionKindResourceKey;
     }
 
     public abstract String getArg();

@@ -14,7 +14,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class BoardsDA extends FenixDispatchAction {
 
-    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	BoardSearchBean boardSearchBean = getBoardSearchBean(request);
 	RenderUtils.invalidateViewState();
 	if (boardSearchBean == null) {

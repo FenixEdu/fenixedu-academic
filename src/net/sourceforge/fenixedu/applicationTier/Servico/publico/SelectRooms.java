@@ -25,9 +25,9 @@ public class SelectRooms extends Service {
 
     public Object run(InfoRoomEditor infoRoom) {
 
-	List<AllocatableSpace> salas = AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(infoRoom.getNome(), 
-		infoRoom.getEdificio(), infoRoom.getPiso(), infoRoom.getTipo(), 
-		infoRoom.getCapacidadeNormal(), infoRoom.getCapacidadeExame());
+	List<AllocatableSpace> salas = AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(infoRoom.getNome(),
+		infoRoom.getEdificio(), infoRoom.getPiso(), infoRoom.getTipo(), infoRoom.getCapacidadeNormal(), infoRoom
+			.getCapacidadeExame());
 
 	if (salas == null)
 	    return new ArrayList();
@@ -38,7 +38,7 @@ public class SelectRooms extends Service {
 
 	while (iter.hasNext()) {
 	    sala = (AllocatableSpace) iter.next();
-	    if(sala.containsIdentification()) {
+	    if (sala.containsIdentification()) {
 		salasView.add(InfoRoom.newInfoFromDomain(sala));
 	    }
 	}

@@ -23,12 +23,12 @@ public class JavaSituationName2SqlSituationNameFieldConversion implements FieldC
      * @see FieldConversion#javaToSql(Object)
      */
     public Object javaToSql(Object source) {
-        if (source instanceof SituationName) {
-            SituationName s = (SituationName) source;
-            return s.getSituationName();
-        }
+	if (source instanceof SituationName) {
+	    SituationName s = (SituationName) source;
+	    return s.getSituationName();
+	}
 
-        return source;
+	return source;
 
     }
 
@@ -36,12 +36,12 @@ public class JavaSituationName2SqlSituationNameFieldConversion implements FieldC
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new SituationName(src);
-        }
+	if (source instanceof Integer) {
+	    Integer src = (Integer) source;
+	    return new SituationName(src);
+	}
 
-        return source;
+	return source;
 
     }
 }

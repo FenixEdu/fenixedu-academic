@@ -37,8 +37,7 @@ public class OptionalDegreeModuleToEnrolKeyConverter extends Converter {
 	    final Context context = (Context) converter.convert(type, parts[0]);
 	    final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
 	    final ExecutionSemester executionSemester = (ExecutionSemester) converter.convert(type, parts[2]);
-	    final CurricularCourse curricularCourse = (CurricularCourse) converter.convert(type,
-		    parts[3]);
+	    final CurricularCourse curricularCourse = (CurricularCourse) converter.convert(type, parts[3]);
 	    result.add(new OptionalDegreeModuleToEnrol(curriculumGroup, context, executionSemester, curricularCourse));
 	}
 

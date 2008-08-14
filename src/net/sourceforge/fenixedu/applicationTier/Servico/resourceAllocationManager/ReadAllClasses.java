@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Jo�o Mota
  * 
- * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
+ *         30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
  */
 public class ReadAllClasses extends Service {
 
-    public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException{
+    public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
 	List<InfoClass> infoClasses = null;
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(keyExecutionPeriod);

@@ -23,43 +23,43 @@ public class ProjectBudgetaryBalanceReportLine implements Serializable, IProject
     private Double balance;
 
     public Double getBalance() {
-        return balance;
+	return balance;
     }
 
     public void setBalance(Double balance) {
-        this.balance = balance;
+	this.balance = balance;
     }
 
     public Double getBudget() {
-        return budget;
+	return budget;
     }
 
     public void setBudget(Double budget) {
-        this.budget = budget;
+	this.budget = budget;
     }
 
     public Double getExecuted() {
-        return executed;
+	return executed;
     }
 
     public void setExecuted(Double executed) {
-        this.executed = executed;
+	this.executed = executed;
     }
 
     public Integer getRubric() {
-        return rubric;
+	return rubric;
     }
 
     public void setRubric(Integer rubric) {
-        this.rubric = rubric;
+	this.rubric = rubric;
     }
 
     public String getRubricDescription() {
-        return rubricDescription;
+	return rubricDescription;
     }
 
     public void setRubricDescription(String rubricDescription) {
-        this.rubricDescription = rubricDescription;
+	this.rubricDescription = rubricDescription;
     }
 
 }

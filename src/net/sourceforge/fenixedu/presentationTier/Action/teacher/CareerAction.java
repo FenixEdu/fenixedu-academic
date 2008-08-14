@@ -22,15 +22,14 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class CareerAction extends CRUDActionByOID {
-    protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-        IUserView userView = UserView.getUser();
-        List categories = (List) ServiceUtils
-                .executeService( "ReadCategories", new Object[] {});
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form, HttpServletRequest request)
+	    throws FenixServiceException, FenixFilterException {
+	IUserView userView = UserView.getUser();
+	List categories = (List) ServiceUtils.executeService("ReadCategories", new Object[] {});
 
-        request.setAttribute("categories", categories);
+	request.setAttribute("categories", categories);
     }
 }

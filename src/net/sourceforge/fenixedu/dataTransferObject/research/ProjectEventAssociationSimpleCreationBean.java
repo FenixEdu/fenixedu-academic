@@ -7,33 +7,33 @@ import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole;
 
 public class ProjectEventAssociationSimpleCreationBean implements Serializable {
-  
+
     private DomainReference<EventEdition> event;
     private ProjectEventAssociationRole role;
     private String eventName;
 
     public ProjectEventAssociationRole getRole() {
-        return role;
+	return role;
     }
 
     public void setRole(ProjectEventAssociationRole associationRole) {
-        this.role = associationRole;
+	this.role = associationRole;
     }
 
     public String getEventName() {
-        return eventName;
+	return eventName;
     }
 
     public void setEventName(String name) {
-        this.eventName = name;
+	this.eventName = name;
     }
 
     public EventEdition getEvent() {
-        return (this.event == null) ? null : this.event.getObject();
+	return (this.event == null) ? null : this.event.getObject();
     }
 
     public void setEvent(EventEdition event) {
-        this.event = (event != null) ? new DomainReference<EventEdition>(event) : null;
+	this.event = (event != null) ? new DomainReference<EventEdition>(event) : null;
     }
 
 }

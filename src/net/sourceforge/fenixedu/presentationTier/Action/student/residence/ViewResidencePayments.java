@@ -16,7 +16,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-
 @Mapping(path = "/viewResidencePayments", module = "student")
 @Forwards( { @Forward(name = "showEvents", path = "show-student-residence-payments"),
 	@Forward(name = "eventDetails", path = "view-event-details") })
@@ -32,18 +31,18 @@ public class ViewResidencePayments extends FenixDispatchAction {
 
 	return mapping.findForward("showEvents");
     }
-    
+
     public ActionForward showEventDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
+
 	long eventOID = Long.parseLong(request.getParameter("event"));
 	ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(eventOID);
-	
+
 	request.setAttribute("person", getLoggedPerson(request));
 	request.setAttribute("event", residenceEvent);
 	request.setAttribute("entryDTOs", residenceEvent.calculateEntries());
 	request.setAttribute("accountingEventPaymentCodes", residenceEvent.getNonProcessedPaymentCodes());
-	
+
 	return mapping.findForward("eventDetails");
     }
 }

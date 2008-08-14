@@ -23,33 +23,31 @@ public class Group2StringConverter implements FieldConversion {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Convert a {@link Group} into a string by asking the group for the 
+     * Convert a {@link Group} into a string by asking the group for the
      * correspondent expression.
      * 
      * @see Group#getExpression()
      */
     public Object javaToSql(Object source) throws ConversionException {
-        if (source == null) {
-            return null;
-        }
-        else {
-            return ((Group) source).getExpression();
-        }
+	if (source == null) {
+	    return null;
+	} else {
+	    return ((Group) source).getExpression();
+	}
     }
 
     /**
-     * Converts a string into a {@link Group} by compiling the string as 
-     * a group expression.
+     * Converts a string into a {@link Group} by compiling the string as a group
+     * expression.
      * 
      * @see ExpressionGroup#ExpressionGroup(String)
      */
     public Object sqlToJava(Object source) throws ConversionException {
-        if (source == null || source.toString().length() == 0) {
-            return null;
-        }
-        else {
-            return new ExpressionGroup((String) source).getGroup();
-        }
+	if (source == null || source.toString().length() == 0) {
+	    return null;
+	} else {
+	    return new ExpressionGroup((String) source).getGroup();
+	}
     }
 
 }

@@ -32,64 +32,64 @@ public class TestType extends FenixUtil {
     }
 
     public TestType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public TestType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public TestType(String typeString) {
-        this.type = getTypeCode(typeString);
+	this.type = getTypeCode(typeString);
     }
 
     public Integer getType() {
-        return type;
+	return type;
     }
 
     public void setType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public void setType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public List getAllTypes() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(EVALUATION_STRING, new Integer(EVALUATION).toString()));
-        result.add(new LabelValueBean(STUDY_STRING, new Integer(STUDY).toString()));
-        result.add(new LabelValueBean(INQUIRY_STRING, new Integer(INQUIRY).toString()));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(EVALUATION_STRING, new Integer(EVALUATION).toString()));
+	result.add(new LabelValueBean(STUDY_STRING, new Integer(STUDY).toString()));
+	result.add(new LabelValueBean(INQUIRY_STRING, new Integer(INQUIRY).toString()));
+	return result;
     }
 
     public Integer getTypeCode(String typeName) {
-        if (typeName.equals(EVALUATION_STRING))
-            return new Integer(EVALUATION);
-        else if (typeName.equals(STUDY_STRING))
-            return new Integer(STUDY);
-        else if (typeName.equals(INQUIRY_STRING))
-            return new Integer(INQUIRY);
-        return null;
+	if (typeName.equals(EVALUATION_STRING))
+	    return new Integer(EVALUATION);
+	else if (typeName.equals(STUDY_STRING))
+	    return new Integer(STUDY);
+	else if (typeName.equals(INQUIRY_STRING))
+	    return new Integer(INQUIRY);
+	return null;
     }
 
     public String getTypeString() {
-        if (type.intValue() == EVALUATION)
-            return new String(EVALUATION_STRING);
-        else if (type.intValue() == STUDY)
-            return new String(STUDY_STRING);
-        else if (type.intValue() == INQUIRY)
-            return new String(INQUIRY_STRING);
+	if (type.intValue() == EVALUATION)
+	    return new String(EVALUATION_STRING);
+	else if (type.intValue() == STUDY)
+	    return new String(STUDY_STRING);
+	else if (type.intValue() == INQUIRY)
+	    return new String(INQUIRY_STRING);
 
-        return null;
+	return null;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof TestType) {
-            TestType tt = (TestType) obj;
-            resultado = this.getType().equals(tt.getType());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof TestType) {
+	    TestType tt = (TestType) obj;
+	    resultado = this.getType().equals(tt.getType());
+	}
+	return resultado;
     }
 }

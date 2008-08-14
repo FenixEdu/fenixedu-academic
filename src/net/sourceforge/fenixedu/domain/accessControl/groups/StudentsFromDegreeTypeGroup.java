@@ -37,7 +37,8 @@ public class StudentsFromDegreeTypeGroup extends Group {
 
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName() + "." + degreeType.toString()); 
+	return RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName() + "."
+		+ degreeType.toString());
     }
 
     @Override

@@ -115,7 +115,8 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 		    curricularYear.getYear().toString(), previousElection.getVotingPeriod().getPeriod() });
 	}
 
-	if (previousElection != null && previousElection.getVotingPeriod() != null && !previousElection.getVotingPeriod().isPastPeriod()) {
+	if (previousElection != null && previousElection.getVotingPeriod() != null
+		&& !previousElection.getVotingPeriod().isPastPeriod()) {
 	    // future voting period (must be deleted)
 	    previousElection.getVotingPeriod().delete();
 	}
@@ -171,9 +172,8 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	final DelegateElectionVotingPeriod votingPeriod = getVotingPeriod();
 
 	if (candidacyPeriod.isPastPeriod() && votingPeriod != null && votingPeriod.getStartDate().isBefore(new YearMonthDay())) {
-	    throw new DomainException("error.yearDelegateElections.edit.pastPeriod",
-		    new String[] { getDegree().getSigla(),getCurricularYear().getYear().toString(),
-		    getCandidacyPeriod().getPeriod() });
+	    throw new DomainException("error.yearDelegateElections.edit.pastPeriod", new String[] { getDegree().getSigla(),
+		    getCurricularYear().getYear().toString(), getCandidacyPeriod().getPeriod() });
 	} else {
 	    try {
 		candidacyPeriod.delete();

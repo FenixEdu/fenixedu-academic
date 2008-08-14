@@ -38,9 +38,9 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
     private CurricularRuleLevel curricularRuleLevel;
 
     private CycleType cycleTypeToEnrol;
-    
-    public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
-	    final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
+
+    public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionSemester executionSemester, final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
 	this(studentCurricularPlan, executionSemester, new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(),
 		executionSemester, curricularYears), curricularRuleLevel);
     }
@@ -130,8 +130,7 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
     }
 
     public String getFuncionalityTitle() {
-	final ResourceBundle resourceBundle = ResourceBundle
-		.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 
 	final StringBuilder result = new StringBuilder();
 	result.append(resourceBundle.getString("label.student.enrollment.courses")).append(" ");

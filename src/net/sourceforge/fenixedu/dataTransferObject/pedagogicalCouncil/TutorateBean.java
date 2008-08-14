@@ -4,23 +4,23 @@ import java.io.Serializable;
 
 public class TutorateBean implements Serializable {
 
-	private Integer personNumber;
-	private Integer degreeCurricularPeriod;
-	
-	public Integer getPersonNumber() {
-		return personNumber;
-	}
+    private Integer personNumber;
+    private Integer degreeCurricularPeriod;
 
-	public void setPersonNumber(Integer studentNumber) {
-		this.personNumber = studentNumber;
-	}
+    public Integer getPersonNumber() {
+	return personNumber;
+    }
 
-	public Integer getDegreeCurricularPeriod() {
-	    return degreeCurricularPeriod;
-	}
+    public void setPersonNumber(Integer studentNumber) {
+	this.personNumber = studentNumber;
+    }
 
-	public void setDegreeCurricularPeriod(Integer degreeCurricularPeriod) {
-	    this.degreeCurricularPeriod = degreeCurricularPeriod;
-	}
-	
+    public Integer getDegreeCurricularPeriod() {
+	return degreeCurricularPeriod;
+    }
+
+    public void setDegreeCurricularPeriod(Integer degreeCurricularPeriod) {
+	this.degreeCurricularPeriod = degreeCurricularPeriod;
+    }
+
 }

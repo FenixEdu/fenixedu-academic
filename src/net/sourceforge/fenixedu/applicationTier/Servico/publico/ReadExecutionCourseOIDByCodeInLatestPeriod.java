@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCourseOIDByCodeInLatestPeriod extends Service {
 
     public Integer run(String executionCourseCode) {
-        final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-        ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseCode);
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+	ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseCode);
 
-        if (executionCourse != null) {
-            return executionCourse.getIdInternal();
-        }
+	if (executionCourse != null) {
+	    return executionCourse.getIdInternal();
+	}
 
-        return null;
+	return null;
     }
 
 }

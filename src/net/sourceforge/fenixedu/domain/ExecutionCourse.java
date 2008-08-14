@@ -346,11 +346,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    if (hasSite()) {
 		getSite().delete();
 	    }
-	    
+
 	    if (hasBoard()) {
 		getBoard().delete();
 	    }
-	    
+
 	    for (; !getCourseLoads().isEmpty(); getCourseLoads().get(0).delete())
 		;
 	    for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete())
@@ -412,7 +412,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	return true;
     }
-    
+
     private boolean hasOnlyFinalEvaluations() {
 	for (final Evaluation evaluation : getAssociatedEvaluationsSet()) {
 	    if (!evaluation.isFinal()) {

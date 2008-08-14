@@ -22,37 +22,35 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class DepartmentMemberManageDegreeTeachingServicesDispatchAction extends ManageDegreeTeachingServicesDispatchAction {
 
-    public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+    public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-        DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer professorshipID = (Integer) dynaForm.get("professorshipID");
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+	DynaActionForm dynaForm = (DynaActionForm) form;
+	Integer professorshipID = (Integer) dynaForm.get("professorshipID");
+	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
 
-        if (professorship == null || professorship.getTeacher() != getLoggedTeacher(request)) {
-            createNewActionMessage(request);
-            return mapping.findForward("teacher-not-found");
-        }
+	if (professorship == null || professorship.getTeacher() != getLoggedTeacher(request)) {
+	    createNewActionMessage(request);
+	    return mapping.findForward("teacher-not-found");
+	}
 
-        teachingServiceDetailsProcess(professorship, request, dynaForm);
-        return mapping.findForward("show-teaching-service-percentages");
+	teachingServiceDetailsProcess(professorship, request, dynaForm);
+	return mapping.findForward("show-teaching-service-percentages");
     }
 
     private void createNewActionMessage(HttpServletRequest request) {
-        ActionMessages actionMessages = new ActionMessages();
-        actionMessages.add("", new ActionMessage("message.invalid.teacher"));
-        saveMessages(request, actionMessages);
+	ActionMessages actionMessages = new ActionMessages();
+	actionMessages.add("", new ActionMessage("message.invalid.teacher"));
+	saveMessages(request, actionMessages);
     }
 
     private Teacher getLoggedTeacher(HttpServletRequest request) {
-        IUserView userView = UserView.getUser();
-        return userView.getPerson().getTeacher();
+	IUserView userView = UserView.getUser();
+	return userView.getPerson().getTeacher();
     }
-    
-    public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {        
-        return updateTeachingServices(mapping, form, request, RoleType.DEPARTMENT_MEMBER);
+
+    public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	return updateTeachingServices(mapping, form, request, RoleType.DEPARTMENT_MEMBER);
     }
 }

@@ -10,46 +10,47 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class CreateLessonPlanningBean implements Serializable {
 
     private DomainReference<ExecutionCourse> executionCourseReference;
-    
+
     private MultiLanguageString title;
-    
+
     private MultiLanguageString planning;
-    
+
     private ShiftType lessonType;
 
     public CreateLessonPlanningBean(ExecutionCourse executionCourse) {
-        setExecutionCourse(executionCourse);
+	setExecutionCourse(executionCourse);
     }
-    
+
     public ExecutionCourse getExecutionCourse() {
-        return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
+	return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
     }
-    
+
     public void setExecutionCourse(ExecutionCourse executionCourseReference) {
-        this.executionCourseReference = (executionCourseReference != null) ? new DomainReference<ExecutionCourse>(executionCourseReference) : null;
+	this.executionCourseReference = (executionCourseReference != null) ? new DomainReference<ExecutionCourse>(
+		executionCourseReference) : null;
     }
 
     public ShiftType getLessonType() {
-        return lessonType;
+	return lessonType;
     }
 
     public void setLessonType(ShiftType lessonType) {
-        this.lessonType = lessonType;
+	this.lessonType = lessonType;
     }
 
     public MultiLanguageString getPlanning() {
-        return planning;
+	return planning;
     }
 
     public void setPlanning(MultiLanguageString planning) {
-        this.planning = planning;
+	this.planning = planning;
     }
 
     public MultiLanguageString getTitle() {
-        return title;
+	return title;
     }
 
     public void setTitle(MultiLanguageString title) {
-        this.title = title;
-    }     
+	this.title = title;
+    }
 }

@@ -22,93 +22,93 @@ public class UIHtmlEditorTag extends UIComponentTag {
     private String maxLength;
 
     public String getValue() {
-        return value;
+	return value;
     }
 
     public void setValue(String value) {
-        this.value = value;
+	this.value = value;
     }
 
     public String getHeight() {
-        return height;
+	return height;
     }
 
     public void setHeight(String height) {
-        this.height = height;
+	this.height = height;
     }
 
     public String getWidth() {
-        return width;
+	return width;
     }
 
     public void setWidth(String width) {
-        this.width = width;
+	this.width = width;
     }
 
     public String getShowButtons() {
-        return showButtons;
+	return showButtons;
     }
 
     public void setShowButtons(String designMode) {
-        this.showButtons = designMode;
+	this.showButtons = designMode;
     }
 
     public String getRequired() {
-        return required;
+	return required;
     }
 
     public void setRequired(String required) {
-        this.required = required;
+	this.required = required;
     }
 
     public String getMaxLength() {
-        return maxLength;
+	return maxLength;
     }
 
     public void setMaxLength(String maxLength) {
-        this.maxLength = maxLength;
+	this.maxLength = maxLength;
     }
 
     @Override
     public String getComponentType() {
 
-        return COMPONENT_TYPE;
+	return COMPONENT_TYPE;
     }
 
     @Override
     public String getRendererType() {
-        return null;
+	return null;
     }
 
     @Override
     protected void setProperties(UIComponent component) {
 
-        super.setProperties(component);
+	super.setProperties(component);
 
-        JsfTagUtils.setInteger(component, "width", this.width);
-        JsfTagUtils.setInteger(component, "height", this.height);
-        JsfTagUtils.setString(component, "value", this.value);
-        JsfTagUtils.setBoolean(component, "showButtons", this.showButtons);
-        JsfTagUtils.setBoolean(component, "required", this.required);
-        JsfTagUtils.setInteger(component, "maxLength", this.maxLength);
+	JsfTagUtils.setInteger(component, "width", this.width);
+	JsfTagUtils.setInteger(component, "height", this.height);
+	JsfTagUtils.setString(component, "value", this.value);
+	JsfTagUtils.setBoolean(component, "showButtons", this.showButtons);
+	JsfTagUtils.setBoolean(component, "required", this.required);
+	JsfTagUtils.setInteger(component, "maxLength", this.maxLength);
 
     }
 
     @Override
     public void release() {
-        super.release();
+	super.release();
 
-        width = null;
+	width = null;
 
-        height = null;
+	height = null;
 
-        value = null;
+	value = null;
 
-        showButtons = null;
+	showButtons = null;
 
-        required = null;
+	required = null;
 
-        maxLength = null;
+	maxLength = null;
 
     }
 

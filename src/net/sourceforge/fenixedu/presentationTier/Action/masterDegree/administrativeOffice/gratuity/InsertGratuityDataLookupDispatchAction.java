@@ -40,8 +40,7 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchAction {
 
-    public ActionForward addPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward addPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	ActionErrors errors = new ActionErrors();
 
 	DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
@@ -63,9 +62,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 			    Data.convertStringDate(initialDate, "/")))) {
 		fillPaymentPhasesList(initialDate, finalDate, phaseValue, infoPaymentPhases);
 	    } else {
-		errors
-			.add("wrongDates", new ActionError(
-				"error.masterDegree.gratuity.phase.wrongDates"));
+		errors.add("wrongDates", new ActionError("error.masterDegree.gratuity.phase.wrongDates"));
 		saveErrors(request, errors);
 	    }
 	}
@@ -79,8 +76,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	String[] paymentPhases = (String[]) gratuityForm.get("paymentPhases");
 	List<InfoPaymentPhase> infoPaymentPhases = new ArrayList<InfoPaymentPhase>();
 	for (int i = 0; i < paymentPhases.length; i = i + 3) {
-	    fillPaymentPhasesList(paymentPhases[i], paymentPhases[i + 1], paymentPhases[i + 2],
-		    infoPaymentPhases);
+	    fillPaymentPhasesList(paymentPhases[i], paymentPhases[i + 1], paymentPhases[i + 2], infoPaymentPhases);
 	}
 	return infoPaymentPhases;
     }
@@ -121,12 +117,10 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	request.setAttribute("executionYear", executionYear);
     }
 
-    private void removePhasesFromList(DynaValidatorForm gratuityForm,
-	    List<InfoPaymentPhase> infoPaymentPhases) {
+    private void removePhasesFromList(DynaValidatorForm gratuityForm, List<InfoPaymentPhase> infoPaymentPhases) {
 
 	String[] phasesToRemove = (String[]) gratuityForm.get("removedPhases");
-	Collection<InfoPaymentPhase> objectsToRemove = new ArrayList<InfoPaymentPhase>(
-		phasesToRemove.length);
+	Collection<InfoPaymentPhase> objectsToRemove = new ArrayList<InfoPaymentPhase>(phasesToRemove.length);
 	for (String phaseToRemoveIndex : phasesToRemove) {
 	    objectsToRemove.add(infoPaymentPhases.get(Integer.valueOf(phaseToRemoveIndex)));
 	}
@@ -137,13 +131,13 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 
     }
 
-    public ActionForward cancelInsertGratuityData(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward cancelInsertGratuityData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return mapping.findForward("cancel");
     }
 
-    public ActionForward insertGratuityData(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
+    public ActionForward insertGratuityData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException {
 	IUserView userView = UserView.getUser();
 	ActionErrors errors = new ActionErrors();
 	DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
@@ -153,11 +147,10 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 
 	Object[] args = { infoGratuityValues };
 	try {
-	    ServiceManagerServiceFactory.executeService( "InsertGratuityData", args);
+	    ServiceManagerServiceFactory.executeService("InsertGratuityData", args);
 	} catch (FenixServiceException e) {
 	    if (e.getMessage().equals("impossible.insertGratuityValues")) {
-		errors.add("exception", new ActionError("error.impossible.insertGratuityValues",
-			gratuityForm.get("degreeName")));
+		errors.add("exception", new ActionError("error.impossible.insertGratuityValues", gratuityForm.get("degreeName")));
 	    } else {
 		errors.add("wrongValues", new ActionError(e.getMessage()));
 	    }
@@ -169,14 +162,13 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	    return mapping.getInputForward();
 	}
 
-	Integer degreeId = new Integer(infoGratuityValues.getInfoExecutionDegree().getIdInternal()
-		.intValue());
+	Integer degreeId = new Integer(infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue());
 
 	infoGratuityValues = null;
 	Object argsRead[] = { degreeId };
 	try {
-	    infoGratuityValues = (InfoGratuityValues) ServiceUtils.executeService(
-		    "ReadGratuityValuesByExecutionDegree", argsRead);
+	    infoGratuityValues = (InfoGratuityValues) ServiceUtils
+		    .executeService("ReadGratuityValuesByExecutionDegree", argsRead);
 	} catch (FenixServiceException ex) {
 	    errors.add("gratuityValues", new ActionError(ex.getMessage()));
 	    saveErrors(request, errors);
@@ -200,52 +192,40 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	infoGratuityValues.setInfoExecutionDegree(infoExecutionDegree);
 	infoGratuityValues.setInfoEmployee(new InfoEmployee(userView.getPerson().getEmployee()));
 
-	if ((String) actionForm.get("gratuityId") != null
-		&& ((String) actionForm.get("gratuityId")).length() > 0) {
+	if ((String) actionForm.get("gratuityId") != null && ((String) actionForm.get("gratuityId")).length() > 0) {
 	    infoGratuityValues.setIdInternal(Integer.valueOf((String) actionForm.get("gratuityId")));
 	}
 
-	if (actionForm.get("annualValue") != null
-		&& ((String) actionForm.get("annualValue")).length() > 0) {
+	if (actionForm.get("annualValue") != null && ((String) actionForm.get("annualValue")).length() > 0) {
 	    infoGratuityValues.setAnualValue(Double.valueOf((String) actionForm.get("annualValue")));
 	}
-	if (actionForm.get("scholarPart") != null
-		&& ((String) actionForm.get("scholarPart")).length() > 0) {
-	    infoGratuityValues.setScholarShipValue(Double
-		    .valueOf((String) actionForm.get("scholarPart")));
+	if (actionForm.get("scholarPart") != null && ((String) actionForm.get("scholarPart")).length() > 0) {
+	    infoGratuityValues.setScholarShipValue(Double.valueOf((String) actionForm.get("scholarPart")));
 
 	    String thesisPart = (String) actionForm.get("thesisPart");
-	    infoGratuityValues
-		    .setFinalProofValue((thesisPart.length() > 0) ? new Double(thesisPart) : 0);
+	    infoGratuityValues.setFinalProofValue((thesisPart.length() > 0) ? new Double(thesisPart) : 0);
 	}
-	if (actionForm.get("unitaryValueCredit") != null
-		&& ((String) actionForm.get("unitaryValueCredit")).length() > 0) {
-	    infoGratuityValues.setCreditValue(Double.valueOf((String) actionForm
-		    .get("unitaryValueCredit")));
+	if (actionForm.get("unitaryValueCredit") != null && ((String) actionForm.get("unitaryValueCredit")).length() > 0) {
+	    infoGratuityValues.setCreditValue(Double.valueOf((String) actionForm.get("unitaryValueCredit")));
 	} else {
-	    infoGratuityValues.setCourseValue(Double.valueOf((String) actionForm
-		    .get("unitaryValueCourse")));
+	    infoGratuityValues.setCourseValue(Double.valueOf((String) actionForm.get("unitaryValueCourse")));
 	}
 	infoGratuityValues.setProofRequestPayment((Boolean) actionForm.get("paymentWhen"));
-	if (actionForm.get("totalPayment") != null
-		&& ((Boolean) actionForm.get("totalPayment")).equals(Boolean.TRUE)) {
-	    infoGratuityValues.setEndPayment(Data.convertStringDate((String) actionForm
-		    .get("finalDateTotalPayment"), "/"));
+	if (actionForm.get("totalPayment") != null && ((Boolean) actionForm.get("totalPayment")).equals(Boolean.TRUE)) {
+	    infoGratuityValues.setEndPayment(Data.convertStringDate((String) actionForm.get("finalDateTotalPayment"), "/"));
 	    if (actionForm.get("initialDateTotalPayment") != null
 		    && ((String) actionForm.get("initialDateTotalPayment")).length() > 0) {
-		infoGratuityValues.setStartPayment(Data.convertStringDate((String) actionForm
-			.get("initialDateTotalPayment"), "/"));
+		infoGratuityValues.setStartPayment(Data
+			.convertStringDate((String) actionForm.get("initialDateTotalPayment"), "/"));
 	    }
 	}
-	if (actionForm.get("partialPayment") != null
-		&& ((Boolean) actionForm.get("partialPayment")).equals(Boolean.TRUE)) {
+	if (actionForm.get("partialPayment") != null && ((Boolean) actionForm.get("partialPayment")).equals(Boolean.TRUE)) {
 	    List infoPaymentPhases = new ArrayList();
 
 	    if (actionForm.get("registrationPayment") != null
 		    && ((Boolean) actionForm.get("registrationPayment")).equals(Boolean.TRUE)) {
 
-		infoGratuityValues.setRegistrationPayment((Boolean) actionForm
-			.get("registrationPayment"));
+		infoGratuityValues.setRegistrationPayment((Boolean) actionForm.get("registrationPayment"));
 
 		InfoPaymentPhase infoPaymentPhase = fillAPaymentPhase(actionForm);
 		infoPaymentPhases.add(infoPaymentPhase);
@@ -253,8 +233,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	    // collect payment phases
 	    String[] paymentPhases = (String[]) actionForm.get("paymentPhases");
 	    for (int i = 0; i < paymentPhases.length; i = i + 3) {
-		fillPaymentPhasesList(paymentPhases[i], paymentPhases[i + 1], paymentPhases[i + 2],
-			infoPaymentPhases);
+		fillPaymentPhasesList(paymentPhases[i], paymentPhases[i + 1], paymentPhases[i + 2], infoPaymentPhases);
 	    }
 
 	    infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
@@ -266,12 +245,10 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
     private InfoPaymentPhase fillAPaymentPhase(DynaValidatorForm actionForm) {
 	// treat registration payment as a phase payment
 	InfoPaymentPhase infoPaymentPhase = new InfoPaymentPhase();
-	infoPaymentPhase.setEndDate(Data.convertStringDate((String) actionForm
-		.get("finalDateRegistrationPayment"), "/"));
+	infoPaymentPhase.setEndDate(Data.convertStringDate((String) actionForm.get("finalDateRegistrationPayment"), "/"));
 	if (actionForm.get("initialDateRegistrationPayment") != null
 		&& ((String) actionForm.get("initialDateRegistrationPayment")).length() > 0) {
-	    infoPaymentPhase.setStartDate(Data.convertStringDate((String) actionForm
-		    .get("initialDateRegistrationPayment"), "/"));
+	    infoPaymentPhase.setStartDate(Data.convertStringDate((String) actionForm.get("initialDateRegistrationPayment"), "/"));
 	}
 	infoPaymentPhase.setValue(Double.valueOf((String) actionForm.get("registrationValue")));
 	return infoPaymentPhase;

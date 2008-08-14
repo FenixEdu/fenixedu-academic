@@ -16,35 +16,35 @@ public class SimpleFileBean implements Serializable {
     private String contentType;
 
     public InputStream getFile() {
-        return this.file;
+	return this.file;
     }
 
     public void setFile(InputStream file) {
-        this.file = file;
+	this.file = file;
     }
 
     public String getName() {
-        return this.name;
+	return this.name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public long getSize() {
-        return this.size;
+	return this.size;
     }
 
     public void setSize(long size) {
-        this.size = size;
+	this.size = size;
     }
 
     public String getContentType() {
-        return this.contentType;
+	return this.contentType;
     }
 
     public void setContentType(String contentType) {
-        this.contentType = contentType;
+	this.contentType = contentType;
     }
-    
+
 }

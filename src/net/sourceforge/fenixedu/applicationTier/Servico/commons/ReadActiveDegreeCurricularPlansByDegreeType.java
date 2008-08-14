@@ -20,18 +20,18 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadActiveDegreeCurricularPlansByDegreeType extends Service {
 
-    public Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType)
-            {
-        
-        List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
-        return CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
+    public Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
 
-            public Object transform(Object arg0) {
-                DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
-                return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-            }
+	List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(degreeType,
+		DegreeCurricularPlanState.ACTIVE);
+	return CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
 
-        });
+	    public Object transform(Object arg0) {
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
+		return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+	    }
+
+	});
 
     }
 

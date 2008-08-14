@@ -21,38 +21,37 @@ public class SectionBean implements Serializable {
 	setContainer(container);
 	setNextSection(null);
     }
-    
+
     public void setContainer(Container container) {
 	this.container = new DomainReference<Container>(container);
     }
-    
+
     public Container getContainer() {
 	return this.container.getObject();
     }
 
     public MultiLanguageString getName() {
-        return name;
+	return name;
     }
 
     public void setName(MultiLanguageString name) {
-        this.name = name;
+	this.name = name;
     }
 
     public boolean isVisible() {
-        return visible;
+	return visible;
     }
 
     public void setVisible(boolean visible) {
-        this.visible = visible;
+	this.visible = visible;
     }
 
     public void setNextSection(Section section) {
 	this.nextSection = new DomainReference<Section>(section);
     }
-    
+
     public Section getNextSection() {
 	return this.nextSection.getObject();
     }
-    
-    
+
 }

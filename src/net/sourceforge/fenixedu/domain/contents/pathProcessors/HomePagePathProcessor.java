@@ -10,7 +10,7 @@ public class HomePagePathProcessor extends AbstractPathProcessor {
 	final int indexOfSlash = path.indexOf('/');
 	return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
     }
-    
+
     public Content processPath(String path) {
 	String istUserName = getIstUserName(path);
 	Person person = Person.readPersonByIstUsername(istUserName);

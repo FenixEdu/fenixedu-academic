@@ -68,8 +68,8 @@ public class StudentOptionalEnrolmentsDA extends FenixDispatchAction {
 	final Context context = rootDomainObject.readContextByOID(contextID);
 
 	try {
-	    ServiceUtils.executeService("CreateOptionalEnrolment", new Object[] { studentCurricularPlan,
-		    executionSemester, (CurriculumGroup) rootDomainObject.readCurriculumModuleByOID(curriculumGroupID),
+	    ServiceUtils.executeService("CreateOptionalEnrolment", new Object[] { studentCurricularPlan, executionSemester,
+		    (CurriculumGroup) rootDomainObject.readCurriculumModuleByOID(curriculumGroupID),
 		    rootDomainObject.readContextByOID(contextID),
 		    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(optionalCCID), EnrollmentCondition.VALIDATED });
 	} catch (DomainException e) {

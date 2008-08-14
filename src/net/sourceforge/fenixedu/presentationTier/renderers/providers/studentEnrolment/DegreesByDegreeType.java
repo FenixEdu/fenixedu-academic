@@ -15,22 +15,22 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class DegreesByDegreeType implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	
+
 	StudentOptionalEnrolmentBean optionalEnrolmentBean = (StudentOptionalEnrolmentBean) source;
 
-        if(optionalEnrolmentBean.getDegreeType() != null) {
-            List<Degree> result = Degree.readAllByDegreeType(optionalEnrolmentBean.getDegreeType());
-            Collections.sort(result, new BeanComparator("name"));
-            return result;
-        } else {
-            optionalEnrolmentBean.setDegreeCurricularPlan(null);
-            return Collections.emptyList();   
-        }
-        
+	if (optionalEnrolmentBean.getDegreeType() != null) {
+	    List<Degree> result = Degree.readAllByDegreeType(optionalEnrolmentBean.getDegreeType());
+	    Collections.sort(result, new BeanComparator("name"));
+	    return result;
+	} else {
+	    optionalEnrolmentBean.setDegreeCurricularPlan(null);
+	    return Collections.emptyList();
+	}
+
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

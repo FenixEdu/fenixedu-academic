@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 
 public class ChangeThesesLibraryConfirmation extends Service {
 
-	public void run(List<Thesis> theses, Boolean value) {
-		for (Thesis thesis : theses) {
-			thesis.setLibraryConfirmation(value);	
-		}
+    public void run(List<Thesis> theses, Boolean value) {
+	for (Thesis thesis : theses) {
+	    thesis.setLibraryConfirmation(value);
 	}
-	
+    }
+
 }

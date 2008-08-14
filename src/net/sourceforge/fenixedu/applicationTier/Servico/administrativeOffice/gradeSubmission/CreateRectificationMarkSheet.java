@@ -11,13 +11,15 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
 public class CreateRectificationMarkSheet extends Service {
-	
-	public MarkSheet run(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Grade newGrade, Date evaluationDate, String reason, Employee employee) throws InvalidArgumentsServiceException {
-		if(markSheet == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-		CurricularCourse curricularCourse = markSheet.getCurricularCourse();
-		return curricularCourse.rectifyEnrolmentEvaluation(markSheet, enrolmentEvaluation, evaluationDate, newGrade, reason, employee);
+
+    public MarkSheet run(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Grade newGrade, Date evaluationDate,
+	    String reason, Employee employee) throws InvalidArgumentsServiceException {
+	if (markSheet == null) {
+	    throw new InvalidArgumentsServiceException();
 	}
+	CurricularCourse curricularCourse = markSheet.getCurricularCourse();
+	return curricularCourse.rectifyEnrolmentEvaluation(markSheet, enrolmentEvaluation, evaluationDate, newGrade, reason,
+		employee);
+    }
 
 }

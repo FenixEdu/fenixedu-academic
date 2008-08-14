@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExamByOID extends Service {
 
-    public InfoExam run(Integer examID) throws FenixServiceException{
-        final Exam exam = (Exam) rootDomainObject.readEvaluationByOID(examID);
-        if (exam == null) {
-            throw new FenixServiceException("error.noExam");
-        }
-        return InfoExam.newInfoFromDomain(exam);
+    public InfoExam run(Integer examID) throws FenixServiceException {
+	final Exam exam = (Exam) rootDomainObject.readEvaluationByOID(examID);
+	if (exam == null) {
+	    throw new FenixServiceException("error.noExam");
+	}
+	return InfoExam.newInfoFromDomain(exam);
     }
 }

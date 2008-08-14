@@ -17,193 +17,191 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class TagCloudRenderer extends OutputRenderer {
 
-	private String linkFormat;
+    private String linkFormat;
 
-	private String classes;
+    private String classes;
 
-	private String styles;
+    private String styles;
 
-	private boolean moduleRelative;
+    private boolean moduleRelative;
 
-	private boolean contextRelative;
+    private boolean contextRelative;
 
-	private int numberOfLevels = 6;
+    private int numberOfLevels = 6;
 
-	private int popularCount = 20;
+    private int popularCount = 20;
 
-	private float minimumLevel = 0.4f;
+    private float minimumLevel = 0.4f;
 
-	private String sortBy;
+    private String sortBy;
 
-	private String onClick;
-	
-	private String onDblClick;
-	
-	
-	public String getOnClick() {
-		return onClick;
-	}
+    private String onClick;
 
-	public void setOnClick(String onClick) {
-		this.onClick = onClick;
-	}
+    private String onDblClick;
 
-	public String getOnDblClick() {
-		return onDblClick;
-	}
+    public String getOnClick() {
+	return onClick;
+    }
 
-	public void setOnDblClick(String onDoubleClick) {
-		this.onDblClick = onDoubleClick;
-	}
+    public void setOnClick(String onClick) {
+	this.onClick = onClick;
+    }
 
-	public String getSortBy() {
-		return sortBy;
-	}
+    public String getOnDblClick() {
+	return onDblClick;
+    }
 
-	public void setSortBy(String sortBy) {
-		this.sortBy = sortBy;
-	}
+    public void setOnDblClick(String onDoubleClick) {
+	this.onDblClick = onDoubleClick;
+    }
 
-	public float getMinimumLevel() {
-		return minimumLevel;
-	}
+    public String getSortBy() {
+	return sortBy;
+    }
 
-	public void setMinimumLevel(float minimumLevel) {
-		this.minimumLevel = minimumLevel;
-	}
+    public void setSortBy(String sortBy) {
+	this.sortBy = sortBy;
+    }
 
-	public int getPopularCount() {
-		return popularCount;
-	}
+    public float getMinimumLevel() {
+	return minimumLevel;
+    }
 
-	public void setPopularCount(int popularCount) {
-		this.popularCount = popularCount;
-	}
+    public void setMinimumLevel(float minimumLevel) {
+	this.minimumLevel = minimumLevel;
+    }
 
-	public int getNumberOfLevels() {
-		return numberOfLevels;
-	}
+    public int getPopularCount() {
+	return popularCount;
+    }
 
-	public void setNumberOfLevels(int numberOfLevels) {
-		this.numberOfLevels = numberOfLevels;
-	}
+    public void setPopularCount(int popularCount) {
+	this.popularCount = popularCount;
+    }
 
-	public String getClasses() {
-		return classes;
-	}
+    public int getNumberOfLevels() {
+	return numberOfLevels;
+    }
 
-	public void setClasses(String classes) {
-		this.classes = classes;
-	}
+    public void setNumberOfLevels(int numberOfLevels) {
+	this.numberOfLevels = numberOfLevels;
+    }
 
-	public boolean isContextRelative() {
-		return contextRelative;
-	}
+    public String getClasses() {
+	return classes;
+    }
 
-	public void setContextRelative(boolean contextRelative) {
-		this.contextRelative = contextRelative;
-	}
+    public void setClasses(String classes) {
+	this.classes = classes;
+    }
 
-	public String getLinkFormat() {
-		return linkFormat;
-	}
+    public boolean isContextRelative() {
+	return contextRelative;
+    }
 
-	public void setLinkFormat(String linkFormat) {
-		this.linkFormat = linkFormat;
-	}
+    public void setContextRelative(boolean contextRelative) {
+	this.contextRelative = contextRelative;
+    }
 
-	public boolean isModuleRelative() {
-		return moduleRelative;
-	}
+    public String getLinkFormat() {
+	return linkFormat;
+    }
 
-	public void setModuleRelative(boolean moduleRelative) {
-		this.moduleRelative = moduleRelative;
-	}
+    public void setLinkFormat(String linkFormat) {
+	this.linkFormat = linkFormat;
+    }
 
-	public String getStyles() {
-		return styles;
-	}
+    public boolean isModuleRelative() {
+	return moduleRelative;
+    }
 
-	public void setStyles(String styles) {
-		this.styles = styles;
-	}
+    public void setModuleRelative(boolean moduleRelative) {
+	this.moduleRelative = moduleRelative;
+    }
 
-	public String getExtraTagClasses(UnitFileTag tag) {
-		return "";
-	}
-	
-	protected void addExtraParameters(HtmlLink link, UnitFileTag tag) {
-	
-	}
-	
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    public String getStyles() {
+	return styles;
+    }
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				Collection<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
-						(Collection<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
-						(Collection<UnitFileTag>) object);
+    public void setStyles(String styles) {
+	this.styles = styles;
+    }
 
-				Person person = AccessControl.getPerson();
-				int maximum = getMaximum(tags, person);
+    public String getExtraTagClasses(UnitFileTag tag) {
+	return "";
+    }
 
-				HtmlList container = new HtmlList();
+    protected void addExtraParameters(HtmlLink link, UnitFileTag tag) {
 
-				for (UnitFileTag tag : tags) {
-					if (tag.isTagAccessibleToUser(person)) {
-						HtmlLink link = new HtmlLink();
-						link.setModuleRelative(isModuleRelative());
-						link.setContextRelative(isContextRelative());
-						link.setUrl(RenderUtils.getFormattedProperties(getLinkFormat(), tag));
-						if (getOnClick() != null) {
-							link.setOnClick(RenderUtils.getFormattedProperties(getOnClick(),tag));
-						}
-						if (getOnDblClick() != null) {
-							link.setOnDblClick(RenderUtils.getFormattedProperties(getOnDblClick(),tag));
-						}
-						HtmlText text = new HtmlText(tag.getName());
-						text.setClasses(getHtmlClass(maximum, tag, person));
-						link.setBody(text);
-						HtmlListItem item = container.createItem();
-						
-						addExtraParameters(link,tag);
-						
-						item.addChild(link);
-					}
-				}
-				return container;
+    }
+
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+	return new Layout() {
+
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		Collection<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
+			(Collection<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
+			(Collection<UnitFileTag>) object);
+
+		Person person = AccessControl.getPerson();
+		int maximum = getMaximum(tags, person);
+
+		HtmlList container = new HtmlList();
+
+		for (UnitFileTag tag : tags) {
+		    if (tag.isTagAccessibleToUser(person)) {
+			HtmlLink link = new HtmlLink();
+			link.setModuleRelative(isModuleRelative());
+			link.setContextRelative(isContextRelative());
+			link.setUrl(RenderUtils.getFormattedProperties(getLinkFormat(), tag));
+			if (getOnClick() != null) {
+			    link.setOnClick(RenderUtils.getFormattedProperties(getOnClick(), tag));
 			}
-
-
-			private String getHtmlClass(Integer maximum, UnitFileTag tag, Person person) {
-				Double level = getLevel(tag, maximum);
-				Double min = Math.min(level, getNumberOfLevels() - 1);
-
-				return "tcloudlevel" + getNumberOfLevels() + "-" + (min.intValue() + 1) + " " + getExtraTagClasses(tag);
+			if (getOnDblClick() != null) {
+			    link.setOnDblClick(RenderUtils.getFormattedProperties(getOnDblClick(), tag));
 			}
+			HtmlText text = new HtmlText(tag.getName());
+			text.setClasses(getHtmlClass(maximum, tag, person));
+			link.setBody(text);
+			HtmlListItem item = container.createItem();
 
-			private double getLevel(UnitFileTag tag, Integer maxFrequency) {
-				float level = Math.min(getNumberOfLevels() - weight(maxFrequency), getNumberOfLevels()
-						* maxFrequency / getPopularCount());
-				return Math.log10(tag.getFileTagCount(AccessControl.getPerson())) * level
-						/ Math.log10(1 + maxFrequency) + weight(maxFrequency);
-			}
+			addExtraParameters(link, tag);
 
-			private float weight(int maximumFrequency) {
-				float value = getMinimumLevel() * getNumberOfLevels();
-				return Math.min(value, value * getPopularCount() / maximumFrequency);
-			}
+			item.addChild(link);
+		    }
+		}
+		return container;
+	    }
 
-			private int getMaximum(Collection<UnitFileTag> tags, Person person) {
-				int max = -1;
-				for (UnitFileTag tag : tags) {
-					max = Math.max(max, tag.getFileTagCount(person));
-				}
-				return max;
-			}
-		};
-	}
+	    private String getHtmlClass(Integer maximum, UnitFileTag tag, Person person) {
+		Double level = getLevel(tag, maximum);
+		Double min = Math.min(level, getNumberOfLevels() - 1);
+
+		return "tcloudlevel" + getNumberOfLevels() + "-" + (min.intValue() + 1) + " " + getExtraTagClasses(tag);
+	    }
+
+	    private double getLevel(UnitFileTag tag, Integer maxFrequency) {
+		float level = Math.min(getNumberOfLevels() - weight(maxFrequency), getNumberOfLevels() * maxFrequency
+			/ getPopularCount());
+		return Math.log10(tag.getFileTagCount(AccessControl.getPerson())) * level / Math.log10(1 + maxFrequency)
+			+ weight(maxFrequency);
+	    }
+
+	    private float weight(int maximumFrequency) {
+		float value = getMinimumLevel() * getNumberOfLevels();
+		return Math.min(value, value * getPopularCount() / maximumFrequency);
+	    }
+
+	    private int getMaximum(Collection<UnitFileTag> tags, Person person) {
+		int max = -1;
+		for (UnitFileTag tag : tags) {
+		    max = Math.max(max, tag.getFileTagCount(person));
+		}
+		return max;
+	    }
+	};
+    }
 
 }

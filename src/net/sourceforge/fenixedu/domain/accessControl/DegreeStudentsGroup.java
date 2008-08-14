@@ -29,8 +29,7 @@ public class DegreeStudentsGroup extends DegreeGroup {
 	Set<Person> elements = super.buildSet();
 
 	for (DegreeCurricularPlan degreeCurricularPlan : getDegree().getActiveDegreeCurricularPlans()) {
-	    for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-		    .getStudentCurricularPlans()) {
+	    for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
 		if (studentCurricularPlan.isActive()) {
 		    elements.add(studentCurricularPlan.getRegistration().getPerson());
 		}
@@ -44,8 +43,7 @@ public class DegreeStudentsGroup extends DegreeGroup {
     public boolean isMember(Person person) {
 	if (person != null && person.hasStudent()) {
 	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-		if (registration.isActive()
-			&& registration.getActiveStudentCurricularPlan().getDegree() == getDegree()) {
+		if (registration.isActive() && registration.getActiveStudentCurricularPlan().getDegree() == getDegree()) {
 		    return true;
 		}
 	    }
@@ -56,35 +54,33 @@ public class DegreeStudentsGroup extends DegreeGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] {
-                new IdOperator(getObject())
-        };
+	return new Argument[] { new IdOperator(getObject()) };
     }
 
     @Override
     public String getName() {
-		return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES",
-				"label.name." + getClass().getSimpleName(), getObject().getPresentationName()); 
+	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
+		getObject().getPresentationName());
     }
-    
+
     public static class Builder implements GroupBuilder {
 
-        public Group build(Object[] arguments) {
-            try {
-                return new DegreeStudentsGroup((Degree) arguments[0]);
-            }
-            catch (ClassCastException e) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.degreeGroup.notDegree", arguments[0].toString());
-            }
-        }
+	public Group build(Object[] arguments) {
+	    try {
+		return new DegreeStudentsGroup((Degree) arguments[0]);
+	    } catch (ClassCastException e) {
+		throw new GroupDynamicExpressionException("accessControl.group.builder.degreeGroup.notDegree", arguments[0]
+			.toString());
+	    }
+	}
 
-        public int getMinArguments() {
-            return 0;
-        }
+	public int getMinArguments() {
+	    return 0;
+	}
 
-        public int getMaxArguments() {
-            return 1;
-        }
-        
+	public int getMaxArguments() {
+	    return 1;
+	}
+
     }
 }

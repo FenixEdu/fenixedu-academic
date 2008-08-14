@@ -9,8 +9,8 @@ import org.joda.time.DateTime;
 public class OpenPunctualRoomsOccupationRequest extends Service {
 
     public void run(PunctualRoomsOccupationRequest request, Person person) {
-	if(request != null) {
-	    request.openRequestAndAssociateOwnerOnlyForEmployess(new DateTime(), person);	    
+	if (request != null) {
+	    request.openRequestAndAssociateOwnerOnlyForEmployess(new DateTime(), person);
 	}
     }
 }

@@ -11,8 +11,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * @author Barbosa
  * @author Pica
  */
-public class CreditsManagerAuthorizationFilter extends
-        AuthorizationByRoleFilter {
+public class CreditsManagerAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public CreditsManagerAuthorizationFilter() {
     }
@@ -23,7 +22,7 @@ public class CreditsManagerAuthorizationFilter extends
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.CREDITS_MANAGER;
+	return RoleType.CREDITS_MANAGER;
     }
 
 }

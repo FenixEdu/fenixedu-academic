@@ -14,20 +14,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EndCurricularCourseScope extends Service {
 
-    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws
-            FenixServiceException {
+    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException {
 
-        if (!newInfoCurricularCourseScope.getEndDate()
-                .after(newInfoCurricularCourseScope.getBeginDate())) {
-            throw new InvalidArgumentsServiceException();
-        }
+	if (!newInfoCurricularCourseScope.getEndDate().after(newInfoCurricularCourseScope.getBeginDate())) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        CurricularCourseScope oldCurricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getIdInternal());
-        if (oldCurricularCourseScope == null) {
-            throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
-        }
+	CurricularCourseScope oldCurricularCourseScope = rootDomainObject
+		.readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getIdInternal());
+	if (oldCurricularCourseScope == null) {
+	    throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
+	}
 
-        oldCurricularCourseScope.setEndDate(newInfoCurricularCourseScope.getEndDate());
+	oldCurricularCourseScope.setEndDate(newInfoCurricularCourseScope.getEndDate());
     }
 
 }

@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *          lepc Exp $
  */
 public class ReadDomainExecutionCourseByID extends Service {
-    public ExecutionCourse run(Integer idInternal) throws FenixServiceException{
+    public ExecutionCourse run(Integer idInternal) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
-        if (executionCourse == null) {
-            throw new NonExistingServiceException();
-        }
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
+	if (executionCourse == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        return executionCourse;
+	return executionCourse;
     }
 }

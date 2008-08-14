@@ -23,8 +23,7 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public NotNeedToEnrollInCurricularCourse(CurricularCourse curricularCourse,
-	    StudentCurricularPlan studentCurricularPlan) {
+    public NotNeedToEnrollInCurricularCourse(CurricularCourse curricularCourse, StudentCurricularPlan studentCurricularPlan) {
 	this();
 	setCurricularCourse(curricularCourse);
 	setStudentCurricularPlan(studentCurricularPlan);
@@ -42,7 +41,7 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
     public Double getEctsCredits() {
 	if (isDueToEquivalence()) {
 	    return Double.valueOf(0d);
-    	}
+	}
 	return getCurricularCourse().getEctsCredits();
     }
 
@@ -51,12 +50,13 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
     }
 
     private boolean isDueToGlobalEquivalence() {
-	for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse().getCurricularCourseEquivalencesSet()) {
+	for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse()
+		.getCurricularCourseEquivalencesSet()) {
 	    if (curricularCourseEquivalence.isSatisfied(getRegistration())) {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
 
@@ -66,18 +66,18 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
 
     public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
     }
-    
+
     public Collection<IEnrolment> getIEnrolments() {
 	Set<IEnrolment> res = new HashSet<IEnrolment>(getEnrolmentsSet());
 	res.addAll(getExternalEnrolmentsSet());
 	return res;
     }
-    
+
 }

@@ -11,46 +11,46 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 public abstract class ConferenceArticlesBean extends ResultPublicationBean implements Serializable {
     private ScopeType scope;
 
-    //private String eventNameAutoComplete;
+    // private String eventNameAutoComplete;
 
-//    private String conference;
-    
+    // private String conference;
+
     private String eventName;
 
     // default type is Conference
     private EventType eventType = EventType.Conference;
 
-//    private String eventLocal;
-//
-//    private YearMonthDay eventStartDate;
-//
-//    private YearMonthDay eventEndDate;
-    
+    // private String eventLocal;
+    //
+    // private YearMonthDay eventStartDate;
+    //
+    // private YearMonthDay eventEndDate;
+
     private DomainReference<EventEdition> eventEdition;
-    
+
     private DomainReference<ResearchEvent> event;
 
     @Override
     public void setCreateEvent(Boolean createEvent) {
-	//this.setEventName(this.getEventNameAutoComplete());
+	// this.setEventName(this.getEventNameAutoComplete());
 	super.setCreateEvent(createEvent);
     }
 
-//    public YearMonthDay getEventEndDate() {
-//	return eventEndDate;
-//    }
-//
-//    public void setEventEndDate(YearMonthDay eventEndDate) {
-//	this.eventEndDate = eventEndDate;
-//    }
-//
-//    public String getEventLocal() {
-//	return eventLocal;
-//    }
-//
-//    public void setEventLocal(String eventLocal) {
-//	this.eventLocal = eventLocal;
-//    }
+    // public YearMonthDay getEventEndDate() {
+    // return eventEndDate;
+    // }
+    //
+    // public void setEventEndDate(YearMonthDay eventEndDate) {
+    // this.eventEndDate = eventEndDate;
+    // }
+    //
+    // public String getEventLocal() {
+    // return eventLocal;
+    // }
+    //
+    // public void setEventLocal(String eventLocal) {
+    // this.eventLocal = eventLocal;
+    // }
 
     public String getEventName() {
 	return eventName;
@@ -60,13 +60,13 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 	this.eventName = eventName;
     }
 
-//    public YearMonthDay getEventStartDate() {
-//	return eventStartDate;
-//    }
-//
-//    public void setEventStartDate(YearMonthDay eventStartDate) {
-//	this.eventStartDate = eventStartDate;
-//    }
+    // public YearMonthDay getEventStartDate() {
+    // return eventStartDate;
+    // }
+    //
+    // public void setEventStartDate(YearMonthDay eventStartDate) {
+    // this.eventStartDate = eventStartDate;
+    // }
 
     public EventType getEventType() {
 	return eventType;
@@ -76,13 +76,13 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 	this.eventType = eventType;
     }
 
-//    public String getEventNameAutoComplete() {
-//	return eventNameAutoComplete;
-//    }
+    // public String getEventNameAutoComplete() {
+    // return eventNameAutoComplete;
+    // }
 
-//    public void setEventNameAutoComplete(String name) {
-//	this.eventNameAutoComplete = name;
-//    }
+    // public void setEventNameAutoComplete(String name) {
+    // this.eventNameAutoComplete = name;
+    // }
 
     public ScopeType getScope() {
 	return scope;
@@ -91,20 +91,20 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
     public void setScope(ScopeType scope) {
 	this.scope = scope;
     }
-	
-	public EventEdition getEventEdition() {
-		return (eventEdition != null) ? eventEdition.getObject() : null;
-	}
 
-	public void setEventEdition(EventEdition eventEdition) {
-		this.eventEdition = (eventEdition != null) ? new DomainReference<EventEdition>(eventEdition) : null;
-	}
-	
-	public ResearchEvent getEvent() {
-		return (event != null) ? event.getObject() : null;
-	}
+    public EventEdition getEventEdition() {
+	return (eventEdition != null) ? eventEdition.getObject() : null;
+    }
 
-	public void setEvent(ResearchEvent event) {
-		this.event = (event != null) ? new DomainReference<ResearchEvent>(event) : null;
-	}
+    public void setEventEdition(EventEdition eventEdition) {
+	this.eventEdition = (eventEdition != null) ? new DomainReference<EventEdition>(eventEdition) : null;
+    }
+
+    public ResearchEvent getEvent() {
+	return (event != null) ? event.getObject() : null;
+    }
+
+    public void setEvent(ResearchEvent event) {
+	this.event = (event != null) ? new DomainReference<ResearchEvent>(event) : null;
+    }
 }

@@ -19,26 +19,24 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 public class IMS_NUMQuestionCorrectionStrategy extends QuestionCorrectionStrategy {
 
     public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion) {
-        if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM) {
-            List questionCorrectionList = studentTestQuestion.getSubQuestionByItem()
-                    .getResponseProcessingInstructions();
-            Iterator questionCorrectionIt = questionCorrectionList.iterator();
-            for (int i = 0; questionCorrectionIt.hasNext(); i++) {
-                ResponseProcessing responseProcessing = (ResponseProcessing) questionCorrectionIt.next();
-                if (isCorrectNUM(responseProcessing.getResponseConditions(), new Double(
-                        ((ResponseNUM) studentTestQuestion.getResponse()).getResponse()))) {
-                    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
-                    ResponseNUM r = (ResponseNUM) studentTestQuestion.getResponse();
-                    r.setResponseProcessingIndex(new Integer(i));
-                    studentTestQuestion.setResponse(r);
-                    studentTestQuestion.getSubQuestionByItem().setNextItemId(
-                            responseProcessing.getNextItem());
-                    return studentTestQuestion;
-                }
-            }
-        }
-        studentTestQuestion.setTestQuestionMark(new Double(0));
-        return studentTestQuestion;
+	if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM) {
+	    List questionCorrectionList = studentTestQuestion.getSubQuestionByItem().getResponseProcessingInstructions();
+	    Iterator questionCorrectionIt = questionCorrectionList.iterator();
+	    for (int i = 0; questionCorrectionIt.hasNext(); i++) {
+		ResponseProcessing responseProcessing = (ResponseProcessing) questionCorrectionIt.next();
+		if (isCorrectNUM(responseProcessing.getResponseConditions(), new Double(((ResponseNUM) studentTestQuestion
+			.getResponse()).getResponse()))) {
+		    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
+		    ResponseNUM r = (ResponseNUM) studentTestQuestion.getResponse();
+		    r.setResponseProcessingIndex(new Integer(i));
+		    studentTestQuestion.setResponse(r);
+		    studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
+		    return studentTestQuestion;
+		}
+	    }
+	}
+	studentTestQuestion.setTestQuestionMark(new Double(0));
+	return studentTestQuestion;
     }
 
 }

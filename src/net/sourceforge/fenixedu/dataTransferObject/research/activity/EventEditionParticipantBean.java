@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 public class EventEditionParticipantBean extends ParticipantBean implements Serializable {
 
     DomainReference<EventEdition> eventEdition;
-    
+
     public EventEditionParticipantBean() {
 	super();
 	setEventEdition(null);
     }
-    
+
     public void setEventEdition(EventEdition eventEdition) {
 	this.eventEdition = new DomainReference<EventEdition>(eventEdition);
     }
-    
+
     public EventEdition getEventEdition() {
 	return this.eventEdition.getObject();
     }
-    
+
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
 	return ResearchActivityParticipationRole.getAllEventEditionRoles();

@@ -18,7 +18,7 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
      * @return Returns the infoGrantCostCenter.
      */
     public InfoGrantCostCenter getInfoGrantCostCenter() {
-        return infoGrantCostCenter;
+	return infoGrantCostCenter;
     }
 
     /**
@@ -26,19 +26,19 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
      *            The infoGrantCostCenter to set.
      */
     public void setInfoGrantCostCenter(InfoGrantCostCenter infoGrantCostCenter) {
-        this.infoGrantCostCenter = infoGrantCostCenter;
+	this.infoGrantCostCenter = infoGrantCostCenter;
     }
 
     /**
      * @param GrantProject
      */
     public void copyFromDomain(GrantProject grantProject) {
-        if (grantProject != null) {
+	if (grantProject != null) {
 
-            super.copyFromDomain(grantProject);
-            setNumber(grantProject.getNumber());
-            setDesignation(grantProject.getDesignation());
-        }
+	    super.copyFromDomain(grantProject);
+	    setNumber(grantProject.getNumber());
+	    setDesignation(grantProject.getDesignation());
+	}
     }
 
     /**
@@ -46,20 +46,19 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
      * @return
      */
     public static InfoGrantProject newInfoFromDomain(GrantProject grantProject) {
-        InfoGrantProject infoGrantProject = null;
-        if (grantProject != null) {
-            infoGrantProject = new InfoGrantProject();
-            infoGrantProject.copyFromDomain(grantProject);
-        }
-        return infoGrantProject;
+	InfoGrantProject infoGrantProject = null;
+	if (grantProject != null) {
+	    infoGrantProject = new InfoGrantProject();
+	    infoGrantProject.copyFromDomain(grantProject);
+	}
+	return infoGrantProject;
     }
 
-    public void copyToDomain(InfoGrantProject infoGrantProject, GrantProject grantProject)
-            {
-        super.copyToDomain(infoGrantProject, grantProject);
+    public void copyToDomain(InfoGrantProject infoGrantProject, GrantProject grantProject) {
+	super.copyToDomain(infoGrantProject, grantProject);
 
-        grantProject.setDesignation(infoGrantProject.getDesignation());
-        grantProject.setNumber(infoGrantProject.getNumber());
+	grantProject.setDesignation(infoGrantProject.getDesignation());
+	grantProject.setNumber(infoGrantProject.getNumber());
     }
 
 }

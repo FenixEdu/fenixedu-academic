@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- * This is the Action to display all the master degrees.
+ *         This is the Action to display all the master degrees.
  * 
  */
 public class MasterDegreeListingDispatchAction extends FenixDispatchAction {

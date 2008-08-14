@@ -24,29 +24,29 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public String getNome() {
-        return getRoom().getNome();
+	return getRoom().getNome();
     }
 
     public String getEdificio() {
 	Building building = getRoom().getBuilding();
-        return building != null ? building.getName() : "";
+	return building != null ? building.getName() : "";
     }
 
     public Integer getPiso() {
-        return getRoom().getPiso();
+	return getRoom().getPiso();
     }
 
     public String getTipo() {
 	RoomClassification roomClassification = getRoom().getRoomClassification();
-        return roomClassification != null ? roomClassification.getName().getContent(Language.getLanguage()) : "";
+	return roomClassification != null ? roomClassification.getName().getContent(Language.getLanguage()) : "";
     }
 
     public Integer getCapacidadeNormal() {
-        return getRoom().getCapacidadeNormal() == null ? Integer.valueOf(0) : getRoom().getCapacidadeNormal();
+	return getRoom().getCapacidadeNormal() == null ? Integer.valueOf(0) : getRoom().getCapacidadeNormal();
     }
 
     public Integer getCapacidadeExame() {
-        return getRoom().getCapacidadeExame() == null ? Integer.valueOf(0) : getRoom().getCapacidadeExame();
+	return getRoom().getCapacidadeExame() == null ? Integer.valueOf(0) : getRoom().getCapacidadeExame();
     }
 
     public boolean equals(Object obj) {
@@ -58,7 +58,7 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public int compareTo(Object obj) {
-        return getNome().compareToIgnoreCase(((InfoRoom) obj).getNome());
+	return getNome().compareToIgnoreCase(((InfoRoom) obj).getNome());
     }
 
     public static InfoRoom newInfoFromDomain(final AllocatableSpace room) {
@@ -76,7 +76,7 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public AllocatableSpace getRoom() {
-        return room == null ? null : room.getObject();
+	return room == null ? null : room.getObject();
     }
 
 }

@@ -9,9 +9,8 @@ import org.joda.time.YearMonthDay;
 
 public class MissingClocking extends MissingClocking_Base {
 
-    public MissingClocking(Assiduousness assiduousness, DateTime date,
-	    JustificationMotive justificationMotive, DateTime lastModifiedDate, Employee modifiedBy,
-	    Integer oracleSequence) {
+    public MissingClocking(Assiduousness assiduousness, DateTime date, JustificationMotive justificationMotive,
+	    DateTime lastModifiedDate, Employee modifiedBy, Integer oracleSequence) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousness(assiduousness);
@@ -22,8 +21,8 @@ public class MissingClocking extends MissingClocking_Base {
 	setOracleSequence(oracleSequence);
     }
 
-    public MissingClocking(Assiduousness assiduousness, DateTime date,
-	    JustificationMotive justificationMotive, Employee modifiedBy) {
+    public MissingClocking(Assiduousness assiduousness, DateTime date, JustificationMotive justificationMotive,
+	    Employee modifiedBy) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousness(assiduousness);
@@ -34,8 +33,8 @@ public class MissingClocking extends MissingClocking_Base {
 	setOracleSequence(0);
     }
 
-    public MissingClocking(Assiduousness assiduousness, JustificationMotive justificationMotive,
-	    DateTime dateTime, Employee modifiedBy) {
+    public MissingClocking(Assiduousness assiduousness, JustificationMotive justificationMotive, DateTime dateTime,
+	    Employee modifiedBy) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousness(assiduousness);

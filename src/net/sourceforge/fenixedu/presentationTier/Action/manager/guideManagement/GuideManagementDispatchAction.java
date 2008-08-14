@@ -44,19 +44,19 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class GuideManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("firstPage");
     }
 
-    public ActionForward prepareChooseGuide(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareChooseGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	return mapping.findForward("chooseGuide");
     }
 
-    public ActionForward chooseGuide(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -94,8 +94,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	    Object[] argsPaymentTransactions = { guideEntry.getIdInternal() };
 	    try {
-		paymentTransaction = (InfoPaymentTransaction) ServiceUtils.executeService(
-			"ReadPaymentTransactionByGuideEntryID", argsPaymentTransactions);
+		paymentTransaction = (InfoPaymentTransaction) ServiceUtils.executeService("ReadPaymentTransactionByGuideEntryID",
+			argsPaymentTransactions);
 	    } catch (FenixServiceException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
@@ -107,8 +107,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	List executionYears = null;
 	Object[] argsEmpty = {};
 	try {
-	    executionYears = (List) ServiceUtils.executeService("ReadExecutionYears",
-		    argsEmpty);
+	    executionYears = (List) ServiceUtils.executeService("ReadExecutionYears", argsEmpty);
 	} catch (FenixServiceException e1) {
 	    // TODO Auto-generated catch block
 	    e1.printStackTrace();
@@ -116,34 +115,29 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	List degreeCurricularPlans = null;
 	try {
-	    degreeCurricularPlans = (List) ServiceUtils.executeService(
-		    "ReadDegreeCurricularPlans", argsEmpty);
+	    degreeCurricularPlans = (List) ServiceUtils.executeService("ReadDegreeCurricularPlans", argsEmpty);
 	} catch (FenixServiceException e1) {
 	    // TODO Auto-generated catch block
 	    e1.printStackTrace();
 	}
 
-	Collection degreeCurricularPlansInLabelValueBeanList = CollectionUtils.collect(
-		degreeCurricularPlans, new Transformer() {
+	Collection degreeCurricularPlansInLabelValueBeanList = CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
 
-		    public Object transform(Object arg0) {
-			InfoDegreeCurricularPlan degreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
-			return new LabelValueBean(degreeCurricularPlan.getName(), degreeCurricularPlan
-				.getIdInternal().toString());
-		    }
+	    public Object transform(Object arg0) {
+		InfoDegreeCurricularPlan degreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
+		return new LabelValueBean(degreeCurricularPlan.getName(), degreeCurricularPlan.getIdInternal().toString());
+	    }
 
-		});
+	});
 
 	guideForm.set("guideID", guide.getIdInternal());
 	if (guide.getInfoExecutionDegree() != null) {
-	    guideForm.set("newExecutionYear", guide.getInfoExecutionDegree().getInfoExecutionYear()
-		    .getYear());
-	    guideForm.set("newDegreeCurricularPlanID", guide.getInfoExecutionDegree()
-		    .getInfoDegreeCurricularPlan().getIdInternal());
+	    guideForm.set("newExecutionYear", guide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
+	    guideForm.set("newDegreeCurricularPlanID", guide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
+		    .getIdInternal());
 	}
-	
-	guideForm.set("newPaymentType", (guide.getPaymentType() != null) ? guide.getPaymentType().name()
-		: null);
+
+	guideForm.set("newPaymentType", (guide.getPaymentType() != null) ? guide.getPaymentType().name() : null);
 	request.setAttribute("paymentTransactions", paymentTransactions);
 	request.setAttribute("degreeCurricularPlans", degreeCurricularPlansInLabelValueBeanList);
 	request.setAttribute("executionYears", executionYears);
@@ -155,8 +149,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("editGuide");
     }
 
-    public ActionForward addGuideEntry(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addGuideEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -167,9 +161,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	Double newEntryPrice = (Double) guideForm.get("newEntryPrice");
 	String newEntryDocumentType = (String) guideForm.get("newEntryDocumentType");
 
-	Object[] args = { guideID, GraduationType.MASTER_DEGREE,
-		DocumentType.valueOf(newEntryDocumentType), newEntryDescription, newEntryPrice,
-		newEntryQuantity };
+	Object[] args = { guideID, GraduationType.MASTER_DEGREE, DocumentType.valueOf(newEntryDocumentType), newEntryDescription,
+		newEntryPrice, newEntryQuantity };
 	try {
 	    ServiceUtils.executeService("CreateGuideEntry", args);
 	} catch (FenixServiceException e) {
@@ -185,8 +178,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	return chooseGuide(mapping, actionForm, request, response);
     }
 
-    public ActionForward addGuideSituation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addGuideSituation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -201,8 +194,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	Integer newSituationYear = (Integer) guideForm.get("newSituationYear");
 	String newSituationType = (String) guideForm.get("newSituationType");
 
-	Date date = (new GregorianCalendar(newSituationYear.intValue(), newSituationMonth.intValue(),
-		newSituationDay.intValue())).getTime();
+	Date date = (new GregorianCalendar(newSituationYear.intValue(), newSituationMonth.intValue(), newSituationDay.intValue()))
+		.getTime();
 
 	Object[] args = { guideID, newSituationRemarks, GuideState.valueOf(newSituationType), date };
 
@@ -222,8 +215,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	return chooseGuide(mapping, actionForm, request, response);
     }
 
-    public ActionForward createPaymentTransaction(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward createPaymentTransaction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -251,8 +244,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward editExecutionDegree(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -275,8 +268,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward deleteGuideSituation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteGuideSituation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -295,8 +288,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward deleteGuideEntry(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteGuideEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -305,8 +298,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	Object[] args = { selectedGuideEntryID };
 	try {
-	    ServiceUtils
-		    .executeService( "DeleteGuideEntryAndPaymentTransactionInManager", args);
+	    ServiceUtils.executeService("DeleteGuideEntryAndPaymentTransactionInManager", args);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -316,8 +308,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward deleteGuide(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 

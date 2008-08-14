@@ -21,21 +21,20 @@ import org.joda.time.DateTime;
 public abstract class CandidacySituation extends CandidacySituation_Base implements IStateWithOperations {
 
     public static Comparator<CandidacySituation> DATE_COMPARATOR = new Comparator<CandidacySituation>() {
-	public int compare(CandidacySituation leftCandidacySituation,
-		CandidacySituation rightCandidacySituation) {
+	public int compare(CandidacySituation leftCandidacySituation, CandidacySituation rightCandidacySituation) {
 	    int comparationResult = leftCandidacySituation.getSituationDate().compareTo(
 		    rightCandidacySituation.getSituationDate());
 	    return (comparationResult == 0) ? leftCandidacySituation.getIdInternal().compareTo(
 		    rightCandidacySituation.getIdInternal()) : comparationResult;
-        }
+	}
     };
 
     protected CandidacySituation() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setSituationDate(new DateTime());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setSituationDate(new DateTime());
     }
-    
+
     protected final void init(final Candidacy candidacy, final Person person) {
 	checkParameters(candidacy, person);
 	super.setCandidacy(candidacy);
@@ -43,7 +42,7 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
 	if (canExecuteOperationAutomatically()) {
 	    try {
 		// This is to be able to save the candidacy situations dates
-                // different along the candidacy workflow.
+		// different along the candidacy workflow.
 		Thread.sleep(100);
 	    } catch (InterruptedException e) {
 		throw new DomainException("error.candidacy.CandidacySituation.cannot.execute.operation");
@@ -76,19 +75,19 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     }
 
     public boolean canChangePersonalData() {
-        return false;
+	return false;
     }
-    
+
     public boolean getCanCandidacyDataBeValidated() {
-        return false;
+	return false;
     }
 
     public boolean getCanGeneratePass() {
-        return true;
+	return true;
     }
-    
+
     public boolean getCanRegister() {
-        return false;
+	return false;
     }
 
     public Collection<Operation> getOperationsForPerson(Person person) {
@@ -117,17 +116,17 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     }
 
     public IState nextState() {
-	return this.getCandidacy().nextState(); 
+	return this.getCandidacy().nextState();
     }
 
-    public IState nextState(String nextState)  {
+    public IState nextState(String nextState) {
 	return (IState) this.getCandidacy().nextState(nextState);
     }
-    
+
     public Set<String> getValidNextStates() {
 	return this.getCandidacy().getValidNextStates();
     }
-    
+
     public void checkConditionsToForward() {
 	this.getCandidacy().checkConditionsToForward();
     }
@@ -139,12 +138,12 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     public abstract CandidacySituationType getCandidacySituationType();
 
     public abstract boolean canExecuteOperationAutomatically();
-    
-    public void delete(){
+
+    public void delete() {
 	removeCandidacy();
 	removePerson();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
 }

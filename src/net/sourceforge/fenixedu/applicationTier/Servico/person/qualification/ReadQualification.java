@@ -20,16 +20,16 @@ import net.sourceforge.fenixedu.domain.Qualification;
 public class ReadQualification extends ReadDomainObjectService {
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-        return InfoQualificationWithPersonAndCountry.newInfoFromDomain((Qualification) domainObject);
+	return InfoQualificationWithPersonAndCountry.newInfoFromDomain((Qualification) domainObject);
     }
 
     protected ISiteComponent getISiteComponent(InfoObject infoObject) {
-        return (InfoQualification) infoObject;
+	return (InfoQualification) infoObject;
     }
 
-	@Override
-	protected DomainObject readDomainObject(final Integer idInternal) {
-		return rootDomainObject.readQualificationByOID(idInternal);
-	}
+    @Override
+    protected DomainObject readDomainObject(final Integer idInternal) {
+	return rootDomainObject.readQualificationByOID(idInternal);
+    }
 
 }

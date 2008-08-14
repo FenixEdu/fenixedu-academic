@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.tests.NewChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteChoice extends Service {
-	public void run(NewChoice choice) throws FenixServiceException{
-		choice.delete();
-	}
+    public void run(NewChoice choice) throws FenixServiceException {
+	choice.delete();
+    }
 }

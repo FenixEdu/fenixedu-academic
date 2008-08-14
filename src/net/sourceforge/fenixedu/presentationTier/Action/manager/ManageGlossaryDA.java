@@ -29,47 +29,46 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ManageGlossaryDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
 
-        List infoGlossaryEntries = (List) ServiceUtils.executeService("ReadGlossaryEntries",
-                null);
-        Collections.sort(infoGlossaryEntries, new BeanComparator("term"));
-        request.setAttribute("infoGlossaryEntries", infoGlossaryEntries);
+	List infoGlossaryEntries = (List) ServiceUtils.executeService("ReadGlossaryEntries", null);
+	Collections.sort(infoGlossaryEntries, new BeanComparator("term"));
+	request.setAttribute("infoGlossaryEntries", infoGlossaryEntries);
 
-        return mapping.findForward("Manage");
+	return mapping.findForward("Manage");
     }
 
-    public ActionForward createGlossaryEntry(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DynaActionForm dynaActionForm = (DynaActionForm) form;
-        String term = (String) dynaActionForm.get("term");
-        String definition = (String) dynaActionForm.get("definition");
+    public ActionForward createGlossaryEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+	String term = (String) dynaActionForm.get("term");
+	String definition = (String) dynaActionForm.get("definition");
 
-        InfoGlossaryEntry infoGlossaryEntry = new InfoGlossaryEntry();
-        infoGlossaryEntry.setTerm(term);
-        infoGlossaryEntry.setDefinition(definition);
+	InfoGlossaryEntry infoGlossaryEntry = new InfoGlossaryEntry();
+	infoGlossaryEntry.setTerm(term);
+	infoGlossaryEntry.setDefinition(definition);
 
-        IUserView userView = UserView.getUser();
-        Object[] args = { infoGlossaryEntry };
-        ServiceUtils.executeService("CreateGlossaryEntry", args);
+	IUserView userView = UserView.getUser();
+	Object[] args = { infoGlossaryEntry };
+	ServiceUtils.executeService("CreateGlossaryEntry", args);
 
-        return mapping.getInputForward();
+	return mapping.getInputForward();
     }
 
-    public ActionForward deleteGlossaryEntry(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String entryIdString = request.getParameter("entryId");
+    public ActionForward deleteGlossaryEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	String entryIdString = request.getParameter("entryId");
 
-        if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
-            Integer entryId = new Integer(entryIdString);
-            IUserView userView = UserView.getUser();
-            Object[] args = { entryId };
-            ServiceUtils.executeService("DeleteGlossaryEntry", args);
-        }
+	if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
+	    Integer entryId = new Integer(entryIdString);
+	    IUserView userView = UserView.getUser();
+	    Object[] args = { entryId };
+	    ServiceUtils.executeService("DeleteGlossaryEntry", args);
+	}
 
-        return mapping.getInputForward();
+	return mapping.getInputForward();
     }
 
 }

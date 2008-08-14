@@ -9,19 +9,19 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class GroupStudent extends GroupStudent_Base {
 
-	public static final Comparator<GroupStudent> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator("student.number");
+    public static final Comparator<GroupStudent> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator("student.number");
 
     public GroupStudent() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeFinalDegreeDegreeWorkGroup();
-        removeFinalDegreeWorkProposalConfirmation();
-        removeRegistration();
-        deleteDomainObject();
+	removeRootDomainObject();
+	removeFinalDegreeDegreeWorkGroup();
+	removeFinalDegreeWorkProposalConfirmation();
+	removeRegistration();
+	deleteDomainObject();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class GroupStudent extends GroupStudent_Base {
     }
 
     @Override
-    @Deprecated    
+    @Deprecated
     public boolean hasStudent() {
 	return hasRegistration();
     }

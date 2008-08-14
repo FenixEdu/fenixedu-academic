@@ -11,34 +11,34 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
     public abstract String getPresentationName();
 
     public abstract RoomClassification getRoomClassification();
-    
+
     public abstract FactoryExecutor getSpaceFactoryEditor();
 
     protected SpaceInformation() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public void delete() {
 	if (getSpace().getSpaceInformationsCount() == 1) {
 	    throw new DomainException("space.must.have.at.least.one.space.information");
 	}
 	deleteWithoutCheckNumberOfSpaceInformations();
-    }  
-    
+    }
+
     public void deleteWithoutCheckNumberOfSpaceInformations() {
-	super.setSpace(null);	
-	removeRootDomainObject();	
+	super.setSpace(null);
+	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
     @Override
     public void setValidFrom(YearMonthDay begin) {
 	checkSpaceInformationsIntersection(begin, getValidUntil());
 	super.setValidFrom(begin);
     }
 
-    @Override    
+    @Override
     public void setValidUntil(YearMonthDay end) {
 	checkSpaceInformationsIntersection(getValidFrom(), end);
 	super.setValidUntil(end);
@@ -48,21 +48,21 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 	setNewValidUntilDateIfNecessary(begin.minusDays(1));
 	editTimeInterval(begin, end);
     }
-        
-    protected void editTimeInterval(final YearMonthDay begin, final YearMonthDay end) {	
+
+    protected void editTimeInterval(final YearMonthDay begin, final YearMonthDay end) {
 	checkSpaceInformationsIntersection(begin, end);
 	super.setValidFrom(begin);
 	super.setValidUntil(end);
     }
-                             
-    @Override    
+
+    @Override
     public void setSpace(Space space) {
 	if (space == null) {
 	    throw new DomainException("error.space.information.no.space");
 	}
 	super.setSpace(space);
-    }   
-       
+    }
+
     public int compareTo(SpaceInformation spaceInformation) {
 	if (getValidUntil() == null) {
 	    return 1;
@@ -83,8 +83,9 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
     }
 
     public boolean isActive(YearMonthDay currentDate) {
-	return (!this.getValidFrom().isAfter(currentDate) && (this.getValidUntil() == null || !this.getValidUntil().isBefore(currentDate)));
-    }    
+	return (!this.getValidFrom().isAfter(currentDate) && (this.getValidUntil() == null || !this.getValidUntil().isBefore(
+		currentDate)));
+    }
 
     protected YearMonthDay getNextPossibleValidFromDate() {
 	SpaceInformation mostRecentSpaceInformation = getSpace().getMostRecentSpaceInformation();
@@ -93,8 +94,8 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 	} else {
 	    return mostRecentSpaceInformation.getValidFrom().plusDays(2);
 	}
-    }     
-   
+    }
+
     private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
 	if (beginDate == null) {
 	    throw new DomainException("error.contract.no.beginDate");
@@ -102,11 +103,11 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 	if (endDate != null && endDate.isBefore(beginDate)) {
 	    throw new DomainException("error.begin.after.end");
 	}
-    }  
+    }
 
     private boolean spaceInformationsIntersection(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getValidFrom().isAfter(end)) && (this.getValidUntil() == null || !this
-		.getValidUntil().isBefore(begin)));
+	return ((end == null || !this.getValidFrom().isAfter(end)) && (this.getValidUntil() == null || !this.getValidUntil()
+		.isBefore(begin)));
     }
 
     private void setValidUntilWithoutCheck(YearMonthDay end) {

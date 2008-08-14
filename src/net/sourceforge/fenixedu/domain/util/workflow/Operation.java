@@ -9,7 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-public abstract class Operation implements Serializable,Comparable<Operation> {
+public abstract class Operation implements Serializable, Comparable<Operation> {
 
     private Set<RoleType> authorizedRoleTypes;
 

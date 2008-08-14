@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditOtherService extends Service {
 
     public void run(Integer otherServiceID, Double credits, String reason) {
-        OtherService otherService = (OtherService) rootDomainObject.readTeacherServiceItemByOID(otherServiceID);
-        otherService.setCredits(credits);
-        otherService.setReason(reason);
+	OtherService otherService = (OtherService) rootDomainObject.readTeacherServiceItemByOID(otherServiceID);
+	otherService.setCredits(credits);
+	otherService.setReason(reason);
     }
 
 }

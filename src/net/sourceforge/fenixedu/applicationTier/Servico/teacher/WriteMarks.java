@@ -18,13 +18,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class WriteMarks extends Service {
 
-    public void run(final Integer executioCourseOID, final Integer evaluationOID,
-	    final Map<Integer, String> marks) throws FenixServiceException {
+    public void run(final Integer executioCourseOID, final Integer evaluationOID, final Map<Integer, String> marks)
+	    throws FenixServiceException {
 	final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
 	final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationOID);
-	final ExecutionCourse executionCourse = rootDomainObject
-		.readExecutionCourseByOID(executioCourseOID);
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executioCourseOID);
 
 	for (final Entry<Integer, String> entry : marks.entrySet()) {
 	    final Integer studentNumber = entry.getKey();
@@ -33,13 +32,14 @@ public class WriteMarks extends Service {
 	    final Attends attends = findStudentAttends(executionCourse, studentNumber);
 
 	    if (attends != null) {
-		if(attends.isEnrolledOrWithActiveSCP()) {
-		    
+		if (attends.isEnrolledOrWithActiveSCP()) {
+
 		    if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
-			exceptionList.add(new DomainException("errors.student.with.impossible.enrolment", studentNumber.toString()));						
+			exceptionList.add(new DomainException("errors.student.with.impossible.enrolment", studentNumber
+				.toString()));
 		    } else {
 			final Mark mark = findExistingMark(attends.getAssociatedMarks(), evaluation);
-			
+
 			if (markValue == null || markValue.length() == 0) {
 			    if (mark != null) {
 				mark.delete();
@@ -56,7 +56,7 @@ public class WriteMarks extends Service {
 			    }
 			}
 		    }
-		    
+
 		} else {
 		    exceptionList.add(new DomainException("errors.student.not.active", studentNumber.toString()));
 		}

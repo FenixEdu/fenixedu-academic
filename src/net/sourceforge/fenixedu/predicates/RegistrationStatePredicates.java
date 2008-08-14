@@ -18,8 +18,7 @@ public class RegistrationStatePredicates {
     public static final AccessControlPredicate<RegistrationState> deletePredicate = new AccessControlPredicate<RegistrationState>() {
 	public boolean evaluate(RegistrationState c) {
 	    final Person person = AccessControl.getPerson();
-	    return person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		    || person.hasRole(RoleType.MANAGER);
+	    return person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || person.hasRole(RoleType.MANAGER);
 	}
     };
 

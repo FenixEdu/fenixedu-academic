@@ -81,8 +81,7 @@ public class WorkWeek implements Serializable {
 	return false;
     }
 
-    public void validateWorkScheduleDays(HashMap<String, WorkScheduleDaySheet> workScheduleDays,
-	    ResourceBundle bundle) {
+    public void validateWorkScheduleDays(HashMap<String, WorkScheduleDaySheet> workScheduleDays, ResourceBundle bundle) {
 	for (WeekDay weekDay : getDays()) {
 	    if (workScheduleDays.get(weekDay.toString()) == null) {
 		WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();

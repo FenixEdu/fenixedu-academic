@@ -11,14 +11,14 @@ public class AddExecutionDegreeToScheduling extends Service {
     }
 
     public void run(final Scheduleing scheduleing, final ExecutionDegree executionDegree)
-    		throws SchedulingContainsProposalsException {
-	if (!scheduleing.getProposalsSet().isEmpty() ||
-		(executionDegree.getScheduling() != null && executionDegree.getScheduling().getProposalsSet().isEmpty())) {
+	    throws SchedulingContainsProposalsException {
+	if (!scheduleing.getProposalsSet().isEmpty()
+		|| (executionDegree.getScheduling() != null && executionDegree.getScheduling().getProposalsSet().isEmpty())) {
 	    throw new SchedulingContainsProposalsException();
 	}
-    	if (!scheduleing.getExecutionDegrees().contains(executionDegree)) {
-    		scheduleing.getExecutionDegrees().add(executionDegree);
-    	}
+	if (!scheduleing.getExecutionDegrees().contains(executionDegree)) {
+	    scheduleing.getExecutionDegrees().add(executionDegree);
+	}
     }
 
 }

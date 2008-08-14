@@ -10,26 +10,26 @@ public class ActiveStudentCurricularPlanAlreadyExistsActionException extends Fen
     public static String key = "error.exception.existingActiveStudentCurricularPlan";
 
     public ActiveStudentCurricularPlanAlreadyExistsActionException(Throwable cause) {
-        super(key, cause);
+	super(key, cause);
     }
 
     public ActiveStudentCurricularPlanAlreadyExistsActionException(Object value, Throwable cause) {
-        super(key, value, cause);
+	super(key, value, cause);
     }
 
     public ActiveStudentCurricularPlanAlreadyExistsActionException(String key, Throwable cause) {
-        super(key, cause);
+	super(key, cause);
     }
 
     public ActiveStudentCurricularPlanAlreadyExistsActionException(Object[] values, Throwable cause) {
-        super(key, values, cause);
+	super(key, values, cause);
     }
 
     /**
      * @return String
      */
     public static String getKey() {
-        return key;
+	return key;
     }
 
     /**
@@ -39,17 +39,17 @@ public class ActiveStudentCurricularPlanAlreadyExistsActionException extends Fen
      *            The key to set
      */
     public static void setKey(String key) {
-        ActiveStudentCurricularPlanAlreadyExistsActionException.key = key;
+	ActiveStudentCurricularPlanAlreadyExistsActionException.key = key;
     }
 
     public String toString() {
-        String result = "[ExistingActionException\n";
-        result += "property" + this.getProperty() + "\n";
-        result += "error" + this.getError() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[ExistingActionException\n";
+	result += "property" + this.getProperty() + "\n";
+	result += "error" + this.getError() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
-    //TODO find a way of internationalizing the message passed as argument to
+    // TODO find a way of internationalizing the message passed as argument to
     // the exception error message of the resource bundle
 }

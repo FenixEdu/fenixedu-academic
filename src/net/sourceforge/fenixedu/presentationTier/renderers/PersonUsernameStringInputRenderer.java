@@ -10,13 +10,13 @@ public class PersonUsernameStringInputRenderer extends StringInputRenderer {
 
     @Override
     protected HtmlComponent createTextField(Object object, Class type) {
-        
-        Person person = (Person) object; 
-        String username = (person != null) ? person.getUsername() : null; 
-        
-        HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(username, type);        
-        formComponent.setConverter(new PersonUsernameConverter());
-        
-        return formComponent;        
+
+	Person person = (Person) object;
+	String username = (person != null) ? person.getUsername() : null;
+
+	HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(username, type);
+	formComponent.setConverter(new PersonUsernameConverter());
+
+	return formComponent;
     }
 }

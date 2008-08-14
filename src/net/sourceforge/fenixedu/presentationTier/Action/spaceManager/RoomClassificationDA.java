@@ -18,27 +18,28 @@ import org.apache.struts.action.ActionMapping;
 
 public class RoomClassificationDA extends FenixDispatchAction {
 
-    public ActionForward viewRoomClassifications(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	
-	final SortedSet<RoomClassification> sortedRoomClassifications = RoomClassification.sortByRoomClassificationAndCode(rootDomainObject.getRoomClassificationSet());	
+    public ActionForward viewRoomClassifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final SortedSet<RoomClassification> sortedRoomClassifications = RoomClassification
+		.sortByRoomClassificationAndCode(rootDomainObject.getRoomClassificationSet());
 	request.setAttribute("roomClassifications", sortedRoomClassifications);
 	request.setAttribute("roomClassificationCreator", new RoomClassification.RoomClassificationFactoryCreator());
 	return mapping.findForward("ViewRoomClassifications");
     }
 
-    public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	try {
 	    executeFactoryMethod(request);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
-	}				
+	}
 	return viewRoomClassifications(mapping, form, request, response);
     }
 
-    public ActionForward prepareRoomClassification(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final RoomClassification roomClassification = retrieveRoomClassification(request);
 	final RoomClassificationFactoryEditor roomClassificationFactoryEditor = new RoomClassificationFactoryEditor(
 		roomClassification);
@@ -46,17 +47,16 @@ public class RoomClassificationDA extends FenixDispatchAction {
 	return viewRoomClassifications(mapping, form, request, response);
     }
 
-    public ActionForward deleteRoomClassification(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-	
+    public ActionForward deleteRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
 	final RoomClassification roomClassification = retrieveRoomClassification(request);
 	final Object[] args = { roomClassification };
 	try {
-	    executeService(request, "DeleteRoomClassification", args);  
+	    executeService(request, "DeleteRoomClassification", args);
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey(), e.getArgs());	   
-	} 
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	}
 	return viewRoomClassifications(mapping, form, request, response);
     }
 

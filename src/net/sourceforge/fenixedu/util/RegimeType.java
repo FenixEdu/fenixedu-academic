@@ -6,11 +6,9 @@ package net.sourceforge.fenixedu.util;
 
 public enum RegimeType {
 
-    INTEGRAL_TIME,
-    PARTIAL_TIME,
-    EXCLUSIVENESS;
-    
+    INTEGRAL_TIME, PARTIAL_TIME, EXCLUSIVENESS;
+
     public String getName() {
-        return name();
-    } 
+	return name();
+    }
 }

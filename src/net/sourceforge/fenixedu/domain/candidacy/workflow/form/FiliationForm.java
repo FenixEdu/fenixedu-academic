@@ -38,18 +38,16 @@ public class FiliationForm extends Form {
     }
 
     public static FiliationForm createFromPerson(final Person person) {
-	final Country nationality = (person.hasRole(RoleType.EMPLOYEE)) ? person.getCountry()
-		: RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID);
+	final Country nationality = (person.hasRole(RoleType.EMPLOYEE)) ? person.getCountry() : RootDomainObject.getInstance()
+		.readCountryByOID(DEFAULT_COUNTRY_ID);
 
-	return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(),
-		person.getDistrictSubdivisionOfBirth(), person.getNameOfFather(), person
-			.getNameOfMother(), nationality, person.getParishOfBirth(), RootDomainObject
-			.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID));
+	return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(), person
+		.getDistrictSubdivisionOfBirth(), person.getNameOfFather(), person.getNameOfMother(), nationality, person
+		.getParishOfBirth(), RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID));
     }
 
-    private FiliationForm(YearMonthDay dateOfBirth, String districtOfBirth,
-	    String districtSubdivisionOfBirth, String fatherName, String motherName,
-	    Country nationality, String parishOfBirth, Country countryOfBirth) {
+    private FiliationForm(YearMonthDay dateOfBirth, String districtOfBirth, String districtSubdivisionOfBirth, String fatherName,
+	    String motherName, Country nationality, String parishOfBirth, Country countryOfBirth) {
 	this();
 	this.dateOfBirth = dateOfBirth;
 	this.districtOfBirth = districtOfBirth;
@@ -122,8 +120,7 @@ public class FiliationForm extends Form {
     }
 
     public void setCountryOfBirth(Country countryOfBirth) {
-	this.countryOfBirth = (countryOfBirth != null) ? new DomainReference<Country>(countryOfBirth)
-		: null;
+	this.countryOfBirth = (countryOfBirth != null) ? new DomainReference<Country>(countryOfBirth) : null;
     }
 
     @Override

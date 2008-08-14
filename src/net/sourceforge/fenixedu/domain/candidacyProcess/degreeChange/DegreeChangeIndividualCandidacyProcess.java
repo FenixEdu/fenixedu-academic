@@ -77,7 +77,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
     private void editCandidacyInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
 	getCandidacy().editCandidacyInformation(bean);
     }
-    
+
     private void editCandidacyCurricularCoursesInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
 	getCandidacy().editCandidacyCurricularCoursesInformation(bean);
     }
@@ -101,7 +101,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
     public BigDecimal getCandidacySeriesCandidacyGrade() {
 	return getCandidacy().getSeriesCandidacyGrade();
     }
-    
+
     public boolean hasCandidacyForSelectedDegree(final Degree degree) {
 	return getCandidacySelectedDegree() == degree;
     }
@@ -191,7 +191,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    return process;
 	}
     }
-    
+
     static private class EditCandidacyCurricularCoursesInformation extends Activity<DegreeChangeIndividualCandidacyProcess> {
 
 	@Override

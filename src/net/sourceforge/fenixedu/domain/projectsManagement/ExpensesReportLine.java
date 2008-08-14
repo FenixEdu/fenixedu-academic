@@ -47,139 +47,139 @@ public class ExpensesReportLine implements Serializable, IExpensesReportLine {
     private Double imputedPercentage;
 
     public String getDate() {
-        return date;
+	return date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+	this.date = date;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     public String getDocumentNumber() {
-        return documentNumber;
+	return documentNumber;
     }
 
     public void setDocumentNumber(String documentNumber) {
-        this.documentNumber = documentNumber;
+	this.documentNumber = documentNumber;
     }
 
     public String getDocumentType() {
-        return documentType;
+	return documentType;
     }
 
     public void setDocumentType(String documentType) {
-        this.documentType = documentType;
+	this.documentType = documentType;
     }
 
     public String getFinancingSource() {
-        return financingSource;
+	return financingSource;
     }
 
     public void setFinancingSource(String financingSource) {
-        this.financingSource = financingSource;
+	this.financingSource = financingSource;
     }
 
     public Double getImputedPercentage() {
-        return imputedPercentage;
+	return imputedPercentage;
     }
 
     public void setImputedPercentage(Double imputedPercentage) {
-        this.imputedPercentage = imputedPercentage;
+	this.imputedPercentage = imputedPercentage;
     }
 
     public Double getIvaPercentage() {
-        return ivaPercentage;
+	return ivaPercentage;
     }
 
     public void setIvaPercentage(Double ivaPercentage) {
-        this.ivaPercentage = ivaPercentage;
+	this.ivaPercentage = ivaPercentage;
     }
 
     public String getMember() {
-        return member;
+	return member;
     }
 
     public void setMember(String member) {
-        this.member = member;
+	this.member = member;
     }
 
     public String getMovementId() {
-        return movementId;
+	return movementId;
     }
 
     public void setMovementId(String movementId) {
-        this.movementId = movementId;
+	this.movementId = movementId;
     }
 
     public String getMovementType() {
-        return movementType;
+	return movementType;
     }
 
     public void setMovementType(String movementType) {
-        this.movementType = movementType;
+	this.movementType = movementType;
     }
 
     public Integer getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public Integer getRubric() {
-        return rubric;
+	return rubric;
     }
 
     public void setRubric(Integer rubric) {
-        this.rubric = rubric;
+	this.rubric = rubric;
     }
 
     public String getSupplier() {
-        return supplier;
+	return supplier;
     }
 
     public void setSupplier(String supplier) {
-        this.supplier = supplier;
+	this.supplier = supplier;
     }
 
     public String getSupplierDescription() {
-        return supplierDescription;
+	return supplierDescription;
     }
 
     public void setSupplierDescription(String supplierDescription) {
-        this.supplierDescription = supplierDescription;
+	this.supplierDescription = supplierDescription;
     }
 
     public Double getTax() {
-        return tax;
+	return tax;
     }
 
     public void setTax(Double tax) {
-        this.tax = tax;
+	this.tax = tax;
     }
 
     public Double getTotal() {
-        return total;
+	return total;
     }
 
     public void setTotal(Double total) {
-        this.total = total;
+	this.total = total;
     }
 
     public Double getValue() {
-        return value;
+	return value;
     }
 
     public void setValue(Double value) {
-        this.value = value;
+	this.value = value;
     }
 
 }

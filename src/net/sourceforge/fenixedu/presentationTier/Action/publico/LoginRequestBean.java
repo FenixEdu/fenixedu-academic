@@ -10,117 +10,116 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 public class LoginRequestBean implements Serializable {
 
-	private DomainReference<Person> person;
+    private DomainReference<Person> person;
 
-	private String name;
+    private String name;
 
-	private String documentIDNumber;
+    private String documentIDNumber;
 
-	private String email;
+    private String email;
 
-	private IDDocumentType documentType;
+    private IDDocumentType documentType;
 
-	private Gender gender;
+    private Gender gender;
 
-	private String phone;
-	
-	private String username;
+    private String phone;
 
-	private String password;
+    private String username;
 
-	private String passwordConfirmation;
-	
-	public String getPasswordConfirmation() {
-		return passwordConfirmation;
-	}
+    private String password;
 
-	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation;
-	}
+    private String passwordConfirmation;
 
-	public LoginRequestBean(LoginRequest request) {
-		setPerson(request.getUser().getPerson());
-	}
+    public String getPasswordConfirmation() {
+	return passwordConfirmation;
+    }
 
-	public String getDocumentIDNumber() {
-		return documentIDNumber;
-	}
+    public void setPasswordConfirmation(String passwordConfirmation) {
+	this.passwordConfirmation = passwordConfirmation;
+    }
 
-	public void setDocumentIDNumber(String documentIDNumber) {
-		this.documentIDNumber = documentIDNumber;
-	}
+    public LoginRequestBean(LoginRequest request) {
+	setPerson(request.getUser().getPerson());
+    }
 
-	public IDDocumentType getDocumentType() {
-		return documentType;
-	}
+    public String getDocumentIDNumber() {
+	return documentIDNumber;
+    }
 
-	public void setDocumentType(IDDocumentType documentType) {
-		this.documentType = documentType;
-	}
+    public void setDocumentIDNumber(String documentIDNumber) {
+	this.documentIDNumber = documentIDNumber;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public IDDocumentType getDocumentType() {
+	return documentType;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setDocumentType(IDDocumentType documentType) {
+	this.documentType = documentType;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Gender getGender() {
+	return gender;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setGender(Gender gender) {
+	this.gender = gender;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getPassword() {
+	return password;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setPassword(String password) {
+	this.password = password;
+    }
 
-	public Person getPerson() {
-		return person.getObject();
-	}
+    public String getUsername() {
+	return username;
+    }
 
-	public void setPerson(Person person) {
-		this.person = new DomainReference<Person>(person);
-		this.name = person.getName();
-		this.documentIDNumber = person.getIdDocuments().get(0).getValue();
-		this.documentType = person.getIdDocuments().get(0).getIdDocumentType().getValue();
-		this.email = person.getEmail();
-		this.gender = null;
-		this.username = person.getUser().readUserLoginIdentification().getUsername();
-		this.password = null;
-		this.phone = person.getPhone();
-	}
+    public void setUsername(String username) {
+	this.username = username;
+    }
 
-	public String getPhone() {
-	    return phone;
-	}
+    public Person getPerson() {
+	return person.getObject();
+    }
 
-	public void setPhone(String phone) {
-	    this.phone = phone;
-	}
-	
-	
+    public void setPerson(Person person) {
+	this.person = new DomainReference<Person>(person);
+	this.name = person.getName();
+	this.documentIDNumber = person.getIdDocuments().get(0).getValue();
+	this.documentType = person.getIdDocuments().get(0).getIdDocumentType().getValue();
+	this.email = person.getEmail();
+	this.gender = null;
+	this.username = person.getUser().readUserLoginIdentification().getUsername();
+	this.password = null;
+	this.phone = person.getPhone();
+    }
+
+    public String getPhone() {
+	return phone;
+    }
+
+    public void setPhone(String phone) {
+	this.phone = phone;
+    }
+
 }

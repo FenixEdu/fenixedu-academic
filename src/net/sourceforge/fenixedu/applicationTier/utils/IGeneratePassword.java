@@ -4,6 +4,6 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public interface IGeneratePassword {
 
-	public String generatePassword(Person person);
-	
+    public String generatePassword(Person person);
+
 }

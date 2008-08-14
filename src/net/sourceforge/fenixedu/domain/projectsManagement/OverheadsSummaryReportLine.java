@@ -33,115 +33,115 @@ public class OverheadsSummaryReportLine implements Serializable, IOverheadsSumma
     private Double balance;
 
     public Double getBalance() {
-        return balance;
+	return balance;
     }
 
     public void setBalance(Double balance) {
-        this.balance = balance;
+	this.balance = balance;
     }
 
     public String getCostCenter() {
-        return costCenter;
+	return costCenter;
     }
 
     public void setCostCenter(String costCenter) {
-        this.costCenter = costCenter;
+	this.costCenter = costCenter;
     }
 
     public Integer getExplorationUnit() {
-        return explorationUnit;
+	return explorationUnit;
     }
 
     public void setExplorationUnit(Integer explorationUnit) {
-        this.explorationUnit = explorationUnit;
+	this.explorationUnit = explorationUnit;
     }
 
     public Double getOAOverhead() {
-        return OAOverhead;
+	return OAOverhead;
     }
 
     public void setOAOverhead(Double overhead) {
-        OAOverhead = overhead;
+	OAOverhead = overhead;
     }
 
     public Double getOARevenue() {
-        return OARevenue;
+	return OARevenue;
     }
 
     public void setOARevenue(Double revenue) {
-        OARevenue = revenue;
+	OARevenue = revenue;
     }
 
     public Double getOEOverhead() {
-        return OEOverhead;
+	return OEOverhead;
     }
 
     public void setOEOverhead(Double overhead) {
-        OEOverhead = overhead;
+	OEOverhead = overhead;
     }
 
     public Double getOERevenue() {
-        return OERevenue;
+	return OERevenue;
     }
 
     public void setOERevenue(Double revenue) {
-        OERevenue = revenue;
+	OERevenue = revenue;
     }
 
     public Double getOGOverhead() {
-        return OGOverhead;
+	return OGOverhead;
     }
 
     public void setOGOverhead(Double overhead) {
-        OGOverhead = overhead;
+	OGOverhead = overhead;
     }
 
     public Double getOGRevenue() {
-        return OGRevenue;
+	return OGRevenue;
     }
 
     public void setOGRevenue(Double revenue) {
-        OGRevenue = revenue;
+	OGRevenue = revenue;
     }
 
     public Double getOOOverhead() {
-        return OOOverhead;
+	return OOOverhead;
     }
 
     public void setOOOverhead(Double overhead) {
-        OOOverhead = overhead;
+	OOOverhead = overhead;
     }
 
     public Double getOORevenue() {
-        return OORevenue;
+	return OORevenue;
     }
 
     public void setOORevenue(Double revenue) {
-        OORevenue = revenue;
+	OORevenue = revenue;
     }
 
     public Double getTotalOverheads() {
-        return totalOverheads;
+	return totalOverheads;
     }
 
     public void setTotalOverheads(Double totalOverheads) {
-        this.totalOverheads = totalOverheads;
+	this.totalOverheads = totalOverheads;
     }
 
     public Double getTransferedOverheads() {
-        return transferedOverheads;
+	return transferedOverheads;
     }
 
     public void setTransferedOverheads(Double transferedOverheads) {
-        this.transferedOverheads = transferedOverheads;
+	this.transferedOverheads = transferedOverheads;
     }
 
     public Integer getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(Integer year) {
-        this.year = year;
+	this.year = year;
     }
 
 }

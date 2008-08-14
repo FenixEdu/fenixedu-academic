@@ -12,7 +12,7 @@ public class DegreePathProcessor extends AbstractPathProcessor {
 	final int indexOfSlash = path.indexOf('/');
 	return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
     }
-    
+
     public Content processPath(String path) {
 	final String unitAcronym = getDegreeName(path);
 	final Degree degree = Degree.readBySigla(unitAcronym);
@@ -24,7 +24,7 @@ public class DegreePathProcessor extends AbstractPathProcessor {
 	    final DegreeUnit otherDegreeUnit = otherDegree.getUnit();
 	    if (otherDegreeUnit != null && otherDegreeUnit.getAcronym().equalsIgnoreCase(unitAcronym)) {
 		final Site site = otherDegreeUnit.getSite();
-		return site == null || !site.isAvailable() ? null : site;		
+		return site == null || !site.isAvailable() ? null : site;
 	    }
 	}
 

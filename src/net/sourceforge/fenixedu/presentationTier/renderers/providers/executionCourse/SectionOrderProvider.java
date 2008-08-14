@@ -10,19 +10,18 @@ public class SectionOrderProvider extends SectionProvider {
 
     @Override
     public Object provideForContext(Site site, Section superiorSection, Section self) {
-        Collection<Section> siblings;
-        
-        if (superiorSection != null) {
-            siblings = superiorSection.getOrderedSubSections();
-        }
-        else {
-            siblings = site.getOrderedTopLevelSections();
-        }
-        
-        siblings = new ArrayList<Section>(siblings);
-        siblings.remove(self);
+	Collection<Section> siblings;
 
-        return siblings;
+	if (superiorSection != null) {
+	    siblings = superiorSection.getOrderedSubSections();
+	} else {
+	    siblings = site.getOrderedTopLevelSections();
+	}
+
+	siblings = new ArrayList<Section>(siblings);
+	siblings.remove(self);
+
+	return siblings;
     }
 
 }

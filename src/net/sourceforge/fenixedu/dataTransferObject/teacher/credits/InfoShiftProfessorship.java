@@ -23,57 +23,57 @@ public class InfoShiftProfessorship extends InfoObject {
      * @return
      */
     public InfoProfessorship getInfoProfessorship() {
-        return infoProfessorship;
+	return infoProfessorship;
     }
 
     /**
      * @return
      */
     public InfoShift getInfoShift() {
-        return infoShift;
+	return infoShift;
     }
 
     /**
      * @return
      */
     public Double getPercentage() {
-        return percentage;
+	return percentage;
     }
 
     /**
      * @param ship
      */
     public void setInfoProfessorship(InfoProfessorship ship) {
-        infoProfessorship = ship;
+	infoProfessorship = ship;
     }
 
     /**
      * @param shift
      */
     public void setInfoShift(InfoShift shift) {
-        infoShift = shift;
+	infoShift = shift;
     }
 
     /**
      * @param double1
      */
     public void setPercentage(Double double1) {
-        percentage = double1;
+	percentage = double1;
     }
 
     public void copyFromDomain(ShiftProfessorship shifProfessorship) {
-        super.copyFromDomain(shifProfessorship);
-        if (shifProfessorship != null) {
-            setPercentage(shifProfessorship.getPercentage());
-        }
+	super.copyFromDomain(shifProfessorship);
+	if (shifProfessorship != null) {
+	    setPercentage(shifProfessorship.getPercentage());
+	}
     }
-    
+
     public static InfoShiftProfessorship newInfoFromDomain(ShiftProfessorship shifProfessorship) {
-        InfoShiftProfessorship infoShiftProfessorship = null;
-        if (shifProfessorship != null) {
-            infoShiftProfessorship = new InfoShiftProfessorship();
-            infoShiftProfessorship.copyFromDomain(shifProfessorship);
-        }
-        return infoShiftProfessorship;
+	InfoShiftProfessorship infoShiftProfessorship = null;
+	if (shifProfessorship != null) {
+	    infoShiftProfessorship = new InfoShiftProfessorship();
+	    infoShiftProfessorship.copyFromDomain(shifProfessorship);
+	}
+	return infoShiftProfessorship;
     }
 }

@@ -8,11 +8,11 @@ public class StudentSearchBeanWithExecutionYear extends StudentsSearchBean {
     private DomainReference<ExecutionYear> executionYearDomainReference;
 
     public ExecutionYear getExecutionYear() {
-        return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
+	return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-        this.executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	this.executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
     }
 
 }

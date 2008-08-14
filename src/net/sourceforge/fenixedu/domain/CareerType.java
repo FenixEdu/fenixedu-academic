@@ -4,11 +4,10 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public enum CareerType {
 

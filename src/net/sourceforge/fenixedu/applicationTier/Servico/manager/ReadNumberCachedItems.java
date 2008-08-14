@@ -15,12 +15,12 @@ import pt.ist.fenixframework.pstm.Transaction;
  */
 public class ReadNumberCachedItems extends Service {
 
-	public Integer run() throws FenixServiceException {
-		Integer numberCachedObjects = null;
+    public Integer run() throws FenixServiceException {
+	Integer numberCachedObjects = null;
 
-		numberCachedObjects = Transaction.getCache().getNumberOfCachedItems();
+	numberCachedObjects = Transaction.getCache().getNumberOfCachedItems();
 
-		return numberCachedObjects;
-	}
+	return numberCachedObjects;
+    }
 
 }

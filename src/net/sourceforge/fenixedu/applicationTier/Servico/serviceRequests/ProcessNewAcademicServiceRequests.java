@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 public class ProcessNewAcademicServiceRequests extends Service {
 
     public void run(AcademicServiceRequest academicServiceRequest) {
-        academicServiceRequest.process();
+	academicServiceRequest.process();
 
     }
 

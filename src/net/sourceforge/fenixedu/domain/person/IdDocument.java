@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class IdDocument extends IdDocument_Base {
-    
+
     public IdDocument(final Person person, final String value, final IdDocumentTypeObject idDocumentType) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setPerson(person);
-        setIdDocumentType(idDocumentType);
-        setValue(value);
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setPerson(person);
+	setIdDocumentType(idDocumentType);
+	setValue(value);
     }
 
     public IdDocument(final Person person, final String value, final IDDocumentType documentType) {

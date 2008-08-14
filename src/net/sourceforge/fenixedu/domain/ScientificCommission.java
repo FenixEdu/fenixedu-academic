@@ -7,34 +7,34 @@ import dml.runtime.RelationAdapter;
 public class ScientificCommission extends ScientificCommission_Base {
 
     static {
-        ScientificCommissionPerson.addListener(new ManageCoordinatorRole());
+	ScientificCommissionPerson.addListener(new ManageCoordinatorRole());
     }
-    
-    public ScientificCommission(ExecutionDegree executionDegree, Person person) {
-        super();
-        
-        if (executionDegree.isPersonInScientificCommission(person)) {
-            throw new DomainException("scientificCommission.person.duplicate");
-        }
-        
-        setRootDomainObject(RootDomainObject.getInstance());
 
-        setContact(false);
-        setExecutionDegree(executionDegree);
-        setPerson(person);
+    public ScientificCommission(ExecutionDegree executionDegree, Person person) {
+	super();
+
+	if (executionDegree.isPersonInScientificCommission(person)) {
+	    throw new DomainException("scientificCommission.person.duplicate");
+	}
+
+	setRootDomainObject(RootDomainObject.getInstance());
+
+	setContact(false);
+	setExecutionDegree(executionDegree);
+	setPerson(person);
     }
-    
+
     public Boolean isContact() {
-        return getContact() == null ? false : getContact();
+	return getContact() == null ? false : getContact();
     }
 
     public void delete() {
-        removePerson();
-        removeExecutionDegree();
-        removeRootDomainObject();
-        deleteDomainObject();
+	removePerson();
+	removeExecutionDegree();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
-    
+
     /**
      * Manage the role COORDINATOR associated with the person. The person
      * becomes a COORDINATOR when it's added to a scientific commission. This
@@ -45,31 +45,31 @@ public class ScientificCommission extends ScientificCommission_Base {
      */
     private static class ManageCoordinatorRole extends RelationAdapter<ScientificCommission, Person> {
 
-        @Override
-        public void afterAdd(ScientificCommission commission, Person person) {
-            super.afterAdd(commission, person);
-            
-            if (person != null && commission != null) {
-                person.addPersonRoleByRoleType(RoleType.COORDINATOR);
-            }
-        }
+	@Override
+	public void afterAdd(ScientificCommission commission, Person person) {
+	    super.afterAdd(commission, person);
 
-        @Override
-        public void afterRemove(ScientificCommission commission, Person person) {
-            super.afterRemove(commission, person);
-            
-            if (person != null && commission != null) {
-                if (person.hasAnyCoordinators()) {
-                    return;
-                }
-                
-                if (person.hasAnyScientificCommissions()) {
-                    return;
-                }
-                
-                person.removeRoleByType(RoleType.COORDINATOR);
-            }
-        }
-        
+	    if (person != null && commission != null) {
+		person.addPersonRoleByRoleType(RoleType.COORDINATOR);
+	    }
+	}
+
+	@Override
+	public void afterRemove(ScientificCommission commission, Person person) {
+	    super.afterRemove(commission, person);
+
+	    if (person != null && commission != null) {
+		if (person.hasAnyCoordinators()) {
+		    return;
+		}
+
+		if (person.hasAnyScientificCommissions()) {
+		    return;
+		}
+
+		person.removeRoleByType(RoleType.COORDINATOR);
+	    }
+	}
+
     }
 }

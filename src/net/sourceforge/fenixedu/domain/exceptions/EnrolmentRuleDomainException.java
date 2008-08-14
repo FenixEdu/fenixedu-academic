@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.exceptions;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
- *
+ * 
  */
 public class EnrolmentRuleDomainException extends FenixDomainException {
 
@@ -14,32 +14,32 @@ public class EnrolmentRuleDomainException extends FenixDomainException {
      * 
      */
     public EnrolmentRuleDomainException() {
-        super();
-        // TODO Auto-generated constructor stub
+	super();
+	// TODO Auto-generated constructor stub
     }
 
     /**
      * @param errorType
      */
     public EnrolmentRuleDomainException(int errorType) {
-        super(errorType);
-        // TODO Auto-generated constructor stub
+	super(errorType);
+	// TODO Auto-generated constructor stub
     }
 
     /**
      * @param s
      */
     public EnrolmentRuleDomainException(String s) {
-        super(s);
-        // TODO Auto-generated constructor stub
+	super(s);
+	// TODO Auto-generated constructor stub
     }
 
     /**
      * @param cause
      */
     public EnrolmentRuleDomainException(Throwable cause) {
-        super(cause);
-        // TODO Auto-generated constructor stub
+	super(cause);
+	// TODO Auto-generated constructor stub
     }
 
     /**
@@ -47,8 +47,8 @@ public class EnrolmentRuleDomainException extends FenixDomainException {
      * @param cause
      */
     public EnrolmentRuleDomainException(String message, Throwable cause) {
-        super(message, cause);
-        // TODO Auto-generated constructor stub
+	super(message, cause);
+	// TODO Auto-generated constructor stub
     }
 
 }

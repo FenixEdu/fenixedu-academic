@@ -86,7 +86,8 @@ public class Timeline {
 			currentPoint.getPointAttributes().addAttribute(attributeType);
 		    } else {
 			pointOpensInterval(insideIntervals, attributeType, i);
-			// insideIntervals.addAttributes(currentPoint.getIntervalAttributes()
+			// insideIntervals.addAttributes(currentPoint.
+			// getIntervalAttributes()
 			// .getAttributes());
 			currentPoint.getPointAttributes().addAttribute(attributeType);
 		    }

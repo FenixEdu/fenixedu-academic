@@ -25,96 +25,96 @@ public class InfoExecutionDegreeEditor extends InfoObject {
     private String qualifiedName;
 
     public boolean bolonha;
-    
+
     public InfoExecutionDegreeEditor() {
     }
 
     public InfoExecutionYear getInfoExecutionYear() {
-        return infoExecutionYear;
+	return infoExecutionYear;
     }
 
     public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-        this.infoExecutionYear = infoExecutionYear;
+	this.infoExecutionYear = infoExecutionYear;
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-        return infoDegreeCurricularPlan;
+	return infoDegreeCurricularPlan;
     }
 
     public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+	this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
     }
 
     public Boolean getTemporaryExamMap() {
-        return temporaryExamMap;
+	return temporaryExamMap;
     }
 
     public void setTemporaryExamMap(Boolean temporary) {
-        temporaryExamMap = temporary;
+	temporaryExamMap = temporary;
     }
 
     public InfoCampus getInfoCampus() {
-        return infoCampus;
+	return infoCampus;
     }
 
     public void setInfoCampus(InfoCampus infoCampus) {
-        this.infoCampus = infoCampus;
+	this.infoCampus = infoCampus;
     }
 
     public List getCoordinatorsList() {
-        return coordinatorsList;
+	return coordinatorsList;
     }
 
     public void setCoordinatorsList(List coordinatorsList) {
-        this.coordinatorsList = coordinatorsList;
+	this.coordinatorsList = coordinatorsList;
     }
 
     public InfoPeriod getInfoPeriodExamsFirstSemester() {
-        return infoPeriodExamsFirstSemester;
+	return infoPeriodExamsFirstSemester;
     }
 
     public void setInfoPeriodExamsFirstSemester(InfoPeriod infoPeriodExamsFirstSemester) {
-        this.infoPeriodExamsFirstSemester = infoPeriodExamsFirstSemester;
+	this.infoPeriodExamsFirstSemester = infoPeriodExamsFirstSemester;
     }
 
     public InfoPeriod getInfoPeriodExamsSecondSemester() {
-        return infoPeriodExamsSecondSemester;
+	return infoPeriodExamsSecondSemester;
     }
 
     public void setInfoPeriodExamsSecondSemester(InfoPeriod infoPeriodExamsSecondSemester) {
-        this.infoPeriodExamsSecondSemester = infoPeriodExamsSecondSemester;
+	this.infoPeriodExamsSecondSemester = infoPeriodExamsSecondSemester;
     }
 
     public InfoPeriod getInfoPeriodLessonsFirstSemester() {
-        return infoPeriodLessonsFirstSemester;
+	return infoPeriodLessonsFirstSemester;
     }
 
     public void setInfoPeriodLessonsFirstSemester(InfoPeriod infoPeriodLessonsFirstSemester) {
-        this.infoPeriodLessonsFirstSemester = infoPeriodLessonsFirstSemester;
+	this.infoPeriodLessonsFirstSemester = infoPeriodLessonsFirstSemester;
     }
 
     public InfoPeriod getInfoPeriodLessonsSecondSemester() {
-        return infoPeriodLessonsSecondSemester;
+	return infoPeriodLessonsSecondSemester;
     }
 
     public void setInfoPeriodLessonsSecondSemester(InfoPeriod infoPeriodLessonsSecondSemester) {
-        this.infoPeriodLessonsSecondSemester = infoPeriodLessonsSecondSemester;
+	this.infoPeriodLessonsSecondSemester = infoPeriodLessonsSecondSemester;
     }
-    
+
     public String getQualifiedName() {
-        return qualifiedName;
+	return qualifiedName;
     }
 
     public void setQualifiedName(String qualifiedName) {
-        this.qualifiedName = qualifiedName;
+	this.qualifiedName = qualifiedName;
     }
 
     public boolean isBolonha() {
-        return bolonha;
+	return bolonha;
     }
 
     public void setBolonha(boolean bolonha) {
-        this.bolonha = bolonha;
+	this.bolonha = bolonha;
     }
 
 }

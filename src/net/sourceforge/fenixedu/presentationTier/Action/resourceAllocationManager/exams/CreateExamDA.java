@@ -360,10 +360,10 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	    saveErrors(request, actionErrors);
 	    return prepare(mapping, form, request, response);
 	}
-	////////////////////
+	// //////////////////
 	String[] scopeIDArray = (String[]) examForm.get("scopes");
 	request.setAttribute("scopes", scopeIDArray);
-	/////////////////
+	// ///////////////
 
 	return mapping.findForward("associateRoom");
     }
@@ -599,7 +599,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	    }
 	}
 	dissociateExamForm.set("executionCourses", newExecutionCourseArray);
-	//		request.setAttribute("examNewForm", dissociateExamForm);
+	// request.setAttribute("examNewForm", dissociateExamForm);
 
 	return prepareAfterDissociateExecutionCourse(mapping, dissociateExamForm, request, response);
 
@@ -727,7 +727,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 		}
 
 		if (!infoContida) {
-		    //room occupied
+		    // room occupied
 		    occupiedSelectedRooms.add(selectedInfoRoom);
 		}
 	    }

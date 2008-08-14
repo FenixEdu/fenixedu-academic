@@ -21,22 +21,21 @@ import org.apache.struts.action.ActionMapping;
 
 public class CreateMasterDegreeThesisLookupDispatchAction extends CreateOrEditMasterDegreeThesisLookupDispatchAction {
 
-	protected Map getKeyMethodMap() {
-        Map map = super.getKeyMethodMap();
-        map.put("button.submit.masterDegree.thesis.createThesis", "createMasterDegreeThesis");
-        map.put("button.cancel", "cancelCreateMasterDegreeThesis");
-        return map;
+    protected Map getKeyMethodMap() {
+	Map map = super.getKeyMethodMap();
+	map.put("button.submit.masterDegree.thesis.createThesis", "createMasterDegreeThesis");
+	map.put("button.cancel", "cancelCreateMasterDegreeThesis");
+	return map;
     }
 
-    public ActionForward cancelCreateMasterDegreeThesis(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	return super.cancelMasterDegreeThesis(mapping, form, request, response);
+    public ActionForward cancelCreateMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return super.cancelMasterDegreeThesis(mapping, form, request, response);
     }
 
-    public ActionForward createMasterDegreeThesis(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
-    	return super.createOrEditMasterDegreeThesis(mapping, form, request, response, "CreateMasterDegreeThesis");
+    public ActionForward createMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	return super.createOrEditMasterDegreeThesis(mapping, form, request, response, "CreateMasterDegreeThesis");
     }
 
 }

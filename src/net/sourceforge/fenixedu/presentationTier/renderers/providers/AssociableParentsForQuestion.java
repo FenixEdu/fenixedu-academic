@@ -9,16 +9,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AssociableParentsForQuestion implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		GroupElementBean groupElementBean = (GroupElementBean) source;
-		
-		List<NewQuestionGroup> possibleParents = groupElementBean.getChild().getAssociableParents();
+    public Object provide(Object source, Object currentValue) {
+	GroupElementBean groupElementBean = (GroupElementBean) source;
 
-		return possibleParents;
-	}
+	List<NewQuestionGroup> possibleParents = groupElementBean.getChild().getAssociableParents();
 
-	public Converter getConverter() {
-		return null;
-	}
+	return possibleParents;
+    }
+
+    public Converter getConverter() {
+	return null;
+    }
 
 }

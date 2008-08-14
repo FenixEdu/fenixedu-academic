@@ -15,7 +15,7 @@ import org.apache.commons.collections.FastHashMap;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class UserExecutionLog implements Serializable {
 
@@ -29,32 +29,32 @@ public class UserExecutionLog implements Serializable {
      *  
      */
     public UserExecutionLog(IUserView userView) {
-        super();
-        this.userView = userView;
-        this.numberCalls = 0;
-        this.mapServicesLog = new FastHashMap();
-        this.mapServicesLog.setFast(true);
+	super();
+	this.userView = userView;
+	this.numberCalls = 0;
+	this.mapServicesLog = new FastHashMap();
+	this.mapServicesLog.setFast(true);
     }
 
     /**
      * @return Returns the numberCalls.
      */
     public int getNumberCalls() {
-        return numberCalls;
+	return numberCalls;
     }
 
     /**
      * @return Returns the userView.
      */
     public IUserView getUserView() {
-        return userView;
+	return userView;
     }
 
     /**
      * @return Returns the mapServicesLog.
      */
     public FastHashMap getMapServicesLog() {
-        return mapServicesLog;
+	return mapServicesLog;
     }
 
     /**
@@ -62,13 +62,13 @@ public class UserExecutionLog implements Serializable {
      * @param serviceStartTime
      */
     public void addServiceCall(String serviceFootPrint, Calendar serviceStartTime) {
-        List listCallTimes = (List) mapServicesLog.get(serviceFootPrint);
-        if (listCallTimes == null) {
-            listCallTimes = new ArrayList();
-            mapServicesLog.put(serviceFootPrint, listCallTimes);
-        }
-        listCallTimes.add(Calendar.getInstance());
-        numberCalls++;
+	List listCallTimes = (List) mapServicesLog.get(serviceFootPrint);
+	if (listCallTimes == null) {
+	    listCallTimes = new ArrayList();
+	    mapServicesLog.put(serviceFootPrint, listCallTimes);
+	}
+	listCallTimes.add(Calendar.getInstance());
+	numberCalls++;
     }
 
 }

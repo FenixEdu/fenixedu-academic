@@ -8,29 +8,28 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class TSDProcessPhasePredicates {
 
-	public static final AccessControlPredicate<TSDProcessPhase> writePredicate = new AccessControlPredicate<TSDProcessPhase>() {
+    public static final AccessControlPredicate<TSDProcessPhase> writePredicate = new AccessControlPredicate<TSDProcessPhase>() {
 
-		public boolean evaluate(TSDProcessPhase tsdProcessPhase) {
-			TSDProcess tsdProcess = tsdProcessPhase.getTSDProcess();
+	public boolean evaluate(TSDProcessPhase tsdProcessPhase) {
+	    TSDProcess tsdProcess = tsdProcessPhase.getTSDProcess();
 
-			Person person = AccessControl.getPerson();
+	    Person person = AccessControl.getPerson();
 
-			return (tsdProcess == null) ? true : tsdProcess.getIsMemberOfAutomaticValuationGroup(person)
-					|| tsdProcess.getIsMemberOfOmissionConfigurationGroup(person)
-					|| tsdProcess.getIsMemberOfPhasesManagementGroup(person)
-					|| tsdProcess.getIsMemberOfCompetenceCoursesAndTeachersManagementGroup(person);
-		}
-	};
+	    return (tsdProcess == null) ? true : tsdProcess.getIsMemberOfAutomaticValuationGroup(person)
+		    || tsdProcess.getIsMemberOfOmissionConfigurationGroup(person)
+		    || tsdProcess.getIsMemberOfPhasesManagementGroup(person)
+		    || tsdProcess.getIsMemberOfCompetenceCoursesAndTeachersManagementGroup(person);
+	}
+    };
 
+    public static final AccessControlPredicate<TSDProcessPhase> omissionPredicate = new AccessControlPredicate<TSDProcessPhase>() {
 
-	public static final AccessControlPredicate<TSDProcessPhase> omissionPredicate = new AccessControlPredicate<TSDProcessPhase>() {
+	public boolean evaluate(TSDProcessPhase tsdProcessPhase) {
+	    TSDProcess tsdProcess = tsdProcessPhase.getTSDProcess();
 
-		public boolean evaluate(TSDProcessPhase tsdProcessPhase) {
-			TSDProcess tsdProcess = tsdProcessPhase.getTSDProcess();
+	    Person person = AccessControl.getPerson();
 
-			Person person = AccessControl.getPerson();
-
-			return tsdProcess.getIsMemberOfOmissionConfigurationGroup(person);
-		}
-	};
+	    return tsdProcess.getIsMemberOfOmissionConfigurationGroup(person);
+	}
+    };
 }

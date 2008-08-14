@@ -42,159 +42,163 @@ public class InfoMetadata extends InfoObject {
     private List visibleQuestions;
 
     public String getAuthor() {
-        return author;
+	return author;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public String getDifficulty() {
-        return difficulty;
+	return difficulty;
     }
 
     public InfoExecutionCourse getInfoExecutionCourse() {
-        return infoExecutionCourse;
+	return infoExecutionCourse;
     }
 
     public Calendar getLearningTime() {
-        return learningTime;
+	return learningTime;
     }
 
     public String getLevel() {
-        return level;
+	return level;
     }
 
     public String getMainSubject() {
-        return mainSubject;
+	return mainSubject;
     }
 
     public String getMetadataFile() {
-        return metadataFile;
+	return metadataFile;
     }
 
     public Integer getNumberOfMembers() {
-        return numberOfMembers;
+	return numberOfMembers;
     }
 
     public String getSecondarySubject() {
-        return secondarySubject;
+	return secondarySubject;
     }
 
     public Boolean getVisibility() {
-        return visibility;
+	return visibility;
     }
 
     public void setAuthor(String string) {
-        author = string;
+	author = string;
     }
 
     public void setDescription(String string) {
-        description = string;
+	description = string;
     }
 
     public void setDifficulty(String string) {
-        difficulty = string;
+	difficulty = string;
     }
 
     public void setInfoExecutionCourse(InfoExecutionCourse course) {
-        infoExecutionCourse = course;
+	infoExecutionCourse = course;
     }
 
     public void setLearningTime(Calendar calendar) {
-        learningTime = calendar;
+	learningTime = calendar;
     }
 
     public void setLevel(String string) {
-        level = string;
+	level = string;
     }
 
     public void setMainSubject(String string) {
-        mainSubject = string;
+	mainSubject = string;
     }
 
     public void setMetadataFile(String string) {
-        metadataFile = string;
+	metadataFile = string;
     }
 
     public void setNumberOfMembers(Integer integer) {
-        numberOfMembers = integer;
+	numberOfMembers = integer;
     }
 
     public void setSecondarySubject(String string) {
-        secondarySubject = string;
+	secondarySubject = string;
     }
 
     public void setVisibility(Boolean boolean1) {
-        visibility = boolean1;
+	visibility = boolean1;
     }
 
     public String getLearningTimeFormatted() {
-        String result = "";
-        Calendar date = getLearningTime();
-        if (date == null)
-            return result;
-        result += date.get(Calendar.HOUR_OF_DAY);
-        result += ":";
-        if (date.get(Calendar.MINUTE) < 10)
-            result += "0";
-        result += date.get(Calendar.MINUTE);
-        return result;
+	String result = "";
+	Calendar date = getLearningTime();
+	if (date == null)
+	    return result;
+	result += date.get(Calendar.HOUR_OF_DAY);
+	result += ":";
+	if (date.get(Calendar.MINUTE) < 10)
+	    result += "0";
+	result += date.get(Calendar.MINUTE);
+	return result;
     }
 
     public List getVisibleQuestions() {
-        return visibleQuestions;
+	return visibleQuestions;
     }
 
     public void setVisibleQuestions(List list) {
-        visibleQuestions = list;
+	visibleQuestions = list;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoMetadata) {
-            InfoMetadata infoMetadata = (InfoMetadata) obj;
-            result = (getIdInternal().equals(infoMetadata.getIdInternal()))
-                    && (getInfoExecutionCourse().equals(infoMetadata.getInfoExecutionCourse()))
-                    && (equals(getMetadataFile(), infoMetadata.getMetadataFile())) && (equals(getDescription(), infoMetadata.getDescription()))
-                    && (equals(getDifficulty(), infoMetadata.getDifficulty())) && (getLearningTime().equals(infoMetadata.getLearningTime()))
-                    && (equals(getLevel(), infoMetadata.getLevel())) && (equals(getMainSubject(), infoMetadata.getMainSubject()))
-                    && (equals(getSecondarySubject(), infoMetadata.getSecondarySubject())) && (equals(getAuthor(), infoMetadata.getAuthor()))
-                    && (getNumberOfMembers().equals(infoMetadata.getNumberOfMembers())) && (getVisibility().equals(infoMetadata.getVisibility()))
-                    && (getVisibleQuestions().equals(infoMetadata.getVisibleQuestions()));
-        }
-        return result;
+	boolean result = false;
+	if (obj instanceof InfoMetadata) {
+	    InfoMetadata infoMetadata = (InfoMetadata) obj;
+	    result = (getIdInternal().equals(infoMetadata.getIdInternal()))
+		    && (getInfoExecutionCourse().equals(infoMetadata.getInfoExecutionCourse()))
+		    && (equals(getMetadataFile(), infoMetadata.getMetadataFile()))
+		    && (equals(getDescription(), infoMetadata.getDescription()))
+		    && (equals(getDifficulty(), infoMetadata.getDifficulty()))
+		    && (getLearningTime().equals(infoMetadata.getLearningTime()))
+		    && (equals(getLevel(), infoMetadata.getLevel())) && (equals(getMainSubject(), infoMetadata.getMainSubject()))
+		    && (equals(getSecondarySubject(), infoMetadata.getSecondarySubject()))
+		    && (equals(getAuthor(), infoMetadata.getAuthor()))
+		    && (getNumberOfMembers().equals(infoMetadata.getNumberOfMembers()))
+		    && (getVisibility().equals(infoMetadata.getVisibility()))
+		    && (getVisibleQuestions().equals(infoMetadata.getVisibleQuestions()));
+	}
+	return result;
     }
 
     private boolean equals(String str1, String str2) {
-        if (str1 == null ? str2 == null : str1.equals(str2))
-            return true;
-        return false;
+	if (str1 == null ? str2 == null : str1.equals(str2))
+	    return true;
+	return false;
     }
 
     public void copyFromDomain(Metadata metadata) {
-        super.copyFromDomain(metadata);
-        if (metadata != null) {
-            setMetadataFile(metadata.getMetadataFile());
-            setDescription(metadata.getDescription());
-            setDifficulty(metadata.getDifficulty());
-            setLearningTime(metadata.getLearningTime());
-            setLevel(metadata.getLevel());
-            setMainSubject(metadata.getMainSubject());
-            setSecondarySubject(metadata.getSecondarySubject());
-            setAuthor(metadata.getAuthor());
-            setNumberOfMembers(metadata.getVisibleQuestions().size());
-            setVisibility(metadata.getVisibility());
-        }
+	super.copyFromDomain(metadata);
+	if (metadata != null) {
+	    setMetadataFile(metadata.getMetadataFile());
+	    setDescription(metadata.getDescription());
+	    setDifficulty(metadata.getDifficulty());
+	    setLearningTime(metadata.getLearningTime());
+	    setLevel(metadata.getLevel());
+	    setMainSubject(metadata.getMainSubject());
+	    setSecondarySubject(metadata.getSecondarySubject());
+	    setAuthor(metadata.getAuthor());
+	    setNumberOfMembers(metadata.getVisibleQuestions().size());
+	    setVisibility(metadata.getVisibility());
+	}
     }
 
     public static InfoMetadata newInfoFromDomain(Metadata metadata) {
-        InfoMetadata infoMetadata = null;
-        if (metadata != null) {
-            infoMetadata = new InfoMetadata();
-            infoMetadata.copyFromDomain(metadata);
-        }
-        return infoMetadata;
+	InfoMetadata infoMetadata = null;
+	if (metadata != null) {
+	    infoMetadata = new InfoMetadata();
+	    infoMetadata.copyFromDomain(metadata);
+	}
+	return infoMetadata;
     }
 
 }

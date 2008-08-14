@@ -16,20 +16,20 @@ import org.joda.time.YearMonthDay;
 
 public class EditLesson extends Service {
 
-    public void run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency, 
-	    InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, 
-	    YearMonthDay newEndDate, Boolean createLessonInstances) throws FenixServiceException {
-	
+    public void run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
+	    InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, YearMonthDay newEndDate,
+	    Boolean createLessonInstances) throws FenixServiceException {
+
 	Lesson aula = rootDomainObject.readLessonByOID(aulaAntiga.getIdInternal());
 
 	if (aula != null) {
 
 	    AllocatableSpace newRoom = null;
-	    if(infoRoomOccupation != null && infoRoomOccupation.getInfoRoom() != null) {
+	    if (infoRoomOccupation != null && infoRoomOccupation.getInfoRoom() != null) {
 		newRoom = AllocatableSpace.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome());
 	    }
-	    
-	    aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances, newRoom);                                            	    	  
+
+	    aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances, newRoom);
 	}
     }
 }

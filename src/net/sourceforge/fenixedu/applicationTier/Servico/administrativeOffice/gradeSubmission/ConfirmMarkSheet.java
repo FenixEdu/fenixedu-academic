@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
 public class ConfirmMarkSheet extends Service {
-	
-	public void run(MarkSheet markSheet, Employee employee) throws InvalidArgumentsServiceException {
-		if(markSheet == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-		markSheet.confirm(employee);
+
+    public void run(MarkSheet markSheet, Employee employee) throws InvalidArgumentsServiceException {
+	if (markSheet == null) {
+	    throw new InvalidArgumentsServiceException();
 	}
+	markSheet.confirm(employee);
+    }
 
 }

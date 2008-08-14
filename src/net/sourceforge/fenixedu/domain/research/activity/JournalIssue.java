@@ -22,8 +22,7 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
 	    @Override
 	    public void afterRemove(JournalIssue issue, ScientificJournal journal) {
 		super.afterRemove(issue, journal);
-		if (issue != null && journal != null && !journal.hasAnyParticipations()
-			&& !journal.hasAnyJournalIssues()) {
+		if (issue != null && journal != null && !journal.hasAnyParticipations() && !journal.hasAnyJournalIssues()) {
 		    journal.delete();
 		}
 	    }
@@ -125,24 +124,23 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
     }
 
     public String getNameWithScientificJournal() {
-	return this.getScientificJournal().getName() + " - " + this.getVolume() + " (" + this.getNumber()
-		+ ")";
+	return this.getScientificJournal().getName() + " - " + this.getVolume() + " (" + this.getNumber() + ")";
     }
-    
+
     public String getPublisher() {
 	return this.getScientificJournal().getPublisher();
     }
 
     public void addUniqueParticipation(Participation participation) {
-	if(participation instanceof JournalIssueParticipation) {
+	if (participation instanceof JournalIssueParticipation) {
 	    JournalIssueParticipation journalIssueParticipation = (JournalIssueParticipation) participation;
 	    for (JournalIssueParticipation journalIssueParticipation2 : getParticipationsSet()) {
-		if(journalIssueParticipation2.getParty().equals(journalIssueParticipation.getParty()) &&
-			journalIssueParticipation2.getRole().equals(journalIssueParticipation.getRole())) {
+		if (journalIssueParticipation2.getParty().equals(journalIssueParticipation.getParty())
+			&& journalIssueParticipation2.getRole().equals(journalIssueParticipation.getRole())) {
 		    return;
 		}
 	    }
 	    addParticipations(journalIssueParticipation);
-	}		
+	}
     }
 }

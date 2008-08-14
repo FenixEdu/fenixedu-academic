@@ -22,30 +22,30 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldInquiriesTeachersResByTeacherNumber extends Service {
 
-	public List run(Integer teacherNumber) throws FenixServiceException{
-		Teacher teacher = Teacher.readByNumber(teacherNumber);
+    public List run(Integer teacherNumber) throws FenixServiceException {
+	Teacher teacher = Teacher.readByNumber(teacherNumber);
 
-		if (teacher == null) {
-			throw new FenixServiceException("nullTeacherNumber");
-		}
-		
-		List<OldInquiriesTeachersRes> oldInquiriesTeachersResList = teacher.getAssociatedOldInquiriesTeachersRes();
-
-		CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
-
-			public Object transform(Object oldInquiriesTeachersRes) {
-				InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
-				try {
-					ioits.copyFromDomain((OldInquiriesTeachersRes) oldInquiriesTeachersRes);
-
-				} catch (Exception ex) {
-				}
-
-				return ioits;
-			}
-		});
-
-		return oldInquiriesTeachersResList;
+	if (teacher == null) {
+	    throw new FenixServiceException("nullTeacherNumber");
 	}
+
+	List<OldInquiriesTeachersRes> oldInquiriesTeachersResList = teacher.getAssociatedOldInquiriesTeachersRes();
+
+	CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
+
+	    public Object transform(Object oldInquiriesTeachersRes) {
+		InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
+		try {
+		    ioits.copyFromDomain((OldInquiriesTeachersRes) oldInquiriesTeachersRes);
+
+		} catch (Exception ex) {
+		}
+
+		return ioits;
+	    }
+	});
+
+	return oldInquiriesTeachersResList;
+    }
 
 }

@@ -25,68 +25,68 @@ public class InfoFAQSection extends InfoObject implements Serializable {
     private List entries = null;
 
     public InfoFAQSection() {
-        super();
+	super();
     }
 
     public int hashCode() {
-        if (this.getIdInternal() != null) {
-            return this.getIdInternal().intValue();
-        }
+	if (this.getIdInternal() != null) {
+	    return this.getIdInternal().intValue();
+	}
 
-        return 0;
+	return 0;
     }
 
     public InfoFAQSection getParentSection() {
-        return parentSection;
+	return parentSection;
     }
 
     public void setParentSection(InfoFAQSection parentSection) {
-        this.parentSection = parentSection;
+	this.parentSection = parentSection;
     }
 
     public String getSectionName() {
-        return sectionName;
+	return sectionName;
     }
 
     public void setSectionName(String sectionName) {
-        this.sectionName = sectionName;
+	this.sectionName = sectionName;
     }
 
     public List getSubSections() {
-        return subSections;
+	return subSections;
     }
 
     public void setSubSections(List subSections) {
-        this.subSections = subSections;
+	this.subSections = subSections;
     }
 
     public List getEntries() {
-        return entries;
+	return entries;
     }
 
     public void setEntries(List entries) {
-        this.entries = entries;
+	this.entries = entries;
     }
 
     public void copyFromDomain(FAQSection faqSection) {
-        super.copyFromDomain(faqSection);
-        if (faqSection != null) {
-            setSectionName(faqSection.getSectionName());
-            FAQSection parentSection = faqSection.getParentSection();
-            if (parentSection != null) {
-                setParentSection(new InfoFAQSection());
-                getParentSection().setIdInternal(parentSection.getIdInternal());
-            }
-        }
+	super.copyFromDomain(faqSection);
+	if (faqSection != null) {
+	    setSectionName(faqSection.getSectionName());
+	    FAQSection parentSection = faqSection.getParentSection();
+	    if (parentSection != null) {
+		setParentSection(new InfoFAQSection());
+		getParentSection().setIdInternal(parentSection.getIdInternal());
+	    }
+	}
     }
 
     public static InfoFAQSection newInfoFromDomain(FAQSection faqSection) {
-        InfoFAQSection infoFAQSection = null;
-        if (faqSection != null) {
-            infoFAQSection = new InfoFAQSection();
-            infoFAQSection.copyFromDomain(faqSection);
-        }
-        return infoFAQSection;
+	InfoFAQSection infoFAQSection = null;
+	if (faqSection != null) {
+	    infoFAQSection = new InfoFAQSection();
+	    infoFAQSection.copyFromDomain(faqSection);
+	}
+	return infoFAQSection;
     }
 
 }

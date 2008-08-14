@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 
 /**
  * @author jdnf
- *
+ * 
  */
 public class ExistingSupportLesson extends FenixServiceException {
 

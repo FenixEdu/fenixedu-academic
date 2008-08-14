@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.Person;
 public class ReadPersonCandidates extends Service {
 
     public List<InfoMasterDegreeCandidate> run(final String username) throws FenixServiceException {
-        final Person person = Person.readPersonByUsername(username);
-        if (person == null) {
-            throw new FenixServiceException("error.noPerson");
-        }
-        final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
-        for (final MasterDegreeCandidate masterDegreeCandidate : person.getMasterDegreeCandidatesSet()) {
-            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate));
-        }
-        return result; 
+	final Person person = Person.readPersonByUsername(username);
+	if (person == null) {
+	    throw new FenixServiceException("error.noPerson");
+	}
+	final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
+	for (final MasterDegreeCandidate masterDegreeCandidate : person.getMasterDegreeCandidatesSet()) {
+	    result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate));
+	}
+	return result;
     }
 }

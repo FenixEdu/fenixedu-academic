@@ -8,15 +8,14 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-
 public class EducationAreaProvider implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		return new ArrayList<EducationArea>(RootDomainObject.getInstance().getEducationAreas());
-	}
+    public Object provide(Object source, Object currentValue) {
+	return new ArrayList<EducationArea>(RootDomainObject.getInstance().getEducationAreas());
+    }
 
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
-	
+    public Converter getConverter() {
+	return new DomainObjectKeyConverter();
+    }
+
 }

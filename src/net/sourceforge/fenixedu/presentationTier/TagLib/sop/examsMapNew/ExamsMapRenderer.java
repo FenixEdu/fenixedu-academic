@@ -251,10 +251,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			} else {
 			    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 			}
-			strBuffer.append("<a href=\"").append(((HttpServletRequest)pageContext.getRequest()).getContextPath());
+			strBuffer.append("<a href=\"").append(((HttpServletRequest) pageContext.getRequest()).getContextPath());
 			strBuffer.append(site.getReversePath());
 			strBuffer.append("\">");
-			
+
 		    } else if (showCreateExamLink && user.equals("sop")) {
 			strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=createByCourse&amp;"
 				+ SessionConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal() + "&amp;"
@@ -405,7 +405,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				    strBuffer.append(season1Exam.getBeginningHour());
 				    strBuffer.append("</td>");
 				    // strBuffer.append("-");
-				    // strBuffer.append(season1Exam.getEndHour());
+				    //strBuffer.append(season1Exam.getEndHour())
+				    // ;
 				}
 
 				if (user.equals("sop")) {
@@ -413,7 +414,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				    strBuffer.append("<td>");
 
 				    // Integer numAlunos =
-				    // infoExecutionCourse.getNumberOfAttendingStudents();
+				    // infoExecutionCourse.
+				    // getNumberOfAttendingStudents();
 
 				    Integer numAlunos = season1Exam.getEnrolledStudents();
 
@@ -530,14 +532,16 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				    strBuffer.append(season2Exam.getBeginningHour());
 				    strBuffer.append("</td>");
 				    // strBuffer.append("-");
-				    // strBuffer.append(season2Exam.getEndHour());
+				    //strBuffer.append(season2Exam.getEndHour())
+				    // ;
 				}
 
 				if (user.equals("sop")) {
 				    strBuffer.append("</td>");
 				    strBuffer.append("<td>");
 				    // Integer numAlunos =
-				    // infoExecutionCourse.getNumberOfAttendingStudents();
+				    // infoExecutionCourse.
+				    // getNumberOfAttendingStudents();
 				    Integer numAlunos = season2Exam.getEnrolledStudents();
 
 				    strBuffer.append(numAlunos);

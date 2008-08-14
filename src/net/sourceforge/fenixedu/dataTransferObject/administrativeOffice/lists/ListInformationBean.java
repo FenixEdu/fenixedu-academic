@@ -19,103 +19,98 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
  * @author - Angela
  * 
  */
-public class ListInformationBean extends  ExecutionDegreeListBean{
+public class ListInformationBean extends ExecutionDegreeListBean {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private List<RegistrationAgreement>  registrationAgreement;
+    private List<RegistrationAgreement> registrationAgreement;
 
-	private List<RegistrationStateType> registrationStateType;
-	
-	private EnrolmentEvaluationState enrolmentEvaluationState;
-	
-	private EnrollmentState enrollmentState;
-	
-	private DomainReference<RegistrationState> registrationState;
-	
-	private Collection<DegreeModuleScope> degreeModuleScope;
-	
-	private Boolean with_equivalence;
-	
-	
+    private List<RegistrationStateType> registrationStateType;
 
-	public Collection<DegreeModuleScope> getDegreeModuleScope() {
-		return this.degreeModuleScope;
-	}
+    private EnrolmentEvaluationState enrolmentEvaluationState;
 
-	public void setDegreeModuleScope(Collection<DegreeModuleScope> degreeModuleScope) {
-		this.degreeModuleScope = degreeModuleScope;
-	}
+    private EnrollmentState enrollmentState;
 
-	public ListInformationBean() {
-		super();
+    private DomainReference<RegistrationState> registrationState;
 
-		this.registrationAgreement = new ArrayList<RegistrationAgreement>();
-		this.registrationStateType = new ArrayList<RegistrationStateType>();
-		this.degreeModuleScope = new ArrayList<DegreeModuleScope>();
-		this.with_equivalence = new Boolean(false);
-		this.enrolmentEvaluationState = null;
-		this.enrollmentState = null;
+    private Collection<DegreeModuleScope> degreeModuleScope;
 
-	}
+    private Boolean with_equivalence;
 
-	public List<RegistrationAgreement> getRegistrationAgreement() {
-		return this.registrationAgreement;
-	}
+    public Collection<DegreeModuleScope> getDegreeModuleScope() {
+	return this.degreeModuleScope;
+    }
 
-	public void setRegistrationAgreement(
-			List<RegistrationAgreement> registrationAgreement) {
-		this.registrationAgreement = registrationAgreement;
-	}
+    public void setDegreeModuleScope(Collection<DegreeModuleScope> degreeModuleScope) {
+	this.degreeModuleScope = degreeModuleScope;
+    }
 
-	public void clearAgreement() {
-		this.registrationAgreement = null;
-	}
+    public ListInformationBean() {
+	super();
 
-	public List<RegistrationStateType> getRegistrationStateType() {
-		return this.registrationStateType;
-	}
+	this.registrationAgreement = new ArrayList<RegistrationAgreement>();
+	this.registrationStateType = new ArrayList<RegistrationStateType>();
+	this.degreeModuleScope = new ArrayList<DegreeModuleScope>();
+	this.with_equivalence = new Boolean(false);
+	this.enrolmentEvaluationState = null;
+	this.enrollmentState = null;
 
-	public void setRegistrationStateType(
-			List<RegistrationStateType> registrationStateType) {
-		this.registrationStateType = registrationStateType;
-	}
+    }
 
-	public void clearRegistrationStateType() {
-		this.registrationStateType = null;
-	}
+    public List<RegistrationAgreement> getRegistrationAgreement() {
+	return this.registrationAgreement;
+    }
 
-	public Boolean getWith_equivalence() {
-		return with_equivalence;
-	}
+    public void setRegistrationAgreement(List<RegistrationAgreement> registrationAgreement) {
+	this.registrationAgreement = registrationAgreement;
+    }
 
-	public void setWith_equivalence(Boolean with_equivalence) {
-		this.with_equivalence = with_equivalence;
-	}
-	public RegistrationState getRegistrationState() {
-		return (this.registrationState == null) ? null : this.registrationState.getObject();
-	}
+    public void clearAgreement() {
+	this.registrationAgreement = null;
+    }
 
-	public void setRegistrationState(RegistrationState registrationState) {
-		this.registrationState = (registrationState != null) ? new DomainReference<RegistrationState>(registrationState)
-				: null;
-	}
+    public List<RegistrationStateType> getRegistrationStateType() {
+	return this.registrationStateType;
+    }
 
-	public EnrollmentState getEnrollmentState() {
-		return this.enrollmentState;
-	}
+    public void setRegistrationStateType(List<RegistrationStateType> registrationStateType) {
+	this.registrationStateType = registrationStateType;
+    }
 
-	public void setEnrollmentState(EnrollmentState enrollmentState) {
-		this.enrollmentState = enrollmentState;
-	}
+    public void clearRegistrationStateType() {
+	this.registrationStateType = null;
+    }
 
-	public EnrolmentEvaluationState getEnrolmentEvaluationState() {
-		return this.enrolmentEvaluationState;
-	}
+    public Boolean getWith_equivalence() {
+	return with_equivalence;
+    }
 
-	public void setEnrolmentEvaluationState(
-			EnrolmentEvaluationState enrolmentEvaluationState) {
-		this.enrolmentEvaluationState = enrolmentEvaluationState;
-	}
+    public void setWith_equivalence(Boolean with_equivalence) {
+	this.with_equivalence = with_equivalence;
+    }
+
+    public RegistrationState getRegistrationState() {
+	return (this.registrationState == null) ? null : this.registrationState.getObject();
+    }
+
+    public void setRegistrationState(RegistrationState registrationState) {
+	this.registrationState = (registrationState != null) ? new DomainReference<RegistrationState>(registrationState) : null;
+    }
+
+    public EnrollmentState getEnrollmentState() {
+	return this.enrollmentState;
+    }
+
+    public void setEnrollmentState(EnrollmentState enrollmentState) {
+	this.enrollmentState = enrollmentState;
+    }
+
+    public EnrolmentEvaluationState getEnrolmentEvaluationState() {
+	return this.enrolmentEvaluationState;
+    }
+
+    public void setEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
+	this.enrolmentEvaluationState = enrolmentEvaluationState;
+    }
 
 }

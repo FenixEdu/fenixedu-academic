@@ -14,8 +14,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
  */
 public class DeleteFileContent extends Service {
 
-    public void run(FileContent fileContent) throws FenixServiceException, DomainException,
-	    FileManagerException {
+    public void run(FileContent fileContent) throws FenixServiceException, DomainException, FileManagerException {
 	fileContent.delete();
 	new DeleteFileRequest(AccessControl.getPerson(), fileContent.getExternalStorageIdentification());
     }

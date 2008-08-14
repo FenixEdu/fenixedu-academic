@@ -13,31 +13,28 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveVigilantsFromGroup extends Service {
 
-    public List<Vigilant> run(Map<VigilantGroup,List<Vigilant>> vigilantsToRemove) {
+    public List<Vigilant> run(Map<VigilantGroup, List<Vigilant>> vigilantsToRemove) {
 
-        List<Vigilant> unableToRemove = new ArrayList<Vigilant>();
+	List<Vigilant> unableToRemove = new ArrayList<Vigilant>();
 
-        Set<VigilantGroup> groups = vigilantsToRemove.keySet();
-		for (VigilantGroup group : groups) {
-			List<Vigilant> vigilants = vigilantsToRemove.get(group);
-			for (Vigilant vigilant : vigilants) {
-				if (vigilant.getVigilantGroupsCount() == 1) {
-					try {
-						vigilant.delete();
-					} catch (DomainException e) {
-						unableToRemove.add(vigilant);
-					}
-				} else {
-					group.removeVigilants(vigilant);
-				}
-			}
+	Set<VigilantGroup> groups = vigilantsToRemove.keySet();
+	for (VigilantGroup group : groups) {
+	    List<Vigilant> vigilants = vigilantsToRemove.get(group);
+	    for (Vigilant vigilant : vigilants) {
+		if (vigilant.getVigilantGroupsCount() == 1) {
+		    try {
+			vigilant.delete();
+		    } catch (DomainException e) {
+			unableToRemove.add(vigilant);
+		    }
+		} else {
+		    group.removeVigilants(vigilant);
 		}
-        
-        return unableToRemove;
-    	
-    	
-    	
-    	
+	    }
+	}
+
+	return unableToRemove;
+
     }
 
 }

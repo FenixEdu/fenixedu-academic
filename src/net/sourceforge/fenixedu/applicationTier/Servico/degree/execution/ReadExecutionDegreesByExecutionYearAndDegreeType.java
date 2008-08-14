@@ -18,17 +18,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesByExecutionYearAndDegreeType extends Service {
 
-    public List run(String executionYear, DegreeType degreeType)
-            {
+    public List run(String executionYear, DegreeType degreeType) {
 
-    	final List<ExecutionDegree> executionDegrees = degreeType == null ?
-            ExecutionDegree.getAllByExecutionYear(executionYear)
-            : ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear, degreeType);
+	final List<ExecutionDegree> executionDegrees = degreeType == null ? ExecutionDegree.getAllByExecutionYear(executionYear)
+		: ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear, degreeType);
 
-        final List infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-        for (final ExecutionDegree executionDegree : executionDegrees) {
-        	infoExecutionDegreeList.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
-        }
-        return infoExecutionDegreeList;
+	final List infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
+	for (final ExecutionDegree executionDegree : executionDegrees) {
+	    infoExecutionDegreeList.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
+	}
+	return infoExecutionDegreeList;
     }
 }

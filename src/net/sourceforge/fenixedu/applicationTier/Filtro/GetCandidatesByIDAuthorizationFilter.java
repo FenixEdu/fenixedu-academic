@@ -17,13 +17,13 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class GetCandidatesByIDAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
-        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, arguments))
-                || (id == null) || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
-        }
+	IUserView id = getRemoteUser(request);
+	Object[] arguments = getServiceCallArguments(request);
+	if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+		|| (id != null && id.getRoleTypes() != null && !hasPrivilege(id, arguments)) || (id == null)
+		|| (id.getRoleTypes() == null)) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 
     /**
@@ -31,10 +31,10 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
      */
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
-        List<RoleType> roles = new ArrayList<RoleType>();
-        roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(RoleType.COORDINATOR);
-        return roles;
+	List<RoleType> roles = new ArrayList<RoleType>();
+	roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+	roles.add(RoleType.COORDINATOR);
+	return roles;
     }
 
     /**
@@ -43,32 +43,30 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
      * @return
      */
     private boolean hasPrivilege(IUserView id, Object[] arguments) {
-        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-            return true;
-        }
+	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+	    return true;
+	}
 
-        if (id.hasRoleType(RoleType.COORDINATOR)) {
-            // Read The ExecutionDegree
-            Integer candidateID = (Integer) arguments[0];
+	if (id.hasRoleType(RoleType.COORDINATOR)) {
+	    // Read The ExecutionDegree
+	    Integer candidateID = (Integer) arguments[0];
 
-            final Person person = id.getPerson();
+	    final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate = rootDomainObject
-                    .readMasterDegreeCandidateByOID(candidateID);
-            if (masterDegreeCandidate == null) {
-                return false;
-            }
+	    MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+	    if (masterDegreeCandidate == null) {
+		return false;
+	    }
 
-            // modified by Tânia Pousão
-            Coordinator coordinator = masterDegreeCandidate.getExecutionDegree()
-                    .getCoordinatorByTeacher(person);
-            if (coordinator == null) {
-                return false;
-            }
+	    // modified by Tânia Pousão
+	    Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);
+	    if (coordinator == null) {
+		return false;
+	    }
 
-            return true;
-        }
-        return true;
+	    return true;
+	}
+	return true;
     }
 
 }

@@ -23,17 +23,17 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 public class LerAulasDeTurno extends Service {
 
-	public List run(ShiftKey shiftKey) {
+    public List run(ShiftKey shiftKey) {
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(shiftKey
-				.getInfoExecutionCourse().getIdInternal());
-		final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(shiftKey.getInfoExecutionCourse()
+		.getIdInternal());
+	final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
 
-		final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
-		for (final Lesson lesson : shift.getAssociatedLessons()) {
-			infoAulas.add(InfoLesson.newInfoFromDomain(lesson));
-		}
-		return infoAulas;
+	final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
+	for (final Lesson lesson : shift.getAssociatedLessons()) {
+	    infoAulas.add(InfoLesson.newInfoFromDomain(lesson));
 	}
+	return infoAulas;
+    }
 
 }

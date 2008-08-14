@@ -16,24 +16,24 @@ public class SelectableEntryBean implements Serializable {
     }
 
     public SelectableEntryBean(boolean selected, Entry entry) {
-        setSelected(selected);
-        setEntry(entry);
+	setSelected(selected);
+	setEntry(entry);
     }
 
     public boolean isSelected() {
-        return selected;
+	return selected;
     }
 
     public void setSelected(boolean selected) {
-        this.selected = selected;
+	this.selected = selected;
     }
 
     public Entry getEntry() {
-        return (this.entry != null) ? this.entry.getObject() : null;
+	return (this.entry != null) ? this.entry.getObject() : null;
     }
 
     public void setEntry(Entry entry) {
-        this.entry = (entry != null) ? new DomainReference<Entry>(entry) : null;
+	this.entry = (entry != null) ? new DomainReference<Entry>(entry) : null;
     }
 
 }

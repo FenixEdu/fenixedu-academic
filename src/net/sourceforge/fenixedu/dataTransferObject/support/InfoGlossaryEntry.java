@@ -20,48 +20,48 @@ public class InfoGlossaryEntry extends InfoObject implements Serializable {
     private String definition = null;
 
     public InfoGlossaryEntry() {
-        super();
+	super();
     }
 
     public String getDefinition() {
-        return definition;
+	return definition;
     }
 
     public void setDefinition(String definition) {
-        this.definition = definition;
+	this.definition = definition;
     }
 
     public String getTerm() {
-        return term;
+	return term;
     }
 
     public void setTerm(String term) {
-        this.term = term;
+	this.term = term;
     }
 
     public void copyFromDomain(GlossaryEntry glossaryEntry) {
-        super.copyFromDomain(glossaryEntry);
-        if (glossaryEntry != null) {
-            setTerm(glossaryEntry.getTerm());
-            setDefinition(glossaryEntry.getDefinition());
-        }
+	super.copyFromDomain(glossaryEntry);
+	if (glossaryEntry != null) {
+	    setTerm(glossaryEntry.getTerm());
+	    setDefinition(glossaryEntry.getDefinition());
+	}
     }
 
     public static InfoGlossaryEntry newInfoFromDomain(GlossaryEntry glossaryEntry) {
-        InfoGlossaryEntry infoGlossaryEntry = null;
-        if (glossaryEntry != null) {
-            infoGlossaryEntry = new InfoGlossaryEntry();
-            infoGlossaryEntry.copyFromDomain(glossaryEntry);
-        }
-        return infoGlossaryEntry;
+	InfoGlossaryEntry infoGlossaryEntry = null;
+	if (glossaryEntry != null) {
+	    infoGlossaryEntry = new InfoGlossaryEntry();
+	    infoGlossaryEntry.copyFromDomain(glossaryEntry);
+	}
+	return infoGlossaryEntry;
     }
 
     public void copyToDomain(InfoGlossaryEntry infoGlossaryEntry, GlossaryEntry glossaryEntry) {
-        if (infoGlossaryEntry != null && glossaryEntry != null) {
-            super.copyToDomain(infoGlossaryEntry, glossaryEntry);
-            glossaryEntry.setTerm(infoGlossaryEntry.getTerm());
-            glossaryEntry.setDefinition(infoGlossaryEntry.getDefinition());
-        }
+	if (infoGlossaryEntry != null && glossaryEntry != null) {
+	    super.copyToDomain(infoGlossaryEntry, glossaryEntry);
+	    glossaryEntry.setTerm(infoGlossaryEntry.getTerm());
+	    glossaryEntry.setDefinition(infoGlossaryEntry.getDefinition());
+	}
     }
 
 }

@@ -8,7 +8,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollStudentInShifts extends Service {
 
-    public class StudentNotFoundServiceException extends FenixServiceException {}
+    public class StudentNotFoundServiceException extends FenixServiceException {
+    }
 
     public ShiftEnrollmentErrorReport run(final Registration registration, final Integer shiftId) throws FenixServiceException {
 
@@ -25,12 +26,12 @@ public class EnrollStudentInShifts extends Service {
 	final Shift selectedShift = rootDomainObject.readShiftByOID(shiftId);
 	if (selectedShift == null) {
 	    errorReport.getUnExistingShifts().add(shiftId);
-	}             
+	}
 
 	final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(registration, selectedShift);
 
 	if (selectedShift != shiftFromStudent) {
-	    //Registration is not yet enroled, so let's reserve the shift...
+	    // Registration is not yet enroled, so let's reserve the shift...
 	    if (selectedShift.reserveForStudent(registration)) {
 		if (shiftFromStudent != null) {
 		    shiftFromStudent.removeStudents(registration);
@@ -44,13 +45,13 @@ public class EnrollStudentInShifts extends Service {
     }
 
     private Shift findShiftOfSameTypeForSameExecutionCourse(final Registration registration, final Shift shift) {
-	for (final Shift shiftFromStudent : registration.getShifts()) {	    
+	for (final Shift shiftFromStudent : registration.getShifts()) {
 	    if (shiftFromStudent.getTypes().containsAll(shift.getTypes())
 		    && shiftFromStudent.getExecutionCourse() == shift.getExecutionCourse()) {
 		return shiftFromStudent;
 	    }
 	}
 	return null;
-    }    
+    }
 
 }

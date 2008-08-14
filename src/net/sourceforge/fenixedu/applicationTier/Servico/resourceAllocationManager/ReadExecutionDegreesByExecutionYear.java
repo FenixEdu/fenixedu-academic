@@ -21,22 +21,21 @@ public class ReadExecutionDegreesByExecutionYear extends Service {
 
     public List run(InfoExecutionYear infoExecutionYear) {
 
-        final List infoExecutionDegreeList = new ArrayList();
-        final List<ExecutionDegree>  executionDegrees = readExecutionDegrees(infoExecutionYear);
+	final List infoExecutionDegreeList = new ArrayList();
+	final List<ExecutionDegree> executionDegrees = readExecutionDegrees(infoExecutionYear);
 
-        for (ExecutionDegree executionDegree : executionDegrees) {                        
-            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-            infoExecutionDegreeList.add(infoExecutionDegree);
-        }
-        return infoExecutionDegreeList;
+	for (ExecutionDegree executionDegree : executionDegrees) {
+	    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	    infoExecutionDegreeList.add(infoExecutionDegree);
+	}
+	return infoExecutionDegreeList;
     }
 
     private List<ExecutionDegree> readExecutionDegrees(final InfoExecutionYear infoExecutionYear) {
-        if (infoExecutionYear == null) {
-            return ExecutionDegree.getAllByExecutionYear(ExecutionYear.readCurrentExecutionYear()
-                    .getYear());
-        }
-        return ExecutionDegree.getAllByExecutionYear(infoExecutionYear.getYear());
+	if (infoExecutionYear == null) {
+	    return ExecutionDegree.getAllByExecutionYear(ExecutionYear.readCurrentExecutionYear().getYear());
+	}
+	return ExecutionDegree.getAllByExecutionYear(infoExecutionYear.getYear());
     }
 
 }

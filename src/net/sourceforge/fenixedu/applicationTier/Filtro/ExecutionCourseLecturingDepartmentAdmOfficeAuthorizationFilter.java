@@ -31,8 +31,8 @@ public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter exte
     }
 
     private boolean lecturesExecutionCourse(IUserView id, Object[] arguments) {
-	final ExecutionCourse executionCourse = ((SummariesManagementBean) arguments[0]).getExecutionCourse();	
-	final Teacher teacher = ((SummariesManagementBean) arguments[0]).getProfessorshipLogged().getTeacher();	
-	return teacher.getProfessorshipByExecutionCourse(executionCourse) != null;	
+	final ExecutionCourse executionCourse = ((SummariesManagementBean) arguments[0]).getExecutionCourse();
+	final Teacher teacher = ((SummariesManagementBean) arguments[0]).getProfessorshipLogged().getTeacher();
+	return teacher.getProfessorshipByExecutionCourse(executionCourse) != null;
     }
 }

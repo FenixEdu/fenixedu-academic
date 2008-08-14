@@ -96,9 +96,11 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 	    // if (!justification
 	    // && getMeal().getMandatoryMealDiscount() != Duration.ZERO
 	    // &&
-	    // lunchBreakDuration.isShorterThan(getMeal().getMinimumMealBreakInterval())
+	    // lunchBreakDuration.isShorterThan(getMeal().
+	    // getMinimumMealBreakInterval())
 	    // &&
-	    // getMeal().getMandatoryMealDiscount().minus(finalDiscount).isShorterThan(
+	    // getMeal().getMandatoryMealDiscount().minus(finalDiscount).
+	    // isShorterThan(
 	    // getMeal().getMinimumMealBreakInterval())) {
 	    // return null;
 	    // }

@@ -20,36 +20,36 @@ import bibtex.dom.BibtexString;
 
 public class OtherPublication extends OtherPublication_Base {
 
-	private static final String usedSchema = "result.publication.presentation.OtherPublication";
-	
+    private static final String usedSchema = "result.publication.presentation.OtherPublication";
+
     public OtherPublication() {
 	super();
     }
 
     public OtherPublication(Person participator, String title, MultiLanguageString keywords, String publisher, Integer year,
-	    String howPublished, MultiLanguageString note, String address, String otherPublicationType,
-	    Integer numberPages, String language, Country country, Month month, String url) {
+	    String howPublished, MultiLanguageString note, String address, String otherPublicationType, Integer numberPages,
+	    String language, Country country, Month month, String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(title, keywords, publisher, year, howPublished, note, address, otherPublicationType,
-		numberPages, language, country, month, url);
+	fillAllAttributes(title, keywords, publisher, year, howPublished, note, address, otherPublicationType, numberPages,
+		language, country, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, String publisher, Integer year, String howPublished, MultiLanguageString note,
-	    String address, String otherPublicationType, Integer numberPages, String language,
+    public void setEditAll(String title, MultiLanguageString keywords, String publisher, Integer year, String howPublished,
+	    MultiLanguageString note, String address, String otherPublicationType, Integer numberPages, String language,
 	    Country country, Month month, String url) {
 	super.checkRequiredParameters(keywords, note);
-    checkRequiredParameters(title);
-	fillAllAttributes(title, keywords, publisher, year, howPublished, note, address, otherPublicationType,
-		numberPages, language, country, month, url);
+	checkRequiredParameters(title);
+	fillAllAttributes(title, keywords, publisher, year, howPublished, note, address, otherPublicationType, numberPages,
+		language, country, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, String publisher, Integer year, String howPublished,
-    		MultiLanguageString note, String address, String otherPublicationType, Integer numberPages,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String publisher, Integer year,
+	    String howPublished, MultiLanguageString note, String address, String otherPublicationType, Integer numberPages,
 	    String language, Country country, Month month, String url) {
 	super.setTitle(title);
 	super.setPublisher(publisher);
@@ -175,8 +175,8 @@ public class OtherPublication extends OtherPublication_Base {
 	throw new DomainException("error.researcher.OtherPublication.call", "setPublisher");
     }
 
-	@Override
-	public String getSchema() {
-		return usedSchema;
-	}
+    @Override
+    public String getSchema() {
+	return usedSchema;
+    }
 }

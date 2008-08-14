@@ -42,8 +42,7 @@ public class JustificationMotiveAsProvider implements DataProvider {
 	    JustificationType justificationType) {
 	List<JustificationMotive> justificationMotives = new ArrayList<JustificationMotive>();
 	if (correctionType.equals(CorrectionType.JUSTIFICATION) && justificationType != null) {
-	    for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
-		    .getJustificationMotives()) {
+	    for (JustificationMotive justificationMotive : RootDomainObject.getInstance().getJustificationMotives()) {
 		if (justificationMotive.getJustificationType() != null
 			&& justificationMotive.getJustificationType().equals(justificationType)
 			&& justificationMotive.getActive()) {
@@ -51,10 +50,8 @@ public class JustificationMotiveAsProvider implements DataProvider {
 		}
 	    }
 	} else if (correctionType.equals(CorrectionType.REGULARIZATION)) {
-	    for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
-		    .getJustificationMotives()) {
-		if (justificationMotive.getJustificationType() == null
-			&& justificationMotive.getActive()) {
+	    for (JustificationMotive justificationMotive : RootDomainObject.getInstance().getJustificationMotives()) {
+		if (justificationMotive.getJustificationType() == null && justificationMotive.getActive()) {
 		    justificationMotives.add(justificationMotive);
 		}
 	    }

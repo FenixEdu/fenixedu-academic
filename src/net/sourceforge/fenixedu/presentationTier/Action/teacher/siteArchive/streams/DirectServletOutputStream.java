@@ -8,26 +8,26 @@ import javax.servlet.ServletOutputStream;
 public class DirectServletOutputStream extends ServletOutputStream {
 
     private OutputStream stream;
-    
-    public DirectServletOutputStream(OutputStream stream) {
-        super();
 
-        this.stream = stream;
+    public DirectServletOutputStream(OutputStream stream) {
+	super();
+
+	this.stream = stream;
     }
 
     @Override
     public void write(int b) throws IOException {
-        this.stream.write(b);
+	this.stream.write(b);
     }
 
     @Override
     public void flush() throws IOException {
-        this.stream.flush();
+	this.stream.flush();
     }
 
     @Override
     public void close() throws IOException {
-        flush();
-        stream.close();
+	flush();
+	stream.close();
     }
 }

@@ -12,26 +12,24 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class GroupSiteComponentService extends Service {
 
-    public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
-            Integer infoSiteCode, Integer groupPropertiesCode, Integer code, Integer shiftCode,
-            Integer value) throws FenixServiceException{
-        ExecutionCourseSite site = null;
-        if (infoSiteCode != null) {
-            site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);
-            if (site == null) {
-                throw new NonExistingServiceException();
-            }
-        }
-        GroupSiteComponentBuilder componentBuilder = GroupSiteComponentBuilder.getInstance();
-        bodyComponent = componentBuilder.getComponent(bodyComponent, site.getExecutionCourse()
-                .getIdInternal(), groupPropertiesCode, code, shiftCode, value);
-        ExecutionCourseSiteComponentBuilder componentBuilder2 = ExecutionCourseSiteComponentBuilder
-                .getInstance();
+    public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
+	    Integer groupPropertiesCode, Integer code, Integer shiftCode, Integer value) throws FenixServiceException {
+	ExecutionCourseSite site = null;
+	if (infoSiteCode != null) {
+	    site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);
+	    if (site == null) {
+		throw new NonExistingServiceException();
+	    }
+	}
+	GroupSiteComponentBuilder componentBuilder = GroupSiteComponentBuilder.getInstance();
+	bodyComponent = componentBuilder.getComponent(bodyComponent, site.getExecutionCourse().getIdInternal(),
+		groupPropertiesCode, code, shiftCode, value);
+	ExecutionCourseSiteComponentBuilder componentBuilder2 = ExecutionCourseSiteComponentBuilder.getInstance();
 
-        commonComponent = componentBuilder2.getComponent(commonComponent, site, null, null, null);
+	commonComponent = componentBuilder2.getComponent(commonComponent, site, null, null, null);
 
-        ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
-        executionCourseSiteView.setExecutionCourse(site.getExecutionCourse());
-        return executionCourseSiteView;
+	ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
+	executionCourseSiteView.setExecutionCourse(site.getExecutionCourse());
+	return executionCourseSiteView;
     }
 }

@@ -20,8 +20,7 @@ public class DegreeCurricularPlansForDegreeAndExecutionYear implements DataProvi
 	final DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) source;
 	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	if (dfaCandidacyBean.getDegree() != null && dfaCandidacyBean.getExecutionYear() != null) {
-	    result.addAll(dfaCandidacyBean.getDegree().getDegreeCurricularPlansForYear(
-		    dfaCandidacyBean.getExecutionYear()));
+	    result.addAll(dfaCandidacyBean.getDegree().getDegreeCurricularPlansForYear(dfaCandidacyBean.getExecutionYear()));
 	    Collections.sort(result, new BeanComparator("name"));
 	} else {
 	    dfaCandidacyBean.setDegreeCurricularPlan(null);

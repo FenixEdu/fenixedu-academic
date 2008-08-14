@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
  * fenix-head DataBeans
  * 
  * @author João Mota 17/Set/2003
- *  
+ * 
  */
 public class InfoLink extends DataTranferObject {
     private String linkName;
@@ -21,18 +21,18 @@ public class InfoLink extends DataTranferObject {
      * @return
      */
     public String getLink() {
-        return link;
+	return link;
     }
 
     /**
      * @param link
      */
     public void setLink(String link) {
-        try {
-            this.link = new String(link.getBytes("ISO-8859-1"), "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            this.link = link;
-        }
+	try {
+	    this.link = new String(link.getBytes("ISO-8859-1"), "ISO-8859-1");
+	} catch (UnsupportedEncodingException e) {
+	    this.link = link;
+	}
 
     }
 
@@ -40,18 +40,18 @@ public class InfoLink extends DataTranferObject {
      * @return
      */
     public String getLinkName() {
-        return linkName;
+	return linkName;
     }
 
     /**
      * @param linkName
      */
     public void setLinkName(String linkName) {
-        try {
-            this.linkName = new String(linkName.getBytes("ISO-8859-1"), "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            this.linkName = linkName;
-        }
+	try {
+	    this.linkName = new String(linkName.getBytes("ISO-8859-1"), "ISO-8859-1");
+	} catch (UnsupportedEncodingException e) {
+	    this.linkName = linkName;
+	}
 
     }
 

@@ -57,8 +57,8 @@ public class DayOfAcademicSemesterDateTimeField extends DateTimeField {
 
     @Override
     public int get(long instant) {
-	if(chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology)chronology).getDayOfAcademicSemester(instant);
+	if (chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology) chronology).getDayOfAcademicSemester(instant);
 	}
 	throw unsupported();
     }
@@ -320,7 +320,7 @@ public class DayOfAcademicSemesterDateTimeField extends DateTimeField {
     }
 
     private UnsupportedOperationException unsupported() {
-	return new UnsupportedOperationException(
-		DayOfAcademicSemesterDateTimeFieldType.dayOfAcademicSemester() + " field is unsupported");
+	return new UnsupportedOperationException(DayOfAcademicSemesterDateTimeFieldType.dayOfAcademicSemester()
+		+ " field is unsupported");
     }
 }

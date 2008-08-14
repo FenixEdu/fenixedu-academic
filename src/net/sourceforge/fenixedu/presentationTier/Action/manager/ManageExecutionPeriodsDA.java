@@ -84,7 +84,8 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 	    throws Exception {
 
 	final String idInternal = request.getParameter("executionPeriodID");
-	ExecutionSemester executionSemester = (ExecutionSemester) rootDomainObject.readExecutionIntervalByOID(Integer.valueOf(idInternal));
+	ExecutionSemester executionSemester = (ExecutionSemester) rootDomainObject.readExecutionIntervalByOID(Integer
+		.valueOf(idInternal));
 	request.setAttribute("executionPeriod", executionSemester);
 	return mapping.findForward("EditExecutionPeriod");
     }

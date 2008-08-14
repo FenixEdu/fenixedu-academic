@@ -10,14 +10,14 @@ public class GeneralClassPropertyValue extends FenixUtil {
     protected String value;
 
     public GeneralClassPropertyValue(String value) {
-        this.value = value;
+	this.value = value;
     }
 
     /**
      * @return Returns the value.
      */
     public String getValue() {
-        return value;
+	return value;
     }
 
     /**
@@ -25,6 +25,6 @@ public class GeneralClassPropertyValue extends FenixUtil {
      *            The value to set.
      */
     public void setValue(String value) {
-        this.value = value;
+	this.value = value;
     }
 }

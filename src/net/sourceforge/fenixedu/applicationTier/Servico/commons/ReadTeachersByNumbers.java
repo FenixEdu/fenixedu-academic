@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTeachersByNumbers extends Service {
 
     public Collection<InfoTeacher> run(Collection<Integer> teacherNumbers) {
-        Collection<InfoTeacher> infoTeachers = new ArrayList(teacherNumbers.size());
-        Collection<Teacher> teachers = Teacher.readByNumbers(teacherNumbers);
+	Collection<InfoTeacher> infoTeachers = new ArrayList(teacherNumbers.size());
+	Collection<Teacher> teachers = Teacher.readByNumbers(teacherNumbers);
 
-        for (Teacher teacher : teachers) {
-            infoTeachers.add(InfoTeacher.newInfoFromDomain(teacher));
-        }
+	for (Teacher teacher : teachers) {
+	    infoTeachers.add(InfoTeacher.newInfoFromDomain(teacher));
+	}
 
-        return infoTeachers;
+	return infoTeachers;
     }
 
 }

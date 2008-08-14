@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 
 abstract public class Strategy {
 
-    abstract public StrategySugestion sugest(List<Vigilant> vigilants,
-            WrittenEvaluation writtenEvaluation);
+    abstract public StrategySugestion sugest(List<Vigilant> vigilants, WrittenEvaluation writtenEvaluation);
 
 }

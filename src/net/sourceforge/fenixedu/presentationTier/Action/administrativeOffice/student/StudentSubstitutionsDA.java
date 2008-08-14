@@ -10,22 +10,22 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class StudentSubstitutionsDA extends StudentDismissalsDA {
-    
+
     @Override
     public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+	    HttpServletResponse response) {
 	DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
-	if(dismissalBean.getSelectedEnrolments().isEmpty()) {
+	if (dismissalBean.getSelectedEnrolments().isEmpty()) {
 	    addActionMessage(request, "error.createSubstitution.origin.cannot.be.empty");
 	    return prepare(mapping, form, request, response);
 	}
-	
-        return super.chooseEquivalents(mapping, form, request, response);
+
+	return super.chooseEquivalents(mapping, form, request, response);
     }
-    
+
     @Override
     protected String getServiceName() {
-        return "CreateNewSubstitutionDismissal";
+	return "CreateNewSubstitutionDismissal";
     }
 
 }

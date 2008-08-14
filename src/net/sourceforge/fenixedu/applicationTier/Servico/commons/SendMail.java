@@ -16,14 +16,15 @@ import net.sourceforge.fenixedu.domain.util.Email;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 18/Set/2003, 19:16:29
- *  
+ *         Created at 18/Set/2003, 19:16:29
+ * 
  */
 public class SendMail extends Service {
 
-    public Collection<String> run(List toList, List ccList, List bccList, String fromName, String from, String subject, String text) {
-    	new Email(fromName, from, null, toList, ccList, bccList, subject, text);
-    	return new ArrayList<String>();
+    public Collection<String> run(List toList, List ccList, List bccList, String fromName, String from, String subject,
+	    String text) {
+	new Email(fromName, from, null, toList, ccList, bccList, subject, text);
+	return new ArrayList<String>();
     }
 
 }

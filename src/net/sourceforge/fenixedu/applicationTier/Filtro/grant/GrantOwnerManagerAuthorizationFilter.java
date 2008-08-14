@@ -11,8 +11,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * @author Barbosa
  * @author Pica
  */
-public class GrantOwnerManagerAuthorizationFilter extends
-        AuthorizationByRoleFilter {
+public class GrantOwnerManagerAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public GrantOwnerManagerAuthorizationFilter() {
     }
@@ -23,7 +22,7 @@ public class GrantOwnerManagerAuthorizationFilter extends
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.GRANT_OWNER_MANAGER;
+	return RoleType.GRANT_OWNER_MANAGER;
     }
 
 }

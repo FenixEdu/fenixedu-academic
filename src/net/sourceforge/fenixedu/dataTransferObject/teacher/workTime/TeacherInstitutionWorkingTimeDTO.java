@@ -24,21 +24,21 @@ public class TeacherInstitutionWorkingTimeDTO extends DataTranferObject {
      * @return Returns the infoExecutionPeriod.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return this.infoExecutionPeriod;
+	return this.infoExecutionPeriod;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return this.infoTeacher;
+	return this.infoTeacher;
     }
 
     /**
      * @return Returns the infoTeacherInstitutionWorkTimeList.
      */
     public List getInfoTeacherInstitutionWorkTimeList() {
-        return this.infoTeacherInstitutionWorkTimeList;
+	return this.infoTeacherInstitutionWorkTimeList;
     }
 
     /**
@@ -46,7 +46,7 @@ public class TeacherInstitutionWorkingTimeDTO extends DataTranferObject {
      *            The infoExecutionPeriod to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
@@ -54,7 +54,7 @@ public class TeacherInstitutionWorkingTimeDTO extends DataTranferObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
@@ -62,7 +62,7 @@ public class TeacherInstitutionWorkingTimeDTO extends DataTranferObject {
      *            The infoTeacherInstitutionWorkTimeList to set.
      */
     public void setInfoTeacherInstitutionWorkTimeList(List infoTeacherInstitutionWorkTimeList) {
-        this.infoTeacherInstitutionWorkTimeList = infoTeacherInstitutionWorkTimeList;
+	this.infoTeacherInstitutionWorkTimeList = infoTeacherInstitutionWorkTimeList;
     }
 
 }

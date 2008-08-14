@@ -16,17 +16,17 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ThesisExecutionYearsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
-        
-        for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
-            result.add(thesis.getEnrolment().getExecutionYear());
-        }
-        
-        return result; 
+	SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
+
+	for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
+	    result.add(thesis.getEnrolment().getExecutionYear());
+	}
+
+	return result;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

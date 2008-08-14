@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllCampus extends Service {
 
-    public List run() throws FenixServiceException{
+    public List run() throws FenixServiceException {
 	List<InfoCampus> result = new ArrayList<InfoCampus>();
 
 	for (Campus campus : Campus.getAllActiveCampus()) {

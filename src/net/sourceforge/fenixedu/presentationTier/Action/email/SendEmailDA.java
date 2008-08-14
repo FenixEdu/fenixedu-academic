@@ -26,7 +26,8 @@ public class SendEmailDA extends FenixDispatchAction {
 		sendEmailBean.setFrom(from);
 	    }
 	    final String allowChangeSender = request.getParameter("allowChangeSender");
-	    sendEmailBean.setAllowChangeSender(allowChangeSender == null || allowChangeSender.length() == 0 ? Boolean.TRUE : Boolean.valueOf(allowChangeSender));
+	    sendEmailBean.setAllowChangeSender(allowChangeSender == null || allowChangeSender.length() == 0 ? Boolean.TRUE
+		    : Boolean.valueOf(allowChangeSender));
 	}
 	request.setAttribute("sendEmailBean", sendEmailBean);
 	return mapping.findForward("showSendEmailForm");

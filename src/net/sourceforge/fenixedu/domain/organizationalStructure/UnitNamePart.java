@@ -10,9 +10,9 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 public class UnitNamePart extends UnitNamePart_Base {
 
     public UnitNamePart(final String namePart) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setNamePart(namePart);
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setNamePart(namePart);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class UnitNamePart extends UnitNamePart_Base {
     public static String normalize(final String string) {
 	return StringNormalizer.normalize(string.trim()).toLowerCase();
     }
-    
+
     public static String[] getNameParts(final String name) {
 	return normalize(name).split(" ");
     }

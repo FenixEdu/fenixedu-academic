@@ -11,23 +11,23 @@ public class RequiredJuriesServiceException extends FenixServiceException {
     }
 
     public RequiredJuriesServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     public RequiredJuriesServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public RequiredJuriesServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[RequiredJuriesServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[RequiredJuriesServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

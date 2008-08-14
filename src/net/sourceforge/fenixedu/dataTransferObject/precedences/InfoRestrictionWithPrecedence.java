@@ -15,28 +15,28 @@ public class InfoRestrictionWithPrecedence extends InfoObject {
     }
 
     public InfoPrecedence getInfoPrecedence() {
-        return infoPrecedence;
+	return infoPrecedence;
     }
 
     public void setInfoPrecedence(InfoPrecedence infoPrecedence) {
-        this.infoPrecedence = infoPrecedence;
+	this.infoPrecedence = infoPrecedence;
     }
 
     public void copyFromDomain(Restriction restriction) {
-        super.copyFromDomain(restriction);
-        this.setInfoPrecedence(InfoPrecedence.newInfoFromDomain(restriction.getPrecedence()));
+	super.copyFromDomain(restriction);
+	this.setInfoPrecedence(InfoPrecedence.newInfoFromDomain(restriction.getPrecedence()));
     }
 
     public static InfoRestrictionWithPrecedence newInfoFromDomain(Restriction restriction) {
 
-        InfoRestrictionWithPrecedence infoRestrictionWithPrecedence = null;
+	InfoRestrictionWithPrecedence infoRestrictionWithPrecedence = null;
 
-        if (restriction != null) {
-            infoRestrictionWithPrecedence = new InfoRestrictionWithPrecedence();
-            infoRestrictionWithPrecedence.copyFromDomain(restriction);
-        }
+	if (restriction != null) {
+	    infoRestrictionWithPrecedence = new InfoRestrictionWithPrecedence();
+	    infoRestrictionWithPrecedence.copyFromDomain(restriction);
+	}
 
-        return infoRestrictionWithPrecedence;
+	return infoRestrictionWithPrecedence;
     }
 
 }

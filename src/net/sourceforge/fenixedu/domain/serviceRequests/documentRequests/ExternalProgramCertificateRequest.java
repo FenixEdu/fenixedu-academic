@@ -39,7 +39,7 @@ public class ExternalProgramCertificateRequest extends ExternalProgramCertificat
 	    throw new DomainException("error.ExternalProgramCertificateRequest.invalid.institution");
 	}
     }
-    
+
     @Override
     public List<Enrolment> getEnrolments() {
 	return Collections.unmodifiableList(super.getEnrolments());
@@ -77,7 +77,7 @@ public class ExternalProgramCertificateRequest extends ExternalProgramCertificat
 
     @Override
     public void delete() {
-        super.setInstitution(null);
-        super.delete();
+	super.setInstitution(null);
+	super.delete();
     }
 }

@@ -18,8 +18,7 @@ public class StudentCurricularPlansProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	ChooseStudentCurricularPlanBean bean = (ChooseStudentCurricularPlanBean) source;
-	return bean.getRegistration() != null ? bean.getRegistration().getStudentCurricularPlans()
-		: Collections.EMPTY_LIST;
+	return bean.getRegistration() != null ? bean.getRegistration().getStudentCurricularPlans() : Collections.EMPTY_LIST;
     }
 
     public Converter getConverter() {

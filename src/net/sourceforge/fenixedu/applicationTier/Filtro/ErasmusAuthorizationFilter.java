@@ -21,18 +21,18 @@ public class ErasmusAuthorizationFilter extends Filtro {
     /*
      * (non-Javadoc)
      * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
+     * @see
+     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView requester = getRemoteUser(request);
-        boolean authorizedRequester = false;
+	IUserView requester = getRemoteUser(request);
+	boolean authorizedRequester = false;
 
-        if (requester.hasRoleType( RoleType.ERASMUS))
-            authorizedRequester = true;
-        if (!authorizedRequester) {
-            throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
-                    + "ACCESS NOT GRANTED!");
-        }
+	if (requester.hasRoleType(RoleType.ERASMUS))
+	    authorizedRequester = true;
+	if (!authorizedRequester) {
+	    throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador() + "ACCESS NOT GRANTED!");
+	}
     }
 }

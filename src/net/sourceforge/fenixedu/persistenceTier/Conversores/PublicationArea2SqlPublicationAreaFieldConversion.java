@@ -11,16 +11,16 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 /**
  * @author Ricardo Rodrigues
- *
+ * 
  */
-public class PublicationArea2SqlPublicationAreaFieldConversion implements FieldConversion{
+public class PublicationArea2SqlPublicationAreaFieldConversion implements FieldConversion {
 
-	public Object javaToSql(Object obj) throws ConversionException {
-        if (obj instanceof PublicationArea) {
-            PublicationArea publicationArea = (PublicationArea) obj;
-            return publicationArea.getName();
-        }
-        return obj;
+    public Object javaToSql(Object obj) throws ConversionException {
+	if (obj instanceof PublicationArea) {
+	    PublicationArea publicationArea = (PublicationArea) obj;
+	    return publicationArea.getName();
+	}
+	return obj;
     }
 
     /*
@@ -28,12 +28,11 @@ public class PublicationArea2SqlPublicationAreaFieldConversion implements FieldC
      */
 
     public Object sqlToJava(Object obj) throws ConversionException {
-    	 if (obj instanceof String) {
-            String src = (String) obj;
-            return PublicationArea.getEnum(src);
-        }
-        return obj;
+	if (obj instanceof String) {
+	    String src = (String) obj;
+	    return PublicationArea.getEnum(src);
+	}
+	return obj;
     }
-
 
 }

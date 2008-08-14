@@ -12,11 +12,11 @@ public class StudentDataByExecutionYearBean implements Serializable {
     private DomainReference<Student> student;
     private DomainReference<ExecutionYear> executionYear;
     private StudentPersonalDataAuthorizationChoice choice;
-    
+
     public StudentDataByExecutionYearBean(final Student student) {
 	setStudent(student);
     }
-    
+
     public Student getStudent() {
 	return (this.student != null) ? this.student.getObject() : null;
     }
@@ -24,7 +24,7 @@ public class StudentDataByExecutionYearBean implements Serializable {
     public void setStudent(Student student) {
 	this.student = (student != null) ? new DomainReference<Student>(student) : null;
     }
-    
+
     public ExecutionYear getExecutionYear() {
 	return (this.executionYear != null) ? this.executionYear.getObject() : null;
     }
@@ -32,13 +32,13 @@ public class StudentDataByExecutionYearBean implements Serializable {
     public void setExecutionYear(ExecutionYear executionYear) {
 	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
     }
-    
+
     public StudentPersonalDataAuthorizationChoice getChoice() {
-        return choice;
+	return choice;
     }
 
     public void setChoice(StudentPersonalDataAuthorizationChoice choice) {
-        this.choice = choice;
+	this.choice = choice;
     }
-    
+
 }

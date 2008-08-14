@@ -9,8 +9,7 @@ import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
 
-public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends
-	AdministrativeOfficeFeeAndInsurancePenaltyExemption_Base {
+public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends AdministrativeOfficeFeeAndInsurancePenaltyExemption_Base {
 
     static {
 	ExemptionEvent.addListener(new RelationAdapter<Exemption, Event>() {
@@ -19,8 +18,7 @@ public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends
 		if (exemption != null && event != null) {
 		    if (exemption instanceof AdministrativeOfficeFeeAndInsurancePenaltyExemption) {
 			final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = ((AdministrativeOfficeFeeAndInsuranceEvent) event);
-			if (administrativeOfficeFeeAndInsuranceEvent
-				.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
+			if (administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
 			    throw new DomainException(
 				    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.event.already.has.exemption.for.fee.and.insurance");
 			}
@@ -35,14 +33,13 @@ public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends
 	super();
     }
 
-    public AdministrativeOfficeFeeAndInsurancePenaltyExemption(
-	    final PenaltyExemptionJustificationType penaltyExemptionType,
-	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent,
-	    final Employee employee, final String reason,
-	    final YearMonthDay directiveCouncilDispatchDate) {
+    public AdministrativeOfficeFeeAndInsurancePenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
+	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent, final Employee employee,
+	    final String reason, final YearMonthDay directiveCouncilDispatchDate) {
 	this();
-	super.init(penaltyExemptionType, administrativeOfficeFeeAndInsuranceEvent, employee, reason,
-		directiveCouncilDispatchDate);
+	super
+		.init(penaltyExemptionType, administrativeOfficeFeeAndInsuranceEvent, employee, reason,
+			directiveCouncilDispatchDate);
     }
 
 }

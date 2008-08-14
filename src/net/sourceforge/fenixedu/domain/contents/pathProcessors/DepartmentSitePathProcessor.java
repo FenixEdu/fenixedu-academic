@@ -13,28 +13,28 @@ public class DepartmentSitePathProcessor extends AbstractPathProcessor {
 	final int indexOfSlash = path.indexOf('/');
 	return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
     }
-    
+
     public Content processPath(String path) {
 	String unitAcronym = getDepartmentName(path);
 	Unit departmentUnit = null;
 
-	for(UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
-	    if(acronym.getAcronym().equalsIgnoreCase(unitAcronym)) {
+	for (UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
+	    if (acronym.getAcronym().equalsIgnoreCase(unitAcronym)) {
 		departmentUnit = getDepartmentFromAcronym(acronym);
 		break;
 	    }
 	}
-	
-	if(departmentUnit == null) {
+
+	if (departmentUnit == null) {
 	    return null;
 	}
 	Site site = departmentUnit.getSite();
 	return site != null && site.isAvailable() ? site : null;
     }
-    
+
     private DepartmentUnit getDepartmentFromAcronym(UnitAcronym acronym) {
-	for(Unit unit : acronym.getUnits()) {
-	    if(unit instanceof DepartmentUnit) {
+	for (Unit unit : acronym.getUnits()) {
+	    if (unit instanceof DepartmentUnit) {
 		return (DepartmentUnit) unit;
 	    }
 	}

@@ -11,11 +11,9 @@ import java.util.List;
 
 /**
  * @author André Fernandes / João Brito
- *
+ * 
  */
-public class InfoForReadStudentsWithAttendsByExecutionCourse extends
-        DataTranferObject implements ISiteComponent
-{    
+public class InfoForReadStudentsWithAttendsByExecutionCourse extends DataTranferObject implements ISiteComponent {
     private List _infoAttends;
     private Collection _classTypes;
     private List _infoGroupProperties;
@@ -23,63 +21,63 @@ public class InfoForReadStudentsWithAttendsByExecutionCourse extends
     private List _infoShifts;
     private InfoExecutionCourse _infoExecutionCourse;
     private InfoAttendsSummary _infoAttendsSummary;
- 
-    
-    public InfoForReadStudentsWithAttendsByExecutionCourse(){}
-    
-    public List getInfoAttends(){
-        return _infoAttends;
+
+    public InfoForReadStudentsWithAttendsByExecutionCourse() {
     }
-    
-    public Collection getClassTypes(){
-        return _classTypes;
+
+    public List getInfoAttends() {
+	return _infoAttends;
     }
-    
-    public List getInfoGroupProperties(){
-        return _infoGroupProperties;
+
+    public Collection getClassTypes() {
+	return _classTypes;
     }
-    
-    public List getInfoDegreeCurricularPlans(){
-        return _infoDegreeCurricularPlans;
+
+    public List getInfoGroupProperties() {
+	return _infoGroupProperties;
     }
-    
-    public List getInfoShifts(){
-        return _infoShifts;
+
+    public List getInfoDegreeCurricularPlans() {
+	return _infoDegreeCurricularPlans;
     }
-    
-    public InfoExecutionCourse getInfoExecutionCourse(){
-        return _infoExecutionCourse;
+
+    public List getInfoShifts() {
+	return _infoShifts;
     }
-    
-    public InfoAttendsSummary getInfoAttendsSummary(){
-        return _infoAttendsSummary;
+
+    public InfoExecutionCourse getInfoExecutionCourse() {
+	return _infoExecutionCourse;
     }
-    
-    public void setInfoAttends(List infoAttends){
-        _infoAttends = infoAttends;
+
+    public InfoAttendsSummary getInfoAttendsSummary() {
+	return _infoAttendsSummary;
     }
-    
-    public void setClassTypes(Collection classTypes){
-        _classTypes=classTypes;
+
+    public void setInfoAttends(List infoAttends) {
+	_infoAttends = infoAttends;
     }
-    
-    public void setInfoGroupProperties(List infoGroupProperties){
-        _infoGroupProperties=infoGroupProperties;
+
+    public void setClassTypes(Collection classTypes) {
+	_classTypes = classTypes;
     }
-    
-    public void setInfoDegreeCurricularPlans(List infoDCPs){
-        _infoDegreeCurricularPlans = infoDCPs;
+
+    public void setInfoGroupProperties(List infoGroupProperties) {
+	_infoGroupProperties = infoGroupProperties;
     }
-    
-    public void setInfoShifts(List infoShifts){
-        _infoShifts = infoShifts;
+
+    public void setInfoDegreeCurricularPlans(List infoDCPs) {
+	_infoDegreeCurricularPlans = infoDCPs;
     }
-    
-    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse){
-        _infoExecutionCourse = infoExecutionCourse;
+
+    public void setInfoShifts(List infoShifts) {
+	_infoShifts = infoShifts;
     }
-    
-    public void setInfoAttendsSummary(InfoAttendsSummary infoAttendsSummary){
-        _infoAttendsSummary = infoAttendsSummary;
+
+    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+	_infoExecutionCourse = infoExecutionCourse;
+    }
+
+    public void setInfoAttendsSummary(InfoAttendsSummary infoAttendsSummary) {
+	_infoAttendsSummary = infoAttendsSummary;
     }
 }

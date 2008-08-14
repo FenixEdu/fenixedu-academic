@@ -18,22 +18,22 @@ import org.apache.struts.action.ActionMapping;
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+	    throws FenixFilterException, FenixServiceException {
 
-        final String executionCourseIDString = request.getParameter("executionCourseID");
-        final Integer executionCourseID = (executionCourseIDString == null || executionCourseIDString.length() == 0) ?
-                null : Integer.valueOf(executionCourseIDString);
+	final String executionCourseIDString = request.getParameter("executionCourseID");
+	final Integer executionCourseID = (executionCourseIDString == null || executionCourseIDString.length() == 0) ? null
+		: Integer.valueOf(executionCourseIDString);
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-        request.setAttribute("executionCourse", executionCourse);
-        request.setAttribute("weeklyWorkLoadView", executionCourse.getWeeklyWorkLoadView());
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	request.setAttribute("executionCourse", executionCourse);
+	request.setAttribute("weeklyWorkLoadView", executionCourse.getWeeklyWorkLoadView());
 
-        final InfoSiteCommon infoSiteCommon = new InfoSiteCommon();
-        infoSiteCommon.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-        final ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(infoSiteCommon, null);
-        request.setAttribute("siteView", executionCourseSiteView);
+	final InfoSiteCommon infoSiteCommon = new InfoSiteCommon();
+	infoSiteCommon.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+	final ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(infoSiteCommon, null);
+	request.setAttribute("siteView", executionCourseSiteView);
 
-        return mapping.findForward("showWeeklyWorkLoad");
+	return mapping.findForward("showWeeklyWorkLoad");
     }
 
 }

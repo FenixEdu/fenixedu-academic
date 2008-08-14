@@ -13,34 +13,32 @@ public enum ContentType {
 
     public String getMimeType() {
 
-        ContentType type = valueOf(name());
+	ContentType type = valueOf(name());
 
-        switch (type) {
-        case JPG:
-            return "image/jpeg";
-        case PNG:
-            return "image/png";
-        default:
-            return "*/*";
-        }
+	switch (type) {
+	case JPG:
+	    return "image/jpeg";
+	case PNG:
+	    return "image/png";
+	default:
+	    return "*/*";
+	}
 
     }
 
     public static ContentType getContentType(String httpContentType) {
 
-        String contentTypeInLowerCase = httpContentType.toLowerCase();
+	String contentTypeInLowerCase = httpContentType.toLowerCase();
 
-        if (contentTypeInLowerCase.equals("image/jpeg")
-                || contentTypeInLowerCase.equals("image/jpg")
-                || contentTypeInLowerCase.equals("image/pjpeg")) {
-            return JPG;
-        }
-        if (contentTypeInLowerCase.equals("image/png")
-                || contentTypeInLowerCase.equals("image/x-png")) {
-            return PNG;
-        }
+	if (contentTypeInLowerCase.equals("image/jpeg") || contentTypeInLowerCase.equals("image/jpg")
+		|| contentTypeInLowerCase.equals("image/pjpeg")) {
+	    return JPG;
+	}
+	if (contentTypeInLowerCase.equals("image/png") || contentTypeInLowerCase.equals("image/x-png")) {
+	    return PNG;
+	}
 
-        return null;
+	return null;
     }
 
 }

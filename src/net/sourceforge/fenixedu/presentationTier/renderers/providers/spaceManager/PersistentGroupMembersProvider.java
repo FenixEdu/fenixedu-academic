@@ -10,15 +10,15 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class PersistentGroupMembersProvider implements DataProvider{
+public class PersistentGroupMembersProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	List<PersistentGroupMembers> result = new ArrayList<PersistentGroupMembers>();	
+	List<PersistentGroupMembers> result = new ArrayList<PersistentGroupMembers>();
 	for (PersistentGroupMembers persistentGroupMembers : RootDomainObject.getInstance().getPersistentGroupMembers()) {
-	    if(persistentGroupMembers.getType().equals(PersistentGroupMembersType.SPACE_OCCUPATION)) {
+	    if (persistentGroupMembers.getType().equals(PersistentGroupMembersType.SPACE_OCCUPATION)) {
 		result.add(persistentGroupMembers);
 	    }
-	}	
+	}
 	return result;
     }
 

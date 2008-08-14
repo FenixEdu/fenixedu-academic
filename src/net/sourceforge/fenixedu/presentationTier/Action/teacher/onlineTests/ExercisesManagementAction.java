@@ -709,8 +709,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	Integer variationCode = getCodeFromRequest(request, "variationCode");
 	Metadata metadata = null;
 	try {
-	    metadata = (Metadata) ServiceUtils.executeService("ReadExercise", new Object[] { executionCourseId,
-		    exerciseId });
+	    metadata = (Metadata) ServiceUtils.executeService("ReadExercise", new Object[] { executionCourseId, exerciseId });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -813,10 +812,11 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	request.setAttribute("exerciseCode", exerciseId);
 
 	try {
-	    ServiceUtils.executeService("ChangeStudentTestQuestion", new Object[] { executionCourseId, null,
-		    variationCode, null, null, new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION),
-		    new Boolean(true), new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS),
-		    request.getContextPath() });
+	    ServiceUtils
+		    .executeService("ChangeStudentTestQuestion", new Object[] { executionCourseId, null, variationCode, null,
+			    null, new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION), new Boolean(true),
+			    new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS),
+			    request.getContextPath() });
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

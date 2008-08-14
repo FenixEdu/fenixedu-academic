@@ -12,7 +12,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * @author dcs-rjao
  * @author Fernanda Quitério
  * 
- * 19/Mar/2003
+ *         19/Mar/2003
  */
 
 public class InfoBranch extends InfoObject {
@@ -34,14 +34,13 @@ public class InfoBranch extends InfoObject {
     }
 
     public Boolean representsCommonBranch() {
-	return Boolean.valueOf(getName() != null && getName().equals("") && getCode() != null
-		&& getCode().equals(""));
+	return Boolean.valueOf(getName() != null && getName().equals("") && getCode() != null && getCode().equals(""));
     }
 
     /**
-         * returns an empty string if there is no branch or branch initials in
-         * case it exists
-         */
+     * returns an empty string if there is no branch or branch initials in case
+     * it exists
+     */
     public String getPrettyCode() {
 	if (representsCommonBranch().booleanValue()) {
 	    return "";
@@ -63,8 +62,7 @@ public class InfoBranch extends InfoObject {
     }
 
     public String getName() {
-	return showEnVersion && getBranch().getNameEn() != null && getBranch().getNameEn().length() > 0 ? getBranch()
-		.getNameEn()
+	return showEnVersion && getBranch().getNameEn() != null && getBranch().getNameEn().length() > 0 ? getBranch().getNameEn()
 		: getBranch().getName();
     }
 

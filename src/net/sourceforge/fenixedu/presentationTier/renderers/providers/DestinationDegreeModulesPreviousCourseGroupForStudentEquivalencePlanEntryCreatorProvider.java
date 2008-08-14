@@ -4,14 +4,12 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 
-public class DestinationDegreeModulesPreviousCourseGroupForStudentEquivalencePlanEntryCreatorProvider
-	extends DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider
-	implements DataProvider {
+public class DestinationDegreeModulesPreviousCourseGroupForStudentEquivalencePlanEntryCreatorProvider extends
+	DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider implements DataProvider {
 
     @Override
     protected DegreeCurricularPlan getDegreeCurricularPlan(Object source) {
-	return ((StudentEquivalencyPlanEntryCreator) source).getDegreeCurricularPlanEquivalencePlan()
-		.getDegreeCurricularPlan();
+	return ((StudentEquivalencyPlanEntryCreator) source).getDegreeCurricularPlanEquivalencePlan().getDegreeCurricularPlan();
     }
 
 }

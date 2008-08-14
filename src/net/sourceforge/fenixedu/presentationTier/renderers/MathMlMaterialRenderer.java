@@ -7,29 +7,29 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
 
 public class MathMlMaterialRenderer extends StringRenderer {
 
-	private String classes;
+    private String classes;
 
-	public String getClasses() {
-		return classes;
-	}
+    public String getClasses() {
+	return classes;
+    }
 
-	public void setClasses(String classes) {
-		this.classes = classes;
-	}
+    public void setClasses(String classes) {
+	this.classes = classes;
+    }
 
-	@Override
-	public HtmlComponent render(Object object, Class type) {
-		NewMathMlMaterial mathMlMaterial = (NewMathMlMaterial) object;
+    @Override
+    public HtmlComponent render(Object object, Class type) {
+	NewMathMlMaterial mathMlMaterial = (NewMathMlMaterial) object;
 
-		HtmlImage image = new HtmlImage();
+	HtmlImage image = new HtmlImage();
 
-		image.setSource(getContext().getViewState().getRequest().getContextPath()
-				+ "/mathml/MathMlServlet?oid=" + mathMlMaterial.getIdInternal());
-		image.setTitle("Equation");
+	image.setSource(getContext().getViewState().getRequest().getContextPath() + "/mathml/MathMlServlet?oid="
+		+ mathMlMaterial.getIdInternal());
+	image.setTitle("Equation");
 
-		image.setClasses(classes);
+	image.setClasses(classes);
 
-		return image;
-	}
+	return image;
+    }
 
 }

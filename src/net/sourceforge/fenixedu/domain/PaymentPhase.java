@@ -18,8 +18,8 @@ public class PaymentPhase extends PaymentPhase_Base {
 	public int compare(PaymentPhase leftPaymentPhase, PaymentPhase rightPaymentPhase) {
 	    int comparationResult = leftPaymentPhase.getEndDateYearMonthDay().compareTo(
 		    rightPaymentPhase.getEndDateYearMonthDay());
-	    return (comparationResult == 0) ? leftPaymentPhase.getIdInternal().compareTo(
-		    rightPaymentPhase.getIdInternal()) : comparationResult;
+	    return (comparationResult == 0) ? leftPaymentPhase.getIdInternal().compareTo(rightPaymentPhase.getIdInternal())
+		    : comparationResult;
 	}
     };
 
@@ -29,8 +29,7 @@ public class PaymentPhase extends PaymentPhase_Base {
     }
 
     public String getDescriptionFromMessageResourses() {
-	MessageResources messages = MessageResources
-		.getMessageResources("resources.ApplicationResources");
+	MessageResources messages = MessageResources.getMessageResources("resources.ApplicationResources");
 
 	String newDescription = null;
 	newDescription = messages.getMessage(super.getDescription());

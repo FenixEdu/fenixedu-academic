@@ -9,8 +9,8 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 /**
- * This renderer provides a generic presentation for a money number. The
- * number is formatted according to the format property
+ * This renderer provides a generic presentation for a money number. The number
+ * is formatted according to the format property
  * 
  * @author naat
  * @author jdnf

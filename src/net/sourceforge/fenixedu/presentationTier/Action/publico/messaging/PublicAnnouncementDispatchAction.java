@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 21, 2006,2:11:27 PM
  * 
  */
@@ -27,23 +27,23 @@ public class PublicAnnouncementDispatchAction extends AnnouncementManagement {
 
     @Override
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        return null;
+	return null;
     }
 
     @Override
     protected String getExtraRequestParameters(HttpServletRequest request) {
-        return "";
+	return "";
     }
 
     @Override
     protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-        return "/publicAnnouncements";
+	return "/publicAnnouncements";
     }
 
     @Override
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-        return new ArrayList<AnnouncementBoard>();
+	return new ArrayList<AnnouncementBoard>();
     }
 }

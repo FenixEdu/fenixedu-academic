@@ -27,7 +27,7 @@ public class InfoAttendsSummary extends InfoObject implements Serializable {
      * @return Returns the attends.
      */
     public List getAttends() {
-        return attends;
+	return attends;
     }
 
     /**
@@ -35,14 +35,14 @@ public class InfoAttendsSummary extends InfoObject implements Serializable {
      *            The attends to set.
      */
     public void setAttends(List attends) {
-        this.attends = attends;
+	this.attends = attends;
     }
 
     /**
      * @return Returns the enrollmentDistribution.
      */
     public Map getEnrollmentDistribution() {
-        return enrollmentDistribution;
+	return enrollmentDistribution;
     }
 
     /**
@@ -50,14 +50,14 @@ public class InfoAttendsSummary extends InfoObject implements Serializable {
      *            The enrollmentDistribution to set.
      */
     public void setEnrollmentDistribution(Map enrollmentDistribution) {
-        this.enrollmentDistribution = enrollmentDistribution;
+	this.enrollmentDistribution = enrollmentDistribution;
     }
 
     /**
      * @return Returns the numberOfEnrollments.
      */
     public List getNumberOfEnrollments() {
-        return numberOfEnrollments;
+	return numberOfEnrollments;
     }
 
     /**
@@ -65,6 +65,6 @@ public class InfoAttendsSummary extends InfoObject implements Serializable {
      *            The numberOfEnrollments to set.
      */
     public void setNumberOfEnrollments(List numberOfEnrollments) {
-        this.numberOfEnrollments = numberOfEnrollments;
+	this.numberOfEnrollments = numberOfEnrollments;
     }
 }

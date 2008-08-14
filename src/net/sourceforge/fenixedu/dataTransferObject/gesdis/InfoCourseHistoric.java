@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoCourseHistoric extends InfoObject {
 
@@ -34,7 +34,7 @@ public class InfoCourseHistoric extends InfoObject {
      * @return Returns the approved.
      */
     public Integer getApproved() {
-        return approved;
+	return approved;
     }
 
     /**
@@ -42,14 +42,14 @@ public class InfoCourseHistoric extends InfoObject {
      *            The approved to set.
      */
     public void setApproved(Integer approved) {
-        this.approved = approved;
+	this.approved = approved;
     }
 
     /**
      * @return Returns the curricularYear.
      */
     public String getCurricularYear() {
-        return curricularYear;
+	return curricularYear;
     }
 
     /**
@@ -57,14 +57,14 @@ public class InfoCourseHistoric extends InfoObject {
      *            The curricularYear to set.
      */
     public void setCurricularYear(String curricularYear) {
-        this.curricularYear = curricularYear;
+	this.curricularYear = curricularYear;
     }
 
     /**
      * @return Returns the enrolled.
      */
     public Integer getEnrolled() {
-        return enrolled;
+	return enrolled;
     }
 
     /**
@@ -72,14 +72,14 @@ public class InfoCourseHistoric extends InfoObject {
      *            The enrolled to set.
      */
     public void setEnrolled(Integer enrolled) {
-        this.enrolled = enrolled;
+	this.enrolled = enrolled;
     }
 
     /**
      * @return Returns the evaluated.
      */
     public Integer getEvaluated() {
-        return evaluated;
+	return evaluated;
     }
 
     /**
@@ -87,14 +87,14 @@ public class InfoCourseHistoric extends InfoObject {
      *            The evaluated to set.
      */
     public void setEvaluated(Integer evaluated) {
-        this.evaluated = evaluated;
+	this.evaluated = evaluated;
     }
 
     /**
      * @return Returns the infoCurricularCourse.
      */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     /**
@@ -102,14 +102,14 @@ public class InfoCourseHistoric extends InfoObject {
      *            The infoCurricularCourse to set.
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
     /**
      * @return Returns the semester.
      */
     public Integer getSemester() {
-        return semester;
+	return semester;
     }
 
     /**
@@ -117,31 +117,33 @@ public class InfoCourseHistoric extends InfoObject {
      *            The semester to set.
      */
     public void setSemester(Integer semester) {
-        this.semester = semester;
+	this.semester = semester;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(CourseHistoric courseHistoric) {
-        super.copyFromDomain(courseHistoric);
-        if (courseHistoric != null) {
-            setApproved(courseHistoric.getApproved());
-            setEnrolled(courseHistoric.getEnrolled());
-            setEvaluated(courseHistoric.getEvaluated());
-            setCurricularYear(courseHistoric.getCurricularYear());
-            setSemester(courseHistoric.getSemester());
-        }
+	super.copyFromDomain(courseHistoric);
+	if (courseHistoric != null) {
+	    setApproved(courseHistoric.getApproved());
+	    setEnrolled(courseHistoric.getEnrolled());
+	    setEvaluated(courseHistoric.getEvaluated());
+	    setCurricularYear(courseHistoric.getCurricularYear());
+	    setSemester(courseHistoric.getSemester());
+	}
     }
 
     public static InfoCourseHistoric newInfoFromDomain(CourseHistoric courseHistoric) {
-        InfoCourseHistoric infoCourseHistoric = null;
-        if (courseHistoric != null) {
-            infoCourseHistoric = new InfoCourseHistoric();
-            infoCourseHistoric.copyFromDomain(courseHistoric);
-        }
-        return infoCourseHistoric;
+	InfoCourseHistoric infoCourseHistoric = null;
+	if (courseHistoric != null) {
+	    infoCourseHistoric = new InfoCourseHistoric();
+	    infoCourseHistoric.copyFromDomain(courseHistoric);
+	}
+	return infoCourseHistoric;
     }
 }

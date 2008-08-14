@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.OldPublicationType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoOldPublication extends InfoObject {
     private OldPublicationType oldPublicationType;
@@ -31,14 +31,14 @@ public class InfoOldPublication extends InfoObject {
      *  
      */
     public InfoOldPublication() {
-        super();
+	super();
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -46,14 +46,14 @@ public class InfoOldPublication extends InfoObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
     public Date getLastModificationDate() {
-        return lastModificationDate;
+	return lastModificationDate;
     }
 
     /**
@@ -61,14 +61,14 @@ public class InfoOldPublication extends InfoObject {
      *            The lastModificationDate to set.
      */
     public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
+	this.lastModificationDate = lastModificationDate;
     }
 
     /**
      * @return Returns the oldPublicationType.
      */
     public OldPublicationType getOldPublicationType() {
-        return oldPublicationType;
+	return oldPublicationType;
     }
 
     /**
@@ -76,15 +76,15 @@ public class InfoOldPublication extends InfoObject {
      *            The oldPublicationType to set.
      */
     public void setOldPublicationType(OldPublicationType oldPublicationType) {
-        this.oldPublicationType = oldPublicationType;
-        this.oldPublicationTypeString = oldPublicationType.getName();
+	this.oldPublicationType = oldPublicationType;
+	this.oldPublicationTypeString = oldPublicationType.getName();
     }
 
     /**
      * @return Returns the publication.
      */
     public String getPublication() {
-        return publication;
+	return publication;
     }
 
     /**
@@ -92,14 +92,14 @@ public class InfoOldPublication extends InfoObject {
      *            The publication to set.
      */
     public void setPublication(String publication) {
-        this.publication = publication;
+	this.publication = publication;
     }
 
     /**
      * @return Returns the oldPublicationTypeString.
      */
     public String getOldPublicationTypeString() {
-        return oldPublicationTypeString;
+	return oldPublicationTypeString;
     }
 
     /**
@@ -107,32 +107,34 @@ public class InfoOldPublication extends InfoObject {
      *            The oldPublicationTypeString to set.
      */
     public void setOldPublicationTypeString(String oldPublicationTypeString) {
-        this.oldPublicationTypeString = oldPublicationTypeString;
-        this.oldPublicationType = OldPublicationType.getEnum(oldPublicationTypeString);
+	this.oldPublicationTypeString = oldPublicationTypeString;
+	this.oldPublicationType = OldPublicationType.getEnum(oldPublicationTypeString);
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(OldPublication oldPublication) {
-        super.copyFromDomain(oldPublication);
+	super.copyFromDomain(oldPublication);
 
-        if (oldPublication != null) {
-            setLastModificationDate(oldPublication.getLastModificationDate());
-            setOldPublicationType(oldPublication.getOldPublicationType());
-            setOldPublicationTypeString(oldPublication.getOldPublicationType().toString());
-            setPublication(oldPublication.getPublication());
-        }
+	if (oldPublication != null) {
+	    setLastModificationDate(oldPublication.getLastModificationDate());
+	    setOldPublicationType(oldPublication.getOldPublicationType());
+	    setOldPublicationTypeString(oldPublication.getOldPublicationType().toString());
+	    setPublication(oldPublication.getPublication());
+	}
     }
 
     public static InfoOldPublication newInfoFromDomain(OldPublication oldPublication) {
-        InfoOldPublication infoOldPublication = null;
-        if (oldPublication != null) {
-            infoOldPublication = new InfoOldPublication();
-            infoOldPublication.copyFromDomain(oldPublication);
-        }
-        return infoOldPublication;
+	InfoOldPublication infoOldPublication = null;
+	if (oldPublication != null) {
+	    infoOldPublication = new InfoOldPublication();
+	    infoOldPublication.copyFromDomain(oldPublication);
+	}
+	return infoOldPublication;
     }
 }

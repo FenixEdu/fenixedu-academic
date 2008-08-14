@@ -23,7 +23,7 @@ public class InfoListGrantSubsidy extends InfoObject {
      * @return Returns the infoGrantParts.
      */
     public List getInfoGrantParts() {
-        return infoGrantParts;
+	return infoGrantParts;
     }
 
     /**
@@ -31,14 +31,14 @@ public class InfoListGrantSubsidy extends InfoObject {
      *            The infoGrantParts to set.
      */
     public void setInfoGrantParts(List infoGrantParts) {
-        this.infoGrantParts = infoGrantParts;
+	this.infoGrantParts = infoGrantParts;
     }
 
     /**
      * @return Returns the infoGrantSubsidy.
      */
     public InfoGrantSubsidy getInfoGrantSubsidy() {
-        return infoGrantSubsidy;
+	return infoGrantSubsidy;
     }
 
     /**
@@ -46,6 +46,6 @@ public class InfoListGrantSubsidy extends InfoObject {
      *            The infoGrantSubsidy to set.
      */
     public void setInfoGrantSubsidy(InfoGrantSubsidy infoGrantSubsidy) {
-        this.infoGrantSubsidy = infoGrantSubsidy;
+	this.infoGrantSubsidy = infoGrantSubsidy;
     }
 }

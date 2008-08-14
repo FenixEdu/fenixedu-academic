@@ -17,43 +17,42 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class MergeResearchActivityDA extends FenixDispatchAction {
-    
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("mergeList");
-	
-	if(mergeResearchActivityPageContainerBean == null) {
+
+	if (mergeResearchActivityPageContainerBean == null) {
 	    mergeResearchActivityPageContainerBean = getNewBean();
-	} 
-	
+	}
+
 	RenderUtils.invalidateViewState();
 
 	return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
     }
-    
-    public ActionForward prepare2(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward prepare2(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("mergeListNotVisible");
 	RenderUtils.invalidateViewState();
 
 	return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
     }
-    
+
     public ActionForward prepareMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) request.getAttribute("mergeBean");
+	MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) request
+		.getAttribute("mergeBean");
 	return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
     }
-    
+
     public ActionForward addToMergeList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("mergeListNotVisible");
 	RenderUtils.invalidateViewState();
 	mergeResearchActivityPageContainerBean.addSelected();
-	
+
 	return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
     }
-    
+
     public ActionForward removeFromMergeList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("mergeList");
@@ -61,69 +60,59 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
 	mergeResearchActivityPageContainerBean.removeSelected();
 	return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
     }
-    
-    
-    public ActionForward goToPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = 
-	    (MergeResearchActivityPageContainerBean) getRenderedObject("page");
+
+    public ActionForward goToPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("page");
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, researchActivityPageContainerBean);
     }
-    
+
     protected ActionForward setObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean) {
 	mergeResearchActivityPageContainerBean.setObjects(getObjects(mergeResearchActivityPageContainerBean));
 	request.setAttribute("mergeBean", mergeResearchActivityPageContainerBean);
 	return mapping.findForward("show-research-activity-merge-page");
     }
-    
+
     public ActionForward prepareResearchActivityMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return pageTwo(mapping, form, request, response, "mergeList", true);
     }
-    
-    public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	return pageTwo(mapping, form, request, response, "researchActivity", false);
     }
-    
+
     private ActionForward pageTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, String id, boolean invalidate) {
-	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = 
-	    (MergeResearchActivityPageContainerBean) getRenderedObject(id);
-	if(invalidate) {
+	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject(id);
+	if (invalidate) {
 	    RenderUtils.invalidateViewState();
 	}
 	request.setAttribute("mergeList", researchActivityPageContainerBean);
 	return mapping.findForward("show-research-activity-merge-list");
     }
 
-    
     public ActionForward mergeResearchActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = 
-	    (MergeResearchActivityPageContainerBean) getRenderedObject("researchActivity");
-	
+	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("researchActivity");
+
 	executeService(request, getServiceName(), new Object[] { researchActivityPageContainerBean });
-	
+
 	researchActivityPageContainerBean.reset();
 	return setObjects(mapping, form, request, response, researchActivityPageContainerBean);
     }
-    
-    public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = 
-	    (MergeResearchActivityPageContainerBean) getRenderedObject("mergeListNotVisible");
+
+    public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("mergeListNotVisible");
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, researchActivityPageContainerBean);
     }
 
-
     protected abstract List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean);
-    
+
     protected abstract MergeResearchActivityPageContainerBean getNewBean();
-    
+
     protected abstract String getServiceName();
 
 }

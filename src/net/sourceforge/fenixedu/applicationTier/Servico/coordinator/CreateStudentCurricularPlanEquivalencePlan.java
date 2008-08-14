@@ -11,10 +11,12 @@ public class CreateStudentCurricularPlanEquivalencePlan extends Service {
     public StudentCurricularPlanEquivalencePlan run(final Student student) {
 	for (final Registration registration : student.getRegistrations()) {
 	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-	    if (studentCurricularPlan != null && studentCurricularPlan.isBoxStructure() && !studentCurricularPlan.isBolonhaDegree()) {
-		final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = studentCurricularPlan.getEquivalencePlan();
-		return studentCurricularPlanEquivalencePlan == null ? studentCurricularPlan.createStudentCurricularPlanEquivalencePlan()
-			: studentCurricularPlanEquivalencePlan;
+	    if (studentCurricularPlan != null && studentCurricularPlan.isBoxStructure()
+		    && !studentCurricularPlan.isBolonhaDegree()) {
+		final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = studentCurricularPlan
+			.getEquivalencePlan();
+		return studentCurricularPlanEquivalencePlan == null ? studentCurricularPlan
+			.createStudentCurricularPlanEquivalencePlan() : studentCurricularPlanEquivalencePlan;
 	    }
 	}
 	return null;

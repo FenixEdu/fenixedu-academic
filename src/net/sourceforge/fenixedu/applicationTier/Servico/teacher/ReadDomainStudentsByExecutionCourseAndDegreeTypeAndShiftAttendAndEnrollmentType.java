@@ -2,9 +2,7 @@
  * 
  */
 
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
-
 
 import java.util.Collection;
 import java.util.List;
@@ -32,118 +30,115 @@ import org.apache.commons.collections.Transformer;
  *         domain objects instead of the ugly
  *         <code>TeacherSiteAdministrationView</code>/<code>component</code>
  *         object
- * @version $Id$
+ * @version $Id:
+ *          ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType
+ *          .java 37647 2008-08-13 15:50:44Z nmgo $
  */
-public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType extends
-		Service {
+public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType extends Service {
 
-	private class CurricularPlanIdPredicate implements Predicate {
+    private class CurricularPlanIdPredicate implements Predicate {
 
-		private Collection<Integer> curricularPlanIds;
+	private Collection<Integer> curricularPlanIds;
 
-		private CurricularPlanIdPredicate(Collection<Integer> curricularPlanIds) {
-			this.curricularPlanIds = curricularPlanIds;
-		}
-
-		public boolean evaluate(Object arg0) {
-			Attends attends = (Attends) arg0;
-			StudentCurricularPlan activeSCP = attends.getRegistration().getActiveStudentCurricularPlan();
-			return activeSCP!=null && (this.curricularPlanIds == null
-					|| this.curricularPlanIds.contains(activeSCP.getDegreeCurricularPlan().getIdInternal()));
-		}
+	private CurricularPlanIdPredicate(Collection<Integer> curricularPlanIds) {
+	    this.curricularPlanIds = curricularPlanIds;
 	}
 
-	private class ShiftIdPredicate implements Predicate {
-
-		private Collection<Integer> shiftIds;
-
-		private ShiftIdPredicate(Collection<Integer> shiftIds) {
-			this.shiftIds = shiftIds;
-		}
-
-		public boolean evaluate(Object arg0) {
-			Attends attends = (Attends) arg0;
-			if (shiftIds == null) return true;
-			else {
-				Registration registration = attends.getRegistration();
-				for (Integer shiftId : shiftIds) {
-					for (Shift shift : registration.getShifts()) {
-						if (shift.getIdInternal().equals(shiftId)) {
-							return true;
-						}
-					}
-				}
-
-			}
-			return false;
-		}
+	public boolean evaluate(Object arg0) {
+	    Attends attends = (Attends) arg0;
+	    StudentCurricularPlan activeSCP = attends.getRegistration().getActiveStudentCurricularPlan();
+	    return activeSCP != null
+		    && (this.curricularPlanIds == null || this.curricularPlanIds.contains(activeSCP.getDegreeCurricularPlan()
+			    .getIdInternal()));
 	}
-	
-	private class AttendsStudentTransformer implements Transformer
-	{
+    }
 
-		public Object transform(Object arg0) {
-			return ((Attends)arg0).getRegistration();
-		}
-		
+    private class ShiftIdPredicate implements Predicate {
+
+	private Collection<Integer> shiftIds;
+
+	private ShiftIdPredicate(Collection<Integer> shiftIds) {
+	    this.shiftIds = shiftIds;
 	}
 
-	private class EnrollmentTypeFilter implements Predicate {
-
-		private Collection<AttendacyStateSelectionType> enrollmentTypes;
-
-		private ExecutionCourse executionCourse;
-
-		private EnrollmentTypeFilter(ExecutionCourse executionCourse,
-				Collection<AttendacyStateSelectionType> enrollmentTypes) {
-			this.enrollmentTypes = enrollmentTypes;
-			this.executionCourse = executionCourse;
+	public boolean evaluate(Object arg0) {
+	    Attends attends = (Attends) arg0;
+	    if (shiftIds == null)
+		return true;
+	    else {
+		Registration registration = attends.getRegistration();
+		for (Integer shiftId : shiftIds) {
+		    for (Shift shift : registration.getShifts()) {
+			if (shift.getIdInternal().equals(shiftId)) {
+			    return true;
+			}
+		    }
 		}
 
-		public boolean evaluate(Object arg0) {
-			boolean result = false;
-			Attends attends = (Attends) arg0;
-			Enrolment enrollment = attends.getEnrolment();
-			// i am sorry if this else/if statements burn your eyes, but i think
-			// its easier to read than a single if statement with multiple
-			// disjunctions
-			if (this.enrollmentTypes == null) {
-				result = true;
-			}
-			else if (this.enrollmentTypes.contains(AttendacyStateSelectionType.NOT_ENROLLED)
-					&& enrollment == null) {
-				result = true;
-			}
-			else if (enrollment != null && this.enrollmentTypes.contains(AttendacyStateSelectionType.IMPROVEMENT)
-					&& enrollment.isImprovementForExecutionCourse(executionCourse)) {
-				result = true;
-			}
-			else if (enrollment != null &&  this.enrollmentTypes.contains(AttendacyStateSelectionType.ENROLLED)
-					&& (!enrollment.isImprovementForExecutionCourse(executionCourse) && enrollment.isEnroled())
-					&& enrollment.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
-				result = true;
-			}
-			else if (enrollment != null &&  this.enrollmentTypes.contains(AttendacyStateSelectionType.SPECIAL_SEASON)
-					&& enrollment.isSpecialSeason()) {
-				result = true;
-			}
+	    }
+	    return false;
+	}
+    }
 
-			return result;
-		}
+    private class AttendsStudentTransformer implements Transformer {
+
+	public Object transform(Object arg0) {
+	    return ((Attends) arg0).getRegistration();
 	}
 
-	public Collection<Registration> run(Integer executionCourseId, List<Integer> curricularPlansIds,
-			List<AttendacyStateSelectionType> enrollmentTypeFilters, List<Integer> shiftIds)
-			throws FenixServiceException{
+    }
 
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-		List<Attends> attends = executionCourse.getAttends();
-		Collection<Enrolment> enrollmentsInWantedState = CollectionUtils.select(attends, new EnrollmentTypeFilter(executionCourse, enrollmentTypeFilters));
-		Collection<Enrolment> enrollmentsInWantedDegree = CollectionUtils.select(enrollmentsInWantedState, new CurricularPlanIdPredicate(curricularPlansIds));
-		Collection<Enrolment> enrollmentsInWantedShifts = CollectionUtils.select(enrollmentsInWantedDegree, new ShiftIdPredicate(shiftIds));
-		
+    private class EnrollmentTypeFilter implements Predicate {
 
-		return CollectionUtils.collect(enrollmentsInWantedShifts,new AttendsStudentTransformer());
+	private Collection<AttendacyStateSelectionType> enrollmentTypes;
+
+	private ExecutionCourse executionCourse;
+
+	private EnrollmentTypeFilter(ExecutionCourse executionCourse, Collection<AttendacyStateSelectionType> enrollmentTypes) {
+	    this.enrollmentTypes = enrollmentTypes;
+	    this.executionCourse = executionCourse;
 	}
+
+	public boolean evaluate(Object arg0) {
+	    boolean result = false;
+	    Attends attends = (Attends) arg0;
+	    Enrolment enrollment = attends.getEnrolment();
+	    // i am sorry if this else/if statements burn your eyes, but i think
+	    // its easier to read than a single if statement with multiple
+	    // disjunctions
+	    if (this.enrollmentTypes == null) {
+		result = true;
+	    } else if (this.enrollmentTypes.contains(AttendacyStateSelectionType.NOT_ENROLLED) && enrollment == null) {
+		result = true;
+	    } else if (enrollment != null && this.enrollmentTypes.contains(AttendacyStateSelectionType.IMPROVEMENT)
+		    && enrollment.isImprovementForExecutionCourse(executionCourse)) {
+		result = true;
+	    } else if (enrollment != null && this.enrollmentTypes.contains(AttendacyStateSelectionType.ENROLLED)
+		    && (!enrollment.isImprovementForExecutionCourse(executionCourse) && enrollment.isEnroled())
+		    && enrollment.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
+		result = true;
+	    } else if (enrollment != null && this.enrollmentTypes.contains(AttendacyStateSelectionType.SPECIAL_SEASON)
+		    && enrollment.isSpecialSeason()) {
+		result = true;
+	    }
+
+	    return result;
+	}
+    }
+
+    public Collection<Registration> run(Integer executionCourseId, List<Integer> curricularPlansIds,
+	    List<AttendacyStateSelectionType> enrollmentTypeFilters, List<Integer> shiftIds) throws FenixServiceException {
+
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	List<Attends> attends = executionCourse.getAttends();
+	Collection<Enrolment> enrollmentsInWantedState = CollectionUtils.select(attends, new EnrollmentTypeFilter(
+		executionCourse, enrollmentTypeFilters));
+	Collection<Enrolment> enrollmentsInWantedDegree = CollectionUtils.select(enrollmentsInWantedState,
+		new CurricularPlanIdPredicate(curricularPlansIds));
+	Collection<Enrolment> enrollmentsInWantedShifts = CollectionUtils.select(enrollmentsInWantedDegree, new ShiftIdPredicate(
+		shiftIds));
+
+	return CollectionUtils.collect(enrollmentsInWantedShifts, new AttendsStudentTransformer());
+    }
 
 }

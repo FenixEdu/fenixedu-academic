@@ -24,7 +24,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- *  
+ * 
  */
 public class VoidAction extends Action {
 
@@ -33,9 +33,9 @@ public class VoidAction extends Action {
      * even when you just forward from a link you check to see if the session is
      * valid
      */
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        return mapping.findForward("Success");
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	return mapping.findForward("Success");
 
     }
 

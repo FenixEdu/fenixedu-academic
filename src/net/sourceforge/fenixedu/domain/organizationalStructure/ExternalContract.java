@@ -16,23 +16,23 @@ public class ExternalContract extends ExternalContract_Base {
 
     public ExternalContract(Person person, Unit institution, YearMonthDay beginDate, YearMonthDay endDate) {
 	super();
-	
-	if(person.hasExternalContract()) {
+
+	if (person.hasExternalContract()) {
 	    throw new DomainException("error.externalContract.person.already.is.externalPerson");
 	}
-	
-	super.init(person, beginDate, endDate, institution);	
-	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.WORKING_CONTRACT);
+
+	super.init(person, beginDate, endDate, institution);
+	AccountabilityType accountabilityType = AccountabilityType
+		.readAccountabilityTypeByType(AccountabilityTypeEnum.WORKING_CONTRACT);
 	setAccountabilityType(accountabilityType);
-	    
-        PersonName personName = person.getPersonName();
-        if (personName != null) {
-            personName.setIsExternalPerson(true);
-        }
-    }  
-    
-    public void edit(String name, String address, String phone, String mobile, String homepage,
-	    String email, Unit institution) {
+
+	PersonName personName = person.getPersonName();
+	if (personName != null) {
+	    personName.setIsExternalPerson(true);
+	}
+    }
+
+    public void edit(String name, String address, String phone, String mobile, String homepage, String email, Unit institution) {
 
 	if (!externalPersonsAlreadyExists(name, address, institution)) {
 	    getPerson().edit(name, address, phone, mobile, homepage, email);
@@ -44,12 +44,12 @@ public class ExternalContract extends ExternalContract_Base {
 
     @Override
     public void setAccountabilityType(AccountabilityType accountabilityType) {
-        super.setAccountabilityType(accountabilityType);
-        if(!accountabilityType.getType().equals(AccountabilityTypeEnum.WORKING_CONTRACT)) {
-            throw new DomainException("error.ExternalContract.invalid.accountabilityType");
-        }
+	super.setAccountabilityType(accountabilityType);
+	if (!accountabilityType.getType().equals(AccountabilityTypeEnum.WORKING_CONTRACT)) {
+	    throw new DomainException("error.ExternalContract.invalid.accountabilityType");
+	}
     }
-    
+
     public void delete() {
 	Person person = getPerson();
 	super.delete();
@@ -67,18 +67,17 @@ public class ExternalContract extends ExternalContract_Base {
     public boolean hasInstitutionUnit() {
 	return getParentParty() != null;
     }
-    
+
     private boolean externalPersonsAlreadyExists(final String name, final String address, final Unit institution) {
-	
+
 	for (final Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
-	    if(accountability instanceof ExternalContract) {
+	    if (accountability instanceof ExternalContract) {
 		final ExternalContract externalPerson = (ExternalContract) accountability;
 		if (externalPerson.hasPerson()) {
 		    final Person person = externalPerson.getPerson();
-		    
+
 		    if (isNameCorrect(person, name) && isAddressFieldCorrect(person, address)
-			    && externalPerson.getInstitutionUnit() == institution
-			    && externalPerson != this) {
+			    && externalPerson.getInstitutionUnit() == institution && externalPerson != this) {
 			return true;
 		    }
 		}
@@ -86,12 +85,12 @@ public class ExternalContract extends ExternalContract_Base {
 	}
 	return false;
     }
-    
+
     private boolean isNameCorrect(final Person person, final String name) {
 	return (person.getName() != null && person.getName().equalsIgnoreCase(name))
 		|| (StringUtils.isEmpty(person.getName()) && name.length() == 0);
     }
-    
+
     private boolean isAddressFieldCorrect(final Person person, final String address) {
 	final String personAddress = person.getAddress();
 	return (personAddress != null && personAddress.equalsIgnoreCase(address))
@@ -100,21 +99,22 @@ public class ExternalContract extends ExternalContract_Base {
 
     public static List<ExternalContract> readByPersonName(String name) {
 	List<ExternalContract> allExternalPersons = new ArrayList<ExternalContract>();
-	final String nameToMatch = (name == null) ? null : name.replaceAll("%", ".*").toLowerCase();	
+	final String nameToMatch = (name == null) ? null : name.replaceAll("%", ".*").toLowerCase();
 	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
-	    if(accountability instanceof ExternalContract) {
+	    if (accountability instanceof ExternalContract) {
 		ExternalContract externalPerson = (ExternalContract) accountability;
 		if (externalPerson.hasPerson() && externalPerson.getPerson().getName().toLowerCase().matches(nameToMatch)) {
-		    allExternalPersons.add(externalPerson);	
+		    allExternalPersons.add(externalPerson);
 		}
 	    }
-	}	
+	}
 	return allExternalPersons;
     }
 
-    public static ExternalContract readByPersonNameAddressAndInstitutionID(final String name, final String address, final Integer institutionID) {
+    public static ExternalContract readByPersonNameAddressAndInstitutionID(final String name, final String address,
+	    final Integer institutionID) {
 	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
-	    if(accountability instanceof ExternalContract) {
+	    if (accountability instanceof ExternalContract) {
 		ExternalContract externalPerson = (ExternalContract) accountability;
 		if (externalPerson.hasPerson() && externalPerson.getPerson().getName().equals(name)
 			&& externalPerson.getInstitutionUnit().getIdInternal().equals(institutionID)
@@ -122,7 +122,7 @@ public class ExternalContract extends ExternalContract_Base {
 			&& externalPerson.getPerson().getDefaultPhysicalAddress().getAddress().equals(address)) {
 		    return externalPerson;
 		}
-	    }	    
+	    }
 	}
 	return null;
     }
@@ -133,8 +133,8 @@ public class ExternalContract extends ExternalContract_Base {
 	    return externalPersons;
 	}
 	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
-	    if(accountability instanceof ExternalContract) {
-		ExternalContract externalPerson = (ExternalContract) accountability;	
+	    if (accountability instanceof ExternalContract) {
+		ExternalContract externalPerson = (ExternalContract) accountability;
 		if (accountabilityIDs.contains(externalPerson.getIdInternal())) {
 		    externalPersons.add(externalPerson);
 		}

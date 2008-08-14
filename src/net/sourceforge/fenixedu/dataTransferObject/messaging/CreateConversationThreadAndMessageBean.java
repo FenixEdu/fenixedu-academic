@@ -18,43 +18,43 @@ public class CreateConversationThreadAndMessageBean implements Serializable {
     private DomainReference<Forum> forumReference;
 
     public CreateConversationThreadAndMessageBean() {
-        super();
-        creatorReference = new DomainReference<Person>(null);
-        forumReference = new DomainReference<Forum>(null);
+	super();
+	creatorReference = new DomainReference<Person>(null);
+	forumReference = new DomainReference<Forum>(null);
     }
 
     public MultiLanguageString getSubject() {
-        return subject;
+	return subject;
     }
 
     public void setSubject(MultiLanguageString subject) {
-        this.subject = subject;
+	this.subject = subject;
     }
 
     public MultiLanguageString getBody() {
-        return body;
+	return body;
     }
 
     public void setBody(MultiLanguageString body) {
-        this.body = body;
+	this.body = body;
     }
 
     public Person getCreator() {
-        return this.creatorReference.getObject();
+	return this.creatorReference.getObject();
 
     }
 
     public void setCreator(Person creator) {
-        this.creatorReference = new DomainReference<Person>(creator);
+	this.creatorReference = new DomainReference<Person>(creator);
     }
 
     public Forum getForum() {
-        return this.forumReference.getObject();
+	return this.forumReference.getObject();
 
     }
 
     public void setForum(Forum forum) {
-        this.forumReference = new DomainReference<Forum>(forum);
+	this.forumReference = new DomainReference<Forum>(forum);
     }
 
 }

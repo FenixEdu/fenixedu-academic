@@ -129,8 +129,7 @@ public class LibraryCardDTO implements Serializable {
 		|| partyClassification == PartyClassification.BOLONHA_INTEGRATED_MASTER_DEGREE
 		|| partyClassification == PartyClassification.BOLONHA_MASTER_DEGREE
 		|| partyClassification == PartyClassification.BOLONHA_SPECIALIZATION_DEGREE
-		|| partyClassification == PartyClassification.DEGREE
-		|| partyClassification == PartyClassification.MASTER_DEGREE;
+		|| partyClassification == PartyClassification.DEGREE || partyClassification == PartyClassification.MASTER_DEGREE;
     }
 
     public String getMailCostCenterCode() {
@@ -197,8 +196,7 @@ public class LibraryCardDTO implements Serializable {
 	if (getPartyClassification().equals(PartyClassification.PERSON)) {
 	    return "Externa";
 	}
-	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language
-		.getLocale());
+	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	return enumerationBundle.getString(getPartyClassification().name());
     }
 

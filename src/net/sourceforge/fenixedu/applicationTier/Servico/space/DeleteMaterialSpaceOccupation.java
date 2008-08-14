@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
 public class DeleteMaterialSpaceOccupation<T extends MaterialSpaceOccupation> extends Service {
 
     public void run(T t) {
-	if(t != null) {
+	if (t != null) {
 	    t.delete();
 	}
     }

@@ -11,14 +11,14 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class FenixContextLookupDispatchAction extends FenixLookupDispatchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        ContextUtils.setExecutionPeriodContext(request);
+	ContextUtils.setExecutionPeriodContext(request);
 
-        ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+	ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
 
-        return super.execute(mapping, actionForm, request, response);
+	return super.execute(mapping, actionForm, request, response);
     }
 
 }

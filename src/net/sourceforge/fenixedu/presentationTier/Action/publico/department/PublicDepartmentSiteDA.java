@@ -29,13 +29,15 @@ import org.apache.struts.action.ActionMapping;
 public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("department", getDepartment(request));
 	return super.execute(mapping, actionForm, request, response);
     }
 
     @Override
-    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return presentation(mapping, form, request, response);
     }
 
@@ -48,13 +50,13 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	Unit unit = getUnit(request);
 	if (unit == null) {
 	    return null;
-	}
-	else {
+	} else {
 	    return unit.getDepartment();
 	}
     }
 
-    public ActionForward employees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward employees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Unit unit = getUnit(request);
 
 	BeanComparator employeeComparator = new BeanComparator("person", Party.COMPARATOR_BY_NAME_AND_ID);
@@ -65,10 +67,10 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
 	for (Employee employee : unit.getAllCurrentNonTeacherEmployees()) {
 
-	    if(employee.getPerson().hasRole(RoleType.TEACHER)) {
+	    if (employee.getPerson().hasRole(RoleType.TEACHER)) {
 		continue;
 	    }
-	    
+
 	    Unit workingUnit = employee.getCurrentWorkingPlace();
 
 	    if (workingUnit != null) {
@@ -82,8 +84,7 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 		}
 
 		employees.add(employee);
-	    }
-	    else {
+	    } else {
 		noUnitAvailable.add(employee);
 	    }
 	}
@@ -99,7 +100,8 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	return mapping.findForward("department-employees");
     }
 
-    public ActionForward degrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward degrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Unit unit = getUnit(request);
 
 	Department department = unit.getDepartment();
@@ -110,16 +112,15 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	Map<DegreeType, SortedSet<Degree>> degreeAndTypes = new HashMap<DegreeType, SortedSet<Degree>>();
 	SortedSet<DegreeType> activeTypes = new TreeSet<DegreeType>();
 	SortedSet<DegreeType> inactiveTypes = new TreeSet<DegreeType>();
-	    
+
 	for (Degree degree : department.getDegrees()) {
 	    DegreeType type = degree.getDegreeType();
-	    if(degree.isActive()) {
+	    if (degree.isActive()) {
 		activeTypes.add(type);
-	    }
-	    else {
+	    } else {
 		inactiveTypes.add(type);
 	    }
-	    
+
 	    SortedSet<Degree> current = degreeAndTypes.get(type);
 	    if (current == null) {
 		current = new TreeSet<Degree>(Degree.COMPARATOR_BY_NAME_AND_ID);
@@ -130,8 +131,8 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	}
 
 	request.setAttribute("inactive-types", inactiveTypes);
-	request.setAttribute("active-types", activeTypes); 
-			
+	request.setAttribute("active-types", activeTypes);
+
 	for (DegreeType type : inactiveTypes) {
 	    request.setAttribute(type.getName(), degreeAndTypes.get(type));
 	}
@@ -139,11 +140,12 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	for (DegreeType type : activeTypes) {
 	    request.setAttribute(type.getName(), degreeAndTypes.get(type));
 	}
-	
+
 	return mapping.findForward("department-degrees");
     }
 
-    public ActionForward teachers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward teachers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Unit unit = getUnit(request);
 
 	Department department = unit.getDepartment();
@@ -155,8 +157,7 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
 	if (mode.equals("category")) {
 	    setupTeachersCategories(request, department);
-	}
-	else if (mode.equals("area")) {
+	} else if (mode.equals("area")) {
 	    setupTeachersAreas(request, department);
 	}
 
@@ -201,8 +202,7 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	    if (area != null) {
 		areas.add(area);
 		addListTeacher(teachers, area.getIdInternal().toString(), teacher);
-	    }
-	    else {
+	    } else {
 		teachersNoArea.add(teacher);
 	    }
 	}
@@ -226,10 +226,9 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
 	teachers.add(teacher);
     }
-    
+
     @Override
-    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit,
-	    ExecutionYearIntervalBean bean) {
+    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit, ExecutionYearIntervalBean bean) {
 	putPublicationsOnRequest(request, unit, bean, Boolean.TRUE);
     }
 }

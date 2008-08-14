@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.projectsManagement;
 
 /**
  * @author Susana Fernandes
- *
+ * 
  */
 public interface ISummaryEURReportLine {
     public abstract Double getAdiantamentosPorJustificar();

@@ -43,15 +43,14 @@ import pt.utl.ist.fenix.tools.smtp.EmailSender;
  */
 public class SendEmailReminderAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	InfoExecutionYear currentExecutionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear");
 
 	Object[] argsExecutionYearId = { currentExecutionYear.getIdInternal() };
-	List<InfoDegreeCurricularPlan> degreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils
-		.executeService( "ReadActiveDegreeCurricularPlansByExecutionYear",
-			argsExecutionYearId);
+	List<InfoDegreeCurricularPlan> degreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils.executeService(
+		"ReadActiveDegreeCurricularPlansByExecutionYear", argsExecutionYearId);
 
 	final ComparatorChain comparatorChain = new ComparatorChain();
 	comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
@@ -65,8 +64,8 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	return mapping.findForward("chooseDegreeCurricularPlans");
     }
 
-    public ActionForward sendEmails(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward sendEmails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm form = (DynaActionForm) actionForm;
 
@@ -83,15 +82,13 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	for (int i = 0; i < degreeCurricularPlanIds.length; i++) {
 
 	    Object[] argsDegreeCPId = { degreeCurricularPlanIds[i] };
-	    InfoExecutionDegree infoExecutionDegreeStudent = (InfoExecutionDegree) ServiceUtils
-		    .executeService( "ReadActiveExecutionDegreebyDegreeCurricularPlanID",
-			    argsDegreeCPId);
+	    InfoExecutionDegree infoExecutionDegreeStudent = (InfoExecutionDegree) ServiceUtils.executeService(
+		    "ReadActiveExecutionDegreebyDegreeCurricularPlanID", argsDegreeCPId);
 
 	    Object[] argsDegreeCurriculapPlanIdAndExecutionPeriod = { degreeCurricularPlanIds[i],
 		    currentExecutionPeriod.getIdInternal(), Boolean.TRUE };
 	    List<InfoStudentWithAttendsAndInquiriesRegistries> studentsList = (List<InfoStudentWithAttendsAndInquiriesRegistries>) ServiceUtils
-		    .executeService(
-			    "student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod",
+		    .executeService("student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod",
 			    argsDegreeCurriculapPlanIdAndExecutionPeriod);
 
 	    InfoInquiriesEmailReminderReport report = new InfoInquiriesEmailReminderReport();
@@ -99,8 +96,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	    report.setNumberDegreeStudents(studentsList.size());
 
 	    for (InfoStudentWithAttendsAndInquiriesRegistries student : studentsList) {
-		sendEmailReminder(request, student, currentExecutionPeriod, report, form, fromName,
-			fromAddress);
+		sendEmailReminder(request, student, currentExecutionPeriod, report, form, fromName, fromAddress);
 	    }
 
 	    reportList.add(report);
@@ -111,10 +107,9 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	return mapping.findForward("showReport");
     }
 
-    private boolean sendEmailReminder(HttpServletRequest request,
-	    InfoStudentWithAttendsAndInquiriesRegistries student,
-	    InfoExecutionPeriod currentExecutionPeriod, InfoInquiriesEmailReminderReport report,
-	    DynaActionForm form, String fromName, String fromAddress) throws FenixFilterException, FenixServiceException {
+    private boolean sendEmailReminder(HttpServletRequest request, InfoStudentWithAttendsAndInquiriesRegistries student,
+	    InfoExecutionPeriod currentExecutionPeriod, InfoInquiriesEmailReminderReport report, DynaActionForm form,
+	    String fromName, String fromAddress) throws FenixFilterException, FenixServiceException {
 
 	String emailAddress = student.getInfoPerson().getEmail();
 

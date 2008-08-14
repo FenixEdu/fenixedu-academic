@@ -15,49 +15,48 @@ import org.apache.commons.beanutils.BeanComparator;
  * @author Susana Fernandes
  */
 public class TestQuestion extends TestQuestion_Base {
-    public static final Comparator<TestQuestion> COMPARATOR_BY_TEST_QUESTION_ORDER = new BeanComparator(
-            "testQuestionOrder");
+    public static final Comparator<TestQuestion> COMPARATOR_BY_TEST_QUESTION_ORDER = new BeanComparator("testQuestionOrder");
 
     public TestQuestion() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public void editTestQuestion(Integer newTestQuestionOrder, final Double newTestQuestionValue,
-            final CorrectionFormula newFormula) {
-        organizeTestQuestionsOrder(newTestQuestionOrder, this.getTestQuestionOrder());
-        this.setTestQuestionOrder(newTestQuestionOrder);
-        this.setTestQuestionValue(newTestQuestionValue);
-        this.setCorrectionFormula(newFormula);
+	    final CorrectionFormula newFormula) {
+	organizeTestQuestionsOrder(newTestQuestionOrder, this.getTestQuestionOrder());
+	this.setTestQuestionOrder(newTestQuestionOrder);
+	this.setTestQuestionValue(newTestQuestionValue);
+	this.setCorrectionFormula(newFormula);
     }
 
     private void organizeTestQuestionsOrder(Integer newOrder, Integer oldOrder) {
-        List<TestQuestion> testQuestions = getTest().getTestQuestions();
-        int diffOrder = newOrder.intValue() - oldOrder.intValue();
-        if (diffOrder != 0) {
-            if (diffOrder > 0) {
-                for (TestQuestion testQuestion : testQuestions) {
-                    if (testQuestion.getTestQuestionOrder().compareTo(newOrder) <= 0
-                            && testQuestion.getTestQuestionOrder().compareTo(oldOrder) > 0) {
-                        testQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder() - 1);
-                    }
-                }
-            } else {
-                for (TestQuestion testQuestion : testQuestions) {
-                    if (testQuestion.getTestQuestionOrder().compareTo(newOrder) >= 0
-                            && testQuestion.getTestQuestionOrder().compareTo(oldOrder) < 0) {
-                        testQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder() + 1);
-                    }
-                }
-            }
-        }
+	List<TestQuestion> testQuestions = getTest().getTestQuestions();
+	int diffOrder = newOrder.intValue() - oldOrder.intValue();
+	if (diffOrder != 0) {
+	    if (diffOrder > 0) {
+		for (TestQuestion testQuestion : testQuestions) {
+		    if (testQuestion.getTestQuestionOrder().compareTo(newOrder) <= 0
+			    && testQuestion.getTestQuestionOrder().compareTo(oldOrder) > 0) {
+			testQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder() - 1);
+		    }
+		}
+	    } else {
+		for (TestQuestion testQuestion : testQuestions) {
+		    if (testQuestion.getTestQuestionOrder().compareTo(newOrder) >= 0
+			    && testQuestion.getTestQuestionOrder().compareTo(oldOrder) < 0) {
+			testQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder() + 1);
+		    }
+		}
+	    }
+	}
     }
 
     public void delete() {
-        removeQuestion();
-        removeTest();
-        removeRootDomainObject();
-        deleteDomainObject();
+	removeQuestion();
+	removeTest();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
 }

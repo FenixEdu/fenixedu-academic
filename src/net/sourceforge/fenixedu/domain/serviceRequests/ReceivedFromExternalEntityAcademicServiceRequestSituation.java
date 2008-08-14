@@ -22,7 +22,8 @@ public class ReceivedFromExternalEntityAcademicServiceRequestSituation extends
 
     @Override
     public void setReceivedDate(DateTime receivedDate) {
-	throw new DomainException("error.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation.cannot.modify.situation.date");
+	throw new DomainException(
+		"error.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation.cannot.modify.situation.date");
     }
 
     @Override
@@ -38,12 +39,14 @@ public class ReceivedFromExternalEntityAcademicServiceRequestSituation extends
     private void checkOwnParameters(final AcademicServiceRequest academicServiceRequest,
 	    final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (!academicServiceRequestBean.isToReceiveFromExternalUnit()) {
-	    throw new DomainException("error.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation.invalid.situation.type");
+	    throw new DomainException(
+		    "error.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation.invalid.situation.type");
 	}
 
 	if (academicServiceRequestBean.getFinalSituationDate().isBefore(
 		academicServiceRequest.getActiveSituation().getSituationDate())) {
-	    throw new DomainException("error.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation.invalid.situation.date");
+	    throw new DomainException(
+		    "error.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation.invalid.situation.date");
 	}
     }
 }

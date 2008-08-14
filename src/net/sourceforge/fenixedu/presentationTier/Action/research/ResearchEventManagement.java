@@ -13,15 +13,15 @@ import org.apache.struts.action.ActionMapping;
 public class ResearchEventManagement extends FenixDispatchAction {
 
     public ActionForward showEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-	
-	String eventId  = request.getParameter("eventId");
-	if(eventId!=null) {
+	    HttpServletResponse response) {
+
+	String eventId = request.getParameter("eventId");
+	if (eventId != null) {
 	    ResearchEvent event = rootDomainObject.readResearchEventByOID(Integer.valueOf(eventId));
-	    request.setAttribute("event",event);
+	    request.setAttribute("event", event);
 	}
-	
+
 	return mapping.findForward("showEvent");
     }
-    
+
 }

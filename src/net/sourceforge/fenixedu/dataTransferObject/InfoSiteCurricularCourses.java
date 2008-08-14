@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * @author João Mota
  * 
- * 24/Jul/2003 fenix-head DataBeans
- *  
+ *         24/Jul/2003 fenix-head DataBeans
+ * 
  */
 public class InfoSiteCurricularCourses extends DataTranferObject implements ISiteComponent {
 
@@ -21,16 +21,16 @@ public class InfoSiteCurricularCourses extends DataTranferObject implements ISit
      * @return
      */
     public List getCurricularCourses() {
-        return curricularCourses;
+	return curricularCourses;
     }
 
     /**
      * @param curricularCourses
      */
     public void setCurricularCourses(List curricularCourses) {
-        this.curricularCourses = curricularCourses;
-        //TODO: uncomment the sort when the test data is fixed
-        //Collections.sort(this.curricularCourses);
+	this.curricularCourses = curricularCourses;
+	// TODO: uncomment the sort when the test data is fixed
+	// Collections.sort(this.curricularCourses);
     }
 
     /**

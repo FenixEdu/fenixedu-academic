@@ -25,75 +25,77 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import org.apache.commons.beanutils.BeanComparator;
 
 public class GenetareStudentTestForSimulation extends Service {
-    public List run(Integer executionCourseId, Integer testId, String path, TestType testType, CorrectionAvailability correctionAvailability,
-            Boolean imsfeedback, String testInformation) throws FenixServiceException{
-        List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        path = path.replace('\\', '/');
-        final Test test = rootDomainObject.readTestByOID(testId);
-        if (test == null)
-            throw new InvalidArgumentsServiceException();
+    public List run(Integer executionCourseId, Integer testId, String path, TestType testType,
+	    CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
+	    throws FenixServiceException {
+	List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
+	path = path.replace('\\', '/');
+	final Test test = rootDomainObject.readTestByOID(testId);
+	if (test == null)
+	    throw new InvalidArgumentsServiceException();
 
-        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
-        if (testScope == null) {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-            if (executionCourse == null)
-                throw new InvalidArgumentsServiceException();
-            testScope = new TestScope(executionCourse);
-        }
+	TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+	if (testScope == null) {
+	    final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	    if (executionCourse == null)
+		throw new InvalidArgumentsServiceException();
+	    testScope = new TestScope(executionCourse);
+	}
 
-        InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-        infoDistributedTest.setIdInternal(testId);
-        infoDistributedTest.setInfoTestScope(InfoTestScope.newInfoFromDomain(testScope));
-        infoDistributedTest.setTestType(testType);
-        infoDistributedTest.setCorrectionAvailability(correctionAvailability);
-        infoDistributedTest.setImsFeedback(imsfeedback);
-        infoDistributedTest.setTitle(test.getTitle());
-        infoDistributedTest.setTestInformation(testInformation);
-        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
+	InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
+	infoDistributedTest.setIdInternal(testId);
+	infoDistributedTest.setInfoTestScope(InfoTestScope.newInfoFromDomain(testScope));
+	infoDistributedTest.setTestType(testType);
+	infoDistributedTest.setCorrectionAvailability(correctionAvailability);
+	infoDistributedTest.setImsFeedback(imsfeedback);
+	infoDistributedTest.setTitle(test.getTitle());
+	infoDistributedTest.setTestInformation(testInformation);
+	infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
-        Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
-        for (TestQuestion testQuestionExample : testQuestionList) {
-            List<Question> questionList = new ArrayList<Question>();
-            questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
+	List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+	Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
+	for (TestQuestion testQuestionExample : testQuestionList) {
+	    List<Question> questionList = new ArrayList<Question>();
+	    questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
-            InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
-            //infoStudentTestQuestion.setDistributedTest(distributedTest);
-            infoStudentTestQuestion.setTestQuestionOrder(testQuestionExample.getTestQuestionOrder());
-            infoStudentTestQuestion.setTestQuestionValue(testQuestionExample.getTestQuestionValue());
-            infoStudentTestQuestion.setOldResponse(Integer.valueOf(0));
-            infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
-            infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
-            infoStudentTestQuestion.setResponse(null);
+	    InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
+	    // infoStudentTestQuestion.setDistributedTest(distributedTest);
+	    infoStudentTestQuestion.setTestQuestionOrder(testQuestionExample.getTestQuestionOrder());
+	    infoStudentTestQuestion.setTestQuestionValue(testQuestionExample.getTestQuestionValue());
+	    infoStudentTestQuestion.setOldResponse(Integer.valueOf(0));
+	    infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
+	    infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
+	    infoStudentTestQuestion.setResponse(null);
 
-            if (questionList.size() == 0)
-                questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
-            Question question = getStudentQuestion(questionList);
-            if (question == null) {
-                throw new InvalidArgumentsServiceException();
-            }
-            infoStudentTestQuestion.setQuestion(InfoQuestion.newInfoFromDomain(question));
-            ParseSubQuestion parse = new ParseSubQuestion();
-//            try {
-//          //      studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
-//            } catch (Exception e) {
-//                throw new FenixServiceException(e);
-//            }
-            infoStudentTestQuestionList.add(infoStudentTestQuestion);
-            questionList.remove(question);
-        }
+	    if (questionList.size() == 0)
+		questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
+	    Question question = getStudentQuestion(questionList);
+	    if (question == null) {
+		throw new InvalidArgumentsServiceException();
+	    }
+	    infoStudentTestQuestion.setQuestion(InfoQuestion.newInfoFromDomain(question));
+	    ParseSubQuestion parse = new ParseSubQuestion();
+	    // try {
+	    // // studentTestQuestion =
+	    // parse.parseStudentTestQuestion(studentTestQuestion, path);
+	    // } catch (Exception e) {
+	    // throw new FenixServiceException(e);
+	    // }
+	    infoStudentTestQuestionList.add(infoStudentTestQuestion);
+	    questionList.remove(question);
+	}
 
-        return infoStudentTestQuestionList;
+	return infoStudentTestQuestionList;
     }
 
     private Question getStudentQuestion(List<Question> questions) {
-        Question question = null;
-        if (questions.size() != 0) {
-            Random r = new Random();
-            int questionIndex = r.nextInt(questions.size());
-            question = questions.get(questionIndex);
-        }
-        return question;
+	Question question = null;
+	if (questions.size() != 0) {
+	    Random r = new Random();
+	    int questionIndex = r.nextInt(questions.size());
+	    question = questions.get(questionIndex);
+	}
+	return question;
     }
 
 }

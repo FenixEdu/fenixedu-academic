@@ -27,7 +27,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jun 19, 2006,3:51:45 PM
  * 
  */
@@ -48,7 +48,7 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
 	Integer id = this.getRequestedExecutionCourseId(request);
-	return RootDomainObject.getInstance().readExecutionCourseByOID(id);	
+	return RootDomainObject.getInstance().readExecutionCourseByOID(id);
     }
 
     @Override

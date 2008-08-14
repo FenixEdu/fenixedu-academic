@@ -25,126 +25,125 @@ public class InfoGuideSituation extends InfoObject {
     public InfoGuideSituation() {
     }
 
-    public InfoGuideSituation(String remarks, GuideState situationOfGuide, Date date, State state,
-            InfoGuide infoGuide) {
-        this.remarks = remarks;
-        this.situation = situationOfGuide;
-        this.date = date;
-        this.state = state;
-        this.infoGuide = infoGuide;
+    public InfoGuideSituation(String remarks, GuideState situationOfGuide, Date date, State state, InfoGuide infoGuide) {
+	this.remarks = remarks;
+	this.situation = situationOfGuide;
+	this.date = date;
+	this.state = state;
+	this.infoGuide = infoGuide;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoGuideSituation) {
-            InfoGuideSituation infoGuideSituation = (InfoGuideSituation) obj;
+	boolean resultado = false;
+	if (obj instanceof InfoGuideSituation) {
+	    InfoGuideSituation infoGuideSituation = (InfoGuideSituation) obj;
 
-            resultado = getInfoGuide().equals(infoGuideSituation.getInfoGuide())
-                    && getSituation().equals(infoGuideSituation.getSituation());
-        }
+	    resultado = getInfoGuide().equals(infoGuideSituation.getInfoGuide())
+		    && getSituation().equals(infoGuideSituation.getSituation());
+	}
 
-        return resultado;
+	return resultado;
     }
 
     public String toString() {
-        String result = "[GUIDE SITUATION";
-        result += ", remarks=" + remarks;
-        result += ", guide=" + infoGuide;
-        result += ", guide Situtation=" + situation;
-        result += ", date=" + date;
-        result += ", state=" + state;
-        result += "]";
-        return result;
+	String result = "[GUIDE SITUATION";
+	result += ", remarks=" + remarks;
+	result += ", guide=" + infoGuide;
+	result += ", guide Situtation=" + situation;
+	result += ", date=" + date;
+	result += ", state=" + state;
+	result += "]";
+	return result;
     }
 
     /**
      * @return
      */
     public Date getDate() {
-        return date;
+	return date;
     }
 
     /**
      * @return
      */
     public InfoGuide getInfoGuide() {
-        return infoGuide;
+	return infoGuide;
     }
 
     /**
      * @return
      */
     public String getRemarks() {
-        return remarks;
+	return remarks;
     }
 
     /**
      * @return
      */
     public GuideState getSituation() {
-        return situation;
+	return situation;
     }
 
     /**
      * @return
      */
     public State getState() {
-        return state;
+	return state;
     }
 
     /**
      * @param date
      */
     public void setDate(Date date) {
-        this.date = date;
+	this.date = date;
     }
 
     /**
      * @param guide
      */
     public void setInfoGuide(InfoGuide guide) {
-        infoGuide = guide;
+	infoGuide = guide;
     }
 
     /**
      * @param string
      */
     public void setRemarks(String string) {
-        remarks = string;
+	remarks = string;
     }
 
     /**
      * @param guide
      */
     public void setSituation(GuideState guide) {
-        situation = guide;
+	situation = guide;
     }
 
     /**
      * @param state
      */
     public void setState(State state) {
-        this.state = state;
+	this.state = state;
     }
 
     public void copyFromDomain(GuideSituation guideSituation) {
-        super.copyFromDomain(guideSituation);
-        if (guideSituation != null) {
-            setDate(guideSituation.getDate());
-            setRemarks(guideSituation.getRemarks());
-            setSituation(guideSituation.getSituation());
-            setState(guideSituation.getState());
-        }
+	super.copyFromDomain(guideSituation);
+	if (guideSituation != null) {
+	    setDate(guideSituation.getDate());
+	    setRemarks(guideSituation.getRemarks());
+	    setSituation(guideSituation.getSituation());
+	    setState(guideSituation.getState());
+	}
     }
 
     public static InfoGuideSituation newInfoFromDomain(GuideSituation guideSituation) {
-        InfoGuideSituation infoGuideSituation = null;
-        if (guideSituation != null) {
-            infoGuideSituation = new InfoGuideSituation();
-            infoGuideSituation.copyFromDomain(guideSituation);
-        }
+	InfoGuideSituation infoGuideSituation = null;
+	if (guideSituation != null) {
+	    infoGuideSituation = new InfoGuideSituation();
+	    infoGuideSituation.copyFromDomain(guideSituation);
+	}
 
-        return infoGuideSituation;
+	return infoGuideSituation;
     }
 
 }

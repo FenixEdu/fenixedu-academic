@@ -28,7 +28,7 @@ public class PublishMarks extends Service {
     private final static String OPTIMUS_NETWORK_PREFIX = "93";
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage, Boolean sendSMS,
-	    String announcementTitle) throws ExcepcaoInexistente, FenixServiceException{
+	    String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
 
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 	final ExecutionCourseSite site = executionCourse.getSite();

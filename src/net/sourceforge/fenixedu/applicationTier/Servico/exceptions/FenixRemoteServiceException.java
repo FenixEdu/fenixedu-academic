@@ -15,26 +15,26 @@ public class FenixRemoteServiceException extends FenixServiceException {
     private String causePackageName;
 
     public FenixRemoteServiceException() {
-        super();
+	super();
     }
 
     public FenixRemoteServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     public FenixRemoteServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public FenixRemoteServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     /**
      * @return Returns the causeClassName.
      */
     public String getCauseClassName() {
-        return causeClassName;
+	return causeClassName;
     }
 
     /**
@@ -42,14 +42,14 @@ public class FenixRemoteServiceException extends FenixServiceException {
      *            The causeClassName to set.
      */
     public void setCauseClassName(String causeClassName) {
-        this.causeClassName = causeClassName;
+	this.causeClassName = causeClassName;
     }
 
     /**
      * @return Returns the causePackage.
      */
     public String getCausePackageName() {
-        return causePackageName;
+	return causePackageName;
     }
 
     /**
@@ -57,7 +57,7 @@ public class FenixRemoteServiceException extends FenixServiceException {
      *            The causePackage to set.
      */
     public void setCausePackageName(String causePackageName) {
-        this.causePackageName = causePackageName;
+	this.causePackageName = causePackageName;
     }
 
 }

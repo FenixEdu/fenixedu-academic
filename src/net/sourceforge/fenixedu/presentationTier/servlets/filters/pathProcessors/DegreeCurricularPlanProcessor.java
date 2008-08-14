@@ -13,89 +13,88 @@ public class DegreeCurricularPlanProcessor extends PathProcessor {
 
     @Override
     public ProcessingContext getProcessingContext(ProcessingContext parentContext) {
-        return new Context(parentContext);
+	return new Context(parentContext);
     }
 
     public DegreeCurricularPlanProcessor add(ExecutionCourseProcessor processor) {
-        addChild(processor);
-        return this;
+	addChild(processor);
+	return this;
     }
-    
+
     @Override
     protected boolean accepts(ProcessingContext context, PathElementsProvider provider) {
-        String current = provider.current();
+	String current = provider.current();
 
-        Context ownContext = (Context) context;
-        ownContext.setCurricularPlanYear(current);
-        
-        return ownContext.getDegreeCurricularPlan() != null;
+	Context ownContext = (Context) context;
+	ownContext.setCurricularPlanYear(current);
+
+	return ownContext.getDegreeCurricularPlan() != null;
     }
 
     @Override
-    protected boolean forward(ProcessingContext context, PathElementsProvider provider)
-            throws IOException {
-        return false;
+    protected boolean forward(ProcessingContext context, PathElementsProvider provider) throws IOException {
+	return false;
     }
 
     public static class Context extends ProcessingContext implements DegreeCurricularPlanContext {
 
-        private String curricularPlanYear;
-        private DegreeCurricularPlan curricularPlan;
-        
-        public Context(ProcessingContext parent) {
-            super(parent);
-        }
+	private String curricularPlanYear;
+	private DegreeCurricularPlan curricularPlan;
 
-        @Override
-        public ExecutionCoursesContext getParent() {
-            return (ExecutionCoursesContext) super.getParent();
-        }
+	public Context(ProcessingContext parent) {
+	    super(parent);
+	}
 
-        public String getCurricularPlanYear() {
-            return this.curricularPlanYear;
-        }
+	@Override
+	public ExecutionCoursesContext getParent() {
+	    return (ExecutionCoursesContext) super.getParent();
+	}
 
-        public void setCurricularPlanYear(String curricularPlanYear) {
-            this.curricularPlanYear = curricularPlanYear;
-        }
+	public String getCurricularPlanYear() {
+	    return this.curricularPlanYear;
+	}
 
-        public Degree getDegree() {
-            return getParent().getDegree();
-        }
-        
-        public DegreeCurricularPlan getDegreeCurricularPlan() {
-            if (this.curricularPlan != null) {
-                return this.curricularPlan;
-            }
-            
-            String year = getCurricularPlanYear();
-            if (year == null) {
-                return null;
-            }
-            
-            if (! year.matches("\\p{Digit}{4}(-\\p{Digit}{4})?")) {
-                return null;
-            }
-            
-            String[] parts = year.split("-");
-            Integer initialYear = new Integer(parts[0]);
-            
-            List<DegreeCurricularPlan> plans = new ArrayList<DegreeCurricularPlan>();
-            for (DegreeCurricularPlan curricularPlan : getDegree().getDegreeCurricularPlans()) {
-                if (curricularPlan.getInitialDateYearMonthDay().getYear() == initialYear) {
-                    if (!curricularPlan.getState().equals(DegreeCurricularPlanState.CONCLUDED)
-                            && !curricularPlan.getState().equals(DegreeCurricularPlanState.PAST)) {
-                        plans.add(curricularPlan);
-                    }
-                }
-            }
+	public void setCurricularPlanYear(String curricularPlanYear) {
+	    this.curricularPlanYear = curricularPlanYear;
+	}
 
-            if (plans.isEmpty()) {
-                return null;
-            }
-            
-            return this.curricularPlan = plans.get(0);
-        }
-        
+	public Degree getDegree() {
+	    return getParent().getDegree();
+	}
+
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+	    if (this.curricularPlan != null) {
+		return this.curricularPlan;
+	    }
+
+	    String year = getCurricularPlanYear();
+	    if (year == null) {
+		return null;
+	    }
+
+	    if (!year.matches("\\p{Digit}{4}(-\\p{Digit}{4})?")) {
+		return null;
+	    }
+
+	    String[] parts = year.split("-");
+	    Integer initialYear = new Integer(parts[0]);
+
+	    List<DegreeCurricularPlan> plans = new ArrayList<DegreeCurricularPlan>();
+	    for (DegreeCurricularPlan curricularPlan : getDegree().getDegreeCurricularPlans()) {
+		if (curricularPlan.getInitialDateYearMonthDay().getYear() == initialYear) {
+		    if (!curricularPlan.getState().equals(DegreeCurricularPlanState.CONCLUDED)
+			    && !curricularPlan.getState().equals(DegreeCurricularPlanState.PAST)) {
+			plans.add(curricularPlan);
+		    }
+		}
+	    }
+
+	    if (plans.isEmpty()) {
+		return null;
+	    }
+
+	    return this.curricularPlan = plans.get(0);
+	}
+
     }
 }

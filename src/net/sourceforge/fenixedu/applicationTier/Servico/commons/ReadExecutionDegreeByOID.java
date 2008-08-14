@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreeByOID extends Service {
 
-	public InfoExecutionDegree run(Integer oid) {
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(oid);
-		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	}
+    public InfoExecutionDegree run(Integer oid) {
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(oid);
+	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+    }
 
 }

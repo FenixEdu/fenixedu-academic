@@ -24,7 +24,7 @@ public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLi
 
     /**
      * @param position
-     *                The position to set.
+     *            The position to set.
      */
     public void setPosition(String position) {
 	this.position = position;

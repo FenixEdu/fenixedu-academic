@@ -16,8 +16,8 @@ import pt.utl.ist.berserk.ServiceResponse;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 5/Set/2003, 16:22:14
- *  
+ *         Created at 5/Set/2003, 16:22:14
+ * 
  */
 public class CandidaciesAccessFilter extends Filtro {
     public CandidaciesAccessFilter() {
@@ -26,19 +26,20 @@ public class CandidaciesAccessFilter extends Filtro {
     /*
      * (non-Javadoc)
      * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
+     * @see
+     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
-                || (id == null) || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedException();
-        }
+	IUserView id = getRemoteUser(request);
+	if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
+		|| (id.getRoleTypes() == null)) {
+	    throw new NotAuthorizedException();
+	}
 
     }
 
     private RoleType getRoleType() {
-        return RoleType.SEMINARIES_COORDINATOR;
+	return RoleType.SEMINARIES_COORDINATOR;
     }
 }

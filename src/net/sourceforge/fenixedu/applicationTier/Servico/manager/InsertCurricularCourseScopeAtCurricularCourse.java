@@ -20,31 +20,33 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
  */
 public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
 
-    public void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException{
-        Branch branch = null;
-        CurricularSemester curricularSemester = null;
-        try {
-            curricularSemester = rootDomainObject.readCurricularSemesterByOID(infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
-            if (curricularSemester == null)
-                throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
-         
-			CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal());
-            if (curricularCourse == null)
-                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+    public void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException {
+	Branch branch = null;
+	CurricularSemester curricularSemester = null;
+	try {
+	    curricularSemester = rootDomainObject.readCurricularSemesterByOID(infoCurricularCourseScope
+		    .getInfoCurricularSemester().getIdInternal());
+	    if (curricularSemester == null)
+		throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
 
-            branch = rootDomainObject.readBranchByOID(infoCurricularCourseScope.getInfoBranch().getIdInternal());
-            if (branch == null)
-                throw new NonExistingServiceException("message.non.existing.branch", null);
-			
-            new CurricularCourseScope(branch, curricularCourse, curricularSemester, infoCurricularCourseScope.getBeginDate(),
-										infoCurricularCourseScope.getEndDate(), infoCurricularCourseScope.getAnotation());
-        } catch(IllegalWriteException iwe) {
-            throw iwe;
-        } catch (RuntimeException e) {
-            throw new ExistingServiceException("O âmbito pertencente ao ramo " + branch.getCode() + ", no "
-                    + curricularSemester.getCurricularYear().getYear() + "º ano,  "
-                    + curricularSemester.getSemester() + "º semestre");
-        }
+	    CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
+		    .readDegreeModuleByOID(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal());
+	    if (curricularCourse == null)
+		throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+
+	    branch = rootDomainObject.readBranchByOID(infoCurricularCourseScope.getInfoBranch().getIdInternal());
+	    if (branch == null)
+		throw new NonExistingServiceException("message.non.existing.branch", null);
+
+	    new CurricularCourseScope(branch, curricularCourse, curricularSemester, infoCurricularCourseScope.getBeginDate(),
+		    infoCurricularCourseScope.getEndDate(), infoCurricularCourseScope.getAnotation());
+	} catch (IllegalWriteException iwe) {
+	    throw iwe;
+	} catch (RuntimeException e) {
+	    throw new ExistingServiceException("O âmbito pertencente ao ramo " + branch.getCode() + ", no "
+		    + curricularSemester.getCurricularYear().getYear() + "º ano,  " + curricularSemester.getSemester()
+		    + "º semestre");
+	}
     }
-    
+
 }

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDomainProfessorshipByOID extends Service {
 
     public Professorship run(Integer professorshipID) {
-        return rootDomainObject.readProfessorshipByOID(professorshipID);
+	return rootDomainObject.readProfessorshipByOID(professorshipID);
     }
 
 }

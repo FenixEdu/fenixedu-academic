@@ -15,18 +15,18 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class FenixForwardAction extends ForwardAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        return super.execute(mapping, actionForm, request, response);
+	return super.execute(mapping, actionForm, request, response);
     }
-    
+
     protected static IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+	return UserView.getUser();
     }
-    
+
     protected Person getLoggedPerson(HttpServletRequest request) {
-        return getUserView(request).getPerson();
+	return getUserView(request).getPerson();
     }
 
 }

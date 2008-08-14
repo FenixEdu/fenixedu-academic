@@ -30,7 +30,7 @@ public class User extends User_Base {
     public void setPerson(Person person) {
 	throw new DomainException("error.impossible.to.edit.person");
     }
-   
+
     public static User readUserByUserUId(final String userUId) {
 	final Login login = Login.readLoginByUsername(userUId);
 	return login == null ? null : login.getUser();
@@ -56,21 +56,22 @@ public class User extends User_Base {
     }
 
     public void delete() {
-	for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete());
+	for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete())
+	    ;
 	super.setPerson(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
 
     public String getAliass() {
-        final StringBuilder aliass = new StringBuilder();
-        for (final LoginAlias loginAlias : readUserLoginIdentification().getLoginAliasOrderByImportance()) {
-            if (aliass.length() > 0) {
-                aliass.append(", ");
-            }
-            aliass.append(loginAlias.getAlias());
-        }
-        return aliass.toString();
+	final StringBuilder aliass = new StringBuilder();
+	for (final LoginAlias loginAlias : readUserLoginIdentification().getLoginAliasOrderByImportance()) {
+	    if (aliass.length() > 0) {
+		aliass.append(", ");
+	    }
+	    aliass.append(loginAlias.getAlias());
+	}
+	return aliass.toString();
     }
 
 }

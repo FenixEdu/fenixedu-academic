@@ -15,6 +15,6 @@ public class FenixTransactionException extends FenixActionException {
 
     public FenixTransactionException(String key) {
 
-        super(key);
+	super(key);
     }
 }

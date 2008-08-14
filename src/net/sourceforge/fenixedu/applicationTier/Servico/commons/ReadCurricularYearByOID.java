@@ -14,27 +14,27 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
- *  
+ * 
  */
 public class ReadCurricularYearByOID extends Service {
 
-    public InfoCurricularYear run(Integer oid) throws FenixServiceException{
-        InfoCurricularYear result = null;
+    public InfoCurricularYear run(Integer oid) throws FenixServiceException {
+	InfoCurricularYear result = null;
 
-        CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(oid);
-        if (curricularYear != null) {
-            result = InfoCurricularYear.newInfoFromDomain(curricularYear);
-        } else {
-            throw new UnexistingCurricularYearException();
-        }
+	CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(oid);
+	if (curricularYear != null) {
+	    result = InfoCurricularYear.newInfoFromDomain(curricularYear);
+	} else {
+	    throw new UnexistingCurricularYearException();
+	}
 
-        return result;
+	return result;
     }
 
     public class UnexistingCurricularYearException extends FenixServiceException {
-        public UnexistingCurricularYearException() {
-            super();
-        }
+	public UnexistingCurricularYearException() {
+	    super();
+	}
     }
 
 }

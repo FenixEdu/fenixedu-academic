@@ -21,18 +21,16 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     public static final Comparator<PersonSpaceOccupation> COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("person.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("person.name",
+		Collator.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
-    @FenixDomainObjectActionLogAnnotation(
-         actionName="Created person occupation", 
-	 parameters={"space","person","begin","end"}
-    )
-    public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin,
-	    final YearMonthDay end) {
-	
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created person occupation", parameters = { "space", "person", "begin",
+	    "end" })
+    public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin, final YearMonthDay end) {
+
 	super();
 	setResource(space);
 	setPerson(person);
@@ -40,34 +38,28 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.setBegin(begin);
 	super.setEnd(end);
     }
-    
+
     @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
-    @FenixDomainObjectActionLogAnnotation(
-         actionName="Edited person occupation", 
-	 parameters={"begin","end"}
-    )
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited person occupation", parameters = { "begin", "end" })
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
 	checkPersonSpaceOccupationIntersection(begin, end, getPerson(), getSpace());
 	super.setBegin(begin);
 	super.setEnd(end);
     }
-    
+
     @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
-    @FenixDomainObjectActionLogAnnotation(
-	 actionName="Deleted person occupation", 
-         parameters={}
-    )
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted person occupation", parameters = {})
     public void delete() {
 	super.setPerson(null);
 	super.delete();
     }
-      
+
     @Override
     public boolean isPersonSpaceOccupation() {
-        return true;
+	return true;
     }
-    
-    @Override       
+
+    @Override
     public void setPerson(Person person) {
 	if (person == null) {
 	    throw new DomainException("error.inexistente.person");
@@ -75,16 +67,16 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.setPerson(person);
     }
 
-    @Override      
+    @Override
     public void setBegin(YearMonthDay begin) {
-	 throw new DomainException("error.invalid.operation");
+	throw new DomainException("error.invalid.operation");
     }
 
-    @Override     
+    @Override
     public void setEnd(YearMonthDay end) {
-	 throw new DomainException("error.invalid.operation");
+	throw new DomainException("error.invalid.operation");
     }
-    
+
     public boolean contains(YearMonthDay currentDate) {
 	return (getBegin() == null || !getBegin().isAfter(currentDate)) && (getEnd() == null || !getEnd().isBefore(currentDate));
     }
@@ -98,8 +90,8 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	return getSpace().getPersonOccupationsAccessGroupWithChainOfResponsibility();
     }
 
-    public void checkPersonSpaceOccupationIntersection(final YearMonthDay begin, final YearMonthDay end,
-	    Person person, Space space) {
+    public void checkPersonSpaceOccupationIntersection(final YearMonthDay begin, final YearMonthDay end, Person person,
+	    Space space) {
 
 	checkBeginDateAndEndDate(begin, end);
 	List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();
@@ -123,11 +115,11 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	    throw new DomainException("error.begin.after.end");
 	}
     }
-    
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
 	final YearMonthDay start = getBegin();
-	final YearMonthDay end = getEnd();	
+	final YearMonthDay end = getEnd();
 	return start != null && (end == null || end.isAfter(start));
     }
 }

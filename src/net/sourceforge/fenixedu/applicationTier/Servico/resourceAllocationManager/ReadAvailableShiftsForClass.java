@@ -26,19 +26,19 @@ public class ReadAvailableShiftsForClass extends Service {
 
     public Object run(InfoClass infoClass) {
 
-        List infoShifts = null;
+	List infoShifts = null;
 
-        SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
-        Set<Shift> shifts = schoolClass.findAvailableShifts();
+	SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
+	Set<Shift> shifts = schoolClass.findAvailableShifts();
 
-        infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
-            public Object transform(Object arg0) {
-                Shift shift = (Shift) arg0;
-                return InfoShift.newInfoFromDomain(shift);
-            }
-        });
+	infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
+	    public Object transform(Object arg0) {
+		Shift shift = (Shift) arg0;
+		return InfoShift.newInfoFromDomain(shift);
+	    }
+	});
 
-        return infoShifts;
+	return infoShifts;
     }
 
 }

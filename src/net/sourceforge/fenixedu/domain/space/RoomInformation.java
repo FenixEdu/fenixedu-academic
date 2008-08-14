@@ -13,15 +13,14 @@ import org.joda.time.YearMonthDay;
 public class RoomInformation extends RoomInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Created room information", parameters = {
-	    "room", "blueprintNumber", "identification", "description", "roomClassification", "area",
-	    "heightQuality", "illuminationQuality", "distanceFromSanitaryInstalationsQuality",
-	    "securityQuality", "ageQuality", "observations", "begin", "end", "doorNumber" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created room information", parameters = { "room", "blueprintNumber",
+	    "identification", "description", "roomClassification", "area", "heightQuality", "illuminationQuality",
+	    "distanceFromSanitaryInstalationsQuality", "securityQuality", "ageQuality", "observations", "begin", "end",
+	    "doorNumber" })
     public RoomInformation(Room room, String blueprintNumber, String identification, String description,
-	    RoomClassification roomClassification, BigDecimal area, Boolean heightQuality,
-	    Boolean illuminationQuality, Boolean distanceFromSanitaryInstalationsQuality,
-	    Boolean securityQuality, Boolean ageQuality, String observations, YearMonthDay begin,
-	    YearMonthDay end, String doorNumber) {
+	    RoomClassification roomClassification, BigDecimal area, Boolean heightQuality, Boolean illuminationQuality,
+	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality, Boolean ageQuality, String observations,
+	    YearMonthDay begin, YearMonthDay end, String doorNumber) {
 
 	super();
 	super.setSpace(room);
@@ -41,17 +40,14 @@ public class RoomInformation extends RoomInformation_Base {
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = {
-	    "blueprintNumber", "identification", "description", "roomClassification", "area",
-	    "heightQuality", "illuminationQuality", "distanceFromSanitaryInstalationsQuality",
-	    "securityQuality", "ageQuality", "observations", "begin", "end", "doorNumber",
-	    "normalCapacity", "examCapacity" })
-    public void editRoomCharacteristics(String blueprintNumber, String identification,
-	    String description, RoomClassification roomClassification, BigDecimal area,
-	    Boolean heightQuality, Boolean illuminationQuality,
-	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
-	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end, 
-	    String doorNumber, Integer normalCapacity, Integer examCapacity) {
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = { "blueprintNumber",
+	    "identification", "description", "roomClassification", "area", "heightQuality", "illuminationQuality",
+	    "distanceFromSanitaryInstalationsQuality", "securityQuality", "ageQuality", "observations", "begin", "end",
+	    "doorNumber", "normalCapacity", "examCapacity" })
+    public void editRoomCharacteristics(String blueprintNumber, String identification, String description,
+	    RoomClassification roomClassification, BigDecimal area, Boolean heightQuality, Boolean illuminationQuality,
+	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality, Boolean ageQuality, String observations,
+	    YearMonthDay begin, YearMonthDay end, String doorNumber, Integer normalCapacity, Integer examCapacity) {
 
 	editTimeInterval(begin, end);
 	setBlueprintNumber(blueprintNumber);
@@ -65,43 +61,42 @@ public class RoomInformation extends RoomInformation_Base {
 	setSecurityQuality(securityQuality);
 	setAgeQuality(ageQuality);
 	setObservations(observations);
-	setDoorNumber(doorNumber);		
+	setDoorNumber(doorNumber);
 	setNormalCapacity(normalCapacity);
 	setExamCapacity(examCapacity);
     }
-    
+
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = {
-	    "blueprintNumber", "identification", "description", "roomClassification", 
-	    "observations", "begin", "end", "doorNumber", "normalCapacity", "examCapacity" })
-    public void editLimitedRoomCharacteristics(String blueprintNumber, String identification,
-	    String description, RoomClassification roomClassification,
-	    String observations, YearMonthDay begin, YearMonthDay end, String doorNumber,
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = { "blueprintNumber",
+	    "identification", "description", "roomClassification", "observations", "begin", "end", "doorNumber",
+	    "normalCapacity", "examCapacity" })
+    public void editLimitedRoomCharacteristics(String blueprintNumber, String identification, String description,
+	    RoomClassification roomClassification, String observations, YearMonthDay begin, YearMonthDay end, String doorNumber,
 	    Integer normalCapacity, Integer examCapacity) {
 
 	editTimeInterval(begin, end);
 	setBlueprintNumber(blueprintNumber);
 	setIdentification(identification);
 	setDescription(description);
-	setRoomClassification(roomClassification);	
+	setRoomClassification(roomClassification);
 	setObservations(observations);
-	setDoorNumber(doorNumber);	
+	setDoorNumber(doorNumber);
 	setNormalCapacity(normalCapacity);
-	setExamCapacity(examCapacity);	
+	setExamCapacity(examCapacity);
     }
 
     private void setNormalCapacity(Integer normalCapacity) {
 	getRoom().setNormalCapacity(normalCapacity);
     }
-    
+
     private void setExamCapacity(Integer examCapacity) {
 	getRoom().setExamCapacity(examCapacity);
     }
-    
+
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room information", parameters = {})
-    public void delete() {	
-	super.delete();	
+    public void delete() {
+	super.delete();
     }
 
     @Override
@@ -109,15 +104,15 @@ public class RoomInformation extends RoomInformation_Base {
 	removeRoomClassification();
 	super.deleteWithoutCheckNumberOfSpaceInformations();
     }
-    
+
     @Override
     public void setRoomClassification(RoomClassification roomClassification) {
-        if(roomClassification != null && !roomClassification.hasParentRoomClassification()) {
-            throw new DomainException("error.roomInformation.invalid.roomClassification");
-        }
+	if (roomClassification != null && !roomClassification.hasParentRoomClassification()) {
+	    throw new DomainException("error.roomInformation.invalid.roomClassification");
+	}
 	super.setRoomClassification(roomClassification);
     }
-        
+
     @Override
     public void setSpace(final Space space) {
 	throw new DomainException("error.incompatible.space");
@@ -128,13 +123,13 @@ public class RoomInformation extends RoomInformation_Base {
     }
 
     public Integer getNormalCapacity() {
-	return getRoom().getNormalCapacity();	
+	return getRoom().getNormalCapacity();
     }
-    
+
     public Integer getExamCapacity() {
 	return getRoom().getExamCapacity();
     }
-          
+
     public RoomFactoryEditor getSpaceFactoryEditor() {
 	final RoomFactoryEditor roomFactoryEditor = new RoomFactoryEditor();
 	roomFactoryEditor.setSpace((Room) getSpace());
@@ -156,12 +151,13 @@ public class RoomInformation extends RoomInformation_Base {
 
     @Override
     public String getPresentationName() {
-	String name = !StringUtils.isEmpty(getIdentification()) ? 
-		(getIdentification() + (!StringUtils.isEmpty(getDescription()) ? " - " + getDescription() : ""))
+	String name = !StringUtils.isEmpty(getIdentification()) ? (getIdentification() + (!StringUtils.isEmpty(getDescription()) ? " - "
+		+ getDescription()
+		: ""))
 		: (!StringUtils.isEmpty(getDescription()) ? getDescription() : "");
 	return name.trim();
     }
-        
+
     public Room getRoom() {
 	return (Room) getSpace();
     }

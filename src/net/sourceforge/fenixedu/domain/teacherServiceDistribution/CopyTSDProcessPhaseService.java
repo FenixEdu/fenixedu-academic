@@ -63,14 +63,14 @@ public class CopyTSDProcessPhaseService {
     }
 
     public void copyDataFromTSDProcessPhase(TSDProcessPhase newProcessPhase, TSDProcessPhase oldTSDProcessPhase) {
-	Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(oldTSDProcessPhase
-		.getTSDProcess().getExecutionPeriods(), newProcessPhase.getTSDProcess().getExecutionPeriods());
+	Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(
+		oldTSDProcessPhase.getTSDProcess().getExecutionPeriods(), newProcessPhase.getTSDProcess().getExecutionPeriods());
 
 	copyDataFromTSDProcessPhase(newProcessPhase, oldTSDProcessPhase, oldAndNewExecutionPeriodMap);
     }
 
-    private Map<ExecutionSemester, ExecutionSemester> getExecutionPeriodTranslationMap(List<ExecutionSemester> oldExecutionPeriodList,
-	    List<ExecutionSemester> newExecutionPeriodList) {
+    private Map<ExecutionSemester, ExecutionSemester> getExecutionPeriodTranslationMap(
+	    List<ExecutionSemester> oldExecutionPeriodList, List<ExecutionSemester> newExecutionPeriodList) {
 	Map<ExecutionSemester, ExecutionSemester> translationMap = new HashMap<ExecutionSemester, ExecutionSemester>();
 
 	for (ExecutionSemester oldExecutionPeriod : oldExecutionPeriodList) {
@@ -122,7 +122,7 @@ public class CopyTSDProcessPhaseService {
 		.getWeightFirstTimeEnrolledStudentsPerTrainingShift());
 	newProcessPhase.setWeightFirstTimeEnrolledStudentsPerTutDirectionShift(oldTSDProcessPhase
 		.getWeightFirstTimeEnrolledStudentsPerTutDirectionShift());
-	
+
 	newProcessPhase.setWeightSecondTimeEnrolledStudentsPerTheoShift(oldTSDProcessPhase
 		.getWeightSecondTimeEnrolledStudentsPerTheoShift());
 	newProcessPhase.setWeightSecondTimeEnrolledStudentsPerLabShift(oldTSDProcessPhase
@@ -141,7 +141,8 @@ public class CopyTSDProcessPhaseService {
 
     private void createAndCopyTSDCoursesAndTSDProfessorships(TSDProcessPhase oldTSDProcessPhase,
 	    Map<TeacherServiceDistribution, TeacherServiceDistribution> oldAndNewTSDMap,
-	    Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap, Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap) {
+	    Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap,
+	    Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap) {
 
 	Map<TSDCourse, TSDCourse> processedTSDCourses = new HashMap<TSDCourse, TSDCourse>();
 
@@ -261,7 +262,7 @@ public class CopyTSDProcessPhaseService {
 	return oldAndNewTSDTeacherMap;
     }
 
-    /*---------------------- TSD ---------------------*/
+    /* ---------------------- TSD --------------------- */
 
     private TeacherServiceDistribution createAndCopyFromTeacherServiceDistribution(TSDProcessPhase newTSDProcessPhase,
 	    TeacherServiceDistribution oldTSD, TeacherServiceDistribution fatherTSD,
@@ -296,7 +297,7 @@ public class CopyTSDProcessPhaseService {
 	return newTSDTeacherList;
     }
 
-    /*---------------------- TSD Courses---------------------*/
+    /* ---------------------- TSD Courses--------------------- */
 
     private void fillTSDCourseFromAnotherTSDCourse(TSDCourse tsdCourse, TSDCourse newTSDCourse) {
 

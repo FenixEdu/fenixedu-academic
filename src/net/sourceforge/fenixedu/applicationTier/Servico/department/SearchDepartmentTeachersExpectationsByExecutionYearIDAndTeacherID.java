@@ -18,28 +18,27 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID extends Service {
 
-    public List<TeacherPersonalExpectation> run(Integer departmentID, Integer executionYearID,
-            Integer teacherID) throws FenixServiceException{
-        Department department = rootDomainObject.readDepartmentByOID(
-                departmentID);
+    public List<TeacherPersonalExpectation> run(Integer departmentID, Integer executionYearID, Integer teacherID)
+	    throws FenixServiceException {
+	Department department = rootDomainObject.readDepartmentByOID(departmentID);
 
-        List<TeacherPersonalExpectation> result = new ArrayList<TeacherPersonalExpectation>();
+	List<TeacherPersonalExpectation> result = new ArrayList<TeacherPersonalExpectation>();
 
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-        if (teacherID != null) {
-            Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-            TeacherPersonalExpectation teacherPersonalExpectation = teacher
-                    .getTeacherPersonalExpectationByExecutionYear(executionYear);
+	if (teacherID != null) {
+	    Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	    TeacherPersonalExpectation teacherPersonalExpectation = teacher
+		    .getTeacherPersonalExpectationByExecutionYear(executionYear);
 
-            if (teacherPersonalExpectation != null) {
-                result.add(teacherPersonalExpectation);
-            }
+	    if (teacherPersonalExpectation != null) {
+		result.add(teacherPersonalExpectation);
+	    }
 
-        } else {
-            result = department.getTeachersPersonalExpectationsByExecutionYear(executionYear);
-        }
+	} else {
+	    result = department.getTeachersPersonalExpectationsByExecutionYear(executionYear);
+	}
 
-        return result;
+	return result;
     }
 }

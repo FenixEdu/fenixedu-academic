@@ -12,10 +12,10 @@ public abstract class Form implements Serializable {
     public abstract String getFormName();
 
     public String getFormDescription() {
-        return "";
+	return "";
     }
 
     public boolean isInput() {
-        return true;
+	return true;
     }
 }

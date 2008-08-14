@@ -15,137 +15,135 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class TagCountRenderer extends OutputRenderer {
 
-	private String linkFormat;
+    private String linkFormat;
 
-	private String classes;
+    private String classes;
 
-	private String styles;
+    private String styles;
 
-	private boolean moduleRelative;
+    private boolean moduleRelative;
 
-	private boolean contextRelative;
+    private boolean contextRelative;
 
-	private String separator;
+    private String separator;
 
-	private String showAllUrl;
-	
-	private String sortBy;
-	
-	
-	public String getSortBy() {
-		return sortBy;
-	}
+    private String showAllUrl;
 
-	public void setSortBy(String sortBy) {
-		this.sortBy = sortBy;
-	}
+    private String sortBy;
 
-	public String getShowAllUrl() {
-		return showAllUrl;
-	}
+    public String getSortBy() {
+	return sortBy;
+    }
 
-	public void setShowAllUrl(String showAllUrl) {
-		this.showAllUrl = showAllUrl;
-	}
+    public void setSortBy(String sortBy) {
+	this.sortBy = sortBy;
+    }
 
-	public String getSeparator() {
-		return separator;
-	}
+    public String getShowAllUrl() {
+	return showAllUrl;
+    }
 
-	public void setSeparator(String separator) {
-		this.separator = separator;
-	}
+    public void setShowAllUrl(String showAllUrl) {
+	this.showAllUrl = showAllUrl;
+    }
 
-	public boolean isContextRelative() {
-		return contextRelative;
-	}
+    public String getSeparator() {
+	return separator;
+    }
 
-	public void setContextRelative(boolean contextRelative) {
-		this.contextRelative = contextRelative;
-	}
+    public void setSeparator(String separator) {
+	this.separator = separator;
+    }
 
-	public boolean isModuleRelative() {
-		return moduleRelative;
-	}
+    public boolean isContextRelative() {
+	return contextRelative;
+    }
 
-	public void setModuleRelative(boolean moduleRelative) {
-		this.moduleRelative = moduleRelative;
-	}
+    public void setContextRelative(boolean contextRelative) {
+	this.contextRelative = contextRelative;
+    }
 
-	public String getClasses() {
-		return classes;
-	}
+    public boolean isModuleRelative() {
+	return moduleRelative;
+    }
 
-	public void setClasses(String classes) {
-		this.classes = classes;
-	}
+    public void setModuleRelative(boolean moduleRelative) {
+	this.moduleRelative = moduleRelative;
+    }
 
-	public String getLinkFormat() {
-		return linkFormat;
-	}
+    public String getClasses() {
+	return classes;
+    }
 
-	public void setLinkFormat(String linkFormat) {
-		this.linkFormat = linkFormat;
-	}
+    public void setClasses(String classes) {
+	this.classes = classes;
+    }
 
-	public String getStyles() {
-		return styles;
-	}
+    public String getLinkFormat() {
+	return linkFormat;
+    }
 
-	public void setStyles(String styles) {
-		this.styles = styles;
-	}
+    public void setLinkFormat(String linkFormat) {
+	this.linkFormat = linkFormat;
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    public String getStyles() {
+	return styles;
+    }
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				Collection<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
-						(Collection<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
-						(Collection<UnitFileTag>) object);
-				
-				HtmlInlineContainer container = new HtmlInlineContainer();
-				int i = 0;
-				for (UnitFileTag tag : tags) {
-					if (tag.isTagAccessibleToUser(AccessControl.getPerson())) {
-						if (i > 0) {
-							container.addChild(new HtmlText(" " + getSeparator() + " "));
-						}
-						
-						HtmlComponent component = null;
-						if (getLinkFormat() != null) {
-							HtmlLink link = new HtmlLink();
-							link.setModuleRelative(isModuleRelative());
-							link.setContextRelative(isContextRelative());
-							link.setUrl(RenderUtils.getFormattedProperties(getLinkFormat(), tag));
-							link.setBody(getText(tag));
-							component = link;
-						} else {
-							component = getText(tag);
-						}
-						container.addChild(component);
-						i++;
-					}
-				}
-				if (getShowAllUrl() != null) {
-					HtmlLink link = new HtmlLink();
-					link.setModuleRelative(isModuleRelative());
-					link.setContextRelative(isContextRelative());
-					link.setUrl(getShowAllUrl());
-					link.setBody(new HtmlText(RenderUtils.getResourceString("RENDERER_RESOURCES", "renderers.show.all")));
-					container.addChild(new HtmlText(" " + getSeparator() + " "));
-					container.addChild(link);
-				}
-				return container;
+    public void setStyles(String styles) {
+	this.styles = styles;
+    }
+
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+	return new Layout() {
+
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		Collection<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
+			(Collection<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
+			(Collection<UnitFileTag>) object);
+
+		HtmlInlineContainer container = new HtmlInlineContainer();
+		int i = 0;
+		for (UnitFileTag tag : tags) {
+		    if (tag.isTagAccessibleToUser(AccessControl.getPerson())) {
+			if (i > 0) {
+			    container.addChild(new HtmlText(" " + getSeparator() + " "));
 			}
 
-			private HtmlComponent getText(UnitFileTag tag) {
-				return new HtmlText(tag.getName() + "(" + tag.getFileTagCount(AccessControl.getPerson())
-						+ ") ");
+			HtmlComponent component = null;
+			if (getLinkFormat() != null) {
+			    HtmlLink link = new HtmlLink();
+			    link.setModuleRelative(isModuleRelative());
+			    link.setContextRelative(isContextRelative());
+			    link.setUrl(RenderUtils.getFormattedProperties(getLinkFormat(), tag));
+			    link.setBody(getText(tag));
+			    component = link;
+			} else {
+			    component = getText(tag);
 			}
+			container.addChild(component);
+			i++;
+		    }
+		}
+		if (getShowAllUrl() != null) {
+		    HtmlLink link = new HtmlLink();
+		    link.setModuleRelative(isModuleRelative());
+		    link.setContextRelative(isContextRelative());
+		    link.setUrl(getShowAllUrl());
+		    link.setBody(new HtmlText(RenderUtils.getResourceString("RENDERER_RESOURCES", "renderers.show.all")));
+		    container.addChild(new HtmlText(" " + getSeparator() + " "));
+		    container.addChild(link);
+		}
+		return container;
+	    }
 
-		};
-	}
+	    private HtmlComponent getText(UnitFileTag tag) {
+		return new HtmlText(tag.getName() + "(" + tag.getFileTagCount(AccessControl.getPerson()) + ") ");
+	    }
+
+	};
+    }
 }

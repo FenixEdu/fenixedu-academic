@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author Fernanda Quitério 25/06/2003
- *  
+ * 
  */
 public class InfoSiteEvaluation extends DataTranferObject implements ISiteComponent {
 
@@ -14,14 +14,14 @@ public class InfoSiteEvaluation extends DataTranferObject implements ISiteCompon
      * @return
      */
     public List getInfoEvaluations() {
-        return infoEvaluations;
+	return infoEvaluations;
     }
 
     /**
      * @param infoEvaluations
      */
     public void setInfoEvaluations(List infoEvaluations) {
-        this.infoEvaluations = infoEvaluations;
+	this.infoEvaluations = infoEvaluations;
     }
 
 }

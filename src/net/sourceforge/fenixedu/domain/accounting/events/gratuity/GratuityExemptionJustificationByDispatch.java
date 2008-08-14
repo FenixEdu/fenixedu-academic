@@ -8,35 +8,31 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-public class GratuityExemptionJustificationByDispatch extends
-	GratuityExemptionJustificationByDispatch_Base {
+public class GratuityExemptionJustificationByDispatch extends GratuityExemptionJustificationByDispatch_Base {
 
     protected GratuityExemptionJustificationByDispatch() {
 	super();
     }
 
     public GratuityExemptionJustificationByDispatch(final GratuityExemption gratuityExemption,
-	    final GratuityExemptionJustificationType justificationType, final String reason,
-	    final YearMonthDay dispatchDate) {
+	    final GratuityExemptionJustificationType justificationType, final String reason, final YearMonthDay dispatchDate) {
 	this();
 	init(gratuityExemption, justificationType, reason, dispatchDate);
     }
 
-    protected void init(GratuityExemption gratuityExemption,
-	    GratuityExemptionJustificationType justificationType, String reason,
+    protected void init(GratuityExemption gratuityExemption, GratuityExemptionJustificationType justificationType, String reason,
 	    YearMonthDay dispatchDate) {
 	checkParameters(justificationType, reason, dispatchDate);
 	super.init(gratuityExemption, justificationType, reason);
 	super.setGratuityExemptionDispatchDate(dispatchDate);
     }
 
-    private void checkParameters(final GratuityExemptionJustificationType justificationType,
-	    final String reason, final YearMonthDay dispatchDate) {
+    private void checkParameters(final GratuityExemptionJustificationType justificationType, final String reason,
+	    final YearMonthDay dispatchDate) {
 	if (dispatchDate == null || StringUtils.isEmpty(reason)) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.events.GratuityExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
-		    new LabelFormatter(justificationType.getQualifiedName(),
-			    LabelFormatter.ENUMERATION_RESOURCES));
+		    new LabelFormatter(justificationType.getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES));
 	}
 
     }
@@ -52,10 +48,8 @@ public class GratuityExemptionJustificationByDispatch extends
 	final LabelFormatter labelFormatter = new LabelFormatter();
 	labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(),
 		LabelFormatter.ENUMERATION_RESOURCES);
-	labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES)
-		.appendLabel(" ").appendLabel(
-			getGratuityExemptionDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT))
-		.appendLabel(")");
+	labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
+		.appendLabel(getGratuityExemptionDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
 
 	return labelFormatter;
     }

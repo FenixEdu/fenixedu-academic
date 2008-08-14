@@ -43,31 +43,31 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
     }
 
     protected void init(Container parent, Content child, Boolean isAscending) {
-	if(!parent.isChildAccepted(child)) { 
+	if (!parent.isChildAccepted(child)) {
 	    throw new DomainException("contents.child.not.accepted", child.getName().getContent(), parent.getName().getContent());
 	}
-	
-	if(!child.isParentAccepted(parent)) {
+
+	if (!child.isParentAccepted(parent)) {
 	    throw new DomainException("contents.child.not.accepted", child.getName().getContent(), parent.getName().getContent());
 	}
-	
+
 	setParent(parent);
 	setChild(child);
 	setContentId(parent.getContentId() + ":" + child.getContentId());
 	setAscending(isAscending);
     }
 
-    public boolean isNodeVisible() { 
+    public boolean isNodeVisible() {
 	return super.getVisible() && getChild().isAvailable();
     }
 
     /**
-         * Deletes this node removing the associating between the container in
-         * {@link #getParent()} and the content in {@link #getChild()}.
-         * 
-         * <p>
-         * Sibling nodes are reordered if needed.
-         */
+     * Deletes this node removing the associating between the container in
+     * {@link #getParent()} and the content in {@link #getChild()}.
+     * 
+     * <p>
+     * Sibling nodes are reordered if needed.
+     */
     public void delete() {
 	removeRootDomainObject();
 	removeParent();
@@ -95,7 +95,7 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
     public boolean isAvailable(FunctionalityContext context) {
 	return getChild().isAvailable(context);
     }
-    
+
     public boolean isAvailable() {
 	return getChild().isAvailable();
     }

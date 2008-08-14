@@ -117,7 +117,6 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 	return prepareStudentsPerformanceGrid(mapping, actionForm, request, response);
     }
 
-
     public Object getRenderedObject(String id) {
 	if (id == null || id.equals("")) {
 	    return (RenderUtils.getViewState() == null ? null : RenderUtils.getViewState().getMetaObject().getObject());

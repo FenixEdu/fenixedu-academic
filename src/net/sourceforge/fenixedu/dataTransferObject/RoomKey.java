@@ -17,33 +17,33 @@ public class RoomKey extends InfoObject {
     }
 
     public RoomKey(String nomeSala) {
-        setNomeSala(nomeSala);
+	setNomeSala(nomeSala);
     }
 
     public String getNomeSala() {
-        return _nomeSala;
+	return _nomeSala;
     }
 
     public void setNomeSala(String nomeSala) {
-        _nomeSala = nomeSala;
+	_nomeSala = nomeSala;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof RoomKey) {
-            RoomKey keySala = (RoomKey) obj;
+	boolean resultado = false;
+	if (obj instanceof RoomKey) {
+	    RoomKey keySala = (RoomKey) obj;
 
-            resultado = (getNomeSala().equals(keySala.getNomeSala()));
-        }
+	    resultado = (getNomeSala().equals(keySala.getNomeSala()));
+	}
 
-        return resultado;
+	return resultado;
     }
 
     public String toString() {
-        String result = "[KEYSALA";
-        result += ", sala=" + _nomeSala;
-        result += "]";
-        return result;
+	String result = "[KEYSALA";
+	result += ", sala=" + _nomeSala;
+	result += "]";
+	return result;
     }
 
 }

@@ -5,6 +5,6 @@ public enum InformationTypeToDisplay {
     CONVOKES, UNAVAILABLE, INCOMPATIBLE_PERSON;
 
     public String getName() {
-        return name();
+	return name();
     }
 }

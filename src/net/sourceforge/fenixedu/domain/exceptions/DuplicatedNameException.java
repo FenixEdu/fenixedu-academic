@@ -14,11 +14,11 @@ public class DuplicatedNameException extends DomainException {
     private static final long serialVersionUID = 1L;
 
     public DuplicatedNameException(String key) {
-        super(key);
+	super(key);
     }
 
     public DuplicatedNameException(String key, String[] args) {
-        super(key, args);
+	super(key, args);
     }
 
 }

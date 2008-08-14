@@ -32,8 +32,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProtocolsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward showProtocols(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showProtocols(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	List<Protocol> protocolList = new ArrayList<Protocol>();
 	ProtocolSearch protocolSearch = (ProtocolSearch) getRenderedObject();
@@ -52,8 +52,8 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("show-protocols");
     }
 
-    public ActionForward showProtocolAlerts(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showProtocolAlerts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	YearMonthDay now = new YearMonthDay();
 	List<ProtocolHistory> protocolHistories = new ArrayList<ProtocolHistory>();
 	List<ProtocolHistory> protocolHistoriesNullEndDate = new ArrayList<ProtocolHistory>();
@@ -74,18 +74,17 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("show-protocol-alerts");
     }
 
-    public ActionForward prepareRenewProtocol(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareRenewProtocol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Integer protocolId = new Integer(request.getParameter("idInternal"));
 	final Protocol protocol = rootDomainObject.readProtocolByOID(protocolId);
-	ProtocolHistoryRenewerFactory protocolHistoryFactory = new ProtocolHistoryRenewerFactory(
-		protocol);
+	ProtocolHistoryRenewerFactory protocolHistoryFactory = new ProtocolHistoryRenewerFactory(protocol);
 	request.setAttribute("protocolHistoryFactory", protocolHistoryFactory);
 	return mapping.findForward("renew-protocol");
     }
 
-    public ActionForward renewProtocol(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward renewProtocol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	if (isCancelled(request)) {
 	    return showProtocolAlerts(mapping, actionForm, request, response);
 	}
@@ -101,8 +100,8 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	return showProtocolAlerts(mapping, actionForm, request, response);
     }
 
-    public ActionForward prepareEditProtocolHistory(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditProtocolHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Integer protocolId = new Integer(request.getParameter("idInternal"));
 	final Protocol protocol = rootDomainObject.readProtocolByOID(protocolId);
 	ProtocolHistoryEditorFactory protocolHistoryFactory = new ProtocolHistoryEditorFactory(protocol);
@@ -110,8 +109,8 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("edit-protocol-history");
     }
 
-    public ActionForward editProtocolHistory(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editProtocolHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	if (isCancelled(request)) {
 	    return showProtocolAlerts(mapping, actionForm, request, response);
 	}
@@ -127,8 +126,8 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	return showProtocolAlerts(mapping, actionForm, request, response);
     }
 
-    public ActionForward searchProtocols(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward searchProtocols(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	ProtocolSearch protocolSearch = (ProtocolSearch) getRenderedObject("protocolSearch");
 	if (protocolSearch == null) {
 	    protocolSearch = new ProtocolSearch();
@@ -141,15 +140,13 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("search-protocols");
     }
 
-    private ActionForward exportProtocols(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response, ProtocolSearch protocolSearch)
-	    throws Exception {
+    private ActionForward exportProtocols(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response, ProtocolSearch protocolSearch) throws Exception {
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=protocolos.xls");
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources",
-		Language.getLocale());
-	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle
-		.getString("label.protocols.navigation.header"), false);
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources", Language.getLocale());
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("label.protocols.navigation.header"),
+		false);
 	Protocol.getExcelHeader(spreadsheet, bundle);
 	List<Protocol> protocolList = protocolSearch.getSearch();
 	for (Protocol protocol : protocolList) {
@@ -162,12 +159,11 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward viewProtocolDetails(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewProtocolDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer protocolID = getIntegerFromRequest(request, "idInternal");
-	Protocol protocol = (Protocol) RootDomainObject
-		.readDomainObjectByOID(Protocol.class, protocolID);
+	Protocol protocol = (Protocol) RootDomainObject.readDomainObjectByOID(Protocol.class, protocolID);
 	request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
 	return mapping.findForward("view-protocol-details");
     }

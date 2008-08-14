@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode extends Service {
 
     public InfoOldInquiriesCoursesRes run(Integer executionPeriodId, Integer degreeId, String courseCode)
-	    throws FenixServiceException, NoSuchMethodException, InvocationTargetException,
-	    NoSuchMethodException, IllegalAccessException {
+	    throws FenixServiceException, NoSuchMethodException, InvocationTargetException, NoSuchMethodException,
+	    IllegalAccessException {
 	InfoOldInquiriesCoursesRes oldInquiriesCoursesRes = null;
 
 	Degree degree = rootDomainObject.readDegreeByOID(degreeId);

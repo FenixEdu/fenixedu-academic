@@ -18,8 +18,7 @@ public class EnrolmentSet extends TreeSet<Enrolment> {
     @Override
     public boolean add(final Enrolment enrolment) {
 	final ExecutionYear enrolmentExecutionYear = enrolment.getExecutionPeriod().getExecutionYear();
-	return executionYear == null || executionYear.compareTo(enrolmentExecutionYear) > 0 ? super
-		.add(enrolment) : false;
+	return executionYear == null || executionYear.compareTo(enrolmentExecutionYear) > 0 ? super.add(enrolment) : false;
     }
 
     @Override

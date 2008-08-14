@@ -22,34 +22,34 @@ public class InfoViewRoomSchedule extends InfoObject {
     }
 
     public InfoViewRoomSchedule(InfoRoom infoRoom, List roomLessons) {
-        setInfoRoom(infoRoom);
-        setRoomLessons(roomLessons);
+	setInfoRoom(infoRoom);
+	setRoomLessons(roomLessons);
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoViewRoomSchedule) {
-            InfoViewRoomSchedule infoViewClassSchedule = (InfoViewRoomSchedule) obj;
-            resultado = getInfoRoom().equals(infoViewClassSchedule.getInfoRoom())
-                    && getRoomLessons().size() == infoViewClassSchedule.getRoomLessons().size();
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoViewRoomSchedule) {
+	    InfoViewRoomSchedule infoViewClassSchedule = (InfoViewRoomSchedule) obj;
+	    resultado = getInfoRoom().equals(infoViewClassSchedule.getInfoRoom())
+		    && getRoomLessons().size() == infoViewClassSchedule.getRoomLessons().size();
+	}
+	return resultado;
     }
 
     public InfoRoom getInfoRoom() {
-        return infoRoom;
+	return infoRoom;
     }
 
     public List getRoomLessons() {
-        return roomLessons;
+	return roomLessons;
     }
 
     public void setInfoRoom(InfoRoom class1) {
-        infoRoom = class1;
+	infoRoom = class1;
     }
 
     public void setRoomLessons(List list) {
-        roomLessons = list;
+	roomLessons = list;
     }
 
 }

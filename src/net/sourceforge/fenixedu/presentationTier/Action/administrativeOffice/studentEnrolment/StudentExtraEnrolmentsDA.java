@@ -86,8 +86,8 @@ public class StudentExtraEnrolmentsDA extends FenixDispatchAction {
 	final ExecutionSemester executionPeriod = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	try {
-	    ServiceUtils.executeService("CreateExtraEnrolment", new Object[] { studentCurricularPlan,
-		    executionPeriod, (CurricularCourse) rootDomainObject.readDegreeModuleByOID(optionalCCID), groupType });
+	    ServiceUtils.executeService("CreateExtraEnrolment", new Object[] { studentCurricularPlan, executionPeriod,
+		    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(optionalCCID), groupType });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    StudentExtraEnrolmentBean extraEnrolmentBean = new StudentExtraEnrolmentBean(studentCurricularPlan, executionPeriod,

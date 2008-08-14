@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditTeacherInstitutionWorkTime extends Service {
 
     public void run(InstitutionWorkTimeDTO institutionWorkTimeDTO, RoleType roleType) {
-        InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) rootDomainObject
-                .readTeacherServiceItemByOID(institutionWorkTimeDTO.getIdInternal());
+	InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) rootDomainObject
+		.readTeacherServiceItemByOID(institutionWorkTimeDTO.getIdInternal());
 
-        institutionWorkTime.update(institutionWorkTimeDTO, roleType);
+	institutionWorkTime.update(institutionWorkTimeDTO, roleType);
     }
 
 }

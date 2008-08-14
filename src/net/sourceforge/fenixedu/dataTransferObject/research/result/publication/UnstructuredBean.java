@@ -27,12 +27,12 @@ public class UnstructuredBean extends ResultPublicationBean implements Serializa
 
     @Override
     protected void fillSpecificFields(ResearchResultPublication publication) {
-	//no specific fields
+	// no specific fields
     }
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	//no bibtex
+	// no bibtex
     }
 
 }

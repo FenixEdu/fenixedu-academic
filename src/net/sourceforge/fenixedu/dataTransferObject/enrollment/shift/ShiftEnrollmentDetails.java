@@ -20,27 +20,27 @@ public class ShiftEnrollmentDetails extends DataTranferObject {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof ShiftEnrollmentDetails) {
-            ShiftEnrollmentDetails details = (ShiftEnrollmentDetails) obj;
-            resultado = getInfoShift().equals(details.getInfoShift());
-        }
+	boolean resultado = false;
+	if (obj instanceof ShiftEnrollmentDetails) {
+	    ShiftEnrollmentDetails details = (ShiftEnrollmentDetails) obj;
+	    resultado = getInfoShift().equals(details.getInfoShift());
+	}
 
-        return resultado;
+	return resultado;
     }
 
     /**
      * @return Returns the infoShift.
      */
     public InfoShift getInfoShift() {
-        return infoShift;
+	return infoShift;
     }
 
     /**
      * @return Returns the vacancies.
      */
     public Integer getVacancies() {
-        return vacancies;
+	return vacancies;
     }
 
     /**
@@ -48,7 +48,7 @@ public class ShiftEnrollmentDetails extends DataTranferObject {
      *            The infoShift to set.
      */
     public void setInfoShift(InfoShift infoShift) {
-        this.infoShift = infoShift;
+	this.infoShift = infoShift;
     }
 
     /**
@@ -56,7 +56,7 @@ public class ShiftEnrollmentDetails extends DataTranferObject {
      *            The vacancies to set.
      */
     public void setVacancies(Integer vacancies) {
-        this.vacancies = vacancies;
+	this.vacancies = vacancies;
     }
 
 }

@@ -17,16 +17,16 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class ReadEnroledExecutionCourses extends Service {
 
     public List<ExecutionCourse> run(final Registration registration) {
-	
+
 	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-	
+
 	for (final Attends attend : registration.getAssociatedAttendsSet()) {
 	    final ExecutionCourse executionCourse = attend.getExecutionCourse();
-	    
+
 	    if (executionCourse.getExecutionPeriod() == executionSemester) {
 		final List<Grouping> groupings = executionCourse.getGroupings();
-		
+
 		if (checkPeriodEnrollment(groupings) && checkStudentInAttendsSet(groupings, registration)) {
 		    result.add(executionCourse);
 		}
@@ -34,29 +34,29 @@ public class ReadEnroledExecutionCourses extends Service {
 	}
 	return result;
     }
-    
+
     private boolean checkPeriodEnrollment(final Grouping grouping) {
-        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
-        return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
+	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+	return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
     }
 
     private boolean checkPeriodEnrollment(final List<Grouping> allGroupProperties) {
-        for (final Grouping grouping : allGroupProperties) {
-            if (checkPeriodEnrollment(grouping)) {
-                return true;
-            }
-        }
-        return false;
+	for (final Grouping grouping : allGroupProperties) {
+	    if (checkPeriodEnrollment(grouping)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean checkStudentInAttendsSet(final List<Grouping> allGroupProperties, final Registration registration) {
-        for (final Grouping grouping : allGroupProperties) {
-            if (grouping.getStudentAttend(registration) != null) {
-        	return true;
-            }
-        }
-        return false;
+	for (final Grouping grouping : allGroupProperties) {
+	    if (grouping.getStudentAttend(registration) != null) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

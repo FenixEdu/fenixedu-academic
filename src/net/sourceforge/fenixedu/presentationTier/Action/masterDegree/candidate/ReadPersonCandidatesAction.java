@@ -31,28 +31,28 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ReadPersonCandidatesAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Object args[] = { userView.getUtilizador() };
+	Object args[] = { userView.getUtilizador() };
 
-        List<InfoMasterDegreeCandidate> candidates = null;
-        try {
-            candidates = (List<InfoMasterDegreeCandidate>) ServiceManagerServiceFactory.executeService(
-                    "ReadPersonCandidates", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	List<InfoMasterDegreeCandidate> candidates = null;
+	try {
+	    candidates = (List<InfoMasterDegreeCandidate>) ServiceManagerServiceFactory.executeService("ReadPersonCandidates",
+		    args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        if (candidates.size() == 1) {
-            request.setAttribute("candidateID", candidates.get(0).getIdInternal());
-            return mapping.findForward("Success");
-        }
+	if (candidates.size() == 1) {
+	    request.setAttribute("candidateID", candidates.get(0).getIdInternal());
+	    return mapping.findForward("Success");
+	}
 
-        request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
-        return mapping.findForward("ChooseCandidate");
+	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+	return mapping.findForward("ChooseCandidate");
 
     }
 

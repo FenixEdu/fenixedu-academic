@@ -11,47 +11,46 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class CorrectorForAllGroupRenderer extends OutputRenderer {
 
-	private String classes;
+    private String classes;
 
-	public String getClasses() {
-		return classes;
-	}
+    public String getClasses() {
+	return classes;
+    }
 
-	public void setClasses(String classes) {
-		this.classes = classes;
-	}
+    public void setClasses(String classes) {
+	this.classes = classes;
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+	return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				NewCorrector corrector = (NewCorrector) object;
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		NewCorrector corrector = (NewCorrector) object;
 
-				HtmlInlineContainer container = new HtmlInlineContainer();
+		HtmlInlineContainer container = new HtmlInlineContainer();
 
-				StringBuilder builder = new StringBuilder("Pergunta: ");
+		StringBuilder builder = new StringBuilder("Pergunta: ");
 
-				Iterator<Integer> iterator = corrector.getAtomicQuestion().getPath().iterator();
-				while (iterator.hasNext()) {
-					Integer position = iterator.next();
-					builder.append(position);
+		Iterator<Integer> iterator = corrector.getAtomicQuestion().getPath().iterator();
+		while (iterator.hasNext()) {
+		    Integer position = iterator.next();
+		    builder.append(position);
 
-					if (iterator.hasNext()) {
-						builder.append(".");
-					}
-				}
+		    if (iterator.hasNext()) {
+			builder.append(".");
+		    }
+		}
 
-				container.addChild(new HtmlText(builder.toString() + ":"));
+		container.addChild(new HtmlText(builder.toString() + ":"));
 
-				container.addChild(renderValue(corrector.getPredicate(), corrector.getPredicate()
-						.getClass(), null, "values"));
+		container.addChild(renderValue(corrector.getPredicate(), corrector.getPredicate().getClass(), null, "values"));
 
-				return container;
-			}
+		return container;
+	    }
 
-		};
-	}
+	};
+    }
 
 }

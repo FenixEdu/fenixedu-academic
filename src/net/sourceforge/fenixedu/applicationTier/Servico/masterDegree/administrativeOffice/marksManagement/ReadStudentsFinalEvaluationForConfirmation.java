@@ -28,14 +28,14 @@ import org.apache.commons.collections.Predicate;
 
 public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 
-    public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString)
-	    throws FenixServiceException {
+    public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
 
 	List infoEnrolmentEvaluations = new ArrayList();
 	InfoTeacher infoTeacher = null;
 
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-	final List<Enrolment> enrolments = (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
+	final List<Enrolment> enrolments = (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString)
+		: curricularCourse.getEnrolments();
 
 	final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
 	for (final Enrolment enrolment : enrolments) {
@@ -56,8 +56,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 		InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
 			.newInfoFromDomain(elem);
 
-		infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem
-			.getEnrolment()));
+		infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem.getEnrolment()));
 		infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 	    }
 	}
@@ -70,8 +69,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 	InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
 	infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
 	infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-	Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0))
-		.getGradeAvailableDate();
+	Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getGradeAvailableDate();
 	infoSiteEnrolmentEvaluation.setLastEvaluationDate(evaluationDate);
 	infoSiteEnrolmentEvaluation.setInfoExecutionPeriod(infoExecutionPeriod);
 
@@ -82,34 +80,32 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 	    InvalidSituationServiceException {
 	// evaluations can only be confirmated if they are not already
 	// confirmated
-	List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations,
-		new Predicate() {
-		    public boolean evaluate(Object arg0) {
-			EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
-			return enrolmentEvaluation.isTemporary();
-		    }
-		});
+	List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations, new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
+		return enrolmentEvaluation.isTemporary();
+	    }
+	});
 
 	if (temporaryEnrolmentEvaluations == null || temporaryEnrolmentEvaluations.size() == 0) {
 	    throw new ExistingServiceException();
 	}
 
-	List enrolmentEvaluationsWithoutGrade = (List) CollectionUtils.select(
-		temporaryEnrolmentEvaluations, new Predicate() {
-		    public boolean evaluate(Object input) {
-			// see if there are evaluations without grade
-			EnrolmentEvaluation enrolmentEvaluationInput = (EnrolmentEvaluation) input;
-			if (enrolmentEvaluationInput.getGrade().isEmpty())
-			    return true;
-			return false;
-		    }
-		});
+	List enrolmentEvaluationsWithoutGrade = (List) CollectionUtils.select(temporaryEnrolmentEvaluations, new Predicate() {
+	    public boolean evaluate(Object input) {
+		// see if there are evaluations without grade
+		EnrolmentEvaluation enrolmentEvaluationInput = (EnrolmentEvaluation) input;
+		if (enrolmentEvaluationInput.getGrade().isEmpty())
+		    return true;
+		return false;
+	    }
+	});
 	if (enrolmentEvaluationsWithoutGrade != null) {
 	    if (enrolmentEvaluationsWithoutGrade.size() == temporaryEnrolmentEvaluations.size()) {
 		throw new InvalidSituationServiceException();
 	    }
-	    temporaryEnrolmentEvaluations = (List) CollectionUtils.subtract(
-		    temporaryEnrolmentEvaluations, enrolmentEvaluationsWithoutGrade);
+	    temporaryEnrolmentEvaluations = (List) CollectionUtils.subtract(temporaryEnrolmentEvaluations,
+		    enrolmentEvaluationsWithoutGrade);
 	}
 
 	return temporaryEnrolmentEvaluations;

@@ -14,17 +14,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditGuideInformationInManager extends Service {
 
-    public void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType)
-            {
-        Guide guide = rootDomainObject.readGuideByOID(guideID);
-        
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        ExecutionDegree cursoExecucao = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear); 
-            
-        if(newPaymentType != null && newPaymentType.length() > 0){
-            guide.setPaymentType(PaymentType.valueOf(newPaymentType));
-        }
-        guide.setExecutionDegree(cursoExecucao);
+    public void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType) {
+	Guide guide = rootDomainObject.readGuideByOID(guideID);
+
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	ExecutionDegree cursoExecucao = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
+		executionYear);
+
+	if (newPaymentType != null && newPaymentType.length() > 0) {
+	    guide.setPaymentType(PaymentType.valueOf(newPaymentType));
+	}
+	guide.setExecutionDegree(cursoExecucao);
 
     }
 

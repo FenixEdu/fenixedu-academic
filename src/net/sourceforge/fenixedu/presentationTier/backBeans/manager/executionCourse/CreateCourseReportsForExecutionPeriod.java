@@ -17,44 +17,42 @@ import org.apache.commons.collections.Transformer;
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
 
     private Integer executionPeriodID;
 
-    public List getExecutionPeriods() throws FenixFilterException, FenixServiceException{
-        
-        List executionPeriods = (List) ServiceUtils.executeService( "ReadNotClosedExecutionPeriods");
-        
-        CollectionUtils.transform(executionPeriods, new Transformer() {
-        
-            public Object transform(Object arg0) {
-                InfoExecutionPeriod executionPeriod = (InfoExecutionPeriod) arg0;                
-                return new SelectItem(executionPeriod.getIdInternal(), executionPeriod.getDescription());
-            }
-        
-        });
-        
-        return executionPeriods;
-                
+    public List getExecutionPeriods() throws FenixFilterException, FenixServiceException {
+
+	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
+
+	CollectionUtils.transform(executionPeriods, new Transformer() {
+
+	    public Object transform(Object arg0) {
+		InfoExecutionPeriod executionPeriod = (InfoExecutionPeriod) arg0;
+		return new SelectItem(executionPeriod.getIdInternal(), executionPeriod.getDescription());
+	    }
+
+	});
+
+	return executionPeriods;
+
     }
-    
-    public void create(ActionEvent evt) throws FenixFilterException, FenixServiceException{
-        
-        Object[] args = { getExecutionPeriodID() };
-        ServiceUtils.executeService( "CreateCourseReports", args);
-        
+
+    public void create(ActionEvent evt) throws FenixFilterException, FenixServiceException {
+
+	Object[] args = { getExecutionPeriodID() };
+	ServiceUtils.executeService("CreateCourseReports", args);
+
     }
-    
+
     public Integer getExecutionPeriodID() {
-        return executionPeriodID;
+	return executionPeriodID;
     }
 
     public void setExecutionPeriodID(Integer executionPeriodID) {
-        this.executionPeriodID = executionPeriodID;
+	this.executionPeriodID = executionPeriodID;
     }
-    
-    
-    
+
 }

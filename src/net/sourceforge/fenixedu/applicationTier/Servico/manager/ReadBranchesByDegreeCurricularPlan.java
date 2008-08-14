@@ -13,22 +13,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadBranchesByDegreeCurricularPlan extends Service {
 
-	public List<InfoBranch> run(Integer idDegreeCurricularPlan) throws FenixServiceException{
-		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
-		if (degreeCurricularPlan == null) {
-			throw new NonExistingServiceException();
-		}
-
-        List<Branch> allBranches = degreeCurricularPlan.getAreas();
-		if (allBranches == null || allBranches.isEmpty()) {
-			return null;
-		}
-
-		List<InfoBranch> result = new ArrayList<InfoBranch>(allBranches.size());
-		for (Branch branch : allBranches) {
-			result.add(InfoBranch.newInfoFromDomain(branch));
-		}
-		return result;
+    public List<InfoBranch> run(Integer idDegreeCurricularPlan) throws FenixServiceException {
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
+	if (degreeCurricularPlan == null) {
+	    throw new NonExistingServiceException();
 	}
-    
+
+	List<Branch> allBranches = degreeCurricularPlan.getAreas();
+	if (allBranches == null || allBranches.isEmpty()) {
+	    return null;
+	}
+
+	List<InfoBranch> result = new ArrayList<InfoBranch>(allBranches.size());
+	for (Branch branch : allBranches) {
+	    result.add(InfoBranch.newInfoFromDomain(branch));
+	}
+	return result;
+    }
+
 }

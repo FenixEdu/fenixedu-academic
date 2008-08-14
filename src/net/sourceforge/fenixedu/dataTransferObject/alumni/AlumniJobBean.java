@@ -184,5 +184,4 @@ public class AlumniJobBean implements Serializable {
 	this.contractType = contractType;
     }
 
-
 }

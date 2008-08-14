@@ -22,14 +22,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadReimbursementGuidesByGuide extends Service {
 
     public List run(Integer guideId) {
-        List<InfoReimbursementGuide> result = new ArrayList<InfoReimbursementGuide>();
+	List<InfoReimbursementGuide> result = new ArrayList<InfoReimbursementGuide>();
 
-        Guide guide = rootDomainObject.readGuideByOID(guideId);
-        for (ReimbursementGuide reimbursementGuide : guide.getReimbursementGuides()) {
-            result.add(InfoReimbursementGuide.newInfoFromDomain(reimbursementGuide));
-        }
+	Guide guide = rootDomainObject.readGuideByOID(guideId);
+	for (ReimbursementGuide reimbursementGuide : guide.getReimbursementGuides()) {
+	    result.add(InfoReimbursementGuide.newInfoFromDomain(reimbursementGuide));
+	}
 
-        return result;
+	return result;
     }
 
 }

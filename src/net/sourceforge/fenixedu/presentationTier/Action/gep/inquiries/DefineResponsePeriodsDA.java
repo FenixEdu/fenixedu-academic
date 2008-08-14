@@ -28,20 +28,19 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class DefineResponsePeriodsDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 	final String executionPeriodIDString = dynaActionForm.getString("executionPeriodID");
-	final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer
-		.valueOf(executionPeriodIDString) : null;
+	final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer.valueOf(executionPeriodIDString) : null;
 
 	final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
 
 	ExecutionSemester selectedExecutionPeriod = null;
 	final List<LabelValueBean> executionPeriodLVBs = new ArrayList<LabelValueBean>();
 	for (final ExecutionSemester executionSemester : executionSemesters) {
-	    final String label = executionSemester.getName() + " " + executionSemester.getExecutionYear().getYear(); executionPeriodLVBs
-		    .add(new LabelValueBean(label, executionSemester.getIdInternal().toString()));
+	    final String label = executionSemester.getName() + " " + executionSemester.getExecutionYear().getYear();
+	    executionPeriodLVBs.add(new LabelValueBean(label, executionSemester.getIdInternal().toString()));
 
 	    if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
 		selectedExecutionPeriod = executionSemester;
@@ -58,8 +57,8 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	return mapping.findForward("showForm");
     }
 
-    public ActionForward define(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward define(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	final IUserView userView = UserView.getUser();
 
@@ -69,14 +68,13 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	final String inquiryResponseBeginString = dynaActionForm.getString("inquiryResponseBegin");
 	final String inquiryResponseEndString = dynaActionForm.getString("inquiryResponseEnd");
 
-	final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer
-		.valueOf(executionPeriodIDString) : null;
-	final Date inquiryResponseBegin = (inquiryResponseBeginString != null && inquiryResponseBeginString
-		.length() > 0) ? DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseBeginString
-		+ ":00") : null;
-	final Date inquiryResponseEnd = (inquiryResponseEndString != null && inquiryResponseEndString
-		.length() > 0) ? DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseEndString
-		+ ":00") : null;
+	final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer.valueOf(executionPeriodIDString) : null;
+	final Date inquiryResponseBegin = (inquiryResponseBeginString != null && inquiryResponseBeginString.length() > 0) ? DateFormatUtil
+		.parse("dd/MM/yyyy HH:mm", inquiryResponseBeginString + ":00")
+		: null;
+	final Date inquiryResponseEnd = (inquiryResponseEndString != null && inquiryResponseEndString.length() > 0) ? DateFormatUtil
+		.parse("dd/MM/yyyy HH:mm", inquiryResponseEndString + ":00")
+		: null;
 
 	final Object[] args = new Object[] { executionPeriodID, inquiryResponseBegin, inquiryResponseEnd };
 	ServiceUtils.executeService("DefineInquiryResponsePeriod", args);

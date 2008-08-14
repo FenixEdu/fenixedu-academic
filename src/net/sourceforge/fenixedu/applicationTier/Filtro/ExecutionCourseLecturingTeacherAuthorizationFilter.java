@@ -69,21 +69,21 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
     private ExecutionCourse getExecutionCourse(Object argument) {
 	if (argument == null) {
 	    return null;
-	    
+
 	} else if (argument instanceof ExecutionCourse) {
 	    return (ExecutionCourse) argument;
-	    
+
 	} else if (argument instanceof InfoExecutionCourse) {
 	    final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
 	    return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-	    
+
 	} else if (argument instanceof Integer) {
 	    final Integer executionCourseID = (Integer) argument;
 	    return rootDomainObject.readExecutionCourseByOID(executionCourseID);
-	    
+
 	} else if (argument instanceof SummariesManagementBean) {
 	    return ((SummariesManagementBean) argument).getExecutionCourse();
-	    
+
 	} else {
 	    return null;
 	}

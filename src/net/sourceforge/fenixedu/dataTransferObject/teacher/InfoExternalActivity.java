@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoExternalActivity extends InfoObject implements ISiteComponent {
 
@@ -31,7 +31,7 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent {
      * @return Returns the activity.
      */
     public String getActivity() {
-        return activity;
+	return activity;
     }
 
     /**
@@ -39,14 +39,14 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent {
      *            The activity to set.
      */
     public void setActivity(String activity) {
-        this.activity = activity;
+	this.activity = activity;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -54,22 +54,22 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoExternalActivity) {
-            resultado = getInfoTeacher().equals(((InfoExternalActivity) obj).getInfoTeacher());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoExternalActivity) {
+	    resultado = getInfoTeacher().equals(((InfoExternalActivity) obj).getInfoTeacher());
+	}
+	return resultado;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
     public Date getLastModificationDate() {
-        return lastModificationDate;
+	return lastModificationDate;
     }
 
     /**
@@ -77,29 +77,31 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent {
      *            The lastModificationDate to set.
      */
     public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
+	this.lastModificationDate = lastModificationDate;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(ExternalActivity externalActivity) {
-        super.copyFromDomain(externalActivity);
-        if (externalActivity != null) {
-            setActivity(externalActivity.getActivity());
-            setLastModificationDate(externalActivity.getLastModificationDate());
-			setInfoTeacher(InfoTeacher.newInfoFromDomain(externalActivity.getTeacher()));
-        }
+	super.copyFromDomain(externalActivity);
+	if (externalActivity != null) {
+	    setActivity(externalActivity.getActivity());
+	    setLastModificationDate(externalActivity.getLastModificationDate());
+	    setInfoTeacher(InfoTeacher.newInfoFromDomain(externalActivity.getTeacher()));
+	}
     }
 
     public static InfoExternalActivity newInfoFromDomain(ExternalActivity externalActivity) {
-        InfoExternalActivity infoExternalActivity = null;
-        if (externalActivity != null) {
-            infoExternalActivity = new InfoExternalActivity();
-            infoExternalActivity.copyFromDomain(externalActivity);
-        }
-        return infoExternalActivity;
+	InfoExternalActivity infoExternalActivity = null;
+	if (externalActivity != null) {
+	    infoExternalActivity = new InfoExternalActivity();
+	    infoExternalActivity.copyFromDomain(externalActivity);
+	}
+	return infoExternalActivity;
     }
 }

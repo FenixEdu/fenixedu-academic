@@ -8,7 +8,7 @@ public class UnitAnnouncementsDA extends UnitSiteAnnouncementManagement {
 
     @Override
     protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-        return mapping.getPath() + ".do";
+	return mapping.getPath() + ".do";
     }
 
 }

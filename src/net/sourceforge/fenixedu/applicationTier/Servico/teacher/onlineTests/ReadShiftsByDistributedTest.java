@@ -24,26 +24,25 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadShiftsByDistributedTest extends Service {
 
-	public List<InfoShift> run(Integer executionCourseId, Integer distributedTestId)
-			throws FenixServiceException{
+    public List<InfoShift> run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
 
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-        final Set<Registration> students = distributedTest != null ? distributedTest.findStudents() : new HashSet<Registration>();
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+	final Set<Registration> students = distributedTest != null ? distributedTest.findStudents() : new HashSet<Registration>();
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseId);
-		if (executionCourse == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-
-		final Set<Shift> shiftList = executionCourse.getAssociatedShifts();
-
-		List<InfoShift> result = new ArrayList<InfoShift>();
-		for (Shift shift : shiftList) {
-			List<Registration> shiftStudents = shift.getStudents();
-			if (!students.containsAll(shiftStudents)) {
-				result.add(InfoShift.newInfoFromDomain(shift));
-			}
-		}
-		return result;
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	if (executionCourse == null) {
+	    throw new InvalidArgumentsServiceException();
 	}
+
+	final Set<Shift> shiftList = executionCourse.getAssociatedShifts();
+
+	List<InfoShift> result = new ArrayList<InfoShift>();
+	for (Shift shift : shiftList) {
+	    List<Registration> shiftStudents = shift.getStudents();
+	    if (!students.containsAll(shiftStudents)) {
+		result.add(InfoShift.newInfoFromDomain(shift));
+	    }
+	}
+	return result;
+    }
 }

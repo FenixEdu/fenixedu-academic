@@ -16,20 +16,21 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class StudentInformationOwnerAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
+	IUserView id = getRemoteUser(request);
 
-        if (id == null || id.getRoleTypes() == null || !id.hasRoleType(getRoleType())
-                || !curriculumOwner(id, request.getServiceParameters().parametersArray())) {
-            throw new NotAuthorizedFilterException();
-        }
+	if (id == null || id.getRoleTypes() == null || !id.hasRoleType(getRoleType())
+		|| !curriculumOwner(id, request.getServiceParameters().parametersArray())) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 
     private boolean curriculumOwner(IUserView id, Object[] arguments) {
-        final StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
-        return studentCurricularPlan != null && studentCurricularPlan.getRegistration().getPerson() == id.getPerson();
+	final StudentCurricularPlan studentCurricularPlan = rootDomainObject
+		.readStudentCurricularPlanByOID((Integer) arguments[1]);
+	return studentCurricularPlan != null && studentCurricularPlan.getRegistration().getPerson() == id.getPerson();
     }
 
     protected RoleType getRoleType() {
-        return RoleType.STUDENT;
+	return RoleType.STUDENT;
     }
 }

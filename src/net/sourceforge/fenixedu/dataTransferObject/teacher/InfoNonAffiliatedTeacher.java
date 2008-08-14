@@ -25,56 +25,56 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
     }
 
     public void copyFromDomain(NonAffiliatedTeacher nonAffiliatedTeacher) {
-        super.copyFromDomain(nonAffiliatedTeacher);
-        if (nonAffiliatedTeacher != null) {
-            if (nonAffiliatedTeacher.getInstitutionUnit() != null) {
-                InfoInstitution infoInstitution = new InfoInstitution();
-                infoInstitution.copyFromDomain(nonAffiliatedTeacher.getInstitutionUnit());
-                setInfoInstitution(infoInstitution);
-            }
-            setName(nonAffiliatedTeacher.getName());
-        }
+	super.copyFromDomain(nonAffiliatedTeacher);
+	if (nonAffiliatedTeacher != null) {
+	    if (nonAffiliatedTeacher.getInstitutionUnit() != null) {
+		InfoInstitution infoInstitution = new InfoInstitution();
+		infoInstitution.copyFromDomain(nonAffiliatedTeacher.getInstitutionUnit());
+		setInfoInstitution(infoInstitution);
+	    }
+	    setName(nonAffiliatedTeacher.getName());
+	}
     }
 
     public static InfoNonAffiliatedTeacher newInfoFromDomain(NonAffiliatedTeacher naTeacher) {
-        InfoNonAffiliatedTeacher infoNaTeacher = null;
-        if (naTeacher != null) {
-            infoNaTeacher = new InfoNonAffiliatedTeacher();
-            infoNaTeacher.copyFromDomain(naTeacher);
-        }
-        return infoNaTeacher;
+	InfoNonAffiliatedTeacher infoNaTeacher = null;
+	if (naTeacher != null) {
+	    infoNaTeacher = new InfoNonAffiliatedTeacher();
+	    infoNaTeacher.copyFromDomain(naTeacher);
+	}
+	return infoNaTeacher;
     }
 
     public InfoInstitution getInfoInstitution() {
-        return infoInstitution;
+	return infoInstitution;
     }
 
     public void setInfoInstitution(InfoInstitution infoInstitution) {
-        this.infoInstitution = infoInstitution;
+	this.infoInstitution = infoInstitution;
     }
 
     public Integer getKeyInstitution() {
-        return keyInstitution;
+	return keyInstitution;
     }
 
     public void setKeyInstitution(Integer keyInstitution) {
-        this.keyInstitution = keyInstitution;
+	this.keyInstitution = keyInstitution;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     @Override
     public String toString() {
-        String result = "[INFONONAFFILIATEDTEACHER";
-        result += ", nome=" + this.getName();
-        result += "]";
-        return result;
+	String result = "[INFONONAFFILIATEDTEACHER";
+	result += ", nome=" + this.getName();
+	result += "]";
+	return result;
     }
 
 }

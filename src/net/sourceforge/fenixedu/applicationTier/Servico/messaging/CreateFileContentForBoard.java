@@ -33,7 +33,7 @@ public class CreateFileContentForBoard extends FileContentService {
 	if (StringUtils.isEmpty(displayName)) {
 	    displayName = file.getName();
 	}
-	
+
 	final VirtualPath filePath = getVirtualPath(board);
 
 	Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName);

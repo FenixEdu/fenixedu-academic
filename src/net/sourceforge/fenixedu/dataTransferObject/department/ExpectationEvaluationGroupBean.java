@@ -9,16 +9,16 @@ import net.sourceforge.fenixedu.domain.Teacher;
 public class ExpectationEvaluationGroupBean implements Serializable {
 
     private DomainReference<ExecutionYear> executionYearReference;
-    
+
     private DomainReference<Teacher> appraiserReference;
-    
+
     private DomainReference<Teacher> evaluatedReference;
-    
+
     public ExpectationEvaluationGroupBean(Teacher teacher, ExecutionYear executionYear) {
 	setAppraiser(teacher);
 	setExecutionYear(executionYear);
-    }    
-    
+    }
+
     public ExecutionYear getExecutionYear() {
 	return (this.executionYearReference != null) ? this.executionYearReference.getObject() : null;
     }
@@ -26,7 +26,7 @@ public class ExpectationEvaluationGroupBean implements Serializable {
     public void setExecutionYear(ExecutionYear executionYear) {
 	this.executionYearReference = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
     }
-    
+
     public Teacher getAppraiser() {
 	return (this.appraiserReference != null) ? this.appraiserReference.getObject() : null;
     }
@@ -34,7 +34,7 @@ public class ExpectationEvaluationGroupBean implements Serializable {
     public void setAppraiser(Teacher teacher) {
 	this.appraiserReference = (teacher != null) ? new DomainReference<Teacher>(teacher) : null;
     }
-    
+
     public Teacher getEvaluated() {
 	return (this.evaluatedReference != null) ? this.evaluatedReference.getObject() : null;
     }

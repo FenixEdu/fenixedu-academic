@@ -8,29 +8,31 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom extends InfoWrittenEvaluationEnrolment {
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(WrittenEvaluationEnrolment writtenEvaluationEnrolment) {
-        super.copyFromDomain(writtenEvaluationEnrolment);
-        if (writtenEvaluationEnrolment != null) {
-            setInfoStudent(InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
-            setInfoRoom(InfoRoom.newInfoFromDomain(writtenEvaluationEnrolment.getRoom()));
-        }
+	super.copyFromDomain(writtenEvaluationEnrolment);
+	if (writtenEvaluationEnrolment != null) {
+	    setInfoStudent(InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
+	    setInfoRoom(InfoRoom.newInfoFromDomain(writtenEvaluationEnrolment.getRoom()));
+	}
     }
 
     public static InfoWrittenEvaluationEnrolment newInfoFromDomain(WrittenEvaluationEnrolment writtenEvaluationEnrolment) {
-        InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom infoWrittenEvaluationEnrolment = null;
-        if (writtenEvaluationEnrolment != null) {
-            infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom();
-            infoWrittenEvaluationEnrolment.copyFromDomain(writtenEvaluationEnrolment);
-        }
-        return infoWrittenEvaluationEnrolment;
+	InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom infoWrittenEvaluationEnrolment = null;
+	if (writtenEvaluationEnrolment != null) {
+	    infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom();
+	    infoWrittenEvaluationEnrolment.copyFromDomain(writtenEvaluationEnrolment);
+	}
+	return infoWrittenEvaluationEnrolment;
     }
 }

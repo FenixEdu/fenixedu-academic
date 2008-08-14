@@ -28,14 +28,15 @@ import bibtex.dom.BibtexString;
  */
 public class Inproceedings extends Inproceedings_Base {
 
-	private static final String usedSchema = "result.publication.presentation.Inproceedings";
+    private static final String usedSchema = "result.publication.presentation.Inproceedings";
+
     public Inproceedings() {
 	super();
     }
 
-    public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title, MultiLanguageString keywords,
-    		EventEdition eventEdition, String publisher, String address, Integer firstPage, Integer lastPage, MultiLanguageString note,
-    		String language, String url) {
+    public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title,
+	    MultiLanguageString keywords, EventEdition eventEdition, String publisher, String address, Integer firstPage,
+	    Integer lastPage, MultiLanguageString note, String language, String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, eventEdition);
@@ -44,16 +45,16 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, EventEdition eventEdition, String publisher, String address,
-    		Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
+    public void setEditAll(String title, MultiLanguageString keywords, EventEdition eventEdition, String publisher,
+	    String address, Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
 	super.checkRequiredParameters(keywords, note);
-    checkRequiredParameters(title, eventEdition);
+	checkRequiredParameters(title, eventEdition);
 	fillAllAttributes(title, keywords, eventEdition, publisher, address, firstPage, lastPage, note, language, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title,MultiLanguageString keywords, EventEdition eventEdition, String publisher, String address,
-    		Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
+    private void fillAllAttributes(String title, MultiLanguageString keywords, EventEdition eventEdition, String publisher,
+	    String address, Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
 	super.setTitle(title);
 	super.setPublisher(publisher);
 	super.setAddress(address);
@@ -78,8 +79,7 @@ public class Inproceedings extends Inproceedings_Base {
 	String resume = getParticipationsAndTitleString();
 	if (getPublisher() != null)
 	    resume = resume + getPublisher() + ", ";
-	if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null)
-		&& (getLastPage() > 0))
+	if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null) && (getLastPage() > 0))
 	    resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
 	resume = finishResume(resume);
 	return resume;
@@ -186,51 +186,51 @@ public class Inproceedings extends Inproceedings_Base {
     public String getSchema() {
 	return usedSchema;
     }
-	
+
     public ResearchEvent getEvent() {
 	return this.getEventEdition().getEvent();
     }
-	
+
     public EventEdition getEventEdition() {
 	return this.getEventConferenceArticlesAssociation().getEventEdition();
     }
-	
+
     @Checked("ResultPredicates.writePredicate")
     public void setEventEdition(EventEdition eventEdition) {
 	EventConferenceArticlesAssociation association = this.getEventConferenceArticlesAssociation();
-	
-	if (association==null) {
+
+	if (association == null) {
 	    Person creator = AccessControl.getPerson();
-	    if(creator==null) {
-	    	creator = getCreator();
+	    if (creator == null) {
+		creator = getCreator();
 	    }
 	    association = new EventConferenceArticlesAssociation(eventEdition, this, creator);
 	} else {
 	    association.setEventEdition(eventEdition);
 	}
-	
+
     }
-    
+
     @Override
     public Integer getYear() {
-    	YearMonthDay startDate =getEventEdition().getStartDate(); 
-    	return startDate != null ? startDate.getYear() : new YearMonthDay().getYear();
+	YearMonthDay startDate = getEventEdition().getStartDate();
+	return startDate != null ? startDate.getYear() : new YearMonthDay().getYear();
     }
-		
+
     @Override
     public Month getMonth() {
-	return Month.values()[getEventEdition().getStartDate().getMonthOfYear()-1];
+	return Month.values()[getEventEdition().getStartDate().getMonthOfYear() - 1];
     }
-		
+
     @Override
     public String getOrganization() {
 	return getEventEdition().getOrganization();
     }
-	
+
     public String getConferenceName() {
 	return getEventEdition().getFullName();
     }
-    
+
     @Override
     public ScopeType getScope() {
 	return this.getEvent().getLocationType();

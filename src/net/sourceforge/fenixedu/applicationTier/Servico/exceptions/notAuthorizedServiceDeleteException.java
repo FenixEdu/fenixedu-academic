@@ -14,21 +14,21 @@ public class notAuthorizedServiceDeleteException extends FenixServiceException {
      *  
      */
     public notAuthorizedServiceDeleteException() {
-        super();
+	super();
     }
 
     /**
      * @param s
      */
     public notAuthorizedServiceDeleteException(String s) {
-        super(s);
+	super(s);
     }
 
     /**
      * @param cause
      */
     public notAuthorizedServiceDeleteException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -36,15 +36,15 @@ public class notAuthorizedServiceDeleteException extends FenixServiceException {
      * @param cause
      */
     public notAuthorizedServiceDeleteException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[notAuthorizedServiceDeleteException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[notAuthorizedServiceDeleteException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

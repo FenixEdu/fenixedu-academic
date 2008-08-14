@@ -31,8 +31,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 	StrategyFactory factory = StrategyFactory.getInstance();
 	Strategy strategy = factory.getStrategy(strategyName);
 	List<Vigilant> possibleVigilants = new ArrayList<Vigilant>(this.getVigilantsThatCanBeConvoked());
-	possibleVigilants.addAll(findTeachersThatAreInGroupFor(writtenEvaluation
-		.getAssociatedExecutionCourses()));
+	possibleVigilants.addAll(findTeachersThatAreInGroupFor(writtenEvaluation.getAssociatedExecutionCourses()));
 	return (strategy != null) ? strategy.sugest(possibleVigilants, writtenEvaluation) : null;
 
     }
@@ -230,8 +229,8 @@ public class VigilantGroup extends VigilantGroup_Base {
     public boolean canSpecifyUnavailablePeriodIn(DateTime date) {
 	return (date.isAfter(this.getBeginOfFirstPeriodForUnavailablePeriods())
 		&& date.isBefore(this.getEndOfFirstPeriodForUnavailablePeriods()) || (date.isAfter(this
-		.getBeginOfSecondPeriodForUnavailablePeriods()) && date.isBefore(this
-		.getEndOfSecondPeriodForUnavailablePeriods())));
+		.getBeginOfSecondPeriodForUnavailablePeriods()) && date
+		.isBefore(this.getEndOfSecondPeriodForUnavailablePeriods())));
 
     }
 

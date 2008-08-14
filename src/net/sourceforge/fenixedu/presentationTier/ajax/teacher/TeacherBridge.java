@@ -23,43 +23,39 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class TeacherBridge {
 
-    public static String readNameByTeacherNumber(String number) throws FenixFilterException,
-            FenixServiceException {
+    public static String readNameByTeacherNumber(String number) throws FenixFilterException, FenixServiceException {
 
-        if (number == null || number.length() == 0 || !StringUtils.isNumeric(number)) {
-            return "";
-        }
+	if (number == null || number.length() == 0 || !StringUtils.isNumeric(number)) {
+	    return "";
+	}
 
-        Object[] args = { Integer.valueOf(number) };
-        InfoTeacher teacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber",
-                args);
+	Object[] args = { Integer.valueOf(number) };
+	InfoTeacher teacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber", args);
 
-        return (teacher != null && teacher.getInfoPerson() != null) ? teacher.getInfoPerson().getNome()
-                : "";
+	return (teacher != null && teacher.getInfoPerson() != null) ? teacher.getInfoPerson().getNome() : "";
     }
 
-    public static Collection readNonAffiliatedTeachersByName(String name) throws FenixFilterException,
-            FenixServiceException {
+    public static Collection readNonAffiliatedTeachersByName(String name) throws FenixFilterException, FenixServiceException {
 
-        
-        if (name == null || name.length() == 0) {
-            return new ArrayList();
-        }
+	if (name == null || name.length() == 0) {
+	    return new ArrayList();
+	}
 
-        IUserView userView = UserView.getUser();
-        Object[] args = { name };
-        List nonAffiliatedTeachers = (List) ServiceUtils.executeService("ReadNonAffiliatedTeachersByName", args);
-        return nonAffiliatedTeachers;
-//        return CollectionUtils.collect(nonAffiliatedTeachers, new Transformer() {
-//        
-//            public Object transform(Object arg0) {
-//                InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = (InfoNonAffiliatedTeacher) arg0;
-//                return infoNonAffiliatedTeacher.getName();
-//            }
-//        
-//        });
+	IUserView userView = UserView.getUser();
+	Object[] args = { name };
+	List nonAffiliatedTeachers = (List) ServiceUtils.executeService("ReadNonAffiliatedTeachersByName", args);
+	return nonAffiliatedTeachers;
+	// return CollectionUtils.collect(nonAffiliatedTeachers, new
+	// Transformer() {
+	//        
+	// public Object transform(Object arg0) {
+	// InfoNonAffiliatedTeacher infoNonAffiliatedTeacher =
+	// (InfoNonAffiliatedTeacher) arg0;
+	// return infoNonAffiliatedTeacher.getName();
+	// }
+	//        
+	// });
 
-        
     }
 
 }

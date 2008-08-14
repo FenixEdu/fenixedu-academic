@@ -84,10 +84,10 @@ public class ContentFilter implements Filter {
 	} else if (content instanceof Attachment) {
 	    Attachment attachment = (Attachment) content;
 	    httpServletResponse.sendRedirect(attachment.getFile().getDownloadUrl());
-	}else if (content instanceof FunctionalityCall) {
+	} else if (content instanceof FunctionalityCall) {
 	    Functionality functionality = ((FunctionalityCall) content).getFunctionality();
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
-	    
+
 	} else if (content instanceof Functionality) {
 	    Functionality functionality = ((Functionality) content);
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());

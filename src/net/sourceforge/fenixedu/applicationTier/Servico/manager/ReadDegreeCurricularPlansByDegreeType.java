@@ -23,29 +23,28 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDegreeCurricularPlansByDegreeType extends Service {
 
     public List run(final DegreeType tipoCurso) {
-        final List degreeCurricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
-        return constructInfoDegreeCurricularPlans(tipoCurso, degreeCurricularPlans);
+	final List degreeCurricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
+	return constructInfoDegreeCurricularPlans(tipoCurso, degreeCurricularPlans);
     }
 
-    protected List constructInfoDegreeCurricularPlans(final DegreeType tipoCurso,
-            final List degreeCurricularPlans) {
-        final List infoDegreeCurricularPlans = new ArrayList(degreeCurricularPlans.size());
-        for (final Iterator iterator = degreeCurricularPlans.iterator(); iterator.hasNext();) {
-            final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iterator.next();
-            final Degree degree = degreeCurricularPlan.getDegree();
+    protected List constructInfoDegreeCurricularPlans(final DegreeType tipoCurso, final List degreeCurricularPlans) {
+	final List infoDegreeCurricularPlans = new ArrayList(degreeCurricularPlans.size());
+	for (final Iterator iterator = degreeCurricularPlans.iterator(); iterator.hasNext();) {
+	    final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iterator.next();
+	    final Degree degree = degreeCurricularPlan.getDegree();
 
-            if (degree.getTipoCurso().equals(tipoCurso)) {
-                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = constructInfoDegreeCurricularPlan(
-                        degreeCurricularPlan, degree);
-                infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
-            }
-        }
-        return infoDegreeCurricularPlans;
+	    if (degree.getTipoCurso().equals(tipoCurso)) {
+		final InfoDegreeCurricularPlan infoDegreeCurricularPlan = constructInfoDegreeCurricularPlan(degreeCurricularPlan,
+			degree);
+		infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
+	    }
+	}
+	return infoDegreeCurricularPlans;
     }
 
-    protected InfoDegreeCurricularPlan constructInfoDegreeCurricularPlan(
-            final DegreeCurricularPlan degreeCurricularPlan, final Degree degree) {
-        return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+    protected InfoDegreeCurricularPlan constructInfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan,
+	    final Degree degree) {
+	return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
     }
 
 }

@@ -16,7 +16,7 @@ public class PersonRolesProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 	Set<RoleType> roleTypes = new HashSet<RoleType>();
 	LoginAliasBean bean = (LoginAliasBean) source;
-	if(bean != null) {
+	if (bean != null) {
 	    Person person = bean.getLogin().getUser().getPerson();
 	    for (Role role : person.getPersonRoles()) {
 		roleTypes.add(role.getRoleType());
@@ -26,6 +26,6 @@ public class PersonRolesProvider implements DataProvider {
     }
 
     public Converter getConverter() {
-	return new EnumConverter();	
+	return new EnumConverter();
     }
 }

@@ -15,23 +15,23 @@ import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 
 public class ChangeLocale extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final String newLanguage = request.getParameter("newLanguage");
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final String newLanguage = request.getParameter("newLanguage");
 
-        I18NFilter.setLocale(request, request.getSession(false), new Locale(newLanguage, "PT"));
+	I18NFilter.setLocale(request, request.getSession(false), new Locale(newLanguage, "PT"));
 
-        final String windowLocation = request.getParameter("windowLocation");
+	final String windowLocation = request.getParameter("windowLocation");
 
-        ActionForward actionForward = new ActionForward();
+	ActionForward actionForward = new ActionForward();
 
-        actionForward.setContextRelative(true);
+	actionForward.setContextRelative(true);
 
-        actionForward.setName(windowLocation);
-        actionForward.setPath(windowLocation);
-        actionForward.setRedirect(true);
+	actionForward.setName(windowLocation);
+	actionForward.setPath(windowLocation);
+	actionForward.setRedirect(true);
 
-        return actionForward;
+	return actionForward;
     }
 
 }

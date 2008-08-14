@@ -17,51 +17,51 @@ public class ExecutionCourseKeyAndLessonType extends InfoObject {
 
     protected String _sigla;
 
-    //FIXME: Add all uniques from ExecutionCourse or add'em to the services
+    // FIXME: Add all uniques from ExecutionCourse or add'em to the services
     // that use this bean
 
     public ExecutionCourseKeyAndLessonType() {
     }
 
     public ExecutionCourseKeyAndLessonType(ShiftType tipoAula, String sigla) {
-        setTipoAula(tipoAula);
-        setSigla(sigla);
+	setTipoAula(tipoAula);
+	setSigla(sigla);
     }
 
     public ShiftType getTipoAula() {
-        return _tipoAula;
+	return _tipoAula;
     }
 
     public void setTipoAula(ShiftType tipoAula) {
-        _tipoAula = tipoAula;
+	_tipoAula = tipoAula;
     }
 
     public String getSigla() {
-        return _sigla;
+	return _sigla;
     }
 
     public void setSigla(String sigla) {
-        _sigla = sigla;
+	_sigla = sigla;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof ExecutionCourseKeyAndLessonType) {
-            ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao = (ExecutionCourseKeyAndLessonType) obj;
+	boolean resultado = false;
+	if (obj instanceof ExecutionCourseKeyAndLessonType) {
+	    ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao = (ExecutionCourseKeyAndLessonType) obj;
 
-            resultado = (getTipoAula().equals(tipoAulaAndKeyDisciplinaExecucao.getTipoAula()))
-                    && (getSigla().equals(tipoAulaAndKeyDisciplinaExecucao.getSigla()));
-        }
+	    resultado = (getTipoAula().equals(tipoAulaAndKeyDisciplinaExecucao.getTipoAula()))
+		    && (getSigla().equals(tipoAulaAndKeyDisciplinaExecucao.getSigla()));
+	}
 
-        return resultado;
+	return resultado;
     }
 
     public String toString() {
-        String result = "[TIPOAULAANDKEYDISCIPLINAEXECUCAO";
-        result += ", tipo aula=" + _tipoAula;
-        result += ", sigla =" + _sigla;
-        result += "]";
-        return result;
+	String result = "[TIPOAULAANDKEYDISCIPLINAEXECUCAO";
+	result += ", tipo aula=" + _tipoAula;
+	result += ", sigla =" + _sigla;
+	result += "]";
+	return result;
     }
 
 }

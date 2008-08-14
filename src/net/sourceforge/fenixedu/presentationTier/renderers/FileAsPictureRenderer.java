@@ -11,25 +11,26 @@ public class FileAsPictureRenderer extends StringRenderer {
     private String classes;
 
     public String getClasses() {
-		return classes;
-	}
+	return classes;
+    }
 
-	public void setClasses(String classes) {
-		this.classes = classes;
-	}
+    public void setClasses(String classes) {
+	this.classes = classes;
+    }
 
-	@Override
+    @Override
     public HtmlComponent render(Object object, Class type) {
-        File file = (File) object;
-        
-        HtmlImage image = new HtmlImage();
+	File file = (File) object;
 
-        image.setSource(FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(file.getExternalStorageIdentification(), file.getFilename()));
-        image.setTitle(file.getDisplayName());
-        
-        image.setClasses(classes);
-        
-        return image;
+	HtmlImage image = new HtmlImage();
+
+	image.setSource(FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
+		file.getExternalStorageIdentification(), file.getFilename()));
+	image.setTitle(file.getDisplayName());
+
+	image.setClasses(classes);
+
+	return image;
     }
 
 }

@@ -11,9 +11,11 @@ public abstract class SessionConstants {
 
     public static String USERNAME = "username";
 
-    // -------------------------------------------------------------------------------
-    //    Degree Administrative Office Constants
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // Degree Administrative Office Constants
+    //--------------------------------------------------------------------------
+    // -----
     public static final String ENROLMENT_TO_REMOVE_LIST_KEY = "erolmentsToRemoveList";
 
     public static final String ACTUAL_ENROLMENT_KEY = "actualEnrolment";
@@ -35,16 +37,20 @@ public abstract class SessionConstants {
 
     public static final String CURRICULUM = "curriculum";
 
-    // -------------------------------------------------------------------------------
-    //    General Purpose Constants - For Specialized Action Mapping
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // General Purpose Constants - For Specialized Action Mapping
+    //--------------------------------------------------------------------------
+    // -----
     public static final String INPUT_PAGE = "inputPage";
 
     public static final String NEXT_PAGE = "nextPage";
 
-    // -------------------------------------------------------------------------------
-    //    General Purpose Constants - For Context
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // General Purpose Constants - For Context
+    //--------------------------------------------------------------------------
+    // -----
     public static final String CLASS_VIEW_OID = "class_oid";
 
     public static final String CURRICULAR_YEAR = "curricular_year";
@@ -63,7 +69,7 @@ public abstract class SessionConstants {
 
     public static final String CURRENT_EXECUTION_PERIOD = "current_execution_period";
 
-	public static final String EXECUTION_PERIOD_OID = "executionPeriodOID";
+    public static final String EXECUTION_PERIOD_OID = "executionPeriodOID";
 
     public static final String STUDENT_CURRICULAR_PLAN_OID = "student_curricular_plan_oid";
 
@@ -71,7 +77,7 @@ public abstract class SessionConstants {
 
     public static final String LESSON_OID = "lessonOID";
 
-	public static final String MASTER_DEGREE_CURRICULAR_PLAN_ID = "master_degree_curricular_plan_id";
+    public static final String MASTER_DEGREE_CURRICULAR_PLAN_ID = "master_degree_curricular_plan_id";
 
     public static final String SHIFT = "shift";
 
@@ -83,7 +89,7 @@ public abstract class SessionConstants {
 
     public static final String LIST_INFOEXECUTIONPERIOD = "infoExecutionPeriodList";
 
-	public static final String NUMERUS_CLAUSUS = "numerusClausus";
+    public static final String NUMERUS_CLAUSUS = "numerusClausus";
 
     public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";
 
@@ -103,9 +109,11 @@ public abstract class SessionConstants {
 
     public static final String SELECTED_ROOMS = "selectedRooms";
 
-    //	-------------------------------------------------------------------------------
-    //    Constants - For Manager
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // Constants - For Manager
+    //--------------------------------------------------------------------------
+    // -----
     public static final String DEGREE = "degree";
 
     public static final String NUMBER_CACHED_ITEMS = "number_cached_items";
@@ -114,9 +122,11 @@ public abstract class SessionConstants {
 
     public static final String CACHED_RESPONSES_TIMEOUT = "CACHED_RESPONSES_TIMEOUT";
 
-    // -------------------------------------------------------------------------------
-    //    GesDis Constants - For GesDis
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // GesDis Constants - For GesDis
+    //--------------------------------------------------------------------------
+    // -----
     public static final String INDEX = "index";
 
     public static final String INFO_SITE = "info_site";
@@ -161,9 +171,11 @@ public abstract class SessionConstants {
 
     public static final String INFO_EVALUATION = "info_evaluation";
 
-    // -------------------------------------------------------------------------------
-    //    Master Degree Constants - For Master Degree
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // Master Degree Constants - For Master Degree
+    //--------------------------------------------------------------------------
+    // -----
     public static final String SPECIALIZATIONS = "specializations";
 
     public static final String DEGREE_LIST = "degree_list";
@@ -177,8 +189,8 @@ public abstract class SessionConstants {
     public static final String CANDIDATE_SITUATION_LIST = "candidate_situation_list";
 
     public static final String MASTER_DEGREE_CANDIDATE = "master_degree_candidate";
-    
-    public static final String MASTER_DEGREE_CANDIDATE_ID = "master_degree_candidate_id";    
+
+    public static final String MASTER_DEGREE_CANDIDATE_ID = "master_degree_candidate_id";
 
     public static final String MASTER_DEGREE_CANDIDATE_LIST = "master_degree_candidate_list";
 
@@ -289,7 +301,7 @@ public abstract class SessionConstants {
     public static final String FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE = "fimCursoDiscriminadaComMedia";
 
     public static final String DIPLOMA = "Diploma";
-    
+
     public static final String DEGREE_LETTER = "cartaCurso";
 
     public static final String STUDENT_LIST = "student_list";
@@ -368,9 +380,11 @@ public abstract class SessionConstants {
 
     public static final String REIMBURSEMENT_GUIDE_STATES_LIST = "reimbursement_guide_states_list";
 
-    // -------------------------------------------------------------------------------
-    //    Person Constants - For Person
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // Person Constants - For Person
+    //--------------------------------------------------------------------------
+    // -----
     public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST = "identification_document_type_list";
 
     public static final String PERSONAL_INFO_KEY = "PERSONAL_INFO_KEY";
@@ -398,24 +412,30 @@ public abstract class SessionConstants {
     public static final String LIST_SMS_DELIVERY_REPORTS = "LIST_SMS_DELIVERY_REPORTS";
 
     public static final int LIMIT_FINDED_PERSONS = 25;
-    
+
     public static final int LIMIT_FINDED_PERSONS_TOTAL = 200;
 
-    // -------------------------------------------------------------------------------
-    //    SOP Constants - For Context
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // SOP Constants - For Context
+    //--------------------------------------------------------------------------
+    // -----
     public static final String LABELLIST_CURRICULAR_YEARS = "anosCurriculares";
 
-    // -------------------------------------------------------------------------------
-    //    SOP Constants - For Working Area
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // SOP Constants - For Working Area
+    //--------------------------------------------------------------------------
+    // -----
     public static String LIST_EXECUTION_PERIODS = "listExecutionPeriods";
 
     public static String LIST_WORKING_AREAS = "listWorkingAreas";
 
-    // -------------------------------------------------------------------------------
-    //    SOP Constants - For Exams
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // SOP Constants - For Exams
+    //--------------------------------------------------------------------------
+    // -----
     public static final String CURRICULAR_YEARS_LIST = "curricularYearsList";
 
     public static final String CURRICULAR_YEARS_1 = "curricularYearsArray_1";
@@ -482,9 +502,11 @@ public abstract class SessionConstants {
 
     public static final String ROOMS_LIST = "rooms_list";
 
-    // -------------------------------------------------------------------------------
-    //    SOP Constants - For Timetables Management
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // SOP Constants - For Timetables Management
+    //--------------------------------------------------------------------------
+    // -----
     public static final String ALL_INFO_VIEW_CLASS_SCHEDULE = "ALL_INFO_VIEW_CLASS_SCHEDULE";
 
     public static final String ALL_INFO_VIEW_ROOM_SCHEDULE = "ALL_INFO_VIEW_ROOM_SCHEDULE";
@@ -497,14 +519,15 @@ public abstract class SessionConstants {
 
     public static final String SHIFTS = "shifts";
 
-    // -------------------------------------------------------------------------------
-    //    Messy Constants Section - For All Sorts of Purposes
-    // -------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // -----
+    // Messy Constants Section - For All Sorts of Purposes
+    //--------------------------------------------------------------------------
+    // -----
     // TODO : Clean this up.
     public static final String CONTEXT_PREFIX = "context.";
 
-    public static final String CONTEXT_KEY = CONTEXT_PREFIX
-            + "anoCurricularAndSemestreAndInfoLicenciaturaExecucao";
+    public static final String CONTEXT_KEY = CONTEXT_PREFIX + "anoCurricularAndSemestreAndInfoLicenciaturaExecucao";
 
     public static final String INFO_EXECUTION_DEGREE_KEY = CONTEXT_PREFIX + "infoLicenciaturaExecucao";
 

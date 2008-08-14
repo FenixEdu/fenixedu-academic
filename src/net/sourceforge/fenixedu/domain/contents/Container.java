@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 /**
- * A <code>Container</code> is a composed content, that is, a grouping of
- * other contents under a certain prefix or context. Containers can have the
- * same information as other basic contentes but are usually important due to
- * their structure and not their name or body.
+ * A <code>Container</code> is a composed content, that is, a grouping of other
+ * contents under a certain prefix or context. Containers can have the same
+ * information as other basic contentes but are usually important due to their
+ * structure and not their name or body.
  * 
  * @author cfgi
  * @author lpec

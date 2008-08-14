@@ -18,17 +18,18 @@ import de.nava.informa.exporters.RSS_2_0_Exporter;
 import de.nava.informa.impl.basic.ItemGuid;
 
 public abstract class InformaRSSAction extends FenixAction {
-	
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws Exception {
-    	final ChannelIF channel = getRSSChannel(request);
-    	response.setContentType("text/xml");	    	
-    	final ChannelExporterIF exporter = new RSS_2_0_Exporter(response.getWriter(), System.getProperty("file.encoding","iso-8859-1"));
-    	exporter.write(channel);
-    	response.flushBuffer();
-    	return null;
+	    throws Exception {
+	final ChannelIF channel = getRSSChannel(request);
+	response.setContentType("text/xml");
+	final ChannelExporterIF exporter = new RSS_2_0_Exporter(response.getWriter(), System.getProperty("file.encoding",
+		"iso-8859-1"));
+	exporter.write(channel);
+	response.flushBuffer();
+	return null;
     }
-    
+
     protected abstract ChannelIF getRSSChannel(HttpServletRequest request) throws Exception;
 
     protected static ItemGuidIF getItemGuidIF(final ItemIF itemIF, final DomainObject domainObject) {

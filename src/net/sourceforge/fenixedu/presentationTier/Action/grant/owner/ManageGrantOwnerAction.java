@@ -24,8 +24,8 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 
 public class ManageGrantOwnerAction extends FenixDispatchAction {
-    public ActionForward prepareManageGrantOwnerForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantOwnerForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer idInternal = null;
 	if (verifyParameterInRequest(request, "idInternal")) {
@@ -38,11 +38,10 @@ public class ManageGrantOwnerAction extends FenixDispatchAction {
 	    throw new Exception();
 	}
 
-	//Read Grant Owner
+	// Read Grant Owner
 	Object[] args = { idInternal };
 	IUserView userView = UserView.getUser();
-	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(
-		"ReadGrantOwner", args);
+	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService("ReadGrantOwner", args);
 
 	if (infoGrantOwner == null) {
 	    throw new Exception();

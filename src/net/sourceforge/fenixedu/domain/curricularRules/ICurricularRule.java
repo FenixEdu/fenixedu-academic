@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 public interface ICurricularRule {
 
     static final public Comparator<ICurricularRule> COMPARATOR_BY_BEGIN = new Comparator<ICurricularRule>() {
-        public int compare(ICurricularRule o1, ICurricularRule o2) {
-            return o1.getBegin().compareTo(o2.getBegin());
-        }
+	public int compare(ICurricularRule o1, ICurricularRule o2) {
+	    return o1.getBegin().compareTo(o2.getBegin());
+	}
     };
 
     public List<GenericPair<Object, Boolean>> getLabel();
@@ -50,7 +50,7 @@ public interface ICurricularRule {
     public boolean isValid(ExecutionYear executionYear);
 
     public boolean isVisible();
-    
+
     public boolean isActive();
 
     public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);

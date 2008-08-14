@@ -25,21 +25,20 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        DynaActionForm teacherExecutionYearResponsabilitiesForm = (DynaActionForm) form;
-        Integer[] executionCourseResponsabilities = (Integer[]) teacherExecutionYearResponsabilitiesForm
-                .get("executionCourseResponsability");
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        Integer teacherId = (Integer) teacherExecutionYearResponsabilitiesForm.get("teacherId");
-        Integer executionYearId = (Integer) teacherExecutionYearResponsabilitiesForm
-                .get("executionYearId");
-        Object args[] = { teacherId, executionYearId, Arrays.asList(executionCourseResponsabilities) };
+	DynaActionForm teacherExecutionYearResponsabilitiesForm = (DynaActionForm) form;
+	Integer[] executionCourseResponsabilities = (Integer[]) teacherExecutionYearResponsabilitiesForm
+		.get("executionCourseResponsability");
 
-        IUserView userView = UserView.getUser();
-        ServiceUtils.executeService("UpdateTeacherExecutionYearResponsabilities", args);
+	Integer teacherId = (Integer) teacherExecutionYearResponsabilitiesForm.get("teacherId");
+	Integer executionYearId = (Integer) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
+	Object args[] = { teacherId, executionYearId, Arrays.asList(executionCourseResponsabilities) };
 
-        return mapping.findForward("successfull-update");
+	IUserView userView = UserView.getUser();
+	ServiceUtils.executeService("UpdateTeacherExecutionYearResponsabilities", args);
+
+	return mapping.findForward("successfull-update");
     }
 }

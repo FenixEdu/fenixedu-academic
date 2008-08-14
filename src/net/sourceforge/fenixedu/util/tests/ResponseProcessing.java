@@ -51,167 +51,166 @@ public class ResponseProcessing extends FenixUtil {
     private String nextItem;
 
     public ResponseProcessing(int id) {
-        responseProcessingId = id;
+	responseProcessingId = id;
     }
 
-    public ResponseProcessing(List<ResponseCondition> responseConditions, Double responseValue,
-            Integer action, List<LabelValueBean> feedback, boolean fenixCorrectResponse) {
-        this.responseConditions = responseConditions;
-        this.responseValue = responseValue;
-        this.action = action;
-        this.feedback = feedback;
-        this.fenixCorrectResponse = fenixCorrectResponse;
+    public ResponseProcessing(List<ResponseCondition> responseConditions, Double responseValue, Integer action,
+	    List<LabelValueBean> feedback, boolean fenixCorrectResponse) {
+	this.responseConditions = responseConditions;
+	this.responseValue = responseValue;
+	this.action = action;
+	this.feedback = feedback;
+	this.fenixCorrectResponse = fenixCorrectResponse;
     }
 
     public int getResponseProcessingId() {
-        return responseProcessingId;
+	return responseProcessingId;
     }
 
     public void setResponseProcessingId(int responseProcessingId) {
-        this.responseProcessingId = responseProcessingId;
+	this.responseProcessingId = responseProcessingId;
     }
 
     public List<ResponseCondition> getResponseConditions() {
-        return responseConditions;
+	return responseConditions;
     }
 
     public void setResponseConditions(List<ResponseCondition> responses) {
-        this.responseConditions = responses;
+	this.responseConditions = responses;
     }
 
     public Double getResponseValue() {
-        return responseValue;
+	return responseValue;
     }
 
     public void setResponseValue(Double responseValue) {
-        this.responseValue = responseValue;
+	this.responseValue = responseValue;
     }
 
     public Integer getAction() {
-        return action;
+	return action;
     }
 
     public void setAction(String actionString) {
-        this.action = getActionCode(actionString);
+	this.action = getActionCode(actionString);
     }
 
     public List<LabelValueBean> getFeedback() {
-        return feedback;
+	return feedback;
     }
 
     public void setFeedback(List<LabelValueBean> feedback) {
-        this.feedback = feedback;
+	this.feedback = feedback;
     }
 
     public boolean isFenixCorrectResponse() {
-        return fenixCorrectResponse;
+	return fenixCorrectResponse;
     }
 
     public void setFenixCorrectResponse(boolean fenixCorrectResponse) {
-        this.fenixCorrectResponse = fenixCorrectResponse;
+	this.fenixCorrectResponse = fenixCorrectResponse;
     }
 
     public String getNextItem() {
-        return nextItem;
+	return nextItem;
     }
 
     public void setNextItem(String nextItem) {
-        this.nextItem = nextItem;
+	this.nextItem = nextItem;
     }
 
     private Integer getActionCode(String actionString) {
-        if (actionString.equals(SET_STRING))
-            return new Integer(SET);
-        else if (actionString.equals(ADD_STRING))
-            return new Integer(ADD);
-        else if (actionString.equals(SUBTRACT_STRING))
-            return new Integer(SUBTRACT);
-        else if (actionString.equals(MULTIPLY_STRING))
-            return new Integer(MULTIPLY);
-        else if (actionString.equals(DIVIDE_STRING))
-            return new Integer(DIVIDE);
-        return null;
+	if (actionString.equals(SET_STRING))
+	    return new Integer(SET);
+	else if (actionString.equals(ADD_STRING))
+	    return new Integer(ADD);
+	else if (actionString.equals(SUBTRACT_STRING))
+	    return new Integer(SUBTRACT);
+	else if (actionString.equals(MULTIPLY_STRING))
+	    return new Integer(MULTIPLY);
+	else if (actionString.equals(DIVIDE_STRING))
+	    return new Integer(DIVIDE);
+	return null;
     }
 
     private String getActionString(Integer actionCode) {
-        if (actionCode.intValue() == SET)
-            return SET_STRING;
-        else if (actionCode.intValue() == ADD)
-            return ADD_STRING;
-        else if (actionCode.intValue() == SUBTRACT)
-            return SUBTRACT_STRING;
-        else if (actionCode.intValue() == MULTIPLY)
-            return MULTIPLY_STRING;
-        else if (actionCode.intValue() == DIVIDE)
-            return DIVIDE_STRING;
-        return null;
+	if (actionCode.intValue() == SET)
+	    return SET_STRING;
+	else if (actionCode.intValue() == ADD)
+	    return ADD_STRING;
+	else if (actionCode.intValue() == SUBTRACT)
+	    return SUBTRACT_STRING;
+	else if (actionCode.intValue() == MULTIPLY)
+	    return MULTIPLY_STRING;
+	else if (actionCode.intValue() == DIVIDE)
+	    return DIVIDE_STRING;
+	return null;
     }
 
-    public boolean isThisConditionListInResponseProcessingList(List<ResponseProcessing> rpList,
-            boolean lidQuestion) {
-        for (ResponseProcessing responseProcessing : rpList) {
-            if (lidQuestion) {
-                if (!hasEqualVAREQUALConditionList(responseProcessing.getResponseConditions())) {
-                    return false;
-                }
-            } else if (!hasEqualConditionList(responseProcessing.getResponseConditions())) {
-                return false;
-            }
-        }
-        return true;
+    public boolean isThisConditionListInResponseProcessingList(List<ResponseProcessing> rpList, boolean lidQuestion) {
+	for (ResponseProcessing responseProcessing : rpList) {
+	    if (lidQuestion) {
+		if (!hasEqualVAREQUALConditionList(responseProcessing.getResponseConditions())) {
+		    return false;
+		}
+	    } else if (!hasEqualConditionList(responseProcessing.getResponseConditions())) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     public boolean hasEqualConditionList(List<ResponseCondition> rcList) {
-        for (ResponseCondition responseCondition : rcList) {
-            if (!hasThisCondition(responseConditions, responseCondition)) {
-                return false;
-            }
-        }
-        for (ResponseCondition responseCondition : responseConditions) {
-            if (!hasThisCondition(rcList, responseCondition)) {
-                return false;
-            }
-        }
-        return true;
+	for (ResponseCondition responseCondition : rcList) {
+	    if (!hasThisCondition(responseConditions, responseCondition)) {
+		return false;
+	    }
+	}
+	for (ResponseCondition responseCondition : responseConditions) {
+	    if (!hasThisCondition(rcList, responseCondition)) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     public boolean hasEqualVAREQUALConditionList(List<ResponseCondition> rcList) {
-        for (ResponseCondition responseCondition : rcList) {
-            if (responseCondition.getCondition().intValue() == ResponseCondition.VAREQUAL) {
-                if (!hasThisCondition(responseConditions, responseCondition)) {
-                    return false;
-                }
-            }
-        }
-        for (ResponseCondition responseCondition : responseConditions) {
-            if (responseCondition.getCondition().intValue() == ResponseCondition.VAREQUAL) {
-                if (!hasThisCondition(rcList, responseCondition)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+	for (ResponseCondition responseCondition : rcList) {
+	    if (responseCondition.getCondition().intValue() == ResponseCondition.VAREQUAL) {
+		if (!hasThisCondition(responseConditions, responseCondition)) {
+		    return false;
+		}
+	    }
+	}
+	for (ResponseCondition responseCondition : responseConditions) {
+	    if (responseCondition.getCondition().intValue() == ResponseCondition.VAREQUAL) {
+		if (!hasThisCondition(rcList, responseCondition)) {
+		    return false;
+		}
+	    }
+	}
+	return true;
     }
 
     public boolean hasThisCondition(List<ResponseCondition> rcList, ResponseCondition rc) {
-        for (ResponseCondition responseCondition : rcList) {
-            if (responseCondition.equals(rc)) {
-                return true;
-            }
-        }
-        return false;
+	for (ResponseCondition responseCondition : rcList) {
+	    if (responseCondition.equals(rc)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public String toXML(String feedback) {
-        String result = "<respcondition>\n<conditionvar>\n";
-        for (int i = 0; i < responseConditions.size(); i++)
-            result = result.concat(((ResponseCondition) responseConditions.get(i)).toXML());
-        result = result.concat("\n</conditionvar>\n<setvar action=\"" + getActionString(action) + "\">"
-                + responseValue + "\n</setvar>\n");
-        if (feedback != null)
-            result = result.concat(feedback);
-        result = result.concat("</respcondition>\n");
+	String result = "<respcondition>\n<conditionvar>\n";
+	for (int i = 0; i < responseConditions.size(); i++)
+	    result = result.concat(((ResponseCondition) responseConditions.get(i)).toXML());
+	result = result.concat("\n</conditionvar>\n<setvar action=\"" + getActionString(action) + "\">" + responseValue
+		+ "\n</setvar>\n");
+	if (feedback != null)
+	    result = result.concat(feedback);
+	result = result.concat("</respcondition>\n");
 
-        return result;
+	return result;
     }
 }

@@ -52,9 +52,9 @@ public class RegisteredState extends RegisteredState_Base {
     }
 
     public IState nextState() {
-	return null;	
+	return null;
     }
-    
+
     @Override
     public boolean isActive() {
 	return true;

@@ -28,7 +28,7 @@ public class OptionsTag extends TagSupport {
      * The message resources for this package.
      */
     protected static MessageResources messages = MessageResources
-            .getMessageResources("org.apache.struts.taglib.html.LocalStrings");
+	    .getMessageResources("org.apache.struts.taglib.html.LocalStrings");
 
     /**
      * The name of the collection containing beans that have properties to
@@ -38,11 +38,11 @@ public class OptionsTag extends TagSupport {
     protected String collection = null;
 
     public String getCollection() {
-        return (this.collection);
+	return (this.collection);
     }
 
     public void setCollection(String collection) {
-        this.collection = collection;
+	this.collection = collection;
     }
 
     /**
@@ -51,11 +51,11 @@ public class OptionsTag extends TagSupport {
     protected String labelName = null;
 
     public String getLabelName() {
-        return labelName;
+	return labelName;
     }
 
     public void setLabelName(String labelName) {
-        this.labelName = labelName;
+	this.labelName = labelName;
     }
 
     /**
@@ -64,11 +64,11 @@ public class OptionsTag extends TagSupport {
     protected String labelProperty = null;
 
     public String getLabelProperty() {
-        return labelProperty;
+	return labelProperty;
     }
 
     public void setLabelProperty(String labelProperty) {
-        this.labelProperty = labelProperty;
+	this.labelProperty = labelProperty;
     }
 
     /**
@@ -77,11 +77,11 @@ public class OptionsTag extends TagSupport {
     protected String name = null;
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     /**
@@ -90,11 +90,11 @@ public class OptionsTag extends TagSupport {
     protected String property = null;
 
     public String getProperty() {
-        return property;
+	return property;
     }
 
     public void setProperty(String property) {
-        this.property = property;
+	this.property = property;
     }
 
     /**
@@ -103,11 +103,11 @@ public class OptionsTag extends TagSupport {
     private String style = null;
 
     public String getStyle() {
-        return style;
+	return style;
     }
 
     public void setStyle(String style) {
-        this.style = style;
+	this.style = style;
     }
 
     /**
@@ -116,11 +116,11 @@ public class OptionsTag extends TagSupport {
     private String styleClass = null;
 
     public String getStyleClass() {
-        return styleClass;
+	return styleClass;
     }
 
     public void setStyleClass(String styleClass) {
-        this.styleClass = styleClass;
+	this.styleClass = styleClass;
     }
 
     /* Acrescentado por Fernanda Quitério & Tania Pousão */
@@ -130,11 +130,11 @@ public class OptionsTag extends TagSupport {
     protected String bundle = Globals.MESSAGES_KEY;
 
     public String getBundle() {
-        return (this.bundle);
+	return (this.bundle);
     }
 
     public void setBundle(String bundle) {
-        this.bundle = bundle;
+	this.bundle = bundle;
     }
 
     /**
@@ -143,11 +143,11 @@ public class OptionsTag extends TagSupport {
     protected String localeKey = Globals.LOCALE_KEY;
 
     public String getLocale() {
-        return (this.localeKey);
+	return (this.localeKey);
     }
 
     public void setLocale(String localeKey) {
-        this.localeKey = localeKey;
+	this.localeKey = localeKey;
     }
 
     /* até aqui */
@@ -157,7 +157,7 @@ public class OptionsTag extends TagSupport {
      */
 
     public int doStartTag() {
-        return SKIP_BODY;
+	return SKIP_BODY;
     }
 
     /**
@@ -168,86 +168,83 @@ public class OptionsTag extends TagSupport {
      */
     public int doEndTag() throws JspException {
 
-        // Acquire the select tag we are associated with
-        SelectTag selectTag = (SelectTag) pageContext.getAttribute(Constants.SELECT_KEY);
-        if (selectTag == null)
-            throw new JspException(messages.getMessage("optionsTag.select"));
-        StringBuilder sb = new StringBuilder();
+	// Acquire the select tag we are associated with
+	SelectTag selectTag = (SelectTag) pageContext.getAttribute(Constants.SELECT_KEY);
+	if (selectTag == null)
+	    throw new JspException(messages.getMessage("optionsTag.select"));
+	StringBuilder sb = new StringBuilder();
 
-        // If a collection was specified, use that mode to render options
-        if (collection != null) {
-            Iterator collIterator = getIterator(collection, null);
-            while (collIterator.hasNext()) {
+	// If a collection was specified, use that mode to render options
+	if (collection != null) {
+	    Iterator collIterator = getIterator(collection, null);
+	    while (collIterator.hasNext()) {
 
-                Object bean = collIterator.next();
-                Object value = null;
-                Object label = null;
+		Object bean = collIterator.next();
+		Object value = null;
+		Object label = null;
 
-                try {
-                    value = PropertyUtils.getProperty(bean, property);
-                    if (value == null)
-                        value = "";
-                } catch (IllegalAccessException e) {
-                    throw new JspException(messages.getMessage("getter.access", property, collection));
-                } catch (InvocationTargetException e) {
-                    Throwable t = e.getTargetException();
-                    throw new JspException(messages.getMessage("getter.result", property, t.toString()));
-                } catch (NoSuchMethodException e) {
-                    throw new JspException(messages.getMessage("getter.method", property, collection));
-                }
+		try {
+		    value = PropertyUtils.getProperty(bean, property);
+		    if (value == null)
+			value = "";
+		} catch (IllegalAccessException e) {
+		    throw new JspException(messages.getMessage("getter.access", property, collection));
+		} catch (InvocationTargetException e) {
+		    Throwable t = e.getTargetException();
+		    throw new JspException(messages.getMessage("getter.result", property, t.toString()));
+		} catch (NoSuchMethodException e) {
+		    throw new JspException(messages.getMessage("getter.method", property, collection));
+		}
 
-                try {
-                    if (labelProperty != null)
-                        label = PropertyUtils.getProperty(bean, labelProperty);
-                    else
-                        label = value;
-                    if (label == null)
-                        label = "";
-                } catch (IllegalAccessException e) {
-                    throw new JspException(messages.getMessage("getter.access", labelProperty,
-                            collection));
-                } catch (InvocationTargetException e) {
-                    Throwable t = e.getTargetException();
-                    throw new JspException(messages.getMessage("getter.result", labelProperty, t
-                            .toString()));
-                } catch (NoSuchMethodException e) {
-                    throw new JspException(messages.getMessage("getter.method", labelProperty,
-                            collection));
-                }
+		try {
+		    if (labelProperty != null)
+			label = PropertyUtils.getProperty(bean, labelProperty);
+		    else
+			label = value;
+		    if (label == null)
+			label = "";
+		} catch (IllegalAccessException e) {
+		    throw new JspException(messages.getMessage("getter.access", labelProperty, collection));
+		} catch (InvocationTargetException e) {
+		    Throwable t = e.getTargetException();
+		    throw new JspException(messages.getMessage("getter.result", labelProperty, t.toString()));
+		} catch (NoSuchMethodException e) {
+		    throw new JspException(messages.getMessage("getter.method", labelProperty, collection));
+		}
 
-                String stringValue = value.toString();
-                addOption(sb, stringValue, label.toString(), selectTag.isMatched(stringValue));
+		String stringValue = value.toString();
+		addOption(sb, stringValue, label.toString(), selectTag.isMatched(stringValue));
 
-            }
+	    }
 
-        }
+	}
 
-        // Otherwise, use the separate iterators mode to render options
-        else {
+	// Otherwise, use the separate iterators mode to render options
+	else {
 
-            // Construct iterators for the values and labels collections
-            Iterator valuesIterator = getIterator(name, property);
-            Iterator labelsIterator = null;
-            if ((labelName == null) && (labelProperty == null))
-                labelsIterator = getIterator(name, property); // Same coll.
-            else
-                labelsIterator = getIterator(labelName, labelProperty);
+	    // Construct iterators for the values and labels collections
+	    Iterator valuesIterator = getIterator(name, property);
+	    Iterator labelsIterator = null;
+	    if ((labelName == null) && (labelProperty == null))
+		labelsIterator = getIterator(name, property); // Same coll.
+	    else
+		labelsIterator = getIterator(labelName, labelProperty);
 
-            // Render the options tags for each element of the values coll.
-            while (valuesIterator.hasNext()) {
-                String value = valuesIterator.next().toString();
-                String label = value;
-                if (labelsIterator.hasNext())
-                    label = labelsIterator.next().toString();
-                addOption(sb, value, label, selectTag.isMatched(value));
-            }
-        }
+	    // Render the options tags for each element of the values coll.
+	    while (valuesIterator.hasNext()) {
+		String value = valuesIterator.next().toString();
+		String label = value;
+		if (labelsIterator.hasNext())
+		    label = labelsIterator.next().toString();
+		addOption(sb, value, label, selectTag.isMatched(value));
+	    }
+	}
 
-        // Render this element to our writer
-        ResponseUtils.write(pageContext, sb.toString());
+	// Render this element to our writer
+	ResponseUtils.write(pageContext, sb.toString());
 
-        // Evaluate the remainder of this page
-        return EVAL_PAGE;
+	// Evaluate the remainder of this page
+	return EVAL_PAGE;
 
     }
 
@@ -256,14 +253,14 @@ public class OptionsTag extends TagSupport {
      */
     public void release() {
 
-        super.release();
-        collection = null;
-        labelName = null;
-        labelProperty = null;
-        name = null;
-        property = null;
-        style = null;
-        styleClass = null;
+	super.release();
+	collection = null;
+	labelName = null;
+	labelProperty = null;
+	name = null;
+	property = null;
+	style = null;
+	styleClass = null;
 
     }
 
@@ -282,44 +279,43 @@ public class OptionsTag extends TagSupport {
      * @param matched
      *            Should this value be marked as selected?
      */
-    protected void addOption(StringBuilder sb, String value, String label, boolean matched)
-            throws JspException {
+    protected void addOption(StringBuilder sb, String value, String label, boolean matched) throws JspException {
 
-        sb.append("<option value=\"");
-        sb.append(value);
-        sb.append("\"");
-        if (matched)
-            sb.append(" selected=\"selected\"");
-        if (style != null) {
-            sb.append(" style=\"");
-            sb.append(style);
-            sb.append("\"");
-        }
-        if (styleClass != null) {
-            sb.append(" class=\"");
-            sb.append(styleClass);
-            sb.append("\"");
-        }
-        sb.append(">");
+	sb.append("<option value=\"");
+	sb.append(value);
+	sb.append("\"");
+	if (matched)
+	    sb.append(" selected=\"selected\"");
+	if (style != null) {
+	    sb.append(" style=\"");
+	    sb.append(style);
+	    sb.append("\"");
+	}
+	if (styleClass != null) {
+	    sb.append(" class=\"");
+	    sb.append(styleClass);
+	    sb.append("\"");
+	}
+	sb.append(">");
 
-        /* acrescentado por Nanda & Tania */
-        //String locale = Action.LOCALE_KEY;
-        //String bundle = Action.MESSAGES_KEY;
-        String key = label;
+	/* acrescentado por Nanda & Tania */
+	// String locale = Action.LOCALE_KEY;
+	// String bundle = Action.MESSAGES_KEY;
+	String key = label;
 
-        // Retrieve the message string we are looking for
-        String message = RequestUtils.message(pageContext, this.bundle, this.localeKey, key, null);
+	// Retrieve the message string we are looking for
+	String message = RequestUtils.message(pageContext, this.bundle, this.localeKey, key, null);
 
-        if (message == null) {
-            JspException e = new JspException(messages.getMessage("message.message", key));
-            RequestUtils.saveException(pageContext, e);
-            throw e;
-        }
-        label = message;
-        /* ate aqui!! */
+	if (message == null) {
+	    JspException e = new JspException(messages.getMessage("message.message", key));
+	    RequestUtils.saveException(pageContext, e);
+	    throw e;
+	}
+	label = message;
+	/* ate aqui!! */
 
-        sb.append(ResponseUtils.filter(label));
-        sb.append("</option>\r\n");
+	sb.append(ResponseUtils.filter(label));
+	sb.append("</option>\r\n");
 
     }
 
@@ -337,44 +333,44 @@ public class OptionsTag extends TagSupport {
      */
     protected Iterator getIterator(String name, String property) throws JspException {
 
-        // Identify the bean containing our collection
-        String beanName = name;
-        if (beanName == null)
-            beanName = Constants.BEAN_KEY;
-        Object bean = pageContext.findAttribute(beanName);
-        if (bean == null)
-            throw new JspException(messages.getMessage("getter.bean", beanName));
+	// Identify the bean containing our collection
+	String beanName = name;
+	if (beanName == null)
+	    beanName = Constants.BEAN_KEY;
+	Object bean = pageContext.findAttribute(beanName);
+	if (bean == null)
+	    throw new JspException(messages.getMessage("getter.bean", beanName));
 
-        // Identify the collection itself
-        Object collection = bean;
-        if (property != null) {
-            try {
-                collection = PropertyUtils.getProperty(bean, property);
-                if (collection == null)
-                    throw new JspException(messages.getMessage("getter.property", property));
-            } catch (IllegalAccessException e) {
-                throw new JspException(messages.getMessage("getter.access", property, name));
-            } catch (InvocationTargetException e) {
-                Throwable t = e.getTargetException();
-                throw new JspException(messages.getMessage("getter.result", property, t.toString()));
-            } catch (NoSuchMethodException e) {
-                throw new JspException(messages.getMessage("getter.method", property, name));
-            }
-        }
+	// Identify the collection itself
+	Object collection = bean;
+	if (property != null) {
+	    try {
+		collection = PropertyUtils.getProperty(bean, property);
+		if (collection == null)
+		    throw new JspException(messages.getMessage("getter.property", property));
+	    } catch (IllegalAccessException e) {
+		throw new JspException(messages.getMessage("getter.access", property, name));
+	    } catch (InvocationTargetException e) {
+		Throwable t = e.getTargetException();
+		throw new JspException(messages.getMessage("getter.result", property, t.toString()));
+	    } catch (NoSuchMethodException e) {
+		throw new JspException(messages.getMessage("getter.method", property, name));
+	    }
+	}
 
-        // Construct and return an appropriate iterator
-        if (collection.getClass().isArray())
-            collection = Arrays.asList((Object[]) collection);
-        if (collection instanceof Collection)
-            return (((Collection) collection).iterator());
-        else if (collection instanceof Iterator)
-            return ((Iterator) collection);
-        else if (collection instanceof Map)
-            return (((Map) collection).entrySet().iterator());
-        else if (collection instanceof Enumeration) {
-            return (IteratorUtils.asIterator((Enumeration) collection));
-        } else
-            throw new JspException(messages.getMessage("optionsTag.iterator", collection.toString()));
+	// Construct and return an appropriate iterator
+	if (collection.getClass().isArray())
+	    collection = Arrays.asList((Object[]) collection);
+	if (collection instanceof Collection)
+	    return (((Collection) collection).iterator());
+	else if (collection instanceof Iterator)
+	    return ((Iterator) collection);
+	else if (collection instanceof Map)
+	    return (((Map) collection).entrySet().iterator());
+	else if (collection instanceof Enumeration) {
+	    return (IteratorUtils.asIterator((Enumeration) collection));
+	} else
+	    throw new JspException(messages.getMessage("optionsTag.iterator", collection.toString()));
 
     }
 

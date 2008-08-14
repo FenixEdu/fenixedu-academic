@@ -26,23 +26,21 @@ import pt.ist.fenixWebFramework.security.UserView;
  * @author Pica
  */
 public class ManageGrantCostCenterAction extends FenixDispatchAction {
-    public ActionForward prepareManageGrantCostCenter(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
+    public ActionForward prepareManageGrantCostCenter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	try {
 
-            Object[] args = { GrantCostCenter.class.getName() };
+	    Object[] args = { GrantCostCenter.class.getName() };
 
-            IUserView userView = UserView.getUser();
-            List infoGrantCostCenterList = (List) ServiceUtils.executeService(
-                    "ReadAllGrantPaymentEntitiesByClassName", args);
+	    IUserView userView = UserView.getUser();
+	    List infoGrantCostCenterList = (List) ServiceUtils.executeService("ReadAllGrantPaymentEntitiesByClassName", args);
 
-            if (infoGrantCostCenterList != null && !infoGrantCostCenterList.isEmpty())
-                request.setAttribute("infoGrantCostCenterList", infoGrantCostCenterList);
+	    if (infoGrantCostCenterList != null && !infoGrantCostCenterList.isEmpty())
+		request.setAttribute("infoGrantCostCenterList", infoGrantCostCenterList);
 
-            return mapping.findForward("manage-grant-costcenter");
-        } catch (FenixServiceException e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-costcenter",
-                    null);
-        }
+	    return mapping.findForward("manage-grant-costcenter");
+	} catch (FenixServiceException e) {
+	    return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-costcenter", null);
+	}
     }
 }

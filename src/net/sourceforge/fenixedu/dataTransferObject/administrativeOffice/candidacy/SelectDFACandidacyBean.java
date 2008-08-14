@@ -27,22 +27,19 @@ public class SelectDFACandidacyBean implements Serializable {
 	super();
 	if (candidacy != null) {
 	    this.candidacy = new DomainReference<DFACandidacy>(candidacy);
-	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(
-		    CandidacySituationType.SUBSTITUTE)) {
+	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.SUBSTITUTE)) {
 		this.selectionSituation = CandidacySituationType.SUBSTITUTE;
 	    }
-        if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(
-                CandidacySituationType.ADMITTED)) {
-            this.selectionSituation = CandidacySituationType.ADMITTED;
-        
-        }
-        if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(
-                CandidacySituationType.NOT_ADMITTED)) {
-            this.selectionSituation = CandidacySituationType.NOT_ADMITTED;
-        
-        }
-        this.remarks=candidacy.getActiveCandidacySituation().getRemarks();
-    }
+	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.ADMITTED)) {
+		this.selectionSituation = CandidacySituationType.ADMITTED;
+
+	    }
+	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.NOT_ADMITTED)) {
+		this.selectionSituation = CandidacySituationType.NOT_ADMITTED;
+
+	    }
+	    this.remarks = candidacy.getActiveCandidacySituation().getRemarks();
+	}
     }
 
     public DFACandidacy getCandidacy() {

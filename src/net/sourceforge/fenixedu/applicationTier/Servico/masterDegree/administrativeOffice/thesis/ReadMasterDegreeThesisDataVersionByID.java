@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadMasterDegreeThesisDataVersionByID extends Service {
 
-	public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException{
-        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = rootDomainObject.readMasterDegreeThesisDataVersionByOID(masterDegreeThesisDataVersionID);
-		if (masterDegreeThesisDataVersion == null)
-			throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion");
+    public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException {
+	MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = rootDomainObject
+		.readMasterDegreeThesisDataVersionByOID(masterDegreeThesisDataVersionID);
+	if (masterDegreeThesisDataVersion == null)
+	    throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion");
 
-		return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis.newInfoFromDomain(masterDegreeThesisDataVersion);
-	}
-    
+	return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis.newInfoFromDomain(masterDegreeThesisDataVersion);
+    }
+
 }

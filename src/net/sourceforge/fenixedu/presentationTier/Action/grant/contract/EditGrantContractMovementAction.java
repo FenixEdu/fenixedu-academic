@@ -31,8 +31,8 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data
      */
-    public ActionForward prepareEditGrantContractMovementForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditGrantContractMovementForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	IUserView userView = UserView.getUser();
 	DynaValidatorForm grantContractMovementForm = (DynaValidatorForm) form;
 
@@ -45,32 +45,31 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
 	    idGrantMovement = new Integer(request.getParameter("idGrantMovement"));
 	}
 
-	if (loaddb != null && loaddb.equals(new Integer(1))) //load contents
+	if (loaddb != null && loaddb.equals(new Integer(1))) // load contents
 	// from database
 	{
-	    if (idGrantMovement != null) //Editing a grant contract movement
+	    if (idGrantMovement != null) // Editing a grant contract movement
 	    {
 		try {
-		    //Read the grant contract movement
+		    // Read the grant contract movement
 		    Object[] args = { idGrantMovement };
 		    InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) ServiceUtils
-			    .executeService( "ReadGrantContractMovement", args);
+			    .executeService("ReadGrantContractMovement", args);
 
-		    //Populate the form
+		    // Populate the form
 		    setFormGrantContractMovement(grantContractMovementForm, infoGrantContractMovement);
-		    request.setAttribute("idContract", infoGrantContractMovement.getInfoGrantContract()
-			    .getIdInternal());
+		    request.setAttribute("idContract", infoGrantContractMovement.getInfoGrantContract().getIdInternal());
 		} catch (FenixServiceException e) {
-		    return setError(request, mapping, "errors.grant.contract.movement.read",
-			    "manage-grant-contract-movement", null);
+		    return setError(request, mapping, "errors.grant.contract.movement.read", "manage-grant-contract-movement",
+			    null);
 		}
-	    } else //New grant contract movement
+	    } else // New grant contract movement
 	    {
 		Integer idContract = new Integer(request.getParameter("idContract"));
 		grantContractMovementForm.set("grantContractId", idContract);
 		request.setAttribute("idContract", idContract);
 	    }
-	} else //Probabily a validation error
+	} else // Probabily a validation error
 	{
 	    request.setAttribute("idContract", request.getParameter("grantContractId"));
 	}
@@ -81,20 +80,17 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
     /*
      * Edit a Grant Contract Movement
      */
-    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	DynaValidatorForm editGrantContractMovementForm = (DynaValidatorForm) form;
 	InfoGrantContractMovement infoGrantContractMovement = null;
 	IUserView userView = UserView.getUser();
 	try {
 	    infoGrantContractMovement = populateInfoFromForm(editGrantContractMovementForm);
 
-	    if (infoGrantContractMovement.getDepartureDate() != null
-		    && infoGrantContractMovement.getArrivalDate() != null
-		    && infoGrantContractMovement.getDepartureDate().after(
-			    infoGrantContractMovement.getArrivalDate())) {
-		return setError(request, mapping, "errors.grant.contract.movement.beginDateBeforeEnd",
-			null, null);
+	    if (infoGrantContractMovement.getDepartureDate() != null && infoGrantContractMovement.getArrivalDate() != null
+		    && infoGrantContractMovement.getDepartureDate().after(infoGrantContractMovement.getArrivalDate())) {
+		return setError(request, mapping, "errors.grant.contract.movement.beginDateBeforeEnd", null, null);
 	    }
 
 	    Object[] args = { infoGrantContractMovement };
@@ -103,15 +99,15 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
 	    request.setAttribute("idContract", editGrantContractMovementForm.get("grantContractId"));
 	} catch (FenixServiceException e) {
 	    return setError(request, mapping, "errors.grant.contract.movement.edit", null, null);
-	} 
+	}
 	return mapping.findForward("manage-grant-contract-movement");
     }
 
     /*
      * Delete a grant contract movement
      */
-    public ActionForward doDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward doDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	try {
 	    Integer idGrantMovement = new Integer(request.getParameter("idGrantMovement"));
 	    Integer idContract = new Integer(request.getParameter("idContract"));
@@ -130,8 +126,8 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
     /*
      * Populates form from InfoGrantContractMovement
      */
-    private void setFormGrantContractMovement(DynaValidatorForm form,
-	    InfoGrantContractMovement infoGrantContractMovement) throws Exception {
+    private void setFormGrantContractMovement(DynaValidatorForm form, InfoGrantContractMovement infoGrantContractMovement)
+	    throws Exception {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 	form.set("location", infoGrantContractMovement.getLocation());
@@ -147,23 +143,19 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
     /*
      * Populates Info from Form
      */
-    private InfoGrantContractMovement populateInfoFromForm(
-	    DynaValidatorForm editGrantContractMovementForm) throws Exception {
+    private InfoGrantContractMovement populateInfoFromForm(DynaValidatorForm editGrantContractMovementForm) throws Exception {
 	InfoGrantContractMovement infoGrantContractMovement = new InfoGrantContractMovement();
 
 	infoGrantContractMovement.setLocation((String) editGrantContractMovementForm.get("location"));
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	if (verifyStringParameterInForm(editGrantContractMovementForm, "departureDate"))
-	    infoGrantContractMovement.setDepartureDate(sdf.parse((String) editGrantContractMovementForm
-		    .get("departureDate")));
+	    infoGrantContractMovement.setDepartureDate(sdf.parse((String) editGrantContractMovementForm.get("departureDate")));
 	if (verifyStringParameterInForm(editGrantContractMovementForm, "arrivalDate"))
-	    infoGrantContractMovement.setArrivalDate(sdf.parse((String) editGrantContractMovementForm
-		    .get("arrivalDate")));
+	    infoGrantContractMovement.setArrivalDate(sdf.parse((String) editGrantContractMovementForm.get("arrivalDate")));
 
 	if (verifyStringParameterInForm(editGrantContractMovementForm, "idInternal")) {
-	    infoGrantContractMovement.setIdInternal((Integer) editGrantContractMovementForm
-		    .get("idInternal"));
+	    infoGrantContractMovement.setIdInternal((Integer) editGrantContractMovementForm.get("idInternal"));
 	}
 
 	InfoGrantContract infoGrantContract = new InfoGrantContract();

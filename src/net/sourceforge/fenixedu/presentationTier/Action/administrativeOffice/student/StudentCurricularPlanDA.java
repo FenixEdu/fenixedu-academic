@@ -23,11 +23,11 @@ import org.apache.struts.action.ActionMapping;
  */
 public class StudentCurricularPlanDA extends FenixDispatchAction {
 
-    public ActionForward prepareCreateSCP(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(
-		request, "registrationId"));
+	final Registration registration = rootDomainObject
+		.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
 
 	request.setAttribute("studentCurricularPlanCreator",
 		new StudentCurricularPlanFactoryExecutor.StudentCurricularPlanCreator(registration));
@@ -36,15 +36,13 @@ public class StudentCurricularPlanDA extends FenixDispatchAction {
 	return mapping.findForward("showCreateNewStudentCurricularPlan");
     }
 
-    public ActionForward createSCP(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	executeFactoryMethod();
 	addActionMessage(request, "message.registration.addNewSCP.success");
 
-	request.setAttribute("registration", ((StudentCurricularPlanCreator) getRenderedObject())
-		.getRegistration());
+	request.setAttribute("registration", ((StudentCurricularPlanCreator) getRenderedObject()).getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
 

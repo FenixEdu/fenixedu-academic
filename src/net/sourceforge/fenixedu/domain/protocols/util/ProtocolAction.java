@@ -48,8 +48,7 @@ public class ProtocolAction implements Serializable {
 
     public boolean contains(List<ProtocolActionType> protocolActionTypes) {
 	for (ProtocolActionType protocolActionType : protocolActionTypes) {
-	    if (getProcotolActionTypes() == null
-		    || !getProcotolActionTypes().contains(protocolActionType)) {
+	    if (getProcotolActionTypes() == null || !getProcotolActionTypes().contains(protocolActionType)) {
 		return false;
 	    }
 	}
@@ -57,14 +56,12 @@ public class ProtocolAction implements Serializable {
     }
 
     public boolean contains(ProtocolActionType protocolActionType) {
-	return (getProcotolActionTypes() == null || !getProcotolActionTypes().contains(
-		protocolActionType)) ? false : true;
+	return (getProcotolActionTypes() == null || !getProcotolActionTypes().contains(protocolActionType)) ? false : true;
     }
 
     public String getText() {
 	StringBuilder stringBuilder = new StringBuilder();
-	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-		Language.getLocale());
+	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	if (getProcotolActionTypes() != null) {
 	    Iterator<ProtocolActionType> iterator = getProcotolActionTypes().iterator();
 	    while (iterator.hasNext()) {

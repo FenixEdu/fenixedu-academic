@@ -22,41 +22,37 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DegreePaymentsManagementDA extends FenixDispatchAction {
 
-    public ActionForward preparePrintGratuityLetters(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward preparePrintGratuityLetters(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	return mapping.findForward("preparePrintGratuityLetters");
     }
 
-    public ActionForward printGratuityLetters(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward printGratuityLetters(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	request.setAttribute("gratuityLetterDTOs", ServiceUtils.executeService(
-		"BuildInformationForDegreeGratuityLetters", new Object[] { ExecutionYear
-			.readCurrentExecutionYear() }));
+	request.setAttribute("gratuityLetterDTOs", ServiceUtils.executeService("BuildInformationForDegreeGratuityLetters",
+		new Object[] { ExecutionYear.readCurrentExecutionYear() }));
 
 	return mapping.findForward("printGratuityLetters");
     }
 
-    public ActionForward prepareGenerateSibsOutgoingFile(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareGenerateSibsOutgoingFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	return mapping.findForward("prepareGenerateSibsOutgoingFile");
     }
 
-    public ActionForward generateSibsOutgoingFile(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws IOException,
-	    FenixFilterException, FenixServiceException {
+    public ActionForward generateSibsOutgoingFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException, FenixFilterException, FenixServiceException {
 
-	final SibsOutgoingPaymentFile sibsOutgoingPaymentFile = (SibsOutgoingPaymentFile) ServiceUtils
-		.executeService(
-			"GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile",
-			new Object[] { ExecutionYear.readCurrentExecutionYear() });
+	final SibsOutgoingPaymentFile sibsOutgoingPaymentFile = (SibsOutgoingPaymentFile) ServiceUtils.executeService(
+		"GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile", new Object[] { ExecutionYear
+			.readCurrentExecutionYear() });
 
 	response.setContentType("application/octet-stream");
-	response.setHeader("Content-disposition", "attachment; filename=SIBS-"
-		+ new YearMonthDay().toString("dd-MM-yyyy") + ".txt");
+	response.setHeader("Content-disposition", "attachment; filename=SIBS-" + new YearMonthDay().toString("dd-MM-yyyy")
+		+ ".txt");
 	final ServletOutputStream writer = response.getOutputStream();
 	writer.write(sibsOutgoingPaymentFile.render().getBytes());
 	writer.flush();
@@ -64,28 +60,27 @@ public class DegreePaymentsManagementDA extends FenixDispatchAction {
 	return prepareGenerateSibsOutgoingFile(mapping, form, request, response);
     }
 
-    public ActionForward prepareUploadSibsPaymentsFile(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareUploadSibsPaymentsFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("paymentsFileBean", new PaymentsFileBean());
 
 	return mapping.findForward("prepareUploadSibsPaymentsFile");
     }
 
-    public ActionForward uploadSibsPaymentsFile(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward uploadSibsPaymentsFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final PaymentsFileBean paymentsFileBean = (PaymentsFileBean) RenderUtils.getViewState(
-		"paymentsFileBean-create").getMetaObject().getObject();
+	final PaymentsFileBean paymentsFileBean = (PaymentsFileBean) RenderUtils.getViewState("paymentsFileBean-create")
+		.getMetaObject().getObject();
 
 	if (paymentsFileBean.getFile() == null) {
 	    addActionMessage(request, "error.payments.uploadPaymentsFile.file.is.required");
 	    return prepareUploadSibsPaymentsFile(mapping, form, request, response);
 	}
 
-	ServiceUtils.executeService("UploadSibsPaymentsFile", new Object[] {
-		getUserView(request).getPerson(), paymentsFileBean });
+	ServiceUtils
+		.executeService("UploadSibsPaymentsFile", new Object[] { getUserView(request).getPerson(), paymentsFileBean });
 
 	RenderUtils.invalidateViewState("paymentsFileBean-create");
 

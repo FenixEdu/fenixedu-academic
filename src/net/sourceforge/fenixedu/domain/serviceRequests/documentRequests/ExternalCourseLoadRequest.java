@@ -64,7 +64,7 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
     public void removeEnrolments(Enrolment enrolments) {
 	throw new DomainException("error.ExternalCourseLoadRequest.cannot.remove.enrolments");
     }
-    
+
     @Override
     public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.EXTERNAL_COURSE_LOAD;
@@ -74,10 +74,10 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
     public EventType getEventType() {
 	return EventType.EXTERNAL_COURSE_LOAD_REQUEST;
     }
-    
+
     @Override
     public void delete() {
 	super.setInstitution(null);
-        super.delete();
+	super.delete();
     }
 }

@@ -27,66 +27,63 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = getUserView(request);
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = getUserView(request);
 
-        InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        Object argsReadExecutionPeriods[] = {};
-        List executionPeriods = (ArrayList) ServiceUtils.executeService(
-                "ReadExecutionPeriods", argsReadExecutionPeriods);
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-        chainComparator.addComparator(new BeanComparator("semester"));
-        Collections.sort(executionPeriods, chainComparator);
+	Object argsReadExecutionPeriods[] = {};
+	List executionPeriods = (ArrayList) ServiceUtils.executeService("ReadExecutionPeriods", argsReadExecutionPeriods);
+	ComparatorChain chainComparator = new ComparatorChain();
+	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+	chainComparator.addComparator(new BeanComparator("semester"));
+	Collections.sort(executionPeriods, chainComparator);
 
-        // if executionPeriod was previously selected,form has that
-        // value as default
-        if (selectedExecutionPeriod != null) {
-            DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
-            chooseExamsExecutionPeriodForm.set("executionPeriod", new Integer(executionPeriods
-                    .indexOf(selectedExecutionPeriod)));
-        }
-        //----------------------------------------------
+	// if executionPeriod was previously selected,form has that
+	// value as default
+	if (selectedExecutionPeriod != null) {
+	    DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
+	    chooseExamsExecutionPeriodForm.set("executionPeriod", new Integer(executionPeriods.indexOf(selectedExecutionPeriod)));
+	}
+	// ----------------------------------------------
 
-        List executionPeriodsLabelValueList = new ArrayList();
-        for (int i = 0; i < executionPeriods.size(); i++) {
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
-            executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), "" + i));
-        }
+	List executionPeriodsLabelValueList = new ArrayList();
+	for (int i = 0; i < executionPeriods.size(); i++) {
+	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
+	    executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
+		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), "" + i));
+	}
 
-        request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);
+	request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);
 
-        request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+	request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
-        return mapping.findForward("ManageExams");
+	return mapping.findForward("ManageExams");
     }
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
+	DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        Object argsReadExecutionPeriods[] = {};
-        List infoExecutionPeriodList = (ArrayList) ServiceUtils.executeService(
-                "ReadExecutionPeriods", argsReadExecutionPeriods);
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-        chainComparator.addComparator(new BeanComparator("semester"));
-        Collections.sort(infoExecutionPeriodList, chainComparator);
+	Object argsReadExecutionPeriods[] = {};
+	List infoExecutionPeriodList = (ArrayList) ServiceUtils.executeService("ReadExecutionPeriods", argsReadExecutionPeriods);
+	ComparatorChain chainComparator = new ComparatorChain();
+	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+	chainComparator.addComparator(new BeanComparator("semester"));
+	Collections.sort(infoExecutionPeriodList, chainComparator);
 
-        Integer executionPeriodOID = (Integer) chooseExamsExecutionPeriodForm.get("executionPeriod");
+	Integer executionPeriodOID = (Integer) chooseExamsExecutionPeriodForm.get("executionPeriod");
 
-        if (infoExecutionPeriodList != null && executionPeriodOID != null) {
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOID.toString());
-            ContextUtils.setExecutionPeriodContext(request);
-        }
+	if (infoExecutionPeriodList != null && executionPeriodOID != null) {
+	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOID.toString());
+	    ContextUtils.setExecutionPeriodContext(request);
+	}
 
-        return mapping.findForward("ManageExams");
+	return mapping.findForward("ManageExams");
     }
 }

@@ -30,8 +30,7 @@ import net.sourceforge.fenixedu.util.Season;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod extends Service {
 
-    public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season, InfoExecutionPeriod infoExecutionPeriod)
-	    {
+    public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season, InfoExecutionPeriod infoExecutionPeriod) {
 	InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());

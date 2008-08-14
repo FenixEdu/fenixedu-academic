@@ -11,70 +11,68 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 public class ExecutionCoursesProcessor extends PathProcessor {
 
     public static final String PREFIX = "disciplinas";
-    
+
     public static final String CONTENT_SUFIX = "/paginas-de-disciplinas";
-    
+
     private final String forwardURI;
-    
+
     public ExecutionCoursesProcessor(String forwardURI) {
-        super();
-        
-        this.forwardURI = forwardURI;
+	super();
+
+	this.forwardURI = forwardURI;
     }
 
     public ExecutionCoursesProcessor add(ExecutionCourseProcessor processor) {
-        addChild(processor);
-        return this;
+	addChild(processor);
+	return this;
     }
-    
+
     public ExecutionCoursesProcessor add(DegreeCurricularPlanProcessor processor) {
-        addChild(processor);
-        return this;
+	addChild(processor);
+	return this;
     }
 
     @Override
     public ProcessingContext getProcessingContext(ProcessingContext parentContext) {
-        return new ExecutionCoursesContext((DegreeContext) parentContext);
+	return new ExecutionCoursesContext((DegreeContext) parentContext);
     }
 
     @Override
     protected boolean accepts(ProcessingContext context, PathElementsProvider provider) {
-        String current = provider.current();
-        return current.equalsIgnoreCase(PREFIX);
+	String current = provider.current();
+	return current.equalsIgnoreCase(PREFIX);
     }
 
     @Override
-    protected boolean forward(ProcessingContext context, PathElementsProvider provider)
-            throws IOException, ServletException {
-        if (provider.hasNext()) {
-            return false;
-        }
-        else {
-            ExecutionCoursesContext ownContext = (ExecutionCoursesContext) context;
-            String url = ownContext.getDegree().getSite().getReversePath() + CONTENT_SUFIX;
+    protected boolean forward(ProcessingContext context, PathElementsProvider provider) throws IOException, ServletException {
+	if (provider.hasNext()) {
+	    return false;
+	} else {
+	    ExecutionCoursesContext ownContext = (ExecutionCoursesContext) context;
+	    String url = ownContext.getDegree().getSite().getReversePath() + CONTENT_SUFIX;
 	    context.getResponse().sendRedirect(ownContext.getRequest().getContextPath() + url);
 	    return true;
-        }
+	}
     }
 
     public static class ExecutionCoursesContext extends ProcessingContext implements DegreeCurricularPlanContext {
 
-        public ExecutionCoursesContext(DegreeContext parent) {
-            super(parent);
-        }
+	public ExecutionCoursesContext(DegreeContext parent) {
+	    super(parent);
+	}
 
-        @Override
-        public DegreeContext getParent() {
-            return (DegreeContext) super.getParent();
-        }
-        
-        public Degree getDegree() {
-            return getParent().getDegree();
-        }
-        
-        public DegreeCurricularPlan getDegreeCurricularPlan() {
-            return getDegree().getMostRecentDegreeCurricularPlan();
-        }
-        
+	@Override
+	public DegreeContext getParent() {
+	    return (DegreeContext) super.getParent();
+	}
+
+	public Degree getDegree() {
+	    return getParent().getDegree();
+	}
+
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+	    return getDegree().getMostRecentDegreeCurricularPlan();
+	}
+
     }
 }

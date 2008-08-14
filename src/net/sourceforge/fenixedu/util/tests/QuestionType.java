@@ -17,11 +17,11 @@ import org.apache.struts.util.LabelValueBean;
 
 public class QuestionType extends FenixUtil {
 
-    public static final int LID = 1; //Logical identifier(multiple choise)
+    public static final int LID = 1; // Logical identifier(multiple choise)
 
-    public static final int STR = 2; //String
+    public static final int STR = 2; // String
 
-    public static final int NUM = 3; //Numeric
+    public static final int NUM = 3; // Numeric
 
     public static final String LID_ID_STRING = "response_lid";
 
@@ -35,15 +35,15 @@ public class QuestionType extends FenixUtil {
 
     public static final String NUM_STRING = "Perguntas Numéricas";
 
-    //if questionType == 2 tipo de resposa = String
-    //if questionType == 3 tipo de resposa = Integer | Decimal
-    //  private Integer rows = new Integer(1);
+    // if questionType == 2 tipo de resposa = String
+    // if questionType == 3 tipo de resposa = Integer | Decimal
+    // private Integer rows = new Integer(1);
 
-    //  private Integer columns = new Integer(1);
+    // private Integer columns = new Integer(1);
 
-    //private Integer maxchars = new Integer(1);
+    // private Integer maxchars = new Integer(1);
 
-    //  prompt (Box | Dashline | Asterisk | Underline ) #IMPLIED
+    // prompt (Box | Dashline | Asterisk | Underline ) #IMPLIED
 
     private Integer type;
 
@@ -52,79 +52,79 @@ public class QuestionType extends FenixUtil {
     private Render render;
 
     public QuestionType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public QuestionType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public QuestionType(String type) {
-        this.type = getTypeCode(type);
+	this.type = getTypeCode(type);
     }
 
     public Integer getType() {
-        return type;
+	return type;
     }
 
     public void setType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public void setType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public void setType(String type) {
-        this.type = getTypeCode(type);
+	this.type = getTypeCode(type);
     }
 
     public CardinalityType getCardinalityType() {
-        return cardinalityType;
+	return cardinalityType;
     }
 
     public void setCardinalityType(CardinalityType cardinalityType) {
-        this.cardinalityType = cardinalityType;
+	this.cardinalityType = cardinalityType;
     }
 
     public Render getRender() {
-        return render;
+	return render;
     }
 
     public void setRender(Render render) {
-        this.render = render;
+	this.render = render;
     }
 
     public Integer getTypeCode(String typeName) {
-        if (typeName.equals(LID_ID_STRING))
-            return new Integer(LID);
-        else if (typeName.equals(STR_ID_STRING))
-            return new Integer(STR);
-        else if (typeName.equals(NUM_ID_STRING))
-            return new Integer(NUM);
-        return null;
+	if (typeName.equals(LID_ID_STRING))
+	    return new Integer(LID);
+	else if (typeName.equals(STR_ID_STRING))
+	    return new Integer(STR);
+	else if (typeName.equals(NUM_ID_STRING))
+	    return new Integer(NUM);
+	return null;
     }
 
     public String getTypeString() {
-        if (this.type.intValue() == LID)
-            return LID_ID_STRING;
-        else if (this.type.intValue() == STR)
-            return STR_ID_STRING;
-        else if (this.type.intValue() == NUM)
-            return NUM_ID_STRING;
-        return null;
+	if (this.type.intValue() == LID)
+	    return LID_ID_STRING;
+	else if (this.type.intValue() == STR)
+	    return STR_ID_STRING;
+	else if (this.type.intValue() == NUM)
+	    return NUM_ID_STRING;
+	return null;
     }
 
     public static List getAllTypes() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(LID_STRING, new Integer(LID).toString()));
-        result.add(new LabelValueBean(STR_STRING, new Integer(STR).toString()));
-        result.add(new LabelValueBean(NUM_STRING, new Integer(NUM).toString()));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(LID_STRING, new Integer(LID).toString()));
+	result.add(new LabelValueBean(STR_STRING, new Integer(STR).toString()));
+	result.add(new LabelValueBean(NUM_STRING, new Integer(NUM).toString()));
+	return result;
     }
 
     public String toXML(String inside, int code) {
-        return "<" + getTypeString() + " ident=\"" + code + "\" " + cardinalityType.toXML()
-                + ">\n" + render.toXML(inside) + "</" + getTypeString() + ">\n";
+	return "<" + getTypeString() + " ident=\"" + code + "\" " + cardinalityType.toXML() + ">\n" + render.toXML(inside) + "</"
+		+ getTypeString() + ">\n";
     }
 }

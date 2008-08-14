@@ -148,11 +148,11 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     public ActionForward createMarkSheetStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	/*
-         * - This method is used when a validation error occurs. Instead of
-         * creating a new bean we use the existing one. - If we dont't use this
-         * method, the createMarkSheetStep1 is called (input method) and a new
-         * create bean is created.
-         */
+	 * - This method is used when a validation error occurs. Instead of
+	 * creating a new bean we use the existing one. - If we dont't use this
+	 * method, the createMarkSheetStep1 is called (input method) and a new
+	 * create bean is created.
+	 */
 	request.setAttribute("edit", RenderUtils.getViewState("edit-invisible").getMetaObject().getObject());
 	return mapping.findForward("createMarkSheetStep2");
     }
@@ -196,8 +196,8 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 	Integer studentNumber = rectifyBean.getStudentNumber();
 	Student student = Student.readStudentByNumber(studentNumber);
 	// Registration registration =
-        // Registration.readStudentByNumberAndDegreeType(studentNumber,
-        // DegreeType.DEGREE);
+	// Registration.readStudentByNumberAndDegreeType(studentNumber,
+	// DegreeType.DEGREE);
 	if (student == null) {
 	    ActionMessages actionMessages = new ActionMessages();
 	    addMessage(request, actionMessages, "error.no.student", studentNumber.toString());

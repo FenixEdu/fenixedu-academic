@@ -107,7 +107,7 @@ public class ReadExamsMapByRooms extends Service {
     // for (final Exam exam : exams) {
     // InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
     // // Use one execution course
-    // infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
+    //infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
     // .getAssociatedExecutionCourses().get(0)));
     // result.add(infoExam);
     // }

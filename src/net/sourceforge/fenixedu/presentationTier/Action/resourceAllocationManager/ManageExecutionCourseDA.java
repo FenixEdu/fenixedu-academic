@@ -28,105 +28,106 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
-        ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();        
-        readAndSetExecutionCourseClasses(request, executionCourse);       
-        request.setAttribute("courseLoadBean", new CourseLoadBean(executionCourse));        
-        return mapping.findForward("ManageExecutionCourse");
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
+	readAndSetExecutionCourseClasses(request, executionCourse);
+	request.setAttribute("courseLoadBean", new CourseLoadBean(executionCourse));
+	return mapping.findForward("ManageExecutionCourse");
     }
 
     public ActionForward preparePostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-	
-	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");	
+	    HttpServletResponse response) throws Exception {
+
+	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");
 	ShiftType type = bean.getType();
-	if(type != null) {
+	if (type != null) {
 	    CourseLoad courseLoad = bean.getExecutionCourse().getCourseLoadByShiftType(type);
-	    if(courseLoad != null) {
+	    if (courseLoad != null) {
 		bean.setUnitQuantity(courseLoad.getUnitQuantity());
-		bean.setTotalQuantity(courseLoad.getTotalQuantity());		
+		bean.setTotalQuantity(courseLoad.getTotalQuantity());
 	    } else {
 		bean.setUnitQuantity(null);
 		bean.setTotalQuantity(null);
 	    }
-	}	
-	
+	}
+
 	readAndSetExecutionCourseClasses(request, bean.getExecutionCourse());
 	RenderUtils.invalidateViewState("courseLoadBeanID");
-	request.setAttribute("courseLoadBean", bean);	
+	request.setAttribute("courseLoadBean", bean);
 	return mapping.findForward("ManageExecutionCourse");
     }
 
     public ActionForward showCourseLoad(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-	
+	    HttpServletResponse response) throws Exception {
+
 	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");
 	readAndSetExecutionCourseClasses(request, bean.getExecutionCourse());
-	request.setAttribute("courseLoadBean", bean);	
+	request.setAttribute("courseLoadBean", bean);
 	return mapping.findForward("ManageExecutionCourse");
     }
-    
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
 
-	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");		
-        try {
-            ServiceManagerServiceFactory.executeService( "EditExecutionCourse",  new Object[] { bean } );   
-	
-        } catch (DomainException e) {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
+	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");
+	try {
+	    ServiceManagerServiceFactory.executeService("EditExecutionCourse", new Object[] { bean });
+
+	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    readAndSetExecutionCourseClasses(request, bean.getExecutionCourse());
-	    request.setAttribute("courseLoadBean", bean);        
+	    request.setAttribute("courseLoadBean", bean);
 	    return mapping.findForward("ManageExecutionCourse");
-	}	       
-        
-        bean.setType(null);
-        bean.setUnitQuantity(null);
+	}
+
+	bean.setType(null);
+	bean.setUnitQuantity(null);
 	bean.setTotalQuantity(null);
-	
-        readAndSetExecutionCourseClasses(request, bean.getExecutionCourse());
-        request.setAttribute("courseLoadBean", bean);        
-	return mapping.findForward("ManageExecutionCourse");        
+
+	readAndSetExecutionCourseClasses(request, bean.getExecutionCourse());
+	request.setAttribute("courseLoadBean", bean);
+	return mapping.findForward("ManageExecutionCourse");
     }
-    
+
     public ActionForward deleteCourseLoad(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-	
+	    HttpServletResponse response) throws Exception {
+
 	CourseLoad courseLoad = getCourseLoadFromParameter(request);
 	ExecutionCourse executionCourse = courseLoad.getExecutionCourse();
 	try {
-	    ServiceManagerServiceFactory.executeService( "DeleteCourseLoad",  new Object[] { courseLoad } );
+	    ServiceManagerServiceFactory.executeService("DeleteCourseLoad", new Object[] { courseLoad });
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());    
+	    addActionMessage(request, e.getMessage());
 	}
-	
-        readAndSetExecutionCourseClasses(request, executionCourse);       
-        request.setAttribute("courseLoadBean", new CourseLoadBean(executionCourse));        
-        return mapping.findForward("ManageExecutionCourse");
-    }
-    
-    private void readAndSetExecutionCourseClasses(HttpServletRequest request, ExecutionCourse executionCourse) 
-    	throws FenixFilterException, FenixServiceException{
-	
-	List<InfoClass> infoClasses = (List<InfoClass>) ServiceManagerServiceFactory.executeService(
-		"ReadClassesByExecutionCourse", new Object[] {executionCourse});
 
-        if (infoClasses != null && !infoClasses.isEmpty()) {
-            Collections.sort(infoClasses, new BeanComparator("nome"));
-            request.setAttribute(SessionConstants.LIST_INFOCLASS, infoClasses);
-        } 
-    }      
-    
+	readAndSetExecutionCourseClasses(request, executionCourse);
+	request.setAttribute("courseLoadBean", new CourseLoadBean(executionCourse));
+	return mapping.findForward("ManageExecutionCourse");
+    }
+
+    private void readAndSetExecutionCourseClasses(HttpServletRequest request, ExecutionCourse executionCourse)
+	    throws FenixFilterException, FenixServiceException {
+
+	List<InfoClass> infoClasses = (List<InfoClass>) ServiceManagerServiceFactory.executeService(
+		"ReadClassesByExecutionCourse", new Object[] { executionCourse });
+
+	if (infoClasses != null && !infoClasses.isEmpty()) {
+	    Collections.sort(infoClasses, new BeanComparator("nome"));
+	    request.setAttribute(SessionConstants.LIST_INFOCLASS, infoClasses);
+	}
+    }
+
     private CourseLoad getCourseLoadFromParameter(final HttpServletRequest request) {
-	final String idString = request.getParameterMap().containsKey("courseLoadID") ? request.getParameter("courseLoadID") : null;
+	final String idString = request.getParameterMap().containsKey("courseLoadID") ? request.getParameter("courseLoadID")
+		: null;
 	final Integer courseLoadID = idString != null ? Integer.valueOf(idString) : null;
 	return rootDomainObject.readCourseLoadByOID(courseLoadID);
-    }    
+    }
 }

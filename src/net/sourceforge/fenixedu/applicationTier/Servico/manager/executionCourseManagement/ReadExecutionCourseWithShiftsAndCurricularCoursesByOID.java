@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * 
  * @author Luis Cruz
- *  
+ * 
  */
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Service {
 

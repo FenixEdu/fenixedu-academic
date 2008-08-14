@@ -25,24 +25,25 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
     }
 
     /*
-         * (non-Javadoc)
-         * 
-         * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-         *      pt.utl.ist.berserk.ServiceResponse)
-         */
+     * (non-Javadoc)
+     * 
+     * @see
+     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	IUserView id = getRemoteUser(request);
 	Object[] argumentos = getServiceCallArguments(request);
 	if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-		|| (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos))
-		|| (id == null) || (id.getRoleTypes() == null)) {
+		|| (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+		|| (id.getRoleTypes() == null)) {
 	    throw new NotAuthorizedFilterException();
 	}
     }
 
     /**
-         * @return The Needed Roles to Execute The Service
-         */
+     * @return The Needed Roles to Execute The Service
+     */
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
 	List<RoleType> roles = new ArrayList<RoleType>();
@@ -52,26 +53,23 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
     }
 
     /**
-         * @param id
-         * @param argumentos
-         * @return
-         */
+     * @param id
+     * @param argumentos
+     * @return
+     */
     private boolean hasPrivilege(IUserView id, Object[] arguments) {
 	Integer degreeCurricularPlanID = (Integer) arguments[0];
 	DegreeType degreeType = (DegreeType) arguments[1];
 
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
-		.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-	if ((degreeCurricularPlan == null)
-		|| (!degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType))) {
+	if ((degreeCurricularPlan == null) || (!degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType))) {
 	    return false;
 	}
 
 	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 	    if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)
-		    || degreeCurricularPlan.getDegree().getTipoCurso().equals(
-			    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+		    || degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		return true;
 	    }
 	    return false;
@@ -86,8 +84,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
 	    // IMPORTANT: It's assumed that the coordinator for a Degree is
 	    // ALWAYS the same
 	    // modified by Tânia Pousão
-	    List<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.get(0))
-		    .getCoordinatorsList();
+	    List<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.get(0)).getCoordinatorsList();
 	    if (coodinatorsList == null) {
 		return false;
 	    }

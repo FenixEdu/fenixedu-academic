@@ -23,21 +23,20 @@ import org.apache.struts.action.ActionMapping;
  */
 public class CreateSiteInExecutionCourseAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-        Object args[] = { executionCourseId };
-        try {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
+	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+	Object args[] = { executionCourseId };
+	try {
 
-            ServiceUtils.executeService("CreateSiteInExecutionCourse", args);
-        } catch (NonExistingServiceException exception) {
-            throw new NonExistingActionException(exception.getMessage());
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        //TODO:ver qd nao exeiste curricularcourse
-        return mapping.findForward("readCurricularCourse");
+	    ServiceUtils.executeService("CreateSiteInExecutionCourse", args);
+	} catch (NonExistingServiceException exception) {
+	    throw new NonExistingActionException(exception.getMessage());
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	// TODO:ver qd nao exeiste curricularcourse
+	return mapping.findForward("readCurricularCourse");
     }
 
 }
-

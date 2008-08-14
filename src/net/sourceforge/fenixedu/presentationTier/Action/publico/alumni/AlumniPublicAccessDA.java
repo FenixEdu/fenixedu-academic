@@ -122,9 +122,8 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 		    .getDocumentIdNumber(), alumniBean.getEmail());
 
 	    // TODO remove
-	    String url = MessageFormat.format(RESOURCES
-		    .getString("alumni.public.registration.url"), alumni.getStudent().getPerson().getFirstAndLastName(), alumni
-		    .getIdInternal().toString(), alumni.getUrlRequestToken());
+	    String url = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
+		    .getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken());
 	    request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
 	    // TODO remove
 
@@ -417,7 +416,6 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
 	return alumniPerson.getIstUsername();
     }
-    
 
     public ActionForward checkLists(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

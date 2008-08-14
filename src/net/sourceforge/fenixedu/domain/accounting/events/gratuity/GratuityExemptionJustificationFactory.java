@@ -5,8 +5,7 @@ import org.joda.time.YearMonthDay;
 public class GratuityExemptionJustificationFactory {
 
     public static GratuityExemptionJustification create(final GratuityExemption gratuityExemption,
-	    final GratuityExemptionJustificationType justificationType, final String reason,
-	    final YearMonthDay dispatchDate) {
+	    final GratuityExemptionJustificationType justificationType, final String reason, final YearMonthDay dispatchDate) {
 
 	switch (justificationType) {
 	case INSTITUTION:
@@ -19,8 +18,7 @@ public class GratuityExemptionJustificationFactory {
 	case SEPARATION_CYCLES_AUTHORIZATION:
 	    return new GratuityExemptionJustification(gratuityExemption, justificationType, reason);
 	case DIRECTIVE_COUNCIL_AUTHORIZATION:
-	    return new GratuityExemptionJustificationByDispatch(gratuityExemption, justificationType,
-		    reason, dispatchDate);
+	    return new GratuityExemptionJustificationByDispatch(gratuityExemption, justificationType, reason, dispatchDate);
 	default:
 	    throw new RuntimeException("Unknown justification type");
 

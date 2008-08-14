@@ -8,26 +8,25 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  */
 
 public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNumberOfDoneCurricularCourses_Base {
-    
-	public RestrictionByNumberOfDoneCurricularCourses() {
-        super();
+
+    public RestrictionByNumberOfDoneCurricularCourses() {
+	super();
     }
-	
-	public RestrictionByNumberOfDoneCurricularCourses(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
-		super();
-		
-        setNumberOfCurricularCourses(number);
-        setPrecedence(precedence);
-	}
-	
-	
+
+    public RestrictionByNumberOfDoneCurricularCourses(Integer number, Precedence precedence,
+	    CurricularCourse precedentCurricularCourse) {
+	super();
+
+	setNumberOfCurricularCourses(number);
+	setPrecedence(precedence);
+    }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        if (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= getNumberOfCurricularCourses()
-                .intValue()) {
-            return CurricularCourseEnrollmentType.DEFINITIVE;
-        }
-        return CurricularCourseEnrollmentType.NOT_ALLOWED;
+	if (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= getNumberOfCurricularCourses()
+		.intValue()) {
+	    return CurricularCourseEnrollmentType.DEFINITIVE;
+	}
+	return CurricularCourseEnrollmentType.NOT_ALLOWED;
 
     }
 }

@@ -32,54 +32,51 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ReadDegreeCurricularPlanAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer degreeCurricularPlanId = null;
-        if (request.getParameter("degreeCurricularPlanId") != null) {
-            degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        }
+	Integer degreeCurricularPlanId = null;
+	if (request.getParameter("degreeCurricularPlanId") != null) {
+	    degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+	}
 
-        Object args[] = { degreeCurricularPlanId };
+	Object args[] = { degreeCurricularPlanId };
 
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-        try {
-            infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceUtils.executeService(
-                    "ReadDegreeCurricularPlan", args);
+	try {
+	    infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceUtils.executeService("ReadDegreeCurricularPlan", args);
 
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", "", e);
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", "", e);
+	} catch (FenixServiceException fenixServiceException) {
+	    throw new FenixActionException(fenixServiceException.getMessage());
+	}
 
-        // in case the degreeCurricularPlan really exists
-        List curricularCourses = null;
-        try {
-            curricularCourses = (List) ServiceUtils.executeService(
-                    "ReadCurricularCoursesByDegreeCurricularPlan", args);
+	// in case the degreeCurricularPlan really exists
+	List curricularCourses = null;
+	try {
+	    curricularCourses = (List) ServiceUtils.executeService("ReadCurricularCoursesByDegreeCurricularPlan", args);
 
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        Collections.sort(curricularCourses, new BeanComparator("name"));
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	Collections.sort(curricularCourses, new BeanComparator("name"));
 
-        List executionDegrees = null;
-        try {
-            executionDegrees = (List) ServiceUtils.executeService(
-                    "ReadExecutionDegreesByDegreeCurricularPlan", args);
+	List executionDegrees = null;
+	try {
+	    executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlan", args);
 
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        Collections.sort(executionDegrees, new BeanComparator("infoExecutionYear.year"));
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	Collections.sort(executionDegrees, new BeanComparator("infoExecutionYear.year"));
 
-        request.setAttribute("curricularCoursesList", curricularCourses);
-        request.setAttribute("executionDegreesList", executionDegrees);
-        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-        return mapping.findForward("viewDegreeCurricularPlan");
+	request.setAttribute("curricularCoursesList", curricularCourses);
+	request.setAttribute("executionDegreesList", executionDegrees);
+	request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+	return mapping.findForward("viewDegreeCurricularPlan");
     }
 }

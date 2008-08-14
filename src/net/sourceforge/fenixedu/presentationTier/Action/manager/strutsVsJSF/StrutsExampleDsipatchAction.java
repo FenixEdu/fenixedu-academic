@@ -15,36 +15,33 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class StrutsExampleDsipatchAction extends FenixDispatchAction {
-    
+
     public ActionForward showFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        
-        return mapping.findForward("showFirstPage");
+	    HttpServletResponse response) {
 
-        
+	return mapping.findForward("showFirstPage");
+
     }
-    
-    public ActionForward showExecutionPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-                
-        final Object[] args = {};
-        Collection infoExecutionPeriods = null;
-        try {
-            infoExecutionPeriods = (Collection) ServiceUtils
-                    .executeService( "ReadExecutionPeriods", args);
-        } catch (FenixFilterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        request.setAttribute("executionPeriods", infoExecutionPeriods);
-        
-        return mapping.findForward("showListExecutionPeriods");
 
-        
+    public ActionForward showExecutionPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Object[] args = {};
+	Collection infoExecutionPeriods = null;
+	try {
+	    infoExecutionPeriods = (Collection) ServiceUtils.executeService("ReadExecutionPeriods", args);
+	} catch (FenixFilterException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+
+	request.setAttribute("executionPeriods", infoExecutionPeriods);
+
+	return mapping.findForward("showListExecutionPeriods");
+
     }
 
 }

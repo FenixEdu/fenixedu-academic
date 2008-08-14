@@ -37,81 +37,80 @@ import org.apache.struts.action.DynaActionForm;
 public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchAction {
 
     protected void getAdviseServices(HttpServletRequest request, DynaActionForm dynaForm,
-            final ExecutionSemester executionSemester, Teacher teacher) {
+	    final ExecutionSemester executionSemester, Teacher teacher) {
 
-        dynaForm.set("executionPeriodId", executionSemester.getIdInternal());
-        dynaForm.set("teacherId", teacher.getIdInternal());
+	dynaForm.set("executionPeriodId", executionSemester.getIdInternal());
+	dynaForm.set("teacherId", teacher.getIdInternal());
 
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-        if (teacherService != null && !teacherService.getTeacherAdviseServices().isEmpty()) {
-            BeanComparator comparator = new BeanComparator("advise.student.number");
-            Iterator orderedAdviseServicesIter = new OrderedIterator(teacherService
-                    .getTeacherAdviseServices().iterator(), comparator);
-            request.setAttribute("adviseServices", orderedAdviseServicesIter);
-        }
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+	if (teacherService != null && !teacherService.getTeacherAdviseServices().isEmpty()) {
+	    BeanComparator comparator = new BeanComparator("advise.student.number");
+	    Iterator orderedAdviseServicesIter = new OrderedIterator(teacherService.getTeacherAdviseServices().iterator(),
+		    comparator);
+	    request.setAttribute("adviseServices", orderedAdviseServicesIter);
+	}
 
-        request.setAttribute("executionPeriod", executionSemester);
-        request.setAttribute("teacher", teacher);
+	request.setAttribute("executionPeriod", executionSemester);
+	request.setAttribute("teacher", teacher);
     }
 
-    protected ActionForward editAdviseService(ActionForm form, HttpServletRequest request,
-            ActionMapping mapping, RoleType roleType) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+    protected ActionForward editAdviseService(ActionForm form, HttpServletRequest request, ActionMapping mapping,
+	    RoleType roleType) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-        DynaActionForm adviseServiceForm = (DynaActionForm) form;
+	DynaActionForm adviseServiceForm = (DynaActionForm) form;
 
-        Integer studentNumber = Integer.valueOf(adviseServiceForm.getString("studentNumber"));
-        Double percentage = Double.valueOf(adviseServiceForm.getString("percentage"));
-        Integer teacherID = (Integer) adviseServiceForm.get("teacherId");
-        Integer executionPeriodID = (Integer) adviseServiceForm.get("executionPeriodId");
-        Object[] args = { teacherID, executionPeriodID, studentNumber, percentage,
-                AdviseType.FINAL_WORK_DEGREE, roleType };
-        try {
-            executeService("EditTeacherAdviseService", args);
+	Integer studentNumber = Integer.valueOf(adviseServiceForm.getString("studentNumber"));
+	Double percentage = Double.valueOf(adviseServiceForm.getString("percentage"));
+	Integer teacherID = (Integer) adviseServiceForm.get("teacherId");
+	Integer executionPeriodID = (Integer) adviseServiceForm.get("executionPeriodId");
+	Object[] args = { teacherID, executionPeriodID, studentNumber, percentage, AdviseType.FINAL_WORK_DEGREE, roleType };
+	try {
+	    executeService("EditTeacherAdviseService", args);
 
-        } catch (AdvisePercentageException ape) {
-            ActionMessages actionMessages = new ActionMessages();
-            addMessages(ape, actionMessages, AdviseType.FINAL_WORK_DEGREE);
-            saveMessages(request, actionMessages);
-            return mapping.getInputForward();
+	} catch (AdvisePercentageException ape) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    addMessages(ape, actionMessages, AdviseType.FINAL_WORK_DEGREE);
+	    saveMessages(request, actionMessages);
+	    return mapping.getInputForward();
 
-        } catch (DomainException e) {
-            saveMessages(request, e);
-        }
+	} catch (DomainException e) {
+	    saveMessages(request, e);
+	}
 
-        return mapping.findForward("successfull-edit");
+	return mapping.findForward("successfull-edit");
     }
 
-    protected void deleteAdviseService(HttpServletRequest request, RoleType roleType)
-            throws NumberFormatException, FenixFilterException, FenixServiceException {
+    protected void deleteAdviseService(HttpServletRequest request, RoleType roleType) throws NumberFormatException,
+	    FenixFilterException, FenixServiceException {
 
-        Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
-        try {
-            executeService("DeleteTeacherAdviseServiceByOID", new Object[] { adviseServiceID, roleType });
-        } catch (DomainException e) {
-            saveMessages(request, e);
-        }
+	Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
+	try {
+	    executeService("DeleteTeacherAdviseServiceByOID", new Object[] { adviseServiceID, roleType });
+	} catch (DomainException e) {
+	    saveMessages(request, e);
+	}
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {
-        ActionMessages actionMessages = new ActionMessages();
-        actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
-        saveMessages(request, actionMessages);
+	ActionMessages actionMessages = new ActionMessages();
+	actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
+	saveMessages(request, actionMessages);
     }
 
     private void addMessages(AdvisePercentageException ape, ActionMessages actionMessages, AdviseType adviseType) {
-        ExecutionSemester executionSemester = ape.getExecutionPeriod();
-        ActionMessage initialActionMessage = new ActionMessage("message.teacherAdvise.percentageExceed");
-        actionMessages.add("", initialActionMessage);
-        for (Advise advise : ape.getAdvises()) {
-            TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionSemester);
-            if (adviseType.equals(ape.getAdviseType()) && teacherAdviseService != null) {
-                Integer teacherNumber = advise.getTeacher().getTeacherNumber();
-                String teacherName = advise.getTeacher().getPerson().getName();
-                Double percentage = teacherAdviseService.getPercentage();
-                ActionMessage actionMessage = new ActionMessage("message.teacherAdvise.teacher.percentageExceed", teacherNumber.toString(), teacherName, percentage.toString(), "%");
-                actionMessages.add("message.teacherAdvise.teacher.percentageExceed", actionMessage);
-            }
-        }
+	ExecutionSemester executionSemester = ape.getExecutionPeriod();
+	ActionMessage initialActionMessage = new ActionMessage("message.teacherAdvise.percentageExceed");
+	actionMessages.add("", initialActionMessage);
+	for (Advise advise : ape.getAdvises()) {
+	    TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionSemester);
+	    if (adviseType.equals(ape.getAdviseType()) && teacherAdviseService != null) {
+		Integer teacherNumber = advise.getTeacher().getTeacherNumber();
+		String teacherName = advise.getTeacher().getPerson().getName();
+		Double percentage = teacherAdviseService.getPercentage();
+		ActionMessage actionMessage = new ActionMessage("message.teacherAdvise.teacher.percentageExceed", teacherNumber
+			.toString(), teacherName, percentage.toString(), "%");
+		actionMessages.add("message.teacherAdvise.teacher.percentageExceed", actionMessage);
+	    }
+	}
     }
 }

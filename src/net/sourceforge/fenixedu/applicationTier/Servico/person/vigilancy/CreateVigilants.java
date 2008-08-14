@@ -13,11 +13,11 @@ public class CreateVigilants extends Service {
 
     public void run(List<Person> persons, VigilantGroup vigilantGroup) {
 
-        for (Person person : persons) {
-            Vigilant vigilant = new Vigilant(person);
-            vigilant.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-            vigilant.addVigilantGroups(vigilantGroup);
-        }
+	for (Person person : persons) {
+	    Vigilant vigilant = new Vigilant(person);
+	    vigilant.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	    vigilant.addVigilantGroups(vigilantGroup);
+	}
 
     }
 

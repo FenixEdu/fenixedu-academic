@@ -13,7 +13,8 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public static final Comparator<LessonPlanning> COMPARATOR_BY_ORDER = new BeanComparator("orderOfPlanning");
 
-    public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType, ExecutionCourse executionCourse) {
+    public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
+	    ExecutionCourse executionCourse) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setLastOrder(executionCourse, lessonType);
@@ -36,10 +37,10 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getLessonType() != null && getPlanning() != null && !getPlanning().isEmpty()
-		&& getTitle() != null && !getTitle().isEmpty() && getOrderOfPlanning() != null;		 
+	return getLessonType() != null && getPlanning() != null && !getPlanning().isEmpty() && getTitle() != null
+		&& !getTitle().isEmpty() && getOrderOfPlanning() != null;
     }
-    
+
     @Override
     public void setLessonType(ShiftType lessonType) {
 	if (lessonType == null) {
@@ -74,12 +75,12 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     @Override
     public void setOrderOfPlanning(Integer orderOfPlanning) {
-	if(orderOfPlanning == null) {
+	if (orderOfPlanning == null) {
 	    throw new DomainException("error.LessonPlanning.empty.order");
 	}
 	super.setOrderOfPlanning(orderOfPlanning);
     }
-    
+
     public void moveTo(Integer order) {
 	List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
 	if (!lessonPlannings.isEmpty() && order != getOrderOfPlanning() && order <= lessonPlannings.size() && order >= 1) {
@@ -102,7 +103,8 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     private void setLastOrder(ExecutionCourse executionCourse, ShiftType lessonType) {
 	List<LessonPlanning> lessonPlannings = executionCourse.getLessonPlanningsOrderedByOrder(lessonType);
-	Integer order = (!lessonPlannings.isEmpty()) ? (lessonPlannings.get(lessonPlannings.size() - 1).getOrderOfPlanning() + 1) : 1;
+	Integer order = (!lessonPlannings.isEmpty()) ? (lessonPlannings.get(lessonPlannings.size() - 1).getOrderOfPlanning() + 1)
+		: 1;
 	setOrderOfPlanning(order);
     }
 

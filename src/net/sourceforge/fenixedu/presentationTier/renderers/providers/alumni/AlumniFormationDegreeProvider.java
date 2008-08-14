@@ -14,7 +14,7 @@ public class AlumniFormationDegreeProvider implements DataProvider {
     }
 
     public Converter getConverter() {
-        return null; 
+	return null;
     }
 
 }

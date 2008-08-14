@@ -15,42 +15,47 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
-public class WrittenEvaluationsByRoomBackingBean extends net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean {
+public class WrittenEvaluationsByRoomBackingBean extends
+	net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean {
 
     @Override
-    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixFilterException, FenixServiceException {
-	final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();	
+    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixFilterException,
+	    FenixServiceException {
+	final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();
 	if (rooms != null) {
-	    final Map<AllocatableSpace, List<CalendarLink>> calendarLinksMap = new HashMap<AllocatableSpace, List<CalendarLink>>();                
+	    final Map<AllocatableSpace, List<CalendarLink>> calendarLinksMap = new HashMap<AllocatableSpace, List<CalendarLink>>();
 	    for (final AllocatableSpace room : rooms) {
 		final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
 		for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {
-		    if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {
-			List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluations();
-			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {			    		
-			    if(verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getExecutionPeriod())) {
+		    if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
+			List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation) roomOccupation)
+				.getWrittenEvaluations();
+			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
+			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getExecutionPeriod())) {
 				final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
 				final CalendarLink calendarLink = new CalendarLink();
 				calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-				calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentarionString(writtenEvaluation, executionCourse));
+				calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentarionString(writtenEvaluation,
+					executionCourse));
 				calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
 				calendarLinks.add(calendarLink);
-			    }   
+			    }
 			}
 		    }
-		} 
+		}
 		calendarLinksMap.put(room, calendarLinks);
-	    }            
+	    }
 	    return calendarLinksMap;
 	} else {
 	    return null;
 	}
     }
-    
-    private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation) {
-	final Map<String, String> linkParameters = new HashMap<String, String>();	
+
+    private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse,
+	    final WrittenEvaluation writtenEvaluation) {
+	final Map<String, String> linkParameters = new HashMap<String, String>();
 	linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
-	linkParameters.put("method", "firstPage");	
+	linkParameters.put("method", "firstPage");
 	return linkParameters;
     }
 }

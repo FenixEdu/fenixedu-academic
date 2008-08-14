@@ -14,17 +14,17 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class StudentsGivenTutorDataProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-    	StudentsByTutorBean bean = (StudentsByTutorBean) source;
-    	
-    	final Teacher teacher = bean.getTeacher();
-    	
-    	List<Tutorship> tutorships = new ArrayList<Tutorship>(teacher.getActiveTutorships());
-    	Collections.sort(tutorships, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
-    	
-    	return tutorships;
+	StudentsByTutorBean bean = (StudentsByTutorBean) source;
+
+	final Teacher teacher = bean.getTeacher();
+
+	List<Tutorship> tutorships = new ArrayList<Tutorship>(teacher.getActiveTutorships());
+	Collections.sort(tutorships, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
+
+	return tutorships;
     }
 
     public Converter getConverter() {
-    	return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 }

@@ -72,7 +72,7 @@ public class GenerateStudentReport implements Serializable {
 	}
 
 	public boolean getAreRequiredFieldsFilledOut() {
-	    return (getActive() || getConcluded()) && getExecutionYear() != null; 
+	    return (getActive() || getConcluded()) && getExecutionYear() != null;
 	}
 
 	public boolean applyFor(final DegreeType forDegreeType) {
@@ -87,9 +87,9 @@ public class GenerateStudentReport implements Serializable {
 		return false;
 	    }
 	    final RegistrationStateType registrationStateType = registrationState.getStateType();
-	    return (getActive() && registrationStateType.isActive()) ||
-	    		(getConcluded() && registrationStateType == RegistrationStateType.CONCLUDED
-	    			&& executionYear.containsDate(registrationState.getStateDate()));
+	    return (getActive() && registrationStateType.isActive())
+		    || (getConcluded() && registrationStateType == RegistrationStateType.CONCLUDED && executionYear
+			    .containsDate(registrationState.getStateDate()));
 	}
 
     }
@@ -125,7 +125,8 @@ public class GenerateStudentReport implements Serializable {
 	spreadsheet.setHeader("Autorização");
     }
 
-    private static void processDegree(final Spreadsheet spreadsheet, final StudentReportPredicate studentReportPredicate, final Degree degree, final ExecutionYear executionYear) {
+    private static void processDegree(final Spreadsheet spreadsheet, final StudentReportPredicate studentReportPredicate,
+	    final Degree degree, final ExecutionYear executionYear) {
 	for (final Registration registration : degree.getRegistrationsSet()) {
 	    if (studentReportPredicate.applyFor(registration)) {
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
@@ -134,8 +135,8 @@ public class GenerateStudentReport implements Serializable {
 	}
     }
 
-    private static void processStudentCurricularPlan(final Spreadsheet spreadsheet, final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionYear executionYear) {
+    private static void processStudentCurricularPlan(final Spreadsheet spreadsheet,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
 	final Registration registration = studentCurricularPlan.getRegistration();
 	final Student student = registration.getStudent();
 	final Person person = student.getPerson();
@@ -151,7 +152,8 @@ public class GenerateStudentReport implements Serializable {
 	final Row row = spreadsheet.addRow();
 	row.setCell(student.getNumber().toString());
 	row.setCell(person.getName());
-	row.setCell(degree.getTipoCurso().getLocalizedName() + " " + degree.getNameFor(registration.getStartExecutionYear()).getContent());
+	row.setCell(degree.getTipoCurso().getLocalizedName() + " "
+		+ degree.getNameFor(registration.getStartExecutionYear()).getContent());
 	row.setCell(branch == null ? "" : branch.getName());
 	row.setCell("" + registration.getCurricularYear(executionYear));
 	row.setCell("" + registration.getAverage(executionYear));

@@ -29,119 +29,105 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- *
+ * 
  * @author Luis Cruz
  * @version 1.1, Oct 24, 2004
  * @since 1.1
- *
+ * 
  */
 public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareTransferCurricularCourse(
-            ActionMapping mapping,
-            ActionForm form,
-            HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward prepareTransferCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer executionCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
-        Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
-        Integer executionPeriodId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"));
+	Integer executionCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
+	Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
+	Integer executionPeriodId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"));
 
-        Object[] args1 = { executionCourseId };
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-                "ReadExecutionCourseByOID", args1);
-        request.setAttribute("infoExecutionCourse", infoExecutionCourse);
+	Object[] args1 = { executionCourseId };
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService("ReadExecutionCourseByOID",
+		args1);
+	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-        Object[] args2 = { curricularCourseId };
-        InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(
-                "ReadCurricularCourseByID", args2);
-        request.setAttribute("infoCurricularCourse", infoCurricularCourse);
+	Object[] args2 = { curricularCourseId };
+	InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(
+		"ReadCurricularCourseByID", args2);
+	request.setAttribute("infoCurricularCourse", infoCurricularCourse);
 
-        Object[] args3 = { executionPeriodId };
-        List executionDegrees = (List) ServiceUtils.executeService(
-                "ReadExecutionDegreesByExecutionPeriodId", args3);
-        Collection executionDegreesLabelValueList = RequestUtils.buildExecutionDegreeLabelValueBean(executionDegrees);
-        request.setAttribute("executionDegrees", executionDegreesLabelValueList);
+	Object[] args3 = { executionPeriodId };
+	List executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionPeriodId", args3);
+	Collection executionDegreesLabelValueList = RequestUtils.buildExecutionDegreeLabelValueBean(executionDegrees);
+	request.setAttribute("executionDegrees", executionDegreesLabelValueList);
 
-        List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
-        request.setAttribute("curricularYears", curricularYears);
+	List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
+	request.setAttribute("curricularYears", curricularYears);
 
-        return mapping.findForward("showPage");
+	return mapping.findForward("showPage");
     }
 
-    public ActionForward selectExecutionDegree(
-            ActionMapping mapping,
-            ActionForm form,
-            HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward selectExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        DynaActionForm dynaActionForm = (DynaActionForm) form;
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
-        RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
-        Integer executionPeriodId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"));
+	RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+	RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
+	Integer executionPeriodId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"));
 
-        //String destinationExecutionDegreeIdString = RequestUtils.getAndSetStringToRequest(request, "destinationExecutionDegreeId");
-        //String curricularYearString = RequestUtils.getAndSetStringToRequest(request, "curricularYear");
-        String destinationExecutionDegreeIdString = (String) dynaActionForm.get("destinationExecutionDegreeId");
-        String curricularYearString = (String) dynaActionForm.get("curricularYear");
+	// String destinationExecutionDegreeIdString =
+	// RequestUtils.getAndSetStringToRequest(request,
+	// "destinationExecutionDegreeId");
+	// String curricularYearString =
+	// RequestUtils.getAndSetStringToRequest(request, "curricularYear");
+	String destinationExecutionDegreeIdString = (String) dynaActionForm.get("destinationExecutionDegreeId");
+	String curricularYearString = (String) dynaActionForm.get("curricularYear");
 
-        if (destinationExecutionDegreeIdString != null && curricularYearString != null
-                && destinationExecutionDegreeIdString.length() > 0
-                && curricularYearString.length() > 0
-                && StringUtils.isNumeric(destinationExecutionDegreeIdString)
-                && StringUtils.isNumeric(curricularYearString)) {
-            Integer destinationExecutionDegreeId = new Integer(destinationExecutionDegreeIdString);
-            Integer curricularYear = new Integer(curricularYearString);
+	if (destinationExecutionDegreeIdString != null && curricularYearString != null
+		&& destinationExecutionDegreeIdString.length() > 0 && curricularYearString.length() > 0
+		&& StringUtils.isNumeric(destinationExecutionDegreeIdString) && StringUtils.isNumeric(curricularYearString)) {
+	    Integer destinationExecutionDegreeId = new Integer(destinationExecutionDegreeIdString);
+	    Integer curricularYear = new Integer(curricularYearString);
 
-            Object[] args = { destinationExecutionDegreeId, executionPeriodId, curricularYear };
-            List executionCourses = (List) ServiceUtils.executeService(
-                    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
-            request.setAttribute("executionCourses", executionCourses);
-        }
+	    Object[] args = { destinationExecutionDegreeId, executionPeriodId, curricularYear };
+	    List executionCourses = (List) ServiceUtils.executeService(
+		    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
+	    request.setAttribute("executionCourses", executionCourses);
+	}
 
-        return prepareTransferCurricularCourse(mapping, form, request, response);
+	return prepareTransferCurricularCourse(mapping, form, request, response);
     }
 
-    public ActionForward transferCurricularCourse(
-            ActionMapping mapping,
-            ActionForm form,
-            HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward transferCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        DynaActionForm dynaActionForm = (DynaActionForm) form;
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer executionCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
-        Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
-        RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
+	Integer executionCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
+	Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
+	RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
 
-        String destinationExecutionDegreeIdString = (String) dynaActionForm.get("destinationExecutionDegreeId");
-        String curricularYearString = (String) dynaActionForm.get("curricularYear");
-        String destinationExecutionCourseIdString = (String) dynaActionForm.get("destinationExecutionCourseId");
+	String destinationExecutionDegreeIdString = (String) dynaActionForm.get("destinationExecutionDegreeId");
+	String curricularYearString = (String) dynaActionForm.get("curricularYear");
+	String destinationExecutionCourseIdString = (String) dynaActionForm.get("destinationExecutionCourseId");
 
-        if (destinationExecutionDegreeIdString != null
-                && curricularYearString != null
-                && destinationExecutionCourseIdString != null
-                && destinationExecutionDegreeIdString.length() > 0
-                && curricularYearString.length() > 0
-                && destinationExecutionCourseIdString.length() > 0
-                && StringUtils.isNumeric(destinationExecutionDegreeIdString)
-                && StringUtils.isNumeric(curricularYearString)
-                && StringUtils.isNumeric(destinationExecutionCourseIdString)) {
-            Integer destinationExecutionCourseId = new Integer(destinationExecutionCourseIdString);
+	if (destinationExecutionDegreeIdString != null && curricularYearString != null
+		&& destinationExecutionCourseIdString != null && destinationExecutionDegreeIdString.length() > 0
+		&& curricularYearString.length() > 0 && destinationExecutionCourseIdString.length() > 0
+		&& StringUtils.isNumeric(destinationExecutionDegreeIdString) && StringUtils.isNumeric(curricularYearString)
+		&& StringUtils.isNumeric(destinationExecutionCourseIdString)) {
+	    Integer destinationExecutionCourseId = new Integer(destinationExecutionCourseIdString);
 
-            Object[] args = { executionCourseId, curricularCourseId, destinationExecutionCourseId };
-            ServiceUtils.executeService(
-                    "TransferCurricularCourse", args);
-        }
+	    Object[] args = { executionCourseId, curricularCourseId, destinationExecutionCourseId };
+	    ServiceUtils.executeService("TransferCurricularCourse", args);
+	}
 
-        return mapping.findForward("completedTransfer");
+	return mapping.findForward("completedTransfer");
     }
 
 }

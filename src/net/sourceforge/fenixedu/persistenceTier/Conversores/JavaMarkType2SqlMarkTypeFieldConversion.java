@@ -15,12 +15,12 @@ public class JavaMarkType2SqlMarkTypeFieldConversion implements FieldConversion 
      * @see FieldConversion#javaToSql(Object)
      */
     public Object javaToSql(Object source) {
-        if (source instanceof MarkType) {
-            MarkType s = (MarkType) source;
-            return s.getType();
-        }
+	if (source instanceof MarkType) {
+	    MarkType s = (MarkType) source;
+	    return s.getType();
+	}
 
-        return source;
+	return source;
 
     }
 
@@ -28,12 +28,12 @@ public class JavaMarkType2SqlMarkTypeFieldConversion implements FieldConversion 
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new MarkType(src);
-        }
+	if (source instanceof Integer) {
+	    Integer src = (Integer) source;
+	    return new MarkType(src);
+	}
 
-        return source;
+	return source;
 
     }
 }

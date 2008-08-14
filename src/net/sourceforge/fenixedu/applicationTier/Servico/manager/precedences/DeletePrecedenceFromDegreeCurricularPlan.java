@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeletePrecedenceFromDegreeCurricularPlan extends Service {
 
-	public void run(Integer precedenceID) throws FenixServiceException{
-		Precedence precedence = rootDomainObject.readPrecedenceByOID(precedenceID);
+    public void run(Integer precedenceID) throws FenixServiceException {
+	Precedence precedence = rootDomainObject.readPrecedenceByOID(precedenceID);
 
-		if (precedence != null)
-			precedence.delete();
-	}
+	if (precedence != null)
+	    precedence.delete();
+    }
 }

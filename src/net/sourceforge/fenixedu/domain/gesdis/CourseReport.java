@@ -10,7 +10,6 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
@@ -19,22 +18,22 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 public class CourseReport extends CourseReport_Base {
 
     public CourseReport() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
-
-	public void edit(String newReport) {
-        if (newReport == null)
-            throw new NullPointerException();
-        
-        setReport(newReport);
-        setLastModificationDate(Calendar.getInstance().getTime());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
+    public void edit(String newReport) {
+	if (newReport == null)
+	    throw new NullPointerException();
+
+	setReport(newReport);
+	setLastModificationDate(Calendar.getInstance().getTime());
+    }
+
     public void delete() {
-        setExecutionCourse(null);
-        removeRootDomainObject();
-        super.deleteDomainObject();
+	setExecutionCourse(null);
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
 }

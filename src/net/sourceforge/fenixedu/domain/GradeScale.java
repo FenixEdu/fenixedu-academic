@@ -59,8 +59,8 @@ public enum GradeScale {
 
 	    try {
 		final int intValue = Integer.valueOf(grade.getValue());
-		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-			Language.getLocale());
+		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
+			.getLocale());
 
 		if (18 <= intValue && intValue <= 20) {
 		    return applicationResources.getString("label.grade.a");
@@ -180,8 +180,8 @@ public enum GradeScale {
 
 	    try {
 		final int intValue = Integer.valueOf(grade.getValue());
-		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-			Language.getLocale());
+		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
+			.getLocale());
 
 		if (intValue == 5) {
 		    return applicationResources.getString("label.grade.a");

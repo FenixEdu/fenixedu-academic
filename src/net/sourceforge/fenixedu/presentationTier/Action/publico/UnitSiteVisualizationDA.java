@@ -98,8 +98,8 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	}
 
 	if (eventsBoard != null) {
-	    request.setAttribute("announcementBoard",eventsBoard);
-	    
+	    request.setAttribute("announcementBoard", eventsBoard);
+
 	    YearMonthDay currentDay = new YearMonthDay();
 	    List<Announcement> currentDayAnnouncements = eventsBoard.getActiveAnnouncementsFor(currentDay);
 	    List<Announcement> futureAnnouncements = eventsBoard.getActiveAnnouncementsAfter(currentDay);
@@ -108,7 +108,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	    request.setAttribute("today-events", currentDayAnnouncements);
 	    request.setAttribute("future-events", futureAnnouncements);
 
-	    int eventCount = currentDayAnnouncements.size() + futureAnnouncements.size(); 
+	    int eventCount = currentDayAnnouncements.size() + futureAnnouncements.size();
 	    if (eventCount < ANNOUNCEMENTS_NUMBER) {
 		List<Announcement> announcements = eventsBoard.getActiveAnnouncementsBefore(currentDay);
 		announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER - eventCount));

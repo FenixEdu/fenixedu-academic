@@ -16,13 +16,12 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 public class ReadGrantInsurance extends ReadDomainObjectService {
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-        return InfoGrantInsuranceWithContractAndPaymentEntity
-                .newInfoFromDomain((GrantInsurance) domainObject);
+	return InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain((GrantInsurance) domainObject);
     }
 
-	@Override
-	protected DomainObject readDomainObject(final Integer idInternal) {
-		return rootDomainObject.readGrantInsuranceByOID(idInternal);
-	}
+    @Override
+    protected DomainObject readDomainObject(final Integer idInternal) {
+	return rootDomainObject.readGrantInsuranceByOID(idInternal);
+    }
 
 }

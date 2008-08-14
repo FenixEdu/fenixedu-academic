@@ -20,37 +20,33 @@ import org.apache.struts.action.ActionMessages;
 
 public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	Person loggedPerson = AccessControl.getPerson();
 	if (spaceInformation.getSpace().personHasPermissionsToManageSpace(loggedPerson)
-		|| spaceInformation.getSpace()
-			.personHasPermissionToManagePersonOccupations(loggedPerson)) {
+		|| spaceInformation.getSpace().personHasPermissionToManagePersonOccupations(loggedPerson)) {
 	    return super.execute(mapping, actionForm, request, response);
 	} else {
 	    final ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add("error", new ActionMessage(
-		    "error.logged.person.not.authorized.to.make.operation"));
+	    actionMessages.add("error", new ActionMessage("error.logged.person.not.authorized.to.make.operation"));
 	    saveMessages(request, actionMessages);
 	}
 	request.setAttribute("spaceInformationID", spaceInformation.getIdInternal());
 	return mapping.findForward("ManageSpace");
     }
 
-    public ActionForward showSpaceOccupations(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward showSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	setSpaceAndSpaceInfo(request, spaceInformation);
 	return mapping.findForward("showSpaceOccupations");
     }
 
-    public ActionForward prepareEditSpacePersonOccupation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward prepareEditSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
@@ -59,9 +55,8 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 	return showSpaceOccupations(mapping, form, request, response);
     }
 
-    public ActionForward deleteSpacePersonOccupation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward deleteSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
@@ -82,18 +77,17 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
-	final String spaceInformationIDString = request.getParameterMap().containsKey(
-		"spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
-		.getAttribute("spaceInformationID");
+	final String spaceInformationIDString = request.getParameterMap().containsKey("spaceInformationID") ? request
+		.getParameter("spaceInformationID") : (String) request.getAttribute("spaceInformationID");
 	final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
 	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
 
     private PersonSpaceOccupation getPersonSpaceOccupationFromParameter(final HttpServletRequest request) {
-	final String personSpaceOccupationIDString = request.getParameterMap().containsKey(
-		"spaceOccupationID") ? request.getParameter("spaceOccupationID") : (String) request
-		.getAttribute("spaceOccupationID");
-	final Integer personSpaceOccupationID = personSpaceOccupationIDString != null ? Integer.valueOf(personSpaceOccupationIDString) : null;
+	final String personSpaceOccupationIDString = request.getParameterMap().containsKey("spaceOccupationID") ? request
+		.getParameter("spaceOccupationID") : (String) request.getAttribute("spaceOccupationID");
+	final Integer personSpaceOccupationID = personSpaceOccupationIDString != null ? Integer
+		.valueOf(personSpaceOccupationIDString) : null;
 	return (PersonSpaceOccupation) rootDomainObject.readResourceAllocationByOID(personSpaceOccupationID);
     }
 }

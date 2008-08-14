@@ -17,17 +17,19 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 	final Employee employee = userView.getPerson().getEmployee();
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
-	final List<Enrolment> enrolments = (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
+	final List<Enrolment> enrolments = (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString)
+		: curricularCourse.getEnrolments();
 
 	final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
 	for (final Enrolment enrolment : enrolments) {
 	    final List<EnrolmentEvaluation> allEnrolmentEvaluations = enrolment.getEvaluations();
 	    enrolmentEvaluations.add(allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1));
 	}
-	
+
 	if (!enrolmentEvaluations.isEmpty()) {
 	    for (final EnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluations) {
-		if (enrolmentEvaluation.hasGrade() && enrolmentEvaluation.isTemporary() && enrolmentEvaluation.hasExamDateYearMonthDay()) {
+		if (enrolmentEvaluation.hasGrade() && enrolmentEvaluation.isTemporary()
+			&& enrolmentEvaluation.hasExamDateYearMonthDay()) {
 		    enrolmentEvaluation.confirmSubmission(employee, "Lançamento de Notas na Secretaria");
 		}
 	    }

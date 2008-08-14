@@ -34,108 +34,82 @@ import org.apache.struts.action.ActionMapping;
  */
 public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException, FenixFilterException {
-		try {
-			super.execute(mapping, form, request, response);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		
-
-		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);		
-		ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
-		readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
-		
-
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
-				
-		InfoExecutionDegree infoExecutionDegree =
-			RequestUtils.getExecutionDegreeFromRequest(
-				request,
-				infoExecutionPeriod.getInfoExecutionYear());
-
-		Integer curricularYear = (Integer) request.getAttribute("curYear");
-
-		Object argsSelectExecutionCourse[] =
-			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
-
-		List infoExecutionCourses;
-		try {
-			infoExecutionCourses =
-				(List) ServiceManagerServiceFactory.executeService(
-					null,
-					"SelectExportExecutionCourse",
-					argsSelectExecutionCourse);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		Collections.sort(infoExecutionCourses,new BeanComparator("nome"));
-		request.setAttribute("exeCourseList", infoExecutionCourses);
-		return mapping.findForward("sucess");
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
+	try {
+	    super.execute(mapping, form, request, response);
+	} catch (Exception e1) {
+	    e1.printStackTrace();
 	}
 
-	private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
-			Integer infoExecutionCourseCode, Object obj1, Object obj2)
-			throws FenixActionException, FenixFilterException
-			{
+	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+	ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
+	readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
 
-		IUserView userView = getUserView(request);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		Integer objectCode = null;
-		if (infoExecutionCourseCode == null)
-		{
-			objectCode = getObjectCode(request);
-			infoExecutionCourseCode = objectCode;
-		}
+	InfoExecutionDegree infoExecutionDegree = RequestUtils.getExecutionDegreeFromRequest(request, infoExecutionPeriod
+		.getInfoExecutionYear());
 
-		ISiteComponent commonComponent = new InfoSiteCommon();
-		Object[] args = {infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1,
-				obj2};
+	Integer curricularYear = (Integer) request.getAttribute("curYear");
 
-		try
-		{
-			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
-					.executeService( "TeacherAdministrationSiteComponentService", args);
-	request.setAttribute("siteView", siteView);
-	request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
-					.getExecutionCourse().getIdInternal());
-	if (siteView.getComponent() instanceof InfoSiteSection)
-	{
-		request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent())
-						.getSection());
+	Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
+
+	List infoExecutionCourses;
+	try {
+	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(null, "SelectExportExecutionCourse",
+		    argsSelectExecutionCourse);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
+	request.setAttribute("exeCourseList", infoExecutionCourses);
+	return mapping.findForward("sucess");
+    }
+
+    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
+	    Object obj1, Object obj2) throws FenixActionException, FenixFilterException {
+
+	IUserView userView = getUserView(request);
+
+	Integer objectCode = null;
+	if (infoExecutionCourseCode == null) {
+	    objectCode = getObjectCode(request);
+	    infoExecutionCourseCode = objectCode;
 	}
 
-	return siteView;
+	ISiteComponent commonComponent = new InfoSiteCommon();
+	Object[] args = { infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2 };
 
-		} catch (FenixServiceException e)
-		{
-	throw new FenixActionException(e);
-		}
+	try {
+	    TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
+		    "TeacherAdministrationSiteComponentService", args);
+	    request.setAttribute("siteView", siteView);
+	    request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
+		    .getIdInternal());
+	    if (siteView.getComponent() instanceof InfoSiteSection) {
+		request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
+	    }
 
-			}
+	    return siteView;
 
-	private Integer getObjectCode(HttpServletRequest request)
-	{
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null)
-		{
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		if (objectCodeString != null)
-		{
-			objectCode = new Integer(objectCodeString);
-		}
-		return objectCode;
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
 	}
-	
-	
+
+    }
+
+    private Integer getObjectCode(HttpServletRequest request) {
+	Integer objectCode = null;
+	String objectCodeString = request.getParameter("objectCode");
+	if (objectCodeString == null) {
+	    objectCodeString = (String) request.getAttribute("objectCode");
+	}
+	if (objectCodeString != null) {
+	    objectCode = new Integer(objectCodeString);
+	}
+	return objectCode;
+    }
+
 }

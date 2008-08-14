@@ -21,7 +21,8 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup extends Service {
 		final GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
 		if (!groupProposal.equals(otherGroupProposal)
 			&& groupProposal.getOrderOfPreference().intValue() < otherGroupProposal.getOrderOfPreference().intValue()) {
-		    otherGroupProposal.setOrderOfPreference(new Integer(otherGroupProposal.getOrderOfPreference().intValue() - 1));
+		    otherGroupProposal
+			    .setOrderOfPreference(new Integer(otherGroupProposal.getOrderOfPreference().intValue() - 1));
 		}
 	    }
 

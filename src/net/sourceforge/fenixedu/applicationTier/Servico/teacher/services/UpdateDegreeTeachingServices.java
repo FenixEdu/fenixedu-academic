@@ -15,27 +15,26 @@ import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeac
 
 public class UpdateDegreeTeachingServices extends Service {
 
-    public void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType)
-            {
-        
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);        
-        Teacher teacher = professorship.getTeacher();
-        ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-        if (teacherService == null) {
-            teacherService = new TeacherService(teacher, executionSemester);
-        }
-        
-        for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
-            Shift shift = rootDomainObject.readShiftByOID(shiftIDTeachingPercentage.getShiftID());
-            DegreeTeachingService degreeTeachingService = teacherService
-                    .getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
-            if (degreeTeachingService != null) {
-                degreeTeachingService.updatePercentage(shiftIDTeachingPercentage.getPercentage(), roleType);
-            } else {
-                new DegreeTeachingService(teacherService, professorship, shift,
-                        shiftIDTeachingPercentage.getPercentage(), roleType);
-            }
-        }
+    public void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
+
+	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+	Teacher teacher = professorship.getTeacher();
+	ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+	if (teacherService == null) {
+	    teacherService = new TeacherService(teacher, executionSemester);
+	}
+
+	for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
+	    Shift shift = rootDomainObject.readShiftByOID(shiftIDTeachingPercentage.getShiftID());
+	    DegreeTeachingService degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift,
+		    professorship);
+	    if (degreeTeachingService != null) {
+		degreeTeachingService.updatePercentage(shiftIDTeachingPercentage.getPercentage(), roleType);
+	    } else {
+		new DegreeTeachingService(teacherService, professorship, shift, shiftIDTeachingPercentage.getPercentage(),
+			roleType);
+	    }
+	}
     }
 }

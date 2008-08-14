@@ -44,8 +44,8 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  * <pre>
  * 
- *  
- *   
+ * 
+ * 
  *    	  &lt;action path=&quot;....&quot;  type=&quot;....&quot;  name=&quot;...&quot; input=&quot;...&quot; scope=&quot;request&quot; className=&quot;presentationTier.mapping.framework.SearchActionMapping&quot;&gt; 
  *    								&lt;set-property property=&quot;serviceName&quot; value=&quot;...&quot;/&gt;
  *    								&lt;set-property property=&quot;objectAttribute&quot; value=&quot;...&quot;/&gt;
@@ -55,9 +55,9 @@ import pt.ist.fenixWebFramework.security.UserView;
  *    								&lt;forward name=&quot;list-one&quot; path=&quot;...&quot;/&gt; 
  *      								&lt;forward name=&quot;list-many&quot; path=&quot;...&quot;/&gt;
  *    		&lt;/action&gt;
- *    
- *   
- *  
+ * 
+ * 
+ * 
  * </pre>
  * 
  * 
@@ -77,27 +77,29 @@ import pt.ist.fenixWebFramework.security.UserView;
  * <ul>
  * <li><b>serviceName </b> is the service that do the search
  * 
- * @link ServidorAplicacao.Servico.framework.SearchService</li>
- *       <li><b>objectAttribute </b> if search result size = 1 is the name of
- *       request attribute where the object found will be placed.</li>
- *       <li><b>listAttribute </b> if more than one object is found is the name
- *       of request attribute where the collection will be placed.</li>
- *       <li><b>notFoundMessageKey </b> key used to notify user that nothing
- *       was found.</li>
- *       </u>
+ * @link ServidorAplicacao.Servico.framework.SearchService</li> <li>
+ *       <b>objectAttribute </b> if search result size = 1 is the name of
+ *       request attribute where the object found will be placed.</li> <li>
+ *       <b>listAttribute </b> if more than one object is found is the name of
+ *       request attribute where the collection will be placed.</li> <li>
+ *       <b>notFoundMessageKey </b> key used to notify user that nothing was
+ *       found.</li> </u>
  * 
- * <b>Notes: </b> <br/>
+ *       <b>Notes: </b> <br/>
  * 
- * <pre>
- * <li>
+ *       <pre>
  * 
- *  
- *   The Struts Exception handling feature should be used to handle exceptions from the services configured.
- *    
- *   
- *  
- * </li>
- * </pre>
+ *       <li>
+ * 
+ * 
+ *       The Struts Exception handling feature should be used to handle
+ *       exceptions from the services configured.
+ * 
+ * 
+ * 
+ *       </li>
+ * 
+ *       </pre>
  * 
  */
 public class SearchAction extends FenixDispatchAction {
@@ -111,17 +113,17 @@ public class SearchAction extends FenixDispatchAction {
      * @return
      */
     private Comparator buildComparator(String sortby) {
-        ComparatorChain comparatorChain = null;
-        if ((sortby != null) && (!sortby.equals(""))) {
-            StringTokenizer stringTokenizer = new StringTokenizer(sortby, ",");
-            comparatorChain = new ComparatorChain();
-            while (stringTokenizer.hasMoreElements()) {
-                String property = stringTokenizer.nextToken();
-                BeanComparator beanComparator = new BeanComparator(property);
-                comparatorChain.addComparator(beanComparator);
-            }
-        }
-        return comparatorChain;
+	ComparatorChain comparatorChain = null;
+	if ((sortby != null) && (!sortby.equals(""))) {
+	    StringTokenizer stringTokenizer = new StringTokenizer(sortby, ",");
+	    comparatorChain = new ComparatorChain();
+	    while (stringTokenizer.hasMoreElements()) {
+		String property = stringTokenizer.nextToken();
+		BeanComparator beanComparator = new BeanComparator(property);
+		comparatorChain.addComparator(beanComparator);
+	    }
+	}
+	return comparatorChain;
     }
 
     /**
@@ -133,60 +135,57 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param response
      * @return if search result size equals to 1 returns <code>list-one</code>
-     *         forward. <br/>
-     *         if search result size greater then 1 returns
-     *         <code>list-many</code> forward. <br/>
-     *         if search result size equals to 0 returns
-     *         <code>inputForward</code>
+     *         forward. <br/> if search result size greater then 1 returns
+     *         <code>list-many</code> forward. <br/> if search result size
+     *         equals to 0 returns <code>inputForward</code>
      * 
      * @throws Exception
      * 
-     * TODO: Some verifications should be done... not tested yet
+     *             TODO: Some verifications should be done... not tested yet
      */
-    public ActionForward doSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        SearchActionMapping searchActionMapping = (SearchActionMapping) mapping;
-        Comparator beanComparator = getDefaultBeanComparator(searchActionMapping);
-        return doSearch(searchActionMapping, form, request, response, beanComparator);
+    public ActionForward doSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	SearchActionMapping searchActionMapping = (SearchActionMapping) mapping;
+	Comparator beanComparator = getDefaultBeanComparator(searchActionMapping);
+	return doSearch(searchActionMapping, form, request, response, beanComparator);
     }
 
-    private ActionForward doSearch(SearchActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response, Comparator comparator)
-            throws Exception {
-        String serviceName = mapping.getServiceName();
-        IUserView userView = UserView.getUser();
-        Object[] args = getSearchServiceArgs(request, form);
-        Collection result = (Collection) ServiceUtils.executeService(serviceName, args);
-        result = treateServiceResult(mapping, request, result);
-        ActionForward actionForward = null;
-        if (result.isEmpty()) {
-            ActionErrors errors = new ActionErrors();
-            String notMessageKey = mapping.getNotFoundMessageKey();
-            ActionError error = new ActionError(notMessageKey);
-            errors.add(notMessageKey, error);
-            saveErrors(request, errors);
-            actionForward = mapping.getInputForward();
-        } else if (result.size() == 1) {
-            Iterator iterator = result.iterator();
-            while (iterator.hasNext()) {
-                Object object = iterator.next();
-                request.setAttribute(mapping.getObjectAttribute(), object);
-                break;
-            }
-            actionForward = mapping.findForward("list-one");
-        } else {
-            actionForward = mapping.findForward("list-many");
-        }
-        if (comparator != null) {
-            Collections.sort((List) result, comparator);
-        }
+    private ActionForward doSearch(SearchActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, Comparator comparator) throws Exception {
+	String serviceName = mapping.getServiceName();
+	IUserView userView = UserView.getUser();
+	Object[] args = getSearchServiceArgs(request, form);
+	Collection result = (Collection) ServiceUtils.executeService(serviceName, args);
+	result = treateServiceResult(mapping, request, result);
+	ActionForward actionForward = null;
+	if (result.isEmpty()) {
+	    ActionErrors errors = new ActionErrors();
+	    String notMessageKey = mapping.getNotFoundMessageKey();
+	    ActionError error = new ActionError(notMessageKey);
+	    errors.add(notMessageKey, error);
+	    saveErrors(request, errors);
+	    actionForward = mapping.getInputForward();
+	} else if (result.size() == 1) {
+	    Iterator iterator = result.iterator();
+	    while (iterator.hasNext()) {
+		Object object = iterator.next();
+		request.setAttribute(mapping.getObjectAttribute(), object);
+		break;
+	    }
+	    actionForward = mapping.findForward("list-one");
+	} else {
+	    actionForward = mapping.findForward("list-many");
+	}
+	if (comparator != null) {
+	    Collections.sort((List) result, comparator);
+	}
 
-        prepareFormConstants(mapping, request, form);
-        materializeSearchCriteria(mapping, request, form);
-        doAfterSearch(mapping, request, result);
-        request.setAttribute(mapping.getListAttribute(), result);
+	prepareFormConstants(mapping, request, form);
+	materializeSearchCriteria(mapping, request, form);
+	doAfterSearch(mapping, request, result);
+	request.setAttribute(mapping.getListAttribute(), result);
 
-        return actionForward;
+	return actionForward;
     }
 
     /**
@@ -197,8 +196,7 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param result
      */
-    protected void doAfterSearch(SearchActionMapping mapping, HttpServletRequest request,
-            Collection result) throws Exception {
+    protected void doAfterSearch(SearchActionMapping mapping, HttpServletRequest request, Collection result) throws Exception {
     }
 
     /**
@@ -209,9 +207,9 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param result
      */
-    protected Collection treateServiceResult(SearchActionMapping mapping, HttpServletRequest request,
-            Collection result) throws Exception {
-        return result;
+    protected Collection treateServiceResult(SearchActionMapping mapping, HttpServletRequest request, Collection result)
+	    throws Exception {
+	return result;
     }
 
     /**
@@ -224,8 +222,8 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param form
      */
-    protected void materializeSearchCriteria(SearchActionMapping mapping, HttpServletRequest request,
-            ActionForm form) throws Exception {
+    protected void materializeSearchCriteria(SearchActionMapping mapping, HttpServletRequest request, ActionForm form)
+	    throws Exception {
     }
 
     /**
@@ -233,10 +231,9 @@ public class SearchAction extends FenixDispatchAction {
      * @param form
      * @return
      */
-    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
-            throws Exception {
-        Map formProperties = BeanUtils.describe(form);
-        return new Object[] { formProperties };
+    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception {
+	Map formProperties = BeanUtils.describe(form);
+	return new Object[] { formProperties };
     }
 
     /**
@@ -244,15 +241,15 @@ public class SearchAction extends FenixDispatchAction {
      * @return
      */
     private Comparator getDefaultBeanComparator(SearchActionMapping searchActionMapping) {
-        if (!defaultComparatorInitialized.booleanValue()) {
-            synchronized (defaultComparatorInitialized) {
-                if (!defaultComparatorInitialized.booleanValue()) {
-                    defaultBeanComparator = buildComparator(searchActionMapping.getDefaultSortBy());
-                    defaultComparatorInitialized = Boolean.TRUE;
-                }
-            }
-        }
-        return defaultBeanComparator;
+	if (!defaultComparatorInitialized.booleanValue()) {
+	    synchronized (defaultComparatorInitialized) {
+		if (!defaultComparatorInitialized.booleanValue()) {
+		    defaultBeanComparator = buildComparator(searchActionMapping.getDefaultSortBy());
+		    defaultComparatorInitialized = Boolean.TRUE;
+		}
+	    }
+	}
+	return defaultBeanComparator;
     }
 
     /**
@@ -263,8 +260,7 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param form
      */
-    protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request,
-            ActionForm form) throws Exception {
+    protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request, ActionForm form) throws Exception {
     }
 
     /**
@@ -274,13 +270,12 @@ public class SearchAction extends FenixDispatchAction {
      * @param form
      * @param request
      * @param response
-     * @return @throws
-     *         Exception
+     * @return @throws Exception
      */
     public ActionForward searchForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        prepareFormConstants(mapping, request, form);
-        return mapping.findForward("search-form");
+	    HttpServletResponse response) throws Exception {
+	prepareFormConstants(mapping, request, form);
+	return mapping.findForward("search-form");
     }
 
     /**
@@ -289,56 +284,54 @@ public class SearchAction extends FenixDispatchAction {
      * @see SearchAction#doSearch(SearchActionMapping, ActionForm,
      *      HttpServletRequest, HttpServletResponse, Comparator)
      */
-    public ActionForward sortBy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        SearchActionMapping searchActionMapping = (SearchActionMapping) mapping;
-        String sortBy = request.getParameter("sortBy");
-        ActionForward actionForward = null;
-        if (sortBy != null) {
-            BeanComparator beanComparator = new BeanComparator(sortBy);
-            actionForward = doSearch(searchActionMapping, form, request, response, beanComparator);
-        } else {
-            actionForward = doSearch(searchActionMapping, form, request, response);
-        }
-        return actionForward;
+    public ActionForward sortBy(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	SearchActionMapping searchActionMapping = (SearchActionMapping) mapping;
+	String sortBy = request.getParameter("sortBy");
+	ActionForward actionForward = null;
+	if (sortBy != null) {
+	    BeanComparator beanComparator = new BeanComparator(sortBy);
+	    actionForward = doSearch(searchActionMapping, form, request, response, beanComparator);
+	} else {
+	    actionForward = doSearch(searchActionMapping, form, request, response);
+	}
+	return actionForward;
     }
 
-    public ActionForward doBeforeSearch(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        //execution years
-        List executionYears = null;
-        Object[] args = {};
-        try {
-            executionYears = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadNotClosedExecutionYears", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException();
-        }
+    public ActionForward doBeforeSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	// execution years
+	List executionYears = null;
+	Object[] args = {};
+	try {
+	    executionYears = (List) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionYears", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException();
+	}
 
-        if (executionYears != null && !executionYears.isEmpty()) {
-            ComparatorChain comparator = new ComparatorChain();
-            comparator.addComparator(new BeanComparator("year"), true);
-            Collections.sort(executionYears, comparator);
+	if (executionYears != null && !executionYears.isEmpty()) {
+	    ComparatorChain comparator = new ComparatorChain();
+	    comparator.addComparator(new BeanComparator("year"), true);
+	    Collections.sort(executionYears, comparator);
 
-            List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
-            request.setAttribute("executionYears", executionYearLabels);
-        }
-        request.setAttribute("showNextSelects", "false");
-        return mapping.findForward("search-form");
+	    List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
+	    request.setAttribute("executionYears", executionYearLabels);
+	}
+	request.setAttribute("showNextSelects", "false");
+	return mapping.findForward("search-form");
     }
 
     protected List buildLabelValueBeanForJsp(List infoExecutionYears) {
-        List executionYearLabels = new ArrayList();
-        CollectionUtils.collect(infoExecutionYears, new Transformer() {
-            public Object transform(Object arg0) {
-                InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+	List executionYearLabels = new ArrayList();
+	CollectionUtils.collect(infoExecutionYears, new Transformer() {
+	    public Object transform(Object arg0) {
+		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 
-                LabelValueBean executionYear = new LabelValueBean(infoExecutionYear.getYear(),
-                        infoExecutionYear.getYear());
-                return executionYear;
-            }
-        }, executionYearLabels);
-        return executionYearLabels;
+		LabelValueBean executionYear = new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear());
+		return executionYear;
+	    }
+	}, executionYearLabels);
+	return executionYearLabels;
     }
 
 }

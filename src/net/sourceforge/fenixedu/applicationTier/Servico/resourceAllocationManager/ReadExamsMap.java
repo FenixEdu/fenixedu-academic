@@ -24,8 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExamsMap extends Service {
 
-    public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears, InfoExecutionPeriod infoExecutionPeriod)
-	    {
+    public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears, InfoExecutionPeriod infoExecutionPeriod) {
 
 	// Object to be returned
 	InfoExamsMap infoExamsMap = new InfoExamsMap();

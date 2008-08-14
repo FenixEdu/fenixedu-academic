@@ -7,23 +7,20 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class DeleteExternalEnrolments extends Service {
 
-    public void run(final Registration registration, String[] externalEnrolmentIDs)
-	    throws FenixServiceException {
+    public void run(final Registration registration, String[] externalEnrolmentIDs) throws FenixServiceException {
 
 	for (final String externalEnrolmentID : externalEnrolmentIDs) {
 	    final ExternalEnrolment externalEnrolment = getExternalEnrolmentByID(registration, Integer
 		    .valueOf(externalEnrolmentID));
 	    if (externalEnrolment == null) {
-		throw new FenixServiceException(
-			"error.DeleteExternalEnrolments.externalEnrolmentID.doesnot.belong.to.student");
+		throw new FenixServiceException("error.DeleteExternalEnrolments.externalEnrolmentID.doesnot.belong.to.student");
 	    }
 	    externalEnrolment.delete();
 	}
 
     }
 
-    private ExternalEnrolment getExternalEnrolmentByID(final Registration registration,
-	    final Integer externalEnrolmentID) {
+    private ExternalEnrolment getExternalEnrolmentByID(final Registration registration, final Integer externalEnrolmentID) {
 	for (final ExternalEnrolment externalEnrolment : registration.getExternalEnrolmentsSet()) {
 	    if (externalEnrolment.getIdInternal().equals(externalEnrolmentID)) {
 		return externalEnrolment;

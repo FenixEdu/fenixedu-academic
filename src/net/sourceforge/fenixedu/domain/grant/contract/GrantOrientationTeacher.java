@@ -9,16 +9,16 @@ import org.apache.commons.beanutils.BeanComparator;
 public class GrantOrientationTeacher extends GrantOrientationTeacher_Base {
 
     final static Comparator<GrantOrientationTeacher> BEGIN_DATE_COMPARATOR = new BeanComparator("beginDate");
-    
-	public GrantOrientationTeacher() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+
+    public GrantOrientationTeacher() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
     public void delete() {
-        removeRootDomainObject();
-        removeGrantContract();
-        removeOrientationTeacher();
-        super.deleteDomainObject();
+	removeRootDomainObject();
+	removeGrantContract();
+	removeOrientationTeacher();
+	super.deleteDomainObject();
     }
 }

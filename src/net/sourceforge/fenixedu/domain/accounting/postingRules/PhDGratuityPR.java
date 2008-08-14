@@ -22,87 +22,83 @@ import org.joda.time.DateTime;
 import org.joda.time.Months;
 
 public class PhDGratuityPR extends PhDGratuityPR_Base {
-    
+
     private PhDGratuityPR() {
-        super();
+	super();
     }
 
-    public PhDGratuityPR(DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money gratuityAmount, Money initialPayment, BigDecimal penaltyPercentage) {
+    public PhDGratuityPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+	    Money gratuityAmount, Money initialPayment, BigDecimal penaltyPercentage) {
 	super();
-	super.init(EventType.GRATUITY, startDate, endDate,serviceAgreementTemplate);
+	super.init(EventType.GRATUITY, startDate, endDate, serviceAgreementTemplate);
 	setPhdGratuityAmount(gratuityAmount);
 	setInitialPayment(initialPayment);
-	
+
     }
-    
+
     public Money getInitialPayment() {
 	return getInitialPayment();
     }
-    
-  
+
     public boolean hasPenalty(Event event, DateTime when) {
-	return ((PhDGratuityEvent)event).hasToBePayedUntil().isBefore(when.toYearMonthDay());
+	return ((PhDGratuityEvent) event).hasToBePayedUntil().isBefore(when.toYearMonthDay());
     }
-     
+
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, event, calculateTotalAmountToPay(
-		event, when), event.getPayedAmount(when), event.calculateAmountToPay(when), event
-		.getDescriptionForEntryType(EntryType.GRATUITY_FEE), event.calculateAmountToPay(when)));
+	return Collections.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, event, calculateTotalAmountToPay(event, when),
+		event.getPayedAmount(when), event.calculateAmountToPay(when), event
+			.getDescriptionForEntryType(EntryType.GRATUITY_FEE), event.calculateAmountToPay(when)));
     }
 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	PhDGratuityEvent gratuityEvent = (PhDGratuityEvent) event;
 	Money ammount = getPhdGratuityAmount();
-	
-	if(applyDiscount) {
-	   ammount= ammount.subtract(ammount.multiply(gratuityEvent.calculateDiscountPercentage(ammount)));
+
+	if (applyDiscount) {
+	    ammount = ammount.subtract(ammount.multiply(gratuityEvent.calculateDiscountPercentage(ammount)));
 	}
-	if(hasPenalty(event, when)) {
-	    ammount = ammount.add(
-		    ammount.multiply(
-			    new BigDecimal(
-				    Months.monthsBetween(
-					    ((PhDGratuityEvent)event).hasToBePayedUntil(), when.toYearMonthDay()).size()* getPenaltyPercentage().floatValue()))); 
+	if (hasPenalty(event, when)) {
+	    ammount = ammount.add(ammount.multiply(new BigDecimal(Months.monthsBetween(
+		    ((PhDGratuityEvent) event).hasToBePayedUntil(), when.toYearMonthDay()).size()
+		    * getPenaltyPercentage().floatValue())));
 	}
-	
+
 	return ammount;
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-	
+    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+
 	if (entryDTOs.size() != 1) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.gratuity.phDGratuityPR.invalid.number.of.entryDTOs");
+	    throw new DomainException("error.accounting.postingRules.gratuity.phDGratuityPR.invalid.number.of.entryDTOs");
 	}
 
-	checkIfCanAddAmount(entryDTOs.get(0).getAmountToPay(), (PhDGratuityEvent)event, transactionDetail
-		.getWhenRegistered());
-	    
-	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-		EntryType.GRATUITY_FEE, entryDTOs.get(0).getAmountToPay(), transactionDetail));
-	}
+	checkIfCanAddAmount(entryDTOs.get(0).getAmountToPay(), (PhDGratuityEvent) event, transactionDetail.getWhenRegistered());
+
+	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, EntryType.GRATUITY_FEE,
+		entryDTOs.get(0).getAmountToPay(), transactionDetail));
+    }
 
     private void checkIfCanAddAmount(Money amountToPay, PhDGratuityEvent event, DateTime whenRegistered) {
-	if(!event.isFirstYearOfPhD(whenRegistered)) {
-	    if(!amountToPay.equals(getPhdGratuityAmount())) {
-		throw new DomainException( "error.accounting.postingRules.gratuity.phDGratuityPR.has.to.be.total.payment");
+	if (!event.isFirstYearOfPhD(whenRegistered)) {
+	    if (!amountToPay.equals(getPhdGratuityAmount())) {
+		throw new DomainException("error.accounting.postingRules.gratuity.phDGratuityPR.has.to.be.total.payment");
 	    }
-	}
-	else {
-	    if(!(amountToPay.equals(getInitialPayment()) || amountToPay.equals(getPhdGratuityAmount().subtract(getInitialPayment())))) {
-		throw new DomainException( "error.accounting.postingRules.gratuity.phDGratuityPR.invalid.ammount.for.first.year");
+	} else {
+	    if (!(amountToPay.equals(getInitialPayment()) || amountToPay.equals(getPhdGratuityAmount().subtract(
+		    getInitialPayment())))) {
+		throw new DomainException("error.accounting.postingRules.gratuity.phDGratuityPR.invalid.ammount.for.first.year");
 	    }
 	}
     }
-    
-    public void edit(DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money gratuityAmount, Money initialPayment, BigDecimal penaltyPercentage) {
-	
+
+    public void edit(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+	    Money gratuityAmount, Money initialPayment, BigDecimal penaltyPercentage) {
+
 	deactivate();
-	new PhDGratuityPR(startDate, endDate, serviceAgreementTemplate, gratuityAmount, initialPayment,penaltyPercentage);
+	new PhDGratuityPR(startDate, endDate, serviceAgreementTemplate, gratuityAmount, initialPayment, penaltyPercentage);
     }
 }

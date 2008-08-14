@@ -17,21 +17,19 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends Service {
 
-    public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber)
-            {
+    public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber) {
 
-        List masterDegreeStudents = Registration
-                .readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(studentName, idNumber,
-                        idType, studentNumber);
+	List masterDegreeStudents = Registration.readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(studentName,
+		idNumber, idType, studentNumber);
 
-        return (List) CollectionUtils.collect(masterDegreeStudents, new Transformer() {
+	return (List) CollectionUtils.collect(masterDegreeStudents, new Transformer() {
 
-            public Object transform(Object arg0) {
-                Registration registration = (Registration) arg0;
-                return InfoStudent.newInfoFromDomain(registration);
-            }
+	    public Object transform(Object arg0) {
+		Registration registration = (Registration) arg0;
+		return InfoStudent.newInfoFromDomain(registration);
+	    }
 
-        });
+	});
 
     }
 }

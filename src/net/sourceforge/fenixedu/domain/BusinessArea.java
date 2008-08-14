@@ -9,19 +9,19 @@ public class BusinessArea extends BusinessArea_Base {
 
     public BusinessArea(Integer level, String code, String description) {
 	super();
-	
+
 	if (level == null) {
 	    throw new DomainException("businessArea.creation.level.null");
 	}
-	
+
 	if (code == null) {
 	    throw new DomainException("businessArea.creation.code.null");
 	}
-	
+
 	if (description == null) {
 	    throw new DomainException("businessArea.creation.description.null");
 	}
-	
+
 	setRootDomainObject(RootDomainObject.getInstance());
 	setLevel(level);
 	setCode(code);

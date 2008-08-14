@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
 
@@ -39,7 +39,7 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -47,14 +47,14 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
      * @return Returns the other.
      */
     public Integer getOther() {
-        return other;
+	return other;
     }
 
     /**
@@ -62,14 +62,14 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
      *            The other to set.
      */
     public void setOther(Integer other) {
-        this.other = other;
+	this.other = other;
     }
 
     /**
      * @return Returns the research.
      */
     public Integer getResearch() {
-        return research;
+	return research;
     }
 
     /**
@@ -77,14 +77,14 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
      *            The research to set.
      */
     public void setResearch(Integer research) {
-        this.research = research;
+	this.research = research;
     }
 
     /**
      * @return Returns the management.
      */
     public Integer getManagement() {
-        return management;
+	return management;
     }
 
     /**
@@ -92,22 +92,22 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
      *            The management to set.
      */
     public void setManagement(Integer management) {
-        this.management = management;
+	this.management = management;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoWeeklyOcupation) {
-            resultado = getInfoTeacher().equals(((InfoWeeklyOcupation) obj).getInfoTeacher());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoWeeklyOcupation) {
+	    resultado = getInfoTeacher().equals(((InfoWeeklyOcupation) obj).getInfoTeacher());
+	}
+	return resultado;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
     public Date getLastModificationDate() {
-        return lastModificationDate;
+	return lastModificationDate;
     }
 
     /**
@@ -115,14 +115,14 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
      *            The lastModificationDate to set.
      */
     public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
+	this.lastModificationDate = lastModificationDate;
     }
 
     /**
      * @return Returns the lecture.
      */
     public Integer getLecture() {
-        return lecture;
+	return lecture;
     }
 
     /**
@@ -130,14 +130,14 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
      *            The lecture to set.
      */
     public void setLecture(Integer lecture) {
-        this.lecture = lecture;
+	this.lecture = lecture;
     }
 
     /**
      * @return Returns the support.
      */
     public Integer getSupport() {
-        return support;
+	return support;
     }
 
     /**
@@ -145,33 +145,35 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
      *            The support to set.
      */
     public void setSupport(Integer support) {
-        this.support = support;
+	this.support = support;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(WeeklyOcupation weeklyOcupation) {
-        super.copyFromDomain(weeklyOcupation);
-        if (weeklyOcupation != null) {
-            setLecture(weeklyOcupation.getLecture());
-            setManagement(weeklyOcupation.getManagement());
-            setOther(weeklyOcupation.getOther());
-            setResearch(weeklyOcupation.getResearch());
-            setSupport(weeklyOcupation.getSupport());
-            setLastModificationDate(weeklyOcupation.getLastModificationDate());
-        }
+	super.copyFromDomain(weeklyOcupation);
+	if (weeklyOcupation != null) {
+	    setLecture(weeklyOcupation.getLecture());
+	    setManagement(weeklyOcupation.getManagement());
+	    setOther(weeklyOcupation.getOther());
+	    setResearch(weeklyOcupation.getResearch());
+	    setSupport(weeklyOcupation.getSupport());
+	    setLastModificationDate(weeklyOcupation.getLastModificationDate());
+	}
     }
 
     public static InfoWeeklyOcupation newInfoFromDomain(WeeklyOcupation weeklyOcupation) {
-        InfoWeeklyOcupation infoWeeklyOcupation = null;
-        if (weeklyOcupation != null) {
-            infoWeeklyOcupation = new InfoWeeklyOcupation();
-            infoWeeklyOcupation.copyFromDomain(weeklyOcupation);
-        }
+	InfoWeeklyOcupation infoWeeklyOcupation = null;
+	if (weeklyOcupation != null) {
+	    infoWeeklyOcupation = new InfoWeeklyOcupation();
+	    infoWeeklyOcupation.copyFromDomain(weeklyOcupation);
+	}
 
-        return infoWeeklyOcupation;
+	return infoWeeklyOcupation;
     }
 }

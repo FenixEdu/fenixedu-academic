@@ -17,7 +17,7 @@ public class InfoServiceExemptionCreditLine extends InfoDatePeriodBaseCreditLine
      * @return Returns the type.
      */
     public ProfessionalSituationType getType() {
-        return type;
+	return type;
     }
 
     /**
@@ -25,25 +25,25 @@ public class InfoServiceExemptionCreditLine extends InfoDatePeriodBaseCreditLine
      *            The type to set.
      */
     public void setType(ProfessionalSituationType type) {
-        this.type = type;
+	this.type = type;
     }
 
     public void populateDomainObject(TeacherServiceExemption serviceExemptionCreditLine) {
-        super.populateDomainObject(serviceExemptionCreditLine);
-        serviceExemptionCreditLine.setSituationType(getType());
+	super.populateDomainObject(serviceExemptionCreditLine);
+	serviceExemptionCreditLine.setSituationType(getType());
     }
 
     public static InfoServiceExemptionCreditLine newInfoFromDomain(TeacherServiceExemption serviceExemptionCreditLine) {
-        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(serviceExemptionCreditLine.getTeacher());
+	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(serviceExemptionCreditLine.getTeacher());
 
-        InfoServiceExemptionCreditLine infoCreditLine = new InfoServiceExemptionCreditLine();
-        infoCreditLine.setEnd(serviceExemptionCreditLine.getEndDate());
-        infoCreditLine.setIdInternal(serviceExemptionCreditLine.getIdInternal());
-        infoCreditLine.setStart(serviceExemptionCreditLine.getBeginDate());
-        infoCreditLine.setType(serviceExemptionCreditLine.getType());
+	InfoServiceExemptionCreditLine infoCreditLine = new InfoServiceExemptionCreditLine();
+	infoCreditLine.setEnd(serviceExemptionCreditLine.getEndDate());
+	infoCreditLine.setIdInternal(serviceExemptionCreditLine.getIdInternal());
+	infoCreditLine.setStart(serviceExemptionCreditLine.getBeginDate());
+	infoCreditLine.setType(serviceExemptionCreditLine.getType());
 
-        infoCreditLine.setInfoTeacher(infoTeacher);
-        return infoCreditLine;
+	infoCreditLine.setInfoTeacher(infoTeacher);
+	return infoCreditLine;
     }
 
 }

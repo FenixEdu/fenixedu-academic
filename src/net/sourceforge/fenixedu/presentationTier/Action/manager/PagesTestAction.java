@@ -15,19 +15,18 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class PagesTestAction extends FenixDispatchAction {
-    
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("page");
-	if(pageContainerBean == null) {
+	if (pageContainerBean == null) {
 	    pageContainerBean = new PageContainerBean();
 	} else {
 	    RenderUtils.invalidateViewState();
 	}
-	
+
 	return setObjects(mapping, form, request, response, pageContainerBean);
     }
-    
+
     public ActionForward doSomething(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("page");
@@ -35,7 +34,7 @@ public class PagesTestAction extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, pageContainerBean);
     }
-    
+
     private ActionForward setObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, PageContainerBean pageContainerBean) {
 	pageContainerBean.setObjects((List) rootDomainObject.getExecutionPeriods());

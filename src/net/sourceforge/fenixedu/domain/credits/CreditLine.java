@@ -9,13 +9,14 @@ import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 /**
  * @author jpvl
  */
-public abstract class CreditLine extends CreditLine_Base implements net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator {
+public abstract class CreditLine extends CreditLine_Base implements
+	net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator {
 
     public CreditLine() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	protected abstract CreditsEvent getCreditEventGenerated();
+    protected abstract CreditsEvent getCreditEventGenerated();
 
 }

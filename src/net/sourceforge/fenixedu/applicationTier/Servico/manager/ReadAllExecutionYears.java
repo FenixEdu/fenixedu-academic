@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllExecutionYears extends Service {
 
-    public List<InfoExecutionYear> run() throws FenixServiceException{
-        List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
+    public List<InfoExecutionYear> run() throws FenixServiceException {
+	List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
 
-        for (ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
-            result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
-        }
+	for (ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+	    result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
+	}
 
-        return result;
+	return result;
     }
 
 }

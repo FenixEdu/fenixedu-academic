@@ -23,11 +23,13 @@ public class ValidateEmailDA extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return mapping.findForward("showForm");
     }
 
-    public ActionForward redirect(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward redirect(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final ActionForward actionForward = new ActionForward();
 	actionForward.setRedirect(true);
 

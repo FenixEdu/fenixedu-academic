@@ -26,25 +26,25 @@ public class InfoCurriculumHistoricReport implements Serializable {
     int approved = 0;
 
     Collection<InfoEnrolmentHistoricReport> enrolments;
-    
+
     DomainReference<CurricularCourse> curricularCourse;
 
     DomainReference<ExecutionSemester> executionSemester;
 
     public Integer getApproved() {
-        return approved;
+	return approved;
     }
 
     public Integer getEvaluated() {
-        return evaluated;
+	return evaluated;
     }
-    
+
     public Collection<InfoEnrolmentHistoricReport> getEnrolments() {
-        return enrolments;
+	return enrolments;
     }
 
     public Integer getEnroled() {
-        return getEnrolments().size();
+	return getEnrolments().size();
     }
 
     public Integer getRatioApprovedEnroled() {
@@ -56,7 +56,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
     }
 
     public CurricularCourse getCurricularCourse() {
-	return this.curricularCourse == null ?  null : this.curricularCourse.getObject();
+	return this.curricularCourse == null ? null : this.curricularCourse.getObject();
     }
 
     private void setCurricularCourse(final CurricularCourse curricularCourse) {
@@ -65,7 +65,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return this.executionSemester == null ?  null : this.executionSemester.getObject();
+	return this.executionSemester == null ? null : this.executionSemester.getObject();
     }
 
     private void setExecutionPeriod(final ExecutionSemester executionSemester) {
@@ -74,29 +74,30 @@ public class InfoCurriculumHistoricReport implements Serializable {
     }
 
     public Integer getSemester() {
-        return getExecutionPeriod().getSemester();
+	return getExecutionPeriod().getSemester();
     }
 
     public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod().getExecutionYear();
     }
-    
+
     public InfoCurriculumHistoricReport(final ExecutionSemester executionSemester, final CurricularCourse curricularCourse) {
 	setExecutionPeriod(executionSemester);
 	setCurricularCourse(curricularCourse);
-	
+
 	init();
     }
 
     private void init() {
-	this.enrolments = new TreeSet<InfoEnrolmentHistoricReport>(new BeanComparator("enrolment.studentCurricularPlan.registration.number"));
+	this.enrolments = new TreeSet<InfoEnrolmentHistoricReport>(new BeanComparator(
+		"enrolment.studentCurricularPlan.registration.number"));
 	for (final Enrolment enrolment : getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod())) {
 	    if (!enrolment.isAnnulled()) {
 		this.enrolments.add(new InfoEnrolmentHistoricReport(enrolment));
-		
+
 		if (enrolment.isEvaluated()) {
 		    this.evaluated++;
-		    
+
 		    if (enrolment.isEnrolmentStateApproved()) {
 			this.approved++;
 		    }

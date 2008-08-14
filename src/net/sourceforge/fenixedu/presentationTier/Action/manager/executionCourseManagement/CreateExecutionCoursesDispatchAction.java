@@ -30,50 +30,47 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseDegreeType(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseDegreeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        return mapping.findForward("chooseDegreeType");
-
-    }
-
-    public ActionForward chooseDegreeCurricularPlans(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
-
-        IUserView userView = UserView.getUser();
-
-        DynaActionForm actionForm = (DynaActionForm) form;
-        String degreeType = (String) actionForm.get("degreeType");
-
-        Object[] args = { DegreeType.valueOf(degreeType) };
-        Collection<InfoDegreeCurricularPlan> degreeCurricularPlans = (Collection<InfoDegreeCurricularPlan>) ServiceUtils
-                .executeService( "ReadActiveDegreeCurricularPlansByDegreeType", args);
-
-        List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
-        
-        request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
-        request.setAttribute("executionPeriods", executionPeriods);
-
-        return mapping.findForward("chooseDegreeCurricularPlans");
+	return mapping.findForward("chooseDegreeType");
 
     }
 
-    public ActionForward createExecutionCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+    public ActionForward chooseDegreeCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm actionForm = (DynaActionForm) form;
-        Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
-        Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
+	DynaActionForm actionForm = (DynaActionForm) form;
+	String degreeType = (String) actionForm.get("degreeType");
 
-        Object[] args = { degreeCurricularPlansIDs, executionPeriodID };
-        ServiceUtils.executeService(
-                "CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod", args);
+	Object[] args = { DegreeType.valueOf(degreeType) };
+	Collection<InfoDegreeCurricularPlan> degreeCurricularPlans = (Collection<InfoDegreeCurricularPlan>) ServiceUtils
+		.executeService("ReadActiveDegreeCurricularPlansByDegreeType", args);
 
-        return mapping.findForward("createExecutionCoursesSuccess");
+	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
+
+	request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
+	request.setAttribute("executionPeriods", executionPeriods);
+
+	return mapping.findForward("chooseDegreeCurricularPlans");
+
+    }
+
+    public ActionForward createExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	IUserView userView = UserView.getUser();
+
+	DynaActionForm actionForm = (DynaActionForm) form;
+	Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
+	Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
+
+	Object[] args = { degreeCurricularPlansIDs, executionPeriodID };
+	ServiceUtils.executeService("CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod", args);
+
+	return mapping.findForward("createExecutionCoursesSuccess");
 
     }
 

@@ -38,33 +38,37 @@ public class CoordinatedDegreeInfo extends FenixAction {
 
     @Override
     @SuppressWarnings("unchecked")
-    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws FenixActionException {
-        final HttpSession session = request.getSession(false);
-        
-        if (session != null) {
-            final IUserView userView = UserView.getUser();
+    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) throws FenixActionException {
+	final HttpSession session = request.getSession(false);
 
-            final Integer degreeCurricularPlanOID = findDegreeCurricularPlanID(request);
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
-            
-            final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+	if (session != null) {
+	    final IUserView userView = UserView.getUser();
+
+	    final Integer degreeCurricularPlanOID = findDegreeCurricularPlanID(request);
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
+
+	    final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
+		    .readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
 	    final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
-            
+
 	    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-            session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
+	    session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
 
-            final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates;
-            try {
-        	infoMasterDegreeCandidates = (List) ServiceManagerServiceFactory.executeService( "ReadDegreeCandidates", new Object[]{degreeCurricularPlanOID} );
-            } catch (Exception e) {
-                throw new FenixActionException(e);
-            }
-            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer.valueOf(infoMasterDegreeCandidates.size()));
+	    final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates;
+	    try {
+		infoMasterDegreeCandidates = (List) ServiceManagerServiceFactory.executeService("ReadDegreeCandidates",
+			new Object[] { degreeCurricularPlanOID });
+	    } catch (Exception e) {
+		throw new FenixActionException(e);
+	    }
+	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer.valueOf(infoMasterDegreeCandidates
+		    .size()));
 
-            return mapping.findForward("Success");
-        }
-        
-        throw new FenixActionException();
+	    return mapping.findForward("Success");
+	}
+
+	throw new FenixActionException();
     }
 
     /**
@@ -72,15 +76,15 @@ public class CoordinatedDegreeInfo extends FenixAction {
      * @return
      */
     final private Integer findDegreeCurricularPlanID(HttpServletRequest request) {
-        final Integer degreeCurricularPlanID;
-        
-        if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-        } else {
-            degreeCurricularPlanID = Integer.valueOf((String) request.getAttribute("degreeCurricularPlanID"));
-        }
+	final Integer degreeCurricularPlanID;
 
-        return degreeCurricularPlanID;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+	} else {
+	    degreeCurricularPlanID = Integer.valueOf((String) request.getAttribute("degreeCurricularPlanID"));
+	}
+
+	return degreeCurricularPlanID;
     }
 
 }

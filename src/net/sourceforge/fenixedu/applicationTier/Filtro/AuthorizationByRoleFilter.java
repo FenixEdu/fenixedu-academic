@@ -24,15 +24,16 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
     /*
      * (non-Javadoc)
      * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
+     * @see
+     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView userView = getRemoteUser(request);
-        if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType())))
-                || (userView == null) || (userView.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
-        }
+	IUserView userView = getRemoteUser(request);
+	if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType()))) || (userView == null)
+		|| (userView.getRoleTypes() == null)) {
+	    throw new NotAuthorizedFilterException();
+	}
 
     }
 }

@@ -80,13 +80,13 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     @Override
     protected void createCandidacyPrecedentDegreeInformation(IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
 	    StudentCurricularPlan studentCurricularPlan) {
-	
+
 	final CandidacyPrecedentDegreeInformationBean info = new CandidacyPrecedentDegreeInformationBean();
-	
+
 	info.setDegreeDesignation(studentCurricularPlan.getName());
 	info.setInstitutionUnitName(rootDomainObject.getInstitutionUnit().getUnitName());
 	info.initCurricularCoursesInformation(studentCurricularPlan);
-	
+
 	bean.setPrecedentDegreeInformation(info);
     }
 

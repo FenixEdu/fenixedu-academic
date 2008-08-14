@@ -25,41 +25,41 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Jo�o Mota
  * 
- * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
+ *         30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
  */
 public class ReadAvailableClassesForShift extends Service {
 
     public List run(Integer shiftOID) {
 
-        final Shift shift = rootDomainObject.readShiftByOID(shiftOID);
-        final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-        final ExecutionYear executionYear = executionSemester.getExecutionYear();
+	final Shift shift = rootDomainObject.readShiftByOID(shiftOID);
+	final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+	final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 
-        final Set<SchoolClass> availableSchoolClasses = new HashSet<SchoolClass>();
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-        	final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-        	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-        		if (executionDegree.getExecutionYear() == executionYear) {
-        			for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
-        				if (schoolClass.getExecutionPeriod() == executionSemester) {
-        					if (!shift.getAssociatedClassesSet().contains(schoolClass)) {
-        						availableSchoolClasses.add(schoolClass);
-        					}
-        				}
-        			}
-        		}
-        	}
-        }
+	final Set<SchoolClass> availableSchoolClasses = new HashSet<SchoolClass>();
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+		if (executionDegree.getExecutionYear() == executionYear) {
+		    for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
+			if (schoolClass.getExecutionPeriod() == executionSemester) {
+			    if (!shift.getAssociatedClassesSet().contains(schoolClass)) {
+				availableSchoolClasses.add(schoolClass);
+			    }
+			}
+		    }
+		}
+	    }
+	}
 
-        final List<InfoClass> infoClasses = new ArrayList<InfoClass>(availableSchoolClasses.size());
-        for (final SchoolClass schoolClass : availableSchoolClasses) {
-            final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-            infoClasses.add(infoClass);
-        }
+	final List<InfoClass> infoClasses = new ArrayList<InfoClass>(availableSchoolClasses.size());
+	for (final SchoolClass schoolClass : availableSchoolClasses) {
+	    final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+	    infoClasses.add(infoClass);
+	}
 
-        return infoClasses;
+	return infoClasses;
     }
 
 }

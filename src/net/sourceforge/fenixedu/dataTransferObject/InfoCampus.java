@@ -15,14 +15,14 @@ public class InfoCampus extends InfoObject {
      * @param integer
      */
     public InfoCampus(Integer campusId) {
-        super(campusId);
+	super(campusId);
     }
 
     /**
      * @return Returns the name.
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
@@ -30,39 +30,39 @@ public class InfoCampus extends InfoObject {
      *            The name to set.
      */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoCampus) {
-            InfoCampus infoCampus = (InfoCampus) obj;
-            result = getName().equals(infoCampus.getName());
-        }
-        return result;
+	boolean result = false;
+	if (obj instanceof InfoCampus) {
+	    InfoCampus infoCampus = (InfoCampus) obj;
+	    result = getName().equals(infoCampus.getName());
+	}
+	return result;
     }
 
     public String toString() {
-        String result = "[INFODEGREE_INFO:";
-        result += " codigo interno= " + getIdInternal();
-        result += " name= " + getName();
-        result += "]";
-        return result;
+	String result = "[INFODEGREE_INFO:";
+	result += " codigo interno= " + getIdInternal();
+	result += " name= " + getName();
+	result += "]";
+	return result;
     }
 
     public void copyFromDomain(Campus campus) {
-        super.copyFromDomain(campus);
-        if (campus != null) {
-            setName(campus.getName());
-        }
+	super.copyFromDomain(campus);
+	if (campus != null) {
+	    setName(campus.getName());
+	}
     }
 
     public static InfoCampus newInfoFromDomain(Campus campus) {
-        InfoCampus infoCampus = null;
-        if (campus != null) {
-            infoCampus = new InfoCampus();
-            infoCampus.copyFromDomain(campus);
-        }
-        return infoCampus;
+	InfoCampus infoCampus = null;
+	if (campus != null) {
+	    infoCampus = new InfoCampus();
+	    infoCampus.copyFromDomain(campus);
+	}
+	return infoCampus;
     }
 }

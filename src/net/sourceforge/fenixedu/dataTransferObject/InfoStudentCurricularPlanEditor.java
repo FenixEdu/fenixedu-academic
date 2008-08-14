@@ -42,124 +42,124 @@ public class InfoStudentCurricularPlanEditor extends InfoObject implements Seria
     public InfoStudentCurricularPlanEditor() {
     }
 
-	public Double getClassification() {
-		return classification;
-	}
+    public Double getClassification() {
+	return classification;
+    }
 
-	public void setClassification(Double classification) {
-		this.classification = classification;
-	}
+    public void setClassification(Double classification) {
+	this.classification = classification;
+    }
 
-	public Integer getCompletedCourses() {
-		return completedCourses;
-	}
+    public Integer getCompletedCourses() {
+	return completedCourses;
+    }
 
-	public void setCompletedCourses(Integer completedCourses) {
-		this.completedCourses = completedCourses;
-	}
+    public void setCompletedCourses(Integer completedCourses) {
+	this.completedCourses = completedCourses;
+    }
 
-	public StudentCurricularPlanState getCurrentState() {
-		return currentState;
-	}
+    public StudentCurricularPlanState getCurrentState() {
+	return currentState;
+    }
 
-	public void setCurrentState(StudentCurricularPlanState currentState) {
-		this.currentState = currentState;
-	}
+    public void setCurrentState(StudentCurricularPlanState currentState) {
+	this.currentState = currentState;
+    }
 
-	public Integer getEnrolledCourses() {
-		return enrolledCourses;
-	}
+    public Integer getEnrolledCourses() {
+	return enrolledCourses;
+    }
 
-	public void setEnrolledCourses(Integer enrolledCourses) {
-		this.enrolledCourses = enrolledCourses;
-	}
+    public void setEnrolledCourses(Integer enrolledCourses) {
+	this.enrolledCourses = enrolledCourses;
+    }
 
-	public Double getGivenCredits() {
-		return givenCredits;
-	}
+    public Double getGivenCredits() {
+	return givenCredits;
+    }
 
-	public void setGivenCredits(Double givenCredits) {
-		this.givenCredits = givenCredits;
-	}
+    public void setGivenCredits(Double givenCredits) {
+	this.givenCredits = givenCredits;
+    }
 
-	public InfoBranch getInfoBranch() {
-		return infoBranch;
-	}
+    public InfoBranch getInfoBranch() {
+	return infoBranch;
+    }
 
-	public void setInfoBranch(InfoBranch infoBranch) {
-		this.infoBranch = infoBranch;
-	}
+    public void setInfoBranch(InfoBranch infoBranch) {
+	this.infoBranch = infoBranch;
+    }
 
-	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-		return infoDegreeCurricularPlan;
-	}
+    public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
+	return infoDegreeCurricularPlan;
+    }
 
-	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-		this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
-	}
+    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+	this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+    }
 
-	public InfoPerson getInfoEmployee() {
-		return infoEmployee;
-	}
+    public InfoPerson getInfoEmployee() {
+	return infoEmployee;
+    }
 
-	public void setInfoEmployee(InfoPerson infoEmployee) {
-		this.infoEmployee = infoEmployee;
-	}
+    public void setInfoEmployee(InfoPerson infoEmployee) {
+	this.infoEmployee = infoEmployee;
+    }
 
-	public List getInfoEnrolments() {
-		return infoEnrolments;
-	}
+    public List getInfoEnrolments() {
+	return infoEnrolments;
+    }
 
-	public void setInfoEnrolments(List infoEnrolments) {
-		this.infoEnrolments = infoEnrolments;
-	}
+    public void setInfoEnrolments(List infoEnrolments) {
+	this.infoEnrolments = infoEnrolments;
+    }
 
-	public InfoBranch getInfoSecundaryBranch() {
-		return infoSecundaryBranch;
-	}
+    public InfoBranch getInfoSecundaryBranch() {
+	return infoSecundaryBranch;
+    }
 
-	public void setInfoSecundaryBranch(InfoBranch infoSecundaryBranch) {
-		this.infoSecundaryBranch = infoSecundaryBranch;
-	}
+    public void setInfoSecundaryBranch(InfoBranch infoSecundaryBranch) {
+	this.infoSecundaryBranch = infoSecundaryBranch;
+    }
 
-	public InfoStudent getInfoStudent() {
-		return infoStudent;
-	}
+    public InfoStudent getInfoStudent() {
+	return infoStudent;
+    }
 
-	public void setInfoStudent(InfoStudent infoStudent) {
-		this.infoStudent = infoStudent;
-	}
+    public void setInfoStudent(InfoStudent infoStudent) {
+	this.infoStudent = infoStudent;
+    }
 
-	public String getObservations() {
-		return observations;
-	}
+    public String getObservations() {
+	return observations;
+    }
 
-	public void setObservations(String observations) {
-		this.observations = observations;
-	}
+    public void setObservations(String observations) {
+	this.observations = observations;
+    }
 
-	public Specialization getSpecialization() {
-		return specialization;
-	}
+    public Specialization getSpecialization() {
+	return specialization;
+    }
 
-	public void setSpecialization(Specialization specialization) {
-		this.specialization = specialization;
-	}
+    public void setSpecialization(Specialization specialization) {
+	this.specialization = specialization;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public Date getStartDate() {
+	return startDate;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+    }
 
-	public Date getWhen() {
-		return when;
-	}
+    public Date getWhen() {
+	return when;
+    }
 
-	public void setWhen(Date when) {
-		this.when = when;
-	}
+    public void setWhen(Date when) {
+	this.when = when;
+    }
 
 }

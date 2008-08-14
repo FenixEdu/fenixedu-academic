@@ -24,11 +24,11 @@ import pt.ist.fenixWebFramework.security.UserView;
  * @author Barbosa
  */
 public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
-    public ActionForward searchGrantOwner(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward searchGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	List infoGrantOwnerList = null;
 	Integer grantOwnerNumber = null;
-	//Read attributes from FormBean
+	// Read attributes from FormBean
 	DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
 	grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
 
@@ -37,8 +37,7 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
 	infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner", args);
 
 	if (infoGrantOwnerList.isEmpty()) {
-	    return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull",
-		    grantOwnerNumber);
+	    return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull", grantOwnerNumber);
 	}
 
 	request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);

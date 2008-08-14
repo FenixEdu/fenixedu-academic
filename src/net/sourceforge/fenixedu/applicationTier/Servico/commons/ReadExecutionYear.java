@@ -7,6 +7,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionYear extends Service {
     public InfoExecutionYear run(String year) {
-        return InfoExecutionYear.newInfoFromDomain(ExecutionYear.readExecutionYearByName(year));
+	return InfoExecutionYear.newInfoFromDomain(ExecutionYear.readExecutionYearByName(year));
     }
 }

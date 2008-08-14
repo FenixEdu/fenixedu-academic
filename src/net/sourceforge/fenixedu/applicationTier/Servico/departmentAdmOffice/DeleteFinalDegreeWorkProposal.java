@@ -10,5 +10,5 @@ public class DeleteFinalDegreeWorkProposal extends Service {
 	    proposal.delete();
 	}
     }
-    
+
 }

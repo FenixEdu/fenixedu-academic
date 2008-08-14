@@ -24,20 +24,20 @@ public enum ExemptionGratuityType {
     MILITARY_SON,
 
     OTHER;
-    
+
     public static List percentageOfExemption() {
-        List percentage = new ArrayList();
+	List percentage = new ArrayList();
 
-        percentage.add(new Integer("25"));
-        percentage.add(new Integer("50"));
-        percentage.add(new Integer("75"));
-        percentage.add(new Integer("100"));
+	percentage.add(new Integer("25"));
+	percentage.add(new Integer("50"));
+	percentage.add(new Integer("75"));
+	percentage.add(new Integer("100"));
 
-        return percentage;
+	return percentage;
     }
-    
-    public String getName(){
-        return name();
+
+    public String getName() {
+	return name();
     }
 
 }

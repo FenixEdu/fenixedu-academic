@@ -15,7 +15,7 @@ public class PortalBean implements Serializable {
     private DomainReference<Container> container;
 
     private DomainReference<Portal> portal;
-    
+
     private MultiLanguageString name;
 
     private String prefix;
@@ -30,7 +30,7 @@ public class PortalBean implements Serializable {
 	setMetaDomainObject(null);
 	setContainer(null);
     }
-    
+
     public PortalBean(Container container) {
 	setMetaDomainObject(null);
 	setPortal(null);
@@ -86,7 +86,7 @@ public class PortalBean implements Serializable {
     public void setPortal(Portal portal) {
 	this.portal = new DomainReference<Portal>(portal);
     }
-    
+
     public Portal getPortal() {
 	return this.portal.getObject();
     }

@@ -9,11 +9,12 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class CreateThesisProposal extends Service {
 
     public Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, MultiLanguageString title, String comment) {
-        Thesis thesis = new Thesis(degreeCurricularPlan.getDegree(), student.getDissertationEnrolment(degreeCurricularPlan), title);
+	Thesis thesis = new Thesis(degreeCurricularPlan.getDegree(), student.getDissertationEnrolment(degreeCurricularPlan),
+		title);
 
-        thesis.setComment(comment);
-        
-        return thesis;
+	thesis.setComment(comment);
+
+	return thesis;
     }
-    
+
 }

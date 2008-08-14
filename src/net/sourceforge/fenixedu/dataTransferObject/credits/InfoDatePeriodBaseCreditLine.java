@@ -19,7 +19,7 @@ public abstract class InfoDatePeriodBaseCreditLine extends InfoCreditLine {
      * @return Returns the end.
      */
     public Date getEnd() {
-        return end;
+	return end;
     }
 
     /**
@@ -27,14 +27,14 @@ public abstract class InfoDatePeriodBaseCreditLine extends InfoCreditLine {
      *            The end to set.
      */
     public void setEnd(Date end) {
-        this.end = end;
+	this.end = end;
     }
 
     /**
      * @return Returns the start.
      */
     public Date getStart() {
-        return start;
+	return start;
     }
 
     /**
@@ -42,12 +42,12 @@ public abstract class InfoDatePeriodBaseCreditLine extends InfoCreditLine {
      *            The start to set.
      */
     public void setStart(Date start) {
-        this.start = start;
+	this.start = start;
     }
 
     public void populateDomainObject(TeacherServiceExemption serviceExemptionCreditLine) {
-        serviceExemptionCreditLine.setEndDate(getEnd());
-        serviceExemptionCreditLine.setBeginDate(getStart());
+	serviceExemptionCreditLine.setEndDate(getEnd());
+	serviceExemptionCreditLine.setBeginDate(getStart());
     }
 
 }

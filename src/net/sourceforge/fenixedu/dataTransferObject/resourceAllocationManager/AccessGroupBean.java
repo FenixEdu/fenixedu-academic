@@ -7,26 +7,27 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole.ResourceAllocationAccessGroupType;
 
 public class AccessGroupBean implements Serializable {
-    
+
     private DomainReference<Person> personReference;
-    
+
     private ResourceAllocationAccessGroupType accessGroupType;
-        
-    public AccessGroupBean() {}
-    
+
+    public AccessGroupBean() {
+    }
+
     public Person getPerson() {
-        return (this.personReference != null) ? this.personReference.getObject() : null;
+	return (this.personReference != null) ? this.personReference.getObject() : null;
     }
 
     public void setPerson(Person Person) {
-        this.personReference = (Person != null) ? new DomainReference<Person>(Person) : null;
+	this.personReference = (Person != null) ? new DomainReference<Person>(Person) : null;
     }
 
     public ResourceAllocationAccessGroupType getAccessGroupType() {
-        return accessGroupType;
+	return accessGroupType;
     }
 
     public void setAccessGroupType(ResourceAllocationAccessGroupType accessGroupType) {
-        this.accessGroupType = accessGroupType;
+	this.accessGroupType = accessGroupType;
     }
 }

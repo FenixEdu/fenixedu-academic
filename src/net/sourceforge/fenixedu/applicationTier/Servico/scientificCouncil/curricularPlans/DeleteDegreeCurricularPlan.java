@@ -9,18 +9,18 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteDegreeCurricularPlan extends Service {
 
-    public void run(Integer idInternal) throws FenixServiceException{
-        if (idInternal == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+    public void run(Integer idInternal) throws FenixServiceException {
+	if (idInternal == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        final DegreeCurricularPlan dcpToDelete = rootDomainObject.readDegreeCurricularPlanByOID(idInternal);
+	final DegreeCurricularPlan dcpToDelete = rootDomainObject.readDegreeCurricularPlanByOID(idInternal);
 
-        if (dcpToDelete == null) {
-            throw new NonExistingServiceException();
-        } else {
-            dcpToDelete.delete();
-        }
+	if (dcpToDelete == null) {
+	    throw new NonExistingServiceException();
+	} else {
+	    dcpToDelete.delete();
+	}
     }
 
 }

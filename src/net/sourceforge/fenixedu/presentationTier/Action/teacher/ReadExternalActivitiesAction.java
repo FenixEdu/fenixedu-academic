@@ -19,29 +19,28 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class ReadExternalActivitiesAction extends FenixAction {
 
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
+     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+     * ActionMapping, org.apache.struts.action.ActionForm,
+     * javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-            Object[] args = { userView.getUtilizador() };
-            SiteView siteView = (SiteView) ServiceUtils.executeService(
-                    "ReadExternalActivities", args);
+	Object[] args = { userView.getUtilizador() };
+	SiteView siteView = (SiteView) ServiceUtils.executeService("ReadExternalActivities", args);
 
-            request.setAttribute("siteView", siteView);
+	request.setAttribute("siteView", siteView);
 
-        return mapping.findForward("show-form");
+	return mapping.findForward("show-form");
     }
 }

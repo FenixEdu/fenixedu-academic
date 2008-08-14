@@ -17,13 +17,11 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 	super();
     }
 
-    public AdministrativeOfficeFeePR(DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount,
-	    Money fixedAmountPenalty, YearMonthDay whenToApplyFixedAmountPenalty) {
+    public AdministrativeOfficeFeePR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+	    Money fixedAmount, Money fixedAmountPenalty, YearMonthDay whenToApplyFixedAmountPenalty) {
 	this();
-	init(EntryType.ADMINISTRATIVE_OFFICE_FEE, EventType.ADMINISTRATIVE_OFFICE_FEE, startDate,
-		endDate, serviceAgreementTemplate, fixedAmount, fixedAmountPenalty,
-		whenToApplyFixedAmountPenalty);
+	init(EntryType.ADMINISTRATIVE_OFFICE_FEE, EventType.ADMINISTRATIVE_OFFICE_FEE, startDate, endDate,
+		serviceAgreementTemplate, fixedAmount, fixedAmountPenalty, whenToApplyFixedAmountPenalty);
 
     }
 
@@ -35,8 +33,7 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
 	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
 	if (administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null) {
-	    return when.toYearMonthDay().isAfter(administrativeOfficeFeeAndInsuranceEvent
-		    .getPaymentEndDate());
+	    return when.toYearMonthDay().isAfter(administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate());
 	}
 
 	return super.hasPenalty(event, when);
@@ -44,13 +41,12 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
     }
 
     @Override
-    public AdministrativeOfficeFeePR edit(Money fixedAmount, Money penaltyAmount,
-	    YearMonthDay whenToApplyFixedAmountPenalty) {
+    public AdministrativeOfficeFeePR edit(Money fixedAmount, Money penaltyAmount, YearMonthDay whenToApplyFixedAmountPenalty) {
 
 	deactivate();
 
-	return new AdministrativeOfficeFeePR(new DateTime().minus(1000), null,
-		getServiceAgreementTemplate(), fixedAmount, penaltyAmount, whenToApplyFixedAmountPenalty);
+	return new AdministrativeOfficeFeePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
+		penaltyAmount, whenToApplyFixedAmountPenalty);
     }
 
 }

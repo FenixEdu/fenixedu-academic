@@ -26,42 +26,41 @@ import org.joda.time.YearMonthDay;
 
 public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent {
 
-    public static final Comparator<GenericEvent> COMPARATOR_BY_DATE_AND_TIME = new ComparatorChain();   
+    public static final Comparator<GenericEvent> COMPARATOR_BY_DATE_AND_TIME = new ComparatorChain();
     private static transient Locale locale = Language.getLocale();
 
     static {
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("endDate"));
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("endTimeDateHourMinuteSecond"));
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("beginDate"));
-	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("startTimeDateHourMinuteSecond"));	
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("startTimeDateHourMinuteSecond"));
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<AllocatableSpace> allocatableSpaces, 
-	    YearMonthDay beginDate, YearMonthDay endDate, HourMinuteSecond beginTime, 
-	    HourMinuteSecond endTime, FrequencyType frequencyType, PunctualRoomsOccupationRequest request,
-	    Boolean markSaturday, Boolean markSunday) {
+    public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<AllocatableSpace> allocatableSpaces,
+	    YearMonthDay beginDate, YearMonthDay endDate, HourMinuteSecond beginTime, HourMinuteSecond endTime,
+	    FrequencyType frequencyType, PunctualRoomsOccupationRequest request, Boolean markSaturday, Boolean markSunday) {
 
-	super();        		
+	super();
 
-	if(allocatableSpaces.isEmpty()) {
+	if (allocatableSpaces.isEmpty()) {
 	    throw new DomainException("error.GenericEvent.empty.rooms");
-	}		
+	}
 
-	if(request != null) {  
-	    if(request.getCurrentState().equals(RequestState.RESOLVED)) {
+	if (request != null) {
+	    if (request.getCurrentState().equals(RequestState.RESOLVED)) {
 		throw new DomainException("error.GenericEvent.request.was.resolved");
 	    }
 	    request.associateNewGenericEvent(AccessControl.getPerson(), this, new DateTime());
 	}
 
-	if(frequencyType != null && frequencyType.equals(FrequencyType.DAILY) && (markSunday == null || markSaturday == null)) {
+	if (frequencyType != null && frequencyType.equals(FrequencyType.DAILY) && (markSunday == null || markSaturday == null)) {
 	    throw new DomainException("error.GenericEvent.invalid.dailyFrequency");
 	}
 
 	setRootDomainObject(RootDomainObject.getInstance());
 	setTitle(title);
-	setDescription(description);        
+	setDescription(description);
 	setFrequency(frequencyType);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
@@ -70,68 +69,71 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	setDailyFrequencyMarkSunday(markSunday);
 	setDailyFrequencyMarkSaturday(markSaturday);
 
-	for (AllocatableSpace allocatableSpace : allocatableSpaces) {	
+	for (AllocatableSpace allocatableSpace : allocatableSpaces) {
 	    new GenericEventSpaceOccupation(allocatableSpace, this);
 	}
 
-	if(!hasAnyGenericEventSpaceOccupations()) {
+	if (!hasAnyGenericEventSpaceOccupations()) {
 	    throw new DomainException("error.GenericEvent.empty.rooms");
 	}
-    }  
+    }
 
-    public void edit(MultiLanguageString title, MultiLanguageString description, List<AllocatableSpace> newRooms, List<GenericEventSpaceOccupation> roomOccupationsToRemove) {	
+    public void edit(MultiLanguageString title, MultiLanguageString description, List<AllocatableSpace> newRooms,
+	    List<GenericEventSpaceOccupation> roomOccupationsToRemove) {
 
-	if(getLastInstant().isBeforeNow()) {
+	if (getLastInstant().isBeforeNow()) {
 	    throw new DomainException("error.edit.GenericEvent.because.was.old.event");
-	}	
+	}
 
-	if(getPunctualRoomsOccupationRequest() != null && getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
+	if (getPunctualRoomsOccupationRequest() != null
+		&& getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
 	    throw new DomainException("error.edit.GenericEvent.request.was.resolved");
-	}		
+	}
 
 	setTitle(title);
-	setDescription(description);	
+	setDescription(description);
 
-	while(!roomOccupationsToRemove.isEmpty()) {
+	while (!roomOccupationsToRemove.isEmpty()) {
 	    roomOccupationsToRemove.remove(0).delete();
 	}
 
-	for (AllocatableSpace room : newRooms) {	
+	for (AllocatableSpace room : newRooms) {
 	    new GenericEventSpaceOccupation(room, this);
-	}	
+	}
 
-	if(!hasAnyGenericEventSpaceOccupations()) {
+	if (!hasAnyGenericEventSpaceOccupations()) {
 	    throw new DomainException("error.GenericEvent.empty.rooms");
 	}
-    }   
+    }
 
-    public void delete() {	
+    public void delete() {
 
-	if(getLastInstant().isBeforeNow()) {
+	if (getLastInstant().isBeforeNow()) {
 	    throw new DomainException("error.GenericEvent.impossible.delete.because.was.old.event");
-	}	
+	}
 
-	if(getPunctualRoomsOccupationRequest() != null && getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
+	if (getPunctualRoomsOccupationRequest() != null
+		&& getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
 	    throw new DomainException("error.GenericEvent.request.was.resolved");
 	}
 
-	if(getFirstInstant().isAfterNow()) {	    
+	if (getFirstInstant().isAfterNow()) {
 
-	    while(hasAnyGenericEventSpaceOccupations()) {
+	    while (hasAnyGenericEventSpaceOccupations()) {
 		getGenericEventSpaceOccupations().get(0).delete();
 	    }
-	    
+
 	    removePunctualRoomsOccupationRequest();
 	    removeRootDomainObject();
 	    deleteDomainObject();
 
 	} else {
-	    	    
+
 	    for (GenericEventSpaceOccupation spaceOccupation : getGenericEventSpaceOccupations()) {
 		spaceOccupation.verifyIfIsPossibleCloseGenericEvent();
 	    }
-	    
-	    if(getStartTimeDateHourMinuteSecond().isAfter(new HourMinuteSecond())) {
+
+	    if (getStartTimeDateHourMinuteSecond().isAfter(new HourMinuteSecond())) {
 		setEndDate(new YearMonthDay().minusDays(1));
 	    } else {
 		setEndDate(new YearMonthDay());
@@ -149,7 +151,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     @Override
     public void setBeginDate(YearMonthDay beginDate) {
-	if(beginDate == null) {
+	if (beginDate == null) {
 	    throw new DomainException("error.GenericEvent.empty.beginDate");
 	}
 	super.setBeginDate(beginDate);
@@ -157,7 +159,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     @Override
     public void setEndDate(YearMonthDay endDate) {
-	if(endDate == null) {
+	if (endDate == null) {
 	    throw new DomainException("error.GenericEvent.empty.endDate");
 	}
 	super.setEndDate(endDate);
@@ -165,7 +167,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     @Override
     public void setStartTimeDateHourMinuteSecond(HourMinuteSecond startTimeDateHourMinuteSecond) {
-	if(startTimeDateHourMinuteSecond == null) {
+	if (startTimeDateHourMinuteSecond == null) {
 	    throw new DomainException("error.GenericEvent.empty.startTime");
 	}
 	super.setStartTimeDateHourMinuteSecond(startTimeDateHourMinuteSecond);
@@ -173,16 +175,16 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     @Override
     public void setEndTimeDateHourMinuteSecond(HourMinuteSecond endTimeDateHourMinuteSecond) {
-	if(endTimeDateHourMinuteSecond == null) {
+	if (endTimeDateHourMinuteSecond == null) {
 	    throw new DomainException("error.GenericEvent.empty.endTime");
 	}
 	super.setEndTimeDateHourMinuteSecond(endTimeDateHourMinuteSecond);
     }
 
-    public static Set<GenericEvent> getActiveGenericEventsForRoomOccupations(){	
+    public static Set<GenericEvent> getActiveGenericEventsForRoomOccupations() {
 	Set<GenericEvent> result = new TreeSet<GenericEvent>(COMPARATOR_BY_DATE_AND_TIME);
 	for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
-	    if(genericEvent.isActive()) {
+	    if (genericEvent.isActive()) {
 		result.add(genericEvent);
 	    }
 	}
@@ -194,27 +196,27 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return (lastInstant == null) || (lastInstant != null && !lastInstant.isBeforeNow()) ? true : false;
     }
 
-    public List<AllocatableSpace> getAssociatedRooms(){
+    public List<AllocatableSpace> getAssociatedRooms() {
 	List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
 	for (GenericEventSpaceOccupation occupation : getGenericEventSpaceOccupations()) {
-	    result.add(occupation.getRoom());	
+	    result.add(occupation.getRoom());
 	}
 	return result;
     }
 
     public boolean constainsRoom(AllocatableSpace room) {
 	for (GenericEventSpaceOccupation occupation : getGenericEventSpaceOccupations()) {
-	    if(occupation.getRoom().equals(room)) {
+	    if (occupation.getRoom().equals(room)) {
 		return true;
 	    }
 	}
 	return false;
     }
 
-    public List<Interval> getGenericEventIntervals(YearMonthDay begin, YearMonthDay end){
-	if(!getGenericEventSpaceOccupations().isEmpty()) {
+    public List<Interval> getGenericEventIntervals(YearMonthDay begin, YearMonthDay end) {
+	if (!getGenericEventSpaceOccupations().isEmpty()) {
 	    GenericEventSpaceOccupation occupation = getGenericEventSpaceOccupations().get(0);
-	    return occupation.getEventSpaceOccupationIntervals(begin, end);	    
+	    return occupation.getEventSpaceOccupationIntervals(begin, end);
 	}
 	return Collections.emptyList();
     }
@@ -252,18 +254,20 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }
 
     public String getPresentationBeginDate() {
-	return getBeginDate().toString("dd MMMM yyyy", locale) + " (" + getBeginDate().toDateTimeAtMidnight().toString("E", locale) + ")";
+	return getBeginDate().toString("dd MMMM yyyy", locale) + " ("
+		+ getBeginDate().toDateTimeAtMidnight().toString("E", locale) + ")";
     }
 
     public String getPresentationEndDate() {
-	return getEndDate().toString("dd MMMM yyyy", locale) + " (" + getEndDate().toDateTimeAtMidnight().toString("E", locale) + ")";
+	return getEndDate().toString("dd MMMM yyyy", locale) + " (" + getEndDate().toDateTimeAtMidnight().toString("E", locale)
+		+ ")";
     }
 
     public String getGanttDiagramEventIdentifier() {
-	return getIdInternal().toString();	
+	return getIdInternal().toString();
     }
 
-    public MultiLanguageString getGanttDiagramEventName() {	
+    public MultiLanguageString getGanttDiagramEventName() {
 	return getTitle();
     }
 
@@ -275,70 +279,70 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return builder.toString();
     }
 
-    public int getGanttDiagramEventOffset() {	
+    public int getGanttDiagramEventOffset() {
 	return 0;
     }
 
-    public List<Interval> getGanttDiagramEventSortedIntervals() {	
-	if(!getGenericEventSpaceOccupations().isEmpty()) {
+    public List<Interval> getGanttDiagramEventSortedIntervals() {
+	if (!getGenericEventSpaceOccupations().isEmpty()) {
 	    return getGenericEventSpaceOccupations().get(0).getEventSpaceOccupationIntervals(null, null);
 	}
 	return Collections.emptyList();
     }
 
     public String getGanttDiagramEventPeriod() {
-	if(!getGenericEventSpaceOccupations().isEmpty()) {
-	    String prettyPrint = getGenericEventSpaceOccupations().get(0).getPrettyPrint();	    
-	    if(getFrequency() != null) {		
-		String saturday = "", sunday = "", marker = "";		
-		if(getFrequency().equals(FrequencyType.DAILY)) {
+	if (!getGenericEventSpaceOccupations().isEmpty()) {
+	    String prettyPrint = getGenericEventSpaceOccupations().get(0).getPrettyPrint();
+	    if (getFrequency() != null) {
+		String saturday = "", sunday = "", marker = "";
+		if (getFrequency().equals(FrequencyType.DAILY)) {
 		    saturday = getDailyFrequencyMarkSaturday() ? "S" : "";
 		    sunday = getDailyFrequencyMarkSunday() ? "D" : "";
-		    if(getDailyFrequencyMarkSaturday() || getDailyFrequencyMarkSunday()) {
+		    if (getDailyFrequencyMarkSaturday() || getDailyFrequencyMarkSunday()) {
 			marker = "-";
 		    }
-		}			
+		}
 		return "[" + getFrequency().getAbbreviation() + marker + saturday + sunday + "] " + prettyPrint;
 	    }
 	    return "[C] " + prettyPrint;
-	}	
+	}
 	return " - ";
     }
 
-    private boolean intersectPeriod(DateTime firstDayOfMonth, DateTime lastDayOfMonth) {		
+    private boolean intersectPeriod(DateTime firstDayOfMonth, DateTime lastDayOfMonth) {
 	for (Interval interval : getGanttDiagramEventSortedIntervals()) {
-	    if(interval.getStart().isAfter(lastDayOfMonth)) {
+	    if (interval.getStart().isAfter(lastDayOfMonth)) {
 		return false;
 	    }
-	    if(interval.getStart().isBefore(lastDayOfMonth) && interval.getEnd().isAfter(firstDayOfMonth)) {
+	    if (interval.getStart().isBefore(lastDayOfMonth) && interval.getEnd().isAfter(firstDayOfMonth)) {
 		return true;
 	    }
 	}
 	return false;
     }
 
-    public static Set<GenericEvent> getAllGenericEvents(DateTime begin, DateTime end, AllocatableSpace allocatableSpace){
+    public static Set<GenericEvent> getAllGenericEvents(DateTime begin, DateTime end, AllocatableSpace allocatableSpace) {
 	Set<GenericEvent> events = new TreeSet<GenericEvent>(GenericEvent.COMPARATOR_BY_DATE_AND_TIME);
 	for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
-	    if(genericEvent.intersectPeriod(begin, end) && (allocatableSpace == null || genericEvent.constainsRoom(allocatableSpace))) {
+	    if (genericEvent.intersectPeriod(begin, end)
+		    && (allocatableSpace == null || genericEvent.constainsRoom(allocatableSpace))) {
 		events.add(genericEvent);
 	    }
-	}	    	   
+	}
 	return events;
     }
 
     @jvstm.cps.ConsistencyPredicate
-    protected boolean checkDateTimeIntervals() {	
-	return getStartTimeDateHourMinuteSecond() != null && getEndTimeDateHourMinuteSecond() != null		
-	&& getStartTimeDateHourMinuteSecond().isBefore(getEndTimeDateHourMinuteSecond()) 
-	&& getBeginDate() != null && getEndDate() != null
-	&& !getBeginDate().isAfter(getEndDate());
+    protected boolean checkDateTimeIntervals() {
+	return getStartTimeDateHourMinuteSecond() != null && getEndTimeDateHourMinuteSecond() != null
+		&& getStartTimeDateHourMinuteSecond().isBefore(getEndTimeDateHourMinuteSecond()) && getBeginDate() != null
+		&& getEndDate() != null && !getBeginDate().isAfter(getEndDate());
     }
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getTitle() != null && !getTitle().isEmpty()
-	&& (getFrequency() == null || !getFrequency().equals(FrequencyType.DAILY) || 
-		(getDailyFrequencyMarkSaturday() != null && getDailyFrequencyMarkSunday() != null));	
+	return getTitle() != null
+		&& !getTitle().isEmpty()
+		&& (getFrequency() == null || !getFrequency().equals(FrequencyType.DAILY) || (getDailyFrequencyMarkSaturday() != null && getDailyFrequencyMarkSunday() != null));
     }
 }

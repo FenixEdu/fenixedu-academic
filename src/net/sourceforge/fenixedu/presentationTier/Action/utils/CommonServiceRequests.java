@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class CommonServiceRequests {
 

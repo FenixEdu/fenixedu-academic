@@ -13,13 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SearchRooms extends Service {
 
-    public List run(String name, String building, Integer floor, RoomClassification type, Integer normal,
-	    Integer exam) throws FenixServiceException{
+    public List run(String name, String building, Integer floor, RoomClassification type, Integer normal, Integer exam)
+	    throws FenixServiceException {
 
-	final List<AllocatableSpace> rooms = AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(name, building, floor, type, normal, exam);
+	final List<AllocatableSpace> rooms = AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(name, building,
+		floor, type, normal, exam);
 	final List<InfoRoom> infoRooms = new ArrayList();
 	for (final AllocatableSpace room : rooms) {
-	    if(room.containsIdentification()) {
+	    if (room.containsIdentification()) {
 		infoRooms.add(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain(room));
 	    }
 	}

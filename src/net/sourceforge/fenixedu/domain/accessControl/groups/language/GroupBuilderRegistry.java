@@ -69,7 +69,7 @@ public class GroupBuilderRegistry {
     private Map<String, Pair<Class, GroupBuilder>> builders;
 
     private GroupBuilderRegistry() {
-        this.builders = new Hashtable<String, Pair<Class, GroupBuilder>>();
+	this.builders = new Hashtable<String, Pair<Class, GroupBuilder>>();
     }
 
     /**
@@ -85,14 +85,14 @@ public class GroupBuilderRegistry {
      *                registered
      */
     public static void register(String name, Class groupClass, GroupBuilder builder) {
-        if (instance.builders.containsKey(name)) {
-            throw new GroupBuilderNameTakenException(name);
-        }
+	if (instance.builders.containsKey(name)) {
+	    throw new GroupBuilderNameTakenException(name);
+	}
 
-        if (LogLevel.DEBUG) {
-            logger.debug("registering builder: " + name + " = " + builder);
-        }
-        instance.builders.put(name, new Pair<Class, GroupBuilder>(groupClass, builder));
+	if (LogLevel.DEBUG) {
+	    logger.debug("registering builder: " + name + " = " + builder);
+	}
+	instance.builders.put(name, new Pair<Class, GroupBuilder>(groupClass, builder));
     }
 
     /**
@@ -102,7 +102,7 @@ public class GroupBuilderRegistry {
      *            the name of the group builder to remove
      */
     public static void unregister(String name) {
-        instance.builders.remove(name);
+	instance.builders.remove(name);
     }
 
     /**
@@ -117,11 +117,11 @@ public class GroupBuilderRegistry {
      *                name
      */
     public static GroupBuilder getGroupBuilder(String name) {
-        if (!instance.builders.containsKey(name)) {
-            throw new NoSuchGroupBuilderException(name);
-        }
+	if (!instance.builders.containsKey(name)) {
+	    throw new NoSuchGroupBuilderException(name);
+	}
 
-        return instance.builders.get(name).getValue();
+	return instance.builders.get(name).getValue();
     }
 
     /**
@@ -130,9 +130,9 @@ public class GroupBuilderRegistry {
      * @return an unmodifiable map of builders
      */
     public static Map<String, Pair<Class, GroupBuilder>> getRegisteredBuilders() {
-        return Collections.unmodifiableMap(instance.builders);
+	return Collections.unmodifiableMap(instance.builders);
     }
-    
+
     /**
      * Obtains the name of the first builder found that is associated with the
      * given group class. If there is more than one builder for each group class
@@ -144,85 +144,81 @@ public class GroupBuilderRegistry {
      *         language
      */
     public static String getNameOfBuilder(Class groupClass) {
-        for (Map.Entry<String, Pair<Class, GroupBuilder>> entry : instance.builders.entrySet()) {
-            if (entry.getValue().getKey().equals(groupClass)) {
-                return entry.getKey();
-            }
-        }
-        
-        return null;
+	for (Map.Entry<String, Pair<Class, GroupBuilder>> entry : instance.builders.entrySet()) {
+	    if (entry.getValue().getKey().equals(groupClass)) {
+		return entry.getKey();
+	    }
+	}
+
+	return null;
     }
 
     //
     // register builders
     //
-    
+
     static {
-        register("role", RoleGroup.class, new RoleGroup.Builder());
-        register("person", PersonGroup.class, new PersonGroup.Builder());
-        register("custom", Group.class, new CustomGroupBuilder());
-        register("fixed", FixedSetGroup.class, new FixedSetGroup.Builder());
-        register("unitEmployees", UnitEmployeesGroup.class, new UnitEmployeesGroup.Builder());
-        register("studentGroupStudents", StudentGroupStudentsGroup.class, new StudentGroupStudentsGroup.Builder());
-        register("executionCourseStudents", ExecutionCourseStudentsGroup.class, new ExecutionCourseStudentsGroup.Builder());
-        register("executionCourseTeachers", ExecutionCourseTeachersGroup.class, new ExecutionCourseTeachersGroup.Builder());
-        register("executionCourseTeachersAndStudents", ExecutionCourseTeachersAndStudentsGroup.class, new ExecutionCourseTeachersAndStudentsGroup.Builder());
-        register("degreeStudents", DegreeStudentsGroup.class, new DegreeStudentsGroup.Builder());
-        register("degreeTeachers", DegreeTeachersGroup.class, new DegreeTeachersGroup.Builder());
-        register("departmentEmployeesByYear", DepartmentEmployeesByExecutionYearGroup.class, new DepartmentEmployeesByExecutionYearGroup.Builder());
-        register("departmentStudentsByYear", DepartmentStudentsByExecutionYearGroup.class, new DepartmentStudentsByExecutionYearGroup.Builder());
-        register("departmentTeachersByYear", DepartmentTeachersByExecutionYearGroup.class, new DepartmentTeachersByExecutionYearGroup.Builder());
-        register("curricularCourseStudentsByPeriod", CurricularCourseStudentsByExecutionPeriodGroup.class, new CurricularCourseStudentsByExecutionPeriodGroup.Builder());
-        register("ifTrue", IfTrueGroup.class, new IfTrueGroup.Builder());
-        register("currentDegreeCoordinators", CurrentDegreeCoordinatorsGroup.class, new CurrentDegreeCoordinatorsGroup.Builder());
-        register("departmentEmployees", DepartmentEmployeesGroup.class, new DepartmentEmployeesGroup.Builder());
-        register("thesisFileReaders", ThesisFileReadersGroup.class, new ThesisFileReadersGroup.Builder());
-        register("researchers", ResearchersGroup.class, new ResearchersGroup.Builder());
-        register("unitSiteManagers", WebSiteManagersGroup.class, new WebSiteManagersGroup.Builder());
-        register("researchUnitMembers",ResearchUnitMembersGroup.class, new ResearchUnitMembersGroup.Builder());
-        register("persistentGroup", PersistentGroup.class, new PersistentGroup.Builder());
-        register("researchUnitElement", ResearchUnitElementGroup.class, new ResearchUnitElementGroup.Builder());
-        register("personInFunction", PersonsInFunctionGroup.class, new PersonsInFunctionGroup.Builder());
-        register("currentDegreeScientificComissionMembers", CurrentDegreeScientificCommissionMembersGroup.class, new CurrentDegreeScientificCommissionMembersGroup.Builder());
-        register("assiduousnessManagers", ManagementGroups.class, new ManagementGroups.AssiduousnessManagerGroupBuilder());
-        register("assiduousnessSectionStaff", ManagementGroups.class, new ManagementGroups.AssiduousnessSectionStaffGroupBuilder());
-        register("scientificAreaMembers", ScientificAreaMemberGroup.class, new ScientificAreaMemberGroup.Builder());
-        register("payrollSectionStaff", ManagementGroups.class, new ManagementGroups.PayrollSectionStaffGroupBuilder());
-        registerGroupsWithNoArguments();
+	register("role", RoleGroup.class, new RoleGroup.Builder());
+	register("person", PersonGroup.class, new PersonGroup.Builder());
+	register("custom", Group.class, new CustomGroupBuilder());
+	register("fixed", FixedSetGroup.class, new FixedSetGroup.Builder());
+	register("unitEmployees", UnitEmployeesGroup.class, new UnitEmployeesGroup.Builder());
+	register("studentGroupStudents", StudentGroupStudentsGroup.class, new StudentGroupStudentsGroup.Builder());
+	register("executionCourseStudents", ExecutionCourseStudentsGroup.class, new ExecutionCourseStudentsGroup.Builder());
+	register("executionCourseTeachers", ExecutionCourseTeachersGroup.class, new ExecutionCourseTeachersGroup.Builder());
+	register("executionCourseTeachersAndStudents", ExecutionCourseTeachersAndStudentsGroup.class,
+		new ExecutionCourseTeachersAndStudentsGroup.Builder());
+	register("degreeStudents", DegreeStudentsGroup.class, new DegreeStudentsGroup.Builder());
+	register("degreeTeachers", DegreeTeachersGroup.class, new DegreeTeachersGroup.Builder());
+	register("departmentEmployeesByYear", DepartmentEmployeesByExecutionYearGroup.class,
+		new DepartmentEmployeesByExecutionYearGroup.Builder());
+	register("departmentStudentsByYear", DepartmentStudentsByExecutionYearGroup.class,
+		new DepartmentStudentsByExecutionYearGroup.Builder());
+	register("departmentTeachersByYear", DepartmentTeachersByExecutionYearGroup.class,
+		new DepartmentTeachersByExecutionYearGroup.Builder());
+	register("curricularCourseStudentsByPeriod", CurricularCourseStudentsByExecutionPeriodGroup.class,
+		new CurricularCourseStudentsByExecutionPeriodGroup.Builder());
+	register("ifTrue", IfTrueGroup.class, new IfTrueGroup.Builder());
+	register("currentDegreeCoordinators", CurrentDegreeCoordinatorsGroup.class, new CurrentDegreeCoordinatorsGroup.Builder());
+	register("departmentEmployees", DepartmentEmployeesGroup.class, new DepartmentEmployeesGroup.Builder());
+	register("thesisFileReaders", ThesisFileReadersGroup.class, new ThesisFileReadersGroup.Builder());
+	register("researchers", ResearchersGroup.class, new ResearchersGroup.Builder());
+	register("unitSiteManagers", WebSiteManagersGroup.class, new WebSiteManagersGroup.Builder());
+	register("researchUnitMembers", ResearchUnitMembersGroup.class, new ResearchUnitMembersGroup.Builder());
+	register("persistentGroup", PersistentGroup.class, new PersistentGroup.Builder());
+	register("researchUnitElement", ResearchUnitElementGroup.class, new ResearchUnitElementGroup.Builder());
+	register("personInFunction", PersonsInFunctionGroup.class, new PersonsInFunctionGroup.Builder());
+	register("currentDegreeScientificComissionMembers", CurrentDegreeScientificCommissionMembersGroup.class,
+		new CurrentDegreeScientificCommissionMembersGroup.Builder());
+	register("assiduousnessManagers", ManagementGroups.class, new ManagementGroups.AssiduousnessManagerGroupBuilder());
+	register("assiduousnessSectionStaff", ManagementGroups.class,
+		new ManagementGroups.AssiduousnessSectionStaffGroupBuilder());
+	register("scientificAreaMembers", ScientificAreaMemberGroup.class, new ScientificAreaMemberGroup.Builder());
+	register("payrollSectionStaff", ManagementGroups.class, new ManagementGroups.PayrollSectionStaffGroupBuilder());
+	registerGroupsWithNoArguments();
     }
 
     private static void registerGroupsWithNoArguments() {
-        Class[] groups = new Class[] {
-                EveryoneGroup.class,
-                NoOneGroup.class,
-                MasterDegreeCoordinatorsGroup.class,
-                DegreeCoordinatorsGroup.class,
-                AllMasterDegreesStudents.class,
-                AllDegreesStudentsGroup.class,
-                InternalPersonGroup.class,
-                ExecutionCourseResponsiblesGroup.class,
-                InstitutionSiteManagers.class,
-                TeachersAndInstitutionSiteManagersGroup.class,
-                PedagogicalCouncilMembersGroup.class,
-                ScientificCouncilMembersGroup.class,
-                DelegatesGroup.class,
-                DelegateStudentsGroup.class,
-                DelegateCurricularCourseStudentsGroup.class
-        };
-        
-        for (Class groupClass : groups) {
-            String className = groupClass.getSimpleName();
-            
-            String groupName;
-            if (className.endsWith("Group")) { 
-                groupName = className.substring(0, 1).toLowerCase() + className.substring(1, className.length() - "Group".length());
-            }
-            else {
-                groupName = className.substring(0, 1).toLowerCase() + className.substring(1);
-            }
-            
-            register(groupName, groupClass, new NoArgumentsGroupBuilder(groupClass));
-        }
+	Class[] groups = new Class[] { EveryoneGroup.class, NoOneGroup.class, MasterDegreeCoordinatorsGroup.class,
+		DegreeCoordinatorsGroup.class, AllMasterDegreesStudents.class, AllDegreesStudentsGroup.class,
+		InternalPersonGroup.class, ExecutionCourseResponsiblesGroup.class, InstitutionSiteManagers.class,
+		TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
+		ScientificCouncilMembersGroup.class, DelegatesGroup.class, DelegateStudentsGroup.class,
+		DelegateCurricularCourseStudentsGroup.class };
+
+	for (Class groupClass : groups) {
+	    String className = groupClass.getSimpleName();
+
+	    String groupName;
+	    if (className.endsWith("Group")) {
+		groupName = className.substring(0, 1).toLowerCase()
+			+ className.substring(1, className.length() - "Group".length());
+	    } else {
+		groupName = className.substring(0, 1).toLowerCase() + className.substring(1);
+	    }
+
+	    register(groupName, groupClass, new NoArgumentsGroupBuilder(groupClass));
+	}
     }
 
 }

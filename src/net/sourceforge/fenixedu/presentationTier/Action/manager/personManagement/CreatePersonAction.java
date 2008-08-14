@@ -20,29 +20,27 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * 
  * @author Paulo Zenida and Dinis Martins
  * 
- * Date: 2006-02-22
+ *         Date: 2006-02-22
  */
 public class CreatePersonAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws FenixFilterException, FenixServiceException {
-		return mapping.findForward("Prepare");
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
+	return mapping.findForward("Prepare");
+    }
 
-	public ActionForward create(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws FenixFilterException, FenixServiceException {
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 
-		final Person person = (Person) RenderUtils.getViewState().getMetaObject().getObject();
+	final Person person = (Person) RenderUtils.getViewState().getMetaObject().getObject();
 
-        final Object[] args = { person, RoleType.PERSON };
-        ServiceUtils.executeService("AddPersonRole", args);
+	final Object[] args = { person, RoleType.PERSON };
+	ServiceUtils.executeService("AddPersonRole", args);
 
-		// It simply returns Success - The object is created by the renderer
-		// mechanism
-		request.setAttribute("person", person);
-		return mapping.findForward("Success");
-	}
+	// It simply returns Success - The object is created by the renderer
+	// mechanism
+	request.setAttribute("person", person);
+	return mapping.findForward("Success");
+    }
 
 }

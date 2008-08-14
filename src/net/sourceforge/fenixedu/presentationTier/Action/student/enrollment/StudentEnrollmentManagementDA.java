@@ -55,7 +55,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	return mapping.findForward("chooseRegistration");
     }
 
-    //TODO: refactor this method
+    // TODO: refactor this method
     private List<Registration> getRegistrationsToChooseSecondCycle(final Student student) {
 	final List<Registration> result = new ArrayList<Registration>();
 
@@ -85,9 +85,11 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 
-	// -------------------------------------------------------------------------------------------------------------------
-	//TODO: refactor this code, should be more generic
-	// -------------------------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------
+	// ---------------------------------------------
+	// TODO: refactor this code, should be more generic
+	//----------------------------------------------------------------------
+	// ---------------------------------------------
 
 	if (!studentCurricularPlan.isActive() && !studentCurricularPlan.getRegistration().isConcluded()) {
 	    request.setAttribute("registrationsToEnrol", Collections.singletonList(registration));
@@ -130,9 +132,11 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    }
 	}
 
-	// -------------------------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------
+	// ---------------------------------------------
 	// TODO: refactor this code, should be more generic
-	// -------------------------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------
+	// ---------------------------------------------
 
     }
 
@@ -157,8 +161,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
 
-	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester, curriculumGroup
-		.getCycleCourseGroup()));
+	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester,
+		curriculumGroup.getCycleCourseGroup()));
 
 	return mapping.findForward("showAffinityToEnrol");
     }
@@ -224,7 +228,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    final Registration registration = (Registration) executeService("EnrolInAffinityCycle", getLoggedPerson(request),
 		    cycleEnrolmentBean.getStudentCurricularPlan(), cycleEnrolmentBean.getCycleCourseGroupToEnrol(),
 		    cycleEnrolmentBean.getExecutionPeriod());
-	    
+
 	    request.setAttribute("registration", registration);
 
 	} catch (DomainException e) {

@@ -16,21 +16,21 @@ public class DuplicateSibsPaymentFileProcessingServiceException extends FenixSer
      *  
      */
     public DuplicateSibsPaymentFileProcessingServiceException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public DuplicateSibsPaymentFileProcessingServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     /**
      * @param cause
      */
     public DuplicateSibsPaymentFileProcessingServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -38,14 +38,14 @@ public class DuplicateSibsPaymentFileProcessingServiceException extends FenixSer
      * @param cause
      */
     public DuplicateSibsPaymentFileProcessingServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[DuplicateSibsPaymentFileProcessingException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[DuplicateSibsPaymentFileProcessingException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

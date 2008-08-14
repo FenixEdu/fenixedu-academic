@@ -33,7 +33,7 @@ import org.apache.struts.action.ActionMessages;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jun 26, 2006,3:07:21 PM
  * 
  */
@@ -86,8 +86,8 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 	} else {
 
 	    try {
-		ServiceUtils.executeService("DeleteAnnouncementBoard", new Object[] { this
-			.getRequestedAnnouncementBoard(request) });
+		ServiceUtils.executeService("DeleteAnnouncementBoard",
+			new Object[] { this.getRequestedAnnouncementBoard(request) });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey());
 		return prepareCreateBoard(mapping, actionForm, request, response);
@@ -212,8 +212,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
 	    Collection<AnnouncementBoardApproversBean> announcementApprovers = (Collection<AnnouncementBoardApproversBean>) getRenderedObject();
 
-	    ServiceUtils.executeService("EditUnitAnnouncementBoardApprovers", new Object[] { board,
-		    announcementApprovers });
+	    ServiceUtils.executeService("EditUnitAnnouncementBoardApprovers", new Object[] { board, announcementApprovers });
 
 	    UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
 	    if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {

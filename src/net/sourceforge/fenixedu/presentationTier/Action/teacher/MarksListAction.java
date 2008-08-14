@@ -25,135 +25,132 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 public class MarksListAction extends FenixDispatchAction {
 
-    public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        Integer executionCourseCode = getFromRequest("objectCode", request);
+	Integer executionCourseCode = getFromRequest("objectCode", request);
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+	Integer evaluationCode = getFromRequest("evaluationCode", request);
 
-        ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null,
-                evaluationCode, null };
+	ISiteComponent commonComponent = new InfoSiteCommon();
+	Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
-        try {
-            TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
-                    .executeService( "TeacherAdministrationSiteComponentService", args);
+	try {
+	    TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
+		    "TeacherAdministrationSiteComponentService", args);
 
-            request.setAttribute("siteView", siteView);
-            request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
-                    .getExecutionCourse().getIdInternal());
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	    request.setAttribute("siteView", siteView);
+	    request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
+		    .getIdInternal());
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("evaluationCode", evaluationCode);
+	request.setAttribute("evaluationCode", evaluationCode);
 
-        return mapping.findForward("loadMarks");
+	return mapping.findForward("loadMarks");
 
     }
 
-     public ActionForward loadMarksOnline(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-	 
-        IUserView userView = getUserView(request);
+    public ActionForward loadMarksOnline(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        Integer executionCourseCode = getFromRequest("objectCode", request);
+	IUserView userView = getUserView(request);
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+	Integer executionCourseCode = getFromRequest("objectCode", request);
 
-        Object[] args = { executionCourseCode, evaluationCode };
+	Integer evaluationCode = getFromRequest("evaluationCode", request);
 
-        TeacherAdministrationSiteView siteView = null;
+	Object[] args = { executionCourseCode, evaluationCode };
 
-        try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
-                    "ReadStudentsAndMarksByEvaluation", args);
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            throw new FenixActionException(e.getMessage());
-        }
+	TeacherAdministrationSiteView siteView = null;
 
-        InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
-        Collections.sort(infoSiteMarks.getInfoAttends(), new BeanComparator("aluno.number"));
+	try {
+	    siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService("ReadStudentsAndMarksByEvaluation", args);
+	} catch (FenixServiceException e) {
+	    e.printStackTrace();
+	    throw new FenixActionException(e.getMessage());
+	}
 
-        request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", executionCourseCode);
-        request.setAttribute("evaluationCode", evaluationCode);
+	InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
+	Collections.sort(infoSiteMarks.getInfoAttends(), new BeanComparator("aluno.number"));
 
-        return mapping.findForward("marksList");
+	request.setAttribute("siteView", siteView);
+	request.setAttribute("objectCode", executionCourseCode);
+	request.setAttribute("evaluationCode", evaluationCode);
+
+	return mapping.findForward("marksList");
     }
 
-    public ActionForward preparePublishMarks(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward preparePublishMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+	Integer evaluationCode = getFromRequest("evaluationCode", request);
 
-        Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
+	Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
 
-        ISiteComponent commonComponent = new InfoSiteCommon();
-        IUserView userView = getUserView(request);
-        Object[] args = { infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null,
-                evaluationCode, null };
-        TeacherAdministrationSiteView siteView = null;
-        try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
-                    "TeacherAdministrationSiteComponentService", args);
+	ISiteComponent commonComponent = new InfoSiteCommon();
+	IUserView userView = getUserView(request);
+	Object[] args = { infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
+	TeacherAdministrationSiteView siteView = null;
+	try {
+	    siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService("TeacherAdministrationSiteComponentService",
+		    args);
 
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", infoExecutionCourseCode);
-        request.setAttribute("evaluationCode", evaluationCode);
+	request.setAttribute("siteView", siteView);
+	request.setAttribute("objectCode", infoExecutionCourseCode);
+	request.setAttribute("evaluationCode", evaluationCode);
 
-        return mapping.findForward("preparePublishMarks");
+	return mapping.findForward("preparePublishMarks");
     }
 
-    public ActionForward publishMarks(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+    public ActionForward publishMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        Integer objectCode = getFromRequest("objectCode", request);
+	Integer evaluationCode = getFromRequest("evaluationCode", request);
 
-        DynaValidatorForm publishForm = (DynaValidatorForm) form;
-        String publishmentMessage = (String) publishForm.get("publishmentMessage");
-        Boolean sendSMS = (Boolean) publishForm.get("sendSMS");
+	Integer objectCode = getFromRequest("objectCode", request);
 
-        String announcementTitle = null;
-        if (publishmentMessage != null && publishmentMessage.length() > 0) {
-            MessageResources messages = getResources(request, "DEFAULT");
-            announcementTitle = messages.getMessage("message.publishment");
-        }
+	DynaValidatorForm publishForm = (DynaValidatorForm) form;
+	String publishmentMessage = (String) publishForm.get("publishmentMessage");
+	Boolean sendSMS = (Boolean) publishForm.get("sendSMS");
 
-        Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
-        IUserView userView = getUserView(request);
-        try {
-            ServiceUtils.executeService("PublishMarks", args);
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            throw new FenixActionException(e.getMessage());
-        }
+	String announcementTitle = null;
+	if (publishmentMessage != null && publishmentMessage.length() > 0) {
+	    MessageResources messages = getResources(request, "DEFAULT");
+	    announcementTitle = messages.getMessage("message.publishment");
+	}
 
-        request.setAttribute("objectCode", objectCode);
+	Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
+	IUserView userView = getUserView(request);
+	try {
+	    ServiceUtils.executeService("PublishMarks", args);
+	} catch (FenixServiceException e) {
+	    e.printStackTrace();
+	    throw new FenixActionException(e.getMessage());
+	}
 
-        return mapping.findForward("viewMarksOptions");
+	request.setAttribute("objectCode", objectCode);
+
+	return mapping.findForward("viewMarksOptions");
     }
 
     private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = request.getAttribute(parameter).toString();
-        }
-        if (parameterCodeString != null) {
-            parameterCode = new Integer(parameterCodeString);
-        }
-        return parameterCode;
+	Integer parameterCode = null;
+	String parameterCodeString = request.getParameter(parameter);
+	if (parameterCodeString == null) {
+	    parameterCodeString = request.getAttribute(parameter).toString();
+	}
+	if (parameterCodeString != null) {
+	    parameterCode = new Integer(parameterCodeString);
+	}
+	return parameterCode;
 
     }
 }

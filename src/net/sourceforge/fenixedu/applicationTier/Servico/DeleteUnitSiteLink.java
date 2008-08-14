@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.UnitSiteLink;
 public class DeleteUnitSiteLink extends Service {
 
     public void run(UnitSite site, UnitSiteLink link) {
-        link.delete();
+	link.delete();
     }
-    
+
 }

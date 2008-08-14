@@ -39,25 +39,26 @@ public class RequestChecksumFilter implements Filter {
     }
 
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
-            throws IOException, ServletException {
+	    throws IOException, ServletException {
 	if (APPLY_FILTER) {
 	    try {
-	        applyFilter(servletRequest, servletResponse, filterChain);
+		applyFilter(servletRequest, servletResponse, filterChain);
 	    } catch (UrlTamperingException ex) {
-	        final HttpServletRequest request = (HttpServletRequest) servletRequest;
-	        final HttpServletResponse response = (HttpServletResponse) servletResponse;
-	        final HttpSession httpSession = request.getSession(false);
-	        if (httpSession != null) {
-	            httpSession.invalidate();
-	        }
-	        response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
+		final HttpServletRequest request = (HttpServletRequest) servletRequest;
+		final HttpServletResponse response = (HttpServletResponse) servletResponse;
+		final HttpSession httpSession = request.getSession(false);
+		if (httpSession != null) {
+		    httpSession.invalidate();
+		}
+		response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
 	    }
 	} else {
 	    filterChain.doFilter(servletRequest, servletResponse);
 	}
     }
 
-    private void applyFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
+    private void applyFilter(final ServletRequest servletRequest, final ServletResponse servletResponse,
+	    final FilterChain filterChain) throws IOException, ServletException {
 	final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 	if (shoudFilterReques(httpServletRequest)) {
 	    verifyRequestChecksum(httpServletRequest);
@@ -74,9 +75,9 @@ public class RequestChecksumFilter implements Filter {
 	if (uri.indexOf("images/") >= 0) {
 	    return false;
 	}
-        if (uri.indexOf("javaScript/") >= 0) {
-            return false;
-        }
+	if (uri.indexOf("javaScript/") >= 0) {
+	    return false;
+	}
 	if (uri.indexOf("script/") >= 0) {
 	    return false;
 	}
@@ -102,10 +103,10 @@ public class RequestChecksumFilter implements Filter {
 		return false;
 	    }
 	}
-	if(uri.indexOf("notAuthorized.do") >= 0){
+	if (uri.indexOf("notAuthorized.do") >= 0) {
 	    return false;
 	}
-	
+
 	return RequestUtils.isPrivateURI(httpServletRequest);
     }
 
@@ -114,9 +115,9 @@ public class RequestChecksumFilter implements Filter {
     }
 
     public static class UrlTamperingException extends Error {
-        public UrlTamperingException() {
-            super("error.url.tampering");
-        }
+	public UrlTamperingException() {
+	    super("error.url.tampering");
+	}
     }
 
     private void verifyRequestChecksum(final HttpServletRequest httpServletRequest) {
@@ -143,7 +144,7 @@ public class RequestChecksumFilter implements Filter {
 		stringBuilder.append(" (");
 		stringBuilder.append(httpServletRequest.getRemoteAddr());
 		stringBuilder.append(")");
-		for (final Enumeration<String> headerNames = httpServletRequest.getHeaderNames(); headerNames.hasMoreElements(); ) {
+		for (final Enumeration<String> headerNames = httpServletRequest.getHeaderNames(); headerNames.hasMoreElements();) {
 		    final String name = headerNames.nextElement();
 		    stringBuilder.append("\n        header: ");
 		    stringBuilder.append(name);
@@ -158,14 +159,14 @@ public class RequestChecksumFilter implements Filter {
     }
 
     private String decodeURL(final String url, final String encoding) {
-        if (url == null) {
-            return null;
-        }
-        try {
-            return URLDecoder.decode(url, encoding);
-        } catch (UnsupportedEncodingException e) {
-            return url;
-        }
+	if (url == null) {
+	    return null;
+	}
+	try {
+	    return URLDecoder.decode(url, encoding);
+	} catch (UnsupportedEncodingException e) {
+	    return url;
+	}
     }
 
     private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
@@ -183,20 +184,21 @@ public class RequestChecksumFilter implements Filter {
 	String request = (queryString != null) ? uri + "?" + queryString : uri;
 	return checksum != null && checksum.length() > 0 && checksum.equals(ChecksumRewriter.calculateChecksum(request));
     }
-    
-    private boolean isValidChecksumIgnoringPath(final HttpServletRequest httpServletRequest, final String checksum, final String encoding) {
-        final String uri = decodeURL(httpServletRequest.getRequestURI(), encoding);
-        if (uri.endsWith(".faces")) {
-            final int lastSlash = uri.lastIndexOf('/');
-            if (lastSlash >= 0) {
-                final String chopedUri = uri.substring(lastSlash + 1);
-                final String queryString = decodeURL(httpServletRequest.getQueryString(), encoding);
-                final String request = queryString != null ? chopedUri + '?' + queryString : chopedUri;
-                final String calculatedChecksum = ChecksumRewriter.calculateChecksum(request);
-                return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
-            }
-        }
-        return false;
+
+    private boolean isValidChecksumIgnoringPath(final HttpServletRequest httpServletRequest, final String checksum,
+	    final String encoding) {
+	final String uri = decodeURL(httpServletRequest.getRequestURI(), encoding);
+	if (uri.endsWith(".faces")) {
+	    final int lastSlash = uri.lastIndexOf('/');
+	    if (lastSlash >= 0) {
+		final String chopedUri = uri.substring(lastSlash + 1);
+		final String queryString = decodeURL(httpServletRequest.getQueryString(), encoding);
+		final String request = queryString != null ? chopedUri + '?' + queryString : chopedUri;
+		final String calculatedChecksum = ChecksumRewriter.calculateChecksum(request);
+		return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
+	    }
+	}
+	return false;
     }
 
 }

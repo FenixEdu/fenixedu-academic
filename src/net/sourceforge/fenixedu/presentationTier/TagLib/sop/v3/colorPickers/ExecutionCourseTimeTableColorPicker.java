@@ -7,17 +7,17 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.ColorPicker;
 public class ExecutionCourseTimeTableColorPicker extends ColorPicker {
 
     protected String getColorKeyFromInfoLesson(InfoShowOccupation infoShowOccupation) {
-        StringBuilder strBuffer = new StringBuilder();
+	StringBuilder strBuffer = new StringBuilder();
 
-        if (infoShowOccupation instanceof InfoLesson) {
-            InfoLesson infoLesson = (InfoLesson) infoShowOccupation;
+	if (infoShowOccupation instanceof InfoLesson) {
+	    InfoLesson infoLesson = (InfoLesson) infoShowOccupation;
 
-            strBuffer.append(infoLesson.getInfoShift().getShiftTypesCodePrettyPrint());
-        } else {
-            strBuffer.append("EXAM");
-        }
+	    strBuffer.append(infoLesson.getInfoShift().getShiftTypesCodePrettyPrint());
+	} else {
+	    strBuffer.append("EXAM");
+	}
 
-        return strBuffer.toString();
+	return strBuffer.toString();
     }
 
 }

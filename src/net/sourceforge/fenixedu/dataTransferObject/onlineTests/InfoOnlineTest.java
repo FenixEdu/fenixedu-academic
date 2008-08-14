@@ -29,49 +29,49 @@ public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
     }
 
     public List getAssociatedExecutionCourse() {
-        return associatedExecutionCourse;
+	return associatedExecutionCourse;
     }
 
     public InfoDistributedTest getInfoDistributedTest() {
-        return infoDistributedTest;
+	return infoDistributedTest;
     }
 
     public String getPublishmentMessage() {
-        return publishmentMessage;
+	return publishmentMessage;
     }
 
     public void setAssociatedExecutionCourse(List list) {
-        associatedExecutionCourse = list;
+	associatedExecutionCourse = list;
     }
 
     public void setInfoDistributedTest(InfoDistributedTest test) {
-        infoDistributedTest = test;
+	infoDistributedTest = test;
     }
 
     public void setPublishmentMessage(String string) {
-        publishmentMessage = string;
+	publishmentMessage = string;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoExam) {
-            InfoOnlineTest infoOnlineTest = (InfoOnlineTest) obj;
+	boolean result = false;
+	if (obj instanceof InfoExam) {
+	    InfoOnlineTest infoOnlineTest = (InfoOnlineTest) obj;
 
-            result = getIdInternal().equals(infoOnlineTest.getIdInternal())
-                    && getInfoDistributedTest().equals(infoOnlineTest.getInfoDistributedTest())
-                    && getPublishmentMessage().equals(infoOnlineTest.getPublishmentMessage())
-                    && getAssociatedExecutionCourse().containsAll(infoOnlineTest.getAssociatedExecutionCourse())
-                    && infoOnlineTest.getAssociatedExecutionCourse().containsAll(getAssociatedExecutionCourse());
-        }
-        return result;
+	    result = getIdInternal().equals(infoOnlineTest.getIdInternal())
+		    && getInfoDistributedTest().equals(infoOnlineTest.getInfoDistributedTest())
+		    && getPublishmentMessage().equals(infoOnlineTest.getPublishmentMessage())
+		    && getAssociatedExecutionCourse().containsAll(infoOnlineTest.getAssociatedExecutionCourse())
+		    && infoOnlineTest.getAssociatedExecutionCourse().containsAll(getAssociatedExecutionCourse());
+	}
+	return result;
     }
 
     public void copyFromDomain(OnlineTest onlineTest) {
-        super.copyFromDomain(onlineTest);
-        if (onlineTest != null) {
-            setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
-            setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(onlineTest.getDistributedTest()));
-        }
+	super.copyFromDomain(onlineTest);
+	if (onlineTest != null) {
+	    setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
+	    setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(onlineTest.getDistributedTest()));
+	}
     }
 
     /**
@@ -79,12 +79,12 @@ public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
      * @return
      */
     public static InfoOnlineTest newInfoFromDomain(OnlineTest onlineTest) {
-        InfoOnlineTest infoOnlineTest = null;
-        if (onlineTest != null) {
-            infoOnlineTest = new InfoOnlineTest();
-            infoOnlineTest.copyFromDomain(onlineTest);
-        }
-        return infoOnlineTest;
+	InfoOnlineTest infoOnlineTest = null;
+	if (onlineTest != null) {
+	    infoOnlineTest = new InfoOnlineTest();
+	    infoOnlineTest.copyFromDomain(onlineTest);
+	}
+	return infoOnlineTest;
     }
 
 }

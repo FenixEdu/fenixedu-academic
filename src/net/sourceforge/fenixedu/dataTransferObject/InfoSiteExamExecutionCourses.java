@@ -6,17 +6,16 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
- *  
+ * 
  */
-public class InfoSiteExamExecutionCourses extends InfoSiteEvaluationExecutionCourses implements
-        ISiteComponent {
+public class InfoSiteExamExecutionCourses extends InfoSiteEvaluationExecutionCourses implements ISiteComponent {
     protected InfoExam infoExam;
 
     /**
      * @return Returns the infoExam.
      */
     public InfoExam getInfoExam() {
-        return infoExam;
+	return infoExam;
     }
 
     /**
@@ -24,7 +23,7 @@ public class InfoSiteExamExecutionCourses extends InfoSiteEvaluationExecutionCou
      *            The infoExam to set.
      */
     public void setInfoExam(InfoExam infoExam) {
-        this.infoExam = infoExam;
+	this.infoExam = infoExam;
     }
 
 }

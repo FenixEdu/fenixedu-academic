@@ -25,7 +25,7 @@ public enum CycleType {
 	    return o1.getWeight().compareTo(o2.getWeight());
 	}
     };
-    
+
     static final public Comparator<CycleType> COMPARATOR_BY_GREATER_WEIGHT = new Comparator<CycleType>() {
 	public int compare(CycleType o1, CycleType o2) {
 	    return -COMPARATOR_BY_LESS_WEIGHT.compare(o1, o2);
@@ -61,8 +61,7 @@ public enum CycleType {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale())
-		.getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
     }
 
     static final public Collection<CycleType> getSortedValues() {
@@ -82,18 +81,18 @@ public enum CycleType {
     public CycleType getSourceCycleAffinity() {
 	return this.sourceCycleAffinity;
     }
-    
+
     public CycleType getNext() {
 	final Iterator<CycleType> iterator = getSortedValues().iterator();
-	
+
 	for (CycleType cycleType = iterator.next(); iterator.hasNext(); cycleType = iterator.next()) {
 	    if (cycleType == this) {
 		return iterator.next();
 	    }
-	    
+
 	    continue;
 	}
-	
+
 	return null;
     }
 
@@ -104,15 +103,15 @@ public enum CycleType {
     public CycleType getPrevious() {
 	final List<CycleType> sortedValues = new ArrayList<CycleType>(getSortedValues());
 	final ListIterator<CycleType> listIterator = sortedValues.listIterator(sortedValues.size() + 1);
-	
+
 	for (CycleType cycleType = listIterator.previous(); listIterator.hasPrevious(); cycleType = listIterator.previous()) {
 	    if (cycleType == this) {
-		return  listIterator.previous();
+		return listIterator.previous();
 	    }
-	    
+
 	    continue;
 	}
-	
+
 	return null;
     }
 

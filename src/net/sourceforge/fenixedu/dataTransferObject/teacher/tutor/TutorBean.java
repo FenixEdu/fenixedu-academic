@@ -6,64 +6,65 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 public class TutorBean implements Serializable {
-	private DomainReference<Teacher> teacher;
-	
-	private Integer teacherNumber;
-	
-	private String teacherName;
+    private DomainReference<Teacher> teacher;
 
-	private Integer executionDegreeID;
+    private Integer teacherNumber;
 
-	private Integer degreeCurricularPlanID;
+    private String teacherName;
 
-	private TutorBean() {}
+    private Integer executionDegreeID;
 
-	public TutorBean(Integer executionDegreeID, Integer degreeCurricularPlanID, Teacher teacher) {
-		this();
-		setExecutionDegreeID(executionDegreeID);
-		setDegreeCurricularPlanID(degreeCurricularPlanID);
-		setTeacher(teacher);
-		setTeacherNumber(teacher.getTeacherNumber());
-		setTeacherName(teacher.getPerson().getName());
-	}
+    private Integer degreeCurricularPlanID;
 
-	public Integer getDegreeCurricularPlanID() {
-		return degreeCurricularPlanID;
-	}
+    private TutorBean() {
+    }
 
-	public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
-		this.degreeCurricularPlanID = degreeCurricularPlanID;
-	}
+    public TutorBean(Integer executionDegreeID, Integer degreeCurricularPlanID, Teacher teacher) {
+	this();
+	setExecutionDegreeID(executionDegreeID);
+	setDegreeCurricularPlanID(degreeCurricularPlanID);
+	setTeacher(teacher);
+	setTeacherNumber(teacher.getTeacherNumber());
+	setTeacherName(teacher.getPerson().getName());
+    }
 
-	public Integer getExecutionDegreeID() {
-		return executionDegreeID;
-	}
+    public Integer getDegreeCurricularPlanID() {
+	return degreeCurricularPlanID;
+    }
 
-	public void setExecutionDegreeID(Integer executionDegreeID) {
-		this.executionDegreeID = executionDegreeID;
-	}
+    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+	this.degreeCurricularPlanID = degreeCurricularPlanID;
+    }
 
-	public Teacher getTeacher() {
-		return (teacher == null ? null : teacher.getObject());
-	}
+    public Integer getExecutionDegreeID() {
+	return executionDegreeID;
+    }
 
-	public void setTeacher(Teacher teacher) {
-		this.teacher = new DomainReference<Teacher>(teacher);
-	}
+    public void setExecutionDegreeID(Integer executionDegreeID) {
+	this.executionDegreeID = executionDegreeID;
+    }
 
-	public Integer getTeacherNumber() {
-		return teacherNumber;
-	}
+    public Teacher getTeacher() {
+	return (teacher == null ? null : teacher.getObject());
+    }
 
-	public void setTeacherNumber(Integer teacherNumber) {
-		this.teacherNumber = teacherNumber;
-	}
+    public void setTeacher(Teacher teacher) {
+	this.teacher = new DomainReference<Teacher>(teacher);
+    }
 
-	public String getTeacherName() {
-		return teacherName;
-	}
+    public Integer getTeacherNumber() {
+	return teacherNumber;
+    }
 
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
-	}
+    public void setTeacherNumber(Integer teacherNumber) {
+	this.teacherNumber = teacherNumber;
+    }
+
+    public String getTeacherName() {
+	return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+	this.teacherName = teacherName;
+    }
 }

@@ -14,8 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 @Mapping(path = "/researcherManagement", module = "researcher")
-@Forwards( {
-	@Forward(name = "viewDetails", path = "view-researcher-details"),
+@Forwards( { @Forward(name = "viewDetails", path = "view-researcher-details"),
 	@Forward(name = "editDetails", path = "edit-researcher-details") })
 public class ResearcherManagement extends FenixDispatchAction {
 

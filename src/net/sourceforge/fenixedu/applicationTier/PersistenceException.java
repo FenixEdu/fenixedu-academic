@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier;
 public class PersistenceException extends Exception {
 
     public PersistenceException() {
-        super();
+	super();
     }
 
     public PersistenceException(String s) {
-        super(s);
+	super(s);
     }
 }
 

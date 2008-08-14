@@ -9,12 +9,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveExecutionCoursesFromGroup extends Service {
 
-    public void run(VigilantGroup group, List<ExecutionCourse> executionCourses)
-            {
+    public void run(VigilantGroup group, List<ExecutionCourse> executionCourses) {
 
-        for (ExecutionCourse course : executionCourses) {
-            group.removeExecutionCourses(course);
-        }
+	for (ExecutionCourse course : executionCourses) {
+	    group.removeExecutionCourses(course);
+	}
     }
 
 }

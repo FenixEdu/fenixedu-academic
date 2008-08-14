@@ -29,11 +29,9 @@ public class MarkType extends FenixUtil {
 
     public static final Object[] OTHER_MARKS = { GradeScale.RE, GradeScale.NA, GradeScale.AP };
 
-    public static final Object[] TYPE20_MARKS = { "10", "11", "12", "13", "14", "15", "16", "17", "18",
-            "19", "20" };
+    public static final Object[] TYPE20_MARKS = { "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
 
-    public static final Object[] TYPE20EVALUATION_MARKS = { "0", "1", "2", "3", "4", "5", "6", "7", "8",
-            "9" };
+    public static final Object[] TYPE20EVALUATION_MARKS = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
     public static final Object[] TYPE5_MARKS = { "3", "4", "5" };
 
@@ -45,90 +43,90 @@ public class MarkType extends FenixUtil {
     }
 
     public MarkType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public MarkType(Integer state) {
-        this.type = state;
+	this.type = state;
     }
 
     /**
      * @return Type of Marks
      */
     public Integer getType() {
-        return type;
+	return type;
     }
 
     /**
      * @param type
      */
     public void setType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public boolean equals(Object o) {
-        if (o instanceof MarkType) {
-            MarkType aux = (MarkType) o;
-            return this.type.equals(aux.getType());
-        }
-        return false;
+	if (o instanceof MarkType) {
+	    MarkType aux = (MarkType) o;
+	    return this.type.equals(aux.getType());
+	}
+	return false;
 
     }
 
     public static Collection getMarks(MarkType markType) {
-        if (markType.equals(MarkType.TYPE20_OBJ))
-            return MarkType.getType20Marks();
-        if (markType.equals(MarkType.TYPE5_OBJ))
-            return MarkType.getType5Marks();
-        return null;
+	if (markType.equals(MarkType.TYPE20_OBJ))
+	    return MarkType.getType20Marks();
+	if (markType.equals(MarkType.TYPE5_OBJ))
+	    return MarkType.getType5Marks();
+	return null;
     }
 
     public static Collection getMarksEvaluation(MarkType markType) {
-        if (markType.equals(MarkType.TYPE20_OBJ))
-            return MarkType.getType20EvaluationMarks();
-        if (markType.equals(MarkType.TYPE5_OBJ))
-            return MarkType.getType5Marks();
-        return null;
+	if (markType.equals(MarkType.TYPE20_OBJ))
+	    return MarkType.getType20EvaluationMarks();
+	if (markType.equals(MarkType.TYPE5_OBJ))
+	    return MarkType.getType5Marks();
+	return null;
     }
 
     public static Collection getRepMarks() {
-        List repMarks = new ArrayList();
-        repMarks.addAll(Arrays.asList(REP_MARKS));
-        return repMarks;
+	List repMarks = new ArrayList();
+	repMarks.addAll(Arrays.asList(REP_MARKS));
+	return repMarks;
     }
 
     public static Collection getNaMarks() {
-        List naMarks = new ArrayList();
-        naMarks.addAll(Arrays.asList(NA_MARKS));
-        return naMarks;
+	List naMarks = new ArrayList();
+	naMarks.addAll(Arrays.asList(NA_MARKS));
+	return naMarks;
     }
 
     private static Collection getType20Marks() {
-        Collection result = new ArrayList();
+	Collection result = new ArrayList();
 
-        result.addAll(Arrays.asList(MarkType.OTHER_MARKS));
-        result.addAll(Arrays.asList(MarkType.TYPE20_MARKS));
+	result.addAll(Arrays.asList(MarkType.OTHER_MARKS));
+	result.addAll(Arrays.asList(MarkType.TYPE20_MARKS));
 
-        return result;
+	return result;
     }
 
     private static Collection getType5Marks() {
-        Collection result = new ArrayList();
+	Collection result = new ArrayList();
 
-        result.addAll(Arrays.asList(MarkType.OTHER_MARKS));
-        result.addAll(Arrays.asList(MarkType.TYPE5_MARKS));
+	result.addAll(Arrays.asList(MarkType.OTHER_MARKS));
+	result.addAll(Arrays.asList(MarkType.TYPE5_MARKS));
 
-        return result;
+	return result;
     }
 
     private static Collection getType20EvaluationMarks() {
-        Collection result = new ArrayList();
-        result.addAll(Arrays.asList(MarkType.REP_MARKS));
-        result.addAll(Arrays.asList(MarkType.NA_MARKS));
-        result.addAll(Arrays.asList(MarkType.TYPE20EVALUATION_MARKS));
-        result.addAll(Arrays.asList(MarkType.TYPE20_MARKS));
+	Collection result = new ArrayList();
+	result.addAll(Arrays.asList(MarkType.REP_MARKS));
+	result.addAll(Arrays.asList(MarkType.NA_MARKS));
+	result.addAll(Arrays.asList(MarkType.TYPE20EVALUATION_MARKS));
+	result.addAll(Arrays.asList(MarkType.TYPE20_MARKS));
 
-        return result;
+	return result;
     }
 
 }

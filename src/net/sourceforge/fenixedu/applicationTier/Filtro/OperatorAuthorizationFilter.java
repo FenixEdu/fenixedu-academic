@@ -21,7 +21,7 @@ public class OperatorAuthorizationFilter extends AuthorizationByRoleFilter {
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -30,7 +30,7 @@ public class OperatorAuthorizationFilter extends AuthorizationByRoleFilter {
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.OPERATOR;
+	return RoleType.OPERATOR;
     }
 
 }

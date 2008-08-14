@@ -17,51 +17,45 @@ import org.apache.struts.action.ActionMapping;
 
 public class SearchForStudents extends FenixDispatchAction {
 
-	public ActionForward prepareSearch(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-		 StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
-	        
-	        if (studentsSearchBean == null) { //1st time
-	            studentsSearchBean = new StudentsSearchBean();
-	        } else {
-	          
-	            final AdministrativeOffice administrativeOffice = AdministrativeOffice
-				.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-	            
-	            final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
-	        
-	            if(students.size() == 1) {
-	            
-	                request.setAttribute("student", students.iterator().next());
-	                return mapping.findForward("viewStudentDetails");
-	            }
-	            request.setAttribute("students", students);
-	        }
+	StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
 
-	        request.setAttribute("studentsSearchBean", studentsSearchBean);
-	        return mapping.findForward("search");
-	    
-	}
+	if (studentsSearchBean == null) { // 1st time
+	    studentsSearchBean = new StudentsSearchBean();
+	} else {
 
-	public ActionForward visualizeStudent(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		getStudent(request);
+	    final AdministrativeOffice administrativeOffice = AdministrativeOffice
+		    .readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+
+	    final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
+
+	    if (students.size() == 1) {
+
+		request.setAttribute("student", students.iterator().next());
 		return mapping.findForward("viewStudentDetails");
+	    }
+	    request.setAttribute("students", students);
 	}
 
-	
+	request.setAttribute("studentsSearchBean", studentsSearchBean);
+	return mapping.findForward("search");
 
-	private Student getStudent(final HttpServletRequest request) {
-		final String studentID = request.getParameter("studentID");
-		final Student student = rootDomainObject.readStudentByOID(Integer
-			.valueOf(studentID));
+    }
 
-		request.setAttribute("student", student);
-		return student;
-	}
+    public ActionForward visualizeStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	getStudent(request);
+	return mapping.findForward("viewStudentDetails");
+    }
 
+    private Student getStudent(final HttpServletRequest request) {
+	final String studentID = request.getParameter("studentID");
+	final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(studentID));
+
+	request.setAttribute("student", student);
+	return student;
+    }
 
 }

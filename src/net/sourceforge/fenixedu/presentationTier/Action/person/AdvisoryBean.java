@@ -25,33 +25,40 @@ public class AdvisoryBean {
     private Date expires;
     private String message;
     private String sender;
+
     public AdvisoryBean(int id, Attends attends, Interval responseWeek) {
-        idInternal = new Integer(id);
-        created = new Date();
-        expires = created;
-        sender = messages.getMessage(locale, "weekly.work.load.advisory.from");
-        final ExecutionCourse executionCourse = attends.getExecutionCourse();
-        subject = messages.getMessage(locale, "weekly.work.load.advisory.subject", executionCourse.getNome());
-        final String intervalString = fmt.print(responseWeek.getStart()) + " - " + fmt.print(responseWeek.getEnd());
-        message = messages.getMessage(locale, "weekly.work.load.advisory.message", executionCourse.getNome(), intervalString);
+	idInternal = new Integer(id);
+	created = new Date();
+	expires = created;
+	sender = messages.getMessage(locale, "weekly.work.load.advisory.from");
+	final ExecutionCourse executionCourse = attends.getExecutionCourse();
+	subject = messages.getMessage(locale, "weekly.work.load.advisory.subject", executionCourse.getNome());
+	final String intervalString = fmt.print(responseWeek.getStart()) + " - " + fmt.print(responseWeek.getEnd());
+	message = messages.getMessage(locale, "weekly.work.load.advisory.message", executionCourse.getNome(), intervalString);
     }
+
     public Date getCreated() {
-        return created;
+	return created;
     }
+
     public Date getExpires() {
-        return expires;
+	return expires;
     }
+
     public Integer getIdInternal() {
-        return idInternal;
+	return idInternal;
     }
+
     public String getMessage() {
-        return message;
+	return message;
     }
+
     public String getSender() {
-        return sender;
+	return sender;
     }
+
     public String getSubject() {
-        return subject;
+	return subject;
     }
 
 }

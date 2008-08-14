@@ -20,8 +20,8 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
 	executionPeriodDomainReference = new DomainReference<ExecutionSemester>(executionSemester);
     }
 
-
     private InfoExecutionYear infoExecutionYear = null;
+
     public InfoExecutionYear getInfoExecutionYear() {
 	if (infoExecutionYear == null) {
 	    infoExecutionYear = new InfoExecutionYear(getExecutionPeriod().getExecutionYear());
@@ -36,8 +36,8 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
     public boolean equals(Object obj) {
 	if (obj instanceof InfoExecutionPeriod) {
 	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) obj;
-	    return (getInfoExecutionYear().equals(infoExecutionPeriod.getInfoExecutionYear()) && getName()
-		    .equals(infoExecutionPeriod.getName()));
+	    return (getInfoExecutionYear().equals(infoExecutionPeriod.getInfoExecutionYear()) && getName().equals(
+		    infoExecutionPeriod.getName()));
 
 	}
 	return false;
@@ -77,68 +77,68 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
      * Method created for presentation matters. Concatenates execution period
      * name with execution year name.
      */
-     public String getDescription() {
-	 StringBuilder buffer = new StringBuilder();
+    public String getDescription() {
+	StringBuilder buffer = new StringBuilder();
 
-	 // these ifs are needed due to cloner converting strategy (it looks to
-	 // all
-	 // properties).
-	 if (getName() != null) {
-	     buffer.append(getName());
-	 }
-	 if (getInfoExecutionYear() != null) {
-	     buffer.append(" - ").append(getInfoExecutionYear().getYear());
-	 }
-	 return buffer.toString();
-     }
+	// these ifs are needed due to cloner converting strategy (it looks to
+	// all
+	// properties).
+	if (getName() != null) {
+	    buffer.append(getName());
+	}
+	if (getInfoExecutionYear() != null) {
+	    buffer.append(" - ").append(getInfoExecutionYear().getYear());
+	}
+	return buffer.toString();
+    }
 
-     public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
-	 final ExecutionSemester previousInfoExecutionPeriod = getExecutionPeriod().getPreviousExecutionPeriod();
-	 return previousInfoExecutionPeriod == null ? null : new InfoExecutionPeriod(previousInfoExecutionPeriod);
-     }
+    public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
+	final ExecutionSemester previousInfoExecutionPeriod = getExecutionPeriod().getPreviousExecutionPeriod();
+	return previousInfoExecutionPeriod == null ? null : new InfoExecutionPeriod(previousInfoExecutionPeriod);
+    }
 
-     public static InfoExecutionPeriod newInfoFromDomain(ExecutionSemester executionSemester) {
-	 return executionSemester == null ? null : new InfoExecutionPeriod(executionSemester);
-     }
+    public static InfoExecutionPeriod newInfoFromDomain(ExecutionSemester executionSemester) {
+	return executionSemester == null ? null : new InfoExecutionPeriod(executionSemester);
+    }
 
-     public String getQualifiedName() {
-	 return getDescription();
-     }
+    public String getQualifiedName() {
+	return getDescription();
+    }
 
-     public Date getInquiryResponseBegin() {
-	 return getExecutionPeriod().getInquiryResponsePeriod().getBegin().toDate();
-     }
+    public Date getInquiryResponseBegin() {
+	return getExecutionPeriod().getInquiryResponsePeriod().getBegin().toDate();
+    }
 
-     public Date getInquiryResponseEnd() {
-	 return getExecutionPeriod().getInquiryResponsePeriod().getEnd().toDate();
-     }
+    public Date getInquiryResponseEnd() {
+	return getExecutionPeriod().getInquiryResponsePeriod().getEnd().toDate();
+    }
 
-     @Override
-     public void copyFromDomain(DomainObject domainObject) {
-	 throw new Error("Method should not be called!");
-     }
+    @Override
+    public void copyFromDomain(DomainObject domainObject) {
+	throw new Error("Method should not be called!");
+    }
 
-     @Override
-     public void copyToDomain(InfoObject infoObject, DomainObject domainObject) {
-	 throw new Error("Method should not be called!");
-     }
+    @Override
+    public void copyToDomain(InfoObject infoObject, DomainObject domainObject) {
+	throw new Error("Method should not be called!");
+    }
 
-     @Override
-     public Integer getIdInternal() {
-	 return getExecutionPeriod().getIdInternal();
-     }
+    @Override
+    public Integer getIdInternal() {
+	return getExecutionPeriod().getIdInternal();
+    }
 
-     @Override
-     public void setIdInternal(Integer integer) {
-	 throw new Error("Method should not be called!");
-     }
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
+    }
 
-     public ExecutionSemester getExecutionPeriod() {
-	 return executionPeriodDomainReference == null ? null : executionPeriodDomainReference.getObject();
-     }
+    public ExecutionSemester getExecutionPeriod() {
+	return executionPeriodDomainReference == null ? null : executionPeriodDomainReference.getObject();
+    }
 
-     public void setExecutionPeriod(ExecutionSemester executionSemester){
-	 executionPeriodDomainReference = new DomainReference<ExecutionSemester>(executionSemester);
-     }
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	executionPeriodDomainReference = new DomainReference<ExecutionSemester>(executionSemester);
+    }
 
 }

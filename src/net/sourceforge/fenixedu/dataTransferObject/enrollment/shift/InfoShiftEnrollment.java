@@ -59,17 +59,17 @@ public class InfoShiftEnrollment extends DataTranferObject {
      * Registration enrolling
      */
     private InfoStudent infoStudent;
-    
+
     /**
      * number of courses in wich isn't enrolled in all shifts
      */
-    private Integer numberCourseUnenrolledShifts; 
+    private Integer numberCourseUnenrolledShifts;
 
     /**
      * @return Returns the numberCourseWithShiftEnrollment.
      */
     public Integer getNumberCourseWithShiftEnrollment() {
-        return numberCourseWithShiftEnrollment;
+	return numberCourseWithShiftEnrollment;
     }
 
     /**
@@ -77,14 +77,14 @@ public class InfoShiftEnrollment extends DataTranferObject {
      *            The numberCourseWithShiftEnrollment to set.
      */
     public void setNumberCourseWithShiftEnrollment(Integer numberCourseWithShiftEnrollment) {
-        this.numberCourseWithShiftEnrollment = numberCourseWithShiftEnrollment;
+	this.numberCourseWithShiftEnrollment = numberCourseWithShiftEnrollment;
     }
 
     /**
      * @return Returns the infoShiftEnrollment.
      */
     public List getInfoShiftEnrollment() {
-        return infoShiftEnrollment;
+	return infoShiftEnrollment;
     }
 
     /**
@@ -92,49 +92,49 @@ public class InfoShiftEnrollment extends DataTranferObject {
      *            The infoShiftEnrollment to set.
      */
     public void setInfoShiftEnrollment(List infoShiftEnrollment) {
-        this.infoShiftEnrollment = infoShiftEnrollment;
+	this.infoShiftEnrollment = infoShiftEnrollment;
     }
 
     /**
      * @return Returns the infoAttendingCourses.
      */
     public List getInfoAttendingCourses() {
-        return infoAttendingCourses;
+	return infoAttendingCourses;
     }
 
     /**
      * @return Returns the infoExecutionCoursesList.
      */
     public List getInfoExecutionCoursesList() {
-        return infoExecutionCoursesList;
+	return infoExecutionCoursesList;
     }
 
     /**
      * @return Returns the infoExecutionDegree.
      */
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return infoExecutionDegree;
+	return infoExecutionDegree;
     }
 
     /**
      * @return Returns the infoExecutionDegreesLabelsList.
      */
     public List getInfoExecutionDegreesLabelsList() {
-        return infoExecutionDegreesLabelsList;
+	return infoExecutionDegreesLabelsList;
     }
 
     /**
      * @return Returns the infoExecutionDegreesList.
      */
     public List getInfoExecutionDegreesList() {
-        return infoExecutionDegreesList;
+	return infoExecutionDegreesList;
     }
 
     /**
      * @return Returns the infoStudent.
      */
     public InfoStudent getInfoStudent() {
-        return infoStudent;
+	return infoStudent;
     }
 
     /**
@@ -142,7 +142,7 @@ public class InfoShiftEnrollment extends DataTranferObject {
      *            The infoAttendingCourses to set.
      */
     public void setInfoAttendingCourses(List infoAttendingCourses) {
-        this.infoAttendingCourses = infoAttendingCourses;
+	this.infoAttendingCourses = infoAttendingCourses;
     }
 
     /**
@@ -150,7 +150,7 @@ public class InfoShiftEnrollment extends DataTranferObject {
      *            The infoExecutionCoursesList to set.
      */
     public void setInfoExecutionCoursesList(List infoExecutionCoursesList) {
-        this.infoExecutionCoursesList = infoExecutionCoursesList;
+	this.infoExecutionCoursesList = infoExecutionCoursesList;
     }
 
     /**
@@ -158,7 +158,7 @@ public class InfoShiftEnrollment extends DataTranferObject {
      *            The infoExecutionDegree to set.
      */
     public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
-        this.infoExecutionDegree = infoExecutionDegree;
+	this.infoExecutionDegree = infoExecutionDegree;
     }
 
     /**
@@ -166,7 +166,7 @@ public class InfoShiftEnrollment extends DataTranferObject {
      *            The infoExecutionDegreesLabelsList to set.
      */
     public void setInfoExecutionDegreesLabelsList(List infoExecutionDegreesLabelsList) {
-        this.infoExecutionDegreesLabelsList = infoExecutionDegreesLabelsList;
+	this.infoExecutionDegreesLabelsList = infoExecutionDegreesLabelsList;
     }
 
     /**
@@ -174,7 +174,7 @@ public class InfoShiftEnrollment extends DataTranferObject {
      *            The infoExecutionDegreesList to set.
      */
     public void setInfoExecutionDegreesList(List infoExecutionDegreesList) {
-        this.infoExecutionDegreesList = infoExecutionDegreesList;
+	this.infoExecutionDegreesList = infoExecutionDegreesList;
     }
 
     /**
@@ -182,64 +182,64 @@ public class InfoShiftEnrollment extends DataTranferObject {
      *            The infoStudent to set.
      */
     public void setInfoStudent(InfoStudent infoStudent) {
-        this.infoStudent = infoStudent;
+	this.infoStudent = infoStudent;
     }
 
     public String toString() {
-        StringBuilder string = new StringBuilder();
+	StringBuilder string = new StringBuilder();
 
-        string.append("[InfoShiftEnrollment ");
-        string.append("\ninfoStudent: ");
-        string.append(infoStudent.getIdInternal());
+	string.append("[InfoShiftEnrollment ");
+	string.append("\ninfoStudent: ");
+	string.append(infoStudent.getIdInternal());
 
-        string.append("\ninfoExecutionDegreesList: ");
-        if (infoExecutionDegreesList != null) {
-            string.append(infoExecutionDegreesList.size());
-        } else {
-            string.append("null");
-        }
+	string.append("\ninfoExecutionDegreesList: ");
+	if (infoExecutionDegreesList != null) {
+	    string.append(infoExecutionDegreesList.size());
+	} else {
+	    string.append("null");
+	}
 
-        string.append("\ninfoExecutionDegreesLabelsList: ");
-        if (infoExecutionDegreesLabelsList != null) {
-            string.append(infoExecutionDegreesLabelsList.size());
-        } else {
-            string.append("null");
-        }
+	string.append("\ninfoExecutionDegreesLabelsList: ");
+	if (infoExecutionDegreesLabelsList != null) {
+	    string.append(infoExecutionDegreesLabelsList.size());
+	} else {
+	    string.append("null");
+	}
 
-        string.append("\ninfoExecutionDegree: ");
-        string.append(infoExecutionDegree.getIdInternal());
+	string.append("\ninfoExecutionDegree: ");
+	string.append(infoExecutionDegree.getIdInternal());
 
-        string.append("\ninfoExecutionCoursesList: ");
-        if (infoExecutionCoursesList != null) {
-            string.append(infoExecutionCoursesList.size());
-        } else {
-            string.append("null");
-        }
+	string.append("\ninfoExecutionCoursesList: ");
+	if (infoExecutionCoursesList != null) {
+	    string.append(infoExecutionCoursesList.size());
+	} else {
+	    string.append("null");
+	}
 
-        string.append("\ninfoAttendingCourses: ");
-        if (infoAttendingCourses != null) {
-            string.append(infoAttendingCourses.size());
-        } else {
-            string.append("null");
-        }
+	string.append("\ninfoAttendingCourses: ");
+	if (infoAttendingCourses != null) {
+	    string.append(infoAttendingCourses.size());
+	} else {
+	    string.append("null");
+	}
 
-        string.append("\ninfoShiftEnrollment: ");
-        if (infoShiftEnrollment != null) {
-            string.append(infoShiftEnrollment.size());
-        } else {
-            string.append("null");
-        }
-        string.append(" ]");
+	string.append("\ninfoShiftEnrollment: ");
+	if (infoShiftEnrollment != null) {
+	    string.append(infoShiftEnrollment.size());
+	} else {
+	    string.append("null");
+	}
+	string.append(" ]");
 
-        return string.toString();
+	return string.toString();
     }
 
     public Integer getNumberCourseUnenrolledShifts() {
-        return numberCourseUnenrolledShifts;
+	return numberCourseUnenrolledShifts;
     }
 
     public void setNumberCourseUnenrolledShifts(Integer numberCourseUnenrolledShifts) {
-        this.numberCourseUnenrolledShifts = numberCourseUnenrolledShifts;
+	this.numberCourseUnenrolledShifts = numberCourseUnenrolledShifts;
     }
 
 }

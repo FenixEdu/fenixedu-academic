@@ -18,17 +18,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionCourseResponsiblesIds extends Service {
 
-    public List run(Integer executionCourseId) throws FenixServiceException{
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseId);
-        
-        List<Professorship> responsibles = executionCourse.responsibleFors();
+    public List run(Integer executionCourseId) throws FenixServiceException {
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
-        List<Integer> responsibleIDs = new ArrayList<Integer>();
-        if (responsibles != null) {
-            for (Professorship responsibleFor : responsibles) {
-                responsibleIDs.add(responsibleFor.getTeacher().getIdInternal());
-            }
-        }
-        return responsibleIDs;
+	List<Professorship> responsibles = executionCourse.responsibleFors();
+
+	List<Integer> responsibleIDs = new ArrayList<Integer>();
+	if (responsibles != null) {
+	    for (Professorship responsibleFor : responsibles) {
+		responsibleIDs.add(responsibleFor.getTeacher().getIdInternal());
+	    }
+	}
+	return responsibleIDs;
     }
 }

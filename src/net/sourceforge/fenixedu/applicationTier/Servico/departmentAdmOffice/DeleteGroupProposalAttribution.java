@@ -10,5 +10,5 @@ public class DeleteGroupProposalAttribution extends Service {
 	    groupProposal.deleteAttributions();
 	}
     }
-    
+
 }

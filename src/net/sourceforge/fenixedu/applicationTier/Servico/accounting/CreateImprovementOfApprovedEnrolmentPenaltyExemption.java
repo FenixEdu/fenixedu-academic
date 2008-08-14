@@ -14,12 +14,9 @@ public class CreateImprovementOfApprovedEnrolmentPenaltyExemption extends Servic
 
     public void run(final Employee employee, final CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean penaltyExemptionBean) {
 
-	new ImprovementOfApprovedEnrolmentPenaltyExemption(
-		penaltyExemptionBean.getJustificationType(),
-		(ImprovementOfApprovedEnrolmentEvent) penaltyExemptionBean.getEvent(), 
-		employee,
-		penaltyExemptionBean.getReason(),
-		penaltyExemptionBean.getDispatchDate());
+	new ImprovementOfApprovedEnrolmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
+		(ImprovementOfApprovedEnrolmentEvent) penaltyExemptionBean.getEvent(), employee,
+		penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
     }
 
 }

@@ -18,27 +18,27 @@ public class DataSetGeneratorMain {
      *  
      */
     public DataSetGeneratorMain() {
-        super();
+	super();
     }
 
     public static void main(String[] args) {
-        DataSetGenerator dataSetGen = null;
+	DataSetGenerator dataSetGen = null;
 
-        try {
-            if (args.length > 0) {
-                String filePath = args[0];
-                filePath = filePath.replaceAll("\\\\", "/");
-                dataSetGen = new DataSetGenerator(filePath);
-            } else
-                dataSetGen = new DataSetGenerator();
+	try {
+	    if (args.length > 0) {
+		String filePath = args[0];
+		filePath = filePath.replaceAll("\\\\", "/");
+		dataSetGen = new DataSetGenerator(filePath);
+	    } else
+		dataSetGen = new DataSetGenerator();
 
-            dataSetGen.writeDataSet();
-        } catch (NullPointerException e) {
-            System.out.println("Configuration file not found");
-        } catch (FileNotFoundException e) {
-            System.out.println("Configuration file not found");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	    dataSetGen.writeDataSet();
+	} catch (NullPointerException e) {
+	    System.out.println("Configuration file not found");
+	} catch (FileNotFoundException e) {
+	    System.out.println("Configuration file not found");
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
     }
 }

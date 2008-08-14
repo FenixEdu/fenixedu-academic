@@ -12,15 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveParentInherentFunction extends Service {
 
-    public void run(Integer functionID) throws FenixServiceException,
-            DomainException {
+    public void run(Integer functionID) throws FenixServiceException, DomainException {
 
-        Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
-        if (function == null) {
-            throw new FenixServiceException("error.noFunction");
-        }
+	Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
+	if (function == null) {
+	    throw new FenixServiceException("error.noFunction");
+	}
 
-        function.removeParentInherentFunction();
+	function.removeParentInherentFunction();
     }
 
 }

@@ -26,7 +26,7 @@ public class InfoGrantPart extends InfoObject {
      * @return Returns the infoGrantPaymentEntity.
      */
     public InfoGrantPaymentEntity getInfoGrantPaymentEntity() {
-        return infoGrantPaymentEntity;
+	return infoGrantPaymentEntity;
     }
 
     /**
@@ -34,14 +34,14 @@ public class InfoGrantPart extends InfoObject {
      *            The infoGrantPaymentEntity to set.
      */
     public void setInfoGrantPaymentEntity(InfoGrantPaymentEntity infoGrantPaymentEntity) {
-        this.infoGrantPaymentEntity = infoGrantPaymentEntity;
+	this.infoGrantPaymentEntity = infoGrantPaymentEntity;
     }
 
     /**
      * @return Returns the infoGrantResponsibleTeacher.
      */
     public InfoTeacher getInfoResponsibleTeacher() {
-        return infoResponsibleTeacher;
+	return infoResponsibleTeacher;
     }
 
     /**
@@ -49,14 +49,14 @@ public class InfoGrantPart extends InfoObject {
      *            The infoResponsibleTeacher to set.
      */
     public void setInfoResponsibleTeacher(InfoTeacher infoResponsibleTeacher) {
-        this.infoResponsibleTeacher = infoResponsibleTeacher;
+	this.infoResponsibleTeacher = infoResponsibleTeacher;
     }
 
     /**
      * @return Returns the infoGrantSubsidy.
      */
     public InfoGrantSubsidy getInfoGrantSubsidy() {
-        return infoGrantSubsidy;
+	return infoGrantSubsidy;
     }
 
     /**
@@ -64,14 +64,14 @@ public class InfoGrantPart extends InfoObject {
      *            The infoGrantSubsidy to set.
      */
     public void setInfoGrantSubsidy(InfoGrantSubsidy infoGrantSubsidy) {
-        this.infoGrantSubsidy = infoGrantSubsidy;
+	this.infoGrantSubsidy = infoGrantSubsidy;
     }
 
     /**
      * @return Returns the percentage.
      */
     public Integer getPercentage() {
-        return percentage;
+	return percentage;
     }
 
     /**
@@ -79,17 +79,17 @@ public class InfoGrantPart extends InfoObject {
      *            The percentage to set.
      */
     public void setPercentage(Integer percentage) {
-        this.percentage = percentage;
+	this.percentage = percentage;
     }
 
     /**
      * @param GrantPart
      */
     public void copyFromDomain(GrantPart grantPart) {
-        super.copyFromDomain(grantPart);
-        if (grantPart != null) {
-            setPercentage(grantPart.getPercentage());
-        }
+	super.copyFromDomain(grantPart);
+	if (grantPart != null) {
+	    setPercentage(grantPart.getPercentage());
+	}
     }
 
     /**
@@ -97,19 +97,18 @@ public class InfoGrantPart extends InfoObject {
      * @return
      */
     public static InfoGrantPart newInfoFromDomain(GrantPart grantPart) {
-        InfoGrantPart infoGrantPart = null;
-        if (grantPart != null) {
-            infoGrantPart = new InfoGrantPart();
-            infoGrantPart.copyFromDomain(grantPart);
-        }
-        return infoGrantPart;
+	InfoGrantPart infoGrantPart = null;
+	if (grantPart != null) {
+	    infoGrantPart = new InfoGrantPart();
+	    infoGrantPart.copyFromDomain(grantPart);
+	}
+	return infoGrantPart;
     }
 
-    public void copyToDomain(InfoGrantPart infoGrantPart, GrantPart grantPart)
-            {
-        super.copyToDomain(infoGrantPart, grantPart);
+    public void copyToDomain(InfoGrantPart infoGrantPart, GrantPart grantPart) {
+	super.copyToDomain(infoGrantPart, grantPart);
 
-        grantPart.setPercentage(infoGrantPart.getPercentage());
+	grantPart.setPercentage(infoGrantPart.getPercentage());
     }
 
 }

@@ -48,49 +48,49 @@ public class ThesisDocumentConfirmationDA extends FenixDispatchAction {
 	    return thesisPresentationState;
 	}
 
-	    public boolean isUnexisting() {
-		return thesisPresentationState.isUnexisting();
-	    }
+	public boolean isUnexisting() {
+	    return thesisPresentationState.isUnexisting();
+	}
 
-	    public boolean isDraft() {
-		return thesisPresentationState.isDraft();
-	    }
+	public boolean isDraft() {
+	    return thesisPresentationState.isDraft();
+	}
 
-	    public boolean isSubmitted() {
-		return thesisPresentationState.isSubmitted();
-	    }
+	public boolean isSubmitted() {
+	    return thesisPresentationState.isSubmitted();
+	}
 
-	    public boolean isRejected() {
-		return thesisPresentationState.isRejected();
-	    }
+	public boolean isRejected() {
+	    return thesisPresentationState.isRejected();
+	}
 
-	    public boolean isApproved() {
-		return thesisPresentationState.isApproved();
-	    }
+	public boolean isApproved() {
+	    return thesisPresentationState.isApproved();
+	}
 
-	    public boolean isDocumentsSubmitted() {
-		return thesisPresentationState.isDocumentsSubmitted();
-	    }
+	public boolean isDocumentsSubmitted() {
+	    return thesisPresentationState.isDocumentsSubmitted();
+	}
 
-	    public boolean isDocumentsConfirmed() {
-		return thesisPresentationState.isDocumentsConfirmed();
-	    }
+	public boolean isDocumentsConfirmed() {
+	    return thesisPresentationState.isDocumentsConfirmed();
+	}
 
-	    public boolean isConfirmed() {
-		return thesisPresentationState.isConfirmed();
-	    }
+	public boolean isConfirmed() {
+	    return thesisPresentationState.isConfirmed();
+	}
 
-	    public boolean isEvaluated1st() {
-		return thesisPresentationState.isEvaluated1st();
-	    }
+	public boolean isEvaluated1st() {
+	    return thesisPresentationState.isEvaluated1st();
+	}
 
-	    public boolean isEvaluated() {
-		return thesisPresentationState.isEvaluated();
-	    }
+	public boolean isEvaluated() {
+	    return thesisPresentationState.isEvaluated();
+	}
 
-	    public boolean isUnknown() {
-		return thesisPresentationState.isUnknown();
-	    }
+	public boolean isUnknown() {
+	    return thesisPresentationState.isUnknown();
+	}
 
     }
 
@@ -107,22 +107,24 @@ public class ThesisDocumentConfirmationDA extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward showThesisList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws InvalidArgumentException {
+    public ActionForward showThesisList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException {
 
 	final Person person = AccessControl.getPerson();
 	if (person != null) {
-	    final ThesisPresentationWrapperSet orientedTheses = new ThesisPresentationWrapperSet(person, ThesisParticipationType.ORIENTATOR);
+	    final ThesisPresentationWrapperSet orientedTheses = new ThesisPresentationWrapperSet(person,
+		    ThesisParticipationType.ORIENTATOR);
 	    request.setAttribute("orientedTheses", orientedTheses);
-	    final ThesisPresentationWrapperSet coorientedTheses = new ThesisPresentationWrapperSet(person, ThesisParticipationType.COORIENTATOR);
+	    final ThesisPresentationWrapperSet coorientedTheses = new ThesisPresentationWrapperSet(person,
+		    ThesisParticipationType.COORIENTATOR);
 	    request.setAttribute("coorientedTheses", coorientedTheses);
 	}
 
 	return mapping.findForward("showThesisList");
     }
 
-    public ActionForward viewThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws InvalidArgumentException {
+    public ActionForward viewThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException {
 	final String thesisIdString = request.getParameter("thesisID");
 	final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 
@@ -135,14 +137,14 @@ public class ThesisDocumentConfirmationDA extends FenixDispatchAction {
 	return mapping.findForward("viewThesis");
     }
 
-    public ActionForward showConfirmationPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws InvalidArgumentException {
+    public ActionForward showConfirmationPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException {
 	request.setAttribute("showConfirmationPage", Boolean.TRUE);
 	return viewThesis(mapping, form, request, response);
     }
 
-    public ActionForward confirmDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+    public ActionForward confirmDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 	final String thesisIdString = request.getParameter("thesisID");
 	final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 

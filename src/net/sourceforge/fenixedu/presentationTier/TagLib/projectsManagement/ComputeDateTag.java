@@ -27,22 +27,22 @@ public class ComputeDateTag extends TagSupport {
      * Constructor for ComputeDateTag.
      */
     public ComputeDateTag() {
-        super();
+	super();
     }
 
     public int doStartTag() throws JspException {
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat(_format);
+	try {
+	    SimpleDateFormat formatter = new SimpleDateFormat(_format);
 
-            Date date = new Date();
-            String dateStr = formatter.format(date);
+	    Date date = new Date();
+	    String dateStr = formatter.format(date);
 
-            pageContext.getOut().print(dateStr);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new JspException(e);
-        }
-        return SKIP_BODY;
+	    pageContext.getOut().print(dateStr);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    throw new JspException(e);
+	}
+	return SKIP_BODY;
     }
 
     /**
@@ -51,7 +51,7 @@ public class ComputeDateTag extends TagSupport {
      * @return String
      */
     public String getFormat() {
-        return _format;
+	return _format;
     }
 
     /**
@@ -61,7 +61,7 @@ public class ComputeDateTag extends TagSupport {
      *            The dateFormat to set
      */
     public void setFormat(String dateFormat) {
-        _format = dateFormat;
+	_format = dateFormat;
     }
 
 }

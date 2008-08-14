@@ -13,10 +13,10 @@ public class LessonSlot {
     private InfoLessonWrapper infoLessonWrapper;
 
     public LessonSlot(InfoLessonWrapper infoLessonWrapper, int startIndex, int endIndex) {
-        this.infoLessonWrapper = infoLessonWrapper;
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
-        this.infoLessonWrapper.setLessonSlot(this);
+	this.infoLessonWrapper = infoLessonWrapper;
+	this.startIndex = startIndex;
+	this.endIndex = endIndex;
+	this.infoLessonWrapper.setLessonSlot(this);
     }
 
     /**
@@ -25,7 +25,7 @@ public class LessonSlot {
      * @return InfoLessonWrapper
      */
     public InfoLessonWrapper getInfoLessonWrapper() {
-        return infoLessonWrapper;
+	return infoLessonWrapper;
     }
 
     /**
@@ -34,7 +34,7 @@ public class LessonSlot {
      * @return int
      */
     public int getEndIndex() {
-        return endIndex;
+	return endIndex;
     }
 
     /**
@@ -43,10 +43,10 @@ public class LessonSlot {
      * @return int
      */
     public int getStartIndex() {
-        return startIndex;
+	return startIndex;
     }
 
     public boolean isSinleSlot() {
-        return getStartIndex() == getEndIndex();
+	return getStartIndex() == getEndIndex();
     }
 }

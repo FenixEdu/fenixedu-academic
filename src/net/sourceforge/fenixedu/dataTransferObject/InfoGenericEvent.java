@@ -14,41 +14,41 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 import org.joda.time.Interval;
 
 public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagramEvent {
-       
+
     private Calendar beginTime;
-    
+
     private Calendar endTime;
-    
+
     private int diaSemana;
-    
+
     private DomainReference<GenericEvent> genericEventReference;
 
     public InfoGenericEvent(GenericEvent genericEvent) {
 	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
     }
-    
+
     public InfoGenericEvent(GenericEvent genericEvent, int diaSemana_) {
 	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
 	diaSemana = diaSemana_;
 	beginTime = genericEvent.getBeginTimeCalendar();
 	endTime = genericEvent.getEndTimeCalendar();
     }
-    
+
     public InfoGenericEvent(GenericEvent genericEvent, int diaSemana_, Calendar beginTime_, Calendar endTime_) {
 	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
 	diaSemana = diaSemana_;
 	beginTime = beginTime_;
 	endTime = endTime_;
     }
- 
+
     public GenericEvent getGenericEvent() {
-        return genericEventReference == null ? null : genericEventReference.getObject();
+	return genericEventReference == null ? null : genericEventReference.getObject();
     }
-    
+
     public Integer getIdInternal() {
 	return getGenericEvent().getIdInternal();
     }
-    
+
     public String getTitle() {
 	return getGenericEvent().getTitle().getContent(Language.getLanguage());
     }
@@ -56,14 +56,14 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     public String getDescription() {
 	return getGenericEvent().getDescription().getContent(Language.getLanguage());
     }
-    
+
     @Override
     public DiaSemana getDiaSemana() {
 	return new DiaSemana(diaSemana);
     }
 
     @Override
-    public Calendar getFim() {	
+    public Calendar getFim() {
 	return endTime;
     }
 
@@ -71,11 +71,11 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     public Calendar getInicio() {
 	return beginTime;
     }
-       
+
     @Override
     public InfoRoomOccupation getInfoRoomOccupation() {
-	return (getGenericEvent().getGenericEventSpaceOccupations().isEmpty()) ? null : 
-	    InfoRoomOccupation.newInfoFromDomain(getGenericEvent().getGenericEventSpaceOccupations().get(0));	
+	return (getGenericEvent().getGenericEventSpaceOccupations().isEmpty()) ? null : InfoRoomOccupation
+		.newInfoFromDomain(getGenericEvent().getGenericEventSpaceOccupations().get(0));
     }
 
     @Override
@@ -110,5 +110,5 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
 
     public List<Interval> getGanttDiagramEventSortedIntervals() {
 	return getGenericEvent().getGanttDiagramEventSortedIntervals();
-    }   
+    }
 }

@@ -29,8 +29,8 @@ public class ListMasterDegreeStudents extends Service {
 
 	final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
 	final Collection<StudentCurricularPlan> studentCurricularPlans = new ArrayList();
-	final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = DegreeCurricularPlan
-		.readByDegreeTypeAndState(DegreeType.MASTER_DEGREE, DegreeCurricularPlanState.ACTIVE);
+	final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(
+		DegreeType.MASTER_DEGREE, DegreeCurricularPlanState.ACTIVE);
 	CollectionUtils.filter(masterDegreeCurricularPlans, new Predicate() {
 
 	    public boolean evaluate(Object arg0) {
@@ -51,17 +51,16 @@ public class ListMasterDegreeStudents extends Service {
 
 	for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
-	    if (!studentCurricularPlan.isActive()){
+	    if (!studentCurricularPlan.isActive()) {
 		continue;
 	    }
 
 	    boolean firstTimeEnrolment = true;
-	    if (studentCurricularPlan.getSpecialization()!=null && studentCurricularPlan.getSpecialization().equals(
-		    Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
+	    if (studentCurricularPlan.getSpecialization() != null
+		    && studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
 
-		Collection<StudentCurricularPlan> previousStudentCurricularPlans = studentCurricularPlan
-			.getRegistration().getStudentCurricularPlansBySpecialization(
-				Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE);
+		Collection<StudentCurricularPlan> previousStudentCurricularPlans = studentCurricularPlan.getRegistration()
+			.getStudentCurricularPlansBySpecialization(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE);
 
 		previousStudentCurricularPlans.remove(studentCurricularPlan);
 		for (StudentCurricularPlan previousStudentCurricularPlan : previousStudentCurricularPlans) {
@@ -71,17 +70,17 @@ public class ListMasterDegreeStudents extends Service {
 			break;
 		    }
 		}
-	    } else if (studentCurricularPlan.getSpecialization()!=null && studentCurricularPlan.getSpecialization().equals(
-		    Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
-		if (!studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionDegree()
-			.getExecutionYear().equals(executionYear)) {
+	    } else if (studentCurricularPlan.getSpecialization() != null
+		    && studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
+		if (!studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionDegree().getExecutionYear().equals(
+			executionYear)) {
 		    continue;
 		}
 	    }
 
 	    if (firstTimeEnrolment) {
-		if (!studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionDegree()
-			.getExecutionYear().equals(executionYear)) {
+		if (!studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionDegree().getExecutionYear().equals(
+			executionYear)) {
 		    firstTimeEnrolment = false;
 		}
 	    }

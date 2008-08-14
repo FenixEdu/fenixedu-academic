@@ -19,34 +19,34 @@ public class Chart {
     private Font font = new Font("SansSerif", Font.PLAIN, 12);
 
     public Chart(String title) {
-        this.title = title;
+	this.title = title;
     }
 
     public void createChart() {
-        addTitles();
-        chart.setBackgroundPaint(new Color(255, 255, 255));
+	addTitles();
+	chart.setBackgroundPaint(new Color(255, 255, 255));
     }
 
     public void saveChart(int imageWidth, int imageHeight, String filename) {
-        try {
-            ChartUtilities.saveChartAsPNG(new File(filename), chart, imageWidth, imageHeight);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	try {
+	    ChartUtilities.saveChartAsPNG(new File(filename), chart, imageWidth, imageHeight);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
     }
 
     private void addTitles() {
-        TextTitle title2 = new TextTitle(title, font);
-        title2.setSpacer(new Spacer(Spacer.RELATIVE, 0.05, 0.05, 0.05, 0.0));
-        chart.addSubtitle(title2);
+	TextTitle title2 = new TextTitle(title, font);
+	title2.setSpacer(new Spacer(Spacer.RELATIVE, 0.05, 0.05, 0.05, 0.0));
+	chart.addSubtitle(title2);
     }
 
     public JFreeChart getChart() {
-        return chart;
+	return chart;
     }
 
     public void setChart(JFreeChart chart) {
-        this.chart = chart;
+	this.chart = chart;
     }
 
 }

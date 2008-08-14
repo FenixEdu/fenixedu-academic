@@ -44,33 +44,33 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	useCASAuthentication = PropertiesManager.getBooleanProperty("cas.enabled");
     }
 
-    public final ActionForward execute(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public final ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	try {
 
 	    String remoteHostName = getRemoteHostName(request);
 	    final IUserView userView = doAuthentication(form, request, remoteHostName);
 
 	    if (userView.getRoleTypes().isEmpty()) {
-		return getAuthenticationFailedForward(mapping, request, "errors.noAuthorization",
-			"errors.noAuthorization");
+		return getAuthenticationFailedForward(mapping, request, "errors.noAuthorization", "errors.noAuthorization");
 	    }
 
 	    final HttpSession session = request.getSession(false);
 
 	    UserView.setUser(userView);
 
-//	    if (isStudentAndHasInquiriesToRespond(userView)) {
-//		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
-//	    } else 
+	    // if (isStudentAndHasInquiriesToRespond(userView)) {
+	    // return
+	    // handleSessionCreationAndForwardToInquiriesResponseQuestion(
+	    // request, userView, session);
+	    // } else
 	    if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
 		return handleSessionRestoreAndGetForward(request, userView, session);
 	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);
 	    }
 	} catch (ExcepcaoAutenticacao e) {
-	    return getAuthenticationFailedForward(mapping, request, "invalidAuthentication",
-		    "errors.invalidAuthentication");
+	    return getAuthenticationFailedForward(mapping, request, "invalidAuthentication", "errors.invalidAuthentication");
 	}
     }
 
@@ -79,11 +79,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    final Person person = userView.getPerson();
 	    final Student student = person.getStudent();
 	    if (student != null) {
-//		if (student.doesNotWantToRespondToInquiries()) {
-//		    return false;
-//		}
+		// if (student.doesNotWantToRespondToInquiries()) {
+		// return false;
+		// }
 		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-		if (executionSemester != null && executionSemester.getInquiryResponsePeriod() != null && executionSemester.getInquiryResponsePeriod().insidePeriod()) {
+		if (executionSemester != null && executionSemester.getInquiryResponsePeriod() != null
+			&& executionSemester.getInquiryResponsePeriod().insidePeriod()) {
 		    for (final Registration reistration : student.getRegistrationsSet()) {
 			if (reistration.isAvailableDegreeTypeForInquiries() && reistration.hasInquiriesToRespond()) {
 			    return true;
@@ -95,44 +96,46 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return false;
     }
 
-    protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request,
-	    String remoteHostName) throws FenixFilterException, FenixServiceException;
+    protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
+	    throws FenixFilterException, FenixServiceException;
 
     protected abstract ActionForward getAuthenticationFailedForward(final ActionMapping mapping,
 	    final HttpServletRequest request, final String actionKey, final String messageKey);
 
-    private ActionForward handleSessionCreationAndGetForward(ActionMapping mapping,
-	    HttpServletRequest request, IUserView userView, final HttpSession session) {
+    private ActionForward handleSessionCreationAndGetForward(ActionMapping mapping, HttpServletRequest request,
+	    IUserView userView, final HttpSession session) {
 	createNewSession(request, session, userView);
 
 	ActionForward actionForward = mapping.findForward("sucess");
-	
+
 	return checkExpirationDate(mapping, request, userView, actionForward);
     }
 
-    private ActionForward handleSessionCreationAndForwardToInquiriesResponseQuestion(HttpServletRequest request, IUserView userView, HttpSession session) {
+    private ActionForward handleSessionCreationAndForwardToInquiriesResponseQuestion(HttpServletRequest request,
+	    IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
 	return new ActionForward("/respondToInquiriesQuestion.do?method=showQuestion");
     }
 
-    private ActionForward checkExpirationDate(ActionMapping mapping, HttpServletRequest request, IUserView userView, ActionForward actionForward) {
-	if(userView.getExpirationDate() == null) {
+    private ActionForward checkExpirationDate(ActionMapping mapping, HttpServletRequest request, IUserView userView,
+	    ActionForward actionForward) {
+	if (userView.getExpirationDate() == null) {
 	    return actionForward;
 	}
-	
+
 	Days days = Days.daysBetween(new DateTime(), userView.getExpirationDate());
-	if(days.getDays() <= 30) {
+	if (days.getDays() <= 30) {
 	    request.setAttribute("path", actionForward.getPath());
 	    request.setAttribute("days", days.getDays());
 	    request.setAttribute("dayString", userView.getExpirationDate().toString("dd/MM/yyyy"));
 	    return mapping.findForward("expirationWarning");
-	} else { 
+	} else {
 	    return actionForward;
 	}
     }
 
-    private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request,
-	    IUserView userView, final HttpSession session) {
+    private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request, IUserView userView,
+	    final HttpSession session) {
 	final ActionForward actionForward = new ActionForward();
 	actionForward.setContextRelative(false);
 	actionForward.setRedirect(true);
@@ -140,10 +143,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	final String originalURI = (String) session.getAttribute("ORIGINAL_URI");
 
 	// Set request attributes
-	final Map<String, Object> attributeMap = (Map<String, Object>) session
-		.getAttribute("ORIGINAL_ATTRIBUTE_MAP");
-	final Map<String, Object> parameterMap = (Map<String, Object>) session
-		.getAttribute("ORIGINAL_PARAMETER_MAP");
+	final Map<String, Object> attributeMap = (Map<String, Object>) session.getAttribute("ORIGINAL_ATTRIBUTE_MAP");
+	final Map<String, Object> parameterMap = (Map<String, Object>) session.getAttribute("ORIGINAL_PARAMETER_MAP");
 
 	actionForward.setPath("/redirect.do");
 
@@ -156,8 +157,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return actionForward;
     }
 
-    private HttpSession createNewSession(final HttpServletRequest request, final HttpSession session,
-	    final IUserView userView) {
+    private HttpSession createNewSession(final HttpServletRequest request, final HttpSession session, final IUserView userView) {
 	if (session != null) {
 	    session.invalidate();
 	}
@@ -175,9 +175,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     /**
-         * @param userRoles
-         * @return
-         */
+     * @param userRoles
+     * @return
+     */
     private int getNumberOfSubApplications(final Collection<RoleType> roleTypes) {
 	final Set<String> subApplications = new HashSet<String>();
 	for (final RoleType roleType : roleTypes) {
@@ -191,15 +191,14 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     /**
-         * @param infoRole
-         * @return
-         */
+     * @param infoRole
+     * @return
+     */
     private ActionForward buildRoleForward(Role infoRole) {
 	ActionForward actionForward = new ActionForward();
 	actionForward.setContextRelative(false);
 	actionForward.setRedirect(false);
-	actionForward.setPath("/dotIstPortal.do?prefix=" + infoRole.getPortalSubApplication() + "&page="
-		+ infoRole.getPage());
+	actionForward.setPath("/dotIstPortal.do?prefix=" + infoRole.getPortalSubApplication() + "&page=" + infoRole.getPage());
 	return actionForward;
     }
 

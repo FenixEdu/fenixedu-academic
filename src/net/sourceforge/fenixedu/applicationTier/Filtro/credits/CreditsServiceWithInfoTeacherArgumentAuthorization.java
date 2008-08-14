@@ -9,23 +9,24 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 /**
  * @author jpvl
  */
-public class CreditsServiceWithInfoTeacherArgumentAuthorization extends
-		AbstractTeacherDepartmentAuthorization {
-	public final static CreditsServiceWithInfoTeacherArgumentAuthorization filter = new CreditsServiceWithInfoTeacherArgumentAuthorization();
+public class CreditsServiceWithInfoTeacherArgumentAuthorization extends AbstractTeacherDepartmentAuthorization {
+    public final static CreditsServiceWithInfoTeacherArgumentAuthorization filter = new CreditsServiceWithInfoTeacherArgumentAuthorization();
 
-	public static CreditsServiceWithInfoTeacherArgumentAuthorization getInstance() {
-		return filter;
-	}
+    public static CreditsServiceWithInfoTeacherArgumentAuthorization getInstance() {
+	return filter;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
-	 */
-	protected Integer getTeacherId(Object[] arguments) {
-		InfoTeacher infoTeacher = (InfoTeacher) arguments[0];
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization
+     * #getTeacherId(java.lang.Object[])
+     */
+    protected Integer getTeacherId(Object[] arguments) {
+	InfoTeacher infoTeacher = (InfoTeacher) arguments[0];
 
-		return infoTeacher != null ? infoTeacher.getIdInternal() : null;
-	}
+	return infoTeacher != null ? infoTeacher.getIdInternal() : null;
+    }
 
 }

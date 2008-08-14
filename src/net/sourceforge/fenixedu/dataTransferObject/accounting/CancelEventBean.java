@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 
 public class CancelEventBean implements Serializable {
 
-
     /**
      * 
      */

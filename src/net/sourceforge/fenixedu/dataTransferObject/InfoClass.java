@@ -16,49 +16,49 @@ public class InfoClass extends InfoObject {
     private final DomainReference<SchoolClass> schoolClassDomainReference;
 
     public SchoolClass getSchoolClass() {
-        return schoolClassDomainReference == null ? null : schoolClassDomainReference.getObject();
+	return schoolClassDomainReference == null ? null : schoolClassDomainReference.getObject();
     }
 
     public InfoClass(final SchoolClass schoolClass) {
-        schoolClassDomainReference = new DomainReference<SchoolClass>(schoolClass);
+	schoolClassDomainReference = new DomainReference<SchoolClass>(schoolClass);
     }
 
     public String getNome() {
-        return getSchoolClass().getNome();
+	return getSchoolClass().getNome();
     }
 
     public Integer getAnoCurricular() {
-        return getSchoolClass().getAnoCurricular();
+	return getSchoolClass().getAnoCurricular();
     }
 
     public boolean equals(Object obj) {
-    	return obj != null && getSchoolClass() == ((InfoClass) obj).getSchoolClass();
+	return obj != null && getSchoolClass() == ((InfoClass) obj).getSchoolClass();
     }
 
     public String toString() {
-    	return getSchoolClass().toString();
+	return getSchoolClass().toString();
     }
 
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return InfoExecutionDegree.newInfoFromDomain(getSchoolClass().getExecutionDegree());
+	return InfoExecutionDegree.newInfoFromDomain(getSchoolClass().getExecutionDegree());
     }
 
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return InfoExecutionPeriod.newInfoFromDomain(getSchoolClass().getExecutionPeriod());
+	return InfoExecutionPeriod.newInfoFromDomain(getSchoolClass().getExecutionPeriod());
     }
 
     public static InfoClass newInfoFromDomain(final SchoolClass schoolClass) {
-    	return schoolClass == null ? null : new InfoClass(schoolClass);
+	return schoolClass == null ? null : new InfoClass(schoolClass);
     }
 
-	@Override
-	public Integer getIdInternal() {
-		return getSchoolClass().getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+	return getSchoolClass().getIdInternal();
+    }
 
     @Override
     public void setIdInternal(Integer integer) {
-        throw new Error("Method should not be called!");
+	throw new Error("Method should not be called!");
     }
 
 }

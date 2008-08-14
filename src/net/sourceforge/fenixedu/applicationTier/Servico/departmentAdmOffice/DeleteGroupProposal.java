@@ -10,5 +10,5 @@ public class DeleteGroupProposal extends Service {
 	    groupProposal.delete();
 	}
     }
-    
+
 }

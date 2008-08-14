@@ -15,7 +15,8 @@ public class Formation extends Formation_Base {
     }
 
     public Formation(Person person, FormationType formationType, QualificationType degree, EducationArea educationArea,
-	    String beginYear, String endYear, BigDecimal ectsCredits, Integer formationHours, AcademicalInstitutionUnit institution) {
+	    String beginYear, String endYear, BigDecimal ectsCredits, Integer formationHours,
+	    AcademicalInstitutionUnit institution) {
 	this();
 
 	checkParameters(person, formationType, degree, educationArea, beginYear, endYear, ectsCredits, formationHours,

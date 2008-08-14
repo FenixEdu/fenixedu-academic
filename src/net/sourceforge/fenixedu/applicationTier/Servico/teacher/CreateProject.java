@@ -16,19 +16,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateProject extends Service {
 
     public void run(Integer executionCourseID, String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Integer groupingID)
-            throws FenixServiceException {
+	    Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Integer groupingID) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = rootDomainObject
-                .readExecutionCourseByOID(executionCourseID);
-        if (executionCourse == null) {
-            throw new FenixServiceException("error.noExecutionCourse");
-        }
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	if (executionCourse == null) {
+	    throw new FenixServiceException("error.noExecutionCourse");
+	}
 
-        final Grouping grouping = (groupingID != null) ? rootDomainObject.readGroupingByOID(groupingID)
-                : null;
+	final Grouping grouping = (groupingID != null) ? rootDomainObject.readGroupingByOID(groupingID) : null;
 
-        new Project(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep,
-                grouping, executionCourse);
+	new Project(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping, executionCourse);
     }
 }

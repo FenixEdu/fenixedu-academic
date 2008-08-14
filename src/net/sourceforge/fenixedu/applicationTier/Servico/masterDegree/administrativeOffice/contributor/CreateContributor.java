@@ -11,33 +11,17 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 public class CreateContributor extends Service {
 
     public void run(InfoContributor newContributor) throws InvalidArgumentsServiceException {
-	
+
 	if (newContributor.getContributorType() == ContributorType.EXTERNAL_PERSON) {
-	    Person.createContributor(
-		    newContributor.getContributorName(),
-		    newContributor.getContributorNumber().toString(),
-		    new PhysicalAddressData(
-			    newContributor.getContributorAddress(),
-			    newContributor.getAreaCode(),
-			    newContributor.getAreaOfAreaCode(),
-			    newContributor.getArea(),
-			    newContributor.getParishOfResidence(),
-			    newContributor.getDistrictSubdivisionOfResidence(),
-			    newContributor.getDistrictOfResidence(),
-			    null));
+	    Person.createContributor(newContributor.getContributorName(), newContributor.getContributorNumber().toString(),
+		    new PhysicalAddressData(newContributor.getContributorAddress(), newContributor.getAreaCode(), newContributor
+			    .getAreaOfAreaCode(), newContributor.getArea(), newContributor.getParishOfResidence(), newContributor
+			    .getDistrictSubdivisionOfResidence(), newContributor.getDistrictOfResidence(), null));
 	} else if (newContributor.getContributorType() == ContributorType.EXTERNAL_INSTITUTION_UNIT) {
-	    Unit.createContributor(
-		    newContributor.getContributorName(),
-		    newContributor.getContributorNumber().toString(),
-		    new PhysicalAddressData(
-			    newContributor.getContributorAddress(),
-			    newContributor.getAreaCode(),
-			    newContributor.getAreaOfAreaCode(),
-			    newContributor.getArea(),
-			    newContributor.getParishOfResidence(),
-			    newContributor.getDistrictSubdivisionOfResidence(),
-			    newContributor.getDistrictOfResidence(),
-			    null));
+	    Unit.createContributor(newContributor.getContributorName(), newContributor.getContributorNumber().toString(),
+		    new PhysicalAddressData(newContributor.getContributorAddress(), newContributor.getAreaCode(), newContributor
+			    .getAreaOfAreaCode(), newContributor.getArea(), newContributor.getParishOfResidence(), newContributor
+			    .getDistrictSubdivisionOfResidence(), newContributor.getDistrictOfResidence(), null));
 	} else {
 	    throw new InvalidArgumentsServiceException();
 	}

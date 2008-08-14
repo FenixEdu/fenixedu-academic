@@ -49,8 +49,9 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 	super.fillReport();
-	
-	init(getDocumentRequest().getRegistration(), ((SchoolRegistrationDeclarationRequest)getDocumentRequest()).getExecutionYear(), AccessControl.getPerson());
+
+	init(getDocumentRequest().getRegistration(), ((SchoolRegistrationDeclarationRequest) getDocumentRequest())
+		.getExecutionYear(), AccessControl.getPerson());
     }
 
     public Person getEmployee() {
@@ -62,15 +63,14 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
     }
 
     public ExecutionYear getExecutionYear() {
-        return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
+	return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-        this.executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	this.executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
     }
 
-    private static final DateTimeFormatter fmt = new DateTimeFormatterBuilder().appendMonthOfYearText()
-	    .toFormatter();
+    private static final DateTimeFormatter fmt = new DateTimeFormatterBuilder().appendMonthOfYearText().toFormatter();
 
     public String getDeclarationBody() {
 	final Person employee = getEmployee();
@@ -84,23 +84,20 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	final StringBuilder stringBuilder = new StringBuilder();
 	try {
 	    // if (employee.getGender() == Gender.MALE) {
-	    // stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.male"));
+	    // stringBuilder.append(resourceBundle.getString(
+	    // "message.declaration.registration.person.title.male"));
 	    // } else if (employee.getGender() == Gender.FEMALE) {
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.person.title.female"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.female"));
 	    // } else {
 	    // throw new Error("unknown.gender.type.of.employee");
 	    // }
 	    stringBuilder.append(" ");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.person.tail"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.tail"));
 	    stringBuilder.append("\n");
 	    if (student.getGender() == Gender.MALE) {
-		stringBuilder.append(resourceBundle
-			.getString("message.declaration.registration.student.number.header.male"));
+		stringBuilder.append(resourceBundle.getString("message.declaration.registration.student.number.header.male"));
 	    } else if (student.getGender() == Gender.FEMALE) {
-		stringBuilder.append(resourceBundle
-			.getString("message.declaration.registration.student.number.header.female"));
+		stringBuilder.append(resourceBundle.getString("message.declaration.registration.student.number.header.female"));
 	    } else {
 		throw new Error("unknown.gender.type.of.student");
 	    }
@@ -111,66 +108,57 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    stringBuilder.append(StringUtils.upperCase(student.getName()));
 	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.comma"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.document.id.prefix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.document.id.prefix"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(enumerationBundle.getString(student.getIdDocumentType().getName()));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(student.getDocumentIdNumber());
 	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.comma"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.nationality.prefix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.nationality.prefix"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(student.getCountry().getName());
 	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.comma"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.father.prefix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.father.prefix"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(student.getNameOfFather());
 	    stringBuilder.append(" ");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.mother.prefix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.mother.prefix"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(student.getNameOfMother());
 	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.comma"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.execution.year.prefix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.execution.year.prefix"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(executionYear.getYear());
 	    stringBuilder.append(" ");
-	    stringBuilder
-		    .append(resourceBundle.getString("message.declaration.registration.is.enroled"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.is.enroled"));
 	    stringBuilder.append(" ");
-	    // stringBuilder.append(resourceBundle.getString("message.declaration.registration.was.enroled"));
+	    // stringBuilder.append(resourceBundle.getString(
+	    // "message.declaration.registration.was.enroled"));
 	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.in"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(curricularYear);
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.degree.prefix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.degree.prefix"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(enumerationBundle.getString(studentCurricularPlan
-		    .getDegreeCurricularPlan().getDegree().getTipoCurso().getName()));
+	    stringBuilder.append(enumerationBundle.getString(studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+		    .getTipoCurso().getName()));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(resourceBundle.getString("label.in"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(studentCurricularPlan.getRegistration().getDegreeName());
 	    stringBuilder.append(" ");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.enroled.courses.prefix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.enroled.courses.prefix"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(numberEnrolments);
 	    stringBuilder.append(" ");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.enroled.courses.posfix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.enroled.courses.posfix"));
 	    stringBuilder.append("\n \n");
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.location.prefix"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.location.prefix"));
 	    stringBuilder.append(" ");
 	    // TODO : fix this when the new spaces structure is introduced
-                // and the location of each campus is known.
+	    // and the location of each campus is known.
 	    if (studentCurricularPlan.getCurrentCampus().getName().equals("Alameda")) {
 		stringBuilder.append("Lisboa");
 	    } else {
@@ -191,10 +179,10 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    stringBuilder.append(" ");
 	    stringBuilder.append("\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
 	    // if (employee.getGender() == Gender.MALE) {
-	    // stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.male"));
+	    // stringBuilder.append(resourceBundle.getString(
+	    // "message.declaration.registration.person.title.male"));
 	    // } else if (employee.getGender() == Gender.FEMALE) {
-	    stringBuilder.append(resourceBundle
-		    .getString("message.declaration.registration.person.title.female"));
+	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.female"));
 	    // } else {
 	    // throw new Error("unknown.gender.type.of.employee");
 	    // }

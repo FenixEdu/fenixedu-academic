@@ -16,29 +16,28 @@ public class InfoPrecedence extends InfoObject {
     }
 
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
     public void copyFromDomain(Precedence precedence) {
-        super.copyFromDomain(precedence);
-        this.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(precedence
-                .getCurricularCourse()));
+	super.copyFromDomain(precedence);
+	this.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(precedence.getCurricularCourse()));
     }
 
     public static InfoPrecedence newInfoFromDomain(Precedence precedence) {
 
-        InfoPrecedence infoPrecedence = null;
+	InfoPrecedence infoPrecedence = null;
 
-        if (precedence != null) {
-            infoPrecedence = new InfoPrecedence();
-            infoPrecedence.copyFromDomain(precedence);
-        }
+	if (precedence != null) {
+	    infoPrecedence = new InfoPrecedence();
+	    infoPrecedence.copyFromDomain(precedence);
+	}
 
-        return infoPrecedence;
+	return infoPrecedence;
     }
 
 }

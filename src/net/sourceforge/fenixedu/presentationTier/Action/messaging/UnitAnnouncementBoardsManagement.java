@@ -19,40 +19,38 @@ import org.apache.struts.action.ActionMessages;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jun 26, 2006,3:07:21 PM
  * 
  */
-public class UnitAnnouncementBoardsManagement
-	extends
+public class UnitAnnouncementBoardsManagement extends
 	net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.announcements.UnitAnnouncementBoardsManagement {
-    
+
     @Override
-    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("returnMethod", "prepareEditAnnouncementBoard");
-        return super.addAnnouncement(mapping, form, request, response);
+	return super.addAnnouncement(mapping, form, request, response);
     }
 
     @Override
-    public ActionForward deleteAnnouncementBoard(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+    public ActionForward deleteAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
 	if (!getLoggedPerson(request).hasRole(RoleType.MANAGER)) {
-            ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
-                    "error.not.allowed.to.delete.board"));
-            saveErrors(request, actionMessages);
-            return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
-        }
-	
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.delete.board"));
+	    saveErrors(request, actionMessages);
+	    return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
+	}
+
 	try {
-	    ServiceUtils.executeService("DeleteAnnouncementBoard",
-		    new Object[] { this.getRequestedAnnouncementBoard(request) });
+	    ServiceUtils.executeService("DeleteAnnouncementBoard", new Object[] { this.getRequestedAnnouncementBoard(request) });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	    return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
 	}
-	
+
 	return this.start(mapping, actionForm, request, response);
     }
 }

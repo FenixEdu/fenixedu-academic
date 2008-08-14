@@ -31,86 +31,79 @@ import org.apache.struts.validator.DynaValidatorForm;
  * @author Luis Cruz & Sara Ribeiro
  */
 public class DefineExamCommentActionDA extends
-        FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+	FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        InfoExamsMap infoExamsMap = getExamsMap(request);
-        request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+	InfoExamsMap infoExamsMap = getExamsMap(request);
+	request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
 
-        Integer indexExecutionCourse = new Integer(request.getParameter("indexExecutionCourse"));
+	Integer indexExecutionCourse = new Integer(request.getParameter("indexExecutionCourse"));
 
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) infoExamsMap
-                .getExecutionCourses().get(indexExecutionCourse.intValue());
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) infoExamsMap.getExecutionCourses().get(
+		indexExecutionCourse.intValue());
 
-        Integer curricularYear = infoExecutionCourse.getCurricularYear();
+	Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
-        request.setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
+	request.setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
 
-        request.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
+	request.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
 
-        request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoExamsMap);
+	request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoExamsMap);
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-                .getAttribute(SessionConstants.EXECUTION_DEGREE);
-        request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal()
-                .toString());
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
 
-        request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionCourse
-                .getInfoExecutionPeriod().getIdInternal().toString());
+	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
+		.toString());
 
-        request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
-        request.setAttribute(SessionConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal()
-                .toString());
+	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+	request.setAttribute(SessionConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal().toString());
 
-        request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
-        ContextUtils.setCurricularYearContext(request);
+	request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
+	ContextUtils.setCurricularYearContext(request);
 
-        return mapping.findForward("defineExamComment");
+	return mapping.findForward("defineExamComment");
     }
 
-    public ActionForward define(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward define(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        DynaValidatorForm defineExamCommentForm = (DynaValidatorForm) form;
+	DynaValidatorForm defineExamCommentForm = (DynaValidatorForm) form;
 
-        String comment = (String) defineExamCommentForm.get("comment");
-        String executionCourseCode = request.getParameter("executionCourseCode");
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	String comment = (String) defineExamCommentForm.get("comment");
+	String executionCourseCode = request.getParameter("executionCourseCode");
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        // Define comment
-        Object argsDefineComment[] = { executionCourseCode, infoExecutionPeriod.getIdInternal(), comment };
-        try {
-            ServiceUtils.executeService("DefineExamComment", argsDefineComment);
-        } catch (ExistingServiceException ex) {
-            throw new ExistingActionException("O comentario do exame", ex);
-        }
+	// Define comment
+	Object argsDefineComment[] = { executionCourseCode, infoExecutionPeriod.getIdInternal(), comment };
+	try {
+	    ServiceUtils.executeService("DefineExamComment", argsDefineComment);
+	} catch (ExistingServiceException ex) {
+	    throw new ExistingActionException("O comentario do exame", ex);
+	}
 
-        return mapping.findForward("showExamsMap");
+	return mapping.findForward("showExamsMap");
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-                .getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 
-        List curricularYears = (List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
+	List curricularYears = (List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-        InfoExamsMap infoExamsMap;
-        try {
-            infoExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService(
-                    "ReadExamsMap", args);
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        return infoExamsMap;
+	Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
+	InfoExamsMap infoExamsMap;
+	try {
+	    infoExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadExamsMap", args);
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException(e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	return infoExamsMap;
     }
 
 }

@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 public class SelectedDismissal implements Serializable {
 
     private DomainReference<CurriculumGroup> curriculumGroup;
-    
+
     private DomainReference<CurricularCourse> curricularCourse;
-    
+
     public SelectedDismissal(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
-        setCurriculumGroup(curriculumGroup);
-        setCurricularCourse(curricularCourse);
+	setCurriculumGroup(curriculumGroup);
+	setCurricularCourse(curricularCourse);
     }
-    
+
     public CurriculumGroup getCurriculumGroup() {
 	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
     }
@@ -35,12 +35,13 @@ public class SelectedDismissal implements Serializable {
     public void setCurricularCourse(CurricularCourse curricularCourse) {
 	this.curricularCourse = (curricularCourse != null) ? new DomainReference<CurricularCourse>(curricularCourse) : null;
     }
-    
+
     public static String getKey(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
-        return CurriculumGroup.class.getName() + ":" + curriculumGroup.getIdInternal() + "," + CurricularCourse.class.getName() + ":" + curricularCourse.getIdInternal();
+	return CurriculumGroup.class.getName() + ":" + curriculumGroup.getIdInternal() + "," + CurricularCourse.class.getName()
+		+ ":" + curricularCourse.getIdInternal();
     }
 
     public boolean equals(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
-        return getCurriculumGroup() == curriculumGroup && getCurricularCourse() == curricularCourse;
+	return getCurriculumGroup() == curriculumGroup && getCurricularCourse() == curricularCourse;
     }
 }

@@ -19,8 +19,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 public class CriarTurno extends Service {
 
     public InfoShift run(InfoShiftEditor infoTurno) {
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());       
-    	final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());
-        return InfoShift.newInfoFromDomain(newShift);
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao()
+		.getIdInternal());
+	final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());
+	return InfoShift.newInfoFromDomain(newShift);
     }
 }

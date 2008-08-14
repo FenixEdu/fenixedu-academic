@@ -14,9 +14,8 @@ public class DiplomaRequestPR extends DiplomaRequestPR_Base {
 	super();
     }
 
-    public DiplomaRequestPR(final EntryType entryType, final EventType eventType,
-	    final DateTime startDate, final DateTime endDate,
-	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
+    public DiplomaRequestPR(final EntryType entryType, final EventType eventType, final DateTime startDate,
+	    final DateTime endDate, final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
     }
 

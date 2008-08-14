@@ -54,7 +54,7 @@ public class SpreadsheetXLSExporter {
 	}
 	workbook.write(outputStream);
     }
-    
+
     public void exportToXLSSheets(final OutputStream outputStream, final List<Spreadsheet> spreadsheets) throws IOException {
 	final HSSFWorkbook workbook = new HSSFWorkbook();
 	final ExcelStyle excelStyle = new ExcelStyle(workbook);

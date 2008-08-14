@@ -19,23 +19,23 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteDegreeCurricularPlans extends Service {
 
-	public List run(List degreeCurricularPlansIds) throws FenixServiceException{
-		Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
+    public List run(List degreeCurricularPlansIds) throws FenixServiceException {
+	Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
 
-		List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
+	List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
 
-		while (iter.hasNext()) {
+	while (iter.hasNext()) {
 
-			Integer degreeCurricularPlanId = (Integer) iter.next();
-			DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+	    Integer degreeCurricularPlanId = (Integer) iter.next();
+	    DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
-			try {
-				degreeCurricularPlan.delete();
-			} catch (DomainException e) {
-				undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
-			}
-		}
-
-		return undeletedDegreeCurricularPlansNames;
+	    try {
+		degreeCurricularPlan.delete();
+	    } catch (DomainException e) {
+		undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
+	    }
 	}
+
+	return undeletedDegreeCurricularPlansNames;
+    }
 }

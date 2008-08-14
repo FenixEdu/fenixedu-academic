@@ -277,15 +277,15 @@ public class TSDProcess extends TSDProcess_Base {
 	if (hasPermissionToTeacherManagement(userViewPerson)) {
 	    return Boolean.TRUE;
 	}
-	
-	if(hasPermissionToCoursesValuation(userViewPerson)) {
+
+	if (hasPermissionToCoursesValuation(userViewPerson)) {
 	    return Boolean.TRUE;
 	}
 
-	if(hasPermissionToTeachersValuation(userViewPerson)) {
+	if (hasPermissionToTeachersValuation(userViewPerson)) {
 	    return Boolean.TRUE;
 	}
-	
+
 	if (getIsMemberOfPhasesManagementGroup(userViewPerson)) {
 	    return Boolean.TRUE;
 	}

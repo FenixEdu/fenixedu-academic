@@ -20,8 +20,7 @@ public class DegreeCurricularPlansForDegree implements DataProvider {
 
 	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	if (optionalEnrollmentBean.hasDegree() && optionalEnrollmentBean.hasDegreeType()) {
-	    if (optionalEnrollmentBean.getDegree().getTipoCurso() == optionalEnrollmentBean
-		    .getDegreeType()) {
+	    if (optionalEnrollmentBean.getDegree().getTipoCurso() == optionalEnrollmentBean.getDegreeType()) {
 		result.addAll(optionalEnrollmentBean.getDegree().getDegreeCurricularPlansSet());
 	    } else {
 		optionalEnrollmentBean.setDegree(null);

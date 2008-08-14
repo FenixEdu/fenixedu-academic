@@ -28,36 +28,32 @@ import pt.ist.fenixWebFramework.security.UserView;
  * @author Ricardo Rodrigues
  */
 public class TfcManagementAction extends FenixDispatchAction {
-    public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        return mapping.findForward("");
+    public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	return mapping.findForward("");
     }
 
-    public ActionForward prepareTfcInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException, FenixFilterException {
+    public ActionForward prepareTfcInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Object args[] = { userView.getUtilizador() };
+	Object args[] = { userView.getUtilizador() };
 
-        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(
-                "ReadTeacherByUsername", args);
+	InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByUsername", args);
 
-        request.setAttribute("infoTeacher", infoTeacher);
+	request.setAttribute("infoTeacher", infoTeacher);
 
-        Integer degreeCurricularPlanId = new Integer(48);
-        Object[] args1 = { degreeCurricularPlanId };
-        List branches = null;
-        try {
-            branches = (List) ServiceUtils.executeService(
-                    "ReadBranchesByDegreeCurricularPlanId", args1);
-        } catch (FenixServiceException fse) {
-            throw new FenixActionException(fse);
-        }
+	Integer degreeCurricularPlanId = new Integer(48);
+	Object[] args1 = { degreeCurricularPlanId };
+	List branches = null;
+	try {
+	    branches = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlanId", args1);
+	} catch (FenixServiceException fse) {
+	    throw new FenixActionException(fse);
+	}
 
-        request.setAttribute("branchList", branches);
-        return mapping.findForward("submitTfcProposal");
+	request.setAttribute("branchList", branches);
+	return mapping.findForward("submitTfcProposal");
 
     }
 }

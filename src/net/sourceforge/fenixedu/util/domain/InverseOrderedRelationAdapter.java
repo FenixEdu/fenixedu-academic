@@ -12,10 +12,11 @@ import dml.runtime.RelationAdapter;
  * 
  * @author cfgi
  */
-public class InverseOrderedRelationAdapter<ObjectType, HolderType> extends RelationAdapter<ObjectType, HolderType> implements OrderedAdapter<HolderType, ObjectType> {
-    
+public class InverseOrderedRelationAdapter<ObjectType, HolderType> extends RelationAdapter<ObjectType, HolderType> implements
+	OrderedAdapter<HolderType, ObjectType> {
+
     private OrderedRelationAdapter<HolderType, ObjectType> adapter;
-    
+
     /**
      * Creates a new adaptor using the given selector to obtain the relation
      * elements and each element order.
@@ -24,9 +25,9 @@ public class InverseOrderedRelationAdapter<ObjectType, HolderType> extends Relat
      *            the selected used to retrieve the necessary information
      */
     public InverseOrderedRelationAdapter(OrdinalAccessor<HolderType, ObjectType> accessor) {
-        super();
-        
-        this.adapter = new OrderedRelationAdapter<HolderType, ObjectType>(accessor);
+	super();
+
+	this.adapter = new OrderedRelationAdapter<HolderType, ObjectType>(accessor);
     }
 
     /**
@@ -39,39 +40,39 @@ public class InverseOrderedRelationAdapter<ObjectType, HolderType> extends Relat
      *            the name of the slot containing the relation in type T2
      */
     public InverseOrderedRelationAdapter(String slotName, String relationName) {
-        super();
-        
-        this.adapter = new OrderedRelationAdapter<HolderType, ObjectType>(relationName, slotName);
+	super();
+
+	this.adapter = new OrderedRelationAdapter<HolderType, ObjectType>(relationName, slotName);
     }
-    
+
     @Override
     public void beforeAdd(ObjectType object, HolderType holder) {
-        super.beforeAdd(object, holder);
-        
-        this.adapter.beforeAdd(holder, object);
+	super.beforeAdd(object, holder);
+
+	this.adapter.beforeAdd(holder, object);
     }
 
     @Override
     public void afterRemove(ObjectType object, HolderType holder) {
-        super.afterRemove(object, holder);
-        
-        this.adapter.afterRemove(holder, object);
+	super.afterRemove(object, holder);
+
+	this.adapter.afterRemove(holder, object);
     }
 
     public void orderChanged(HolderType holder, ObjectType object) {
-        this.adapter.orderChanged(holder, object);
+	this.adapter.orderChanged(holder, object);
     }
 
     public void updateOrder(HolderType holder, Collection<ObjectType> objects) {
-        this.adapter.updateOrder(holder, objects);
+	this.adapter.updateOrder(holder, objects);
     }
 
     public ObjectType getNext(HolderType holder, ObjectType object) {
-        return this.adapter.getNext(holder, object);
+	return this.adapter.getNext(holder, object);
     }
 
     public ObjectType getPrevious(HolderType holder, ObjectType object) {
-        return this.adapter.getPrevious(holder, object);
+	return this.adapter.getPrevious(holder, object);
     }
 
 }

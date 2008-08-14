@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain;
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public enum GuiderType {
 

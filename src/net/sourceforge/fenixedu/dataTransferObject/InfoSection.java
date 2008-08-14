@@ -10,7 +10,7 @@ import org.joda.time.YearMonthDay;
  * object.
  * 
  * @author Joao Pereira
- *  
+ * 
  */
 
 public class InfoSection extends InfoObject implements Comparable, ISiteComponent {
@@ -31,7 +31,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      */
 
     public InfoSection() {
-        setSectionDepth(calculateDepth());
+	setSectionDepth(calculateDepth());
     }
 
     /**
@@ -40,23 +40,22 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
 
     public InfoSection(String name, Integer sectionOrder, InfoSite infoSite) {
 
-        this.name = name;
-        this.sectionOrder = sectionOrder;
-        this.infoSite = infoSite;
-        setSectionDepth(calculateDepth());
+	this.name = name;
+	this.sectionOrder = sectionOrder;
+	this.infoSite = infoSite;
+	setSectionDepth(calculateDepth());
     }
 
     /**
      * Construtor
      */
 
-    public InfoSection(String name, Integer sectionOrder, InfoSite infoSite,
-            InfoSection infoSuperiorSection) {
-        this.name = name;
-        this.sectionOrder = sectionOrder;
-        this.infoSite = infoSite;
-        this.infoSuperiorSection = infoSuperiorSection;
-        setSectionDepth(calculateDepth());
+    public InfoSection(String name, Integer sectionOrder, InfoSite infoSite, InfoSection infoSuperiorSection) {
+	this.name = name;
+	this.sectionOrder = sectionOrder;
+	this.infoSite = infoSite;
+	this.infoSuperiorSection = infoSuperiorSection;
+	setSectionDepth(calculateDepth());
 
     }
 
@@ -64,7 +63,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      * @return String
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
@@ -74,15 +73,15 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      *            The name to set
      */
     public void setName(String name) {
-        this.name = name;
-        setSectionDepth(calculateDepth());
+	this.name = name;
+	setSectionDepth(calculateDepth());
     }
 
     /**
      * @return Integer
      */
     public Integer getSectionOrder() {
-        return sectionOrder;
+	return sectionOrder;
     }
 
     /**
@@ -92,15 +91,15 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      *            The sectionOrder to set
      */
     public void setSectionOrder(Integer sectionOrder) {
-        this.sectionOrder = sectionOrder;
-        setSectionDepth(calculateDepth());
+	this.sectionOrder = sectionOrder;
+	setSectionDepth(calculateDepth());
     }
 
     /**
      * @return Date
      */
     public YearMonthDay getLastModifiedDate() {
-        return lastModifiedDate;
+	return lastModifiedDate;
     }
 
     /**
@@ -110,15 +109,15 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      *            The lastModifiedDate to set
      */
     public void setLastModifiedDate(YearMonthDay lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-        setSectionDepth(calculateDepth());
+	this.lastModifiedDate = lastModifiedDate;
+	setSectionDepth(calculateDepth());
     }
 
     /**
      * @return InfoSite
      */
     public InfoSite getInfoSite() {
-        return infoSite;
+	return infoSite;
     }
 
     /**
@@ -128,15 +127,15 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      *            The infoSite to set
      */
     public void setInfoSite(InfoSite infoSite) {
-        this.infoSite = infoSite;
-        setSectionDepth(calculateDepth());
+	this.infoSite = infoSite;
+	setSectionDepth(calculateDepth());
     }
 
     /**
      * @return InfoSection
      */
     public InfoSection getSuperiorInfoSection() {
-        return infoSuperiorSection;
+	return infoSuperiorSection;
     }
 
     /**
@@ -146,57 +145,55 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      *            The infoSite to set
      */
     public void setSuperiorInfoSection(InfoSection infoSuperiorSection) {
-        this.infoSuperiorSection = infoSuperiorSection;
-        setSectionDepth(calculateDepth());
+	this.infoSuperiorSection = infoSuperiorSection;
+	setSectionDepth(calculateDepth());
     }
 
     /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String result = "\n[INFOSECTION";
-        result += ", internalCode=" + getIdInternal();
-        result += ", name=" + getName();
-        //		result += ", sectionOrder=" + getSectionOrder();
-        //		result += ", sectionDepth=" + getSectionDepth();
-        result += ", superiorInfoSection=" + getSuperiorInfoSection() + "\n";
-        result += ", infoSite=\n\t\t"
-                + (getInfoSite() != null ? getInfoSite().getIdInternal().toString() : "null");
-        result += "]";
-        return result;
+	String result = "\n[INFOSECTION";
+	result += ", internalCode=" + getIdInternal();
+	result += ", name=" + getName();
+	// result += ", sectionOrder=" + getSectionOrder();
+	// result += ", sectionDepth=" + getSectionDepth();
+	result += ", superiorInfoSection=" + getSuperiorInfoSection() + "\n";
+	result += ", infoSite=\n\t\t" + (getInfoSite() != null ? getInfoSite().getIdInternal().toString() : "null");
+	result += "]";
+	return result;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoSection) {
-            InfoSection infoSection = (InfoSection) obj;
+	boolean resultado = false;
+	if (obj instanceof InfoSection) {
+	    InfoSection infoSection = (InfoSection) obj;
 
-            resultado = getName().equals(infoSection.getName())
-                    && getSectionOrder() == infoSection.getSectionOrder();
+	    resultado = getName().equals(infoSection.getName()) && getSectionOrder() == infoSection.getSectionOrder();
 
-            if (getInfoSite() != null && (infoSection.getInfoSite() != null))
-                resultado = resultado && getInfoSite().equals(infoSection.getInfoSite());
-            else
-                resultado = resultado && (getInfoSite() == null && infoSection.getInfoSite() == null);
-        }
-        return resultado;
+	    if (getInfoSite() != null && (infoSection.getInfoSite() != null))
+		resultado = resultado && getInfoSite().equals(infoSection.getInfoSite());
+	    else
+		resultado = resultado && (getInfoSite() == null && infoSection.getInfoSite() == null);
+	}
+	return resultado;
     }
 
     public Integer calculateDepth() {
-        InfoSection section = this;
-        int depth = 0;
-        while (section.getSuperiorInfoSection() != null) {
-            depth++;
-            section = section.getSuperiorInfoSection();
-        }
-        return new Integer(depth);
+	InfoSection section = this;
+	int depth = 0;
+	while (section.getSuperiorInfoSection() != null) {
+	    depth++;
+	    section = section.getSuperiorInfoSection();
+	}
+	return new Integer(depth);
     }
 
     /**
      * @return int
      */
     public Integer getSectionDepth() {
-        return sectionDepth;
+	return sectionDepth;
     }
 
     /**
@@ -206,7 +203,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      *            The depth to set
      */
     public void setSectionDepth(Integer depth) {
-        this.sectionDepth = depth;
+	this.sectionDepth = depth;
     }
 
     /*
@@ -216,52 +213,54 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      */
     public int compareTo(Object arg0) {
 
-        InfoSection section = (InfoSection) arg0;
+	InfoSection section = (InfoSection) arg0;
 
-        if (getSectionDepth().intValue() == section.getSectionDepth().intValue()) {
-            if (getSuperiorInfoSection() == null) {
-                return getSectionOrder().intValue() - section.getSectionOrder().intValue();
-            }
-            if (getSuperiorInfoSection().equals(section.getSuperiorInfoSection())) {
-                return getSectionOrder().intValue() - section.getSectionOrder().intValue();
-            }
+	if (getSectionDepth().intValue() == section.getSectionDepth().intValue()) {
+	    if (getSuperiorInfoSection() == null) {
+		return getSectionOrder().intValue() - section.getSectionOrder().intValue();
+	    }
+	    if (getSuperiorInfoSection().equals(section.getSuperiorInfoSection())) {
+		return getSectionOrder().intValue() - section.getSectionOrder().intValue();
+	    }
 
-            return getSuperiorInfoSection().compareTo(section.getSuperiorInfoSection());
+	    return getSuperiorInfoSection().compareTo(section.getSuperiorInfoSection());
 
-        }
-        if (getSectionDepth().intValue() > section.getSectionDepth().intValue()) {
-            int aux = getSuperiorInfoSection().compareTo(section);
-            if (aux == 0) {
-                return 1;
-            }
-            return aux;
+	}
+	if (getSectionDepth().intValue() > section.getSectionDepth().intValue()) {
+	    int aux = getSuperiorInfoSection().compareTo(section);
+	    if (aux == 0) {
+		return 1;
+	    }
+	    return aux;
 
-        }
-        return compareTo(section.getSuperiorInfoSection());
+	}
+	return compareTo(section.getSuperiorInfoSection());
 
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(Section section) {
-        super.copyFromDomain(section);
-        if (section != null) {
-            setName(section.getName().getContent(Language.pt));
-            setSectionOrder(section.getSectionOrder());
-            setLastModifiedDate(section.getModificationDate());
-            setSectionDepth(calculateDepth());
-        }
+	super.copyFromDomain(section);
+	if (section != null) {
+	    setName(section.getName().getContent(Language.pt));
+	    setSectionOrder(section.getSectionOrder());
+	    setLastModifiedDate(section.getModificationDate());
+	    setSectionDepth(calculateDepth());
+	}
     }
 
     public static InfoSection newInfoFromDomain(Section section) {
-        InfoSection infoSection = null;
-        if (section != null) {
-            infoSection = new InfoSection();
-            infoSection.copyFromDomain(section);
-        }
-        return infoSection;
+	InfoSection infoSection = null;
+	if (section != null) {
+	    infoSection = new InfoSection();
+	    infoSection.copyFromDomain(section);
+	}
+	return infoSection;
     }
 }

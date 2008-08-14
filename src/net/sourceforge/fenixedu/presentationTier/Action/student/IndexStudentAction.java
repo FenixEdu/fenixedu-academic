@@ -28,31 +28,31 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author João Fialho & Rita Ferreira
  * 
- *  
+ * 
  */
 public class IndexStudentAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        HttpSession session = getSession(request);
-        IUserView userView = UserView.getUser();
+	HttpSession session = getSession(request);
+	IUserView userView = UserView.getUser();
 
-        InfoStudent student = null;
-        try {
-            Object args[] = { userView.getUtilizador() };
-            student = (InfoStudent) ServiceUtils.executeService("ReadStudentByUsername", args);
-            //TODO: fix the situation where the student is null
-            if (student == null) {
-                throw new InvalidSessionActionException();
-            }
+	InfoStudent student = null;
+	try {
+	    Object args[] = { userView.getUtilizador() };
+	    student = (InfoStudent) ServiceUtils.executeService("ReadStudentByUsername", args);
+	    // TODO: fix the situation where the student is null
+	    if (student == null) {
+		throw new InvalidSessionActionException();
+	    }
 
-            session.setAttribute(SessionConstants.INFO_STUDENT_KEY, student);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        request.setAttribute("infoStudent", student);
-        return mapping.findForward("Success");
+	    session.setAttribute(SessionConstants.INFO_STUDENT_KEY, student);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	request.setAttribute("infoStudent", student);
+	return mapping.findForward("Success");
     }
 
 }

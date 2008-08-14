@@ -34,147 +34,146 @@ public class UIAutoCompleteTag extends UIComponentTag {
     private String size;
 
     public String getSize() {
-        return size;
+	return size;
     }
 
     public void setSize(String size) {
-        this.size = size;
+	this.size = size;
     }
 
     public String getAutoCompleteItemsStyleClass() {
-        return autoCompleteItemsStyleClass;
+	return autoCompleteItemsStyleClass;
     }
 
     public void setAutoCompleteItemsStyleClass(String autoCompleteItemsStyleClass) {
-        this.autoCompleteItemsStyleClass = autoCompleteItemsStyleClass;
+	this.autoCompleteItemsStyleClass = autoCompleteItemsStyleClass;
     }
 
     public String getRequired() {
-        return required;
+	return required;
     }
 
     public void setRequired(String required) {
-        this.required = required;
+	this.required = required;
     }
 
     public String getValue() {
-        return value;
+	return value;
     }
 
     public void setValue(String value) {
-        this.value = value;
+	this.value = value;
     }
 
     public String getAutoCompleteStyleClass() {
-        return autoCompleteStyleClass;
+	return autoCompleteStyleClass;
     }
 
     public void setAutoCompleteStyleClass(String autoCompleteStyleClass) {
-        this.autoCompleteStyleClass = autoCompleteStyleClass;
+	this.autoCompleteStyleClass = autoCompleteStyleClass;
     }
 
     public String getClassName() {
-        return className;
+	return className;
     }
 
     public void setClassName(String className) {
-        this.className = className;
+	this.className = className;
     }
 
     public String getInputTextArgName() {
-        return inputTextArgName;
+	return inputTextArgName;
     }
 
     public void setInputTextArgName(String inputTextArgName) {
-        this.inputTextArgName = inputTextArgName;
+	this.inputTextArgName = inputTextArgName;
     }
 
     public String getLabelField() {
-        return labelField;
+	return labelField;
     }
 
     public void setLabelField(String labelField) {
-        this.labelField = labelField;
+	this.labelField = labelField;
     }
 
     public String getServiceArgs() {
-        return serviceArgs;
+	return serviceArgs;
     }
 
     public void setServiceArgs(String serviceArgs) {
-        this.serviceArgs = serviceArgs;
+	this.serviceArgs = serviceArgs;
     }
 
     public String getServiceName() {
-        return serviceName;
+	return serviceName;
     }
 
     public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+	this.serviceName = serviceName;
     }
 
     public String getTextFieldStyleClass() {
-        return textFieldStyleClass;
+	return textFieldStyleClass;
     }
 
     public void setTextFieldStyleClass(String textFieldStyleClass) {
-        this.textFieldStyleClass = textFieldStyleClass;
+	this.textFieldStyleClass = textFieldStyleClass;
     }
 
     public String getValueField() {
-        return valueField;
+	return valueField;
     }
 
     public void setValueField(String valueField) {
-        this.valueField = valueField;
+	this.valueField = valueField;
     }
 
     @Override
     public String getComponentType() {
 
-        return COMPONENT_TYPE;
+	return COMPONENT_TYPE;
     }
 
     @Override
     public String getRendererType() {
-        return null;
+	return null;
     }
 
     @Override
     protected void setProperties(UIComponent component) {
 
-        super.setProperties(component);
+	super.setProperties(component);
 
-        JsfTagUtils.setString(component, "autoCompleteStyleClass", this.autoCompleteStyleClass);
-        JsfTagUtils
-                .setString(component, "autoCompleteItemsStyleClass", this.autoCompleteItemsStyleClass);
-        JsfTagUtils.setString(component, "className", this.className);
-        JsfTagUtils.setString(component, "inputTextArgName", this.inputTextArgName);
-        JsfTagUtils.setString(component, "labelField", this.labelField);
-        JsfTagUtils.setString(component, "valueField", this.valueField);
-        JsfTagUtils.setString(component, "serviceArgs", this.serviceArgs);
-        JsfTagUtils.setString(component, "serviceName", this.serviceName);
-        JsfTagUtils.setString(component, "textFieldStyleClass", this.textFieldStyleClass);
-        JsfTagUtils.setInteger(component, "value", this.value);
-        JsfTagUtils.setBoolean(component, "required", this.required);
-        JsfTagUtils.setInteger(component, "size", this.size);
+	JsfTagUtils.setString(component, "autoCompleteStyleClass", this.autoCompleteStyleClass);
+	JsfTagUtils.setString(component, "autoCompleteItemsStyleClass", this.autoCompleteItemsStyleClass);
+	JsfTagUtils.setString(component, "className", this.className);
+	JsfTagUtils.setString(component, "inputTextArgName", this.inputTextArgName);
+	JsfTagUtils.setString(component, "labelField", this.labelField);
+	JsfTagUtils.setString(component, "valueField", this.valueField);
+	JsfTagUtils.setString(component, "serviceArgs", this.serviceArgs);
+	JsfTagUtils.setString(component, "serviceName", this.serviceName);
+	JsfTagUtils.setString(component, "textFieldStyleClass", this.textFieldStyleClass);
+	JsfTagUtils.setInteger(component, "value", this.value);
+	JsfTagUtils.setBoolean(component, "required", this.required);
+	JsfTagUtils.setInteger(component, "size", this.size);
 
     }
 
     @Override
     public void release() {
-        super.release();
+	super.release();
 
-        this.value = null;
-        this.required = null;
-        this.serviceArgs = null;
-        this.serviceName = null;
-        this.textFieldStyleClass = null;
-        this.valueField = null;
-        this.labelField = null;
-        this.inputTextArgName = null;
-        this.className = null;
-        this.autoCompleteStyleClass = null;
+	this.value = null;
+	this.required = null;
+	this.serviceArgs = null;
+	this.serviceName = null;
+	this.textFieldStyleClass = null;
+	this.valueField = null;
+	this.labelField = null;
+	this.inputTextArgName = null;
+	this.className = null;
+	this.autoCompleteStyleClass = null;
 
     }
 

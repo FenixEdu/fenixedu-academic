@@ -58,11 +58,11 @@ public class MenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the CSS classes to be used in the entry that corresponds to the
-         * selected functionality.
-         * 
-         * @property
-         */
+     * Sets the CSS classes to be used in the entry that corresponds to the
+     * selected functionality.
+     * 
+     * @property
+     */
     public void setSelectedClasses(String selectedClasses) {
 	this.selectedClasses = selectedClasses;
     }
@@ -72,11 +72,11 @@ public class MenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the CSS style to be applied to the menu entry that corresponds
-         * to the selected funcitonality
-         * 
-         * @property
-         */
+     * Sets the CSS style to be applied to the menu entry that corresponds to
+     * the selected funcitonality
+     * 
+     * @property
+     */
     public void setSelectedStyle(String selectedStyle) {
 	this.selectedStyle = selectedStyle;
     }
@@ -86,11 +86,11 @@ public class MenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Selects the CSS classes to apply to each level of the menu. The first
-         * level is level 0.
-         * 
-         * @property
-         */
+     * Selects the CSS classes to apply to each level of the menu. The first
+     * level is level 0.
+     * 
+     * @property
+     */
     public void setLevelClasses(String index, String value) {
 	this.levelClasses.put(Integer.parseInt(index), value);
     }
@@ -100,10 +100,10 @@ public class MenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Selects the CSS style to apply to each level of the menu.
-         * 
-         * @property
-         */
+     * Selects the CSS style to apply to each level of the menu.
+     * 
+     * @property
+     */
     public void getLevelStyle(String index, String value) {
 	this.levelStyle.put(Integer.parseInt(index), value);
     }
@@ -113,11 +113,11 @@ public class MenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Chooses the CSS classes to apply to the an entry corresponding to a
-         * module.
-         * 
-         * @property
-         */
+     * Chooses the CSS classes to apply to the an entry corresponding to a
+     * module.
+     * 
+     * @property
+     */
     public void setModuleClasses(String moduleClasses) {
 	this.moduleClasses = moduleClasses;
     }
@@ -127,10 +127,10 @@ public class MenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the CSS style to apply to an a module entry.
-         * 
-         * @property
-         */
+     * Sets the CSS style to apply to an a module entry.
+     * 
+     * @property
+     */
     public void setModuleStyle(String moduleStyle) {
 	this.moduleStyle = moduleStyle;
     }
@@ -191,7 +191,8 @@ public class MenuRenderer extends OutputRenderer {
 		    }
 
 		    boolean selected = false;
-		    if (context.getSelectedContent() != null && context.getSelectedContent().getContentId().equals(entry.getEntryId())) {
+		    if (context.getSelectedContent() != null
+			    && context.getSelectedContent().getContentId().equals(entry.getEntryId())) {
 			selected = true;
 		    } else {
 			String nodeId = context.getRequest().getParameter("nodeID");
@@ -218,12 +219,12 @@ public class MenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Creates a component that shows the functionality name, possibly in a
-         * link to the functionality's public path. If the fuctionality is
-         * parameterized then the required parameters are appended to the link.
-         */
-    public static HtmlComponent getFunctionalityNameComponent(FilterFunctionalityContext context,
-	    MenuEntry entry, boolean canMakeLink, final Collection<String> subPath) {
+     * Creates a component that shows the functionality name, possibly in a link
+     * to the functionality's public path. If the fuctionality is parameterized
+     * then the required parameters are appended to the link.
+     */
+    public static HtmlComponent getFunctionalityNameComponent(FilterFunctionalityContext context, MenuEntry entry,
+	    boolean canMakeLink, final Collection<String> subPath) {
 	HtmlText text = new HtmlText(entry.getName().getContent());
 	text.setFace(Face.STANDARD);
 
@@ -232,7 +233,8 @@ public class MenuRenderer extends OutputRenderer {
 	String path = entry.getPath();
 	if (path != null && canMakeLink && entry.isAvailable()) {
 	    final Content content = entry.getReferingContent();
-	    final String linkPrefix = content.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+	    final String linkPrefix = content.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+		    : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
 	    HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
 
 	    link.setContextRelative(false);

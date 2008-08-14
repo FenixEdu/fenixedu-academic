@@ -15,41 +15,40 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadFinalDegreeWorkProposalSubmisionPeriod extends Service {
 
-    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException{
+    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException {
 
-        InfoScheduleing infoScheduleing = null;
+	InfoScheduleing infoScheduleing = null;
 
-        if (executionDegreeOID != null) {
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+	if (executionDegreeOID != null) {
+	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
-            if (executionDegree != null) {
-                Scheduleing scheduleing = executionDegree.getScheduling();
+	    if (executionDegree != null) {
+		Scheduleing scheduleing = executionDegree.getScheduling();
 
-                if (scheduleing != null) {
-                    infoScheduleing = new InfoScheduleing();
-                    infoScheduleing.setIdInternal(scheduleing.getIdInternal());
-                    infoScheduleing.setStartOfProposalPeriod(scheduleing.getStartOfProposalPeriod());
-                    infoScheduleing.setEndOfProposalPeriod(scheduleing.getEndOfProposalPeriod());
-                    infoScheduleing.setStartOfCandidacyPeriod(scheduleing.getStartOfCandidacyPeriod());
-                    infoScheduleing.setEndOfCandidacyPeriod(scheduleing.getEndOfCandidacyPeriod());
-                    infoScheduleing.setMinimumNumberOfCompletedCourses(scheduleing
-                            .getMinimumNumberOfCompletedCourses());
-                    infoScheduleing.setMaximumCurricularYearToCountCompletedCourses(
-                    		scheduleing.getMaximumCurricularYearToCountCompletedCourses());
-                    infoScheduleing.setMinimumCompletedCurricularYear(
-                    		scheduleing.getMinimumCompletedCurricularYear());
-                    infoScheduleing.setMinimumNumberOfStudents(scheduleing.getMinimumNumberOfStudents());
-                    infoScheduleing.setMaximumNumberOfStudents(scheduleing.getMaximumNumberOfStudents());
-                    infoScheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(scheduleing
-                            .getMaximumNumberOfProposalCandidaciesPerGroup());
-                    infoScheduleing.setAttributionByTeachers(scheduleing.getAttributionByTeachers());
-                    infoScheduleing.setAllowSimultaneousCoorientationAndCompanion(scheduleing.getAllowSimultaneousCoorientationAndCompanion());
-                    infoScheduleing.setMinimumCompletedCreditsSecondCycle(scheduleing.getMinimumCompletedCreditsSecondCycle());
-                }
-            }
-        }
+		if (scheduleing != null) {
+		    infoScheduleing = new InfoScheduleing();
+		    infoScheduleing.setIdInternal(scheduleing.getIdInternal());
+		    infoScheduleing.setStartOfProposalPeriod(scheduleing.getStartOfProposalPeriod());
+		    infoScheduleing.setEndOfProposalPeriod(scheduleing.getEndOfProposalPeriod());
+		    infoScheduleing.setStartOfCandidacyPeriod(scheduleing.getStartOfCandidacyPeriod());
+		    infoScheduleing.setEndOfCandidacyPeriod(scheduleing.getEndOfCandidacyPeriod());
+		    infoScheduleing.setMinimumNumberOfCompletedCourses(scheduleing.getMinimumNumberOfCompletedCourses());
+		    infoScheduleing.setMaximumCurricularYearToCountCompletedCourses(scheduleing
+			    .getMaximumCurricularYearToCountCompletedCourses());
+		    infoScheduleing.setMinimumCompletedCurricularYear(scheduleing.getMinimumCompletedCurricularYear());
+		    infoScheduleing.setMinimumNumberOfStudents(scheduleing.getMinimumNumberOfStudents());
+		    infoScheduleing.setMaximumNumberOfStudents(scheduleing.getMaximumNumberOfStudents());
+		    infoScheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(scheduleing
+			    .getMaximumNumberOfProposalCandidaciesPerGroup());
+		    infoScheduleing.setAttributionByTeachers(scheduleing.getAttributionByTeachers());
+		    infoScheduleing.setAllowSimultaneousCoorientationAndCompanion(scheduleing
+			    .getAllowSimultaneousCoorientationAndCompanion());
+		    infoScheduleing.setMinimumCompletedCreditsSecondCycle(scheduleing.getMinimumCompletedCreditsSecondCycle());
+		}
+	    }
+	}
 
-        return infoScheduleing;
+	return infoScheduleing;
     }
 
 }

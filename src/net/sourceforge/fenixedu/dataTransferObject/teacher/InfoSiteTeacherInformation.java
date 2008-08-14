@@ -21,7 +21,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoSiteTeacherInformation extends DataTranferObject implements ISiteComponent {
     private InfoTeacher infoTeacher;
@@ -67,30 +67,29 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
     private List infoCientificPublications;
 
     private List infoDidaticPublications;
-    
+
     private List<PersonFunction> personFunctions;
 
-    
     public List<PersonFunction> getPersonFunctions() {
-        return personFunctions;
+	return personFunctions;
     }
 
     public void setPersonFunctions(List<PersonFunction> personFunctions) {
-        this.personFunctions = personFunctions;
+	this.personFunctions = personFunctions;
     }
 
     /**
      * @return Returns the infoCientificPublications.
      */
     public List getInfoCientificPublications() {
-        return infoCientificPublications;
+	return infoCientificPublications;
     }
 
     /**
      * @return Returns the infoDidaticPublications.
      */
     public List getInfoDidaticPublications() {
-        return infoDidaticPublications;
+	return infoDidaticPublications;
     }
 
     /**
@@ -98,7 +97,7 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoCientificPublications to set.
      */
     public void setInfoCientificPublications(List infoCientificPublications) {
-        this.infoCientificPublications = infoCientificPublications;
+	this.infoCientificPublications = infoCientificPublications;
     }
 
     /**
@@ -106,7 +105,7 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoDidaticPublications to set.
      */
     public void setInfoDidaticPublications(List infoDidaticPublications) {
-        this.infoDidaticPublications = infoDidaticPublications;
+	this.infoDidaticPublications = infoDidaticPublications;
     }
 
     /**
@@ -116,48 +115,48 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
     }
 
     public Date getLastModificationDate() {
-        List dates = new ArrayList();
-        dates.add(infoServiceProviderRegime.getLastModificationDate());
-        dates.add(infoWeeklyOcupation.getLastModificationDate());
-        dates.add(infoDegreeOrientation.getLastModificationDate());
-        dates.add(infoMasterOrientation.getLastModificationDate());
-        dates.add(infoPhdOrientation.getLastModificationDate());
-        dates.add(infoComunicationPublicationsNumber.getLastModificationDate());
-        dates.add(infoMagArticlePublicationsNumber.getLastModificationDate());
-        dates.add(infoAuthorBookPublicationsNumber.getLastModificationDate());
-        dates.add(infoEditBookPublicationsNumber.getLastModificationDate());
-        dates.add(infoArticleChapterPublicationsNumber.getLastModificationDate());
-        dates.addAll(CollectionUtils.collect(infoProfessionalCareers, new Transformer() {
-            public Object transform(Object arg0) {
-                InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer) arg0;
-                return infoProfessionalCareer.getLastModificationDate();
-            }
-        }));
-        dates.addAll(CollectionUtils.collect(infoTeachingCareers, new Transformer() {
-            public Object transform(Object arg0) {
-                InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) arg0;
-                return infoTeachingCareer.getLastModificationDate();
-            }
-        }));
-        dates.addAll(CollectionUtils.collect(infoExternalActivities, new Transformer() {
-            public Object transform(Object arg0) {
-                InfoExternalActivity infoExternalActivity = (InfoExternalActivity) arg0;
-                return infoExternalActivity.getLastModificationDate();
-            }
-        }));
-        dates.addAll(CollectionUtils.collect(infoOldCientificPublications, new Transformer() {
-            public Object transform(Object arg0) {
-                InfoOldPublication infoOldPublication = (InfoOldPublication) arg0;
-                return infoOldPublication.getLastModificationDate();
-            }
-        }));
-        dates.addAll(CollectionUtils.collect(infoOldDidacticPublications, new Transformer() {
-            public Object transform(Object arg0) {
-                InfoOldPublication infoOldPublication = (InfoOldPublication) arg0;
-                return infoOldPublication.getLastModificationDate();
-            }
-        }));
-        return getMostRecentDate(dates);
+	List dates = new ArrayList();
+	dates.add(infoServiceProviderRegime.getLastModificationDate());
+	dates.add(infoWeeklyOcupation.getLastModificationDate());
+	dates.add(infoDegreeOrientation.getLastModificationDate());
+	dates.add(infoMasterOrientation.getLastModificationDate());
+	dates.add(infoPhdOrientation.getLastModificationDate());
+	dates.add(infoComunicationPublicationsNumber.getLastModificationDate());
+	dates.add(infoMagArticlePublicationsNumber.getLastModificationDate());
+	dates.add(infoAuthorBookPublicationsNumber.getLastModificationDate());
+	dates.add(infoEditBookPublicationsNumber.getLastModificationDate());
+	dates.add(infoArticleChapterPublicationsNumber.getLastModificationDate());
+	dates.addAll(CollectionUtils.collect(infoProfessionalCareers, new Transformer() {
+	    public Object transform(Object arg0) {
+		InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer) arg0;
+		return infoProfessionalCareer.getLastModificationDate();
+	    }
+	}));
+	dates.addAll(CollectionUtils.collect(infoTeachingCareers, new Transformer() {
+	    public Object transform(Object arg0) {
+		InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) arg0;
+		return infoTeachingCareer.getLastModificationDate();
+	    }
+	}));
+	dates.addAll(CollectionUtils.collect(infoExternalActivities, new Transformer() {
+	    public Object transform(Object arg0) {
+		InfoExternalActivity infoExternalActivity = (InfoExternalActivity) arg0;
+		return infoExternalActivity.getLastModificationDate();
+	    }
+	}));
+	dates.addAll(CollectionUtils.collect(infoOldCientificPublications, new Transformer() {
+	    public Object transform(Object arg0) {
+		InfoOldPublication infoOldPublication = (InfoOldPublication) arg0;
+		return infoOldPublication.getLastModificationDate();
+	    }
+	}));
+	dates.addAll(CollectionUtils.collect(infoOldDidacticPublications, new Transformer() {
+	    public Object transform(Object arg0) {
+		InfoOldPublication infoOldPublication = (InfoOldPublication) arg0;
+		return infoOldPublication.getLastModificationDate();
+	    }
+	}));
+	return getMostRecentDate(dates);
     }
 
     /**
@@ -165,34 +164,34 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      * @return
      */
     private Date getMostRecentDate(List dates) {
-        Date minDate = new Date(Long.MIN_VALUE);
-        Date maxDate = minDate;
-        Iterator iter = dates.iterator();
-        while (iter.hasNext()) {
-            Date date = (Date) iter.next();
-            if (date == null)
-                continue;
-            if (date.getTime() > maxDate.getTime())
-                maxDate = date;
-        }
-        // if the minDate is equal to maxDate then the information wasn't filled
-        if (minDate == maxDate)
-            maxDate = null;
-        return maxDate;
+	Date minDate = new Date(Long.MIN_VALUE);
+	Date maxDate = minDate;
+	Iterator iter = dates.iterator();
+	while (iter.hasNext()) {
+	    Date date = (Date) iter.next();
+	    if (date == null)
+		continue;
+	    if (date.getTime() > maxDate.getTime())
+		maxDate = date;
+	}
+	// if the minDate is equal to maxDate then the information wasn't filled
+	if (minDate == maxDate)
+	    maxDate = null;
+	return maxDate;
     }
 
     /**
      * @return Returns the infoExternalActivities.
      */
     public List getInfoExternalActivities() {
-        return infoExternalActivities;
+	return infoExternalActivities;
     }
 
     /**
      * @return Returns the infoLecturingExecutionCourses.
      */
     public List getInfoLecturingExecutionCourses() {
-        return infoLecturingExecutionCourses;
+	return infoLecturingExecutionCourses;
     }
 
     /**
@@ -200,14 +199,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoLecturingExecutionCourses to set.
      */
     public void setInfoLecturingExecutionCourses(List infoLecturingExecutionCourses) {
-        this.infoLecturingExecutionCourses = infoLecturingExecutionCourses;
+	this.infoLecturingExecutionCourses = infoLecturingExecutionCourses;
     }
 
     /**
      * @return Returns the infoResponsibleExecutionCourses.
      */
     public List getInfoResponsibleExecutionCourses() {
-        return infoResponsibleExecutionCourses;
+	return infoResponsibleExecutionCourses;
     }
 
     /**
@@ -215,7 +214,7 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoResponsibleExecutionCourses to set.
      */
     public void setInfoResponsibleExecutionCourses(List infoResponsibleExecutionCourses) {
-        this.infoResponsibleExecutionCourses = infoResponsibleExecutionCourses;
+	this.infoResponsibleExecutionCourses = infoResponsibleExecutionCourses;
     }
 
     /**
@@ -223,14 +222,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoExternalActivities to set.
      */
     public void setInfoExternalActivities(List infoExternalActivities) {
-        this.infoExternalActivities = infoExternalActivities;
+	this.infoExternalActivities = infoExternalActivities;
     }
 
     /**
      * @return Returns the infoProfessionalCareers.
      */
     public List getInfoProfessionalCareers() {
-        return infoProfessionalCareers;
+	return infoProfessionalCareers;
     }
 
     /**
@@ -238,14 +237,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoProfessionalCareers to set.
      */
     public void setInfoProfessionalCareers(List infoProfessionalCareers) {
-        this.infoProfessionalCareers = infoProfessionalCareers;
+	this.infoProfessionalCareers = infoProfessionalCareers;
     }
 
     /**
      * @return Returns the infoQualifications.
      */
     public List getInfoQualifications() {
-        return infoQualifications;
+	return infoQualifications;
     }
 
     /**
@@ -253,14 +252,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoQualifications to set.
      */
     public void setInfoQualifications(List infoQualifications) {
-        this.infoQualifications = infoQualifications;
+	this.infoQualifications = infoQualifications;
     }
 
     /**
      * @return Returns the infoServiceProviderRegime.
      */
     public InfoServiceProviderRegime getInfoServiceProviderRegime() {
-        return infoServiceProviderRegime;
+	return infoServiceProviderRegime;
     }
 
     /**
@@ -268,14 +267,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoServiceProviderRegime to set.
      */
     public void setInfoServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime) {
-        this.infoServiceProviderRegime = infoServiceProviderRegime;
+	this.infoServiceProviderRegime = infoServiceProviderRegime;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -283,14 +282,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
      * @return Returns the infoTeachingCareers.
      */
     public List getInfoTeachingCareers() {
-        return infoTeachingCareers;
+	return infoTeachingCareers;
     }
 
     /**
@@ -298,14 +297,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoTeachingCareers to set.
      */
     public void setInfoTeachingCareers(List infoTeachingCareers) {
-        this.infoTeachingCareers = infoTeachingCareers;
+	this.infoTeachingCareers = infoTeachingCareers;
     }
 
     /**
      * @return Returns the infoWeeklyOcupation.
      */
     public InfoWeeklyOcupation getInfoWeeklyOcupation() {
-        return infoWeeklyOcupation;
+	return infoWeeklyOcupation;
     }
 
     /**
@@ -313,14 +312,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoWeeklyOcupation to set.
      */
     public void setInfoWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation) {
-        this.infoWeeklyOcupation = infoWeeklyOcupation;
+	this.infoWeeklyOcupation = infoWeeklyOcupation;
     }
 
     /**
      * @return Returns the infoDegreeOrientation.
      */
     public InfoOrientation getInfoDegreeOrientation() {
-        return infoDegreeOrientation;
+	return infoDegreeOrientation;
     }
 
     /**
@@ -328,14 +327,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoDegreeOrientation to set.
      */
     public void setInfoDegreeOrientation(InfoOrientation infoDegreeOrientation) {
-        this.infoDegreeOrientation = infoDegreeOrientation;
+	this.infoDegreeOrientation = infoDegreeOrientation;
     }
 
     /**
      * @return Returns the infoMasterOrientation.
      */
     public InfoOrientation getInfoMasterOrientation() {
-        return infoMasterOrientation;
+	return infoMasterOrientation;
     }
 
     /**
@@ -343,14 +342,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoMasterOrientation to set.
      */
     public void setInfoMasterOrientation(InfoOrientation infoMasterOrientation) {
-        this.infoMasterOrientation = infoMasterOrientation;
+	this.infoMasterOrientation = infoMasterOrientation;
     }
 
     /**
      * @return Returns the infoPhdOrientation.
      */
     public InfoOrientation getInfoPhdOrientation() {
-        return infoPhdOrientation;
+	return infoPhdOrientation;
     }
 
     /**
@@ -358,62 +357,59 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoPhdOrientation to set.
      */
     public void setInfoPhdOrientation(InfoOrientation infoPhdOrientation) {
-        this.infoPhdOrientation = infoPhdOrientation;
+	this.infoPhdOrientation = infoPhdOrientation;
     }
 
     /**
      * @return Returns the infoArticleChapterPublicationsNumber.
      */
     public InfoPublicationsNumber getInfoArticleChapterPublicationsNumber() {
-        return infoArticleChapterPublicationsNumber;
+	return infoArticleChapterPublicationsNumber;
     }
 
     /**
      * @param infoArticleChapterPublicationsNumber
      *            The infoArticleChapterPublicationsNumber to set.
      */
-    public void setInfoArticleChapterPublicationsNumber(
-            InfoPublicationsNumber infoArticleChapterPublicationsNumber) {
-        this.infoArticleChapterPublicationsNumber = infoArticleChapterPublicationsNumber;
+    public void setInfoArticleChapterPublicationsNumber(InfoPublicationsNumber infoArticleChapterPublicationsNumber) {
+	this.infoArticleChapterPublicationsNumber = infoArticleChapterPublicationsNumber;
     }
 
     /**
      * @return Returns the infoAuthorBookPublicationsNumber.
      */
     public InfoPublicationsNumber getInfoAuthorBookPublicationsNumber() {
-        return infoAuthorBookPublicationsNumber;
+	return infoAuthorBookPublicationsNumber;
     }
 
     /**
      * @param infoAuthorBookPublicationsNumber
      *            The infoAuthorBookPublicationsNumber to set.
      */
-    public void setInfoAuthorBookPublicationsNumber(
-            InfoPublicationsNumber infoAuthorBookPublicationsNumber) {
-        this.infoAuthorBookPublicationsNumber = infoAuthorBookPublicationsNumber;
+    public void setInfoAuthorBookPublicationsNumber(InfoPublicationsNumber infoAuthorBookPublicationsNumber) {
+	this.infoAuthorBookPublicationsNumber = infoAuthorBookPublicationsNumber;
     }
 
     /**
      * @return Returns the infoComunicationPublicationsNumber.
      */
     public InfoPublicationsNumber getInfoComunicationPublicationsNumber() {
-        return infoComunicationPublicationsNumber;
+	return infoComunicationPublicationsNumber;
     }
 
     /**
      * @param infoComunicationPublicationsNumber
      *            The infoComunicationPublicationsNumber to set.
      */
-    public void setInfoComunicationPublicationsNumber(
-            InfoPublicationsNumber infoComunicationPublicationsNumber) {
-        this.infoComunicationPublicationsNumber = infoComunicationPublicationsNumber;
+    public void setInfoComunicationPublicationsNumber(InfoPublicationsNumber infoComunicationPublicationsNumber) {
+	this.infoComunicationPublicationsNumber = infoComunicationPublicationsNumber;
     }
 
     /**
      * @return Returns the infoEditBookPublicationsNumber.
      */
     public InfoPublicationsNumber getInfoEditBookPublicationsNumber() {
-        return infoEditBookPublicationsNumber;
+	return infoEditBookPublicationsNumber;
     }
 
     /**
@@ -421,30 +417,29 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoEditBookPublicationsNumber to set.
      */
     public void setInfoEditBookPublicationsNumber(InfoPublicationsNumber infoEditBookPublicationsNumber) {
-        this.infoEditBookPublicationsNumber = infoEditBookPublicationsNumber;
+	this.infoEditBookPublicationsNumber = infoEditBookPublicationsNumber;
     }
 
     /**
      * @return Returns the infoMagArticlePublicationsNumber.
      */
     public InfoPublicationsNumber getInfoMagArticlePublicationsNumber() {
-        return infoMagArticlePublicationsNumber;
+	return infoMagArticlePublicationsNumber;
     }
 
     /**
      * @param infoMagArticlePublicationsNumber
      *            The infoMagArticlePublicationsNumber to set.
      */
-    public void setInfoMagArticlePublicationsNumber(
-            InfoPublicationsNumber infoMagArticlePublicationsNumber) {
-        this.infoMagArticlePublicationsNumber = infoMagArticlePublicationsNumber;
+    public void setInfoMagArticlePublicationsNumber(InfoPublicationsNumber infoMagArticlePublicationsNumber) {
+	this.infoMagArticlePublicationsNumber = infoMagArticlePublicationsNumber;
     }
 
     /**
      * @return Returns the infoOldCientificPublications.
      */
     public List getInfoOldCientificPublications() {
-        return infoOldCientificPublications;
+	return infoOldCientificPublications;
     }
 
     /**
@@ -452,14 +447,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoOldCientificPublications to set.
      */
     public void setInfoOldCientificPublications(List infoOldCientificPublications) {
-        this.infoOldCientificPublications = infoOldCientificPublications;
+	this.infoOldCientificPublications = infoOldCientificPublications;
     }
 
     /**
      * @return Returns the infoOldDidacticPublications.
      */
     public List getInfoOldDidacticPublications() {
-        return infoOldDidacticPublications;
+	return infoOldDidacticPublications;
     }
 
     /**
@@ -467,14 +462,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoOldDidacticPublications to set.
      */
     public void setInfoOldDidacticPublications(List infoOldDidacticPublications) {
-        this.infoOldDidacticPublications = infoOldDidacticPublications;
+	this.infoOldDidacticPublications = infoOldDidacticPublications;
     }
 
     /**
      * @return Returns the infoExecutionPeriod.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return infoExecutionPeriod;
+	return infoExecutionPeriod;
     }
 
     /**
@@ -482,6 +477,6 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
      *            The infoExecutionPeriod to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 }

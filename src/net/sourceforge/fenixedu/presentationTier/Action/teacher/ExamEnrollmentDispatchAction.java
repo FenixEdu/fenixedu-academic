@@ -34,167 +34,162 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Tânia Nunes
- *  
+ * 
  */
 public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
     /**
      * @author Fernanda Quitério 15/07/2003
-     *  
+     * 
      */
-    public ActionForward prepareEnrolmentManagement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward prepareEnrolmentManagement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+	Integer evaluationCode = getFromRequest("evaluationCode", request);
 
-        Integer executionCourseCode = getFromRequest("objectCode", request);
+	Integer executionCourseCode = getFromRequest("objectCode", request);
 
-        ISiteComponent commonComponent = new InfoSiteCommon();
-        InfoEvaluation evaluationComponent = new InfoEvaluation();
-        Object[] args = { executionCourseCode, commonComponent, evaluationComponent, null,
-                evaluationCode, null };
+	ISiteComponent commonComponent = new InfoSiteCommon();
+	InfoEvaluation evaluationComponent = new InfoEvaluation();
+	Object[] args = { executionCourseCode, commonComponent, evaluationComponent, null, evaluationCode, null };
 
-        TeacherAdministrationSiteView siteView = null;
-        try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
-                    "TeacherAdministrationSiteComponentService", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	TeacherAdministrationSiteView siteView = null;
+	try {
+	    siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService("TeacherAdministrationSiteComponentService",
+		    args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
-                .getExecutionCourse().getIdInternal());
+	request.setAttribute("siteView", siteView);
+	request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
 
-        return mapping.findForward("viewEvaluationEnrolmentManagementMenu");
+	return mapping.findForward("viewEvaluationEnrolmentManagementMenu");
     }
 
     private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null) {
-            parameterCode = new Integer(parameterCodeString);
-        }
-        return parameterCode;
+	Integer parameterCode = null;
+	String parameterCodeString = request.getParameter(parameter);
+	if (parameterCodeString == null) {
+	    parameterCodeString = (String) request.getAttribute(parameter);
+	}
+	if (parameterCodeString != null) {
+	    parameterCode = new Integer(parameterCodeString);
+	}
+	return parameterCode;
 
     }
 
     /**
      * @author Fernanda Quitério 15/07/2003
-     *  
+     * 
      */
-    public ActionForward prepareEditEvaluationEnrolment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward prepareEditEvaluationEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        Integer evaluationCode = getFromRequest("evaluationCode", request);
+	Integer evaluationCode = getFromRequest("evaluationCode", request);
 
-        Integer executionCourseCode = getFromRequest("objectCode", request);
+	Integer executionCourseCode = getFromRequest("objectCode", request);
 
-        ISiteComponent commonComponent = new InfoSiteCommon();
-        InfoEvaluation evaluationComponent = new InfoEvaluation();
-        Object[] args = { executionCourseCode, commonComponent, evaluationComponent, null,
-                evaluationCode, null };
+	ISiteComponent commonComponent = new InfoSiteCommon();
+	InfoEvaluation evaluationComponent = new InfoEvaluation();
+	Object[] args = { executionCourseCode, commonComponent, evaluationComponent, null, evaluationCode, null };
 
-        TeacherAdministrationSiteView siteView = null;
-        try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
-                    "TeacherAdministrationSiteComponentService", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        InfoEvaluation infoEvaluation = (InfoEvaluation) siteView.getComponent();
-        if (infoEvaluation != null) {
-            if (infoEvaluation instanceof InfoExam) {
-                InfoExam infoExam = (InfoExam) infoEvaluation;
-                DynaValidatorForm periodForm = (DynaValidatorForm) form;
-                periodForm.set("enrollmentBeginDayFormatted", infoExam.getEnrollmentBeginDayFormatted());
-                periodForm.set("enrollmentBeginTimeFormatted", infoExam
-                        .getEnrollmentBeginTimeFormatted());
-                periodForm.set("enrollmentEndDayFormatted", infoExam.getEnrollmentEndDayFormatted());
-                periodForm.set("enrollmentEndTimeFormatted", infoExam.getEnrollmentEndTimeFormatted());
-            }
-        }
+	TeacherAdministrationSiteView siteView = null;
+	try {
+	    siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService("TeacherAdministrationSiteComponentService",
+		    args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	InfoEvaluation infoEvaluation = (InfoEvaluation) siteView.getComponent();
+	if (infoEvaluation != null) {
+	    if (infoEvaluation instanceof InfoExam) {
+		InfoExam infoExam = (InfoExam) infoEvaluation;
+		DynaValidatorForm periodForm = (DynaValidatorForm) form;
+		periodForm.set("enrollmentBeginDayFormatted", infoExam.getEnrollmentBeginDayFormatted());
+		periodForm.set("enrollmentBeginTimeFormatted", infoExam.getEnrollmentBeginTimeFormatted());
+		periodForm.set("enrollmentEndDayFormatted", infoExam.getEnrollmentEndDayFormatted());
+		periodForm.set("enrollmentEndTimeFormatted", infoExam.getEnrollmentEndTimeFormatted());
+	    }
+	}
 
-        request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
-                .getExecutionCourse().getIdInternal());
-        request.setAttribute("evaluationCode", evaluationCode);
+	request.setAttribute("siteView", siteView);
+	request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+	request.setAttribute("evaluationCode", evaluationCode);
 
-        return mapping.findForward("editEvaluationEnrolmentPeriod");
+	return mapping.findForward("editEvaluationEnrolmentPeriod");
     }
 
-    public ActionForward editExamEnrollment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        DynaActionForm examEnrollmentForm = (DynaActionForm) form;
+    public ActionForward editExamEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	DynaActionForm examEnrollmentForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer examIdInternal = new Integer(request.getParameter("evaluationCode"));
-        Integer disciplinaExecucaoIdInternal = new Integer(request.getParameter("objectCode"));
+	Integer examIdInternal = new Integer(request.getParameter("evaluationCode"));
+	Integer disciplinaExecucaoIdInternal = new Integer(request.getParameter("objectCode"));
 
-        String enrollmentBeginDay = (String) examEnrollmentForm.get("enrollmentBeginDayFormatted");
-        String enrollmentBeginHour = (String) examEnrollmentForm.get("enrollmentBeginTimeFormatted");
-        String enrollmentEndDay = (String) examEnrollmentForm.get("enrollmentEndDayFormatted");
-        String enrollmentEndHour = (String) examEnrollmentForm.get("enrollmentEndTimeFormatted");
-        if (enrollmentBeginDay.length() == 0 || enrollmentBeginHour.length() == 0
-                || enrollmentEndDay.length() == 0 || enrollmentEndHour.length() == 0) {
-            setErrorMessage(request, "error.form.incomplete");
-            return mapping.getInputForward();
-        }
+	String enrollmentBeginDay = (String) examEnrollmentForm.get("enrollmentBeginDayFormatted");
+	String enrollmentBeginHour = (String) examEnrollmentForm.get("enrollmentBeginTimeFormatted");
+	String enrollmentEndDay = (String) examEnrollmentForm.get("enrollmentEndDayFormatted");
+	String enrollmentEndHour = (String) examEnrollmentForm.get("enrollmentEndTimeFormatted");
+	if (enrollmentBeginDay.length() == 0 || enrollmentBeginHour.length() == 0 || enrollmentEndDay.length() == 0
+		|| enrollmentEndHour.length() == 0) {
+	    setErrorMessage(request, "error.form.incomplete");
+	    return mapping.getInputForward();
+	}
 
-        String[] enrollmentBeginDayArray = enrollmentBeginDay.split("/");
-        String[] enrollmentBeginHourArray = enrollmentBeginHour.split(":");
-        String[] enrollmentEndDayArray = enrollmentEndDay.split("/");
-        String[] enrollmentEndHourArray = enrollmentEndHour.split(":");
-        Calendar beginDate = Calendar.getInstance();
-        beginDate.set(Calendar.YEAR, new Integer(enrollmentBeginDayArray[2]).intValue());
-        beginDate.set(Calendar.MONTH, new Integer(enrollmentBeginDayArray[1]).intValue() - 1);
-        beginDate.set(Calendar.DAY_OF_MONTH, new Integer(enrollmentBeginDayArray[0]).intValue());
+	String[] enrollmentBeginDayArray = enrollmentBeginDay.split("/");
+	String[] enrollmentBeginHourArray = enrollmentBeginHour.split(":");
+	String[] enrollmentEndDayArray = enrollmentEndDay.split("/");
+	String[] enrollmentEndHourArray = enrollmentEndHour.split(":");
+	Calendar beginDate = Calendar.getInstance();
+	beginDate.set(Calendar.YEAR, new Integer(enrollmentBeginDayArray[2]).intValue());
+	beginDate.set(Calendar.MONTH, new Integer(enrollmentBeginDayArray[1]).intValue() - 1);
+	beginDate.set(Calendar.DAY_OF_MONTH, new Integer(enrollmentBeginDayArray[0]).intValue());
 
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentBeginHourArray[0]).intValue());
-        beginTime.set(Calendar.MINUTE, new Integer(enrollmentBeginHourArray[1]).intValue());
+	Calendar beginTime = Calendar.getInstance();
+	beginTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentBeginHourArray[0]).intValue());
+	beginTime.set(Calendar.MINUTE, new Integer(enrollmentBeginHourArray[1]).intValue());
 
-        Calendar endDate = Calendar.getInstance();
+	Calendar endDate = Calendar.getInstance();
 
-        endDate.set(Calendar.YEAR, new Integer(enrollmentEndDayArray[2]).intValue());
-        endDate.set(Calendar.MONTH, new Integer(enrollmentEndDayArray[1]).intValue() - 1);
-        endDate.set(Calendar.DAY_OF_MONTH, new Integer(enrollmentEndDayArray[0]).intValue());
+	endDate.set(Calendar.YEAR, new Integer(enrollmentEndDayArray[2]).intValue());
+	endDate.set(Calendar.MONTH, new Integer(enrollmentEndDayArray[1]).intValue() - 1);
+	endDate.set(Calendar.DAY_OF_MONTH, new Integer(enrollmentEndDayArray[0]).intValue());
 
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentEndHourArray[0]).intValue());
-        endTime.set(Calendar.MINUTE, new Integer(enrollmentEndHourArray[1]).intValue());
+	Calendar endTime = Calendar.getInstance();
+	endTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentEndHourArray[0]).intValue());
+	endTime.set(Calendar.MINUTE, new Integer(enrollmentEndHourArray[1]).intValue());
 
-        Object args[] = { disciplinaExecucaoIdInternal, examIdInternal, beginDate.getTime(), endDate.getTime(), beginTime.getTime(),
-                endTime };
+	Object args[] = { disciplinaExecucaoIdInternal, examIdInternal, beginDate.getTime(), endDate.getTime(),
+		beginTime.getTime(), endTime };
 
-        try {
-            ServiceUtils.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
-        } catch (DomainException e) {
-            setErrorMessage(request, e.getKey());
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            setErrorMessage(request, e.getMessage());
-            return mapping.getInputForward();
-        }
+	try {
+	    ServiceUtils.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
+	} catch (DomainException e) {
+	    setErrorMessage(request, e.getKey());
+	    return mapping.getInputForward();
+	} catch (FenixServiceException e) {
+	    setErrorMessage(request, e.getMessage());
+	    return mapping.getInputForward();
+	}
 
-        request.setAttribute("evaluationCode", examIdInternal);
-        request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
+	request.setAttribute("evaluationCode", examIdInternal);
+	request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
 
-        return prepareEnrolmentManagement(mapping, form, request, response);
+	return prepareEnrolmentManagement(mapping, form, request, response);
     }
 
     private void setErrorMessage(HttpServletRequest request, String message) {
-        ActionErrors actionErrors = new ActionErrors();
-        ActionError actionError = new ActionError(message);
-        actionErrors.add(message, actionError);
-        saveErrors(request, actionErrors);
+	ActionErrors actionErrors = new ActionErrors();
+	ActionError actionError = new ActionError(message);
+	actionErrors.add(message, actionError);
+	saveErrors(request, actionErrors);
     }
 }

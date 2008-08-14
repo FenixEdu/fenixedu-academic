@@ -16,7 +16,7 @@ public class SpaceManagerAuthorizationFilter extends AuthorizationByRoleFilter {
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -25,6 +25,6 @@ public class SpaceManagerAuthorizationFilter extends AuthorizationByRoleFilter {
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.SPACE_MANAGER;
+	return RoleType.SPACE_MANAGER;
     }
 }

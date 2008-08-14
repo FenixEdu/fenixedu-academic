@@ -45,11 +45,11 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * Example: <div> <div> <input type="text"/> <select> <option
  * selected="selected" value="">-- Choose an option --</option> <option
  * value="eo">Esperanto</option> <option value="xx-klingon">Klingon</option>
- * <option value="xx-piglatin">Pig Latin</option> <option
- * value="xx-elmer">Elmer Fudd</option> </select> <a href="#">Remove</a>
- * </div> <div> <input type="text"/> <select> <option selected="selected"
- * value="">-- Choose an option --</option> <option value="eo">Esperanto</option>
- * <option value="xx-klingon">Klingon</option> <option value="xx-piglatin">Pig
+ * <option value="xx-piglatin">Pig Latin</option> <option value="xx-elmer">Elmer
+ * Fudd</option> </select> <a href="#">Remove</a> </div> <div> <input
+ * type="text"/> <select> <option selected="selected" value="">-- Choose an
+ * option --</option> <option value="eo">Esperanto</option> <option
+ * value="xx-klingon">Klingon</option> <option value="xx-piglatin">Pig
  * Latin</option> <option value="xx-elmer">Elmer Fudd</option> </select> <a
  * href="#">Remove</a> </div> <a href="#">Add</a> </div>
  * 

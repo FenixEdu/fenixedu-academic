@@ -31,68 +31,56 @@ import com.thoughtworks.xstream.XStream;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
  * 
- * Created at 11:36:06, 28/Fev/2005
+ *         Created at 11:36:06, 28/Fev/2005
  */
-public class InfoGroupsByExecutionCourse extends FenixAction
-{
+public class InfoGroupsByExecutionCourse extends FenixAction {
     private final String SEPARATOR = ","; //$NON-NLS-1$
     private String studentUsername;
     private String studentPassword;
     private Integer[] executionCourseIds;
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException {
 
-        this.readRequestInformation(request);
+	this.readRequestInformation(request);
 
-        StringBuilder buffer = new StringBuilder();
-        try
-        {
+	StringBuilder buffer = new StringBuilder();
+	try {
 
-			final String requestURL = request.getRequestURL().toString();
-            final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
-            IUserView userView = authenticate(this.studentUsername, this.studentPassword, requestURL, remoteHostName);
-            for (int i = 0; i < this.executionCourseIds.length; i++)
-            {
-                buffer.append(this.buildInfo(this.executionCourseIds[i], userView));
-            }
-            if (buffer.toString().equals(""))
-                buffer = new StringBuilder("-1");
+	    final String requestURL = request.getRequestURL().toString();
+	    final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
+	    IUserView userView = authenticate(this.studentUsername, this.studentPassword, requestURL, remoteHostName);
+	    for (int i = 0; i < this.executionCourseIds.length; i++) {
+		buffer.append(this.buildInfo(this.executionCourseIds[i], userView));
+	    }
+	    if (buffer.toString().equals(""))
+		buffer = new StringBuilder("-1");
 
-        }
-        catch (Exception e)
-        {
-            buffer = new StringBuilder();
-            buffer = new StringBuilder();
-            buffer.append("<error><cause>");
-            buffer.append(e.getMessage());
-            buffer.append("</cause></error>");
-        }
+	} catch (Exception e) {
+	    buffer = new StringBuilder();
+	    buffer = new StringBuilder();
+	    buffer.append("<error><cause>");
+	    buffer.append(e.getMessage());
+	    buffer.append("</cause></error>");
+	}
 
-        try
-        {
-            sendAnswer(response, buffer.toString());
-        }
-        catch (IOException ex)
-        {
-            throw new FenixActionException();
-        }
+	try {
+	    sendAnswer(response, buffer.toString());
+	} catch (IOException ex) {
+	    throw new FenixActionException();
+	}
 
-
-        return null;
+	return null;
     }
 
-    private String buildInfo(Integer integer, IUserView userView) throws FenixFilterException,
-            FenixServiceException
-    {
-        Object[] args = { integer, userView.getUtilizador() };
-        Collection info = (Collection) ServiceManagerServiceFactory.executeService(
-                "ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername", args); //$NON-NLS-1$
-        XStream xstream = new XStream();
-        String data = xstream.toXML(info);
+    private String buildInfo(Integer integer, IUserView userView) throws FenixFilterException, FenixServiceException {
+	Object[] args = { integer, userView.getUtilizador() };
+	Collection info = (Collection) ServiceManagerServiceFactory.executeService(
+		"ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername", args); //$NON-NLS-1$
+	XStream xstream = new XStream();
+	String data = xstream.toXML(info);
 
-        return data;
+	return data;
     }
 
     /**
@@ -100,45 +88,41 @@ public class InfoGroupsByExecutionCourse extends FenixAction
      * @param result
      * @throws IOException
      */
-    private void sendAnswer(HttpServletResponse response, String result) throws IOException
-    {
-        ServletOutputStream writer = response.getOutputStream();
-        response.setContentType("text/plain");
-        writer.print(result);
-        writer.flush();
-        response.flushBuffer();
+    private void sendAnswer(HttpServletResponse response, String result) throws IOException {
+	ServletOutputStream writer = response.getOutputStream();
+	response.setContentType("text/plain");
+	writer.print(result);
+	writer.flush();
+	response.flushBuffer();
     }
 
     /**
      * @param request
      * 
      */
-    private void readRequestInformation(HttpServletRequest request)
-    {
-        this.studentUsername = request.getParameter("username"); //$NON-NLS-1$
-        this.studentPassword = request.getParameter("password"); //$NON-NLS-1$
-        String idsString = request.getParameter("ids"); //$NON-NLS-1$
-        this.executionCourseIds = buildIdsArray(idsString);
+    private void readRequestInformation(HttpServletRequest request) {
+	this.studentUsername = request.getParameter("username"); //$NON-NLS-1$
+	this.studentPassword = request.getParameter("password"); //$NON-NLS-1$
+	String idsString = request.getParameter("ids"); //$NON-NLS-1$
+	this.executionCourseIds = buildIdsArray(idsString);
     }
 
-    private IUserView authenticate(String username, String password, String requestURL,
-            String remoteHostName) throws FenixServiceException, FenixFilterException {
-        Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-        IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(
-        	PropertiesManager.getProperty("authenticationService"), argsAutenticacao);
-        return userView;
+    private IUserView authenticate(String username, String password, String requestURL, String remoteHostName)
+	    throws FenixServiceException, FenixFilterException {
+	Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
+	IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(PropertiesManager
+		.getProperty("authenticationService"), argsAutenticacao);
+	return userView;
     }
 
-    private Integer[] buildIdsArray(String idsString)
-    {
-        Integer[] coursesIds = { new Integer(34811), new Integer(34661), new Integer(34950) };
-        if (idsString != null)
-        {
-            String[] ids = idsString.split(this.SEPARATOR);
-            coursesIds = new Integer[ids.length];
-            for (int i = 0; i < ids.length; i++)
-                coursesIds[i] = new Integer(ids[i]);
-        }
-        return coursesIds;
+    private Integer[] buildIdsArray(String idsString) {
+	Integer[] coursesIds = { new Integer(34811), new Integer(34661), new Integer(34950) };
+	if (idsString != null) {
+	    String[] ids = idsString.split(this.SEPARATOR);
+	    coursesIds = new Integer[ids.length];
+	    for (int i = 0; i < ids.length; i++)
+		coursesIds[i] = new Integer(ids[i]);
+	}
+	return coursesIds;
     }
 }

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class InfoSiteEvaluationStatistics extends DataTranferObject {
     private Integer enrolled;
@@ -25,14 +25,14 @@ public class InfoSiteEvaluationStatistics extends DataTranferObject {
      *  
      */
     public InfoSiteEvaluationStatistics() {
-        super();
+	super();
     }
 
     /**
      * @return Returns the infoExecutionPeriod.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return infoExecutionPeriod;
+	return infoExecutionPeriod;
     }
 
     /**
@@ -40,14 +40,14 @@ public class InfoSiteEvaluationStatistics extends DataTranferObject {
      *            The infoExecutionPeriod to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
      * @return Returns the approved.
      */
     public Integer getApproved() {
-        return approved;
+	return approved;
     }
 
     /**
@@ -55,14 +55,14 @@ public class InfoSiteEvaluationStatistics extends DataTranferObject {
      *            The approved to set.
      */
     public void setApproved(Integer approved) {
-        this.approved = approved;
+	this.approved = approved;
     }
 
     /**
      * @return Returns the enrolled.
      */
     public Integer getEnrolled() {
-        return enrolled;
+	return enrolled;
     }
 
     /**
@@ -70,14 +70,14 @@ public class InfoSiteEvaluationStatistics extends DataTranferObject {
      *            The enrolled to set.
      */
     public void setEnrolled(Integer enrolled) {
-        this.enrolled = enrolled;
+	this.enrolled = enrolled;
     }
 
     /**
      * @return Returns the evaluated.
      */
     public Integer getEvaluated() {
-        return evaluated;
+	return evaluated;
     }
 
     /**
@@ -85,7 +85,7 @@ public class InfoSiteEvaluationStatistics extends DataTranferObject {
      *            The evaluated to set.
      */
     public void setEvaluated(Integer evaluated) {
-        this.evaluated = evaluated;
+	this.evaluated = evaluated;
     }
 
 }

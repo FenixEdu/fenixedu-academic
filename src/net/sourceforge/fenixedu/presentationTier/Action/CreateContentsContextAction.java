@@ -30,7 +30,8 @@ public class CreateContentsContextAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final FunctionalityContext functionalityContext = new FilterFunctionalityContext(request, (List<Content>)Collections.EMPTY_LIST);
+	final FunctionalityContext functionalityContext = new FilterFunctionalityContext(request,
+		(List<Content>) Collections.EMPTY_LIST);
 	request.setAttribute(FunctionalityContext.CONTEXT_KEY, functionalityContext);
 
 	final MenuEntry initialMenuEntry = getInitialMenuEntry(functionalityContext);
@@ -61,16 +62,16 @@ public class CreateContentsContextAction extends FenixAction {
 	List<Content> contents = rootPortal.getPathTo(content);
 
 	List<String> paths = new ArrayList<String>();
-	for(Content contentForPath : contents.subList(1,contents.size())) {
+	for (Content contentForPath : contents.subList(1, contents.size())) {
 	    paths.add(contentForPath.getNormalizedName().getContent());
 	}
-	
-	StringBuffer buffer = new StringBuffer(""); 
-	for(String pathPart : paths) {
+
+	StringBuffer buffer = new StringBuffer("");
+	for (String pathPart : paths) {
 	    buffer.append("/");
 	    buffer.append(pathPart);
 	}
-	
+
 	String realPath = buffer.toString();
 	final String seperator = realPath.indexOf('?') >= 0 ? "&" : "?";
 	actionForward.setPath(realPath + seperator + ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME + "="

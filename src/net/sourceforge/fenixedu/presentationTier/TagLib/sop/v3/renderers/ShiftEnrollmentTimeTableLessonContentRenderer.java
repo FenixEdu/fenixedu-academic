@@ -82,8 +82,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
 	if (showOccupation instanceof InfoLesson) {
 	    InfoLesson lesson = (InfoLesson) showOccupation;
 	    strBuffer.append(getURL(lesson, context));
-	    strBuffer.append("<img src=\"").append(context).append("/images/").append(getImage()).append("/>").append(
-		    "</a>");
+	    strBuffer.append("<img src=\"").append(context).append("/images/").append(getImage()).append("/>").append("</a>");
 	    return strBuffer;
 	}
 	return strBuffer.append("");

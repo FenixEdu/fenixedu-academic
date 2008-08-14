@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPate
 public class DeleteResultPatent extends Service {
 
     public void run(Integer oid) {
-        ResearchResultPatent patent = (ResearchResultPatent) rootDomainObject.readResearchResultByOID(oid);
-        patent.delete();
+	ResearchResultPatent patent = (ResearchResultPatent) rootDomainObject.readResearchResultByOID(oid);
+	patent.delete();
     }
 }

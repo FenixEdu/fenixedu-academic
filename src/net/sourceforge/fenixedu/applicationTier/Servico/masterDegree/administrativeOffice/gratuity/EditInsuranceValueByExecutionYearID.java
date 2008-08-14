@@ -9,19 +9,18 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditInsuranceValueByExecutionYearID extends Service {
 
-    public void run(Integer executionYearID, Double annualValue, Date endDate)
-            {
+    public void run(Integer executionYearID, Double annualValue, Date endDate) {
 
-        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-        InsuranceValue insuranceValue = executionYear.getInsuranceValue();
-        
-        if (insuranceValue != null) {
-            insuranceValue.setEndDate(endDate);
-            insuranceValue.setAnnualValue(annualValue);
-        } else {
-            insuranceValue = new InsuranceValue(executionYear, annualValue, endDate);
-        }
+	InsuranceValue insuranceValue = executionYear.getInsuranceValue();
+
+	if (insuranceValue != null) {
+	    insuranceValue.setEndDate(endDate);
+	    insuranceValue.setAnnualValue(annualValue);
+	} else {
+	    insuranceValue = new InsuranceValue(executionYear, annualValue, endDate);
+	}
     }
 
 }

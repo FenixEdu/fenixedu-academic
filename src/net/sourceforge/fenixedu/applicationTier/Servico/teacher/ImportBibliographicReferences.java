@@ -6,10 +6,11 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 public class ImportBibliographicReferences extends Service {
 
-    public void run(Integer executionCourseToId, ExecutionCourse executionCourseTo, ExecutionCourse executionCourseFrom, Shift shift) {
-        if(executionCourseTo != null && executionCourseFrom != null) {
-            executionCourseTo.copyBibliographicReferencesFrom(executionCourseFrom);
-        }
+    public void run(Integer executionCourseToId, ExecutionCourse executionCourseTo, ExecutionCourse executionCourseFrom,
+	    Shift shift) {
+	if (executionCourseTo != null && executionCourseFrom != null) {
+	    executionCourseTo.copyBibliographicReferencesFrom(executionCourseFrom);
+	}
     }
-    
+
 }

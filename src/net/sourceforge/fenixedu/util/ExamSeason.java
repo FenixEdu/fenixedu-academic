@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.util;
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
- * 22/Abr/2003
+ *         22/Abr/2003
  */
 public class ExamSeason extends FenixUtil {
 
@@ -25,49 +25,49 @@ public class ExamSeason extends FenixUtil {
     }
 
     public ExamSeason(int state) {
-        this.type = new Integer(state);
+	this.type = new Integer(state);
     }
 
     public ExamSeason(Integer state) {
-        this.type = state;
+	this.type = state;
     }
 
     public java.lang.Integer getType() {
-        return type;
+	return type;
     }
 
     public void setType(Integer state) {
-        this.type = state;
+	this.type = state;
     }
 
     public boolean equals(Object o) {
-        if (o instanceof ExamSeason) {
-            ExamSeason aux = (ExamSeason) o;
-            return this.type.equals(aux.getType());
-        }
-        return false;
+	if (o instanceof ExamSeason) {
+	    ExamSeason aux = (ExamSeason) o;
+	    return this.type.equals(aux.getType());
+	}
+	return false;
 
     }
 
     public String toString() {
 
-        int value = this.type.intValue();
-        String values = null;
+	int value = this.type.intValue();
+	String values = null;
 
-        switch (value) {
-        case FIRST_SEASON:
-            values = "FIRST_SEASON";
-            break;
-        case SECOND_SEASON:
-            values = "SECOND_SEASON";
-            break;
-        case SPECIAL_SEASON:
-            values = "SPECIAL_SEASON";
-            break;
-        default:
-            break;
-        }
+	switch (value) {
+	case FIRST_SEASON:
+	    values = "FIRST_SEASON";
+	    break;
+	case SECOND_SEASON:
+	    values = "SECOND_SEASON";
+	    break;
+	case SPECIAL_SEASON:
+	    values = "SPECIAL_SEASON";
+	    break;
+	default:
+	    break;
+	}
 
-        return "[" + this.getClass().getName() + ": " + values + "]";
+	return "[" + this.getClass().getName() + ": " + values + "]";
     }
 }

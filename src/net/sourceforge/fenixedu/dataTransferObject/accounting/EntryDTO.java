@@ -26,8 +26,8 @@ public class EntryDTO implements Serializable {
 
     private Money debtAmount;
 
-    public EntryDTO(EntryType entryType, Event event, Money totalAmount, Money payedAmount,
-	    Money amountToPay, LabelFormatter description, Money debtAmount) {
+    public EntryDTO(EntryType entryType, Event event, Money totalAmount, Money payedAmount, Money amountToPay,
+	    LabelFormatter description, Money debtAmount) {
 	setEntryType(entryType);
 	setEvent(event);
 	setTotalAmount(totalAmount);
@@ -37,7 +37,7 @@ public class EntryDTO implements Serializable {
 	setDebtAmount(debtAmount);
 
     }
-    
+
     public EntryDTO(EntryType entryType, Event event, Money amountToPay) {
 	setEntryType(entryType);
 	setEvent(event);

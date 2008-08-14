@@ -45,13 +45,13 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
     private Boolean mandatoryEnrollment;
 
     private Boolean enrollmentAllowed;
-    
+
     private String acronym;
-    
+
     private String nameEn;
-    
+
     private GradeScale gradeScale;
-    
+
     private RegimeType regimeType;
 
     private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
@@ -60,29 +60,29 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      * @return
      */
     public Boolean getBasic() {
-        return basic;
+	return basic;
     }
 
     /**
      * @param basic
      */
     public void setBasic(Boolean basic) {
-        this.basic = basic;
+	this.basic = basic;
     }
 
     public InfoCurricularCourseEditor() {
     }
 
     public String getOwnershipType() {
-        String result = "";
-        if (getBasic() != null) {
-            if (getBasic().booleanValue()) {
-                result = "Básica";
-            } else {
-                result = "Não Básica";
-            }
-        }
-        return result;
+	String result = "";
+	if (getBasic() != null) {
+	    if (getBasic().booleanValue()) {
+		result = "Básica";
+	    } else {
+		result = "Não Básica";
+	    }
+	}
+	return result;
     }
 
     /**
@@ -91,7 +91,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      * @return String
      */
     public String getCode() {
-        return code;
+	return code;
     }
 
     /**
@@ -100,7 +100,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      * @return String
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
@@ -110,7 +110,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The code to set
      */
     public void setCode(String code) {
-        this.code = code;
+	this.code = code;
     }
 
     /**
@@ -120,7 +120,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The nome to set
      */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     /**
@@ -129,7 +129,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      * @return Double
      */
     public Double getCredits() {
-        return credits;
+	return credits;
     }
 
     /**
@@ -138,7 +138,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      * @return Double
      */
     public Double getLabHours() {
-        return labHours;
+	return labHours;
     }
 
     /**
@@ -147,7 +147,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      * @return Double
      */
     public Double getPraticalHours() {
-        return praticalHours;
+	return praticalHours;
     }
 
     /**
@@ -156,7 +156,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      * @return Double
      */
     public Double getTheoPratHours() {
-        return theoPratHours;
+	return theoPratHours;
     }
 
     /**
@@ -165,7 +165,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      * @return Double
      */
     public Double getTheoreticalHours() {
-        return theoreticalHours;
+	return theoreticalHours;
     }
 
     /**
@@ -175,7 +175,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The credits to set
      */
     public void setCredits(Double credits) {
-        this.credits = credits;
+	this.credits = credits;
     }
 
     /**
@@ -185,7 +185,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The labHours to set
      */
     public void setLabHours(Double labHours) {
-        this.labHours = labHours;
+	this.labHours = labHours;
     }
 
     /**
@@ -195,7 +195,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The praticalHours to set
      */
     public void setPraticalHours(Double praticalHours) {
-        this.praticalHours = praticalHours;
+	this.praticalHours = praticalHours;
     }
 
     /**
@@ -205,7 +205,7 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The theoPratHours to set
      */
     public void setTheoPratHours(Double theoPratHours) {
-        this.theoPratHours = theoPratHours;
+	this.theoPratHours = theoPratHours;
     }
 
     /**
@@ -215,14 +215,14 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The theoreticalHours to set
      */
     public void setTheoreticalHours(Double theoreticalHours) {
-        this.theoreticalHours = theoreticalHours;
+	this.theoreticalHours = theoreticalHours;
     }
 
     /**
      * @return CurricularCourseType
      */
     public CurricularCourseType getType() {
-        return type;
+	return type;
     }
 
     /**
@@ -232,34 +232,34 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The type to set
      */
     public void setType(CurricularCourseType type) {
-        this.type = type;
+	this.type = type;
     }
 
     public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
-        return curricularCourseExecutionScope;
+	return curricularCourseExecutionScope;
     }
 
     public Boolean getMandatory() {
-        return mandatory;
+	return mandatory;
     }
 
     public void setCurricularCourseExecutionScope(CurricularCourseExecutionScope scope) {
-        curricularCourseExecutionScope = scope;
+	curricularCourseExecutionScope = scope;
     }
 
     public void setMandatory(Boolean boolean1) {
-        mandatory = boolean1;
+	mandatory = boolean1;
     }
 
     public boolean infoCurricularCourseIsMandatory() {
-        return mandatory.booleanValue();
+	return mandatory.booleanValue();
     }
 
     /**
      * @return Returns the chosen.
      */
     public String getChosen() {
-        return chosen;
+	return chosen;
     }
 
     /**
@@ -267,14 +267,14 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The chosen to set.
      */
     public void setChosen(String chosen) {
-        this.chosen = chosen;
+	this.chosen = chosen;
     }
 
     /**
      * @return Returns the ectsCredits.
      */
     public Double getEctsCredits() {
-        return ectsCredits;
+	return ectsCredits;
     }
 
     /**
@@ -282,14 +282,14 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The ectsCredits to set.
      */
     public void setEctsCredits(Double ectsCredits) {
-        this.ectsCredits = ectsCredits;
+	this.ectsCredits = ectsCredits;
     }
 
     /**
      * @return Returns the enrollmentWeigth.
      */
     public Integer getEnrollmentWeigth() {
-        return enrollmentWeigth;
+	return enrollmentWeigth;
     }
 
     /**
@@ -297,14 +297,14 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The enrollmentWeigth to set.
      */
     public void setEnrollmentWeigth(Integer enrollmentWeigth) {
-        this.enrollmentWeigth = enrollmentWeigth;
+	this.enrollmentWeigth = enrollmentWeigth;
     }
 
     /**
      * @return Returns the maximumValueForAcumulatedEnrollments.
      */
     public Integer getMaximumValueForAcumulatedEnrollments() {
-        return maximumValueForAcumulatedEnrollments;
+	return maximumValueForAcumulatedEnrollments;
     }
 
     /**
@@ -312,14 +312,14 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The maximumValueForAcumulatedEnrollments to set.
      */
     public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments) {
-        this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
+	this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
     }
 
     /**
      * @return Returns the minimumValueForAcumulatedEnrollments.
      */
     public Integer getMinimumValueForAcumulatedEnrollments() {
-        return minimumValueForAcumulatedEnrollments;
+	return minimumValueForAcumulatedEnrollments;
     }
 
     /**
@@ -327,14 +327,14 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The minimumValueForAcumulatedEnrollments to set.
      */
     public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments) {
-        this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
+	this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
     }
 
     /**
      * @return Returns the weigth.
      */
     public Double getWeigth() {
-        return weigth;
+	return weigth;
     }
 
     /**
@@ -342,14 +342,14 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The weigth to set.
      */
     public void setWeigth(Double weigth) {
-        this.weigth = weigth;
+	this.weigth = weigth;
     }
 
     /**
      * @return Returns the mandatoryEnrollment.
      */
     public Boolean getMandatoryEnrollment() {
-        return mandatoryEnrollment;
+	return mandatoryEnrollment;
     }
 
     /**
@@ -357,97 +357,94 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
      *            The mandatoryEnrollment to set.
      */
     public void setMandatoryEnrollment(Boolean mandatoryEnrollment) {
-        this.mandatoryEnrollment = mandatoryEnrollment;
+	this.mandatoryEnrollment = mandatoryEnrollment;
     }
 
     public Boolean getEnrollmentAllowed() {
-        return enrollmentAllowed;
+	return enrollmentAllowed;
     }
 
     public void setEnrollmentAllowed(Boolean enrollmentAllowed) {
-        this.enrollmentAllowed = enrollmentAllowed;
+	this.enrollmentAllowed = enrollmentAllowed;
     }
-    
-    public String getAcronym(){
-    	return acronym;
+
+    public String getAcronym() {
+	return acronym;
     }
-    
-    public void setAcronym(String acronym){
-    	this.acronym = acronym;
+
+    public void setAcronym(String acronym) {
+	this.acronym = acronym;
     }
 
     public void copyFromDomain(CurricularCourse curricularCourse) {
-        super.copyFromDomain(curricularCourse);
-        if (curricularCourse != null) {
-            setBasic(curricularCourse.getBasic());
-            setCode(curricularCourse.getCode());
-            setCredits(curricularCourse.getCredits());
-            setEctsCredits(curricularCourse.getEctsCredits());
-            setEnrollmentWeigth(curricularCourse.getEnrollmentWeigth());
-            setLabHours(curricularCourse.getLabHours());
-            setMandatory(curricularCourse.getMandatory());
-            setMandatoryEnrollment(curricularCourse.getMandatoryEnrollment());
-            setMaximumValueForAcumulatedEnrollments(curricularCourse
-                    .getMaximumValueForAcumulatedEnrollments());
-            setMinimumValueForAcumulatedEnrollments(curricularCourse
-                    .getMinimumValueForAcumulatedEnrollments());
-            setName(curricularCourse.getName());
-            setPraticalHours(curricularCourse.getPraticalHours());
-            setTheoPratHours(curricularCourse.getTheoPratHours());
-            setTheoreticalHours(curricularCourse.getTheoreticalHours());
-            setType(curricularCourse.getType());
-            setWeigth(curricularCourse.getWeigth());
-            setAcronym(curricularCourse.getAcronym());
-            setNameEn(curricularCourse.getNameEn());
-			setEnrollmentAllowed(curricularCourse.getEnrollmentAllowed());
-			setGradeScale(curricularCourse.getGradeScale());
-        }
+	super.copyFromDomain(curricularCourse);
+	if (curricularCourse != null) {
+	    setBasic(curricularCourse.getBasic());
+	    setCode(curricularCourse.getCode());
+	    setCredits(curricularCourse.getCredits());
+	    setEctsCredits(curricularCourse.getEctsCredits());
+	    setEnrollmentWeigth(curricularCourse.getEnrollmentWeigth());
+	    setLabHours(curricularCourse.getLabHours());
+	    setMandatory(curricularCourse.getMandatory());
+	    setMandatoryEnrollment(curricularCourse.getMandatoryEnrollment());
+	    setMaximumValueForAcumulatedEnrollments(curricularCourse.getMaximumValueForAcumulatedEnrollments());
+	    setMinimumValueForAcumulatedEnrollments(curricularCourse.getMinimumValueForAcumulatedEnrollments());
+	    setName(curricularCourse.getName());
+	    setPraticalHours(curricularCourse.getPraticalHours());
+	    setTheoPratHours(curricularCourse.getTheoPratHours());
+	    setTheoreticalHours(curricularCourse.getTheoreticalHours());
+	    setType(curricularCourse.getType());
+	    setWeigth(curricularCourse.getWeigth());
+	    setAcronym(curricularCourse.getAcronym());
+	    setNameEn(curricularCourse.getNameEn());
+	    setEnrollmentAllowed(curricularCourse.getEnrollmentAllowed());
+	    setGradeScale(curricularCourse.getGradeScale());
+	}
     }
 
     public static InfoCurricularCourseEditor newInfoFromDomain(CurricularCourse curricularCourse) {
-        InfoCurricularCourseEditor infoCurricularCourse = null;
-        if (curricularCourse != null) {
-            infoCurricularCourse = new InfoCurricularCourseEditor();
-            infoCurricularCourse.copyFromDomain(curricularCourse);
-        }
-        return infoCurricularCourse;
+	InfoCurricularCourseEditor infoCurricularCourse = null;
+	if (curricularCourse != null) {
+	    infoCurricularCourse = new InfoCurricularCourseEditor();
+	    infoCurricularCourse.copyFromDomain(curricularCourse);
+	}
+	return infoCurricularCourse;
     }
 
     public String getNameEn() {
-        return nameEn;
+	return nameEn;
     }
-    
 
     public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
+	this.nameEn = nameEn;
     }
-    
+
     public String getNameAndCode() {
-        return getCode() + " - " + getName();
+	return getCode() + " - " + getName();
     }
 
-	public GradeScale getGradeScale() {
-		return gradeScale;
-	}
+    public GradeScale getGradeScale() {
+	return gradeScale;
+    }
 
-	public void setGradeScale(GradeScale gradeScale) {
-		this.gradeScale = gradeScale;
-	}
+    public void setGradeScale(GradeScale gradeScale) {
+	this.gradeScale = gradeScale;
+    }
 
-	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-		return infoDegreeCurricularPlan;
-	}
+    public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
+	return infoDegreeCurricularPlan;
+    }
 
-	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-		this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
-	}
+    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+	this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+    }
 
-	public RegimeType getRegimeType() {
-	    return regimeType;
-	}
+    public RegimeType getRegimeType() {
+	return regimeType;
+    }
 
-	public void setRegimeType(RegimeType regimeType) {
-	    this.regimeType = regimeType;
-	}
+    public void setRegimeType(RegimeType regimeType) {
+	this.regimeType = regimeType;
+    }
 
 }

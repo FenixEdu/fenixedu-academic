@@ -20,14 +20,14 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
     private Date endContract;
 
     private Integer grantTypeId;
-    
+
     private Date validToTheDate;
 
     /**
      * @return Returns the beginContract.
      */
     public Date getBeginContract() {
-        return beginContract;
+	return beginContract;
     }
 
     /**
@@ -35,14 +35,14 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
      *            The beginContract to set.
      */
     public void setBeginContract(Date beginContract) {
-        this.beginContract = beginContract;
+	this.beginContract = beginContract;
     }
 
     /**
      * @return Returns the endContract.
      */
     public Date getEndContract() {
-        return endContract;
+	return endContract;
     }
 
     /**
@@ -50,14 +50,14 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
      *            The endContract to set.
      */
     public void setEndContract(Date endContract) {
-        this.endContract = endContract;
+	this.endContract = endContract;
     }
 
     /**
      * @return Returns the justActiveContract.
      */
     public Boolean getJustActiveContract() {
-        return justActiveContract;
+	return justActiveContract;
     }
 
     /**
@@ -65,14 +65,14 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
      *            The justActiveContract to set.
      */
     public void setJustActiveContract(Boolean justActiveContract) {
-        this.justActiveContract = justActiveContract;
+	this.justActiveContract = justActiveContract;
     }
 
     /**
      * @return Returns the justDesactiveContract.
      */
     public Boolean getJustDesactiveContract() {
-        return justDesactiveContract;
+	return justDesactiveContract;
     }
 
     /**
@@ -80,14 +80,14 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
      *            The justDesactiveContract to set.
      */
     public void setJustDesactiveContract(Boolean justDesactiveContract) {
-        this.justDesactiveContract = justDesactiveContract;
+	this.justDesactiveContract = justDesactiveContract;
     }
 
     /**
      * @return Returns the grantTypeId.
      */
     public Integer getGrantTypeId() {
-        return grantTypeId;
+	return grantTypeId;
     }
 
     /**
@@ -95,14 +95,14 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
      *            The grantTypeId to set.
      */
     public void setGrantTypeId(Integer grantTypeId) {
-        this.grantTypeId = grantTypeId;
+	this.grantTypeId = grantTypeId;
     }
 
-	public Date getValidToTheDate() {
-		return validToTheDate;
-	}
+    public Date getValidToTheDate() {
+	return validToTheDate;
+    }
 
-	public void setValidToTheDate(Date validToTheDate) {
-		this.validToTheDate = validToTheDate;
-	}
+    public void setValidToTheDate(Date validToTheDate) {
+	this.validToTheDate = validToTheDate;
+    }
 }

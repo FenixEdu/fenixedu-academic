@@ -88,8 +88,8 @@ public class GuideDocument extends FenixReport {
 	final List<GuideDocumentEntry> result = new ArrayList<GuideDocumentEntry>();
 
 	for (final EntryDTO entryDTO : this.paymentsManagementDTO.getSelectedEntries()) {
-	    result.add(new GuideDocumentEntry(entryDTO.getDescription().toString(this.messageResourceProvider), entryDTO.getAmountToPay()
-		    .toPlainString()));
+	    result.add(new GuideDocumentEntry(entryDTO.getDescription().toString(this.messageResourceProvider), entryDTO
+		    .getAmountToPay().toPlainString()));
 	}
 
 	return result;

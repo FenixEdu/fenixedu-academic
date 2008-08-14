@@ -38,36 +38,30 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	request.setAttribute("executionYears", executeService(request, "ReadNotClosedExecutionYears",
-		null));
+	request.setAttribute("executionYears", executeService(request, "ReadNotClosedExecutionYears", null));
 	return mapping.findForward("chooseExecutionYear");
     }
 
-    public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException, IOException {
+    public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
 	IUserView userView = getUserView(request);
 	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 	Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
 	String agreementName = (String) dynaActionForm.get("registrationAgreement");
-	RegistrationAgreement agreement = StringUtils.isEmpty(agreementName) ? null
-		: RegistrationAgreement.valueOf(agreementName);
+	RegistrationAgreement agreement = StringUtils.isEmpty(agreementName) ? null : RegistrationAgreement
+		.valueOf(agreementName);
 
 	Collection<String> processedDegreeCurricularPlans = new ArrayList<String>();
 	Collection<String> processingDegreeCurricularPlans = new ArrayList<String>();
 	Collection<String> toProcessDegreeCurricularPlans = new ArrayList<String>();
 
-	CurricularCourseStatisticsStatusBridge.processedDegreeCurricularPlans.put(userView,
-		processedDegreeCurricularPlans);
-	CurricularCourseStatisticsStatusBridge.processingDegreeCurricularPlans.put(userView,
-		processingDegreeCurricularPlans);
-	CurricularCourseStatisticsStatusBridge.toProcessDegreeCurricularPlans.put(userView,
-		toProcessDegreeCurricularPlans);
+	CurricularCourseStatisticsStatusBridge.processedDegreeCurricularPlans.put(userView, processedDegreeCurricularPlans);
+	CurricularCourseStatisticsStatusBridge.processingDegreeCurricularPlans.put(userView, processingDegreeCurricularPlans);
+	CurricularCourseStatisticsStatusBridge.toProcessDegreeCurricularPlans.put(userView, toProcessDegreeCurricularPlans);
 
 	StringBuilder result = new StringBuilder();
 	result
@@ -79,8 +73,8 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
 	degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
 
-	List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan
-		.readByDegreeTypesAndState(degreeTypes, DegreeCurricularPlanState.ACTIVE);
+	List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypesAndState(degreeTypes,
+		DegreeCurricularPlanState.ACTIVE);
 
 	for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
 	    toProcessDegreeCurricularPlans.add(degreeCurricularPlan.getName());
@@ -98,8 +92,7 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
 	}
 
 	String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
-	response.setHeader("Content-disposition", "attachment;filename=" + executionYearID + "_"
-		+ currentDate + ".csv");
+	response.setHeader("Content-disposition", "attachment;filename=" + executionYearID + "_" + currentDate + ".csv");
 	response.setContentType("application/txt");
 	PrintWriter writer = response.getWriter();
 	writer.write(result.toString());

@@ -16,23 +16,21 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class PricesManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward viewPrices(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewPrices(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	final SortedSet<PostingRule> sortedPostingRules = new TreeSet<PostingRule>(
-		PostingRule.COMPARATOR_BY_EVENT_TYPE);
-	sortedPostingRules.addAll(getAdministrativeOffice(request).getServiceAgreementTemplate()
-		.getActiveVisiblePostingRules());
+	final SortedSet<PostingRule> sortedPostingRules = new TreeSet<PostingRule>(PostingRule.COMPARATOR_BY_EVENT_TYPE);
+	sortedPostingRules.addAll(getAdministrativeOffice(request).getServiceAgreementTemplate().getActiveVisiblePostingRules());
 	request.setAttribute("postingRules", sortedPostingRules);
 
 	return mapping.findForward("viewPrices");
     }
 
-    public ActionForward prepareEditPrice(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareEditPrice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	request.setAttribute("postingRule", rootDomainObject
-		.readPostingRuleByOID(getRequestParameterAsInteger(request, "postingRuleId")));
+	request.setAttribute("postingRule", rootDomainObject.readPostingRuleByOID(getRequestParameterAsInteger(request,
+		"postingRuleId")));
 	return mapping.findForward("editPrice");
     }
 

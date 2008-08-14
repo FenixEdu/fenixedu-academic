@@ -20,123 +20,114 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class TagInputCloudRenderer extends InputRenderer {
 
-	private String size;
-	
-	private String tagClasses;
-	
-	private String tagSort;
-	
-	private String textClasses;
-	
-	
-	public String getTextClasses() {
-		return textClasses;
-	}
+    private String size;
 
-	public void setTextClasses(String textClasses) {
-		this.textClasses = textClasses;
-	}
+    private String tagClasses;
 
-	public String getTagSort() {
-		return tagSort;
-	}
+    private String tagSort;
 
-	public void setTagSort(String tagSort) {
-		this.tagSort = tagSort;
-	}
+    private String textClasses;
 
-	public String getTagClasses() {
-		return tagClasses;
-	}
+    public String getTextClasses() {
+	return textClasses;
+    }
 
-	public void setTagClasses(String tagClasses) {
-		this.tagClasses = tagClasses;
-	}
+    public void setTextClasses(String textClasses) {
+	this.textClasses = textClasses;
+    }
 
+    public String getTagSort() {
+	return tagSort;
+    }
 
-	public String getSize() {
-		return size;
-	}
+    public void setTagSort(String tagSort) {
+	this.tagSort = tagSort;
+    }
 
+    public String getTagClasses() {
+	return tagClasses;
+    }
 
-	public void setSize(String size) {
-		this.size = size;
-	}
+    public void setTagClasses(String tagClasses) {
+	this.tagClasses = tagClasses;
+    }
 
+    public String getSize() {
+	return size;
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
+    public void setSize(String size) {
+	this.size = size;
+    }
 
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				MetaSlot slot = (MetaSlot) getContext().getMetaObject();
+	return new Layout() {
 
-				HtmlBlockContainer container = new HtmlBlockContainer();
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		MetaSlot slot = (MetaSlot) getContext().getMetaObject();
 
-				String tags = (String) object;
-				HtmlTextInput input = new HtmlTextInput();
-				if (getSize() != null) {
-					input.setSize(getSize());
-				}
-				input.setValue(tags);
-				input.bind(slot);
-				input.setId(input.getName());
+		HtmlBlockContainer container = new HtmlBlockContainer();
 
-				TagCloudRenderer tagCloud = new TagCloudRenderer();
-				tagCloud.setClasses(getTagClasses());
-				tagCloud.setSortBy(getTagSort());
-				tagCloud.setLinkFormat("#");
-				tagCloud.setOnClick(getAction(input.getName()));
-				tagCloud.setOnDblClick(getAction(input.getName()));
-				List<UnitFileTag> tagList = getTags();
+		String tags = (String) object;
+		HtmlTextInput input = new HtmlTextInput();
+		if (getSize() != null) {
+		    input.setSize(getSize());
+		}
+		input.setValue(tags);
+		input.bind(slot);
+		input.setId(input.getName());
 
-				PresentationContext newContext = getContext().createSubContext(
-						getContext().getMetaObject());
-				newContext.setProperties(new Properties());
-				newContext.setRenderMode(RenderMode.getMode("output"));
+		TagCloudRenderer tagCloud = new TagCloudRenderer();
+		tagCloud.setClasses(getTagClasses());
+		tagCloud.setSortBy(getTagSort());
+		tagCloud.setLinkFormat("#");
+		tagCloud.setOnClick(getAction(input.getName()));
+		tagCloud.setOnDblClick(getAction(input.getName()));
+		List<UnitFileTag> tagList = getTags();
 
-				container.addChild(getScript());
-				container.addChild(input);
-				container.addChild(new HtmlText("<br/>", false));
-				HtmlText text = new HtmlText(RenderUtils.getResourceString("RENDERER_RESOURCES", "renderers.label.tags.are.space.separated"));
-				text.setClasses(getTextClasses());
-				container.addChild(text);
-				container.addChild(RenderKit.getInstance().renderUsing(tagCloud, newContext, tagList,
-						tagList.getClass()));
+		PresentationContext newContext = getContext().createSubContext(getContext().getMetaObject());
+		newContext.setProperties(new Properties());
+		newContext.setRenderMode(RenderMode.getMode("output"));
 
-				return container;
+		container.addChild(getScript());
+		container.addChild(input);
+		container.addChild(new HtmlText("<br/>", false));
+		HtmlText text = new HtmlText(RenderUtils.getResourceString("RENDERER_RESOURCES",
+			"renderers.label.tags.are.space.separated"));
+		text.setClasses(getTextClasses());
+		container.addChild(text);
+		container.addChild(RenderKit.getInstance().renderUsing(tagCloud, newContext, tagList, tagList.getClass()));
 
-			}
+		return container;
 
-			private HtmlComponent getScript() {
-				HtmlScript script = new HtmlScript();
+	    }
 
-				script.setContentType("text/javascript");
-				script.setConditional(true);
-				script.setScript("\n" + "function addTag(field, tag) {\n"
-						+ "var element = document.getElementById(field);\n"
-						+ "var tags = element.value;\n"
-						+ "if (!tags.match('^' + tag + '$|\\\\s' + tag + '\\\\s|\\\\s' + tag + '$')) {\n" + "if (tags.length > 0) {\n"
-						+ "element.value = tags + ' ' + tag;\n" + "}\n" + "else {\n"
-						+ "element.value = tag;\n" + "}\n"
-						+ "element.focus();\n"
-						+ "}\n" + "}\n");
-				return script;
-			}
+	    private HtmlComponent getScript() {
+		HtmlScript script = new HtmlScript();
 
-			private List<UnitFileTag> getTags() {
-				UnitFileBean bean = (UnitFileBean) getContext().getParentContext().getMetaObject()
-						.getObject();
-				return bean.getUnit().getUnitFileTags();
-			}
+		script.setContentType("text/javascript");
+		script.setConditional(true);
+		script.setScript("\n" + "function addTag(field, tag) {\n" + "var element = document.getElementById(field);\n"
+			+ "var tags = element.value;\n"
+			+ "if (!tags.match('^' + tag + '$|\\\\s' + tag + '\\\\s|\\\\s' + tag + '$')) {\n"
+			+ "if (tags.length > 0) {\n" + "element.value = tags + ' ' + tag;\n" + "}\n" + "else {\n"
+			+ "element.value = tag;\n" + "}\n" + "element.focus();\n" + "}\n" + "}\n");
+		return script;
+	    }
 
-			private String getAction(String name) {
-				return "addTag('" + name + "','${name}');";
-			}
+	    private List<UnitFileTag> getTags() {
+		UnitFileBean bean = (UnitFileBean) getContext().getParentContext().getMetaObject().getObject();
+		return bean.getUnit().getUnitFileTags();
+	    }
 
-		};
-	}
+	    private String getAction(String name) {
+		return "addTag('" + name + "','${name}');";
+	    }
+
+	};
+    }
 
 }

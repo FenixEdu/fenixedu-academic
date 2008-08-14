@@ -84,8 +84,8 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
 	    if (lesson.getInfoRoomOccupation() != null) {
 		strBuffer.append(" <a href='");
 		strBuffer.append(context).append("/resourceAllocationManager/");
-		strBuffer.append("pesquisarSala.do?name=").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
-			.append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+		strBuffer.append("pesquisarSala.do?name=").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
+			"'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
 	    }
 
 	} else if (showOccupation instanceof InfoExam) {
@@ -101,7 +101,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
 	    strBuffer.append(" - ");
 	    strBuffer.append(infoExam.getSeason().getSeason());
 	    strBuffer.append("ª época");
-	    
+
 	} else if (showOccupation instanceof InfoWrittenTest) {
 	    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
 	    for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public abstract class InfoTransaction extends InfoObject {
 
@@ -39,17 +39,15 @@ public abstract class InfoTransaction extends InfoObject {
 
     public static InfoTransaction newInfoFromDomain(Transaction transaction) {
 
-        InfoTransaction infoTransaction = null;
+	InfoTransaction infoTransaction = null;
 
-        if (transaction instanceof PaymentTransaction) {
-            infoTransaction = InfoPaymentTransaction
-                    .newInfoFromDomain((PaymentTransaction) transaction);
-        } else if (transaction instanceof ReimbursementTransaction) {
-            infoTransaction = InfoReimbursementTransaction
-                    .newInfoFromDomain((ReimbursementTransaction) transaction);
-        }
+	if (transaction instanceof PaymentTransaction) {
+	    infoTransaction = InfoPaymentTransaction.newInfoFromDomain((PaymentTransaction) transaction);
+	} else if (transaction instanceof ReimbursementTransaction) {
+	    infoTransaction = InfoReimbursementTransaction.newInfoFromDomain((ReimbursementTransaction) transaction);
+	}
 
-        return infoTransaction;
+	return infoTransaction;
 
     }
 
@@ -58,15 +56,15 @@ public abstract class InfoTransaction extends InfoObject {
      * @param transaction
      */
     protected void copyFromDomain(Transaction transaction) {
-        super.copyFromDomain(transaction);
-        this.paymentType = transaction.getPaymentType();
-        this.remarks = transaction.getRemarks();
-        if (transaction.getTransactionDate() != null) {
-            this.setTransactionDate(new Timestamp(transaction.getTransactionDate().getTime()));
-        }
-        this.transactionType = transaction.getTransactionType();
-        this.value = transaction.getValue();
-        this.wasInternalBalance = transaction.getWasInternalBalance();
+	super.copyFromDomain(transaction);
+	this.paymentType = transaction.getPaymentType();
+	this.remarks = transaction.getRemarks();
+	if (transaction.getTransactionDate() != null) {
+	    this.setTransactionDate(new Timestamp(transaction.getTransactionDate().getTime()));
+	}
+	this.transactionType = transaction.getTransactionType();
+	this.value = transaction.getValue();
+	this.wasInternalBalance = transaction.getWasInternalBalance();
 
     }
 
@@ -74,7 +72,7 @@ public abstract class InfoTransaction extends InfoObject {
      * @return Returns the infoPersonAccount.
      */
     public InfoPersonAccount getInfoPersonAccount() {
-        return infoPersonAccount;
+	return infoPersonAccount;
     }
 
     /**
@@ -82,14 +80,14 @@ public abstract class InfoTransaction extends InfoObject {
      *            The infoPersonAccount to set.
      */
     public void setInfoPersonAccount(InfoPersonAccount infoPersonAccount) {
-        this.infoPersonAccount = infoPersonAccount;
+	this.infoPersonAccount = infoPersonAccount;
     }
 
     /**
      * @return Returns the infoResponsiblePerson.
      */
     public InfoPerson getInfoResponsiblePerson() {
-        return infoResponsiblePerson;
+	return infoResponsiblePerson;
     }
 
     /**
@@ -97,14 +95,14 @@ public abstract class InfoTransaction extends InfoObject {
      *            The infoResponsiblePerson to set.
      */
     public void setInfoResponsiblePerson(InfoPerson infoResponsiblePerson) {
-        this.infoResponsiblePerson = infoResponsiblePerson;
+	this.infoResponsiblePerson = infoResponsiblePerson;
     }
 
     /**
      * @return Returns the paymentType.
      */
     public PaymentType getPaymentType() {
-        return paymentType;
+	return paymentType;
     }
 
     /**
@@ -112,14 +110,14 @@ public abstract class InfoTransaction extends InfoObject {
      *            The paymentType to set.
      */
     public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
+	this.paymentType = paymentType;
     }
 
     /**
      * @return Returns the remarks.
      */
     public String getRemarks() {
-        return remarks;
+	return remarks;
     }
 
     /**
@@ -127,14 +125,14 @@ public abstract class InfoTransaction extends InfoObject {
      *            The remarks to set.
      */
     public void setRemarks(String remarks) {
-        this.remarks = remarks;
+	this.remarks = remarks;
     }
 
     /**
      * @return Returns the transactionDate.
      */
     public Timestamp getTransactionDate() {
-        return transactionDate;
+	return transactionDate;
     }
 
     /**
@@ -142,14 +140,14 @@ public abstract class InfoTransaction extends InfoObject {
      *            The transactionDate to set.
      */
     public void setTransactionDate(Timestamp transactionDate) {
-        this.transactionDate = transactionDate;
+	this.transactionDate = transactionDate;
     }
 
     /**
      * @return Returns the transactionType.
      */
     public TransactionType getTransactionType() {
-        return transactionType;
+	return transactionType;
     }
 
     /**
@@ -157,14 +155,14 @@ public abstract class InfoTransaction extends InfoObject {
      *            The transactionType to set.
      */
     public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
+	this.transactionType = transactionType;
     }
 
     /**
      * @return Returns the value.
      */
     public Double getValue() {
-        return value;
+	return value;
     }
 
     /**
@@ -172,14 +170,14 @@ public abstract class InfoTransaction extends InfoObject {
      *            The value to set.
      */
     public void setValue(Double value) {
-        this.value = value;
+	this.value = value;
     }
 
     /**
      * @return Returns the wasInternalBalance.
      */
     public Boolean getWasInternalBalance() {
-        return wasInternalBalance;
+	return wasInternalBalance;
     }
 
     /**
@@ -187,6 +185,6 @@ public abstract class InfoTransaction extends InfoObject {
      *            The wasInternalBalance to set.
      */
     public void setWasInternalBalance(Boolean wasInternalBalance) {
-        this.wasInternalBalance = wasInternalBalance;
+	this.wasInternalBalance = wasInternalBalance;
     }
 }

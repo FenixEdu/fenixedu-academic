@@ -31,7 +31,7 @@ public class ReadFilteredExamsMap extends Service {
     }
 
     public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears,
-	    InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException{
+	    InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
 	InfoExamsMap result = new InfoExamsMap();
 	result.setInfoExecutionDegree(infoExecutionDegree);

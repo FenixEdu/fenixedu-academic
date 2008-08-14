@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ExecutionCourseHasProposals extends Service {
 
-	public boolean run(Integer executionCourseCode) throws FenixServiceException{
-		boolean result = false;
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+    public boolean run(Integer executionCourseCode) throws FenixServiceException {
+	boolean result = false;
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
-		result = executionCourse.hasProposals();
+	result = executionCourse.hasProposals();
 
-		return result;
+	return result;
 
-	}
+    }
 }

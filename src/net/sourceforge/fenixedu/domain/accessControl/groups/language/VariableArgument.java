@@ -13,14 +13,14 @@ public class VariableArgument extends DynamicArgument {
     private String variable;
 
     public VariableArgument(String variable) {
-        this.variable = variable;
+	this.variable = variable;
     }
 
     /**
      * @return the variable name that defines this argument's value
      */
     public String getVariable() {
-        return this.variable;
+	return this.variable;
     }
 
     /**
@@ -29,13 +29,12 @@ public class VariableArgument extends DynamicArgument {
      * @see #getVariable()
      * @see Argument#getContext()
      * 
-     * @exception
-     * net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException
-     * if the variable is not defined in the current context
+     * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException
+     *                if the variable is not defined in the current context
      */
     @Override
     public Object getMainValue() {
-        return getContext().getVariable(getVariable());
+	return getContext().getVariable(getVariable());
     }
 
     /**
@@ -45,12 +44,12 @@ public class VariableArgument extends DynamicArgument {
      */
     @Override
     public boolean isDynamic() {
-        return true;
+	return true;
     }
 
     @Override
     protected String getMainValueString() {
-        return "$" + getVariable();
+	return "$" + getVariable();
     }
-    
+
 }

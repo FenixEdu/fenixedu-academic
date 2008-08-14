@@ -32,11 +32,8 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
-		"label.degreeCandidacy")
-		+ " - "
-		+ getExecutionDegree().getDegreeCurricularPlan().getName()
-		+ " - "
+	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString("label.degreeCandidacy")
+		+ " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
 		+ getExecutionDegree().getExecutionYear().getYear();
     }
 

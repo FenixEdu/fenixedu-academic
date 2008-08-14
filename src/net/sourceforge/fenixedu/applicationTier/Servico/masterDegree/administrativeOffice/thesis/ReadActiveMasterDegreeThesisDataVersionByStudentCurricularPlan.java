@@ -19,22 +19,21 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan extends Service {
 
     public InfoMasterDegreeThesisDataVersion run(InfoStudentCurricularPlan infoStudentCurricularPlan)
-            throws FenixServiceException{
-        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+	    throws FenixServiceException {
+	InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                .readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan
+		.getIdInternal());
 
-        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = studentCurricularPlan
-                .readActiveMasterDegreeThesisDataVersion();
+	MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = studentCurricularPlan
+		.readActiveMasterDegreeThesisDataVersion();
 
-        if (masterDegreeThesisDataVersion == null)
-            throw new NonExistingServiceException(
-                    "error.exception.masterDegree.nonExistingMasterDegreeThesis");
+	if (masterDegreeThesisDataVersion == null)
+	    throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesis");
 
-        infoMasterDegreeThesisDataVersion = InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
-                .newInfoFromDomain(masterDegreeThesisDataVersion);
+	infoMasterDegreeThesisDataVersion = InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
+		.newInfoFromDomain(masterDegreeThesisDataVersion);
 
-        return infoMasterDegreeThesisDataVersion;
+	return infoMasterDegreeThesisDataVersion;
     }
 }

@@ -19,96 +19,95 @@ public class Regime {
 
     /* Construtores */
     public Regime() {
-        _codigoInterno = 0;
-        _sigla = null;
-        _designacao = null;
-        _quem = 0;
-        _quando = null;
+	_codigoInterno = 0;
+	_sigla = null;
+	_designacao = null;
+	_quem = 0;
+	_quando = null;
     }
 
     public Regime(String designacao) {
-        _codigoInterno = 0;
-        _sigla = null;
-        _designacao = designacao;
-        _quem = 0;
-        _quando = null;
+	_codigoInterno = 0;
+	_sigla = null;
+	_designacao = designacao;
+	_quem = 0;
+	_quando = null;
     }
 
     public Regime(String designacao, int quem, Timestamp quando) {
-        _codigoInterno = 0;
-        _sigla = null;
-        _designacao = designacao;
-        _quem = quem;
-        _quando = quando;
+	_codigoInterno = 0;
+	_sigla = null;
+	_designacao = designacao;
+	_quem = quem;
+	_quando = quando;
     }
 
     public Regime(int codigoInterno, String designacao) {
-        _codigoInterno = codigoInterno;
-        _designacao = designacao;
-        _quem = 0;
-        _quando = null;
+	_codigoInterno = codigoInterno;
+	_designacao = designacao;
+	_quem = 0;
+	_quando = null;
     }
 
     public Regime(int codigoInterno, String designacao, int quem, Timestamp quando) {
-        _codigoInterno = codigoInterno;
-        _sigla = null;
-        _designacao = designacao;
-        _quem = quem;
-        _quando = quando;
+	_codigoInterno = codigoInterno;
+	_sigla = null;
+	_designacao = designacao;
+	_quem = quem;
+	_quando = quando;
     }
 
     /* Selectores */
     public int getCodigoInterno() {
-        return _codigoInterno;
+	return _codigoInterno;
     }
 
     public String getSigla() {
-        return _sigla;
+	return _sigla;
     }
 
     public String getDesignacao() {
-        return _designacao;
+	return _designacao;
     }
 
     public int getQuem() {
-        return _quem;
+	return _quem;
     }
 
     public Timestamp getQuando() {
-        return _quando;
+	return _quando;
     }
 
     /* Modificadores */
     public void setCodigoInterno(int codigoInterno) {
-        _codigoInterno = codigoInterno;
+	_codigoInterno = codigoInterno;
     }
 
     public void setSigla(String sigla) {
-        _sigla = sigla;
+	_sigla = sigla;
     }
 
     public void setDesignacao(String designacao) {
-        _designacao = designacao;
+	_designacao = designacao;
     }
 
     public void setQuem(int quem) {
-        _quem = quem;
+	_quem = quem;
     }
 
     public void setQuando(Timestamp quando) {
-        _quando = quando;
+	_quando = quando;
     }
 
     /* teste da igualdade */
     public boolean equals(Object obj) {
-        boolean resultado = false;
+	boolean resultado = false;
 
-        if (obj instanceof Regime) {
-            Regime regime = (Regime) obj;
+	if (obj instanceof Regime) {
+	    Regime regime = (Regime) obj;
 
-            resultado = (this.getCodigoInterno() == regime.getCodigoInterno() && this.getDesignacao() == regime
-                    .getDesignacao());
-        }
-        return resultado;
+	    resultado = (this.getCodigoInterno() == regime.getCodigoInterno() && this.getDesignacao() == regime.getDesignacao());
+	}
+	return resultado;
     }
 }

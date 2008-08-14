@@ -9,28 +9,28 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 public class CertificateForm extends Form {
 
     public CertificateForm() {
-        super();
+	super();
     }
 
     @Override
     public List<LabelFormatter> validate() {
-        return Collections.EMPTY_LIST;
+	return Collections.EMPTY_LIST;
     }
 
     @Override
     public String getFormName() {
-        // TODO Auto-generated method stub
-        return "cenouras";
+	// TODO Auto-generated method stub
+	return "cenouras";
     }
 
     @Override
     public String getFormDescription() {
-        return "batatas";
+	return "batatas";
     }
 
     @Override
     public boolean isInput() {
-        return false;
+	return false;
     }
 
 }

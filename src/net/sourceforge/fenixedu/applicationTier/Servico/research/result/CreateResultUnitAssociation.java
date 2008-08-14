@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 public class CreateResultUnitAssociation extends Service {
 
     public void run(ResultUnitAssociationCreationBean bean) {
-	
-	if(bean.isSuggestion()) {
-	    run(bean.getResult(),bean.getSuggestedUnits());
-	}else {
-	    run(bean.getResult(),bean.getUnit());
+
+	if (bean.isSuggestion()) {
+	    run(bean.getResult(), bean.getSuggestedUnits());
+	} else {
+	    run(bean.getResult(), bean.getUnit());
 	}
 	ResearchResultMetaDataManager.updateMetaDataInStorageFor(bean.getResult());
     }
@@ -28,7 +28,7 @@ public class CreateResultUnitAssociation extends Service {
 	}
 	result.addUnitAssociation(unit, ResultUnitAssociationRole.getDefaultRole());
     }
-    
+
     private void run(ResearchResult result, List<Unit> suggestedUnits) {
 	for (Unit unit : suggestedUnits) {
 	    result.addUnitAssociation(unit, ResultUnitAssociationRole.getDefaultRole());

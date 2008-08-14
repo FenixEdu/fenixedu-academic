@@ -6,34 +6,34 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 public class ForumSubscription extends ForumSubscription_Base {
 
     public ForumSubscription() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setReceivePostsByEmail(false);
-        setFavorite(false);
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setReceivePostsByEmail(false);
+	setFavorite(false);
 
     }
 
     public ForumSubscription(Person person, Forum forum) {
-        this();
-        setPerson(person);
-        setForum(forum);
+	this();
+	setPerson(person);
+	setForum(forum);
     }
 
     public void delete() {
-        removePerson();
-        removeForum();
-        removeRootDomainObject();
-        deleteDomainObject();
+	removePerson();
+	removeForum();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
     @Override
     public void removePerson() {
-        super.setPerson(null);
+	super.setPerson(null);
     }
 
     @Override
     public void removeForum() {
-        super.setForum(null);
+	super.setForum(null);
     }
 
 }

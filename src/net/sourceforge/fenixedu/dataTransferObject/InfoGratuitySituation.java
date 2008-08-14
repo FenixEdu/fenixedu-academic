@@ -43,7 +43,7 @@ public class InfoGratuitySituation extends InfoObject {
     private Double totalValue;
 
     private GratuitySituationType situationType; // attributes
-                                                        // auxiliaries for
+    // auxiliaries for
 
     // calculations
 
@@ -54,196 +54,196 @@ public class InfoGratuitySituation extends InfoObject {
     // calculations
 
     /**
-         * @return Returns the insurancePayed.
-         */
+     * @return Returns the insurancePayed.
+     */
     public String getInsurancePayed() {
 	return insurancePayed;
     }
 
     /**
-         * @param insurancePayed
-         *                The insurancePayed to set.
-         */
+     * @param insurancePayed
+     *            The insurancePayed to set.
+     */
     public void setInsurancePayed(String insurancePayed) {
 	this.insurancePayed = insurancePayed;
     }
 
     /**
-         * @return Returns the situationType.
-         */
+     * @return Returns the situationType.
+     */
     public GratuitySituationType getSituationType() {
 	return situationType;
     }
 
     /**
-         * @param situationType
-         *                The situationType to set.
-         */
+     * @param situationType
+     *            The situationType to set.
+     */
     public void setSituationType(GratuitySituationType situationType) {
 	this.situationType = situationType;
     }
 
     /**
-         * @return Returns the infoEmployee.
-         */
+     * @return Returns the infoEmployee.
+     */
     public InfoEmployee getInfoEmployee() {
 	return infoEmployee;
     }
 
     /**
-         * @param infoEmployee
-         *                The infoEmployee to set.
-         */
+     * @param infoEmployee
+     *            The infoEmployee to set.
+     */
     public void setInfoEmployee(InfoEmployee infoEmployee) {
 	this.infoEmployee = infoEmployee;
     }
 
     /**
-         * @return Returns the when.
-         */
+     * @return Returns the when.
+     */
     public Date getWhen() {
 	return when;
     }
 
     /**
-         * @param when
-         *                The when to set.
-         */
+     * @param when
+     *            The when to set.
+     */
     public void setWhen(Date when) {
 	this.when = when;
     }
 
     /**
-         * @return Returns the exemptionDescription.
-         */
+     * @return Returns the exemptionDescription.
+     */
     public String getExemptionDescription() {
 	return exemptionDescription;
     }
 
     /**
-         * @param exemptionDescription
-         *                The exemptionDescription to set.
-         */
+     * @param exemptionDescription
+     *            The exemptionDescription to set.
+     */
     public void setExemptionDescription(String exemptionDescription) {
 	this.exemptionDescription = exemptionDescription;
     }
 
     /**
-         * @return Returns the exemptionPercentage.
-         */
+     * @return Returns the exemptionPercentage.
+     */
     public Integer getExemptionPercentage() {
 	return exemptionPercentage;
     }
 
     /**
-         * @param exemptionPercentage
-         *                The exemptionPercentage to set.
-         */
+     * @param exemptionPercentage
+     *            The exemptionPercentage to set.
+     */
     public void setExemptionPercentage(Integer exemptionPercentage) {
 	this.exemptionPercentage = exemptionPercentage;
     }
 
     /**
-         * @return Returns the exemptionType.
-         */
+     * @return Returns the exemptionType.
+     */
     public ExemptionGratuityType getExemptionType() {
 	return exemptionType;
     }
 
     /**
-         * @param exemptionType
-         *                The exemptionType to set.
-         */
+     * @param exemptionType
+     *            The exemptionType to set.
+     */
     public void setExemptionType(ExemptionGratuityType exemptionType) {
 	this.exemptionType = exemptionType;
     }
 
     /**
-         * @return Returns the gratuity.
-         */
+     * @return Returns the gratuity.
+     */
     public InfoGratuityValues getInfoGratuityValues() {
 	return infoGratuityValues;
     }
 
     /**
-         * @param gratuity
-         *                The gratuity to set.
-         */
+     * @param gratuity
+     *            The gratuity to set.
+     */
     public void setInfoGratuityValues(InfoGratuityValues gratuity) {
 	this.infoGratuityValues = gratuity;
     }
 
     /**
-         * @return Returns the payedValue.
-         */
+     * @return Returns the payedValue.
+     */
     public Double getPayedValue() {
 	return payedValue;
     }
 
     /**
-         * @param payedValue
-         *                The payedValue to set.
-         */
+     * @param payedValue
+     *            The payedValue to set.
+     */
     public void setPayedValue(Double payedValue) {
 	this.payedValue = payedValue;
     }
 
     /**
-         * @return Returns the remainingValue.
-         */
+     * @return Returns the remainingValue.
+     */
     public Double getRemainingValue() {
 	return remainingValue;
     }
 
     /**
-         * @param remainingValue
-         *                The remainingValue to set.
-         */
+     * @param remainingValue
+     *            The remainingValue to set.
+     */
     public void setRemainingValue(Double remainingValue) {
 	this.remainingValue = remainingValue;
     }
 
     /**
-         * @return Returns the student.
-         */
+     * @return Returns the student.
+     */
     public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
 	return infoStudentCurricularPlan;
     }
 
     /**
-         * @param student
-         *                The student to set.
-         */
+     * @param student
+     *            The student to set.
+     */
     public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan studentCurricularPlan) {
 	this.infoStudentCurricularPlan = studentCurricularPlan;
     }
 
     /**
-         * @return Returns the transactionList.
-         */
+     * @return Returns the transactionList.
+     */
     public List getTransactionList() {
 	return transactionList;
     }
 
     /**
-         * @param transactionList
-         *                The transactionList to set.
-         */
+     * @param transactionList
+     *            The transactionList to set.
+     */
     public void setTransactionList(List transactionList) {
 	this.transactionList = transactionList;
     }
 
     /**
-         * @return Returns the exemptionValue.
-         */
+     * @return Returns the exemptionValue.
+     */
     public Double getExemptionValue() {
 	return exemptionValue;
     }
 
     /**
-         * @param exemptionValue
-         *                The exemptionValue to set.
-         */
+     * @param exemptionValue
+     *            The exemptionValue to set.
+     */
     public void setExemptionValue(Double exemptionValue) {
 	this.exemptionValue = exemptionValue;
     }
@@ -261,10 +261,12 @@ public class InfoGratuitySituation extends InfoObject {
     }
 
     /*
-         * (non-Javadoc)
-         * 
-         * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
-         */
+     * (non-Javadoc)
+     * 
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
+     */
     public void copyFromDomain(GratuitySituation gratuitySituation) {
 	super.copyFromDomain(gratuitySituation);
 	if (gratuitySituation != null) {

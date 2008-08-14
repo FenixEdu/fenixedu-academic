@@ -14,48 +14,48 @@ public class InfoExecutionYear extends InfoObject {
     private final DomainReference<ExecutionYear> executionYearDomainReference;
 
     public InfoExecutionYear(final ExecutionYear executionYear) {
-        executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
+	executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
     }
 
     public ExecutionYear getExecutionYear() {
-        return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
+	return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
     }
 
     public String getYear() {
-        return getExecutionYear().getYear();
+	return getExecutionYear().getYear();
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof InfoExecutionYear) {
-            InfoExecutionYear infoExecutionYear = (InfoExecutionYear) obj;
-            return getYear().equals(infoExecutionYear.getYear());
-        }
-        return false;
+	if (obj instanceof InfoExecutionYear) {
+	    InfoExecutionYear infoExecutionYear = (InfoExecutionYear) obj;
+	    return getYear().equals(infoExecutionYear.getYear());
+	}
+	return false;
     }
 
     public String toString() {
-        return getExecutionYear().getYear();
+	return getExecutionYear().getYear();
     }
 
     public PeriodState getState() {
-        return getExecutionYear().getState();
+	return getExecutionYear().getState();
     }
 
     public int compareTo(Object arg0) {
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
-        return this.getYear().compareTo(infoExecutionYear.getYear());
+	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+	return this.getYear().compareTo(infoExecutionYear.getYear());
     }
 
     public Date getBeginDate() {
-        return getExecutionYear().getBeginDate();
+	return getExecutionYear().getBeginDate();
     }
 
     public Date getEndDate() {
-        return getExecutionYear().getEndDate();
+	return getExecutionYear().getEndDate();
     }
 
     public static InfoExecutionYear newInfoFromDomain(final ExecutionYear executionYear) {
-        return executionYear == null ? null : new InfoExecutionYear(executionYear);
+	return executionYear == null ? null : new InfoExecutionYear(executionYear);
     }
 
     public String getNextExecutionYearYear() {
@@ -63,22 +63,22 @@ public class InfoExecutionYear extends InfoObject {
     }
 
     public boolean after(InfoExecutionYear infoExecutionYear) {
-        return getBeginDate().after(infoExecutionYear.getEndDate());
+	return getBeginDate().after(infoExecutionYear.getEndDate());
     }
 
     public InfoExecutionYear getNextInfoExecutionYear() {
-        final ExecutionYear nextExecutionYear = getExecutionYear().getNextExecutionYear();
-        return nextExecutionYear == null ? null : InfoExecutionYear.newInfoFromDomain(nextExecutionYear);
+	final ExecutionYear nextExecutionYear = getExecutionYear().getNextExecutionYear();
+	return nextExecutionYear == null ? null : InfoExecutionYear.newInfoFromDomain(nextExecutionYear);
     }
 
     @Override
     public Integer getIdInternal() {
-        return getExecutionYear().getIdInternal();
+	return getExecutionYear().getIdInternal();
     }
 
     @Override
     public void setIdInternal(Integer integer) {
-        throw new Error("Method should not be called!");
+	throw new Error("Method should not be called!");
     }
 
 }

@@ -12,14 +12,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionPeriodsByExecutionYear extends Service {
 
     public List run(Integer executionYearId) {
-        final ExecutionYear executionYear = executionYearId != null ?
-                rootDomainObject.readExecutionYearByOID(executionYearId)
-                : ExecutionYear.readCurrentExecutionYear();
+	final ExecutionYear executionYear = executionYearId != null ? rootDomainObject.readExecutionYearByOID(executionYearId)
+		: ExecutionYear.readCurrentExecutionYear();
 
-        final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-            infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
-        }
-        return infoExecutionPeriods;
+	final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+	}
+	return infoExecutionPeriods;
     }
 }

@@ -48,98 +48,96 @@ public class DataSetGenerator {
     /**
      *  
      */
-    public DataSetGenerator(String configFilename) throws NullPointerException, FileNotFoundException,
-            IOException {
-        this.props = new Properties();
-        this.props.load(new FileInputStream(configFilename));
-        addPropertiesToIgnore();
+    public DataSetGenerator(String configFilename) throws NullPointerException, FileNotFoundException, IOException {
+	this.props = new Properties();
+	this.props.load(new FileInputStream(configFilename));
+	addPropertiesToIgnore();
     }
 
-    public DataSetGenerator(String configFilename, String filePath) throws NullPointerException,
-            FileNotFoundException, IOException {
-        this.props = new Properties();
-        this.props.load(new FileInputStream(configFilename));
-        this.props.put("destination.dataset", filePath);
-        addPropertiesToIgnore();
+    public DataSetGenerator(String configFilename, String filePath) throws NullPointerException, FileNotFoundException,
+	    IOException {
+	this.props = new Properties();
+	this.props.load(new FileInputStream(configFilename));
+	this.props.put("destination.dataset", filePath);
+	addPropertiesToIgnore();
     }
 
     /**
      *  
      */
     public DataSetGenerator() throws IOException, NullPointerException {
-        this.props = new Properties();
-        this.props.load(DataSetGenerator.class.getResourceAsStream(DATASET_CONFIG));
-        addPropertiesToIgnore();
+	this.props = new Properties();
+	this.props.load(DataSetGenerator.class.getResourceAsStream(DATASET_CONFIG));
+	addPropertiesToIgnore();
     }
 
     private void addPropertiesToIgnore() {
-        propertiesToIgnore = new ArrayList();
-        propertiesToIgnore.add(DB_DRIVER_PROPERTY);
-        propertiesToIgnore.add(DB_URL_PROPERTY);
-        propertiesToIgnore.add(DB_USER_PROPERTY);
-        propertiesToIgnore.add(DB_PASS_PROPERTY);
-        propertiesToIgnore.add(DESTINATION_DATASET_PROPERTY);
+	propertiesToIgnore = new ArrayList();
+	propertiesToIgnore.add(DB_DRIVER_PROPERTY);
+	propertiesToIgnore.add(DB_URL_PROPERTY);
+	propertiesToIgnore.add(DB_USER_PROPERTY);
+	propertiesToIgnore.add(DB_PASS_PROPERTY);
+	propertiesToIgnore.add(DESTINATION_DATASET_PROPERTY);
     }
 
     private IDatabaseConnection getConnection() throws Exception {
-        String driver = this.props.getProperty(DB_DRIVER_PROPERTY);
-        String url = this.props.getProperty(DB_URL_PROPERTY);
-        String user = this.props.getProperty(DB_USER_PROPERTY);
-        String pass = this.props.getProperty(DB_PASS_PROPERTY);
+	String driver = this.props.getProperty(DB_DRIVER_PROPERTY);
+	String url = this.props.getProperty(DB_URL_PROPERTY);
+	String user = this.props.getProperty(DB_USER_PROPERTY);
+	String pass = this.props.getProperty(DB_PASS_PROPERTY);
 
-        Class.forName(driver);
-        Connection jdbcConnection = DriverManager.getConnection(url, user, pass);
+	Class.forName(driver);
+	Connection jdbcConnection = DriverManager.getConnection(url, user, pass);
 
-        return new DatabaseConnection(jdbcConnection);
+	return new DatabaseConnection(jdbcConnection);
     }
 
     public void writeDataSet() {
-        IDataSet dataset = null;
-        IDatabaseConnection con = null;
+	IDataSet dataset = null;
+	IDatabaseConnection con = null;
 
-        try {
-            con = getConnection();
-            QueryDataSet queryDataset = new QueryDataSet(con);
+	try {
+	    con = getConnection();
+	    QueryDataSet queryDataset = new QueryDataSet(con);
 
-            Enumeration enumeration = this.props.propertyNames();
-            while (enumeration.hasMoreElements()) {
-                String propertyName = (String) enumeration.nextElement();
-                if (propertyName.endsWith(".columns") || propertyName.endsWith(".whereCondition")
-                        || propertiesToIgnore.contains(propertyName))
-                    continue; //we
-                // have
-                // already
-                // processed
-                // this
-                // properties
+	    Enumeration enumeration = this.props.propertyNames();
+	    while (enumeration.hasMoreElements()) {
+		String propertyName = (String) enumeration.nextElement();
+		if (propertyName.endsWith(".columns") || propertyName.endsWith(".whereCondition")
+			|| propertiesToIgnore.contains(propertyName))
+		    continue; // we
+		// have
+		// already
+		// processed
+		// this
+		// properties
 
-                String tableName = this.props.getProperty(propertyName);
-                String tableColumns = this.props.getProperty(propertyName + ".columns");
-                String tableWhereCondition = this.props.getProperty(propertyName + ".whereCondition");
-                String sqlInst = "SELECT " + tableColumns + " FROM " + tableName + " WHERE "
-                        + tableWhereCondition;
-                queryDataset.addTable(tableName, sqlInst);
-            }
-            dataset = queryDataset;
+		String tableName = this.props.getProperty(propertyName);
+		String tableColumns = this.props.getProperty(propertyName + ".columns");
+		String tableWhereCondition = this.props.getProperty(propertyName + ".whereCondition");
+		String sqlInst = "SELECT " + tableColumns + " FROM " + tableName + " WHERE " + tableWhereCondition;
+		queryDataset.addTable(tableName, sqlInst);
+	    }
+	    dataset = queryDataset;
 
-            String destinationDataSetPath = this.props.getProperty(DESTINATION_DATASET_PROPERTY);
-            destinationDataSetPath.replaceAll("\\\\", "/");
-            FileWriter fileWriter = new FileWriter(new File(destinationDataSetPath));
-            FlatXmlDataSet.write(dataset, fileWriter, "ISO-8859-1");
-            fileWriter.close();
+	    String destinationDataSetPath = this.props.getProperty(DESTINATION_DATASET_PROPERTY);
+	    destinationDataSetPath.replaceAll("\\\\", "/");
+	    FileWriter fileWriter = new FileWriter(new File(destinationDataSetPath));
+	    FlatXmlDataSet.write(dataset, fileWriter, "ISO-8859-1");
+	    fileWriter.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (con != null)
-                try {
-                    con.close();
-                } catch (SQLException e2) {
-                    e2.printStackTrace();
-                }
-        }
+	} catch (IOException e) {
+	    e.printStackTrace();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	} finally {
+	    if (con != null)
+		try {
+		    con.close();
+		} catch (SQLException e2) {
+		    e2.printStackTrace();
+		}
+	}
 
     }
 }

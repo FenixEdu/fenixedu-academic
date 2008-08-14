@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive;
 import java.io.Serializable;
 
 public class ArchiveOptions implements Serializable {
-    
+
     /**
-     * Default serialization id. 
+     * Default serialization id.
      */
     private static final long serialVersionUID = 1L;
-    
+
     private boolean announcements = true;
     private boolean planning = true;
     private boolean schedule = true;
@@ -18,59 +18,59 @@ public class ArchiveOptions implements Serializable {
     private boolean files = false;
 
     public boolean isAnnouncements() {
-        return this.announcements;
+	return this.announcements;
     }
 
     public void setAnnouncements(boolean announcements) {
-        this.announcements = announcements;
+	this.announcements = announcements;
     }
 
     public boolean isEvaluations() {
-        return this.evaluations;
+	return this.evaluations;
     }
 
     public void setEvaluations(boolean evaluations) {
-        this.evaluations = evaluations;
+	this.evaluations = evaluations;
     }
 
     public boolean isGroupings() {
-        return this.groupings;
+	return this.groupings;
     }
 
     public void setGroupings(boolean groupings) {
-        this.groupings = groupings;
+	this.groupings = groupings;
     }
 
     public boolean isPlanning() {
-        return this.planning;
+	return this.planning;
     }
 
     public void setPlanning(boolean planning) {
-        this.planning = planning;
+	this.planning = planning;
     }
 
     public boolean isSchedule() {
-        return this.schedule;
+	return this.schedule;
     }
 
     public void setSchedule(boolean schedule) {
-        this.schedule = schedule;
+	this.schedule = schedule;
     }
 
     public boolean isShifts() {
-        return this.shifts;
+	return this.shifts;
     }
 
     public void setShifts(boolean shifts) {
-        this.shifts = shifts;
+	this.shifts = shifts;
     }
 
     public boolean isFiles() {
-        return this.files;
+	return this.files;
     }
 
     public void setFiles(boolean files) {
-        this.files = files;
+	this.files = files;
     }
 
 }

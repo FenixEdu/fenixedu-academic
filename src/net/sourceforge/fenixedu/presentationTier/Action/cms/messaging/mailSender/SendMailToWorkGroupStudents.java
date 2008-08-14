@@ -2,9 +2,7 @@
  * 
  */
 
-
 package net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender;
-
 
 import java.util.Map;
 
@@ -22,34 +20,33 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 15:30:31,31/Mar/2006
- * @version $Id$
+ * @version $Id: SendMailToWorkGroupStudents.java 23397 2006-11-17 14:31:10Z
+ *          cfgi $
  */
 public class SendMailToWorkGroupStudents extends ExecutionCourseSendMail {
 
-	@Override
-	protected IGroup[] getAllowedGroups(HttpServletRequest request, IGroup[] selectedGroups)
-			throws FenixFilterException, FenixServiceException {
-		// TODO Auto-generated method stub
-		return null;
+    @Override
+    protected IGroup[] getAllowedGroups(HttpServletRequest request, IGroup[] selectedGroups) throws FenixFilterException,
+	    FenixServiceException {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    protected IGroup[] getGroupsToSend(IUserView userView, SendMailForm form, Map previousRequestParameters)
+	    throws FenixFilterException, FenixServiceException, FenixActionException {
+	String studentGroupCodeString = (String) ((String[]) previousRequestParameters.get("studentGroupCode"))[0];
+	Integer studentGroupCode = new Integer(studentGroupCodeString);
+
+	try {
+
+	    StudentGroup group = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+
+	    IGroup groupToSend = new StudentGroupStudentsGroup(group);
+
+	    return new IGroup[] { groupToSend };
+	} catch (Exception e) {
+	    throw new FenixActionException(e);
 	}
-
-	@Override
-	protected IGroup[] getGroupsToSend(IUserView userView, SendMailForm form,
-			Map previousRequestParameters) throws FenixFilterException, FenixServiceException,
-			FenixActionException {
-		String studentGroupCodeString = (String) ((String[]) previousRequestParameters.get("studentGroupCode"))[0];
-		Integer studentGroupCode = new Integer(studentGroupCodeString);
-
-		try {
-
-			StudentGroup group = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-
-			IGroup groupToSend = new StudentGroupStudentsGroup(group);
-
-			return new IGroup[] { groupToSend };
-		}
-		catch (Exception e) {
-			throw new FenixActionException(e);
-		}
-	}
+    }
 }

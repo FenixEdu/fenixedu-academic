@@ -27,8 +27,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 	super();
     }
 
-    public DFACandidacyEvent(AdministrativeOffice administrativeOffice, Person person,
-	    DFACandidacy candidacy) {
+    public DFACandidacyEvent(AdministrativeOffice administrativeOffice, Person person, DFACandidacy candidacy) {
 	this();
 	init(administrativeOffice, person, candidacy);
     }
@@ -67,10 +66,9 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
-		getDegree().getDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
-		getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
-		.appendLabel(")");
+	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
+		"enum").appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent())
+		.appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
 	return labelFormatter;
 
@@ -95,8 +93,8 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     @Override
     public PostingRule getPostingRule() {
-	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate()
-		.findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(
+		getEventType(), getWhenOccured());
     }
 
     public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriodInDegreeCurricularPlan() {

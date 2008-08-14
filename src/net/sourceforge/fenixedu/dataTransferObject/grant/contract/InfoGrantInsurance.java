@@ -31,14 +31,14 @@ public class InfoGrantInsurance extends InfoObject {
     private InfoGrantPaymentEntity infoGrantPaymentEntity;
 
     public InfoGrantInsurance() {
-        super();
+	super();
     }
 
     /**
      * @return Returns the infoGrantContract.
      */
     public InfoGrantContract getInfoGrantContract() {
-        return infoGrantContract;
+	return infoGrantContract;
     }
 
     /**
@@ -46,14 +46,14 @@ public class InfoGrantInsurance extends InfoObject {
      *            The infoGrantContract to set.
      */
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
-        this.infoGrantContract = infoGrantContract;
+	this.infoGrantContract = infoGrantContract;
     }
 
     /**
      * @return Returns the dateBeginInsurance.
      */
     public Date getDateBeginInsurance() {
-        return dateBeginInsurance;
+	return dateBeginInsurance;
     }
 
     /**
@@ -61,14 +61,14 @@ public class InfoGrantInsurance extends InfoObject {
      *            The dateBeginInsurance to set.
      */
     public void setDateBeginInsurance(Date dateBeginInsurance) {
-        this.dateBeginInsurance = dateBeginInsurance;
+	this.dateBeginInsurance = dateBeginInsurance;
     }
 
     /**
      * @return Returns the dateEndInsurance.
      */
     public Date getDateEndInsurance() {
-        return dateEndInsurance;
+	return dateEndInsurance;
     }
 
     /**
@@ -76,14 +76,14 @@ public class InfoGrantInsurance extends InfoObject {
      *            The dateEndInsurance to set.
      */
     public void setDateEndInsurance(Date dateEndInsurance) {
-        this.dateEndInsurance = dateEndInsurance;
+	this.dateEndInsurance = dateEndInsurance;
     }
 
     /**
      * @return Returns the totalValue.
      */
     public Double getTotalValue() {
-        return totalValue;
+	return totalValue;
     }
 
     /**
@@ -91,14 +91,14 @@ public class InfoGrantInsurance extends InfoObject {
      *            The totalValue to set.
      */
     public void setTotalValue(Double totalValue) {
-        this.totalValue = totalValue;
+	this.totalValue = totalValue;
     }
 
     /**
      * @return Returns the infoGrantPaymentEntity.
      */
     public InfoGrantPaymentEntity getInfoGrantPaymentEntity() {
-        return infoGrantPaymentEntity;
+	return infoGrantPaymentEntity;
     }
 
     /**
@@ -106,11 +106,11 @@ public class InfoGrantInsurance extends InfoObject {
      *            The infoGrantPaymentEntity to set.
      */
     public void setInfoGrantPaymentEntity(InfoGrantPaymentEntity infoGrantPaymentEntity) {
-        this.infoGrantPaymentEntity = infoGrantPaymentEntity;
+	this.infoGrantPaymentEntity = infoGrantPaymentEntity;
     }
 
     public static Double getDayValueOfInsurance() {
-        return new Double(dayValueOfInsurance);
+	return new Double(dayValueOfInsurance);
     }
 
     /**
@@ -118,51 +118,47 @@ public class InfoGrantInsurance extends InfoObject {
      * multiply by the constant value 'dayValueOfInsurance'
      */
     public static Double calculateTotalValue(Date dateBegin, Date dateEnd) {
-    	 
-    	 	 final long MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
-    	 	 long days = 0;
-    	  
-    	 
-        if (dateBegin != null && dateEnd != null && (dateBegin.before(dateEnd) || dateBegin.equals(dateEnd)) ) {
-        	long deltaMillis = dateEnd.getTime() - dateBegin.getTime();
-    	    days = (deltaMillis / MILLIS_PER_DAY) + 1;
-            return new Double(FormatDouble
-                    .round(((getDayValueOfInsurance().doubleValue()) / 365)* days ));
 
-        }
-    	return new Double(0);
+	final long MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
+	long days = 0;
+
+	if (dateBegin != null && dateEnd != null && (dateBegin.before(dateEnd) || dateBegin.equals(dateEnd))) {
+	    long deltaMillis = dateEnd.getTime() - dateBegin.getTime();
+	    days = (deltaMillis / MILLIS_PER_DAY) + 1;
+	    return new Double(FormatDouble.round(((getDayValueOfInsurance().doubleValue()) / 365) * days));
+
+	}
+	return new Double(0);
     }
 
     public void setTotalValue() {
-        totalValue = InfoGrantInsurance.calculateTotalValue(this.dateBeginInsurance,
-                this.dateEndInsurance);
+	totalValue = InfoGrantInsurance.calculateTotalValue(this.dateBeginInsurance, this.dateEndInsurance);
     }
 
     public void copyFromDomain(GrantInsurance grantInsurance) {
-        super.copyFromDomain(grantInsurance);
-        if (grantInsurance != null) {
-            setDateBeginInsurance(grantInsurance.getDateBeginInsurance());
-            setDateEndInsurance(grantInsurance.getDateEndInsurance());
-            setTotalValue(grantInsurance.getTotalValue());
-        }
+	super.copyFromDomain(grantInsurance);
+	if (grantInsurance != null) {
+	    setDateBeginInsurance(grantInsurance.getDateBeginInsurance());
+	    setDateEndInsurance(grantInsurance.getDateEndInsurance());
+	    setTotalValue(grantInsurance.getTotalValue());
+	}
     }
 
     public static InfoGrantInsurance newInfoFromDomain(GrantInsurance grantInsurance) {
-        InfoGrantInsurance infoGrantInsurance = null;
-        if (grantInsurance != null) {
-            infoGrantInsurance = new InfoGrantInsurance();
-            infoGrantInsurance.copyFromDomain(grantInsurance);
-        }
-        return infoGrantInsurance;
+	InfoGrantInsurance infoGrantInsurance = null;
+	if (grantInsurance != null) {
+	    infoGrantInsurance = new InfoGrantInsurance();
+	    infoGrantInsurance.copyFromDomain(grantInsurance);
+	}
+	return infoGrantInsurance;
     }
 
-    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, GrantInsurance grantInsurance)
-            {
-        super.copyToDomain(infoGrantInsurance, grantInsurance);
+    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, GrantInsurance grantInsurance) {
+	super.copyToDomain(infoGrantInsurance, grantInsurance);
 
-        grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
-        grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
-        grantInsurance.setTotalValue(infoGrantInsurance.getTotalValue());
+	grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
+	grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
+	grantInsurance.setTotalValue(infoGrantInsurance.getTotalValue());
     }
 
 }

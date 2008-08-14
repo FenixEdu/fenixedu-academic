@@ -18,8 +18,7 @@ import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider implements
-	DataProvider {
+public class DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider implements DataProvider {
 
     private static class CourseGroupPair extends GenericPair<Integer, String> {
 
@@ -40,10 +39,9 @@ public class DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryC
 
     public Object provide(Object source, Object currentValue) {
 	final List<GenericPair<Integer, String>> result = new ArrayList<GenericPair<Integer, String>>();
-	for (final List<DegreeModule> degreeModules : getDegreeCurricularPlan(source)
-		.getDcpDegreeModulesIncludingFullPath(CourseGroup.class, null)) {
-	    result.add(new CourseGroupPair((CourseGroup) degreeModules.get(degreeModules.size() - 1),
-		    buildPath(degreeModules)));
+	for (final List<DegreeModule> degreeModules : getDegreeCurricularPlan(source).getDcpDegreeModulesIncludingFullPath(
+		CourseGroup.class, null)) {
+	    result.add(new CourseGroupPair((CourseGroup) degreeModules.get(degreeModules.size() - 1), buildPath(degreeModules)));
 
 	}
 

@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class CreateExternalEnrolments extends Service {
 
-    public void run(final Registration registration,
-	    final List<ExternalCurricularCourseEnrolmentBean> beans) throws FenixServiceException {
+    public void run(final Registration registration, final List<ExternalCurricularCourseEnrolmentBean> beans)
+	    throws FenixServiceException {
 
 	for (final ExternalCurricularCourseEnrolmentBean bean : beans) {
-	    new ExternalEnrolment(registration, bean.getExternalCurricularCourse(), bean.getGrade(),
-		    bean.getExecutionPeriod(), bean.getEvaluationDate(), bean.getEctsCredits());
+	    new ExternalEnrolment(registration, bean.getExternalCurricularCourse(), bean.getGrade(), bean.getExecutionPeriod(),
+		    bean.getEvaluationDate(), bean.getEctsCredits());
 	}
     }
 }

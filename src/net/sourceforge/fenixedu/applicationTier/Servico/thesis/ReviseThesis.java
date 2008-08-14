@@ -9,5 +9,5 @@ public class ReviseThesis extends Service {
     public void run(Thesis thesis) {
 	thesis.allowRevision();
     }
-    
+
 }

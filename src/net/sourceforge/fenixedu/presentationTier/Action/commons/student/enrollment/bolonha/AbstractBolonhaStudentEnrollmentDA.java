@@ -34,7 +34,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAction {
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+	    HttpServletResponse response, final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionSemester executionSemester) {
 
 	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(studentCurricularPlan,
 		executionSemester, getCurricularYearForCurricularCourses(), getCurricularRuleLevel((DynaActionForm) form)));

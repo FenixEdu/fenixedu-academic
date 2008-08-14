@@ -92,10 +92,10 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
     public boolean isOptional() {
 	return false;
     }
-    
+
     @Override
     public boolean isDissertation() {
-        return false;
+	return false;
     }
 
     public boolean canCollectRules() {
@@ -130,7 +130,8 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
     }
 
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {
-	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup().getCurricularRules(executionSemester);
+	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup()
+		.getCurricularRules(executionSemester);
     }
 
     public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {

@@ -15,23 +15,21 @@ import org.joda.time.YearMonthDay;
 
 public class EditPersonFunction extends Service {
 
-    public void run(Integer personFunctionID, Integer functionID, YearMonthDay beginDate,
-            YearMonthDay endDate, Double credits) throws FenixServiceException,
-            DomainException {
+    public void run(Integer personFunctionID, Integer functionID, YearMonthDay beginDate, YearMonthDay endDate, Double credits)
+	    throws FenixServiceException, DomainException {
 
-        PersonFunction person_Function = (PersonFunction) rootDomainObject
-                .readAccountabilityByOID(personFunctionID);
+	PersonFunction person_Function = (PersonFunction) rootDomainObject.readAccountabilityByOID(personFunctionID);
 
-        if (person_Function == null) {
-            throw new FenixServiceException("error.no.personFunction");
-        }
+	if (person_Function == null) {
+	    throw new FenixServiceException("error.no.personFunction");
+	}
 
-        Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
+	Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
 
-        if (function == null) {
-            throw new FenixServiceException("erro.noFunction");
-        }
+	if (function == null) {
+	    throw new FenixServiceException("erro.noFunction");
+	}
 
-        person_Function.edit(beginDate, endDate, credits);
+	person_Function.edit(beginDate, endDate, credits);
     }
 }

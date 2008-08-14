@@ -24,23 +24,23 @@ public class InfoFileContent extends InfoObject {
     private Integer size;
 
     private String externalStorageIdentification;
-    
+
     public InfoFileContent() {
 
     }
 
     public void copyFromDomain(FileContent fileItem) {
-        super.copyFromDomain(fileItem);
-        if (fileItem != null) {
-            setName(fileItem.getFilename());
-            setDisplayName(fileItem.getDisplayName());
-            setMimeType(fileItem.getMimeType());
-            setChecksum(fileItem.getChecksum());
-            setChecksumAlgorithm(fileItem.getChecksumAlgorithm());
-            setSize(fileItem.getSize());
-            setExternalStorageIdentification(fileItem.getExternalStorageIdentification());
-            
-        }
+	super.copyFromDomain(fileItem);
+	if (fileItem != null) {
+	    setName(fileItem.getFilename());
+	    setDisplayName(fileItem.getDisplayName());
+	    setMimeType(fileItem.getMimeType());
+	    setChecksum(fileItem.getChecksum());
+	    setChecksumAlgorithm(fileItem.getChecksumAlgorithm());
+	    setSize(fileItem.getSize());
+	    setExternalStorageIdentification(fileItem.getExternalStorageIdentification());
+
+	}
     }
 
     /**
@@ -48,72 +48,72 @@ public class InfoFileContent extends InfoObject {
      * @return
      */
     public static InfoFileContent newInfoFromDomain(FileContent item) {
-        InfoFileContent infoItem = null;
-        if (item != null) {
-            infoItem = new InfoFileContent();
-            infoItem.copyFromDomain(item);
-        }
-        return infoItem;
+	InfoFileContent infoItem = null;
+	if (item != null) {
+	    infoItem = new InfoFileContent();
+	    infoItem.copyFromDomain(item);
+	}
+	return infoItem;
     }
 
     public String getChecksum() {
-        return checksum;
+	return checksum;
     }
 
     public void setChecksum(String checksum) {
-        this.checksum = checksum;
+	this.checksum = checksum;
     }
 
     public String getChecksumAlgorithm() {
-        return checksumAlgorithm;
+	return checksumAlgorithm;
     }
 
     public void setChecksumAlgorithm(String checksumAlgorithm) {
-        this.checksumAlgorithm = checksumAlgorithm;
+	this.checksumAlgorithm = checksumAlgorithm;
     }
 
     public String getDisplayName() {
-        return displayName;
+	return displayName;
     }
 
     public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+	this.displayName = displayName;
     }
 
     public String getExternalStorageIdentification() {
-        return externalStorageIdentification;
+	return externalStorageIdentification;
     }
 
     public void setExternalStorageIdentification(String externalStorageIdentification) {
-        this.externalStorageIdentification = externalStorageIdentification;
+	this.externalStorageIdentification = externalStorageIdentification;
     }
 
     public String getFilename() {
-        return name;
+	return name;
     }
 
     public void setName(String filename) {
-        this.name = filename;
+	this.name = filename;
     }
 
     public String getMimeType() {
-        return mimeType;
+	return mimeType;
     }
 
     public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
+	this.mimeType = mimeType;
     }
 
     public Integer getSize() {
-        return size;
+	return size;
     }
 
     public void setSize(Integer size) {
-        this.size = size;
+	this.size = size;
     }
 
     public String getHtmlFriendlyFilename() {
-        return getFilename().replaceAll("&", "&amp;").replaceAll(" ", "%20");
+	return getFilename().replaceAll("&", "&amp;").replaceAll(" ", "%20");
     }
 
 }

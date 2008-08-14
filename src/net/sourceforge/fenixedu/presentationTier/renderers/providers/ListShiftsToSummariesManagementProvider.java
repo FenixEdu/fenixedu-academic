@@ -13,17 +13,17 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ListShiftsToSummariesManagementProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        SummariesManagementBean bean = (SummariesManagementBean) source;
-        ExecutionCourse executionCourse = bean.getExecutionCourse();
-        Set<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
-        if(executionCourse != null) {            
-            shifts.addAll(executionCourse.getAssociatedShifts());
-        }
-        return shifts;
+	SummariesManagementBean bean = (SummariesManagementBean) source;
+	ExecutionCourse executionCourse = bean.getExecutionCourse();
+	Set<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+	if (executionCourse != null) {
+	    shifts.addAll(executionCourse.getAssociatedShifts());
+	}
+	return shifts;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

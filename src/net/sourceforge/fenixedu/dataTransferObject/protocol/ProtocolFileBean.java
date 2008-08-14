@@ -9,23 +9,22 @@ public class ProtocolFileBean extends OpenFileBean {
 
     private FilePermissionType filePermissionType;
 
-    public ProtocolFileBean(InputStream inputStream, String fileName,
-            FilePermissionType filePermissionType) {
-        setInputStream(inputStream);
-        setFileName(fileName);
-        setFilePermissionType(filePermissionType);
+    public ProtocolFileBean(InputStream inputStream, String fileName, FilePermissionType filePermissionType) {
+	setInputStream(inputStream);
+	setFileName(fileName);
+	setFilePermissionType(filePermissionType);
     }
 
     public String getFilePermissionTypeName() {
-        return filePermissionType.toString();
+	return filePermissionType.toString();
     }
-    
+
     public FilePermissionType getFilePermissionType() {
-        return filePermissionType;
+	return filePermissionType;
     }
 
     public void setFilePermissionType(FilePermissionType filePermissionType) {
-        this.filePermissionType = filePermissionType;
+	this.filePermissionType = filePermissionType;
     }
 
 }

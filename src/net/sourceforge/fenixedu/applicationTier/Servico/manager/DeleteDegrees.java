@@ -17,25 +17,25 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteDegrees extends Service {
 
     // delete a set of degrees
-    public List run(List degreesInternalIds) throws FenixServiceException{
-            Iterator iter = degreesInternalIds.iterator();
+    public List run(List degreesInternalIds) throws FenixServiceException {
+	Iterator iter = degreesInternalIds.iterator();
 
-            List<String> undeletedDegreesNames = new ArrayList<String>();
-            while (iter.hasNext()) {
-                Integer internalId = (Integer) iter.next();
-                Degree degree = rootDomainObject.readDegreeByOID(internalId);
-                
-                if (degree != null) {
-                
-                    try {
-						degree.delete();
-					} catch (DomainException e) {
-						undeletedDegreesNames.add(degree.getNome());
-					}
-                }
-            }
+	List<String> undeletedDegreesNames = new ArrayList<String>();
+	while (iter.hasNext()) {
+	    Integer internalId = (Integer) iter.next();
+	    Degree degree = rootDomainObject.readDegreeByOID(internalId);
 
-            return undeletedDegreesNames;
+	    if (degree != null) {
+
+		try {
+		    degree.delete();
+		} catch (DomainException e) {
+		    undeletedDegreesNames.add(degree.getNome());
+		}
+	    }
+	}
+
+	return undeletedDegreesNames;
     }
-    
+
 }

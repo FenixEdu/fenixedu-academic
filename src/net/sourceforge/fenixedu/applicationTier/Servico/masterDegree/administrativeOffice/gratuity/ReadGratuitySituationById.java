@@ -16,19 +16,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGratuitySituationById extends Service {
 
-	public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException{
-		InfoGratuitySituation infoGratuitySituation = null;
+    public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException {
+	InfoGratuitySituation infoGratuitySituation = null;
 
-		GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
-		if (gratuitySituation == null) {
-			throw new NonExistingServiceException(
-					"error.exception.masterDegree.gratuity.notExistingGratuitySituation");
-		}
-
-		infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-				.newInfoFromDomain(gratuitySituation);
-
-		return infoGratuitySituation;
-
+	GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
+	if (gratuitySituation == null) {
+	    throw new NonExistingServiceException("error.exception.masterDegree.gratuity.notExistingGratuitySituation");
 	}
+
+	infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree.newInfoFromDomain(gratuitySituation);
+
+	return infoGratuitySituation;
+
+    }
 }

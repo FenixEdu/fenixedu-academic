@@ -11,22 +11,22 @@ public class StrategyProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        StrategyFactory factory = StrategyFactory.getInstance();
-        Set<String> availableStrategies = factory.getAvailableStrategies();
+	StrategyFactory factory = StrategyFactory.getInstance();
+	Set<String> availableStrategies = factory.getAvailableStrategies();
 
-        return new ArrayList<String>(factory.getAvailableStrategies());
+	return new ArrayList<String>(factory.getAvailableStrategies());
 
     }
 
     public Converter getConverter() {
-        return new Converter() {
+	return new Converter() {
 
-            @Override
-            public Object convert(Class type, Object value) {
+	    @Override
+	    public Object convert(Class type, Object value) {
 
-                return value;
-            }
-        };
+		return value;
+	    }
+	};
     }
 
 }

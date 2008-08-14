@@ -41,14 +41,14 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	readAndSetInfoToManageShifts(request);      
+	readAndSetInfoToManageShifts(request);
 	return mapping.findForward("ShowShiftList");
     }
 
@@ -58,9 +58,10 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	readAndSetInfoToManageShifts(request);
 
 	DynaActionForm createShiftForm = (DynaActionForm) form;
-	InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request, (String) createShiftForm.get("courseInitials"));               
+	InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request, (String) createShiftForm
+		.get("courseInitials"));
 
-	if(infoExecutionCourse != null) {
+	if (infoExecutionCourse != null) {
 	    final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", request.getLocale());
 
@@ -69,7 +70,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	    }
 
 	    request.setAttribute("tiposAula", tiposAula);
-	} 
+	}
 
 	return mapping.findForward("ShowShiftList");
     }
@@ -83,7 +84,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 	InfoShiftEditor infoShift = new InfoShiftEditor();
 	infoShift.setAvailabilityFinal(new Integer(0));
-	InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request, (String) createShiftForm.get("courseInitials"));
+	InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request, (String) createShiftForm
+		.get("courseInitials"));
 	infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 	infoShift.setInfoLessons(null);
 	infoShift.setLotacao((Integer) createShiftForm.get("lotacao"));
@@ -144,8 +146,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	return listShifts(mapping, form, request, response);
     }
 
-    public ActionForward deleteShifts(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	DynaActionForm deleteShiftsForm = (DynaActionForm) form;
 	String[] selectedShifts = (String[]) deleteShiftsForm.get("selectedItems");
 
@@ -168,8 +170,9 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	} catch (FenixServiceMultipleException e) {
 	    final ActionErrors actionErrors = new ActionErrors();
 
-	    for (final DomainException domainException: e.getExceptionList()) {
-		actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
+	    for (final DomainException domainException : e.getExceptionList()) {
+		actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException
+			.getArgs()));
 	    }
 	    saveErrors(request, actionErrors);
 
@@ -179,7 +182,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	return mapping.findForward("ShowShiftList");
     }
 
-    private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException, Exception {
+    private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException,
+	    Exception {
 
 	IUserView userView = UserView.getUser();
 

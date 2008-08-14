@@ -13,22 +13,21 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadInquiriesRegistriesByStudent extends Service {
 
-    public List<InfoInquiriesRegistry> run(Registration registration) throws FenixServiceException,
-              NoSuchMethodException, InvocationTargetException,
-            NoSuchMethodException, IllegalAccessException {
+    public List<InfoInquiriesRegistry> run(Registration registration) throws FenixServiceException, NoSuchMethodException,
+	    InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
-        if (registration == null) {
-            throw new FenixServiceException("nullInfoStudent");
-        }
+	if (registration == null) {
+	    throw new FenixServiceException("nullInfoStudent");
+	}
 
-        List<InquiriesRegistry> inquiriesRegistries = registration.getAssociatedInquiriesRegistries();
+	List<InquiriesRegistry> inquiriesRegistries = registration.getAssociatedInquiriesRegistries();
 
-        List<InfoInquiriesRegistry> infoInquiriesRegistries = new ArrayList<InfoInquiriesRegistry>(inquiriesRegistries.size());
-        for (InquiriesRegistry inquiriesRegistry : inquiriesRegistries) {
-            infoInquiriesRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(inquiriesRegistry));
-        }
+	List<InfoInquiriesRegistry> infoInquiriesRegistries = new ArrayList<InfoInquiriesRegistry>(inquiriesRegistries.size());
+	for (InquiriesRegistry inquiriesRegistry : inquiriesRegistries) {
+	    infoInquiriesRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(inquiriesRegistry));
+	}
 
-        return infoInquiriesRegistries;
+	return infoInquiriesRegistries;
     }
 
 }

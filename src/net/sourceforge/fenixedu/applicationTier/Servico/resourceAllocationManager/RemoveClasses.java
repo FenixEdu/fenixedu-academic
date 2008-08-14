@@ -22,23 +22,21 @@ public class RemoveClasses extends Service {
 
     public Boolean run(InfoShift infoShift, List classOIDs) {
 
-        boolean result = false;
+	boolean result = false;
 
-        Shift shift = rootDomainObject.readShiftByOID(
-                infoShift.getIdInternal());
+	Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 
-        for (int i = 0; i < classOIDs.size(); i++) {
-            SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(
-                    (Integer) classOIDs.get(i));
+	for (int i = 0; i < classOIDs.size(); i++) {
+	    SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID((Integer) classOIDs.get(i));
 
-            shift.getAssociatedClasses().remove(schoolClass);
+	    shift.getAssociatedClasses().remove(schoolClass);
 
-            schoolClass.getAssociatedShifts().remove(shift);
-        }
+	    schoolClass.getAssociatedShifts().remove(shift);
+	}
 
-        result = true;
+	result = true;
 
-        return new Boolean(result);
+	return new Boolean(result);
     }
 
 }

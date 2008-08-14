@@ -98,8 +98,7 @@ public abstract class ResultPublicationBeanConversions {
 	}
     }
 
-    public static ResultPublicationBean BookPartTo(BookPartBean oldBean,
-	    ResultPublicationType type) {
+    public static ResultPublicationBean BookPartTo(BookPartBean oldBean, ResultPublicationType type) {
 	ResultPublicationBean newBean = null;
 	switch (type) {
 	case Article:
@@ -142,8 +141,7 @@ public abstract class ResultPublicationBeanConversions {
 	}
     }
 
-    public static ResultPublicationBean inproceedingsTo(InproceedingsBean oldBean,
-	    ResultPublicationType type) {
+    public static ResultPublicationBean inproceedingsTo(InproceedingsBean oldBean, ResultPublicationType type) {
 	ResultPublicationBean newBean = null;
 	switch (type) {
 	case Article:
@@ -231,8 +229,7 @@ public abstract class ResultPublicationBeanConversions {
 	}
     }
 
-    public static ResultPublicationBean otherPublicationTo(OtherPublicationBean oldBean,
-	    ResultPublicationType type) {
+    public static ResultPublicationBean otherPublicationTo(OtherPublicationBean oldBean, ResultPublicationType type) {
 	ResultPublicationBean newBean = null;
 	switch (type) {
 	case Article:
@@ -317,8 +314,7 @@ public abstract class ResultPublicationBeanConversions {
 	}
     }
 
-    public static ResultPublicationBean technicalReportTo(TechnicalReportBean oldBean,
-	    ResultPublicationType type) {
+    public static ResultPublicationBean technicalReportTo(TechnicalReportBean oldBean, ResultPublicationType type) {
 	ResultPublicationBean newBean = null;
 	switch (type) {
 	case Article:
@@ -418,8 +414,7 @@ public abstract class ResultPublicationBeanConversions {
 	}
     }
 
-    public static ResultPublicationBean unstructuredTo(UnstructuredBean oldBean,
-	    ResultPublicationType type) {
+    public static ResultPublicationBean unstructuredTo(UnstructuredBean oldBean, ResultPublicationType type) {
 	switch (type) {
 	case Article:
 	    return new ArticleBean(oldBean);

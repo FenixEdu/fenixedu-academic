@@ -13,8 +13,8 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on May 8, 2006, 4:13:15
- *         PM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
+ *         May 8, 2006, 4:13:15 PM
  * 
  */
 public class EmailIdentityRenderer extends OutputRenderer {
@@ -59,7 +59,7 @@ public class EmailIdentityRenderer extends OutputRenderer {
 		    container.addChild(emailHtml);
 		    container.addChild(new HtmlText(">", true));
 		    container.setIndented(false);
-		    
+
 		    return container;
 		} else {
 		    emailHtml.setText(name);
@@ -77,39 +77,39 @@ public class EmailIdentityRenderer extends OutputRenderer {
     }
 
     /**
-         * 
-         * @property
-         */
+     * 
+     * @property
+     */
     public void setCollapsed(boolean collapsed) {
 	this.collapsed = collapsed;
     }
 
     /**
-         * @return the address
-         */
+     * @return the address
+     */
     public String getAddress() {
 	return this.address;
     }
 
     /**
-         * @param address
-         *                the address to set
-         */
+     * @param address
+     *            the address to set
+     */
     public void setAddress(String address) {
 	this.address = address;
     }
 
     /**
-         * @return the text
-         */
+     * @return the text
+     */
     public String getText() {
 	return this.text;
     }
 
     /**
-         * @param text
-         *                the text to set
-         */
+     * @param text
+     *            the text to set
+     */
     public void setText(String text) {
 	this.text = text;
     }

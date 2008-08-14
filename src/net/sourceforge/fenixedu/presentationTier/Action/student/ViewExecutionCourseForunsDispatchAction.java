@@ -24,17 +24,16 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewExecutionCourseForunsDispatchAction extends ForunsManagement {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException,
-            FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
-        SortedSet<Attends> attendsForCurrentExecutionPeriod = new TreeSet<Attends>(
-                Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
-        attendsForCurrentExecutionPeriod.addAll(getLoggedPerson(request).getCurrentAttends());
+	SortedSet<Attends> attendsForCurrentExecutionPeriod = new TreeSet<Attends>(
+		Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+	attendsForCurrentExecutionPeriod.addAll(getLoggedPerson(request).getCurrentAttends());
 
-        request.setAttribute("attendsForExecutionPeriod", attendsForCurrentExecutionPeriod);
+	request.setAttribute("attendsForExecutionPeriod", attendsForCurrentExecutionPeriod);
 
-        return mapping.findForward("viewForuns");
+	return mapping.findForward("viewForuns");
 
     }
 

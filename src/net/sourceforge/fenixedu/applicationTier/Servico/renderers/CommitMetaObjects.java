@@ -7,8 +7,8 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 
 public class CommitMetaObjects extends Service {
     public void run(List<MetaObject> metaObjects) {
-        for (MetaObject object : metaObjects) {
-            object.commit();
-        }
+	for (MetaObject object : metaObjects) {
+	    object.commit();
+	}
     }
 }

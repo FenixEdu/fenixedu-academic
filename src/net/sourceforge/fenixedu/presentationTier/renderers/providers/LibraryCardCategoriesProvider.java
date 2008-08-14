@@ -12,16 +12,16 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 public class LibraryCardCategoriesProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        List<PartyClassification> partyClassifications = new ArrayList<PartyClassification>();
-        for (PartyClassification classification : Arrays.asList(PartyClassification.values())) {
-            if(!classification.equals(PartyClassification.UNIT)) {
-                partyClassifications.add(classification);
-            }
-        }
-        return partyClassifications;
+	List<PartyClassification> partyClassifications = new ArrayList<PartyClassification>();
+	for (PartyClassification classification : Arrays.asList(PartyClassification.values())) {
+	    if (!classification.equals(PartyClassification.UNIT)) {
+		partyClassifications.add(classification);
+	    }
+	}
+	return partyClassifications;
     }
 
     public Converter getConverter() {
-        return new EnumConverter();
+	return new EnumConverter();
     }
 }

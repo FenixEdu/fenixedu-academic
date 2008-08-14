@@ -32,17 +32,16 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException,
-	    IOException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException, IOException {
 
 	ListMasterDegreeProofsBean bean = (ListMasterDegreeProofsBean) getRenderedObject();
 	if (bean == null) {
 	    bean = new ListMasterDegreeProofsBean();
 	} else {
 	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = (Collection<MasterDegreeThesis>) ServiceUtils
-		    .executeService( "ReadActiveMasterDegreeThesis",
-			    new Object[] { bean.getThesisState(), bean.getYear(), bean.getDegree() });
+		    .executeService("ReadActiveMasterDegreeThesis", new Object[] { bean.getThesisState(), bean.getYear(),
+			    bean.getDegree() });
 
 	    if (bean.getGenerateFile()) {
 		request.setAttribute("chooseDegreeAndYearBean", bean);
@@ -56,13 +55,12 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("showList");
     }
 
-    private ActionForward generateFile(HttpServletResponse response,
-	    Collection<MasterDegreeThesis> masterDegreeThesisCollection) throws IOException {
+    private ActionForward generateFile(HttpServletResponse response, Collection<MasterDegreeThesis> masterDegreeThesisCollection)
+	    throws IOException {
 	Formatter resultFormatter = new Formatter();
 	for (MasterDegreeThesis thesis : masterDegreeThesisCollection) {
-	    resultFormatter.format("%d\t%s\tFénix\t", thesis.getStudentCurricularPlan()
-		    .getRegistration().getNumber(), thesis.getStudentCurricularPlan()
-		    .getDegreeCurricularPlan().getDegree().getNome());
+	    resultFormatter.format("%d\t%s\tFénix\t", thesis.getStudentCurricularPlan().getRegistration().getNumber(), thesis
+		    .getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getNome());
 
 	    List<Teacher> guiders = thesis.getActiveMasterDegreeThesisDataVersion().getGuiders();
 	    if (!guiders.isEmpty()) {
@@ -70,8 +68,7 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 		    resultFormatter.format("%s\t", teacher.getPerson().getName());
 		}
 	    } else {
-		List<ExternalContract> externalGuiders = thesis.getActiveMasterDegreeThesisDataVersion()
-			.getExternalGuiders();
+		List<ExternalContract> externalGuiders = thesis.getActiveMasterDegreeThesisDataVersion().getExternalGuiders();
 		if (!externalGuiders.isEmpty()) {
 		    for (ExternalContract externalPerson : externalGuiders) {
 			resultFormatter.format("%s\t", externalPerson.getPerson().getName());
@@ -79,8 +76,7 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 		}
 	    }
 
-	    resultFormatter.format("%s\n", thesis.getActiveMasterDegreeThesisDataVersion()
-		    .getDissertationTitle());
+	    resultFormatter.format("%s\n", thesis.getActiveMasterDegreeThesisDataVersion().getDissertationTitle());
 	}
 
 	response.setHeader("Content-disposition", "attachment;filename=masterDegreeThesisList.txt");

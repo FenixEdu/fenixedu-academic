@@ -8,7 +8,7 @@ import org.joda.time.YearMonthDay;
 public class DeleteLessonInstance extends Service {
 
     public void run(Lesson lesson, YearMonthDay day) {
-	if(lesson != null && day != null) {
+	if (lesson != null && day != null) {
 	    lesson.deleteLessonInstanceIn(day);
 	}
     }

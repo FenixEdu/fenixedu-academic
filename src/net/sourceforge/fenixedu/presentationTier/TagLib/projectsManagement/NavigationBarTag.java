@@ -37,55 +37,55 @@ public class NavigationBarTag extends TagSupport {
     private String numberOfSpanElements;
 
     public String getLinesId() {
-        return this.linesId;
+	return this.linesId;
     }
 
     public void setLinesId(String linesId) {
-        this.linesId = linesId;
+	this.linesId = linesId;
     }
 
     public String getNumberOfSpanElements() {
-        return this.numberOfSpanElements;
+	return this.numberOfSpanElements;
     }
 
     public void setNumberOfSpanElements(String numberOfSpanElements) {
-        this.numberOfSpanElements = numberOfSpanElements;
+	this.numberOfSpanElements = numberOfSpanElements;
     }
 
     public String getSpanId() {
-        return this.spanId;
+	return this.spanId;
     }
 
     public void setSpanId(String spanId) {
-        this.spanId = spanId;
+	this.spanId = spanId;
     }
 
     public int doStartTag() {
-        InfoReport infoReport = (InfoReport) pageContext.findAttribute(this.getLinesId());
-        int span = (new Integer((String) pageContext.findAttribute(this.getSpanId()))).intValue();
-        int numberOfElements = (new Integer((String) pageContext.findAttribute(this.getNumberOfSpanElements()))).intValue();
+	InfoReport infoReport = (InfoReport) pageContext.findAttribute(this.getLinesId());
+	int span = (new Integer((String) pageContext.findAttribute(this.getSpanId()))).intValue();
+	int numberOfElements = (new Integer((String) pageContext.findAttribute(this.getNumberOfSpanElements()))).intValue();
 
-        int numberOfSpans = (int) Math.ceil((double) infoReport.getLinesSize().intValue() / numberOfElements);
-        StringBuilder navigationBar = new StringBuilder("");
+	int numberOfSpans = (int) Math.ceil((double) infoReport.getLinesSize().intValue() / numberOfElements);
+	StringBuilder navigationBar = new StringBuilder("");
 
-        if (numberOfSpans > 1) {
-            navigationBar.append("<table class=\"navigation-bar\"><tr><td>Páginas:&nbsp;&nbsp; ");
-            for (int i = 0; i < numberOfSpans; i++) {
-                if (i == span)
-                    navigationBar.append(i + 1);
-                else
-                    navigationBar.append(" <a class=\"report-navigation-bar\" href='").append(computeUrl(i)).append("'>").append(i + 1).append(
-                            "</a> ");
+	if (numberOfSpans > 1) {
+	    navigationBar.append("<table class=\"navigation-bar\"><tr><td>Páginas:&nbsp;&nbsp; ");
+	    for (int i = 0; i < numberOfSpans; i++) {
+		if (i == span)
+		    navigationBar.append(i + 1);
+		else
+		    navigationBar.append(" <a class=\"report-navigation-bar\" href='").append(computeUrl(i)).append("'>").append(
+			    i + 1).append("</a> ");
 
-            }
-            navigationBar.append("</td></tr></table>");
-        }
+	    }
+	    navigationBar.append("</td></tr></table>");
+	}
 
-        try {
-            pageContext.getOut().print(navigationBar.toString());
-        } catch (IOException e) {
-        }
-        return SKIP_BODY;
+	try {
+	    pageContext.getOut().print(navigationBar.toString());
+	} catch (IOException e) {
+	}
+	return SKIP_BODY;
     }
 
     /**
@@ -94,32 +94,32 @@ public class NavigationBarTag extends TagSupport {
      * @return String
      */
     public String computeUrl(int span) {
-        ActionMapping mapping = (ActionMapping) pageContext.getRequest().getAttribute(Globals.MAPPING_KEY);
-        Map params = new HashMap();
-        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+	ActionMapping mapping = (ActionMapping) pageContext.getRequest().getAttribute(Globals.MAPPING_KEY);
+	Map params = new HashMap();
+	HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
-        Map paramsFromRequest = filterParams(request);
+	Map paramsFromRequest = filterParams(request);
 
-        params.putAll(paramsFromRequest);
-        params.put("span", new Integer(span));
+	params.putAll(paramsFromRequest);
+	params.put("span", new Integer(span));
 
-        try {
-            return RequestUtils.computeURL(pageContext, null, null, null, mapping.getPath(), params, null, false);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+	try {
+	    return RequestUtils.computeURL(pageContext, null, null, null, mapping.getPath(), params, null, false);
+	} catch (MalformedURLException e) {
+	    throw new RuntimeException(e);
+	}
     }
 
     private Map filterParams(HttpServletRequest request) {
-        Map paramsFromRequest = request.getParameterMap();
-        Iterator paramsIterator = paramsFromRequest.keySet().iterator();
+	Map paramsFromRequest = request.getParameterMap();
+	Iterator paramsIterator = paramsFromRequest.keySet().iterator();
 
-        while (paramsIterator.hasNext()) {
-            Object param = paramsIterator.next();
-            if (param.equals("span") || param.equals(ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME)) {
-                paramsIterator.remove();
-            }
-        }
-        return paramsFromRequest;
+	while (paramsIterator.hasNext()) {
+	    Object param = paramsIterator.next();
+	    if (param.equals("span") || param.equals(ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME)) {
+		paramsIterator.remove();
+	    }
+	}
+	return paramsFromRequest;
     }
 }

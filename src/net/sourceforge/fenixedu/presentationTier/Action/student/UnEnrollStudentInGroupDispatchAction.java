@@ -31,133 +31,127 @@ import org.apache.struts.action.ActionMapping;
  */
 public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepareRemove(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException, FenixFilterException {
+    public ActionForward prepareRemove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-		IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-		String studentGroupCodeString = request.getParameter("studentGroupCode");
+	String studentGroupCodeString = request.getParameter("studentGroupCode");
 
-		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		
-		String shiftCodeString = request.getParameter("shiftCode");
-		request.setAttribute("shiftCode", shiftCodeString);
+	Integer studentGroupCode = new Integer(studentGroupCodeString);
 
-		Object[] args1 = { null,null, studentGroupCode, userView.getUtilizador(), new Integer(3)};
-		try {
-			ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
+	String shiftCodeString = request.getParameter("shiftCode");
+	request.setAttribute("shiftCode", shiftCodeString);
 
-		}catch (NotAuthorizedException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("errors.noStudentInAttendsSetToDelete");
-			actionErrors.add("errors.noStudentInAttendsSetToDelete", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("insucess");
-		
-		}catch (InvalidSituationServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			// Create an ACTION_ERROR 
-			error = new ActionError("errors.removeEnrolment.studentNotEnroled");
-			actionErrors.add("errors.removeEnrolment.studentNotEnroled", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("viewStudentGroupInformation");
+	Object[] args1 = { null, null, studentGroupCode, userView.getUtilizador(), new Integer(3) };
+	try {
+	    ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
 
-		} catch (InvalidArgumentsServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			// Create an ACTION_ERROR 
-			error = new ActionError("errors.removeEnrolment.minimumNumberOfElements");
-			actionErrors.add("errors.removeEnrolment.minimumNumberOfElements", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("viewStudentGroupInformation");
+	} catch (NotAuthorizedException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("errors.noStudentInAttendsSetToDelete");
+	    actionErrors.add("errors.noStudentInAttendsSetToDelete", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("insucess");
 
-		} catch (FenixServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("error.noGroup");
-			actionErrors.add("error.noGroup", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("viewShiftsAndGroups");
-		}
+	} catch (InvalidSituationServiceException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    // Create an ACTION_ERROR
+	    error = new ActionError("errors.removeEnrolment.studentNotEnroled");
+	    actionErrors.add("errors.removeEnrolment.studentNotEnroled", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("viewStudentGroupInformation");
 
-		ISiteComponent viewStudentGroup;
-		Object[] args = { studentGroupCode };
+	} catch (InvalidArgumentsServiceException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    // Create an ACTION_ERROR
+	    error = new ActionError("errors.removeEnrolment.minimumNumberOfElements");
+	    actionErrors.add("errors.removeEnrolment.minimumNumberOfElements", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("viewStudentGroupInformation");
 
-		try {
-			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService("ReadStudentGroupInformation", args);
-
-		} catch (InvalidSituationServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("error.noGroup");
-			actionErrors.add("error.noGroup", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("viewShiftsAndGroups");
-		}catch (FenixServiceException e){
-			throw new FenixActionException(e);
-		}
-		
-		InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
-
-		request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
-
-		return mapping.findForward("sucess");
+	} catch (FenixServiceException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.noGroup");
+	    actionErrors.add("error.noGroup", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("viewShiftsAndGroups");
 	}
-	
-	
 
-	public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException, FenixFilterException {
+	ISiteComponent viewStudentGroup;
+	Object[] args = { studentGroupCode };
 
-		IUserView userView = getUserView(request);
-		String userName = userView.getUtilizador();
+	try {
+	    viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService("ReadStudentGroupInformation", args);
 
-		String studentGroupCodeString = request.getParameter("studentGroupCode");
-		Integer studentGroupCode = new Integer(studentGroupCodeString);
-
-		Object[] args1 = { userName, studentGroupCode };
-		Boolean shiftWithGroups;
-		try {
-			shiftWithGroups = (Boolean) ServiceUtils.executeService("UnEnrollStudentInGroup", args1);
-
-		}catch (NotAuthorizedException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("errors.noStudentInAttendsSetToDelete");
-			actionErrors.add("errors.noStudentInAttendsSetToDelete", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("insucess");
-
-		}catch (InvalidSituationServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("error.noGroup");
-			actionErrors.add("error.noGroup", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("viewShiftsAndGroups");
-
-		}catch (InvalidArgumentsServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("errors.removeEnrolment.studentNotEnroled");
-			actionErrors.add("errors.removeEnrolment.studentNotEnroled", error);
-			saveErrors(request, actionErrors);
-			return mapping.findForward("viewStudentGroupInformation");
-
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		if(!shiftWithGroups.booleanValue())
-			return mapping.findForward("viewShiftsAndGroups");
-		
-		return mapping.findForward("viewStudentGroupInformation");
-
+	} catch (InvalidSituationServiceException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.noGroup");
+	    actionErrors.add("error.noGroup", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("viewShiftsAndGroups");
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
 	}
+
+	InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
+
+	request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
+
+	return mapping.findForward("sucess");
+    }
+
+    public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
+
+	IUserView userView = getUserView(request);
+	String userName = userView.getUtilizador();
+
+	String studentGroupCodeString = request.getParameter("studentGroupCode");
+	Integer studentGroupCode = new Integer(studentGroupCodeString);
+
+	Object[] args1 = { userName, studentGroupCode };
+	Boolean shiftWithGroups;
+	try {
+	    shiftWithGroups = (Boolean) ServiceUtils.executeService("UnEnrollStudentInGroup", args1);
+
+	} catch (NotAuthorizedException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("errors.noStudentInAttendsSetToDelete");
+	    actionErrors.add("errors.noStudentInAttendsSetToDelete", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("insucess");
+
+	} catch (InvalidSituationServiceException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.noGroup");
+	    actionErrors.add("error.noGroup", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("viewShiftsAndGroups");
+
+	} catch (InvalidArgumentsServiceException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("errors.removeEnrolment.studentNotEnroled");
+	    actionErrors.add("errors.removeEnrolment.studentNotEnroled", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("viewStudentGroupInformation");
+
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	if (!shiftWithGroups.booleanValue())
+	    return mapping.findForward("viewShiftsAndGroups");
+
+	return mapping.findForward("viewStudentGroupInformation");
+
+    }
 
 }

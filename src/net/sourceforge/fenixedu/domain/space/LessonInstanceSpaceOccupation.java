@@ -26,39 +26,41 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
 	super();
 
-	ResourceAllocation allocation = allocatableSpace.getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
-	if(allocation != null) {
+	ResourceAllocation allocation = allocatableSpace
+		.getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+	if (allocation != null) {
 	    throw new DomainException("error.LessonInstanceSpaceOccupation.occupation.for.this.space.already.exists");
 	}
 
-	setResource(allocatableSpace);		
+	setResource(allocatableSpace);
     }
 
     @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck")
     public void edit(LessonInstance lessonInstance) {
 
-	if(hasLessonInstances(lessonInstance)) {
+	if (hasLessonInstances(lessonInstance)) {
 	    removeLessonInstances(lessonInstance);
 	}
 
 	AllocatableSpace space = (AllocatableSpace) getResource();
 	final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
-	if(!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(), lessonInstance.getEndDateTime())
-		&& !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), 
-			lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
+	if (!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(), lessonInstance
+		.getEndDateTime())
+		&& !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), lessonInstance
+			.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
 
-	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free",
-		    space.getIdentification(), lessonInstance.getDay().toString("dd-MM-yy"));
+	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
+		    lessonInstance.getDay().toString("dd-MM-yy"));
 	}
 
 	addLessonInstances(lessonInstance);
-    } 
+    }
 
     @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations")
     public void delete() {
-	if(canBeDeleted()) {
+	if (canBeDeleted()) {
 	    super.delete();
-	}	
+	}
     }
 
     private boolean canBeDeleted() {
@@ -72,22 +74,23 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
     @Override
     protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
-	return true;    
+	return true;
     }
 
     @Override
-    public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {	
-	
-	List<Interval> result = new ArrayList<Interval>();	
-	List<LessonInstance> lessonInstances = getLessonInstances();	
-	
+    public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
+
+	List<Interval> result = new ArrayList<Interval>();
+	List<LessonInstance> lessonInstances = getLessonInstances();
+
 	DateTime startDateTime = startDateToSearch != null ? startDateToSearch.toDateTimeAtMidnight() : null;
 	DateTime endDateTime = endDateToSearch != null ? endDateToSearch.toDateTime(new TimeOfDay(23, 59, 59)) : null;
 
-	for (LessonInstance lessonInstance : lessonInstances) {	
-	    if(startDateTime == null || (!lessonInstance.getEndDateTime().isBefore(startDateTime) &&
-		    !lessonInstance.getBeginDateTime().isAfter(endDateTime))) {
-		
+	for (LessonInstance lessonInstance : lessonInstances) {
+	    if (startDateTime == null
+		    || (!lessonInstance.getEndDateTime().isBefore(startDateTime) && !lessonInstance.getBeginDateTime().isAfter(
+			    endDateTime))) {
+
 		result.add(new Interval(lessonInstance.getBeginDateTime(), lessonInstance.getEndDateTime()));
 	    }
 	}
@@ -122,7 +125,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public DiaSemana getDayOfWeek() {
 	return null;
-    }   
+    }
 
     @Override
     public Boolean getDailyFrequencyMarkSaturday() {
@@ -132,7 +135,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public Boolean getDailyFrequencyMarkSunday() {
 	return null;
-    }        
+    }
 
     @Override
     public Group getAccessGroup() {
@@ -143,9 +146,8 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
 	for (final LessonInstance lessonInstance : getLessonInstancesSet()) {
 	    final Lesson lesson = lessonInstance.getLesson();
-	    if (lesson.getExecutionCourse() == executionCourse &&
-		    start.isBefore(lessonInstance.getEndDateTime()) &&
-		    end.isAfter(lessonInstance.getBeginDateTime())) {
+	    if (lesson.getExecutionCourse() == executionCourse && start.isBefore(lessonInstance.getEndDateTime())
+		    && end.isAfter(lessonInstance.getBeginDateTime())) {
 		return true;
 	    }
 	}

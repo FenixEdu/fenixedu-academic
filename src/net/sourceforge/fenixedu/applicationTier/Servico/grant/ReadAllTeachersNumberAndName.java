@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllTeachersNumberAndName extends Service {
 
-    public List run() throws FenixServiceException{
-        final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+    public List run() throws FenixServiceException {
+	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
-        final Collection<Teacher> teachers = rootDomainObject.getTeachers();
-        for (final Teacher teacher : teachers) {
-            InfoTeacher infoTeacher = new InfoTeacher(teacher);
-            result.add(infoTeacher);
-        }
+	final Collection<Teacher> teachers = rootDomainObject.getTeachers();
+	for (final Teacher teacher : teachers) {
+	    InfoTeacher infoTeacher = new InfoTeacher(teacher);
+	    result.add(infoTeacher);
+	}
 
-        return result;
+	return result;
     }
 
 }

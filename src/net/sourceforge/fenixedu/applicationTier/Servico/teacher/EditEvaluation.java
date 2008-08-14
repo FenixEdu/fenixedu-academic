@@ -10,11 +10,11 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class EditEvaluation extends Service {
 
     public boolean run(final ExecutionCourse executionCourse, final MultiLanguageString evaluationMethod) {
-        if (executionCourse.getEvaluationMethod() == null) {
-            executionCourse.createEvaluationMethod(evaluationMethod);
-        } else {
-            executionCourse.getEvaluationMethod().edit(evaluationMethod);
-        }
-        return true;
+	if (executionCourse.getEvaluationMethod() == null) {
+	    executionCourse.createEvaluationMethod(evaluationMethod);
+	} else {
+	    executionCourse.getEvaluationMethod().edit(evaluationMethod);
+	}
+	return true;
     }
 }

@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 13, 2006,4:39:15 PM
  * 
  */
 public class AllDegreesStudentsGroup extends Group {
-    
+
     private static final long serialVersionUID = 2693414643122716513L;
 
     @Override
@@ -39,8 +39,8 @@ public class AllDegreesStudentsGroup extends Group {
     @Override
     public boolean isMember(Person person) {
 	if (person != null && person.getStudent() != null) {
-	    for (final Registration registration : person.getStudent().getRegistrationsSet()) { 
-		if (registration.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()){
+	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+		if (registration.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()) {
 		    return true;
 		}
 	    }
@@ -50,6 +50,6 @@ public class AllDegreesStudentsGroup extends Group {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[0];
+	return new Argument[0];
     }
 }

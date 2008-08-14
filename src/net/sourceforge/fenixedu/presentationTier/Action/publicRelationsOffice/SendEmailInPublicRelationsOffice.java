@@ -25,8 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/sendEmail", module = "publicRelations")
-@Forwards( {
-	@Forward(name = "compose-mail", path = "publicRelationsOffice-sendMail"),
+@Forwards( { @Forward(name = "compose-mail", path = "publicRelationsOffice-sendMail"),
 	@Forward(name = "success", path = "publicRelationsOffice-sendMail"),
 	@Forward(name = "problem", path = "publicRelationsOffice-sendMail") })
 public class SendEmailInPublicRelationsOffice extends SimpleMailSenderAction {
@@ -40,20 +39,20 @@ public class SendEmailInPublicRelationsOffice extends SimpleMailSenderAction {
 	groups.add(new AllResearchersGroup());
 	groups.add(new ExecutionCourseResponsiblesGroup());
 	groups.add(new InternalPersonGroup());
-	for ( Campus campus : Space.getAllActiveCampus()) {
+	for (Campus campus : Space.getAllActiveCampus()) {
 	    groups.add(new AllStudentsByCampus(campus));
 	    groups.add(new AllTeachersByCampus(campus));
 	    groups.add(new AllEmployeesByCampus(campus));
-	    
+
 	}
-	
+
 	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
 	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_DEGREE));
 	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
 	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_MASTER_DEGREE));
 	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_PHD_PROGRAM));
 	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_SPECIALIZATION_DEGREE));
-	
+
 	return groups;
     }
 }

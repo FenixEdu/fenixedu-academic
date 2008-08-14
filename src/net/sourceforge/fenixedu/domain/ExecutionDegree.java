@@ -623,7 +623,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return null;
     }
 
-    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionSemester executionSemester, MarkSheetType markSheetType) {
+    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionSemester executionSemester,
+	    MarkSheetType markSheetType) {
 	return isSpecialAuthorization(markSheetType, executionSemester, evaluationDate)
 		|| checkOccupationPeriod(evaluationDate, executionSemester, markSheetType);
     }
@@ -691,7 +692,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public String getDegreeName() {
 	return getDegree().getNameFor(getExecutionYear()).getContent();
     }
-    
+
     public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
     }

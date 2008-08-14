@@ -10,16 +10,16 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class InfoGroupProposal extends InfoObject {
 
     private DomainReference<GroupProposal> groupProposalDomainReference;
-    
+
     public InfoGroupProposal(final GroupProposal groupProposal) {
 	groupProposalDomainReference = new DomainReference<GroupProposal>(groupProposal);
     }
-    
+
     public static InfoGroupProposal newInfoFromDomain(final GroupProposal groupProposal) {
 	return groupProposal == null ? null : new InfoGroupProposal(groupProposal);
     }
@@ -39,8 +39,7 @@ public class InfoGroupProposal extends InfoObject {
     }
 
     public boolean equals(Object obj) {
-	return obj instanceof InfoGroupProposal
-		&& getGroupProposal() == ((InfoGroupProposal) obj).getGroupProposal();
+	return obj instanceof InfoGroupProposal && getGroupProposal() == ((InfoGroupProposal) obj).getGroupProposal();
     }
 
     public int hashCode() {
@@ -50,7 +49,7 @@ public class InfoGroupProposal extends InfoObject {
     public String toString() {
 	return getGroupProposal().toString();
     }
-    
+
     /**
      * @return Returns the finalDegreeWorkProposal.
      */

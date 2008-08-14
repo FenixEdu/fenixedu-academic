@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class DeleteUnitFile extends Service {
 
-	public void run(UnitFile file) {
-		String uniqueID = file.getExternalStorageIdentification();
-		file.delete();
-		new DeleteFileRequest(AccessControl.getPerson(),uniqueID);
-	}
+    public void run(UnitFile file) {
+	String uniqueID = file.getExternalStorageIdentification();
+	file.delete();
+	new DeleteFileRequest(AccessControl.getPerson(), uniqueID);
+    }
 }

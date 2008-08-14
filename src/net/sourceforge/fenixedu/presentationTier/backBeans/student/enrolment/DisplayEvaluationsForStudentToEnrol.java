@@ -206,8 +206,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     private List<InfoExecutionPeriod> getExecutionPeriods() {
 	try {
 	    final Object args[] = {};
-	    return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
-		    "ReadNotClosedExecutionPeriods", args);
+	    return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionPeriods", args);
 	} catch (FenixFilterException e) {
 	} catch (FenixServiceException e) {
 	}
@@ -217,8 +216,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     private InfoExecutionPeriod getCurrentExecutionPeriod() {
 	try {
 	    final Object args[] = {};
-	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService( "ReadCurrentExecutionPeriod",
-		    args);
+	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionPeriod", args);
 	} catch (FenixFilterException e) {
 	} catch (FenixServiceException e) {
 	}
@@ -234,8 +232,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 	if (this.student == null) {
 	    try {
 		final Object args[] = { getUserView().getUtilizador() };
-		this.student = (Registration) ServiceUtils.executeService(
-			"ReadStudentByUsernameForEvaluationEnrolment", args);
+		this.student = (Registration) ServiceUtils.executeService("ReadStudentByUsernameForEvaluationEnrolment", args);
 	    } catch (FenixFilterException e) {
 	    } catch (FenixServiceException e) {
 	    }

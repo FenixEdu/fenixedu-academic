@@ -29,16 +29,16 @@ public abstract class SearchService extends Service {
      *             if it can't get persistent support
      */
     public List run(HashMap searchParameters) {
-        final List domainList = doSearch(searchParameters);
+	final List domainList = doSearch(searchParameters);
 
-        final List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
-            public Object transform(Object input) {
-                InfoObject infoObject = newInfoFromDomain((DomainObject) input);
-                return infoObject;
-            }
-        });
+	final List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
+	    public Object transform(Object input) {
+		InfoObject infoObject = newInfoFromDomain((DomainObject) input);
+		return infoObject;
+	    }
+	});
 
-        return infoList;
+	return infoList;
     }
 
     /**
@@ -55,7 +55,6 @@ public abstract class SearchService extends Service {
      * @param searchParameters
      * @return A list of DomainObject.
      */
-    abstract protected List doSearch(HashMap searchParameters)
-            ;
+    abstract protected List doSearch(HashMap searchParameters);
 
 }

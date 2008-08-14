@@ -22,42 +22,41 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class ViewExternalPersonDispatchAction extends FenixDispatchAction {
 
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer externalPersonId = new Integer(this.getFromRequest("id", request));
+	Integer externalPersonId = new Integer(this.getFromRequest("id", request));
 
-        InfoExternalPerson infoExternalPerson = null;
+	InfoExternalPerson infoExternalPerson = null;
 
-        Object args[] = { externalPersonId };
-        try {
-            infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService(
-                    "ReadExternalPersonByID", args);
-        } catch (NonExistingServiceException e) {
-            throw new FenixActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	Object args[] = { externalPersonId };
+	try {
+	    infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService("ReadExternalPersonByID", args);
+	} catch (NonExistingServiceException e) {
+	    throw new FenixActionException(e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute(SessionConstants.EXTERNAL_PERSON, infoExternalPerson);
+	request.setAttribute(SessionConstants.EXTERNAL_PERSON, infoExternalPerson);
 
-        return mapping.findForward("start");
+	return mapping.findForward("start");
 
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
+	String parameterString = request.getParameter(parameter);
+	if (parameterString == null) {
+	    parameterString = (String) request.getAttribute(parameter);
+	}
+	return parameterString;
     }
 
 }

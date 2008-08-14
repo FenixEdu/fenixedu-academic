@@ -10,23 +10,25 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentCurricularPlanForEnrollmentsWithoutRules extends Service {
 
-	public StudentCurricularPlan run(Registration registration, DegreeType degreeType,
-			ExecutionSemester executionSemester) throws FenixServiceException {
+    public StudentCurricularPlan run(Registration registration, DegreeType degreeType, ExecutionSemester executionSemester)
+	    throws FenixServiceException {
 
-		final StudentCurricularPlan studentCurricularPlan = (registration == null) ? null : registration.getLastStudentCurricularPlan();
-		if (studentCurricularPlan == null) {
-			throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
-		}
-
-		if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionSemester.getExecutionYear())) {
-			return studentCurricularPlan;
-			
-		} else {
-			throw new FenixServiceException("error.student.curriculum.not.from.chosen.execution.year");
-		}
+	final StudentCurricularPlan studentCurricularPlan = (registration == null) ? null : registration
+		.getLastStudentCurricularPlan();
+	if (studentCurricularPlan == null) {
+	    throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 	}
 
-	private boolean isStudentCurricularPlanFromChosenExecutionYear(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-		return studentCurricularPlan.getDegreeCurricularPlan().hasExecutionDegreeFor(executionYear);
+	if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionSemester.getExecutionYear())) {
+	    return studentCurricularPlan;
+
+	} else {
+	    throw new FenixServiceException("error.student.curriculum.not.from.chosen.execution.year");
 	}
+    }
+
+    private boolean isStudentCurricularPlanFromChosenExecutionYear(StudentCurricularPlan studentCurricularPlan,
+	    ExecutionYear executionYear) {
+	return studentCurricularPlan.getDegreeCurricularPlan().hasExecutionDegreeFor(executionYear);
+    }
 }

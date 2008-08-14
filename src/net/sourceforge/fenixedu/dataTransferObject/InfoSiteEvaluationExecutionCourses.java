@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
- *  
+ * 
  */
 public class InfoSiteEvaluationExecutionCourses extends DataTranferObject implements ISiteComponent {
     protected List infoExecutionCourses;
@@ -17,7 +17,7 @@ public class InfoSiteEvaluationExecutionCourses extends DataTranferObject implem
      * @return Returns the infoExecutionCourses.
      */
     public List getInfoExecutionCourses() {
-        return infoExecutionCourses;
+	return infoExecutionCourses;
     }
 
     /**
@@ -25,7 +25,7 @@ public class InfoSiteEvaluationExecutionCourses extends DataTranferObject implem
      *            The infoExecutionCourses to set.
      */
     public void setInfoExecutionCourses(List infoExecutionCourses) {
-        this.infoExecutionCourses = infoExecutionCourses;
+	this.infoExecutionCourses = infoExecutionCourses;
     }
 
 }

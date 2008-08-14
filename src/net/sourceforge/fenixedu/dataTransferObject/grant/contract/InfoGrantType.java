@@ -33,114 +33,114 @@ public class InfoGrantType extends InfoObject {
      * @return
      */
     public Double getIndicativeValue() {
-        return indicativeValue;
+	return indicativeValue;
     }
 
     /**
      * @param indicativeValue
      */
     public void setIndicativeValue(Double indicativeValue) {
-        this.indicativeValue = indicativeValue;
+	this.indicativeValue = indicativeValue;
     }
 
     /**
      * @return
      */
     public Integer getMaxPeriodDays() {
-        return maxPeriodDays;
+	return maxPeriodDays;
     }
 
     /**
      * @param maxPeriodDays
      */
     public void setMaxPeriodDays(Integer maxPeriodDays) {
-        this.maxPeriodDays = maxPeriodDays;
+	this.maxPeriodDays = maxPeriodDays;
     }
 
     /**
      * @return
      */
     public Integer getMinPeriodDays() {
-        return minPeriodDays;
+	return minPeriodDays;
     }
 
     /**
      * @param minPeriodDays
      */
     public void setMinPeriodDays(Integer minPeriodDays) {
-        this.minPeriodDays = minPeriodDays;
+	this.minPeriodDays = minPeriodDays;
     }
 
     /**
      * @return
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
      * @param name
      */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     /**
      * @return
      */
     public String getSigla() {
-        return sigla;
+	return sigla;
     }
 
     /**
      * @param sigla
      */
     public void setSigla(String sigla) {
-        this.sigla = sigla;
+	this.sigla = sigla;
     }
 
     /**
      * @return
      */
     public String getSource() {
-        return source;
+	return source;
     }
 
     /**
      * @param source
      */
     public void setSource(String source) {
-        this.source = source;
+	this.source = source;
     }
 
     /**
      * @return
      */
     public Date getState() {
-        return state;
+	return state;
     }
 
     /**
      * @param state
      */
     public void setState(Date state) {
-        this.state = state;
+	this.state = state;
     }
 
     /**
      * @param GrantType
      */
     public void copyFromDomain(GrantType grantType) {
-        super.copyFromDomain(grantType);
-        if (grantType != null) {
-            setName(grantType.getName());
-            setSigla(grantType.getSigla());
-            setMinPeriodDays(grantType.getMinPeriodDays());
-            setMaxPeriodDays(grantType.getMaxPeriodDays());
-            setIndicativeValue(grantType.getIndicativeValue());
-            setSource(grantType.getSource());
-            setState(grantType.getState());
-        }
+	super.copyFromDomain(grantType);
+	if (grantType != null) {
+	    setName(grantType.getName());
+	    setSigla(grantType.getSigla());
+	    setMinPeriodDays(grantType.getMinPeriodDays());
+	    setMaxPeriodDays(grantType.getMaxPeriodDays());
+	    setIndicativeValue(grantType.getIndicativeValue());
+	    setSource(grantType.getSource());
+	    setState(grantType.getState());
+	}
     }
 
     /**
@@ -148,24 +148,24 @@ public class InfoGrantType extends InfoObject {
      * @return
      */
     public static InfoGrantType newInfoFromDomain(GrantType grantType) {
-        InfoGrantType infoGrantType = null;
-        if (grantType != null) {
-            infoGrantType = new InfoGrantType();
-            infoGrantType.copyFromDomain(grantType);
-        }
-        return infoGrantType;
+	InfoGrantType infoGrantType = null;
+	if (grantType != null) {
+	    infoGrantType = new InfoGrantType();
+	    infoGrantType.copyFromDomain(grantType);
+	}
+	return infoGrantType;
     }
 
     public void copyToDomain(InfoGrantType infoGrantType, GrantType grantType) {
-        super.copyToDomain(infoGrantType, grantType);
+	super.copyToDomain(infoGrantType, grantType);
 
-        grantType.setName(infoGrantType.getName());
-        grantType.setSigla(infoGrantType.getSigla());
-        grantType.setMinPeriodDays(infoGrantType.getMinPeriodDays());
-        grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());
-        grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
-        grantType.setSource(infoGrantType.getSource());
-        grantType.setState(infoGrantType.getState());
+	grantType.setName(infoGrantType.getName());
+	grantType.setSigla(infoGrantType.getSigla());
+	grantType.setMinPeriodDays(infoGrantType.getMinPeriodDays());
+	grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());
+	grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
+	grantType.setSource(infoGrantType.getSource());
+	grantType.setState(infoGrantType.getState());
     }
 
 }

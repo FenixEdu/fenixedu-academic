@@ -16,24 +16,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class ListSitesAction extends FenixAction {
-    
+
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Person person = getLoggedPerson(request);
-        
-        SortedSet<UnitSite> sites = new TreeSet<UnitSite>(new Comparator<UnitSite>() {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Person person = getLoggedPerson(request);
 
-            public int compare(UnitSite o1, UnitSite o2) {
-                return o1.getUnit().getName().compareTo(o2.getUnit().getName());
-            }
-            
-        });
-        
+	SortedSet<UnitSite> sites = new TreeSet<UnitSite>(new Comparator<UnitSite>() {
 
-        sites.addAll(person.getUnitSites());
-        request.setAttribute("sites", sites);
-        
-        return mapping.findForward("list");
+	    public int compare(UnitSite o1, UnitSite o2) {
+		return o1.getUnit().getName().compareTo(o2.getUnit().getName());
+	    }
+
+	});
+
+	sites.addAll(person.getUnitSites());
+	request.setAttribute("sites", sites);
+
+	return mapping.findForward("list");
     }
-    
+
 }

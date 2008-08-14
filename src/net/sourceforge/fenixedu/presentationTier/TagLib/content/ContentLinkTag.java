@@ -21,7 +21,7 @@ public class ContentLinkTag extends BodyTagSupport {
     protected String target = null;
     protected String title = null;
     protected Boolean hrefInBody = null;
-    protected String styleClass = null;    
+    protected String styleClass = null;
 
     public String getName() {
 	return (this.name);
@@ -38,38 +38,37 @@ public class ContentLinkTag extends BodyTagSupport {
     public void setProperty(String property) {
 	this.property = property;
     }
-    
+
     public String getTarget() {
-        return target;
+	return target;
     }
 
     public void setTarget(String target) {
-        this.target = target;
+	this.target = target;
     }
 
-
     public String getTitle() {
-        return title;
+	return title;
     }
 
     public Boolean getHrefInBody() {
-        return hrefInBody;
+	return hrefInBody;
     }
 
     public void setHrefInBody(Boolean hrefInBody) {
-        this.hrefInBody = hrefInBody;
+	this.hrefInBody = hrefInBody;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+	this.title = title;
     }
 
     public String getStyleClass() {
-        return styleClass;
+	return styleClass;
     }
 
     public void setStyleClass(String styleClass) {
-        this.styleClass = styleClass;
+	this.styleClass = styleClass;
     }
 
     @Override
@@ -86,7 +85,7 @@ public class ContentLinkTag extends BodyTagSupport {
     public int doEndTag() throws JspException {
 	try {
 	    writeStartTag();
-	    if(getHrefInBody() != null && getHrefInBody()) {
+	    if (getHrefInBody() != null && getHrefInBody()) {
 		final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
 		final String path = content.getReversePath();
 		write(RequestUtils.absoluteURL((HttpServletRequest) pageContext.getRequest(), path).toString());
@@ -114,13 +113,13 @@ public class ContentLinkTag extends BodyTagSupport {
 	write(getContextPath());
 	write(content.getReversePath());
 	write("\"");
-	if(getTarget() != null) {
+	if (getTarget() != null) {
 	    write(" target=\"" + getTarget() + "\"");
 	}
-	if(getTitle() != null) {
+	if (getTitle() != null) {
 	    write(" title=\"" + getTitle() + "\"");
 	}
-	if(getStyleClass() != null) {
+	if (getStyleClass() != null) {
 	    write(" class=\"" + getStyleClass() + "\"");
 	}
 	write(">");
@@ -151,10 +150,10 @@ public class ContentLinkTag extends BodyTagSupport {
     }
 
     public String getScope() {
-        return scope;
+	return scope;
     }
 
     public void setScope(String scope) {
-        this.scope = scope;
+	this.scope = scope;
     }
 }

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 
 public class InfoStudentGroup extends InfoObject {
@@ -32,76 +32,70 @@ public class InfoStudentGroup extends InfoObject {
     /**
      * Construtor
      */
-    public InfoStudentGroup(Integer groupNumber,
-            InfoGrouping infoGrouping) {
+    public InfoStudentGroup(Integer groupNumber, InfoGrouping infoGrouping) {
 
-        this.groupNumber = groupNumber;
-        this.infoGrouping = infoGrouping;
+	this.groupNumber = groupNumber;
+	this.infoGrouping = infoGrouping;
     }
 
     /**
      * Construtor
      */
-    public InfoStudentGroup(Integer groupNumber,
-            InfoGrouping infoAttendsSet, InfoShift infoShift) {
+    public InfoStudentGroup(Integer groupNumber, InfoGrouping infoAttendsSet, InfoShift infoShift) {
 
-        this.groupNumber = groupNumber;
-        this.infoGrouping = infoAttendsSet;
-        this.infoShift = infoShift;
+	this.groupNumber = groupNumber;
+	this.infoGrouping = infoAttendsSet;
+	this.infoShift = infoShift;
     }
 
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof InfoStudentGroup) {
-            result = (getInfoGrouping().equals(((InfoStudentGroup) arg0)
-                    .getInfoGrouping()))
-                    && (getGroupNumber().equals(((InfoStudentGroup) arg0)
-                            .getGroupNumber()));
-            if (getInfoShift() != null) {
-                result = result
-                        && (getInfoShift().equals(((InfoStudentGroup) arg0)
-                                .getInfoShift()));
-            } else if (((InfoStudentGroup) arg0).getInfoShift() != null) {
-                result = false;
-            }
-        }
-        return result;
+	boolean result = false;
+	if (arg0 instanceof InfoStudentGroup) {
+	    result = (getInfoGrouping().equals(((InfoStudentGroup) arg0).getInfoGrouping()))
+		    && (getGroupNumber().equals(((InfoStudentGroup) arg0).getGroupNumber()));
+	    if (getInfoShift() != null) {
+		result = result && (getInfoShift().equals(((InfoStudentGroup) arg0).getInfoShift()));
+	    } else if (((InfoStudentGroup) arg0).getInfoShift() != null) {
+		result = false;
+	    }
+	}
+	return result;
     }
 
     /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String result = "[INFO_STUDENT_GROUP";
-        result += ", groupNumber=" + getGroupNumber();
-        result += ", infoAttendsSet=" + getInfoGrouping();
-        result += ", infoShift" + getInfoShift();
-        result += "]";
-        return result;
+	String result = "[INFO_STUDENT_GROUP";
+	result += ", groupNumber=" + getGroupNumber();
+	result += ", infoAttendsSet=" + getInfoGrouping();
+	result += ", infoShift" + getInfoShift();
+	result += "]";
+	return result;
     }
 
     /**
      * @return Integer
      */
     public Integer getGroupNumber() {
-        return groupNumber;
+	return groupNumber;
     }
 
     /**
      * @return InfoGroupProperties
      */
     public InfoGrouping getInfoGrouping() {
-        return infoGrouping;
+	return infoGrouping;
     }
 
     /**
      * @return InfoTurno
      */
     public InfoShift getInfoShift() {
-        return infoShift;
+	return infoShift;
     }
 
     /**
@@ -111,7 +105,7 @@ public class InfoStudentGroup extends InfoObject {
      *            The groupNumber to set
      */
     public void setGroupNumber(Integer groupNumber) {
-        this.groupNumber = groupNumber;
+	this.groupNumber = groupNumber;
     }
 
     /**
@@ -121,7 +115,7 @@ public class InfoStudentGroup extends InfoObject {
      *            The infoGroupProperties to set
      */
     public void setInfoGrouping(InfoGrouping infoGrouping) {
-        this.infoGrouping = infoGrouping;
+	this.infoGrouping = infoGrouping;
     }
 
     /**
@@ -131,33 +125,33 @@ public class InfoStudentGroup extends InfoObject {
      *            The infoShift to set
      */
     public void setInfoShift(InfoShift infoShift) {
-        this.infoShift = infoShift;
+	this.infoShift = infoShift;
     }
 
     public void copyFromDomain(StudentGroup studentGroup) {
-        super.copyFromDomain(studentGroup);
-        
-        if(studentGroup != null) {
-            setGroupNumber(studentGroup.getGroupNumber());
-        }
+	super.copyFromDomain(studentGroup);
+
+	if (studentGroup != null) {
+	    setGroupNumber(studentGroup.getGroupNumber());
+	}
     }
-    
+
     public static InfoStudentGroup newInfoFromDomain(StudentGroup studentGroup) {
-        InfoStudentGroup infoStudentGroup = null;
-        
-        if(studentGroup != null) {
-            infoStudentGroup = new InfoStudentGroup();
-            infoStudentGroup.copyFromDomain(studentGroup);
-        }
-        
-        return infoStudentGroup;
+	InfoStudentGroup infoStudentGroup = null;
+
+	if (studentGroup != null) {
+	    infoStudentGroup = new InfoStudentGroup();
+	    infoStudentGroup.copyFromDomain(studentGroup);
+	}
+
+	return infoStudentGroup;
     }
 
     public List<InfoFrequenta> getInfoAttends() {
-        return infoAttends;
+	return infoAttends;
     }
 
     public void setInfoAttends(List<InfoFrequenta> infoAttends) {
-        this.infoAttends = infoAttends;
+	this.infoAttends = infoAttends;
     }
 }

@@ -6,7 +6,7 @@ public class NotAuthorizedException extends FenixServiceException {
     }
 
     public NotAuthorizedException(String s) {
-        super(s);
+	super(s);
     }
 
 }

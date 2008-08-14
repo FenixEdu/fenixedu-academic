@@ -25,10 +25,10 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 
 public abstract class TransactionalLookupDispatchAction extends LookupDispatchAction {
-	
-	protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-	
-	private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
+
+    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+
+    private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
     /**
      * Creates a token and saves it on request
@@ -36,8 +36,8 @@ public abstract class TransactionalLookupDispatchAction extends LookupDispatchAc
      * @param request
      */
     protected void createToken(HttpServletRequest request) {
-        generateToken(request);
-        saveToken(request);
+	generateToken(request);
+	saveToken(request);
     }
 
     /**
@@ -52,9 +52,9 @@ public abstract class TransactionalLookupDispatchAction extends LookupDispatchAc
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping,
-            String errorMessageKey) throws FenixTransactionException {
-        validateToken(request, form, mapping, errorMessageKey, true);
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping, String errorMessageKey)
+	    throws FenixTransactionException {
+	validateToken(request, form, mapping, errorMessageKey, true);
     }
 
     /**
@@ -71,57 +71,56 @@ public abstract class TransactionalLookupDispatchAction extends LookupDispatchAc
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping,
-            String errorMessageKey, boolean renewToken) throws FenixTransactionException {
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping, String errorMessageKey,
+	    boolean renewToken) throws FenixTransactionException {
 
-        if (!isTokenValid(request)) {
-            form.reset(mapping, request);
-            throw new FenixTransactionException(errorMessageKey);
-        }
-        if (renewToken) {
-            createToken(request);
-        }
+	if (!isTokenValid(request)) {
+	    form.reset(mapping, request);
+	    throw new FenixTransactionException(errorMessageKey);
+	}
+	if (renewToken) {
+	    createToken(request);
+	}
 
     }
-    
+
     protected static IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+	return UserView.getUser();
     }
-    
+
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        final ActionMessages actionMessages = new ActionMessages();
-        request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
-        
-        final ActionForward actionForward = super.execute(mapping, actionForm, request, response);
-        
-        if (!actionMessages.isEmpty()) {
-            saveMessages(request, actionMessages);
-        }
+	final ActionMessages actionMessages = new ActionMessages();
+	request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
 
-        return actionForward;
+	final ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+
+	if (!actionMessages.isEmpty()) {
+	    saveMessages(request, actionMessages);
+	}
+
+	return actionForward;
     }
-    
+
     protected ActionMessages getActionMessages(HttpServletRequest request) {
-        return (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
+	return (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
     }
-    
+
     protected boolean hasActionMessage(HttpServletRequest request) {
-        return !this.getActionMessages(request).isEmpty();
+	return !this.getActionMessages(request).isEmpty();
     }
-    
+
     protected void addActionMessage(HttpServletRequest request, String key, String... args) {
-        this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
+	this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
     }
 
     abstract protected Map getKeyMethodMap();
 
     protected Integer getIntegerFromRequest(HttpServletRequest request, String name) {
 	final String requestParameter = request.getParameter(name);
-	return (requestParameter != null ? Integer.valueOf(requestParameter) : (Integer) request
-		.getAttribute(name));
+	return (requestParameter != null ? Integer.valueOf(requestParameter) : (Integer) request.getAttribute(name));
     }
 
 }

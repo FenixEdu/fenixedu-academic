@@ -13,9 +13,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public enum RegistrationStateType {
 
-    REGISTERED(true, false), MOBILITY(true, false), CANCELED(false, true), CONCLUDED(false, false), FLUNKED(false, true), 
-    INTERRUPTED(false, true), SCHOOLPARTCONCLUDED(true, false), INTERNAL_ABANDON(false, true), EXTERNAL_ABANDON(false, true),
-    TRANSITION(false, false), TRANSITED(false, false);
+    REGISTERED(true, false), MOBILITY(true, false), CANCELED(false, true), CONCLUDED(false, false), FLUNKED(false, true), INTERRUPTED(
+	    false, true), SCHOOLPARTCONCLUDED(true, false), INTERNAL_ABANDON(false, true), EXTERNAL_ABANDON(false, true), TRANSITION(
+	    false, false), TRANSITED(false, false);
 
     private RegistrationStateType(boolean active, boolean deleteActualPeriodInfo) {
 	this.active = active;
@@ -36,7 +36,7 @@ public enum RegistrationStateType {
     public boolean isInactive() {
 	return !active;
     }
-    
+
     public boolean deleteActualPeriodInfo() {
 	return deleteActualPeriodInfo;
     }
@@ -50,8 +50,7 @@ public enum RegistrationStateType {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale())
-		.getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
     }
 
     public boolean canReingress() {

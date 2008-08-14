@@ -13,15 +13,15 @@ public class LessonPlainRenderer extends OutputRenderer {
 	return new Layout() {
 
 	    @Override
-	    public HtmlComponent createComponent(Object object, Class type) {                
-		
+	    public HtmlComponent createComponent(Object object, Class type) {
+
 		if (object == null) {
 		    return new HtmlText();
-		}               
+		}
 
-		Lesson lesson = (Lesson) object;			
-		return new HtmlText(lesson.prettyPrint());                               
-	    }            
+		Lesson lesson = (Lesson) object;
+		return new HtmlText(lesson.prettyPrint());
+	    }
 	};
     }
 

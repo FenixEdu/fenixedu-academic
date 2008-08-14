@@ -19,28 +19,28 @@ import org.apache.struts.action.RequestProcessor;
  */
 public class FenixRequestProcessor extends RequestProcessor {
 
-	protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
-		final HttpSession httpSession = request.getSession(false);
+    protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
+	final HttpSession httpSession = request.getSession(false);
 
-		setLocal(request, httpSession);
-		try {
-			request.setCharacterEncoding("ISO-8859-1");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-
-		return true;
+	setLocal(request, httpSession);
+	try {
+	    request.setCharacterEncoding("ISO-8859-1");
+	} catch (UnsupportedEncodingException e1) {
+	    e1.printStackTrace();
 	}
 
-	public static void setLocal(HttpServletRequest request, HttpSession httpSession) {
-		Locale locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
-		if (locale == null) {
-			httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
-		}
-		locale = (Locale) request.getAttribute(Globals.LOCALE_KEY);
-		if (locale == null) {
-			request.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
-		}
+	return true;
+    }
+
+    public static void setLocal(HttpServletRequest request, HttpSession httpSession) {
+	Locale locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
+	if (locale == null) {
+	    httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
 	}
+	locale = (Locale) request.getAttribute(Globals.LOCALE_KEY);
+	if (locale == null) {
+	    request.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
+	}
+    }
 
 }

@@ -15,20 +15,18 @@ public class CivilYearsProvider implements DataProvider {
 
 	AlumniFormation formation = (AlumniFormation) source;
 	int firstYear = formation.getFirstYear();
-	
+
 	int currentYear = new DateTime().year().get();
 	List<String> years = new ArrayList<String>();
-	do
-	{
+	do {
 	    years.add(String.valueOf(firstYear));
-	}
-	while(++firstYear <= currentYear);
+	} while (++firstYear <= currentYear);
 
 	return years;
     }
 
     public Converter getConverter() {
-        return null; 
+	return null;
     }
 
 }

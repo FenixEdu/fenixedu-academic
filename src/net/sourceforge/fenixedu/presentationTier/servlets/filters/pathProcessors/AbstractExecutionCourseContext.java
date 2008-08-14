@@ -10,28 +10,27 @@ public abstract class AbstractExecutionCourseContext extends ProcessingContext i
     private String contexURI;
 
     public AbstractExecutionCourseContext(ProcessingContext parent, String contextURI) {
-        super(parent);
-        
-        this.contexURI = contextURI;
+	super(parent);
+
+	this.contexURI = contextURI;
     }
 
     public ExecutionCourse getExecutionCourse() {
-        List<ExecutionCourse> executionCourses = getExecutionCourses();
-        
-        if (executionCourses.isEmpty()) {
-            return null;
-        }
-        else {
-            return executionCourses.get(executionCourses.size() - 1);
-        }
+	List<ExecutionCourse> executionCourses = getExecutionCourses();
+
+	if (executionCourses.isEmpty()) {
+	    return null;
+	} else {
+	    return executionCourses.get(executionCourses.size() - 1);
+	}
     }
 
     public Site getSite() {
-        return getExecutionCourse().getSite();
+	return getExecutionCourse().getSite();
     }
-    
+
     public String getSiteBasePath() {
-        return String.format(this.contexURI, "%s", getExecutionCourse().getIdInternal());
+	return String.format(this.contexURI, "%s", getExecutionCourse().getIdInternal());
     }
-    
+
 }

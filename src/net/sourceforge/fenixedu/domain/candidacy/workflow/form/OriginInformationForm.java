@@ -29,8 +29,7 @@ public class OriginInformationForm extends Form {
 
     public OriginInformationForm() {
 	super();
-	setCountryWhereFinishedPrecedentDegree(RootDomainObject.getInstance().readCountryByOID(
-		DEFAULT_COUNTRY_ID));
+	setCountryWhereFinishedPrecedentDegree(RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID));
     }
 
     public String getConclusionGrade() {
@@ -70,20 +69,16 @@ public class OriginInformationForm extends Form {
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(
-		institutionUnitName.getUnit());
+	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
     }
 
     public Country getCountryWhereFinishedPrecedentDegree() {
-	return (this.countryWhereFinishedPrecedentDegree != null) ? this.countryWhereFinishedPrecedentDegree
-		.getObject()
-		: null;
+	return (this.countryWhereFinishedPrecedentDegree != null) ? this.countryWhereFinishedPrecedentDegree.getObject() : null;
     }
 
     public void setCountryWhereFinishedPrecedentDegree(Country countryWhereFinishedPrecedentDegree) {
 	this.countryWhereFinishedPrecedentDegree = (countryWhereFinishedPrecedentDegree != null) ? new DomainReference<Country>(
-		countryWhereFinishedPrecedentDegree)
-		: null;
+		countryWhereFinishedPrecedentDegree) : null;
     }
 
     public Unit getInstitution() {

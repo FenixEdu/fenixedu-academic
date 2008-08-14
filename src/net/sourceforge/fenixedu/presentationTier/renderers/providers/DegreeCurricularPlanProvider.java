@@ -13,13 +13,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class DegreeCurricularPlanProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-    	final List<DegreeCurricularPlan> degreeCurricularPlans = new ArrayList<DegreeCurricularPlan>(RootDomainObject.getInstance().getDegreeCurricularPlansSet());
-    	Collections.sort(degreeCurricularPlans, DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
-        return degreeCurricularPlans; 
+	final List<DegreeCurricularPlan> degreeCurricularPlans = new ArrayList<DegreeCurricularPlan>(RootDomainObject
+		.getInstance().getDegreeCurricularPlansSet());
+	Collections.sort(degreeCurricularPlans, DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
+	return degreeCurricularPlans;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

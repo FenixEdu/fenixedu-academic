@@ -22,107 +22,101 @@ import org.apache.struts.util.MessageResources;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class ExecutionDegreesFormat extends FenixUtil {
-    public static List buildExecutionDegreeLabelValueBean(List executionDegreeList, MessageResources messageResources, HttpServletRequest request) {
-        List executionDegreeLabels = new ArrayList();
-        Iterator iterator = executionDegreeList.iterator();
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+    public static List buildExecutionDegreeLabelValueBean(List executionDegreeList, MessageResources messageResources,
+	    HttpServletRequest request) {
+	List executionDegreeLabels = new ArrayList();
+	Iterator iterator = executionDegreeList.iterator();
+	while (iterator.hasNext()) {
+	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 
-            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            String degreeType = null;
-            
-            if(messageResources != null) {
-            	final Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-                degreeType = messageResources.getMessage(locale, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().name());
-            }
+	    String degreeType = null;
 
-            if(degreeType == null)
-                degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
+	    if (messageResources != null) {
+		final Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
+		degreeType = messageResources.getMessage(locale, infoExecutionDegree.getInfoDegreeCurricularPlan()
+			.getInfoDegree().getTipoCurso().name());
+	    }
 
-            name = degreeType
-                    + " em " + name;
+	    if (degreeType == null)
+		degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
 
-            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? " - "
-                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+	    name = degreeType + " em " + name;
 
-            executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal()
-                    .toString()));
-        }
-        return executionDegreeLabels;
+	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? " - "
+		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+
+	    executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
+	}
+	return executionDegreeLabels;
     }
 
     public static List buildExecutionDegreeLabelValueWithNameBean(List executionDegreeList) {
-        List executionDegreeLabels = new ArrayList();
-        Iterator iterator = executionDegreeList.iterator();
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+	List executionDegreeLabels = new ArrayList();
+	Iterator iterator = executionDegreeList.iterator();
+	while (iterator.hasNext()) {
+	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                    .toString()
-                    + " em " + name;
+	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
 
-            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? " - "
-                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? " - "
+		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, name + "~"
-                    + infoExecutionDegree.getIdInternal().toString()));
-        }
-        return executionDegreeLabels;
+	    executionDegreeLabels.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getIdInternal().toString()));
+	}
+	return executionDegreeLabels;
     }
 
-    private static boolean duplicateInfoDegree(List executionDegreeList,
-            InfoExecutionDegree infoExecutionDegree) {
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        Iterator iterator = executionDegreeList.iterator();
+    private static boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
+	InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+	Iterator iterator = executionDegreeList.iterator();
 
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
-                return true;
+	while (iterator.hasNext()) {
+	    InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+	    if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+		    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
+		return true;
 
-        }
-        return false;
+	}
+	return false;
     }
 
-	public static List<LabelValueBean> buildLabelValueBeansForExecutionDegree(
-			List<ExecutionDegree> executionDegrees, MessageResources messageResources,
-			HttpServletRequest request) {
+    public static List<LabelValueBean> buildLabelValueBeansForExecutionDegree(List<ExecutionDegree> executionDegrees,
+	    MessageResources messageResources, HttpServletRequest request) {
 
-		final Locale locale = (Locale) request.getAttribute(Globals.LOCALE_KEY);
+	final Locale locale = (Locale) request.getAttribute(Globals.LOCALE_KEY);
 
-		final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-		for (final ExecutionDegree executionDegree : executionDegrees) {
+	final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+	for (final ExecutionDegree executionDegree : executionDegrees) {
 
-		    	final ExecutionYear executionYear = executionDegree.getExecutionYear();
-			final String degreeName = executionDegree.getDegree().getNameFor(executionYear).getContent();
-			final String degreeType = messageResources.getMessage(locale, executionDegree
-					.getDegreeCurricularPlan().getDegree().getDegreeType().name());
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
+	    final String degreeName = executionDegree.getDegree().getNameFor(executionYear).getContent();
+	    final String degreeType = messageResources.getMessage(locale, executionDegree.getDegreeCurricularPlan().getDegree()
+		    .getDegreeType().name());
 
-			String name = degreeType + " em " + degreeName;
-			name += (addDegreeCurricularPlanName(executionDegree, executionDegrees)) ? " - "
-					+ executionDegree.getDegreeCurricularPlan().getName() : "";
+	    String name = degreeType + " em " + degreeName;
+	    name += (addDegreeCurricularPlanName(executionDegree, executionDegrees)) ? " - "
+		    + executionDegree.getDegreeCurricularPlan().getName() : "";
 
-			result.add(new LabelValueBean(name, executionDegree.getIdInternal().toString()));
-		}
-
-		return result;
+	    result.add(new LabelValueBean(name, executionDegree.getIdInternal().toString()));
 	}
 
-	private static boolean addDegreeCurricularPlanName(final ExecutionDegree selectedExecutionDegree,
-			final List<ExecutionDegree> executionDegrees) {
+	return result;
+    }
 
-		for (final ExecutionDegree executionDegree : executionDegrees) {
-			if (executionDegree.getDegree() == selectedExecutionDegree.getDegree()
-					&& executionDegree != selectedExecutionDegree) {
-				return true;
-			}
-		}
-		return false;
+    private static boolean addDegreeCurricularPlanName(final ExecutionDegree selectedExecutionDegree,
+	    final List<ExecutionDegree> executionDegrees) {
+
+	for (final ExecutionDegree executionDegree : executionDegrees) {
+	    if (executionDegree.getDegree() == selectedExecutionDegree.getDegree() && executionDegree != selectedExecutionDegree) {
+		return true;
+	    }
 	}
+	return false;
+    }
 }

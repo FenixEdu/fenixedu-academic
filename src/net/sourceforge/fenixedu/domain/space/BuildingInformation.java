@@ -11,19 +11,19 @@ import org.joda.time.YearMonthDay;
 public class BuildingInformation extends BuildingInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Created building information", parameters = {
-	    "building", "name", "begin", "end", "blueprintNumber" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created building information", parameters = { "building", "name",
+	    "begin", "end", "blueprintNumber" })
     public BuildingInformation(Building building, String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	super();
 	super.setSpace(building);
 	setName(name);
 	setBlueprintNumber(blueprintNumber);
-	setFirstTimeInterval(begin, end);	
+	setFirstTimeInterval(begin, end);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Edited building information", parameters = {
-	    "name", "begin", "end", "blueprintNumber" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited building information", parameters = { "name", "begin", "end",
+	    "blueprintNumber" })
     public void editBuildingCharacteristics(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	setName(name);
 	setBlueprintNumber(blueprintNumber);
@@ -32,7 +32,7 @@ public class BuildingInformation extends BuildingInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted building information", parameters = {})
-    public void delete() {	
+    public void delete() {
 	super.delete();
     }
 

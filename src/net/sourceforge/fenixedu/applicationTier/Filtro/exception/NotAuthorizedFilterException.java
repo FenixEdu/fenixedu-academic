@@ -7,21 +7,21 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.exception;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class NotAuthorizedFilterException extends FenixFilterException {
     /**
      *  
      */
     public NotAuthorizedFilterException() {
-        super();
+	super();
     }
 
     /**
      * @param message
      */
     public NotAuthorizedFilterException(String message) {
-        super(message);
+	super(message);
     }
 
     /**
@@ -29,14 +29,14 @@ public class NotAuthorizedFilterException extends FenixFilterException {
      * @param cause
      */
     public NotAuthorizedFilterException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     /**
      * @param cause
      */
     public NotAuthorizedFilterException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
 }

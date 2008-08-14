@@ -21,17 +21,17 @@ public class PrepararCriarSalaFormAction extends FenixDispatchAction {
     /**
      * Prepares the information for the form used to search salas.
      */
-    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        List edificios = Util.readExistingBuldings("*", null);
-        List tipos = Util.readTypesOfRooms("*", null);
+	List edificios = Util.readExistingBuldings("*", null);
+	List tipos = Util.readTypesOfRooms("*", null);
 
-        request.setAttribute("publico.buildings", edificios);
-        request.setAttribute("publico.types", tipos);
-        List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
-        request.setAttribute("publico.executionPeriods", executionPeriods);
+	request.setAttribute("publico.buildings", edificios);
+	request.setAttribute("publico.types", tipos);
+	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
+	request.setAttribute("publico.executionPeriods", executionPeriods);
 
-        return mapping.findForward("PesquisarSalas");
+	return mapping.findForward("PesquisarSalas");
     }
 }

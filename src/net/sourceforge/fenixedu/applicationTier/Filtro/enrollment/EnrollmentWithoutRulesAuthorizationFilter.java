@@ -35,8 +35,7 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 		return "error.masterDegree.type";
 	    }
 
-	    if (!(checkStudentType(arguments, MASTER_DEGREE_TYPE) || checkStudentType(arguments,
-		    DFA_TYPE))) {
+	    if (!(checkStudentType(arguments, MASTER_DEGREE_TYPE) || checkStudentType(arguments, DFA_TYPE))) {
 		return "error.student.degree.master";
 	    }
 	}
@@ -62,16 +61,15 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
     private boolean checkStudentType(Object[] args, DegreeType degreeType) {
 	Object object = args[0];
 	DegreeType type = null;
-	if(object instanceof Registration) {
+	if (object instanceof Registration) {
 	    Registration registration = (Registration) object;
 	    type = registration.getDegreeType();
 	}
-	if(object instanceof StudentCurricularPlan) {
+	if (object instanceof StudentCurricularPlan) {
 	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) object;
 	    type = studentCurricularPlan.getDegreeType();
 	}
-	
-	return type != null ? type.equals(
-		degreeType) : false;
+
+	return type != null ? type.equals(degreeType) : false;
     }
 }

@@ -23,121 +23,124 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class SimpleMailSenderAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RenderUtils.invalidateViewState();
-        
-        MailBean bean = createMailBean(request);
-        request.setAttribute("mailBean", bean);
-        
-        return mapping.findForward("compose-mail");
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	RenderUtils.invalidateViewState();
+
+	MailBean bean = createMailBean(request);
+	request.setAttribute("mailBean", bean);
+
+	return mapping.findForward("compose-mail");
     }
 
     protected MailBean createMailBean(HttpServletRequest request) {
-        MailBean bean = new MailBean();
-        
-        Person person = getLoggedPerson(request);
-        bean.setFromName(getFromName(request));
-        bean.setFromAddress(person.getEmail());
-     
-        bean.setReceiversOptions(getPossibleReceivers(request));
-        
-        return bean;
+	MailBean bean = new MailBean();
+
+	Person person = getLoggedPerson(request);
+	bean.setFromName(getFromName(request));
+	bean.setFromAddress(person.getEmail());
+
+	bean.setReceiversOptions(getPossibleReceivers(request));
+
+	return bean;
     }
-    
+
     protected String getFromName(HttpServletRequest request) {
 	return getLoggedPerson(request).getName();
     }
 
-    public ActionForward sendInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("compose-mail");
+    public ActionForward sendInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("compose-mail");
     }
-    
-    public ActionForward send(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        MailBean bean = getMailBean(request);
-        
-        if (bean == null) {
-            return prepare(mapping, actionForm, request, response);
-        }
-        
-        if (bean.getReceiversGroupList().isEmpty() && bean.getReceiversOfCopy() == null) {
-        	return prepare(mapping, actionForm, request, response);
-        }
-        
-        SendMailReport report;
-        try {
-            report = (SendMailReport) ServiceUtils.executeService("SendEMail", bean.getEmailParameters());
-            processReport(request, bean, report);
-        } catch (Exception e) {
-            addActionMessage("error", request, "messaging.mail.send.error");
-            return mapping.findForward("problem");
-        }
-        
-        return mapping.findForward("success");
+
+    public ActionForward send(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	MailBean bean = getMailBean(request);
+
+	if (bean == null) {
+	    return prepare(mapping, actionForm, request, response);
+	}
+
+	if (bean.getReceiversGroupList().isEmpty() && bean.getReceiversOfCopy() == null) {
+	    return prepare(mapping, actionForm, request, response);
+	}
+
+	SendMailReport report;
+	try {
+	    report = (SendMailReport) ServiceUtils.executeService("SendEMail", bean.getEmailParameters());
+	    processReport(request, bean, report);
+	} catch (Exception e) {
+	    addActionMessage("error", request, "messaging.mail.send.error");
+	    return mapping.findForward("problem");
+	}
+
+	return mapping.findForward("success");
     }
- 
+
     protected void processReport(HttpServletRequest request, MailBean bean, SendMailReport report) {
-        if (report == null) {
-            return;
-        }
+	if (report == null) {
+	    return;
+	}
 
-        boolean hasProblems = false;
-        int sentCount = 0;
-        
-        for (SendStatus status : SendStatus.values()) {
-            switch (status) {
-            case QUEUED:
-                break;
-            case SENT:
-                Collection<EMailAddress> addresses = report.getAddressReport(status);
-                if (addresses != null) {
-                    sentCount += addresses.size();
-                }
+	boolean hasProblems = false;
+	int sentCount = 0;
 
-                Collection<Person> persons = report.getPersonReport(status);
-                if (persons != null) {
-                    sentCount += persons.size();
-                }
-                
-                break;
-            default:
-                if (report.getAddressReport(status) != null) {
-                    for (EMailAddress address : report.getAddressReport(status)) {
-                        addActionMessage("problem", request, "messaging.mail.address.problem", address.getAddress());
-                        hasProblems = true;
-                    }
-                }
+	for (SendStatus status : SendStatus.values()) {
+	    switch (status) {
+	    case QUEUED:
+		break;
+	    case SENT:
+		Collection<EMailAddress> addresses = report.getAddressReport(status);
+		if (addresses != null) {
+		    sentCount += addresses.size();
+		}
 
-                if (report.getPersonReport(status) != null) {
-                    for (Person person : report.getPersonReport(status)) {
-                	StringBuffer buffer = new StringBuffer("");
-                	buffer.append(person.getName());
-                	buffer.append(" (");
-                	buffer.append(person.getEmail());
-                	buffer.append(")");
-                        addActionMessage("problem", request, "messaging.mail.address.problem", buffer.toString());
-                        hasProblems = true;
-                    }
-                }
-                
-                break;
-            }
-        }
-        
-        if (! hasProblems) {
-            addActionMessage("confirmation", request, "messaging.mail.send.ok", String.valueOf(sentCount));
-        }
-        else {
-            if (bean.getReceiversCount() > 0) {
-                addActionMessage("warning", request, "messaging.mail.send.count", String.valueOf(sentCount), String.valueOf(bean.getReceiversCount()));
-            }
-        }
+		Collection<Person> persons = report.getPersonReport(status);
+		if (persons != null) {
+		    sentCount += persons.size();
+		}
+
+		break;
+	    default:
+		if (report.getAddressReport(status) != null) {
+		    for (EMailAddress address : report.getAddressReport(status)) {
+			addActionMessage("problem", request, "messaging.mail.address.problem", address.getAddress());
+			hasProblems = true;
+		    }
+		}
+
+		if (report.getPersonReport(status) != null) {
+		    for (Person person : report.getPersonReport(status)) {
+			StringBuffer buffer = new StringBuffer("");
+			buffer.append(person.getName());
+			buffer.append(" (");
+			buffer.append(person.getEmail());
+			buffer.append(")");
+			addActionMessage("problem", request, "messaging.mail.address.problem", buffer.toString());
+			hasProblems = true;
+		    }
+		}
+
+		break;
+	    }
+	}
+
+	if (!hasProblems) {
+	    addActionMessage("confirmation", request, "messaging.mail.send.ok", String.valueOf(sentCount));
+	} else {
+	    if (bean.getReceiversCount() > 0) {
+		addActionMessage("warning", request, "messaging.mail.send.count", String.valueOf(sentCount), String.valueOf(bean
+			.getReceiversCount()));
+	    }
+	}
     }
 
     protected List<IGroup> getPossibleReceivers(HttpServletRequest request) {
-        return new ArrayList<IGroup>();
+	return new ArrayList<IGroup>();
     }
 
     protected MailBean getMailBean(HttpServletRequest request) {
-        return (MailBean) getRenderedObject("mailBean");
+	return (MailBean) getRenderedObject("mailBean");
     }
 }

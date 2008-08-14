@@ -15,7 +15,7 @@ public class LoginPeriod extends LoginPeriod_Base {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"), true);
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
-    
+
     public LoginPeriod(YearMonthDay begin, YearMonthDay end, Login login) {
 	super();
 	setBeginDate(begin);
@@ -23,14 +23,14 @@ public class LoginPeriod extends LoginPeriod_Base {
 	setLogin(login);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public LoginPeriod(YearMonthDay begin, Login login) {
 	super();
 	setBeginDate(begin);
 	setLogin(login);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public void edit(YearMonthDay begin, YearMonthDay end) {
 	setBeginDate(begin);
 	setEndDate(end);
@@ -39,9 +39,9 @@ public class LoginPeriod extends LoginPeriod_Base {
     public void delete() {
 	super.setLogin(null);
 	removeRootDomainObject();
-	super.deleteDomainObject();	
-    }   
-    
+	super.deleteDomainObject();
+    }
+
     @Override
     public void setLogin(Login login) {
 	if (login == null) {
@@ -53,7 +53,7 @@ public class LoginPeriod extends LoginPeriod_Base {
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
 	final YearMonthDay start = getBeginDate();
-	final YearMonthDay end = getEndDate();	
+	final YearMonthDay end = getEndDate();
 	return start != null && (end == null || !start.isAfter(end));
-    }   
+    }
 }

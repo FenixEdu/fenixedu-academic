@@ -42,7 +42,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	}
 
 	RenderUtils.invalidateViewState();
-	
+
 	request.setAttribute("currentResidence", getLoggedPerson(request).getEmployee().getCurrentWorkingPlace());
 	request.setAttribute("searchBean", importResidenceEventBean);
 	return mapping.findForward("manageResidenceEvents");
@@ -64,7 +64,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 
     public ActionForward viewPersonResidenceEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	ResidenceMonth month = getResidenceMonth(request);
 	long personOID = Long.parseLong(request.getParameter("person"));
 
@@ -91,12 +91,12 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 
 	return viewPersonResidenceEvents(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward payResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(Long.parseLong(request.getParameter("event")));
-	
+
 	try {
 	    executeService("PayResidenceEvent", new Object[] { getLoggedPerson(request).getUser(), residenceEvent });
 	} catch (DomainException e) {
@@ -105,5 +105,5 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 
 	return viewPersonResidenceEvents(mapping, actionForm, request, response);
     }
-    
+
 }

@@ -28,45 +28,44 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class PrepareCreateStudentGroup extends Service {
 
-    public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
-            throws ExistingServiceException {
+    public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode) throws ExistingServiceException {
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(
-                groupPropertiesCode);
+	final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
-        if (grouping == null) {
-            throw new ExistingServiceException();
-        }
+	if (grouping == null) {
+	    throw new ExistingServiceException();
+	}
 
-        final List<StudentGroup> allStudentsGroups = grouping.getStudentGroups();
-        final List<Attends> attendsGrouping = new ArrayList(grouping.getAttends());
-        for (final StudentGroup studentGroup : allStudentsGroups) {
-            for (Attends attend : studentGroup.getAttends()) {
-                attendsGrouping.remove(attend);
-            }
-        }
+	final List<StudentGroup> allStudentsGroups = grouping.getStudentGroups();
+	final List<Attends> attendsGrouping = new ArrayList(grouping.getAttends());
+	for (final StudentGroup studentGroup : allStudentsGroups) {
+	    for (Attends attend : studentGroup.getAttends()) {
+		attendsGrouping.remove(attend);
+	    }
+	}
 
-        final List<InfoSiteStudentInformation> infoStudentInformationList = new ArrayList<InfoSiteStudentInformation>(attendsGrouping.size());
-        for (Attends attend : attendsGrouping) {
-            final Registration registration = attend.getRegistration();
-            final Person person = registration.getPerson();
-            InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
-            infoSiteStudentInformation.setEmail(person.getEmail());
-            infoSiteStudentInformation.setName(person.getName());
-            infoSiteStudentInformation.setNumber(registration.getNumber());
-            infoSiteStudentInformation.setUsername(person.getUsername());
-            infoStudentInformationList.add(infoSiteStudentInformation);
-        }
+	final List<InfoSiteStudentInformation> infoStudentInformationList = new ArrayList<InfoSiteStudentInformation>(
+		attendsGrouping.size());
+	for (Attends attend : attendsGrouping) {
+	    final Registration registration = attend.getRegistration();
+	    final Person person = registration.getPerson();
+	    InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
+	    infoSiteStudentInformation.setEmail(person.getEmail());
+	    infoSiteStudentInformation.setName(person.getName());
+	    infoSiteStudentInformation.setNumber(registration.getNumber());
+	    infoSiteStudentInformation.setUsername(person.getUsername());
+	    infoStudentInformationList.add(infoSiteStudentInformation);
+	}
 
-        Collections.sort(infoStudentInformationList, new BeanComparator("number"));
+	Collections.sort(infoStudentInformationList, new BeanComparator("number"));
 
-        InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-        infoSiteStudentGroup.setInfoSiteStudentInformationList(infoStudentInformationList);
+	InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+	infoSiteStudentGroup.setInfoSiteStudentInformationList(infoStudentInformationList);
 
-        final int groupNumber = grouping.findMaxGroupNumber() + 1;
-        infoSiteStudentGroup.setNrOfElements(Integer.valueOf(groupNumber));
+	final int groupNumber = grouping.findMaxGroupNumber() + 1;
+	infoSiteStudentGroup.setNrOfElements(Integer.valueOf(groupNumber));
 
-        return infoSiteStudentGroup;
+	return infoSiteStudentGroup;
 
     }
 

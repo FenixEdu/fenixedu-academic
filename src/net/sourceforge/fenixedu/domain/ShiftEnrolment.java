@@ -17,11 +17,11 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
     }
 
     public ShiftEnrolment(final Shift shift, final Registration registration) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setRegistration(registration);
-        setShift(shift);
-        setCreatedOn(new DateTime());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setRegistration(registration);
+	setShift(shift);
+	setCreatedOn(new DateTime());
     }
 
     public void delete() {

@@ -33,11 +33,9 @@ public class ImprovementOfApprovedEnrolmentPenaltyExemption extends ImprovementO
 	super();
     }
 
-    public ImprovementOfApprovedEnrolmentPenaltyExemption(
-	    final PenaltyExemptionJustificationType penaltyExemptionType,
-	    final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent,
-	    final Employee employee, final String comments,
-	    final YearMonthDay directiveCouncilDispatchDate) {
+    public ImprovementOfApprovedEnrolmentPenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
+	    final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent, final Employee employee,
+	    final String comments, final YearMonthDay directiveCouncilDispatchDate) {
 	this();
 	super.init(penaltyExemptionType, improvementOfApprovedEnrolmentEvent, employee, comments, directiveCouncilDispatchDate);
     }

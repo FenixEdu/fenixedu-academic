@@ -18,21 +18,21 @@ import org.apache.struts.action.ActionMapping;
 
 public class ReadDelegateDegreeDispatchAction extends FenixAction {
 
-	@Override
-	 public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws FenixActionException {
-        final HttpSession session = request.getSession(false);
-        
-        if (session != null) {
-        	final Person person = getLoggedPerson(request);
-        	if(person.hasStudent()) {
-	        	final Degree degree = person.getStudent().getLastActiveRegistration().getDegree();
-	        	final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan().getMostRecentExecutionDegree();
-	            
-	        	final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	            session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
-        	}
-        }
-        return mapping.findForward("success");
+    @Override
+    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) throws FenixActionException {
+	final HttpSession session = request.getSession(false);
+
+	if (session != null) {
+	    final Person person = getLoggedPerson(request);
+	    if (person.hasStudent()) {
+		final Degree degree = person.getStudent().getLastActiveRegistration().getDegree();
+		final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan().getMostRecentExecutionDegree();
+
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+		session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
+	    }
+	}
+	return mapping.findForward("success");
     }
 }
-	

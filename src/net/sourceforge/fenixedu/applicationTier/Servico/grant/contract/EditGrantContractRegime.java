@@ -18,21 +18,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditGrantContractRegime extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
-	    {
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
 
 	InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
 
 	GrantContract grantContract = infoGrantContractRegime.getGrantContract();
 	if (grantContract == null) {
-	    grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime
-		    .getInfoGrantContract().getIdInternal());
+	    grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime.getInfoGrantContract()
+		    .getIdInternal());
 	}
 
 	GrantContractRegime grantContractRegime = (GrantContractRegime) domainObject;
 	grantContractRegime.setGrantContract(grantContract);
-	grantContractRegime.editTimeInterval(infoGrantContractRegime.getDateBeginContract(),
-		infoGrantContractRegime.getDateEndContract());
+	grantContractRegime.editTimeInterval(infoGrantContractRegime.getDateBeginContract(), infoGrantContractRegime
+		.getDateEndContract());
 	grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
 	grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
 	grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
@@ -66,8 +65,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     }
 
     @Override
-    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject)
-	    throws FenixServiceException{
+    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject) throws FenixServiceException {
 
 	InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
 	if (infoGrantContractRegime.getState().equals(InfoGrantContractRegime.getActiveState())) {
@@ -78,15 +76,14 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
 	    GrantContract grantContract = infoGrantContractRegime.getGrantContract();
 	    if (grantContract == null) {
-		grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime
-			.getInfoGrantContract().getIdInternal());
+		grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime.getInfoGrantContract()
+			.getIdInternal());
 	    }
 
 	    if (infoGrantContractRegime.getGrantCostCenterInfo() != null
 		    && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length() > 0) { // ||
-		GrantCostCenter grantCostCenter = GrantCostCenter
-			.readGrantCostCenterByNumber(infoGrantContractRegime.getGrantCostCenterInfo()
-				.getNumber());
+		GrantCostCenter grantCostCenter = GrantCostCenter.readGrantCostCenterByNumber(infoGrantContractRegime
+			.getGrantCostCenterInfo().getNumber());
 		if (grantCostCenter == null)
 		    throw new GrantOrientationTeacherNotFoundException();
 		grantContract.setGrantCostCenter(grantCostCenter);
@@ -97,8 +94,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
 	    grantContractRegime.setGrantCostCenter(grantContract.getGrantCostCenter());
 
-	    GrantOrientationTeacher grantOrientationTeacher = grantContract
-		    .readActualGrantOrientationTeacher();
+	    GrantOrientationTeacher grantOrientationTeacher = grantContract.readActualGrantOrientationTeacher();
 	    if (grantOrientationTeacher != null) {
 
 		// If grantOrientationTeacher is filled in
@@ -111,8 +107,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
 			teacher = grantOrientationTeacher.getOrientationTeacher();
 		    } else {
-			teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
-				.getTeacherNumber());
+			teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
 		    }
 
 		    grantOrientationTeacher.setOrientationTeacher(teacher);

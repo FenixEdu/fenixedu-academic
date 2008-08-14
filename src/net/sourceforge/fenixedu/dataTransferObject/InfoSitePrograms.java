@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Tânia Nunes
- *  
+ * 
  */
 public class InfoSitePrograms extends DataTranferObject implements ISiteComponent {
     private List infoCurriculums;
@@ -19,35 +19,35 @@ public class InfoSitePrograms extends DataTranferObject implements ISiteComponen
      * @return
      */
     public List getInfoCurricularCourses() {
-        return infoCurricularCourses;
+	return infoCurricularCourses;
     }
 
     /**
      * @return
      */
     public List getInfoCurriculums() {
-        return infoCurriculums;
+	return infoCurriculums;
     }
 
     /**
      * @param list
      */
     public void setInfoCurricularCourses(List list) {
-        infoCurricularCourses = list;
+	infoCurricularCourses = list;
     }
 
     /**
      * @param list
      */
     public void setInfoCurriculums(List list) {
-        infoCurriculums = list;
+	infoCurriculums = list;
     }
 
     /**
      *  
      */
     public InfoSitePrograms() {
-        super();
+	super();
 
     }
 }

@@ -23,37 +23,38 @@ public class EveryoneGroup extends Group {
 
     @Override
     public String getName() {
-    	return RenderUtils.getResourceString("SITE_RESOURCES", "label.net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup");
+	return RenderUtils.getResourceString("SITE_RESOURCES",
+		"label.net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup");
     }
-    
+
     @Override
     public Set<Person> getElements() {
-        return new HashSet<Person>(Person.readAllPersons());
+	return new HashSet<Person>(Person.readAllPersons());
     }
 
     @Override
     public boolean allows(IUserView userView) {
-        return true;
+	return true;
     }
 
     @Override
     public boolean isMember(Person person) {
-        return true;
+	return true;
     }
 
     @Override
     public boolean equals(Object object) {
-        return object != null && object instanceof EveryoneGroup;
+	return object != null && object instanceof EveryoneGroup;
     }
 
     @Override
     public int hashCode() {
-        return this.getClass().hashCode();
+	return this.getClass().hashCode();
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[0];
+	return new Argument[0];
     }
 
 }

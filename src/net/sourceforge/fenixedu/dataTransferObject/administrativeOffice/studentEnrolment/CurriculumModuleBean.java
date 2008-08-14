@@ -7,46 +7,46 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
-public class CurriculumModuleBean implements Serializable{
-    
+public class CurriculumModuleBean implements Serializable {
+
     private List<CurriculumModuleBean> groupsEnroled;
     private List<CurriculumModuleBean> curricularCoursesEnroled;
-    
+
     private List<DegreeModuleToEnrol> groupsToEnrol;
     private List<DegreeModuleToEnrol> curricularCoursesToEnrol;
-    
+
     private DomainReference<CurriculumModule> curriculumModule;
-    
+
     public List<CurriculumModuleBean> getCurricularCoursesEnroled() {
-        return curricularCoursesEnroled;
+	return curricularCoursesEnroled;
     }
-    
+
     public void setCurricularCoursesEnroled(List<CurriculumModuleBean> curricularCoursesEnroled) {
-        this.curricularCoursesEnroled = curricularCoursesEnroled;
+	this.curricularCoursesEnroled = curricularCoursesEnroled;
     }
-    
+
     public List<DegreeModuleToEnrol> getCurricularCoursesToEnrol() {
-        return curricularCoursesToEnrol;
+	return curricularCoursesToEnrol;
     }
-    
+
     public void setCurricularCoursesToEnrol(List<DegreeModuleToEnrol> curricularCoursesToEnrol) {
-        this.curricularCoursesToEnrol = curricularCoursesToEnrol;
+	this.curricularCoursesToEnrol = curricularCoursesToEnrol;
     }
-    
+
     public List<CurriculumModuleBean> getGroupsEnroled() {
-        return groupsEnroled;
+	return groupsEnroled;
     }
-    
+
     public void setGroupsEnroled(List<CurriculumModuleBean> groupsEnroled) {
-        this.groupsEnroled = groupsEnroled;
+	this.groupsEnroled = groupsEnroled;
     }
-    
+
     public List<DegreeModuleToEnrol> getGroupsToEnrol() {
-        return groupsToEnrol;
+	return groupsToEnrol;
     }
-    
+
     public void setGroupsToEnrol(List<DegreeModuleToEnrol> groupsToEnrol) {
-        this.groupsToEnrol = groupsToEnrol;
+	this.groupsToEnrol = groupsToEnrol;
     }
 
     public CurriculumModule getCurriculumModule() {

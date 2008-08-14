@@ -25,20 +25,18 @@ import org.apache.struts.action.ActionMapping;
  */
 public class StudentStatutesDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	final Student student = rootDomainObject.readStudentByOID(getIntegerFromRequest(request,
-		"studentId"));
+	final Student student = rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
 	request.setAttribute("student", student);
 	request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
 
 	return mapping.findForward("manageStatutes");
     }
 
-    public ActionForward addNewStatute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward addNewStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
 	    // add new statute
@@ -46,7 +44,6 @@ public class StudentStatutesDA extends FenixDispatchAction {
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
-
 
 	final Student student = ((CreateStudentStatuteFactory) getRenderedObject()).getStudent();
 	request.setAttribute("student", student);
@@ -56,9 +53,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
     }
 
-    public ActionForward deleteStatute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward deleteStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final StudentStatute studentStatute = rootDomainObject
 		.readStudentStatuteByOID(getIntegerFromRequest(request, "statuteId"));

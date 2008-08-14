@@ -22,10 +22,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear extends Service {
 
-    public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, Integer executioYearID)
-	    throws FenixServiceException{
-	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
-		.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+    public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, Integer executioYearID) throws FenixServiceException {
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executioYearID);
 
 	final ComparatorChain comparator = new ComparatorChain();

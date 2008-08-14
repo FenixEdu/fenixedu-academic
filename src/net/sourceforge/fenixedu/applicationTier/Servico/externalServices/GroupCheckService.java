@@ -62,22 +62,33 @@ public class GroupCheckService extends Service {
     }
 
     /**
-         * Checks if the user belongs to the group specified in query
-         * 
-         * Generic query format: user=ISTnnnn;role=ROLE;type=TYPE;unit=IST.<TheUnit>{.<SubUnit>}[;year=<TheYear>][;semester=<TheSemester>]
-         * 
-         * Available queries: user=ISTnnnn;role=ROLE;type=DEPARTMENT;unit=IST.<DepartmentAcronym>[;year=<TheYear>]
-         * user=ISTnnnn;role=ROLE;type=DEGREE;unit=IST.<DegreeAcronym> (Uses
-         * the active degree curricular plans)
-         * user=ISTnnnn;role=ROLE;type=CURRICULAR_COURSE;unit=IST.<DegreeAcronym>.<CurricularCourseAcronym>[;year=<TheYear>;semester=<TheSemester>]
-         * user=ISTnnnn;role=ROLE;type=EXECUTION_COURSE;unit=IST.<DegreeAcronym>.<CurricularCourseAcronym>[;year=<TheYear>;semester=<TheSemester>]
-         * 
-         * Queries that will be available in future:
-         * user=ISTnnnn;role=ROLE;type=SCIENTIFIC_AREA;unit=IST.<TheUnit>{.<SubUnit>}[;year=<TheYear>][;semester=<TheSemester>]
-         * user=ISTnnnn;role=ROLE;type=SECTION;unit=IST.<TheUnit>{.<SubUnit>}[;year=<TheYear>][;semester=<TheSemester>]
-         * 
-         */
-    public Boolean run(String query) throws FenixServiceException{
+     * Checks if the user belongs to the group specified in query
+     * 
+     * Generic query format:
+     * user=ISTnnnn;role=ROLE;type=TYPE;unit=IST.<TheUnit>{
+     * .<SubUnit>}[;year=<TheYear>][;semester=<TheSemester>]
+     * 
+     * Available queries:
+     * user=ISTnnnn;role=ROLE;type=DEPARTMENT;unit=IST.<DepartmentAcronym
+     * >[;year=<TheYear>]
+     * user=ISTnnnn;role=ROLE;type=DEGREE;unit=IST.<DegreeAcronym> (Uses the
+     * active degree curricular plans)
+     * user=ISTnnnn;role=ROLE;type=CURRICULAR_COURSE
+     * ;unit=IST.<DegreeAcronym>.<CurricularCourseAcronym
+     * >[;year=<TheYear>;semester=<TheSemester>]
+     * user=ISTnnnn;role=ROLE;type=EXECUTION_COURSE
+     * ;unit=IST.<DegreeAcronym>.<CurricularCourseAcronym
+     * >[;year=<TheYear>;semester=<TheSemester>]
+     * 
+     * Queries that will be available in future:
+     * user=ISTnnnn;role=ROLE;type=SCIENTIFIC_AREA
+     * ;unit=IST.<TheUnit>{.<SubUnit>}[;year=<TheYear>][;semester=<TheSemester>]
+     * user
+     * =ISTnnnn;role=ROLE;type=SECTION;unit=IST.<TheUnit>{.<SubUnit>}[;year=<
+     * TheYear>][;semester=<TheSemester>]
+     * 
+     */
+    public Boolean run(String query) throws FenixServiceException {
 
 	GroupCheckQuery groupCheckQuery = parseQuery(query);
 
@@ -104,18 +115,16 @@ public class GroupCheckService extends Service {
     }
 
     /**
-         * Checks if person has role.
-         * 
-         * Accepted roles: TEACHER and EMPLOYEE
-         * 
-         * @throws NonExistingServiceException
-         * 
-         * 
-         */
-    private Boolean checkRoleGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws NonExistingServiceException {
-	if (groupCheckQuery.roleType == RoleType.TEACHER
-		|| groupCheckQuery.roleType == RoleType.EMPLOYEE) {
+     * Checks if person has role.
+     * 
+     * Accepted roles: TEACHER and EMPLOYEE
+     * 
+     * @throws NonExistingServiceException
+     * 
+     * 
+     */
+    private Boolean checkRoleGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
+	if (groupCheckQuery.roleType == RoleType.TEACHER || groupCheckQuery.roleType == RoleType.EMPLOYEE) {
 	    return new RoleGroup(Role.getRoleByRoleType(groupCheckQuery.roleType)).isMember(person);
 	} else {
 	    throw new NonExistingServiceException();
@@ -124,20 +133,20 @@ public class GroupCheckService extends Service {
     }
 
     /**
-         * Checks if person belongs to curricular course. The unit path format
-         * should be: IST{.<SubUnitAcronym>}.<DegreeAcronym>.<CurricularCourseAcronym>
-         * 
-         * Accepted roles: STUDENT and TEACHER
-         * 
-         * 
-         * @param person
-         * @param groupCheckQuery
-         * @return
-         * @throws NonExistingServiceException
-         * @throws ExcepcaoPersistencia
-         */
-    private Boolean checkExecutionCourseGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws NonExistingServiceException{
+     * Checks if person belongs to curricular course. The unit path format
+     * should be:
+     * IST{.<SubUnitAcronym>}.<DegreeAcronym>.<CurricularCourseAcronym>
+     * 
+     * Accepted roles: STUDENT and TEACHER
+     * 
+     * 
+     * @param person
+     * @param groupCheckQuery
+     * @return
+     * @throws NonExistingServiceException
+     * @throws ExcepcaoPersistencia
+     */
+    private Boolean checkExecutionCourseGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT) {
@@ -147,15 +156,12 @@ public class GroupCheckService extends Service {
 	Degree degree = getDegree(unitAcronyms);
 	for (DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
 
-	    ExecutionSemester executionSemester = getExecutionPeriod(groupCheckQuery.year,
-		    groupCheckQuery.semester);
+	    ExecutionSemester executionSemester = getExecutionPeriod(groupCheckQuery.year, groupCheckQuery.semester);
 
-	    CurricularCourse curricularCourse = degreeCurricularPlan
-		    .getCurricularCourseByAcronym(unitAcronyms[4]);
+	    CurricularCourse curricularCourse = degreeCurricularPlan.getCurricularCourseByAcronym(unitAcronyms[4]);
 
 	    if (curricularCourse != null) {
-		List<ExecutionCourse> executionCourses = curricularCourse
-			.getExecutionCoursesByExecutionPeriod(executionSemester);
+		List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester);
 
 		for (ExecutionCourse executionCourse : executionCourses) {
 		    Group group;
@@ -178,34 +184,32 @@ public class GroupCheckService extends Service {
     }
 
     /**
-         * Checks if person belongs to curricular course. The unit path format
-         * should be: IST{.<SubUnitAcronym>}.<DegreeAcronym>.<CurricularCourseAcronym>
-         * 
-         * Accepted roles: STUDENT
-         * 
-         * @param person
-         * @param groupCheckQuery
-         * @return
-         * @throws NonExistingServiceException
-         * @throws ExcepcaoPersistencia
-         */
-    private Boolean checkCurricularCourseGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws NonExistingServiceException{
+     * Checks if person belongs to curricular course. The unit path format
+     * should be:
+     * IST{.<SubUnitAcronym>}.<DegreeAcronym>.<CurricularCourseAcronym>
+     * 
+     * Accepted roles: STUDENT
+     * 
+     * @param person
+     * @param groupCheckQuery
+     * @return
+     * @throws NonExistingServiceException
+     * @throws ExcepcaoPersistencia
+     */
+    private Boolean checkCurricularCourseGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
 	final String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.STUDENT) {
 	    throw new NonExistingServiceException();
 	}
 
-	for (final DegreeCurricularPlan degreeCurricularPlan : getDegree(unitAcronyms)
-		.getActiveDegreeCurricularPlans()) {
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegree(unitAcronyms).getActiveDegreeCurricularPlans()) {
 
-	    final CurricularCourse curricularCourse = degreeCurricularPlan
-		    .getCurricularCourseByAcronym(unitAcronyms[4]);
+	    final CurricularCourse curricularCourse = degreeCurricularPlan.getCurricularCourseByAcronym(unitAcronyms[4]);
 
 	    if (curricularCourse != null) {
-		final Group group = new CurricularCourseStudentsByExecutionPeriodGroup(curricularCourse,
-			getExecutionPeriod(groupCheckQuery.year, groupCheckQuery.semester));
+		final Group group = new CurricularCourseStudentsByExecutionPeriodGroup(curricularCourse, getExecutionPeriod(
+			groupCheckQuery.year, groupCheckQuery.semester));
 
 		if (group.isMember(person)) {
 		    return true;
@@ -218,19 +222,18 @@ public class GroupCheckService extends Service {
     }
 
     /**
-         * Checks if person belongs to degree. The unit path format should be:
-         * IST.<DegreeAcronym>
-         * 
-         * Accepted roles: TEACHER and STUDENT
-         * 
-         * @param person
-         * @param groupCheckQuery
-         * @return
-         * @throws ExcepcaoPersistencia
-         * @throws FenixServiceException
-         */
-    private Boolean checkDegreeGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws NonExistingServiceException {
+     * Checks if person belongs to degree. The unit path format should be:
+     * IST.<DegreeAcronym>
+     * 
+     * Accepted roles: TEACHER and STUDENT
+     * 
+     * @param person
+     * @param groupCheckQuery
+     * @return
+     * @throws ExcepcaoPersistencia
+     * @throws FenixServiceException
+     */
+    private Boolean checkDegreeGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT) {
@@ -250,8 +253,7 @@ public class GroupCheckService extends Service {
 
     }
 
-    private Degree getDegree(String[] unitAcronyms) throws
-	    NonExistingServiceException {
+    private Degree getDegree(String[] unitAcronyms) throws NonExistingServiceException {
 	Unit unit = getUnit(unitAcronyms, 3);
 
 	if (!unit.isDegreeUnit()) {
@@ -262,8 +264,7 @@ public class GroupCheckService extends Service {
 	return degree;
     }
 
-    private Department getDepartment(String[] unitAcronyms) throws
-	    NonExistingServiceException {
+    private Department getDepartment(String[] unitAcronyms) throws NonExistingServiceException {
 	final Unit unit = getUnit(unitAcronyms, 2);
 	if (!unit.isDepartmentUnit()) {
 	    throw new NonExistingServiceException();
@@ -272,11 +273,9 @@ public class GroupCheckService extends Service {
 	return unit.getDepartment();
     }
 
-    private Unit getUnit(String[] unitAcronyms, int maxIndex) throws
-	    NonExistingServiceException {
+    private Unit getUnit(String[] unitAcronyms, int maxIndex) throws NonExistingServiceException {
 	Unit unit = UnitUtils.readInstitutionUnit();
-	if (unit == null || StringUtils.isEmpty(unit.getAcronym())
-		|| !unit.getAcronym().equals(unitAcronyms[0])) {
+	if (unit == null || StringUtils.isEmpty(unit.getAcronym()) || !unit.getAcronym().equals(unitAcronyms[0])) {
 	    throw new NonExistingServiceException();
 	}
 
@@ -291,19 +290,18 @@ public class GroupCheckService extends Service {
     }
 
     /**
-         * Checks if person belongs to deparment on a specified execution year.
-         * The unit path format should be: IST.<DepartmentAcronym>
-         * 
-         * Accepted roles: STUDENT, TEACHER and EMPLOYEE
-         * 
-         * @param person
-         * @param groupCheckQuery
-         * @return
-         * @throws ExcepcaoPersistencia
-         * @throws FenixServiceException
-         */
-    private Boolean checkDepartmentGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws NonExistingServiceException {
+     * Checks if person belongs to deparment on a specified execution year. The
+     * unit path format should be: IST.<DepartmentAcronym>
+     * 
+     * Accepted roles: STUDENT, TEACHER and EMPLOYEE
+     * 
+     * @param person
+     * @param groupCheckQuery
+     * @return
+     * @throws ExcepcaoPersistencia
+     * @throws FenixServiceException
+     */
+    private Boolean checkDepartmentGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
 
 	final String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT
@@ -312,20 +310,19 @@ public class GroupCheckService extends Service {
 	}
 
 	if (groupCheckQuery.roleType == RoleType.TEACHER) {
-	    return new DepartmentTeachersByExecutionYearGroup(getExecutionYear(groupCheckQuery.year),
-		    getDepartment(unitAcronyms)).isMember(person);
+	    return new DepartmentTeachersByExecutionYearGroup(getExecutionYear(groupCheckQuery.year), getDepartment(unitAcronyms))
+		    .isMember(person);
 	} else if (groupCheckQuery.roleType == RoleType.EMPLOYEE) {
 	    return new DepartmentEmployeesByExecutionYearGroup(getExecutionYear(groupCheckQuery.year),
 		    getDepartment(unitAcronyms)).isMember(person);
 	} else {
-	    return new DepartmentStudentsByExecutionYearGroup(getExecutionYear(groupCheckQuery.year),
-		    getDepartment(unitAcronyms)).isMember(person);
+	    return new DepartmentStudentsByExecutionYearGroup(getExecutionYear(groupCheckQuery.year), getDepartment(unitAcronyms))
+		    .isMember(person);
 	}
 
     }
 
-    private ExecutionSemester getExecutionPeriod(String year, Integer semester)
-	    throws NonExistingServiceException {
+    private ExecutionSemester getExecutionPeriod(String year, Integer semester) throws NonExistingServiceException {
 
 	if (year != null && semester != null) {
 	    return ExecutionSemester.readBySemesterAndExecutionYear(semester, year);

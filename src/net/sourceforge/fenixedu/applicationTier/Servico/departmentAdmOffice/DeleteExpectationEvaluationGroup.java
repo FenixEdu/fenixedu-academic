@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup;
 public class DeleteExpectationEvaluationGroup extends Service {
 
     public void run(ExpectationEvaluationGroup group) {
-	if(group != null) {
+	if (group != null) {
 	    group.delete();
 	}
     }
-    
+
 }

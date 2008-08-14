@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class OldPublicationType extends FenixValuedEnum {
     public static final int DIDACTIC_TYPE = 1;
@@ -23,34 +23,34 @@ public class OldPublicationType extends FenixValuedEnum {
     public static OldPublicationType CIENTIFIC = new OldPublicationType("Cientific", CIENTIFIC_TYPE);
 
     public OldPublicationType(String name, int value) {
-        super(name, value);
+	super(name, value);
     }
 
     public static OldPublicationType getEnum(String oldPublicationType) {
-        return (OldPublicationType) getEnum(OldPublicationType.class, oldPublicationType);
+	return (OldPublicationType) getEnum(OldPublicationType.class, oldPublicationType);
     }
 
     public static OldPublicationType getEnum(int oldPublicationType) {
-        return (OldPublicationType) getEnum(OldPublicationType.class, oldPublicationType);
+	return (OldPublicationType) getEnum(OldPublicationType.class, oldPublicationType);
     }
 
     public static Map getEnumMap() {
-        return getEnumMap(OldPublicationType.class);
+	return getEnumMap(OldPublicationType.class);
     }
 
     public static List getEnumList() {
-        return getEnumList(OldPublicationType.class);
+	return getEnumList(OldPublicationType.class);
     }
 
     public static Iterator iterator() {
-        return iterator(OldPublicationType.class);
+	return iterator(OldPublicationType.class);
     }
 
     public String toString() {
-        String result = "Old Publication Type Type :\n";
-        result += "\n  - OldPublication Type : " + this.getName();
+	String result = "Old Publication Type Type :\n";
+	result += "\n  - OldPublication Type : " + this.getName();
 
-        return result;
+	return result;
     }
 
 }

@@ -54,8 +54,8 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
 	Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear().getIdInternal() };
-	List executionPeriods = (List) ServiceManagerServiceFactory.executeService(
-		"ReadExecutionPeriodsByExecutionYear", argsReadExecutionPeriods);
+	List executionPeriods = (List) ServiceManagerServiceFactory.executeService("ReadExecutionPeriodsByExecutionYear",
+		argsReadExecutionPeriods);
 
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -89,8 +89,8 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	}
 
 	Object argsReadExecutionPeriods[] = { degreeCurricularPlanID };
-	List executionPeriods = (List) ServiceManagerServiceFactory.executeService(
-		"ReadExecutionPeriodsByDegreeCurricularPlan", argsReadExecutionPeriods);
+	List executionPeriods = (List) ServiceManagerServiceFactory.executeService("ReadExecutionPeriodsByDegreeCurricularPlan",
+		argsReadExecutionPeriods);
 
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -170,7 +170,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
 	List infoExecutionCourses = null;
 	try {
-	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService( "SearchExecutionCourses", args);
+	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService("SearchExecutionCourses", args);
 	} catch (NotAuthorizedFilterException e) {
 	    return mapping.findForward("notAuthorized");
 	}
@@ -197,7 +197,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
 	InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory
-		.executeService( "ReadShiftsByExecutionCourseID", args);
+		.executeService("ReadShiftsByExecutionCourseID", args);
 
 	arranjeShifts(infoExecutionCourseOccupancy);
 

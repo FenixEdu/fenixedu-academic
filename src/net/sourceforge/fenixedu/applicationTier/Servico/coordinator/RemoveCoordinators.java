@@ -12,16 +12,16 @@ public class RemoveCoordinators extends Service {
 
     public void run(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs) {
 
-        for (final Integer coordinatorToRemoveID : coordinatorsToRemoveIDs) {
-            final Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorToRemoveID);
-            if (coordinator != null) {
-                final Person person = coordinator.getPerson();
-                coordinator.delete();
-                if (!person.hasAnyCoordinators()) {
-                    person.removeRoleByType(RoleType.COORDINATOR);
-                }
-            }
-        }
+	for (final Integer coordinatorToRemoveID : coordinatorsToRemoveIDs) {
+	    final Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorToRemoveID);
+	    if (coordinator != null) {
+		final Person person = coordinator.getPerson();
+		coordinator.delete();
+		if (!person.hasAnyCoordinators()) {
+		    person.removeRoleByType(RoleType.COORDINATOR);
+		}
+	    }
+	}
     }
 
 }

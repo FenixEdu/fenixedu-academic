@@ -27,7 +27,7 @@ public enum TransactionType {
     INSURANCE_REIMBURSEMENT;
 
     public String getName() {
-        return name();
+	return name();
     }
-    
+
 }

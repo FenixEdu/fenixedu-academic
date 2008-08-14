@@ -22,24 +22,25 @@ public class ExternalPersonDA extends FenixDispatchAction {
 	if (anyPersonSearchBean == null) {
 	    anyPersonSearchBean = new AnyPersonSearchBean();
 	}
-        final String name = request.getParameter("name");
-        if (isSpecified(name)) {
-            anyPersonSearchBean.setName(name);
-        }
+	final String name = request.getParameter("name");
+	if (isSpecified(name)) {
+	    anyPersonSearchBean.setName(name);
+	}
 	request.setAttribute("anyPersonSearchBean", anyPersonSearchBean);
-	
-    	return mapping.findForward("showSearch");
+
+	return mapping.findForward("showSearch");
     }
 
-    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	ExternalPersonBeanFactoryCreator externalPersonBean = (ExternalPersonBeanFactoryCreator) getRenderedObject();
 	if (externalPersonBean == null) {
 	    externalPersonBean = new ExternalPersonBeanFactoryCreator();
 	}
 	setRequestParameters(request, externalPersonBean);
 	request.setAttribute("externalPersonBean", externalPersonBean);
-	
-    	return mapping.findForward("showCreateForm");
+
+	return mapping.findForward("showCreateForm");
     }
 
     private void setRequestParameters(final HttpServletRequest request, final ExternalPersonBeanFactoryCreator externalPersonBean) {
@@ -62,38 +63,38 @@ public class ExternalPersonDA extends FenixDispatchAction {
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+	    throws Exception {
 	final Person person = (Person) executeFactoryMethod(request);
 	request.setAttribute("person", person);
 	RenderUtils.invalidateViewState();
-    	return mapping.findForward("showCreatedPerson");
+	return mapping.findForward("showCreatedPerson");
     }
 
-    public ActionForward createExternalPersonAndParkingParty(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        create(mapping, form, request, response);
-        return createParkingParty(mapping, form, request, response);
+    public ActionForward createExternalPersonAndParkingParty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	create(mapping, form, request, response);
+	return createParkingParty(mapping, form, request, response);
     }
-
 
     public ActionForward createParkingParty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final String personIDString = request.getParameter("personID");
-        final Integer personID = personIDString == null ? null : Integer.valueOf(personIDString);
-        final Person person;
-        if (personID != null) {
-            person = (Person) rootDomainObject.readPartyByOID(personID);
-        } else {
-            person = (Person) request.getAttribute("person");
-        }
-        if (person != null) {
-            final Object[] args = { person };
-            executeService(request, "CreateParkingParty", args);
-            final ActionForward actionForward = new ActionForward("/parking.do?plateNumber=&partyID=" + person.getIdInternal() + "&method=showParkingPartyRequests");
-            return actionForward;
-        } else {
-            throw new Error("error.no.person.specified");
-        }
+	    HttpServletResponse response) throws Exception {
+	final String personIDString = request.getParameter("personID");
+	final Integer personID = personIDString == null ? null : Integer.valueOf(personIDString);
+	final Person person;
+	if (personID != null) {
+	    person = (Person) rootDomainObject.readPartyByOID(personID);
+	} else {
+	    person = (Person) request.getAttribute("person");
+	}
+	if (person != null) {
+	    final Object[] args = { person };
+	    executeService(request, "CreateParkingParty", args);
+	    final ActionForward actionForward = new ActionForward("/parking.do?plateNumber=&partyID=" + person.getIdInternal()
+		    + "&method=showParkingPartyRequests");
+	    return actionForward;
+	} else {
+	    throw new Error("error.no.person.specified");
+	}
     }
 
 }

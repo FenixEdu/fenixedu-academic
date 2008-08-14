@@ -8,11 +8,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rule
 
 /**
  * A <tt>Resource</tt> represents something that needs to be retrieved by the
- * {@link net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher}.
+ * {@link net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher}
+ * .
  * 
  * <p>
- * A <tt>Resource</tt> defines a local name for the content being retrieved
- * and the url from where the content will be retrieved. The name must not start
+ * A <tt>Resource</tt> defines a local name for the content being retrieved and
+ * the url from where the content will be retrieved. The name must not start
  * with '/' but can represent a complex path like <tt>"parent/dir/file"</tt>.
  * 
  * <p>
@@ -27,7 +28,7 @@ public class Resource {
 
     private String url;
     private String name;
-    
+
     private List<Rule> rules;
 
     /**
@@ -39,56 +40,56 @@ public class Resource {
      *            the url from where the resource wil lbe retrieved
      */
     public Resource(String name, String url) {
-        super();
-    
-        this.url = url;
-        this.name = name;
-        
-        this.rules = new ArrayList<Rule>();
+	super();
+
+	this.url = url;
+	this.name = name;
+
+	this.rules = new ArrayList<Rule>();
     }
 
     public String getName() {
-        return this.name;
+	return this.name;
     }
 
     public String getUrl() {
-        return this.url;
+	return this.url;
     }
 
     public List<Rule> getRules() {
-        return this.rules;
+	return this.rules;
     }
 
     public void addRule(Rule rule) {
-        this.rules.add(rule);
+	this.rules.add(rule);
     }
-    
+
     public void addAllRules(Collection<Rule> rules) {
-        this.rules.addAll(rules);
+	this.rules.addAll(rules);
     }
 
     @Override
     public String toString() {
-        return String.format("Resource['%s' -> '%s']", getUrl(), getName());
+	return String.format("Resource['%s' -> '%s']", getUrl(), getName());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        
-        if (! (obj instanceof Resource)) {
-            return false;
-        }
-        
-        Resource other = (Resource) obj;
-        return getName().equals(other.getName());
+	if (this == obj) {
+	    return true;
+	}
+
+	if (!(obj instanceof Resource)) {
+	    return false;
+	}
+
+	Resource other = (Resource) obj;
+	return getName().equals(other.getName());
     }
 
     @Override
     public int hashCode() {
-        return getName().hashCode();
+	return getName().hashCode();
     }
 
 }

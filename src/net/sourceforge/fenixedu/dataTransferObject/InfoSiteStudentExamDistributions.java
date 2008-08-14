@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class InfoSiteStudentExamDistributions extends DataTranferObject implements ISiteComponent {
 
@@ -22,21 +22,21 @@ public class InfoSiteStudentExamDistributions extends DataTranferObject implemen
     }
 
     public InfoSiteStudentExamDistributions(List examDistributions) {
-        setExamDistributions(examDistributions);
+	setExamDistributions(examDistributions);
     }
 
     /**
      * @return
      */
     public List getExamDistributions() {
-        return examDistributions;
+	return examDistributions;
     }
 
     /**
      * @param list
      */
     public void setExamDistributions(List list) {
-        examDistributions = list;
+	examDistributions = list;
     }
 
 }

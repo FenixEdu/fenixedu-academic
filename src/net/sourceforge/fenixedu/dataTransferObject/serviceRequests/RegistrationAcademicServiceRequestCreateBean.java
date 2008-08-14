@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import org.joda.time.YearMonthDay;
 
 public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSelectExecutionYearBean {
-    
+
     private AcademicServiceRequestType academicServiceRequestType;
     private DomainReference<CurriculumGroup> curriculumGroup;
     private DomainReference<CourseGroup> courseGroup;
@@ -21,17 +21,17 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
     private String subject;
     private String purpose;
     private YearMonthDay requestDate;
-    
+
     public RegistrationAcademicServiceRequestCreateBean(final Registration registration) {
 	super(registration);
     }
-    
+
     public AcademicServiceRequestType getAcademicServiceRequestType() {
-        return academicServiceRequestType;
+	return academicServiceRequestType;
     }
 
     public void setAcademicServiceRequestType(AcademicServiceRequestType academicServiceRequestType) {
-        this.academicServiceRequestType = academicServiceRequestType;
+	this.academicServiceRequestType = academicServiceRequestType;
     }
 
     public CurriculumGroup getCurriculumGroup() {
@@ -41,7 +41,7 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
 	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
     }
-    
+
     public CourseGroup getCourseGroup() {
 	return (this.courseGroup != null) ? this.courseGroup.getObject() : null;
     }
@@ -49,7 +49,7 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
     public void setCourseGroup(CourseGroup courseGroup) {
 	this.courseGroup = (courseGroup != null) ? new DomainReference<CourseGroup>(courseGroup) : null;
     }
-    
+
     public Enrolment getEnrolment() {
 	return (this.enrolment != null) ? this.enrolment.getObject() : null;
     }
@@ -57,37 +57,38 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
     public void setEnrolment(Enrolment enrolment) {
 	this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
     }
-    
+
     public EquivalencePlanRequest getEquivalencePlanRequest() {
 	return (this.equivalencePlanRequest != null) ? this.equivalencePlanRequest.getObject() : null;
     }
 
     public void setEquivalencePlanRequest(EquivalencePlanRequest equivalencePlanRequest) {
-	this.equivalencePlanRequest = (equivalencePlanRequest != null) ? new DomainReference<EquivalencePlanRequest>(equivalencePlanRequest) : null;
+	this.equivalencePlanRequest = (equivalencePlanRequest != null) ? new DomainReference<EquivalencePlanRequest>(
+		equivalencePlanRequest) : null;
     }
-    
+
     public String getSubject() {
-        return subject;
+	return subject;
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+	this.subject = subject;
     }
 
     public String getPurpose() {
-        return purpose;
+	return purpose;
     }
 
     public void setPurpose(String purpose) {
-        this.purpose = purpose;
+	this.purpose = purpose;
     }
 
     public YearMonthDay getRequestDate() {
-        return requestDate;
+	return requestDate;
     }
 
     public void setRequestDate(YearMonthDay requestDate) {
-        this.requestDate = requestDate;
+	this.requestDate = requestDate;
     }
-    
+
 }

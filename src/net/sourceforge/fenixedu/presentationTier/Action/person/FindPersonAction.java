@@ -35,14 +35,14 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * 
  */
 public class FindPersonAction extends FenixDispatchAction {
-    
-    public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("findPerson");
     }
 
-    public ActionForward preparePerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward preparePerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm findPersonForm = (DynaActionForm) actionForm;
 
@@ -55,8 +55,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	} else if (findPersonForm.get("roleType") != null) {
 	    roleType = (String) findPersonForm.get("roleType");
 	}
-	if (request.getParameter("degreeType") != null
-		&& request.getParameter("degreeType").length() > 0) {
+	if (request.getParameter("degreeType") != null && request.getParameter("degreeType").length() > 0) {
 	    degreeType = (String) request.getParameter("degreeType");
 
 	} else if (findPersonForm.get("degreeType") != null) {
@@ -64,8 +63,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	if (roleType != null && roleType.length() != 0) {
-	    if (roleType.equals(RoleType.EMPLOYEE.getName())
-		    || roleType.equals(RoleType.TEACHER.getName())) {
+	    if (roleType.equals(RoleType.EMPLOYEE.getName()) || roleType.equals(RoleType.TEACHER.getName())) {
 		if (roleType.equals(RoleType.TEACHER.getName())) {
 		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments");
 		    request.setAttribute("departments", departments);
@@ -76,7 +74,8 @@ public class FindPersonAction extends FenixDispatchAction {
 
 		if (degreeType.length() != 0) {
 		    Object[] args = { degreeType };
-		    List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService("ReadAllDegreesByType", args);
+		    List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService("ReadAllDegreesByType",
+			    args);
 
 		    request.setAttribute("nonMasterDegree", nonMasterDegree);
 		    request.setAttribute("degreeType", true);
@@ -114,8 +113,8 @@ public class FindPersonAction extends FenixDispatchAction {
 	return mapping.findForward("findPerson");
     }
 
-    public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
 
@@ -139,8 +138,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	    roleType = (String) findPersonForm.get("roleType");
 	}
 
-	if (request.getParameter("degreeType") != null
-		&& request.getParameter("degreeType").length() > 0) {
+	if (request.getParameter("degreeType") != null && request.getParameter("degreeType").length() > 0) {
 	    degreeType = (String) request.getParameter("degreeType");
 
 	} else if (findPersonForm.get("degreeType") != null) {
@@ -160,8 +158,7 @@ public class FindPersonAction extends FenixDispatchAction {
 		request.setAttribute("degreeType", true);
 	    }
 	}
-	if (request.getParameter("departmentId") != null
-		&& request.getParameter("departmentId").length() > 0) {
+	if (request.getParameter("departmentId") != null && request.getParameter("departmentId").length() > 0) {
 	    departmentId = Integer.valueOf(request.getParameter("departmentId"));
 
 	} else if (findPersonForm.get("departmentId") != null) {
@@ -180,8 +177,8 @@ public class FindPersonAction extends FenixDispatchAction {
 	    degreeId = (Integer) findPersonForm.get("degreeId");
 	}
 
-	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, null, null, null,
-		null, roleType, degreeType, degreeId, departmentId, Boolean.TRUE, null, Boolean.FALSE);
+	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, null, null, null, null, roleType, degreeType,
+		degreeId, departmentId, Boolean.TRUE, null, Boolean.FALSE);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
@@ -189,7 +186,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
 	CollectionPager result = null;
 	try {
-	    result = (CollectionPager) ServiceManagerServiceFactory.executeService( "SearchPerson", args);
+	    result = (CollectionPager) ServiceManagerServiceFactory.executeService("SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    addErrorMessage(request, "impossibleFindPerson", e.getMessage());
@@ -207,8 +204,9 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
-	
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
+		.valueOf(1);
+
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
 
@@ -226,7 +224,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	} else {
 	    request.setAttribute("show", Boolean.FALSE);
 	}
-	
+
 	Boolean viewPhoto = null;
 	if (request.getParameter("viewPhoto") != null && request.getParameter("viewPhoto").length() > 0) {
 	    viewPhoto = getCheckBoxValue((String) request.getParameter("viewPhoto"));
@@ -234,12 +232,10 @@ public class FindPersonAction extends FenixDispatchAction {
 	} else if (findPersonForm.get("viewPhoto") != null) {
 	    viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
 	}
-	
+
 	findPersonForm.set("viewPhoto", viewPhoto.toString());
 	request.setAttribute("viewPhoto", viewPhoto);
-	
-	
-	
+
 	return mapping.findForward("findPerson");
     }
 

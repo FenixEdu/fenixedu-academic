@@ -24,15 +24,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 
-    public ActionForward prepareEdition(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	VigilancyCourseGroupBean bean = new VigilancyCourseGroupBean();
 	String oid = request.getParameter("gid");
 	Integer idInternal = Integer.valueOf(oid);
 
-	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(
-		VigilantGroup.class, idInternal);
+	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, idInternal);
 	bean.setSelectedVigilantGroup(group);
 	bean.setSelectedDepartment(getDepartment(group));
 	request.setAttribute("bean", bean);
@@ -41,29 +40,29 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
     }
 
     private Department getDepartment(VigilantGroup group) {
-	    Unit unit = group.getUnit();
-	    if(unit.isDepartmentUnit()) {
-		return unit.getDepartment();
-	    }
-	    if(unit.isScientificAreaUnit()) {
-		ScientificAreaUnit scientificAreaUnit = (ScientificAreaUnit)unit;
-		return scientificAreaUnit.getDepartmentUnit().getDepartment();
-	    }
-	    return null;
+	Unit unit = group.getUnit();
+	if (unit.isDepartmentUnit()) {
+	    return unit.getDepartment();
 	}
-    
+	if (unit.isScientificAreaUnit()) {
+	    ScientificAreaUnit scientificAreaUnit = (ScientificAreaUnit) unit;
+	    return scientificAreaUnit.getDepartmentUnit().getDepartment();
+	}
+	return null;
+    }
+
     public ActionForward selectUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) RenderUtils
-		.getViewState("selectUnit").getMetaObject().getObject();
+	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) RenderUtils.getViewState("selectUnit").getMetaObject()
+		.getObject();
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("selectUnit");
 	return mapping.findForward("editCourseGroup");
     }
 
-    public ActionForward addExecutionCourseToGroup(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addExecutionCourseToGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IViewState viewState = RenderUtils.getViewState("addExecutionCourses");
 	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) viewState.getMetaObject().getObject();
@@ -73,8 +72,7 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 	if (executionCourses.size() > 0) {
 	    List<ExecutionCourse> coursesUnableToAdd;
 	    Object[] args = { group, executionCourses };
-	    coursesUnableToAdd = (List<ExecutionCourse>) executeService(request,
-		    "AddExecutionCourseToGroup", args);
+	    coursesUnableToAdd = (List<ExecutionCourse>) executeService(request, "AddExecutionCourseToGroup", args);
 
 	    request.setAttribute("coursesUnableToAdd", coursesUnableToAdd);
 	}
@@ -85,11 +83,11 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward removeExecutionCoursesFromGroup(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeExecutionCoursesFromGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) RenderUtils.getViewState(
-		"removeExecutionCourses").getMetaObject().getObject();
+	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) RenderUtils.getViewState("removeExecutionCourses")
+		.getMetaObject().getObject();
 	List<ExecutionCourse> executionCourses = bean.getCourses();
 	VigilantGroup group = bean.getSelectedVigilantGroup();
 
@@ -105,8 +103,8 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 	return mapping.findForward("editCourseGroup");
     }
 
-    public ActionForward addExternalCourse(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addExternalCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IViewState viewState = (IViewState) RenderUtils.getViewState("addExternalCourse");
 	if (viewState == null) {

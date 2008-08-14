@@ -7,197 +7,196 @@ import java.util.Stack;
 
 public class NewModelGroup extends NewModelGroup_Base {
 
-	public NewModelGroup() {
-		super();
+    public NewModelGroup() {
+	super();
+    }
+
+    public NewModelGroup(NewModelGroup parentGroup, String name) {
+	this();
+
+	this.setName(name);
+
+	init(parentGroup);
+    }
+
+    public NewModelRestriction getModelRestriction(NewQuestion question) {
+	for (NewModelRestriction modelRestriction : this.getChildRestrictions()) {
+	    if (modelRestriction.getQuestion().equals(question)) {
+		return modelRestriction;
+	    }
 	}
 
-	public NewModelGroup(NewModelGroup parentGroup, String name) {
-		this();
+	return null;
+    }
 
-		this.setName(name);
-
-		init(parentGroup);
+    @Override
+    public NewModelRestriction findModelRestriction(NewQuestion question) {
+	for (NewModelRestriction eachRestriction : this.getChildRestrictions()) {
+	    NewModelRestriction modelRestriction = eachRestriction.findModelRestriction(question);
+	    if (modelRestriction != null) {
+		return modelRestriction;
+	    }
 	}
 
-	public NewModelRestriction getModelRestriction(NewQuestion question) {
-		for (NewModelRestriction modelRestriction : this.getChildRestrictions()) {
-			if (modelRestriction.getQuestion().equals(question)) {
-				return modelRestriction;
-			}
-		}
+	return null;
+    }
 
-		return null;
+    @Override
+    public void delete() {
+	final NewTestModel testModel = this.getTestModel();
+
+	for (NewModelRestriction atomicRestriction : this.getChildAtomicRestrictions()) {
+	    testModel.unselectRestriction(atomicRestriction);
 	}
 
-	@Override
-	public NewModelRestriction findModelRestriction(NewQuestion question) {
-		for (NewModelRestriction eachRestriction : this.getChildRestrictions()) {
-			NewModelRestriction modelRestriction = eachRestriction.findModelRestriction(question);
-			if(modelRestriction != null) {
-				return modelRestriction;
-			}
-		}
-
-		return null;
+	while (this.getChildRestrictionsCount() > 0) {
+	    this.getChildRestrictions().get(0).delete();
 	}
 
-	@Override
-	public void delete() {
-		final NewTestModel testModel = this.getTestModel();
-		
-		for(NewModelRestriction atomicRestriction : this.getChildAtomicRestrictions()) {
-			testModel.unselectRestriction(atomicRestriction);
-		}
-		
-		while (this.getChildRestrictionsCount() > 0) {
-			this.getChildRestrictions().get(0).delete();
-		}
+	super.delete();
+    }
 
-		super.delete();
-	}
-	
-	public void deleteAsBag() {
-		this.getTestModel().removeBag();
-		
-		while (this.getChildRestrictionsCount() > 0) {
-			this.getChildRestrictions().get(0).delete();
-		}
+    public void deleteAsBag() {
+	this.getTestModel().removeBag();
 
-		super.delete();
+	while (this.getChildRestrictionsCount() > 0) {
+	    this.getChildRestrictions().get(0).delete();
 	}
 
-	@Override
-	public Double getValue() {
-		double sum = 0;
+	super.delete();
+    }
 
-		for (NewModelRestriction modelRestriction : this.getChildRestrictions()) {
-			Double value = modelRestriction.getValue();
+    @Override
+    public Double getValue() {
+	double sum = 0;
 
-			if (value != null) {
-				sum += value;
-			}
-		}
+	for (NewModelRestriction modelRestriction : this.getChildRestrictions()) {
+	    Double value = modelRestriction.getValue();
 
-		return sum;
+	    if (value != null) {
+		sum += value;
+	    }
 	}
 
-	@Override
-	public int getQuestionCount() {
-		int sum = 0;
-		for (NewModelRestriction modelRestriction : getChildRestrictions()) {
-			sum += modelRestriction.getQuestionCount();
-		}
+	return sum;
+    }
 
-		return sum;
+    @Override
+    public int getQuestionCount() {
+	int sum = 0;
+	for (NewModelRestriction modelRestriction : getChildRestrictions()) {
+	    sum += modelRestriction.getQuestionCount();
 	}
 
-	@Override
-	public NewTestModel getTestModel() {
-		if (this.getBagModel() != null) {
-			return this.getBagModel();
-		}
+	return sum;
+    }
 
-		return this.getParentGroup().getTestModel();
+    @Override
+    public NewTestModel getTestModel() {
+	if (this.getBagModel() != null) {
+	    return this.getBagModel();
 	}
 
-	public void resortChildRestrictions() {
-		int i = 1;
-		for (NewModelRestriction modelRestriction : this.getOrderedChildRestrictions()) {
-			modelRestriction.setPosition(i++);
-		}
+	return this.getParentGroup().getTestModel();
+    }
+
+    public void resortChildRestrictions() {
+	int i = 1;
+	for (NewModelRestriction modelRestriction : this.getOrderedChildRestrictions()) {
+	    modelRestriction.setPosition(i++);
+	}
+    }
+
+    public List<NewModelRestriction> getOrderedChildRestrictions() {
+	List<NewModelRestriction> orderedChildRestrictions = new ArrayList<NewModelRestriction>(this.getChildRestrictions());
+
+	Collections.sort(orderedChildRestrictions, Positionable.POSITION_COMPARATOR);
+
+	return orderedChildRestrictions;
+    }
+
+    public List<NewModelGroup> getChildModelGroups() {
+	List<NewModelGroup> orderedChildModelGroups = new ArrayList<NewModelGroup>();
+
+	for (NewModelRestriction modelRestriction : this.getChildRestrictions()) {
+	    if (modelRestriction.isComposite()) {
+		orderedChildModelGroups.add((NewModelGroup) modelRestriction);
+	    }
 	}
 
-	public List<NewModelRestriction> getOrderedChildRestrictions() {
-		List<NewModelRestriction> orderedChildRestrictions = new ArrayList<NewModelRestriction>(this
-				.getChildRestrictions());
+	return orderedChildModelGroups;
+    }
 
-		Collections.sort(orderedChildRestrictions, Positionable.POSITION_COMPARATOR);
+    public List<NewModelGroup> getOrderedChildModelGroups() {
+	List<NewModelGroup> orderedChildModelGroups = getChildModelGroups();
 
-		return orderedChildRestrictions;
-	}
-	
-	public List<NewModelGroup> getChildModelGroups() {
-		List<NewModelGroup> orderedChildModelGroups = new ArrayList<NewModelGroup>();
+	Collections.sort(orderedChildModelGroups, Positionable.POSITION_COMPARATOR);
 
-		for (NewModelRestriction modelRestriction : this.getChildRestrictions()) {
-			if (modelRestriction.isComposite()) {
-				orderedChildModelGroups.add((NewModelGroup) modelRestriction);
-			}
-		}
+	return orderedChildModelGroups;
+    }
 
-		return orderedChildModelGroups;
-	}
+    public List<NewModelRestriction> getChildAtomicRestrictions() {
+	List<NewModelRestriction> atomicRestrictions = new ArrayList<NewModelRestriction>();
 
-	public List<NewModelGroup> getOrderedChildModelGroups() {
-		List<NewModelGroup> orderedChildModelGroups = getChildModelGroups();
-
-		Collections.sort(orderedChildModelGroups, Positionable.POSITION_COMPARATOR);
-
-		return orderedChildModelGroups;
+	for (NewModelRestriction modelRestriction : this.getChildRestrictions()) {
+	    if (!modelRestriction.isComposite()) {
+		atomicRestrictions.add(modelRestriction);
+	    }
 	}
 
-	public List<NewModelRestriction> getChildAtomicRestrictions() {
-		List<NewModelRestriction> atomicRestrictions= new ArrayList<NewModelRestriction>();
+	return atomicRestrictions;
+    }
 
-		for (NewModelRestriction modelRestriction : this.getChildRestrictions()) {
-			if (!modelRestriction.isComposite()) {
-				atomicRestrictions.add(modelRestriction);
-			}
-		}
+    public List<NewQuestionGroup> getChildQuestionGroups() {
+	List<NewQuestionGroup> childQuestionGroups = new ArrayList<NewQuestionGroup>();
 
-		return atomicRestrictions;
-	}
-	
-	public List<NewQuestionGroup> getChildQuestionGroups() {
-		List<NewQuestionGroup> childQuestionGroups = new ArrayList<NewQuestionGroup>();
-		
-		for(NewModelRestriction childAtomicRestriction : this.getChildAtomicRestrictions()) {
-			if(childAtomicRestriction.getQuestion().isComposite()) {
-				childQuestionGroups.add((NewQuestionGroup) childAtomicRestriction.getQuestion());
-			}
-		}
-		
-		return childQuestionGroups;
-	}
-	
-	public int getChildQuestionGroupsCount() {
-		return this.getChildQuestionGroups().size();
-	}
-	
-	public List<NewQuestion> getChildAtomicQuestions() {
-		List<NewQuestion> childAtomicQuestions = new ArrayList<NewQuestion>();
-		
-		for(NewModelRestriction childAtomicRestriction : this.getChildAtomicRestrictions()) {
-			if(!childAtomicRestriction.getQuestion().isComposite()) {
-				childAtomicQuestions.add(childAtomicRestriction.getQuestion());
-			}
-		}
-		
-		return childAtomicQuestions;
-	}
-	
-	public int getChildAtomicQuestionsCount() {
-		return this.getChildAtomicQuestions().size();
+	for (NewModelRestriction childAtomicRestriction : this.getChildAtomicRestrictions()) {
+	    if (childAtomicRestriction.getQuestion().isComposite()) {
+		childQuestionGroups.add((NewQuestionGroup) childAtomicRestriction.getQuestion());
+	    }
 	}
 
-	public List<NewModelGroup> getAllChildModelGroups() {
-		Stack<NewModelGroup> stack = new Stack<NewModelGroup>();
-		List<NewModelGroup> childModelGroups = new ArrayList<NewModelGroup>();
+	return childQuestionGroups;
+    }
 
-		stack.add(this);
+    public int getChildQuestionGroupsCount() {
+	return this.getChildQuestionGroups().size();
+    }
 
-		while (stack.size() > 0) {
-			NewModelGroup modelGroup = stack.pop();
-			childModelGroups.add(modelGroup);
-			stack.addAll(modelGroup.getOrderedChildModelGroups());
-		}
+    public List<NewQuestion> getChildAtomicQuestions() {
+	List<NewQuestion> childAtomicQuestions = new ArrayList<NewQuestion>();
 
-		return childModelGroups;
+	for (NewModelRestriction childAtomicRestriction : this.getChildAtomicRestrictions()) {
+	    if (!childAtomicRestriction.getQuestion().isComposite()) {
+		childAtomicQuestions.add(childAtomicRestriction.getQuestion());
+	    }
 	}
 
-	@Override
-	public boolean isComposite() {
-		return true;
+	return childAtomicQuestions;
+    }
+
+    public int getChildAtomicQuestionsCount() {
+	return this.getChildAtomicQuestions().size();
+    }
+
+    public List<NewModelGroup> getAllChildModelGroups() {
+	Stack<NewModelGroup> stack = new Stack<NewModelGroup>();
+	List<NewModelGroup> childModelGroups = new ArrayList<NewModelGroup>();
+
+	stack.add(this);
+
+	while (stack.size() > 0) {
+	    NewModelGroup modelGroup = stack.pop();
+	    childModelGroups.add(modelGroup);
+	    stack.addAll(modelGroup.getOrderedChildModelGroups());
 	}
+
+	return childModelGroups;
+    }
+
+    @Override
+    public boolean isComposite() {
+	return true;
+    }
 
 }

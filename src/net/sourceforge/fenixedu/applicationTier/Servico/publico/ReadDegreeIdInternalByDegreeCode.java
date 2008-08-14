@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Pedro Santos e Rita Carvalho
  */
 public class ReadDegreeIdInternalByDegreeCode extends Service {
-	
-	public Integer run(String degreeCode) {
-        Degree degree = Degree.readBySigla(degreeCode);
 
-        return degree != null ? degree.getIdInternal() : null;
-	}
+    public Integer run(String degreeCode) {
+	Degree degree = Degree.readBySigla(degreeCode);
+
+	return degree != null ? degree.getIdInternal() : null;
+    }
 
 }

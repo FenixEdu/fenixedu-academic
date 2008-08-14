@@ -10,83 +10,82 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public abstract class NodeGroup extends Group {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private List<IGroup> children;
-    
+
     protected NodeGroup() {
-        super();
-        
-        this.children = new ArrayList<IGroup>();
+	super();
+
+	this.children = new ArrayList<IGroup>();
     }
-    
-    public NodeGroup(IGroup ... groups) {
-        this();
-        
-        for (IGroup group : groups) {
-            this.children.add(group);
-        }
+
+    public NodeGroup(IGroup... groups) {
+	this();
+
+	for (IGroup group : groups) {
+	    this.children.add(group);
+	}
     }
-    
+
     public NodeGroup(Collection<IGroup> groups) {
-        this();
-        
-        this.children.addAll(groups);
+	this();
+
+	this.children.addAll(groups);
     }
-    
+
     public List<IGroup> getChildren() {
-        return Collections.unmodifiableList(this.children);
+	return Collections.unmodifiableList(this.children);
     }
-    
+
     @Override
     public boolean equals(Object other) {
-        if (other == null) {
-            return false;
-        }
-        
-        if (! this.getClass().equals(other.getClass())) {
-            return false;
-        }
+	if (other == null) {
+	    return false;
+	}
 
-        NodeGroup otherNodeGroup = (NodeGroup) other;
-        return this.children.equals(otherNodeGroup.children);
+	if (!this.getClass().equals(other.getClass())) {
+	    return false;
+	}
+
+	NodeGroup otherNodeGroup = (NodeGroup) other;
+	return this.children.equals(otherNodeGroup.children);
     }
 
     @Override
     public int hashCode() {
-        return this.children.hashCode();
+	return this.children.hashCode();
     }
-    
+
     public String getExpression() {
-        StringBuilder builder = new StringBuilder();
-        
-        Iterator<IGroup> iterator = getChildren().iterator();
-        while (iterator.hasNext()) {
-            builder.append(getChildrenExpression(iterator.next()));
-            
-            if (iterator.hasNext()) {
-                builder.append(" " + getExpressionOperator() + " ");
-            }
-        }
-        
-        return builder.toString();
+	StringBuilder builder = new StringBuilder();
+
+	Iterator<IGroup> iterator = getChildren().iterator();
+	while (iterator.hasNext()) {
+	    builder.append(getChildrenExpression(iterator.next()));
+
+	    if (iterator.hasNext()) {
+		builder.append(" " + getExpressionOperator() + " ");
+	    }
+	}
+
+	return builder.toString();
     }
 
     private String getChildrenExpression(IGroup group) {
-        if (group instanceof NodeGroup) {
-            return "(" + group.getExpression() + ")";
-        }
-        else {
-            return group.getExpression();
-        }
+	if (group instanceof NodeGroup) {
+	    return "(" + group.getExpression() + ")";
+	} else {
+	    return group.getExpression();
+	}
     }
 
     protected abstract String getExpressionOperator();
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[0];
+	return new Argument[0];
     }
 
 }

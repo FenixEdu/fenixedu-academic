@@ -28,85 +28,85 @@ public class UnavailablePeriodBean implements Serializable {
     private List<DomainReference<UnavailablePeriod>> unavailablePeriods = new ArrayList<DomainReference<UnavailablePeriod>>();;
 
     private DomainReference<VigilantGroup> selectedVigilantGroup;
-    
+
     private Integer idInternal;
 
     public UnavailablePeriodBean() {
-        setVigilant(null);
-        setCoordinator(null);
-        setSelectedVigilantGroup(null);
+	setVigilant(null);
+	setCoordinator(null);
+	setSelectedVigilantGroup(null);
     }
 
     public DateTime getBeginDate() {
-        return beginDate;
+	return beginDate;
     }
 
     public void setBeginDate(DateTime beginDate) {
-        this.beginDate = beginDate;
+	this.beginDate = beginDate;
     }
 
     public DateTime getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public void setEndDate(DateTime endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     public String getJustification() {
-        return justification;
+	return justification;
     }
 
     public void setJustification(String justification) {
-        this.justification = justification;
+	this.justification = justification;
     }
 
     public Vigilant getVigilant() {
-        return (this.vigilant != null) ? this.vigilant.getObject() : null;
+	return (this.vigilant != null) ? this.vigilant.getObject() : null;
     }
 
     public void setVigilant(Vigilant vigilant) {
-        this.vigilant = (vigilant != null) ? new DomainReference<Vigilant>(vigilant) : null;
+	this.vigilant = (vigilant != null) ? new DomainReference<Vigilant>(vigilant) : null;
     }
 
     public ExamCoordinator getCoordinator() {
-        return coordinator.getObject();
+	return coordinator.getObject();
     }
 
     public void setCoordinator(ExamCoordinator coordinator) {
-        this.coordinator = new DomainReference<ExamCoordinator>(coordinator);
+	this.coordinator = new DomainReference<ExamCoordinator>(coordinator);
     }
 
     public Integer getIdInternal() {
-        return idInternal;
+	return idInternal;
     }
 
     public void setIdInternal(Integer idInternal) {
-        this.idInternal = idInternal;
+	this.idInternal = idInternal;
     }
 
     public Collection getUnavailablePeriods() {
-        Collection periods = new ArrayList<UnavailablePeriod>();
-        for (DomainReference<UnavailablePeriod> unavailablePeriod : this.unavailablePeriods) {
-            if (unavailablePeriod != null)
-                periods.add(unavailablePeriod.getObject());
-        }
-        return periods;
+	Collection periods = new ArrayList<UnavailablePeriod>();
+	for (DomainReference<UnavailablePeriod> unavailablePeriod : this.unavailablePeriods) {
+	    if (unavailablePeriod != null)
+		periods.add(unavailablePeriod.getObject());
+	}
+	return periods;
     }
 
     public void setUnavailablePeriods(List<UnavailablePeriod> unavailablePeriods) {
-        for (UnavailablePeriod unavailablePeriod : unavailablePeriods) {
-            if (unavailablePeriod != null) {
-                this.unavailablePeriods.add(new DomainReference(unavailablePeriod));
-            }
-        }
+	for (UnavailablePeriod unavailablePeriod : unavailablePeriods) {
+	    if (unavailablePeriod != null) {
+		this.unavailablePeriods.add(new DomainReference(unavailablePeriod));
+	    }
+	}
     }
 
     public VigilantGroup getSelectedVigilantGroup() {
-    	return this.selectedVigilantGroup.getObject();
+	return this.selectedVigilantGroup.getObject();
     }
-    
+
     public void setSelectedVigilantGroup(VigilantGroup group) {
-    	this.selectedVigilantGroup = new DomainReference<VigilantGroup>(group);
+	this.selectedVigilantGroup = new DomainReference<VigilantGroup>(group);
     }
 }

@@ -24,8 +24,8 @@ import org.joda.time.Days;
 
 public class ResidencePR extends ResidencePR_Base {
 
-    public ResidencePR(final DateTime startDate, final DateTime endDate,
-	    final ServiceAgreementTemplate serviceAgreementTemplate, Money penaltyPerDay) {
+    public ResidencePR(final DateTime startDate, final DateTime endDate, final ServiceAgreementTemplate serviceAgreementTemplate,
+	    Money penaltyPerDay) {
 	super.init(EntryType.RESIDENCE_FEE, EventType.RESIDENCE_PAYMENT, startDate, endDate, serviceAgreementTemplate);
 	setPenaltyPerDay(penaltyPerDay);
     }
@@ -45,13 +45,13 @@ public class ResidencePR extends ResidencePR_Base {
 	    return baseValue;
 	}
 	return baseValue.add(getPenaltyPerDay().multiply(
-		BigDecimal.valueOf(Days.daysBetween(residenceEvent.getPaymentLimitDate(),when).getDays())));
+		BigDecimal.valueOf(Days.daysBetween(residenceEvent.getPaymentLimitDate(), when).getDays())));
     }
 
     @Override
     protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-	
+
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.accounting.postingRules.residencePR.invalid.number.of.entryDTOs");
 	}

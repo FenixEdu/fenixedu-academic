@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class InternalEnrolmentWrapper extends InternalEnrolmentWrapper_Base {
-    
+
     protected InternalEnrolmentWrapper() {
-        super();
+	super();
     }
-    
+
     protected InternalEnrolmentWrapper(final Credits credits, final Enrolment enrolment) {
 	this();
 	super.init(credits);
@@ -22,7 +22,7 @@ public class InternalEnrolmentWrapper extends InternalEnrolmentWrapper_Base {
 	}
 	super.setEnrolment(enrolment);
     }
-    
+
     @Override
     public void setEnrolment(Enrolment enrolment) {
 	throw new RuntimeException("error.EnrolmentWrapper.cannot.modify.enrolment");
@@ -32,10 +32,10 @@ public class InternalEnrolmentWrapper extends InternalEnrolmentWrapper_Base {
     public IEnrolment getIEnrolment() {
 	return getEnrolment();
     }
-    
+
     @Override
     public void delete() {
-        super.setEnrolment(null);
-        super.delete();
+	super.setEnrolment(null);
+	super.delete();
     }
 }

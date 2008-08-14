@@ -15,17 +15,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExternalPersonByID extends Service {
 
-    public Object run(Integer externalPersonID) throws FenixServiceException{
-        InfoExternalPerson infoExternalPerson = null;
-        ExternalContract externalPerson = null;
+    public Object run(Integer externalPersonID) throws FenixServiceException {
+	InfoExternalPerson infoExternalPerson = null;
+	ExternalContract externalPerson = null;
 
-        externalPerson = (ExternalContract) rootDomainObject.readAccountabilityByOID(externalPersonID);
-        if (externalPerson == null)
-            throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
+	externalPerson = (ExternalContract) rootDomainObject.readAccountabilityByOID(externalPersonID);
+	if (externalPerson == null)
+	    throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
 
-        infoExternalPerson = InfoExternalPerson.newInfoFromDomain(externalPerson);
+	infoExternalPerson = InfoExternalPerson.newInfoFromDomain(externalPerson);
 
-        return infoExternalPerson;
+	return infoExternalPerson;
     }
-    
+
 }

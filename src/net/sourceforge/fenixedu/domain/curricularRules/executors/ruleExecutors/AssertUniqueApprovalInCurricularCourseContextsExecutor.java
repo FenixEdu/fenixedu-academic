@@ -56,7 +56,8 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
 			curricularCourse.getName());
 	    }
 
-	} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
+	} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionSemester
+		.getPreviousExecutionPeriod())) {
 	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
 
 	} else {

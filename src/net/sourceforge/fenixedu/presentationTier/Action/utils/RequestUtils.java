@@ -112,12 +112,12 @@ public class RequestUtils {
      * be used to force the user to login before a certain request is fulfilled.
      * 
      * @param request
-     *                the current request
+     *            the current request
      * @param response
-     *                the reponse were the redirect will be sent
+     *            the reponse were the redirect will be sent
      * 
      * @throws IOException
-     *                 when it's not possible to send the redirect to the client
+     *             when it's not possible to send the redirect to the client
      */
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	final String uri = request.getRequestURI();

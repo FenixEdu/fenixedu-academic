@@ -329,7 +329,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public void createNoCourseGroupCurriculumGroupEnrolment(final StudentCurricularPlan studentCurricularPlan,
 	    final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
 	    final NoCourseGroupCurriculumGroupType groupType) {
-	
+
 	CurriculumGroup extraCurricularGroup = getNoCourseGroupCurriculumGroup(groupType);
 	if (extraCurricularGroup == null) {
 	    extraCurricularGroup = NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, this);

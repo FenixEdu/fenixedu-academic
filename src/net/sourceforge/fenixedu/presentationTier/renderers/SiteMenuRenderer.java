@@ -34,10 +34,10 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * {@link net.sourceforge.fenixedu.domain.Site} as a menu. It uses all the
  * sections defined in the site and it's template to generate the menu and
  * expands some sections if they were selected. The renderer uses parameters to
- * interact with the environment, so some parameters like <tt>sectionID</tt>
- * are appended automatically and others, like the one indicated by
- * {@link #setContextParam(String)}, are appened to mantain the required
- * context for the target site.
+ * interact with the environment, so some parameters like <tt>sectionID</tt> are
+ * appended automatically and others, like the one indicated by
+ * {@link #setContextParam(String)}, are appened to mantain the required context
+ * for the target site.
  */
 public class SiteMenuRenderer extends OutputRenderer {
 
@@ -52,7 +52,7 @@ public class SiteMenuRenderer extends OutputRenderer {
     private String empty;
 
     private String depthStyle;
-    
+
     public SiteMenuRenderer() {
 	super();
 
@@ -61,11 +61,11 @@ public class SiteMenuRenderer extends OutputRenderer {
     }
 
     public String getDepthStyle() {
-        return depthStyle;
+	return depthStyle;
     }
 
     public void setDepthStyle(String depthStyle) {
-        this.depthStyle = depthStyle;
+	this.depthStyle = depthStyle;
     }
 
     public boolean isContextRelative() {
@@ -73,12 +73,12 @@ public class SiteMenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Indicates that the url for the sections ir not relative to the
-         * applications context. This can be usefull to redirect to another
-         * application or the remove dependencies on Struts.
-         * 
-         * @property
-         */
+     * Indicates that the url for the sections ir not relative to the
+     * applications context. This can be usefull to redirect to another
+     * application or the remove dependencies on Struts.
+     * 
+     * @property
+     */
     public void setContextRelative(boolean contextRelative) {
 	this.contextRelative = contextRelative;
     }
@@ -88,10 +88,10 @@ public class SiteMenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Indicates that the link for sections is not relative to the module.
-         * 
-         * @property
-         */
+     * Indicates that the link for sections is not relative to the module.
+     * 
+     * @property
+     */
     public void setModuleRelative(boolean moduleRelative) {
 	this.moduleRelative = moduleRelative;
     }
@@ -101,10 +101,10 @@ public class SiteMenuRenderer extends OutputRenderer {
     }
 
     /**
-         * The url of the action responsible for showing the section content.
-         * 
-         * @property
-         */
+     * The url of the action responsible for showing the section content.
+     * 
+     * @property
+     */
     public void setSectionUrl(String sectionUrl) {
 	this.sectionUrl = sectionUrl;
     }
@@ -114,10 +114,10 @@ public class SiteMenuRenderer extends OutputRenderer {
     }
 
     /**
-         * The name of the parameters that provides a context for this site.
-         * 
-         * @property
-         */
+     * The name of the parameters that provides a context for this site.
+     * 
+     * @property
+     */
     public void setContextParam(String contextParam) {
 	this.contextParam = contextParam;
     }
@@ -127,11 +127,10 @@ public class SiteMenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Decides what to show when there are no sections to include in the
-         * menu.
-         * 
-         * @property
-         */
+     * Decides what to show when there are no sections to include in the menu.
+     * 
+     * @property
+     */
     public void setEmpty(String empty) {
 	this.empty = empty;
     }
@@ -178,22 +177,22 @@ public class SiteMenuRenderer extends OutputRenderer {
 		    if (!(content instanceof Item || content instanceof Forum || content instanceof Attachment)) {
 			HtmlListItem item = list.createItem();
 			item.addChild(generateComponent(context, content, true));
-			if(depth>0) {
+			if (depth > 0) {
 			    item.setStyle(getDepthStyle());
 			}
-			
+
 			if (allowsSubMenus() && isSelectedContent(content, context) && !entry.getChildren().isEmpty()) {
 			    HtmlList subMenu = new HtmlList();
 			    item.addChild(subMenu);
-			    createList(subMenu, context, entry.getChildren(),depth+1);
+			    createList(subMenu, context, entry.getChildren(), depth + 1);
 			}
 		    }
 		}
 	    }
 
 	    private HtmlLink generateLink(final String url, final HtmlComponent body, final boolean isPublic) {
-		final String preapendedComment = isPublic ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX :
-		    	ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		final String preapendedComment = isPublic ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+			: ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
 		HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
 
 		link.setContextRelative(false);
@@ -267,7 +266,7 @@ public class SiteMenuRenderer extends OutputRenderer {
     protected boolean allowsSubMenus() {
 	return true;
     }
-    
+
     private List<String> subPath(Container start, Content end) {
 	List<Content> contents = start.getPathTo(end);
 	List<String> subPaths = new ArrayList<String>();

@@ -12,20 +12,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadInterminatedCurricularCourseScopes extends Service {
 
-	public List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException{
-		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
-		
-        List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getInterminatedScopes();
-		if (curricularCourseScopes == null || curricularCourseScopes.isEmpty()) {
-            return new ArrayList<InfoCurricularCourseScope>();
-        }
+    public List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException {
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
-		List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>(curricularCourseScopes.size());
-		for (CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-            result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-        }
-
-		return result;
+	List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getInterminatedScopes();
+	if (curricularCourseScopes == null || curricularCourseScopes.isEmpty()) {
+	    return new ArrayList<InfoCurricularCourseScope>();
 	}
+
+	List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>(curricularCourseScopes.size());
+	for (CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+	    result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+	}
+
+	return result;
+    }
 
 }

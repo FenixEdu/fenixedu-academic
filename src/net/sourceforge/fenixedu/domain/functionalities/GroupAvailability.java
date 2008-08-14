@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 public class GroupAvailability extends GroupAvailability_Base {
 
     protected GroupAvailability() {
-        super();
+	super();
     }
 
     /**
-     * Creates a <code>GroupAvailability</code> to the given accessible item that relies on
-     * the given group to determine the availability
+     * Creates a <code>GroupAvailability</code> to the given accessible item
+     * that relies on the given group to determine the availability
      * 
      * @param item
      *            the target item
@@ -30,16 +30,16 @@ public class GroupAvailability extends GroupAvailability_Base {
      *                when the expression is not correct
      */
     public GroupAvailability(Content content, Group group) {
-        super();
+	super();
 
-        setContent(content);
-        setTargetGroup(group);
+	setContent(content);
+	setTargetGroup(group);
     }
 
     /**
-     * Delegates the availability to the group obtained with {@link #getGroup()}.
-     * The functionality is available if the group allows the <tt>UserView</tt>
-     * specified in the context.
+     * Delegates the availability to the group obtained with {@link #getGroup()}
+     * . The functionality is available if the group allows the
+     * <tt>UserView</tt> specified in the context.
      * 
      * @return <code>getGroup().allows(context.getUserView())</code>
      * 
@@ -50,17 +50,15 @@ public class GroupAvailability extends GroupAvailability_Base {
      */
     @Override
     public boolean isAvailable(FunctionalityContext context) {
-        try {
-            return getTargetGroup().allows(context.getUserView());
-        } catch (GroupDynamicExpressionException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new GroupDynamicExpressionException(e,
-                    "accessControl.group.expression.evaluation.error");
-        }
+	try {
+	    return getTargetGroup().allows(context.getUserView());
+	} catch (GroupDynamicExpressionException e) {
+	    throw e;
+	} catch (Exception e) {
+	    throw new GroupDynamicExpressionException(e, "accessControl.group.expression.evaluation.error");
+	}
     }
-    
-    
+
     public String getExpression() {
 	return getTargetGroup().getExpression();
     }

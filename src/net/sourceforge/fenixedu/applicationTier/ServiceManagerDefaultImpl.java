@@ -46,22 +46,22 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
 
     private static FastHashMap mapUsersToWatch;
 
-    private static final Map<String,String> KNOWN_WRITE_SERVICES = new ConcurrentHashMap<String,String>();
+    private static final Map<String, String> KNOWN_WRITE_SERVICES = new ConcurrentHashMap<String, String>();
 
     static {
-        serviceLoggingIsOn = false;
-        mapServicesToWatch = new FastHashMap();
-        mapServicesToWatch.setFast(true);
+	serviceLoggingIsOn = false;
+	mapServicesToWatch = new FastHashMap();
+	mapServicesToWatch.setFast(true);
 
-        userLoggingIsOn = false;
-        mapUsersToWatch = new FastHashMap();
-        mapUsersToWatch.setFast(true);
+	userLoggingIsOn = false;
+	mapUsersToWatch = new FastHashMap();
+	mapUsersToWatch.setFast(true);
     }
 
     public class ExceptionWrapper extends RuntimeException {
-        public ExceptionWrapper(Throwable t) {
-            super(t);
-        }
+	public ExceptionWrapper(Throwable t) {
+	    super(t);
+	}
     }
 
     /**
@@ -76,223 +76,225 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
      * 
      * @param argumentos
      *            is a vector with the arguments of the service to execute.
-     * @throws FenixFilterException 
+     * @throws FenixFilterException
      * 
      */
-    public Object execute(IUserView id, String service, Object args[])
-            throws FenixServiceException, FenixFilterException {
-        return execute(id, service, "run", args);
+    public Object execute(IUserView id, String service, Object args[]) throws FenixServiceException, FenixFilterException {
+	return execute(id, service, "run", args);
     }
 
-    public Object execute(IUserView id, String service, String method, Object[] args)
-            throws FenixServiceException, FenixFilterException {
-        try {
-            Calendar serviceStartTime = null;
-            Calendar serviceEndTime = null;
+    public Object execute(IUserView id, String service, String method, Object[] args) throws FenixServiceException,
+	    FenixFilterException {
+	try {
+	    Calendar serviceStartTime = null;
+	    Calendar serviceEndTime = null;
 
-            IServiceManager manager = ServiceManager.getInstance();
-            if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
-                serviceStartTime = Calendar.getInstance();
-            }
+	    IServiceManager manager = ServiceManager.getInstance();
+	    if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
+		serviceStartTime = Calendar.getInstance();
+	    }
 
-            // Replace this line with the following block if conflicting
-            // transactions should restart automatically
-            // Object serviceResult = manager.execute(id, service, method,
-            // args);
+	    // Replace this line with the following block if conflicting
+	    // transactions should restart automatically
+	    // Object serviceResult = manager.execute(id, service, method,
+	    // args);
 
-            final String username = id != null ? id.getUtilizador() : null;
-            ServiceInfo.setCurrentServiceInfo(username, service, args);
+	    final String username = id != null ? id.getUtilizador() : null;
+	    ServiceInfo.setCurrentServiceInfo(username, service, args);
 
-            // try read-only transaction first, but only for non-public sessions...
-            Transaction.setDefaultReadOnly(! KNOWN_WRITE_SERVICES.containsKey(service));
+	    // try read-only transaction first, but only for non-public
+	    // sessions...
+	    Transaction.setDefaultReadOnly(!KNOWN_WRITE_SERVICES.containsKey(service));
 
-            Object serviceResult = null;
-            int tries = 0;
-            try {
-                while (true) {
-                    tries++;
-                    try {
-                        serviceResult = manager.execute(id, service, method, args);
-                        break;
-                    } catch (jvstm.CommitException ce) {
-                        //                    ce.printStackTrace();
-                        if (LogLevel.INFO) {
-                            System.out.println("Restarting TX because of CommitException");
-                        }
-                        // repeat service
-                        if (tries > 3) {
-                            System.out.println("Service " + service + " has been restarted " + tries + " times because of CommitException.");
-                        }
-                    } catch (DomainObject.UnableToDetermineIdException ce) {
-                        //                    ce.printStackTrace();
-                        if (LogLevel.INFO) {
-                            System.out.println("Restarting TX because of UnableToDetermineIdException");
-                        }
-                        // repeat service
-                        if (tries > 3) {
-                            System.out.println("Service " + service + " has been restarted " + tries + " times because of UnableToDetermineIdException.");
-                        }
-                    } catch (IllegalWriteException iwe) {
-                        KNOWN_WRITE_SERVICES.put(service, service);
-                        Transaction.setDefaultReadOnly(false);
-                        // repeat service
-                        if (tries > 3) {
-                            System.out.println("Service " + service + " has been restarted " + tries + " times because of IllegalWriteException.");
-                        }
-                    }
-                }
-            } finally {
-                Transaction.setDefaultReadOnly(false);
-                if (LogLevel.INFO) {
-                    if (tries > 1) {
-                        System.out.println("Service " + service + " took " + tries + " tries.");
-                    }
-                }
-            }
+	    Object serviceResult = null;
+	    int tries = 0;
+	    try {
+		while (true) {
+		    tries++;
+		    try {
+			serviceResult = manager.execute(id, service, method, args);
+			break;
+		    } catch (jvstm.CommitException ce) {
+			// ce.printStackTrace();
+			if (LogLevel.INFO) {
+			    System.out.println("Restarting TX because of CommitException");
+			}
+			// repeat service
+			if (tries > 3) {
+			    System.out.println("Service " + service + " has been restarted " + tries
+				    + " times because of CommitException.");
+			}
+		    } catch (DomainObject.UnableToDetermineIdException ce) {
+			// ce.printStackTrace();
+			if (LogLevel.INFO) {
+			    System.out.println("Restarting TX because of UnableToDetermineIdException");
+			}
+			// repeat service
+			if (tries > 3) {
+			    System.out.println("Service " + service + " has been restarted " + tries
+				    + " times because of UnableToDetermineIdException.");
+			}
+		    } catch (IllegalWriteException iwe) {
+			KNOWN_WRITE_SERVICES.put(service, service);
+			Transaction.setDefaultReadOnly(false);
+			// repeat service
+			if (tries > 3) {
+			    System.out.println("Service " + service + " has been restarted " + tries
+				    + " times because of IllegalWriteException.");
+			}
+		    }
+		}
+	    } finally {
+		Transaction.setDefaultReadOnly(false);
+		if (LogLevel.INFO) {
+		    if (tries > 1) {
+			System.out.println("Service " + service + " took " + tries + " tries.");
+		    }
+		}
+	    }
 
-            if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
-                serviceEndTime = Calendar.getInstance();
-            }
-            if (serviceLoggingIsOn && serviceStartTime != null && serviceEndTime != null) {
-                registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
-            }
-            if (userLoggingIsOn && id != null && serviceStartTime != null && serviceEndTime != null) {
-                registerUserExecutionOfService(id, service, method, args, serviceStartTime,
-                        serviceEndTime);
-            }
+	    if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
+		serviceEndTime = Calendar.getInstance();
+	    }
+	    if (serviceLoggingIsOn && serviceStartTime != null && serviceEndTime != null) {
+		registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
+	    }
+	    if (userLoggingIsOn && id != null && serviceStartTime != null && serviceEndTime != null) {
+		registerUserExecutionOfService(id, service, method, args, serviceStartTime, serviceEndTime);
+	    }
 
-            return serviceResult;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        } catch (InvalidServiceException e) {
-            throw new FenixServiceException(e);
-        } catch (FilterRetrieveException e) {
-            throw new FenixServiceException(e);
-        } catch (InvalidFilterExpressionException e) {
-            throw new FenixServiceException(e);
-        } catch (InvalidFilterException e) {
-            throw new FenixServiceException(e);
-        } catch (ClassNotIFilterException e) {
-            throw new FenixServiceException(e);
-        } catch (IncompatibleFilterException e) {
-            throw new FenixServiceException(e);
-        } catch (FilterChainFailedException e) {
-            FilterChainFailedException filterChainFailedException = (FilterChainFailedException) e;
-            Map failedPreFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.PRE);
-            Map failedPostFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.POST);
-            if (failedPreFilters != null && !failedPreFilters.isEmpty()) {
-        	for (List failledExceptions : (Collection<List>) failedPreFilters.values()) {
-        	    if (!failledExceptions.isEmpty()) {
-        		throw (FenixFilterException) failledExceptions.get(0);
-        	    }
-        	}
-            }
-            if (failedPostFilters != null && !failedPostFilters.isEmpty()) {
-        	for (List failledExceptions : (Collection<List>) failedPostFilters.values()) {
-        	    if (!failledExceptions.isEmpty()) {
-        		throw (FenixFilterException) failledExceptions.get(0);
-        	    }
-        	}
-            }
-            throw new FenixServiceException(e);
-        } catch (ServiceManagerException e) {
-            throw new ExceptionWrapper(e);
-        } catch (Throwable t) {
-            if (LogLevel.WARN) {
-        	t.printStackTrace();
-            }
-            throw new ExceptionWrapper(t);
-        }
+	    return serviceResult;
+	} catch (ExcepcaoPersistencia e) {
+	    throw new FenixServiceException(e);
+	} catch (InvalidServiceException e) {
+	    throw new FenixServiceException(e);
+	} catch (FilterRetrieveException e) {
+	    throw new FenixServiceException(e);
+	} catch (InvalidFilterExpressionException e) {
+	    throw new FenixServiceException(e);
+	} catch (InvalidFilterException e) {
+	    throw new FenixServiceException(e);
+	} catch (ClassNotIFilterException e) {
+	    throw new FenixServiceException(e);
+	} catch (IncompatibleFilterException e) {
+	    throw new FenixServiceException(e);
+	} catch (FilterChainFailedException e) {
+	    FilterChainFailedException filterChainFailedException = (FilterChainFailedException) e;
+	    Map failedPreFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.PRE);
+	    Map failedPostFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.POST);
+	    if (failedPreFilters != null && !failedPreFilters.isEmpty()) {
+		for (List failledExceptions : (Collection<List>) failedPreFilters.values()) {
+		    if (!failledExceptions.isEmpty()) {
+			throw (FenixFilterException) failledExceptions.get(0);
+		    }
+		}
+	    }
+	    if (failedPostFilters != null && !failedPostFilters.isEmpty()) {
+		for (List failledExceptions : (Collection<List>) failedPostFilters.values()) {
+		    if (!failledExceptions.isEmpty()) {
+			throw (FenixFilterException) failledExceptions.get(0);
+		    }
+		}
+	    }
+	    throw new FenixServiceException(e);
+	} catch (ServiceManagerException e) {
+	    throw new ExceptionWrapper(e);
+	} catch (Throwable t) {
+	    if (LogLevel.WARN) {
+		t.printStackTrace();
+	    }
+	    throw new ExceptionWrapper(t);
+	}
     }
 
     public synchronized void turnServiceLoggingOn(IUserView id) {
-        serviceLoggingIsOn = true;
+	serviceLoggingIsOn = true;
     }
 
     public synchronized void turnServiceLoggingOff(IUserView id) {
-        serviceLoggingIsOn = false;
+	serviceLoggingIsOn = false;
     }
 
     public synchronized void clearServiceLogHistory(IUserView id) {
-        mapServicesToWatch.clear();
+	mapServicesToWatch.clear();
     }
 
     public synchronized void turnUserLoggingOn(IUserView id) {
-        userLoggingIsOn = true;
+	userLoggingIsOn = true;
     }
 
     public synchronized void turnUserLoggingOff(IUserView id) {
-        userLoggingIsOn = false;
+	userLoggingIsOn = false;
     }
 
     public synchronized void clearUserLogHistory(IUserView id) {
-        mapUsersToWatch.clear();
+	mapUsersToWatch.clear();
     }
 
-    private void registerServiceExecutionTime(String service, String method, Object[] args,
-            Calendar serviceStartTime, Calendar serviceEndTime) {
-        String hashKey = generateServiceHashKey(service, method, args);
-        long serviceExecutionTime = calculateServiceExecutionTime(serviceStartTime, serviceEndTime);
-        ServiceExecutionLog serviceExecutionLog = (ServiceExecutionLog) mapServicesToWatch.get(hashKey);
-        if (serviceExecutionLog == null) {
-            serviceExecutionLog = new ServiceExecutionLog(hashKey);
-            mapServicesToWatch.put(hashKey, serviceExecutionLog);
-        }
+    private void registerServiceExecutionTime(String service, String method, Object[] args, Calendar serviceStartTime,
+	    Calendar serviceEndTime) {
+	String hashKey = generateServiceHashKey(service, method, args);
+	long serviceExecutionTime = calculateServiceExecutionTime(serviceStartTime, serviceEndTime);
+	ServiceExecutionLog serviceExecutionLog = (ServiceExecutionLog) mapServicesToWatch.get(hashKey);
+	if (serviceExecutionLog == null) {
+	    serviceExecutionLog = new ServiceExecutionLog(hashKey);
+	    mapServicesToWatch.put(hashKey, serviceExecutionLog);
+	}
 
-        serviceExecutionLog.addExecutionTime(serviceExecutionTime);
+	serviceExecutionLog.addExecutionTime(serviceExecutionTime);
     }
 
-    private void registerUserExecutionOfService(IUserView id, String service, String method,
-            Object[] args, Calendar serviceStartTime, Calendar serviceEndTime) {
-        UserExecutionLog userExecutionLog = (UserExecutionLog) mapUsersToWatch.get(id.getUtilizador());
-        if (userExecutionLog == null) {
-            userExecutionLog = new UserExecutionLog(id);
-            mapUsersToWatch.put(id.getUtilizador(), userExecutionLog);
-        }
+    private void registerUserExecutionOfService(IUserView id, String service, String method, Object[] args,
+	    Calendar serviceStartTime, Calendar serviceEndTime) {
+	UserExecutionLog userExecutionLog = (UserExecutionLog) mapUsersToWatch.get(id.getUtilizador());
+	if (userExecutionLog == null) {
+	    userExecutionLog = new UserExecutionLog(id);
+	    mapUsersToWatch.put(id.getUtilizador(), userExecutionLog);
+	}
 
-        userExecutionLog.addServiceCall(generateServiceHashKey(service, method, args), serviceStartTime);
+	userExecutionLog.addServiceCall(generateServiceHashKey(service, method, args), serviceStartTime);
     }
 
     private long calculateServiceExecutionTime(Calendar serviceStartTime, Calendar serviceEndTime) {
-        return serviceEndTime.getTimeInMillis() - serviceStartTime.getTimeInMillis();
+	return serviceEndTime.getTimeInMillis() - serviceStartTime.getTimeInMillis();
     }
 
     private String generateServiceHashKey(String service, String method, Object[] args) {
-        String hashKey = service + "." + method + "(";
-        if (args != null) {
-            for (int i = 0; i < args.length; i++) {
-                if (args[i] != null) {
-                    hashKey += args[i].getClass().getName();
-                } else {
-                    hashKey += "null";
-                }
-                if (i + 1 < args.length) {
-                    hashKey += ", ";
-                }
-            }
-        }
-        hashKey += ")";
-        return hashKey;
+	String hashKey = service + "." + method + "(";
+	if (args != null) {
+	    for (int i = 0; i < args.length; i++) {
+		if (args[i] != null) {
+		    hashKey += args[i].getClass().getName();
+		} else {
+		    hashKey += "null";
+		}
+		if (i + 1 < args.length) {
+		    hashKey += ", ";
+		}
+	    }
+	}
+	hashKey += ")";
+	return hashKey;
     }
 
     public HashMap getMapServicesToWatch(IUserView id) {
-        return mapServicesToWatch;
+	return mapServicesToWatch;
     }
 
     public Boolean serviceLoggingIsOn(IUserView id) {
-        return new Boolean(serviceLoggingIsOn);
+	return new Boolean(serviceLoggingIsOn);
     }
 
     public HashMap getMapUsersToWatch(IUserView id) {
-        return mapUsersToWatch;
+	return mapUsersToWatch;
     }
 
     public Boolean userLoggingIsOn(IUserView id) {
-        return new Boolean(userLoggingIsOn);
+	return new Boolean(userLoggingIsOn);
     }
 
     public SystemInfo getSystemInfo(IUserView id) {
-        return new SystemInfo();
+	return new SystemInfo();
     }
 
 }

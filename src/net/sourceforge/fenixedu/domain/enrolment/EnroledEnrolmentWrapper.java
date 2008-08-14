@@ -19,7 +19,7 @@ public class EnroledEnrolmentWrapper extends EnroledCurriculumModuleWrapper {
     public Enrolment getCurriculumModule() {
 	return (Enrolment) super.getCurriculumModule();
     }
-    
+
     private boolean isApproved() {
 	return getCurriculumModule().isApproved();
     }
@@ -31,6 +31,6 @@ public class EnroledEnrolmentWrapper extends EnroledCurriculumModuleWrapper {
 
     @Override
     public boolean isDissertation() {
-        return getCurriculumModule().getDegreeModule().isDissertation();
+	return getCurriculumModule().getDegreeModule().isDissertation();
     }
 }

@@ -21,23 +21,22 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter {
 
     protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
-        InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoOject;
-        final Person person = id.getPerson();
-        final Teacher teacher = person == null ? null : person.getTeacher();
+	InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoOject;
+	final Person person = id.getPerson();
+	final Teacher teacher = person == null ? null : person.getTeacher();
 
-        boolean isNew = infoExternalActivity.getIdInternal() == null
-                || infoExternalActivity.getIdInternal().intValue() == 0;
-        if (isNew) {
-            return true;
-        }
+	boolean isNew = infoExternalActivity.getIdInternal() == null || infoExternalActivity.getIdInternal().intValue() == 0;
+	if (isNew) {
+	    return true;
+	}
 
-        final ExternalActivity externalActivity = rootDomainObject
-                .readExternalActivityByOID(infoExternalActivity.getIdInternal());
-        return externalActivity.getTeacher() == teacher;
+	final ExternalActivity externalActivity = rootDomainObject
+		.readExternalActivityByOID(infoExternalActivity.getIdInternal());
+	return externalActivity.getTeacher() == teacher;
     }
 
     protected RoleType getRoleType() {
-        return RoleType.TEACHER;
+	return RoleType.TEACHER;
     }
 
 }

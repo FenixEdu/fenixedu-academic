@@ -13,8 +13,7 @@ public abstract class GratuityLetterDTO implements Serializable {
 
     private ExecutionYear executionYear;
 
-    protected GratuityLetterDTO(final Person person, final ExecutionYear executionYear,
-	    final String entityCode) {
+    protected GratuityLetterDTO(final Person person, final ExecutionYear executionYear, final String entityCode) {
 	super();
 	setPerson(person);
 	setExecutionYear(executionYear);

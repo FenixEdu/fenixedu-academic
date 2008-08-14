@@ -19,8 +19,7 @@ import org.joda.time.YearMonthDay;
  */
 public class ListPayedInsurancesByDates extends Service {
 
-    public List<InsuranceTransaction> run(ExecutionYear executionYear, YearMonthDay beginDate,
-	    YearMonthDay endDate) {
+    public List<InsuranceTransaction> run(ExecutionYear executionYear, YearMonthDay beginDate, YearMonthDay endDate) {
 
 	List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
 
@@ -33,20 +32,16 @@ public class ListPayedInsurancesByDates extends Service {
 		    continue;
 		}
 
-		if (executionYear != null
-			&& !insuranceTransaction.getExecutionYear().equals(executionYear)) {
+		if (executionYear != null && !insuranceTransaction.getExecutionYear().equals(executionYear)) {
 		    continue;
 		}
 
 		if (beginDate != null
-			&& insuranceTransaction.getTransactionDateDateTime().isBefore(
-				beginDate.toDateTimeAtMidnight())) {
+			&& insuranceTransaction.getTransactionDateDateTime().isBefore(beginDate.toDateTimeAtMidnight())) {
 		    continue;
 		}
 
-		if (endDate != null
-			&& insuranceTransaction.getTransactionDateDateTime().isAfter(
-				endDate.toDateTimeAtMidnight())) {
+		if (endDate != null && insuranceTransaction.getTransactionDateDateTime().isAfter(endDate.toDateTimeAtMidnight())) {
 		    continue;
 		}
 

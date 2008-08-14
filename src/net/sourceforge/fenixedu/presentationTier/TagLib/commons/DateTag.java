@@ -15,7 +15,7 @@ import org.apache.struts.util.ResponseUtils;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class DateTag extends TagSupport {
 
@@ -25,7 +25,7 @@ public class DateTag extends TagSupport {
      *  
      */
     public DateTag() {
-        super();
+	super();
 
     }
 
@@ -33,42 +33,41 @@ public class DateTag extends TagSupport {
      * @return
      */
     public Calendar getDate() {
-        return date;
+	return date;
     }
 
     /**
      * @param calendar
      */
     public void setDate(Calendar calendar) {
-        date = calendar;
+	date = calendar;
     }
 
     public int doStartTag() throws JspException {
-        // Special case for name anchors
-        if (date != null) {
-            StringBuilder results = new StringBuilder("");
-            results.append(date.get(Calendar.DAY_OF_MONTH));
-            results.append("/");
-            results.append(date.get(Calendar.MONTH));
-            results.append("/");
-            results.append(date.get(Calendar.YEAR));
-            ResponseUtils.write(pageContext, results.toString());
+	// Special case for name anchors
+	if (date != null) {
+	    StringBuilder results = new StringBuilder("");
+	    results.append(date.get(Calendar.DAY_OF_MONTH));
+	    results.append("/");
+	    results.append(date.get(Calendar.MONTH));
+	    results.append("/");
+	    results.append(date.get(Calendar.YEAR));
+	    ResponseUtils.write(pageContext, results.toString());
 
-        }
+	}
 
-        return (SKIP_BODY);
+	return (SKIP_BODY);
     }
 
     public int doEndTag() {
-        return (EVAL_PAGE);
+	return (EVAL_PAGE);
     }
 
     public void release() {
-        super.release();
+	super.release();
     }
 
-    //	Error Messages
-    protected static MessageResources messages = MessageResources
-            .getMessageResources("ApplicationResources");
+    // Error Messages
+    protected static MessageResources messages = MessageResources.getMessageResources("ApplicationResources");
 
 }

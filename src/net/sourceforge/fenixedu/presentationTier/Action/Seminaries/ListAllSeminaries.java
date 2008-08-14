@@ -27,50 +27,49 @@ import org.apache.struts.action.ActionMapping;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 31/Jul/2003, 16:04:48
- *  
+ *         Created at 31/Jul/2003, 16:04:48
+ * 
  */
 public class ListAllSeminaries extends FenixAction {
-    public List setCurrentCandidaciesInfo(ActionMapping mapping, HttpServletRequest request,
-            IUserView userView) throws FenixActionException {
-        List currentCandidacies = null;
-        try {
-            Object[] argsReadCandidacies = { userView.getPerson() };
-            currentCandidacies = (List) ServiceManagerServiceFactory.executeService(
-                    "Seminaries.GetCandidaciesByStudentID", argsReadCandidacies);
-        } catch (Exception e) {
-            throw new FenixActionException(e);
-        }
-        return currentCandidacies;
+    public List setCurrentCandidaciesInfo(ActionMapping mapping, HttpServletRequest request, IUserView userView)
+	    throws FenixActionException {
+	List currentCandidacies = null;
+	try {
+	    Object[] argsReadCandidacies = { userView.getPerson() };
+	    currentCandidacies = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetCandidaciesByStudentID",
+		    argsReadCandidacies);
+	} catch (Exception e) {
+	    throw new FenixActionException(e);
+	}
+	return currentCandidacies;
 
     }
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
-        List seminaries = null;
-        ActionForward destiny = null;
-        List currentCandidacies = setCurrentCandidaciesInfo(mapping, request, userView);
-        List candidaciesToDisplay = new LinkedList();
-        try {
-            Object[] args = { new Boolean(true) };
-            seminaries = (List) ServiceManagerServiceFactory.executeService(
-                    "Seminaries.GetAllSeminaries", args);
-            for (Iterator iter = currentCandidacies.iterator(); iter.hasNext();) {
-                InfoCandidacy infoCandidacy = (InfoCandidacy) iter.next();
-                Integer seminaryID = infoCandidacy.getInfoSeminary().getIdInternal();
-                for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {
-                    InfoSeminaryWithEquivalencies infoSeminary = (InfoSeminaryWithEquivalencies) iterator.next();
-                    if (infoSeminary.getIdInternal().equals(seminaryID))
-                        candidaciesToDisplay.add(infoCandidacy);
-                }
-            }
-        } catch (Exception e) {
-            throw new FenixActionException(e);
-        }
-        request.setAttribute("currentCandidacies", candidaciesToDisplay);
-        destiny = mapping.findForward("listSeminaries");
-        request.setAttribute("seminaries", seminaries);
-        return destiny;
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException {
+	IUserView userView = getUserView(request);
+	List seminaries = null;
+	ActionForward destiny = null;
+	List currentCandidacies = setCurrentCandidaciesInfo(mapping, request, userView);
+	List candidaciesToDisplay = new LinkedList();
+	try {
+	    Object[] args = { new Boolean(true) };
+	    seminaries = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetAllSeminaries", args);
+	    for (Iterator iter = currentCandidacies.iterator(); iter.hasNext();) {
+		InfoCandidacy infoCandidacy = (InfoCandidacy) iter.next();
+		Integer seminaryID = infoCandidacy.getInfoSeminary().getIdInternal();
+		for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {
+		    InfoSeminaryWithEquivalencies infoSeminary = (InfoSeminaryWithEquivalencies) iterator.next();
+		    if (infoSeminary.getIdInternal().equals(seminaryID))
+			candidaciesToDisplay.add(infoCandidacy);
+		}
+	    }
+	} catch (Exception e) {
+	    throw new FenixActionException(e);
+	}
+	request.setAttribute("currentCandidacies", candidaciesToDisplay);
+	destiny = mapping.findForward("listSeminaries");
+	request.setAttribute("seminaries", seminaries);
+	return destiny;
     }
 }

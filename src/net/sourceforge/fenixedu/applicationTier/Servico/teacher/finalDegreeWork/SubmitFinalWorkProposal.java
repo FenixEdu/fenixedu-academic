@@ -22,74 +22,74 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class SubmitFinalWorkProposal extends Service {
 
-    public void run(InfoProposalEditor infoProposal) throws FenixServiceException{
-        Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+    public void run(InfoProposalEditor infoProposal) throws FenixServiceException {
+	Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 
-        Scheduleing scheduleing = executionDegree.getScheduling();
-        if (scheduleing == null) {
-            throw new OutOfPeriodException(null, null, null);
-        }
+	Scheduleing scheduleing = executionDegree.getScheduling();
+	if (scheduleing == null) {
+	    throw new OutOfPeriodException(null, null, null);
+	}
 
-        Proposal proposal = null;
-        if (infoProposal.getIdInternal() != null) {
-            proposal = rootDomainObject.readProposalByOID(infoProposal.getIdInternal());
-        }
-        if (proposal == null) {
-            proposal = new Proposal();
-            int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
-            proposal.setProposalNumber(proposalNumber);
-            scheduleing.setCurrentProposalNumber(proposalNumber + 1);
-        }
+	Proposal proposal = null;
+	if (infoProposal.getIdInternal() != null) {
+	    proposal = rootDomainObject.readProposalByOID(infoProposal.getIdInternal());
+	}
+	if (proposal == null) {
+	    proposal = new Proposal();
+	    int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
+	    proposal.setProposalNumber(proposalNumber);
+	    scheduleing.setCurrentProposalNumber(proposalNumber + 1);
+	}
 
-        proposal.setCompanionName(infoProposal.getCompanionName());
-        proposal.setCompanionMail(infoProposal.getCompanionMail());
-        proposal.setCompanionPhone(infoProposal.getCompanionPhone());
-        proposal.setCompanyAdress(infoProposal.getCompanyAdress());
-        proposal.setCompanyName(infoProposal.getCompanyName());
+	proposal.setCompanionName(infoProposal.getCompanionName());
+	proposal.setCompanionMail(infoProposal.getCompanionMail());
+	proposal.setCompanionPhone(infoProposal.getCompanionPhone());
+	proposal.setCompanyAdress(infoProposal.getCompanyAdress());
+	proposal.setCompanyName(infoProposal.getCompanyName());
 
-        if (infoProposal.getCoorientator() != null) {
-            Person coorientator = infoProposal.getCoorientator().getPerson();
-            proposal.setCoorientator(coorientator);
-        } else {
-            proposal.setCoorientator(null);
-        }
+	if (infoProposal.getCoorientator() != null) {
+	    Person coorientator = infoProposal.getCoorientator().getPerson();
+	    proposal.setCoorientator(coorientator);
+	} else {
+	    proposal.setCoorientator(null);
+	}
 
-        proposal.setCoorientatorsCreditsPercentage(infoProposal.getCoorientatorsCreditsPercentage());
-        proposal.setDegreeType(infoProposal.getDegreeType());
-        proposal.setDeliverable(infoProposal.getDeliverable());
-        proposal.setDescription(infoProposal.getDescription());
+	proposal.setCoorientatorsCreditsPercentage(infoProposal.getCoorientatorsCreditsPercentage());
+	proposal.setDegreeType(infoProposal.getDegreeType());
+	proposal.setDeliverable(infoProposal.getDeliverable());
+	proposal.setDescription(infoProposal.getDescription());
 
-        proposal.setScheduleing(executionDegree.getScheduling());
-        proposal.setFraming(infoProposal.getFraming());
-        proposal.setLocation(infoProposal.getLocation());
+	proposal.setScheduleing(executionDegree.getScheduling());
+	proposal.setFraming(infoProposal.getFraming());
+	proposal.setLocation(infoProposal.getLocation());
 
-        proposal.setMaximumNumberOfGroupElements(infoProposal.getMaximumNumberOfGroupElements());
-        proposal.setMinimumNumberOfGroupElements(infoProposal.getMinimumNumberOfGroupElements());
-        proposal.setObjectives(infoProposal.getObjectives());
-        proposal.setObservations(infoProposal.getObservations());
+	proposal.setMaximumNumberOfGroupElements(infoProposal.getMaximumNumberOfGroupElements());
+	proposal.setMinimumNumberOfGroupElements(infoProposal.getMinimumNumberOfGroupElements());
+	proposal.setObjectives(infoProposal.getObjectives());
+	proposal.setObservations(infoProposal.getObservations());
 
-        Person orientator = infoProposal.getOrientator().getPerson();
+	Person orientator = infoProposal.getOrientator().getPerson();
 
-        proposal.setOrientator(orientator);
-        proposal.setOrientatorsCreditsPercentage(infoProposal.getOrientatorsCreditsPercentage());
-        proposal.setRequirements(infoProposal.getRequirements());
-        proposal.setTitle(infoProposal.getTitle());
-        proposal.setUrl(infoProposal.getUrl());
+	proposal.setOrientator(orientator);
+	proposal.setOrientatorsCreditsPercentage(infoProposal.getOrientatorsCreditsPercentage());
+	proposal.setRequirements(infoProposal.getRequirements());
+	proposal.setTitle(infoProposal.getTitle());
+	proposal.setUrl(infoProposal.getUrl());
 
-        proposal.getBranches().clear();
-        if (infoProposal.getBranches() != null && !infoProposal.getBranches().isEmpty()) {
-            for (int i = 0; i < infoProposal.getBranches().size(); i++) {
-                InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
-                if (infoBranch != null && infoBranch.getIdInternal() != null) {
-                    Branch branch = rootDomainObject.readBranchByOID(infoBranch.getIdInternal());
-                    if (branch != null) {
-                        proposal.getBranches().add(branch);
-                    }
-                }
-            }
-        }
+	proposal.getBranches().clear();
+	if (infoProposal.getBranches() != null && !infoProposal.getBranches().isEmpty()) {
+	    for (int i = 0; i < infoProposal.getBranches().size(); i++) {
+		InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
+		if (infoBranch != null && infoBranch.getIdInternal() != null) {
+		    Branch branch = rootDomainObject.readBranchByOID(infoBranch.getIdInternal());
+		    if (branch != null) {
+			proposal.getBranches().add(branch);
+		    }
+		}
+	    }
+	}
 
-        proposal.setStatus(infoProposal.getStatus());
+	proposal.setStatus(infoProposal.getStatus());
     }
 }

@@ -37,7 +37,7 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      * @return Returns the infoCredits.
      */
     public InfoCredits getInfoCredits() {
-        return infoCredits;
+	return infoCredits;
     }
 
     /**
@@ -45,14 +45,14 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      *            The infoCredits to set.
      */
     public void setInfoCredits(InfoCredits infoCredits) {
-        this.infoCredits = infoCredits;
+	this.infoCredits = infoCredits;
     }
 
     /**
      * @return Returns the infoExecution.
      */
     public InfoExecutionPeriod getInfoExecution() {
-        return infoExecution;
+	return infoExecution;
     }
 
     /**
@@ -60,14 +60,14 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      *            The infoExecution to set.
      */
     public void setInfoExecution(InfoExecutionPeriod infoExecution) {
-        this.infoExecution = infoExecution;
+	this.infoExecution = infoExecution;
     }
 
     /**
      * @return Returns the teacherCategory.
      */
     public InfoCategory getCategory() {
-        return category;
+	return category;
     }
 
     /**
@@ -75,14 +75,14 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      *            The teacherCategory to set.
      */
     public void setCategory(InfoCategory teacherCategory) {
-        this.category = teacherCategory;
+	this.category = teacherCategory;
     }
 
     /**
      * @return Returns the teacherId.
      */
     public Integer getTeacherId() {
-        return teacherId;
+	return teacherId;
     }
 
     /**
@@ -90,14 +90,14 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      *            The teacherId to set.
      */
     public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
+	this.teacherId = teacherId;
     }
 
     /**
      * @return Returns the teacherName.
      */
     public String getTeacherName() {
-        return teacherName;
+	return teacherName;
     }
 
     /**
@@ -105,14 +105,14 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      *            The teacherName to set.
      */
     public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+	this.teacherName = teacherName;
     }
 
     /**
      * @return Returns the teacherNumber.
      */
     public Integer getTeacherNumber() {
-        return teacherNumber;
+	return teacherNumber;
     }
 
     /**
@@ -120,6 +120,6 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      *            The teacherNumber to set.
      */
     public void setTeacherNumber(Integer teacherNumber) {
-        this.teacherNumber = teacherNumber;
+	this.teacherNumber = teacherNumber;
     }
 }

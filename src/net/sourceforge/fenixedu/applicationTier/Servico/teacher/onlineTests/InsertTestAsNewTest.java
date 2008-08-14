@@ -16,27 +16,27 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InsertTestAsNewTest extends Service {
 
-    public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException{
-        Test oldTest = rootDomainObject.readTestByOID(oldTestId);
-        if (oldTest == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-        
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
-        String title=MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() });
-        Test test =new Test(title, oldTest.getInformation(), oldTest.getTestScope());
+    public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException {
+	Test oldTest = rootDomainObject.readTestByOID(oldTestId);
+	if (oldTest == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        List<TestQuestion> testQuestionList = oldTest.getTestQuestions();
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+	String title = MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() });
+	Test test = new Test(title, oldTest.getInformation(), oldTest.getTestScope());
 
-        for (TestQuestion testQuestion : testQuestionList) {
-            TestQuestion newTestQuestion = new TestQuestion();
-            newTestQuestion.setQuestion(testQuestion.getQuestion());
-            newTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
-            newTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
-            newTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
-            newTestQuestion.setTest(test);
-        }
-        return test.getIdInternal();
+	List<TestQuestion> testQuestionList = oldTest.getTestQuestions();
+
+	for (TestQuestion testQuestion : testQuestionList) {
+	    TestQuestion newTestQuestion = new TestQuestion();
+	    newTestQuestion.setQuestion(testQuestion.getQuestion());
+	    newTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
+	    newTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
+	    newTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
+	    newTestQuestion.setTest(test);
+	}
+	return test.getIdInternal();
     }
 
 }

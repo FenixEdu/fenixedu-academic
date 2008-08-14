@@ -246,9 +246,9 @@ public class Lesson extends Lesson_Base {
 	 * if(lessonInstance == null) { if(!wasFinished() &&
 	 * !getPeriod().getStartYearMonthDay().isAfter(day)){
 	 * edit(day.plusDays(1),
-	 * getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay(),
-	 * getDiaSemana(), getInicio(), getFim(), getFrequency(), true, day); } }
-	 * else { lessonInstance.delete(); }
+	 * getPeriod().getLastOccupationPeriodOfNestedPeriods
+	 * ().getEndYearMonthDay(), getDiaSemana(), getInicio(), getFim(),
+	 * getFrequency(), true, day); } } else { lessonInstance.delete(); }
 	 */
     }
 

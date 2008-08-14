@@ -115,7 +115,7 @@ public class ReportType extends FenixUtil {
     public static final String REVENUE_NOTE = "Nota: Nos movimentos com tipo DE (Devoluções) e ES (Estorno), embora o valor indicado no movimento seja positivo, eles diminuem o total das despesas. Se quiser usar estes dados para calcular totais efectivos de despesas fazendo somas na coluna total, deve considerar os campos DE e ES como valores negativos.";
 
     public static final String EXPENSES_NOTE = REVENUE_NOTE, CABIMENTOS_NOTE = REVENUE_NOTE, ADIANTAMENTOS_NOTE = REVENUE_NOTE,
-            COMPLETE_EXPENSES_NOTE = REVENUE_NOTE;
+	    COMPLETE_EXPENSES_NOTE = REVENUE_NOTE;
 
     public static final String SUMMARY_NOTE = "(*) O Saldo Orçamental é calculado com base no valor da coluna Máximo Financiável";
 
@@ -167,183 +167,183 @@ public class ReportType extends FenixUtil {
     private Integer reportType;
 
     public ReportType(int reportType) {
-        this.reportType = new Integer(reportType);
+	this.reportType = new Integer(reportType);
     }
 
     public ReportType(Integer reportType) {
-        this.reportType = reportType;
+	this.reportType = reportType;
     }
 
     public ReportType(String reportType) {
-        if (reportType.equals(REVENUE_STRING))
-            this.reportType = new Integer(REVENUE_TYPE);
-        else if (reportType.equals(EXPENSES_STRING))
-            this.reportType = new Integer(EXPENSES_TYPE);
-        else if (reportType.equals(SUMMARY_PTE_STRING))
-            this.reportType = new Integer(SUMMARY_PTE_TYPE);
-        else if (reportType.equals(SUMMARY_EUR_STRING))
-            this.reportType = new Integer(SUMMARY_EUR_TYPE);
-        else if (reportType.equals(SUMMARY_ADIANTAMENTOS_STRING))
-            this.reportType = new Integer(SUMMARY_ADIANTAMENTOS_TYPE);
-        else if (reportType.equals(SUMMARY_CABIMENTOS_STRING))
-            this.reportType = new Integer(SUMMARY_CABIMENTOS_TYPE);
-        else if (reportType.equals(SUMMARY_STRING))
-            this.reportType = new Integer(SUMMARY_TYPE);
-        else if (reportType.equals(GENERATED_OVERHEADS_STRING))
-            this.reportType = new Integer(GENERATED_OVERHEADS_TYPE);
-        else if (reportType.equals(TRANSFERED_OVERHEADS_STRING))
-            this.reportType = new Integer(TRANSFERED_OVERHEADS_TYPE);
-        else if (reportType.equals(OVERHEADS_SUMMARY_STRING))
-            this.reportType = new Integer(OVERHEADS_SUMMARY_TYPE);
-        else if (reportType.equals(CABIMENTOS_STRING))
-            this.reportType = new Integer(CABIMENTOS_TYPE);
-        else if (reportType.equals(ADIANTAMENTOS_STRING))
-            this.reportType = new Integer(ADIANTAMENTOS_TYPE);
-        else if (reportType.equals(COMPLETE_EXPENSES_STRING))
-            this.reportType = new Integer(COMPLETE_EXPENSES_TYPE);
-        else if (reportType.equals(OPENING_PROJECT_FILE_STRING))
-            this.reportType = new Integer(OPENING_PROJECT_FILE_TYPE);
-        else if (reportType.equals(PROJECT_BUDGETARY_BALANCE_STRING))
-            this.reportType = new Integer(PROJECT_BUDGETARY_BALANCE_TYPE);
-        // else if (reportType.equals(COORDINATOR_BUDGETARY_BALANCE_STRING))
-        // this.reportType = new Integer(COORDINATOR_BUDGETARY_BALANCE_TYPE);
-        else
-            this.reportType = null;
+	if (reportType.equals(REVENUE_STRING))
+	    this.reportType = new Integer(REVENUE_TYPE);
+	else if (reportType.equals(EXPENSES_STRING))
+	    this.reportType = new Integer(EXPENSES_TYPE);
+	else if (reportType.equals(SUMMARY_PTE_STRING))
+	    this.reportType = new Integer(SUMMARY_PTE_TYPE);
+	else if (reportType.equals(SUMMARY_EUR_STRING))
+	    this.reportType = new Integer(SUMMARY_EUR_TYPE);
+	else if (reportType.equals(SUMMARY_ADIANTAMENTOS_STRING))
+	    this.reportType = new Integer(SUMMARY_ADIANTAMENTOS_TYPE);
+	else if (reportType.equals(SUMMARY_CABIMENTOS_STRING))
+	    this.reportType = new Integer(SUMMARY_CABIMENTOS_TYPE);
+	else if (reportType.equals(SUMMARY_STRING))
+	    this.reportType = new Integer(SUMMARY_TYPE);
+	else if (reportType.equals(GENERATED_OVERHEADS_STRING))
+	    this.reportType = new Integer(GENERATED_OVERHEADS_TYPE);
+	else if (reportType.equals(TRANSFERED_OVERHEADS_STRING))
+	    this.reportType = new Integer(TRANSFERED_OVERHEADS_TYPE);
+	else if (reportType.equals(OVERHEADS_SUMMARY_STRING))
+	    this.reportType = new Integer(OVERHEADS_SUMMARY_TYPE);
+	else if (reportType.equals(CABIMENTOS_STRING))
+	    this.reportType = new Integer(CABIMENTOS_TYPE);
+	else if (reportType.equals(ADIANTAMENTOS_STRING))
+	    this.reportType = new Integer(ADIANTAMENTOS_TYPE);
+	else if (reportType.equals(COMPLETE_EXPENSES_STRING))
+	    this.reportType = new Integer(COMPLETE_EXPENSES_TYPE);
+	else if (reportType.equals(OPENING_PROJECT_FILE_STRING))
+	    this.reportType = new Integer(OPENING_PROJECT_FILE_TYPE);
+	else if (reportType.equals(PROJECT_BUDGETARY_BALANCE_STRING))
+	    this.reportType = new Integer(PROJECT_BUDGETARY_BALANCE_TYPE);
+	// else if (reportType.equals(COORDINATOR_BUDGETARY_BALANCE_STRING))
+	// this.reportType = new Integer(COORDINATOR_BUDGETARY_BALANCE_TYPE);
+	else
+	    this.reportType = null;
     }
 
     public static ReportType getReportType(Integer reportType) {
-        return getReportType(reportType.intValue());
+	return getReportType(reportType.intValue());
     }
 
     public static ReportType getReportType(int reportType) {
-        if (reportType == REVENUE_TYPE)
-            return REVENUE;
-        if (reportType == EXPENSES_TYPE)
-            return EXPENSES;
-        if (reportType == SUMMARY_PTE_TYPE)
-            return SUMMARY_PTE;
-        if (reportType == SUMMARY_EUR_TYPE)
-            return SUMMARY_EUR;
-        if (reportType == SUMMARY_ADIANTAMENTOS_TYPE)
-            return SUMMARY_ADIANTAMENTOS;
-        if (reportType == SUMMARY_CABIMENTOS_TYPE)
-            return SUMMARY_CABIMENTOS;
-        if (reportType == SUMMARY_TYPE)
-            return SUMMARY;
-        if (reportType == GENERATED_OVERHEADS_TYPE)
-            return GENERATED_OVERHEADS;
-        if (reportType == TRANSFERED_OVERHEADS_TYPE)
-            return TRANSFERED_OVERHEADS;
-        if (reportType == OVERHEADS_SUMMARY_TYPE)
-            return OVERHEADS_SUMMARY;
-        if (reportType == CABIMENTOS_TYPE)
-            return CABIMENTOS;
-        if (reportType == ADIANTAMENTOS_TYPE)
-            return ADIANTAMENTOS;
-        if (reportType == COMPLETE_EXPENSES_TYPE)
-            return COMPLETE_EXPENSES;
-        if (reportType == OPENING_PROJECT_FILE_TYPE)
-            return OPENING_PROJECT_FILE;
-        if (reportType == PROJECT_BUDGETARY_BALANCE_TYPE)
-            return PROJECT_BUDGETARY_BALANCE;
-        // if (reportType == COORDINATOR_BUDGETARY_BALANCE_TYPE)
-        // return COORDINATOR_BUDGETARY_BALANCE;
-        return null;
+	if (reportType == REVENUE_TYPE)
+	    return REVENUE;
+	if (reportType == EXPENSES_TYPE)
+	    return EXPENSES;
+	if (reportType == SUMMARY_PTE_TYPE)
+	    return SUMMARY_PTE;
+	if (reportType == SUMMARY_EUR_TYPE)
+	    return SUMMARY_EUR;
+	if (reportType == SUMMARY_ADIANTAMENTOS_TYPE)
+	    return SUMMARY_ADIANTAMENTOS;
+	if (reportType == SUMMARY_CABIMENTOS_TYPE)
+	    return SUMMARY_CABIMENTOS;
+	if (reportType == SUMMARY_TYPE)
+	    return SUMMARY;
+	if (reportType == GENERATED_OVERHEADS_TYPE)
+	    return GENERATED_OVERHEADS;
+	if (reportType == TRANSFERED_OVERHEADS_TYPE)
+	    return TRANSFERED_OVERHEADS;
+	if (reportType == OVERHEADS_SUMMARY_TYPE)
+	    return OVERHEADS_SUMMARY;
+	if (reportType == CABIMENTOS_TYPE)
+	    return CABIMENTOS;
+	if (reportType == ADIANTAMENTOS_TYPE)
+	    return ADIANTAMENTOS;
+	if (reportType == COMPLETE_EXPENSES_TYPE)
+	    return COMPLETE_EXPENSES;
+	if (reportType == OPENING_PROJECT_FILE_TYPE)
+	    return OPENING_PROJECT_FILE;
+	if (reportType == PROJECT_BUDGETARY_BALANCE_TYPE)
+	    return PROJECT_BUDGETARY_BALANCE;
+	// if (reportType == COORDINATOR_BUDGETARY_BALANCE_TYPE)
+	// return COORDINATOR_BUDGETARY_BALANCE;
+	return null;
     }
 
     public String getReportTypeString() {
-        if (reportType.intValue() == REVENUE_TYPE)
-            return REVENUE_STRING;
-        if (reportType.intValue() == EXPENSES_TYPE)
-            return EXPENSES_STRING;
-        if (reportType.intValue() == SUMMARY_PTE_TYPE)
-            return SUMMARY_PTE_STRING;
-        if (reportType.intValue() == SUMMARY_EUR_TYPE)
-            return SUMMARY_EUR_STRING;
-        if (reportType.intValue() == SUMMARY_ADIANTAMENTOS_TYPE)
-            return SUMMARY_ADIANTAMENTOS_STRING;
-        if (reportType.intValue() == SUMMARY_CABIMENTOS_TYPE)
-            return SUMMARY_CABIMENTOS_STRING;
-        if (reportType.intValue() == SUMMARY_TYPE)
-            return SUMMARY_STRING;
-        if (reportType.intValue() == GENERATED_OVERHEADS_TYPE)
-            return GENERATED_OVERHEADS_STRING;
-        if (reportType.intValue() == TRANSFERED_OVERHEADS_TYPE)
-            return TRANSFERED_OVERHEADS_STRING;
-        if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
-            return OVERHEADS_SUMMARY_STRING;
-        if (reportType.intValue() == CABIMENTOS_TYPE)
-            return CABIMENTOS_STRING;
-        if (reportType.intValue() == ADIANTAMENTOS_TYPE)
-            return ADIANTAMENTOS_STRING;
-        if (reportType.intValue() == COMPLETE_EXPENSES_TYPE)
-            return COMPLETE_EXPENSES_STRING;
-        if (reportType.intValue() == OPENING_PROJECT_FILE_TYPE)
-            return OPENING_PROJECT_FILE_STRING;
-        if (reportType.intValue() == PROJECT_BUDGETARY_BALANCE_TYPE)
-            return PROJECT_BUDGETARY_BALANCE_STRING;
-        // if (reportType.intValue() == COORDINATOR_BUDGETARY_BALANCE_TYPE)
-        // return COORDINATOR_BUDGETARY_BALANCE_STRING;
-        return null;
+	if (reportType.intValue() == REVENUE_TYPE)
+	    return REVENUE_STRING;
+	if (reportType.intValue() == EXPENSES_TYPE)
+	    return EXPENSES_STRING;
+	if (reportType.intValue() == SUMMARY_PTE_TYPE)
+	    return SUMMARY_PTE_STRING;
+	if (reportType.intValue() == SUMMARY_EUR_TYPE)
+	    return SUMMARY_EUR_STRING;
+	if (reportType.intValue() == SUMMARY_ADIANTAMENTOS_TYPE)
+	    return SUMMARY_ADIANTAMENTOS_STRING;
+	if (reportType.intValue() == SUMMARY_CABIMENTOS_TYPE)
+	    return SUMMARY_CABIMENTOS_STRING;
+	if (reportType.intValue() == SUMMARY_TYPE)
+	    return SUMMARY_STRING;
+	if (reportType.intValue() == GENERATED_OVERHEADS_TYPE)
+	    return GENERATED_OVERHEADS_STRING;
+	if (reportType.intValue() == TRANSFERED_OVERHEADS_TYPE)
+	    return TRANSFERED_OVERHEADS_STRING;
+	if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
+	    return OVERHEADS_SUMMARY_STRING;
+	if (reportType.intValue() == CABIMENTOS_TYPE)
+	    return CABIMENTOS_STRING;
+	if (reportType.intValue() == ADIANTAMENTOS_TYPE)
+	    return ADIANTAMENTOS_STRING;
+	if (reportType.intValue() == COMPLETE_EXPENSES_TYPE)
+	    return COMPLETE_EXPENSES_STRING;
+	if (reportType.intValue() == OPENING_PROJECT_FILE_TYPE)
+	    return OPENING_PROJECT_FILE_STRING;
+	if (reportType.intValue() == PROJECT_BUDGETARY_BALANCE_TYPE)
+	    return PROJECT_BUDGETARY_BALANCE_STRING;
+	// if (reportType.intValue() == COORDINATOR_BUDGETARY_BALANCE_TYPE)
+	// return COORDINATOR_BUDGETARY_BALANCE_STRING;
+	return null;
     }
 
     public String getReportLabel() {
-        if (reportType.intValue() == REVENUE_TYPE)
-            return REVENUE_LABEL;
-        else if (reportType.intValue() == EXPENSES_TYPE)
-            return EXPENSES_LABEL;
-        else if (reportType.intValue() == SUMMARY_TYPE)
-            return SUMMARY_LABEL;
-        else if (reportType.intValue() == CABIMENTOS_TYPE)
-            return CABIMENTOS_LABEL;
-        else if (reportType.intValue() == ADIANTAMENTOS_TYPE)
-            return ADIANTAMENTOS_LABEL;
-        else if (reportType.intValue() == COMPLETE_EXPENSES_TYPE)
-            return COMPLETE_EXPENSES_LABEL;
-        else if (reportType.intValue() == OPENING_PROJECT_FILE_TYPE)
-            return OPENING_PROJECT_FILE_LABEL;
-        else if (reportType.intValue() == PROJECT_BUDGETARY_BALANCE_TYPE)
-            return PROJECT_BUDGETARY_BALANCE_LABEL;
-        else if (reportType.intValue() == GENERATED_OVERHEADS_TYPE)
-            return GENERATED_OVERHEADS_LABEL;
-        else if (reportType.intValue() == TRANSFERED_OVERHEADS_TYPE)
-            return TRANSFERED_OVERHEADS_LABEL;
-        else if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
-            return OVERHEADS_SUMMARY_LABEL;
-        // else if (reportType.intValue() == COORDINATOR_BUDGETARY_BALANCE_TYPE)
-        // return COORDINATOR_BUDGETARY_BALANCE_LABEL;
-        return null;
+	if (reportType.intValue() == REVENUE_TYPE)
+	    return REVENUE_LABEL;
+	else if (reportType.intValue() == EXPENSES_TYPE)
+	    return EXPENSES_LABEL;
+	else if (reportType.intValue() == SUMMARY_TYPE)
+	    return SUMMARY_LABEL;
+	else if (reportType.intValue() == CABIMENTOS_TYPE)
+	    return CABIMENTOS_LABEL;
+	else if (reportType.intValue() == ADIANTAMENTOS_TYPE)
+	    return ADIANTAMENTOS_LABEL;
+	else if (reportType.intValue() == COMPLETE_EXPENSES_TYPE)
+	    return COMPLETE_EXPENSES_LABEL;
+	else if (reportType.intValue() == OPENING_PROJECT_FILE_TYPE)
+	    return OPENING_PROJECT_FILE_LABEL;
+	else if (reportType.intValue() == PROJECT_BUDGETARY_BALANCE_TYPE)
+	    return PROJECT_BUDGETARY_BALANCE_LABEL;
+	else if (reportType.intValue() == GENERATED_OVERHEADS_TYPE)
+	    return GENERATED_OVERHEADS_LABEL;
+	else if (reportType.intValue() == TRANSFERED_OVERHEADS_TYPE)
+	    return TRANSFERED_OVERHEADS_LABEL;
+	else if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
+	    return OVERHEADS_SUMMARY_LABEL;
+	// else if (reportType.intValue() == COORDINATOR_BUDGETARY_BALANCE_TYPE)
+	// return COORDINATOR_BUDGETARY_BALANCE_LABEL;
+	return null;
     }
 
     public String getReportNote() {
-        if (reportType.intValue() == REVENUE_TYPE)
-            return REVENUE_NOTE;
-        else if (reportType.intValue() == EXPENSES_TYPE)
-            return EXPENSES_NOTE;
-        else if (reportType.intValue() == SUMMARY_TYPE)
-            return SUMMARY_NOTE;
-        else if (reportType.intValue() == CABIMENTOS_TYPE)
-            return CABIMENTOS_NOTE;
-        else if (reportType.intValue() == ADIANTAMENTOS_TYPE)
-            return ADIANTAMENTOS_NOTE;
-        else if (reportType.intValue() == COMPLETE_EXPENSES_TYPE)
-            return COMPLETE_EXPENSES_NOTE;
-        else if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
-            return OVERHEADS_SUMMARY_NOTE;
-        return null;
+	if (reportType.intValue() == REVENUE_TYPE)
+	    return REVENUE_NOTE;
+	else if (reportType.intValue() == EXPENSES_TYPE)
+	    return EXPENSES_NOTE;
+	else if (reportType.intValue() == SUMMARY_TYPE)
+	    return SUMMARY_NOTE;
+	else if (reportType.intValue() == CABIMENTOS_TYPE)
+	    return CABIMENTOS_NOTE;
+	else if (reportType.intValue() == ADIANTAMENTOS_TYPE)
+	    return ADIANTAMENTOS_NOTE;
+	else if (reportType.intValue() == COMPLETE_EXPENSES_TYPE)
+	    return COMPLETE_EXPENSES_NOTE;
+	else if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
+	    return OVERHEADS_SUMMARY_NOTE;
+	return null;
     }
 
     public Integer getReportType() {
-        return reportType;
+	return reportType;
     }
 
     public void setReportType(Integer reportType) {
-        this.reportType = reportType;
+	this.reportType = reportType;
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof ReportType)
-            return reportType.equals(((ReportType) obj).getReportType());
-        return false;
+	if (obj instanceof ReportType)
+	    return reportType.equals(((ReportType) obj).getReportType());
+	return false;
     }
 }

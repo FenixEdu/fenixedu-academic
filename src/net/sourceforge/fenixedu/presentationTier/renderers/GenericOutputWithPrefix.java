@@ -27,82 +27,81 @@ public class GenericOutputWithPrefix extends OutputRenderer {
     private String subLayout;
     private String separator;
     private boolean indented;
-    
-    private Map<String,String> properties = new HashMap<String,String>();;
-    
-    
+
+    private Map<String, String> properties = new HashMap<String, String>();;
+
     public String getSeparator() {
-        return separator;
+	return separator;
     }
 
     public void setSeparator(String separator) {
-        this.separator = separator;
+	this.separator = separator;
     }
 
-    private Map<String,String> getPropertiesMap() {
+    private Map<String, String> getPropertiesMap() {
 	return properties;
     }
-    
+
     public void setSubProperty(String property, String value) {
 	properties.put(property, value);
     }
-    
+
     public String getSubProperty(String property) {
 	return properties.get(property);
     }
-    
+
     public String getEmptyBundle() {
-        return emptyBundle;
+	return emptyBundle;
     }
 
     public void setEmptyBundle(String emptyBundle) {
-        this.emptyBundle = emptyBundle;
+	this.emptyBundle = emptyBundle;
     }
 
     public String getEmptyKey() {
-        return emptyKey;
+	return emptyKey;
     }
 
     public void setEmptyKey(String emptyKey) {
-        this.emptyKey = emptyKey;
+	this.emptyKey = emptyKey;
     }
 
     public String getPrefixBundle() {
-        return prefixBundle;
+	return prefixBundle;
     }
 
     public void setPrefixBundle(String prefixBundle) {
-        this.prefixBundle = prefixBundle;
+	this.prefixBundle = prefixBundle;
     }
 
     public String getPrefixKey() {
-        return prefixKey;
+	return prefixKey;
     }
 
     public void setPrefixKey(String prefixKey) {
-        this.prefixKey = prefixKey;
+	this.prefixKey = prefixKey;
     }
 
     public String getPrefixClasses() {
-        return prefixClasses;
+	return prefixClasses;
     }
 
     public void setPrefixClasses(String prefixClasses) {
-        this.prefixClasses = prefixClasses;
+	this.prefixClasses = prefixClasses;
     }
 
     public String getSubLayout() {
-        return subLayout;
+	return subLayout;
     }
-    
+
     public void setSubLayout(String subLayout) {
-        this.subLayout = subLayout;
+	this.subLayout = subLayout;
     }
-    
+
     public boolean isIndented() {
 	return indented;
     }
-    
+
     public void setIndented(boolean indented) {
 	this.indented = indented;
     }
@@ -113,8 +112,8 @@ public class GenericOutputWithPrefix extends OutputRenderer {
 
 	    private Properties getProperties() {
 		Properties properties = new Properties();
-		Map<String,String> map = getPropertiesMap(); 
-		for(String property : map.keySet()) {
+		Map<String, String> map = getPropertiesMap();
+		for (String property : map.keySet()) {
 		    properties.put(property, map.get(property));
 		}
 		return properties;
@@ -123,16 +122,16 @@ public class GenericOutputWithPrefix extends OutputRenderer {
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
 		OutputContext context = getOutputContext();
-		
+
 		context.setLayout(getSubLayout());
 		context.setProperties(getProperties());
 		context.getMetaObject().setProperties(getProperties());
-		
-		HtmlComponent component = possiblyNonEmptyPresentationObject(object) ? RenderKit.getInstance().render(context, object, type) :
-		    new HtmlText(RenderUtils.getResourceString(getEmptyBundle(), getEmptyKey()),false);
-		
-		HtmlText text = new HtmlText((getPrefixBundle() != null) ? RenderUtils.getResourceString(
-			getPrefixBundle(), getPrefixKey()) : getPrefixKey(), getPrefixBundle() == null);
+
+		HtmlComponent component = possiblyNonEmptyPresentationObject(object) ? RenderKit.getInstance().render(context,
+			object, type) : new HtmlText(RenderUtils.getResourceString(getEmptyBundle(), getEmptyKey()), false);
+
+		HtmlText text = new HtmlText((getPrefixBundle() != null) ? RenderUtils.getResourceString(getPrefixBundle(),
+			getPrefixKey()) : getPrefixKey(), getPrefixBundle() == null);
 
 		text.setClasses(getPrefixClasses());
 		HtmlContainer container = new HtmlBlockContainer();
@@ -144,18 +143,18 @@ public class GenericOutputWithPrefix extends OutputRenderer {
 	    }
 
 	    private boolean possiblyNonEmptyPresentationObject(Object object) {
-		if(object == null) {
+		if (object == null) {
 		    return false;
 		}
-		if(object instanceof String) {
+		if (object instanceof String) {
 		    String theString = (String) object;
-		    if(StringUtils.isEmpty(theString)) {
+		    if (StringUtils.isEmpty(theString)) {
 			return false;
 		    }
 		}
-		if(object instanceof List) {
-		    List theList = (List)object;
-		    if(theList.isEmpty()) {
+		if (object instanceof List) {
+		    List theList = (List) object;
+		    if (theList.isEmpty()) {
 			return false;
 		    }
 		}

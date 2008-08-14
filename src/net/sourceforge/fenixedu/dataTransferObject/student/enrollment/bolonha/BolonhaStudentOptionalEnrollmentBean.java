@@ -72,8 +72,7 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		degreeCurricularPlan)
-		: null;
+		degreeCurricularPlan) : null;
     }
 
     public ExecutionSemester getExecutionPeriod() {
@@ -81,13 +80,11 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(
-		executionSemester) : null;
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public CurricularCourse getSelectedOptionalCurricularCourse() {
-	return (this.selectedOptionalCurricularCourse != null) ? this.selectedOptionalCurricularCourse
-		.getObject() : null;
+	return (this.selectedOptionalCurricularCourse != null) ? this.selectedOptionalCurricularCourse.getObject() : null;
     }
 
     public void setSelectedOptionalCurricularCourse(CurricularCourse selectedOptionalCurricularCourse) {
@@ -110,8 +107,7 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
 	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan)
-		: null;
+		studentCurricularPlan) : null;
     }
 
 }

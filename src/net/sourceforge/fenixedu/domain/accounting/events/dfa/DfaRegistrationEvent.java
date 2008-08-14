@@ -26,8 +26,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 	super();
     }
 
-    public DfaRegistrationEvent(AdministrativeOffice administrativeOffice, Person person,
-	    Registration registration) {
+    public DfaRegistrationEvent(AdministrativeOffice administrativeOffice, Person person, Registration registration) {
 	this();
 	init(administrativeOffice, person, registration);
     }
@@ -40,18 +39,16 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 
     private void checkParameters(Registration registration) {
 	if (registration == null) {
-	    throw new DomainException(
-		    "error.accounting.events.dfa.DfaRegistrationEvent.registration.cannot.be.null");
+	    throw new DomainException("error.accounting.events.dfa.DfaRegistrationEvent.registration.cannot.be.null");
 	}
     }
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
-		getDegree().getDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
-		getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ").appendLabel(
-		getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
+	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
+		"enum").appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent())
+		.appendLabel(" - ").appendLabel(getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
 
 	return labelFormatter;
     }
@@ -66,8 +63,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 
     @Override
     public PostingRule getPostingRule() {
-	return getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
-		getWhenOccured());
+	return getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
     }
 
     private AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {
@@ -86,8 +82,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 
     @Override
     public void setRegistration(Registration registration) {
-	throw new DomainException(
-		"error.accounting.events.dfa.DfaRegistrationEvent.cannot.modify.registration");
+	throw new DomainException("error.accounting.events.dfa.DfaRegistrationEvent.cannot.modify.registration");
     }
 
     public DateTime getRegistrationDate() {
@@ -99,8 +94,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     }
 
     public boolean hasRegistrationPeriodInDegreeCurricularPlan() {
-	return getExecutionDegree().getDegreeCurricularPlan().hasRegistrationPeriodFor(
-		getExecutionYear());
+	return getExecutionDegree().getDegreeCurricularPlan().hasRegistrationPeriodFor(getExecutionYear());
     }
 
     private ExecutionYear getExecutionYear() {

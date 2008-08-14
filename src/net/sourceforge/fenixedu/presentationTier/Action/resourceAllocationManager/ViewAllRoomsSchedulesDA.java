@@ -24,60 +24,58 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-            /* Criar o bean de pavilhoes */
-            List<String> pavillionsNamesList = new ArrayList<String>();            
-            List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
-            for (LabelValueBean building : readExistingBuldings) {
-        	pavillionsNamesList.add(building.getLabel());
-	    }
-                        
-            request.setAttribute(SessionConstants.PAVILLIONS_NAMES_LIST, pavillionsNamesList);
+	/* Criar o bean de pavilhoes */
+	List<String> pavillionsNamesList = new ArrayList<String>();
+	List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
+	for (LabelValueBean building : readExistingBuldings) {
+	    pavillionsNamesList.add(building.getLabel());
+	}
 
-            return mapping.findForward("choose");
+	request.setAttribute(SessionConstants.PAVILLIONS_NAMES_LIST, pavillionsNamesList);
+
+	return mapping.findForward("choose");
     }
 
-    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-            IUserView userView = getUserView(request);
-            DynaActionForm chooseViewAllRoomsSchedulesContextForm = (DynaActionForm) form;
+	IUserView userView = getUserView(request);
+	DynaActionForm chooseViewAllRoomsSchedulesContextForm = (DynaActionForm) form;
 
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                    .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-            List<String> pavillions = new ArrayList<String>();            
-            List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
-            for (LabelValueBean building : readExistingBuldings) {
-        	pavillions.add(building.getLabel());
+	List<String> pavillions = new ArrayList<String>();
+	List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
+	for (LabelValueBean building : readExistingBuldings) {
+	    pavillions.add(building.getLabel());
+	}
+
+	Boolean selectAllPavillions = (Boolean) chooseViewAllRoomsSchedulesContextForm.get("selectAllPavillions");
+	List<String> selectedPavillions = null;
+	if (selectAllPavillions != null && selectAllPavillions.booleanValue()) {
+	    selectedPavillions = pavillions;
+	} else {
+	    String[] selectedPavillionsNames = (String[]) chooseViewAllRoomsSchedulesContextForm.get("selectedPavillions");
+	    selectedPavillions = new ArrayList();
+	    for (int i = 0; i < selectedPavillionsNames.length; i++) {
+		selectedPavillions.add(selectedPavillionsNames[i]);
 	    }
-            
-            Boolean selectAllPavillions = (Boolean) chooseViewAllRoomsSchedulesContextForm.get("selectAllPavillions");
-            List<String> selectedPavillions = null;
-            if (selectAllPavillions != null && selectAllPavillions.booleanValue()) {
-                selectedPavillions = pavillions;
-            } else {
-                String[] selectedPavillionsNames = (String[]) chooseViewAllRoomsSchedulesContextForm.get("selectedPavillions");
-                selectedPavillions = new ArrayList();
-                for (int i = 0; i < selectedPavillionsNames.length; i++) {
-                    selectedPavillions.add(selectedPavillionsNames[i]);
-                }
-            }
+	}
 
-            Object[] args = { selectedPavillions, infoExecutionPeriod };
-            List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService( "ReadPavillionsRoomsLessons", args);
+	Object[] args = { selectedPavillions, infoExecutionPeriod };
+	List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService("ReadPavillionsRoomsLessons", args);
 
-            if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
-                request.removeAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);
-            } else {
-                request.setAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE,
-                        infoViewClassScheduleList);
-                request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD, infoExecutionPeriod);
-            }
+	if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
+	    request.removeAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);
+	} else {
+	    request.setAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE, infoViewClassScheduleList);
+	    request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD, infoExecutionPeriod);
+	}
 
-            return mapping.findForward("list");
+	return mapping.findForward("list");
     }
 
 }

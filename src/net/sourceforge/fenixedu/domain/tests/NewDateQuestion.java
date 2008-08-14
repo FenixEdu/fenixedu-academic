@@ -12,60 +12,60 @@ import org.joda.time.DateTime;
 
 public class NewDateQuestion extends NewDateQuestion_Base {
 
-	public NewDateQuestion() {
-		super();
+    public NewDateQuestion() {
+	super();
+    }
+
+    public NewDateQuestion(NewQuestionGroup parentQuestionGroup) {
+	super();
+
+	init(parentQuestionGroup);
+    }
+
+    protected static final List<PredicateType> predicates = new ArrayList<PredicateType>();
+
+    @Override
+    public List<PredicateType> getPredicates() {
+	return predicates;
+    }
+
+    @Override
+    public NewQuestionType getQuestionType() {
+	return NewQuestionType.DATE_QUESTION;
+    }
+
+    @Override
+    public NewTestElement copy(HashMap<Object, Object> transformationMap) {
+	NewDateQuestion question = new NewDateQuestion();
+
+	transformationMap.put(this, question);
+
+	this.initCopy(question, transformationMap);
+
+	return question;
+    }
+
+    public DateTime getDateAnswer(Person person) {
+	NewAnswer answer = this.getAnswer(person);
+	if (answer == null) {
+	    return null;
+	}
+	return (DateTime) answer.getConcreteAnswer().getAnswer();
+    }
+
+    public DateTime getDateAnswer() {
+	return this.getDateAnswer(this.getPerson());
+    }
+
+    public void setAnswer(DateTime answerValue) {
+	NewAnswer answer = this.getAnswer();
+
+	if (answer == null) {
+	    answer = createAnswer();
 	}
 
-	public NewDateQuestion(NewQuestionGroup parentQuestionGroup) {
-		super();
-
-		init(parentQuestionGroup);
-	}
-
-	protected static final List<PredicateType> predicates = new ArrayList<PredicateType>();
-
-	@Override
-	public List<PredicateType> getPredicates() {
-		return predicates;
-	}
-
-	@Override
-	public NewQuestionType getQuestionType() {
-		return NewQuestionType.DATE_QUESTION;
-	}
-
-	@Override
-	public NewTestElement copy(HashMap<Object, Object> transformationMap) {
-		NewDateQuestion question = new NewDateQuestion();
-
-		transformationMap.put(this, question);
-
-		this.initCopy(question, transformationMap);
-
-		return question;
-	}
-
-	public DateTime getDateAnswer(Person person) {
-		NewAnswer answer = this.getAnswer(person);
-		if (answer == null) {
-			return null;
-		}
-		return (DateTime) answer.getConcreteAnswer().getAnswer();
-	}
-
-	public DateTime getDateAnswer() {
-		return this.getDateAnswer(this.getPerson());
-	}
-
-	public void setAnswer(DateTime answerValue) {
-		NewAnswer answer = this.getAnswer();
-		
-		if(answer == null) {
-			answer = createAnswer();
-		}
-		
-		ConcreteAnswer concreteAnswer = new ConcreteAnswer(answerValue);
-		this.getAnswer().setConcreteAnswer(concreteAnswer);
-	}
+	ConcreteAnswer concreteAnswer = new ConcreteAnswer(answerValue);
+	this.getAnswer().setConcreteAnswer(concreteAnswer);
+    }
 
 }

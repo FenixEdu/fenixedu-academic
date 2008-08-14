@@ -31,14 +31,13 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
 	super.setType(PartyTypeEnum.SCIENTIFIC_AREA);
     }
 
-    public static ScientificAreaUnit createNewInternalScientificArea(MultiLanguageString name,
-	    Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate,
-	    Unit parentUnit, AccountabilityType accountabilityType, String webAddress,
-	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static ScientificAreaUnit createNewInternalScientificArea(MultiLanguageString name, Integer costCenterCode,
+	    String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
+	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	ScientificAreaUnit scientificAreaUnit = new ScientificAreaUnit();
-	scientificAreaUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress,
-		classification, canBeResponsibleOfSpaces, campus);
+	scientificAreaUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces, campus);
 	scientificAreaUnit.addParentUnit(parentUnit, accountabilityType);
 
 	checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(scientificAreaUnit);
@@ -47,13 +46,12 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress,
-	    UnitClassification classification, Department department, Degree degree,
+    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
 	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
-		department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
+		administrativeOffice, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(this);
     }
@@ -120,8 +118,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
 	for (Context context : contexts) {
 	    if (context.getChildDegreeModule().isLeaf()) {
 		CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-		if (!curricularCourse.isOptional()
-			&& curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
+		if (!curricularCourse.isOptional() && curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
 		    result += curricularCourse.getCompetenceCourse().getEctsCredits();
 		}
 	    }
@@ -129,13 +126,12 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
 	return result;
     }
 
-    private static void checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(
-	    ScientificAreaUnit scientificAreaUnit) {
+    private static void checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(ScientificAreaUnit scientificAreaUnit) {
 	for (Unit parentUnit : scientificAreaUnit.getParentUnits()) {
 	    for (Unit unit : parentUnit.getAllSubUnits()) {
 		if (!unit.equals(scientificAreaUnit)
-			&& (scientificAreaUnit.getName().equalsIgnoreCase(unit.getName()) || scientificAreaUnit
-				.getAcronym().equalsIgnoreCase(unit.getAcronym()))) {
+			&& (scientificAreaUnit.getName().equalsIgnoreCase(unit.getName()) || scientificAreaUnit.getAcronym()
+				.equalsIgnoreCase(unit.getAcronym()))) {
 		    throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
 		}
 	    }
@@ -162,8 +158,8 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
 
     @Override
     protected List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
-        groups.add(new ScientificAreaMemberGroup(this));
-        return groups;
+	List<IGroup> groups = super.getDefaultGroups();
+	groups.add(new ScientificAreaMemberGroup(this));
+	return groups;
     }
 }

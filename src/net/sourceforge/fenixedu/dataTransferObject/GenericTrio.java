@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -14,34 +13,34 @@ public class GenericTrio<T, U, V> {
     private V third;
 
     public GenericTrio(T first, U second, V third) {
-        super();
-        this.first = first;
-        this.second = second;
-        this.third = third;
+	super();
+	this.first = first;
+	this.second = second;
+	this.third = third;
     }
 
     public T getFirst() {
-        return first;
+	return first;
     }
 
     public void setFirst(T first) {
-        this.first = first;
+	this.first = first;
     }
 
     public U getSecond() {
-        return second;
+	return second;
     }
 
     public void setSecond(U second) {
-        this.second = second;
+	this.second = second;
     }
 
     public V getThird() {
-        return third;
+	return third;
     }
 
     public void setThird(V third) {
-        this.third = third;
+	this.third = third;
     }
 
     public boolean equals(Object obj) {
@@ -51,9 +50,8 @@ public class GenericTrio<T, U, V> {
 	} else {
 	    return false;
 	}
-	return (this.getFirst().equals(genericTrio.getFirst())
-		&& this.getSecond().equals(genericTrio.getSecond()) 
-		&& this.getThird().equals(genericTrio.getThird()));
+	return (this.getFirst().equals(genericTrio.getFirst()) && this.getSecond().equals(genericTrio.getSecond()) && this
+		.getThird().equals(genericTrio.getThird()));
     }
 
     public int hashCode() {

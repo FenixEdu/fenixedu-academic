@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class GiveUpQuestion extends Service {
-	public void run(NewAtomicQuestion atomicQuestion) throws FenixServiceException{
-		atomicQuestion.giveUpQuestion();
-	}
+    public void run(NewAtomicQuestion atomicQuestion) throws FenixServiceException {
+	atomicQuestion.giveUpQuestion();
+    }
 }

@@ -48,7 +48,6 @@ public class NumberUtils extends FenixUtil {
 	decimalFormatSymbols.setDecimalSeparator('.');
 	decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 	int position = decimalFormat.format(number).lastIndexOf(".");
-	return new Double(decimalFormat.format(number)
-		.substring(0, position + numberOfDecimalPlaces + 1));
+	return new Double(decimalFormat.format(number).substring(0, position + numberOfDecimalPlaces + 1));
     }
 }

@@ -26,24 +26,24 @@ import org.apache.commons.collections.Transformer;
 public class ReadExternalActivities extends Service {
 
     public SiteView run(String user) {
-        Teacher teacher = Teacher.readTeacherByUsername(user);
-        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
+	Teacher teacher = Teacher.readTeacherByUsername(user);
+	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
-        List<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
+	List<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
 
-        List result = (List) CollectionUtils.collect(externalActivities, new Transformer() {
-            public Object transform(Object o) {
-                ExternalActivity externalActivity = (ExternalActivity) o;
-                return InfoExternalActivity.newInfoFromDomain(externalActivity);
-            }
-        });
+	List result = (List) CollectionUtils.collect(externalActivities, new Transformer() {
+	    public Object transform(Object o) {
+		ExternalActivity externalActivity = (ExternalActivity) o;
+		return InfoExternalActivity.newInfoFromDomain(externalActivity);
+	    }
+	});
 
-        InfoSiteExternalActivities bodyComponent = new InfoSiteExternalActivities();
-        bodyComponent.setInfoExternalActivities(result);
-        bodyComponent.setInfoTeacher(infoTeacher);
+	InfoSiteExternalActivities bodyComponent = new InfoSiteExternalActivities();
+	bodyComponent.setInfoExternalActivities(result);
+	bodyComponent.setInfoTeacher(infoTeacher);
 
-        SiteView siteView = new SiteView(bodyComponent);
-        return siteView;
+	SiteView siteView = new SiteView(bodyComponent);
+	return siteView;
     }
 
 }

@@ -19,20 +19,20 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 4/Ago/2003, 18:58:03
+ *         Created at 4/Ago/2003, 18:58:03
  * 
  */
 public class GetCaseStudiesByThemeID extends Service {
 
-	public List run(Integer themeID) throws BDException{
-		List cases = rootDomainObject.readThemeByOID(themeID).getCaseStudies();
-        
-        List infoCases = new LinkedList();
-		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-			CaseStudy caseStudy = (CaseStudy) iterator.next();
-			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
-		}
+    public List run(Integer themeID) throws BDException {
+	List cases = rootDomainObject.readThemeByOID(themeID).getCaseStudies();
 
-		return infoCases;
+	List infoCases = new LinkedList();
+	for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+	    CaseStudy caseStudy = (CaseStudy) iterator.next();
+	    infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
 	}
+
+	return infoCases;
+    }
 }

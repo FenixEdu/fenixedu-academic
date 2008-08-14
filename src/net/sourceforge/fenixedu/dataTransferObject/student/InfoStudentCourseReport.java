@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class InfoStudentCourseReport extends InfoObject {
     private String strongPoints;
@@ -30,21 +30,21 @@ public class InfoStudentCourseReport extends InfoObject {
      *  
      */
     public InfoStudentCourseReport() {
-        super();
+	super();
     }
 
     /**
      * @param idInternal
      */
     public InfoStudentCourseReport(Integer idInternal) {
-        super(idInternal);
+	super(idInternal);
     }
 
     /**
      * @return Returns the infoCurricularCourse.
      */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     /**
@@ -52,14 +52,14 @@ public class InfoStudentCourseReport extends InfoObject {
      *            The infoCurricularCourse to set.
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
     public Date getLastModificationDate() {
-        return lastModificationDate;
+	return lastModificationDate;
     }
 
     /**
@@ -67,14 +67,14 @@ public class InfoStudentCourseReport extends InfoObject {
      *            The lastModificationDate to set.
      */
     public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
+	this.lastModificationDate = lastModificationDate;
     }
 
     /**
      * @return Returns the strongPoints.
      */
     public String getStrongPoints() {
-        return strongPoints;
+	return strongPoints;
     }
 
     /**
@@ -82,14 +82,14 @@ public class InfoStudentCourseReport extends InfoObject {
      *            The strongPoints to set.
      */
     public void setStrongPoints(String strongPoints) {
-        this.strongPoints = strongPoints;
+	this.strongPoints = strongPoints;
     }
 
     /**
      * @return Returns the studentReport.
      */
     public String getStudentReport() {
-        return studentReport;
+	return studentReport;
     }
 
     /**
@@ -97,14 +97,14 @@ public class InfoStudentCourseReport extends InfoObject {
      *            The studentReport to set.
      */
     public void setStudentReport(String studentReport) {
-        this.studentReport = studentReport;
+	this.studentReport = studentReport;
     }
 
     /**
      * @return Returns the weakPoints.
      */
     public String getWeakPoints() {
-        return weakPoints;
+	return weakPoints;
     }
 
     /**
@@ -112,26 +112,26 @@ public class InfoStudentCourseReport extends InfoObject {
      *            The weakPoints to set.
      */
     public void setWeakPoints(String weakPoints) {
-        this.weakPoints = weakPoints;
+	this.weakPoints = weakPoints;
     }
 
     public void copyFromDomain(StudentCourseReport scr) {
-        super.copyFromDomain(scr);
-        if (scr != null) {
-            setStrongPoints(scr.getStrongPoints());
-            setWeakPoints(scr.getWeakPoints());
-            setStudentReport(scr.getStudentReport());
-            setLastModificationDate(scr.getLastModificationDate());
-        }
+	super.copyFromDomain(scr);
+	if (scr != null) {
+	    setStrongPoints(scr.getStrongPoints());
+	    setWeakPoints(scr.getWeakPoints());
+	    setStudentReport(scr.getStudentReport());
+	    setLastModificationDate(scr.getLastModificationDate());
+	}
     }
 
     public static InfoStudentCourseReport newInfoFromDomain(StudentCourseReport scr) {
-        InfoStudentCourseReport infoStudentCourseReport = null;
-        if (scr != null) {
-            infoStudentCourseReport = new InfoStudentCourseReport();
-            infoStudentCourseReport.copyFromDomain(scr);
-        }
-        return infoStudentCourseReport;
+	InfoStudentCourseReport infoStudentCourseReport = null;
+	if (scr != null) {
+	    infoStudentCourseReport = new InfoStudentCourseReport();
+	    infoStudentCourseReport.copyFromDomain(scr);
+	}
+	return infoStudentCourseReport;
     }
 
 }

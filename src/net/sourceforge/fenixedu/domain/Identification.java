@@ -14,43 +14,44 @@ import org.joda.time.DateTime;
 public abstract class Identification extends Identification_Base {
 
     protected Identification() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public void delete() {	
-        super.setUser(null);       
-        removeRootDomainObject();
-        super.deleteDomainObject();
+    public void delete() {
+	super.setUser(null);
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
-    
+
     public boolean isLogin() {
-        return false;
+	return false;
     }
-           
+
     @Override
     public void setUser(User user) {
-	if(user == null) {
+	if (user == null) {
 	    throw new DomainException("error.identification.empty.user");
 	}
 	super.setUser(user);
     }
 
     public boolean belongsToPeriod(DateTime begin, DateTime end) {
-	return ((end == null || !getBeginDateDateTime().isAfter(end)) && (getEndDateDateTime() == null || !getEndDateDateTime().isBefore(begin)));
+	return ((end == null || !getBeginDateDateTime().isAfter(end)) && (getEndDateDateTime() == null || !getEndDateDateTime()
+		.isBefore(begin)));
     }
-    
+
     public boolean isActive(DateTime currentDate) {
 	return belongsToPeriod(currentDate, currentDate);
     }
-    
+
     public static List<Login> readAllLogins() {
-        List<Login> logins = new ArrayList<Login>();
-        for (Identification identification : RootDomainObject.getInstance().getIdentifications()) {
-            if (identification.isLogin()) {
-                logins.add((Login) identification);
-            }
-        }
-        return logins;
+	List<Login> logins = new ArrayList<Login>();
+	for (Identification identification : RootDomainObject.getInstance().getIdentifications()) {
+	    if (identification.isLogin()) {
+		logins.add((Login) identification);
+	    }
+	}
+	return logins;
     }
 }

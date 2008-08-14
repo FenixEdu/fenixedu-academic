@@ -25,40 +25,37 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
 
     protected RoleType getRoleType() {
-        return RoleType.DEPARTMENT_CREDITS_MANAGER;
+	return RoleType.DEPARTMENT_CREDITS_MANAGER;
     }
 
-    private void verifyTeacherPermission(IUserView requester, Integer teacherNumber)
-            throws FenixServiceException {
+    private void verifyTeacherPermission(IUserView requester, Integer teacherNumber) throws FenixServiceException {
 
-        final Teacher teacher = Teacher.readByNumber(teacherNumber);
-        if (teacher == null) {
-            throw new NonExistingServiceException("Teacher doesn't exists");
-        }
-        
-        final Person requesterPerson = requester.getPerson();
-        if (requesterPerson == null) {
-            throw new NotAuthorizedException("No person with that userView");
-        }
+	final Teacher teacher = Teacher.readByNumber(teacherNumber);
+	if (teacher == null) {
+	    throw new NonExistingServiceException("Teacher doesn't exists");
+	}
 
-        final List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+	final Person requesterPerson = requester.getPerson();
+	if (requesterPerson == null) {
+	    throw new NotAuthorizedException("No person with that userView");
+	}
 
-        final Department department = teacher.getCurrentWorkingDepartment();
+	final List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
 
-        if (department == null) {
-            throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()
-                    + " doesn't have department!");
-        }
+	final Department department = teacher.getCurrentWorkingDepartment();
 
-        if (!departmentsWithAccessGranted.contains(department)) {
-            throw new NotAuthorizedException("Not authorized to run the service!");
-        }
+	if (department == null) {
+	    throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber() + " doesn't have department!");
+	}
+
+	if (!departmentsWithAccessGranted.contains(department)) {
+	    throw new NotAuthorizedException("Not authorized to run the service!");
+	}
     }
 
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws FilterException, Exception {
-        super.execute(request, response);
-        verifyTeacherPermission(getRemoteUser(request), (Integer) getServiceCallArguments(request)[0]);
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+	super.execute(request, response);
+	verifyTeacherPermission(getRemoteUser(request), (Integer) getServiceCallArguments(request)[0]);
     }
 
 }

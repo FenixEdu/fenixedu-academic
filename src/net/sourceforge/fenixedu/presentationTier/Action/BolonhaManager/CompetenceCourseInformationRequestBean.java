@@ -20,9 +20,9 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
     private String justification;
 
     private String name;
-    
+
     private String nameEn;
-    
+
     private RegimeType regime;
 
     private String objectives;
@@ -40,7 +40,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
     private CompetenceCourseLevel competenceCourseLevel;
 
     private BibliographicReferences references;
-    
+
     public CompetenceCourseInformationRequestBean(CompetenceCourseInformationChangeRequest request) {
 	setCompetenceCourse(request.getCompetenceCourse());
 	setRegime(request.getRegime());
@@ -56,7 +56,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 	setName(request.getName());
 	setNameEn(request.getNameEn());
     }
-    
+
     public CompetenceCourseInformationRequestBean(CompetenceCourseInformation information) {
 	setCompetenceCourse(information.getCompetenceCourse());
 	setRegime(information.getRegime());
@@ -75,11 +75,11 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     public CompetenceCourseInformationRequestBean(CompetenceCourse course, ExecutionSemester period) {
 	setExecutionPeriod(period);
-	setCompetenceCourse(course);	
+	setCompetenceCourse(course);
     }
-    
+
     public CompetenceCourseInformationRequestBean() {
-	this(null,null);
+	this(null, null);
     }
 
     public boolean isCompetenceCourseDefinedForExecutionPeriod() {
@@ -88,7 +88,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 	}
 	return false;
     }
-    
+
     public ExecutionSemester getExecutionPeriod() {
 	return executionSemester.getObject();
     }
@@ -189,7 +189,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 	setName(information.getName());
 	setNameEn(information.getNameEn());
     }
-    
+
     public void reset() {
 	setObjectives(null);
 	setObjectivesEn(null);
@@ -211,22 +211,22 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
     }
 
     public void setReferences(BibliographicReferences references) {
-        this.references = references;
+	this.references = references;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public String getNameEn() {
-        return nameEn;
+	return nameEn;
     }
 
     public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
+	this.nameEn = nameEn;
     }
 }

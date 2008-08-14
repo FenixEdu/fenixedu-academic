@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteInstitutionWorkTimeByOID extends Service {
 
     public void run(Integer institutionWorkTimeID, RoleType roleType) {
-        
-        InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) rootDomainObject
-                .readTeacherServiceItemByOID(institutionWorkTimeID);
-        if (institutionWorkTime != null) {
-            institutionWorkTime.delete(roleType);
-        }
+
+	InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) rootDomainObject
+		.readTeacherServiceItemByOID(institutionWorkTimeID);
+	if (institutionWorkTime != null) {
+	    institutionWorkTime.delete(roleType);
+	}
     }
 
 }

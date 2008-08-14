@@ -21,31 +21,31 @@ public class Rubric implements IRubric, Serializable {
     }
 
     public Rubric(String code, String description) {
-        setCode(code);
-        setDescription(description);
+	setCode(code);
+	setDescription(description);
     }
 
     public String getCode() {
-        return code;
+	return code;
     }
 
     public void setCode(String code) {
-        this.code = code;
+	this.code = code;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     public Double getValue() {
-        return value;
+	return value;
     }
 
     public void setValue(Double value) {
-        this.value = value;
+	this.value = value;
     }
 }

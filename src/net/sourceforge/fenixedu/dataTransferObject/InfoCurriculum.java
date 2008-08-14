@@ -36,7 +36,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
     protected InfoPerson infoPersonWhoAltered;
 
     protected Integer executionYearId;
-    
+
     public InfoCurriculum() {
 
     }
@@ -44,30 +44,30 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
     public void setExecutionYearId(Integer id) {
 	this.executionYearId = id;
     }
-    
+
     public Integer getExecutionYearId() {
 	return this.executionYearId;
     }
-    
+
     public ExecutionYear getExecutionYear() {
-	return this.executionYearId == null || this.executionYearId == 0 ? ExecutionYear.readCurrentExecutionYear() : RootDomainObject.getInstance().readExecutionYearByOID(this.executionYearId);
+	return this.executionYearId == null || this.executionYearId == 0 ? ExecutionYear.readCurrentExecutionYear()
+		: RootDomainObject.getInstance().readExecutionYearByOID(this.executionYearId);
     }
-    
+
     public InfoCurriculum(InfoCurricularCourse infoCurricularCourse) {
-        setInfoCurricularCourse(infoCurricularCourse);
+	setInfoCurricularCourse(infoCurricularCourse);
 
     }
 
-    public InfoCurriculum(String generalObjectives, String operacionalObjectives, String program,
-            String generalObjectivesEn, String operacionalObjectivesEn, String programEn,
-            InfoCurricularCourse infoCurricularCourse) {
-        setInfoCurricularCourse(infoCurricularCourse);
-        setGeneralObjectives(generalObjectives);
-        setOperacionalObjectives(operacionalObjectives);
-        setProgram(program);
-        setGeneralObjectivesEn(generalObjectivesEn);
-        setOperacionalObjectivesEn(operacionalObjectivesEn);
-        setProgramEn(programEn);
+    public InfoCurriculum(String generalObjectives, String operacionalObjectives, String program, String generalObjectivesEn,
+	    String operacionalObjectivesEn, String programEn, InfoCurricularCourse infoCurricularCourse) {
+	setInfoCurricularCourse(infoCurricularCourse);
+	setGeneralObjectives(generalObjectives);
+	setOperacionalObjectives(operacionalObjectives);
+	setProgram(program);
+	setGeneralObjectivesEn(generalObjectivesEn);
+	setOperacionalObjectivesEn(operacionalObjectivesEn);
+	setProgramEn(programEn);
 
     }
 
@@ -75,28 +75,28 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
      * @return String
      */
     public String getGeneralObjectives() {
-        return generalObjectives;
+	return generalObjectives;
     }
 
     /**
      * @return InfoExecutionCourse
      */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     /**
      * @return String
      */
     public String getOperacionalObjectives() {
-        return operacionalObjectives;
+	return operacionalObjectives;
     }
 
     /**
      * @return String
      */
     public String getProgram() {
-        return program;
+	return program;
     }
 
     /**
@@ -106,7 +106,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
      *            The generalObjectives to set
      */
     public void setGeneralObjectives(String generalObjectives) {
-        this.generalObjectives = generalObjectives;
+	this.generalObjectives = generalObjectives;
     }
 
     /**
@@ -116,7 +116,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
      *            The infoCurricularCourse to set
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
     /**
@@ -126,7 +126,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
      *            The operacionalObjectives to set
      */
     public void setOperacionalObjectives(String operacionalObjectives) {
-        this.operacionalObjectives = operacionalObjectives;
+	this.operacionalObjectives = operacionalObjectives;
     }
 
     /**
@@ -136,94 +136,94 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
      *            The program to set
      */
     public void setProgram(String program) {
-        this.program = program;
+	this.program = program;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoCurriculum) {
-            InfoCurriculum infoCurriculum = (InfoCurriculum) obj;
-            result = getInfoCurricularCourse().equals(infoCurriculum.getInfoCurricularCourse());
-        }
-        return result;
+	boolean result = false;
+	if (obj instanceof InfoCurriculum) {
+	    InfoCurriculum infoCurriculum = (InfoCurriculum) obj;
+	    result = getInfoCurricularCourse().equals(infoCurriculum.getInfoCurricularCourse());
+	}
+	return result;
     }
-    
+
     public void prepareEnglishPresentation(Locale locale) {
-        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {        
-            this.generalObjectives  = this.generalObjectivesEn;
-            this.operacionalObjectives = this.operacionalObjectivesEn;
-            this.program = this.programEn;
-        }
+	if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+	    this.generalObjectives = this.generalObjectivesEn;
+	    this.operacionalObjectives = this.operacionalObjectivesEn;
+	    this.program = this.programEn;
+	}
     }
-    
+
     public String toString() {
-        String result = "[INFOCURRICULUM";
-        result += ", getGeneralObjectives=" + getGeneralObjectives();
-        result += ", getOperacionalObjectives=" + getOperacionalObjectives();
-        result += ", getProgram=" + getProgram();
-        result += ", getGeneralObjectivesEn=" + getGeneralObjectivesEn();
-        result += ", getOperacionalObjectivesEn=" + getOperacionalObjectivesEn();
-        result += ", getProgramEn=" + getProgramEn();
-        result += ", InfoCurricularCourse =" + getInfoCurricularCourse();
-        result += "]";
-        return result;
+	String result = "[INFOCURRICULUM";
+	result += ", getGeneralObjectives=" + getGeneralObjectives();
+	result += ", getOperacionalObjectives=" + getOperacionalObjectives();
+	result += ", getProgram=" + getProgram();
+	result += ", getGeneralObjectivesEn=" + getGeneralObjectivesEn();
+	result += ", getOperacionalObjectivesEn=" + getOperacionalObjectivesEn();
+	result += ", getProgramEn=" + getProgramEn();
+	result += ", InfoCurricularCourse =" + getInfoCurricularCourse();
+	result += "]";
+	return result;
     }
 
     /**
      * @return
      */
     public String getGeneralObjectivesEn() {
-        return generalObjectivesEn;
+	return generalObjectivesEn;
     }
 
     /**
      * @return
      */
     public String getOperacionalObjectivesEn() {
-        return operacionalObjectivesEn;
+	return operacionalObjectivesEn;
     }
 
     /**
      * @return
      */
     public String getProgramEn() {
-        return programEn;
+	return programEn;
     }
 
     /**
      * @param string
      */
     public void setGeneralObjectivesEn(String string) {
-        generalObjectivesEn = string;
+	generalObjectivesEn = string;
     }
 
     /**
      * @param string
      */
     public void setOperacionalObjectivesEn(String string) {
-        operacionalObjectivesEn = string;
+	operacionalObjectivesEn = string;
     }
 
     /**
      * @param string
      */
     public void setProgramEn(String string) {
-        programEn = string;
+	programEn = string;
     }
 
     public Date getLastModificationDate() {
-        return lastModificationDate;
+	return lastModificationDate;
     }
 
     public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
+	this.lastModificationDate = lastModificationDate;
     }
 
     /**
      * @return Returns the infoPersonWhoAltered.
      */
     public InfoPerson getInfoPersonWhoAltered() {
-        return infoPersonWhoAltered;
+	return infoPersonWhoAltered;
     }
 
     /**
@@ -231,29 +231,29 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
      *            The infoPersonWhoAltered to set.
      */
     public void setInfoPersonWhoAltered(InfoPerson infoPersonWhoAltered) {
-        this.infoPersonWhoAltered = infoPersonWhoAltered;
+	this.infoPersonWhoAltered = infoPersonWhoAltered;
     }
 
     public void copyFromDomain(Curriculum curriculum) {
-        super.copyFromDomain(curriculum);
-        if (curriculum != null) {
-            setGeneralObjectives(curriculum.getGeneralObjectives());
-            setGeneralObjectivesEn(curriculum.getGeneralObjectivesEn());
-            setLastModificationDate(curriculum.getLastModificationDate());
-            setOperacionalObjectives(curriculum.getOperacionalObjectives());
-            setOperacionalObjectivesEn(curriculum.getOperacionalObjectivesEn());
-            setProgram(curriculum.getProgram());
-            setProgramEn(curriculum.getProgramEn());
-        }
+	super.copyFromDomain(curriculum);
+	if (curriculum != null) {
+	    setGeneralObjectives(curriculum.getGeneralObjectives());
+	    setGeneralObjectivesEn(curriculum.getGeneralObjectivesEn());
+	    setLastModificationDate(curriculum.getLastModificationDate());
+	    setOperacionalObjectives(curriculum.getOperacionalObjectives());
+	    setOperacionalObjectivesEn(curriculum.getOperacionalObjectivesEn());
+	    setProgram(curriculum.getProgram());
+	    setProgramEn(curriculum.getProgramEn());
+	}
     }
 
     public static InfoCurriculum newInfoFromDomain(Curriculum curriculum) {
-        InfoCurriculum infoCurriculum = null;
-        if (curriculum != null) {
-            infoCurriculum = new InfoCurriculum();
-            infoCurriculum.copyFromDomain(curriculum);
-            
-        }
-        return infoCurriculum;
+	InfoCurriculum infoCurriculum = null;
+	if (curriculum != null) {
+	    infoCurriculum = new InfoCurriculum();
+	    infoCurriculum.copyFromDomain(curriculum);
+
+	}
+	return infoCurriculum;
     }
 }

@@ -29,92 +29,89 @@ import org.apache.struts.action.ActionMapping;
 public class ShowDegreesAction extends FenixContextDispatchAction {
 
     public ActionForward nonMaster(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
+	    HttpServletResponse response) throws Exception {
+	ActionErrors errors = new ActionErrors();
 
-        Boolean inEnglish = new Boolean(false);
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-        InfoExecutionYear infoExecutionYear = null;
-        if (infoExecutionPeriod != null) {
-            infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
-        }
+	Boolean inEnglish = new Boolean(false);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionYear infoExecutionYear = null;
+	if (infoExecutionPeriod != null) {
+	    infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
+	}
 
-        Object[] args = { infoExecutionYear };
-        List executionDegreesList = null;
-        try {
-            //ReadExecutionDegreesByExecutionYear
-            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadNonMasterExecutionDegreesByExecutionYear", args);
-        } catch (FenixServiceException e) {
-            errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
-            saveErrors(request, errors);
-        }
+	Object[] args = { infoExecutionYear };
+	List executionDegreesList = null;
+	try {
+	    // ReadExecutionDegreesByExecutionYear
+	    executionDegreesList = (List) ServiceManagerServiceFactory.executeService(
+		    "ReadNonMasterExecutionDegreesByExecutionYear", args);
+	} catch (FenixServiceException e) {
+	    errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
+	    saveErrors(request, errors);
+	}
 
-        //buil a list of degrees by execution degrees list
-        List degreesList = buildDegreesList(executionDegreesList);
+	// buil a list of degrees by execution degrees list
+	List degreesList = buildDegreesList(executionDegreesList);
 
-        //put both list in request
+	// put both list in request
 
-        request.setAttribute("degreesList", degreesList);
-        request.setAttribute("inEnglish", inEnglish);
-        return mapping.findForward("showDegrees");
+	request.setAttribute("degreesList", degreesList);
+	request.setAttribute("inEnglish", inEnglish);
+	return mapping.findForward("showDegrees");
     }
 
-    public ActionForward master(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
+    public ActionForward master(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	ActionErrors errors = new ActionErrors();
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-        InfoExecutionYear infoExecutionYear = null;
-        String ano = null;
-        if (infoExecutionPeriod != null) {
-            infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
-            ano = infoExecutionYear.getYear();
-        }
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionYear infoExecutionYear = null;
+	String ano = null;
+	if (infoExecutionPeriod != null) {
+	    infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
+	    ano = infoExecutionYear.getYear();
+	}
 
-        Object[] args = { ano };
+	Object[] args = { ano };
 
-        List executionDegreesList = null;
-        try {
-            //ReadExecutionDegreesByExecutionYear
-            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadMasterDegrees", args);
-        } catch (FenixServiceException e) {
-            errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
-            saveErrors(request, errors);
-        }
+	List executionDegreesList = null;
+	try {
+	    // ReadExecutionDegreesByExecutionYear
+	    executionDegreesList = (List) ServiceManagerServiceFactory.executeService("ReadMasterDegrees", args);
+	} catch (FenixServiceException e) {
+	    errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
+	    saveErrors(request, errors);
+	}
 
-        //buil a list of degrees by execution degrees list
-        List degreesList = buildDegreesList(executionDegreesList);
+	// buil a list of degrees by execution degrees list
+	List degreesList = buildDegreesList(executionDegreesList);
 
-        //put both list in request
-        request.setAttribute("degreesList", degreesList);
+	// put both list in request
+	request.setAttribute("degreesList", degreesList);
 
-        return mapping.findForward("showDegrees");
+	return mapping.findForward("showDegrees");
     }
 
     private List buildDegreesList(List executionDegreesList) {
-        if (executionDegreesList == null) {
-            return null;
-        }
+	if (executionDegreesList == null) {
+	    return null;
+	}
 
-        List degreesList = new ArrayList();
+	List degreesList = new ArrayList();
 
-        ListIterator listIterator = executionDegreesList.listIterator();
-        while (listIterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) listIterator.next();
+	ListIterator listIterator = executionDegreesList.listIterator();
+	while (listIterator.hasNext()) {
+	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) listIterator.next();
 
-            if (!degreesList.contains(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree())) {
+	    if (!degreesList.contains(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree())) {
 
-                degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
-            }
-        }
+		degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
+	    }
+	}
 
-        //order list by alphabetic order of the code
-        Collections.sort(degreesList, new BeanComparator("nome"));
+	// order list by alphabetic order of the code
+	Collections.sort(degreesList, new BeanComparator("nome"));
 
-        return degreesList;
+	return degreesList;
     }
 }

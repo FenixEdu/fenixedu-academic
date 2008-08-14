@@ -22,29 +22,27 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadActiveDegreeCurricularPlansByExecutionYear extends Service {
 
-    public List run(Integer executionYearID) throws FenixServiceException{
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
-        
-        List executionDegrees = null;
-        if (executionYear != null) {
-            executionDegrees = executionYear.getExecutionDegrees();
-        }
+    public List run(Integer executionYearID) throws FenixServiceException {
+	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-        if (executionDegrees == null) {
-            throw new FenixServiceException("nullDegree");
-        }
+	List executionDegrees = null;
+	if (executionYear != null) {
+	    executionDegrees = executionYear.getExecutionDegrees();
+	}
 
-        List infoDegreeCurricularPlans = (List) CollectionUtils.collect(executionDegrees,
-                new Transformer() {
-                    public Object transform(Object obj) {
-                        ExecutionDegree cursoExecucao = (ExecutionDegree) obj;
-                        DegreeCurricularPlan degreeCurricularPlan = cursoExecucao
-                                .getDegreeCurricularPlan();
-                        return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-                    }
-                });
+	if (executionDegrees == null) {
+	    throw new FenixServiceException("nullDegree");
+	}
 
-        return infoDegreeCurricularPlans;
+	List infoDegreeCurricularPlans = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
+	    public Object transform(Object obj) {
+		ExecutionDegree cursoExecucao = (ExecutionDegree) obj;
+		DegreeCurricularPlan degreeCurricularPlan = cursoExecucao.getDegreeCurricularPlan();
+		return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+	    }
+	});
+
+	return infoDegreeCurricularPlans;
     }
 
 }

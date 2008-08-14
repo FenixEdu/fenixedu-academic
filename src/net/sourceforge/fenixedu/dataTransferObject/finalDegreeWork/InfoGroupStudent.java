@@ -11,27 +11,26 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class InfoGroupStudent extends InfoObject {
 
     private DomainReference<GroupStudent> groupStudentDomainReference;
-    
+
     public InfoGroupStudent(final GroupStudent groupStudent) {
 	groupStudentDomainReference = new DomainReference<GroupStudent>(groupStudent);
     }
-    
+
     public static InfoGroupStudent newInfoFromDomain(GroupStudent groupStudent) {
 	return groupStudent == null ? null : new InfoGroupStudent(groupStudent);
     }
-    
+
     private GroupStudent getGroupStudent() {
-	return groupStudentDomainReference == null ?  null : groupStudentDomainReference.getObject();
+	return groupStudentDomainReference == null ? null : groupStudentDomainReference.getObject();
     }
-    
+
     public boolean equals(Object obj) {
-	return obj instanceof InfoGroupStudent
-		&& getGroupStudent() == ((InfoGroupStudent) obj).getGroupStudent();
+	return obj instanceof InfoGroupStudent && getGroupStudent() == ((InfoGroupStudent) obj).getGroupStudent();
     }
 
     public int hashCode() {
@@ -58,7 +57,6 @@ public class InfoGroupStudent extends InfoObject {
     public InfoGroup getFinalDegreeDegreeWorkGroup() {
 	return InfoGroup.newInfoFromDomain(getGroupStudent().getFinalDegreeDegreeWorkGroup());
     }
-
 
     /**
      * @return Returns the finalDegreeWorkProposalConfirmation.

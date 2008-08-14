@@ -21,14 +21,14 @@ public class ProfessorshipSupportLessonsDTO extends DataTranferObject {
      * @return Returns the infoProfessorShip.
      */
     public InfoProfessorship getInfoProfessorship() {
-        return this.infoProfessorship;
+	return this.infoProfessorship;
     }
 
     /**
      * @return Returns the infoSupportLessonList.
      */
     public List getInfoSupportLessonList() {
-        return this.infoSupportLessonList;
+	return this.infoSupportLessonList;
     }
 
     /**
@@ -36,7 +36,7 @@ public class ProfessorshipSupportLessonsDTO extends DataTranferObject {
      *            The infoProfessorShip to set.
      */
     public void setInfoProfessorship(InfoProfessorship infoProfessorShip) {
-        this.infoProfessorship = infoProfessorShip;
+	this.infoProfessorship = infoProfessorShip;
     }
 
     /**
@@ -44,7 +44,7 @@ public class ProfessorshipSupportLessonsDTO extends DataTranferObject {
      *            The infoSupportLessonList to set.
      */
     public void setInfoSupportLessonList(List infoSupportLessonList) {
-        this.infoSupportLessonList = infoSupportLessonList;
+	this.infoSupportLessonList = infoSupportLessonList;
     }
 
 }

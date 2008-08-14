@@ -22,49 +22,48 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(Dominio.Guide)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(
+     * Dominio.Guide)
      */
     public void copyFromDomain(Guide guide) {
-        super.copyFromDomain(guide);
-        if (guide != null) {
-            setInfoPerson(InfoPerson.newInfoFromDomain(guide.getPerson()));
-            setInfoExecutionDegree(InfoExecutionDegree
-                    .newInfoFromDomain(guide.getExecutionDegree()));
-            setInfoContributor(InfoContributor.newInfoFromDomain(guide.getContributorParty()));
-            setInfoGuideSituation(InfoGuideSituation.newInfoFromDomain(guide.getActiveSituation()));
+	super.copyFromDomain(guide);
+	if (guide != null) {
+	    setInfoPerson(InfoPerson.newInfoFromDomain(guide.getPerson()));
+	    setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(guide.getExecutionDegree()));
+	    setInfoContributor(InfoContributor.newInfoFromDomain(guide.getContributorParty()));
+	    setInfoGuideSituation(InfoGuideSituation.newInfoFromDomain(guide.getActiveSituation()));
 
-            if (guide.getGuideEntries() != null) {
-                List infoGuideEntryList = (List) CollectionUtils.collect(guide.getGuideEntries(),
-                        new Transformer() {
+	    if (guide.getGuideEntries() != null) {
+		List infoGuideEntryList = (List) CollectionUtils.collect(guide.getGuideEntries(), new Transformer() {
 
-                            public Object transform(Object arg0) {
-                                GuideEntry guideEntry = (GuideEntry) arg0;
-                                return InfoGuideEntry.newInfoFromDomain(guideEntry);
-                            }
-                        });
-                setInfoGuideEntries(infoGuideEntryList);
-            }
+		    public Object transform(Object arg0) {
+			GuideEntry guideEntry = (GuideEntry) arg0;
+			return InfoGuideEntry.newInfoFromDomain(guideEntry);
+		    }
+		});
+		setInfoGuideEntries(infoGuideEntryList);
+	    }
 
-            if (guide.getGuideSituations() != null) {
-                List infoGuideSituationList = (List) CollectionUtils.collect(guide.getGuideSituations(),
-                        new Transformer() {
+	    if (guide.getGuideSituations() != null) {
+		List infoGuideSituationList = (List) CollectionUtils.collect(guide.getGuideSituations(), new Transformer() {
 
-                            public Object transform(Object arg0) {
-                                GuideSituation guideSituation = (GuideSituation) arg0;
-                                return InfoGuideSituation.newInfoFromDomain(guideSituation);
-                            }
-                        });
-                setInfoGuideSituations(infoGuideSituationList);
-            }
-        }
+		    public Object transform(Object arg0) {
+			GuideSituation guideSituation = (GuideSituation) arg0;
+			return InfoGuideSituation.newInfoFromDomain(guideSituation);
+		    }
+		});
+		setInfoGuideSituations(infoGuideSituationList);
+	    }
+	}
     }
 
     public static InfoGuide newInfoFromDomain(Guide guide) {
-        InfoGuideWithPersonAndExecutionDegreeAndContributor infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
-        if (guide != null) {
-            infoGuide.copyFromDomain(guide);
-        }
+	InfoGuideWithPersonAndExecutionDegreeAndContributor infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
+	if (guide != null) {
+	    infoGuide.copyFromDomain(guide);
+	}
 
-        return infoGuide;
+	return infoGuide;
     }
 }

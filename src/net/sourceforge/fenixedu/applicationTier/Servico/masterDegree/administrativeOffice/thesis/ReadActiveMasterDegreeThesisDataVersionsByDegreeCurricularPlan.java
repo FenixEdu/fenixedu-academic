@@ -20,29 +20,26 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends Service {
 
-    public List run(Integer degreeCurricularPlanID) throws FenixServiceException{
+    public List run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
-                .readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        List masterDegreeThesisDataVersions = degreeCurricularPlan
-                .readActiveMasterDegreeThesisDataVersions();
+	List masterDegreeThesisDataVersions = degreeCurricularPlan.readActiveMasterDegreeThesisDataVersions();
 
-        if (masterDegreeThesisDataVersions == null || masterDegreeThesisDataVersions.isEmpty()) {
-            throw new NonExistingServiceException(
-                    "error.exception.masterDegree.nonExistingMasterDegreeThesis");
-        }
+	if (masterDegreeThesisDataVersions == null || masterDegreeThesisDataVersions.isEmpty()) {
+	    throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesis");
+	}
 
-        CollectionUtils.transform(masterDegreeThesisDataVersions, new Transformer() {
+	CollectionUtils.transform(masterDegreeThesisDataVersions, new Transformer() {
 
-            public Object transform(Object arg0) {
-                MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) arg0;
-                return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
-                        .newInfoFromDomain(masterDegreeThesisDataVersion);
-            }
+	    public Object transform(Object arg0) {
+		MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) arg0;
+		return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
+			.newInfoFromDomain(masterDegreeThesisDataVersion);
+	    }
 
-        });
+	});
 
-        return masterDegreeThesisDataVersions;
+	return masterDegreeThesisDataVersions;
     }
 }

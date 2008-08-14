@@ -17,23 +17,23 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadPersonToDelegateAccess extends Service {
 
-    public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException{
-        Person person = Person.readPersonByUsername(username);
-        if (person == null) {
-            throw new ExcepcaoInexistente();
-        } else if (!isTeacherOrEmployee(person)) {
-            throw new InvalidArgumentsServiceException();
-        }
-        return InfoPerson.newInfoFromDomain(person);
+    public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException {
+	Person person = Person.readPersonByUsername(username);
+	if (person == null) {
+	    throw new ExcepcaoInexistente();
+	} else if (!isTeacherOrEmployee(person)) {
+	    throw new InvalidArgumentsServiceException();
+	}
+	return InfoPerson.newInfoFromDomain(person);
     }
 
     private boolean isTeacherOrEmployee(Person person) {
-        if (person.getTeacher() == null) {
-            if (person.getEmployee() == null) {
-                return false;
-            }
-        }
-        return true;
+	if (person.getTeacher() == null) {
+	    if (person.getEmployee() == null) {
+		return false;
+	    }
+	}
+	return true;
     }
 
 }

@@ -24,8 +24,7 @@ public class SearchCurrentExecutionCourses extends Service implements AutoComple
 	List<DomainObject> result = new ArrayList<DomainObject>();
 
 	String slotName = arguments.get("slot");
-	Collection<ExecutionCourse> objects = ExecutionSemester.readActualExecutionSemester()
-		.getAssociatedExecutionCourses();
+	Collection<ExecutionCourse> objects = ExecutionSemester.readActualExecutionSemester().getAssociatedExecutionCourses();
 
 	if (value == null) {
 	    result.addAll(objects);
@@ -40,8 +39,7 @@ public class SearchCurrentExecutionCourses extends Service implements AutoComple
 			continue;
 		    }
 
-		    String normalizedValue = StringNormalizer.normalize(objectValue.toString())
-			    .toLowerCase();
+		    String normalizedValue = StringNormalizer.normalize(objectValue.toString()).toLowerCase();
 
 		    for (int i = 0; i < values.length; i++) {
 			String part = values[i];

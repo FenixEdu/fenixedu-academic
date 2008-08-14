@@ -39,7 +39,7 @@ public class UnitFileTag extends UnitFileTag_Base {
 
     public Set<UnitFileTag> getNeighboursTags() {
 	Set<UnitFileTag> tags = new HashSet<UnitFileTag>();
-	for(UnitFile file : getTaggedFiles()) {
+	for (UnitFile file : getTaggedFiles()) {
 	    tags.addAll(file.getUnitFileTags());
 	}
 	tags.remove(this);

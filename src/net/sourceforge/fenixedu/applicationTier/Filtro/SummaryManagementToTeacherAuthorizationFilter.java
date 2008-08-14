@@ -42,15 +42,15 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
 	    Professorship professorshipLogged = teacherLogged.getProfessorshipByExecutionCourse(executionCourse);
 	    boolean executionCourseResponsibleLogged = teacherLogged.isResponsibleFor(executionCourse) != null ? true : false;
 
-	    if ((userViewLogged == null) || (userViewLogged.getRoleTypes() == null)
-		    || !userViewLogged.hasRoleType(getRoleType()) || professorshipLogged == null) {
+	    if ((userViewLogged == null) || (userViewLogged.getRoleTypes() == null) || !userViewLogged.hasRoleType(getRoleType())
+		    || professorshipLogged == null) {
 		throw new NotAuthorizedFilterException("error.summary.not.authorized");
 	    }
 	    if (executionCourseResponsibleLogged
 		    && (summary.getProfessorship() != null && (!summary.getProfessorship().equals(professorshipLogged)))) {
 		throw new NotAuthorizedFilterException("error.summary.not.authorized");
 
-	    } else if (!executionCourseResponsibleLogged 
+	    } else if (!executionCourseResponsibleLogged
 		    && (summary.getProfessorship() == null || (!summary.getProfessorship().equals(professorshipLogged)))) {
 		throw new NotAuthorizedFilterException("error.summary.not.authorized");
 	    }

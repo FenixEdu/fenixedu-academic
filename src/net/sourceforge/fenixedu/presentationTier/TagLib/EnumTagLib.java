@@ -78,14 +78,12 @@ public class EnumTagLib extends BodyTagSupport {
 	    }
 
 	    if (this.excludedFields != null && this.includedFields != null) {
-		throw new IllegalArgumentException(
-			"includedFields and excludedFields are both not empty");
+		throw new IllegalArgumentException("includedFields and excludedFields are both not empty");
 	    }
 
 	    final Method method = clazz.getMethod("values", (Class[]) null);
 	    final Object[] objects = (Object[]) method.invoke(clazz, (Object[]) null);
-	    final Collection<LabelValueBean> labelValueBeans = new ArrayList<LabelValueBean>(
-		    objects.length);
+	    final Collection<LabelValueBean> labelValueBeans = new ArrayList<LabelValueBean>(objects.length);
 
 	    final Set<String> excludedFieldsNames = new HashSet();
 	    fillSetWithSplittedString(excludedFieldsNames, this.excludedFields);
@@ -127,9 +125,8 @@ public class EnumTagLib extends BodyTagSupport {
     }
 
     private String getMessageFromBundle(String key) throws JspException {
-	return (TagUtils.getInstance().present(this.pageContext, this.bundle, this.locale, key)) ? TagUtils
-		.getInstance().message(this.pageContext, this.bundle, this.locale, key)
-		: null;
+	return (TagUtils.getInstance().present(this.pageContext, this.bundle, this.locale, key)) ? TagUtils.getInstance()
+		.message(this.pageContext, this.bundle, this.locale, key) : null;
     }
 
     private void fillSetWithSplittedString(final Set<String> fieldsNamesSet, String fieldNamesString) {

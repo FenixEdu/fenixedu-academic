@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class SmsLimitReachedServiceException extends FenixServiceException {
 
@@ -17,28 +17,28 @@ public class SmsLimitReachedServiceException extends FenixServiceException {
      *  
      */
     public SmsLimitReachedServiceException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public SmsLimitReachedServiceException(int errorType) {
-        super(errorType);
+	super(errorType);
     }
 
     /**
      * @param s
      */
     public SmsLimitReachedServiceException(String s) {
-        super(s);
+	super(s);
     }
 
     /**
      * @param cause
      */
     public SmsLimitReachedServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -46,14 +46,14 @@ public class SmsLimitReachedServiceException extends FenixServiceException {
      * @param cause
      */
     public SmsLimitReachedServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[SmsLimitReachedServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[SmsLimitReachedServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

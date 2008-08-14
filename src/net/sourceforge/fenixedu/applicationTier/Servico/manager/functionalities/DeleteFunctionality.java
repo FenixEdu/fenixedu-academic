@@ -6,18 +6,19 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 /**
  * This service is used to delete a functionality from persistent storage.
- *
+ * 
  * @author cfgi
  */
 public class DeleteFunctionality extends Service {
 
     /**
-     * @param functionality the functionality to delete
+     * @param functionality
+     *            the functionality to delete
      * 
      * @see Functionality#delete()
      */
     public void run(Content functionality) {
-        functionality.delete();
+	functionality.delete();
     }
-    
+
 }

@@ -33,68 +33,66 @@ public class TestQuestionStudentsChangesType extends FenixUtil {
 
     private Integer type;
 
-    //    private String typeString;
+    // private String typeString;
 
     public TestQuestionStudentsChangesType() {
     }
 
     public TestQuestionStudentsChangesType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public TestQuestionStudentsChangesType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public TestQuestionStudentsChangesType(String typeString) {
-        this.type = getTypeCode(typeString);
+	this.type = getTypeCode(typeString);
     }
 
     public Integer getType() {
-        return type;
+	return type;
     }
 
     public void setType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public void setType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public List getAllTypes() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(THIS_STUDENT_STRING, new Integer(THIS_STUDENT).toString()));
-        result.add(new LabelValueBean(STUDENTS_FROM_TEST_VARIATION_STRING, new Integer(
-                STUDENTS_FROM_TEST_VARIATION).toString()));
-        result.add(new LabelValueBean(STUDENTS_FROM_TEST_STRING, new Integer(STUDENTS_FROM_TEST)
-                .toString()));
-        result.add(new LabelValueBean(ALL_STUDENTS_STRING, new Integer(ALL_STUDENTS).toString()));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(THIS_STUDENT_STRING, new Integer(THIS_STUDENT).toString()));
+	result.add(new LabelValueBean(STUDENTS_FROM_TEST_VARIATION_STRING, new Integer(STUDENTS_FROM_TEST_VARIATION).toString()));
+	result.add(new LabelValueBean(STUDENTS_FROM_TEST_STRING, new Integer(STUDENTS_FROM_TEST).toString()));
+	result.add(new LabelValueBean(ALL_STUDENTS_STRING, new Integer(ALL_STUDENTS).toString()));
+	return result;
     }
 
     public Integer getTypeCode(String typeName) {
-        if (typeName.equals(THIS_STUDENT_STRING))
-            return new Integer(THIS_STUDENT);
-        else if (typeName.equals(STUDENTS_FROM_TEST_VARIATION_STRING))
-            return new Integer(STUDENTS_FROM_TEST_VARIATION);
-        else if (typeName.equals(STUDENTS_FROM_TEST_STRING))
-            return new Integer(STUDENTS_FROM_TEST);
-        else if (typeName.equals(ALL_STUDENTS_STRING))
-            return new Integer(ALL_STUDENTS);
-        return null;
+	if (typeName.equals(THIS_STUDENT_STRING))
+	    return new Integer(THIS_STUDENT);
+	else if (typeName.equals(STUDENTS_FROM_TEST_VARIATION_STRING))
+	    return new Integer(STUDENTS_FROM_TEST_VARIATION);
+	else if (typeName.equals(STUDENTS_FROM_TEST_STRING))
+	    return new Integer(STUDENTS_FROM_TEST);
+	else if (typeName.equals(ALL_STUDENTS_STRING))
+	    return new Integer(ALL_STUDENTS);
+	return null;
     }
 
     public String getTypeString() {
-        if (type.intValue() == THIS_STUDENT)
-            return new String(THIS_STUDENT_STRING);
-        else if (type.intValue() == STUDENTS_FROM_TEST_VARIATION)
-            return new String(STUDENTS_FROM_TEST_VARIATION_STRING);
-        else if (type.intValue() == STUDENTS_FROM_TEST)
-            return new String(STUDENTS_FROM_TEST_STRING);
-        else if (type.intValue() == ALL_STUDENTS)
-            return new String(ALL_STUDENTS_STRING);
-        return null;
+	if (type.intValue() == THIS_STUDENT)
+	    return new String(THIS_STUDENT_STRING);
+	else if (type.intValue() == STUDENTS_FROM_TEST_VARIATION)
+	    return new String(STUDENTS_FROM_TEST_VARIATION_STRING);
+	else if (type.intValue() == STUDENTS_FROM_TEST)
+	    return new String(STUDENTS_FROM_TEST_STRING);
+	else if (type.intValue() == ALL_STUDENTS)
+	    return new String(ALL_STUDENTS_STRING);
+	return null;
     }
 
 }

@@ -79,7 +79,7 @@ abstract public class StudentCurricularPlanEnrolment {
     protected void assertEnrolmentPreConditions() {
 
 	final Registration registration = studentCurricularPlan.getRegistration();
-	
+
 	if (!responsiblePerson.hasRole(RoleType.MANAGER) && registration.getStudent().isAnyTuitionInDebt()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
 	}
@@ -96,7 +96,8 @@ abstract public class StudentCurricularPlanEnrolment {
 	    }
 
 	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionSemester)
-		    && !studentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionSemester)) {
+		    && !studentCurricularPlan
+			    .hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionSemester)) {
 		throw new DomainException(
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
@@ -162,6 +163,6 @@ abstract public class StudentCurricularPlanEnrolment {
     abstract protected void addEnroled();
 
     abstract protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate();
-    
+
     abstract protected void performEnrolments(Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap);
 }

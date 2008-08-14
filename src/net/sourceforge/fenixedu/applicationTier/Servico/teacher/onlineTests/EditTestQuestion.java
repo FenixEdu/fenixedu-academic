@@ -15,21 +15,21 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
  */
 public class EditTestQuestion extends Service {
 
-    public void run(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder, Double testQuestionValue, CorrectionFormula formula)
-            throws FenixServiceException {
-        TestQuestion testQuestion = rootDomainObject.readTestQuestionByOID(testQuestionId);
-        if (testQuestion == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-        if (testQuestionOrder == -1) {
-            testQuestionOrder = testQuestion.getTest().getTestQuestions().size();
-        } else if (testQuestionOrder == -2) {
-            testQuestionOrder = testQuestion.getTestQuestionOrder();
-        }
-        if (testQuestionOrder.compareTo(testQuestion.getTestQuestionOrder()) < 0) {
-            testQuestionOrder++;
-        }
+    public void run(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder, Double testQuestionValue,
+	    CorrectionFormula formula) throws FenixServiceException {
+	TestQuestion testQuestion = rootDomainObject.readTestQuestionByOID(testQuestionId);
+	if (testQuestion == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
+	if (testQuestionOrder == -1) {
+	    testQuestionOrder = testQuestion.getTest().getTestQuestions().size();
+	} else if (testQuestionOrder == -2) {
+	    testQuestionOrder = testQuestion.getTestQuestionOrder();
+	}
+	if (testQuestionOrder.compareTo(testQuestion.getTestQuestionOrder()) < 0) {
+	    testQuestionOrder++;
+	}
 
-        testQuestion.editTestQuestion(testQuestionOrder, testQuestionValue, formula);
+	testQuestion.editTestQuestion(testQuestionOrder, testQuestionValue, formula);
     }
 }

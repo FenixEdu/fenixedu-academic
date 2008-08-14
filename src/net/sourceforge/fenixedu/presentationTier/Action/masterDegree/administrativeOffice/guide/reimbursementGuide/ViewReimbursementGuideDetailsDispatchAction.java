@@ -25,39 +25,38 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class ViewReimbursementGuideDetailsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
+	Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
 
-        InfoReimbursementGuide infoReimbursementGuide = null;
+	InfoReimbursementGuide infoReimbursementGuide = null;
 
-        Object args[] = { reimbursementGuideId };
-        try {
-            infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils.executeService(
-                    "ViewReimbursementGuide", args);
+	Object args[] = { reimbursementGuideId };
+	try {
+	    infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils.executeService("ViewReimbursementGuide", args);
 
-            request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        }
+	    request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+	}
 
-        return mapping.findForward("start");
+	return mapping.findForward("start");
 
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
+	String parameterString = request.getParameter(parameter);
+	if (parameterString == null) {
+	    parameterString = (String) request.getAttribute(parameter);
+	}
+	return parameterString;
     }
 
 }

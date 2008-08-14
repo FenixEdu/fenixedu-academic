@@ -6,33 +6,32 @@ public class PathElementsProvider {
     private int index;
 
     public PathElementsProvider(String path) {
-        super();
-        
-        this.elements = path.split("/");
-        this.index = 0;
+	super();
+
+	this.elements = path.split("/");
+	this.index = 0;
     }
-    
+
     public int getElementCount() {
-        return this.elements.length;
+	return this.elements.length;
     }
 
     public String peek(int offset) {
-        if (this.index + offset >= getElementCount()) {
-            return null;
-        }
-        else {
-            return this.elements[this.index + offset];
-        }
+	if (this.index + offset >= getElementCount()) {
+	    return null;
+	} else {
+	    return this.elements[this.index + offset];
+	}
     }
-    
+
     public String current() {
-        return peek(0);
+	return peek(0);
     }
-    
+
     public boolean hasNext() {
-        return peek(1) != null;
+	return peek(1) != null;
     }
-    
+
     /**
      * Advances the path provider and returns the current element, that is, the
      * same as {@link #current()} before the class to {@link #next()}.
@@ -40,10 +39,10 @@ public class PathElementsProvider {
      * @return the current element
      */
     public String next() {
-        String next = current();
-        this.index++;
-        
-        return next;
+	String next = current();
+	this.index++;
+
+	return next;
     }
-    
+
 }

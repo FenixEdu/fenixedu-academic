@@ -13,9 +13,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionCoursesByCurricularCourse extends Service {
 
-    public List run(Integer curricularCourseId) throws FenixServiceException{
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
-		.readDegreeModuleByOID(curricularCourseId);
+    public List run(Integer curricularCourseId) throws FenixServiceException {
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 	if (curricularCourse == null) {
 	    throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 	}

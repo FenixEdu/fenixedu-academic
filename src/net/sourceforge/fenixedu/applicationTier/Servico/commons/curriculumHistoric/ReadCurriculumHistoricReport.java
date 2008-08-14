@@ -8,12 +8,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class ReadCurriculumHistoricReport extends Service {
 
-    public InfoCurriculumHistoricReport run(final Integer curricularCourseOID, final Integer semester, final Integer executionYearOID) {
+    public InfoCurriculumHistoricReport run(final Integer curricularCourseOID, final Integer semester,
+	    final Integer executionYearOID) {
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearOID);
-        final ExecutionSemester executionSemester = executionYear.readExecutionPeriodForSemester(semester);
-        
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
-	
+	final ExecutionSemester executionSemester = executionYear.readExecutionPeriodForSemester(semester);
+
+	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
+
 	return new InfoCurriculumHistoricReport(executionSemester, curricularCourse);
     }
 

@@ -20,42 +20,42 @@ public class InfoGuideList extends InfoObject {
      * @return
      */
     public List getGuides() {
-        return guides;
+	return guides;
     }
 
     /**
      * @param guides
      */
     public void setGuides(List guides) {
-        this.guides = guides;
+	this.guides = guides;
     }
 
     /**
      * @return
      */
     public String getSituation() {
-        return situation;
+	return situation;
     }
 
     /**
      * @param situation
      */
     public void setSituation(String situation) {
-        this.situation = situation;
+	this.situation = situation;
     }
 
     /**
      * @return
      */
     public Double getTotal() {
-        return total;
+	return total;
     }
 
     /**
      * @param total
      */
     public void setTotal(Double total) {
-        this.total = total;
+	this.total = total;
     }
 
 }

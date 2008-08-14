@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStat
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class InfoSiteStudentCourseReport extends DataTranferObject {
     private InfoStudentCourseReport infoStudentCourseReport;
@@ -25,14 +25,14 @@ public class InfoSiteStudentCourseReport extends DataTranferObject {
      *  
      */
     public InfoSiteStudentCourseReport() {
-        super();
+	super();
     }
 
     /**
      * @return Returns the infoSiteEvaluationHistory.
      */
     public List getInfoSiteEvaluationHistory() {
-        return infoSiteEvaluationHistory;
+	return infoSiteEvaluationHistory;
     }
 
     /**
@@ -40,14 +40,14 @@ public class InfoSiteStudentCourseReport extends DataTranferObject {
      *            The infoSiteEvaluationHistory to set.
      */
     public void setInfoSiteEvaluationHistory(List infoSiteEvaluationHistory) {
-        this.infoSiteEvaluationHistory = infoSiteEvaluationHistory;
+	this.infoSiteEvaluationHistory = infoSiteEvaluationHistory;
     }
 
     /**
      * @return Returns the infoSiteEvaluationStatistics.
      */
     public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
-        return infoSiteEvaluationStatistics;
+	return infoSiteEvaluationStatistics;
     }
 
     /**
@@ -55,14 +55,14 @@ public class InfoSiteStudentCourseReport extends DataTranferObject {
      *            The infoSiteEvaluationStatistics to set.
      */
     public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
-        this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
+	this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
     }
 
     /**
      * @return Returns the infoStudentCourseReport.
      */
     public InfoStudentCourseReport getInfoStudentCourseReport() {
-        return infoStudentCourseReport;
+	return infoStudentCourseReport;
     }
 
     /**
@@ -70,6 +70,6 @@ public class InfoSiteStudentCourseReport extends DataTranferObject {
      *            The infoStudentCourseReport to set.
      */
     public void setInfoStudentCourseReport(InfoStudentCourseReport infoStudentCourseReport) {
-        this.infoStudentCourseReport = infoStudentCourseReport;
+	this.infoStudentCourseReport = infoStudentCourseReport;
     }
 }

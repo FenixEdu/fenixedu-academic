@@ -9,21 +9,22 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import org.apache.commons.lang.StringUtils;
 
 public class PhotocopyRequestEvent extends PhotocopyRequestEvent_Base {
-    
+
     protected PhotocopyRequestEvent() {
-        super();
+	super();
     }
 
-    public PhotocopyRequestEvent(final AdministrativeOffice administrativeOffice, final Person person, final PhotocopyRequest request) {
+    public PhotocopyRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+	    final PhotocopyRequest request) {
 	this();
 	super.init(administrativeOffice, request.getEventType(), person, request);
     }
-    
+
     @Override
     public PhotocopyRequest getAcademicServiceRequest() {
-        return (PhotocopyRequest) super.getAcademicServiceRequest();
+	return (PhotocopyRequest) super.getAcademicServiceRequest();
     }
-    
+
     public Integer getNumberOfPages() {
 	return getAcademicServiceRequest().getNumberOfPages();
     }
@@ -31,7 +32,7 @@ public class PhotocopyRequestEvent extends PhotocopyRequestEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	
+
 	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
 	if (!StringUtils.isEmpty(getAcademicServiceRequest().getPurpose())) {
 	    labelFormatter.appendLabel(" (").appendLabel(getAcademicServiceRequest().getPurpose()).appendLabel(")");

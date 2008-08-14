@@ -12,28 +12,28 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
-            {
-        InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) infoObject;
-        ShiftProfessorship shiftProfessorship = (ShiftProfessorship) domainObject;
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
+	InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) infoObject;
+	ShiftProfessorship shiftProfessorship = (ShiftProfessorship) domainObject;
 
-        shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
+	shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
 
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(infoShiftProfessorship.getInfoProfessorship().getIdInternal());
-        shiftProfessorship.setProfessorship(professorship);
+	Professorship professorship = rootDomainObject.readProfessorshipByOID(infoShiftProfessorship.getInfoProfessorship()
+		.getIdInternal());
+	shiftProfessorship.setProfessorship(professorship);
 
-        Shift shift = rootDomainObject.readShiftByOID(infoShiftProfessorship.getInfoShift().getIdInternal());
-        shiftProfessorship.setShift(shift);
+	Shift shift = rootDomainObject.readShiftByOID(infoShiftProfessorship.getInfoShift().getIdInternal());
+	shiftProfessorship.setShift(shift);
     }
 
     @Override
     protected DomainObject createNewDomainObject(InfoObject infoObject) {
-        return new ShiftProfessorship();
+	return new ShiftProfessorship();
     }
 
-	@Override
-	protected DomainObject readDomainObject(Integer idInternal) {
-		return rootDomainObject.readShiftProfessorshipByOID(idInternal);
-	}
+    @Override
+    protected DomainObject readDomainObject(Integer idInternal) {
+	return rootDomainObject.readShiftProfessorshipByOID(idInternal);
+    }
 
 }

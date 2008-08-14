@@ -179,9 +179,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
 
 	return null;
-	
+
 	// throw new DomainException(
-	// "error.accounting.events.gratuity.GratuityEventWithPaymentPlan.paymentCode.does.not.have.corresponding.entryDTO.because.data.is.corrupted");
+	// "error.accounting.events.gratuity.GratuityEventWithPaymentPlan.paymentCode.does.not.have.corresponding.entryDTO.because.data.is.corrupted"
+	// );
 
     }
 

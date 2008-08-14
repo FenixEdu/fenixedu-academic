@@ -4,17 +4,15 @@
  */
 package net.sourceforge.fenixedu.domain.research.project;
 
+public enum ProjectType {
 
-public enum ProjectType{
+    INTERNAL_PROJECT, EXTERNAL_PROJECT;
 
-    INTERNAL_PROJECT,
-    EXTERNAL_PROJECT;
-    
     public String getName() {
-        return name();
+	return name();
     }
-    
-    public static ProjectType getDefaultType(){
-        return INTERNAL_PROJECT;
+
+    public static ProjectType getDefaultType() {
+	return INTERNAL_PROJECT;
     }
 }

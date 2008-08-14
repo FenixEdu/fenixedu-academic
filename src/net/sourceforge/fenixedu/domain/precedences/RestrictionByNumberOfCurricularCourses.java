@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public abstract class RestrictionByNumberOfCurricularCourses extends RestrictionByNumberOfCurricularCourses_Base {
 
-	public RestrictionByNumberOfCurricularCourses() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public RestrictionByNumberOfCurricularCourses() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
 }

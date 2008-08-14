@@ -18,7 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 public class ExtraExamRequest extends ExtraExamRequest_Base {
-    
+
     private static List<StudentStatuteType> acceptedStatutes = Arrays.asList(StudentStatuteType.ASSOCIATIVE_LEADER);
 
     protected ExtraExamRequest() {

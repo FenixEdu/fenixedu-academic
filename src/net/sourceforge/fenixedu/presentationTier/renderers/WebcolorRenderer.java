@@ -16,28 +16,28 @@ public class WebcolorRenderer extends OutputRenderer {
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new Layout() {
+	return new Layout() {
 
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                String value = (String) object;
-                
-                if (value == null) {
-                    return new HtmlText();
-                }
-                
-                HtmlInlineContainer container = new HtmlInlineContainer();
-                
-                HtmlText color = new HtmlText("&nbsp;", false);
-                color.setStyle(String.format("border: 1px solid %1$s; background-color: %1$s; padding: 0px 7px;", value));
-                
-                container.addChild(new HtmlText(value));
-                container.addChild(color);
-                
-                return container;
-            }
-            
-        };
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		String value = (String) object;
+
+		if (value == null) {
+		    return new HtmlText();
+		}
+
+		HtmlInlineContainer container = new HtmlInlineContainer();
+
+		HtmlText color = new HtmlText("&nbsp;", false);
+		color.setStyle(String.format("border: 1px solid %1$s; background-color: %1$s; padding: 0px 7px;", value));
+
+		container.addChild(new HtmlText(value));
+		container.addChild(color);
+
+		return container;
+	    }
+
+	};
     }
 
 }

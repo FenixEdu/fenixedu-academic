@@ -28,33 +28,33 @@ public class BookPart extends BookPart_Base {
 	super();
     }
 
-    public BookPart(Person participator, ResultParticipationRole participatorRole, String title,
-	    MultiLanguageString keywords, String bookTitle, String chapter, String volume, String publisher, Integer year, Integer firstPage,
-	    Integer lastPage, String series, String edition, String organization, Country country, String address, MultiLanguageString note,
+    public BookPart(Person participator, ResultParticipationRole participatorRole, String title, MultiLanguageString keywords,
+	    String bookTitle, String chapter, String volume, String publisher, Integer year, Integer firstPage, Integer lastPage,
+	    String series, String edition, String organization, Country country, String address, MultiLanguageString note,
 	    Month month, String url) {
 
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
 	super.setCreatorParticipation(participator, participatorRole);
-	fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume,
-		series, edition, country, address, note, month, url);
+	fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume, series, edition,
+		country, address, note, month, url);
 
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, String bookTitle, String chapter,
-	    Integer firstPage, Integer lastPage, String publisher, Integer year, String volume, String series,
-	    String edition, Country country, String address, MultiLanguageString note, Month month, String url) {
+    public void setEditAll(String title, MultiLanguageString keywords, String bookTitle, String chapter, Integer firstPage,
+	    Integer lastPage, String publisher, Integer year, String volume, String series, String edition, Country country,
+	    String address, MultiLanguageString note, Month month, String url) {
 
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
-	fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume,
-		series, edition, country, address, note, month, url);
+	fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume, series, edition,
+		country, address, note, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void checkRequiredParameters(String title, String bookTitle, Integer firstPage, Integer lastPage,
-	    String publisher, Integer year) {
+    private void checkRequiredParameters(String title, String bookTitle, Integer firstPage, Integer lastPage, String publisher,
+	    Integer year) {
 	if (title == null || title.length() == 0)
 	    throw new DomainException("error.researcher.BookPart.title.null");
 	if (publisher == null)
@@ -65,10 +65,9 @@ public class BookPart extends BookPart_Base {
 	    throw new DomainException("error.researcher.BookPart.bookTitle.null");
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, String bookTitle,
-	    String chapter, Integer firstPage, Integer lastPage, String publisher, Integer year, String volume,
-	    String series, String edition, Country country, String address, MultiLanguageString note,
-	    Month month, String url) {
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String bookTitle, String chapter,
+	    Integer firstPage, Integer lastPage, String publisher, Integer year, String volume, String series, String edition,
+	    Country country, String address, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
 	super.setPublisher(publisher);
 	super.setBookTitle(bookTitle);
@@ -96,8 +95,7 @@ public class BookPart extends BookPart_Base {
 	    resume = resume + getBookTitle() + ", ";
 	if ((getChapter() != null) && (getChapter().length() > 0))
 	    resume = resume + getChapter() + ", ";
-	if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null)
-		&& (getLastPage() > 0))
+	if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null) && (getLastPage() > 0))
 	    resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
 	if ((getEdition() != null) && (getEdition().length() > 0))
 	    resume = resume + "Ed. " + getEdition() + ", ";

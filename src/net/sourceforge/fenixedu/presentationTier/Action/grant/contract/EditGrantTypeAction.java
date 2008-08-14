@@ -31,67 +31,64 @@ public class EditGrantTypeAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data
      */
-    public ActionForward prepareEditGrantTypeForm(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditGrantTypeForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        Integer idGrantType = null;
-        if (verifyParameterInRequest(request, "idGrantType")) {
-            idGrantType = new Integer(request.getParameter("idGrantType"));
-        }
+	Integer idGrantType = null;
+	if (verifyParameterInRequest(request, "idGrantType")) {
+	    idGrantType = new Integer(request.getParameter("idGrantType"));
+	}
 
-        if (idGrantType != null) //Edit
-        {
-            try {
-                IUserView userView = UserView.getUser();
+	if (idGrantType != null) // Edit
+	{
+	    try {
+		IUserView userView = UserView.getUser();
 
-                //Read the grant type
-                Object[] args = { idGrantType };
-                InfoGrantType infoGrantType = (InfoGrantType) ServiceUtils.executeService(
-                        "ReadGrantType", args);
+		// Read the grant type
+		Object[] args = { idGrantType };
+		InfoGrantType infoGrantType = (InfoGrantType) ServiceUtils.executeService("ReadGrantType", args);
 
-                //Populate the form
-                setFormGrantType((DynaValidatorForm) form, infoGrantType);
-            } catch (FenixServiceException e) {
-                return setError(request, mapping, "errors.grant.type.read", null, null);
-            }
-        }
-        return mapping.findForward("edit-grant-type");
+		// Populate the form
+		setFormGrantType((DynaValidatorForm) form, infoGrantType);
+	    } catch (FenixServiceException e) {
+		return setError(request, mapping, "errors.grant.type.read", null, null);
+	    }
+	}
+	return mapping.findForward("edit-grant-type");
     }
 
     /*
      * Edit the Grant Type
      */
-    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        try {
+    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	try {
 
-            InfoGrantType infoGrantType = populateInfoFromForm((DynaValidatorForm) form);
-            if (infoGrantType.getMinPeriodDays() != null
-                    && infoGrantType.getMaxPeriodDays() != null
-                    && infoGrantType.getMinPeriodDays().intValue() > infoGrantType.getMaxPeriodDays()
-                            .intValue()) {
-                return setError(request, mapping, "errors.grant.type.maxminconflit", null, null);
-            }
+	    InfoGrantType infoGrantType = populateInfoFromForm((DynaValidatorForm) form);
+	    if (infoGrantType.getMinPeriodDays() != null && infoGrantType.getMaxPeriodDays() != null
+		    && infoGrantType.getMinPeriodDays().intValue() > infoGrantType.getMaxPeriodDays().intValue()) {
+		return setError(request, mapping, "errors.grant.type.maxminconflit", null, null);
+	    }
 
-            Object[] args = { infoGrantType };
-            IUserView userView = UserView.getUser();
-            ServiceUtils.executeService("EditGrantType", args);
+	    Object[] args = { infoGrantType };
+	    IUserView userView = UserView.getUser();
+	    ServiceUtils.executeService("EditGrantType", args);
 
-            return mapping.findForward("manage-grant-type");
-        } catch (FenixServiceException e) {
-            return setError(request, mapping, "errors.grant.type.bd.create", null, null);
-        }
+	    return mapping.findForward("manage-grant-type");
+	} catch (FenixServiceException e) {
+	    return setError(request, mapping, "errors.grant.type.bd.create", null, null);
+	}
     }
 
     /*
      * Populates Form from Info
      */
     private void setFormGrantType(DynaValidatorForm form, InfoGrantType infoGrantType) throws Exception {
-        BeanUtils.copyProperties(form, infoGrantType);
+	BeanUtils.copyProperties(form, infoGrantType);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        if (infoGrantType.getState() != null)
-            form.set("state", sdf.format(infoGrantType.getState()));
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	if (infoGrantType.getState() != null)
+	    form.set("state", sdf.format(infoGrantType.getState()));
     }
 
     /*
@@ -99,25 +96,24 @@ public class EditGrantTypeAction extends FenixDispatchAction {
      */
     private InfoGrantType populateInfoFromForm(DynaValidatorForm editGrantTypeForm) throws Exception {
 
-        InfoGrantType infoGrantType = new InfoGrantType();
+	InfoGrantType infoGrantType = new InfoGrantType();
 
-        if (verifyStringParameterInForm(editGrantTypeForm, "minPeriodDays"))
-            infoGrantType.setMinPeriodDays(new Integer((String) editGrantTypeForm.get("minPeriodDays")));
-        if (verifyStringParameterInForm(editGrantTypeForm, "maxPeriodDays"))
-            infoGrantType.setMaxPeriodDays(new Integer((String) editGrantTypeForm.get("maxPeriodDays")));
-        if (verifyStringParameterInForm(editGrantTypeForm, "indicativeValue"))
-            infoGrantType.setIndicativeValue(new Double((String) editGrantTypeForm
-                    .get("indicativeValue")));
+	if (verifyStringParameterInForm(editGrantTypeForm, "minPeriodDays"))
+	    infoGrantType.setMinPeriodDays(new Integer((String) editGrantTypeForm.get("minPeriodDays")));
+	if (verifyStringParameterInForm(editGrantTypeForm, "maxPeriodDays"))
+	    infoGrantType.setMaxPeriodDays(new Integer((String) editGrantTypeForm.get("maxPeriodDays")));
+	if (verifyStringParameterInForm(editGrantTypeForm, "indicativeValue"))
+	    infoGrantType.setIndicativeValue(new Double((String) editGrantTypeForm.get("indicativeValue")));
 
-        infoGrantType.setIdInternal((Integer) editGrantTypeForm.get("idInternal"));
-        infoGrantType.setName((String) editGrantTypeForm.get("name"));
-        infoGrantType.setSigla((String) editGrantTypeForm.get("sigla"));
-        infoGrantType.setSource((String) editGrantTypeForm.get("source"));
+	infoGrantType.setIdInternal((Integer) editGrantTypeForm.get("idInternal"));
+	infoGrantType.setName((String) editGrantTypeForm.get("name"));
+	infoGrantType.setSigla((String) editGrantTypeForm.get("sigla"));
+	infoGrantType.setSource((String) editGrantTypeForm.get("source"));
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        if (verifyStringParameterInForm(editGrantTypeForm, "state"))
-            infoGrantType.setState(sdf.parse((String) editGrantTypeForm.get("state")));
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	if (verifyStringParameterInForm(editGrantTypeForm, "state"))
+	    infoGrantType.setState(sdf.parse((String) editGrantTypeForm.get("state")));
 
-        return infoGrantType;
+	return infoGrantType;
     }
 }

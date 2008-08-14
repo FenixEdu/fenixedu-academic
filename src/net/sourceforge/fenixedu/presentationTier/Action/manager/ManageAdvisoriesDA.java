@@ -24,33 +24,33 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ManageAdvisoriesDA extends AnnouncementManagement {
 
-    
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("returnAction", this.getContextInformation(mapping, request));
-        request.setAttribute("returnMethod", "start");
-        return super.execute(mapping, actionForm, request, response);
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("returnAction", this.getContextInformation(mapping, request));
+	request.setAttribute("returnMethod", "start");
+	return super.execute(mapping, actionForm, request, response);
     }
 
     @Override
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-        final IUserView userView = getUserView(request);
-        final Collection<AnnouncementBoard> boardsToShow = new ArrayList<AnnouncementBoard>();
-        for (AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoards()) {
-            if (board.getWriters() == null || board.getWriters().allows(userView)) {
-                boardsToShow.add(board);
-            }
-        }
-        return boardsToShow;
+	final IUserView userView = getUserView(request);
+	final Collection<AnnouncementBoard> boardsToShow = new ArrayList<AnnouncementBoard>();
+	for (AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoards()) {
+	    if (board.getWriters() == null || board.getWriters().allows(userView)) {
+		boardsToShow.add(board);
+	    }
+	}
+	return boardsToShow;
     }
 
     @Override
     protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-        return "/manageAdvisories.do";
+	return "/manageAdvisories.do";
     }
 
     @Override
     protected String getExtraRequestParameters(HttpServletRequest request) {
-        return "";
-    }    
+	return "";
+    }
 }

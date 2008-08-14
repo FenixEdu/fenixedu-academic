@@ -22,17 +22,16 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ShowCurriculumHistoricAction extends FenixDispatchAction {
 
-    public ActionForward showCurriculumHistoric(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward showCurriculumHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	final Integer curricularCourseOID = getIntegerFromRequest(request, "curricularCourseCode");
 	final Integer semester = getIntegerFromRequest(request, "semester");
 	final Integer executionYearOID = getIntegerFromRequest(request, "executionYearID");
 	final Object[] args = new Object[] { curricularCourseOID, semester, executionYearOID };
 
-	final InfoCurriculumHistoricReport result = (InfoCurriculumHistoricReport) ServiceUtils
-		.executeService( "ReadCurriculumHistoricReport", args);
+	final InfoCurriculumHistoricReport result = (InfoCurriculumHistoricReport) ServiceUtils.executeService(
+		"ReadCurriculumHistoricReport", args);
 
 	request.setAttribute("infoCurriculumHistoricReport", result);
 

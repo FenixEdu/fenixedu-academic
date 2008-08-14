@@ -53,8 +53,8 @@ public class CourseGroup extends CourseGroup_Base {
 	super.setNameEn(StringFormatter.prettyPrint(nameEn));
     }
 
-    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn, final ExecutionSemester begin,
-	    final ExecutionSemester end) {
+    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+	    final ExecutionSemester begin, final ExecutionSemester end) {
 	init(parentCourseGroup, name, nameEn, begin, end);
     }
 
@@ -157,7 +157,8 @@ public class CourseGroup extends CourseGroup_Base {
     // Valid means that is open to execution period, and if is
     // CurricularCourse
     // the context must have same semester than executionPeriod
-    public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
+    public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz,
+	    final ExecutionSemester executionSemester) {
 	final List<Context> result = new ArrayList<Context>();
 	for (Context context : this.getChildContexts()) {
 	    if (hasClass(clazz, context.getChildDegreeModule())
@@ -190,7 +191,8 @@ public class CourseGroup extends CourseGroup_Base {
     public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
 	final List<Context> result = new ArrayList<Context>();
 	for (final Context context : getChildContexts()) {
-	    if (hasClass(clazz, context.getChildDegreeModule()) && ((executionSemester == null || context.isOpen(executionSemester)))) {
+	    if (hasClass(clazz, context.getChildDegreeModule())
+		    && ((executionSemester == null || context.isOpen(executionSemester)))) {
 		result.add(context);
 	    }
 	}
@@ -655,7 +657,8 @@ public class CourseGroup extends CourseGroup_Base {
 	for (final Context context : getActiveChildContexts()) {
 	    if (maxContextsByDegreeModule.containsKey(context.getChildDegreeModule())) {
 		final Context existingContext = maxContextsByDegreeModule.get(context.getChildDegreeModule());
-		if (existingContext.getCurricularPeriod().getChildOrder().intValue() != executionSemester.getSemester().intValue()
+		if (existingContext.getCurricularPeriod().getChildOrder().intValue() != executionSemester.getSemester()
+			.intValue()
 			&& context.getCurricularPeriod().getChildOrder().intValue() == executionSemester.getSemester().intValue()) {
 		    maxContextsByDegreeModule.put(context.getChildDegreeModule(), context);
 		}
@@ -708,7 +711,8 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public Set<Context> getActiveChildContextsWithMaxCurricularPeriodForCurricularCourses(final ExecutionSemester executionSemester) {
+    public Set<Context> getActiveChildContextsWithMaxCurricularPeriodForCurricularCourses(
+	    final ExecutionSemester executionSemester) {
 	final Set<Context> result = new HashSet<Context>();
 	for (final Context context : getActiveChildContextsWithMax(executionSemester)) {
 	    if (context.getChildDegreeModule().isCurricularCourse()) {
@@ -752,7 +756,7 @@ public class CourseGroup extends CourseGroup_Base {
     public Set<CurricularCourse> getAllOpenCurricularCourses() {
 	return getAllCurricularCourses(ExecutionSemester.readActualExecutionSemester());
     }
-    
+
     public Set<ExecutionYear> getBeginContextExecutionYears() {
 	final Set<ExecutionYear> result = new HashSet<ExecutionYear>();
 	for (final Context context : getChildContexts(CourseGroup.class)) {
@@ -768,7 +772,7 @@ public class CourseGroup extends CourseGroup_Base {
 	    final DegreeModule degreeModule = context.getChildDegreeModule();
 	    degreeModule.doForAllCurricularCourses(curricularCourseFunctor);
 	    if (!curricularCourseFunctor.keepDoing()) {
-		return ;
+		return;
 	    }
 	}
     }

@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class AcademicCalendarPredicates {
-    
+
     public static final AccessControlPredicate<AcademicCalendarEntry> checkPermissionsToManageAcademicCalendarEntry = new AccessControlPredicate<AcademicCalendarEntry>() {
 	public boolean evaluate(AcademicCalendarEntry academicCalendarEntry) {
 	    Person person = AccessControl.getPerson();
-	    if(!person.hasRole(RoleType.MANAGER) && !person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+	    if (!person.hasRole(RoleType.MANAGER) && !person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
 		throw new DomainException("error.logged.person.not.authorized.to.make.operation");
 	    }
 	    return true;

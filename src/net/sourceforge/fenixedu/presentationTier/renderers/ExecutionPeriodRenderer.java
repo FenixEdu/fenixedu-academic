@@ -9,19 +9,19 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ExecutionPeriodRenderer extends OutputRenderer {
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+	return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				ExecutionSemester executionSemester = (ExecutionSemester) object;
-				StringBuilder text = new StringBuilder();
-				text.append(executionSemester.getExecutionYear().getYear()).append(", "); 
-				text.append(executionSemester.getSemester()).append(RenderUtils.getResourceString("label.semester.short"));
-				return new HtmlText(text.toString());
-			}
-		};
-	}
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		ExecutionSemester executionSemester = (ExecutionSemester) object;
+		StringBuilder text = new StringBuilder();
+		text.append(executionSemester.getExecutionYear().getYear()).append(", ");
+		text.append(executionSemester.getSemester()).append(RenderUtils.getResourceString("label.semester.short"));
+		return new HtmlText(text.toString());
+	    }
+	};
+    }
 
 }

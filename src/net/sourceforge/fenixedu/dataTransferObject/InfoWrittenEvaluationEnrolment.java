@@ -20,50 +20,50 @@ public class InfoWrittenEvaluationEnrolment extends InfoObject {
      * @return
      */
     public InfoExam getInfoExam() {
-        return this.infoExam;
+	return this.infoExam;
     }
 
     /**
      * @param infoExam
      */
     public void setInfoExam(InfoExam infoExam) {
-        this.infoExam = infoExam;
+	this.infoExam = infoExam;
     }
 
     /**
      * @return
      */
     public InfoRoom getInfoRoom() {
-        return this.infoRoom;
+	return this.infoRoom;
     }
 
     /**
      * @param infoRoom
      */
     public void setInfoRoom(InfoRoom infoRoom) {
-        this.infoRoom = infoRoom;
+	this.infoRoom = infoRoom;
     }
 
     /**
      * @return
      */
     public InfoStudent getInfoStudent() {
-        return this.infoStudent;
+	return this.infoStudent;
     }
 
     /**
      * @param infoStudent
      */
     public void setInfoStudent(InfoStudent infoStudent) {
-        this.infoStudent = infoStudent;
+	this.infoStudent = infoStudent;
     }
 
     public static InfoWrittenEvaluationEnrolment newInfoFromDomain(DomainObject domainObject) {
-        InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = null;
-        if (domainObject != null) {
-            infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolment();
-            infoWrittenEvaluationEnrolment.copyFromDomain(domainObject);
-        }
-        return infoWrittenEvaluationEnrolment;
+	InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = null;
+	if (domainObject != null) {
+	    infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolment();
+	    infoWrittenEvaluationEnrolment.copyFromDomain(domainObject);
+	}
+	return infoWrittenEvaluationEnrolment;
     }
 }

@@ -22,7 +22,7 @@ public class DepartmentAdministrativeOfficeAuthorizationFilter extends Authoriza
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -31,6 +31,6 @@ public class DepartmentAdministrativeOfficeAuthorizationFilter extends Authoriza
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE;
+	return RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE;
     }
 }

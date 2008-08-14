@@ -14,25 +14,25 @@ public class NoArgumentsGroupBuilder implements GroupBuilder {
     private Class<? extends Group> groupType;
 
     public NoArgumentsGroupBuilder(Class<? extends Group> groupType) {
-        super();
+	super();
 
-        this.groupType = groupType;
+	this.groupType = groupType;
     }
 
     public Group build(Object[] arguments) {
-        try {
-            return groupType.newInstance();
-        } catch (Exception e) {
-            throw new DomainException("accessControl.group.builder.noArguments.failed", e);
-        }
+	try {
+	    return groupType.newInstance();
+	} catch (Exception e) {
+	    throw new DomainException("accessControl.group.builder.noArguments.failed", e);
+	}
     }
 
     public int getMinArguments() {
-        return 0;
+	return 0;
     }
 
     public int getMaxArguments() {
-        return 0;
+	return 0;
     }
 
 }

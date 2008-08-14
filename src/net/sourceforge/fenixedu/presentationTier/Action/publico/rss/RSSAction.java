@@ -33,33 +33,33 @@ public abstract class RSSAction extends InformaRSSAction {
 
     @Override
     protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
-        final ChannelBuilder builder = new ChannelBuilder();
-        
-        final ChannelIF channel = builder.createChannel(getFeedTitle(request));
-        channel.setDescription(getFeedDescription(request));
-        channel.setLocation(new URL(getFeedLink(request)));
-        String siteLocation = getSiteLocation(request);
-        if(siteLocation != null) {
-            channel.setSite(new URL(siteLocation));
-        }
+	final ChannelBuilder builder = new ChannelBuilder();
 
-        for (final SyndEntryFenixImpl syndEntry : getFeedEntries(request)) {
-            final ItemIF item = new Item();
-            item.setTitle(syndEntry.getTitle());
-            item.setDescription(syndEntry.getDescription().getValue());
-            item.setCreator(syndEntry.getAuthor());
-            item.setDate(syndEntry.getUpdatedDate());
-            item.setFound(syndEntry.getPublishedDate());
-            
-            if (syndEntry.getLink() != null) {
-            	item.setLink(new URL(syndEntry.getLink()));
-            }
-            
-            item.setGuid(syndEntry.getItemGuidIF(item));
-            channel.addItem(item);
-        }
+	final ChannelIF channel = builder.createChannel(getFeedTitle(request));
+	channel.setDescription(getFeedDescription(request));
+	channel.setLocation(new URL(getFeedLink(request)));
+	String siteLocation = getSiteLocation(request);
+	if (siteLocation != null) {
+	    channel.setSite(new URL(siteLocation));
+	}
 
-        return channel;
+	for (final SyndEntryFenixImpl syndEntry : getFeedEntries(request)) {
+	    final ItemIF item = new Item();
+	    item.setTitle(syndEntry.getTitle());
+	    item.setDescription(syndEntry.getDescription().getValue());
+	    item.setCreator(syndEntry.getAuthor());
+	    item.setDate(syndEntry.getUpdatedDate());
+	    item.setFound(syndEntry.getPublishedDate());
+
+	    if (syndEntry.getLink() != null) {
+		item.setLink(new URL(syndEntry.getLink()));
+	    }
+
+	    item.setGuid(syndEntry.getItemGuidIF(item));
+	    channel.addItem(item);
+	}
+
+	return channel;
     }
 
     protected abstract List<SyndEntryFenixImpl> getFeedEntries(HttpServletRequest request) throws Exception;
@@ -69,7 +69,7 @@ public abstract class RSSAction extends InformaRSSAction {
     protected abstract String getFeedDescription(HttpServletRequest request) throws Exception;
 
     protected abstract String getFeedLink(HttpServletRequest request) throws Exception;
-    
+
     protected abstract String getSiteLocation(HttpServletRequest request) throws Exception;
 
 }

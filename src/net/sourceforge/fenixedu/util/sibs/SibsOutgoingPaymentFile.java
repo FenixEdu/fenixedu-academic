@@ -86,8 +86,7 @@ public class SibsOutgoingPaymentFile {
 	public String render(int totalLines) {
 	    final StringBuilder footer = new StringBuilder();
 	    footer.append(FOOTER_REGISTER_TYPE);
-	    footer.append(StringUtils.leftPad(String.valueOf(totalLines),
-		    NUMBER_OF_LINES_DESCRIPTOR_LENGTH, NUMBER_FILLER));
+	    footer.append(StringUtils.leftPad(String.valueOf(totalLines), NUMBER_OF_LINES_DESCRIPTOR_LENGTH, NUMBER_FILLER));
 	    footer.append(StringUtils.leftPad("", WHITE_SPACES_IN_FOOTER));
 	    footer.append("\n");
 
@@ -117,8 +116,7 @@ public class SibsOutgoingPaymentFile {
 
 	private YearMonthDay endDate;
 
-	public Line(String code, Money minAmount, Money maxAmount, YearMonthDay startDate,
-		YearMonthDay endDate) {
+	public Line(String code, Money minAmount, Money maxAmount, YearMonthDay startDate, YearMonthDay endDate) {
 
 	    checkAmounts(code, minAmount, maxAmount);
 
@@ -131,13 +129,11 @@ public class SibsOutgoingPaymentFile {
 
 	private void checkAmounts(String code, Money minAmount, Money maxAmount) {
 	    if (minAmount.lessOrEqualThan(Money.ZERO)) {
-		throw new RuntimeException(MessageFormat.format(
-			"Min amount for code {0} must be greater than zero", code));
+		throw new RuntimeException(MessageFormat.format("Min amount for code {0} must be greater than zero", code));
 	    }
 
 	    if (maxAmount.lessOrEqualThan(Money.ZERO)) {
-		throw new RuntimeException(MessageFormat.format(
-			"Max amount for code {0} must be greater than zero", code));
+		throw new RuntimeException(MessageFormat.format("Max amount for code {0} must be greater than zero", code));
 	    }
 
 	}
@@ -159,9 +155,8 @@ public class SibsOutgoingPaymentFile {
 	}
 
 	private String leftPadAmount(final Money amount) {
-	    return StringUtils.leftPad(String.valueOf(amount.multiply(
-		    BigDecimal.valueOf(DECIMAL_PLACES_FACTOR)).longValue()), AMOUNT_LENGTH,
-		    NUMBER_FILLER);
+	    return StringUtils.leftPad(String.valueOf(amount.multiply(BigDecimal.valueOf(DECIMAL_PLACES_FACTOR)).longValue()),
+		    AMOUNT_LENGTH, NUMBER_FILLER);
 	}
     }
 
@@ -173,16 +168,14 @@ public class SibsOutgoingPaymentFile {
 
     private Set<String> existingCodes;
 
-    public SibsOutgoingPaymentFile(String sourceInstitutionId, String destinationInstitutionId,
-	    String entity) {
+    public SibsOutgoingPaymentFile(String sourceInstitutionId, String destinationInstitutionId, String entity) {
 	this.header = new Header(sourceInstitutionId, destinationInstitutionId, entity);
 	this.lines = new ArrayList<Line>();
 	this.footer = new Footer();
 	this.existingCodes = new HashSet<String>();
     }
 
-    public void addLine(String code, Money minAmount, Money maxAmount, YearMonthDay startDate,
-	    YearMonthDay endDate) {
+    public void addLine(String code, Money minAmount, Money maxAmount, YearMonthDay startDate, YearMonthDay endDate) {
 	if (existingCodes.contains(code)) {
 	    throw new RuntimeException(MessageFormat.format("Code {0} is duplicated", code));
 	}

@@ -409,7 +409,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Department getDepartment() {
 	return getDegree().getUnit().getDepartment();
     }
-    
+
     final public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
     }

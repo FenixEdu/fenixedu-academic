@@ -2,9 +2,7 @@
  * 
  */
 
-
 package net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,63 +33,61 @@ import pt.utl.ist.fenix.tools.util.Pair;
  *          Exp $
  */
 public class PersonalGroupsMailSender extends MailSenderAction {
-	@Override
-	protected List<IGroup> loadPersonalGroupsToChooseFrom(HttpServletRequest request)
-			throws FenixFilterException, FenixServiceException {
-		IUserView userView = this.getUserView(request);
-		Person person = userView.getPerson();
-		ArrayList<IGroup> groups = new ArrayList<IGroup>();
-		for (PersonalGroup group : person.getPersonalGroups()) {
-			groups.add(group);
+    @Override
+    protected List<IGroup> loadPersonalGroupsToChooseFrom(HttpServletRequest request) throws FenixFilterException,
+	    FenixServiceException {
+	IUserView userView = this.getUserView(request);
+	Person person = userView.getPerson();
+	ArrayList<IGroup> groups = new ArrayList<IGroup>();
+	for (PersonalGroup group : person.getPersonalGroups()) {
+	    groups.add(group);
+	}
+
+	return groups;
+    }
+
+    @Override
+    protected IGroup[] getAllowedGroups(HttpServletRequest request, IGroup[] destinationGroups) throws FenixFilterException,
+	    FenixServiceException {
+	IGroup[] allowedGroups = new IGroup[2];
+	IGroup cmsManagerGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.CMS_MANAGER));
+	IGroup managerGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER));
+
+	allowedGroups[0] = cmsManagerGroup;
+	allowedGroups[1] = managerGroup;
+
+	return allowedGroups;
+    }
+
+    @Override
+    protected IGroup[] getGroupsToSend(IUserView userView, SendMailForm form, Map previousRequestParameters)
+	    throws FenixFilterException, FenixServiceException, FenixActionException {
+	Person person = userView.getPerson();
+	Integer[] ids = form.getSelectedPersonalGroupsIds();
+	if (ids == null || ids.length == 0) {
+	    return new PersonalGroup[0];
+	}
+	IGroup[] groupsToSend = new PersonalGroup[ids.length];
+
+	for (PersonalGroup group : person.getPersonalGroups()) {
+	    for (int i = 0; i < ids.length; i++) {
+		if (group.getIdInternal().equals(ids[i])) {
+		    groupsToSend[i] = group;
+		    break;
 		}
-
-		return groups;
+	    }
 	}
 
-	@Override
-	protected IGroup[] getAllowedGroups(HttpServletRequest request, IGroup[] destinationGroups)
-			throws FenixFilterException, FenixServiceException {
-		IGroup[] allowedGroups = new IGroup[2];
-		IGroup cmsManagerGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.CMS_MANAGER));
-		IGroup managerGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER));
+	return groupsToSend;
+    }
 
-		allowedGroups[0] = cmsManagerGroup;
-		allowedGroups[1] = managerGroup;
+    @Override
+    protected Pair<String, Object>[] getStateRequestAttributes(IUserView userView, ActionForm actionForm,
+	    Map previousRequestParameters) throws FenixActionException, FenixFilterException, FenixServiceException {
+	return null;
+    }
 
-		return allowedGroups;
-	}
-
-	@Override
-	protected IGroup[] getGroupsToSend(IUserView userView, SendMailForm form,
-			Map previousRequestParameters) throws FenixFilterException, FenixServiceException,
-			FenixActionException {
-		Person person = userView.getPerson();
-		Integer[] ids = form.getSelectedPersonalGroupsIds();
-		if (ids == null || ids.length == 0) {
-			return new PersonalGroup[0];
-		}
-		IGroup[] groupsToSend = new PersonalGroup[ids.length];
-
-		for (PersonalGroup group : person.getPersonalGroups()) {
-			for (int i = 0; i < ids.length; i++) {
-				if (group.getIdInternal().equals(ids[i])) {
-					groupsToSend[i] = group;
-					break;
-				}
-			}
-		}
-
-		return groupsToSend;
-	}
-
-	@Override
-	protected Pair<String, Object>[] getStateRequestAttributes(IUserView userView,
-			ActionForm actionForm, Map previousRequestParameters) throws FenixActionException,
-			FenixFilterException, FenixServiceException {
-		return null;
-	}
-
-	protected String getNoFromAddressWarningMessageKey() {
-		return "cms.mailSender.fillPersonEMailAddress";
-	}
+    protected String getNoFromAddressWarningMessageKey() {
+	return "cms.mailSender.fillPersonEMailAddress";
+    }
 }

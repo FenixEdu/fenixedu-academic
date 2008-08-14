@@ -31,7 +31,7 @@ public class StringFormatter {
     private static Set<String> allLowerSet = new HashSet<String>();
 
     private static Set<String> allCapSet = new HashSet<String>();
-    
+
     static final private Map<Language, Map<String, String>> personNameDictionaries = new HashMap<Language, Map<String, String>>();
 
     static {
@@ -42,7 +42,7 @@ public class StringFormatter {
 	ptPersonNameDictionary.put("jose", "josé");
 	personNameDictionaries.put(Language.pt, ptPersonNameDictionary);
     }
-    
+
     static {
 	// PT
 	// artigos
@@ -115,7 +115,7 @@ public class StringFormatter {
 	// IT
 	allLowerSet.add("dei");
 	allLowerSet.add("degli");
-//	allLowerSet.add("del");
+	// allLowerSet.add("del");
 	allLowerSet.add("dell");
 	allLowerSet.add("delle");
 	allLowerSet.add("di");
@@ -181,13 +181,14 @@ public class StringFormatter {
     }
 
     /**
-         * Capitalizes a string that may contain whitespaces and special
-         * characters. This method uses <code>capitalizeWord</code> and
-         * <code>capitalizeWordWithSpecChars<code>.
-     *
-     * @param   uglyDuckling    the string to capitalize.
-     * @return  the capitalized string.
-         */
+     * Capitalizes a string that may contain whitespaces and special characters.
+     * This method uses <code>capitalizeWord</code> and
+     * <code>capitalizeWordWithSpecChars<code>.
+     * 
+     * @param uglyDuckling
+     *            the string to capitalize.
+     * @return the capitalized string.
+     */
     public static String prettyPrint(String uglyDuckling) {
 
 	if (StringUtils.isEmpty(uglyDuckling)) {
@@ -210,10 +211,10 @@ public class StringFormatter {
 		    capitalizedName.append(WordUtils.capitalize(lowerCaseName[i]));
 		} else {
 		    // Exception to the general case: if "A" is the last
-                        // word
+		    // word
 		    // converts to UPPERCASE
 		    // (needed for courses that occur in alternative
-                        // semesters)
+		    // semesters)
 		    if (i == (lowerCaseName.length - 1) & lowerCaseName[i].equals("a")) {
 			capitalizedName.append(lowerCaseName[i].toUpperCase());
 		    } else {
@@ -242,9 +243,10 @@ public class StringFormatter {
 	for (int i = 0; i < lowerCaseName.length; i++) {
 
 	    if (containsNoneSpecialChars(lowerCaseName[i])) {
-		capitalizedName.append(personNameDictionary.containsKey(lowerCaseName[i]) ?  personNameDictionary.get(lowerCaseName[i]) : lowerCaseName[i]);
+		capitalizedName.append(personNameDictionary.containsKey(lowerCaseName[i]) ? personNameDictionary
+			.get(lowerCaseName[i]) : lowerCaseName[i]);
 	    }
-	    
+
 	    capitalizedName.append(" ");
 	}
 
@@ -252,21 +254,20 @@ public class StringFormatter {
     }
 
     /**
-         * Capitalizes a string that contains special characters. This method
-         * uses <code>capitalizeWord</code> to capitalize the substrings
-         * between the special characters.
-         * 
-         * @param uglyWord
-         *                the string to capitalize.
-         * @return the capitalized string.
-         */
+     * Capitalizes a string that contains special characters. This method uses
+     * <code>capitalizeWord</code> to capitalize the substrings between the
+     * special characters.
+     * 
+     * @param uglyWord
+     *            the string to capitalize.
+     * @return the capitalized string.
+     */
     private static String capitalizeWordWithSpecChars(String uglyWord) {
 	StringBuffer prettyWord = new StringBuffer();
 
 	int startPos = 0;
 
-	for (int index = indexOfAnySpecChar(uglyWord, 0); index >= 0; index = indexOfAnySpecChar(
-		uglyWord, startPos)) {
+	for (int index = indexOfAnySpecChar(uglyWord, 0); index >= 0; index = indexOfAnySpecChar(uglyWord, startPos)) {
 	    prettyWord.append(capitalizeWord(uglyWord.substring(startPos, startPos + index)));
 	    prettyWord.append(uglyWord.substring(startPos + index, startPos + index + 1));
 	    startPos += (index + 1);
@@ -280,15 +281,15 @@ public class StringFormatter {
     }
 
     /**
-         * Capitalizes a string according to its type. The first letter is
-         * changed to title case (no other letters are changed) if the string
-         * isn't supposed to be in upper (e.g.: roman numeration) or lower case
-         * (e.g.: articles and prepositions).
-         * 
-         * @param uglyWord
-         *                the string to capitalize
-         * @return the capitalized word
-         */
+     * Capitalizes a string according to its type. The first letter is changed
+     * to title case (no other letters are changed) if the string isn't supposed
+     * to be in upper (e.g.: roman numeration) or lower case (e.g.: articles and
+     * prepositions).
+     * 
+     * @param uglyWord
+     *            the string to capitalize
+     * @return the capitalized word
+     */
     public static String capitalizeWord(String uglyWord) {
 	StringBuffer prettyWord = new StringBuffer();
 
@@ -305,37 +306,36 @@ public class StringFormatter {
     }
 
     /**
-         * Checks that a string does not contain special characters (only
-         * alphanumeric ones).
-         * 
-         * @param string
-         *                the string to check
-         * @return <code>true</code> if the strings contains a special
-         *         character
-         */
+     * Checks that a string does not contain special characters (only
+     * alphanumeric ones).
+     * 
+     * @param string
+     *            the string to check
+     * @return <code>true</code> if the strings contains a special character
+     */
     private static boolean containsNoneSpecialChars(String string) {
 	return StringUtils.containsNone(string, specialChars);
     }
 
     /**
-         * Finds the first index of a special character within the given string
-         * after a start position.
-         * 
-         * @param string
-         *                the string to check
-         * @param startPos
-         *                the position to start from
-         * @return the first index of a special character
-         */
+     * Finds the first index of a special character within the given string
+     * after a start position.
+     * 
+     * @param string
+     *            the string to check
+     * @param startPos
+     *            the position to start from
+     * @return the first index of a special character
+     */
     private static int indexOfAnySpecChar(String string, int startPos) {
 	return StringUtils.indexOfAny(string.substring(startPos), specialChars);
     }
 
     /**
-         * 
-         * @param string
-         * @return
-         */
+     * 
+     * @param string
+     * @return
+     */
     public static String normalize(String string) {
 	String spacesReplacedString = removeDuplicateSpaces(string.trim());
 	return StringNormalizer.normalize(spacesReplacedString).toLowerCase();
@@ -348,10 +348,10 @@ public class StringFormatter {
     }
 
     /**
-         * 
-         * @param string
-         * @return
-         */
+     * 
+     * @param string
+     * @return
+     */
     public static String splitCamelCaseString(String string) {
 
 	StringBuilder result = new StringBuilder();
@@ -369,10 +369,10 @@ public class StringFormatter {
     }
 
     /**
-         * 
-         * @param string
-         * @return
-         */
+     * 
+     * @param string
+     * @return
+     */
     public static String convertToDBStyle(String string) {
 	return splitCamelCaseString(string).replace(' ', '_').toUpperCase();
     }

@@ -17,8 +17,8 @@ import org.apache.struts.action.ActionMapping;
 
 public class DepartmentDegreesDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 	DepartmentDegreeBean departmentDegreeBean = (DepartmentDegreeBean) getRenderedObject();
 	if (departmentDegreeBean == null) {
 	    departmentDegreeBean = new DepartmentDegreeBean();
@@ -27,13 +27,13 @@ public class DepartmentDegreesDA extends FenixDispatchAction {
     }
 
     public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	executeFactoryMethod(request);
 	return prepare(mapping, form, request, response);
     }
 
-    public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+    public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException, FenixServiceException {
 	final String departmentString = request.getParameter("departmentID");
 	final String degreeString = request.getParameter("degreeID");
 	final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentString));
@@ -44,7 +44,8 @@ public class DepartmentDegreesDA extends FenixDispatchAction {
 	return forwardToPage(mapping, request, departmentDegreeBean);
     }
 
-    private ActionForward forwardToPage(final ActionMapping mapping, final HttpServletRequest request, final DepartmentDegreeBean departmentDegreeBean) {
+    private ActionForward forwardToPage(final ActionMapping mapping, final HttpServletRequest request,
+	    final DepartmentDegreeBean departmentDegreeBean) {
 	request.setAttribute("departmentDegreeBean", departmentDegreeBean);
 	return mapping.findForward("manageDepartmentDegrees");
     }

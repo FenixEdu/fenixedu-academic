@@ -16,15 +16,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadSite extends Service {
 
     public InfoSite run(InfoExecutionCourse infoExecutionCourse) {
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
-        final ExecutionCourseSite site = executionCourse.getSite();
-        if (site != null) {
-            final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
-            infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-            return infoSite;
-        } else {
-            return null;
-        }
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+	final ExecutionCourseSite site = executionCourse.getSite();
+	if (site != null) {
+	    final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
+	    infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+	    return infoSite;
+	} else {
+	    return null;
+	}
     }
 
 }

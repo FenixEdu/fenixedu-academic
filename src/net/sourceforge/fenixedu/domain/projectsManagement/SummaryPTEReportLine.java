@@ -23,42 +23,42 @@ public class SummaryPTEReportLine implements Serializable, ISummaryPTEReportLine
     private Double total;
 
     public Double getExpense() {
-        return expense;
+	return expense;
     }
 
     public void setExpense(Double expense) {
-        this.expense = expense;
+	this.expense = expense;
     }
 
     public Integer getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public Double getRevenue() {
-        return revenue;
+	return revenue;
     }
 
     public void setRevenue(Double revenue) {
-        this.revenue = revenue;
+	this.revenue = revenue;
     }
 
     public Double getTax() {
-        return tax;
+	return tax;
     }
 
     public void setTax(Double tax) {
-        this.tax = tax;
+	this.tax = tax;
     }
 
     public Double getTotal() {
-        return total;
+	return total;
     }
 
     public void setTotal(Double total) {
-        this.total = total;
+	this.total = total;
     }
 }

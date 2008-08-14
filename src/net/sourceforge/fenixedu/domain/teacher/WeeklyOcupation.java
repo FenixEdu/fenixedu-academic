@@ -16,31 +16,31 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  * 
  */
 public class WeeklyOcupation extends WeeklyOcupation_Base {
-	
-	public WeeklyOcupation() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
 
-	public WeeklyOcupation(Teacher teacher, InfoWeeklyOcupation infoWeeklyOcupation) {
-		this();
-		if(teacher == null)
-			throw new DomainException("The teacher should not be null!");
-		setTeacher(teacher);
-		setBasicProperties(infoWeeklyOcupation);
-	}
+    public WeeklyOcupation() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void edit(InfoWeeklyOcupation infoWeeklyOcupation) {
-		setBasicProperties(infoWeeklyOcupation);
-	}
-	
-	private void setBasicProperties(InfoWeeklyOcupation infoWeeklyOcupation) {
-		this.setOther(infoWeeklyOcupation.getOther());
-        this.setLecture(infoWeeklyOcupation.getLecture());
-        this.setManagement(infoWeeklyOcupation.getManagement());
-        this.setResearch(infoWeeklyOcupation.getResearch());
-        this.setSupport(infoWeeklyOcupation.getSupport());
-		
-	}
+    public WeeklyOcupation(Teacher teacher, InfoWeeklyOcupation infoWeeklyOcupation) {
+	this();
+	if (teacher == null)
+	    throw new DomainException("The teacher should not be null!");
+	setTeacher(teacher);
+	setBasicProperties(infoWeeklyOcupation);
+    }
+
+    public void edit(InfoWeeklyOcupation infoWeeklyOcupation) {
+	setBasicProperties(infoWeeklyOcupation);
+    }
+
+    private void setBasicProperties(InfoWeeklyOcupation infoWeeklyOcupation) {
+	this.setOther(infoWeeklyOcupation.getOther());
+	this.setLecture(infoWeeklyOcupation.getLecture());
+	this.setManagement(infoWeeklyOcupation.getManagement());
+	this.setResearch(infoWeeklyOcupation.getResearch());
+	this.setSupport(infoWeeklyOcupation.getSupport());
+
+    }
 
 }

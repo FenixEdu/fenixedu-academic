@@ -27,18 +27,17 @@ public class ResearchUnit extends ResearchUnit_Base {
 	super.setType(PartyTypeEnum.RESEARCH_UNIT);
     }
 
-    public static ResearchUnit createNewResearchUnit(MultiLanguageString name, Integer costCenterCode,
-	    String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
-	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static ResearchUnit createNewResearchUnit(MultiLanguageString name, Integer costCenterCode, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
+	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	ResearchUnit researchUnit = new ResearchUnit();
-	researchUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
+	researchUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces, campus);
 	researchUnit.addParentUnit(parentUnit, accountabilityType);
-	
+
 	checkIfAlreadyExistsOneResearchUnitWithSameNameOrAcronym(researchUnit);
 
-	
 	return researchUnit;
     }
 
@@ -52,11 +51,11 @@ public class ResearchUnit extends ResearchUnit_Base {
 
     @Override
     public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification,
-	    Department department, Degree degree, AdministrativeOffice administrativeOffice,
-	    Boolean canBeResponsibleOfSpaces, Campus campus) {
+	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
+	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
+		administrativeOffice, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOneResearchUnitWithSameNameOrAcronym(this);
     }
@@ -71,13 +70,11 @@ public class ResearchUnit extends ResearchUnit_Base {
 	throw new DomainException("unit.impossible.set.type");
     }
 
-    private static void checkIfAlreadyExistsOneResearchUnitWithSameNameOrAcronym(
-	    ResearchUnit researchUnit) {
+    private static void checkIfAlreadyExistsOneResearchUnitWithSameNameOrAcronym(ResearchUnit researchUnit) {
 	PartyType type = PartyType.readPartyTypeByType(PartyTypeEnum.RESEARCH_UNIT);
 	for (Party party : type.getParties()) {
 	    ResearchUnit unit = (ResearchUnit) party;
-	    if (!unit.equals(researchUnit) && unit.isResearchUnit()
-		    && researchUnit.getName().equalsIgnoreCase(unit.getName())
+	    if (!unit.equals(researchUnit) && unit.isResearchUnit() && researchUnit.getName().equalsIgnoreCase(unit.getName())
 		    && researchUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())) {
 		throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
 	    }
@@ -89,31 +86,29 @@ public class ResearchUnit extends ResearchUnit_Base {
 	return (Collection<Accountability>) getChildAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
     }
 
-
     public Collection<Person> getActivePeopleForContract(Class clazz) {
 	AccountabilityType accountabilityType = Function.readAccountabilityTypeByType(AccountabilityTypeEnum.RESEARCH_CONTRACT);
-    	YearMonthDay today = new YearMonthDay();
+	YearMonthDay today = new YearMonthDay();
 	List<Person> people = new ArrayList<Person>();
 	for (Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().equals(accountabilityType)
-		    && (accountability.getEndDate() == null || accountability.getEndDate()
-			    .isAfter(today)) 
-			    && clazz.isAssignableFrom(accountability.getClass())) {
-		people.add((Person)accountability.getChildParty());
+		    && (accountability.getEndDate() == null || accountability.getEndDate().isAfter(today))
+		    && clazz.isAssignableFrom(accountability.getClass())) {
+		people.add((Person) accountability.getChildParty());
 	    }
 	}
 	return people;
     }
-    
-    public Collection<Accountability> getActiveResearchContracts(Class clazz) {;
+
+    public Collection<Accountability> getActiveResearchContracts(Class clazz) {
+	;
 	AccountabilityType accountabilityType = Function.readAccountabilityTypeByType(AccountabilityTypeEnum.RESEARCH_CONTRACT);
-    	YearMonthDay today = new YearMonthDay();
+	YearMonthDay today = new YearMonthDay();
 	List<Accountability> accountabilities = new ArrayList<Accountability>();
 	for (Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().equals(accountabilityType)
-		    && (accountability.getEndDate() == null || accountability.getEndDate()
-			    .isAfter(today)) 
-			    && clazz.isAssignableFrom(accountability.getClass())) {
+		    && (accountability.getEndDate() == null || accountability.getEndDate().isAfter(today))
+		    && clazz.isAssignableFrom(accountability.getClass())) {
 		accountabilities.add(accountability);
 	    }
 	}
@@ -122,12 +117,12 @@ public class ResearchUnit extends ResearchUnit_Base {
 
     @Override
     public Collection<Person> getPossibleGroupMembers() {
-	List<Person> people = new ArrayList<Person> ();
+	List<Person> people = new ArrayList<Person>();
 	YearMonthDay today = new YearMonthDay();
 	for (Accountability accountability : getChildsSet()) {
-	    if (accountability instanceof ResearchContract && (accountability.getEndDate() == null || accountability.getEndDate()
-		    .isAfter(today))) {
-		people.add(((ResearchContract)accountability).getPerson());
+	    if (accountability instanceof ResearchContract
+		    && (accountability.getEndDate() == null || accountability.getEndDate().isAfter(today))) {
+		people.add(((ResearchContract) accountability).getPerson());
 	    }
 	}
 	return people;
@@ -140,15 +135,15 @@ public class ResearchUnit extends ResearchUnit_Base {
     public Collection<Person> getResearchers() {
 	return getActivePeopleForContract(ResearcherContract.class);
     }
-    
+
     public Collection<Accountability> getResearcherContracts() {
 	return getActiveResearchContracts(ResearcherContract.class);
     }
-    
+
     public Collection<Person> getTechnicalStaff() {
 	return getActivePeopleForContract(ResearchTechnicalStaffContract.class);
     }
-    
+
     public Collection<Accountability> getTechnicalStaffContracts() {
 	return getActiveResearchContracts(ResearchTechnicalStaffContract.class);
     }
@@ -156,7 +151,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     public Collection<Person> getScholarships() {
 	return getActivePeopleForContract(ResearchScholarshipContract.class);
     }
-    
+
     public Collection<Accountability> getScholarshipContracts() {
 	return getActiveResearchContracts(ResearchScholarshipContract.class);
     }
@@ -164,7 +159,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     public Collection<Person> getInternships() {
 	return getActivePeopleForContract(ResearchInternshipContract.class);
     }
-    
+
     public Collection<Accountability> getInternshipContracts() {
 	return getActiveResearchContracts(ResearchInternshipContract.class);
     }
@@ -194,10 +189,10 @@ public class ResearchUnit extends ResearchUnit_Base {
 	getPublicationCollaborators().clear();
 	getPublicationCollaborators().addAll(collaborators);
     }
-    
+
     @Override
     protected ResearchUnitSite createSite() {
-    	return new ResearchUnitSite(this);
+	return new ResearchUnitSite(this);
     }
-    
+
 }

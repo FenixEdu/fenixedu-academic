@@ -101,7 +101,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     public BigDecimal getCandidacySeriesCandidacyGrade() {
 	return getCandidacy().getSeriesCandidacyGrade();
     }
-    
+
     public boolean hasCandidacyForSelectedDegree(final Degree degree) {
 	return getCandidacySelectedDegree() == degree;
     }

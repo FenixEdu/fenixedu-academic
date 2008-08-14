@@ -27,29 +27,29 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ChangePersonPasswordAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-            DynaActionForm changePasswordForm = (DynaActionForm) form;
-            IUserView userView = getUserView(request);
-            String oldPassword = (String) changePasswordForm.get("oldPassword");
-            String newPassword = (String) changePasswordForm.get("newPassword");
+	DynaActionForm changePasswordForm = (DynaActionForm) form;
+	IUserView userView = getUserView(request);
+	String oldPassword = (String) changePasswordForm.get("oldPassword");
+	String newPassword = (String) changePasswordForm.get("newPassword");
 
-            // Check the old Password
-            Object args[] = { userView, oldPassword, newPassword };
+	// Check the old Password
+	Object args[] = { userView, oldPassword, newPassword };
 
-            try {
-                ServiceUtils.executeService(PropertiesManager.getProperty("changePassService"), args);
-            } catch (InvalidPasswordServiceException e) {
-                throw new InvalidPasswordActionException(e);
-            } catch (FenixServiceException e) {
-            	ActionError error = new ActionError("error.person.impossible.change", e.getMessage());
-            	ActionErrors actionErrors = new ActionErrors();
-            	actionErrors.add("error.person.impossible.change", error);
-            	saveErrors(request, actionErrors);
-            	return mapping.getInputForward();
-            }
-            return mapping.findForward("Success");
+	try {
+	    ServiceUtils.executeService(PropertiesManager.getProperty("changePassService"), args);
+	} catch (InvalidPasswordServiceException e) {
+	    throw new InvalidPasswordActionException(e);
+	} catch (FenixServiceException e) {
+	    ActionError error = new ActionError("error.person.impossible.change", e.getMessage());
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("error.person.impossible.change", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
+	}
+	return mapping.findForward("Success");
     }
 
 }

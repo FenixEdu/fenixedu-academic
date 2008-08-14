@@ -19,16 +19,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExternalPersonsByInstitution extends Service {
 
-    public List run(Integer institutionID) throws FenixServiceException{
-        List infoExternalPersons = new ArrayList();
-        
-        Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
-        Collection<ExternalContract> externalPersons = institution.getExternalPersons();               
+    public List run(Integer institutionID) throws FenixServiceException {
+	List infoExternalPersons = new ArrayList();
 
-        for (ExternalContract externalPerson : externalPersons) {
-            infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
-        }
+	Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
+	Collection<ExternalContract> externalPersons = institution.getExternalPersons();
 
-        return infoExternalPersons;
+	for (ExternalContract externalPerson : externalPersons) {
+	    infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
+	}
+
+	return infoExternalPersons;
     }
 }

@@ -10,43 +10,43 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 public class CourseLoadBean implements Serializable {
 
     private DomainReference<ExecutionCourse> executionCourseReference;
-    private ShiftType type;   
-    private BigDecimal totalQuantity;    
+    private ShiftType type;
+    private BigDecimal totalQuantity;
     private BigDecimal unitQuantity;
-           
+
     public CourseLoadBean(ExecutionCourse executionCourse) {
 	setExecutionCourse(executionCourse);
     }
-        
+
     public ExecutionCourse getExecutionCourse() {
 	return this.executionCourseReference != null ? this.executionCourseReference.getObject() : null;
     }
-    
-    public void setExecutionCourse(ExecutionCourse executionCourse) {	
+
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
 	this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
     }
 
     public ShiftType getType() {
-        return type;
+	return type;
     }
 
     public void setType(ShiftType type) {
-        this.type = type;       
+	this.type = type;
     }
 
     public BigDecimal getTotalQuantity() {
-        return totalQuantity;
+	return totalQuantity;
     }
 
     public void setTotalQuantity(BigDecimal totalQuantity) {
-        this.totalQuantity = totalQuantity;
+	this.totalQuantity = totalQuantity;
     }
 
     public BigDecimal getUnitQuantity() {
-        return unitQuantity;
+	return unitQuantity;
     }
 
     public void setUnitQuantity(BigDecimal unitQuantity) {
-        this.unitQuantity = unitQuantity;
-    }   
+	this.unitQuantity = unitQuantity;
+    }
 }

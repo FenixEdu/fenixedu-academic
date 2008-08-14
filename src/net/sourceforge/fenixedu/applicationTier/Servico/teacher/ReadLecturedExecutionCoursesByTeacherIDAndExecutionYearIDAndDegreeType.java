@@ -17,43 +17,43 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType extends Service {
 
     public List<ExecutionCourse> run(Integer teacherID, Integer executionYearID, DegreeType degreeType)
-            throws FenixServiceException {
+	    throws FenixServiceException {
 
-        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 
-        List<ExecutionCourse> lecturedExecutionCourses;
+	List<ExecutionCourse> lecturedExecutionCourses;
 
-        if (executionYearID == null) {
-            lecturedExecutionCourses = teacher.getAllLecturedExecutionCourses();
+	if (executionYearID == null) {
+	    lecturedExecutionCourses = teacher.getAllLecturedExecutionCourses();
 
-        } else {
-            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
-            lecturedExecutionCourses = teacher.getLecturedExecutionCoursesByExecutionYear(executionYear);
-        }
+	} else {
+	    ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+	    lecturedExecutionCourses = teacher.getLecturedExecutionCoursesByExecutionYear(executionYear);
+	}
 
-        List<ExecutionCourse> result;
+	List<ExecutionCourse> result;
 
-        if (degreeType == DegreeType.DEGREE) {
-            result = filterExecutionCourses(lecturedExecutionCourses, false);
-        } else {
-            // master degree
-            result = filterExecutionCourses(lecturedExecutionCourses, true);
-        }
+	if (degreeType == DegreeType.DEGREE) {
+	    result = filterExecutionCourses(lecturedExecutionCourses, false);
+	} else {
+	    // master degree
+	    result = filterExecutionCourses(lecturedExecutionCourses, true);
+	}
 
-        return result;
+	return result;
 
     }
 
     private List<ExecutionCourse> filterExecutionCourses(List<ExecutionCourse> executionCourses, boolean masterDegreeOnly) {
-        List<ExecutionCourse> masterDegreeExecutionCourses = new ArrayList<ExecutionCourse>();
+	List<ExecutionCourse> masterDegreeExecutionCourses = new ArrayList<ExecutionCourse>();
 
-        for (ExecutionCourse executionCourse : executionCourses) {
-            if (executionCourse.isMasterDegreeDFAOrDEAOnly() == masterDegreeOnly) {
-                masterDegreeExecutionCourses.add(executionCourse);
-            }
-        }
+	for (ExecutionCourse executionCourse : executionCourses) {
+	    if (executionCourse.isMasterDegreeDFAOrDEAOnly() == masterDegreeOnly) {
+		masterDegreeExecutionCourses.add(executionCourse);
+	    }
+	}
 
-        return masterDegreeExecutionCourses;
+	return masterDegreeExecutionCourses;
     }
 
 }

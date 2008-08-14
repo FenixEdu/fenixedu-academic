@@ -31,26 +31,24 @@ import org.apache.commons.collections.Predicate;
 public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends Service {
 
     /**
-         * Constructor
-         */
+     * Constructor
+     */
     public ReadGratuitySituationListByExecutionDegreeAndSpecialization() {
 
     }
 
     /*
-         * Return an hash map with three objects: 1. at first position a list of
-         * infoGratuitySituation 2. in second, a double with the total of list's
-         * payed values 3. in third, a double with the total of list's remaning
-         * values
-         */
-    public Object run(Integer executionDegreeId, String executionYearName,
-	    String persistentSupportecializationName, String gratuitySituationTypeName)
-	    throws FenixServiceException {
+     * Return an hash map with three objects: 1. at first position a list of
+     * infoGratuitySituation 2. in second, a double with the total of list's
+     * payed values 3. in third, a double with the total of list's remaning
+     * values
+     */
+    public Object run(Integer executionDegreeId, String executionYearName, String persistentSupportecializationName,
+	    String gratuitySituationTypeName) throws FenixServiceException {
 
 	// at least one of the arguments it's obligator
 	if (executionDegreeId == null && executionYearName == null) {
-	    throw new FenixServiceException(
-		    "error.masterDegree.gratuity.impossible.studentsGratuityList");
+	    throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
 	}
 
 	HashMap result = null;
@@ -61,26 +59,23 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 
 	    if (executionDegreeId != null) {
 
-		ExecutionDegree executionDegree = rootDomainObject
-			.readExecutionDegreeByOID(executionDegreeId);
+		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 		executionDegreeList.add(executionDegree);
 
 	    } else {
 		// the execution degree wasn't supplied so
 		// we have to show all execution degrees from the choosen year
 		if (executionYearName != null) {
-		    ExecutionYear executionYear = ExecutionYear
-			    .readExecutionYearByName(executionYearName);
+		    ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 		    if (executionYear != null) {
-			executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(
-				executionYear.getYear(), DegreeType.MASTER_DEGREE);
+			executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(),
+				DegreeType.MASTER_DEGREE);
 		    }
 		}
 	    }
 
 	    if (executionDegreeList == null || executionDegreeList.size() == 0) {
-		throw new FenixServiceException(
-			"error.masterDegree.gratuity.impossible.studentsGratuityList");
+		throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
 	    }
 
 	    // GRATUITY SITUATION
@@ -101,24 +96,20 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 		    continue;
 		}
 
-		List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan()
-			.getStudentCurricularPlans();
-		List filteredStudentCurricularPlans = (List) CollectionUtils.select(
-			allStudentCurricularPlans, new Predicate() {
+		List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
+		List filteredStudentCurricularPlans = (List) CollectionUtils.select(allStudentCurricularPlans, new Predicate() {
 
-			    public boolean evaluate(Object arg0) {
-				StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
-				return scp.getSpecialization() != null;
-			    }
-			});
+		    public boolean evaluate(Object arg0) {
+			StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
+			return scp.getSpecialization() != null;
+		    }
+		});
 
 		for (Iterator iterator = filteredStudentCurricularPlans.iterator(); iterator.hasNext();) {
-		    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
-			    .next();
+		    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
 		    GratuitySituation gratuitySituation = studentCurricularPlan
-			    .getGratuitySituationByGratuityValuesAndGratuitySituationType(
-				    gratuitySituationType, gratuityValues);
+			    .getGratuitySituationByGratuityValuesAndGratuitySituationType(gratuitySituationType, gratuityValues);
 
 		    if (gratuitySituation == null) {
 			// ignore them, because they will be created in the next
@@ -134,16 +125,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 		    fillSituationType(infoGratuitySituation);
 
 		    List insuranceTransactionList = studentCurricularPlan.getRegistration()
-			    .readAllNonReimbursedInsuranceTransactionsByExecutionYear(
-				    executionDegree.getExecutionYear());
+			    .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionDegree.getExecutionYear());
 
 		    /*
-                         * InsuranceTransaction insuranceTransaction =
-                         * insuranceTransactionDAO
-                         * .readByExecutionYearAndStudent(executionDegree
-                         * .getExecutionYear(), studentCurricularPlan
-                         * .getStudent());
-                         */
+		     * InsuranceTransaction insuranceTransaction =
+		     * insuranceTransactionDAO
+		     * .readByExecutionYearAndStudent(executionDegree
+		     * .getExecutionYear(), studentCurricularPlan
+		     * .getStudent());
+		     */
 
 		    if (insuranceTransactionList.size() > 0) {
 			infoGratuitySituation.setInsurancePayed(SessionConstants.PAYED_INSURANCE);
@@ -179,15 +169,18 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 	    if (e.getMessage() != null && e.getMessage().length() > 0) {
 		throw new FenixServiceException(e.getMessage());
 	    }
-	    throw new FenixServiceException(
-		    "error.masterDegree.gratuity.impossible.studentsGratuityList");
+	    throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
 
 	}
 
 	return result;
     }
 
-    private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception { // infoGratuitySituation.getRemainingValue()
+    private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception { // infoGratuitySituation
+												   // .
+												   // getRemainingValue
+												   // (
+												   // )
 	// contains the total value that
 	// a student has to
 

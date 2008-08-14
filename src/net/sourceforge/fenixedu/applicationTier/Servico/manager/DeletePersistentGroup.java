@@ -6,9 +6,8 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 public class DeletePersistentGroup extends Service {
 
     public void run(PersistentGroupMembers groupMembers) {
-	if(groupMembers != null) {
+	if (groupMembers != null) {
 	    groupMembers.delete();
 	}
     }
 }
-

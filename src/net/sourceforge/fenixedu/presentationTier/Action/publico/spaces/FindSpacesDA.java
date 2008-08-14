@@ -31,109 +31,109 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class FindSpacesDA extends FenixDispatchAction {
-    
-    public ActionForward prepareSearchSpaces(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+
+    public ActionForward prepareSearchSpaces(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
 	FindSpacesBean bean = new FindSpacesBean();
-	request.setAttribute("bean", bean);	
+	request.setAttribute("bean", bean);
 	return mapping.findForward("listFoundSpaces");
     }
-    
-    public ActionForward prepareSearchSpacesPostBack(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
-	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");	
-	request.setAttribute("bean", bean);	
+
+    public ActionForward prepareSearchSpacesPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
+	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("beanWithLabelToSearchID");
 	return mapping.findForward("listFoundSpaces");
     }
-    
-    public ActionForward search(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");	
-	if(bean != null) {	    
-	    
+
+    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
+	if (bean != null) {
+
 	    String labelToSearch = bean.getLabelToSearch();
 	    Campus campus = bean.getCampus();
 	    Building building = bean.getBuilding();
-	    
-	    if(campus != null && building == null && (labelToSearch == null || StringUtils.isEmpty(labelToSearch.trim()))) {
+
+	    if (campus != null && building == null && (labelToSearch == null || StringUtils.isEmpty(labelToSearch.trim()))) {
 		addActionMessage(request, "error.findSpaces.empty.building");
 		request.setAttribute("bean", bean);
 		return mapping.findForward("listFoundSpaces");
 	    }
-	    
-	    if(campus == null && (labelToSearch == null || StringUtils.isEmpty(labelToSearch.trim()))) {
-		 addActionMessage(request, "error.findSpaces.empty.labelToSearch");
-		 request.setAttribute("bean", bean);
-		 return mapping.findForward("listFoundSpaces");
-	    }	    	    
-	    
+
+	    if (campus == null && (labelToSearch == null || StringUtils.isEmpty(labelToSearch.trim()))) {
+		addActionMessage(request, "error.findSpaces.empty.labelToSearch");
+		request.setAttribute("bean", bean);
+		return mapping.findForward("listFoundSpaces");
+	    }
+
 	    List<FindSpacesBean> result = new ArrayList<FindSpacesBean>();
 	    Set<Space> resultSpaces = Space.findSpaces(labelToSearch, campus, building, bean.getSearchType());
 	    for (Space space : resultSpaces) {
 		result.add(new FindSpacesBean(space, bean.getSearchType(), ExecutionSemester.readActualExecutionSemester()));
-	    }	   
-	    
+	    }
+
 	    request.setAttribute("foundSpaces", result);
 	}
-	
+
 	request.setAttribute("bean", bean);
 	return mapping.findForward("listFoundSpaces");
     }
-    
-    public ActionForward searchWithExtraOptions(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
+    public ActionForward searchWithExtraOptions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
 	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
-	bean.setExtraOptions(true);	
+	bean.setExtraOptions(true);
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("beanWithLabelToSearchID");
 	return mapping.findForward("listFoundSpaces");
     }
-    
-    public ActionForward searchWithoutExtraOptions(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
+    public ActionForward searchWithoutExtraOptions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
 	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
 	bean.setExtraOptions(false);
 	bean.setCampus(null);
-	bean.setBuilding(null);	
+	bean.setBuilding(null);
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("beanWithLabelToSearchID");
 	return mapping.findForward("listFoundSpaces");
     }
-       
-    public ActionForward viewSpace(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
-	Space space = getSpaceFromParameter(request);	
-	if(space != null) {
-	    //setBlueprintTextRectangles(request, space);	
+
+    public ActionForward viewSpace(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	Space space = getSpaceFromParameter(request);
+	if (space != null) {
+	    // setBlueprintTextRectangles(request, space);
 	    Set<Space> containedSpaces = space.getContainedSpacesByState(SpaceState.ACTIVE);
 	    request.setAttribute("containedSpaces", containedSpaces);
-	    request.setAttribute("selectedSpace", new FindSpacesBean(space, ExecutionSemester.readActualExecutionSemester()));	    
+	    request.setAttribute("selectedSpace", new FindSpacesBean(space, ExecutionSemester.readActualExecutionSemester()));
 	}
-	
+
 	return mapping.findForward("viewSelectedSpace");
     }
-    
-    public ActionForward viewSpaceBlueprint(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-	return new ManageSpaceBlueprintsDA().view(mapping, actionForm, request, response);	
+
+    public ActionForward viewSpaceBlueprint(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	return new ManageSpaceBlueprintsDA().view(mapping, actionForm, request, response);
     }
-    
+
     // Private Methods
-    
+
     private Space getSpaceFromParameter(final HttpServletRequest request) {
 	final String spaceIDString = request.getParameter("spaceID");
 	final Integer spaceID = Integer.valueOf(spaceIDString);
 	return (Space) rootDomainObject.readResourceByOID(spaceID);
     }
-    
+
     private void setBlueprintTextRectangles(HttpServletRequest request, Space space) throws IOException {
 
 	Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
@@ -141,15 +141,16 @@ public class FindSpacesDA extends FenixDispatchAction {
 	mostRecentBlueprint = (mostRecentBlueprint == null) ? space.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
 
 	if (mostRecentBlueprint != null) {
-	    	    
+
 	    final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
 	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
 	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
-	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(inputStream, mostRecentBlueprint.getSpace(), false, false, true, false, null);
+	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(inputStream,
+		    mostRecentBlueprint.getSpace(), false, false, true, false, null);
 
 	    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
-	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);	    	   
+	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
 	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
-	}	
+	}
     }
 }

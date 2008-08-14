@@ -11,15 +11,15 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 public class EditDocumentRequest extends Service {
 
     public void run(final DocumentRequestEditBean documentRequestEditBean) throws FenixServiceException {
-        final DocumentRequest documentRequest = documentRequestEditBean.getDocumentRequest();
-        final DocumentRequestBean requestBean = getDocumentRequestBean(documentRequestEditBean);
-        
-        if (documentRequest.isCertificate()) {
-            ((CertificateRequest)documentRequest).edit(requestBean);
-            
-        } else if (documentRequest.isDeclaration()) {
-            ((DeclarationRequest)documentRequest).edit(requestBean);    
-        }
+	final DocumentRequest documentRequest = documentRequestEditBean.getDocumentRequest();
+	final DocumentRequestBean requestBean = getDocumentRequestBean(documentRequestEditBean);
+
+	if (documentRequest.isCertificate()) {
+	    ((CertificateRequest) documentRequest).edit(requestBean);
+
+	} else if (documentRequest.isDeclaration()) {
+	    ((DeclarationRequest) documentRequest).edit(requestBean);
+	}
     }
 
     private DocumentRequestBean getDocumentRequestBean(final DocumentRequestEditBean documentRequestEditBean) {

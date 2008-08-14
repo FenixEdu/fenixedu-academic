@@ -12,21 +12,20 @@ public class InfoRestrictionNotDoneCurricularCourse extends InfoRestrictionByCur
     }
 
     public void copyFromDomain(RestrictionByCurricularCourse restriction) {
-        super.copyFromDomain(restriction);
-        super.setRestrictionKindResourceKey("label.manager.restrictionNotDoneCurricularCourse");
+	super.copyFromDomain(restriction);
+	super.setRestrictionKindResourceKey("label.manager.restrictionNotDoneCurricularCourse");
     }
 
-    public static InfoRestrictionByCurricularCourse newInfoFromDomain(
-            RestrictionByCurricularCourse restriction) {
+    public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
 
-        InfoRestrictionNotDoneCurricularCourse infoRestriction = null;
+	InfoRestrictionNotDoneCurricularCourse infoRestriction = null;
 
-        if (restriction != null) {
-            infoRestriction = new InfoRestrictionNotDoneCurricularCourse();
-            infoRestriction.copyFromDomain(restriction);
-        }
+	if (restriction != null) {
+	    infoRestriction = new InfoRestrictionNotDoneCurricularCourse();
+	    infoRestriction.copyFromDomain(restriction);
+	}
 
-        return infoRestriction;
+	return infoRestriction;
     }
 
 }

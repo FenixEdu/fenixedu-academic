@@ -9,19 +9,17 @@ import net.sourceforge.fenixedu.util.Month;
 public class CreateJournalIssue extends Service {
 
     public JournalIssue run(CreateIssueBean bean) {
-	
+
 	ScientificJournal journal;
-	if(bean.getJournal()==null) {
+	if (bean.getJournal() == null) {
 	    CreateScientificJournal service = new CreateScientificJournal();
 	    journal = service.run(bean.getScientificJournalName(), bean.getIssn(), bean.getPublisher(), bean.getLocation());
-	}
-	else {
+	} else {
 	    journal = bean.getJournal();
 	}
-	return run(journal,bean.getYear(),bean.getMonth(),bean.getVolume(),bean.getNumber(),bean.getUrl());
+	return run(journal, bean.getYear(), bean.getMonth(), bean.getVolume(), bean.getNumber(), bean.getUrl());
     }
-    
-    
+
     public JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number, String url) {
 	JournalIssue issue = new JournalIssue(journal);
 	issue.setYear(year);
@@ -31,4 +29,4 @@ public class CreateJournalIssue extends Service {
 	issue.setUrl(url);
 	return issue;
     }
- }
+}

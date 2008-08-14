@@ -19,31 +19,31 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ShowStudentCurricularCoursePlanAction extends FenixDispatchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        Integer studentCurricularPlanId = null;
-        String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
-        if (studentCurricularPlanIdString == null) {
-            studentCurricularPlanIdString = (String) request.getAttribute("studentCurricularPlanId");
-        }
-        studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
+	Integer studentCurricularPlanId = null;
+	String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
+	if (studentCurricularPlanIdString == null) {
+	    studentCurricularPlanIdString = (String) request.getAttribute("studentCurricularPlanId");
+	}
+	studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        Object args[] = { studentCurricularPlanId };
+	Object args[] = { studentCurricularPlanId };
 
-        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-        try {
-            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                    .executeService( "ReadPosGradStudentCurricularPlanById", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+	try {
+	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+		    "ReadPosGradStudentCurricularPlanById", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
-        request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
+	request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
+	request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
 
-        return mapping.findForward("ShowStudentCurricularCoursePlan");
+	return mapping.findForward("ShowStudentCurricularCoursePlan");
     }
 }

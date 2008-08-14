@@ -11,36 +11,36 @@ public class EditGrantType extends EditDomainObjectService {
 
     @Override
     protected DomainObject readObjectByUnique(InfoObject infoObject) {
-        InfoGrantType infoGrantType = (InfoGrantType) infoObject;
-        return GrantType.readBySigla(infoGrantType.getSigla());
+	InfoGrantType infoGrantType = (InfoGrantType) infoObject;
+	return GrantType.readBySigla(infoGrantType.getSigla());
     }
 
     public void run(InfoGrantType infoGrantType) throws Exception {
-        super.run(Integer.valueOf(0), infoGrantType);
+	super.run(Integer.valueOf(0), infoGrantType);
     }
 
-	@Override
-	protected DomainObject createNewDomainObject(InfoObject infoObject) {
-		return new GrantType();
-	}
+    @Override
+    protected DomainObject createNewDomainObject(InfoObject infoObject) {
+	return new GrantType();
+    }
 
-	@Override
-	protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
-		InfoGrantType infoGrantType = (InfoGrantType) infoObject;
-		GrantType grantType = (GrantType) domainObject;
+    @Override
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
+	InfoGrantType infoGrantType = (InfoGrantType) infoObject;
+	GrantType grantType = (GrantType) domainObject;
 
-		grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
-		grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());
-		grantType.setMinPeriodDays(infoGrantType.getMinPeriodDays());
-		grantType.setName(infoGrantType.getName());
-		grantType.setSigla(infoGrantType.getSigla());
-		grantType.setSource(infoGrantType.getSource());
-		grantType.setState(infoGrantType.getState());
-	}
+	grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
+	grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());
+	grantType.setMinPeriodDays(infoGrantType.getMinPeriodDays());
+	grantType.setName(infoGrantType.getName());
+	grantType.setSigla(infoGrantType.getSigla());
+	grantType.setSource(infoGrantType.getSource());
+	grantType.setState(infoGrantType.getState());
+    }
 
-	@Override
-	protected DomainObject readDomainObject(Integer idInternal) {
-		return rootDomainObject.readGrantTypeByOID(idInternal);
-	}
-    
+    @Override
+    protected DomainObject readDomainObject(Integer idInternal) {
+	return rootDomainObject.readGrantTypeByOID(idInternal);
+    }
+
 }

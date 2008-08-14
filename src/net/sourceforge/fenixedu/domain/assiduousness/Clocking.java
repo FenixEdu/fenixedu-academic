@@ -12,8 +12,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Clocking extends Clocking_Base {
 
-    public Clocking(Assiduousness assiduousness, ClockUnit clockUnit, DateTime date,
-	    Integer oracleSequence) {
+    public Clocking(Assiduousness assiduousness, ClockUnit clockUnit, DateTime date, Integer oracleSequence) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setDate(date);
@@ -31,10 +30,8 @@ public class Clocking extends Clocking_Base {
 	if (yearMonth.getIsThisYearMonthClosed()) {
 	    return "";
 	}
-	return "("
-		+ ResourceBundle
-			.getBundle("resources.AssiduousnessResources", Language.getLocale())
-			.getString("label.delete") + ")";
+	return "(" + ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale()).getString("label.delete")
+		+ ")";
     }
 
     public String getRestoreSlot() {
@@ -43,9 +40,8 @@ public class Clocking extends Clocking_Base {
 	    return "";
 	}
 	return "("
-		+ ResourceBundle
-			.getBundle("resources.AssiduousnessResources", Language.getLocale())
-			.getString("label.restore") + ")";
+		+ ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale()).getString("label.restore")
+		+ ")";
     }
 
     @Override

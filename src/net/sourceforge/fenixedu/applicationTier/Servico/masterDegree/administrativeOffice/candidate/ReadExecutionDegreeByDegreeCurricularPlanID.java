@@ -29,34 +29,31 @@ import org.apache.commons.collections.Predicate;
 
 public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
 
-    public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex)
-            {
-        List infoExecutionDegreeList = null;
-        List executionDegrees = null;
+    public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex) {
+	List infoExecutionDegreeList = null;
+	List executionDegrees = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
-                        degreeCurricularPlanID);
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+	executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
-        infoExecutionDegreeList = new ArrayList();
+	infoExecutionDegreeList = new ArrayList();
 
-        for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
-            ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
+	for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
+	    ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
 
-            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-                    .newInfoFromDomain(executionDegree);
-            infoExecutionDegreeList.add(infoExecutionDegree);
-        }
+	    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	    infoExecutionDegreeList.add(infoExecutionDegree);
+	}
 
-        Collections.sort(infoExecutionDegreeList, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((InfoExecutionDegree) o2).getInfoExecutionYear().getBeginDate().compareTo(
-                        ((InfoExecutionDegree) o1).getInfoExecutionYear().getBeginDate());
-            }
-        });
+	Collections.sort(infoExecutionDegreeList, new Comparator() {
+	    public int compare(Object o1, Object o2) {
+		return ((InfoExecutionDegree) o2).getInfoExecutionYear().getBeginDate().compareTo(
+			((InfoExecutionDegree) o1).getInfoExecutionYear().getBeginDate());
+	    }
+	});
 
-        return ((InfoExecutionDegree) infoExecutionDegreeList.get(executionDegreeIndex.intValue() - 1));
+	return ((InfoExecutionDegree) infoExecutionDegreeList.get(executionDegreeIndex.intValue() - 1));
     }
 
     /**
@@ -67,30 +64,26 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    public InfoExecutionDegree run(Integer degreeCurricularPlanID, final String executionYear)
-            {
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
-                        degreeCurricularPlanID);
+    public InfoExecutionDegree run(Integer degreeCurricularPlanID, final String executionYear) {
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        if (executionYear.equals("")) {
-            return InfoExecutionDegree
-                    .newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees()
-                            .get(0));
-        }
+	if (executionYear.equals("")) {
+	    return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees().get(0));
+	}
 
-        ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(degreeCurricularPlan
-                .getExecutionDegrees(), new Predicate() {
+	ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(degreeCurricularPlan.getExecutionDegrees(),
+		new Predicate() {
 
-            public boolean evaluate(Object arg0) {
-                ExecutionDegree executionDegree = (ExecutionDegree) arg0;
-                if (executionDegree.getExecutionYear().getYear().equals(executionYear)) {
-                    return true;
-                }
-                return false;
-            }
-        });
+		    public boolean evaluate(Object arg0) {
+			ExecutionDegree executionDegree = (ExecutionDegree) arg0;
+			if (executionDegree.getExecutionYear().getYear().equals(executionYear)) {
+			    return true;
+			}
+			return false;
+		    }
+		});
 
-        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 
 }

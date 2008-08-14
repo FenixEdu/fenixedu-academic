@@ -21,8 +21,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class MergeEventsDA extends MergeResearchActivityDA {
 
-    public ActionForward chooseEvent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	MergeEventPageContainerBean researchActivityPageContainerBean = (MergeEventPageContainerBean) getRenderedObject("mergeList");
 	ResearchEvent event = (ResearchEvent) researchActivityPageContainerBean.getSelected();
 	researchActivityPageContainerBean.setSelected(null);
@@ -34,8 +34,7 @@ public class MergeEventsDA extends MergeResearchActivityDA {
 	return mapping.findForward("show-research-activity-merge-list");
     }
 
-    private void copyProperties(ResearchEvent event,
-	    MergeEventPageContainerBean researchActivityPageContainerBean) {
+    private void copyProperties(ResearchEvent event, MergeEventPageContainerBean researchActivityPageContainerBean) {
 	researchActivityPageContainerBean.setName(event.getName());
 	researchActivityPageContainerBean.setResearchActivityLocationType(event.getLocationType());
 	researchActivityPageContainerBean.setEventType(event.getEventType());
@@ -59,6 +58,5 @@ public class MergeEventsDA extends MergeResearchActivityDA {
 	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
 	return events;
     }
-
 
 }

@@ -21,49 +21,49 @@ public class Element {
     Attributes attributes;
 
     public Element(String uri, String localName, String qName, Attributes attributes) {
-        this.uri = uri;
-        this.localName = localName;
-        this.qName = qName;
-        this.attributes = attributes;
+	this.uri = uri;
+	this.localName = localName;
+	this.qName = qName;
+	this.attributes = attributes;
     }
 
     public Attributes getAttributes() {
-        return attributes;
+	return attributes;
     }
 
     public String getLocalName() {
-        return localName;
+	return localName;
     }
 
     public String getQName() {
-        return qName;
+	return qName;
     }
 
     public String getUri() {
-        return uri;
+	return uri;
     }
 
     public String getValue() {
-        return value;
+	return value;
     }
 
     public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
+	this.attributes = attributes;
     }
 
     public void setLocalName(String string) {
-        localName = string;
+	localName = string;
     }
 
     public void setQName(String string) {
-        qName = string;
+	qName = string;
     }
 
     public void setUri(String string) {
-        uri = string;
+	uri = string;
     }
 
     public void setValue(String string) {
-        value = string;
+	value = string;
     }
 }

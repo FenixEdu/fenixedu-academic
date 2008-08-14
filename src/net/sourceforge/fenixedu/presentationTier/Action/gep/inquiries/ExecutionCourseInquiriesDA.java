@@ -18,26 +18,26 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
 
-    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
-        if (executionCourseSearchBean == null) {
-            executionCourseSearchBean = new ExecutionCourseSearchBean();
-            final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-            executionCourseSearchBean.setExecutionPeriod(executionSemester);
-        } else {
-            final Collection<ExecutionCourse> executionCourses = executionCourseSearchBean.search();
-            if (executionCourses != null) {
-                request.setAttribute("executionCourses", executionCourses);
-            }
-            RenderUtils.invalidateViewState("executionCourses");
-        }
-        request.setAttribute("executionCourseSearchBean", executionCourseSearchBean);
-        return mapping.findForward("showExecutionCoursesForInquiries");
+    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
+	if (executionCourseSearchBean == null) {
+	    executionCourseSearchBean = new ExecutionCourseSearchBean();
+	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+	    executionCourseSearchBean.setExecutionPeriod(executionSemester);
+	} else {
+	    final Collection<ExecutionCourse> executionCourses = executionCourseSearchBean.search();
+	    if (executionCourses != null) {
+		request.setAttribute("executionCourses", executionCourses);
+	    }
+	    RenderUtils.invalidateViewState("executionCourses");
+	}
+	request.setAttribute("executionCourseSearchBean", executionCourseSearchBean);
+	return mapping.findForward("showExecutionCoursesForInquiries");
     }
 
-    public ActionForward selectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
-    		throws Exception {
+    public ActionForward selectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
 	executeService(request, "SelectAllExecutionCoursesForInquiries", new Object[] { executionCourseSearchBean });
 	return search(mapping, actionForm, request, response);

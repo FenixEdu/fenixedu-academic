@@ -185,15 +185,14 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    firstCarPropertyRegistryByteArray = getByteArray(firstCarPropertyRegistryInputStream,
 		    firstCarPropertyRegistryByteArray);
 	    firstCarOwnerIdByteArray = getByteArray(firstCarOwnerIdInputStream, firstCarOwnerIdByteArray);
-	    firstDeclarationAuthorizationByteArray = getByteArray(
-		    firstDeclarationAuthorizationInputStream, firstDeclarationAuthorizationByteArray);
+	    firstDeclarationAuthorizationByteArray = getByteArray(firstDeclarationAuthorizationInputStream,
+		    firstDeclarationAuthorizationByteArray);
 	    firstInsuranceByteArray = getByteArray(firstInsuranceInputStream, firstInsuranceByteArray);
 	    secondCarPropertyRegistryByteArray = getByteArray(secondCarPropertyRegistryInputStream,
 		    secondCarPropertyRegistryByteArray);
-	    secondCarOwnerIdByteArray = getByteArray(secondCarOwnerIdInputStream,
-		    secondCarOwnerIdByteArray);
-	    secondDeclarationAuthorizationByteArray = getByteArray(
-		    secondDeclarationAuthorizationInputStream, secondDeclarationAuthorizationByteArray);
+	    secondCarOwnerIdByteArray = getByteArray(secondCarOwnerIdInputStream, secondCarOwnerIdByteArray);
+	    secondDeclarationAuthorizationByteArray = getByteArray(secondDeclarationAuthorizationInputStream,
+		    secondDeclarationAuthorizationByteArray);
 	    secondInsuranceByteArray = getByteArray(secondInsuranceInputStream, secondInsuranceByteArray);
 	}
 
@@ -230,8 +229,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	public InputStream getDriverLicenseInputStream() {
-	    return driverLicenseByteArray == null ? null : new ByteArrayInputStream(
-		    driverLicenseByteArray);
+	    return driverLicenseByteArray == null ? null : new ByteArrayInputStream(driverLicenseByteArray);
 	}
 
 	public void setDriverLicenseInputStream(InputStream driverLicenseInputStream) {
@@ -255,8 +253,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	public InputStream getFirstCarOwnerIdInputStream() {
-	    return firstCarOwnerIdByteArray == null ? null : new ByteArrayInputStream(
-		    firstCarOwnerIdByteArray);
+	    return firstCarOwnerIdByteArray == null ? null : new ByteArrayInputStream(firstCarOwnerIdByteArray);
 	}
 
 	public void setFirstCarOwnerIdInputStream(InputStream firstCarOwnerIdInputStream) {
@@ -280,12 +277,10 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	public InputStream getFirstCarPropertyRegistryInputStream() {
-	    return firstCarPropertyRegistryByteArray == null ? null : new ByteArrayInputStream(
-		    firstCarPropertyRegistryByteArray);
+	    return firstCarPropertyRegistryByteArray == null ? null : new ByteArrayInputStream(firstCarPropertyRegistryByteArray);
 	}
 
-	public void setFirstCarPropertyRegistryInputStream(
-		InputStream firstCarPropertyRegistryInputStream) {
+	public void setFirstCarPropertyRegistryInputStream(InputStream firstCarPropertyRegistryInputStream) {
 	    this.firstCarPropertyRegistryInputStream = firstCarPropertyRegistryInputStream;
 	}
 
@@ -316,8 +311,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	public InputStream getSecondCarOwnerIdInputStream() {
-	    return secondCarOwnerIdByteArray == null ? null : new ByteArrayInputStream(
-		    secondCarOwnerIdByteArray);
+	    return secondCarOwnerIdByteArray == null ? null : new ByteArrayInputStream(secondCarOwnerIdByteArray);
 	}
 
 	public void setSecondCarOwnerIdInputStream(InputStream secondCarOwnerIdInputStream) {
@@ -345,8 +339,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 		    secondCarPropertyRegistryByteArray);
 	}
 
-	public void setSecondCarPropertyRegistryInputStream(
-		InputStream secondCarPropertyRegistryInputStream) {
+	public void setSecondCarPropertyRegistryInputStream(InputStream secondCarPropertyRegistryInputStream) {
 	    this.secondCarPropertyRegistryInputStream = secondCarPropertyRegistryInputStream;
 	}
 
@@ -363,8 +356,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 		    firstDeclarationAuthorizationByteArray);
 	}
 
-	public void setFirstDeclarationAuthorizationInputStream(
-		InputStream firstDeclarationAuthorizationInputStream) {
+	public void setFirstDeclarationAuthorizationInputStream(InputStream firstDeclarationAuthorizationInputStream) {
 	    this.firstDeclarationAuthorizationInputStream = firstDeclarationAuthorizationInputStream;
 	}
 
@@ -372,8 +364,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    return secondDeclarationAuthorizationFileName;
 	}
 
-	public void setSecondDeclarationAuthorizationFileName(
-		String secondDeclarationAuthorizationFileName) {
+	public void setSecondDeclarationAuthorizationFileName(String secondDeclarationAuthorizationFileName) {
 	    this.secondDeclarationAuthorizationFileName = secondDeclarationAuthorizationFileName;
 	}
 
@@ -382,8 +373,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 		    secondDeclarationAuthorizationByteArray);
 	}
 
-	public void setSecondDeclarationAuthorizationInputStream(
-		InputStream secondDeclarationAuthorizationInputStream) {
+	public void setSecondDeclarationAuthorizationInputStream(InputStream secondDeclarationAuthorizationInputStream) {
 	    this.secondDeclarationAuthorizationInputStream = secondDeclarationAuthorizationInputStream;
 	}
 
@@ -396,8 +386,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	public InputStream getFirstInsuranceInputStream() {
-	    return firstInsuranceByteArray == null ? null : new ByteArrayInputStream(
-		    firstInsuranceByteArray);
+	    return firstInsuranceByteArray == null ? null : new ByteArrayInputStream(firstInsuranceByteArray);
 	}
 
 	public void setFirstInsuranceInputStream(InputStream firstInsuranceInputStream) {
@@ -413,8 +402,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	public InputStream getSecondInsuranceInputStream() {
-	    return secondInsuranceByteArray == null ? null : new ByteArrayInputStream(
-		    secondInsuranceByteArray);
+	    return secondInsuranceByteArray == null ? null : new ByteArrayInputStream(secondInsuranceByteArray);
 	}
 
 	public void setSecondInsuranceInputStream(InputStream secondInsuranceInputStream) {
@@ -422,40 +410,33 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	protected void writeFirstVehicleDocuments(Vehicle vehicle, VirtualPath filePath) {
-	    writeVehicleFile(vehicle, filePath, getFirstCarOwnerIdFileName(),
-		    NewParkingDocumentType.VEHICLE_OWNER_ID, getFirstCarOwnerIdInputStream(),
-		    getFirstCarOwnerIdDeliveryType());
+	    writeVehicleFile(vehicle, filePath, getFirstCarOwnerIdFileName(), NewParkingDocumentType.VEHICLE_OWNER_ID,
+		    getFirstCarOwnerIdInputStream(), getFirstCarOwnerIdDeliveryType());
 	    writeVehicleFile(vehicle, filePath, getFirstCarPropertyRegistryFileName(),
-		    NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER,
-		    getFirstCarPropertyRegistryInputStream(), getFirstCarPropertyRegistryDeliveryType());
+		    NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER, getFirstCarPropertyRegistryInputStream(),
+		    getFirstCarPropertyRegistryDeliveryType());
 	    writeVehicleFile(vehicle, filePath, getFirstDeclarationAuthorizationFileName(),
-		    NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION,
-		    getFirstDeclarationAuthorizationInputStream(), getFirstCarDeclarationDeliveryType());
-	    writeVehicleFile(vehicle, filePath, getFirstInsuranceFileName(),
-		    NewParkingDocumentType.VEHICLE_INSURANCE, getFirstInsuranceInputStream(),
-		    getFirstCarInsuranceDeliveryType());
+		    NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION, getFirstDeclarationAuthorizationInputStream(),
+		    getFirstCarDeclarationDeliveryType());
+	    writeVehicleFile(vehicle, filePath, getFirstInsuranceFileName(), NewParkingDocumentType.VEHICLE_INSURANCE,
+		    getFirstInsuranceInputStream(), getFirstCarInsuranceDeliveryType());
 	}
 
 	protected void writeSecondVehicleDocuments(Vehicle vehicle, VirtualPath filePath) {
-	    writeVehicleFile(vehicle, filePath, getSecondCarOwnerIdFileName(),
-		    NewParkingDocumentType.VEHICLE_OWNER_ID, getSecondCarOwnerIdInputStream(),
-		    getSecondCarOwnerIdDeliveryType());
+	    writeVehicleFile(vehicle, filePath, getSecondCarOwnerIdFileName(), NewParkingDocumentType.VEHICLE_OWNER_ID,
+		    getSecondCarOwnerIdInputStream(), getSecondCarOwnerIdDeliveryType());
 	    writeVehicleFile(vehicle, filePath, getSecondCarPropertyRegistryFileName(),
-		    NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER,
-		    getSecondCarPropertyRegistryInputStream(),
+		    NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER, getSecondCarPropertyRegistryInputStream(),
 		    getSecondCarPropertyRegistryDeliveryType());
 	    writeVehicleFile(vehicle, filePath, getSecondDeclarationAuthorizationFileName(),
-		    NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION,
-		    getSecondDeclarationAuthorizationInputStream(),
+		    NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION, getSecondDeclarationAuthorizationInputStream(),
 		    getSecondCarDeclarationDeliveryType());
-	    writeVehicleFile(vehicle, filePath, getSecondInsuranceFileName(),
-		    NewParkingDocumentType.VEHICLE_INSURANCE, getSecondInsuranceInputStream(),
-		    getSecondCarInsuranceDeliveryType());
+	    writeVehicleFile(vehicle, filePath, getSecondInsuranceFileName(), NewParkingDocumentType.VEHICLE_INSURANCE,
+		    getSecondInsuranceInputStream(), getSecondCarInsuranceDeliveryType());
 	}
 
 	private void writeVehicleFile(Vehicle vehicle, VirtualPath filePath, String filename,
-		NewParkingDocumentType parkingDocumentType, InputStream inputStream,
-		DocumentDeliveryType documentDeliveryType) {
+		NewParkingDocumentType parkingDocumentType, InputStream inputStream, DocumentDeliveryType documentDeliveryType) {
 	    NewParkingDocument parkingDocument = vehicle.getParkingDocument(parkingDocumentType);
 	    if (parkingDocument != null
 		    && (inputStream != null || documentDeliveryType != DocumentDeliveryType.ELECTRONIC_DELIVERY)) {
@@ -463,14 +444,12 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    }
 	    if (documentDeliveryType == DocumentDeliveryType.ELECTRONIC_DELIVERY && inputStream != null) {
 		final Group group = getGroup(vehicle.getParkingRequest().getParkingParty().getParty());
-		final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance()
-			.getFileManager().saveFile(filePath, filename, false,
-				getParkingParty().getParty().getName(), filename, inputStream);
+		final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
+			filename, false, getParkingParty().getParty().getName(), filename, inputStream);
 
-		final ParkingFile parkingFile = new ParkingFile(filename, filename, fileDescriptor
-			.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-			.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-			group);
+		final ParkingFile parkingFile = new ParkingFile(filename, filename, fileDescriptor.getMimeType(), fileDescriptor
+			.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
+			.getUniqueId(), group);
 
 		new NewParkingDocument(parkingDocumentType, parkingFile, vehicle);
 	    }
@@ -482,28 +461,22 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    String filename = getDriverLicenseFileName();
 	    if (parkingDocument != null
 		    && (getDriverLicenseInputStream() != null || documentDeliveryType != DocumentDeliveryType.ELECTRONIC_DELIVERY)) {
-		String externalIdentifier = parkingDocument.getParkingFile()
-			.getExternalStorageIdentification();
+		String externalIdentifier = parkingDocument.getParkingFile().getExternalStorageIdentification();
 		parkingDocument.delete();
 		if (externalIdentifier != null) {
 		    new DeleteFileRequest(AccessControl.getPerson(), externalIdentifier);
 		}
 	    }
-	    if (documentDeliveryType == DocumentDeliveryType.ELECTRONIC_DELIVERY
-		    && getDriverLicenseInputStream() != null) {
+	    if (documentDeliveryType == DocumentDeliveryType.ELECTRONIC_DELIVERY && getDriverLicenseInputStream() != null) {
 		final Group group = getGroup(getParkingParty().getParty());
-		final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance()
-			.getFileManager().saveFile(filePath, filename, false,
-				getParkingParty().getParty().getName(), filename,
-				getDriverLicenseInputStream());
+		final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
+			filename, false, getParkingParty().getParty().getName(), filename, getDriverLicenseInputStream());
 
-		final ParkingFile parkingFile = new ParkingFile(filename, filename, fileDescriptor
-			.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-			.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-			group);
+		final ParkingFile parkingFile = new ParkingFile(filename, filename, fileDescriptor.getMimeType(), fileDescriptor
+			.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
+			.getUniqueId(), group);
 
-		new NewParkingDocument(NewParkingDocumentType.DRIVER_LICENSE, parkingFile,
-			parkingRequest);
+		new NewParkingDocument(NewParkingDocumentType.DRIVER_LICENSE, parkingFile, parkingRequest);
 	    }
 	}
 
@@ -633,8 +606,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    return firstCarDeclarationDeliveryType;
 	}
 
-	public void setFirstCarDeclarationDeliveryType(
-		DocumentDeliveryType firstCarDeclarationDeliveryType) {
+	public void setFirstCarDeclarationDeliveryType(DocumentDeliveryType firstCarDeclarationDeliveryType) {
 	    this.firstCarDeclarationDeliveryType = firstCarDeclarationDeliveryType;
 	}
 
@@ -658,8 +630,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    return firstCarPropertyRegistryDeliveryType;
 	}
 
-	public void setFirstCarPropertyRegistryDeliveryType(
-		DocumentDeliveryType firstCarPropertyRegistryDeliveryType) {
+	public void setFirstCarPropertyRegistryDeliveryType(DocumentDeliveryType firstCarPropertyRegistryDeliveryType) {
 	    this.firstCarPropertyRegistryDeliveryType = firstCarPropertyRegistryDeliveryType;
 	}
 
@@ -667,8 +638,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    return secondCarDeclarationDeliveryType;
 	}
 
-	public void setSecondCarDeclarationDeliveryType(
-		DocumentDeliveryType secondCarDeclarationDeliveryType) {
+	public void setSecondCarDeclarationDeliveryType(DocumentDeliveryType secondCarDeclarationDeliveryType) {
 	    this.secondCarDeclarationDeliveryType = secondCarDeclarationDeliveryType;
 	}
 
@@ -692,8 +662,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    return secondCarPropertyRegistryDeliveryType;
 	}
 
-	public void setSecondCarPropertyRegistryDeliveryType(
-		DocumentDeliveryType secondCarPropertyRegistryDeliveryType) {
+	public void setSecondCarPropertyRegistryDeliveryType(DocumentDeliveryType secondCarPropertyRegistryDeliveryType) {
 	    this.secondCarPropertyRegistryDeliveryType = secondCarPropertyRegistryDeliveryType;
 	}
 
@@ -726,8 +695,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 		firstVehicle.setPropertyRegistryDeliveryType(getFirstCarPropertyRegistryDeliveryType());
 		firstVehicle.setInsuranceDeliveryType(getFirstCarInsuranceDeliveryType());
 		firstVehicle.setOwnerIdDeliveryType(getFirstCarOwnerIdDeliveryType());
-		firstVehicle
-			.setAuthorizationDeclarationDeliveryType(getFirstCarDeclarationDeliveryType());
+		firstVehicle.setAuthorizationDeclarationDeliveryType(getFirstCarDeclarationDeliveryType());
 		writeFirstVehicleDocuments(firstVehicle, filePath);
 
 		if (getSecondCarMake() != null) {
@@ -735,12 +703,10 @@ public class ParkingRequest extends ParkingRequest_Base {
 		    secondVehicle.setParkingRequest(parkingRequest);
 		    secondVehicle.setPlateNumber(getSecondCarPlateNumber());
 		    secondVehicle.setVehicleMake(getSecondCarMake());
-		    secondVehicle
-			    .setPropertyRegistryDeliveryType(getSecondCarPropertyRegistryDeliveryType());
+		    secondVehicle.setPropertyRegistryDeliveryType(getSecondCarPropertyRegistryDeliveryType());
 		    secondVehicle.setInsuranceDeliveryType(getSecondCarInsuranceDeliveryType());
 		    secondVehicle.setOwnerIdDeliveryType(getSecondCarOwnerIdDeliveryType());
-		    secondVehicle
-			    .setAuthorizationDeclarationDeliveryType(getSecondCarDeclarationDeliveryType());
+		    secondVehicle.setAuthorizationDeclarationDeliveryType(getSecondCarDeclarationDeliveryType());
 		    writeSecondVehicleDocuments(secondVehicle, filePath);
 		}
 
@@ -774,13 +740,11 @@ public class ParkingRequest extends ParkingRequest_Base {
 		setFirstCarPropertyRegistryFileName(firstVehicle.getPropertyRegistryFileName());
 		setFirstInsuranceFileName(firstVehicle.getInsuranceFileName());
 		setFirstCarOwnerIdFileName(firstVehicle.getOwnerIdFileName());
-		setFirstDeclarationAuthorizationFileName(firstVehicle
-			.getAuthorizationDeclarationFileName());
+		setFirstDeclarationAuthorizationFileName(firstVehicle.getAuthorizationDeclarationFileName());
 		setFirstCarPropertyRegistryDeliveryType(firstVehicle.getPropertyRegistryDeliveryType());
 		setFirstCarInsuranceDeliveryType(firstVehicle.getInsuranceDeliveryType());
 		setFirstCarOwnerIdDeliveryType(firstVehicle.getOwnerIdDeliveryType());
-		setFirstCarDeclarationDeliveryType(firstVehicle
-			.getAuthorizationDeclarationDeliveryType());
+		setFirstCarDeclarationDeliveryType(firstVehicle.getAuthorizationDeclarationDeliveryType());
 	    }
 
 	    if (parkingRequest.getVehicles().size() > 1) {
@@ -791,13 +755,11 @@ public class ParkingRequest extends ParkingRequest_Base {
 		setSecondCarPropertyRegistryFileName(secondVehicle.getPropertyRegistryFileName());
 		setSecondInsuranceFileName(secondVehicle.getInsuranceFileName());
 		setSecondCarOwnerIdFileName(secondVehicle.getOwnerIdFileName());
-		setSecondDeclarationAuthorizationFileName(secondVehicle
-			.getAuthorizationDeclarationFileName());
+		setSecondDeclarationAuthorizationFileName(secondVehicle.getAuthorizationDeclarationFileName());
 		setSecondCarPropertyRegistryDeliveryType(secondVehicle.getPropertyRegistryDeliveryType());
 		setSecondCarInsuranceDeliveryType(secondVehicle.getInsuranceDeliveryType());
 		setSecondCarOwnerIdDeliveryType(secondVehicle.getOwnerIdDeliveryType());
-		setSecondCarDeclarationDeliveryType(secondVehicle
-			.getAuthorizationDeclarationDeliveryType());
+		setSecondCarDeclarationDeliveryType(secondVehicle.getAuthorizationDeclarationDeliveryType());
 	    }
 
 	    setRequestAs(parkingRequest.getRequestedAs());
@@ -821,8 +783,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
 	    writeDriverLicenseFile(parkingRequest, filePath);
 
-	    Vehicle firstVehicle = (Vehicle) RootDomainObject.readDomainObjectByOID(Vehicle.class,
-		    getFirstVechicleID());
+	    Vehicle firstVehicle = (Vehicle) RootDomainObject.readDomainObjectByOID(Vehicle.class, getFirstVechicleID());
 
 	    if (firstVehicle != null) {
 		firstVehicle.setPlateNumber(getFirstCarPlateNumber());
@@ -830,26 +791,22 @@ public class ParkingRequest extends ParkingRequest_Base {
 		firstVehicle.setPropertyRegistryDeliveryType(getFirstCarPropertyRegistryDeliveryType());
 		firstVehicle.setInsuranceDeliveryType(getFirstCarInsuranceDeliveryType());
 		firstVehicle.setOwnerIdDeliveryType(getFirstCarOwnerIdDeliveryType());
-		firstVehicle
-			.setAuthorizationDeclarationDeliveryType(getFirstCarDeclarationDeliveryType());
+		firstVehicle.setAuthorizationDeclarationDeliveryType(getFirstCarDeclarationDeliveryType());
 		writeFirstVehicleDocuments(firstVehicle, filePath);
 	    }
 
 	    if (getSecondVechicleID() != null) {
-		Vehicle secondVehicle = (Vehicle) RootDomainObject.readDomainObjectByOID(Vehicle.class,
-			getSecondVechicleID());
+		Vehicle secondVehicle = (Vehicle) RootDomainObject.readDomainObjectByOID(Vehicle.class, getSecondVechicleID());
 
 		if (getSecondCarMake() == null) {
 		    secondVehicle.delete();
 		} else {
 		    secondVehicle.setPlateNumber(getSecondCarPlateNumber());
 		    secondVehicle.setVehicleMake(getSecondCarMake());
-		    secondVehicle
-			    .setPropertyRegistryDeliveryType(getSecondCarPropertyRegistryDeliveryType());
+		    secondVehicle.setPropertyRegistryDeliveryType(getSecondCarPropertyRegistryDeliveryType());
 		    secondVehicle.setInsuranceDeliveryType(getSecondCarInsuranceDeliveryType());
 		    secondVehicle.setOwnerIdDeliveryType(getSecondCarOwnerIdDeliveryType());
-		    secondVehicle
-			    .setAuthorizationDeclarationDeliveryType(getSecondCarDeclarationDeliveryType());
+		    secondVehicle.setAuthorizationDeclarationDeliveryType(getSecondCarDeclarationDeliveryType());
 		    writeSecondVehicleDocuments(secondVehicle, filePath);
 		}
 	    } else if (getSecondCarMake() != null) {
@@ -857,12 +814,10 @@ public class ParkingRequest extends ParkingRequest_Base {
 		secondVehicle.setParkingRequest(parkingRequest);
 		secondVehicle.setPlateNumber(getSecondCarPlateNumber());
 		secondVehicle.setVehicleMake(getSecondCarMake());
-		secondVehicle
-			.setPropertyRegistryDeliveryType(getSecondCarPropertyRegistryDeliveryType());
+		secondVehicle.setPropertyRegistryDeliveryType(getSecondCarPropertyRegistryDeliveryType());
 		secondVehicle.setInsuranceDeliveryType(getSecondCarInsuranceDeliveryType());
 		secondVehicle.setOwnerIdDeliveryType(getSecondCarOwnerIdDeliveryType());
-		secondVehicle
-			.setAuthorizationDeclarationDeliveryType(getSecondCarDeclarationDeliveryType());
+		secondVehicle.setAuthorizationDeclarationDeliveryType(getSecondCarDeclarationDeliveryType());
 		writeSecondVehicleDocuments(secondVehicle, filePath);
 	    }
 	    return parkingRequest;
@@ -898,8 +853,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	if (driverLicenseDocument != null) {
 	    return driverLicenseDocument.getParkingFile().getFilename();
 	} else if (getDriverLicenseDeliveryType() != null) {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language
-		    .getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
 	    return bundle.getString(getDriverLicenseDeliveryType().name());
 	}
 	return "";
@@ -907,8 +861,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public String getDeclarationDocumentLink() {
 	NewParkingDocument parkingDocument = getDriverLicenseDocument();
-	if (parkingDocument != null
-		&& parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
+	if (parkingDocument != null && parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
 	    ParkingFile parkingFile = parkingDocument.getParkingFile();
 	    return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
 		    parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());

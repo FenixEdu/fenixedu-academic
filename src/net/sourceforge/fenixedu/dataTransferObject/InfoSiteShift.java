@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-
 /**
  * 
  * @author tfc130
@@ -17,71 +16,71 @@ public class InfoSiteShift extends InfoObject {
     protected Object nrOfGroups;
 
     protected InfoShift infoShift;
-    
+
     protected String orderByWeekDay;
-    
+
     protected String orderByBeginHour;
 
     protected String orderByEndHour;
-    
+
     protected String orderByRoom;
-    
+
     public Object getNrOfGroups() {
-        return nrOfGroups;
+	return nrOfGroups;
     }
 
     public InfoShift getInfoShift() {
-        return infoShift;
+	return infoShift;
     }
 
     public void setNrOfGroups(Object nrOfGroups) {
-        this.nrOfGroups = nrOfGroups;
+	this.nrOfGroups = nrOfGroups;
     }
 
     public void setInfoShift(InfoShift infoShift) {
-        this.infoShift = infoShift;
+	this.infoShift = infoShift;
     }
-        
+
     public String getOrderByWeekDay() {
-        return orderByWeekDay;
+	return orderByWeekDay;
     }
 
     public void setOrderByWeekDay(String orderByWeekDay) {
-    	this.orderByWeekDay = orderByWeekDay;
+	this.orderByWeekDay = orderByWeekDay;
     }
-    
+
     public String getOrderByBeginHour() {
-        return orderByBeginHour;
+	return orderByBeginHour;
     }
 
     public void setOrderByBeginHour(String orderByBeginHour) {
-    	this.orderByBeginHour = orderByBeginHour;
+	this.orderByBeginHour = orderByBeginHour;
     }
 
     public String getOrderByEndHour() {
-        return orderByEndHour;
+	return orderByEndHour;
     }
 
     public void setOrderByEndHour(String orderByEndHour) {
-    	this.orderByEndHour = orderByEndHour;
+	this.orderByEndHour = orderByEndHour;
     }
-    
+
     public String getOrderByRoom() {
-        return orderByRoom;
+	return orderByRoom;
     }
 
     public void setOrderByRoom(String orderByRoom) {
-    	this.orderByRoom = orderByRoom;
+	this.orderByRoom = orderByRoom;
     }
-    
+
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoSiteShift) {
-            InfoSiteShift infoSiteShift = (InfoSiteShift) obj;
-            resultado = (this.getNrOfGroups().equals(infoSiteShift.getNrOfGroups()))
-                    && (this.getInfoShift().equals(infoSiteShift.getInfoShift()));
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoSiteShift) {
+	    InfoSiteShift infoSiteShift = (InfoSiteShift) obj;
+	    resultado = (this.getNrOfGroups().equals(infoSiteShift.getNrOfGroups()))
+		    && (this.getInfoShift().equals(infoSiteShift.getInfoShift()));
+	}
+	return resultado;
     }
 
 }

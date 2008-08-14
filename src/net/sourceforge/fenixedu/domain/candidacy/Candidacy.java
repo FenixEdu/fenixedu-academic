@@ -36,8 +36,8 @@ public abstract class Candidacy extends Candidacy_Base {
 	if (RootDomainObject.getInstance().getCandidaciesCount() == 0) {
 	    return Integer.valueOf(1);
 	}
-	Candidacy candidacy = (Candidacy) Collections.max(RootDomainObject.getInstance()
-		.getCandidaciesSet(), new BeanComparator("number"));
+	Candidacy candidacy = (Candidacy) Collections.max(RootDomainObject.getInstance().getCandidaciesSet(), new BeanComparator(
+		"number"));
 	return candidacy.getNumber() + 1;
     }
 
@@ -108,16 +108,15 @@ public abstract class Candidacy extends Candidacy_Base {
 
     @Override
     public YearMonthDay getStartDate() {
-	return super.getStartDate() != null ? super.getStartDate() : getFirstCandidacySituation()
-		.getSituationDate().toYearMonthDay();
+	return super.getStartDate() != null ? super.getStartDate() : getFirstCandidacySituation().getSituationDate()
+		.toYearMonthDay();
     }
 
     public void delete() {
 
 	removePerson();
 
-	for (; !getCandidacySituationsSet().isEmpty(); getCandidacySituationsSet().iterator().next()
-		.delete())
+	for (; !getCandidacySituationsSet().isEmpty(); getCandidacySituationsSet().iterator().next().delete())
 	    ;
 
 	removeRootDomainObject();
@@ -160,11 +159,10 @@ public abstract class Candidacy extends Candidacy_Base {
 	return null;
     }
 
-
-    public IState  nextState() {
+    public IState nextState() {
 	return nextState(getDefaultState());
     }
-    
+
     public void checkConditionsToForward() {
 	checkConditionsToForward(getDefaultState());
     }
@@ -177,16 +175,16 @@ public abstract class Candidacy extends Candidacy_Base {
 	    throw new DomainException("error.impossible.to.forward.from.cancelled");
 	case ADMITTED:
 	    if (this instanceof PHDProgramCandidacy) {
-		if(((PHDProgramCandidacy)this).getPhdCandidacyEvent().isInDebt()) {
+		if (((PHDProgramCandidacy) this).getPhdCandidacyEvent().isInDebt()) {
 		    throw new DomainException("error.student.needs.to.pay.candidacy.fee");
 		}
 	    }
-	    break;	    
+	    break;
 	case STAND_BY:
 	    if (isCancelling(nextState)) {
 		break;
 	    }
-	    
+
 	    if (!checkIfDataIsFilled()) {
 		throw new DomainException("error.mandatory.data.not.filled.yet");
 	    }
@@ -200,41 +198,35 @@ public abstract class Candidacy extends Candidacy_Base {
 	    break;
 	}
     }
-    
+
     private boolean isCancelling(final String nextState) {
 	return CandidacySituationType.valueOf(nextState) == CandidacySituationType.CANCELLED;
     }
 
-
     public Set<String> getValidNextStates() {
-	return getStateMapping().get(
-		getActiveCandidacySituation().getCandidacySituationType().toString());
+	return getStateMapping().get(getActiveCandidacySituation().getCandidacySituationType().toString());
     }
 
     private boolean checkIfPrecedenceDataIsFilled() {
-	if(!(this instanceof DFACandidacy)) {
+	if (!(this instanceof DFACandidacy)) {
 	    return false;
 	}
-	PrecedentDegreeInformation precedentDegreeInformation =  ((DFACandidacy)this).getPrecedentDegreeInformation();
-	return (precedentDegreeInformation.getConclusionGrade() != null
-		&& precedentDegreeInformation.getConclusionYear() != null
-		&& precedentDegreeInformation.getCountry() != null
-		&& precedentDegreeInformation.getDegreeDesignation() != null && precedentDegreeInformation
+	PrecedentDegreeInformation precedentDegreeInformation = ((DFACandidacy) this).getPrecedentDegreeInformation();
+	return (precedentDegreeInformation.getConclusionGrade() != null && precedentDegreeInformation.getConclusionYear() != null
+		&& precedentDegreeInformation.getCountry() != null && precedentDegreeInformation.getDegreeDesignation() != null && precedentDegreeInformation
 		.getInstitution() != null);
     }
 
     private boolean checkIfDataIsFilled() {
 	Person person = getPerson();
 	return (person.getGender() != null && person.getEmissionDateOfDocumentIdYearMonthDay() != null
-		&& person.getEmissionLocationOfDocumentId() != null
-		&& person.getExpirationDateOfDocumentIdYearMonthDay() != null
+		&& person.getEmissionLocationOfDocumentId() != null && person.getExpirationDateOfDocumentIdYearMonthDay() != null
 		&& person.getSocialSecurityNumber() != null && person.getProfession() != null
 		&& person.getMaritalStatus() != null && person.getDateOfBirthYearMonthDay() != null
 		&& person.getCountry() != null && person.getParishOfBirth() != null
 		&& person.getDistrictSubdivisionOfBirth() != null && person.getDistrictOfBirth() != null
-		&& person.getCountryOfBirth() != null && person.getNameOfFather() != null
-		&& person.getNameOfMother() != null && person.hasDefaultPhysicalAddress() && person
-		.getEmail() != null);
+		&& person.getCountryOfBirth() != null && person.getNameOfFather() != null && person.getNameOfMother() != null
+		&& person.hasDefaultPhysicalAddress() && person.getEmail() != null);
     }
 
 }

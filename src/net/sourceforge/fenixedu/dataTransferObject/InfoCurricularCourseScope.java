@@ -17,7 +17,6 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  * @author tfc130
  */
@@ -31,7 +30,8 @@ public class InfoCurricularCourseScope extends InfoObject {
 	    comparatorChain.addComparator(new Comparator<InfoCurricularCourseScope>() {
 
 		public int compare(InfoCurricularCourseScope o1, InfoCurricularCourseScope o2) {
-		    return o1.getInfoCurricularSemester().getInfoCurricularYear().getYear().compareTo(o2.getInfoCurricularSemester().getInfoCurricularYear().getYear());
+		    return o1.getInfoCurricularSemester().getInfoCurricularYear().getYear().compareTo(
+			    o2.getInfoCurricularSemester().getInfoCurricularYear().getYear());
 		}
 
 	    });
@@ -64,7 +64,8 @@ public class InfoCurricularCourseScope extends InfoObject {
 	    comparatorChain.addComparator(new Comparator<InfoCurricularCourseScope>() {
 
 		public int compare(InfoCurricularCourseScope o1, InfoCurricularCourseScope o2) {
-		    return InfoCurricularCourse.COMPARATOR_BY_NAME_AND_ID.compare(o1.getInfoCurricularCourse(), o2.getInfoCurricularCourse());
+		    return InfoCurricularCourse.COMPARATOR_BY_NAME_AND_ID.compare(o1.getInfoCurricularCourse(), o2
+			    .getInfoCurricularCourse());
 		}
 
 	    });
@@ -87,7 +88,8 @@ public class InfoCurricularCourseScope extends InfoObject {
     }
 
     public boolean equals(Object obj) {
-	return obj instanceof InfoCurricularCourseScope && getCurricularCourseScope() == ((InfoCurricularCourseScope) obj).getCurricularCourseScope();
+	return obj instanceof InfoCurricularCourseScope
+		&& getCurricularCourseScope() == ((InfoCurricularCourseScope) obj).getCurricularCourseScope();
     }
 
     public String toString() {

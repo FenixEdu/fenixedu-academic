@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 public class WriteEnrollmentsList extends Service {
 
     public void run(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
-	    ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments,
-	    IUserView userView) throws FenixServiceException {
+	    ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
+	    throws FenixServiceException {
 
 	if (studentCurricularPlan == null) {
 	    throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
@@ -30,8 +30,7 @@ public class WriteEnrollmentsList extends Service {
 	    final Integer curricularCourseId = Integer.valueOf(enrolmentInfo.split("-")[0]);
 	    final CurricularCourse curricularCourse = readCurricularCourse(curricularCourseId);
 
-	    final Integer enrollmentclass = Integer.valueOf(optionalEnrollments.get(
-		    curricularCourseId.toString()).toString());
+	    final Integer enrollmentclass = Integer.valueOf(optionalEnrollments.get(curricularCourseId.toString()).toString());
 
 	    createEnrollment(studentCurricularPlan, curricularCourse, executionSemester,
 		    CurricularCourseEnrollmentType.VALIDATED, enrollmentclass, userView);
@@ -42,31 +41,28 @@ public class WriteEnrollmentsList extends Service {
 	return (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
     }
 
-    protected void createEnrollment(final StudentCurricularPlan studentCurricularPlan,
-	    final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
-	    final CurricularCourseEnrollmentType enrollmentType, final Integer enrollmentClass,
-	    final IUserView userView) {
+    protected void createEnrollment(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
+	    final ExecutionSemester executionSemester, final CurricularCourseEnrollmentType enrollmentType,
+	    final Integer enrollmentClass, final IUserView userView) {
 
-	final Enrolment enrollment = studentCurricularPlan
-		.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionSemester);
+	final Enrolment enrollment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
+		executionSemester);
 
 	if (enrollment == null) {
 
-	    if (enrollmentClass == null || enrollmentClass.intValue() == 0
-		    || enrollmentClass.intValue() == 1) {
+	    if (enrollmentClass == null || enrollmentClass.intValue() == 0 || enrollmentClass.intValue() == 1) {
 
-		new Enrolment(studentCurricularPlan, curricularCourse, executionSemester,
-			getEnrollmentCondition(enrollmentType), userView.getUtilizador());
+		new Enrolment(studentCurricularPlan, curricularCourse, executionSemester, getEnrollmentCondition(enrollmentType),
+			userView.getUtilizador());
 
 	    } else if (enrollmentClass.intValue() == 2) {
 
-		new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, curricularCourse,
-			executionSemester, getEnrollmentCondition(enrollmentType), userView
-				.getUtilizador());
+		new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, curricularCourse, executionSemester,
+			getEnrollmentCondition(enrollmentType), userView.getUtilizador());
 
 	    } else {
-		new Enrolment(studentCurricularPlan, curricularCourse, executionSemester,
-			getEnrollmentCondition(enrollmentType), userView.getUtilizador()).markAsExtraCurricular();
+		new Enrolment(studentCurricularPlan, curricularCourse, executionSemester, getEnrollmentCondition(enrollmentType),
+			userView.getUtilizador()).markAsExtraCurricular();
 	    }
 
 	} else {

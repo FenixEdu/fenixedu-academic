@@ -10,32 +10,31 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
- *
- * Created at 4:10:39 PM, Mar 11, 2005
+ * 
+ *         Created at 4:10:39 PM, Mar 11, 2005
  */
-public class InfoExternalEvaluationInfo
-{
+public class InfoExternalEvaluationInfo {
 
-    private String gradeValue;    
+    private String gradeValue;
+
     /**
      * @return Returns the grade.
      */
-    public String getGradeValue()
-    {
-        return this.gradeValue;
+    public String getGradeValue() {
+	return this.gradeValue;
     }
+
     /**
-     * @param grade The grade to set.
+     * @param grade
+     *            The grade to set.
      */
-    public void setGradeValue(String grade)
-    {
-        this.gradeValue = grade;
+    public void setGradeValue(String grade) {
+	this.gradeValue = grade;
     }
-    
-    public static InfoExternalEvaluationInfo newFromEvaluation(EnrolmentEvaluation evaluation)
-    {
-        InfoExternalEvaluationInfo info = new InfoExternalEvaluationInfo();
-        info.setGradeValue(evaluation.getGradeValue());
-        return info;
+
+    public static InfoExternalEvaluationInfo newFromEvaluation(EnrolmentEvaluation evaluation) {
+	InfoExternalEvaluationInfo info = new InfoExternalEvaluationInfo();
+	info.setGradeValue(evaluation.getGradeValue());
+	return info;
     }
 }

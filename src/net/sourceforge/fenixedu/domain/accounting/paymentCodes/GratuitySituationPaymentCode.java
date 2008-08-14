@@ -18,15 +18,15 @@ public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_B
 	super();
     }
 
-    private GratuitySituationPaymentCode(final PaymentCodeType paymentCodeType,
-	    final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
-	    final Money maxAmount, final Student student, final GratuitySituation gratuitySituation) {
+    private GratuitySituationPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+	    final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
+	    final GratuitySituation gratuitySituation) {
 	this();
 	init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student, gratuitySituation);
     }
 
-    private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate,
-	    Money minAmount, Money maxAmount, Student student, GratuitySituation gratuitySituation) {
+    private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
+	    Money maxAmount, Student student, GratuitySituation gratuitySituation) {
 
 	super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student);
 
@@ -42,37 +42,34 @@ public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_B
 	}
     }
 
-    public static GratuitySituationPaymentCode create(final PaymentCodeType paymentCodeType,
-	    final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
-	    final Money maxAmount, final Student student, final GratuitySituation gratuitySituation) {
+    public static GratuitySituationPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+	    final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
+	    final GratuitySituation gratuitySituation) {
 
 	if (PaymentCodeGenerator.canGenerateNewCode(paymentCodeType, student)) {
-	    return new GratuitySituationPaymentCode(paymentCodeType, startDate, endDate, minAmount,
-		    maxAmount, student, gratuitySituation);
+	    return new GratuitySituationPaymentCode(paymentCodeType, startDate, endDate, minAmount, maxAmount, student,
+		    gratuitySituation);
 	}
 
-	throw new DomainException(
-		"error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.could.not.generate.new.code");
+	throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.could.not.generate.new.code");
     }
 
     @Override
     public void setGratuitySituation(GratuitySituation gratuitySituation) {
-	throw new DomainException(
-		"error.accounting.paymentCodes.GratuitySituationPaymentCode.cannot.modify.gratuitySituation");
+	throw new DomainException("error.accounting.paymentCodes.GratuitySituationPaymentCode.cannot.modify.gratuitySituation");
     }
 
     @Override
-    protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered,
-	    String sibsTransactionId, String comments) {
-	getGratuitySituation()
-		.processAmount(responsiblePerson, amount, whenRegistered, PaymentType.SIBS);
+    protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId,
+	    String comments) {
+	getGratuitySituation().processAmount(responsiblePerson, amount, whenRegistered, PaymentType.SIBS);
     }
-    
+
     @Override
     public void delete() {
 	super.setGratuitySituation(null);
-	
-        super.delete();
+
+	super.delete();
     }
 
 }

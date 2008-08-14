@@ -29,82 +29,80 @@ public class InfoGrantOwner extends InfoObject {
     private Date dateSendCGD;
 
     public boolean equals(Object obj) {
-        return ((obj instanceof InfoGrantOwner) && ((this.personInfo.equals(((InfoGrantOwner) obj)
-                .getPersonInfo())) && (this.grantOwnerNumber.equals(((InfoGrantOwner) obj)
-                .getGrantOwnerNumber()))));
+	return ((obj instanceof InfoGrantOwner) && ((this.personInfo.equals(((InfoGrantOwner) obj).getPersonInfo())) && (this.grantOwnerNumber
+		.equals(((InfoGrantOwner) obj).getGrantOwnerNumber()))));
     }
-    
+
     public InfoPerson getPersonInfo() {
-        return personInfo;
+	return personInfo;
     }
 
     public Integer getGrantOwnerNumber() {
-        return grantOwnerNumber;
+	return grantOwnerNumber;
     }
 
     public Integer getCardCopyNumber() {
-        return cardCopyNumber;
+	return cardCopyNumber;
     }
 
     public Date getDateSendCGD() {
-        return dateSendCGD;
+	return dateSendCGD;
     }
-    
+
     public void setPersonInfo(InfoPerson infoPerson) {
-        this.personInfo = infoPerson;
+	this.personInfo = infoPerson;
     }
 
     public void setGrantOwnerNumber(Integer number) {
-        this.grantOwnerNumber = number;
+	this.grantOwnerNumber = number;
     }
 
     public void setCardCopyNumber(Integer copyNumber) {
-        this.cardCopyNumber = copyNumber;
+	this.cardCopyNumber = copyNumber;
     }
 
     public void setDateSendCGD(Date dateSend) {
-        this.dateSendCGD = dateSend;
+	this.dateSendCGD = dateSend;
     }
 
     public void copyFromDomain(GrantOwner grantOwner) {
-        super.copyFromDomain(grantOwner);
-        if (grantOwner != null) {
-            setGrantOwnerNumber(grantOwner.getNumber());
-            setCardCopyNumber(grantOwner.getCardCopyNumber());
-            setDateSendCGD(grantOwner.getDateSendCGD());
-        }
+	super.copyFromDomain(grantOwner);
+	if (grantOwner != null) {
+	    setGrantOwnerNumber(grantOwner.getNumber());
+	    setCardCopyNumber(grantOwner.getCardCopyNumber());
+	    setDateSendCGD(grantOwner.getDateSendCGD());
+	}
     }
 
     public static InfoGrantOwner newInfoFromDomain(GrantOwner grantOwner) {
-        InfoGrantOwner infoGrantOwner = null;
-        if (grantOwner != null) {
-            infoGrantOwner = new InfoGrantOwner();
-            infoGrantOwner.copyFromDomain(grantOwner);
-        }
-        return infoGrantOwner;
+	InfoGrantOwner infoGrantOwner = null;
+	if (grantOwner != null) {
+	    infoGrantOwner = new InfoGrantOwner();
+	    infoGrantOwner.copyFromDomain(grantOwner);
+	}
+	return infoGrantOwner;
     }
 
-    public void copyToDomain(InfoGrantOwner infoGrantOwner, GrantOwner grantOwner)
-            {
-        super.copyToDomain(infoGrantOwner, grantOwner);
+    public void copyToDomain(InfoGrantOwner infoGrantOwner, GrantOwner grantOwner) {
+	super.copyToDomain(infoGrantOwner, grantOwner);
 
-        grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
-        grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
-        grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
+	grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
+	grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
+	grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
     }
-    
+
     /*
-     * - Temporary solution to remove create InfoPerson wrapper
-     * - This attribute should be removed and placed in InfoGrantOwnerEditor 
+     * - Temporary solution to remove create InfoPerson wrapper - This attribute
+     * should be removed and placed in InfoGrantOwnerEditor
      */
     private InfoPersonEditor infoPersonEditor;
 
     public InfoPersonEditor getInfoPersonEditor() {
-        return infoPersonEditor;
+	return infoPersonEditor;
     }
 
     public void setInfoPersonEditor(InfoPersonEditor infoPersonEditor) {
-        this.infoPersonEditor = infoPersonEditor;
+	this.infoPersonEditor = infoPersonEditor;
     }
 
 }

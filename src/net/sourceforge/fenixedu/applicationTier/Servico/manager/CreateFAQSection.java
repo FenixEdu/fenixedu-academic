@@ -15,16 +15,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateFAQSection extends Service {
 
     public void run(InfoFAQSection infoFAQSection) {
-        FAQSection parentFAQSection = null;
-        if (infoFAQSection.getParentSection() != null
-                && infoFAQSection.getParentSection().getIdInternal() != null) {
-            parentFAQSection = rootDomainObject.readFAQSectionByOID(infoFAQSection
-                    .getParentSection().getIdInternal());
-        }
+	FAQSection parentFAQSection = null;
+	if (infoFAQSection.getParentSection() != null && infoFAQSection.getParentSection().getIdInternal() != null) {
+	    parentFAQSection = rootDomainObject.readFAQSectionByOID(infoFAQSection.getParentSection().getIdInternal());
+	}
 
-        FAQSection faqSection = new FAQSection();
-        faqSection.setSectionName(infoFAQSection.getSectionName());
-        faqSection.setParentSection(parentFAQSection);
+	FAQSection faqSection = new FAQSection();
+	faqSection.setSectionName(infoFAQSection.getSectionName());
+	faqSection.setParentSection(parentFAQSection);
     }
 
 }

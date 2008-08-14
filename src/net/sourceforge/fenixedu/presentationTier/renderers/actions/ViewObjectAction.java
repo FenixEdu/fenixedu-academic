@@ -12,18 +12,19 @@ import org.apache.struts.action.ActionMapping;
 public class ViewObjectAction extends NavigationAction {
 
     public ViewObjectAction() {
-        super();
+	super();
     }
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DomainObject domainObject = getTargetObject(request);
-     
-        request.setAttribute("object", domainObject);
-        
-        request.setAttribute("schema", getGivenSchema(request));
-        request.setAttribute("layout", getGivenLayout(request));
-        
-        return mapping.findForward(NAVIGATION_SHOW);
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	DomainObject domainObject = getTargetObject(request);
+
+	request.setAttribute("object", domainObject);
+
+	request.setAttribute("schema", getGivenSchema(request));
+	request.setAttribute("layout", getGivenLayout(request));
+
+	return mapping.findForward(NAVIGATION_SHOW);
     }
 }

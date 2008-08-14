@@ -14,88 +14,88 @@ public class InfoFrequenta extends InfoObject {
     }
 
     public InfoFrequenta(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao) {
-        setAluno(aluno);
-        setDisciplinaExecucao(disciplinaExecucao);
+	setAluno(aluno);
+	setDisciplinaExecucao(disciplinaExecucao);
     }
 
-    public InfoFrequenta(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao,
-            InfoEnrolment enrolment) {
-        setAluno(aluno);
-        setDisciplinaExecucao(disciplinaExecucao);
-        setInfoEnrolment(enrolment);
+    public InfoFrequenta(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao, InfoEnrolment enrolment) {
+	setAluno(aluno);
+	setDisciplinaExecucao(disciplinaExecucao);
+	setInfoEnrolment(enrolment);
     }
 
     public InfoStudent getAluno() {
-        return _aluno;
+	return _aluno;
     }
 
     public void setAluno(InfoStudent aluno) {
-        _aluno = aluno;
+	_aluno = aluno;
     }
 
     public InfoExecutionCourse getDisciplinaExecucao() {
-        return _disciplinaExecucao;
+	return _disciplinaExecucao;
     }
 
     public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao) {
-        _disciplinaExecucao = disciplinaExecucao;
+	_disciplinaExecucao = disciplinaExecucao;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoFrequenta) {
-            InfoFrequenta frequenta = (InfoFrequenta) obj;
-            resultado = getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(frequenta.getDisciplinaExecucao());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoFrequenta) {
+	    InfoFrequenta frequenta = (InfoFrequenta) obj;
+	    resultado = getAluno().equals(frequenta.getAluno())
+		    && getDisciplinaExecucao().equals(frequenta.getDisciplinaExecucao());
+	}
+	return resultado;
     }
 
     public String toString() {
-        String result = "[ATTEND";
-        result += ", Registration=" + _aluno;
-        result += ", ExecutionCourse=" + _disciplinaExecucao;
-        result += ", Enrolment=" + infoEnrolment;
-        result += "]";
-        return result;
+	String result = "[ATTEND";
+	result += ", Registration=" + _aluno;
+	result += ", ExecutionCourse=" + _disciplinaExecucao;
+	result += ", Enrolment=" + infoEnrolment;
+	result += "]";
+	return result;
     }
 
     public InfoEnrolment getInfoEnrolment() {
-        return infoEnrolment;
+	return infoEnrolment;
     }
 
     public void setInfoEnrolment(InfoEnrolment enrolment) {
-        this.infoEnrolment = enrolment;
+	this.infoEnrolment = enrolment;
 
     }
 
     /*
-     * Temporary solution to create InfoEnrolment to an Enrolment wrapper
-     *  - after create InfoFrequenta wrapper this should be delegated to attends
+     * Temporary solution to create InfoEnrolment to an Enrolment wrapper -
+     * after create InfoFrequenta wrapper this should be delegated to attends
      */
     private EnrolmentEvaluationType enrolmentEvaluationType;
+
     public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-        return enrolmentEvaluationType;
+	return enrolmentEvaluationType;
     }
 
     public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
-        this.enrolmentEvaluationType = enrolmentEvaluationType;
-    }    
-    
-    
+	this.enrolmentEvaluationType = enrolmentEvaluationType;
+    }
+
     public void copyFromDomain(Attends frequenta) {
-        super.copyFromDomain(frequenta);
-		this.setAluno(InfoStudent.newInfoFromDomain(frequenta.getRegistration()));
-		this.setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta.getExecutionCourse()));
-		this.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
+	super.copyFromDomain(frequenta);
+	this.setAluno(InfoStudent.newInfoFromDomain(frequenta.getRegistration()));
+	this.setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta.getExecutionCourse()));
+	this.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
     }
 
     public static InfoFrequenta newInfoFromDomain(Attends frequenta) {
-        InfoFrequenta infoFrequenta = null;
-        if (frequenta != null) {
-            infoFrequenta = new InfoFrequenta();
-            infoFrequenta.copyFromDomain(frequenta);
-        }
-        return infoFrequenta;
+	InfoFrequenta infoFrequenta = null;
+	if (frequenta != null) {
+	    infoFrequenta = new InfoFrequenta();
+	    infoFrequenta.copyFromDomain(frequenta);
+	}
+	return infoFrequenta;
     }
 
 }

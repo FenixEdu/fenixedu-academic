@@ -16,21 +16,21 @@ public class InsuranceNotDefinedServiceException extends FenixServiceException {
      *  
      */
     public InsuranceNotDefinedServiceException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public InsuranceNotDefinedServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     /**
      * @param cause
      */
     public InsuranceNotDefinedServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -38,14 +38,14 @@ public class InsuranceNotDefinedServiceException extends FenixServiceException {
      * @param cause
      */
     public InsuranceNotDefinedServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[InsuranceNotDefinedServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[InsuranceNotDefinedServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

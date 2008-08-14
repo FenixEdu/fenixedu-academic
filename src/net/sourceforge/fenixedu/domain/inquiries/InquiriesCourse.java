@@ -45,10 +45,12 @@ public class InquiriesCourse extends InquiriesCourse_Base {
      * @param schoolClass
      * @param infoInquiriesCourse
      * 
-     * Preconditions: - executionCourse != null - executionDegreeCourse != null -
-     * executionDegreeStudent != null - executionPeriod != null Postcondition: -
-     * A new inquiriesCourse is created, referencing correctly the other
-     * domainObjects and its basic properties are initialized Invariants: - None
+     *            Preconditions: - executionCourse != null -
+     *            executionDegreeCourse != null - executionDegreeStudent != null
+     *            - executionPeriod != null Postcondition: - A new
+     *            inquiriesCourse is created, referencing correctly the other
+     *            domainObjects and its basic properties are initialized
+     *            Invariants: - None
      */
     public InquiriesCourse(ExecutionCourse executionCourse, ExecutionDegree executionDegreeCourse,
 	    ExecutionDegree executionDegreeStudent, ExecutionSemester executionSemester, SchoolClass schoolClass,
@@ -114,7 +116,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 
 	InquiriesCourse inquiriesCourse = new InquiriesCourse(inquiriesRegistry);
 	inquiriesCourse.setAnswerDuration(inquiryDTO.getAnswerDuration());
-	
+
 	setAnswers(inquiryDTO, inquiriesCourse);
 
 	inquiriesRegistry.setState(InquiriesRegistryState.ANSWERED);

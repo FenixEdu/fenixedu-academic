@@ -15,15 +15,14 @@ public class CreateResearchEventEdition extends Service {
 	ResearchEvent event = null;
 	if (eventBean.getEvent() == null) {
 	    CreateResearchEvent service = new CreateResearchEvent();
-	    event = (ResearchEvent) service.run(eventBean.getEventName(), eventBean.getEventType(), eventBean
-		    .getLocationType(), eventBean.getEventUrl());
+	    event = (ResearchEvent) service.run(eventBean.getEventName(), eventBean.getEventType(), eventBean.getLocationType(),
+		    eventBean.getEventUrl());
 	} else {
 	    event = eventBean.getEvent();
 	}
 
-	return run(event, eventBean.getEdition(), eventBean.getEventLocation(), eventBean
-		.getStartDate(), eventBean.getEndDate(), eventBean.getOrganization(), eventBean
-		.getEventEditionUrl());
+	return run(event, eventBean.getEdition(), eventBean.getEventLocation(), eventBean.getStartDate(), eventBean.getEndDate(),
+		eventBean.getOrganization(), eventBean.getEventEditionUrl());
     }
 
     public EventEdition run(ResearchEvent event, String edition, String eventLocation, YearMonthDay startDate,
@@ -39,9 +38,9 @@ public class CreateResearchEventEdition extends Service {
 
 	return eventEdition;
     }
-    
+
     public EventEdition run(ResearchEvent event, ResearchEventEditionCreationBean bean) {
-	return run(event,bean.getEventEditionName(), bean.getEventLocation(), bean.getStartDate(),
-	    bean.getEndDate(), bean.getOrganization(), bean.getEditionUrl());
+	return run(event, bean.getEventEditionName(), bean.getEventLocation(), bean.getStartDate(), bean.getEndDate(), bean
+		.getOrganization(), bean.getEditionUrl());
     }
 }

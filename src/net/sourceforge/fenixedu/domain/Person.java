@@ -915,10 +915,10 @@ public class Person extends Person_Base {
      *            filter all PersonFunctions to this unit, or <code>null</code>
      *            for all PersonFunctions
      * @param includeSubUnits
-     *                if even subunits of the given unit are considered
+     *            if even subunits of the given unit are considered
      * @param active
-     *                the state of the function, <code>null</code> for all
-     *                PersonFunctions
+     *            the state of the function, <code>null</code> for all
+     *            PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -1512,7 +1512,7 @@ public class Person extends Person_Base {
 	filteredPersons.retainAll(Person.findInternalPerson(name));
 	return new ArrayList<Person>(filteredPersons);
     }
-    
+
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
 	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
@@ -1660,7 +1660,6 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    
     public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice, boolean withInstallments) {
 	return getNotPayedEventsPayableOn(administrativeOffice, AcademicEvent.class, withInstallments);
     }
@@ -1680,7 +1679,6 @@ public class Person extends Person_Base {
 	return ((administrativeOffice == null) || (event.isPayableOnAdministrativeOffice(administrativeOffice)));
     }
 
-    
     public List<Event> getPayedEvents(Class eventClass) {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : getEventsFromType(eventClass)) {
@@ -2862,11 +2860,11 @@ public class Person extends Person_Base {
     public boolean hasValidDegreeCandidacyForGraduatedPerson(final ExecutionInterval executionInterval) {
 	return hasValidIndividualCandidacy(DegreeCandidacyForGraduatedPerson.class, executionInterval);
     }
-    
+
     public boolean hasValidDegreeChangeIndividualCandidacy(final ExecutionInterval executionInterval) {
 	return hasValidIndividualCandidacy(DegreeChangeIndividualCandidacy.class, executionInterval);
     }
-    
+
     public boolean hasValidDegreeTransferIndividualCandidacy(final ExecutionInterval executionInterval) {
 	return hasValidIndividualCandidacy(DegreeTransferIndividualCandidacy.class, executionInterval);
     }

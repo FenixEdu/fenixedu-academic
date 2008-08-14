@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class DegreeCoordinatorsGroup extends Group {
-    
+
     private static final long serialVersionUID = -7559780015187749338L;
 
     @Override
@@ -38,27 +38,27 @@ public class DegreeCoordinatorsGroup extends Group {
 	}
 	return elements;
     }
-    
+
     @Override
     public boolean isMember(Person person) {
 	return person != null
 		&& person.hasTeacher()
-		&& person.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
-				ExecutionYear.readCurrentExecutionYear());
+		&& person.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(ExecutionYear
+			.readCurrentExecutionYear());
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[0];
+	return new Argument[0];
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-    	return obj instanceof DegreeCoordinatorsGroup;
+	return obj instanceof DegreeCoordinatorsGroup;
     }
-    
+
     @Override
     public int hashCode() {
-    	return getClass().hashCode();
+	return getClass().hashCode();
     }
 }

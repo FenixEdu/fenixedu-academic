@@ -12,34 +12,31 @@ import org.apache.struts.action.DynaActionForm;
 public class ValidateMultiBox {
 
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
-            HttpServletRequest request, ServletContext application) {
+	    HttpServletRequest request, ServletContext application) {
 
-        try {
+	try {
 
-            DynaActionForm form = (DynaActionForm) bean;
+	    DynaActionForm form = (DynaActionForm) bean;
 
-            String sProperty = field.getProperty();
-            Object[] multiBox = (Object[]) form.get(sProperty);
+	    String sProperty = field.getProperty();
+	    Object[] multiBox = (Object[]) form.get(sProperty);
 
-            String feminin = field.getVarValue("femininProperty");
-            if ((multiBox != null) && (multiBox.length > 0)) {
-                return true;
-            }
-            if (feminin != null && feminin.equalsIgnoreCase("true")) {
-                errors.add(field.getKey(), new ActionError("errors.required.a.checkbox", field.getArg(0)
-                        .getKey()));
-            } else {
-                errors.add(field.getKey(), new ActionError("errors.required.checkbox", field.getArg(0)
-                        .getKey()));
-            }
+	    String feminin = field.getVarValue("femininProperty");
+	    if ((multiBox != null) && (multiBox.length > 0)) {
+		return true;
+	    }
+	    if (feminin != null && feminin.equalsIgnoreCase("true")) {
+		errors.add(field.getKey(), new ActionError("errors.required.a.checkbox", field.getArg(0).getKey()));
+	    } else {
+		errors.add(field.getKey(), new ActionError("errors.required.checkbox", field.getArg(0).getKey()));
+	    }
 
-            return false;
+	    return false;
 
-        } catch (Exception e) {
-            errors.add(field.getKey(), new ActionError("errors.required.undefined.checkbox", field
-                    .getArg(0).getKey()));
-            return false;
-        }
+	} catch (Exception e) {
+	    errors.add(field.getKey(), new ActionError("errors.required.undefined.checkbox", field.getArg(0).getKey()));
+	    return false;
+	}
 
     }
 }

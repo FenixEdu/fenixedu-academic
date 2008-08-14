@@ -6,7 +6,8 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 
 public class DeActivateEquivalencePlanEntry extends Service {
 
-    public void run(final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan , final EquivalencePlanEntry equivalencePlanEntry) {
+    public void run(final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan,
+	    final EquivalencePlanEntry equivalencePlanEntry) {
 	studentCurricularPlanEquivalencePlan.getEntriesToRemoveSet().add(equivalencePlanEntry);
     }
 

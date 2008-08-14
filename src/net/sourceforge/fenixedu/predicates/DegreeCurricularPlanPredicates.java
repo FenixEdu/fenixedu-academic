@@ -17,49 +17,49 @@ public class DegreeCurricularPlanPredicates {
 
     public static final AccessControlPredicate<DegreeCurricularPlan> readPredicate = new AccessControlPredicate<DegreeCurricularPlan>() {
 
-        public boolean evaluate(DegreeCurricularPlan dcp) {
-            
-            if (!dcp.isBolonhaDegree()) {
-                return true;
-            }
-            
-            Person person = AccessControl.getPerson();
+	public boolean evaluate(DegreeCurricularPlan dcp) {
 
-            if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
-                return true;
-            }
+	    if (!dcp.isBolonhaDegree()) {
+		return true;
+	    }
 
-            boolean isCurricularPlanMember = dcp.getCurricularPlanMembersGroup().isMember(person);
+	    Person person = AccessControl.getPerson();
 
-            switch (dcp.getCurricularStage()) {
-            case DRAFT:
-                return isCurricularPlanMember;
-            case PUBLISHED:
-                return isCurricularPlanMember || person.hasRole(RoleType.BOLONHA_MANAGER);
-            case APPROVED:
-                return true;
-            default:
-                return false;
-            }
+	    if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+		return true;
+	    }
 
-        }
+	    boolean isCurricularPlanMember = dcp.getCurricularPlanMembersGroup().isMember(person);
+
+	    switch (dcp.getCurricularStage()) {
+	    case DRAFT:
+		return isCurricularPlanMember;
+	    case PUBLISHED:
+		return isCurricularPlanMember || person.hasRole(RoleType.BOLONHA_MANAGER);
+	    case APPROVED:
+		return true;
+	    default:
+		return false;
+	    }
+
+	}
 
     };
 
     public static final AccessControlPredicate<DegreeCurricularPlan> scientificCouncilWritePredicate = new AccessControlPredicate<DegreeCurricularPlan>() {
 
-        public boolean evaluate(DegreeCurricularPlan dcp) {
-            final Person person = AccessControl.getPerson();
-            return person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || !dcp.isBolonhaDegree();
-        }
+	public boolean evaluate(DegreeCurricularPlan dcp) {
+	    final Person person = AccessControl.getPerson();
+	    return person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || !dcp.isBolonhaDegree();
+	}
 
     };
 
     public static final AccessControlPredicate<DegreeCurricularPlan> curricularPlanMemberWritePredicate = new AccessControlPredicate<DegreeCurricularPlan>() {
 
-        public boolean evaluate(DegreeCurricularPlan dcp) {
-            return !dcp.isBolonhaDegree() || dcp.getCurricularPlanMembersGroup().isMember(AccessControl.getPerson());
-        }
+	public boolean evaluate(DegreeCurricularPlan dcp) {
+	    return !dcp.isBolonhaDegree() || dcp.getCurricularPlanMembersGroup().isMember(AccessControl.getPerson());
+	}
 
     };
 

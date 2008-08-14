@@ -29,7 +29,7 @@ public class CRUDMapping extends ActionMapping {
      * @return Returns the oidProperty.
      */
     public String getOidProperty() {
-        return this.oidProperty;
+	return this.oidProperty;
     }
 
     /**
@@ -37,14 +37,14 @@ public class CRUDMapping extends ActionMapping {
      *            The oidProperty to set.
      */
     public void setOidProperty(String oidProperty) {
-        this.oidProperty = oidProperty;
+	this.oidProperty = oidProperty;
     }
 
     /**
      * @return Returns the requestAttribute.
      */
     public String getRequestAttribute() {
-        return this.requestAttribute;
+	return this.requestAttribute;
     }
 
     /**
@@ -52,14 +52,14 @@ public class CRUDMapping extends ActionMapping {
      *            The requestAttribute to set.
      */
     public void setRequestAttribute(String requestAttribute) {
-        this.requestAttribute = requestAttribute;
+	this.requestAttribute = requestAttribute;
     }
 
     /**
      * @return Returns the deleteService.
      */
     public String getDeleteService() {
-        return this.deleteService;
+	return this.deleteService;
     }
 
     /**
@@ -67,14 +67,14 @@ public class CRUDMapping extends ActionMapping {
      *            The deleteService to set.
      */
     public void setDeleteService(String deleteService) {
-        this.deleteService = deleteService;
+	this.deleteService = deleteService;
     }
 
     /**
      * @return Returns the editService.
      */
     public String getEditService() {
-        return this.editService;
+	return this.editService;
     }
 
     /**
@@ -82,14 +82,14 @@ public class CRUDMapping extends ActionMapping {
      *            The editService to set.
      */
     public void setEditService(String editService) {
-        this.editService = editService;
+	this.editService = editService;
     }
 
     /**
      * @return Returns the readService.
      */
     public String getReadService() {
-        return this.readService;
+	return this.readService;
     }
 
     /**
@@ -97,14 +97,14 @@ public class CRUDMapping extends ActionMapping {
      *            The readService to set.
      */
     public void setReadService(String readService) {
-        this.readService = readService;
+	this.readService = readService;
     }
 
     /**
      * @return Returns the infoObjectClassName.
      */
     public String getInfoObjectClassName() {
-        return this.infoObjectClassName;
+	return this.infoObjectClassName;
     }
 
     /**
@@ -112,7 +112,7 @@ public class CRUDMapping extends ActionMapping {
      *            The infoObjectClassName to set.
      */
     public void setInfoObjectClassName(String infoObjectClassName) {
-        this.infoObjectClassName = infoObjectClassName;
+	this.infoObjectClassName = infoObjectClassName;
     }
 
 }

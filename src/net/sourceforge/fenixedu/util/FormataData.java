@@ -10,18 +10,18 @@ public abstract class FormataData extends FenixDateFormat {
     }
 
     public static DateFormat getDateFormat(Locale locale) {
-        return DateFormat.getDateInstance(DateFormat.SHORT, locale);
+	return DateFormat.getDateInstance(DateFormat.SHORT, locale);
     }
 
     public static String getDay(String data) throws PatternSyntaxException, NullPointerException {
-        return ((data.split("-", -1))[0]);
+	return ((data.split("-", -1))[0]);
     }
 
     public static String getMonth(String data) throws PatternSyntaxException, NullPointerException {
-        return ((data.split("-", -1))[1]);
+	return ((data.split("-", -1))[1]);
     }
 
     public static String getYear(String data) throws PatternSyntaxException, NullPointerException {
-        return ((data.split("-", -1))[2]);
+	return ((data.split("-", -1))[2]);
     }
 }

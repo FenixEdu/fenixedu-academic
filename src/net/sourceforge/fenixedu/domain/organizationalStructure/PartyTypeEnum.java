@@ -5,23 +5,10 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 public enum PartyTypeEnum {
-      
-    ADMINISTRATIVE_OFFICE_UNIT,
-    SCIENTIFIC_AREA,    
-    COMPETENCE_COURSE_GROUP,       
-    AGGREGATE_UNIT,        
-    PLANET,
-    COUNTRY,
-    UNIVERSITY,    
-    SCHOOL,    
-    DEPARTMENT,
-    DEGREE_UNIT,    
-    SECTION,
-    RESEARCH_UNIT,
-    PEDAGOGICAL_COUNCIL, 
-    SCIENTIFIC_COUNCIL;                  
-                   
+
+    ADMINISTRATIVE_OFFICE_UNIT, SCIENTIFIC_AREA, COMPETENCE_COURSE_GROUP, AGGREGATE_UNIT, PLANET, COUNTRY, UNIVERSITY, SCHOOL, DEPARTMENT, DEGREE_UNIT, SECTION, RESEARCH_UNIT, PEDAGOGICAL_COUNCIL, SCIENTIFIC_COUNCIL;
+
     public String getName() {
-        return name();
-    }      
+	return name();
+    }
 }

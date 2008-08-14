@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadGrantInsuranceByGrantContract extends Service {
 
-	public InfoGrantInsurance run(Integer idContract) throws FenixServiceException{
-	    GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
-		if (grantContract.getGrantInsurance() != null) {
-			return InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain(grantContract.getGrantInsurance());
-		}
-		return null;
+    public InfoGrantInsurance run(Integer idContract) throws FenixServiceException {
+	GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
+	if (grantContract.getGrantInsurance() != null) {
+	    return InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain(grantContract.getGrantInsurance());
 	}
+	return null;
+    }
 
 }

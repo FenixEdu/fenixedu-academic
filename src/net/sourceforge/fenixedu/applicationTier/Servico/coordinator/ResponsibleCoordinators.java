@@ -10,16 +10,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ResponsibleCoordinators extends Service {
 
-    public void run(Integer executionDegreeId, List<Integer> coordinatorsToBeResponsibleIDs)
-            throws FenixServiceException{
+    public void run(Integer executionDegreeId, List<Integer> coordinatorsToBeResponsibleIDs) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-        if (executionDegree == null) {
-            throw new FenixServiceException("error.noExecutionDegree");
-        }
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	if (executionDegree == null) {
+	    throw new FenixServiceException("error.noExecutionDegree");
+	}
 
-        for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-            coordinator.setResponsible(coordinatorsToBeResponsibleIDs.contains(coordinator.getIdInternal()));
-        }
+	for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+	    coordinator.setResponsible(coordinatorsToBeResponsibleIDs.contains(coordinator.getIdInternal()));
+	}
     }
 }

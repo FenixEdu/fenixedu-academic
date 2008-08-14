@@ -18,8 +18,8 @@ import org.apache.struts.action.ActionMessages;
 /**
  * @author TJBF & PFON
  * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
+ *         To change the template for this generated type comment go to Window -
+ *         Preferences - Java - Code Generation - Code and Comments
  */
 public class ValidatePublicationForm implements Serializable {
 
@@ -27,9 +27,8 @@ public class ValidatePublicationForm implements Serializable {
      *  
      */
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
-            HttpServletRequest request, ServletContext application) {
-        return (errors.isEmpty());
+	    HttpServletRequest request, ServletContext application) {
+	return (errors.isEmpty());
     }
 
 }
-

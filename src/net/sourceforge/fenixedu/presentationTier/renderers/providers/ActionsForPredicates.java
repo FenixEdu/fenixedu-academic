@@ -11,19 +11,19 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class ActionsForPredicates implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		PredicateBean predicateBean = (PredicateBean) source;
-		List<Action> results = new ArrayList<Action>();
+    public Object provide(Object source, Object currentValue) {
+	PredicateBean predicateBean = (PredicateBean) source;
+	List<Action> results = new ArrayList<Action>();
 
-		for (Action action : Action.values()) {
-			results.add(action);
-		}
-
-		return results;
+	for (Action action : Action.values()) {
+	    results.add(action);
 	}
 
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+	return results;
+    }
+
+    public Converter getConverter() {
+	return new EnumConverter();
+    }
 
 }

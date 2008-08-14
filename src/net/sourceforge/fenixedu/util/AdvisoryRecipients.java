@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.util;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class AdvisoryRecipients extends FenixUtil {
 
@@ -22,27 +22,27 @@ public class AdvisoryRecipients extends FenixUtil {
      *  
      */
     public AdvisoryRecipients() {
-        super();
-        recipients = null;
+	super();
+	recipients = null;
     }
 
     public AdvisoryRecipients(Integer recipients) {
-        super();
-        this.recipients = recipients;
+	super();
+	this.recipients = recipients;
     }
 
     /**
      * @return
      */
     public Integer getRecipients() {
-        return recipients;
+	return recipients;
     }
 
     /**
      * @param integer
      */
     public void setRecipients(Integer integer) {
-        recipients = integer;
+	recipients = integer;
     }
 
     /**
@@ -50,11 +50,11 @@ public class AdvisoryRecipients extends FenixUtil {
      * @return
      */
     public boolean equals(int i) {
-        if (recipients != null && recipients.intValue() == i) {
-            return true;
-        }
+	if (recipients != null && recipients.intValue() == i) {
+	    return true;
+	}
 
-        return false;
+	return false;
     }
 
 }

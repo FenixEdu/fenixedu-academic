@@ -139,8 +139,7 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 	IUserView userView = getUserView(request);
 	ActionMessages actionMessages = new ActionMessages();
 	try {
-	    ServiceUtils.executeService("ConfirmMarkSheet", new Object[] { markSheet,
-		    userView.getPerson().getEmployee() });
+	    ServiceUtils.executeService("ConfirmMarkSheet", new Object[] { markSheet, userView.getPerson().getEmployee() });
 	} catch (NotAuthorizedFilterException e) {
 	    addMessage(request, actionMessages, "error.notAuthorized");
 	} catch (InDebtEnrolmentsException e) {

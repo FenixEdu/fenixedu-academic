@@ -24,20 +24,22 @@ public class ReadStudentByNumberAndType extends Service {
 
     public Object run(Integer number, DegreeType degreeType) {
 
-        InfoStudent infoStudent = null;
+	InfoStudent infoStudent = null;
 
-        // ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Isto não é para ficar assim. Está assim temporariamente até se
-        // saber como é feita de facto a distinção
-        // dos aluno, referente ao tipo, a partir da página de login.
-        // ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
+	////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////
+	// Isto não é para ficar assim. Está assim temporariamente até se
+	// saber como é feita de facto a distinção
+	// dos aluno, referente ao tipo, a partir da página de login.
+	////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////
+	Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
 
-        if (registration != null) {
-            infoStudent = InfoStudent.newInfoFromDomain(registration);
-        }
+	if (registration != null) {
+	    infoStudent = InfoStudent.newInfoFromDomain(registration);
+	}
 
-        return infoStudent;
+	return infoStudent;
     }
 
 }

@@ -24,14 +24,16 @@ public class ResearcherAllowedContacts extends OutputRenderer {
 		Researcher researcher = (Researcher) object;
 		StringBuffer buffer = new StringBuffer("");
 
-		addContentToBuffer(buffer, researcher.getAllowsContactByStudents(), getTextFromBundle(getKeyForStudents(), getBundle()));
+		addContentToBuffer(buffer, researcher.getAllowsContactByStudents(), getTextFromBundle(getKeyForStudents(),
+			getBundle()));
 		addContentToBuffer(buffer, researcher.getAllowsContactByMedia(), getTextFromBundle(getKeyForMedia(), getBundle()));
-		addContentToBuffer(buffer, researcher.getAllowsContactByOtherResearchers(), getTextFromBundle(getKeyForOtherResearchers(), getBundle()));
+		addContentToBuffer(buffer, researcher.getAllowsContactByOtherResearchers(), getTextFromBundle(
+			getKeyForOtherResearchers(), getBundle()));
 
 		HtmlText text = new HtmlText(buffer.toString());
 		HtmlInlineContainer container = new HtmlInlineContainer();
 		container.addChild(text);
-		
+
 		return container;
 	    }
 

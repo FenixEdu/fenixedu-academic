@@ -10,21 +10,21 @@ public class SiteManagerAuthorizationFilter extends Filtro {
 
     @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Site site = getSite(request, response);
-        
-        IGroup owner = site.getOwner();
-        
-        if (owner == null) {
-            throw new NotAuthorizedFilterException();
-        }
-        
-        if (! owner.allows(getRemoteUser(request))) {
-            throw new NotAuthorizedFilterException();
-        }
+	Site site = getSite(request, response);
+
+	IGroup owner = site.getOwner();
+
+	if (owner == null) {
+	    throw new NotAuthorizedFilterException();
+	}
+
+	if (!owner.allows(getRemoteUser(request))) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 
     protected Site getSite(ServiceRequest request, ServiceResponse response) {
-        return (Site) request.getServiceParameters().getParameter(0);
+	return (Site) request.getServiceParameters().getParameter(0);
     }
-    
+
 }

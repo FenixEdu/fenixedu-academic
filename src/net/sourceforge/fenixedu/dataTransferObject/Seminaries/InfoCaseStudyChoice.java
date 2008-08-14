@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 5/Ago/2003, 17:12:20
- *  
+ *         Created at 5/Ago/2003, 17:12:20
+ * 
  */
 public class InfoCaseStudyChoice extends InfoObject {
     private Integer order;
@@ -26,39 +26,39 @@ public class InfoCaseStudyChoice extends InfoObject {
      * @return
      */
     public Integer getOrder() {
-        return order;
+	return order;
     }
 
     /**
      * @param integer
      */
     public void setOrder(Integer integer) {
-        order = integer;
+	order = integer;
     }
 
     public void copyFromDomain(CaseStudyChoice caseStudyChoice) {
-        super.copyFromDomain(caseStudyChoice);
-        if (caseStudyChoice != null) {
-            // setCandidacyIdInternal(caseStudyChoice.getCandidacyIdInternal());
-            setCaseStudy(InfoCaseStudy.newInfoFromDomain(caseStudyChoice.getCaseStudy()));
-            setOrder(caseStudyChoice.getOrder());
-        }
+	super.copyFromDomain(caseStudyChoice);
+	if (caseStudyChoice != null) {
+	    // setCandidacyIdInternal(caseStudyChoice.getCandidacyIdInternal());
+	    setCaseStudy(InfoCaseStudy.newInfoFromDomain(caseStudyChoice.getCaseStudy()));
+	    setOrder(caseStudyChoice.getOrder());
+	}
     }
 
     public static InfoCaseStudyChoice newInfoFromDomain(CaseStudyChoice caseStudyChoice) {
-        InfoCaseStudyChoice infoCaseStudyChoice = null;
-        if (caseStudyChoice != null) {
-            infoCaseStudyChoice = new InfoCaseStudyChoice();
-            infoCaseStudyChoice.copyFromDomain(caseStudyChoice);
-        }
-        return infoCaseStudyChoice;
+	InfoCaseStudyChoice infoCaseStudyChoice = null;
+	if (caseStudyChoice != null) {
+	    infoCaseStudyChoice = new InfoCaseStudyChoice();
+	    infoCaseStudyChoice.copyFromDomain(caseStudyChoice);
+	}
+	return infoCaseStudyChoice;
     }
 
     /**
      * @return Returns the candidacy.
      */
     public InfoCandidacy getCandidacy() {
-        return candidacy;
+	return candidacy;
     }
 
     /**
@@ -66,14 +66,14 @@ public class InfoCaseStudyChoice extends InfoObject {
      *            The candidacy to set.
      */
     public void setCandidacy(InfoCandidacy candidacy) {
-        this.candidacy = candidacy;
+	this.candidacy = candidacy;
     }
 
     /**
      * @return Returns the caseStudy.
      */
     public InfoCaseStudy getCaseStudy() {
-        return caseStudy;
+	return caseStudy;
     }
 
     /**
@@ -81,6 +81,6 @@ public class InfoCaseStudyChoice extends InfoObject {
      *            The caseStudy to set.
      */
     public void setCaseStudy(InfoCaseStudy caseStudy) {
-        this.caseStudy = caseStudy;
+	this.caseStudy = caseStudy;
     }
 }

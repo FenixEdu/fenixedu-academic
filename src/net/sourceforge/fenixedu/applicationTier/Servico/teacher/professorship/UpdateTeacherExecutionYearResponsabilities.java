@@ -17,13 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class UpdateTeacherExecutionYearResponsabilities extends Service {
 
-    public void run(Integer teacherId, Integer executionYearId,
-            final List executionCourseResponsabilities) throws FenixServiceException,
-              DomainException {    
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-        if (teacher == null)
-            throw new FenixServiceException("message.teacher-not-found");
+    public void run(Integer teacherId, Integer executionYearId, final List executionCourseResponsabilities)
+	    throws FenixServiceException, DomainException {
+	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+	if (teacher == null)
+	    throw new FenixServiceException("message.teacher-not-found");
 
-        teacher.updateResponsabilitiesFor(executionYearId, executionCourseResponsabilities);        
-    }       
+	teacher.updateResponsabilitiesFor(executionYearId, executionCourseResponsabilities);
+    }
 }

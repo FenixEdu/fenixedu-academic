@@ -20,17 +20,15 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-
 public class MergeEventEditionsDA extends MergeResearchActivityDA {
 
     public static final Comparator<EventEdition> COMPARE_BY_EDITION = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARE_BY_EDITION).addComparator(new BeanComparator("edition"));
     }
-    
-    
-    public ActionForward chooseEventEdition(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward chooseEventEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	MergeEventEditionPageContainerBean researchActivityPageContainerBean = (MergeEventEditionPageContainerBean) getRenderedObject("mergeList");
 	EventEdition eventEdition = (EventEdition) researchActivityPageContainerBean.getSelected();
 	researchActivityPageContainerBean.setSelected(null);
@@ -42,8 +40,7 @@ public class MergeEventEditionsDA extends MergeResearchActivityDA {
 	return mapping.findForward("show-research-activity-merge-list");
     }
 
-    private void copyProperties(EventEdition eventEdition,
-	    MergeEventEditionPageContainerBean researchActivityPageContainerBean) {
+    private void copyProperties(EventEdition eventEdition, MergeEventEditionPageContainerBean researchActivityPageContainerBean) {
 	researchActivityPageContainerBean.setUrl(eventEdition.getUrl());
 	researchActivityPageContainerBean.setEdition(eventEdition.getEdition());
 	researchActivityPageContainerBean.setEventLocation(eventEdition.getEventLocation());
@@ -51,7 +48,6 @@ public class MergeEventEditionsDA extends MergeResearchActivityDA {
 	researchActivityPageContainerBean.setStartDate(eventEdition.getStartDate());
 	researchActivityPageContainerBean.setEndDate(eventEdition.getEndDate());
     }
-
 
     @Override
     protected MergeResearchActivityPageContainerBean getNewBean() {
@@ -61,7 +57,8 @@ public class MergeEventEditionsDA extends MergeResearchActivityDA {
     @Override
     protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
 	MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean = (MergeEventEditionPageContainerBean) researchActivityPageContainerBean;
-	List<EventEdition> eventEditions = new ArrayList<EventEdition>(mergeEventEditionPageContainerBean.getEvent().getEventEditionsSet());
+	List<EventEdition> eventEditions = new ArrayList<EventEdition>(mergeEventEditionPageContainerBean.getEvent()
+		.getEventEditionsSet());
 	Collections.sort(eventEditions, COMPARE_BY_EDITION);
 	return eventEditions;
     }

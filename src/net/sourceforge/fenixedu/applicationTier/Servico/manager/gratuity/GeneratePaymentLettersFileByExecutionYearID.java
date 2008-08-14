@@ -167,7 +167,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
     }
 
-    public byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException{
+    public byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
 	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 	InsuranceValue insuranceValue = executionYear.getInsuranceValue();
 	if (insuranceValue == null) {

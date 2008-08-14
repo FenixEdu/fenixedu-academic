@@ -19,15 +19,14 @@ public class ManageEnrolmentModelBean implements Serializable {
     private EnrolmentModel enrolmentModel;
 
     private DomainReference<ExecutionYear> executionYear;
-    
+
     private DomainReference<Registration> registration;
 
     public ManageEnrolmentModelBean(Registration registration) {
 	super();
 	this.registration = new DomainReference<Registration>(registration);
 	this.executionYear = new DomainReference<ExecutionYear>(ExecutionYear.readCurrentExecutionYear());
-	EnrolmentModel enrolmentModelForCurrentExecutionYear = registration
-		.getEnrolmentModelForExecutionYear(getExecutionYear());
+	EnrolmentModel enrolmentModelForCurrentExecutionYear = registration.getEnrolmentModelForExecutionYear(getExecutionYear());
 	this.enrolmentModel = enrolmentModelForCurrentExecutionYear;
     }
 
@@ -44,7 +43,7 @@ public class ManageEnrolmentModelBean implements Serializable {
     }
 
     public Registration getRegistration() {
-        return registration == null ? null : registration.getObject();
+	return registration == null ? null : registration.getObject();
     }
-    
+
 }

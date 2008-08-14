@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 
 public class DeletePersonSpaceOccupation extends Service {
 
-    public boolean run(PersonSpaceOccupation personSpaceOccupation) {        
-        if(personSpaceOccupation != null) {
-            personSpaceOccupation.delete();
-        }        
-        return true;
-    }    
+    public boolean run(PersonSpaceOccupation personSpaceOccupation) {
+	if (personSpaceOccupation != null) {
+	    personSpaceOccupation.delete();
+	}
+	return true;
+    }
 }

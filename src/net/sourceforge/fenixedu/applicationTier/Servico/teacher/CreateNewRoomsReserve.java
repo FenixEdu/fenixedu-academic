@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 public class CreateNewRoomsReserve extends Service {
 
     public PunctualRoomsOccupationRequest run(RoomsReserveBean bean) {
-	if(bean != null) {
+	if (bean != null) {
 	    return new PunctualRoomsOccupationRequest(bean.getRequestor(), bean.getSubject(), bean.getDescription());
 	}
 	return null;

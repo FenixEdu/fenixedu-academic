@@ -7,9 +7,9 @@ public enum GratuitySituationType {
     CREDITOR,
 
     REGULARIZED;
-    
-    public String getName(){
-        return name();
+
+    public String getName() {
+	return name();
     }
 
 }

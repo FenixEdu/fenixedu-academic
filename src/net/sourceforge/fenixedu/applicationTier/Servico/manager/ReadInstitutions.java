@@ -21,16 +21,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadInstitutions extends Service {
 
     public List run() {
-                
-        List<Unit> institutions = UnitUtils.readAllExternalInstitutionUnits();
 
-        List<InfoInstitution> infoInstitutions = new ArrayList<InfoInstitution>();
-        for (Unit institution : institutions) {
-            InfoInstitution infoInstitution = new InfoInstitution();
-            infoInstitution.copyFromDomain(institution);
-            infoInstitutions.add(infoInstitution);
-        }
-        
-        return infoInstitutions;
+	List<Unit> institutions = UnitUtils.readAllExternalInstitutionUnits();
+
+	List<InfoInstitution> infoInstitutions = new ArrayList<InfoInstitution>();
+	for (Unit institution : institutions) {
+	    InfoInstitution infoInstitution = new InfoInstitution();
+	    infoInstitution.copyFromDomain(institution);
+	    infoInstitutions.add(infoInstitution);
+	}
+
+	return infoInstitutions;
     }
 }

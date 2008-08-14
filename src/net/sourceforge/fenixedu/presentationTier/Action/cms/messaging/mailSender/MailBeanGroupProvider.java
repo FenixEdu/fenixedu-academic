@@ -6,12 +6,12 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class MailBeanGroupProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        MailBean bean = (MailBean) source;
-        return bean.getReceiversOptions();
+	MailBean bean = (MailBean) source;
+	return bean.getReceiversOptions();
     }
 
     public Converter getConverter() {
-        return null;
+	return null;
     }
 
 }

@@ -11,35 +11,35 @@ public class EvaluationManagementMenuBackingBean extends FenixBackingBean {
     private HtmlInputHidden executionCourseIdHidden;
 
     public Integer getExecutionCourseID() {
-        if (this.executionCourseID == null) {
-            if (this.executionCourseIdHidden != null) {
-                this.executionCourseID = Integer.valueOf(this.executionCourseIdHidden.getValue().toString());
-            } else {
-                this.executionCourseID = Integer.valueOf(this.getRequestParameter("executionCourseID"));
-            }
-        }
-        return this.executionCourseID;
+	if (this.executionCourseID == null) {
+	    if (this.executionCourseIdHidden != null) {
+		this.executionCourseID = Integer.valueOf(this.executionCourseIdHidden.getValue().toString());
+	    } else {
+		this.executionCourseID = Integer.valueOf(this.getRequestParameter("executionCourseID"));
+	    }
+	}
+	return this.executionCourseID;
     }
 
     public void setExecutionCourseID(Integer executionCourseId) {
-        this.executionCourseID = executionCourseId;
+	this.executionCourseID = executionCourseId;
     }
-    
+
     public HtmlInputHidden getExecutionCourseIdHidden() {
-        if (this.executionCourseIdHidden == null) {
-            Integer executionCourseId = this.getExecutionCourseID();
-            
-            this.executionCourseIdHidden = new HtmlInputHidden();
-            this.executionCourseIdHidden.setValue(executionCourseId);
-        }
-        return this.executionCourseIdHidden;
+	if (this.executionCourseIdHidden == null) {
+	    Integer executionCourseId = this.getExecutionCourseID();
+
+	    this.executionCourseIdHidden = new HtmlInputHidden();
+	    this.executionCourseIdHidden.setValue(executionCourseId);
+	}
+	return this.executionCourseIdHidden;
     }
 
     public void setExecutionCourseIdHidden(HtmlInputHidden executionCourseIdHidden) {
-        if (executionCourseIdHidden != null) {
-            this.executionCourseID = Integer.valueOf(executionCourseIdHidden.getValue().toString());
-        }
-        this.executionCourseIdHidden = executionCourseIdHidden;
+	if (executionCourseIdHidden != null) {
+	    this.executionCourseID = Integer.valueOf(executionCourseIdHidden.getValue().toString());
+	}
+	this.executionCourseIdHidden = executionCourseIdHidden;
     }
 
 }

@@ -22,18 +22,17 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 
 public class ShowAllTeachersAction extends FenixDispatchAction {
 
-    public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	IUserView userView = UserView.getUser();
 
 	Object[] args = {};
-	List teachersList = (List) ServiceUtils.executeService("ReadAllTeachersNumberAndName",
-		args);
+	List teachersList = (List) ServiceUtils.executeService("ReadAllTeachersNumberAndName", args);
 	request.setAttribute("teachersList", teachersList);
 
 	return mapping.findForward("show-teachers");

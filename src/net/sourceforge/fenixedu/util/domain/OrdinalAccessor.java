@@ -4,12 +4,13 @@ import java.util.Collection;
 
 /**
  * Provides an interface to obtain all the information required by the
- * {@link net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter OrderedRelationAdapter}.
+ * {@link net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter
+ * OrderedRelationAdapter}.
  * 
  * @author cfgi
  */
 public interface OrdinalAccessor<HolderType, ObjectType> {
-    
+
     /**
      * @param holder
      *            the holder of the ordered relation

@@ -10,19 +10,19 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class ExecutionCourseSiteView extends SiteView {
 
-    private DomainReference<ExecutionCourse> executionCourseDomainReference; 
+    private DomainReference<ExecutionCourse> executionCourseDomainReference;
 
     /**
      * @param commonComponent
      * @param bodyComponent
      */
     public ExecutionCourseSiteView(ISiteComponent commonComponent, ISiteComponent bodyComponent) {
-        setCommonComponent(commonComponent);
-        setComponent(bodyComponent);
+	setCommonComponent(commonComponent);
+	setComponent(bodyComponent);
     }
 
     private ISiteComponent commonComponent;
@@ -32,36 +32,36 @@ public class ExecutionCourseSiteView extends SiteView {
      */
     public ISiteComponent getCommonComponent() {
 
-        return commonComponent;
+	return commonComponent;
     }
 
     /**
      * @param component
      */
     public void setCommonComponent(ISiteComponent component) {
-        commonComponent = component;
+	commonComponent = component;
     }
 
     public boolean equals(Object obj) {
 
-        boolean resultado = false;
+	boolean resultado = false;
 
-        if (obj instanceof ExecutionCourseSiteView) {
-            ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) obj;
+	if (obj instanceof ExecutionCourseSiteView) {
+	    ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) obj;
 
-            resultado = getCommonComponent().equals(siteView.getCommonComponent())
-                    && getComponent().equals(siteView.getComponent());
-        }
+	    resultado = getCommonComponent().equals(siteView.getCommonComponent())
+		    && getComponent().equals(siteView.getComponent());
+	}
 
-        return resultado;
+	return resultado;
     }
 
-	public ExecutionCourse getExecutionCourse() {
-		return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
-	}
+    public ExecutionCourse getExecutionCourse() {
+	return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
+    }
 
-	public void setExecutionCourse(ExecutionCourse executionCourse) {
-        executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
-	}
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
+	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+    }
 
 }

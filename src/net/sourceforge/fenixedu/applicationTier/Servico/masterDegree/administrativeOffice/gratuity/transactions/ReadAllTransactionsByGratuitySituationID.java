@@ -25,65 +25,61 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ReadAllTransactionsByGratuitySituationID extends Service {
 
-    public List run(Integer gratuitySituationID) throws FenixServiceException{
-        GratuitySituation gratuitySituation = rootDomainObject
-                .readGratuitySituationByOID(gratuitySituationID);
-        List<InsuranceTransaction> insuranceTransactionList = gratuitySituation
-                .getStudentCurricularPlan().getRegistration().readAllInsuranceTransactionByExecutionYear(
-                        gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear());
+    public List run(Integer gratuitySituationID) throws FenixServiceException {
+	GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
+	List<InsuranceTransaction> insuranceTransactionList = gratuitySituation.getStudentCurricularPlan().getRegistration()
+		.readAllInsuranceTransactionByExecutionYear(
+			gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear());
 
-        List<PaymentTransaction> paymentTransactionList = new ArrayList<PaymentTransaction>();
-        paymentTransactionList.addAll(insuranceTransactionList);
-        paymentTransactionList.addAll(gratuitySituation.getTransactionList());
+	List<PaymentTransaction> paymentTransactionList = new ArrayList<PaymentTransaction>();
+	paymentTransactionList.addAll(insuranceTransactionList);
+	paymentTransactionList.addAll(gratuitySituation.getTransactionList());
 
-        List<ReimbursementTransaction> reimbursementTransactionList = new ArrayList<ReimbursementTransaction>();
-        for (PaymentTransaction paymentTransaction : paymentTransactionList) {
-            GuideEntry guideEntry = paymentTransaction.getGuideEntry();
+	List<ReimbursementTransaction> reimbursementTransactionList = new ArrayList<ReimbursementTransaction>();
+	for (PaymentTransaction paymentTransaction : paymentTransactionList) {
+	    GuideEntry guideEntry = paymentTransaction.getGuideEntry();
 
-            if ((guideEntry != null)
-                    && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE) || (guideEntry
-                            .getDocumentType().equals(DocumentType.GRATUITY))))) {
+	    if ((guideEntry != null)
+		    && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE) || (guideEntry.getDocumentType()
+			    .equals(DocumentType.GRATUITY))))) {
 
-                for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
-                        .getReimbursementGuideEntries()) {
-                    ReimbursementGuide reimbursementGuide = reimbursementGuideEntry
-                            .getReimbursementGuide();
+		for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry.getReimbursementGuideEntries()) {
+		    ReimbursementGuide reimbursementGuide = reimbursementGuideEntry.getReimbursementGuide();
 
-                    if (!reimbursementGuide.getActiveReimbursementGuideSituation()
-                            .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
-                        // reimbursement is not payed, so there is notransaction
-                        continue;
-                    }
+		    if (!reimbursementGuide.getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(
+			    ReimbursementGuideState.PAYED)) {
+			// reimbursement is not payed, so there is notransaction
+			continue;
+		    }
 
-                    ReimbursementTransaction reimbursementTransaction = reimbursementGuideEntry
-                            .getReimbursementTransaction();
-                    if (reimbursementTransaction == null) {
-                        throw new NonExistingServiceException(
-                                "Database is inconsistent because this reimbursement guide entry is supposed to have a reimbursement transaction");
-                    }
-                    reimbursementTransactionList.add(reimbursementTransaction);
-                }
-            }
+		    ReimbursementTransaction reimbursementTransaction = reimbursementGuideEntry.getReimbursementTransaction();
+		    if (reimbursementTransaction == null) {
+			throw new NonExistingServiceException(
+				"Database is inconsistent because this reimbursement guide entry is supposed to have a reimbursement transaction");
+		    }
+		    reimbursementTransactionList.add(reimbursementTransaction);
+		}
+	    }
 
-        }
+	}
 
-        List<InfoTransaction> infoTransactionList = new ArrayList<InfoTransaction>();
-        for (InsuranceTransaction insuranceTransaction : insuranceTransactionList) {
-            infoTransactionList.add(InfoTransaction.newInfoFromDomain(insuranceTransaction));
-        }
-        for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
-            infoTransactionList.add(InfoTransaction.newInfoFromDomain(gratuityTransaction));
-        }
-        for (ReimbursementTransaction reimbursementTransaction : reimbursementTransactionList) {
-            infoTransactionList.add(InfoTransaction.newInfoFromDomain(reimbursementTransaction));
-        }
+	List<InfoTransaction> infoTransactionList = new ArrayList<InfoTransaction>();
+	for (InsuranceTransaction insuranceTransaction : insuranceTransactionList) {
+	    infoTransactionList.add(InfoTransaction.newInfoFromDomain(insuranceTransaction));
+	}
+	for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
+	    infoTransactionList.add(InfoTransaction.newInfoFromDomain(gratuityTransaction));
+	}
+	for (ReimbursementTransaction reimbursementTransaction : reimbursementTransactionList) {
+	    infoTransactionList.add(InfoTransaction.newInfoFromDomain(reimbursementTransaction));
+	}
 
-        BeanComparator transactionDateComparator = new BeanComparator("transactionDate");
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(transactionDateComparator, true);
-        Collections.sort(infoTransactionList, chainComparator);
+	BeanComparator transactionDateComparator = new BeanComparator("transactionDate");
+	ComparatorChain chainComparator = new ComparatorChain();
+	chainComparator.addComparator(transactionDateComparator, true);
+	Collections.sort(infoTransactionList, chainComparator);
 
-        return infoTransactionList;
+	return infoTransactionList;
     }
 
 }

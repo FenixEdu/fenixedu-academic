@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTeacherByNumber extends Service {
 
     public InfoTeacher run(Integer teacherNumber) {
-        final Teacher teacher = Teacher.readByNumber(teacherNumber);
-        return (teacher != null) ? InfoTeacher.newInfoFromDomain(teacher) : null;
+	final Teacher teacher = Teacher.readByNumber(teacherNumber);
+	return (teacher != null) ? InfoTeacher.newInfoFromDomain(teacher) : null;
     }
 
 }

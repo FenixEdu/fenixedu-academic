@@ -16,8 +16,7 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	setDegreeCurricularPlanId(form, getDegreeCurricularPlanId(request));
 	setExecutionDegreeId(form, getExecutionDegreeId(request));
@@ -25,8 +24,8 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 	return mapping.findForward("chooseStudent");
     }
 
-    public ActionForward showStudentCurriculum(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final Student student = getStudent(actionForm);
 
 	if (student == null) {
@@ -51,8 +50,7 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
 	final ActionForward actionForward = new ActionForward();
-	actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId="
-		+ student.getIdInternal());
+	actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getIdInternal());
 
 	return actionForward;
 
@@ -60,9 +58,9 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     private ActionForward getOldCurriculumRedirect(final ActionForm actionForm, final Student student) {
 	final ActionForward actionForward = new ActionForward();
-	actionForward.setPath("/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber="
-		+ student.getNumber() + "&executionDegreeId=" + getExecutionDegreeId(actionForm)
-		+ "&degreeCurricularPlanID=" + getDegreeCurricularPlanId(actionForm));
+	actionForward.setPath("/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + student.getNumber()
+		+ "&executionDegreeId=" + getExecutionDegreeId(actionForm) + "&degreeCurricularPlanID="
+		+ getDegreeCurricularPlanId(actionForm));
 
 	return actionForward;
 

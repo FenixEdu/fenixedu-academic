@@ -125,12 +125,10 @@ public class MultipleFormatTimeInputRenderer extends DateInputRenderer {
 	    if (type.equals(Partial.class)) {
 		Partial partial = new Partial();
 		if (isHour()) {
-		    partial = partial.with(DateTimeFieldType.hourOfDay(), calendar
-			    .get(Calendar.HOUR_OF_DAY));
+		    partial = partial.with(DateTimeFieldType.hourOfDay(), calendar.get(Calendar.HOUR_OF_DAY));
 		}
 		if (isMinute()) {
-		    partial = partial.with(DateTimeFieldType.minuteOfHour(), calendar
-			    .get(Calendar.MINUTE));
+		    partial = partial.with(DateTimeFieldType.minuteOfHour(), calendar.get(Calendar.MINUTE));
 		}
 		return partial;
 	    } else {

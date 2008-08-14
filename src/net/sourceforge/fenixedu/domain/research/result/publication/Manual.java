@@ -18,14 +18,14 @@ import bibtex.dom.BibtexString;
  */
 public class Manual extends Manual_Base {
 
-	private static final String usedSchema = "result.publication.presentation.Manual";
-	
+    private static final String usedSchema = "result.publication.presentation.Manual";
+
     public Manual() {
 	super();
     }
 
-    public Manual(Person participator, String title, MultiLanguageString keywords, String organization, Integer year, String address,
-    		MultiLanguageString note, String edition, Month month, String url) {
+    public Manual(Person participator, String title, MultiLanguageString keywords, String organization, Integer year,
+	    String address, MultiLanguageString note, String edition, Month month, String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title);
@@ -34,16 +34,16 @@ public class Manual extends Manual_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, String organization, Integer year, String address, MultiLanguageString note,
-	    String edition, Month month, String url) {
+    public void setEditAll(String title, MultiLanguageString keywords, String organization, Integer year, String address,
+	    MultiLanguageString note, String edition, Month month, String url) {
 	super.checkRequiredParameters(keywords, note);
-    checkRequiredParameters(title);
+	checkRequiredParameters(title);
 	fillAllAttributes(title, keywords, organization, year, address, note, edition, month, url);
 	super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, MultiLanguageString keywords, String organization, Integer year, String address,
-    		MultiLanguageString note, String edition, Month month, String url) {
+	    MultiLanguageString note, String edition, Month month, String url) {
 	super.setTitle(title);
 	super.setOrganization(organization);
 	super.setYear(year);
@@ -150,8 +150,8 @@ public class Manual extends Manual_Base {
 	throw new DomainException("error.researcher.Manual.call", "setEdition");
     }
 
-	@Override
-	public String getSchema() {
-		return usedSchema;
-	}
+    @Override
+    public String getSchema() {
+	return usedSchema;
+    }
 }

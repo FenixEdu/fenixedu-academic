@@ -12,10 +12,8 @@ public class DayOfAcademicSemesterDateTimeFieldType extends DateTimeFieldType {
 
     private static final DayOfAcademicSemesterDateTimeFieldType DAY_OF_ACADEMIC_SEMESTER_TYPE;
     static {
-	DAY_OF_ACADEMIC_SEMESTER_TYPE = new DayOfAcademicSemesterDateTimeFieldType(
-		"dayOfAcademicSemester",
-		DurationFieldType.days(), 
-		AcademicSemestersDurationFieldType.academicSemesters());
+	DAY_OF_ACADEMIC_SEMESTER_TYPE = new DayOfAcademicSemesterDateTimeFieldType("dayOfAcademicSemester", DurationFieldType
+		.days(), AcademicSemestersDurationFieldType.academicSemesters());
     }
 
     private DayOfAcademicSemesterDateTimeFieldType(String name, DurationFieldType unitType, DurationFieldType rangeType) {
@@ -25,15 +23,15 @@ public class DayOfAcademicSemesterDateTimeFieldType extends DateTimeFieldType {
     public static DateTimeFieldType dayOfAcademicSemester() {
 	return DAY_OF_ACADEMIC_SEMESTER_TYPE;
     }
-    
+
     @Override
     public DateTimeField getField(Chronology chronology) {
-	if(chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology)chronology).dayOfAcademicSemester();
+	if (chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology) chronology).dayOfAcademicSemester();
 	}
 	throw unsupported();
     }
-    
+
     @Override
     public DurationFieldType getDurationType() {
 	return DurationFieldType.days();
@@ -43,8 +41,8 @@ public class DayOfAcademicSemesterDateTimeFieldType extends DateTimeFieldType {
     public DurationFieldType getRangeDurationType() {
 	return AcademicSemestersDurationFieldType.academicSemesters();
     }
-    
+
     private UnsupportedOperationException unsupported() {
-        return new UnsupportedOperationException(DAY_OF_ACADEMIC_SEMESTER_TYPE + " field is unsupported");
+	return new UnsupportedOperationException(DAY_OF_ACADEMIC_SEMESTER_TYPE + " field is unsupported");
     }
 }

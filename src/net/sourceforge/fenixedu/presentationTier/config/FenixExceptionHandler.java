@@ -38,24 +38,24 @@ import pt.ist.fenixframework.pstm.Transaction;
 public class FenixExceptionHandler extends ExceptionHandler {
 
     /**
-     * Handle the exception. Return the <code>ActionForward</code> instance
-     * (if any) returned by the called <code>ExceptionHandler</code>.
+     * Handle the exception. Return the <code>ActionForward</code> instance (if
+     * any) returned by the called <code>ExceptionHandler</code>.
      * 
      * @param ex
-     *                The exception to handle
+     *            The exception to handle
      * @param ae
-     *                The ExceptionConfig corresponding to the exception
+     *            The ExceptionConfig corresponding to the exception
      * @param mapping
-     *                The ActionMapping we are processing
+     *            The ActionMapping we are processing
      * @param formInstance
-     *                The ActionForm we are processing
+     *            The ActionForm we are processing
      * @param request
-     *                The servlet request we are processing
+     *            The servlet request we are processing
      * @param response
-     *                The servlet response we are creating
+     *            The servlet response we are creating
      * 
      * @exception ServletException
-     *                    if a servlet exception occurs
+     *                if a servlet exception occurs
      * 
      * @since Struts 1.1
      */

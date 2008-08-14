@@ -19,49 +19,48 @@ import org.apache.commons.collections.Transformer;
 
 public class WriteCandidateEnrolments extends Service {
 
-    public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits,
-            String givenCreditsRemarks) throws FenixServiceException{
+    public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
+	    throws FenixServiceException {
 
-        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
-        if (masterDegreeCandidate == null) {
-            throw new NonExistingServiceException();
-        }
+	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+	if (masterDegreeCandidate == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        masterDegreeCandidate.setGivenCredits(credits);
+	masterDegreeCandidate.setGivenCredits(credits);
 
-        if (credits.floatValue() != 0) {
-            masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
-        }
+	if (credits.floatValue() != 0) {
+	    masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
+	}
 
-        List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-        List<Integer> candidateEnrolmentsCurricularCoursesIDs = (List<Integer>) CollectionUtils.collect(
-                candidateEnrolments, new Transformer() {
-                    public Object transform(Object arg0) {
-                        CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
-                        return candidateEnrolment.getCurricularCourse().getIdInternal();
-                    }
-                });
+	List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+	List<Integer> candidateEnrolmentsCurricularCoursesIDs = (List<Integer>) CollectionUtils.collect(candidateEnrolments,
+		new Transformer() {
+		    public Object transform(Object arg0) {
+			CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
+			return candidateEnrolment.getCurricularCourse().getIdInternal();
+		    }
+		});
 
-        Collection<Integer> curricularCoursesToEnroll = CollectionUtils.subtract(
-                selectedCurricularCoursesIDs, candidateEnrolmentsCurricularCoursesIDs);
+	Collection<Integer> curricularCoursesToEnroll = CollectionUtils.subtract(selectedCurricularCoursesIDs,
+		candidateEnrolmentsCurricularCoursesIDs);
 
-        final Collection<Integer> curricularCoursesToDelete = CollectionUtils.subtract(
-                candidateEnrolmentsCurricularCoursesIDs, selectedCurricularCoursesIDs);
+	final Collection<Integer> curricularCoursesToDelete = CollectionUtils.subtract(candidateEnrolmentsCurricularCoursesIDs,
+		selectedCurricularCoursesIDs);
 
-        Collection<CandidateEnrolment> candidateEnrollmentsToDelete = CollectionUtils
-                .select(candidateEnrolments, new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
-                        return (curricularCoursesToDelete.contains(candidateEnrolment
-                                .getCurricularCourse().getIdInternal()));
-                    }
-                });
+	Collection<CandidateEnrolment> candidateEnrollmentsToDelete = CollectionUtils.select(candidateEnrolments,
+		new Predicate() {
+		    public boolean evaluate(Object arg0) {
+			CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
+			return (curricularCoursesToDelete.contains(candidateEnrolment.getCurricularCourse().getIdInternal()));
+		    }
+		});
 
-        writeFilteredEnrollments(masterDegreeCandidate, curricularCoursesToEnroll);
+	writeFilteredEnrollments(masterDegreeCandidate, curricularCoursesToEnroll);
 
-        for (CandidateEnrolment candidateEnrolmentToDelete : candidateEnrollmentsToDelete) {
-            candidateEnrolmentToDelete.delete();
-        }
+	for (CandidateEnrolment candidateEnrolmentToDelete : candidateEnrollmentsToDelete) {
+	    candidateEnrolmentToDelete.delete();
+	}
     }
 
     /**
@@ -71,23 +70,23 @@ public class WriteCandidateEnrolments extends Service {
      * @throws NonExistingServiceException
      * @throws ExcepcaoPersistencia
      */
-    private void writeFilteredEnrollments(MasterDegreeCandidate masterDegreeCandidate, Collection<Integer> curricularCoursesToEnroll)
-            throws NonExistingServiceException{
-        Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
-        while (iterCurricularCourseIds.hasNext()) {
+    private void writeFilteredEnrollments(MasterDegreeCandidate masterDegreeCandidate,
+	    Collection<Integer> curricularCoursesToEnroll) throws NonExistingServiceException {
+	Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
+	while (iterCurricularCourseIds.hasNext()) {
 
-            CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
+	    CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
+		    .readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
 
-            if (curricularCourse == null) {
-                throw new NonExistingServiceException();
-            }
+	    if (curricularCourse == null) {
+		throw new NonExistingServiceException();
+	    }
 
-            CandidateEnrolment candidateEnrolment = new CandidateEnrolment();
+	    CandidateEnrolment candidateEnrolment = new CandidateEnrolment();
 
-            masterDegreeCandidate.addCandidateEnrolments(candidateEnrolment);
-            candidateEnrolment.setCurricularCourse(curricularCourse);
-        }
+	    masterDegreeCandidate.addCandidateEnrolments(candidateEnrolment);
+	    candidateEnrolment.setCurricularCourse(curricularCourse);
+	}
     }
 
- 
 }

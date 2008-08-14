@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.domain.contents.Content;
  */
 public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Base {
 
-    /** cached not persisted group   */
+    /** cached not persisted group */
     private ExpressionGroup group;
-    
+
     protected ExpressionGroupAvailability() {
-        super();
+	super();
     }
 
     /**
@@ -36,12 +36,12 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
      * @exception GroupExpressionException
      *                when the expression is not correct
      */
-   
-    public ExpressionGroupAvailability(Content content, String expression) {
-        super();
 
-        setContent(content);
-        setExpression(expression);
+    public ExpressionGroupAvailability(Content content, String expression) {
+	super();
+
+	setContent(content);
+	setExpression(expression);
     }
 
     /**
@@ -53,25 +53,25 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
      */
     @Override
     public void setExpression(String expression) {
-        super.setExpression(expression);
+	super.setExpression(expression);
 
-        // we build the group immediatly to detect problems with the expression
-        // as soon as possible. Nevertheless the group has a lazy construction
-        // built in getGroup(). This is used after obtaining the group for the
-        // persistent storage.
-        setTargetGroup(new ExpressionGroup(expression));
+	// we build the group immediatly to detect problems with the expression
+	// as soon as possible. Nevertheless the group has a lazy construction
+	// built in getGroup(). This is used after obtaining the group for the
+	// persistent storage.
+	setTargetGroup(new ExpressionGroup(expression));
     }
 
     protected ExpressionGroup getGroup() {
-        if (this.group == null) {
-            this.group = new ExpressionGroup(getExpression());
-        }
+	if (this.group == null) {
+	    this.group = new ExpressionGroup(getExpression());
+	}
 
-        return this.group;
+	return this.group;
     }
 
     protected void setGroup(ExpressionGroup group) {
-        this.group = group;
+	this.group = group;
     }
 
     /**
@@ -85,13 +85,13 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
      */
     @Override
     public ExpressionGroup getTargetGroup() {
-        return getGroup();
+	return getGroup();
     }
 
     /**
-     * Delegates the availability to the group obtained with {@link #getGroup()}.
-     * The functionality is available if the group allows the <tt>UserView</tt>
-     * specified in the context.
+     * Delegates the availability to the group obtained with {@link #getGroup()}
+     * . The functionality is available if the group allows the
+     * <tt>UserView</tt> specified in the context.
      * 
      * @return <code>getGroup().allows(context.getUserView())</code>
      * 
@@ -102,14 +102,13 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
      */
     @Override
     public boolean isAvailable(FunctionalityContext context) {
-        try {
-            return getTargetGroup().allows(new GroupContextFromFunctionality(context), context.getUserView());
-        } catch (GroupDynamicExpressionException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new GroupDynamicExpressionException(e,
-                    "accessControl.group.expression.evaluation.error");
-        }
+	try {
+	    return getTargetGroup().allows(new GroupContextFromFunctionality(context), context.getUserView());
+	} catch (GroupDynamicExpressionException e) {
+	    throw e;
+	} catch (Exception e) {
+	    throw new GroupDynamicExpressionException(e, "accessControl.group.expression.evaluation.error");
+	}
     }
 
 }

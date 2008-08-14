@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.events.candidacy;
 
-
 public enum CandidacyExemptionJustificationType {
     TIME;
 

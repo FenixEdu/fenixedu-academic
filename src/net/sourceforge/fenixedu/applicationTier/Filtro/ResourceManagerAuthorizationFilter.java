@@ -14,7 +14,7 @@ public class ResourceManagerAuthorizationFilter extends AuthorizationByRoleFilte
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -23,7 +23,7 @@ public class ResourceManagerAuthorizationFilter extends AuthorizationByRoleFilte
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.RESOURCE_MANAGER;
+	return RoleType.RESOURCE_MANAGER;
     }
 
 }

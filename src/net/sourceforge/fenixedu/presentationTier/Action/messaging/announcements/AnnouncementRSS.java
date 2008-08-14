@@ -28,63 +28,60 @@ import com.sun.syndication.feed.synd.SyndContentImpl;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 20, 2006,8:42:24 AM
  * 
  */
 public class AnnouncementRSS extends RSSAction {
 
-    
-
     protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
-        MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
-        String titlePrefix = resources.getMessage(this.getLocale(request),
-                "messaging.announcements.channelTitlePrefix");
-        StringBuffer buffer = new StringBuffer();
-        if (board != null) {
-            buffer.append(titlePrefix).append(" ").append(board.getName());
-        }
-        return buffer.toString();
+	MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
+	String titlePrefix = resources.getMessage(this.getLocale(request), "messaging.announcements.channelTitlePrefix");
+	StringBuffer buffer = new StringBuffer();
+	if (board != null) {
+	    buffer.append(titlePrefix).append(" ").append(board.getName());
+	}
+	return buffer.toString();
     }
 
     private String getAuthor(Announcement announcement) {
 	final Person person = announcement.getCreator();
-	return (person != null) ? person.getNickname() : announcement.getAuthor(); 
+	return (person != null) ? person.getNickname() : announcement.getAuthor();
     }
 
     @Override
     protected List<SyndEntryFenixImpl> getFeedEntries(HttpServletRequest request) throws Exception {
 
-        final List<SyndEntryFenixImpl> entries = new ArrayList<SyndEntryFenixImpl>();
+	final List<SyndEntryFenixImpl> entries = new ArrayList<SyndEntryFenixImpl>();
 
-        final AnnouncementBoard board = this.getSelectedBoard(request);
-        if (board != null) {
-            if (board.getReaders() != null) {
-                throw new FenixActionException("board.does.not.have.rss");
-            }
-        
-            final List<Announcement> activeAnnouncements = board.getActiveAnnouncements();
-            Collections.sort(activeAnnouncements, Announcement.NEWEST_FIRST);
+	final AnnouncementBoard board = this.getSelectedBoard(request);
+	if (board != null) {
+	    if (board.getReaders() != null) {
+		throw new FenixActionException("board.does.not.have.rss");
+	    }
 
-            for (final Announcement announcement : activeAnnouncements) {
-	    
-                SyndContent description = new SyndContentImpl();
-                description.setType("text/plain");
-                description.setValue(announcement.getBody().getContent());
+	    final List<Announcement> activeAnnouncements = board.getActiveAnnouncements();
+	    Collections.sort(activeAnnouncements, Announcement.NEWEST_FIRST);
 
-                SyndEntryFenixImpl entry = new SyndEntryFenixImpl(announcement);
-                entry.setAuthor(this.getAuthor(announcement));
-                entry.setTitle(announcement.getSubject().getContent());
-                entry.setPublishedDate(announcement.getCreationDate().toDate());
-                entry.setUpdatedDate(announcement.getLastModification().toDate());
-                entry.setLink(this.getEntryLink(request, announcement));
-                entry.setDescription(description);
-                entry.setUri(constructURI(request, announcement));
-                entries.add(entry);
-            }
-        }
+	    for (final Announcement announcement : activeAnnouncements) {
 
-        return entries;
+		SyndContent description = new SyndContentImpl();
+		description.setType("text/plain");
+		description.setValue(announcement.getBody().getContent());
+
+		SyndEntryFenixImpl entry = new SyndEntryFenixImpl(announcement);
+		entry.setAuthor(this.getAuthor(announcement));
+		entry.setTitle(announcement.getSubject().getContent());
+		entry.setPublishedDate(announcement.getCreationDate().toDate());
+		entry.setUpdatedDate(announcement.getLastModification().toDate());
+		entry.setLink(this.getEntryLink(request, announcement));
+		entry.setDescription(description);
+		entry.setUri(constructURI(request, announcement));
+		entries.add(entry);
+	    }
+	}
+
+	return entries;
 
     }
 
@@ -97,93 +94,90 @@ public class AnnouncementRSS extends RSSAction {
 	return stringBuilder.toString();
     }
 
-    private String getAnnouncementBoardFeedServicePrefix(HttpServletRequest request)
-            throws FenixActionException {
-        String result = null;
-        String scheme = request.getScheme();
-        int serverPort = request.getServerPort();
-        String serverName = request.getServerName();
-        String appContext = PropertiesManager.getProperty("app.context");
-        String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
-        String module = ModuleUtils.getInstance().getModuleName(request,
-                getServlet().getServletContext());
-        String actionPath = "/announcementsRSS.do";
+    private String getAnnouncementBoardFeedServicePrefix(HttpServletRequest request) throws FenixActionException {
+	String result = null;
+	String scheme = request.getScheme();
+	int serverPort = request.getServerPort();
+	String serverName = request.getServerName();
+	String appContext = PropertiesManager.getProperty("app.context");
+	String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+	String module = ModuleUtils.getInstance().getModuleName(request, getServlet().getServletContext());
+	String actionPath = "/announcementsRSS.do";
 
-        StringBuffer file = new StringBuffer();
-        file.append(context).append(module).append(actionPath);
-        try {
-            URL url = new URL(scheme, serverName, serverPort, file.toString());
-            result = url.toString();
-        } catch (MalformedURLException e) {
-            throw new FenixActionException(e);
-        }
+	StringBuffer file = new StringBuffer();
+	file.append(context).append(module).append(actionPath);
+	try {
+	    URL url = new URL(scheme, serverName, serverPort, file.toString());
+	    result = url.toString();
+	} catch (MalformedURLException e) {
+	    throw new FenixActionException(e);
+	}
 
-        return result;
+	return result;
 
     }
 
-    private String getEntryLink(HttpServletRequest request, Announcement announcement)
-            throws FenixActionException {
+    private String getEntryLink(HttpServletRequest request, Announcement announcement) throws FenixActionException {
 
-    	String actionPath = getDirectAnnouncementBaseUrl(request, announcement);
-    	
-    	if (actionPath == null) {
-    		return null;
-    	}
-    	
-        String result = null;
-        String scheme = request.getScheme();
-        int serverPort = request.getServerPort();
-        String serverName = request.getServerName();
-        String appContext = PropertiesManager.getProperty("app.context");
-        String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+	String actionPath = getDirectAnnouncementBaseUrl(request, announcement);
 
-        if (actionPath.indexOf('?') == -1) {
-        	actionPath += "?";
-        }
-        
-        actionPath += "&announcementId=" + announcement.getIdInternal();
-        
-        try {
-            URL url = new URL(scheme, serverName, serverPort, context + actionPath);
-            result = url.toString();
-        } catch (MalformedURLException e) {
-            throw new FenixActionException(e);
-        }
+	if (actionPath == null) {
+	    return null;
+	}
 
-        return result;
+	String result = null;
+	String scheme = request.getScheme();
+	int serverPort = request.getServerPort();
+	String serverName = request.getServerName();
+	String appContext = PropertiesManager.getProperty("app.context");
+	String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+
+	if (actionPath.indexOf('?') == -1) {
+	    actionPath += "?";
+	}
+
+	actionPath += "&announcementId=" + announcement.getIdInternal();
+
+	try {
+	    URL url = new URL(scheme, serverName, serverPort, context + actionPath);
+	    result = url.toString();
+	} catch (MalformedURLException e) {
+	    throw new FenixActionException(e);
+	}
+
+	return result;
     }
 
     protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
-		return null;
-		//return "/publico/publicAnnouncements.do?method=viewAnnouncement";
-	}
+	return null;
+	// return "/publico/publicAnnouncements.do?method=viewAnnouncement";
+    }
 
-	@Override
+    @Override
     protected String getFeedTitle(HttpServletRequest request) throws Exception {
-        return this.getFeedTitle(request, this.getSelectedBoard(request));
+	return this.getFeedTitle(request, this.getSelectedBoard(request));
     }
 
     @Override
     protected String getFeedDescription(HttpServletRequest request) throws Exception {
-        return "";
+	return "";
     }
 
     @Override
     protected String getFeedLink(HttpServletRequest request) throws FenixActionException {
-        StringBuffer buffer = new StringBuffer();
-        AnnouncementBoard board = this.getSelectedBoard(request);
-        buffer.append(this.getAnnouncementBoardFeedServicePrefix(request)).append("?");
-        if (board != null) {
-            buffer.append("announcementBoardId=").append(board.getIdInternal());
-        }
-        return buffer.toString();
+	StringBuffer buffer = new StringBuffer();
+	AnnouncementBoard board = this.getSelectedBoard(request);
+	buffer.append(this.getAnnouncementBoardFeedServicePrefix(request)).append("?");
+	if (board != null) {
+	    buffer.append("announcementBoardId=").append(board.getIdInternal());
+	}
+	return buffer.toString();
     }
 
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
-        final String id = request.getParameter("announcementBoardId");
-        Content content = rootDomainObject.readContentByOID(Integer.valueOf(id));
-        return (content instanceof AnnouncementBoard) ? (AnnouncementBoard)content : null; 
+	final String id = request.getParameter("announcementBoardId");
+	Content content = rootDomainObject.readContentByOID(Integer.valueOf(id));
+	return (content instanceof AnnouncementBoard) ? (AnnouncementBoard) content : null;
     }
 
     @Override

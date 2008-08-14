@@ -7,5 +7,5 @@ public class SummaryManagementToDepartmentAdmOfficeAuthorizationFilter extends S
     @Override
     protected RoleType getRoleType() {
 	return RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE;
-    }   
+    }
 }

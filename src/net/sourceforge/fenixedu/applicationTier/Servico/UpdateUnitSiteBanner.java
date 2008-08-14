@@ -11,18 +11,19 @@ import net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType;
 
 public class UpdateUnitSiteBanner extends UnitSiteBannerFileService {
 
-    public void run(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile, String backName, UnitSiteBannerRepeatType repeat, String color, String link, Integer weight) throws FenixServiceException, IOException {
-        UnitSiteBannerFile main = banner.getMainImage();
-        if (main != null && mainFile != null) {
-        	deleteFile(main);
-        }
-        
-        UnitSiteBannerFile background = banner.getBackgroundImage();
-        if (background != null && mainFile != null) {
-        	deleteFile(background);
-        }
+    public void run(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile, String backName,
+	    UnitSiteBannerRepeatType repeat, String color, String link, Integer weight) throws FenixServiceException, IOException {
+	UnitSiteBannerFile main = banner.getMainImage();
+	if (main != null && mainFile != null) {
+	    deleteFile(main);
+	}
 
-        updateBanner(site, banner, mainFile, mainName, backFile, backName, repeat, color, link, weight);
+	UnitSiteBannerFile background = banner.getBackgroundImage();
+	if (background != null && mainFile != null) {
+	    deleteFile(background);
+	}
+
+	updateBanner(site, banner, mainFile, mainName, backFile, backName, repeat, color, link, weight);
     }
-    
+
 }

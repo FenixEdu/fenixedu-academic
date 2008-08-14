@@ -44,97 +44,97 @@ public class QuestionDifficultyType extends FenixUtil {
     }
 
     public QuestionDifficultyType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public QuestionDifficultyType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public QuestionDifficultyType(String typeString) {
-        this.type = getTypeCode(typeString);
+	this.type = getTypeCode(typeString);
     }
 
     public Integer getType() {
-        return type;
+	return type;
     }
 
     public void setType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public void setType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public List getAllTypes() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(NOT_DEFINED_STRING, new Integer(NOT_DEFINED).toString()));
-        result.add(new LabelValueBean(VERY_EASY_STRING, new Integer(VERY_EASY).toString()));
-        result.add(new LabelValueBean(EASY_STRING, new Integer(EASY).toString()));
-        result.add(new LabelValueBean(MEDIUM_STRING, new Integer(MEDIUM).toString()));
-        result.add(new LabelValueBean(DIFFICULT_STRING, new Integer(DIFFICULT).toString()));
-        result.add(new LabelValueBean(VERY_DIFFICULT_STRING, new Integer(VERY_DIFFICULT).toString()));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(NOT_DEFINED_STRING, new Integer(NOT_DEFINED).toString()));
+	result.add(new LabelValueBean(VERY_EASY_STRING, new Integer(VERY_EASY).toString()));
+	result.add(new LabelValueBean(EASY_STRING, new Integer(EASY).toString()));
+	result.add(new LabelValueBean(MEDIUM_STRING, new Integer(MEDIUM).toString()));
+	result.add(new LabelValueBean(DIFFICULT_STRING, new Integer(DIFFICULT).toString()));
+	result.add(new LabelValueBean(VERY_DIFFICULT_STRING, new Integer(VERY_DIFFICULT).toString()));
+	return result;
     }
 
     public List getAllTypesStrings() {
-        List result = new ArrayList();
-        result.add(NOT_DEFINED_STRING);
-        result.add(VERY_EASY_STRING);
-        result.add(EASY_STRING);
-        result.add(MEDIUM_STRING);
-        result.add(DIFFICULT_STRING);
-        result.add(VERY_DIFFICULT_STRING);
-        return result;
+	List result = new ArrayList();
+	result.add(NOT_DEFINED_STRING);
+	result.add(VERY_EASY_STRING);
+	result.add(EASY_STRING);
+	result.add(MEDIUM_STRING);
+	result.add(DIFFICULT_STRING);
+	result.add(VERY_DIFFICULT_STRING);
+	return result;
     }
 
     public Integer getTypeCode(String typeName) {
-        if (typeName.equals(NOT_DEFINED_STRING))
-            return new Integer(NOT_DEFINED);
-        else if (typeName.equals(VERY_EASY_STRING))
-            return new Integer(VERY_EASY);
-        else if (typeName.equals(EASY_STRING))
-            return new Integer(EASY);
-        else if (typeName.equals(MEDIUM_STRING))
-            return new Integer(MEDIUM);
-        else if (typeName.equals(DIFFICULT_STRING))
-            return new Integer(DIFFICULT);
-        else if (typeName.equals(VERY_DIFFICULT_STRING))
-            return new Integer(VERY_DIFFICULT);
-        return null;
+	if (typeName.equals(NOT_DEFINED_STRING))
+	    return new Integer(NOT_DEFINED);
+	else if (typeName.equals(VERY_EASY_STRING))
+	    return new Integer(VERY_EASY);
+	else if (typeName.equals(EASY_STRING))
+	    return new Integer(EASY);
+	else if (typeName.equals(MEDIUM_STRING))
+	    return new Integer(MEDIUM);
+	else if (typeName.equals(DIFFICULT_STRING))
+	    return new Integer(DIFFICULT);
+	else if (typeName.equals(VERY_DIFFICULT_STRING))
+	    return new Integer(VERY_DIFFICULT);
+	return null;
     }
 
     public String getTypeString() {
-        if (type.intValue() == NOT_DEFINED)
-            return new String(NOT_DEFINED_STRING);
-        else if (type.intValue() == VERY_EASY)
-            return new String(VERY_EASY_STRING);
-        else if (type.intValue() == EASY)
-            return new String(EASY_STRING);
-        else if (type.intValue() == MEDIUM)
-            return new String(MEDIUM_STRING);
-        else if (type.intValue() == DIFFICULT)
-            return new String(DIFFICULT_STRING);
-        else if (type.intValue() == VERY_DIFFICULT)
-            return new String(VERY_DIFFICULT_STRING);
+	if (type.intValue() == NOT_DEFINED)
+	    return new String(NOT_DEFINED_STRING);
+	else if (type.intValue() == VERY_EASY)
+	    return new String(VERY_EASY_STRING);
+	else if (type.intValue() == EASY)
+	    return new String(EASY_STRING);
+	else if (type.intValue() == MEDIUM)
+	    return new String(MEDIUM_STRING);
+	else if (type.intValue() == DIFFICULT)
+	    return new String(DIFFICULT_STRING);
+	else if (type.intValue() == VERY_DIFFICULT)
+	    return new String(VERY_DIFFICULT_STRING);
 
-        return null;
+	return null;
     }
 
     public static boolean isQuestionDifficultyType(int type) {
-        if (type >= NOT_DEFINED && type <= VERY_DIFFICULT)
-            return true;
-        return false;
+	if (type >= NOT_DEFINED && type <= VERY_DIFFICULT)
+	    return true;
+	return false;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof TestType) {
-            TestType tt = (TestType) obj;
-            resultado = this.getType().equals(tt.getType());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof TestType) {
+	    TestType tt = (TestType) obj;
+	    resultado = this.getType().equals(tt.getType());
+	}
+	return resultado;
     }
 
 }

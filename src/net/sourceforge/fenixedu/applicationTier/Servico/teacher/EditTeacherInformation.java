@@ -16,81 +16,78 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditTeacherInformation extends Service {
 
-    public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime,
-            InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
-            List<InfoPublicationsNumber> infoPublicationsNumbers) {
+    public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
+	    List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers) {
 
-        Teacher teacher = rootDomainObject.readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getIdInternal());
+	Teacher teacher = rootDomainObject.readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getIdInternal());
 
-		editServiceProviderRegime(infoServiceProviderRegime, teacher);	
-		editWeeklyOcupation(infoWeeklyOcupation, teacher);
-		editOrientations(infoOrientations, teacher);
-		editPublicationNumbers(infoPublicationsNumbers, teacher);
+	editServiceProviderRegime(infoServiceProviderRegime, teacher);
+	editWeeklyOcupation(infoWeeklyOcupation, teacher);
+	editOrientations(infoOrientations, teacher);
+	editPublicationNumbers(infoPublicationsNumbers, teacher);
 
-        // TODO <cargos de gestão>
+	// TODO <cargos de gestão>
 
-        return Boolean.TRUE;
+	return Boolean.TRUE;
     }
-	
-	private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime,
-			Teacher teacher) {
 
-        ServiceProviderRegime serviceProviderRegime = rootDomainObject.readServiceProviderRegimeByOID(infoServiceProviderRegime.getIdInternal());
+    private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime, Teacher teacher) {
 
-        if (serviceProviderRegime == null) {
-			serviceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegime);
+	ServiceProviderRegime serviceProviderRegime = rootDomainObject.readServiceProviderRegimeByOID(infoServiceProviderRegime
+		.getIdInternal());
 
-		} else {
-			serviceProviderRegime.edit(infoServiceProviderRegime);
-			
-		}
-		
-		
-	}
+	if (serviceProviderRegime == null) {
+	    serviceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegime);
 
-	private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) {
-        // Weekly Ocupation
-        WeeklyOcupation weeklyOcupation = teacher.getWeeklyOcupation();
-        if (weeklyOcupation == null) {
-			weeklyOcupation = new WeeklyOcupation(teacher, infoWeeklyOcupation);
-		} else {
-			weeklyOcupation.edit(infoWeeklyOcupation);
-        }
-	}
-
-	private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) {
-        // Orientations
-        for (InfoOrientation infoOrientation : infoOrientations) {
-            Orientation orientation = rootDomainObject.readOrientationByOID(infoOrientation.getIdInternal());
-
-            if (orientation == null) {
-				orientation = new Orientation(teacher, infoOrientation);
-
-			} else {
-				orientation.edit(infoOrientation);				
-			}
-
-        }
+	} else {
+	    serviceProviderRegime.edit(infoServiceProviderRegime);
 
 	}
 
-	private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) {
-        // Publications Number
-        for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
-            PublicationsNumber publicationsNumber = rootDomainObject.readPublicationsNumberByOID(infoPublicationsNumber.getIdInternal());
+    }
 
-            if (publicationsNumber == null) {
-				publicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumber);
-
-			} else {
-				publicationsNumber.edit(infoPublicationsNumber);
-				
-            }
-
-			
-        }
-
-		
+    private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) {
+	// Weekly Ocupation
+	WeeklyOcupation weeklyOcupation = teacher.getWeeklyOcupation();
+	if (weeklyOcupation == null) {
+	    weeklyOcupation = new WeeklyOcupation(teacher, infoWeeklyOcupation);
+	} else {
+	    weeklyOcupation.edit(infoWeeklyOcupation);
 	}
+    }
+
+    private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) {
+	// Orientations
+	for (InfoOrientation infoOrientation : infoOrientations) {
+	    Orientation orientation = rootDomainObject.readOrientationByOID(infoOrientation.getIdInternal());
+
+	    if (orientation == null) {
+		orientation = new Orientation(teacher, infoOrientation);
+
+	    } else {
+		orientation.edit(infoOrientation);
+	    }
+
+	}
+
+    }
+
+    private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) {
+	// Publications Number
+	for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
+	    PublicationsNumber publicationsNumber = rootDomainObject.readPublicationsNumberByOID(infoPublicationsNumber
+		    .getIdInternal());
+
+	    if (publicationsNumber == null) {
+		publicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumber);
+
+	    } else {
+		publicationsNumber.edit(infoPublicationsNumber);
+
+	    }
+
+	}
+
+    }
 
 }

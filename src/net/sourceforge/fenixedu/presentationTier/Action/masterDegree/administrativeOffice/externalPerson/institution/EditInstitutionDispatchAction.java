@@ -28,79 +28,75 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class EditInstitutionDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
-        ActionErrors actionErrors = new ActionErrors();
-        Object args[] = {};
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
+	ActionErrors actionErrors = new ActionErrors();
+	Object args[] = {};
 
-        try {
-            List infoInstitutions = (List) ServiceUtils.executeService(
-                    "ReadAllInstitutions", args);
+	try {
+	    List infoInstitutions = (List) ServiceUtils.executeService("ReadAllInstitutions", args);
 
-            if (infoInstitutions != null) {
-                if (infoInstitutions.isEmpty() == false) {
-                    Collections.sort(infoInstitutions, new BeanComparator("name"));
-                    List infoInstitutionsValueBeanList = new ArrayList();
-                    Iterator it = infoInstitutions.iterator();
-                    Unit infoInstitution = null;
+	    if (infoInstitutions != null) {
+		if (infoInstitutions.isEmpty() == false) {
+		    Collections.sort(infoInstitutions, new BeanComparator("name"));
+		    List infoInstitutionsValueBeanList = new ArrayList();
+		    Iterator it = infoInstitutions.iterator();
+		    Unit infoInstitution = null;
 
-                    while (it.hasNext()) {
-                        infoInstitution = (Unit) it.next();
-                        infoInstitutionsValueBeanList
-                                .add(new LabelValueBean(infoInstitution.getName(), infoInstitution
-                                        .getIdInternal().toString()));
-                    }
+		    while (it.hasNext()) {
+			infoInstitution = (Unit) it.next();
+			infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
+				.getIdInternal().toString()));
+		    }
 
-                    request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST,
-                            infoInstitutionsValueBeanList);
-                }
-            }
+		    request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
+		}
+	    }
 
-            if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
-                actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions",
-                        new ActionError(
-                                "label.masterDegree.administrativeOffice.nonExistingInstitutions"));
+	    if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
+		actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions", new ActionError(
+			"label.masterDegree.administrativeOffice.nonExistingInstitutions"));
 
-                saveErrors(request, actionErrors);
-                return mapping.findForward("error");
-            }
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        }
+		saveErrors(request, actionErrors);
+		return mapping.findForward("error");
+	    }
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+	}
 
-        return mapping.findForward("start");
+	return mapping.findForward("start");
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm editInstitutionForm = (DynaActionForm) form;
+	DynaActionForm editInstitutionForm = (DynaActionForm) form;
 
-        Integer oldInstitutionId = (Integer) editInstitutionForm.get("institutionId");
-        String newInstitutionName = (String) editInstitutionForm.get("name");
+	Integer oldInstitutionId = (Integer) editInstitutionForm.get("institutionId");
+	String newInstitutionName = (String) editInstitutionForm.get("name");
 
-        Object args[] = { oldInstitutionId, newInstitutionName };
+	Object args[] = { oldInstitutionId, newInstitutionName };
 
-        try {
-            ServiceUtils.executeService("EditInstitution", args);
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e.getMessage(), mapping
-                    .findForward("errorLocationAlreadyExists"));
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        }
+	try {
+	    ServiceUtils.executeService("EditInstitution", args);
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException(e.getMessage(), mapping.findForward("errorLocationAlreadyExists"));
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+	}
 
-        return mapping.findForward("success");
+	return mapping.findForward("success");
     }
 
 }

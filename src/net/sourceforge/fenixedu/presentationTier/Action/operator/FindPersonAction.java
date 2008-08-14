@@ -32,13 +32,13 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * 
  */
 public class FindPersonAction extends FenixDispatchAction {
-    public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("choosePerson");
     }
 
-    public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	ActionErrors errors = new ActionErrors();
 
 	IUserView userView = UserView.getUser();
@@ -55,8 +55,8 @@ public class FindPersonAction extends FenixDispatchAction {
 	    request.setAttribute("documentIdNumber", documentIdNumber);
 	}
 
-	SearchParameters searchParameters = new SearchPerson.SearchParameters(null, null, username,
-		documentIdNumber, null, null, null, null, null, Boolean.TRUE, null, null);
+	SearchParameters searchParameters = new SearchPerson.SearchParameters(null, null, username, documentIdNumber, null, null,
+		null, null, null, Boolean.TRUE, null, null);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
@@ -64,8 +64,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
 	CollectionPager<Person> result = null;
 	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService(
-		    "SearchPerson", args);
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
@@ -80,8 +79,8 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer
-		.valueOf(pageNumberString) : Integer.valueOf(1);
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
+		.valueOf(1);
 
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));

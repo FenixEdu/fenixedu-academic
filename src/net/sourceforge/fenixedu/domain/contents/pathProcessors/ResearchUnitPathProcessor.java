@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 
-
 public class ResearchUnitPathProcessor extends AbstractUnitAcronymPathProcessor {
 
     @Override
@@ -10,5 +9,4 @@ public class ResearchUnitPathProcessor extends AbstractUnitAcronymPathProcessor 
 	return new Class[] { ResearchUnit.class };
     }
 
-  
 }

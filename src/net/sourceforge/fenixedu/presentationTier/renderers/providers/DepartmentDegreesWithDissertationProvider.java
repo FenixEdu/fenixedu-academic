@@ -9,8 +9,8 @@ public class DepartmentDegreesWithDissertationProvider extends DegreesWithDisser
 
     @Override
     protected Collection<Degree> getDegrees(Object source) {
-        ThesisFilterBean bean = (ThesisFilterBean) source;
-        return bean.getDegreeOptions();
+	ThesisFilterBean bean = (ThesisFilterBean) source;
+	return bean.getDegreeOptions();
     }
-    
+
 }

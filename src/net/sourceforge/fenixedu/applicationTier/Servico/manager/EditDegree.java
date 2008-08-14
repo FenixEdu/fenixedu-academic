@@ -16,38 +16,37 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditDegree extends Service {
 
-	public void run(final Integer idInternal, final String code, final String name,
-			final String nameEn, final DegreeType degreeType, final GradeScale gradeScale, ExecutionYear executionYear)
-			throws FenixServiceException{
-        if (idInternal == null || name == null || nameEn == null || code == null || degreeType == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+    public void run(final Integer idInternal, final String code, final String name, final String nameEn,
+	    final DegreeType degreeType, final GradeScale gradeScale, ExecutionYear executionYear) throws FenixServiceException {
+	if (idInternal == null || name == null || nameEn == null || code == null || degreeType == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        final Degree degreeToEdit = rootDomainObject.readDegreeByOID(idInternal);
+	final Degree degreeToEdit = rootDomainObject.readDegreeByOID(idInternal);
 
-        if (degreeToEdit == null) {
-            throw new NonExistingServiceException();
-        } else if (!degreeToEdit.getSigla().equalsIgnoreCase(code)
-                || !degreeToEdit.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name)
-                || !degreeToEdit.getTipoCurso().equals(degreeType)) {
-            
-        	final List<Degree> degrees = Degree.readOldDegrees();
-            
-            // assert unique degree code and unique pair name/type
-            for (Degree degree : degrees) {
-                if (degree != degreeToEdit) {
-                    if (degree.getSigla().equalsIgnoreCase(code)) {
-                        throw new FenixServiceException("error.existing.code");
-                    }
-                    if ((degree.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree.getNameEn()
-                            .equalsIgnoreCase(nameEn))
-                            && degree.getTipoCurso().equals(degreeType)) {
-                        throw new FenixServiceException("error.existing.name.and.type");
-                    }
-                }
-            }
-        }
-        degreeToEdit.edit(name, nameEn, code, degreeType, gradeScale, executionYear);
+	if (degreeToEdit == null) {
+	    throw new NonExistingServiceException();
+	} else if (!degreeToEdit.getSigla().equalsIgnoreCase(code)
+		|| !degreeToEdit.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name)
+		|| !degreeToEdit.getTipoCurso().equals(degreeType)) {
+
+	    final List<Degree> degrees = Degree.readOldDegrees();
+
+	    // assert unique degree code and unique pair name/type
+	    for (Degree degree : degrees) {
+		if (degree != degreeToEdit) {
+		    if (degree.getSigla().equalsIgnoreCase(code)) {
+			throw new FenixServiceException("error.existing.code");
+		    }
+		    if ((degree.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree.getNameEn()
+			    .equalsIgnoreCase(nameEn))
+			    && degree.getTipoCurso().equals(degreeType)) {
+			throw new FenixServiceException("error.existing.name.and.type");
+		    }
+		}
+	    }
+	}
+	degreeToEdit.edit(name, nameEn, code, degreeType, gradeScale, executionYear);
     }
 
 }

@@ -21,8 +21,7 @@ public class DegreeCurricularPlansForDegreeManager implements DataProvider {
 
 	final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
 	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-	if (markSheetManagementBean.getDegree() != null
-		&& markSheetManagementBean.getExecutionPeriod() != null) {
+	if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getExecutionPeriod() != null) {
 	    result.addAll(markSheetManagementBean.getDegree().getDegreeCurricularPlansSet());
 	}
 	Collections.sort(result, new BeanComparator("name"));

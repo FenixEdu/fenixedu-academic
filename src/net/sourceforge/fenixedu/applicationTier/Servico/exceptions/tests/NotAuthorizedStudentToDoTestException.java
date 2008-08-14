@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 
 /**
  * @author Susana Fernandes
- *  
+ * 
  */
 public class NotAuthorizedStudentToDoTestException extends FenixServiceException {
 
@@ -16,28 +16,28 @@ public class NotAuthorizedStudentToDoTestException extends FenixServiceException
      *  
      */
     public NotAuthorizedStudentToDoTestException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public NotAuthorizedStudentToDoTestException(int errorType) {
-        super(errorType);
+	super(errorType);
     }
 
     /**
      * @param s
      */
     public NotAuthorizedStudentToDoTestException(String s) {
-        super(s);
+	super(s);
     }
 
     /**
      * @param cause
      */
     public NotAuthorizedStudentToDoTestException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -45,14 +45,14 @@ public class NotAuthorizedStudentToDoTestException extends FenixServiceException
      * @param cause
      */
     public NotAuthorizedStudentToDoTestException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[NotAuthorizedStudentToDoTestException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[NotAuthorizedStudentToDoTestException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

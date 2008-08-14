@@ -34,33 +34,33 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class StudentDismissalsDA extends FenixDispatchAction {
-    
+
     private StudentCurricularPlan getSCP(final HttpServletRequest request) {
 	final Integer scpID = getIntegerFromRequest(request, "scpID");
 	return rootDomainObject.readStudentCurricularPlanByOID(scpID);
     }
-    
+
     public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("studentCurricularPlan", getSCP(request));
 	return mapping.findForward("manage");
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
 	final DismissalBean dismissalBean = new DismissalBean();
 	dismissalBean.setStudentCurricularPlan(getSCP(request));
-	
+
 	request.setAttribute("dismissalBean", dismissalBean);
 	dismissalBean.setEnrolments(buildStudentEnrolmentsInformation(dismissalBean));
 	dismissalBean.setExternalEnrolments(buildStudentExternalEnrolmentsInformation(dismissalBean));
-	
+
 	return mapping.findForward("chooseDismissalEnrolments");
     }
 
     private Collection<SelectedExternalEnrolment> buildStudentExternalEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedExternalEnrolment> externalEnrolments = new HashSet<SelectedExternalEnrolment>();
-	for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent().getSortedExternalEnrolments()) {
+	for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent()
+		.getSortedExternalEnrolments()) {
 	    externalEnrolments.add(new DismissalBean.SelectedExternalEnrolment(externalEnrolment));
 	}
 	return externalEnrolments;
@@ -68,10 +68,11 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     private Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
-	for (final StudentCurricularPlan studentCurricularPlan : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent()
-		.getAllStudentCurricularPlans()) {
-	    
-	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(studentCurricularPlan.getDismissalApprovedEnrolments());
+	for (final StudentCurricularPlan studentCurricularPlan : dismissalBean.getStudentCurricularPlan().getRegistration()
+		.getStudent().getAllStudentCurricularPlans()) {
+
+	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(studentCurricularPlan
+		    .getDismissalApprovedEnrolments());
 	    Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
 	    for (final Enrolment enrolment : approvedEnrolments) {
 		enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
@@ -84,80 +85,80 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
 	dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
-	
+
 	final DegreeCurricularPlan dcp = dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan();
 	final ExecutionSemester actualEP = ExecutionSemester.readActualExecutionSemester();
-	dismissalBean.setExecutionPeriod(dcp.hasExecutionDegreeFor(actualEP.getExecutionYear()) ? actualEP : dcp.getMostRecentExecutionYear().getFirstExecutionPeriod());
-	
+	dismissalBean.setExecutionPeriod(dcp.hasExecutionDegreeFor(actualEP.getExecutionYear()) ? actualEP : dcp
+		.getMostRecentExecutionYear().getFirstExecutionPeriod());
+
 	request.setAttribute("dismissalBean", dismissalBean);
 	return mapping.findForward("chooseEquivalents");
     }
-    
-    public ActionForward dismissalTypePostBack(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        
+
+    public ActionForward dismissalTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
 	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
 	dismissalBean.setCredits(null);
 	dismissalBean.setCourseGroup(null);
 	dismissalBean.setDismissals(null);
 	dismissalBean.setCurriculumGroup(null);
-	
-        RenderUtils.invalidateViewState();
-        request.setAttribute("dismissalBean", dismissalBean);
-        
-        return mapping.findForward("chooseEquivalents");
+
+	RenderUtils.invalidateViewState();
+	request.setAttribute("dismissalBean", dismissalBean);
+
+	return mapping.findForward("chooseEquivalents");
     }
-    
+
     private void checkArguments(HttpServletRequest request, DismissalBean dismissalBean) throws FenixActionException {
-	if(dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
+	if (dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
 	    if (!dismissalBean.hasAnyDismissals() && !dismissalBean.hasAnyOptionalDismissals()) {
 		addActionMessage("error", request, "error.studentDismissal.curricularCourse.required");
 		throw new FenixActionException();
 	    }
-	} else if(dismissalBean.getDismissalType() == DismissalType.CURRICULUM_GROUP_CREDITS) {
-	    if(dismissalBean.getCourseGroup() == null) {
+	} else if (dismissalBean.getDismissalType() == DismissalType.CURRICULUM_GROUP_CREDITS) {
+	    if (dismissalBean.getCourseGroup() == null) {
 		addActionMessage("error", request, "error.studentDismissal.curriculumGroup.required");
 		throw new FenixActionException();
 	    }
 	} else {
-	    if(dismissalBean.getCurriculumGroup() == null) {
+	    if (dismissalBean.getCurriculumGroup() == null) {
 		addActionMessage("error", request, "error.studentDismissal.curriculumGroup.required");
 		throw new FenixActionException();
-	    }	    
+	    }
 	}
     }
-    
-    public ActionForward confirmCreateDismissals(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward confirmCreateDismissals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
 	request.setAttribute("dismissalBean", dismissalBean);
-	
+
 	try {
 	    checkArguments(request, dismissalBean);
-	    
+
 	} catch (FenixActionException e) {
 	    return stepTwo(mapping, actionForm, request, response);
 	}
-	
-	
-	
-	if(dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
+
+	if (dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
 	    setCurriculumGroups(dismissalBean);
 	}
-	
+
 	return mapping.findForward("confirmCreateDismissals");
     }
-    
+
     private void setCurriculumGroups(DismissalBean dismissalBean) {
 	for (SelectedCurricularCourse selectedCurricularCourse : dismissalBean.getDismissals()) {
-	    Collection<? extends CurriculumGroup> curricularCoursePossibleGroups = dismissalBean.getStudentCurricularPlan().getCurricularCoursePossibleGroups(selectedCurricularCourse.getCurricularCourse());
-	    if(!curricularCoursePossibleGroups.isEmpty()) {
-		if(curricularCoursePossibleGroups.size() == 1) {
+	    Collection<? extends CurriculumGroup> curricularCoursePossibleGroups = dismissalBean.getStudentCurricularPlan()
+		    .getCurricularCoursePossibleGroups(selectedCurricularCourse.getCurricularCourse());
+	    if (!curricularCoursePossibleGroups.isEmpty()) {
+		if (curricularCoursePossibleGroups.size() == 1) {
 		    selectedCurricularCourse.setCurriculumGroup(curricularCoursePossibleGroups.iterator().next());
 		} else {
 		    for (CurriculumGroup curriculumGroup : curricularCoursePossibleGroups) {
-			if(!curriculumGroup.isNoCourseGroupCurriculumGroup()) {
+			if (!curriculumGroup.isNoCourseGroupCurriculumGroup()) {
 			    selectedCurricularCourse.setCurriculumGroup(curriculumGroup);
 			    break;
 			}
@@ -167,14 +168,12 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward stepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward stepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("dismissalBean", getRenderedObject());
 	return mapping.findForward("chooseDismissalEnrolments");
     }
-    
-    public ActionForward stepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward stepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("dismissalBean", getRenderedObject());
 	return mapping.findForward("chooseEquivalents");
     }
@@ -185,12 +184,11 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	return mapping.findForward("confirmCreateDismissals");
     }
 
-    public ActionForward createDismissals(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createDismissals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
-	
+
 	try {
 	    checkArguments(request, dismissalBean);
 	} catch (FenixActionException e) {
@@ -206,37 +204,37 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
 	return manage(mapping, form, request, response);
     }
-    
+
     protected String getServiceName() {
 	return "";
     }
 
     public ActionForward deleteCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	
+
 	String[] creditsIDs = ((DynaActionForm) form).getStrings("creditsToDelete");
 	final StudentCurricularPlan studentCurricularPlan = getSCP(request);
-	
+
 	try {
 	    executeService(request, "DeleteCredits", new Object[] { studentCurricularPlan, creditsIDs });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
-	
+
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 	return mapping.findForward("manage");
     }
-    
-    public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("registrationId", getSCP(request).getRegistration().getIdInternal().toString());
 	return mapping.findForward("visualizeRegistration");
     }
-    
-    public ActionForward prepareChooseNotNeedToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward prepareChooseNotNeedToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("dismissalBean", getRenderedObject());
 	return mapping.findForward("chooseNotNeedToEnrol");
     }
 
-    
-    
 }

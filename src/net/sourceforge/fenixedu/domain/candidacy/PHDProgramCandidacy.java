@@ -17,22 +17,22 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
     static {
 	stateMap = new HashMap<String, Set<String>>();
-	
+
 	Set<String> standBy = new HashSet<String>();
 	standBy.add(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString());
 	standBy.add(CandidacySituationType.CANCELLED.toString());
-	stateMap.put(CandidacySituationType.STAND_BY.toString(),standBy);
+	stateMap.put(CandidacySituationType.STAND_BY.toString(), standBy);
 
 	Set<String> standByConfirmedData = new HashSet<String>();
 	standByConfirmedData.add(CandidacySituationType.ADMITTED.toString());
 	standByConfirmedData.add(CandidacySituationType.CANCELLED.toString());
 	stateMap.put(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString(), standByConfirmedData);
-	
+
 	Set<String> admitted = new HashSet<String>();
 	admitted.add(CandidacySituationType.REGISTERED.toString());
 	admitted.add(CandidacySituationType.CANCELLED.toString());
 	stateMap.put(CandidacySituationType.ADMITTED.toString(), admitted);
-	
+
 	stateMap.put(CandidacySituationType.REGISTERED.toString(), new HashSet<String>());
 
     }
@@ -42,15 +42,17 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 	init(person, executionDegree);
 	new StandByCandidacySituation(this);
 
-	//final AdministrativeOffice administrativeOffice = AdministrativeOffice
-	//	.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-	//new PhDCandidacyEvent(administrativeOffice, person, this);
+	// final AdministrativeOffice administrativeOffice =
+	// AdministrativeOffice
+	//.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE
+	// );
+	// new PhDCandidacyEvent(administrativeOffice, person, this);
     }
 
     @Override
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale())
-		.getString("label.phdProgramCandidacy")
+	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
+		"label.phdProgramCandidacy")
 		+ " - "
 		+ getExecutionDegree().getDegreeCurricularPlan().getName()
 		+ " - "
@@ -69,7 +71,7 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
     @Override
     public String getDefaultState() {
 	switch (getActiveCandidacySituation().getCandidacySituationType()) {
-	case STAND_BY: 
+	case STAND_BY:
 	    return CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString();
 	case STAND_BY_CONFIRMED_DATA:
 	    return CandidacySituationType.ADMITTED.toString();

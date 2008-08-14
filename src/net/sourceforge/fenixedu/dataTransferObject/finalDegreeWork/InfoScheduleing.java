@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class InfoScheduleing extends InfoObject {
 
@@ -45,32 +45,32 @@ public class InfoScheduleing extends InfoObject {
 
     /* Construtores */
     public InfoScheduleing() {
-        super();
+	super();
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoScheduleing) {
-            InfoScheduleing proposal = (InfoScheduleing) obj;
+	boolean result = false;
+	if (obj instanceof InfoScheduleing) {
+	    InfoScheduleing proposal = (InfoScheduleing) obj;
 
-            result = getExecutionDegree().equals(proposal.getExecutionDegree());
-        }
-        return result;
+	    result = getExecutionDegree().equals(proposal.getExecutionDegree());
+	}
+	return result;
     }
 
     public String toString() {
-        String result = "[InfoScheduleing";
-        result += ", idInternal=" + getIdInternal();
-        result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
-        result += "]";
-        return result;
+	String result = "[InfoScheduleing";
+	result += ", idInternal=" + getIdInternal();
+	result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
+	result += "]";
+	return result;
     }
 
     /**
      * @return Returns the endOfProposalPeriod.
      */
     public Date getEndOfProposalPeriod() {
-        return endOfProposalPeriod;
+	return endOfProposalPeriod;
     }
 
     /**
@@ -78,14 +78,14 @@ public class InfoScheduleing extends InfoObject {
      *            The endOfProposalPeriod to set.
      */
     public void setEndOfProposalPeriod(Date endOfProposalPeriod) {
-        this.endOfProposalPeriod = endOfProposalPeriod;
+	this.endOfProposalPeriod = endOfProposalPeriod;
     }
 
     /**
      * @return Returns the executionDegree.
      */
     public InfoExecutionDegree getExecutionDegree() {
-        return executionDegree;
+	return executionDegree;
     }
 
     /**
@@ -93,14 +93,14 @@ public class InfoScheduleing extends InfoObject {
      *            The executionDegree to set.
      */
     public void setExecutionDegree(InfoExecutionDegree executionDegree) {
-        this.executionDegree = executionDegree;
+	this.executionDegree = executionDegree;
     }
 
     /**
      * @return Returns the startOfProposalPeriod.
      */
     public Date getStartOfProposalPeriod() {
-        return startOfProposalPeriod;
+	return startOfProposalPeriod;
     }
 
     /**
@@ -108,14 +108,14 @@ public class InfoScheduleing extends InfoObject {
      *            The startOfProposalPeriod to set.
      */
     public void setStartOfProposalPeriod(Date startOfProposalPeriod) {
-        this.startOfProposalPeriod = startOfProposalPeriod;
+	this.startOfProposalPeriod = startOfProposalPeriod;
     }
 
     /**
      * @return Returns the startOfCandidacyPeriod.
      */
     public Date getStartOfCandidacyPeriod() {
-        return startOfCandidacyPeriod;
+	return startOfCandidacyPeriod;
     }
 
     /**
@@ -123,14 +123,14 @@ public class InfoScheduleing extends InfoObject {
      *            The startOfCandidacyPeriod to set.
      */
     public void setStartOfCandidacyPeriod(Date startOfCandidacyPeriod) {
-        this.startOfCandidacyPeriod = startOfCandidacyPeriod;
+	this.startOfCandidacyPeriod = startOfCandidacyPeriod;
     }
 
     /**
      * @return Returns the endOfCandidacyPeriod.
      */
     public Date getEndOfCandidacyPeriod() {
-        return endOfCandidacyPeriod;
+	return endOfCandidacyPeriod;
     }
 
     /**
@@ -138,14 +138,14 @@ public class InfoScheduleing extends InfoObject {
      *            The endOfCandidacyPeriod to set.
      */
     public void setEndOfCandidacyPeriod(Date endOfCandidacyPeriod) {
-        this.endOfCandidacyPeriod = endOfCandidacyPeriod;
+	this.endOfCandidacyPeriod = endOfCandidacyPeriod;
     }
 
     /**
      * @return Returns the minimumNumberOfCompletedCourses.
      */
     public Integer getMinimumNumberOfCompletedCourses() {
-        return minimumNumberOfCompletedCourses;
+	return minimumNumberOfCompletedCourses;
     }
 
     /**
@@ -153,14 +153,14 @@ public class InfoScheduleing extends InfoObject {
      *            The minimumNumberOfCompletedCourses to set.
      */
     public void setMinimumNumberOfCompletedCourses(Integer minimumNumberOfCompletedCourses) {
-        this.minimumNumberOfCompletedCourses = minimumNumberOfCompletedCourses;
+	this.minimumNumberOfCompletedCourses = minimumNumberOfCompletedCourses;
     }
 
     /**
      * @return Returns the maximumNumberOfStudents.
      */
     public Integer getMaximumNumberOfStudents() {
-        return maximumNumberOfStudents;
+	return maximumNumberOfStudents;
     }
 
     /**
@@ -168,14 +168,14 @@ public class InfoScheduleing extends InfoObject {
      *            The maximumNumberOfStudents to set.
      */
     public void setMaximumNumberOfStudents(Integer maximumNumberOfStudents) {
-        this.maximumNumberOfStudents = maximumNumberOfStudents;
+	this.maximumNumberOfStudents = maximumNumberOfStudents;
     }
 
     /**
      * @return Returns the minimumNumberOfStudents.
      */
     public Integer getMinimumNumberOfStudents() {
-        return minimumNumberOfStudents;
+	return minimumNumberOfStudents;
     }
 
     /**
@@ -183,65 +183,61 @@ public class InfoScheduleing extends InfoObject {
      *            The minimumNumberOfStudents to set.
      */
     public void setMinimumNumberOfStudents(Integer minimumNumberOfStudents) {
-        this.minimumNumberOfStudents = minimumNumberOfStudents;
+	this.minimumNumberOfStudents = minimumNumberOfStudents;
     }
 
     /**
      * @return Returns the maximumNumberOfProposalCandidaciesPerGroup.
      */
     public Integer getMaximumNumberOfProposalCandidaciesPerGroup() {
-        return maximumNumberOfProposalCandidaciesPerGroup;
+	return maximumNumberOfProposalCandidaciesPerGroup;
     }
 
     /**
      * @param maximumNumberOfProposalCandidaciesPerGroup
      *            The maximumNumberOfProposalCandidaciesPerGroup to set.
      */
-    public void setMaximumNumberOfProposalCandidaciesPerGroup(
-            Integer maximumNumberOfProposalCandidaciesPerGroup) {
-        this.maximumNumberOfProposalCandidaciesPerGroup = maximumNumberOfProposalCandidaciesPerGroup;
+    public void setMaximumNumberOfProposalCandidaciesPerGroup(Integer maximumNumberOfProposalCandidaciesPerGroup) {
+	this.maximumNumberOfProposalCandidaciesPerGroup = maximumNumberOfProposalCandidaciesPerGroup;
     }
 
-	public Boolean getAttributionByTeachers() {
-		return attributionByTeachers;
-	}
+    public Boolean getAttributionByTeachers() {
+	return attributionByTeachers;
+    }
 
-	public void setAttributionByTeachers(Boolean attributionByTeachers) {
-		this.attributionByTeachers = attributionByTeachers;
-	}
+    public void setAttributionByTeachers(Boolean attributionByTeachers) {
+	this.attributionByTeachers = attributionByTeachers;
+    }
 
-	public Integer getMaximumCurricularYearToCountCompletedCourses() {
-		return maximumCurricularYearToCountCompletedCourses;
-	}
+    public Integer getMaximumCurricularYearToCountCompletedCourses() {
+	return maximumCurricularYearToCountCompletedCourses;
+    }
 
-	public void setMaximumCurricularYearToCountCompletedCourses(
-			Integer maximumCurricularYearToCountCompletedCourses) {
-		this.maximumCurricularYearToCountCompletedCourses = maximumCurricularYearToCountCompletedCourses;
-	}
+    public void setMaximumCurricularYearToCountCompletedCourses(Integer maximumCurricularYearToCountCompletedCourses) {
+	this.maximumCurricularYearToCountCompletedCourses = maximumCurricularYearToCountCompletedCourses;
+    }
 
-	public Integer getMinimumCompletedCurricularYear() {
-		return minimumCompletedCurricularYear;
-	}
+    public Integer getMinimumCompletedCurricularYear() {
+	return minimumCompletedCurricularYear;
+    }
 
-	public void setMinimumCompletedCurricularYear(
-			Integer minimumCompletedCurricularYear) {
-		this.minimumCompletedCurricularYear = minimumCompletedCurricularYear;
-	}
+    public void setMinimumCompletedCurricularYear(Integer minimumCompletedCurricularYear) {
+	this.minimumCompletedCurricularYear = minimumCompletedCurricularYear;
+    }
 
-	public Boolean getAllowSimultaneousCoorientationAndCompanion() {
-	    return allowSimultaneousCoorientationAndCompanion;
-	}
+    public Boolean getAllowSimultaneousCoorientationAndCompanion() {
+	return allowSimultaneousCoorientationAndCompanion;
+    }
 
-	public void setAllowSimultaneousCoorientationAndCompanion(
-		Boolean allowSimultaneousCoorientationAndCompanion) {
-	    this.allowSimultaneousCoorientationAndCompanion = allowSimultaneousCoorientationAndCompanion;
-	}
+    public void setAllowSimultaneousCoorientationAndCompanion(Boolean allowSimultaneousCoorientationAndCompanion) {
+	this.allowSimultaneousCoorientationAndCompanion = allowSimultaneousCoorientationAndCompanion;
+    }
 
-	public Integer getMinimumCompletedCreditsSecondCycle() {
-	    return minimumCompletedCreditsSecondCycle;
-	}
+    public Integer getMinimumCompletedCreditsSecondCycle() {
+	return minimumCompletedCreditsSecondCycle;
+    }
 
-	public void setMinimumCompletedCreditsSecondCycle(Integer minimumCompletedCreditsSecondCycle) {
-	    this.minimumCompletedCreditsSecondCycle = minimumCompletedCreditsSecondCycle;
-	}
+    public void setMinimumCompletedCreditsSecondCycle(Integer minimumCompletedCreditsSecondCycle) {
+	this.minimumCompletedCreditsSecondCycle = minimumCompletedCreditsSecondCycle;
+    }
 }

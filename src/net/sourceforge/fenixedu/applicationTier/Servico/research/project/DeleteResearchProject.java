@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteResearchProject extends Service {
 
     public void run(Integer oid) throws FenixServiceException {
-        Project project = rootDomainObject.readProjectByOID(oid);
-        if(project == null){
-            throw new FenixServiceException();
-        }
-        project.delete();        
+	Project project = rootDomainObject.readProjectByOID(oid);
+	if (project == null) {
+	    throw new FenixServiceException();
+	}
+	project.delete();
     }
 }

@@ -38,21 +38,21 @@ public class ConvokeManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	String writtenEvaluationId = request.getParameter("writtenEvaluationId");
-	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(
-		WrittenEvaluation.class, Integer.valueOf(writtenEvaluationId));
+	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+		Integer.valueOf(writtenEvaluationId));
 
 	request.setAttribute("writtenEvaluation", writtenEvaluation);
 	return mapping.findForward("showReport");
     }
 
-    public ActionForward prepareEditConvoke(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	recoverBeanFromRequest(request);
 	return mapping.findForward("prepareEditConvoke");
     }
 
-    public ActionForward changeVisualizationOptions(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward changeVisualizationOptions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("options").getMetaObject().getObject();
 	VigilantGroup group = bean.getSelectedVigilantGroup();
@@ -61,8 +61,8 @@ public class ConvokeManagement extends FenixDispatchAction {
 	return mapping.findForward("prepareEditConvoke");
     }
 
-    private void editAttend(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    private void editAttend(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	String id = request.getParameter("oid");
 	Integer idInternal = Integer.valueOf(id);
 	String bool = request.getParameter("bool");
@@ -85,31 +85,30 @@ public class ConvokeManagement extends FenixDispatchAction {
 	return prepareEditConvoke(mapping, form, request, response);
     }
 
-
-    public ActionForward changeConvokeStatusInReport(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward changeConvokeStatusInReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	String id = request.getParameter("oid");
 	Integer idInternal = Integer.valueOf(id);
 	String participationType = request.getParameter("participationType");
 	AttendingStatus status = AttendingStatus.valueOf(participationType);
-	
+
 	Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
 	try {
 	    Object[] args = { vigilancy, status };
 	    executeService("ChangeConvokeStatus", args);
-	}catch(DomainException exception) {
+	} catch (DomainException exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
 
 	String writtenEvaluationId = request.getParameter("writtenEvaluationId");
-	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(
-		WrittenEvaluation.class, Integer.valueOf(writtenEvaluationId));
+	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+		Integer.valueOf(writtenEvaluationId));
 	request.setAttribute("writtenEvaluation", writtenEvaluation);
 	return mapping.findForward("showReport");
     }
-    
-    private void editActive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+
+    private void editActive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	String id = request.getParameter("oid");
 	Integer idInternal = Integer.valueOf(id);
 	String bool = request.getParameter("bool");
@@ -131,14 +130,14 @@ public class ConvokeManagement extends FenixDispatchAction {
 	editActive(mapping, form, request, response);
 	return prepareEditConvoke(mapping, form, request, response);
     }
-    
+
     public ActionForward convokeActiveEditInReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
+
 	editActive(mapping, form, request, response);
 	return showReport(mapping, form, request, response);
     }
-    
+
     public ActionForward prepareConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -159,11 +158,10 @@ public class ConvokeManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward generateConvokesSugestion(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward generateConvokesSugestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("selectEvaluation").getMetaObject()
-		.getObject();
+	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("selectEvaluation").getMetaObject().getObject();
 	VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
 	WrittenEvaluation evaluation = bean.getWrittenEvaluation();
 
@@ -187,13 +185,12 @@ public class ConvokeManagement extends FenixDispatchAction {
     public ActionForward createConvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("confirmConvokes").getMetaObject()
-		.getObject();
+	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("confirmConvokes").getMetaObject().getObject();
 	List<Vigilant> vigilantSugestion = bean.getVigilants();
 	WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
 
-	Object[] args = { vigilantSugestion, writtenEvaluation, bean.getSelectedVigilantGroup(),
-		bean.getExamCoordinator(), bean.getEmailMessage() };
+	Object[] args = { vigilantSugestion, writtenEvaluation, bean.getSelectedVigilantGroup(), bean.getExamCoordinator(),
+		bean.getEmailMessage() };
 	try {
 	    executeService(request, "CreateConvokes", args);
 	} catch (DomainException e) {
@@ -206,14 +203,13 @@ public class ConvokeManagement extends FenixDispatchAction {
     public ActionForward confirmConvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ConvokeBean beanWithTeachers = (ConvokeBean) RenderUtils.getViewState(
-		"selectVigilantsThatAreTeachers").getMetaObject().getObject();
+	ConvokeBean beanWithTeachers = (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreTeachers").getMetaObject()
+		.getObject();
 
-	ConvokeBean beanWithVigilants = (ConvokeBean) RenderUtils.getViewState("selectVigilants")
+	ConvokeBean beanWithVigilants = (ConvokeBean) RenderUtils.getViewState("selectVigilants").getMetaObject().getObject();
+
+	ConvokeBean beanWithUnavailables = (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreUnavailable")
 		.getMetaObject().getObject();
-
-	ConvokeBean beanWithUnavailables = (ConvokeBean) RenderUtils.getViewState(
-		"selectVigilantsThatAreUnavailable").getMetaObject().getObject();
 	List<Vigilant> teachers, vigilants, unavailables;
 
 	teachers = beanWithTeachers.getSelectedTeachers();
@@ -231,8 +227,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 	MessageFormat format = new MessageFormat(email);
 	WrittenEvaluation evaluation = beanWithVigilants.getWrittenEvaluation();
 	DateTime beginDate = evaluation.getBeginningDateTime();
-	String date = beginDate.getDayOfMonth() + "/" + beginDate.getMonthOfYear() + "/"
-		+ beginDate.getYear();
+	String date = beginDate.getDayOfMonth() + "/" + beginDate.getMonthOfYear() + "/" + beginDate.getYear();
 
 	String minutes = String.format("%02d", new Object[] { beginDate.getMinuteOfHour() });
 
@@ -251,17 +246,17 @@ public class ConvokeManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward selectVigilantGroup(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward selectVigilantGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return forwardBean(mapping, request, "selectGroup", "prepareGenerateConvokes");
     }
 
-    public ActionForward prepareAddMoreVigilants(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareAddMoreVigilants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	String writtenEvalatuionId = request.getParameter("writtenEvaluationId");
-	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(
-		WrittenEvaluation.class, Integer.valueOf(writtenEvalatuionId));
+	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+		Integer.valueOf(writtenEvalatuionId));
 
 	Person person = getLoggedPerson(request);
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
@@ -293,32 +288,31 @@ public class ConvokeManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward showConvokesByVigilants(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showConvokesByVigilants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	recoverBeanFromRequest(request);
 	return mapping.findForward("prepareEditConvoke");
     }
 
-    public ActionForward showConvokesByEvaluation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showConvokesByEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	recoverBeanFromRequest(request);
 	return mapping.findForward("prepareEditConvoke");
     }
 
-    public ActionForward exportVigilancyTable(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward exportVigilancyTable(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	recoverBeanFromRequest(request);
 	return mapping.findForward("export-table");
     }
-    
-    public ActionForward checkForIncompatibilities(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("selectVigilants").getMetaObject()
-		.getObject();
+    public ActionForward checkForIncompatibilities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("selectVigilants").getMetaObject().getObject();
 	List<Vigilant> vigilants = bean.getTeachersForAGivenCourse();
 	vigilants.addAll(bean.getVigilants());
 	List<Vigilant> incompatibleVigilants = new ArrayList<Vigilant>();
@@ -335,16 +329,15 @@ public class ConvokeManagement extends FenixDispatchAction {
 	return mapping.findForward("prepareGenerateConvokes");
     }
 
-    private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request)
-	    throws FenixFilterException, FenixServiceException {
+    private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request) throws FenixFilterException,
+	    FenixServiceException {
 	ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
 	Person person = getLoggedPerson(request);
 	ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(currentYear);
 	return coordinator;
     }
 
-    private ActionForward forwardBean(ActionMapping mapping, HttpServletRequest request,
-	    String viewStateName, String forwardTo) {
+    private ActionForward forwardBean(ActionMapping mapping, HttpServletRequest request, String viewStateName, String forwardTo) {
 	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState(viewStateName).getMetaObject().getObject();
 
 	RenderUtils.invalidateViewState(viewStateName);
@@ -352,8 +345,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 	return mapping.findForward(forwardTo);
     }
 
-    private void recoverBeanFromRequest(HttpServletRequest request) throws FenixFilterException,
-	    FenixServiceException {
+    private void recoverBeanFromRequest(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 	ConvokeBean bean = new ConvokeBean();
 	String vigilantGroup = request.getParameter("gid");
 	String incompatiblities = request.getParameter("showIncompatibilities");
@@ -364,27 +356,21 @@ public class ConvokeManagement extends FenixDispatchAction {
 	String notActiveConvokes = request.getParameter("showNotActiveConvokes");
 	String startPoints = request.getParameter("showStartPoints");
 	String pointsWeight = request.getParameter("showPointsWeight");
-	bean.setShowInformationByVigilant((whatToShow != null) ? whatToShow.equals("vigilants")
-		: Boolean.TRUE);
-	bean.setShowIncompatibilities((incompatiblities != null) ? Boolean.valueOf(incompatiblities)
-		: Boolean.FALSE);
+	bean.setShowInformationByVigilant((whatToShow != null) ? whatToShow.equals("vigilants") : Boolean.TRUE);
+	bean.setShowIncompatibilities((incompatiblities != null) ? Boolean.valueOf(incompatiblities) : Boolean.FALSE);
 	bean.setShowUnavailables((unavailables != null) ? Boolean.valueOf(unavailables) : Boolean.FALSE);
 	bean.setShowBoundsJustification((bounds != null) ? Boolean.valueOf(bounds) : Boolean.FALSE);
 	bean.setShowAllVigilancyInfo((convokeInfo != null) ? Boolean.valueOf(convokeInfo) : Boolean.FALSE);
-	bean.setShowNotActiveConvokes((notActiveConvokes != null) ? Boolean.valueOf(notActiveConvokes)
-		: Boolean.FALSE);
-	bean.setShowStartPoints((startPoints != null) ? Boolean.valueOf(startPoints)
-			: Boolean.FALSE);
-	bean.setShowPointsWeight((pointsWeight != null) ? Boolean.valueOf(pointsWeight)
-			: Boolean.FALSE);
+	bean.setShowNotActiveConvokes((notActiveConvokes != null) ? Boolean.valueOf(notActiveConvokes) : Boolean.FALSE);
+	bean.setShowStartPoints((startPoints != null) ? Boolean.valueOf(startPoints) : Boolean.FALSE);
+	bean.setShowPointsWeight((pointsWeight != null) ? Boolean.valueOf(pointsWeight) : Boolean.FALSE);
 	ExamCoordinator coordinator = getCoordinatorForCurrentYear(request);
 	bean.setExamCoordinator(coordinator);
 	bean.setVigilantGroups(coordinator.getVigilantGroups());
 
 	VigilantGroup group = null;
 	if (vigilantGroup != null) {
-	    group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer
-		    .valueOf(vigilantGroup));
+	    group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroup));
 	    bean.setSelectedVigilantGroup(group);
 	}
 
@@ -392,8 +378,8 @@ public class ConvokeManagement extends FenixDispatchAction {
 	request.setAttribute("bean", bean);
     }
 
-    private void putInformationOnRequest(HttpServletRequest request, boolean showVigilants)
-	    throws FenixFilterException, FenixServiceException {
+    private void putInformationOnRequest(HttpServletRequest request, boolean showVigilants) throws FenixFilterException,
+	    FenixServiceException {
 
 	ExamCoordinator coordinator = getCoordinatorForCurrentYear(request);
 
@@ -403,14 +389,13 @@ public class ConvokeManagement extends FenixDispatchAction {
 	    List<WrittenEvaluation> writtenEvaluations = new ArrayList<WrittenEvaluation>();
 	    writtenEvaluations.addAll(coordinator.getAssociatedWrittenEvaluations());
 
-	    Collections.sort(writtenEvaluations, new ReverseComparator(
-		    WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE));
+	    Collections.sort(writtenEvaluations, new ReverseComparator(WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE));
 	    request.setAttribute("writtenEvaluations", writtenEvaluations);
 	}
     }
 
-    private void putInformationOnRequest(HttpServletRequest request, VigilantGroup group,
-	    boolean showVigilants) throws FenixFilterException, FenixServiceException {
+    private void putInformationOnRequest(HttpServletRequest request, VigilantGroup group, boolean showVigilants)
+	    throws FenixFilterException, FenixServiceException {
 	if (group == null) {
 	    putInformationOnRequest(request, showVigilants);
 	} else {
@@ -420,8 +405,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 		List<WrittenEvaluation> writtenEvaluations = new ArrayList<WrittenEvaluation>();
 		writtenEvaluations.addAll(group.getAllAssociatedWrittenEvaluations());
 
-		Collections.sort(writtenEvaluations, new ReverseComparator(
-			WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE));
+		Collections.sort(writtenEvaluations, new ReverseComparator(WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE));
 		request.setAttribute("writtenEvaluations", writtenEvaluations);
 	    }
 	}

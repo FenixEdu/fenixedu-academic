@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class DeleteExternalUnit extends Service {
-    
+
     public void run(final Unit externalUnit) throws FenixServiceException {
 	if (externalUnit.isOfficialExternal()) {
 	    externalUnit.delete();

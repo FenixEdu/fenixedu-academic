@@ -13,31 +13,27 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
 
     @Override
-    protected void createEnrollment(StudentCurricularPlan studentCurricularPlan,
-	    CurricularCourse curricularCourse, ExecutionSemester executionSemester,
-	    CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView) {
-	final Enrolment enrollment = studentCurricularPlan
-		.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionSemester);
+    protected void createEnrollment(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
+	    ExecutionSemester executionSemester, CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass,
+	    IUserView userView) {
+	final Enrolment enrollment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
+		executionSemester);
 
 	if (enrollment == null) {
 
-	    if (enrollmentClass == null || enrollmentClass.intValue() == 0
-		    || enrollmentClass.intValue() == 1) {
+	    if (enrollmentClass == null || enrollmentClass.intValue() == 0 || enrollmentClass.intValue() == 1) {
 
-		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
-			executionSemester, getEnrollmentCondition(enrollmentType), userView
-				.getUtilizador());
+		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse, executionSemester,
+			getEnrollmentCondition(enrollmentType), userView.getUtilizador());
 
 	    } else if (enrollmentClass.intValue() == 2) {
 
-		new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, studentCurricularPlan
-			.getRoot(), curricularCourse, executionSemester,
-			getEnrollmentCondition(enrollmentType), userView.getUtilizador());
+		new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
+			executionSemester, getEnrollmentCondition(enrollmentType), userView.getUtilizador());
 
 	    } else {
-		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
-			executionSemester, getEnrollmentCondition(enrollmentType), userView
-				.getUtilizador()).markAsExtraCurricular();
+		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse, executionSemester,
+			getEnrollmentCondition(enrollmentType), userView.getUtilizador()).markAsExtraCurricular();
 	    }
 
 	} else {

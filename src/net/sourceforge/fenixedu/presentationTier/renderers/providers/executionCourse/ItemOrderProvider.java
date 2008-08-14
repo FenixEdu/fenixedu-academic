@@ -10,10 +10,10 @@ public class ItemOrderProvider extends ItemProvider {
 
     @Override
     public Object provideForContext(Section section, Item self) {
-        Collection<Item> siblings = new ArrayList<Item>(section.getOrderedItems());
-        siblings.remove(self);
-        
-        return siblings;
+	Collection<Item> siblings = new ArrayList<Item>(section.getOrderedItems());
+	siblings.remove(self);
+
+	return siblings;
     }
 
 }

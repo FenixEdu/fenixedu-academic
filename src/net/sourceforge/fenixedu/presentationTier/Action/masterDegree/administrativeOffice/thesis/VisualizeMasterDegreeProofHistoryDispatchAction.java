@@ -27,11 +27,9 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
     public ActionForward getStudentAndMasterDegreeProofVersion(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request,
-		new ActionErrors());
+	new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request, new ActionErrors());
 
-	Integer masterDegreeProofVersionID = Integer.valueOf(request
-		.getParameter("masterDegreeProofVersionID"));
+	Integer masterDegreeProofVersionID = Integer.valueOf(request.getParameter("masterDegreeProofVersionID"));
 	MasterDegreeProofVersion masterDegreeProofVersion = rootDomainObject
 		.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
 
@@ -39,8 +37,7 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
 	    request.setAttribute(SessionConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
 
 	if (masterDegreeProofVersion.getExternalJuries().isEmpty() == false) {
-	    request.setAttribute(SessionConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion
-		    .getExternalJuries());
+	    request.setAttribute(SessionConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
 	}
 
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -54,8 +51,7 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
 	}
 
 	if (masterDegreeProofVersion.getThesisDeliveryDate() != null) {
-	    thesisDeliveryDate = simpleDateFormat.format(masterDegreeProofVersion
-		    .getThesisDeliveryDate());
+	    thesisDeliveryDate = simpleDateFormat.format(masterDegreeProofVersion.getThesisDeliveryDate());
 	    request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
 
 	}
@@ -64,13 +60,10 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
 	simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
 	String formattedLastModification = simpleDateFormat.format(lastModification);
 
-	request.setAttribute(SessionConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult()
-		.name());
-	request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion
-		.getAttachedCopiesNumber());
+	request.setAttribute(SessionConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
+	request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
 
-	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion
-		.getResponsibleEmployee());
+	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
 	request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
 
 	return mapping.findForward("start");

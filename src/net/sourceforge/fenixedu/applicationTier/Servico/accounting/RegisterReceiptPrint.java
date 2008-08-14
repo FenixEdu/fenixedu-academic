@@ -8,6 +8,6 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 public class RegisterReceiptPrint extends Service {
 
     public void run(final Receipt receipt, final Employee employee) throws FenixServiceException {
-        receipt.registerReceiptPrint(employee);
+	receipt.registerReceiptPrint(employee);
     }
 }

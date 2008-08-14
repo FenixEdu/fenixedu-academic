@@ -38,15 +38,13 @@ public class SearchEmployeeAssiduousness extends Service implements AutoComplete
 	    outter: for (Assiduousness assiduousness : allAssiduousnesses) {
 		if (isValidCondition(assiduousness)) {
 		    try {
-			Object objectValue = (Object) PropertyUtils.getProperty(assiduousness
-				.getEmployee(), slotName);
+			Object objectValue = (Object) PropertyUtils.getProperty(assiduousness.getEmployee(), slotName);
 
 			if (objectValue == null) {
 			    continue;
 			}
 
-			String normalizedValue = StringNormalizer.normalize(objectValue.toString())
-				.toLowerCase();
+			String normalizedValue = StringNormalizer.normalize(objectValue.toString()).toLowerCase();
 
 			for (int i = 0; i < values.length; i++) {
 			    String part = values[i];

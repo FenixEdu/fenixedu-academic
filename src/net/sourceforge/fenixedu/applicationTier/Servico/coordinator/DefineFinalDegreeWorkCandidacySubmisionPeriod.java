@@ -17,24 +17,23 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DefineFinalDegreeWorkCandidacySubmisionPeriod extends Service {
 
-    public void run(Integer executionDegreeOID, Date startOfCandidacyPeriod, Date endOfCandidacyPeriod)
-            {
+    public void run(Integer executionDegreeOID, Date startOfCandidacyPeriod, Date endOfCandidacyPeriod) {
 
-        if (executionDegreeOID != null && startOfCandidacyPeriod != null && endOfCandidacyPeriod != null) {
-            ExecutionDegree cursoExecucao = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+	if (executionDegreeOID != null && startOfCandidacyPeriod != null && endOfCandidacyPeriod != null) {
+	    ExecutionDegree cursoExecucao = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
-            if (cursoExecucao != null) {
-                Scheduleing scheduleing = cursoExecucao.getScheduling();
-                if (scheduleing == null) {
-                    scheduleing = new Scheduleing();
-                    scheduleing.setCurrentProposalNumber(Integer.valueOf(1));
-                }
+	    if (cursoExecucao != null) {
+		Scheduleing scheduleing = cursoExecucao.getScheduling();
+		if (scheduleing == null) {
+		    scheduleing = new Scheduleing();
+		    scheduleing.setCurrentProposalNumber(Integer.valueOf(1));
+		}
 
-                scheduleing.addExecutionDegrees(cursoExecucao);
-                scheduleing.setStartOfCandidacyPeriod(startOfCandidacyPeriod);
-                scheduleing.setEndOfCandidacyPeriod(endOfCandidacyPeriod);
-            }
-        }
+		scheduleing.addExecutionDegrees(cursoExecucao);
+		scheduleing.setStartOfCandidacyPeriod(startOfCandidacyPeriod);
+		scheduleing.setEndOfCandidacyPeriod(endOfCandidacyPeriod);
+	    }
+	}
     }
 
 }

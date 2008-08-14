@@ -22,25 +22,25 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 5/Ago/2003, 19:44:39
+ *         Created at 5/Ago/2003, 19:44:39
  * 
  */
 public class GetCandidaciesByStudentID extends Service {
 
-	public List run(final Person person) throws BDException{
-		final List candidaciesInfo = new LinkedList();
+    public List run(final Person person) throws BDException {
+	final List candidaciesInfo = new LinkedList();
 
-		final Student student = person.getStudent();
-		for (final Registration registration : student.getRegistrationsSet()) {
-		    for (final SeminaryCandidacy seminaryCandidacy : registration.getAssociatedCandidanciesSet()) {
-			final InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(seminaryCandidacy);
-			final Seminary seminary = seminaryCandidacy.getSeminary();
-			infoCandidacy.setSeminaryName(seminary.getName());
-			candidaciesInfo.add(infoCandidacy);
-		    }
-		}
-
-		return candidaciesInfo;
+	final Student student = person.getStudent();
+	for (final Registration registration : student.getRegistrationsSet()) {
+	    for (final SeminaryCandidacy seminaryCandidacy : registration.getAssociatedCandidanciesSet()) {
+		final InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(seminaryCandidacy);
+		final Seminary seminary = seminaryCandidacy.getSeminary();
+		infoCandidacy.setSeminaryName(seminary.getName());
+		candidaciesInfo.add(infoCandidacy);
+	    }
 	}
+
+	return candidaciesInfo;
+    }
 
 }

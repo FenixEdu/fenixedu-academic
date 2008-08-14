@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs;
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class SibsPaymentFileConstants {
 
@@ -51,8 +51,8 @@ public class SibsPaymentFileConstants {
     // Codes for each entry in file
     public static final int HEADER_RECORD_CODE = 0;
 
-    //NOTE: This is the code actually used by SIBS.
-    //The number provided by SIBS user manual its not up-to-date
+    // NOTE: This is the code actually used by SIBS.
+    // The number provided by SIBS user manual its not up-to-date
     public static final int DETAIL_RECORD_CODE = 2;
 
     public static final int FOOTER_RECORD_CODE = 9;

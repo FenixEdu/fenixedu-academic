@@ -35,164 +35,164 @@ public class SubQuestion {
     private Integer optionNumber;
 
     public String getItemId() {
-        return itemId;
+	return itemId;
     }
 
     public void setItemId(String itemId) {
-        this.itemId = itemId;
+	this.itemId = itemId;
     }
 
     public String getNextItemId() {
-        return nextItemId;
+	return nextItemId;
     }
 
     public void setNextItemId(String nextItemId) {
-        this.nextItemId = nextItemId;
+	this.nextItemId = nextItemId;
     }
 
     public String getTitle() {
-        return title;
+	return title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+	this.title = title;
     }
 
     public List<QuestionOption> getOptions() {
-        return options;
+	return options;
     }
 
     public void setOptions(List<QuestionOption> options) {
-        this.options = options;
+	this.options = options;
     }
 
     public List<LabelValueBean> getPrePresentation() {
-        return prePresentation;
+	return prePresentation;
     }
 
     public void setPrePresentation(List<LabelValueBean> prePresentation) {
-        this.prePresentation = prePresentation;
+	this.prePresentation = prePresentation;
     }
 
     public List<LabelValueBean> getPresentation() {
-        return presentation;
+	return presentation;
     }
 
     public void setPresentation(List<LabelValueBean> presentation) {
-        this.presentation = presentation;
+	this.presentation = presentation;
     }
 
     public QuestionType getQuestionType() {
-        return questionType;
+	return questionType;
     }
 
     public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
+	this.questionType = questionType;
     }
 
     public Double getQuestionValue() {
-        return questionValue;
+	return questionValue;
     }
 
     public void setQuestionValue(Double questionValue) {
-        this.questionValue = questionValue;
+	this.questionValue = questionValue;
     }
 
     public List<ResponseProcessing> getResponseProcessingInstructions() {
-        return responseProcessingInstructions;
+	return responseProcessingInstructions;
     }
 
     public void setResponseProcessingInstructions(List<ResponseProcessing> responseProcessingInstructions) {
-        this.responseProcessingInstructions = responseProcessingInstructions;
+	this.responseProcessingInstructions = responseProcessingInstructions;
     }
 
     public String[] getShuffle() {
-        return shuffle;
+	return shuffle;
     }
 
     public void setShuffle(String[] shuffle) {
-        this.shuffle = shuffle;
+	this.shuffle = shuffle;
     }
 
     public Integer getOptionNumber() {
-        return optionNumber;
+	return optionNumber;
     }
 
     public void setOptionNumber(Integer optionNumber) {
-        this.optionNumber = optionNumber;
+	this.optionNumber = optionNumber;
     }
 
     public String getShuffleString() {
-        StringBuffer result = new StringBuffer();
-        result.append("[");
-        for (int i = 0; i < getShuffle().length; i++) {
-            result.append(getShuffle()[i]);
-            if (i != getShuffle().length - 1) {
-                result.append(",");
-            }
-        }
-        result.append("]");
-        return result.toString();
+	StringBuffer result = new StringBuffer();
+	result.append("[");
+	for (int i = 0; i < getShuffle().length; i++) {
+	    result.append(getShuffle()[i]);
+	    if (i != getShuffle().length - 1) {
+		result.append(",");
+	    }
+	}
+	result.append("]");
+	return result.toString();
     }
 
     public List<SubQuestion> getSubQuestions() {
-        return subQuestions;
+	return subQuestions;
     }
 
     public void setSubQuestions(List<SubQuestion> subQuestions) {
-        this.subQuestions = subQuestions;
+	this.subQuestions = subQuestions;
     }
 
     public String getImage(int imageId) {
-        int imageIdAux = 1;
-        for (LabelValueBean lvb : getPrePresentation()) {
-            if (lvb.getLabel().startsWith("image/")) {
-                if (imageIdAux == imageId) {
-                    return lvb.getValue();
-                }
-                imageIdAux++;
-            }
-        }
-        for (LabelValueBean lvb : getPresentation()) {
-            if (lvb.getLabel().startsWith("image/")) {
-                if (imageIdAux == imageId) {
-                    return lvb.getValue();
-                }
-                imageIdAux++;
-            }
-        }
-        for (QuestionOption qo : getOptions()) {
-            for (LabelValueBean lvb : qo.getOptionContent()) {
-                if (lvb.getLabel().startsWith("image/")) {
-                    if (imageIdAux == imageId) {
-                        return lvb.getValue();
-                    }
-                    imageIdAux++;
-                }
-            }
-        }
-        for (ResponseProcessing responseProcessing : getResponseProcessingInstructions()) {
-            for (LabelValueBean lvb : responseProcessing.getFeedback()) {
-                if (lvb.getLabel().startsWith("image/")) {
-                    if (imageIdAux == imageId) {
-                        return lvb.getValue();
-                    }
-                    imageIdAux++;
-                }
-            }
-        }
-        return null;
+	int imageIdAux = 1;
+	for (LabelValueBean lvb : getPrePresentation()) {
+	    if (lvb.getLabel().startsWith("image/")) {
+		if (imageIdAux == imageId) {
+		    return lvb.getValue();
+		}
+		imageIdAux++;
+	    }
+	}
+	for (LabelValueBean lvb : getPresentation()) {
+	    if (lvb.getLabel().startsWith("image/")) {
+		if (imageIdAux == imageId) {
+		    return lvb.getValue();
+		}
+		imageIdAux++;
+	    }
+	}
+	for (QuestionOption qo : getOptions()) {
+	    for (LabelValueBean lvb : qo.getOptionContent()) {
+		if (lvb.getLabel().startsWith("image/")) {
+		    if (imageIdAux == imageId) {
+			return lvb.getValue();
+		    }
+		    imageIdAux++;
+		}
+	    }
+	}
+	for (ResponseProcessing responseProcessing : getResponseProcessingInstructions()) {
+	    for (LabelValueBean lvb : responseProcessing.getFeedback()) {
+		if (lvb.getLabel().startsWith("image/")) {
+		    if (imageIdAux == imageId) {
+			return lvb.getValue();
+		    }
+		    imageIdAux++;
+		}
+	    }
+	}
+	return null;
     }
 
     public Double getMaxValue() {
-        Double maxValue = new Double(0);
-        for (ResponseProcessing responseProcessing : getResponseProcessingInstructions()) {
-            if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
-                    || responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
-                if (maxValue.compareTo(responseProcessing.getResponseValue()) < 0)
-                    maxValue = responseProcessing.getResponseValue();
-        }
-        return maxValue;
+	Double maxValue = new Double(0);
+	for (ResponseProcessing responseProcessing : getResponseProcessingInstructions()) {
+	    if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
+		    || responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
+		if (maxValue.compareTo(responseProcessing.getResponseValue()) < 0)
+		    maxValue = responseProcessing.getResponseValue();
+	}
+	return maxValue;
     }
 
 }

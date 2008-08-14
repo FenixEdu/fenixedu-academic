@@ -12,20 +12,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class BuildingProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {	
-	
+    public Object provide(Object source, Object currentValue) {
+
 	Set<Building> result = new HashSet<Building>();
 	FindSpacesBean bean = (FindSpacesBean) source;
 	Campus campus = bean.getCampus();
-	
-	if(campus != null) {
-	    return campus.getActiveContainedSpacesByType(Building.class);	    
-	}	
-	
+
+	if (campus != null) {
+	    return campus.getActiveContainedSpacesByType(Building.class);
+	}
+
 	return result;
     }
 
-    public Converter getConverter() {	
+    public Converter getConverter() {
 	return new DomainObjectKeyConverter();
     }
 }

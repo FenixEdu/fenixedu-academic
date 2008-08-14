@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.util.State;
 /**
  * 
  * 
- * This class contains all the information regarding a Reimbursement Guide. <br/>
+ * This class contains all the information regarding a Reimbursement Guide.
+ * <br/>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  * 
@@ -40,91 +41,91 @@ public class InfoReimbursementGuideSituation extends InfoObject {
      * @return
      */
     public InfoEmployee getInfoEmployee() {
-        return infoEmployee;
+	return infoEmployee;
     }
 
     /**
      * @param infoEmployee
      */
     public void setInfoEmployee(InfoEmployee infoEmployee) {
-        this.infoEmployee = infoEmployee;
+	this.infoEmployee = infoEmployee;
     }
 
     /**
      * @return
      */
     public InfoReimbursementGuide getInfoReimbursementGuide() {
-        return infoReimbursementGuide;
+	return infoReimbursementGuide;
     }
 
     /**
      * @param infoReimbursementGuide
      */
     public void setInfoReimbursementGuide(InfoReimbursementGuide infoReimbursementGuide) {
-        this.infoReimbursementGuide = infoReimbursementGuide;
+	this.infoReimbursementGuide = infoReimbursementGuide;
     }
 
     /**
      * @return
      */
     public Calendar getModificationDate() {
-        return modificationDate;
+	return modificationDate;
     }
 
     /**
      * @param modificationDate
      */
     public void setModificationDate(Calendar modificationDate) {
-        this.modificationDate = modificationDate;
+	this.modificationDate = modificationDate;
     }
 
     /**
      * @return
      */
     public ReimbursementGuideState getReimbursementGuideState() {
-        return reimbursementGuideState;
+	return reimbursementGuideState;
     }
 
     /**
      * @param reimbursementGuideState
      */
     public void setReimbursementGuideState(ReimbursementGuideState reimbursementGuideState) {
-        this.reimbursementGuideState = reimbursementGuideState;
+	this.reimbursementGuideState = reimbursementGuideState;
     }
 
     /**
      * @return
      */
     public String getRemarks() {
-        return remarks;
+	return remarks;
     }
 
     /**
      * @param remarks
      */
     public void setRemarks(String remarks) {
-        this.remarks = remarks;
+	this.remarks = remarks;
     }
 
     /**
      * @return
      */
     public State getState() {
-        return state;
+	return state;
     }
 
     /**
      * @param state
      */
     public void setState(State state) {
-        this.state = state;
+	this.state = state;
     }
 
     /**
      * @return Returns the officialDate.
      */
     public Calendar getOfficialDate() {
-        return officialDate;
+	return officialDate;
     }
 
     /**
@@ -132,33 +133,32 @@ public class InfoReimbursementGuideSituation extends InfoObject {
      *            The officialDate to set.
      */
     public void setOfficialDate(Calendar officialDate) {
-        this.officialDate = officialDate;
+	this.officialDate = officialDate;
     }
 
     public void copyFromDomain(ReimbursementGuideSituation reimbursementGuideSituation) {
-        super.copyFromDomain(reimbursementGuideSituation);
-        if (reimbursementGuideSituation != null) {
+	super.copyFromDomain(reimbursementGuideSituation);
+	if (reimbursementGuideSituation != null) {
 
-            setInfoEmployee(InfoEmployee.newInfoFromDomain(reimbursementGuideSituation.getEmployee()));
-            // setInfoReimbursementGuide(null);
-            setModificationDate(reimbursementGuideSituation.getModificationDate());
-            setOfficialDate(reimbursementGuideSituation.getOfficialDate());
-            setReimbursementGuideState(reimbursementGuideSituation.getReimbursementGuideState());
-            setRemarks(reimbursementGuideSituation.getRemarks());
-            setState(reimbursementGuideSituation.getState());
+	    setInfoEmployee(InfoEmployee.newInfoFromDomain(reimbursementGuideSituation.getEmployee()));
+	    // setInfoReimbursementGuide(null);
+	    setModificationDate(reimbursementGuideSituation.getModificationDate());
+	    setOfficialDate(reimbursementGuideSituation.getOfficialDate());
+	    setReimbursementGuideState(reimbursementGuideSituation.getReimbursementGuideState());
+	    setRemarks(reimbursementGuideSituation.getRemarks());
+	    setState(reimbursementGuideSituation.getState());
 
-        }
+	}
     }
 
-    public static InfoReimbursementGuideSituation newInfoFromDomain(
-            ReimbursementGuideSituation reimbursementGuideSituation) {
-        InfoReimbursementGuideSituation infoReimbursementGuideSituation = null;
-        if (reimbursementGuideSituation != null) {
-            infoReimbursementGuideSituation = new InfoReimbursementGuideSituation();
-            infoReimbursementGuideSituation.copyFromDomain(reimbursementGuideSituation);
-        }
+    public static InfoReimbursementGuideSituation newInfoFromDomain(ReimbursementGuideSituation reimbursementGuideSituation) {
+	InfoReimbursementGuideSituation infoReimbursementGuideSituation = null;
+	if (reimbursementGuideSituation != null) {
+	    infoReimbursementGuideSituation = new InfoReimbursementGuideSituation();
+	    infoReimbursementGuideSituation.copyFromDomain(reimbursementGuideSituation);
+	}
 
-        return infoReimbursementGuideSituation;
+	return infoReimbursementGuideSituation;
     }
 
 }

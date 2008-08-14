@@ -16,8 +16,8 @@ public class PrepareDegreesListByStudentNumber extends Service {
 	    final ExecutionSemester executionSemester) throws FenixServiceException {
 
 	if (registration.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
-	    return ExecutionDegree.getAllByExecutionYearAndDegreeType(
-		    executionSemester.getExecutionYear(), DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+	    return ExecutionDegree.getAllByExecutionYearAndDegreeType(executionSemester.getExecutionYear(),
+		    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
 	}
 
 	final List<ExecutionDegree> executionDegrees = (degreeType == null) ? ExecutionDegree

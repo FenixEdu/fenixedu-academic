@@ -16,10 +16,11 @@ public class ReadStudentTestForCorrectionFilter extends ReadStudentTestBaseFilte
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Filtro.student.tests.StudentReadTestToDoFilter#testIfCanReadTest(java.util.Calendar,
-     *      java.util.Calendar, java.util.Calendar)
+     * @seeServidorAplicacao.Filtro.student.tests.StudentReadTestToDoFilter#
+     * testIfCanReadTest(java.util.Calendar, java.util.Calendar,
+     * java.util.Calendar)
      */
     protected boolean canReadTest(Calendar now, Calendar beginDate, Calendar endDate) {
-        return endDate.before(now);
+	return endDate.before(now);
     }
 }

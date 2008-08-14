@@ -73,7 +73,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
 	for (final Resource resource : rootDomainObject.getResources()) {
-	    if (resource.isSpace() && !((Space)resource).hasSuroundingSpace()) {
+	    if (resource.isSpace() && !((Space) resource).hasSuroundingSpace()) {
 		spaces.add((Space) resource);
 	    }
 	}
@@ -81,12 +81,12 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return mapping.findForward("ShowSpaces");
     }
 
-    protected SpaceInformation executeSpaceFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException, DomainException {
+    protected SpaceInformation executeSpaceFactoryMethod(final HttpServletRequest request) throws FenixFilterException,
+	    FenixServiceException, DomainException {
 	Object serviceResult = executeFactoryMethod(request);
 	if (serviceResult instanceof Space) {
-	    return ((Space) serviceResult).getSuroundingSpace() != null ? ((Space) serviceResult)
-		    .getSuroundingSpace().getSpaceInformation() : ((Space) serviceResult)
-		    .getSpaceInformation();
+	    return ((Space) serviceResult).getSuroundingSpace() != null ? ((Space) serviceResult).getSuroundingSpace()
+		    .getSpaceInformation() : ((Space) serviceResult).getSpaceInformation();
 	} else if (serviceResult instanceof SpaceInformation) {
 	    return ((SpaceInformation) serviceResult);
 	} else {
@@ -103,19 +103,19 @@ public class ManageSpacesDA extends FenixDispatchAction {
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
-	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);		
+	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	return manageSpace(mapping, request, spaceInformation);
     }
 
     public ActionForward viewSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
-	Space space = getSpaceFromParameter(request);		
+	Space space = getSpaceFromParameter(request);
 	return manageSpace(mapping, request, space.getSpaceInformation());
     }
 
-    public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	SpaceInformation spaceInformation = null;
 	try {
@@ -124,8 +124,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    saveMessages(request, e);
 	    spaceInformation = getSpaceInformationFromParameter(request);
 	}
-	return (spaceInformation == null) ? viewSpaces(mapping, form, request, response) : manageSpace(
-		mapping, request, spaceInformation);
+	return (spaceInformation == null) ? viewSpaces(mapping, form, request, response) : manageSpace(mapping, request,
+		spaceInformation);
     }
 
     public ActionForward deleteSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -154,39 +154,38 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward setSelectedSpaceInformationAndForward(final ActionMapping mapping,
-	    final HttpServletRequest request, final String forward) {
+    public ActionForward setSelectedSpaceInformationAndForward(final ActionMapping mapping, final HttpServletRequest request,
+	    final String forward) {
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
 	return mapping.findForward(forward);
     }
 
-    public ActionForward showCreateSubSpaceForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showCreateSubSpaceForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return setSelectedSpaceInformationAndForward(mapping, request, "ShowCreateSubSpaceForm");
     }
 
-    public ActionForward viewSpaceInformation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return setSelectedSpaceInformationAndForward(mapping, request, "ViewSpaceInformation");
     }
 
-    public ActionForward prepareEditSpace(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareEditSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return setSelectedSpaceInformationAndForward(mapping, request, "EditSpace");
     }
 
-    public ActionForward prepareCreateSpaceInformation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareCreateSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final FactoryExecutor factoryExecutor = spaceInformation.getSpaceFactoryEditor();
 	request.setAttribute("SpaceFactoryEditor", factoryExecutor);
 	return mapping.findForward("CreateSpaceInformation");
     }
 
-    public ActionForward deleteSpaceInformation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException, IOException {
+    public ActionForward deleteSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	if (spaceInformation == null) {
@@ -206,9 +205,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return manageSpace(mapping, request, previousSpaceInformation);
     }
 
-    public ActionForward manageAccessGroups(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward manageAccessGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final Space space = spaceInformation.getSpace();
@@ -217,9 +215,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return mapping.findForward("ManageSpaceAccessGroups");
     }
 
-    public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final Space space = spaceInformation.getSpace();
@@ -230,20 +227,19 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	String groupExpression = null;
 	Person person = (bean != null) ? bean.getPerson() : null;
-	PersistentGroupMembers persistentGroupMembers = (bean != null) ? bean.getPersistentGroupMembers() : null;	
-	RoleType roleType = (bean != null) ? bean.getRoleType() : null; 
+	PersistentGroupMembers persistentGroupMembers = (bean != null) ? bean.getPersistentGroupMembers() : null;
+	RoleType roleType = (bean != null) ? bean.getRoleType() : null;
 
-	if(person != null) {
+	if (person != null) {
 	    groupExpression = new PersonGroup(person).getExpression();
-	} else if(persistentGroupMembers != null) {
+	} else if (persistentGroupMembers != null) {
 	    groupExpression = new PersistentGroup(persistentGroupMembers).getExpression();
-	} else if(roleType != null) {
+	} else if (roleType != null) {
 	    groupExpression = new RoleGroup(roleType).getExpression();
 	}
 
-	final Object[] args = {
-		space, (bean != null) ? bean.getAccessGroupType() : null, true,		
-			(bean != null) ? bean.getMaintainElements() : false, groupExpression };
+	final Object[] args = { space, (bean != null) ? bean.getAccessGroupType() : null, true,
+		(bean != null) ? bean.getMaintainElements() : false, groupExpression };
 
 	try {
 	    executeService(request, "SpaceAccessGroupsManagement", args);
@@ -253,9 +249,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return manageAccessGroups(mapping, form, request, response);
     }
 
-    public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final Space space = spaceInformation.getSpace();
@@ -271,22 +266,24 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return manageAccessGroups(mapping, form, request, response);
     }
 
-    public ActionForward exportSpaceInfoToExcel(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward exportSpaceInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	Space space = getSpaceFromParameter(request);
 
 	try {
 	    String filename;
 	    Building spaceBuilding = space.getSpaceBuilding();
-	    if(spaceBuilding != null && !spaceBuilding.equals(space)) {
-		filename = spaceBuilding.getClass().getSimpleName() + "_" + spaceBuilding.getSpaceInformation().getPresentationName().replace(' ', '_') 
-		+ "_" + space.getClass().getSimpleName() + "_" + space.getSpaceInformation().getPresentationName().replace(' ', '_')  
-		+  "_" + new DateTime().toString("dd-MM-yyyy_hh:mm");	
+	    if (spaceBuilding != null && !spaceBuilding.equals(space)) {
+		filename = spaceBuilding.getClass().getSimpleName() + "_"
+			+ spaceBuilding.getSpaceInformation().getPresentationName().replace(' ', '_') + "_"
+			+ space.getClass().getSimpleName() + "_"
+			+ space.getSpaceInformation().getPresentationName().replace(' ', '_') + "_"
+			+ new DateTime().toString("dd-MM-yyyy_hh:mm");
 	    } else {
-		filename = space.getClass().getSimpleName() + "_" + space.getSpaceInformation().getPresentationName().replace(' ', '_')
-		+ "_" + new DateTime().toString("dd-MM-yyyy_hh:mm");
+		filename = space.getClass().getSimpleName() + "_"
+			+ space.getSpaceInformation().getPresentationName().replace(' ', '_') + "_"
+			+ new DateTime().toString("dd-MM-yyyy_hh:mm");
 	    }
 
 	    response.setContentType("application/vnd.ms-excel");
@@ -304,8 +301,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward prepareMoveSpace(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareMoveSpace(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	SpaceInformation spaceInformationFromParameter = getSpaceInformationFromParameter(request);
 	Space space = spaceInformationFromParameter.getSpace();
@@ -313,22 +310,21 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return mapping.findForward("PrepareMoveSpace");
     }
 
-
-    public ActionForward moveSpace(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+    public ActionForward moveSpace(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
 	final IViewState viewState = RenderUtils.getViewState();
 	MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
 
-	executeService("MoveSpace", new Object[]{bean});    	
+	executeService("MoveSpace", new Object[] { bean });
 	Space space = bean.getSpace();
 	SpaceInformation spaceInformation = space.getSpaceInformation();
 
-	return returnToManageSpacePage(mapping, request, spaceInformation);	
+	return returnToManageSpacePage(mapping, request, spaceInformation);
     }
 
-    public ActionForward prepareMergeRoom(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+    public ActionForward prepareMergeRoom(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
 	SpaceInformation spaceInformationFromParameter = getSpaceInformationFromParameter(request);
 	Space space = spaceInformationFromParameter.getSpace();
@@ -337,7 +333,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward findDestinationRoomForProcessMerge(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException,
+	    IOException {
 
 	final IViewState viewState = RenderUtils.getViewState("findMergeDestinationRoomBean");
 	MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
@@ -351,7 +348,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward compareDestinationRoomWithFromRoom(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException,
+	    IOException {
 
 	AllocatableSpace fromRoom = getFromRoomFromParameter(request);
 	AllocatableSpace destinationRoom = getDestinationRoomFromParameter(request);
@@ -360,10 +358,10 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	request.setAttribute("spaceBean", bean);
 
 	return mapping.findForward("CompareRoomsBeforeMerge");
-    } 
+    }
 
-    public ActionForward mergeRooms(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+    public ActionForward mergeRooms(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
 	final IViewState viewState = RenderUtils.getViewState("mergeRoomsBean");
 	MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
@@ -371,28 +369,28 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	Space fromRoom = bean.getSpace();
 	Space destinationRoom = bean.getSelectedParentSpace();
 
-	executeService("MergeRooms", new Object[]{fromRoom, destinationRoom});    	
+	executeService("MergeRooms", new Object[] { fromRoom, destinationRoom });
 
 	return returnToManageSpacePage(mapping, request, destinationRoom.getSpaceInformation());
-    } 
+    }
 
-    public ActionForward viewEventSpaceOccupations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+    public ActionForward viewEventSpaceOccupations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
 	Space space = null;
 	YearMonthDay day = null;
 	ViewEventSpaceOccupationsBean bean = (ViewEventSpaceOccupationsBean) getRenderedObject();
 
-	if(bean != null) {
+	if (bean != null) {
 
-	    space = bean.getAllocatableSpace();	    
+	    space = bean.getAllocatableSpace();
 	    day = bean.getDay();
 	    Partial month = bean.getMonth();
 	    Partial year = bean.getYear();
 
-	    if(day != null && (month == null || year == null 
-		    || day.getMonthOfYear() != month.get(DateTimeFieldType.monthOfYear())
-		    || day.getYear() != year.get(DateTimeFieldType.year()))) {
+	    if (day != null
+		    && (month == null || year == null || day.getMonthOfYear() != month.get(DateTimeFieldType.monthOfYear()) || day
+			    .getYear() != year.get(DateTimeFieldType.year()))) {
 
 		bean.setDay(null);
 		day = null;
@@ -405,25 +403,27 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    space = spaceInformationFromParameter != null ? spaceInformationFromParameter.getSpace() : null;
 	    day = new YearMonthDay();
 	    request.setAttribute("eventSpaceOccupationsBean", new ViewEventSpaceOccupationsBean(day, (AllocatableSpace) space));
-	}	
+	}
 
-	if(space != null && space.isAllocatableSpace() && day != null) {
+	if (space != null && space.isAllocatableSpace() && day != null) {
 	    Object args[] = { space, day };
-	    List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService("ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", args);
-	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);	    
+	    List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService(
+		    "ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", args);
+	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
 	}
 
 	return mapping.findForward("ViewEventSpaceOccupations");
-    } 
+    }
 
     // Private Methods
 
-    private ActionForward returnToManageSpacePage(ActionMapping mapping, HttpServletRequest request, SpaceInformation spaceInformation) throws IOException {
+    private ActionForward returnToManageSpacePage(ActionMapping mapping, HttpServletRequest request,
+	    SpaceInformation spaceInformation) throws IOException {
 
 	MoveSpaceBean spaceBean = (MoveSpaceBean) getRenderedObject("subSpacesStateBeanID");
 	spaceBean = (spaceBean == null) ? new MoveSpaceBean(spaceInformation.getSpace()) : spaceBean;
 
-	Space space = spaceInformation.getSpace();	
+	Space space = spaceInformation.getSpace();
 	Set<Space> spaces = space.getContainedSpacesByState(spaceBean.getSpaceState());
 	setBlueprintTextRectangles(request, space);
 
@@ -442,68 +442,79 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	spreadsheet.exportToXLSSheet(outputStream);
     }
 
-    private void fillSpreadSheet(Space space, final Spreadsheet spreadsheet) {        	
+    private void fillSpreadSheet(Space space, final Spreadsheet spreadsheet) {
 	for (Space subSpace : space.getContainedSpacesSet()) {
 
-	    if(subSpace.isActive() && subSpace.isRoom()) {
+	    if (subSpace.isActive() && subSpace.isRoom()) {
 
 		Room room = (Room) subSpace;
 		final Row row = spreadsheet.addRow();
 
-		Building spaceBuilding = room.getSpaceBuilding();        	
+		Building spaceBuilding = room.getSpaceBuilding();
 		row.setCell((spaceBuilding != null) ? spaceBuilding.getSpaceInformation().getPresentationName() : "--");
 
-		Floor spaceFloor = room.getSpaceFloorWithIntermediary();                
-		if(spaceFloor != null && spaceFloor.getSuroundingSpace() instanceof Floor) {
-		    if(spaceFloor.getSpaceInformation().getLevel().intValue() == 1) {
-			row.setCell(spaceFloor.getSuroundingSpace().getSpaceInformation().getPresentationName() + "i");        	    
+		Floor spaceFloor = room.getSpaceFloorWithIntermediary();
+		if (spaceFloor != null && spaceFloor.getSuroundingSpace() instanceof Floor) {
+		    if (spaceFloor.getSpaceInformation().getLevel().intValue() == 1) {
+			row.setCell(spaceFloor.getSuroundingSpace().getSpaceInformation().getPresentationName() + "i");
 		    } else {
 			row.setCell(spaceFloor.getSuroundingSpace().getSpaceInformation().getPresentationName());
 		    }
 		} else {
-		    row.setCell((spaceFloor != null) ? spaceFloor.getSpaceInformation().getPresentationName() : "--");        	
+		    row.setCell((spaceFloor != null) ? spaceFloor.getSpaceInformation().getPresentationName() : "--");
 		}
 
-		row.setCell(room.getSpaceInformation().getDescription() != null ? room.getSpaceInformation().getDescription() : "--");
-		row.setCell(room.getSpaceInformation().getIdentification() != null ? room.getSpaceInformation().getIdentification() : "--");
-		row.setCell(room.getSpaceInformation().getDoorNumber() != null ? room.getSpaceInformation().getDoorNumber() : "--");
-		row.setCell(room.getSpaceInformation().getBlueprintNumber() != null ? room.getSpaceInformation().getBlueprintNumber() : "--");                
-		row.setCell((room.getSpaceInformation().getRoomClassification() != null) ? room.getSpaceInformation().getRoomClassification().getPresentationCode() : "--");
-		row.setCell((room.getSpaceInformation().getArea() != null) ? room.getSpaceInformation().getArea().toString() : "--");
+		row.setCell(room.getSpaceInformation().getDescription() != null ? room.getSpaceInformation().getDescription()
+			: "--");
+		row.setCell(room.getSpaceInformation().getIdentification() != null ? room.getSpaceInformation()
+			.getIdentification() : "--");
+		row.setCell(room.getSpaceInformation().getDoorNumber() != null ? room.getSpaceInformation().getDoorNumber()
+			: "--");
+		row.setCell(room.getSpaceInformation().getBlueprintNumber() != null ? room.getSpaceInformation()
+			.getBlueprintNumber() : "--");
+		row.setCell((room.getSpaceInformation().getRoomClassification() != null) ? room.getSpaceInformation()
+			.getRoomClassification().getPresentationCode() : "--");
+		row.setCell((room.getSpaceInformation().getArea() != null) ? room.getSpaceInformation().getArea().toString()
+			: "--");
 
-		row.setCell(room.getSpaceInformation().getHeightQuality() != null ? room.getSpaceInformation().getHeightQuality().toString() : "--");
-		row.setCell(room.getSpaceInformation().getIlluminationQuality() != null ? room.getSpaceInformation().getIlluminationQuality().toString() : "--");
-		row.setCell(room.getSpaceInformation().getDistanceFromSanitaryInstalationsQuality() != null ? room.getSpaceInformation().getDistanceFromSanitaryInstalationsQuality().toString() : "--");
-		row.setCell(room.getSpaceInformation().getSecurityQuality() != null ? room.getSpaceInformation().getSecurityQuality().toString() : "--");
-		row.setCell(room.getSpaceInformation().getAgeQuality() != null ? room.getSpaceInformation().getAgeQuality().toString() : "--");
+		row.setCell(room.getSpaceInformation().getHeightQuality() != null ? room.getSpaceInformation().getHeightQuality()
+			.toString() : "--");
+		row.setCell(room.getSpaceInformation().getIlluminationQuality() != null ? room.getSpaceInformation()
+			.getIlluminationQuality().toString() : "--");
+		row.setCell(room.getSpaceInformation().getDistanceFromSanitaryInstalationsQuality() != null ? room
+			.getSpaceInformation().getDistanceFromSanitaryInstalationsQuality().toString() : "--");
+		row.setCell(room.getSpaceInformation().getSecurityQuality() != null ? room.getSpaceInformation()
+			.getSecurityQuality().toString() : "--");
+		row.setCell(room.getSpaceInformation().getAgeQuality() != null ? room.getSpaceInformation().getAgeQuality()
+			.toString() : "--");
 
 		StringBuilder builder = new StringBuilder();
 		for (ResourceResponsibility responsibility : room.getResourceResponsibility()) {
-		    if(responsibility.isSpaceResponsibility()) {
-			Unit unit = ((SpaceResponsibility)responsibility).getUnit();
+		    if (responsibility.isSpaceResponsibility()) {
+			Unit unit = ((SpaceResponsibility) responsibility).getUnit();
 			builder.append(unit.getPresentationName()).append("; ");
 		    }
-		}                
+		}
 		row.setCell(builder.toString());
 
 		builder = new StringBuilder();
 		for (UnitSpaceOccupation occupation : room.getUnitSpaceOccupations()) {
 		    Unit unit = occupation.getUnit();
 		    builder.append(unit.getPresentationName()).append("; ");
-		}                
+		}
 		row.setCell(builder.toString());
 
 		builder = new StringBuilder();
 		for (PersonSpaceOccupation occupation : room.getPersonSpaceOccupations()) {
 		    Person person = occupation.getPerson();
 		    builder.append(person.getName() + " (" + person.getUsername() + "); ");
-		}                
+		}
 		row.setCell(builder.toString());
 
 		row.setCell(room.getSpaceInformation().getObservations());
-	    }	
+	    }
 
-	    if(subSpace.hasAnyContainedSpaces()) {
+	    if (subSpace.hasAnyContainedSpaces()) {
 		fillSpreadSheet(subSpace, spreadsheet);
 	    }
 	}
@@ -516,19 +527,19 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	headers.add("Piso");
 	headers.add("Espaço");
 	headers.add("Identificação do Espaço");
-	headers.add("Número na Porta");        
-	headers.add("Número na Planta");            
-	headers.add("Classificação");        
+	headers.add("Número na Porta");
+	headers.add("Número na Planta");
+	headers.add("Classificação");
 	headers.add("Área");
 
 	headers.add("Qualid. em Pé Direito");
 	headers.add("Qualid. em Iluminação");
-	headers.add("Qualid. em Dist. às Instalações Sanitárias");     
-	headers.add("Qualid. em Segurança");        
+	headers.add("Qualid. em Dist. às Instalações Sanitárias");
+	headers.add("Qualid. em Segurança");
 	headers.add("Qualid. em Vetustez");
 
 	headers.add("Unidade(s) responsáveis");
-	headers.add("Ocupantes (Unidades)");        
+	headers.add("Ocupantes (Unidades)");
 	headers.add("Ocupantes (Pessoas)");
 
 	headers.add("Observações");
@@ -546,34 +557,31 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
 	Boolean suroundingSpaceBlueprint = mostRecentBlueprint == null;
-	mostRecentBlueprint = (mostRecentBlueprint == null) ? space
-		.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
+	mostRecentBlueprint = (mostRecentBlueprint == null) ? space.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
 
-		if (mostRecentBlueprint != null) {
+	if (mostRecentBlueprint != null) {
 
-		    if (!viewDoorNumbers && !viewSpaceIdentifications && !viewBlueprintNumbers
-			    && !viewOriginalSpaceBlueprint) {
-			viewSpaceIdentifications = Boolean.TRUE;
-		    }
+	    if (!viewDoorNumbers && !viewSpaceIdentifications && !viewBlueprintNumbers && !viewOriginalSpaceBlueprint) {
+		viewSpaceIdentifications = Boolean.TRUE;
+	    }
 
-		    final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
-		    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
-		    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
-		    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor
-		    .getBlueprintTextRectangles(inputStream, mostRecentBlueprint.getSpace(),
-			    viewBlueprintNumbers, viewOriginalSpaceBlueprint, viewSpaceIdentifications,
-			    viewDoorNumbers, scalePercentage);
+	    final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
+	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
+	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(inputStream,
+		    mostRecentBlueprint.getSpace(), viewBlueprintNumbers, viewOriginalSpaceBlueprint, viewSpaceIdentifications,
+		    viewDoorNumbers, scalePercentage);
 
-		    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
-		    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);	    	   
-		    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
-		}
+	    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
+	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
+	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
+	}
 
-		request.setAttribute("scalePercentage", scalePercentage.doubleValue());
-		request.setAttribute("viewDoorNumbers", viewDoorNumbers);
-		request.setAttribute("viewSpaceIdentifications", viewSpaceIdentifications);
-		request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);
-		request.setAttribute("viewOriginalSpaceBlueprint", viewOriginalSpaceBlueprint);	   
+	request.setAttribute("scalePercentage", scalePercentage.doubleValue());
+	request.setAttribute("viewDoorNumbers", viewDoorNumbers);
+	request.setAttribute("viewSpaceIdentifications", viewSpaceIdentifications);
+	request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);
+	request.setAttribute("viewOriginalSpaceBlueprint", viewOriginalSpaceBlueprint);
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {
@@ -583,46 +591,47 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
-	final String spaceInformationIDString = request.getParameterMap().containsKey("spaceInformationID") ?
-		request.getParameter("spaceInformationID") : (String) request.getAttribute("spaceInformationID");
-		final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-		return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+	final String spaceInformationIDString = request.getParameterMap().containsKey("spaceInformationID") ? request
+		.getParameter("spaceInformationID") : (String) request.getAttribute("spaceInformationID");
+	final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
+	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
 
     private String getGroupExpressionFromParameter(final HttpServletRequest request) {
-	final String groupExpression = request.getParameterMap().containsKey("expression") ? 
-		request.getParameter("expression") : (String) request.getAttribute("expression");
-		return groupExpression;
+	final String groupExpression = request.getParameterMap().containsKey("expression") ? request.getParameter("expression")
+		: (String) request.getAttribute("expression");
+	return groupExpression;
     }
 
     private Boolean isToViewBlueprintNumbers(HttpServletRequest request) {
-	final String viewBlueprintNumbersString = request.getParameterMap().containsKey("viewBlueprintNumbers") ?
-		request.getParameter("viewBlueprintNumbers") : (String) request.getAttribute("viewBlueprintNumbers");
-		return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString)	: Boolean.FALSE;
+	final String viewBlueprintNumbersString = request.getParameterMap().containsKey("viewBlueprintNumbers") ? request
+		.getParameter("viewBlueprintNumbers") : (String) request.getAttribute("viewBlueprintNumbers");
+	return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString) : Boolean.FALSE;
     }
 
     private Boolean isToViewDoorNumbers(HttpServletRequest request) {
-	final String isToViewDoorNumbersString = request.getParameterMap().containsKey("viewDoorNumbers") ? 
-		request.getParameter("viewDoorNumbers")	: (String) request.getAttribute("viewDoorNumbers");
-		return isToViewDoorNumbersString != null ? Boolean.valueOf(isToViewDoorNumbersString) : Boolean.FALSE;
+	final String isToViewDoorNumbersString = request.getParameterMap().containsKey("viewDoorNumbers") ? request
+		.getParameter("viewDoorNumbers") : (String) request.getAttribute("viewDoorNumbers");
+	return isToViewDoorNumbersString != null ? Boolean.valueOf(isToViewDoorNumbersString) : Boolean.FALSE;
     }
 
     private Boolean isToViewSpaceIdentifications(HttpServletRequest request) {
-	final String viewSpaceIdentificationsString = request.getParameterMap().containsKey("viewSpaceIdentifications") ?
-		request.getParameter("viewSpaceIdentifications") : (String) request.getAttribute("viewSpaceIdentifications");
-		return viewSpaceIdentificationsString != null ? Boolean.valueOf(viewSpaceIdentificationsString) : Boolean.FALSE;
+	final String viewSpaceIdentificationsString = request.getParameterMap().containsKey("viewSpaceIdentifications") ? request
+		.getParameter("viewSpaceIdentifications") : (String) request.getAttribute("viewSpaceIdentifications");
+	return viewSpaceIdentificationsString != null ? Boolean.valueOf(viewSpaceIdentificationsString) : Boolean.FALSE;
     }
 
     private Boolean isToViewOriginalSpaceBlueprint(HttpServletRequest request) {
-	final String viewOriginalSpaceBlueprintString = request.getParameterMap().containsKey("viewOriginalSpaceBlueprint") ? 
-		request.getParameter("viewOriginalSpaceBlueprint") : (String) request.getAttribute("viewOriginalSpaceBlueprint");
-		return viewOriginalSpaceBlueprintString != null ? Boolean.valueOf(viewOriginalSpaceBlueprintString) : Boolean.FALSE;
+	final String viewOriginalSpaceBlueprintString = request.getParameterMap().containsKey("viewOriginalSpaceBlueprint") ? request
+		.getParameter("viewOriginalSpaceBlueprint")
+		: (String) request.getAttribute("viewOriginalSpaceBlueprint");
+	return viewOriginalSpaceBlueprintString != null ? Boolean.valueOf(viewOriginalSpaceBlueprintString) : Boolean.FALSE;
     }
 
     private BigDecimal getScalePercentage(HttpServletRequest request) {
-	final String scalePercentageString = request.getParameterMap().containsKey("scalePercentage") ? 
-		request.getParameter("scalePercentage") : (String) request.getAttribute("scalePercentage");
-		return scalePercentageString != null ? BigDecimal.valueOf(Double.valueOf(scalePercentageString)) : BigDecimal.valueOf(50);
+	final String scalePercentageString = request.getParameterMap().containsKey("scalePercentage") ? request
+		.getParameter("scalePercentage") : (String) request.getAttribute("scalePercentage");
+	return scalePercentageString != null ? BigDecimal.valueOf(Double.valueOf(scalePercentageString)) : BigDecimal.valueOf(50);
     }
 
     private Space getSpaceFromParameter(final HttpServletRequest request) {

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
 /**
- * The <code>$P</code> operator obtains the exact value of context parameter. 
+ * The <code>$P</code> operator obtains the exact value of context parameter.
  * 
  * <p>
  * If the request contains <code>"name=john+smith"</code> then
@@ -24,68 +24,68 @@ public class ParameterOperator extends OperatorArgument {
     public static final int NAME = 0;
 
     private boolean required;
-    
+
     public ParameterOperator(Argument name) {
-        super();
-        
-        addArgument(name);
-        setRequired(false);
+	super();
+
+	addArgument(name);
+	setRequired(false);
     }
 
     public ParameterOperator(String name) {
-        this(new StaticArgument(name));
+	this(new StaticArgument(name));
     }
-    
+
     ParameterOperator(GroupContextProvider provider, Argument argument) {
-        this(argument);
-        
-        setContextProvider(provider);
+	this(argument);
+
+	setContextProvider(provider);
     }
 
     /**
      * @return the required state for the parameter argument
      */
     public boolean isRequired() {
-        return this.required;
+	return this.required;
     }
 
     /**
-     * Indicates if the parameter is required. When the parameter is required and 
-     * this argument is evaluated, if the parameter is not available in the current
-     * context an error is reported.
+     * Indicates if the parameter is required. When the parameter is required
+     * and this argument is evaluated, if the parameter is not available in the
+     * current context an error is reported.
      */
     public void setRequired(boolean required) {
-        this.required = required;
+	this.required = required;
     }
 
     @Override
     protected void checkOperatorArguments() {
-        int size = getArguments().size();
+	int size = getArguments().size();
 
-        if (size != 1) {
-            throw new WrongNumberOfArgumentsException(size, 1, 1);
-        }
+	if (size != 1) {
+	    throw new WrongNumberOfArgumentsException(size, 1, 1);
+	}
     }
 
     @Override
     protected String execute() {
-        String value = getContext().getParameter(getParameterName());
-        
-        if (value == null && isRequired()) {
-            throw new GroupDynamicExpressionException("accessControl.group.expression.operator.parameter.required", getParameterName());
-        }
-        else {
-            return value;
-        }
+	String value = getContext().getParameter(getParameterName());
+
+	if (value == null && isRequired()) {
+	    throw new GroupDynamicExpressionException("accessControl.group.expression.operator.parameter.required",
+		    getParameterName());
+	} else {
+	    return value;
+	}
     }
 
     protected String getParameterName() {
-        return String.valueOf(argument(NAME).getValue());
+	return String.valueOf(argument(NAME).getValue());
     }
 
     @Override
     protected String getMainValueString() {
-        return String.format("$P(%s)", argument(NAME));
+	return String.format("$P(%s)", argument(NAME));
     }
 
     /**
@@ -94,7 +94,7 @@ public class ParameterOperator extends OperatorArgument {
      */
     @Override
     public boolean isDynamic() {
-        return true;
+	return true;
     }
-    
+
 }

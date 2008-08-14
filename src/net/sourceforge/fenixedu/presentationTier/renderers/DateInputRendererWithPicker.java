@@ -36,104 +36,99 @@ public class DateInputRendererWithPicker extends DateInputRenderer {
     public static final String CALENDAR_SETUP_PATH = "/javaScript/calendar/calendar-setup.js";
     public static final String CALENDAR_LANG_PATH = "/javaScript/calendar/lang/calendar-%s.js";
     public static final String CALENDAR_ICON_PATH = "/javaScript/calendar/img.gif";
-    
+
     @Override
     protected HtmlComponent createTextField(Object object, Class type) {
-        HtmlContainer container = (HtmlContainer) super.createTextField(object, type);
-        
-        HtmlImage image = getCalendarImage();
-        container.addChild(image);
-        container.addChild(getSetupScripts());
-        container.addChild(getCalendarScript(image));
-        
-        return container;
+	HtmlContainer container = (HtmlContainer) super.createTextField(object, type);
+
+	HtmlImage image = getCalendarImage();
+	container.addChild(image);
+	container.addChild(getSetupScripts());
+	container.addChild(getCalendarScript(image));
+
+	return container;
     }
 
     protected HtmlImage getCalendarImage() {
-        HtmlImage imageCalendar = new HtmlImage();
-        
-        imageCalendar.setName(HtmlFormComponent.getNewName());
-        imageCalendar.setId(imageCalendar.getName());
-        
-        imageCalendar.setHeight("100%");
-        imageCalendar.setSource(getUrl(CALENDAR_ICON_PATH));
-        imageCalendar.setTitle(RenderUtils.getResourceString("fenix.renderers.dataPicker.image.title"));
-        
-        return imageCalendar;
+	HtmlImage imageCalendar = new HtmlImage();
+
+	imageCalendar.setName(HtmlFormComponent.getNewName());
+	imageCalendar.setId(imageCalendar.getName());
+
+	imageCalendar.setHeight("100%");
+	imageCalendar.setSource(getUrl(CALENDAR_ICON_PATH));
+	imageCalendar.setTitle(RenderUtils.getResourceString("fenix.renderers.dataPicker.image.title"));
+
+	return imageCalendar;
     }
 
     protected String getUrl(String base) {
-        HtmlLink link = new HtmlLink();
-        link.setModuleRelative(false);
-        link.setContextRelative(true);
-        link.setUrl(base);
-        
-        String imageUrl = link.calculateUrl();
-        return imageUrl;
+	HtmlLink link = new HtmlLink();
+	link.setModuleRelative(false);
+	link.setContextRelative(true);
+	link.setUrl(base);
+
+	String imageUrl = link.calculateUrl();
+	return imageUrl;
     }
 
     protected HtmlComponent getSetupScripts() {
-        HtmlContainer container = new HtmlInlineContainer();
+	HtmlContainer container = new HtmlInlineContainer();
 
-        Language language = Language.getLanguage();
-        switch (language) {
-        case en:
-        case pt:
-        case es:
-            break;
-        default:
-            language = Language.getDefaultLanguage();
-        }
+	Language language = Language.getLanguage();
+	switch (language) {
+	case en:
+	case pt:
+	case es:
+	    break;
+	default:
+	    language = Language.getDefaultLanguage();
+	}
 
-        String langPath = String.format(CALENDAR_LANG_PATH, language.name());
-        
-        container.addChild(new HtmlScript("text/javascript", getUrl(CALENDAR_PATH), true));
-        container.addChild(new HtmlScript("text/javascript", getUrl(CALENDAR_SETUP_PATH), true));
-        container.addChild(new HtmlScript("text/javascript", getUrl(langPath), true));
-        
-        return container;
+	String langPath = String.format(CALENDAR_LANG_PATH, language.name());
+
+	container.addChild(new HtmlScript("text/javascript", getUrl(CALENDAR_PATH), true));
+	container.addChild(new HtmlScript("text/javascript", getUrl(CALENDAR_SETUP_PATH), true));
+	container.addChild(new HtmlScript("text/javascript", getUrl(langPath), true));
+
+	return container;
     }
-    
-    protected HtmlScript getCalendarScript(HtmlImage image) {
-        MetaSlotKey key = (MetaSlotKey) getInputContext().getMetaObject().getKey();
-        
-        String scriptCalendarSetup = getScriptText(image, key);
-        
-        HtmlScript script = new HtmlScript();
-        script.setContentType("text/javascript");
-        script.setScript(scriptCalendarSetup);
-        script.setConditional(true);
 
-        return script;
+    protected HtmlScript getCalendarScript(HtmlImage image) {
+	MetaSlotKey key = (MetaSlotKey) getInputContext().getMetaObject().getKey();
+
+	String scriptCalendarSetup = getScriptText(image, key);
+
+	HtmlScript script = new HtmlScript();
+	script.setContentType("text/javascript");
+	script.setScript(scriptCalendarSetup);
+	script.setConditional(true);
+
+	return script;
     }
 
     protected String getScriptText(HtmlImage image, MetaSlotKey key) {
-        return String.format(
-                "Calendar.setup({inputField: '%s', ifFormat: '%s', button: '%s'});",
-                key.toString(),
-                getInputFormatForCalendar(),
-                image.getId()
-        );
+	return String.format("Calendar.setup({inputField: '%s', ifFormat: '%s', button: '%s'});", key.toString(),
+		getInputFormatForCalendar(), image.getId());
     }
 
     protected String getInputFormatForCalendar() {
-        Locale locale = getLocale();
-        SimpleDateFormat format = new SimpleDateFormat(getFormat(), locale);
-        
-        Calendar c = Calendar.getInstance();
-        
-        c.set(Calendar.YEAR, 1999);
-        c.set(Calendar.MONTH, 11);
-        c.set(Calendar.DAY_OF_MONTH, 24);
-        
-        String dateStringFormatted = format.format(c.getTime());
-        dateStringFormatted = dateStringFormatted.replace("1999", "%Y");
-        dateStringFormatted = dateStringFormatted.replace("99", "%y");
-        dateStringFormatted = dateStringFormatted.replace("12", "%m");
-        dateStringFormatted = dateStringFormatted.replace("24", "%e");
-        
-        return dateStringFormatted;
+	Locale locale = getLocale();
+	SimpleDateFormat format = new SimpleDateFormat(getFormat(), locale);
+
+	Calendar c = Calendar.getInstance();
+
+	c.set(Calendar.YEAR, 1999);
+	c.set(Calendar.MONTH, 11);
+	c.set(Calendar.DAY_OF_MONTH, 24);
+
+	String dateStringFormatted = format.format(c.getTime());
+	dateStringFormatted = dateStringFormatted.replace("1999", "%Y");
+	dateStringFormatted = dateStringFormatted.replace("99", "%y");
+	dateStringFormatted = dateStringFormatted.replace("12", "%m");
+	dateStringFormatted = dateStringFormatted.replace("24", "%e");
+
+	return dateStringFormatted;
     }
-    
+
 }
- 

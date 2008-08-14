@@ -19,28 +19,28 @@ import org.apache.struts.action.ActionMapping;
 public class ProjectsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward listProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-        
-        List<Project> projects = new ArrayList<Project>();
+	    HttpServletResponse response) throws Exception {
+	final IUserView userView = getUserView(request);
 
-        for(ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
-            if (!projects.contains(participation.getProject())) {
-                projects.add(participation.getProject());
-            }
-        }
-        request.setAttribute("projects", projects);
-        return mapping.findForward("Success");  
+	List<Project> projects = new ArrayList<Project>();
+
+	for (ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
+	    if (!projects.contains(participation.getProject())) {
+		projects.add(participation.getProject());
+	    }
+	}
+	request.setAttribute("projects", projects);
+	return mapping.findForward("Success");
     }
-    
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
-        
-        ServiceUtils.executeService("DeleteResearchProject", new Object[] { oid });
-        
-        return listProjects(mapping, form, request, response);  
+
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	final IUserView userView = getUserView(request);
+	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+
+	ServiceUtils.executeService("DeleteResearchProject", new Object[] { oid });
+
+	return listProjects(mapping, form, request, response);
     }
-    
+
 }

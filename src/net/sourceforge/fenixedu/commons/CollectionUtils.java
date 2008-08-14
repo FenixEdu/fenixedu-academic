@@ -21,88 +21,88 @@ import org.apache.commons.collections.Predicate;
  */
 public class CollectionUtils extends org.apache.commons.collections.CollectionUtils {
 
-	/**
+    /**
 	 * 
 	 */
-	public CollectionUtils() {
-		super();
+    public CollectionUtils() {
+	super();
+    }
+
+    public static String[] toArrayOfString(Collection collection) {
+	String[] strings = new String[collection.size()];
+
+	int i = 0;
+	Iterator iterator = collection.iterator();
+	while (iterator.hasNext()) {
+	    strings[i++] = (String) iterator.next();
 	}
 
-	public static String[] toArrayOfString(Collection collection) {
-		String[] strings = new String[collection.size()];
+	return strings;
+    }
 
-		int i = 0;
-		Iterator iterator = collection.iterator();
-		while (iterator.hasNext()) {
-			strings[i++] = (String) iterator.next();
-		}
+    public static List toList(Object[] array) {
+	List result = new ArrayList();
+	for (int i = 0; i < array.length; i++) {
+	    result.add(array[i]);
+	}
+	return result;
+    }
 
-		return strings;
+    public static InfoObject getByInternalId(Collection infoObjectList, final Integer idInternal) {
+	InfoObject infoObject = (InfoObject) CollectionUtils.find(infoObjectList, new Predicate() {
+
+	    public boolean evaluate(Object obj) {
+		InfoObject infoObj = (InfoObject) obj;
+		return infoObj.getIdInternal().equals(idInternal);
+	    }
+
+	});
+
+	return infoObject;
+    }
+
+    public static List getCombinations(List list, int count) {
+	Combinations c = new Combinations(list, count);
+
+	List results = new ArrayList();
+
+	while (c.hasMoreElements()) {
+	    results.add(c.nextElement());
 	}
 
-	public static List toList(Object[] array) {
-		List result = new ArrayList();
-		for (int i = 0; i < array.length; i++) {
-			result.add(array[i]);
-		}
-		return result;
+	return results;
+    }
+
+    public static List getPermutations(List list, int count) {
+	Permutations p = new Permutations(list, count);
+
+	List results = new ArrayList();
+
+	while (p.hasMoreElements()) {
+	    results.add(p.nextElement());
 	}
 
-	public static InfoObject getByInternalId(Collection infoObjectList, final Integer idInternal) {
-		InfoObject infoObject = (InfoObject) CollectionUtils.find(infoObjectList, new Predicate() {
+	return results;
+    }
 
-			public boolean evaluate(Object obj) {
-				InfoObject infoObj = (InfoObject) obj;
-				return infoObj.getIdInternal().equals(idInternal);
-			}
+    public static <T extends DomainObject> List<T> toObjects(List<DomainReference<T>> references) {
+	List<T> objects = new ArrayList<T>();
 
-		});
-
-		return infoObject;
+	for (DomainReference<T> reference : references) {
+	    objects.add(reference.getObject());
 	}
 
-	public static List getCombinations(List list, int count) {
-		Combinations c = new Combinations(list, count);
+	return objects;
+    }
 
-		List results = new ArrayList();
+    public static <T extends DomainObject> List<DomainReference<T>> toReferences(List<T> objects) {
+	List<DomainReference<T>> references = new ArrayList<DomainReference<T>>();
 
-		while (c.hasMoreElements()) {
-			results.add(c.nextElement());
-		}
-
-		return results;
+	for (T object : objects) {
+	    references.add(new DomainReference<T>(object));
 	}
 
-	public static List getPermutations(List list, int count) {
-		Permutations p = new Permutations(list, count);
-
-		List results = new ArrayList();
-
-		while (p.hasMoreElements()) {
-			results.add(p.nextElement());
-		}
-
-		return results;
-	}
-	
-	public static <T extends DomainObject> List<T> toObjects(List<DomainReference<T>> references) {
-		List<T> objects = new ArrayList<T>();
-		
-		for(DomainReference<T> reference : references) {
-			objects.add(reference.getObject());
-		}
-		
-		return objects;
-	}
-	
-	public static <T extends DomainObject> List<DomainReference<T>> toReferences(List<T> objects) {
-		List<DomainReference<T>> references = new ArrayList<DomainReference<T>>();
-		
-		for(T object : objects) {
-			references.add(new DomainReference<T>(object));
-		}
-		
-		return references;
-	}
+	return references;
+    }
 
 }

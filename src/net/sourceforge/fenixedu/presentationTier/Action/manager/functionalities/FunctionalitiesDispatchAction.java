@@ -27,148 +27,149 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 public class FunctionalitiesDispatchAction extends FenixDispatchAction {
 
-    protected void addMessage(HttpServletRequest request, String name, String key, String ... args) {
-        ActionMessages messages = getMessages(request);
-        messages.add(name, new ActionMessage(key, args));
-        saveMessages(request, messages);
+    protected void addMessage(HttpServletRequest request, String name, String key, String... args) {
+	ActionMessages messages = getMessages(request);
+	messages.add(name, new ActionMessage(key, args));
+	saveMessages(request, messages);
     }
-    
+
     public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Content functionality) throws Exception {
-        setBreadCrumbs(request, functionality);
-        request.setAttribute("functionality", functionality);
-        
-        return forward;
+	setBreadCrumbs(request, functionality);
+	request.setAttribute("functionality", functionality);
+
+	return forward;
     }
-    
-    public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Module module, boolean includeLast) throws Exception {
-        setBreadCrumbs(request, module, includeLast);
-        
-        if (includeLast) {
-            request.setAttribute("parent", module);
-        }
-        
-        request.setAttribute("module", module);
-        
-        return forward;
+
+    public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Module module, boolean includeLast)
+	    throws Exception {
+	setBreadCrumbs(request, module, includeLast);
+
+	if (includeLast) {
+	    request.setAttribute("parent", module);
+	}
+
+	request.setAttribute("module", module);
+
+	return forward;
     }
-    
-    public ActionForward viewRoot(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Module module = Module.getRootModule();
-        
-        return viewModule(module, mapping, actionForm, request, response);
+
+    public ActionForward viewRoot(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Module module = Module.getRootModule();
+
+	return viewModule(module, mapping, actionForm, request, response);
     }
-    
-    protected ActionForward viewModule(Module module, ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (module == null) {
-            return viewRoot(mapping, actionForm, request, response);
-        }
-        else {
-            setBreadCrumbs(request, module);
-            
-            request.setAttribute("module", module);
-            request.setAttribute("functionalities", module.getOrderedFunctionalities());
-            
-            return mapping.findForward("view.module");
-        }
+
+    protected ActionForward viewModule(Module module, ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	if (module == null) {
+	    return viewRoot(mapping, actionForm, request, response);
+	} else {
+	    setBreadCrumbs(request, module);
+
+	    request.setAttribute("module", module);
+	    request.setAttribute("functionalities", module.getOrderedFunctionalities());
+
+	    return mapping.findForward("view.module");
+	}
     }
 
     protected List<Module> getBreadCrumbs(HttpServletRequest request, Content content) {
-        List<Module> crumbs = new ArrayList<Module>();
+	List<Module> crumbs = new ArrayList<Module>();
 
-        IFunctionality functionality = (IFunctionality) content;
-        for (Module parent = functionality.getModule(); parent != null; parent = parent.getModule()) {
-            if (crumbs.isEmpty()) {
-                crumbs.add(parent);
-            }
-            else {
-                crumbs.add(0, parent);
-            }
-        }
-        
-        return crumbs;
+	IFunctionality functionality = (IFunctionality) content;
+	for (Module parent = functionality.getModule(); parent != null; parent = parent.getModule()) {
+	    if (crumbs.isEmpty()) {
+		crumbs.add(parent);
+	    } else {
+		crumbs.add(0, parent);
+	    }
+	}
+
+	return crumbs;
     }
-    
+
     protected void setBreadCrumbs(HttpServletRequest request, Content functionality) {
-        List<Module> crumbs = getBreadCrumbs(request, functionality);
-        request.setAttribute("crumbs", crumbs);
+	List<Module> crumbs = getBreadCrumbs(request, functionality);
+	request.setAttribute("crumbs", crumbs);
     }
 
     protected void setBreadCrumbs(HttpServletRequest request, Module module, boolean includeLast) {
-        List<Module> crumbs = getBreadCrumbs(request, module);
-        
-        if (includeLast) {
-            crumbs.add(module);
-        }
-        
-        request.setAttribute("crumbs", crumbs);
+	List<Module> crumbs = getBreadCrumbs(request, module);
+
+	if (includeLast) {
+	    crumbs.add(module);
+	}
+
+	request.setAttribute("crumbs", crumbs);
     }
 
-    public ActionForward confirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Content functionality = getFunctionality(request);
-    
-        if (functionality == null) {
-            return viewRoot(mapping, actionForm, request, response);
-        }
-        
-        return forwardTo(mapping.findForward("confirm"), request, functionality);
+    public ActionForward confirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Content functionality = getFunctionality(request);
+
+	if (functionality == null) {
+	    return viewRoot(mapping, actionForm, request, response);
+	}
+
+	return forwardTo(mapping.findForward("confirm"), request, functionality);
     }
 
-    public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Content functionality = getFunctionality(request);
-    
-        if (functionality == null) {
-            return viewRoot(mapping, actionForm, request, response);
-        }
-        
-        if (request.getParameter("confirm") != null) {
-            Module parent = ((IFunctionality) functionality).getModule();
-            deleteFunctionality(functionality);
-            
-            return viewModule(parent, mapping, actionForm, request, response);
-        }
-        else {
-            if (functionality instanceof Module) {
-                return viewModule((Module) functionality, mapping, actionForm, request, response);    
-            }
-            else {
-                return forwardTo(mapping.findForward("view"), request, functionality);
-            }
-        }
+    public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Content functionality = getFunctionality(request);
+
+	if (functionality == null) {
+	    return viewRoot(mapping, actionForm, request, response);
+	}
+
+	if (request.getParameter("confirm") != null) {
+	    Module parent = ((IFunctionality) functionality).getModule();
+	    deleteFunctionality(functionality);
+
+	    return viewModule(parent, mapping, actionForm, request, response);
+	} else {
+	    if (functionality instanceof Module) {
+		return viewModule((Module) functionality, mapping, actionForm, request, response);
+	    } else {
+		return forwardTo(mapping.findForward("view"), request, functionality);
+	    }
+	}
     }
 
     protected Module getModule(HttpServletRequest request) {
-        return (Module) getObject(request, Module.class, "module");
+	return (Module) getObject(request, Module.class, "module");
     }
 
     protected Content getFunctionality(HttpServletRequest request) {
-        return (Content) getObject(request, Content.class, "functionality");
+	return (Content) getObject(request, Content.class, "functionality");
     }
 
     protected DomainObject getObject(HttpServletRequest request, Class type, String parameter) {
-        Integer objectId = getObjectId(request, parameter);
-        
-        if (objectId == null) {
-            return null;
-        }
-        
-        return readDomainObject(request, type, objectId);
+	Integer objectId = getObjectId(request, parameter);
+
+	if (objectId == null) {
+	    return null;
+	}
+
+	return readDomainObject(request, type, objectId);
     }
 
     protected Integer getObjectId(HttpServletRequest request, String name) {
-        return getId((String) request.getParameter(name));
+	return getId((String) request.getParameter(name));
     }
-    
+
     protected Integer getId(String id) {
-        if (id == null) {
-            return null;
-        }
-        
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
+	if (id == null) {
+	    return null;
+	}
+
+	try {
+	    return new Integer(id);
+	} catch (NumberFormatException e) {
+	    e.printStackTrace();
+	    return null;
+	}
     }
 
     //
@@ -185,7 +186,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception throw by the service
      */
     public static void deleteFunctionality(Content functionality) throws Exception {
-        ServiceUtils.executeService( "DeleteFunctionality", functionality);
+	ServiceUtils.executeService("DeleteFunctionality", functionality);
     }
 
     /**
@@ -199,9 +200,8 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      * @throws Exception
      *             the exception thrown by the service
      */
-    public static void rearrangeFunctionalities(List<Pair<Module, Content>> arrangements)
-            throws Exception {
-        ServiceUtils.executeService( "ArrangeFunctionalities", arrangements);
+    public static void rearrangeFunctionalities(List<Pair<Module, Content>> arrangements) throws Exception {
+	ServiceUtils.executeService("ArrangeFunctionalities", arrangements);
     }
 
     /**
@@ -214,8 +214,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void enable(Functionality functionality) throws Exception {
-        ServiceUtils.executeService( "ChangeEnableInFunctionality",
-                functionality, true);
+	ServiceUtils.executeService("ChangeEnableInFunctionality", functionality, true);
     }
 
     /**
@@ -228,8 +227,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void disable(Functionality functionality) throws Exception {
-        ServiceUtils.executeService( "ChangeEnableInFunctionality",
-                functionality, false);
+	ServiceUtils.executeService("ChangeEnableInFunctionality", functionality, false);
     }
 
     /**
@@ -242,10 +240,8 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            the group expression used to the create the new group
      *            availability
      */
-    public static void setGroupAvailability(Content functionality, String expression)
-            throws Exception {
-        ServiceUtils.executeService( "CreateGroupAvailability",
-                functionality, expression);
+    public static void setGroupAvailability(Content functionality, String expression) throws Exception {
+	ServiceUtils.executeService("CreateGroupAvailability", functionality, expression);
     }
 
     /**
@@ -263,22 +259,23 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            conflicts with existing functionalities
      * @param uuidUsed
      *            if the uuid declared in the document should be used as the new
-     *            functionality uuid, that is, functionalities will be imported 
+     *            functionality uuid, that is, functionalities will be imported
      *            with the same uuids
      */
-    public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed) throws Exception {
-        ServiceUtils.executeService( "ImportFunctionalities",
-                module, stream, principalPreserved, uuidUsed);
+    public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed)
+	    throws Exception {
+	ServiceUtils.executeService("ImportFunctionalities", module, stream, principalPreserved, uuidUsed);
     }
-    
+
     /**
      * Auxiliary method that invokes a service to import functionalities from a
-     * file using the parent declared in that file or by creating a new top level
-     * module to hold them.
+     * file using the parent declared in that file or by creating a new top
+     * level module to hold them.
      * 
-     * @param stream the stream containing the XML funcitonalities structure
+     * @param stream
+     *            the stream containing the XML funcitonalities structure
      */
     public static void importStartupFunctionalities(InputStream stream) throws Exception {
-        ServiceUtils.executeService( "ImportStartupFunctionalities", stream);
+	ServiceUtils.executeService("ImportStartupFunctionalities", stream);
     }
 }

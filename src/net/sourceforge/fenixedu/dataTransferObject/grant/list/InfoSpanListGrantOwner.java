@@ -23,7 +23,7 @@ public class InfoSpanListGrantOwner extends InfoObject {
      * @return Returns the ascendingOrder.
      */
     public Boolean getAscendingOrder() {
-        return ascendingOrder;
+	return ascendingOrder;
     }
 
     /**
@@ -31,14 +31,14 @@ public class InfoSpanListGrantOwner extends InfoObject {
      *            The ascendingOrder to set.
      */
     public void setAscendingOrder(Boolean ascendingOrder) {
-        this.ascendingOrder = ascendingOrder;
+	this.ascendingOrder = ascendingOrder;
     }
 
     /**
      * @return Returns the orderBy.
      */
     public String getOrderBy() {
-        return orderBy;
+	return orderBy;
     }
 
     /**
@@ -46,14 +46,14 @@ public class InfoSpanListGrantOwner extends InfoObject {
      *            The orderBy to set.
      */
     public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
+	this.orderBy = orderBy;
     }
 
     /**
      * @return Returns the spanNumber.
      */
     public Integer getSpanNumber() {
-        return spanNumber;
+	return spanNumber;
     }
 
     /**
@@ -61,14 +61,14 @@ public class InfoSpanListGrantOwner extends InfoObject {
      *            The spanNumber to set.
      */
     public void setSpanNumber(Integer spanNumber) {
-        this.spanNumber = spanNumber;
+	this.spanNumber = spanNumber;
     }
 
     /**
      * @return Returns the totalElements.
      */
     public Integer getTotalElements() {
-        return totalElements;
+	return totalElements;
     }
 
     /**
@@ -76,37 +76,38 @@ public class InfoSpanListGrantOwner extends InfoObject {
      *            The totalElements to set.
      */
     public void setTotalElements(Integer totalElements) {
-        this.totalElements = totalElements;
+	this.totalElements = totalElements;
     }
 
     public Integer getNumberOfSpans() {
-        if (this.totalElements != null) {
-            return new Integer(
-                    (this.totalElements.intValue() / new Integer(100).intValue()) + 1);			//SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN
-                           
-        }
-        return new Integer(-1);
+	if (this.totalElements != null) {
+	    return new Integer((this.totalElements.intValue() / new Integer(100).intValue()) + 1); // SessionConstants
+												   // .
+												   // NUMBER_OF_ELEMENTS_IN_SPAN
+
+	}
+	return new Integer(-1);
     }
 
     public boolean hasBeforeSpan() {
-        if (this.spanNumber.intValue() > 1) {
-            return true;
-        }
-        return false;
+	if (this.spanNumber.intValue() > 1) {
+	    return true;
+	}
+	return false;
     }
 
     public Integer getBeforeSpan() {
-        return new Integer(this.spanNumber.intValue() - 1);
+	return new Integer(this.spanNumber.intValue() - 1);
     }
 
     public boolean hasAfterSpan() {
-        if (this.spanNumber.intValue() < getNumberOfSpans().intValue()) {
-            return true;
-        }
-        return false;
+	if (this.spanNumber.intValue() < getNumberOfSpans().intValue()) {
+	    return true;
+	}
+	return false;
     }
 
     public Integer getAfterSpan() {
-        return new Integer(this.spanNumber.intValue() + 1);
+	return new Integer(this.spanNumber.intValue() + 1);
     }
 }

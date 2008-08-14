@@ -18,13 +18,12 @@ public class EvenOddExecuter extends CurricularRuleExecutor {
     protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 	final EvenOddRule evenOddRule = (EvenOddRule) curricularRule;
-	if(!canApplyRule(enrolmentContext, evenOddRule)) {
+	if (!canApplyRule(enrolmentContext, evenOddRule)) {
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
-	
+
 	Integer studentNumber = enrolmentContext.getRegistration().getStudent().getNumber();
-	if(evenOddRule.getEven() && isEven(studentNumber) || 
-		!evenOddRule.getEven() && isOdd(studentNumber)) {
+	if (evenOddRule.getEven() && isEven(studentNumber) || !evenOddRule.getEven() && isOdd(studentNumber)) {
 	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 	return createFalseRuleResult(evenOddRule, sourceDegreeModuleToEvaluate);
@@ -38,10 +37,10 @@ public class EvenOddExecuter extends CurricularRuleExecutor {
 
     private RuleResult createFalseRuleResult(final EvenOddRule rule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
 	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		"curricularRules.ruleExecutors.EvenOddExecutor.invalid.number", rule.getEvenOddString(), rule.getDegreeModuleToApplyRule()
-			.getName());
+		"curricularRules.ruleExecutors.EvenOddExecutor.invalid.number", rule.getEvenOddString(), rule
+			.getDegreeModuleToApplyRule().getName());
     }
-    
+
     private boolean isEven(int number) {
 	return (number & 1) == 0;
     }

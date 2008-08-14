@@ -49,38 +49,39 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Thesis thesis = getThesis(request);
-        request.setAttribute("thesis", thesis);
+	request.setAttribute("thesis", thesis);
 
-        if (thesis != null) {
-            final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
-            request.setAttribute("thesisPresentationState", thesisPresentationState);
-        }
+	if (thesis != null) {
+	    final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
+	    request.setAttribute("thesisPresentationState", thesisPresentationState);
+	}
 
-        Degree degree = getDegree(request);
-        ExecutionYear executionYear = getExecutionYear(request);
+	Degree degree = getDegree(request);
+	ExecutionYear executionYear = getExecutionYear(request);
 
-        setFilterContext(request, degree, executionYear);
-        
-        return super.execute(mapping, actionForm, request, response);
+	setFilterContext(request, degree, executionYear);
+
+	return super.execute(mapping, actionForm, request, response);
     }
 
     private void setFilterContext(HttpServletRequest request, Degree degree, ExecutionYear executionYear) {
-    	request.setAttribute("degree", degree);
-        request.setAttribute("degreeId", degree == null ? "" : degree.getIdInternal());
-        request.setAttribute("executionYear", executionYear);
-        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
+	request.setAttribute("degree", degree);
+	request.setAttribute("degreeId", degree == null ? "" : degree.getIdInternal());
+	request.setAttribute("executionYear", executionYear);
+	request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
     }
 
     private Thesis getThesis(HttpServletRequest request) {
-        Integer id = getId(request.getParameter("thesisID"));
-        if (id == null) {
-            return null;
-        } else {
-            return RootDomainObject.getInstance().readThesisByOID(id);
-        }
-    }   
+	Integer id = getId(request.getParameter("thesisID"));
+	if (id == null) {
+	    return null;
+	} else {
+	    return RootDomainObject.getInstance().readThesisByOID(id);
+	}
+    }
 
     private Degree getDegree(HttpServletRequest request) {
 	Integer id = getId(request.getParameter("degreeID"));
@@ -90,7 +91,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    return RootDomainObject.getInstance().readDegreeByOID(id);
 	}
     }
-    
+
     private ExecutionYear getExecutionYear(HttpServletRequest request) {
 	Integer id = getId(request.getParameter("executionYearID"));
 	if (id == null) {
@@ -99,39 +100,40 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    return RootDomainObject.getInstance().readExecutionYearByOID(id);
 	}
     }
-    
-    private Integer getId(String id) {
-        if (id == null || id.equals("")) {
-            return null;
-        }
 
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
+    private Integer getId(String id) {
+	if (id == null || id.equals("")) {
+	    return null;
+	}
+
+	try {
+	    return new Integer(id);
+	} catch (NumberFormatException e) {
+	    e.printStackTrace();
+	    return null;
+	}
     }
-    
-    public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	ThesisContextBean bean = getContextBean(request);
-	
+
 	Degree degree = bean.getDegree();
 	ExecutionYear executionYear = bean.getExecutionYear();
 
 	setFilterContext(request, degree, executionYear);
-	
+
 	List<Thesis> theses = new ArrayList<Thesis>();
 
-        theses.addAll(Thesis.getSubmittedThesis(degree, executionYear));
-        theses.addAll(Thesis.getApprovedThesis(degree, executionYear));
-        theses.addAll(Thesis.getConfirmedThesis(degree, executionYear));
-        theses.addAll(Thesis.getEvaluatedThesis(degree, executionYear));
-        
-        request.setAttribute("contextBean", bean);
-        request.setAttribute("theses", theses);
-        
-        return mapping.findForward("list-thesis");
+	theses.addAll(Thesis.getSubmittedThesis(degree, executionYear));
+	theses.addAll(Thesis.getApprovedThesis(degree, executionYear));
+	theses.addAll(Thesis.getConfirmedThesis(degree, executionYear));
+	theses.addAll(Thesis.getEvaluatedThesis(degree, executionYear));
+
+	request.setAttribute("contextBean", bean);
+	request.setAttribute("theses", theses);
+
+	return mapping.findForward("list-thesis");
     }
 
     public Integer getIntegerParameter(final HttpServletRequest request, final String paramName) {
@@ -139,13 +141,15 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	return string == null ? null : Integer.valueOf(string);
     }
 
-    public ActionForward listScientificComission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward listScientificComission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Integer degreeId = getIntegerParameter(request, "degreeId");
 	final Degree degree = degreeId == null ? null : rootDomainObject.readDegreeByOID(degreeId);
 	request.setAttribute("degree", degree);
 
 	final Integer executionYearId = getIntegerParameter(request, "executionYearId");
-	final ExecutionYear executionYear = (ExecutionYear) (executionYearId == null ? null : rootDomainObject.readExecutionIntervalByOID(executionYearId));
+	final ExecutionYear executionYear = (ExecutionYear) (executionYearId == null ? null : rootDomainObject
+		.readExecutionIntervalByOID(executionYearId));
 	request.setAttribute("executionYear", executionYear);
 
 	if (degree != null || executionYear != null) {
@@ -159,81 +163,89 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    }
 	    request.setAttribute("executionDegrees", executionDegrees);
 	}
-        
-        return mapping.findForward("list-scientific-comission");
+
+	return mapping.findForward("list-scientific-comission");
     }
 
     private ThesisContextBean getContextBean(HttpServletRequest request) {
-        ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
-        RenderUtils.invalidateViewState("contextBean");
+	ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
+	RenderUtils.invalidateViewState("contextBean");
 
-        if (bean != null) {
-            return bean;
-        } else {
-            Degree degree = getDegree(request);
-            ExecutionYear executionYear = getExecutionYear(request);
+	if (bean != null) {
+	    return bean;
+	} else {
+	    Degree degree = getDegree(request);
+	    ExecutionYear executionYear = getExecutionYear(request);
 
-            if (executionYear == null) {
-                executionYear = ExecutionYear.readCurrentExecutionYear();
-            }
+	    if (executionYear == null) {
+		executionYear = ExecutionYear.readCurrentExecutionYear();
+	    }
 
-            return new ThesisContextBean(degree, executionYear);
-        }
+	    return new ThesisContextBean(degree, executionYear);
+	}
     }
 
-    public ActionForward reviewProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    return mapping.findForward("review-proposal");
+    public ActionForward reviewProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("review-proposal");
     }
-    
-    public ActionForward approveProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        	Thesis thesis = getThesis(request);
 
-        if (thesis != null) {
-            executeService("ApproveThesisProposal", thesis);
-            addActionMessage("mail", request, "thesis.approved.mail.sent");
-        }
-        
-        return listThesis(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward confirmRejectProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("confirmReject", true);
-        return reviewProposal(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward reviewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("review-thesis");
-    }
-    
-    public ActionForward confirmApprove(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("confirmApprove", true);
-        return reviewThesis(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward confirmDisapprove(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("confirmDisapprove", true);
-        return reviewThesis(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward approveThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
+    public ActionForward approveProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
 
-        if (thesis != null) {
-            try {
-                executeService("ApproveThesisDiscussion", thesis);
-                addActionMessage("mail", request, "thesis.evaluated.mail.sent");
-            } catch (DomainException e) {
-                addActionMessage("error", request, e.getKey(), e.getArgs());
-                return reviewThesis(mapping, actionForm, request, response);
-            }
-        }
-        
-        return listThesis(mapping, actionForm, request, response);
+	if (thesis != null) {
+	    executeService("ApproveThesisProposal", thesis);
+	    addActionMessage("mail", request, "thesis.approved.mail.sent");
+	}
+
+	return listThesis(mapping, actionForm, request, response);
     }
-    
-    public ActionForward viewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    public ActionForward confirmRejectProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("confirmReject", true);
+	return reviewProposal(mapping, actionForm, request, response);
+    }
+
+    public ActionForward reviewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("review-thesis");
+    }
+
+    public ActionForward confirmApprove(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("confirmApprove", true);
+	return reviewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward confirmDisapprove(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("confirmDisapprove", true);
+	return reviewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward approveThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+
+	if (thesis != null) {
+	    try {
+		executeService("ApproveThesisDiscussion", thesis);
+		addActionMessage("mail", request, "thesis.evaluated.mail.sent");
+	    } catch (DomainException e) {
+		addActionMessage("error", request, e.getKey(), e.getArgs());
+		return reviewThesis(mapping, actionForm, request, response);
+	    }
+	}
+
+	return listThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward viewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	setDocumentAvailability(request);
-        return mapping.findForward("view-thesis");
+	return mapping.findForward("view-thesis");
     }
 
     private void setDocumentAvailability(final HttpServletRequest request) {
@@ -261,17 +273,20 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	return false;
     }
 
-    public ActionForward showMakeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showMakeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setAttribute("showMakeDocumentUnavailablePage", Boolean.TRUE);
 	return viewThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward showMakeDocumentsAvailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showMakeDocumentsAvailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("showMakeDocumentsAvailablePage", Boolean.TRUE);
 	return viewThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward showSubstituteDocumentsPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showSubstituteDocumentsPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Thesis thesis = getThesis(request);
 	final ThesisFile thesisFile = thesis.getDissertation();
 	final ThesisFileBean thesisFileBean = new ThesisFileBean();
@@ -283,35 +298,40 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	return viewThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward showSubstituteExtendedAbstractPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showSubstituteExtendedAbstractPage(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final ThesisFileBean thesisFileBean = new ThesisFileBean();
 	request.setAttribute("fileBean", thesisFileBean);
 	request.setAttribute("showSubstituteExtendedAbstractPage", Boolean.TRUE);
 	return viewThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward makeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward makeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Thesis thesis = getThesis(request);
 	executeService("MakeThesisDocumentsUnavailable", new Object[] { thesis });
 	return viewThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward makeDocumentAvailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward makeDocumentAvailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Thesis thesis = getThesis(request);
 	executeService("MakeThesisDocumentsAvailable", new Object[] { thesis });
 	return viewThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward substituteDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward substituteDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
 	RenderUtils.invalidateViewState();
-    
+
 	if (bean != null && bean.getFile() != null) {
 	    File temporaryFile = null;
-    	
+
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisDissertationFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+		executeService("CreateThesisDissertationFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean
+			.getTitle(), bean.getSubTitle(), bean.getLanguage());
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -322,16 +342,18 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	return viewThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward substituteExtendedAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward substituteExtendedAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
 	RenderUtils.invalidateViewState();
-    
+
 	if (bean != null && bean.getFile() != null) {
 	    File temporaryFile = null;
-    	
+
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisAbstractFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+		executeService("CreateThesisAbstractFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean
+			.getTitle(), bean.getSubTitle(), bean.getLanguage());
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -342,7 +364,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	return viewThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward listThesisCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward listThesisCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getThesisCreationPeriodFactoryExecutor(request);
 
 	return forwardToListThesisCreationPeriodsPage(mapping, request, thesisCreationPeriodFactoryExecutor);
@@ -377,7 +400,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    if (executionDegreeIdString != null) {
 		final Integer executionDegreeId = Integer.valueOf(executionDegreeIdString);
 		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-		thesisCreationPeriodFactoryExecutor.setExecutionDegree(executionDegree);		
+		thesisCreationPeriodFactoryExecutor.setExecutionDegree(executionDegree);
 	    }
 	}
 	RenderUtils.invalidateViewState();
@@ -385,7 +408,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	return thesisCreationPeriodFactoryExecutor;
     }
 
-    public ActionForward prepareDefineCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareDefineCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getThesisCreationPeriodFactoryExecutor(request);
 
 	final ExecutionDegree executionDegree = thesisCreationPeriodFactoryExecutor.getExecutionDegree();
@@ -401,7 +425,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 		    if (endThesisCreationPeriod != null) {
 			thesisCreationPeriodFactoryExecutor.setEndThesisCreationPeriod(endThesisCreationPeriod);
 		    }
-		    if (thesisCreationPeriodFactoryExecutor.getBeginThesisCreationPeriod() != null && thesisCreationPeriodFactoryExecutor.getEndThesisCreationPeriod() != null) {
+		    if (thesisCreationPeriodFactoryExecutor.getBeginThesisCreationPeriod() != null
+			    && thesisCreationPeriodFactoryExecutor.getEndThesisCreationPeriod() != null) {
 			break;
 		    }
 		}
@@ -416,20 +441,23 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	return mapping.findForward("list-thesis-creation-periods");
     }
 
-    public ActionForward defineCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward defineCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getThesisCreationPeriodFactoryExecutor(request);
 	executeFactoryMethod(thesisCreationPeriodFactoryExecutor);
 	thesisCreationPeriodFactoryExecutor.setExecutionDegree(null);
 	return forwardToListThesisCreationPeriodsPage(mapping, request, thesisCreationPeriodFactoryExecutor);
     }
 
-    public ActionForward downloadDissertationsList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward downloadDissertationsList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final String executionYearIdString = request.getParameter("executionYearId");
 	final Integer executionYearId = executionYearIdString == null ? null : Integer.valueOf(executionYearIdString);
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
 
 	response.setContentType("application/vnd.ms-excel");
-	response.setHeader("Content-disposition", "attachment; filename=dissertacoes" + executionYear.getYear().replace("/", "") + ".xls");
+	response.setHeader("Content-disposition", "attachment; filename=dissertacoes" + executionYear.getYear().replace("/", "")
+		+ ".xls");
 	ServletOutputStream writer = response.getOutputStream();
 
 	exportDissertations(writer, executionYear);
@@ -492,7 +520,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    if (numbers.length() > 0) {
 		numbers.append(" ");
 	    }
-	    if (thesisEvaluationParticipant.hasPerson()) { 
+	    if (thesisEvaluationParticipant.hasPerson()) {
 		final Person person = thesisEvaluationParticipant.getPerson();
 		if (person.hasTeacher()) {
 		    final Teacher teacher = person.getTeacher();

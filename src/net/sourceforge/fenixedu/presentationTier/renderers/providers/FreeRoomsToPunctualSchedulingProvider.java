@@ -22,30 +22,32 @@ public class FreeRoomsToPunctualSchedulingProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-	Set<AllocatableSpace> result = new TreeSet<AllocatableSpace>(AllocatableSpace.ROOM_COMPARATOR_BY_NAME);	
-	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) source;	
-	
-	List<AllocatableSpace> selectedRooms = bean.getRooms();	
+	Set<AllocatableSpace> result = new TreeSet<AllocatableSpace>(AllocatableSpace.ROOM_COMPARATOR_BY_NAME);
+	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) source;
+
+	List<AllocatableSpace> selectedRooms = bean.getRooms();
 	FrequencyType frequency = bean.getFrequency();
 	YearMonthDay beginDate = bean.getBegin();
-	YearMonthDay endDate = bean.getEnd();	
+	YearMonthDay endDate = bean.getEnd();
 	Partial beginTime = bean.getBeginTime();
-	Partial endTime = bean.getEndTime();	
+	Partial endTime = bean.getEndTime();
 	Boolean markSaturday = bean.getMarkSaturday();
 	Boolean markSunday = bean.getMarkSunday();
 	DiaSemana diaSemana = new DiaSemana(DiaSemana.getDiaSemana(beginDate));
-	
-	HourMinuteSecond startTimeHMS = new HourMinuteSecond(beginTime.get(DateTimeFieldType.hourOfDay()), beginTime.get(DateTimeFieldType.minuteOfHour()), 0);
-	HourMinuteSecond endTimeHMS = new HourMinuteSecond(endTime.get(DateTimeFieldType.hourOfDay()), endTime.get(DateTimeFieldType.minuteOfHour()), 0);
-	
-	for (AllocatableSpace room :  AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations()) {	    
-	    if (!selectedRooms.contains(room)) {				
-		if(room.isFree(beginDate, endDate, startTimeHMS, endTimeHMS, diaSemana, frequency, markSaturday, markSunday)) {
+
+	HourMinuteSecond startTimeHMS = new HourMinuteSecond(beginTime.get(DateTimeFieldType.hourOfDay()), beginTime
+		.get(DateTimeFieldType.minuteOfHour()), 0);
+	HourMinuteSecond endTimeHMS = new HourMinuteSecond(endTime.get(DateTimeFieldType.hourOfDay()), endTime
+		.get(DateTimeFieldType.minuteOfHour()), 0);
+
+	for (AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations()) {
+	    if (!selectedRooms.contains(room)) {
+		if (room.isFree(beginDate, endDate, startTimeHMS, endTimeHMS, diaSemana, frequency, markSaturday, markSunday)) {
 		    result.add(room);
-		} 
-	    } 
+		}
+	    }
 	}
-				
+
 	return result;
     }
 

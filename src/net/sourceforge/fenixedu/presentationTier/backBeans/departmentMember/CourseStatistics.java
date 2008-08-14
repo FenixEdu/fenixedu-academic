@@ -37,151 +37,145 @@ public class CourseStatistics extends FenixBackingBean {
     private CompetenceCourse competenceCourse;
 
     public Department getDepartment() {
-        return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
+	return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
     }
 
     public Integer getCompetenceCourseId() throws FenixFilterException, FenixServiceException {
-        Integer competenceCourseId = (Integer) this.getViewState().getAttribute("competenceCourseId");
-        return competenceCourseId;
+	Integer competenceCourseId = (Integer) this.getViewState().getAttribute("competenceCourseId");
+	return competenceCourseId;
     }
 
     public void setCompetenceCourseId(Integer competenceCourseId) {
-        this.getViewState().setAttribute("competenceCourseId", competenceCourseId);
+	this.getViewState().setAttribute("competenceCourseId", competenceCourseId);
     }
 
     public Integer getDegreeId() throws FenixFilterException, FenixServiceException {
-        Integer degreeId = (Integer) this.getViewState().getAttribute("degreeId");
-        return degreeId;
+	Integer degreeId = (Integer) this.getViewState().getAttribute("degreeId");
+	return degreeId;
     }
 
     public void setDegreeId(Integer degreeId) {
-        this.getViewState().setAttribute("degreeId", degreeId);
+	this.getViewState().setAttribute("degreeId", degreeId);
     }
 
     public Integer getExecutionPeriodId() throws FenixFilterException, FenixServiceException {
-        Integer executionPeriodId = (Integer) this.getViewState().getAttribute("executionYearPeriod");
+	Integer executionPeriodId = (Integer) this.getViewState().getAttribute("executionYearPeriod");
 
-        if (executionPeriodId == null) {
-        	executionPeriodId = (Integer) getRequestAttribute("executionPeriodId");
+	if (executionPeriodId == null) {
+	    executionPeriodId = (Integer) getRequestAttribute("executionPeriodId");
 
-            if (executionPeriodId == null) {
-                InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-                        "ReadCurrentExecutionPeriod", new Object[] {});
+	    if (executionPeriodId == null) {
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
+			"ReadCurrentExecutionPeriod", new Object[] {});
 
-                if (infoExecutionPeriod == null) {
-                    executionPeriodId = (Integer) this.getExecutionPeriods().get(
-                            this.executionPeriods.size() - 1).getValue();
-                } else {
-                    executionPeriodId = infoExecutionPeriod.getIdInternal();
-                }
-            }
+		if (infoExecutionPeriod == null) {
+		    executionPeriodId = (Integer) this.getExecutionPeriods().get(this.executionPeriods.size() - 1).getValue();
+		} else {
+		    executionPeriodId = infoExecutionPeriod.getIdInternal();
+		}
+	    }
 
-            this.getViewState().setAttribute("executionPeriodId", executionPeriodId);
-        }
+	    this.getViewState().setAttribute("executionPeriodId", executionPeriodId);
+	}
 
-        return executionPeriodId;
+	return executionPeriodId;
     }
 
     public void setExecutionPeriodId(Integer executionPeriodId) {
-        this.getViewState().setAttribute("executionPeriodId", executionPeriodId);
-        setRequestAttribute("executionPeriodId", executionPeriodId);
+	this.getViewState().setAttribute("executionPeriodId", executionPeriodId);
+	setRequestAttribute("executionPeriodId", executionPeriodId);
     }
 
-    public void onExecutionPeriodChangeForCompetenceCourses(ValueChangeEvent valueChangeEvent)
-            throws FenixFilterException, FenixServiceException {
-    	setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
-        loadCompetenceCourses();
+    public void onExecutionPeriodChangeForCompetenceCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+	    FenixServiceException {
+	setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
+	loadCompetenceCourses();
     }
 
-    public void onExecutionPeriodChangeForDegreeCourses(ValueChangeEvent valueChangeEvent)
-            throws FenixFilterException, FenixServiceException {
-        setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
-        loadDegreeCourses();
+    public void onExecutionPeriodChangeForDegreeCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+	    FenixServiceException {
+	setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
+	loadDegreeCourses();
     }
 
-    public void onExecutionPeriodChangeForExecutionCourses(ValueChangeEvent valueChangeEvent)
-            throws FenixFilterException, FenixServiceException {
-        setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
-        loadExecutionCourses();
+    public void onExecutionPeriodChangeForExecutionCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+	    FenixServiceException {
+	setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
+	loadExecutionCourses();
     }
 
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
-        if (this.executionPeriods == null) {
-            Object[] args = {};
-            List<InfoExecutionYear> executionYearsList = (List<InfoExecutionYear>) ServiceUtils
-                    .executeService( "ReadNotClosedExecutionYears", args);
-            List<SelectItem> result = new ArrayList<SelectItem>();
-            for (InfoExecutionYear executionYear : executionYearsList) {
-            	List<ExecutionSemester> executionSemesters = rootDomainObject.readExecutionYearByOID(executionYear.getIdInternal()).getExecutionPeriods();
-            	for(ExecutionSemester executionSemester : executionSemesters) {
-            		result.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getExecutionYear().getYear() + " - " + executionSemester.getName()));
-            	}
-            }
-            this.executionPeriods = result;
-        }
-        return this.executionPeriods;
+	if (this.executionPeriods == null) {
+	    Object[] args = {};
+	    List<InfoExecutionYear> executionYearsList = (List<InfoExecutionYear>) ServiceUtils.executeService(
+		    "ReadNotClosedExecutionYears", args);
+	    List<SelectItem> result = new ArrayList<SelectItem>();
+	    for (InfoExecutionYear executionYear : executionYearsList) {
+		List<ExecutionSemester> executionSemesters = rootDomainObject.readExecutionYearByOID(
+			executionYear.getIdInternal()).getExecutionPeriods();
+		for (ExecutionSemester executionSemester : executionSemesters) {
+		    result.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getExecutionYear().getYear()
+			    + " - " + executionSemester.getName()));
+		}
+	    }
+	    this.executionPeriods = result;
+	}
+	return this.executionPeriods;
     }
 
     private void loadCompetenceCourses() throws FenixFilterException, FenixServiceException {
-        Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
-        Object args[] = { departmentID, this.getExecutionPeriodId() };
-        competenceCourses = (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService(
-                "ComputeCompetenceCourseStatistics", args);
+	Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
+	Object args[] = { departmentID, this.getExecutionPeriodId() };
+	competenceCourses = (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService(
+		"ComputeCompetenceCourseStatistics", args);
     }
 
-    public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws FenixFilterException,
-            FenixServiceException {
-        if (competenceCourses == null) {
-            loadCompetenceCourses();
-        }
+    public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws FenixFilterException, FenixServiceException {
+	if (competenceCourses == null) {
+	    loadCompetenceCourses();
+	}
 
-        return competenceCourses;
+	return competenceCourses;
     }
 
     private void loadDegreeCourses() throws FenixFilterException, FenixServiceException {
-        degreeCourses = (List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService(
-                "ComputeDegreeCourseStatistics", new Object[] { getCompetenceCourseId(),
-                        getExecutionPeriodId() });
+	degreeCourses = (List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService("ComputeDegreeCourseStatistics",
+		new Object[] { getCompetenceCourseId(), getExecutionPeriodId() });
     }
 
-    public List<DegreeCourseStatisticsDTO> getDegreeCourses() throws FenixFilterException,
-            FenixServiceException {
-        if (degreeCourses == null) {
-            loadDegreeCourses();
-        }
+    public List<DegreeCourseStatisticsDTO> getDegreeCourses() throws FenixFilterException, FenixServiceException {
+	if (degreeCourses == null) {
+	    loadDegreeCourses();
+	}
 
-        return degreeCourses;
+	return degreeCourses;
     }
 
     private void loadExecutionCourses() throws FenixFilterException, FenixServiceException {
-        executionCourses = (List<ExecutionCourseStatisticsDTO>) ServiceUtils.executeService(
-                "ComputeExecutionCourseStatistics", new Object[] {
-                        this.getCompetenceCourseId(), this.getDegreeId(), getExecutionPeriodId() });
+	executionCourses = (List<ExecutionCourseStatisticsDTO>) ServiceUtils.executeService("ComputeExecutionCourseStatistics",
+		new Object[] { this.getCompetenceCourseId(), this.getDegreeId(), getExecutionPeriodId() });
     }
 
-    public List<ExecutionCourseStatisticsDTO> getExecutionCourses() throws FenixFilterException,
-            FenixServiceException {
-        if (executionCourses == null) {
-            loadExecutionCourses();
-        }
+    public List<ExecutionCourseStatisticsDTO> getExecutionCourses() throws FenixFilterException, FenixServiceException {
+	if (executionCourses == null) {
+	    loadExecutionCourses();
+	}
 
-        return executionCourses;
+	return executionCourses;
     }
 
-    public void onCompetenceCourseSelect(ActionEvent event) throws FenixFilterException,
-            FenixServiceException {
+    public void onCompetenceCourseSelect(ActionEvent event) throws FenixFilterException, FenixServiceException {
 
-        int competenceCourseId = Integer.parseInt(getRequestParameter("competenceCourseId"));
-        setCompetenceCourseId(competenceCourseId);
+	int competenceCourseId = Integer.parseInt(getRequestParameter("competenceCourseId"));
+	setCompetenceCourseId(competenceCourseId);
     }
 
-    public void onDegreeCourseSelect(ActionEvent event) throws FenixFilterException,
-            FenixServiceException {
-        int degreeId = Integer.parseInt(getRequestParameter("degreeId"));
-        setDegreeId(degreeId);
+    public void onDegreeCourseSelect(ActionEvent event) throws FenixFilterException, FenixServiceException {
+	int degreeId = Integer.parseInt(getRequestParameter("degreeId"));
+	setDegreeId(degreeId);
     }
 
     public CompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
-        return competenceCourse == null ? rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseId()) : competenceCourse;
+	return competenceCourse == null ? rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseId()) : competenceCourse;
     }
 }

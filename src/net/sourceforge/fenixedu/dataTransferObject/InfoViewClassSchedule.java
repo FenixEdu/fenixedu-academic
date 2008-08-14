@@ -21,34 +21,34 @@ public class InfoViewClassSchedule extends InfoObject {
     }
 
     public InfoViewClassSchedule(InfoClass infoClass, List classLessons) {
-        setInfoClass(infoClass);
-        setClassLessons(classLessons);
+	setInfoClass(infoClass);
+	setClassLessons(classLessons);
     }
 
     public List getClassLessons() {
-        return classLessons;
+	return classLessons;
     }
 
     public InfoClass getInfoClass() {
-        return infoClass;
+	return infoClass;
     }
 
     public void setClassLessons(List list) {
-        classLessons = list;
+	classLessons = list;
     }
 
     public void setInfoClass(InfoClass class1) {
-        infoClass = class1;
+	infoClass = class1;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoViewClassSchedule) {
-            InfoViewClassSchedule infoViewClassSchedule = (InfoViewClassSchedule) obj;
-            resultado = getInfoClass().equals(infoViewClassSchedule.getInfoClass())
-                    && getClassLessons().size() == infoViewClassSchedule.getClassLessons().size();
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoViewClassSchedule) {
+	    InfoViewClassSchedule infoViewClassSchedule = (InfoViewClassSchedule) obj;
+	    resultado = getInfoClass().equals(infoViewClassSchedule.getInfoClass())
+		    && getClassLessons().size() == infoViewClassSchedule.getClassLessons().size();
+	}
+	return resultado;
     }
 
 }

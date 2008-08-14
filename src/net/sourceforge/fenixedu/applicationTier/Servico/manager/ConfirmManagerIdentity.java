@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class ConfirmManagerIdentity extends Service {
 
@@ -16,8 +16,8 @@ public class ConfirmManagerIdentity extends Service {
     }
 
     public Boolean run() {
-        // Authentication is taken care of by the filters.
-        return new Boolean(true);
+	// Authentication is taken care of by the filters.
+	return new Boolean(true);
     }
 
 }

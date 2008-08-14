@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class AlumniAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -18,11 +18,11 @@ public class AlumniAuthorizationFilter extends AuthorizationByRoleFilter {
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     protected RoleType getRoleType() {
-        return RoleType.ALUMNI;
+	return RoleType.ALUMNI;
     }
 
 }

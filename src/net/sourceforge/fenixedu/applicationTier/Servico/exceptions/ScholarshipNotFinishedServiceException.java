@@ -14,21 +14,21 @@ public class ScholarshipNotFinishedServiceException extends FenixServiceExceptio
      *  
      */
     public ScholarshipNotFinishedServiceException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public ScholarshipNotFinishedServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     /**
      * @param cause
      */
     public ScholarshipNotFinishedServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -36,14 +36,14 @@ public class ScholarshipNotFinishedServiceException extends FenixServiceExceptio
      * @param cause
      */
     public ScholarshipNotFinishedServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[ScholarshipNotFinishedServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[ScholarshipNotFinishedServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

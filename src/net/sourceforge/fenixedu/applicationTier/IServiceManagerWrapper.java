@@ -29,11 +29,10 @@ public interface IServiceManagerWrapper {
      * @throws FenixServiceException
      * @throws NotAuthorizedException
      */
-    public Object execute(IUserView id, String service, Object argumentos[])
-            throws FenixServiceException, FenixFilterException;
+    public Object execute(IUserView id, String service, Object argumentos[]) throws FenixServiceException, FenixFilterException;
 
-    public Object execute(IUserView id, String service, String methods, Object argumentos[])
-            throws FenixServiceException, FenixFilterException;
+    public Object execute(IUserView id, String service, String methods, Object argumentos[]) throws FenixServiceException,
+	    FenixFilterException;
 
     public HashMap getMapServicesToWatch(IUserView id);
 

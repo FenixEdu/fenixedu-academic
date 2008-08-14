@@ -13,17 +13,15 @@ import org.apache.struts.action.ActionMapping;
 
 public class ManageResearchUnitAnnouncementsDA extends UnitSiteAnnouncementManagement {
 
-	public ActionForward editAnnouncementBoards(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		List<PartyAnnouncementBoard> boards = getUnit(request).getBoards();
-		request.setAttribute("announcementBoards", boards);
-		return mapping.findForward(boards.isEmpty() ? "noBoards"
-				: "listAnnouncementBoards");
-	}
+    public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	List<PartyAnnouncementBoard> boards = getUnit(request).getBoards();
+	request.setAttribute("announcementBoards", boards);
+	return mapping.findForward(boards.isEmpty() ? "noBoards" : "listAnnouncementBoards");
+    }
 
-	protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-		return "/manageResearchUnitAnnouncements.do";
-	}
+    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
+	return "/manageResearchUnitAnnouncements.do";
+    }
 
 }

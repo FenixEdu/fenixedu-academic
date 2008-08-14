@@ -65,8 +65,7 @@ public class Guide extends Guide_Base {
 	BigDecimal total = BigDecimal.ZERO;
 
 	for (final GuideEntry guideEntry : getGuideEntries()) {
-	    total = total.add(guideEntry.getPriceBigDecimal().multiply(
-		    BigDecimal.valueOf(guideEntry.getQuantity())));
+	    total = total.add(guideEntry.getPriceBigDecimal().multiply(BigDecimal.valueOf(guideEntry.getQuantity())));
 	}
 
 	total.setScale(2, RoundingMode.HALF_EVEN);
@@ -75,8 +74,7 @@ public class Guide extends Guide_Base {
 
     }
 
-    public GuideEntry getEntry(GraduationType graduationType, DocumentType documentType,
-	    String description) {
+    public GuideEntry getEntry(GraduationType graduationType, DocumentType documentType, String description) {
 	for (GuideEntry entry : getGuideEntries()) {
 	    if (graduationType == null || !graduationType.equals(entry.getGraduationType())) {
 		continue;
@@ -97,16 +95,13 @@ public class Guide extends Guide_Base {
     }
 
     public static Integer generateGuideNumber() {
-	return Collections
-		.max(RootDomainObject.getInstance().getGuides(), Guide.yearAndNumberComparator)
-		.getNumber() + 1;
+	return Collections.max(RootDomainObject.getInstance().getGuides(), Guide.yearAndNumberComparator).getNumber() + 1;
 
     }
 
     public static Guide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version) {
 	for (Guide guide : RootDomainObject.getInstance().getGuides()) {
-	    if (guide.getNumber().equals(number) && guide.getYear().equals(year)
-		    && guide.getVersion().equals(version)) {
+	    if (guide.getNumber().equals(number) && guide.getYear().equals(year) && guide.getVersion().equals(version)) {
 		return guide;
 	    }
 	}
@@ -151,10 +146,9 @@ public class Guide extends Guide_Base {
 
     @Deprecated
     public void setTotal(Double total) {
-	if(total != null){
+	if (total != null) {
 	    setTotalBigDecimal(BigDecimal.valueOf(total));
-	}
-	else{
+	} else {
 	    setTotalBigDecimal(null);
 	}
     }

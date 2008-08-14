@@ -20,9 +20,9 @@ public class DataIndisponivel extends java.util.Date implements Serializable {
     /** variavel que contem valor de data invalida */
     private static java.util.Date valor = null;
     static {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(ano + 1900, mes, dia);
-        valor = calendar.getTime();
+	Calendar calendar = Calendar.getInstance();
+	calendar.set(ano + 1900, mes, dia);
+	valor = calendar.getTime();
     }
 
     /** mensagem a imprimir */
@@ -30,8 +30,8 @@ public class DataIndisponivel extends java.util.Date implements Serializable {
 
     /** Creates a new instance of DataIndisponivel */
     public DataIndisponivel() {
-        /* invoca construtor da classe mae */
-        super();
+	/* invoca construtor da classe mae */
+	super();
     }
 
     /**
@@ -40,7 +40,7 @@ public class DataIndisponivel extends java.util.Date implements Serializable {
      * @return string data indisponivel
      */
     public String toString() {
-        return mensagem;
+	return mensagem;
     }
 
     /**
@@ -49,16 +49,16 @@ public class DataIndisponivel extends java.util.Date implements Serializable {
      * @return Date(0, 0, 1) (1/1/1900)
      */
     public static java.util.Date getValor() {
-        return valor;
+	return valor;
     }
 
     public static boolean isDataIndisponivel(java.util.Date dataGenerica) {
-        boolean resultado = false;
+	boolean resultado = false;
 
-        if (dataGenerica.equals(valor))
-            resultado = true;
+	if (dataGenerica.equals(valor))
+	    resultado = true;
 
-        return resultado;
+	return resultado;
     }
 
 }

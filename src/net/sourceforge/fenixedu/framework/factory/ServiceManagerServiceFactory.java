@@ -19,90 +19,91 @@ public class ServiceManagerServiceFactory {
 
     private static final IServiceManagerWrapper service = new ServiceManagerDefaultImpl();
 
-    public static Object executeService(String serviceName, Object[] serviceArgs)
-    	throws FenixServiceException, FenixFilterException {
+    public static Object executeService(String serviceName, Object[] serviceArgs) throws FenixServiceException,
+	    FenixFilterException {
 	final IUserView userView = UserView.getUser();
 	return executeService(userView, serviceName, serviceArgs);
     }
-    
+
     public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)
-            throws FenixServiceException, FenixFilterException {
-        try {
-            return service.execute(userView, serviceName, serviceArgs);
-        } catch (ServiceManagerDefaultImpl.ExceptionWrapper e) {
-            if (e != null && e.getCause() != null && e.getCause() instanceof FenixServiceException) {
-                FenixServiceException fenixServiceException = (FenixServiceException) e.getCause();
-                throw fenixServiceException;
-            }
-            if (e != null && e.getCause() != null && e.getCause() instanceof DomainException) {
-                DomainException domainException = (DomainException) e.getCause();
-                throw domainException;
-            }
-            if (e != null && e.getCause() != null && e.getCause() instanceof FileManagerException) {
-                FileManagerException fileManagerException = (FileManagerException) e.getCause();
-                throw fileManagerException;
-            }
-            if (e != null && e.getCause() != null && e.getCause() instanceof FenixFilterException) {
-                FenixFilterException fenixFilterException = (FenixFilterException) e.getCause();
-                throw fenixFilterException;
-            }
-            if (e != null && e.getCause() != null && e.getCause() instanceof ServiceManagerException) {
-                ServiceManagerException serviceManagerException = (ServiceManagerException) e.getCause();
-                if (serviceManagerException.getCause() != null && serviceManagerException.getCause() instanceof NotAuthorizedException) {
-                    NotAuthorizedException notAuthorizedException = (NotAuthorizedException) serviceManagerException.getCause();
-                    throw notAuthorizedException;
-                }
-            }
-            if (e != null && e.getCause() != null && e.getCause() instanceof RuntimeException) {
-        	RuntimeException runtimeException = (RuntimeException) e.getCause();
-                throw runtimeException;
-            }
-            throw new FenixRemoteServiceException(e);
-        }
+	    throws FenixServiceException, FenixFilterException {
+	try {
+	    return service.execute(userView, serviceName, serviceArgs);
+	} catch (ServiceManagerDefaultImpl.ExceptionWrapper e) {
+	    if (e != null && e.getCause() != null && e.getCause() instanceof FenixServiceException) {
+		FenixServiceException fenixServiceException = (FenixServiceException) e.getCause();
+		throw fenixServiceException;
+	    }
+	    if (e != null && e.getCause() != null && e.getCause() instanceof DomainException) {
+		DomainException domainException = (DomainException) e.getCause();
+		throw domainException;
+	    }
+	    if (e != null && e.getCause() != null && e.getCause() instanceof FileManagerException) {
+		FileManagerException fileManagerException = (FileManagerException) e.getCause();
+		throw fileManagerException;
+	    }
+	    if (e != null && e.getCause() != null && e.getCause() instanceof FenixFilterException) {
+		FenixFilterException fenixFilterException = (FenixFilterException) e.getCause();
+		throw fenixFilterException;
+	    }
+	    if (e != null && e.getCause() != null && e.getCause() instanceof ServiceManagerException) {
+		ServiceManagerException serviceManagerException = (ServiceManagerException) e.getCause();
+		if (serviceManagerException.getCause() != null
+			&& serviceManagerException.getCause() instanceof NotAuthorizedException) {
+		    NotAuthorizedException notAuthorizedException = (NotAuthorizedException) serviceManagerException.getCause();
+		    throw notAuthorizedException;
+		}
+	    }
+	    if (e != null && e.getCause() != null && e.getCause() instanceof RuntimeException) {
+		RuntimeException runtimeException = (RuntimeException) e.getCause();
+		throw runtimeException;
+	    }
+	    throw new FenixRemoteServiceException(e);
+	}
     }
 
     public static Map getServicesLogInfo(IUserView userView) throws FenixServiceException {
-        return service.getMapServicesToWatch(userView);
+	return service.getMapServicesToWatch(userView);
     }
 
     public static Map getUsersLogInfo(IUserView userView) throws FenixServiceException {
-        return service.getMapUsersToWatch(userView);
+	return service.getMapUsersToWatch(userView);
     }
 
     public static Boolean serviceLoggingIsOn(IUserView userView) throws FenixServiceException {
-        return service.serviceLoggingIsOn(userView);
+	return service.serviceLoggingIsOn(userView);
     }
 
     public static Boolean userLoggingIsOn(IUserView userView) throws FenixServiceException {
-        return service.userLoggingIsOn(userView);
+	return service.userLoggingIsOn(userView);
     }
 
     public static SystemInfo getSystemInfo(IUserView userView) throws FenixServiceException {
-        return service.getSystemInfo(userView);
+	return service.getSystemInfo(userView);
     }
 
     public static void turnServiceLoggingOn(IUserView userView) throws FenixServiceException {
-        service.turnServiceLoggingOn(userView);
+	service.turnServiceLoggingOn(userView);
     }
 
     public static void turnUserLoggingOn(IUserView userView) throws FenixServiceException {
-        service.turnUserLoggingOn(userView);
+	service.turnUserLoggingOn(userView);
     }
 
     public static void turnServiceLoggingOff(IUserView userView) throws FenixServiceException {
-        service.turnServiceLoggingOff(userView);
+	service.turnServiceLoggingOff(userView);
     }
 
     public static void turnUserLoggingOff(IUserView userView) throws FenixServiceException {
-        service.turnUserLoggingOff(userView);
+	service.turnUserLoggingOff(userView);
     }
 
     public static void clearServiceLogHistory(IUserView userView) throws FenixServiceException {
-        service.clearServiceLogHistory(userView);
+	service.clearServiceLogHistory(userView);
     }
 
     public static void clearUserLogHistory(IUserView userView) throws FenixServiceException {
-        service.clearUserLogHistory(userView);
+	service.clearUserLogHistory(userView);
     }
 
 }

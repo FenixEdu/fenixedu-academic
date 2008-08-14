@@ -24,32 +24,32 @@ public class DateValidatorTag extends ValidatorTag {
     private Boolean strict;
 
     public DateValidatorTag() {
-        super();
-        super.setValidatorId("dateValidator");
+	super();
+	super.setValidatorId("dateValidator");
     }
 
     protected Validator createValidator() throws JspException {
-        DateValidator dateValidator = (DateValidator) super.createValidator();
-        dateValidator.setFormat(getFormat());
-        dateValidator.setStrict(getStrict());
+	DateValidator dateValidator = (DateValidator) super.createValidator();
+	dateValidator.setFormat(getFormat());
+	dateValidator.setStrict(getStrict());
 
-        return dateValidator;
+	return dateValidator;
     }
 
     public String getFormat() {
-        return format;
+	return format;
     }
 
     public void setFormat(String format) {
-        this.format = format;
+	this.format = format;
     }
 
     public Boolean getStrict() {
-        return strict;
+	return strict;
     }
 
     public void setStrict(Boolean strict) {
-        this.strict = strict;
+	this.strict = strict;
     }
 
 }

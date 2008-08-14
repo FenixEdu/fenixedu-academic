@@ -16,9 +16,8 @@ import org.joda.time.YearMonthDay;
 
 public class EditMasterDegreeCandidate extends Service {
 
-    public InfoMasterDegreeCandidate run(MasterDegreeCandidate oldMasterDegreeCandidate,
-	    InfoMasterDegreeCandidate newCandidate, InfoPersonEditor infoPersonEditor)
-	    throws ExcepcaoInexistente, FenixServiceException {
+    public InfoMasterDegreeCandidate run(MasterDegreeCandidate oldMasterDegreeCandidate, InfoMasterDegreeCandidate newCandidate,
+	    InfoPersonEditor infoPersonEditor) throws ExcepcaoInexistente, FenixServiceException {
 
 	if (oldMasterDegreeCandidate == null) {
 	    throw new ExcepcaoInexistente("Unknown Candidate !!");
@@ -40,11 +39,9 @@ public class EditMasterDegreeCandidate extends Service {
 	oldMasterDegreeCandidate.setSpecializationArea(newCandidate.getSpecializationArea());
 
 	// Change Situation
-	CandidateSituation oldCandidateSituation = oldMasterDegreeCandidate
-		.getActiveCandidateSituation();
+	CandidateSituation oldCandidateSituation = oldMasterDegreeCandidate.getActiveCandidateSituation();
 	CandidateSituation newCandidateSituation = null;
-	if (!oldCandidateSituation.getSituation().equals(
-		newCandidate.getInfoCandidateSituation().getSituation())) {
+	if (!oldCandidateSituation.getSituation().equals(newCandidate.getInfoCandidateSituation().getSituation())) {
 
 	    oldCandidateSituation.setValidation(new State(State.INACTIVE));
 	    newCandidateSituation = new CandidateSituation();
@@ -54,8 +51,7 @@ public class EditMasterDegreeCandidate extends Service {
 	    newCandidateSituation.setSituation(newCandidate.getInfoCandidateSituation().getSituation());
 	    newCandidateSituation.setValidation(new State(State.ACTIVE));
 
-	} else if (oldCandidateSituation.getSituation().equals(
-		newCandidate.getInfoCandidateSituation().getSituation())) {
+	} else if (oldCandidateSituation.getSituation().equals(newCandidate.getInfoCandidateSituation().getSituation())) {
 	    newCandidateSituation = oldCandidateSituation;
 	    newCandidateSituation.setDateYearMonthDay(oldCandidateSituation.getDateYearMonthDay());
 	    newCandidateSituation.setMasterDegreeCandidate(oldMasterDegreeCandidate);

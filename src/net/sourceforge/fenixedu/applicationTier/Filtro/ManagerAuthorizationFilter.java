@@ -11,6 +11,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class ManagerAuthorizationFilter extends AuthorizationByRoleFilter {
 
     protected RoleType getRoleType() {
-        return RoleType.MANAGER;
+	return RoleType.MANAGER;
     }
 }

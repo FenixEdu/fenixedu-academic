@@ -28,94 +28,90 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDispatchAction {
 
-    public ActionForward showFirstPage(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward showFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+	Integer degreeID = new Integer(request.getParameter("degreeId"));
+	Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-        if (degreeID == null && degreeCurricularPlanID == null) {
-            degreeID = (Integer) request.getAttribute("degreeId");
-            degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanId");
-        }
+	if (degreeID == null && degreeCurricularPlanID == null) {
+	    degreeID = (Integer) request.getAttribute("degreeId");
+	    degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanId");
+	}
 
-        Object args[] = { degreeCurricularPlanID };
+	Object args[] = { degreeCurricularPlanID };
 
-        try {
-            Map result = (Map) ServiceManagerServiceFactory.executeService(
-                    "ReadPrecedencesFromDegreeCurricularPlan", args);
-            request.setAttribute("precedences", result);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	try {
+	    Map result = (Map) ServiceManagerServiceFactory.executeService("ReadPrecedencesFromDegreeCurricularPlan", args);
+	    request.setAttribute("precedences", result);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("degreeId", degreeID);
-        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+	request.setAttribute("degreeId", degreeID);
+	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-        return mapping.findForward("showFirstPage");
+	return mapping.findForward("showFirstPage");
     }
 
-    public ActionForward showSecondPage(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward showSecondPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+	DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
+	IUserView userView = UserView.getUser();
 
-        Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
-        Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
-        Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
+	Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
+	Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
+	Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
 
-        Object args[] = { degreeCurricularPlanID };
+	Object args[] = { degreeCurricularPlanID };
 
-        try {
-            Map result = (Map) ServiceManagerServiceFactory.executeService(
-                    "ReadPrecedencesFromDegreeCurricularPlan", args);
-            request.setAttribute("precedences", result);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	try {
+	    Map result = (Map) ServiceManagerServiceFactory.executeService("ReadPrecedencesFromDegreeCurricularPlan", args);
+	    request.setAttribute("precedences", result);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        mergePrecedencesForm.set("firstPrecedence", firstPrecedenceID);
-        request.setAttribute("degreeId", degreeID);
-        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+	mergePrecedencesForm.set("firstPrecedence", firstPrecedenceID);
+	request.setAttribute("degreeId", degreeID);
+	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-        return mapping.findForward("showSecondPage");
+	return mapping.findForward("showSecondPage");
     }
 
-    public ActionForward merge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward merge(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        ActionErrors errors = new ActionErrors();
-        DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+	ActionErrors errors = new ActionErrors();
+	DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
+	IUserView userView = UserView.getUser();
 
-        Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
-        Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
-        Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
-        Integer secondPrecedenceID = (Integer) mergePrecedencesForm.get("secondPrecedence");
+	Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
+	Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
+	Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
+	Integer secondPrecedenceID = (Integer) mergePrecedencesForm.get("secondPrecedence");
 
-        Object args1[] = { firstPrecedenceID, secondPrecedenceID };
-        Object args2[] = { degreeCurricularPlanID };
+	Object args1[] = { firstPrecedenceID, secondPrecedenceID };
+	Object args2[] = { degreeCurricularPlanID };
 
-        try {
-            ServiceManagerServiceFactory.executeService(
-                    "MergePrecedencesForDegreeCurricularPlan", args1);
-            Map result = (Map) ServiceManagerServiceFactory.executeService(
-                    "ReadPrecedencesFromDegreeCurricularPlan", args2);
-            request.setAttribute("precedences", result);
-        } catch (InvalidArgumentsServiceException e) {
-            errors.add(e.getMessage(), new ActionError(e.getMessage()));
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	try {
+	    ServiceManagerServiceFactory.executeService("MergePrecedencesForDegreeCurricularPlan", args1);
+	    Map result = (Map) ServiceManagerServiceFactory.executeService("ReadPrecedencesFromDegreeCurricularPlan", args2);
+	    request.setAttribute("precedences", result);
+	} catch (InvalidArgumentsServiceException e) {
+	    errors.add(e.getMessage(), new ActionError(e.getMessage()));
+	    saveErrors(request, errors);
+	    return mapping.getInputForward();
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("degreeId", degreeID);
-        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+	request.setAttribute("degreeId", degreeID);
+	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-        return mapping.findForward("backToBeginig");
+	return mapping.findForward("backToBeginig");
     }
 }

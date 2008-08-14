@@ -23,19 +23,18 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
     /*
      * (non-Javadoc)
      * 
-     * @see presentationTier.Action.department.AbstractReadProfessorshipsAction#getDetailedProfessorships(ServidorAplicacao.IUserView,
-     *      java.lang.Integer, org.apache.struts.action.DynaActionForm,
-     *      javax.servlet.http.HttpServletRequest)
+     * @seepresentationTier.Action.department.AbstractReadProfessorshipsAction#
+     * getDetailedProfessorships(ServidorAplicacao.IUserView, java.lang.Integer,
+     * org.apache.struts.action.DynaActionForm,
+     * javax.servlet.http.HttpServletRequest)
      */
-    List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
-            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-        Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
-        executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null
-                : executionPeriodId;
-        List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(
-                "ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[] { teacherId,
-                        executionPeriodId });
-        return detailedInfoProfessorshipList;
+    List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
+	    throws FenixServiceException, FenixFilterException {
+	Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
+	executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null : executionPeriodId;
+	List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(
+		"ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[] { teacherId, executionPeriodId });
+	return detailedInfoProfessorshipList;
     }
 
 }

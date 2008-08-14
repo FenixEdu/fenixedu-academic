@@ -26,19 +26,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class LerAlunosDeTurno extends Service {
 
     public List<InfoStudent> run(ShiftKey keyTurno) {
-    	
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
-    	final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
-        List<Registration> alunos = shift.getStudents();
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(keyTurno.getInfoExecutionCourse()
+		.getIdInternal());
+	final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
-        List<InfoStudent> infoAlunos = new ArrayList<InfoStudent>(alunos.size());
-        for (final Iterator<Registration> iterator = alunos.iterator(); iterator.hasNext();) {
-            Registration elem = iterator.next();
-            infoAlunos.add(new InfoStudent(elem));
-        }
+	List<Registration> alunos = shift.getStudents();
 
-        return infoAlunos;
+	List<InfoStudent> infoAlunos = new ArrayList<InfoStudent>(alunos.size());
+	for (final Iterator<Registration> iterator = alunos.iterator(); iterator.hasNext();) {
+	    Registration elem = iterator.next();
+	    infoAlunos.add(new InfoStudent(elem));
+	}
+
+	return infoAlunos;
     }
 
 }

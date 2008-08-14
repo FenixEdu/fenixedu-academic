@@ -35,12 +35,12 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     public static class InternalUnitNameAndTypeLimitedOrderedSet extends UnitNameLimitedOrderedSet {
 
 	private Class<? extends Unit> unitType;
-	
+
 	public InternalUnitNameAndTypeLimitedOrderedSet(int maxElements, Class<? extends Unit> unitType) {
 	    super(maxElements);
-	    this.unitType = unitType; 
+	    this.unitType = unitType;
 	}
-	
+
 	@Override
 	public boolean add(UnitName unitName) {
 	    if (size() < maxElements && unitName.getUnit().getClass().equals(unitType)) {
@@ -54,7 +54,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	    return false;
 	}
     }
-    
+
     public static class InternalUnitNameLimitedOrderedSet extends UnitNameLimitedOrderedSet {
 
 	public InternalUnitNameLimitedOrderedSet(final int maxElements) {
@@ -106,16 +106,15 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	return true;
     }
 
-    public static void find(final UnitNameLimitedOrderedSet unitNameLimitedOrderedSet, final String name,
-	    final int size) {
+    public static void find(final UnitNameLimitedOrderedSet unitNameLimitedOrderedSet, final String name, final int size) {
 	final String[] nameParts = UnitNamePart.getNameParts(name);
 	if (nameParts.length > 0) {
 	    final UnitNamePart unitNamePart = UnitNamePart.find(nameParts[0]);
 	    if (unitNamePart != null && nameParts.length == 1) {
 		unitNameLimitedOrderedSet.addAll(unitNamePart.getUnitNameSet());
 	    } else {
-		final Set<UnitName> unitNames = unitNamePart == null ? RootDomainObject.getInstance()
-			.getUnitNameSet() : unitNamePart.getUnitNameSet();
+		final Set<UnitName> unitNames = unitNamePart == null ? RootDomainObject.getInstance().getUnitNameSet()
+			: unitNamePart.getUnitNameSet();
 		for (final UnitName unitName : unitNames) {
 		    final String normalizedUnitName = unitName.getName();
 		    if (containsAll(normalizedUnitName, nameParts)) {
@@ -127,21 +126,20 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     }
 
     public static Collection<UnitName> findInternalUnitWithType(final String name, final int size, Class<? extends Unit> unitType) {
-	InternalUnitNameAndTypeLimitedOrderedSet internalUnitNameAndTypeLimitedOrderedSet = new InternalUnitNameAndTypeLimitedOrderedSet(size,unitType);
-	find(internalUnitNameAndTypeLimitedOrderedSet,name,size);
+	InternalUnitNameAndTypeLimitedOrderedSet internalUnitNameAndTypeLimitedOrderedSet = new InternalUnitNameAndTypeLimitedOrderedSet(
+		size, unitType);
+	find(internalUnitNameAndTypeLimitedOrderedSet, name, size);
 	return internalUnitNameAndTypeLimitedOrderedSet;
     }
-    
+
     public static Collection<UnitName> findInternalUnit(final String name, final int size) {
-	final InternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet = new InternalUnitNameLimitedOrderedSet(
-		size);
+	final InternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet = new InternalUnitNameLimitedOrderedSet(size);
 	find(unitNameLimitedOrderedSet, name, size);
 	return unitNameLimitedOrderedSet;
     }
-    
+
     public static Collection<UnitName> findExternalUnit(final String name, final int size) {
-	final ExternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet = new ExternalUnitNameLimitedOrderedSet(
-		size);
+	final ExternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet = new ExternalUnitNameLimitedOrderedSet(size);
 	find(unitNameLimitedOrderedSet, name, size);
 	return unitNameLimitedOrderedSet;
     }

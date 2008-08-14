@@ -8,12 +8,12 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class UnavaibleVigilantsInGivenConvoke implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        ConvokeBean bean = (ConvokeBean) source;
-        return bean.getUnavailableVigilants();
+	ConvokeBean bean = (ConvokeBean) source;
+	return bean.getUnavailableVigilants();
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 
 }

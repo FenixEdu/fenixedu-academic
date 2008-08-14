@@ -91,12 +91,13 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 	return innerFormationManagement(mapping, actionForm, request, response);
     }
 
-//    public ActionForward viewFormation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-//	    HttpServletResponse response) throws Exception {
-//
-//	request.setAttribute("formationView", "true");
-//	return getFormation(mapping, request);
-//    }
+    // public ActionForward viewFormation(ActionMapping mapping, ActionForm
+    // actionForm, HttpServletRequest request,
+    // HttpServletResponse response) throws Exception {
+    //
+    // request.setAttribute("formationView", "true");
+    // return getFormation(mapping, request);
+    // }
 
     public ActionForward prepareFormationEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

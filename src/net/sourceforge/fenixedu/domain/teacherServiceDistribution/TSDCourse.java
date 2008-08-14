@@ -214,10 +214,10 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public Integer getNumberOfSchoolClasses(ShiftType type) {
-	TSDCurricularLoad load = getTSDCurricularLoadByShiftType(type); 
+	TSDCurricularLoad load = getTSDCurricularLoadByShiftType(type);
 	return load == null ? 0 : load.getNumberOfSchoolClasses();
     }
-    
+
     public double getNumberOfHoursForStudents(ShiftType type) {
 	return getHoursPerShift(type) * getShiftFrequency(type);
     }
@@ -449,7 +449,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     public Double getHoursNotLectured(ShiftType type) {
 	return getHours(type) - getTotalHoursLecturedByShiftType(type);
     }
-    
+
     public Double getTotalHoursNotLectured() {
 	return getTotalHours() - getTotalHoursLectured();
     }
@@ -541,7 +541,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	for (CurricularCourse course : getAssociatedCurricularCourses()) {
 	    degrees.add(course.getDegree());
 	}
-	
+
 	return degrees;
     }
 }

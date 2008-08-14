@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
 
 public class TutorUnitProcessor extends AbstractPathProcessor {
-  
+
     private Unit tutorUnit;
-    
+
     @Override
     public Content processPath(String path) {
 	return getTutorUnit().getSite();
@@ -23,15 +23,15 @@ public class TutorUnitProcessor extends AbstractPathProcessor {
     public Content getInitialContent() {
 	return getTutorUnit().getSite();
     }
-    
+
     public boolean keepPortalInContentsPath() {
 	return false;
     }
-    
+
     private Unit getTutorUnit() {
-	if(tutorUnit == null) {
-	    for(UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
-		if(acronym.getAcronym().equalsIgnoreCase("Tutor")) {
+	if (tutorUnit == null) {
+	    for (UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
+		if (acronym.getAcronym().equalsIgnoreCase("Tutor")) {
 		    tutorUnit = acronym.getUnits().get(0);
 		    return tutorUnit;
 		}

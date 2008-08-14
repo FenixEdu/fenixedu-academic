@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveExamCoordinatorsFromVigilantGroup extends Service {
     public void run(List<ExamCoordinator> coordinators, VigilantGroup group) {
-        for (ExamCoordinator coordinator : coordinators) {
-            group.removeExamCoordinators(coordinator);
-        }
+	for (ExamCoordinator coordinator : coordinators) {
+	    group.removeExamCoordinators(coordinator);
+	}
     }
 }

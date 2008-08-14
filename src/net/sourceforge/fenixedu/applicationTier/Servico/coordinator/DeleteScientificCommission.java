@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class DeleteScientificCommission extends Service {
 
     public void run(Integer executionDegreeId, ScientificCommission commission) {
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
-        
-        if (! executionDegree.getScientificCommissionMembers().contains(commission)) {
-            throw new DomainException("scientificCommission.delete.incorrectExecutionDegree");
-        }
-        
-        commission.delete();
+	ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+
+	if (!executionDegree.getScientificCommissionMembers().contains(commission)) {
+	    throw new DomainException("scientificCommission.delete.incorrectExecutionDegree");
+	}
+
+	commission.delete();
     }
-    
+
 }

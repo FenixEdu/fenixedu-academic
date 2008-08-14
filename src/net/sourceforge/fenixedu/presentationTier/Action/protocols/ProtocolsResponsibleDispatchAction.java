@@ -21,8 +21,8 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ProtocolsResponsibleDispatchAction extends FenixDispatchAction {
 
-    public ActionForward showProtocols(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showProtocols(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	final IUserView userView = UserView.getUser();
 
@@ -40,8 +40,8 @@ public class ProtocolsResponsibleDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("show-protocols");
     }
 
-    public ActionForward viewProtocol(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewProtocol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	final IUserView userView = UserView.getUser();
 	Integer protocolId = new Integer(request.getParameter("idInternal"));

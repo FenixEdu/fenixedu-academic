@@ -18,8 +18,7 @@ public class CreateOtherPartyPayment extends Service {
     public void run(final Person person, final CreateOtherPartyPaymentBean createOtherPartyPaymentBean) {
 	final Event event = createOtherPartyPaymentBean.getEvent();
 	event.addOtherPartyAmount(person.getUser(), createOtherPartyPaymentBean.getContributorParty(),
-		createOtherPartyPaymentBean.getAmount(), new AccountingTransactionDetailDTO(
-			new DateTime(), PaymentMode.CASH));
+		createOtherPartyPaymentBean.getAmount(), new AccountingTransactionDetailDTO(new DateTime(), PaymentMode.CASH));
     }
 
 }

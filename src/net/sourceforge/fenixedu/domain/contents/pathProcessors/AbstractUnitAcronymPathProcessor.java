@@ -18,13 +18,13 @@ public abstract class AbstractUnitAcronymPathProcessor extends AbstractPathProce
     private List<Unit> findUnitsInPath(String[] possibleUnits) {
 	List<Unit> units = new ArrayList<Unit>();
 	String unitName = possibleUnits[0];
-	
-	Unit currentUnit = findCorrectUnit(Unit.readUnitsByAcronym(unitName,true));
 
-	if(currentUnit == null && unitName.contains("-")) {
-	    currentUnit = findCorrectUnit(Unit.readUnitsByAcronym(unitName.replace('-', ' '),true));
+	Unit currentUnit = findCorrectUnit(Unit.readUnitsByAcronym(unitName, true));
+
+	if (currentUnit == null && unitName.contains("-")) {
+	    currentUnit = findCorrectUnit(Unit.readUnitsByAcronym(unitName.replace('-', ' '), true));
 	}
-	
+
 	if (currentUnit != null && isDescendantOfBaseUnit(currentUnit)) {
 	    units.add(currentUnit);
 	    for (int i = 1; i < possibleUnits.length; i++) {

@@ -19,8 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadActiveMasterDegreeThesis extends Service {
 
-    public Collection<MasterDegreeThesis> run(MasterDegreeThesisState thesisState, Integer year,
-	    Degree degree) {
+    public Collection<MasterDegreeThesis> run(MasterDegreeThesisState thesisState, Integer year, Degree degree) {
 
 	Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
 	for (MasterDegreeThesis masterDegreeThesis : rootDomainObject.getMasterDegreeThesiss()) {
@@ -30,16 +29,14 @@ public class ReadActiveMasterDegreeThesis extends Service {
 	    }
 
 	    if (year != null && thesisState != MasterDegreeThesisState.NOT_DELIVERED) {
-		final MasterDegreeProofVersion proofVersion = masterDegreeThesis
-			.getActiveMasterDegreeProofVersion();
+		final MasterDegreeProofVersion proofVersion = masterDegreeThesis.getActiveMasterDegreeProofVersion();
 
 		if (proofVersion == null) {
 		    continue;
 		}
 
 		if (thesisState == MasterDegreeThesisState.CONCLUDED
-			&& (proofVersion.getProofDateYearMonthDay() == null || proofVersion
-				.getProofDateYearMonthDay().getYear() != year)) {
+			&& (proofVersion.getProofDateYearMonthDay() == null || proofVersion.getProofDateYearMonthDay().getYear() != year)) {
 		    continue;
 		}
 

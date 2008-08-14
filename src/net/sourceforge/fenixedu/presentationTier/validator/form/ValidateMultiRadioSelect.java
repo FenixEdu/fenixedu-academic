@@ -36,22 +36,22 @@ public class ValidateMultiRadioSelect {
      * @return
      */
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
-            HttpServletRequest request, ServletContext application) {
+	    HttpServletRequest request, ServletContext application) {
 
-        DynaActionForm form = (DynaActionForm) bean;
-        HashMap hashMap = (HashMap) form.get(field.getProperty());
-        if (hashMap.keySet().size() == 0) {
-            errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
-            return false;
-        }
-        Iterator iterator = hashMap.keySet().iterator();
-        while (iterator.hasNext()) {
-            String key = (String) iterator.next();
-            if (hashMap.get(key).equals("")) {
-                errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
-                return false;
-            }
-        }
-        return true;
+	DynaActionForm form = (DynaActionForm) bean;
+	HashMap hashMap = (HashMap) form.get(field.getProperty());
+	if (hashMap.keySet().size() == 0) {
+	    errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
+	    return false;
+	}
+	Iterator iterator = hashMap.keySet().iterator();
+	while (iterator.hasNext()) {
+	    String key = (String) iterator.next();
+	    if (hashMap.get(key).equals("")) {
+		errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
+		return false;
+	    }
+	}
+	return true;
     }
 }

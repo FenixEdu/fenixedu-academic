@@ -9,29 +9,29 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class DegreeSite extends DegreeSite_Base {
 
     public DegreeSite(Degree degree) {
-        super();
-        
-        setDegree(degree);
+	super();
+
+	setDegree(degree);
     }
-    
+
     @Override
     public IGroup getOwner() {
-        return new CurrentDegreeCoordinatorsGroup(getDegree());
+	return new CurrentDegreeCoordinatorsGroup(getDegree());
     }
 
     @Override
     public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
-        
-        groups.add(new CurrentDegreeCoordinatorsGroup(getDegree()));
-        
-        return groups;
+	List<IGroup> groups = super.getContextualPermissionGroups();
+
+	groups.add(new CurrentDegreeCoordinatorsGroup(getDegree()));
+
+	return groups;
     }
 
     @Override
     protected void disconnect() {
 	removeDegree();
-        super.disconnect();
+	super.disconnect();
     }
 
     @Override

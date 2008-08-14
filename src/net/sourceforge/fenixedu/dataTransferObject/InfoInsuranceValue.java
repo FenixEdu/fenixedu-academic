@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.InsuranceValue;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class InfoInsuranceValue extends InfoObject {
 
@@ -19,28 +19,28 @@ public class InfoInsuranceValue extends InfoObject {
     private Date endDate;
 
     protected void copyFromDomain(InsuranceValue insuranceValue) {
-        super.copyFromDomain(insuranceValue);
-        this.annualValue = insuranceValue.getAnnualValue();
-        this.endDate = insuranceValue.getEndDate();
-        this.infoExecutionYear = InfoExecutionYear.newInfoFromDomain(insuranceValue.getExecutionYear());
+	super.copyFromDomain(insuranceValue);
+	this.annualValue = insuranceValue.getAnnualValue();
+	this.endDate = insuranceValue.getEndDate();
+	this.infoExecutionYear = InfoExecutionYear.newInfoFromDomain(insuranceValue.getExecutionYear());
 
     }
 
     public static InfoInsuranceValue newInfoFromDomain(InsuranceValue insuranceValue) {
 
-        InfoInsuranceValue infoInsuranceValue = null;
-        if (insuranceValue != null) {
-            infoInsuranceValue = new InfoInsuranceValue();
-            infoInsuranceValue.copyFromDomain(insuranceValue);
-        }
-        return infoInsuranceValue;
+	InfoInsuranceValue infoInsuranceValue = null;
+	if (insuranceValue != null) {
+	    infoInsuranceValue = new InfoInsuranceValue();
+	    infoInsuranceValue.copyFromDomain(insuranceValue);
+	}
+	return infoInsuranceValue;
     }
 
     /**
      * @return Returns the annualValue.
      */
     public Double getAnnualValue() {
-        return annualValue;
+	return annualValue;
     }
 
     /**
@@ -48,14 +48,14 @@ public class InfoInsuranceValue extends InfoObject {
      *            The annualValue to set.
      */
     public void setAnnualValue(Double annualValue) {
-        this.annualValue = annualValue;
+	this.annualValue = annualValue;
     }
 
     /**
      * @return Returns the infoExecutionYear.
      */
     public InfoExecutionYear getInfoExecutionYear() {
-        return infoExecutionYear;
+	return infoExecutionYear;
     }
 
     /**
@@ -63,14 +63,14 @@ public class InfoInsuranceValue extends InfoObject {
      *            The infoExecutionYear to set.
      */
     public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-        this.infoExecutionYear = infoExecutionYear;
+	this.infoExecutionYear = infoExecutionYear;
     }
 
     public Date getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 }

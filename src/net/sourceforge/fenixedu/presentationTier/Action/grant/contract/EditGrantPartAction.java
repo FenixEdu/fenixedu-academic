@@ -39,8 +39,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data
      */
-    public ActionForward prepareEditGrantPartForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditGrantPartForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer idGrantPart = null;
 	Integer loaddb = null;
@@ -55,28 +55,25 @@ public class EditGrantPartAction extends FenixDispatchAction {
 	DynaValidatorForm grantPartForm = (DynaValidatorForm) form;
 
 	if (loaddb != null && loaddb.equals(new Integer(1))) {
-	    //load contents from database
-	    if (idGrantPart != null) { //Editing a grant part
+	    // load contents from database
+	    if (idGrantPart != null) { // Editing a grant part
 		try {
-		    //Read the grant part
+		    // Read the grant part
 		    Object[] args = { idGrantPart };
-		    InfoGrantPart infoGrantPart = (InfoGrantPart) ServiceUtils.executeService(
-			    "ReadGrantPart", args);
+		    InfoGrantPart infoGrantPart = (InfoGrantPart) ServiceUtils.executeService("ReadGrantPart", args);
 
-		    //Populate the form
+		    // Populate the form
 		    setFormGrantPart(grantPartForm, infoGrantPart);
-		    request.setAttribute("idSubsidy", infoGrantPart.getInfoGrantSubsidy()
-			    .getIdInternal());
+		    request.setAttribute("idSubsidy", infoGrantPart.getInfoGrantSubsidy().getIdInternal());
 		} catch (FenixServiceException e) {
-		    return setError(request, mapping, "errors.grant.part.read", "manage-grant-part",
-			    null);
+		    return setError(request, mapping, "errors.grant.part.read", "manage-grant-part", null);
 		}
-	    } else { //New grant part
+	    } else { // New grant part
 		Integer idSubsidy = new Integer(request.getParameter("idSubsidy"));
 		grantPartForm.set("grantSubsidyId", idSubsidy);
 		request.setAttribute("idSubsidy", idSubsidy);
 	    }
-	} else { //Probabily a validation error
+	} else { // Probabily a validation error
 	    request.setAttribute("idSubsidy", request.getParameter("grantSubsidyId"));
 	}
 	return mapping.findForward("edit-grant-part");
@@ -85,14 +82,14 @@ public class EditGrantPartAction extends FenixDispatchAction {
     /*
      * Edit a Grant Part
      */
-    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
 	DynaValidatorForm editGrantPartForm = (DynaValidatorForm) form;
 	InfoGrantPart infoGrantPart = null;
 	IUserView userView = UserView.getUser();
 	try {
-	    //Verificar se foi escolhida UMA E SO UMA entidade pagadora
+	    // Verificar se foi escolhida UMA E SO UMA entidade pagadora
 	    if (!verifyStringParameterInForm(editGrantPartForm, "project")
 		    && !verifyStringParameterInForm(editGrantPartForm, "costCenter")) {
 		return setError(request, mapping, "errors.grant.part.mustBeOnePaymentEntity", null, null);
@@ -104,7 +101,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 
 	    infoGrantPart = populateInfoFromForm(editGrantPartForm);
 
-	    //Let's read the payment entity
+	    // Let's read the payment entity
 	    if (infoGrantPart.getInfoGrantPaymentEntity().getNumber() != null) {
 		String paymentEntityClass = null;
 		if (verifyStringParameterInForm(editGrantPartForm, "project")) {
@@ -113,36 +110,32 @@ public class EditGrantPartAction extends FenixDispatchAction {
 		    paymentEntityClass = GrantCostCenter.class.getName();
 		}
 
-		Object[] args = { infoGrantPart.getInfoGrantPaymentEntity().getNumber(),
-			paymentEntityClass };
-		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils
-			.executeService( "ReadPaymentEntityByNumberAndClass", args);
+		Object[] args = { infoGrantPart.getInfoGrantPaymentEntity().getNumber(), paymentEntityClass };
+		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils.executeService(
+			"ReadPaymentEntityByNumberAndClass", args);
 
 		if (infoGrantPaymentEntity == null) {
 		    if (verifyStringParameterInForm(editGrantPartForm, "project")) {
-			return setError(request, mapping, "errors.grant.paymententity.unknownProject",
-				null, infoGrantPart.getInfoGrantPaymentEntity().getNumber());
+			return setError(request, mapping, "errors.grant.paymententity.unknownProject", null, infoGrantPart
+				.getInfoGrantPaymentEntity().getNumber());
 		    } else if (verifyStringParameterInForm(editGrantPartForm, "costCenter")) {
-			return setError(request, mapping,
-				"errors.grant.paymententity.unknownCostCenter", null, infoGrantPart
-					.getInfoGrantPaymentEntity().getNumber());
+			return setError(request, mapping, "errors.grant.paymententity.unknownCostCenter", null, infoGrantPart
+				.getInfoGrantPaymentEntity().getNumber());
 		    } else {
-			return setError(request, mapping, "errors.grant.part.invalidPaymentEntity",
-				null, null);
+			return setError(request, mapping, "errors.grant.part.invalidPaymentEntity", null, null);
 		    }
 		}
 		infoGrantPart.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
 	    }
 
 	    if (infoGrantPart.getInfoResponsibleTeacher() == null) {
-		//NO part responsible teacher set YET.
-		//The part responsbile teacher will be set to be the payment
+		// NO part responsible teacher set YET.
+		// The part responsbile teacher will be set to be the payment
 		// entity responsible teacher
 		Object[] args = { infoGrantPart.getInfoGrantPaymentEntity().getIdInternal() };
-		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils
-			.executeService( "ReadGrantPaymentEntity", args);
-		infoGrantPart.setInfoResponsibleTeacher(infoGrantPaymentEntity
-			.getInfoResponsibleTeacher());
+		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils.executeService(
+			"ReadGrantPaymentEntity", args);
+		infoGrantPart.setInfoResponsibleTeacher(infoGrantPaymentEntity.getInfoResponsibleTeacher());
 	    }
 
 	    Object[] args = { infoGrantPart };
@@ -151,8 +144,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
 	    request.setAttribute("idSubsidy", editGrantPartForm.get("grantSubsidyId"));
 
 	} catch (InvalidPartResponsibleTeacherException e) {
-	    return setError(request, mapping, "errors.grant.part.invalidPartTeacher", null,
-		    infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber());
+	    return setError(request, mapping, "errors.grant.part.invalidPartTeacher", null, infoGrantPart
+		    .getInfoResponsibleTeacher().getTeacherNumber());
 	} catch (ExistingServiceException e) {
 	    return setError(request, mapping, "errors.grant.part.duplicateEntry", null, null);
 	} catch (FenixServiceException e) {
@@ -164,8 +157,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
     /*
      * Delete a grant part
      */
-    public ActionForward doDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward doDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	try {
 	    Integer idGrantPart = new Integer(request.getParameter("idGrantPart"));
 	    Integer idSubsidy = new Integer(request.getParameter("idSubsidy"));
@@ -191,8 +184,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 
 	if (infoGrantPart.getInfoResponsibleTeacher() != null
 		&& infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber() != null) {
-	    form.set("responsibleTeacherNumber", infoGrantPart.getInfoResponsibleTeacher()
-		    .getTeacherNumber().toString());
+	    form.set("responsibleTeacherNumber", infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber().toString());
 	}
 
 	if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter) {
@@ -208,7 +200,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
     private InfoGrantPart populateInfoFromForm(DynaValidatorForm editGrantPartForm) throws Exception {
 	InfoGrantPart infoGrantPart = new InfoGrantPart();
 
-	//Percentage
+	// Percentage
 	BeanUtils.copyProperties(infoGrantPart, editGrantPartForm);
 
 	if (verifyStringParameterInForm(editGrantPartForm, "idInternal")) {
@@ -219,17 +211,17 @@ public class EditGrantPartAction extends FenixDispatchAction {
 	infoGrantSubsidy.setIdInternal((Integer) editGrantPartForm.get("grantSubsidyId"));
 	infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
 
-	//The part responsible teacher is only set HERE if the user has chosen
+	// The part responsible teacher is only set HERE if the user has chosen
 	// one in the form
-	//Otherwise, the part responsible teacher will be the payment entity
+	// Otherwise, the part responsible teacher will be the payment entity
 	// responsible teacher
 	if (verifyStringParameterInForm(editGrantPartForm, "responsibleTeacherNumber")) {
-	    InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByNumber(new Integer(
-		    (String) editGrantPartForm.get("responsibleTeacherNumber"))));
+	    InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByNumber(new Integer((String) editGrantPartForm
+		    .get("responsibleTeacherNumber"))));
 	    infoGrantPart.setInfoResponsibleTeacher(infoTeacher);
 	}
 
-	//Set the Payment Entity
+	// Set the Payment Entity
 	InfoGrantPaymentEntity infoPaymentEntity = null;
 	if (verifyStringParameterInForm(editGrantPartForm, "project")) {
 	    infoPaymentEntity = new InfoGrantProject();

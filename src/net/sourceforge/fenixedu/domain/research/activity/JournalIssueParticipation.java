@@ -8,10 +8,11 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class JournalIssueParticipation extends JournalIssueParticipation_Base {
-    
-    public  JournalIssueParticipation(JournalIssue issue, ResearchActivityParticipationRole role, Party party, MultiLanguageString roleMessage) {
+
+    public JournalIssueParticipation(JournalIssue issue, ResearchActivityParticipationRole role, Party party,
+	    MultiLanguageString roleMessage) {
 	super();
-	if(alreadyHasParticipation(party, role, issue)) {
+	if (alreadyHasParticipation(party, role, issue)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setParty(party);
@@ -19,23 +20,23 @@ public class JournalIssueParticipation extends JournalIssueParticipation_Base {
 	super.setJournalIssue(issue);
 	super.setRoleMessage(roleMessage);
     }
-    
+
     private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, JournalIssue issue) {
-	for(JournalIssueParticipation participation : party.getJournalIssueParticipations()) {
-	    if(participation.match(party,role,issue)) {
+	for (JournalIssueParticipation participation : party.getJournalIssueParticipations()) {
+	    if (participation.match(party, role, issue)) {
 		return true;
 	    }
 	}
-	return false;	
+	return false;
     }
-    
+
     public boolean match(Party party, ResearchActivityParticipationRole role, JournalIssue issue) {
-	return this.getParty().equals(party) && this.getRole().equals(role) && this.getJournalIssue() .equals(issue);
+	return this.getParty().equals(party) && this.getRole().equals(role) && this.getJournalIssue().equals(issue);
     }
 
     @Override
     public void setJournalIssue(JournalIssue journalIssue) {
-	if(alreadyHasParticipation(getParty(), getRole(), journalIssue)) {
+	if (alreadyHasParticipation(getParty(), getRole(), journalIssue)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setJournalIssue(journalIssue);
@@ -43,7 +44,7 @@ public class JournalIssueParticipation extends JournalIssueParticipation_Base {
 
     @Override
     public void setParty(Party party) {
-	if(alreadyHasParticipation(party, getRole(), getJournalIssue())) {
+	if (alreadyHasParticipation(party, getRole(), getJournalIssue())) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setParty(party);
@@ -51,7 +52,7 @@ public class JournalIssueParticipation extends JournalIssueParticipation_Base {
 
     @Override
     public void setRole(ResearchActivityParticipationRole role) {
-	if(alreadyHasParticipation(getParty(), role, getJournalIssue())) {
+	if (alreadyHasParticipation(getParty(), role, getJournalIssue())) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setRole(role);

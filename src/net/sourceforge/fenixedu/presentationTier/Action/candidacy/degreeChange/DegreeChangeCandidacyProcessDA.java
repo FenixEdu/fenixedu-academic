@@ -222,7 +222,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	if (process.getCandidacyApprovedEctsRate() != null) {
 	    return process.getCandidacyApprovedEctsRate();
 	}
-	
+
 	final BigDecimal approvedEcts = process.getCandidacyPrecedentDegreeInformation().getApprovedEcts();
 	final BigDecimal enroledEcts = process.getCandidacyPrecedentDegreeInformation().getEnroledEcts();
 	if (approvedEcts != null && enroledEcts != null && enroledEcts.signum() > 0) {
@@ -236,7 +236,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	if (process.getCandidacyGradeRate() != null) {
 	    return process.getCandidacyGradeRate();
 	}
-	
+
 	final Integer total = process.getCandidacyPrecedentDegreeInformation().getNumberOfApprovedCurricularCourses();
 	final BigDecimal gradeSum = process.getCandidacyPrecedentDegreeInformation().getGradeSum();
 	if (gradeSum != null && total != null && total.intValue() != 0) {
@@ -250,7 +250,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	if (process.getCandidacySeriesCandidacyGrade() != null) {
 	    return process.getCandidacySeriesCandidacyGrade().setScale(2, RoundingMode.HALF_EVEN);
 	}
-	
+
 	final BigDecimal affinity = process.getCandidacyAffinity();
 	final Integer nature = process.getCandidacyDegreeNature();
 	final BigDecimal valueA = calculateA(process, false);

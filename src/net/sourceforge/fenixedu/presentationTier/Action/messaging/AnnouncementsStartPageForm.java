@@ -11,7 +11,7 @@ import org.apache.struts.validator.ValidatorForm;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 4, 2006,3:41:09 PM
  * 
  */
@@ -26,42 +26,42 @@ public class AnnouncementsStartPageForm extends ValidatorForm {
     private String boardType = "BOOKMARKED";
 
     public Integer getHowManyAnnouncementsToShow() {
-        return howManyAnnouncementsToShow;
+	return howManyAnnouncementsToShow;
     }
 
     public void setHowManyAnnouncementsToShow(Integer howManyAnnouncementsToShow) {
-        this.howManyAnnouncementsToShow = howManyAnnouncementsToShow;
+	this.howManyAnnouncementsToShow = howManyAnnouncementsToShow;
     }
 
     public String getAnnouncementBoardAccessLevel() {
-        return announcementBoardAccessLevel;
+	return announcementBoardAccessLevel;
     }
 
     public void setAnnouncementBoardAccessLevel(String announcementBoardAccessLevel) {
-        this.announcementBoardAccessLevel = announcementBoardAccessLevel;
+	this.announcementBoardAccessLevel = announcementBoardAccessLevel;
     }
 
     public String getAnnouncementBoardAccessType() {
-        return announcementBoardAccessType;
+	return announcementBoardAccessType;
     }
 
     public void setAnnouncementBoardAccessType(String announcementBoardAccessType) {
-        this.announcementBoardAccessType = announcementBoardAccessType;
+	this.announcementBoardAccessType = announcementBoardAccessType;
     }
 
     public String getRecentBoardsTimeSpanSelection() {
-        return recentBoardsTimeSpanSelection;
+	return recentBoardsTimeSpanSelection;
     }
 
     public void setRecentBoardsTimeSpanSelection(String recentBoardsTimeSpanSelection) {
-        this.recentBoardsTimeSpanSelection = recentBoardsTimeSpanSelection;
+	this.recentBoardsTimeSpanSelection = recentBoardsTimeSpanSelection;
     }
 
     public String getBoardType() {
-        return boardType;
+	return boardType;
     }
 
     public void setBoardType(String boardType) {
-        this.boardType = boardType;
+	this.boardType = boardType;
     }
 }

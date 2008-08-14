@@ -15,7 +15,7 @@ public class FenixDomainObjectLogCallsGenerator implements CodeGenerator {
 	String[] parameters = (String[]) annotationParameters.get("parameters");
 
 	buffer.append("{");
-	
+
 	buffer.append("java.util.Map ___map = new java.util.HashMap();");
 
 	if (parameters != null) {
@@ -26,12 +26,12 @@ public class FenixDomainObjectLogCallsGenerator implements CodeGenerator {
 	    }
 	}
 
-	if(methodName != null) {
-            buffer.append("new net.sourceforge.fenixedu.domain.DomainObjectActionLog(");
-            buffer.append("net.sourceforge.fenixedu.injectionCode.AccessControl.getPerson(),this,");
-            buffer.append("\"" + methodName.trim()).append("\",___map);");
+	if (methodName != null) {
+	    buffer.append("new net.sourceforge.fenixedu.domain.DomainObjectActionLog(");
+	    buffer.append("net.sourceforge.fenixedu.injectionCode.AccessControl.getPerson(),this,");
+	    buffer.append("\"" + methodName.trim()).append("\",___map);");
 	}
-	
+
 	buffer.append("}");
 
 	return buffer.toString();

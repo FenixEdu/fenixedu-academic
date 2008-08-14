@@ -27,22 +27,22 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class DeleteCurricularCourseScopeAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer scopeId = new Integer(request.getParameter("curricularCourseScopeId"));
-        Object args[] = { scopeId };
+	Integer scopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+	Object args[] = { scopeId };
 
-        try {
-            ServiceUtils.executeService("DeleteCurricularCourseScope", args);
-        } catch (CantDeleteServiceException e) {
-            throw new CantDeleteActionException("message.cant.delete.curricular.course.scope");
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
+	try {
+	    ServiceUtils.executeService("DeleteCurricularCourseScope", args);
+	} catch (CantDeleteServiceException e) {
+	    throw new CantDeleteActionException("message.cant.delete.curricular.course.scope");
+	} catch (FenixServiceException fenixServiceException) {
+	    throw new FenixActionException(fenixServiceException.getMessage());
+	}
 
-        return mapping.findForward("readCurricularCourse");
+	return mapping.findForward("readCurricularCourse");
     }
 }

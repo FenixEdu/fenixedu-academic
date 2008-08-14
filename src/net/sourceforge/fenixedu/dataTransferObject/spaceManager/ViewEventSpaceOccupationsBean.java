@@ -18,7 +18,7 @@ public class ViewEventSpaceOccupationsBean implements Serializable {
 
     private YearMonthDay day;
 
-    private DomainReference<AllocatableSpace> allocatableSpaceReference; 
+    private DomainReference<AllocatableSpace> allocatableSpaceReference;
 
     public static int MONDAY_IN_JODA_TIME = 1;
     public static int SATURDAY_IN_JODA_TIME = 6;
@@ -27,15 +27,15 @@ public class ViewEventSpaceOccupationsBean implements Serializable {
 
 	setAllocatableSpace(allocatableSpace);
 
-	if(day != null) {	    
+	if (day != null) {
 	    setYear(new Partial(DateTimeFieldType.year(), day.getYear()));
-	    setMonth(new Partial(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()));	    	    
-	    
-	    YearMonthDay monday = day.toDateTimeAtMidnight().withDayOfWeek(MONDAY_IN_JODA_TIME).toYearMonthDay();	    
-	    if(monday.getMonthOfYear() < day.getMonthOfYear()) {
-		monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);		
-	    } 	         	 	  
-	    
+	    setMonth(new Partial(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()));
+
+	    YearMonthDay monday = day.toDateTimeAtMidnight().withDayOfWeek(MONDAY_IN_JODA_TIME).toYearMonthDay();
+	    if (monday.getMonthOfYear() < day.getMonthOfYear()) {
+		monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
+	    }
+
 	    setDay(monday);
 	}
     }

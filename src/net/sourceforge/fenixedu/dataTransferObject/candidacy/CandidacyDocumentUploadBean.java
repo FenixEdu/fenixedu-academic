@@ -23,7 +23,7 @@ public class CandidacyDocumentUploadBean implements Serializable {
     private transient InputStream inputStream;
 
     private File temporaryFile;
-    
+
     private String filename;
 
     private String documentDescription;
@@ -33,61 +33,59 @@ public class CandidacyDocumentUploadBean implements Serializable {
     private DomainReference<CandidacyDocument> candidacyDocument;
 
     public CandidacyDocumentUploadBean(CandidacyDocument candidacyDocument) {
-        super();
-        CandidacyDocumentFile file = candidacyDocument.getFile();
-        this.documentDescription = candidacyDocument.getDocumentDescription();
-        this.actualFile = (file != null) ? file.getFilename() + " - "
-                + file.getUploadTime().toString("dd/MM/yyyy hh:mm") : null;
-        this.candidacyDocument = new DomainReference<CandidacyDocument>(candidacyDocument);
+	super();
+	CandidacyDocumentFile file = candidacyDocument.getFile();
+	this.documentDescription = candidacyDocument.getDocumentDescription();
+	this.actualFile = (file != null) ? file.getFilename() + " - " + file.getUploadTime().toString("dd/MM/yyyy hh:mm") : null;
+	this.candidacyDocument = new DomainReference<CandidacyDocument>(candidacyDocument);
     }
 
     public String getActualFile() {
-        return (actualFile == null) ? new LabelFormatter().appendLabel("label.file.not.uploaded.yet",
-                "resources.CandidateResources").toString() : actualFile;
+	return (actualFile == null) ? new LabelFormatter().appendLabel("label.file.not.uploaded.yet",
+		"resources.CandidateResources").toString() : actualFile;
     }
 
     public CandidacyDocument getCandidacyDocument() {
-        return candidacyDocument.getObject();
+	return candidacyDocument.getObject();
     }
 
     public InputStream getFileInputStream() {
-        return inputStream;
+	return inputStream;
     }
 
     public void setFileInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
+	this.inputStream = inputStream;
     }
 
     public String getFilename() {
-        return filename;
+	return filename;
     }
 
     public void setFilename(String filename) {
-        this.filename = filename;
+	this.filename = filename;
     }
 
     public String getDocumentDescription() {
-        return new LabelFormatter().appendLabel("label." + documentDescription,
-                "resources.CandidateResources").toString();
+	return new LabelFormatter().appendLabel("label." + documentDescription, "resources.CandidateResources").toString();
     }
 
     public boolean getIsFileUploaded() {
-        return actualFile != null;
+	return actualFile != null;
     }
 
     public void createTemporaryFile() {
 	try {
 	    temporaryFile = inputStream != null ? FileUtils.copyToTemporaryFile(inputStream) : null;
-	}catch(IOException exception) {
+	} catch (IOException exception) {
 	    temporaryFile = null;
 	}
-	
+
     }
-    
+
     public File getTemporaryFile() {
 	return temporaryFile;
     }
-    
+
     public void deleteTemporaryFile() {
 	temporaryFile.delete();
     }

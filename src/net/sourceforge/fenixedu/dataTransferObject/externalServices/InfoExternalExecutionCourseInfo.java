@@ -10,32 +10,31 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
- *
- * Created at 2:31:25 PM, Mar 10, 2005
+ * 
+ *         Created at 2:31:25 PM, Mar 10, 2005
  */
-public class InfoExternalExecutionCourseInfo
-{
+public class InfoExternalExecutionCourseInfo {
     private String name;
+
     /**
      * @return Returns the name.
      */
-    public String getName()
-    {
-        return this.name;
+    public String getName() {
+	return this.name;
     }
+
     /**
-     * @param name The name to set.
+     * @param name
+     *            The name to set.
      */
-    public void setName(String name)
-    {
-        this.name = name;
+    public void setName(String name) {
+	this.name = name;
     }
-    
-    public static InfoExternalExecutionCourseInfo newFromExecutionCourse(ExecutionCourse executionCourse)
-    {
-       InfoExternalExecutionCourseInfo info = new InfoExternalExecutionCourseInfo();
-       info.setName(executionCourse.getNome());
-       
-       return info;
+
+    public static InfoExternalExecutionCourseInfo newFromExecutionCourse(ExecutionCourse executionCourse) {
+	InfoExternalExecutionCourseInfo info = new InfoExternalExecutionCourseInfo();
+	info.setName(executionCourse.getNome());
+
+	return info;
     }
 }

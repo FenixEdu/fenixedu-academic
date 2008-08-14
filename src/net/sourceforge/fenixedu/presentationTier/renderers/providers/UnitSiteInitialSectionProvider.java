@@ -13,15 +13,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class UnitSiteInitialSectionProvider implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		UnitSite unitSite = (UnitSite) source;
-		
-		return unitSite.getSideSection().getChildrenAsContent();
-		
-	}
+    public Object provide(Object source, Object currentValue) {
+	UnitSite unitSite = (UnitSite) source;
 
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
-	
+	return unitSite.getSideSection().getChildrenAsContent();
+
+    }
+
+    public Converter getConverter() {
+	return new DomainObjectKeyConverter();
+    }
+
 }

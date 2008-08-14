@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 
 public class ResultDocumentFileSubmissionBean extends OpenFileBean {
-    
+
     private DomainReference<ResearchResult> result;
     private String displayName;
     private FileResultPermittedGroupType permission;
@@ -27,18 +27,18 @@ public class ResultDocumentFileSubmissionBean extends OpenFileBean {
     }
 
     public String getDisplayName() {
-        return displayName;
+	return displayName;
     }
 
     public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+	this.displayName = displayName;
     }
 
     public FileResultPermittedGroupType getPermission() {
-        return permission;
+	return permission;
     }
 
     public void setPermission(FileResultPermittedGroupType permission) {
-        this.permission = permission;
+	this.permission = permission;
     }
 }

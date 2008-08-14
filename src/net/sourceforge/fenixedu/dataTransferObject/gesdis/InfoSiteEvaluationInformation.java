@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class InfoSiteEvaluationInformation extends DataTranferObject {
     private InfoCurricularCourse infoCurricularCourse;
@@ -25,14 +25,14 @@ public class InfoSiteEvaluationInformation extends DataTranferObject {
      *  
      */
     public InfoSiteEvaluationInformation() {
-        super();
+	super();
     }
 
     /**
      * @return Returns the infoSiteEvaluationHistory.
      */
     public List getInfoSiteEvaluationHistory() {
-        return infoSiteEvaluationHistory;
+	return infoSiteEvaluationHistory;
     }
 
     /**
@@ -40,14 +40,14 @@ public class InfoSiteEvaluationInformation extends DataTranferObject {
      *            The infoSiteEvaluationHistory to set.
      */
     public void setInfoSiteEvaluationHistory(List infoSiteEvaluationHistory) {
-        this.infoSiteEvaluationHistory = infoSiteEvaluationHistory;
+	this.infoSiteEvaluationHistory = infoSiteEvaluationHistory;
     }
 
     /**
      * @return Returns the infoSiteEvaluationStatistics.
      */
     public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
-        return infoSiteEvaluationStatistics;
+	return infoSiteEvaluationStatistics;
     }
 
     /**
@@ -55,14 +55,14 @@ public class InfoSiteEvaluationInformation extends DataTranferObject {
      *            The infoSiteEvaluationStatistics to set.
      */
     public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
-        this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
+	this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
     }
 
     /**
      * @return Returns the infoCurricularCourse.
      */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     /**
@@ -70,7 +70,7 @@ public class InfoSiteEvaluationInformation extends DataTranferObject {
      *            The infoCurricularCourse to set.
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
 }

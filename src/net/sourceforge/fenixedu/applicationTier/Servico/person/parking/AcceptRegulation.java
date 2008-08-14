@@ -6,6 +6,6 @@ import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 public class AcceptRegulation extends Service {
 
     public void run(final ParkingParty parkingParty) {
-        parkingParty.setAcceptedRegulation(Boolean.TRUE);
+	parkingParty.setAcceptedRegulation(Boolean.TRUE);
     }
 }

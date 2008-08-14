@@ -17,21 +17,21 @@ public class SearchSpacesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	MoveSpaceBean bean = new MoveSpaceBean();
-	request.setAttribute("bean", bean);	
+	request.setAttribute("bean", bean);
 	return mapping.findForward("prepareSearch");
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	MoveSpaceBean bean = (MoveSpaceBean) getRenderedObject();
-	
+
 	List<Space> spaces = null;
-	if(bean != null) {
+	if (bean != null) {
 	    String spaceName = bean.getSpaceName();
-	    spaces = Space.getAllSpacesByPresentationName(spaceName);	    
+	    spaces = Space.getAllSpacesByPresentationName(spaceName);
 	}
-	
+
 	request.setAttribute("spaces", spaces);
-	request.setAttribute("bean", bean);	
+	request.setAttribute("bean", bean);
 	return mapping.findForward("prepareSearch");
-    }   
+    }
 }

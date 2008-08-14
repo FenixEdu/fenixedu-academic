@@ -20,108 +20,102 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareCreateExtraWorkAuthorization(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateExtraWorkAuthorization(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
-        if (extraWorkAuthorizationFactory != null) {
-            DynaActionForm actionForm = (DynaActionForm) form;
-            String addEmployee = actionForm.getString("addEmployee");
-            if (addEmployee.equalsIgnoreCase("yes")) {
-                extraWorkAuthorizationFactory.addEmployeeExtraWorkAuthorization();
-                request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
-                RenderUtils.invalidateViewState();
-            } else {
-                request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
-            }
-        } else {
-            IUserView userView = UserView.getUser();
-            request.setAttribute("extraWorkAuthorizationFactory", new ExtraWorkAuthorizationFactory(
-                    userView.getPerson().getEmployee()));
-        }
-        return mapping.findForward("create-extra-work-authorization");
+	ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
+	if (extraWorkAuthorizationFactory != null) {
+	    DynaActionForm actionForm = (DynaActionForm) form;
+	    String addEmployee = actionForm.getString("addEmployee");
+	    if (addEmployee.equalsIgnoreCase("yes")) {
+		extraWorkAuthorizationFactory.addEmployeeExtraWorkAuthorization();
+		request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
+		RenderUtils.invalidateViewState();
+	    } else {
+		request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
+	    }
+	} else {
+	    IUserView userView = UserView.getUser();
+	    request.setAttribute("extraWorkAuthorizationFactory", new ExtraWorkAuthorizationFactory(userView.getPerson()
+		    .getEmployee()));
+	}
+	return mapping.findForward("create-extra-work-authorization");
     }
 
-    public ActionForward createExtraWorkAuthorization(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward createExtraWorkAuthorization(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
-        ExtraWorkAuthorization extraWorkAuthorization = (ExtraWorkAuthorization) ServiceUtils
-                .executeService( "ExecuteFactoryMethod",
-                        new Object[] { extraWorkAuthorizationFactory });
-        request.setAttribute("authorizationID", extraWorkAuthorization.getIdInternal());
+	ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
+	ExtraWorkAuthorization extraWorkAuthorization = (ExtraWorkAuthorization) ServiceUtils.executeService(
+		"ExecuteFactoryMethod", new Object[] { extraWorkAuthorizationFactory });
+	request.setAttribute("authorizationID", extraWorkAuthorization.getIdInternal());
 
-        return viewExtraWorkAuthorization(mapping, form, request, response);        
+	return viewExtraWorkAuthorization(mapping, form, request, response);
     }
 
-    public ActionForward prepareExtraWorkAuthorizationsSearch(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareExtraWorkAuthorizationsSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        ExtraWorkAuthorizationSearchBean extraWorkAuthorizationSearchBean = (ExtraWorkAuthorizationSearchBean) getRenderedObject();
-        if (extraWorkAuthorizationSearchBean != null) {
-            request.setAttribute("extraWorkAuthorizationSearchBean", extraWorkAuthorizationSearchBean);
-        } else {
-            request.setAttribute("extraWorkAuthorizationSearchBean",
-                    new ExtraWorkAuthorizationSearchBean());
-        }
-        return mapping.findForward("show-extra-work-authorizations");
+	ExtraWorkAuthorizationSearchBean extraWorkAuthorizationSearchBean = (ExtraWorkAuthorizationSearchBean) getRenderedObject();
+	if (extraWorkAuthorizationSearchBean != null) {
+	    request.setAttribute("extraWorkAuthorizationSearchBean", extraWorkAuthorizationSearchBean);
+	} else {
+	    request.setAttribute("extraWorkAuthorizationSearchBean", new ExtraWorkAuthorizationSearchBean());
+	}
+	return mapping.findForward("show-extra-work-authorizations");
     }
 
-    public ActionForward showExtraWorkAuthorizations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showExtraWorkAuthorizations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        ExtraWorkAuthorizationSearchBean extraWorkAuthorizationSearchBean = (ExtraWorkAuthorizationSearchBean) getRenderedObject();
-        extraWorkAuthorizationSearchBean.doSearch();
-        request.setAttribute("extraWorkAuthorizationSearchBean", extraWorkAuthorizationSearchBean);
+	ExtraWorkAuthorizationSearchBean extraWorkAuthorizationSearchBean = (ExtraWorkAuthorizationSearchBean) getRenderedObject();
+	extraWorkAuthorizationSearchBean.doSearch();
+	request.setAttribute("extraWorkAuthorizationSearchBean", extraWorkAuthorizationSearchBean);
 
-        return mapping.findForward("show-extra-work-authorizations");
+	return mapping.findForward("show-extra-work-authorizations");
     }
 
-    public ActionForward viewExtraWorkAuthorization(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewExtraWorkAuthorization(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        Integer authorizationID = getIntegerFromRequest(request, "authorizationID");
-        ExtraWorkAuthorization extraWorkAuthorization = rootDomainObject
-                .readExtraWorkAuthorizationByOID(authorizationID);
-        request.setAttribute("extraWorkAuthorization", extraWorkAuthorization);
+	Integer authorizationID = getIntegerFromRequest(request, "authorizationID");
+	ExtraWorkAuthorization extraWorkAuthorization = rootDomainObject.readExtraWorkAuthorizationByOID(authorizationID);
+	request.setAttribute("extraWorkAuthorization", extraWorkAuthorization);
 
-        return mapping.findForward("view-extra-work-authorization");
+	return mapping.findForward("view-extra-work-authorization");
     }
 
-    public ActionForward prepareEditExtraWorkAuthorization(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareEditExtraWorkAuthorization(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
-        if (extraWorkAuthorizationFactory != null) {
-            DynaActionForm actionForm = (DynaActionForm) form;
-            String addEmployee = actionForm.getString("addEmployee");
-            if (addEmployee.equalsIgnoreCase("yes")) {
-                extraWorkAuthorizationFactory.addEmployeeExtraWorkAuthorization();
-                request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
-                RenderUtils.invalidateViewState();
-            } else {
-                request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
-            }
-        } else {
-            Integer authorizationID = getIntegerFromRequest(request, "authorizationID");
-            ExtraWorkAuthorization extraWorkAuthorization = rootDomainObject
-                    .readExtraWorkAuthorizationByOID(authorizationID);
-            IUserView userView = UserView.getUser();
-            request.setAttribute("extraWorkAuthorizationFactory", new ExtraWorkAuthorizationFactory(
-                    userView.getPerson().getEmployee(), extraWorkAuthorization));
-        }
-        return mapping.findForward("edit-extra-work-authorization");
+	ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
+	if (extraWorkAuthorizationFactory != null) {
+	    DynaActionForm actionForm = (DynaActionForm) form;
+	    String addEmployee = actionForm.getString("addEmployee");
+	    if (addEmployee.equalsIgnoreCase("yes")) {
+		extraWorkAuthorizationFactory.addEmployeeExtraWorkAuthorization();
+		request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
+		RenderUtils.invalidateViewState();
+	    } else {
+		request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
+	    }
+	} else {
+	    Integer authorizationID = getIntegerFromRequest(request, "authorizationID");
+	    ExtraWorkAuthorization extraWorkAuthorization = rootDomainObject.readExtraWorkAuthorizationByOID(authorizationID);
+	    IUserView userView = UserView.getUser();
+	    request.setAttribute("extraWorkAuthorizationFactory", new ExtraWorkAuthorizationFactory(userView.getPerson()
+		    .getEmployee(), extraWorkAuthorization));
+	}
+	return mapping.findForward("edit-extra-work-authorization");
     }
 
-    public ActionForward editExtraWorkAuthorization(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editExtraWorkAuthorization(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
-        ServiceUtils.executeService("ExecuteFactoryMethod",
-                new Object[] { extraWorkAuthorizationFactory });
-        request.setAttribute("authorizationID", extraWorkAuthorizationFactory
-                .getExtraWorkAuthorization().getIdInternal());
+	ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
+	ServiceUtils.executeService("ExecuteFactoryMethod", new Object[] { extraWorkAuthorizationFactory });
+	request.setAttribute("authorizationID", extraWorkAuthorizationFactory.getExtraWorkAuthorization().getIdInternal());
 
-        return viewExtraWorkAuthorization(mapping, form, request, response);
+	return viewExtraWorkAuthorization(mapping, form, request, response);
     }
 }

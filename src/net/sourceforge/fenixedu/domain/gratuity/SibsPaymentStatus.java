@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.domain.gratuity;
 
-
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public enum SibsPaymentStatus {
 
@@ -25,7 +24,7 @@ public enum SibsPaymentStatus {
     UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN;
 
     public String getName() {
-        return name();
+	return name();
     }
 
 }

@@ -12,67 +12,67 @@ public class MergeJournalIssuePageContainerBean extends MergeResearchActivityPag
     private String url;
     private Boolean specialIssue;
     private String specialIssueComment;
-    
+
     private DomainReference<ScientificJournal> scientificJournal;
-    
+
     public MergeJournalIssuePageContainerBean(ScientificJournal scientificJournal) {
 	this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
     }
 
     public String getVolume() {
-        return volume;
+	return volume;
     }
 
     public void setVolume(String volume) {
-        this.volume = volume;
+	this.volume = volume;
     }
 
     public Integer getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(Integer year) {
-        this.year = year;
+	this.year = year;
     }
 
     public String getNumber() {
-        return number;
+	return number;
     }
 
     public void setNumber(String number) {
-        this.number = number;
+	this.number = number;
     }
 
     public Month getMonth() {
-        return month;
+	return month;
     }
 
     public void setMonth(Month month) {
-        this.month = month;
+	this.month = month;
     }
 
     public String getUrl() {
-        return url;
+	return url;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+	this.url = url;
     }
 
     public Boolean getSpecialIssue() {
-        return specialIssue;
+	return specialIssue;
     }
 
     public void setSpecialIssue(Boolean specialIssue) {
-        this.specialIssue = specialIssue;
+	this.specialIssue = specialIssue;
     }
 
     public String getSpecialIssueComment() {
-        return specialIssueComment;
+	return specialIssueComment;
     }
 
     public void setSpecialIssueComment(String specialIssueComment) {
-        this.specialIssueComment = specialIssueComment;
+	this.specialIssueComment = specialIssueComment;
     }
 
     public ScientificJournal getScientificJournal() {
@@ -82,7 +82,5 @@ public class MergeJournalIssuePageContainerBean extends MergeResearchActivityPag
     public void setScientificJournal(ScientificJournal scientificJournal) {
 	this.scientificJournal = (scientificJournal != null) ? new DomainReference<ScientificJournal>(scientificJournal) : null;
     }
-
-
 
 }

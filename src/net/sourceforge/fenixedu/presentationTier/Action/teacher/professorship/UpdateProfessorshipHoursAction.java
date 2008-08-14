@@ -28,23 +28,23 @@ public class UpdateProfessorshipHoursAction extends Action {
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
+     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+     * ActionMapping, org.apache.struts.action.ActionForm,
+     * javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        DynaActionForm professorshipsHours = (DynaActionForm) form;
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	DynaActionForm professorshipsHours = (DynaActionForm) form;
 
-        HashMap hours = (HashMap) professorshipsHours.get("hours");
-        Integer teacherId = (Integer) professorshipsHours.get("teacherId");
-        Integer executionYearId = (Integer) professorshipsHours.get("executionYearId");
-        Object args[] = { teacherId, executionYearId, hours };
+	HashMap hours = (HashMap) professorshipsHours.get("hours");
+	Integer teacherId = (Integer) professorshipsHours.get("teacherId");
+	Integer executionYearId = (Integer) professorshipsHours.get("executionYearId");
+	Object args[] = { teacherId, executionYearId, hours };
 
-        IUserView userView = UserView.getUser();
-        ServiceUtils.executeService("UpdateProfessorshipsHours", args);
+	IUserView userView = UserView.getUser();
+	ServiceUtils.executeService("UpdateProfessorshipsHours", args);
 
-        return mapping.findForward("successfull-update");
+	return mapping.findForward("successfull-update");
     }
 }

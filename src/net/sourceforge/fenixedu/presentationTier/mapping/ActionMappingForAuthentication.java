@@ -16,14 +16,14 @@ public class ActionMappingForAuthentication extends ActionMapping {
      * @return
      */
     public String getApplication() {
-        return application;
+	return application;
     }
 
     /**
      * @param string
      */
     public void setApplication(String application) {
-        this.application = application;
+	this.application = application;
     }
 
 }

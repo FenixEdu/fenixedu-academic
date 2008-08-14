@@ -4,43 +4,40 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-
 /**
  * @author joaosa & rmalo
- *
+ * 
  */
 public class InfoSiteStudentAndGroup extends DataTranferObject implements ISiteComponent {
 
-	private InfoSiteStudentInformation infoSiteStudentInformation;
-	private InfoStudentGroup infoStudentGroup;
-	
-	
-	/**
-	* @return InfoSiteStudentInformation
-	*/
-	public InfoSiteStudentInformation getInfoSiteStudentInformation() {
-		return infoSiteStudentInformation;
-	}
+    private InfoSiteStudentInformation infoSiteStudentInformation;
+    private InfoStudentGroup infoStudentGroup;
 
-	/**
-	 * @param InfoSiteStudentInformation
-	 */
-	public void setInfoSiteStudentInformation(InfoSiteStudentInformation infoSiteStudentInformation) {
-		this.infoSiteStudentInformation = infoSiteStudentInformation;
-	}
-	
+    /**
+     * @return InfoSiteStudentInformation
+     */
+    public InfoSiteStudentInformation getInfoSiteStudentInformation() {
+	return infoSiteStudentInformation;
+    }
 
-	/**
-	* @return InfoStudentGroup
-	*/
-	public InfoStudentGroup getInfoStudentGroup() {
-		return infoStudentGroup;
-	}
+    /**
+     * @param InfoSiteStudentInformation
+     */
+    public void setInfoSiteStudentInformation(InfoSiteStudentInformation infoSiteStudentInformation) {
+	this.infoSiteStudentInformation = infoSiteStudentInformation;
+    }
 
-	/**
-	 * @param InfoStudentGroup
-	 */
-	public void setInfoStudentGroup(InfoStudentGroup infoStudentGroup) {
-		this.infoStudentGroup = infoStudentGroup;
-	}
+    /**
+     * @return InfoStudentGroup
+     */
+    public InfoStudentGroup getInfoStudentGroup() {
+	return infoStudentGroup;
+    }
+
+    /**
+     * @param InfoStudentGroup
+     */
+    public void setInfoStudentGroup(InfoStudentGroup infoStudentGroup) {
+	this.infoStudentGroup = infoStudentGroup;
+    }
 }

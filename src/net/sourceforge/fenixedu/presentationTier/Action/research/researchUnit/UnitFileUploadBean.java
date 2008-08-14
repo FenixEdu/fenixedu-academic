@@ -14,75 +14,75 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class UnitFileUploadBean extends UnitFileBean implements Serializable {
 
-		private DomainReference<Unit> unit;
-		
-	  	private String fileName;
-	    private Long fileSize;
-	    
-	    private List<IGroup> permittedGroups;
-	    private Group permittedGroup;
+    private DomainReference<Unit> unit;
 
-	    transient private InputStream uploadFile;
-	    private String authorsName;
-	    
-		public UnitFileUploadBean(Unit unit) {
-	    	this.unit = new DomainReference<Unit>(unit);
-	    	permittedGroups = new ArrayList<IGroup> ();
-	    }
-	    
-	    public Unit getUnit() {
-	    	return this.unit.getObject();
-	    }
-	    
-		public String getAuthorsName() {
-			return authorsName;
-		}
+    private String fileName;
+    private Long fileSize;
 
-		public void setAuthorsName(String authorsName) {
-			this.authorsName = authorsName;
-		}
-		
-		public InputStream getUploadFile() {
-			return uploadFile;
-		}
-		
-		public void setUploadFile(InputStream file) {
-			this.uploadFile = file;
-		}
-		
-		public String getFileName() {
-			return fileName;
-		}
-		
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
-		}
-		
-		public Long getFileSize() {
-			return fileSize;
-		}
-		
-		public void setFileSize(Long fileSize) {
-			this.fileSize = fileSize;
-		}
-		
-		public Group getPermittedGroup() {
-			return (permittedGroup != null) ? permittedGroup : getUnion();
-		}
-		
-		public void setPermittedGroup(Group permittedGroup) {
-			this.permittedGroup = permittedGroup;
-		}
+    private List<IGroup> permittedGroups;
+    private Group permittedGroup;
 
-		public Group getUnion() {
-			return new GroupUnion((Collection<IGroup>)getPermittedGroups());
-		}
-		
-		public List<IGroup> getPermittedGroups() {
-			return permittedGroups;
-		}
+    transient private InputStream uploadFile;
+    private String authorsName;
 
-		public void setPermittedGroups(List<IGroup> permittedGroups) {
-			this.permittedGroups = permittedGroups;
-		}
+    public UnitFileUploadBean(Unit unit) {
+	this.unit = new DomainReference<Unit>(unit);
+	permittedGroups = new ArrayList<IGroup>();
+    }
+
+    public Unit getUnit() {
+	return this.unit.getObject();
+    }
+
+    public String getAuthorsName() {
+	return authorsName;
+    }
+
+    public void setAuthorsName(String authorsName) {
+	this.authorsName = authorsName;
+    }
+
+    public InputStream getUploadFile() {
+	return uploadFile;
+    }
+
+    public void setUploadFile(InputStream file) {
+	this.uploadFile = file;
+    }
+
+    public String getFileName() {
+	return fileName;
+    }
+
+    public void setFileName(String fileName) {
+	this.fileName = fileName;
+    }
+
+    public Long getFileSize() {
+	return fileSize;
+    }
+
+    public void setFileSize(Long fileSize) {
+	this.fileSize = fileSize;
+    }
+
+    public Group getPermittedGroup() {
+	return (permittedGroup != null) ? permittedGroup : getUnion();
+    }
+
+    public void setPermittedGroup(Group permittedGroup) {
+	this.permittedGroup = permittedGroup;
+    }
+
+    public Group getUnion() {
+	return new GroupUnion((Collection<IGroup>) getPermittedGroups());
+    }
+
+    public List<IGroup> getPermittedGroups() {
+	return permittedGroups;
+    }
+
+    public void setPermittedGroups(List<IGroup> permittedGroups) {
+	this.permittedGroups = permittedGroups;
+    }
 }

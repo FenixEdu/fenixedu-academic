@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteShift extends Service {
 
-    public void run(InfoShift infoShift) throws FenixServiceException{
+    public void run(InfoShift infoShift) throws FenixServiceException {
 	rootDomainObject.readShiftByOID(infoShift.getIdInternal()).delete();
     }
 

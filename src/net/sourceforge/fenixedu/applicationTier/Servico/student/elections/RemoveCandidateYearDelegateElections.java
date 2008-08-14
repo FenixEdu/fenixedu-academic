@@ -7,15 +7,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class RemoveCandidateYearDelegateElections extends Service  {
-	
-	public void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException{
-		
-		try {
-			yearDelegateElection.removeCandidates(student);
-		} catch (DomainException ex) {
-			throw new FenixServiceException(ex.getMessage(), ex.getArgs());
-		}
+public class RemoveCandidateYearDelegateElections extends Service {
+
+    public void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException {
+
+	try {
+	    yearDelegateElection.removeCandidates(student);
+	} catch (DomainException ex) {
+	    throw new FenixServiceException(ex.getMessage(), ex.getArgs());
 	}
+    }
 
 }

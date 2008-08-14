@@ -51,14 +51,13 @@ public class ContextFilter implements Filter {
     }
 
     private boolean shouldBeSkipped(String path) {
-	return path.contains("/CSS/") || path.contains("/javaScript/") || path.endsWith(".jsp")
-		|| path.contains("images/") || path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do")
-		|| path.contains("/ajax/") || path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") 
-		|| path.endsWith("/redirect.do") 
+	return path.contains("/CSS/") || path.contains("/javaScript/") || path.endsWith(".jsp") || path.contains("images/")
+		|| path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") || path.contains("/ajax/")
+		|| path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") || path.endsWith("/redirect.do")
 		|| path.contains("/home.do") || path.contains("/logoff.do") || path.contains("/siteMap.do")
 		|| path.contains("/login.do") || path.startsWith("/external/") || path.startsWith("/isAlive.do")
 		|| path.endsWith(".html") || path.endsWith(".htm") || path.startsWith("/exceptionHandlingAction.do")
-		|| path.startsWith("/showErrorPageRegistered.do") || path.startsWith("/services") 
+		|| path.startsWith("/showErrorPageRegistered.do") || path.startsWith("/services")
 		|| path.contains("/loginExpired.do");
     }
 

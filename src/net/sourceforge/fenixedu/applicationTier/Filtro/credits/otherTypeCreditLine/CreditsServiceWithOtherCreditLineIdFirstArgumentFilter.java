@@ -9,14 +9,13 @@ import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 /**
  * @author jpvl
  */
-public class CreditsServiceWithOtherCreditLineIdFirstArgumentFilter extends
-        AbstractTeacherDepartmentAuthorization {
+public class CreditsServiceWithOtherCreditLineIdFirstArgumentFilter extends AbstractTeacherDepartmentAuthorization {
 
     protected Integer getTeacherId(Object[] arguments) {
-        Integer id = (Integer) arguments[0];
+	Integer id = (Integer) arguments[0];
 
-        OtherTypeCreditLine otherTypeCreditLine = (OtherTypeCreditLine) rootDomainObject.readCreditLineByOID(id);
-        return otherTypeCreditLine == null ? null : otherTypeCreditLine.getTeacher().getIdInternal();
+	OtherTypeCreditLine otherTypeCreditLine = (OtherTypeCreditLine) rootDomainObject.readCreditLineByOID(id);
+	return otherTypeCreditLine == null ? null : otherTypeCreditLine.getTeacher().getIdInternal();
     }
 
 }

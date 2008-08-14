@@ -22,8 +22,8 @@ public class TransactionalDispatchAction extends FenixDispatchAction {
      * @param request
      */
     protected void createToken(HttpServletRequest request) {
-        generateToken(request);
-        saveToken(request);
+	generateToken(request);
+	saveToken(request);
     }
 
     /**
@@ -38,9 +38,9 @@ public class TransactionalDispatchAction extends FenixDispatchAction {
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping,
-            String errorMessageKey) throws FenixTransactionException {
-        validateToken(request, form, mapping, errorMessageKey, true);
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping, String errorMessageKey)
+	    throws FenixTransactionException {
+	validateToken(request, form, mapping, errorMessageKey, true);
     }
 
     /**
@@ -57,16 +57,16 @@ public class TransactionalDispatchAction extends FenixDispatchAction {
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping,
-            String errorMessageKey, boolean renewToken) throws FenixTransactionException {
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping, String errorMessageKey,
+	    boolean renewToken) throws FenixTransactionException {
 
-        if (!isTokenValid(request)) {
-            form.reset(mapping, request);
-            throw new FenixTransactionException(errorMessageKey);
-        }
-        if (renewToken) {
-            createToken(request);
-        }
+	if (!isTokenValid(request)) {
+	    form.reset(mapping, request);
+	    throw new FenixTransactionException(errorMessageKey);
+	}
+	if (renewToken) {
+	    createToken(request);
+	}
 
     }
 

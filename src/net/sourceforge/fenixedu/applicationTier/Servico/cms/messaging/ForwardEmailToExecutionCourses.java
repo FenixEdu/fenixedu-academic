@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created
- *         on May 18, 2006, 12:07:00 PM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
+ *         May 18, 2006, 12:07:00 PM
  * 
  */
 public class ForwardEmailToExecutionCourses extends Service {
@@ -59,8 +59,7 @@ public class ForwardEmailToExecutionCourses extends Service {
 	    if (!this.mailsSentIsComputed) {
 		this.mailsSentIsComputed = true;
 		for (String mail : this.mailsToSend) {
-		    if (!this.disabledDynamicDelivery.contains(mail)
-			    && !this.invalidAddresses.contains(mail)
+		    if (!this.disabledDynamicDelivery.contains(mail) && !this.invalidAddresses.contains(mail)
 			    && !this.unknownAddresses.contains(mail)) {
 			this.mailsSent.add(mail);
 		    }
@@ -70,38 +69,37 @@ public class ForwardEmailToExecutionCourses extends Service {
 	}
 
 	/**
-         * @return the unknownAddresses
-         */
+	 * @return the unknownAddresses
+	 */
 	public Collection<String> getUnknownAddresses() {
 	    return this.unknownAddresses;
 	}
 
 	/**
-         * @param unknownAddresses
-         *                the unknownAddresses to set
-         */
+	 * @param unknownAddresses
+	 *            the unknownAddresses to set
+	 */
 	public void setUnknownAddresses(Collection<String> unknownAddresses) {
 	    this.unknownAddresses = unknownAddresses;
 	}
 
 	/**
-         * @return the disabledDynamicDelivery
-         */
+	 * @return the disabledDynamicDelivery
+	 */
 	public Collection<String> getDisabledDynamicDelivery() {
 	    return this.disabledDynamicDelivery;
 	}
 
 	/**
-         * @param disabledDynamicDelivery
-         *                the disabledDynamicDelivery to set
-         */
+	 * @param disabledDynamicDelivery
+	 *            the disabledDynamicDelivery to set
+	 */
 	public void setDisabledDynamicDelivery(Collection<String> disabledDynamicDelivery) {
 	    this.disabledDynamicDelivery = disabledDynamicDelivery;
 	}
     }
 
-    public ForwardMailsReport run(MimeMessage message, String prefix, String host)
-	    throws FenixServiceException {
+    public ForwardMailsReport run(MimeMessage message, String prefix, String host) throws FenixServiceException {
 	ForwardMailsReport report = new ForwardMailsReport();
 
 	try {
@@ -110,14 +108,13 @@ public class ForwardEmailToExecutionCourses extends Service {
 	    // Address[] cc = message.getRecipients(RecipientType.CC);
 	    // Address[] bcc = message.getRecipients(RecipientType.BCC);
 	    // Collection<Integer> executionCourseIds =
-                // this.extractExecutionCourseIds(to, prefix,
+	    // this.extractExecutionCourseIds(to, prefix,
 	    // report);
 	    // executionCourseIds.addAll(this.extractExecutionCourseIds(cc,
-                // prefix, report));
+	    // prefix, report));
 	    // executionCourseIds.addAll(this.extractExecutionCourseIds(bcc,
-                // prefix, report));
-	    Collection<Integer> executionCourseIds = this.extractExecutionCourseIds(xOriginalTo, prefix,
-		    report);
+	    // prefix, report));
+	    Collection<Integer> executionCourseIds = this.extractExecutionCourseIds(xOriginalTo, prefix, report);
 
 	    this.send(message, executionCourseIds, report, prefix, host);
 	    return report;
@@ -127,8 +124,8 @@ public class ForwardEmailToExecutionCourses extends Service {
 	}
     }
 
-    private Address[] extractXOriginalTo(MimeMessage message, String prefix, String host,
-	    ForwardMailsReport report) throws MessagingException {
+    private Address[] extractXOriginalTo(MimeMessage message, String prefix, String host, ForwardMailsReport report)
+	    throws MessagingException {
 
 	String[] xOriginalTo = message.getHeader("X-Original-To");
 	try {
@@ -144,8 +141,8 @@ public class ForwardEmailToExecutionCourses extends Service {
 	}
     }
 
-    private void send(MimeMessage message, Collection<Integer> executionCourseIds,
-	    ForwardMailsReport report, String prefix, String host) {
+    private void send(MimeMessage message, Collection<Integer> executionCourseIds, ForwardMailsReport report, String prefix,
+	    String host) {
 	Collection<ExecutionCourse> courses = new ArrayList<ExecutionCourse>(1);
 	for (Integer id : executionCourseIds) {
 	    ExecutionCourse course = RootDomainObject.getInstance().readExecutionCourseByOID(id);
@@ -163,23 +160,21 @@ public class ForwardEmailToExecutionCourses extends Service {
 			addresses.add(professorship.getTeacher().getPerson().getEmail());
 		    }
 		} else {
-		    report.getDisabledDynamicDelivery().add(
-			    prefix + course.getIdInternal().toString() + "@" + host);
+		    report.getDisabledDynamicDelivery().add(prefix + course.getIdInternal().toString() + "@" + host);
 		}
 	    }
 	}
 	EmailSender.forward(message, addresses);
     }
 
-    private Collection<Integer> extractExecutionCourseIds(Address[] addressArray,
-	    String emailAddressPrefix, ForwardMailsReport report) {
+    private Collection<Integer> extractExecutionCourseIds(Address[] addressArray, String emailAddressPrefix,
+	    ForwardMailsReport report) {
 	Collection<Integer> executionCourseIds = new ArrayList<Integer>();
 	if (addressArray != null) {
 	    for (int i = 0; i < addressArray.length; i++) {
 		Address address = addressArray[i];
 		if (address instanceof InternetAddress) {
-		    String stringAddress = ((InternetAddress) address).getAddress().toString()
-			    .toLowerCase();
+		    String stringAddress = ((InternetAddress) address).getAddress().toString().toLowerCase();
 		    report.getMailsToSend().add(stringAddress);
 		    String[] splittedAddress = stringAddress.split("@");
 		    if (splittedAddress.length > 0) {

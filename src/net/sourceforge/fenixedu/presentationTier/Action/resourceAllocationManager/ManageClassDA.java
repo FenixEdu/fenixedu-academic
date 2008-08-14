@@ -32,153 +32,150 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
-        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
-        request.setAttribute("schoolClass", schoolClass);
+	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
+	request.setAttribute("schoolClass", schoolClass);
 
-        // Fill out the form with the name of the class
-        DynaActionForm classForm = (DynaActionForm) form;
-        classForm.set("className", schoolClass.getEditablePartOfName());
+	// Fill out the form with the name of the class
+	DynaActionForm classForm = (DynaActionForm) form;
+	classForm.set("className", schoolClass.getEditablePartOfName());
 
-        //Get list of shifts and place them in request
-        Object args[] = { infoClass };
+	// Get list of shifts and place them in request
+	Object args[] = { infoClass };
 
-        List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(
-                "ReadShiftsByClass", args);
+	List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService("ReadShiftsByClass", args);
 
-        if (infoShifts != null && !infoShifts.isEmpty()) {            
-            Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
-            request.setAttribute(SessionConstants.SHIFTS, infoShifts);
-        }
+	if (infoShifts != null && !infoShifts.isEmpty()) {
+	    Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+	    request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+	}
 
-        return mapping.findForward("EditClass");
+	return mapping.findForward("EditClass");
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        DynaValidatorForm classForm = (DynaValidatorForm) form;
+	DynaValidatorForm classForm = (DynaValidatorForm) form;
 
-        String className = (String) classForm.get("className");
+	String className = (String) classForm.get("className");
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        InfoClass infoClassOld = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClassOld = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        Object argsCriarTurma[] = { infoClassOld.getIdInternal(), className, infoClassOld.getAnoCurricular(),
-        		infoClassOld.getInfoExecutionDegree(), infoClassOld.getInfoExecutionPeriod() };
+	Object argsCriarTurma[] = { infoClassOld.getIdInternal(), className, infoClassOld.getAnoCurricular(),
+		infoClassOld.getInfoExecutionDegree(), infoClassOld.getInfoExecutionPeriod() };
 
-        InfoClass infoClassNew = null;
-        try {
-            infoClassNew = (InfoClass) ServiceUtils.executeService("EditarTurma", argsCriarTurma);
-       
-        } catch (DomainException e) {
-            throw new ExistingActionException("A SchoolClass", e);
-        }
+	InfoClass infoClassNew = null;
+	try {
+	    infoClassNew = (InfoClass) ServiceUtils.executeService("EditarTurma", argsCriarTurma);
 
-        request.removeAttribute(SessionConstants.CLASS_VIEW);
-        request.setAttribute(SessionConstants.CLASS_VIEW, infoClassNew);
+	} catch (DomainException e) {
+	    throw new ExistingActionException("A SchoolClass", e);
+	}
 
-        return prepare(mapping, form, request, response);
+	request.removeAttribute(SessionConstants.CLASS_VIEW);
+	request.setAttribute(SessionConstants.CLASS_VIEW, infoClassNew);
+
+	return prepare(mapping, form, request, response);
     }
 
     public ActionForward removeShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+	Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
 
-        Object[] args = { shiftOID };
-        InfoShift infoShift = null;
-        try {
-            infoShift = (InfoShift) ServiceUtils.executeService("ReadShiftByOID", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException();
-        }
+	Object[] args = { shiftOID };
+	InfoShift infoShift = null;
+	try {
+	    infoShift = (InfoShift) ServiceUtils.executeService("ReadShiftByOID", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException();
+	}
 
-        Object argsRemove[] = { infoShift, infoClass };
-        ServiceUtils.executeService("RemoverTurno", argsRemove);
+	Object argsRemove[] = { infoShift, infoClass };
+	ServiceUtils.executeService("RemoverTurno", argsRemove);
 
-        return prepare(mapping, form, request, response);
+	return prepare(mapping, form, request, response);
     }
 
-    public ActionForward prepareAddShifts(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareAddShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        //Get list of available shifts and place them in request
-        Object args[] = { infoClass };
+	// Get list of available shifts and place them in request
+	Object args[] = { infoClass };
 
-        List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(
-                "ReadAvailableShiftsForClass", args);
+	List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService("ReadAvailableShiftsForClass", args);
 
-        /* Sort the list of shifts */
-        Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+	/* Sort the list of shifts */
+	Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 
-        /* Place list of shifts in request */
-        request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+	/* Place list of shifts in request */
+	request.setAttribute(SessionConstants.SHIFTS, infoShifts);
 
-        return mapping.findForward("AddShifts");
+	return mapping.findForward("AddShifts");
     }
 
-    public ActionForward viewSchedule(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewSchedule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        // Fill out the form with the name of the class
-        DynaActionForm classForm = (DynaActionForm) form;
-        classForm.set("className", infoClass.getNome());
+	// Fill out the form with the name of the class
+	DynaActionForm classForm = (DynaActionForm) form;
+	classForm.set("className", infoClass.getNome());
 
-        // Place list of lessons in request
-        Object argsApagarTurma[] = { infoClass };
+	// Place list of lessons in request
+	Object argsApagarTurma[] = { infoClass };
 
-        /** InfoLesson List */
-        List<InfoLesson> lessonList = (ArrayList<InfoLesson>) ServiceUtils.executeService("LerAulasDeTurma",
-                argsApagarTurma);
+	/** InfoLesson List */
+	List<InfoLesson> lessonList = (ArrayList<InfoLesson>) ServiceUtils.executeService("LerAulasDeTurma", argsApagarTurma);
 
-        request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
+	request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
 
-        return mapping.findForward("ViewSchedule");
+	return mapping.findForward("ViewSchedule");
     }
 
-    public ActionForward removeShifts(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        DynaActionForm removeShiftsForm = (DynaActionForm) form;
-        String[] selectedShifts = (String[]) removeShiftsForm.get("selectedItems");
+	DynaActionForm removeShiftsForm = (DynaActionForm) form;
+	String[] selectedShifts = (String[]) removeShiftsForm.get("selectedItems");
 
-        if (selectedShifts.length == 0) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("errors.shifts.notSelected", new ActionError("errors.shifts.notSelected"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
+	if (selectedShifts.length == 0) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("errors.shifts.notSelected", new ActionError("errors.shifts.notSelected"));
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
 
-        }
-        List<Integer> shiftOIDs = new ArrayList<Integer>();
-        for (int i = 0; i < selectedShifts.length; i++) {
-            shiftOIDs.add(new Integer(selectedShifts[i]));
-        }
+	}
+	List<Integer> shiftOIDs = new ArrayList<Integer>();
+	for (int i = 0; i < selectedShifts.length; i++) {
+	    shiftOIDs.add(new Integer(selectedShifts[i]));
+	}
 
-        InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        Object args[] = { infoClass, shiftOIDs };
-        ServiceUtils.executeService("RemoveShifts", args);
+	Object args[] = { infoClass, shiftOIDs };
+	ServiceUtils.executeService("RemoveShifts", args);
 
-        return mapping.findForward("EditClass");
+	return mapping.findForward("EditClass");
 
     }
 

@@ -15,20 +15,20 @@ public class TimeTableSlot {
     private List lessonSlotList;
 
     public TimeTableSlot(DayColumn dayColumn, Integer lineIndex) {
-        this.lineIndex = lineIndex;
-        this.dayColumn = dayColumn;
-        lessonSlotList = new ArrayList();
+	this.lineIndex = lineIndex;
+	this.dayColumn = dayColumn;
+	lessonSlotList = new ArrayList();
     }
 
     public void addLessonSlot(LessonSlot lessonSlot) {
-        Iterator iterator = lessonSlotList.iterator();
-        while (iterator.hasNext()) {
-            LessonSlot lessonSlotElem = (LessonSlot) iterator.next();
-            lessonSlotElem.getInfoLessonWrapper().addCollision();
-        }
-        lessonSlot.getInfoLessonWrapper().setNumberOfCollisions(new Integer(lessonSlotList.size()));
-        lessonSlotList.add(lessonSlot);
-        dayColumn.setMaxColisionSize(new Integer(lessonSlotList.size()));
+	Iterator iterator = lessonSlotList.iterator();
+	while (iterator.hasNext()) {
+	    LessonSlot lessonSlotElem = (LessonSlot) iterator.next();
+	    lessonSlotElem.getInfoLessonWrapper().addCollision();
+	}
+	lessonSlot.getInfoLessonWrapper().setNumberOfCollisions(new Integer(lessonSlotList.size()));
+	lessonSlotList.add(lessonSlot);
+	dayColumn.setMaxColisionSize(new Integer(lessonSlotList.size()));
     }
 
     /**
@@ -37,7 +37,7 @@ public class TimeTableSlot {
      * @return List
      */
     public List getLessonSlotList() {
-        return lessonSlotList;
+	return lessonSlotList;
     }
 
     /**
@@ -46,7 +46,7 @@ public class TimeTableSlot {
      * @return Integer
      */
     public Integer getLineIndex() {
-        return lineIndex;
+	return lineIndex;
     }
 
     /**
@@ -56,7 +56,7 @@ public class TimeTableSlot {
      *            The lineIndex to set
      */
     public void setLineIndex(Integer lineIndex) {
-        this.lineIndex = lineIndex;
+	this.lineIndex = lineIndex;
     }
 
 }

@@ -18,50 +18,50 @@ public class PeriodState extends FenixUtil {
     public static final String CURRENT_CODE = "C";
     public static final String OPEN_CODE = "O";
     public static final String NOT_OPEN_CODE = "NO";
-    
+
     private String stateCode;
 
     public PeriodState() {
     }
 
     public PeriodState(String stateCode) {
-        this.stateCode = stateCode;
+	this.stateCode = stateCode;
     }
 
     public String getStateCode() {
-        return stateCode;
+	return stateCode;
     }
 
     public PeriodState(PeriodState executionPeriodState) {
-        this.stateCode = executionPeriodState.getStateCode();
+	this.stateCode = executionPeriodState.getStateCode();
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof PeriodState) {
-            PeriodState executionPeriodState = (PeriodState) obj;
-            return executionPeriodState.getStateCode().equals(stateCode);
-        }
-        return false;
+	if (obj instanceof PeriodState) {
+	    PeriodState executionPeriodState = (PeriodState) obj;
+	    return executionPeriodState.getStateCode().equals(stateCode);
+	}
+	return false;
     }
 
     public String toString() {
-        String result = "";
+	String result = "";
 
-        if (getStateCode().equals(CLOSED_CODE)) {
-            result = "CLOSED";
-        } else if (getStateCode().equals(CURRENT_CODE)) {
-            result = "CURRENT";
-        } else if (getStateCode().equals(OPEN_CODE)) {
-            result = "OPEN";
-        } else if (getStateCode().equals(NOT_OPEN_CODE)) {
-            result = "NOT_OPEN";
-        }
+	if (getStateCode().equals(CLOSED_CODE)) {
+	    result = "CLOSED";
+	} else if (getStateCode().equals(CURRENT_CODE)) {
+	    result = "CURRENT";
+	} else if (getStateCode().equals(OPEN_CODE)) {
+	    result = "OPEN";
+	} else if (getStateCode().equals(NOT_OPEN_CODE)) {
+	    result = "NOT_OPEN";
+	}
 
-        return result;
+	return result;
     }
 
     public void setStateCode(String string) {
-        stateCode = string;
+	stateCode = string;
     }
 
 }

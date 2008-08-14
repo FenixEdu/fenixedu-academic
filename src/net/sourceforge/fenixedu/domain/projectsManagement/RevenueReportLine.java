@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Susana Fernandes
  * 
  */
-public class RevenueReportLine implements Serializable, IRevenueReportLine{
+public class RevenueReportLine implements Serializable, IRevenueReportLine {
 
     private Integer projectCode;
 
@@ -27,58 +27,58 @@ public class RevenueReportLine implements Serializable, IRevenueReportLine{
     private Double value;
 
     public String getDate() {
-        return date;
+	return date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+	this.date = date;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     public String getFinancialEntity() {
-        return financialEntity;
+	return financialEntity;
     }
 
     public void setFinancialEntity(String financialEntity) {
-        this.financialEntity = financialEntity;
+	this.financialEntity = financialEntity;
     }
 
     public String getMovementId() {
-        return movementId;
+	return movementId;
     }
 
     public void setMovementId(String movementId) {
-        this.movementId = movementId;
+	this.movementId = movementId;
     }
 
     public Integer getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public Integer getRubric() {
-        return rubric;
+	return rubric;
     }
 
     public void setRubric(Integer rubric) {
-        this.rubric = rubric;
+	this.rubric = rubric;
     }
 
     public Double getValue() {
-        return value;
+	return value;
     }
 
     public void setValue(Double value) {
-        this.value = value;
+	this.value = value;
     }
 }

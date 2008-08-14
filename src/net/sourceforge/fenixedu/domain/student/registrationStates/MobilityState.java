@@ -13,10 +13,10 @@ import org.joda.time.DateTime;
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class MobilityState extends MobilityState_Base {
-    
+
     public MobilityState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
@@ -50,12 +50,12 @@ public class MobilityState extends MobilityState_Base {
     }
 
     public IState nextState() {
-	return null;	
+	return null;
     }
-    
+
     @Override
     public boolean isActive() {
-        return true;
+	return true;
     }
-    
+
 }

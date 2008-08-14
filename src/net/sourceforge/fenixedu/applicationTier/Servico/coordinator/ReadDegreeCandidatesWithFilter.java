@@ -21,58 +21,58 @@ import net.sourceforge.fenixedu.util.State;
 public class ReadDegreeCandidatesWithFilter extends Service {
 
     public List run(Integer degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
-            throws FenixServiceException{
-        
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-        return createInfoMasterDegreeCandidateFromDomain(getMasterDegreeCandidates(degreeCurricularPlan, filterBy, filterValue));
+	    throws FenixServiceException {
+
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+	return createInfoMasterDegreeCandidateFromDomain(getMasterDegreeCandidates(degreeCurricularPlan, filterBy, filterValue));
     }
 
     private Set<MasterDegreeCandidate> getMasterDegreeCandidates(DegreeCurricularPlan degreeCurricularPlan,
-            PrintAllCandidatesFilter filterBy, String filterValue) {
+	    PrintAllCandidatesFilter filterBy, String filterValue) {
 
-        switch (filterBy) {
-        case FILTERBY_SPECIALIZATION_VALUE:
-            return degreeCurricularPlan.readMasterDegreeCandidatesBySpecialization(Specialization
-                    .valueOf(filterValue));
+	switch (filterBy) {
+	case FILTERBY_SPECIALIZATION_VALUE:
+	    return degreeCurricularPlan.readMasterDegreeCandidatesBySpecialization(Specialization.valueOf(filterValue));
 
-        case FILTERBY_SITUATION_VALUE:
-            return degreeCurricularPlan.readMasterDegreeCandidatesBySituatioName(new SituationName(
-                    filterValue));
+	case FILTERBY_SITUATION_VALUE:
+	    return degreeCurricularPlan.readMasterDegreeCandidatesBySituatioName(new SituationName(filterValue));
 
-        case FILTERBY_GIVESCLASSES_VALUE:
-            return degreeCurricularPlan.readMasterDegreeCandidatesByCourseAssistant(true);
+	case FILTERBY_GIVESCLASSES_VALUE:
+	    return degreeCurricularPlan.readMasterDegreeCandidatesByCourseAssistant(true);
 
-        case FILTERBY_DOESNTGIVESCLASSES_VALUE:
-            return degreeCurricularPlan.readMasterDegreeCandidatesByCourseAssistant(false);
+	case FILTERBY_DOESNTGIVESCLASSES_VALUE:
+	    return degreeCurricularPlan.readMasterDegreeCandidatesByCourseAssistant(false);
 
-        default:
-            return null;
-        }
+	default:
+	    return null;
+	}
     }
 
     private List createInfoMasterDegreeCandidateFromDomain(Set<MasterDegreeCandidate> masterDegreeCandidates) {
-        
-        final State candidateSituationState = new State(State.ACTIVE);
-        final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
 
-        for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
-            
-            final InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
-            
-            final List<InfoCandidateSituation> candidateSituations = new ArrayList<InfoCandidateSituation>();
-            for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
+	final State candidateSituationState = new State(State.ACTIVE);
+	final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
 
-                final InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain(candidateSituation);
-                candidateSituations.add(infoCandidateSituation);
+	for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
 
-                if (candidateSituation.getValidation().equals(candidateSituationState)) {
-                    infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-                }
-            }
-            
-            infoMasterDegreeCandidate.setSituationList(candidateSituations);
-            result.add(infoMasterDegreeCandidate);
-        }
-        return result;
+	    final InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+		    .newInfoFromDomain(masterDegreeCandidate);
+
+	    final List<InfoCandidateSituation> candidateSituations = new ArrayList<InfoCandidateSituation>();
+	    for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
+
+		final InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
+			.newInfoFromDomain(candidateSituation);
+		candidateSituations.add(infoCandidateSituation);
+
+		if (candidateSituation.getValidation().equals(candidateSituationState)) {
+		    infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+		}
+	    }
+
+	    infoMasterDegreeCandidate.setSituationList(candidateSituations);
+	    result.add(infoMasterDegreeCandidate);
+	}
+	return result;
     }
 }

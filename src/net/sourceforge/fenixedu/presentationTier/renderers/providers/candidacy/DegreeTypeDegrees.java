@@ -16,21 +16,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeTypeDegrees implements DataProvider {
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public Object provide(Object source, Object currentValue) {
 
-        final List<Degree> result = new ArrayList<Degree>();
-        for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
-            if (degree.getTipoCurso() == DegreeType.BOLONHA_DEGREE) {
-                result.add(degree);
-            }
-        }
-        Collections.sort(result, new BeanComparator("name"));
-        return result;
+	final List<Degree> result = new ArrayList<Degree>();
+	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	    if (degree.getTipoCurso() == DegreeType.BOLONHA_DEGREE) {
+		result.add(degree);
+	    }
+	}
+	Collections.sort(result, new BeanComparator("name"));
+	return result;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

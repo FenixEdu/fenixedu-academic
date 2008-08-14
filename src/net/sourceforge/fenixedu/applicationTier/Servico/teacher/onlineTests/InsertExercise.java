@@ -45,14 +45,12 @@ public class InsertExercise extends Service {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List<String> run(Integer executionCourseId, UploadedFile xmlZipFile, String path)
-	    throws FenixServiceException{
+    public List<String> run(Integer executionCourseId, UploadedFile xmlZipFile, String path) throws FenixServiceException {
 
 	List<String> badXmls = new ArrayList<String>();
 	String replacedPath = path.replace('\\', '/');
 	boolean createAny = false;
-	ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject
-		.readExecutionCourseByOID(executionCourseId);
+	ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject.readExecutionCourseByOID(executionCourseId);
 	if (executionCourse == null) {
 	    throw new InvalidArgumentsServiceException();
 	}
@@ -61,9 +59,9 @@ public class InsertExercise extends Service {
 	for (List<LabelValueBean> xmlFilesList : allXmlList) {
 	    Map<String, Question> questionMap = new HashMap<String, Question>();
 	    List<LabelValueBean> metadatas = new ArrayList<LabelValueBean>();
-	    //	    if (xmlFilesList == null || xmlFilesList.size() == 0) {
-	    //		throw new InvalidXMLFilesException();
-	    //	    }
+	    // if (xmlFilesList == null || xmlFilesList.size() == 0) {
+	    // throw new InvalidXMLFilesException();
+	    // }
 	    for (LabelValueBean labelValueBean : xmlFilesList) {
 		String xmlFile = labelValueBean.getValue();
 		String xmlFileName = labelValueBean.getLabel();
@@ -92,8 +90,7 @@ public class InsertExercise extends Service {
 		    ParseMetadata parse = new ParseMetadata();
 		    try {
 			Vector<Element> vector = parse.parseMetadata(xmlFile, path);
-			List<Question> listToThisMetadata = getListToThisMetadata(questionMap, parse
-				.getMembers());
+			List<Question> listToThisMetadata = getListToThisMetadata(questionMap, parse.getMembers());
 			if (listToThisMetadata.size() != 0) {
 			    metadata = new Metadata(executionCourse, xmlFile, vector);
 			    metadata.getQuestions().addAll(listToThisMetadata);
@@ -147,11 +144,9 @@ public class InsertExercise extends Service {
 		xmlListMap = readFromZip(xmlListMap, xmlZipFile.getInputStream(), "");
 	    } else {
 		List<LabelValueBean> xmlList = new ArrayList<LabelValueBean>();
-		if (xmlZipFile.getContentType().equals("text/xml")
-			|| xmlZipFile.getContentType().equals("application/xml")) {
+		if (xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml")) {
 		    if (xmlZipFile.getSize() <= FILE_SIZE_LIMIT) {
-			xmlList.add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile
-				.getFileData(), "ISO-8859-1")));
+			xmlList.add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
 		    } else {
 			xmlList.add(new LabelValueBean(xmlZipFile.getName(), null));
 		    }
@@ -191,8 +186,7 @@ public class InsertExercise extends Service {
 	    if (entry.getName().endsWith("zip")) {
 		xmlListMap = readFromZip(xmlListMap, is, entry.getName());
 	    } else {
-		for (int readed = 0; (readed = is.read(b)) > -1; stringBuilder.append(new String(b, 0,
-			readed, "ISO-8859-1"))) {
+		for (int readed = 0; (readed = is.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"))) {
 		    // nothing to do :o)
 		}
 		if (stringBuilder.length() <= FILE_SIZE_LIMIT) {

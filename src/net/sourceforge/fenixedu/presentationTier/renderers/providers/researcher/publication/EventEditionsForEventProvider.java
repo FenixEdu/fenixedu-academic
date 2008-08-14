@@ -19,12 +19,12 @@ public class EventEditionsForEventProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 	ResearchEvent event;
 	try {
-		event = (ResearchEvent) MethodUtils.invokeMethod(source, "getEvent", null);
-	}catch(Exception e) {
-		throw new RuntimeException(e);
+	    event = (ResearchEvent) MethodUtils.invokeMethod(source, "getEvent", null);
+	} catch (Exception e) {
+	    throw new RuntimeException(e);
 	}
-	
-	return event==null ? Collections.EMPTY_LIST : event.getEventEditions();
+
+	return event == null ? Collections.EMPTY_LIST : event.getEventEditions();
     }
 
 }

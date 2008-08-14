@@ -15,19 +15,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 28/Ago/2003, 7:57:10
+ *         Created at 28/Ago/2003, 7:57:10
  * 
  */
 public class ReadStudentById extends Service {
 
-	public Object run(Integer id) throws FenixServiceException{
-		InfoStudent infoStudent = null;
+    public Object run(Integer id) throws FenixServiceException {
+	InfoStudent infoStudent = null;
 
-		Registration registration = rootDomainObject.readRegistrationByOID(id);
-		if (registration != null) {
-			infoStudent = InfoStudent.newInfoFromDomain(registration);
-		}
-
-		return infoStudent;
+	Registration registration = rootDomainObject.readRegistrationByOID(id);
+	if (registration != null) {
+	    infoStudent = InfoStudent.newInfoFromDomain(registration);
 	}
+
+	return infoStudent;
+    }
 }

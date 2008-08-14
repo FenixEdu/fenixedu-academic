@@ -16,23 +16,21 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteGrouping extends Service {
 
-    public Boolean run(Integer executionCourseId, Integer groupPropertiesId)
-            throws FenixServiceException{
+    public Boolean run(Integer executionCourseId, Integer groupPropertiesId) throws FenixServiceException {
 
-        if (groupPropertiesId == null) {
-            return Boolean.FALSE;
-        }
+	if (groupPropertiesId == null) {
+	    return Boolean.FALSE;
+	}
 
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(
-                groupPropertiesId);
+	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
 
-        if (groupProperties == null) {
-            throw new ExistingServiceException();
-        }
+	if (groupProperties == null) {
+	    throw new ExistingServiceException();
+	}
 
-        groupProperties.delete();
-               
-        return Boolean.TRUE;
+	groupProperties.delete();
+
+	return Boolean.TRUE;
     }
 
 }

@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 public class SearchPolymorphicObjects extends AbstractSearchObjects implements AutoCompleteSearchService {
 
     public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-        Collection<DomainObject> objects = RootDomainObject.readAllDomainObjectsAux(type);
+	Collection<DomainObject> objects = RootDomainObject.readAllDomainObjectsAux(type);
 
-        return super.process(objects, value, limit, arguments);
+	return super.process(objects, value, limit, arguments);
     }
 }

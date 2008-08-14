@@ -15,28 +15,27 @@ import pt.utl.ist.berserk.ServiceResponse;
  * @author João Mota
  * 
  */
-public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter extends
-        AuthorizationByRoleFilter {
+public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter() {
     }
 
     protected RoleType getRoleType() {
-        return RoleType.TEACHER;
+	return RoleType.TEACHER;
     }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        try {
-            if ((id == null) || id.getRoleTypes().isEmpty() || !id.hasRoleType(getRoleType())) {
-                throw new NotAuthorizedFilterException();
-            }
-        } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
-        }
+	IUserView id = getRemoteUser(request);
+	try {
+	    if ((id == null) || id.getRoleTypes().isEmpty() || !id.hasRoleType(getRoleType())) {
+		throw new NotAuthorizedFilterException();
+	    }
+	} catch (RuntimeException e) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 
     private Integer getAnnouncementID(Object[] args) {
-        return (Integer) args[0];
+	return (Integer) args[0];
     }
 }

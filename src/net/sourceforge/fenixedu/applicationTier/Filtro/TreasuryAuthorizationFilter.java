@@ -20,7 +20,7 @@ public class TreasuryAuthorizationFilter extends AuthorizationByRoleFilter {
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -29,7 +29,7 @@ public class TreasuryAuthorizationFilter extends AuthorizationByRoleFilter {
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.TREASURY;
+	return RoleType.TREASURY;
     }
 
 }

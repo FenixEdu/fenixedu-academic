@@ -17,8 +17,8 @@ public class RequestLog extends RequestLog_Base {
 	setRequestTime(new DateTime());
     }
 
-    public RequestLog(String queryString, String referer, String user, String requestAttributes, String sessionAttributes, String path,
-	    String... parameters) {
+    public RequestLog(String queryString, String referer, String user, String requestAttributes, String sessionAttributes,
+	    String path, String... parameters) {
 	this();
 	setQueryString(queryString);
 	setRequester(user);

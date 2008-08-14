@@ -26,19 +26,19 @@ public class TestFilterContext implements FunctionalityContext {
     private HttpServletRequest request;
     private IUserView userView;
     private Functionality functionality;
-    
+
     public TestFilterContext(HttpServletRequest request, TestFilterBean bean, Functionality functionality) {
-        this.request = new TestFilterRequestWrapper(request, bean.getParametersMap());
-        this.userView = AccessControl.getUserView();
-        this.functionality = functionality;
+	this.request = new TestFilterRequestWrapper(request, bean.getParametersMap());
+	this.userView = AccessControl.getUserView();
+	this.functionality = functionality;
     }
 
     public HttpServletRequest getRequest() {
-        return this.request;
+	return this.request;
     }
 
     public IUserView getUserView() {
-        return this.userView;
+	return this.userView;
     }
 
     public User getLoggedUser() {
@@ -46,87 +46,85 @@ public class TestFilterContext implements FunctionalityContext {
     }
 
     public Module getSelectedModule() {
-        return ((IFunctionality)this.functionality).getModule();
+	return ((IFunctionality) this.functionality).getModule();
     }
 
     public Functionality getSelectedFunctionality() {
-        return this.functionality;
+	return this.functionality;
     }
 
     private static class TestFilterRequestWrapper extends HttpServletRequestWrapper {
 
-        private Map<String, String[]> parameters;
+	private Map<String, String[]> parameters;
 
-        public TestFilterRequestWrapper(HttpServletRequest request, Map<String, String[]> parameters) {
-            super(request);
-            
-            this.parameters = parameters;
-        }
+	public TestFilterRequestWrapper(HttpServletRequest request, Map<String, String[]> parameters) {
+	    super(request);
 
-        @Override
-        public String getQueryString() {
-            if (this.parameters.isEmpty()) {
-                return null;
-            }
-            
-            StringBuilder builder = new StringBuilder();
+	    this.parameters = parameters;
+	}
 
-            for (String key : this.parameters.keySet()) {
-                String[] values = this.parameters.get(key);
-                
-                for (int i = 0; i < values.length; i++) {
-                    String value = values[i];
-                
-                    builder.append("&" + key + "=" + value);
-                }
-            }
-            
-            return builder.substring(1).toString();
-        }
+	@Override
+	public String getQueryString() {
+	    if (this.parameters.isEmpty()) {
+		return null;
+	    }
 
-        @Override
-        public String getParameter(String name) {
-            String[] values = this.parameters.get(name);
-            
-            if (values == null) {
-                return null;
-            }
-            else {
-                return values[0];
-            }
-        }
+	    StringBuilder builder = new StringBuilder();
 
-        @Override
-        public Map getParameterMap() {
-            return this.parameters;
-        }
+	    for (String key : this.parameters.keySet()) {
+		String[] values = this.parameters.get(key);
 
-        @Override
-        public Enumeration getParameterNames() {
-            return new Vector<String>(this.parameters.keySet()).elements();
-        }
+		for (int i = 0; i < values.length; i++) {
+		    String value = values[i];
 
-        @Override
-        public String[] getParameterValues(String name) {
-            return this.parameters.get(name);
-        }
+		    builder.append("&" + key + "=" + value);
+		}
+	    }
 
-        
+	    return builder.substring(1).toString();
+	}
+
+	@Override
+	public String getParameter(String name) {
+	    String[] values = this.parameters.get(name);
+
+	    if (values == null) {
+		return null;
+	    } else {
+		return values[0];
+	    }
+	}
+
+	@Override
+	public Map getParameterMap() {
+	    return this.parameters;
+	}
+
+	@Override
+	public Enumeration getParameterNames() {
+	    return new Vector<String>(this.parameters.keySet()).elements();
+	}
+
+	@Override
+	public String[] getParameterValues(String name) {
+	    return this.parameters.get(name);
+	}
+
     }
 
     public Container getSelectedContainer() {
 	Portal root = Portal.getRootPortal();
 
-	Section section  = ((List<Section>)functionality.getParents(Section.class)).get(0);
+	Section section = ((List<Section>) functionality.getParents(Section.class)).get(0);
 	List<Content> path = root.getPathTo(section);
-	
-	return path.size() <= 2 ? (Container)root : (Container)path.get(2);
+
+	return path.size() <= 2 ? (Container) root : (Container) path.get(2);
     }
 
     public Container getSelectedTopLevelContainer() {
 	Portal root = Portal.getRootPortal();
 
-	Section section  = ((List<Section>)functionality.getParents(Section.class)).get(0);
+	Section section = ((List<Section>) functionality.getParents(Section.class)).get(0);
 	return (Container) root.getPathTo(section).get(2);
     }
 
@@ -145,7 +143,7 @@ public class TestFilterContext implements FunctionalityContext {
     }
 
     public Content getSelectedContent() {
-        // TODO Auto-generated method stub
-        return null;
+	// TODO Auto-generated method stub
+	return null;
     }
 }

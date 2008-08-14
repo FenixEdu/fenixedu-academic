@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author tfc130
- *  
+ * 
  */
 public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject {
 
@@ -18,18 +18,17 @@ public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject
      * Constructor for InfoShiftWithAssociatedInfoClassesAndInfoLessons.
      */
     public InfoShiftWithAssociatedInfoClassesAndInfoLessons() {
-        super();
+	super();
     }
 
     /**
      * Constructor for InfoShiftWithAssociatedInfoClassesAndInfoLessons.
      */
-    public InfoShiftWithAssociatedInfoClassesAndInfoLessons(InfoShift infoShift, List infoLessons,
-            List infoClasses) {
-        super();
-        setInfoClasses(infoClasses);
-        setInfoLessons(infoLessons);
-        setInfoShift(infoShift);
+    public InfoShiftWithAssociatedInfoClassesAndInfoLessons(InfoShift infoShift, List infoLessons, List infoClasses) {
+	super();
+	setInfoClasses(infoClasses);
+	setInfoLessons(infoLessons);
+	setInfoShift(infoShift);
     }
 
     /**
@@ -38,7 +37,7 @@ public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject
      * @return List
      */
     public List getInfoClasses() {
-        return infoClasses;
+	return infoClasses;
     }
 
     /**
@@ -47,7 +46,7 @@ public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject
      * @return List
      */
     public List getInfoLessons() {
-        return infoLessons;
+	return infoLessons;
     }
 
     /**
@@ -56,7 +55,7 @@ public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject
      * @return InfoShift
      */
     public InfoShift getInfoShift() {
-        return infoShift;
+	return infoShift;
     }
 
     /**
@@ -66,7 +65,7 @@ public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject
      *            The infoClasses to set
      */
     public void setInfoClasses(List infoClasses) {
-        this.infoClasses = infoClasses;
+	this.infoClasses = infoClasses;
     }
 
     /**
@@ -76,7 +75,7 @@ public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject
      *            The infoLessons to set
      */
     public void setInfoLessons(List infoLessons) {
-        this.infoLessons = infoLessons;
+	this.infoLessons = infoLessons;
     }
 
     /**
@@ -86,7 +85,7 @@ public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject
      *            The infoShift to set
      */
     public void setInfoShift(InfoShift infoShift) {
-        this.infoShift = infoShift;
+	this.infoShift = infoShift;
     }
 
 }

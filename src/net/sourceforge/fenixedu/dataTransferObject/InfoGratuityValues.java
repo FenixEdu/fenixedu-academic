@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 
 /**
  * @author Fernanda Quitério 10/Jan/2004
- *  
+ * 
  */
 public class InfoGratuityValues extends InfoObject {
     private Double anualValue;
@@ -37,23 +37,21 @@ public class InfoGratuityValues extends InfoObject {
     private List<InfoPaymentPhase> infoPaymentPhases;
 
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        result = result.append("[InfoGratuityValues: \n").append("idInternal= ").append(getIdInternal())
-                .append("\nanualValue= ").append(getAnualValue()).append("\nscholarShipPart= ").append(
-                        getScholarShipValue()).append("\nfinalProofValue= ")
-                .append(getFinalProofValue()).append("\ncourseValue= ").append(getCourseValue()).append(
-                        "\ncreditValue= ").append(getCreditValue()).append("\nproofRequestPayment= ")
-                .append(getProofRequestPayment()).append("\nstartPayment= ").append(getStartPayment())
-                .append("\nendPayment= ").append(getEndPayment()).append("\nregistrationPayment= ")
-                .append(getRegistrationPayment()).append("]");
-        return result.toString();
+	StringBuilder result = new StringBuilder();
+	result = result.append("[InfoGratuityValues: \n").append("idInternal= ").append(getIdInternal()).append("\nanualValue= ")
+		.append(getAnualValue()).append("\nscholarShipPart= ").append(getScholarShipValue())
+		.append("\nfinalProofValue= ").append(getFinalProofValue()).append("\ncourseValue= ").append(getCourseValue())
+		.append("\ncreditValue= ").append(getCreditValue()).append("\nproofRequestPayment= ").append(
+			getProofRequestPayment()).append("\nstartPayment= ").append(getStartPayment()).append("\nendPayment= ")
+		.append(getEndPayment()).append("\nregistrationPayment= ").append(getRegistrationPayment()).append("]");
+	return result.toString();
     }
 
     /**
      * @return Returns the when.
      */
     public Date getWhen() {
-        return when;
+	return when;
     }
 
     /**
@@ -61,14 +59,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The when to set.
      */
     public void setWhen(Date when) {
-        this.when = when;
+	this.when = when;
     }
 
     /**
      * @return Returns the registrationPayment.
      */
     public Boolean getRegistrationPayment() {
-        return registrationPayment;
+	return registrationPayment;
     }
 
     /**
@@ -76,14 +74,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The registrationPayment to set.
      */
     public void setRegistrationPayment(Boolean registrationPayment) {
-        this.registrationPayment = registrationPayment;
+	this.registrationPayment = registrationPayment;
     }
 
     /**
      * @return Returns the anualValue.
      */
     public Double getAnualValue() {
-        return anualValue;
+	return anualValue;
     }
 
     /**
@@ -91,14 +89,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The anualValue to set.
      */
     public void setAnualValue(Double anualValue) {
-        this.anualValue = anualValue;
+	this.anualValue = anualValue;
     }
 
     /**
      * @return Returns the courseValue.
      */
     public Double getCourseValue() {
-        return courseValue;
+	return courseValue;
     }
 
     /**
@@ -106,14 +104,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The courseValue to set.
      */
     public void setCourseValue(Double courseValue) {
-        this.courseValue = courseValue;
+	this.courseValue = courseValue;
     }
 
     /**
      * @return Returns the creditValue.
      */
     public Double getCreditValue() {
-        return creditValue;
+	return creditValue;
     }
 
     /**
@@ -121,14 +119,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The creditValue to set.
      */
     public void setCreditValue(Double creditValue) {
-        this.creditValue = creditValue;
+	this.creditValue = creditValue;
     }
 
     /**
      * @return Returns the endPayment.
      */
     public Date getEndPayment() {
-        return endPayment;
+	return endPayment;
     }
 
     /**
@@ -136,14 +134,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The endPayment to set.
      */
     public void setEndPayment(Date endPayment) {
-        this.endPayment = endPayment;
+	this.endPayment = endPayment;
     }
 
     /**
      * @return Returns the finalProofValue.
      */
     public Double getFinalProofValue() {
-        return finalProofValue;
+	return finalProofValue;
     }
 
     /**
@@ -151,14 +149,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The finalProofValue to set.
      */
     public void setFinalProofValue(Double finalProofValue) {
-        this.finalProofValue = finalProofValue;
+	this.finalProofValue = finalProofValue;
     }
 
     /**
      * @return Returns the infoEmployee.
      */
     public InfoEmployee getInfoEmployee() {
-        return infoEmployee;
+	return infoEmployee;
     }
 
     /**
@@ -166,14 +164,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The infoEmployee to set.
      */
     public void setInfoEmployee(InfoEmployee infoEmployee) {
-        this.infoEmployee = infoEmployee;
+	this.infoEmployee = infoEmployee;
     }
 
     /**
      * @return Returns the infoExecutionDegree.
      */
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return infoExecutionDegree;
+	return infoExecutionDegree;
     }
 
     /**
@@ -181,14 +179,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The infoExecutionDegree to set.
      */
     public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
-        this.infoExecutionDegree = infoExecutionDegree;
+	this.infoExecutionDegree = infoExecutionDegree;
     }
 
     /**
      * @return Returns the infoPaymentPhases.
      */
     public List<InfoPaymentPhase> getInfoPaymentPhases() {
-        return infoPaymentPhases;
+	return infoPaymentPhases;
     }
 
     /**
@@ -196,14 +194,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The infoPaymentPhases to set.
      */
     public void setInfoPaymentPhases(List<InfoPaymentPhase> infoPaymentPhases) {
-        this.infoPaymentPhases = infoPaymentPhases;
+	this.infoPaymentPhases = infoPaymentPhases;
     }
 
     /**
      * @return Returns the proofRequestPayment.
      */
     public Boolean getProofRequestPayment() {
-        return proofRequestPayment;
+	return proofRequestPayment;
     }
 
     /**
@@ -211,14 +209,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The proofRequestPayment to set.
      */
     public void setProofRequestPayment(Boolean proofRequestPayment) {
-        this.proofRequestPayment = proofRequestPayment;
+	this.proofRequestPayment = proofRequestPayment;
     }
 
     /**
      * @return Returns the scholarShipValue.
      */
     public Double getScholarShipValue() {
-        return scholarShipValue;
+	return scholarShipValue;
     }
 
     /**
@@ -226,14 +224,14 @@ public class InfoGratuityValues extends InfoObject {
      *            The scholarShipValue to set.
      */
     public void setScholarShipValue(Double scholarShipValue) {
-        this.scholarShipValue = scholarShipValue;
+	this.scholarShipValue = scholarShipValue;
     }
 
     /**
      * @return Returns the startPayment.
      */
     public Date getStartPayment() {
-        return startPayment;
+	return startPayment;
     }
 
     /**
@@ -241,30 +239,30 @@ public class InfoGratuityValues extends InfoObject {
      *            The startPayment to set.
      */
     public void setStartPayment(Date startPayment) {
-        this.startPayment = startPayment;
+	this.startPayment = startPayment;
     }
 
     public void copyFromDomain(GratuityValues gratuityValues) {
-        super.copyFromDomain(gratuityValues);
-        if (gratuityValues != null) {
-            setAnualValue(gratuityValues.getAnualValue());
-            setScholarShipValue(gratuityValues.getScholarShipValue());
-            setFinalProofValue(gratuityValues.getFinalProofValue());
-            setCourseValue(gratuityValues.getCourseValue());
-            setCreditValue(gratuityValues.getCreditValue());
-            setProofRequestPayment(gratuityValues.getProofRequestPayment());
-            setStartPayment(gratuityValues.getStartPayment());
-            setEndPayment(gratuityValues.getEndPayment());
-            setWhen(gratuityValues.getWhen());
-        }
+	super.copyFromDomain(gratuityValues);
+	if (gratuityValues != null) {
+	    setAnualValue(gratuityValues.getAnualValue());
+	    setScholarShipValue(gratuityValues.getScholarShipValue());
+	    setFinalProofValue(gratuityValues.getFinalProofValue());
+	    setCourseValue(gratuityValues.getCourseValue());
+	    setCreditValue(gratuityValues.getCreditValue());
+	    setProofRequestPayment(gratuityValues.getProofRequestPayment());
+	    setStartPayment(gratuityValues.getStartPayment());
+	    setEndPayment(gratuityValues.getEndPayment());
+	    setWhen(gratuityValues.getWhen());
+	}
     }
 
     public static InfoGratuityValues newInfoFromDomain(GratuityValues gratuityValues) {
-        InfoGratuityValues infoGratuityValues = null;
-        if (gratuityValues != null) {
-            infoGratuityValues = new InfoGratuityValues();
-            infoGratuityValues.copyFromDomain(gratuityValues);
-        }
-        return infoGratuityValues;
+	InfoGratuityValues infoGratuityValues = null;
+	if (gratuityValues != null) {
+	    infoGratuityValues = new InfoGratuityValues();
+	    infoGratuityValues.copyFromDomain(gratuityValues);
+	}
+	return infoGratuityValues;
     }
 }

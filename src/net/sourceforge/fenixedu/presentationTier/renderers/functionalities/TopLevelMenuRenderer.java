@@ -51,11 +51,11 @@ public class TopLevelMenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the CSS classes to be used in the entry that corresponds to the
-         * selected functionality.
-         * 
-         * @property
-         */
+     * Sets the CSS classes to be used in the entry that corresponds to the
+     * selected functionality.
+     * 
+     * @property
+     */
     public void setSelectedClasses(String selectedClasses) {
 	this.selectedClasses = selectedClasses;
     }
@@ -65,11 +65,11 @@ public class TopLevelMenuRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the CSS style to be applied to the menu entry that corresponds
-         * to the selected funcitonality
-         * 
-         * @property
-         */
+     * Sets the CSS style to be applied to the menu entry that corresponds to
+     * the selected funcitonality
+     * 
+     * @property
+     */
     public void setSelectedStyle(String selectedStyle) {
 	this.selectedStyle = selectedStyle;
     }
@@ -87,7 +87,8 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 
 		    AvailabilityPolicy policy = getAvailablityPocility(node);
 
-		    if (!node.isNodeVisible() || (policy != null && !policy.isAvailable(context)) || node.getReferingContent() instanceof MetaDomainObjectPortal) {
+		    if (!node.isNodeVisible() || (policy != null && !policy.isAvailable(context))
+			    || node.getReferingContent() instanceof MetaDomainObjectPortal) {
 			continue;
 		    }
 
@@ -101,7 +102,7 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 		    }
 
 		    item.addChild(getMenuComponent(context, node));
-		    
+
 		}
 
 		return menu;
@@ -110,8 +111,7 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 	    private HtmlComponent getMenuComponent(FunctionalityContext context, MenuEntry node) {
 
 		Content child = node.getReferingContent();
-		Content content = (child instanceof Section) ? ((Section) child).getInitialContent()
-			: child;
+		Content content = (child instanceof Section) ? ((Section) child).getInitialContent() : child;
 		if (content == null) {
 		    return new HtmlText(child.getName().getContent());
 		}
@@ -120,15 +120,15 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 		HtmlComponent component = new HtmlText(child.getName().getContent());
 
 		if (path != null && content.isAvailable()) {
-		    final String linkPrefix = child.isPublic() ? 
-			    ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : 
-				ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		    final String linkPrefix = child.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+			    : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
 		    HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
 
 		    HtmlInlineContainer container = new HtmlInlineContainer();
 		    container.addChild(component);
 		    link.setContextRelative(false);
-		    link.setUrl(context.getRequest().getContextPath() + "/" + node.getReferingContent().getNormalizedName().getContent());
+		    link.setUrl(context.getRequest().getContextPath() + "/"
+			    + node.getReferingContent().getNormalizedName().getContent());
 		    link.setBody(container);
 
 		    component = link;

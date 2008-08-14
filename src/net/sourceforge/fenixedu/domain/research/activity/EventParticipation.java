@@ -8,10 +8,11 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EventParticipation extends EventParticipation_Base {
-    
-    public  EventParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event, MultiLanguageString roleMessage) {
+
+    public EventParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event,
+	    MultiLanguageString roleMessage) {
 	super();
-	if(alreadyHasParticipation(party, role, event)) {
+	if (alreadyHasParticipation(party, role, event)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setParty(party);
@@ -19,23 +20,23 @@ public class EventParticipation extends EventParticipation_Base {
 	super.setEvent(event);
 	super.setRoleMessage(roleMessage);
     }
-    
+
     private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event) {
-	for(EventParticipation participation : party.getEventParticipations()) {
-	    if(participation.match(party,role,event)) {
+	for (EventParticipation participation : party.getEventParticipations()) {
+	    if (participation.match(party, role, event)) {
 		return true;
 	    }
 	}
-	return false;	
+	return false;
     }
-    
+
     public boolean match(Party party, ResearchActivityParticipationRole role, ResearchEvent event) {
-	return this.getParty().equals(party) && this.getRole().equals(role) && this.getEvent() .equals(event);
+	return this.getParty().equals(party) && this.getRole().equals(role) && this.getEvent().equals(event);
     }
 
     @Override
     public void setEvent(ResearchEvent event) {
-	if(alreadyHasParticipation(getParty(), getRole(), event)) {
+	if (alreadyHasParticipation(getParty(), getRole(), event)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setEvent(event);
@@ -43,7 +44,7 @@ public class EventParticipation extends EventParticipation_Base {
 
     @Override
     public void setParty(Party party) {
-	if(alreadyHasParticipation(party, getRole(), getEvent())) {
+	if (alreadyHasParticipation(party, getRole(), getEvent())) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setParty(party);
@@ -51,7 +52,7 @@ public class EventParticipation extends EventParticipation_Base {
 
     @Override
     public void setRole(ResearchActivityParticipationRole role) {
-	if(alreadyHasParticipation(getParty(), role, getEvent())) {
+	if (alreadyHasParticipation(getParty(), role, getEvent())) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setRole(role);
@@ -71,7 +72,7 @@ public class EventParticipation extends EventParticipation_Base {
     public boolean isLastParticipation() {
 	return this.getEvent().getParticipationsFor(this.getParty()).size() == 1;
     }
-    
+
     @Override
     public void delete() {
 	removeEvent();

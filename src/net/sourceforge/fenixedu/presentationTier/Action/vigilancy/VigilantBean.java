@@ -24,244 +24,231 @@ public class VigilantBean implements Serializable {
     private boolean showAllVigilancyInfo = Boolean.FALSE;
 
     private boolean showInformationByVigilant = Boolean.TRUE;
-    
+
     private boolean showBoundsJustification = Boolean.FALSE;
 
     private boolean showStartPoints = Boolean.FALSE;
-    
+
     private boolean showNotActiveConvokes = Boolean.FALSE;
-    
+
     private boolean showPointsWeight = Boolean.FALSE;
-    
+
     private boolean showOwnVigilancies = Boolean.FALSE;
-    
-    private final HashMap<String,String> schemas = new HashMap<String, String>();
-    
-    
+
+    private final HashMap<String, String> schemas = new HashMap<String, String>();
+
     public boolean isShowStartPoints() {
-		return showStartPoints;
-	}
+	return showStartPoints;
+    }
 
-	public void setShowStartPoints(boolean showStartPoints) {
-		this.showStartPoints = showStartPoints;
-	}
+    public void setShowStartPoints(boolean showStartPoints) {
+	this.showStartPoints = showStartPoints;
+    }
 
-	public boolean isShowBoundsJustification() {
-		return showBoundsJustification;
-	}
+    public boolean isShowBoundsJustification() {
+	return showBoundsJustification;
+    }
 
-	public void setShowBoundsJustification(boolean showBoundsJustification) {
-		this.showBoundsJustification = showBoundsJustification;
-	}
+    public void setShowBoundsJustification(boolean showBoundsJustification) {
+	this.showBoundsJustification = showBoundsJustification;
+    }
 
-	public boolean isShowAllVigilancyInfo() {
-        return showAllVigilancyInfo;
+    public boolean isShowAllVigilancyInfo() {
+	return showAllVigilancyInfo;
     }
 
     public void setShowAllVigilancyInfo(boolean showAllVigilancyInfo) {
-        this.showAllVigilancyInfo = showAllVigilancyInfo;
+	this.showAllVigilancyInfo = showAllVigilancyInfo;
     }
 
     public boolean isShowIncompatibilities() {
-        return showIncompatibilities;
+	return showIncompatibilities;
     }
 
     public void setShowIncompatibilities(boolean showIncompatibilities) {
-        this.showIncompatibilities = showIncompatibilities;
+	this.showIncompatibilities = showIncompatibilities;
     }
 
     public boolean isShowUnavailables() {
-        return showUnavailables;
+	return showUnavailables;
     }
 
     public void setShowUnavailables(boolean showUnavailables) {
-        this.showUnavailables = showUnavailables;
+	this.showUnavailables = showUnavailables;
     }
- 
+
     public boolean isShowInformationByVigilant() {
-        return showInformationByVigilant;
+	return showInformationByVigilant;
     }
 
     public void setShowInformationByVigilant(boolean showInformationByVigilant) {
-        this.showInformationByVigilant = showInformationByVigilant;
+	this.showInformationByVigilant = showInformationByVigilant;
     }
 
     public String getWhatSchemaToUse() {
-        if (this.showAllVigilancyInfo) {
-            if (this.showIncompatibilities) {
-                if (this.showUnavailables) {
-                  if(this.showBoundsJustification) { 
-                	return "convokesByVigilant.allInformation";
-                  }
-                  else {
-                	  return "convokesByVigilant.exceptBounds";
-                  }
-                } else {
-                	if(this.showBoundsJustification) {
-                		return "convokesByVigilant.exceptUnavailablesAndBounds";
-                	}
-                	else {
-                		return "convokesByVigilant.exceptUnavailables";
-                	}
-                }
-            } else {
-                if (this.showUnavailables) {
-                	if(this.showBoundsJustification) {
-                		return "convokesByVigilant.incompatibilitiesAndbounds";
-                	}
-                	else {
-                		return "convokesByVigilant.exceptIncompatibilities";
-                	}
-                } else {
-                	if(this.showBoundsJustification) {
-                		return "convokesByVigilant.vigilancyInformationAndBounds";
-                	}
-                	else {
-                		return "convokesByVigilant.onlyVigilancyInformation";
-                	}
-                }
-            }
-        } else {
-            if (this.showIncompatibilities) {
-                if (this.showUnavailables) {
-                    if(this.showBoundsJustification) {
-                    	return "convokesByVigilant.exceptVigilancyInformationAndBounds";
-                    }
-                    else {
-                    	return "convokesByVigilant.exceptVigilancyInformation";
-                    }
-                } else {
-                	if(this.showBoundsJustification)  {
-                		return "convokesByVigilant.incompatibilitiesAndBounds";
-                	}
-                	else {
-                		return "convokesByVigilant.onlyIncompatibilities";
-                	}
-                }
-            } else {
-                if (this.showUnavailables) {
-                    if(this.showUnavailables) {
-                    	return "convokesByVigilant.unavailablesAndBounds";
-                    }
-                    else {
-                    	return "convokesByVigilant.onlyUnavailables";
-                    }
-                } else {
-                	if(this.showBoundsJustification) {
-                		return "convokesByVigilant.showOnlyBounds";
-                	}
-                	else {
-                		return "convokesByVigilant.simpleInformation";
-                	}
-                }
-            }
-        }
+	if (this.showAllVigilancyInfo) {
+	    if (this.showIncompatibilities) {
+		if (this.showUnavailables) {
+		    if (this.showBoundsJustification) {
+			return "convokesByVigilant.allInformation";
+		    } else {
+			return "convokesByVigilant.exceptBounds";
+		    }
+		} else {
+		    if (this.showBoundsJustification) {
+			return "convokesByVigilant.exceptUnavailablesAndBounds";
+		    } else {
+			return "convokesByVigilant.exceptUnavailables";
+		    }
+		}
+	    } else {
+		if (this.showUnavailables) {
+		    if (this.showBoundsJustification) {
+			return "convokesByVigilant.incompatibilitiesAndbounds";
+		    } else {
+			return "convokesByVigilant.exceptIncompatibilities";
+		    }
+		} else {
+		    if (this.showBoundsJustification) {
+			return "convokesByVigilant.vigilancyInformationAndBounds";
+		    } else {
+			return "convokesByVigilant.onlyVigilancyInformation";
+		    }
+		}
+	    }
+	} else {
+	    if (this.showIncompatibilities) {
+		if (this.showUnavailables) {
+		    if (this.showBoundsJustification) {
+			return "convokesByVigilant.exceptVigilancyInformationAndBounds";
+		    } else {
+			return "convokesByVigilant.exceptVigilancyInformation";
+		    }
+		} else {
+		    if (this.showBoundsJustification) {
+			return "convokesByVigilant.incompatibilitiesAndBounds";
+		    } else {
+			return "convokesByVigilant.onlyIncompatibilities";
+		    }
+		}
+	    } else {
+		if (this.showUnavailables) {
+		    if (this.showUnavailables) {
+			return "convokesByVigilant.unavailablesAndBounds";
+		    } else {
+			return "convokesByVigilant.onlyUnavailables";
+		    }
+		} else {
+		    if (this.showBoundsJustification) {
+			return "convokesByVigilant.showOnlyBounds";
+		    } else {
+			return "convokesByVigilant.simpleInformation";
+		    }
+		}
+	    }
+	}
     }
 
     public VigilantBean() {
-        setExecutionYear(null);
-        setSelectedVigilantGroup(null);
+	setExecutionYear(null);
+	setSelectedVigilantGroup(null);
     }
 
     public ExecutionYear getExecutionYear() {
-        return executionYear.getObject();
+	return executionYear.getObject();
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-        this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
 
     }
 
     public VigilantGroup getSelectedVigilantGroup() {
-        return selectedVigilantGroup.getObject();
+	return selectedVigilantGroup.getObject();
     }
 
     public void setSelectedVigilantGroup(VigilantGroup group) {
-        this.selectedVigilantGroup = new DomainReference<VigilantGroup>(group);
+	this.selectedVigilantGroup = new DomainReference<VigilantGroup>(group);
     }
 
     public List getVigilantGroups() {
-        List groups = new ArrayList<VigilantGroup>();
-        for (DomainReference<VigilantGroup> vigilantGroup : this.vigilantGroups) {
-            if (vigilantGroup != null)
-                groups.add(vigilantGroup.getObject());
-        }
-        return groups;
+	List groups = new ArrayList<VigilantGroup>();
+	for (DomainReference<VigilantGroup> vigilantGroup : this.vigilantGroups) {
+	    if (vigilantGroup != null)
+		groups.add(vigilantGroup.getObject());
+	}
+	return groups;
     }
 
     public void setVigilantGroups(List<VigilantGroup> groups) {
-        this.vigilantGroups = new ArrayList<DomainReference<VigilantGroup>>();
-        for (VigilantGroup group : groups) {
-            if (group != null) {
-                this.vigilantGroups.add(new DomainReference(group));
-            }
-        }
+	this.vigilantGroups = new ArrayList<DomainReference<VigilantGroup>>();
+	for (VigilantGroup group : groups) {
+	    if (group != null) {
+		this.vigilantGroups.add(new DomainReference(group));
+	    }
+	}
     }
-    
+
     public String getWhatSchemaToUseInVigilants() {
-        boolean unavailables = this.isShowUnavailables();
-        boolean incompatibilities = this.isShowIncompatibilities();
-        boolean bounds = this.isShowBoundsJustification();
-        
-        if (unavailables) {
-            if (incompatibilities) {
-                if(bounds) {
-                	return "vigilantsWithAllInformation";
-                }
-                else {
-                	return "vigilantsWithoutBounds";
-                }
-            } else {
-                if(bounds) {
-                	return "vigilantsWithoutIncompatibilities";
-                }
-                else {
-                	return "vigilantsOnlyWithUnavailables";
-                }
-            }
-        } else {
-            if (incompatibilities) {
-              if(bounds) {
-            	return "vigilantsWithOutUnavailables";
-              }
-              else {
-            	 return "vigilantsOnlyWithIncompatibilities"; 
-              }
-            } else {
-                if(bounds) {
-                		return "vigilantsOnlyWithBounds";
-                }
-                else {
-                	return "simpleVigilants";
-                }
-            	
-            }
-        }
+	boolean unavailables = this.isShowUnavailables();
+	boolean incompatibilities = this.isShowIncompatibilities();
+	boolean bounds = this.isShowBoundsJustification();
+
+	if (unavailables) {
+	    if (incompatibilities) {
+		if (bounds) {
+		    return "vigilantsWithAllInformation";
+		} else {
+		    return "vigilantsWithoutBounds";
+		}
+	    } else {
+		if (bounds) {
+		    return "vigilantsWithoutIncompatibilities";
+		} else {
+		    return "vigilantsOnlyWithUnavailables";
+		}
+	    }
+	} else {
+	    if (incompatibilities) {
+		if (bounds) {
+		    return "vigilantsWithOutUnavailables";
+		} else {
+		    return "vigilantsOnlyWithIncompatibilities";
+		}
+	    } else {
+		if (bounds) {
+		    return "vigilantsOnlyWithBounds";
+		} else {
+		    return "simpleVigilants";
+		}
+
+	    }
+	}
 
     }
 
-	public boolean isShowNotActiveConvokes() {
-		return showNotActiveConvokes;
-	}
+    public boolean isShowNotActiveConvokes() {
+	return showNotActiveConvokes;
+    }
 
-	public void setShowNotActiveConvokes(boolean showNotActiveConvokes) {
-		this.showNotActiveConvokes = showNotActiveConvokes;
-	}
+    public void setShowNotActiveConvokes(boolean showNotActiveConvokes) {
+	this.showNotActiveConvokes = showNotActiveConvokes;
+    }
 
-	public boolean isShowPointsWeight() {
-		return showPointsWeight;
-	}
+    public boolean isShowPointsWeight() {
+	return showPointsWeight;
+    }
 
-	public void setShowPointsWeight(boolean showPointsWeight) {
-		this.showPointsWeight = showPointsWeight;
-	}
+    public void setShowPointsWeight(boolean showPointsWeight) {
+	this.showPointsWeight = showPointsWeight;
+    }
 
-	public boolean isShowOwnVigilancies() {
-	    return showOwnVigilancies;
-	}
+    public boolean isShowOwnVigilancies() {
+	return showOwnVigilancies;
+    }
 
-	public void setShowOwnVigilancies(boolean showOwnVigilancies) {
-	    this.showOwnVigilancies = showOwnVigilancies;
-	}
+    public void setShowOwnVigilancies(boolean showOwnVigilancies) {
+	this.showOwnVigilancies = showOwnVigilancies;
+    }
 
 }

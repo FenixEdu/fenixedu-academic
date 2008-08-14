@@ -31,7 +31,8 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester, optionalCurricularCourse);
 	// TODO: check this
 	// validateDegreeModuleLink(curriculumGroup, curricularCourse);
-	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition, createdBy);
+	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
+		createdBy);
 	setOptionalCurricularCourse(optionalCurricularCourse);
     }
 
@@ -56,8 +57,9 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	}
     }
 
-    private boolean hasCurricularCourseOrOptionalCurricularCourse(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-	return hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester) 
+    private boolean hasCurricularCourseOrOptionalCurricularCourse(final CurricularCourse curricularCourse,
+	    final ExecutionSemester executionSemester) {
+	return hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester)
 		|| hasCurricularCourse(getOptionalCurricularCourse(), curricularCourse, executionSemester);
     }
 
@@ -108,11 +110,15 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 
     /**
      * 
-     * After create new OptionalEnrolment, must delete Enrolment
-     * (to delete Enrolment remove: ProgramCertificateRequests, CourseLoadRequests, ExamDateCertificateRequests)
-     * @param enrolment 
-     * @param curriculumGroup: new CurriculumGroup for OptionalEnrolment
-     * @param optionalCurricularCourse: choosed OptionalCurricularCourse
+     * After create new OptionalEnrolment, must delete Enrolment (to delete
+     * Enrolment remove: ProgramCertificateRequests, CourseLoadRequests,
+     * ExamDateCertificateRequests)
+     * 
+     * @param enrolment
+     * @param curriculumGroup
+     *            : new CurriculumGroup for OptionalEnrolment
+     * @param optionalCurricularCourse
+     *            : choosed OptionalCurricularCourse
      * @return OptionalEnrolment
      */
     static OptionalEnrolment createBasedOn(final Enrolment enrolment, final CurriculumGroup curriculumGroup,

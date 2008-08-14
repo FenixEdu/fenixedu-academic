@@ -22,12 +22,12 @@ import org.apache.struts.action.ActionMapping;
 
 public class ReadDegreesAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID); 
-        degrees.addAll(Degree.readAllByDegreeType(DegreeType.MASTER_DEGREE)); 
-        request.setAttribute("degreesList", degrees);
-        return mapping.findForward("readDegrees");
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
+	final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	degrees.addAll(Degree.readAllByDegreeType(DegreeType.MASTER_DEGREE));
+	request.setAttribute("degreesList", degrees);
+	return mapping.findForward("readDegrees");
     }
 
 }
-

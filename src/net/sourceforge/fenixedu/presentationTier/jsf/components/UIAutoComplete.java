@@ -38,239 +38,224 @@ public class UIAutoComplete extends UIInput {
     private final String AUTO_COMPLETE_VALUE_REQUIRED = "net.sourceforge.fenixedu.presentationTier.jsf.validators.autoCompleteValidator.AUTO_COMPLETE_VALUE_REQUIRED";
 
     public UIAutoComplete() {
-        setRendererType(null);
-        setConverter(new IntegerConverter());
+	setRendererType(null);
+	setConverter(new IntegerConverter());
     }
 
     @Override
     public void encodeEnd(FacesContext context) throws IOException {
 
-        ResponseWriter writer = context.getResponseWriter();
-        Map requestMap = context.getExternalContext().getRequestMap();
-        String valueHiddenClientId = this.getClientId(context) + AUTO_COMPLETE_VALUE_HIDDEN_FIELD_SUFFIX;
-        String inputTextClientId = this.getClientId(context);
-        String divClientId = this.getClientId(context) + AUTO_COMPLETE_DIV_COMPONENT_SUFFIX;
-        String autoCompleteStyleClass = (String) this.getAttributes().get("autoCompleteStyleClass");
-        String autoCompleteItemsStyleClass = (String) this.getAttributes().get(
-                "autoCompleteItemsStyleClass");
-        String className = (String) this.getAttributes().get("className");
-        String inputTextArgName = (String) this.getAttributes().get("inputTextArgName");
-        String labelField = (String) this.getAttributes().get("labelField");
-        String valueField = (String) this.getAttributes().get("valueField");
-        String serviceName = (String) this.getAttributes().get("serviceName");
-        String serviceArgs = (String) this.getAttributes().get("serviceArgs");
-        Integer value = (Integer) this.getValue();
-        String textFieldStyleClass = (String) this.getAttributes().get("textFieldStyleClass");
-        Integer size = (Integer) this.getAttributes().get("size");
-        String contextPath = ((HttpServletRequest) context.getExternalContext().getRequest())
-                .getContextPath();
-        String inputTextValue = (value != null) ? getInputTextValue(getUserView(context), className,
-                value, labelField) : null;
+	ResponseWriter writer = context.getResponseWriter();
+	Map requestMap = context.getExternalContext().getRequestMap();
+	String valueHiddenClientId = this.getClientId(context) + AUTO_COMPLETE_VALUE_HIDDEN_FIELD_SUFFIX;
+	String inputTextClientId = this.getClientId(context);
+	String divClientId = this.getClientId(context) + AUTO_COMPLETE_DIV_COMPONENT_SUFFIX;
+	String autoCompleteStyleClass = (String) this.getAttributes().get("autoCompleteStyleClass");
+	String autoCompleteItemsStyleClass = (String) this.getAttributes().get("autoCompleteItemsStyleClass");
+	String className = (String) this.getAttributes().get("className");
+	String inputTextArgName = (String) this.getAttributes().get("inputTextArgName");
+	String labelField = (String) this.getAttributes().get("labelField");
+	String valueField = (String) this.getAttributes().get("valueField");
+	String serviceName = (String) this.getAttributes().get("serviceName");
+	String serviceArgs = (String) this.getAttributes().get("serviceArgs");
+	Integer value = (Integer) this.getValue();
+	String textFieldStyleClass = (String) this.getAttributes().get("textFieldStyleClass");
+	Integer size = (Integer) this.getAttributes().get("size");
+	String contextPath = ((HttpServletRequest) context.getExternalContext().getRequest()).getContextPath();
+	String inputTextValue = (value != null) ? getInputTextValue(getUserView(context), className, value, labelField) : null;
 
-        encodeAutoCompleteInclusionScriptsIfRequired(writer, requestMap, contextPath);
-        encodeInputTextField(writer, inputTextClientId, inputTextValue, textFieldStyleClass, size);
-        encodeAutoCompleteDiv(writer, divClientId, autoCompleteStyleClass);
-        encodeValueHiddenField(writer, valueHiddenClientId, value);
-        encodeAutoCompleteInitializationScript(writer, inputTextClientId, divClientId, contextPath,
-                serviceName, serviceArgs, labelField, valueField, autoCompleteItemsStyleClass,
-                className, inputTextArgName);
+	encodeAutoCompleteInclusionScriptsIfRequired(writer, requestMap, contextPath);
+	encodeInputTextField(writer, inputTextClientId, inputTextValue, textFieldStyleClass, size);
+	encodeAutoCompleteDiv(writer, divClientId, autoCompleteStyleClass);
+	encodeValueHiddenField(writer, valueHiddenClientId, value);
+	encodeAutoCompleteInitializationScript(writer, inputTextClientId, divClientId, contextPath, serviceName, serviceArgs,
+		labelField, valueField, autoCompleteItemsStyleClass, className, inputTextArgName);
     }
 
     private IUserView getUserView(FacesContext context) {
 	return UserView.getUser();
     }
 
-    private String getInputTextValue(IUserView userView, String className, Integer idInternal,
-            String labelField) {
-        Class clazz;
-        try {
-            clazz = Class.forName(className);
-            DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, idInternal);
+    private String getInputTextValue(IUserView userView, String className, Integer idInternal, String labelField) {
+	Class clazz;
+	try {
+	    clazz = Class.forName(className);
+	    DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, idInternal);
 
-            return BeanUtils.getProperty(domainObject, labelField);
+	    return BeanUtils.getProperty(domainObject, labelField);
 
-        } catch (Exception ex) {
-            throw new RuntimeException("Error getting value for autocomplete component", ex);
-        }
-
-    }
-
-    private void encodeAutoCompleteInitializationScript(ResponseWriter writer, String inputTextClientId,
-            String divClientId, String contextPath, String serviceName, String serviceArgs,
-            String labelField, String valueField, String autoCompleteItemsStyleClass, String className,
-            String inputTextArgName) throws IOException {
-        String finalUri = MessageFormat
-                .format(
-                        contextPath
-                                + "/"
-                                + DEFAULT_AUTO_COMPLETE_SERVLET_URI
-                                + "?serviceName={0}&serviceArgs={1}&labelField={2}&valueField={3}&styleClass={4}&class={5}&inputTextArgName={6}",
-                        new Object[] { serviceName, URLEncoder.encode(serviceArgs, DEFAULT_ENCODING),
-                                labelField, valueField, autoCompleteItemsStyleClass, className,
-                                inputTextArgName });
-
-        StringBuilder autoCompleteScriptInitialization = new StringBuilder();
-
-        autoCompleteScriptInitialization.append("new Ajax.Autocompleter('").append(inputTextClientId)
-                .append("','").append(divClientId).append("','").append(finalUri).append(
-                        "',{paramName: 'value',afterUpdateElement: autoCompleteUpdate});");
-
-        writer.startElement("script", null);
-        writer.writeAttribute("language", "JavaScript", null);
-        writer.write(autoCompleteScriptInitialization.toString());
-
-        writer.endElement("script");
+	} catch (Exception ex) {
+	    throw new RuntimeException("Error getting value for autocomplete component", ex);
+	}
 
     }
 
-    private void encodeAutoCompleteDiv(ResponseWriter writer, String clientId,
-            String autoCompleteStyleClass) throws IOException {
+    private void encodeAutoCompleteInitializationScript(ResponseWriter writer, String inputTextClientId, String divClientId,
+	    String contextPath, String serviceName, String serviceArgs, String labelField, String valueField,
+	    String autoCompleteItemsStyleClass, String className, String inputTextArgName) throws IOException {
+	String finalUri = MessageFormat.format(contextPath + "/" + DEFAULT_AUTO_COMPLETE_SERVLET_URI
+		+ "?serviceName={0}&serviceArgs={1}&labelField={2}&valueField={3}&styleClass={4}&class={5}&inputTextArgName={6}",
+		new Object[] { serviceName, URLEncoder.encode(serviceArgs, DEFAULT_ENCODING), labelField, valueField,
+			autoCompleteItemsStyleClass, className, inputTextArgName });
 
-        writer.startElement("div", this);
-        writer.writeAttribute("class", autoCompleteStyleClass, null);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("name", clientId, null);
-        writer.endElement("div");
+	StringBuilder autoCompleteScriptInitialization = new StringBuilder();
+
+	autoCompleteScriptInitialization.append("new Ajax.Autocompleter('").append(inputTextClientId).append("','").append(
+		divClientId).append("','").append(finalUri).append(
+		"',{paramName: 'value',afterUpdateElement: autoCompleteUpdate});");
+
+	writer.startElement("script", null);
+	writer.writeAttribute("language", "JavaScript", null);
+	writer.write(autoCompleteScriptInitialization.toString());
+
+	writer.endElement("script");
+
     }
 
-    private void encodeAutoCompleteInclusionScriptsIfRequired(ResponseWriter writer, Map requestMap,
-            String contextPath) throws IOException {
-        if (requestMap.containsKey(INIT_SCRIPT_FLAG_REQUEST_KEY) == false) {
+    private void encodeAutoCompleteDiv(ResponseWriter writer, String clientId, String autoCompleteStyleClass) throws IOException {
 
-            String javaScriptBasePath = contextPath + "/javaScript";
-
-            writer.startElement("script", null);
-            writer.writeAttribute("type", "text/javascript", null);
-            writer.writeAttribute("language", "JavaScript", null);
-            writer.writeAttribute("src", javaScriptBasePath + "/prototype.js", null);
-            writer.endElement("script");
-
-            writer.startElement("script", null);
-            writer.writeAttribute("type", "text/javascript", null);
-            writer.writeAttribute("language", "JavaScript", null);
-            writer.writeAttribute("src", javaScriptBasePath + "/effects.js", null);
-            writer.endElement("script");
-
-            writer.startElement("script", null);
-            writer.writeAttribute("type", "text/javascript", null);
-            writer.writeAttribute("language", "JavaScript", null);
-            writer.writeAttribute("src", javaScriptBasePath + "/dragdrop.js", null);
-            writer.endElement("script");
-
-            writer.startElement("script", null);
-            writer.writeAttribute("type", "text/javascript", null);
-            writer.writeAttribute("src", javaScriptBasePath + "/controls.js", null);
-            writer.endElement("script");
-
-            writer.startElement("script", null);
-            writer.writeAttribute("type", "text/javascript", null);
-            writer.writeAttribute("src", javaScriptBasePath + "/fenixScript.js", null);
-            writer.endElement("script");
-
-            requestMap.put(INIT_SCRIPT_FLAG_REQUEST_KEY, true);
-
-        }
+	writer.startElement("div", this);
+	writer.writeAttribute("class", autoCompleteStyleClass, null);
+	writer.writeAttribute("id", clientId, null);
+	writer.writeAttribute("name", clientId, null);
+	writer.endElement("div");
     }
 
-    private void encodeValueHiddenField(ResponseWriter writer, String clientId, Integer value)
-            throws IOException {
-        writer.startElement("input", this);
-        writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("name", clientId, null);
-        writer.writeAttribute("value", (value != null) ? value : "", null);
-        writer.endElement("input");
+    private void encodeAutoCompleteInclusionScriptsIfRequired(ResponseWriter writer, Map requestMap, String contextPath)
+	    throws IOException {
+	if (requestMap.containsKey(INIT_SCRIPT_FLAG_REQUEST_KEY) == false) {
+
+	    String javaScriptBasePath = contextPath + "/javaScript";
+
+	    writer.startElement("script", null);
+	    writer.writeAttribute("type", "text/javascript", null);
+	    writer.writeAttribute("language", "JavaScript", null);
+	    writer.writeAttribute("src", javaScriptBasePath + "/prototype.js", null);
+	    writer.endElement("script");
+
+	    writer.startElement("script", null);
+	    writer.writeAttribute("type", "text/javascript", null);
+	    writer.writeAttribute("language", "JavaScript", null);
+	    writer.writeAttribute("src", javaScriptBasePath + "/effects.js", null);
+	    writer.endElement("script");
+
+	    writer.startElement("script", null);
+	    writer.writeAttribute("type", "text/javascript", null);
+	    writer.writeAttribute("language", "JavaScript", null);
+	    writer.writeAttribute("src", javaScriptBasePath + "/dragdrop.js", null);
+	    writer.endElement("script");
+
+	    writer.startElement("script", null);
+	    writer.writeAttribute("type", "text/javascript", null);
+	    writer.writeAttribute("src", javaScriptBasePath + "/controls.js", null);
+	    writer.endElement("script");
+
+	    writer.startElement("script", null);
+	    writer.writeAttribute("type", "text/javascript", null);
+	    writer.writeAttribute("src", javaScriptBasePath + "/fenixScript.js", null);
+	    writer.endElement("script");
+
+	    requestMap.put(INIT_SCRIPT_FLAG_REQUEST_KEY, true);
+
+	}
     }
 
-    private void encodeInputTextField(ResponseWriter writer, String clientId, String value,
-            String styleClass, Integer size) throws IOException {
-        writer.startElement("input", this);
-        writer.writeAttribute("type", "text", null);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("name", clientId, null);
-        writer.writeAttribute("value", (value != null) ? value : "", null);
-        writer.writeAttribute("class", (styleClass != null) ? styleClass : "", null);
-        writer.writeAttribute("size", (size != null) ? size : "", null);
-        writer.writeAttribute("onkeyup", "javascript:autoCompleteClearValueFieldIfTextIsEmpty('"
-                + clientId + "');", null);
-        writer.endElement("input");
+    private void encodeValueHiddenField(ResponseWriter writer, String clientId, Integer value) throws IOException {
+	writer.startElement("input", this);
+	writer.writeAttribute("type", "hidden", null);
+	writer.writeAttribute("id", clientId, null);
+	writer.writeAttribute("name", clientId, null);
+	writer.writeAttribute("value", (value != null) ? value : "", null);
+	writer.endElement("input");
+    }
+
+    private void encodeInputTextField(ResponseWriter writer, String clientId, String value, String styleClass, Integer size)
+	    throws IOException {
+	writer.startElement("input", this);
+	writer.writeAttribute("type", "text", null);
+	writer.writeAttribute("id", clientId, null);
+	writer.writeAttribute("name", clientId, null);
+	writer.writeAttribute("value", (value != null) ? value : "", null);
+	writer.writeAttribute("class", (styleClass != null) ? styleClass : "", null);
+	writer.writeAttribute("size", (size != null) ? size : "", null);
+	writer.writeAttribute("onkeyup", "javascript:autoCompleteClearValueFieldIfTextIsEmpty('" + clientId + "');", null);
+	writer.endElement("input");
     }
 
     @Override
     public void decode(FacesContext context) {
-        Map requestMap = context.getExternalContext().getRequestParameterMap();
-        String valueFieldClientId = this.getClientId(context) + AUTO_COMPLETE_VALUE_HIDDEN_FIELD_SUFFIX;
-        String value = (String) requestMap.get(valueFieldClientId);
-        setSubmittedValue(value);
-        this.setValid(true);
+	Map requestMap = context.getExternalContext().getRequestParameterMap();
+	String valueFieldClientId = this.getClientId(context) + AUTO_COMPLETE_VALUE_HIDDEN_FIELD_SUFFIX;
+	String value = (String) requestMap.get(valueFieldClientId);
+	setSubmittedValue(value);
+	this.setValid(true);
 
     }
 
     @Override
     protected void validateValue(FacesContext context, Object newValue) {
 
-        String submittedInputTextValue = (String) context.getExternalContext().getRequestParameterMap()
-                .get(this.getClientId(context));
+	String submittedInputTextValue = (String) context.getExternalContext().getRequestParameterMap().get(
+		this.getClientId(context));
 
-        if (submittedInputTextValue.length() == 0 && newValue == null) {
+	if (submittedInputTextValue.length() == 0 && newValue == null) {
 
-            if (isValid() && isRequired()) {
-                String errorMessage = getMessageFromBundle(context, AUTO_COMPLETE_VALUE_REQUIRED);
+	    if (isValid() && isRequired()) {
+		String errorMessage = getMessageFromBundle(context, AUTO_COMPLETE_VALUE_REQUIRED);
 
-                context.addMessage(getClientId(context), new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        errorMessage, errorMessage));
+		context.addMessage(getClientId(context),
+			new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, errorMessage));
 
-                this.setValid(false);
-            }
+		this.setValid(false);
+	    }
 
-        } else if (submittedInputTextValue.length() != 0 && newValue == null) {
-            String errorMessage = getMessageFromBundle(context, INVALID_AUTO_COMPLETE_INPUT);
+	} else if (submittedInputTextValue.length() != 0 && newValue == null) {
+	    String errorMessage = getMessageFromBundle(context, INVALID_AUTO_COMPLETE_INPUT);
 
-            context.addMessage(getClientId(context), new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    errorMessage, errorMessage));
+	    context.addMessage(getClientId(context), new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, errorMessage));
 
-            this.setValid(false);
+	    this.setValid(false);
 
-        } else {
+	} else {
 
-            // Value needs to be validated
+	    // Value needs to be validated
 
-            String className = (String) this.getAttributes().get("className");
-            String labelField = (String) this.getAttributes().get("labelField");
+	    String className = (String) this.getAttributes().get("className");
+	    String labelField = (String) this.getAttributes().get("labelField");
 
-            try {
-                Class clazz = Class.forName(className);
-                DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, (Integer) newValue);
+	    try {
+		Class clazz = Class.forName(className);
+		DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, (Integer) newValue);
 
-                String correctLabelForIdInternal = BeanUtils.getProperty(domainObject, labelField);
+		String correctLabelForIdInternal = BeanUtils.getProperty(domainObject, labelField);
 
-                if (correctLabelForIdInternal.equals(submittedInputTextValue) == false) {
-                    String errorMessage = getMessageFromBundle(context, INVALID_AUTO_COMPLETE_INPUT);
+		if (correctLabelForIdInternal.equals(submittedInputTextValue) == false) {
+		    String errorMessage = getMessageFromBundle(context, INVALID_AUTO_COMPLETE_INPUT);
 
-                    context.addMessage(getClientId(context), new FacesMessage(
-                            FacesMessage.SEVERITY_ERROR, errorMessage, errorMessage));
+		    context.addMessage(getClientId(context), new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage,
+			    errorMessage));
 
-                    this.setValid(false);
-                }
+		    this.setValid(false);
+		}
 
-            } catch (Exception ex) {
-                String errorMessage = "Unexpected error occured in validation";
+	    } catch (Exception ex) {
+		String errorMessage = "Unexpected error occured in validation";
 
-                context.addMessage(getClientId(context), new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        errorMessage, errorMessage));
+		context.addMessage(getClientId(context),
+			new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, errorMessage));
 
-                this.setValid(false);
-            }
+		this.setValid(false);
+	    }
 
-        }
+	}
 
     }
 
     private String getMessageFromBundle(FacesContext context, String key) {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(context.getApplication()
-                .getMessageBundle(), context.getViewRoot().getLocale());
+	ResourceBundle resourceBundle = ResourceBundle.getBundle(context.getApplication().getMessageBundle(), context
+		.getViewRoot().getLocale());
 
-        String errorMessage = resourceBundle.getString(key);
-        return errorMessage;
+	String errorMessage = resourceBundle.getString(key);
+	return errorMessage;
     }
 }

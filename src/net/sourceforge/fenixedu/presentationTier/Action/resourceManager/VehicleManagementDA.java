@@ -22,23 +22,23 @@ import org.apache.struts.action.ActionMapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class VehicleManagementDA extends FenixDispatchAction {
-    
-    public ActionForward prepareVehicleManage(ActionMapping mapping, ActionForm form,	   	    
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {
-	
+
+    public ActionForward prepareVehicleManage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException {
+
 	VehicleBean bean = new VehicleBean();
 	request.setAttribute("vehicleBean", bean);
-	return mapping.findForward("prepareVehicleManage");	
+	return mapping.findForward("prepareVehicleManage");
     }
-    
-    public ActionForward listVehicles(ActionMapping mapping, ActionForm form,	   	    
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {
+
+    public ActionForward listVehicles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException {
 
 	VehicleBean bean;
 	List<Vehicle> result;
-	
-	Vehicle vehicle = (Vehicle) getRenderedObject("vehicleEditID");	   
-	if(vehicle != null) {    
+
+	Vehicle vehicle = (Vehicle) getRenderedObject("vehicleEditID");
+	if (vehicle != null) {
 	    bean = new VehicleBean();
 	    bean.setNumberPlate(vehicle.getNumberPlate());
 	} else {
@@ -46,81 +46,83 @@ public class VehicleManagementDA extends FenixDispatchAction {
 	    bean = bean != null ? bean : (VehicleBean) getRenderedObject("createVehicleBeanID");
 	    bean = bean != null ? bean : new VehicleBean();
 	}
-	
-	String numberPlate = bean != null ? bean.getNumberPlate() : null;	
-	if(StringUtils.isEmpty(numberPlate)) {
-	    result = Vehicle.getAllVehicles();	    
+
+	String numberPlate = bean != null ? bean.getNumberPlate() : null;
+	if (StringUtils.isEmpty(numberPlate)) {
+	    result = Vehicle.getAllVehicles();
 	} else {
 	    Vehicle vehicleByNumberPlate = Vehicle.getVehicleByNumberPlate(numberPlate);
 	    result = new ArrayList<Vehicle>();
-	    if(vehicleByNumberPlate != null) {
+	    if (vehicleByNumberPlate != null) {
 		result.add(vehicleByNumberPlate);
 	    }
 	}
-	
-	CollectionPager<Vehicle> collectionPager = new CollectionPager<Vehicle>(result != null ? result : new ArrayList<Vehicle>(), 50);
+
+	CollectionPager<Vehicle> collectionPager = new CollectionPager<Vehicle>(result != null ? result
+		: new ArrayList<Vehicle>(), 50);
 	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1); 	
-	
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
+		.valueOf(1);
+
 	request.setAttribute("pageNumber", pageNumber);
-	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));	
-	request.setAttribute("vehicles", collectionPager.getPage(pageNumber.intValue()));	
-	request.setAttribute("vehicleBean", bean);	
-	
-	return mapping.findForward("prepareVehicleManage");	
+	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
+	request.setAttribute("vehicles", collectionPager.getPage(pageNumber.intValue()));
+	request.setAttribute("vehicleBean", bean);
+
+	return mapping.findForward("prepareVehicleManage");
     }
-    
-    public ActionForward prepareCreateVehicle(ActionMapping mapping, ActionForm form,	   	    
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {
+
+    public ActionForward prepareCreateVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException {
 
 	VehicleBean bean = new VehicleBean();
-	request.setAttribute("vehicleBean", bean);	
-	return mapping.findForward("editVehicle");	
+	request.setAttribute("vehicleBean", bean);
+	return mapping.findForward("editVehicle");
     }
-    
-    public ActionForward prepareEditVehicle(ActionMapping mapping, ActionForm form,	   	    
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {
 
-	Vehicle vehicle = getVehicleFromParameter(request);	
-	request.setAttribute("vehicle", vehicle);	
-	return mapping.findForward("editVehicle");	
-    }    
-    
-    public ActionForward createVehicle(ActionMapping mapping, ActionForm form,	   	    
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
-		
+    public ActionForward prepareEditVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException {
+
+	Vehicle vehicle = getVehicleFromParameter(request);
+	request.setAttribute("vehicle", vehicle);
+	return mapping.findForward("editVehicle");
+    }
+
+    public ActionForward createVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+
 	VehicleBean bean = (VehicleBean) getRenderedObject("createVehicleBeanID");
-	
+
 	try {
-	    executeService("CreateVehicle", new Object[]{bean.getNumberPlate(), bean.getMake(), bean.getModel(),
-		bean.getAcquisition(), bean.getCease(), bean.getAllocationCostMultiplier()});
-	
-	}  catch (DomainException e) {
+	    executeService("CreateVehicle", new Object[] { bean.getNumberPlate(), bean.getMake(), bean.getModel(),
+		    bean.getAcquisition(), bean.getCease(), bean.getAllocationCostMultiplier() });
+
+	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
-	    request.setAttribute("vehicleBean", bean);	
+	    request.setAttribute("vehicleBean", bean);
 	    return mapping.findForward("editVehicle");
 	}
-	
-	return listVehicles(mapping, form, request, response);	
-    }   
-    
-    public ActionForward deleteVehicle(ActionMapping mapping, ActionForm form,	   	    
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
-		
+
+	return listVehicles(mapping, form, request, response);
+    }
+
+    public ActionForward deleteVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+
 	Vehicle vehicle = getVehicleFromParameter(request);
-	
+
 	try {
-	    executeService("DeleteVehicle", new Object[]{vehicle});
-	
-	}  catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());	   	   
-	}	
-	
-	return prepareVehicleManage(mapping, form, request, response);	
-    }            
-    
-    /////
-    
+	    executeService("DeleteVehicle", new Object[] { vehicle });
+
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	}
+
+	return prepareVehicleManage(mapping, form, request, response);
+    }
+
+    // ///
+
     private Vehicle getVehicleFromParameter(HttpServletRequest request) {
 	final String vehicleIDString = request.getParameter("vehicleID");
 	final Integer vehicleID = vehicleIDString != null ? Integer.valueOf(vehicleIDString) : null;

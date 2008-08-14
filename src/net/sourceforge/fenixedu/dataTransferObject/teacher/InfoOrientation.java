@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.OrientationType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoOrientation extends InfoObject {
     private InfoTeacher infoTeacher;
@@ -31,14 +31,14 @@ public class InfoOrientation extends InfoObject {
      *  
      */
     public InfoOrientation() {
-        super();
+	super();
     }
 
     /**
      * @return Returns the description.
      */
     public String getDescription() {
-        return description;
+	return description;
     }
 
     /**
@@ -46,14 +46,14 @@ public class InfoOrientation extends InfoObject {
      *            The description to set.
      */
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -61,14 +61,14 @@ public class InfoOrientation extends InfoObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
      * @return Returns the numberOfStudents.
      */
     public Integer getNumberOfStudents() {
-        return numberOfStudents;
+	return numberOfStudents;
     }
 
     /**
@@ -76,14 +76,14 @@ public class InfoOrientation extends InfoObject {
      *            The numberOfStudents to set.
      */
     public void setNumberOfStudents(Integer numberOfStudents) {
-        this.numberOfStudents = numberOfStudents;
+	this.numberOfStudents = numberOfStudents;
     }
 
     /**
      * @return Returns the orientationType.
      */
     public OrientationType getOrientationType() {
-        return orientationType;
+	return orientationType;
     }
 
     /**
@@ -91,14 +91,14 @@ public class InfoOrientation extends InfoObject {
      *            The orientationType to set.
      */
     public void setOrientationType(OrientationType orientationType) {
-        this.orientationType = orientationType;
+	this.orientationType = orientationType;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
     public Date getLastModificationDate() {
-        return lastModificationDate;
+	return lastModificationDate;
     }
 
     /**
@@ -106,31 +106,33 @@ public class InfoOrientation extends InfoObject {
      *            The lastModificationDate to set.
      */
     public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
+	this.lastModificationDate = lastModificationDate;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(Orientation orientation) {
-        super.copyFromDomain(orientation);
-        if (orientation != null) {
-            setDescription(orientation.getDescription());
-            setLastModificationDate(orientation.getLastModificationDate());
-            setNumberOfStudents(orientation.getNumberOfStudents());
-            setOrientationType(orientation.getOrientationType());
-        }
+	super.copyFromDomain(orientation);
+	if (orientation != null) {
+	    setDescription(orientation.getDescription());
+	    setLastModificationDate(orientation.getLastModificationDate());
+	    setNumberOfStudents(orientation.getNumberOfStudents());
+	    setOrientationType(orientation.getOrientationType());
+	}
     }
 
     public static InfoOrientation newInfoFromDomain(Orientation orientation) {
-        InfoOrientation infoOrientation = null;
-        if (orientation != null) {
-            infoOrientation = new InfoOrientation();
-            infoOrientation.copyFromDomain(orientation);
-        }
+	InfoOrientation infoOrientation = null;
+	if (orientation != null) {
+	    infoOrientation = new InfoOrientation();
+	    infoOrientation.copyFromDomain(orientation);
+	}
 
-        return infoOrientation;
+	return infoOrientation;
     }
 }

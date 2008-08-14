@@ -16,8 +16,10 @@ public class EquivalencyPlanEntryCurriculumModuleWrapper {
 
     private static final Comparator<EquivalencyPlanEntryCurriculumModuleWrapper> COMPARATOR_BY_DEGREE_MODULE_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_DEGREE_MODULE_NAME).addComparator(new BeanComparator("curriculumModule.degreeModule.name", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_DEGREE_MODULE_NAME).addComparator(new BeanComparator("curriculumModule.degreeModule.idInternal"));
+	((ComparatorChain) COMPARATOR_BY_DEGREE_MODULE_NAME).addComparator(new BeanComparator(
+		"curriculumModule.degreeModule.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_DEGREE_MODULE_NAME).addComparator(new BeanComparator(
+		"curriculumModule.degreeModule.idInternal"));
     }
 
     private final CurriculumModule curriculumModule;
@@ -26,38 +28,39 @@ public class EquivalencyPlanEntryCurriculumModuleWrapper {
 
     private final Set<EquivalencePlanEntry> removedEquivalencePlanEntries = new HashSet<EquivalencePlanEntry>();
 
-    private final Set<EquivalencyPlanEntryCurriculumModuleWrapper> children = new TreeSet<EquivalencyPlanEntryCurriculumModuleWrapper>(COMPARATOR_BY_DEGREE_MODULE_NAME);
+    private final Set<EquivalencyPlanEntryCurriculumModuleWrapper> children = new TreeSet<EquivalencyPlanEntryCurriculumModuleWrapper>(
+	    COMPARATOR_BY_DEGREE_MODULE_NAME);
 
     public EquivalencyPlanEntryCurriculumModuleWrapper(final CurriculumModule curriculumModule) {
 	this.curriculumModule = curriculumModule;
     }
 
     public CurriculumModule getCurriculumModule() {
-        return curriculumModule;
+	return curriculumModule;
     }
 
     public Set<EquivalencePlanEntry> getEquivalencePlanEntriesToApply() {
-        return equivalencePlanEntriesToApply;
+	return equivalencePlanEntriesToApply;
     }
 
     public Set<EquivalencePlanEntry> getRemovedEquivalencePlanEntries() {
-        return removedEquivalencePlanEntries;
+	return removedEquivalencePlanEntries;
     }
 
     public Set<EquivalencyPlanEntryCurriculumModuleWrapper> getChildren() {
-        return children;
+	return children;
     }
 
     public void addEquivalencePlanEntriesToApply(final EquivalencePlanEntry equivalencePlanEntry) {
-        equivalencePlanEntriesToApply.add(equivalencePlanEntry);
+	equivalencePlanEntriesToApply.add(equivalencePlanEntry);
     }
 
     public void addRemovedEquivalencePlanEntries(final EquivalencePlanEntry equivalencePlanEntry) {
-        removedEquivalencePlanEntries.add(equivalencePlanEntry);
+	removedEquivalencePlanEntries.add(equivalencePlanEntry);
     }
 
     public void addChildren(final EquivalencyPlanEntryCurriculumModuleWrapper curriculumModule) {
-        children.add(curriculumModule);
+	children.add(curriculumModule);
     }
 
 }

@@ -139,7 +139,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
 		final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
 			YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_) };
-		ServiceUtils.executeService( "AssociateNewFunctionToPerson", argsToRead);
+		ServiceUtils.executeService("AssociateNewFunctionToPerson", argsToRead);
 		setErrorMessage("message.success");
 		return "success";
 
@@ -176,7 +176,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
 	    final Object[] argsToRead = { this.getPersonFunctionID(), this.getFunctionID(),
 		    YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_), credits };
-	    ServiceUtils.executeService( "EditPersonFunction", argsToRead);
+	    ServiceUtils.executeService("EditPersonFunction", argsToRead);
 	    setErrorMessage("message.success");
 	    return "alterFunction";
 
@@ -192,7 +192,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public String deletePersonFunction() throws FenixFilterException, FenixServiceException {
 	final Object[] argsToRead = { this.getPersonFunctionID() };
-	ServiceUtils.executeService( "DeletePersonFunction", argsToRead);
+	ServiceUtils.executeService("DeletePersonFunction", argsToRead);
 	setErrorMessage("message.success");
 	return "success";
     }
@@ -296,8 +296,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 		null, null, Boolean.TRUE, null, Boolean.FALSE);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService( "SearchPerson",
-		new Object[] { searchParameters, predicate });
+	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService("SearchPerson", new Object[] {
+		searchParameters, predicate });
 
 	return allPersons.getCollection();
     }
@@ -465,7 +465,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	return accountabilityTypeEnums;
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException{
+    public String getUnits() throws FenixFilterException, FenixServiceException {
 	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
 	buffer.append("<ul class='padding nobullet'>");

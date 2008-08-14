@@ -9,34 +9,34 @@ public class Response extends FenixUtil {
     private Integer responseProcessingIndex = null;
 
     public Response() {
-        super();
+	super();
     }
 
     public void setResponsed() {
-        responsed = true;
+	responsed = true;
     }
 
     public void setResponsed(boolean isResponsed) {
-        responsed = isResponsed;
+	responsed = isResponsed;
     }
 
     public boolean getResponsed() {
-        return responsed;
+	return responsed;
     }
 
     public boolean isResponsed() {
-        return responsed;
+	return responsed;
     }
 
     public Integer getResponseProcessingIndex() {
-        return responseProcessingIndex;
+	return responseProcessingIndex;
     }
 
     public void setResponseProcessingIndex(Integer responseProcessingIndex) {
-        this.responseProcessingIndex = responseProcessingIndex;
+	this.responseProcessingIndex = responseProcessingIndex;
     }
 
     public boolean hasResponse(String responseOption) {
-        return false;
+	return false;
     }
 }

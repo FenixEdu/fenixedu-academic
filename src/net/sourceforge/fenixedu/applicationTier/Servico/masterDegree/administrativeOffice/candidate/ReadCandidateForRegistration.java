@@ -24,36 +24,31 @@ import net.sourceforge.fenixedu.util.SituationName;
  */
 public class ReadCandidateForRegistration extends Service {
 
-    public List run(Integer executionDegreeCode) throws FenixServiceException{
+    public List run(Integer executionDegreeCode) throws FenixServiceException {
 
-        List<SituationName> situationNames = Arrays.asList(
-                new SituationName[] {
-                        SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ,
-                        SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ,
-                        SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ,
-                        SituationName.ADMITED_CONDICIONAL_OTHER_OBJ, SituationName.ADMITIDO_OBJ,
-                        SituationName.ADMITED_SPECIALIZATION_OBJ 
-                });
+	List<SituationName> situationNames = Arrays.asList(new SituationName[] {
+		SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ, SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ,
+		SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ, SituationName.ADMITED_CONDICIONAL_OTHER_OBJ,
+		SituationName.ADMITIDO_OBJ, SituationName.ADMITED_SPECIALIZATION_OBJ });
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
-        List<CandidateSituation> result = executionDegree.getCandidateSituationsInSituation(situationNames);
-        
-        if (result.isEmpty()) {
-            throw new NonExistingServiceException();
-        }
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
+	List<CandidateSituation> result = executionDegree.getCandidateSituationsInSituation(situationNames);
 
-        List candidateList = new ArrayList();
-        Iterator resultIterator = result.iterator();
-        while (resultIterator.hasNext()) {
-            CandidateSituation candidateSituation = (CandidateSituation) resultIterator.next();
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-                    .newInfoFromDomain(candidateSituation.getMasterDegreeCandidate());
-            infoMasterDegreeCandidate.setInfoCandidateSituation(InfoCandidateSituation
-                    .newInfoFromDomain(candidateSituation));
-            candidateList.add(infoMasterDegreeCandidate);
-        }
+	if (result.isEmpty()) {
+	    throw new NonExistingServiceException();
+	}
 
-        return candidateList;
+	List candidateList = new ArrayList();
+	Iterator resultIterator = result.iterator();
+	while (resultIterator.hasNext()) {
+	    CandidateSituation candidateSituation = (CandidateSituation) resultIterator.next();
+	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+		    .newInfoFromDomain(candidateSituation.getMasterDegreeCandidate());
+	    infoMasterDegreeCandidate.setInfoCandidateSituation(InfoCandidateSituation.newInfoFromDomain(candidateSituation));
+	    candidateList.add(infoMasterDegreeCandidate);
+	}
+
+	return candidateList;
 
     }
 }

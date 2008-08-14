@@ -38,22 +38,20 @@ import dml.DomainClass;
  */
 public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	Person person = checkUser();
 
 	generateIdIndexesToAnswer(form, person);
 
 	request.setAttribute("method", "deleteObject");
-	((DynaActionForm)form).set("method", "prepareEditObject");
+	((DynaActionForm) form).set("method", "prepareEditObject");
 	request.setAttribute("domainClasses", getClasses());
 	return mapping.findForward("chooseClassToManage");
     }
 
-    public ActionForward deleteObject(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException, ClassNotFoundException {
+    public ActionForward deleteObject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, ClassNotFoundException {
 
 	Person person = checkUser();
 
@@ -76,12 +74,11 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 
 	    try {
 		executeService("DeleteObjectByOID", Class.forName(classToDelete), classToDeleteId);
-		request.setAttribute("message", "Object " + classToDelete + " with ID:"
-			+ classToDeleteId + " Deleted. God have mercy of your soul...");
+		request.setAttribute("message", "Object " + classToDelete + " with ID:" + classToDeleteId
+			+ " Deleted. God have mercy of your soul...");
 
 	    } catch (Exception e) {
-		request.setAttribute("message", "Error deleting Object " + classToDelete + " with ID:"
-			+ classToDeleteId);
+		request.setAttribute("message", "Error deleting Object " + classToDelete + " with ID:" + classToDeleteId);
 	    }
 
 	} else {
@@ -89,13 +86,12 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 	}
 
 	request.setAttribute("domainClasses", getClasses());
-	((DynaActionForm)form).set("method", "prepareEditObject");
+	((DynaActionForm) form).set("method", "prepareEditObject");
 	return mapping.findForward("chooseClassToManage");
     }
 
-    public ActionForward prepareEditObject(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException, ClassNotFoundException {
+    public ActionForward prepareEditObject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, ClassNotFoundException {
 
 	Person person = checkUser();
 
@@ -115,12 +111,11 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 	    String className = (String) actionForm.get("classToManage");
 	    Integer classToEditId = (Integer) actionForm.get("classToManageId");
 
-	    DomainObject object = rootDomainObject.readDomainObjectByOID(Class.forName(className),
-		    classToEditId);
+	    DomainObject object = rootDomainObject.readDomainObjectByOID(Class.forName(className), classToEditId);
 
 	    if (object != null) {
 		request.setAttribute("objectToEdit", object);
-	    } 
+	    }
 	} else {
 	    request.setAttribute("message", "Who the hell are you!?!?!");
 	}

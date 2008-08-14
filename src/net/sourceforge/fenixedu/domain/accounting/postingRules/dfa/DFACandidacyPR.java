@@ -26,9 +26,8 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
 	super();
     }
 
-    public DFACandidacyPR(DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount,
-	    Money fixedAmountPenalty) {
+    public DFACandidacyPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+	    Money fixedAmount, Money fixedAmountPenalty) {
 	super.init(EntryType.CANDIDACY_ENROLMENT_FEE, EventType.CANDIDACY_ENROLMENT, startDate, endDate,
 		serviceAgreementTemplate, fixedAmount, fixedAmountPenalty);
 
@@ -48,14 +47,12 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
 
 	deactivate();
 
-	return new DFACandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
-		fixedAmount, penaltyAmount);
+	return new DFACandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount, penaltyAmount);
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    Event event, Account fromAccount, Account toAccount,
-	    AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	checkPreconditionsToProcess(event);
 	return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);
     }

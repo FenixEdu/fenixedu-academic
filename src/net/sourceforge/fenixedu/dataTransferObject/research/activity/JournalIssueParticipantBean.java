@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 public class JournalIssueParticipantBean extends ParticipantBean implements Serializable {
 
     DomainReference<JournalIssue> issue;
-    
+
     public JournalIssueParticipantBean() {
 	super();
 	setJournalIssue(null);
     }
-    
+
     public void setJournalIssue(JournalIssue issue) {
 	this.issue = new DomainReference<JournalIssue>(issue);
     }
-    
+
     public JournalIssue getJournalIssue() {
 	return this.issue.getObject();
     }
-    
+
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
 	return ResearchActivityParticipationRole.getAllJournalIssueRoles();

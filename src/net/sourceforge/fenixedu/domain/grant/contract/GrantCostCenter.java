@@ -12,18 +12,16 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 public class GrantCostCenter extends GrantCostCenter_Base {
 
     public GrantCostCenter() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public static GrantCostCenter readGrantCostCenterByNumber(String number) {
-        for (GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance()
-                .getGrantPaymentEntitys()) {
-            if (grantPaymentEntity instanceof GrantCostCenter
-                    && grantPaymentEntity.getNumber().equals(number)) {
-                return (GrantCostCenter) grantPaymentEntity;
-            }
-        }
-        return null;
+	for (GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
+	    if (grantPaymentEntity instanceof GrantCostCenter && grantPaymentEntity.getNumber().equals(number)) {
+		return (GrantCostCenter) grantPaymentEntity;
+	    }
+	}
+	return null;
     }
 }

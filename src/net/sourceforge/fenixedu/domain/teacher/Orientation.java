@@ -17,28 +17,28 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class Orientation extends Orientation_Base {
 
-	public Orientation() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
-	
-	public Orientation(Teacher teacher, InfoOrientation infoOrientation) {
-		this();
-		if(teacher == null)
-			throw new DomainException("The teacher should not be null!");
-		
-		setTeacher(teacher);
-		setBasicProperties(infoOrientation);
-	}
+    public Orientation() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void edit(InfoOrientation infoOrientation) {
-		setBasicProperties(infoOrientation);
-	}
-	
-	private void setBasicProperties(InfoOrientation infoOrientation) {
-        this.setDescription(infoOrientation.getDescription());
-        this.setNumberOfStudents(infoOrientation.getNumberOfStudents());
-        this.setOrientationType(infoOrientation.getOrientationType());
-	}
+    public Orientation(Teacher teacher, InfoOrientation infoOrientation) {
+	this();
+	if (teacher == null)
+	    throw new DomainException("The teacher should not be null!");
+
+	setTeacher(teacher);
+	setBasicProperties(infoOrientation);
+    }
+
+    public void edit(InfoOrientation infoOrientation) {
+	setBasicProperties(infoOrientation);
+    }
+
+    private void setBasicProperties(InfoOrientation infoOrientation) {
+	this.setDescription(infoOrientation.getDescription());
+	this.setNumberOfStudents(infoOrientation.getNumberOfStudents());
+	this.setOrientationType(infoOrientation.getOrientationType());
+    }
 
 }

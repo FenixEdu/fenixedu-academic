@@ -132,7 +132,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 	}
 
 	// indice, SessionConstants.EXECUTION_PERIOD,
-	    // SessionConstants.EXECUTION_PERIOD_OID
+	// SessionConstants.EXECUTION_PERIOD_OID
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 	Integer executionPeriodID = (Integer) chooseExamContextoForm.get("indice");
 	if (executionPeriodID != null) {
@@ -153,7 +153,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
 	// SessionConstants.EXECUTION_DEGREE, executionDegreeID,
-	    // infoExecutionDegree
+	// infoExecutionDegree
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
 		.getIdInternal());
 	ExecutionDegree executionDegree = null;

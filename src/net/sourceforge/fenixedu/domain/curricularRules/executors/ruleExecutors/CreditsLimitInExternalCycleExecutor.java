@@ -29,7 +29,7 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 	if (!isToApply(sourceDegreeModuleToEvaluate, enrolmentContext, externalCurriculumGroup)) {
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
-	
+
 	if (isEnrolingDissertation(enrolmentContext, externalCurriculumGroup)) {
 	    return createRuleResultForEnrolingDissertation(sourceDegreeModuleToEvaluate, creditsLimitInExternalCycle);
 	}

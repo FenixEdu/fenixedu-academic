@@ -648,8 +648,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	}
 
 	try {
-	    List<InfoStudent> infoStudentList = (List) ServiceUtils.executeService("ReadStudentsByIdArray",
-		    new Object[] { objectCode, selected, new Boolean(insertByShifts) });
+	    List<InfoStudent> infoStudentList = (List) ServiceUtils.executeService("ReadStudentsByIdArray", new Object[] {
+		    objectCode, selected, new Boolean(insertByShifts) });
 	    Object[] args = { objectCode, testCode, testInformation, evaluationTitle, beginDate, beginHour, endDate, endHour,
 		    testTypeArg, correctionAvailabilityArg, imsFeedbackArg, infoStudentList,
 		    getServlet().getServletContext().getRealPath("/") };
@@ -836,10 +836,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 	if (selected != null) {
 	    try {
-		infoStudentList = (List) ServiceUtils.executeService("ReadStudentsByIdArray", new Object[] {
-			objectCode, distributedTestCode, selected, new Boolean(insertByShifts) });
-		ServiceUtils.executeService("AddStudentsToDistributedTest", new Object[] { objectCode,
-			distributedTestCode, infoStudentList, getServlet().getServletContext().getRealPath("/") });
+		infoStudentList = (List) ServiceUtils.executeService("ReadStudentsByIdArray", new Object[] { objectCode,
+			distributedTestCode, selected, new Boolean(insertByShifts) });
+		ServiceUtils.executeService("AddStudentsToDistributedTest", new Object[] { objectCode, distributedTestCode,
+			infoStudentList, getServlet().getServletContext().getRealPath("/") });
 	    } catch (Exception e) {
 		request.setAttribute("successfulStudentAddition", new Boolean(false));
 		return showDistributedTests(mapping, form, request, response);
@@ -893,8 +893,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
 	try {
 	    final Object[] args = { objectCode, distributedTestCode, studentCode, path };
-	    studentTestQuestionList = (List<StudentTestQuestion>) ServiceUtils.executeService(
-		    "ReadStudentDistributedTest", args);
+	    studentTestQuestionList = (List<StudentTestQuestion>) ServiceUtils.executeService("ReadStudentDistributedTest", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -1030,8 +1029,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	final String path = getServlet().getServletContext().getRealPath("/");
 	InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = null;
 	try {
-	    infoSiteStudentsTestMarks = (InfoSiteStudentsTestMarks) ServiceUtils.executeService(
-		    "ReadDistributedTestMarks", new Object[] { objectCode, distributedTestCode, path });
+	    infoSiteStudentsTestMarks = (InfoSiteStudentsTestMarks) ServiceUtils.executeService("ReadDistributedTestMarks",
+		    new Object[] { objectCode, distributedTestCode, path });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -1048,8 +1047,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	SiteView siteView = null;
 	try {
-	    siteView = (SiteView) ServiceUtils.executeService("ReadDistributedTestMarksStatistics", new Object[] {
-		    objectCode, distributedTestCode });
+	    siteView = (SiteView) ServiceUtils.executeService("ReadDistributedTestMarksStatistics", new Object[] { objectCode,
+		    distributedTestCode });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -1066,9 +1065,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	List<InfoInquiryStatistics> infoInquiryStatisticsList = null;
 	try {
-	    infoInquiryStatisticsList = (List<InfoInquiryStatistics>) ServiceUtils.executeService(
-		    "ReadInquiryStatistics", new Object[] { objectCode, distributedTestCode,
-			    getServlet().getServletContext().getRealPath("/") });
+	    infoInquiryStatisticsList = (List<InfoInquiryStatistics>) ServiceUtils.executeService("ReadInquiryStatistics",
+		    new Object[] { objectCode, distributedTestCode, getServlet().getServletContext().getRealPath("/") });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -1166,10 +1164,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 	}
 	Boolean result = Boolean.FALSE;
 	try {
-	    result = (Boolean) ServiceUtils.executeService("ChangeStudentTestQuestion", new Object[] {
-		    executionCourseId, distributedTestId, questionId, metadataId, studentId,
-		    new TestQuestionChangesType(new Integer(changesType)), new Boolean(delete),
-		    new TestQuestionStudentsChangesType(new Integer(studentsType)), request.getContextPath() });
+	    result = (Boolean) ServiceUtils.executeService("ChangeStudentTestQuestion",
+		    new Object[] { executionCourseId, distributedTestId, questionId, metadataId, studentId,
+			    new TestQuestionChangesType(new Integer(changesType)), new Boolean(delete),
+			    new TestQuestionStudentsChangesType(new Integer(studentsType)), request.getContextPath() });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -1206,8 +1204,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	final String questionValueString = (String) ((DynaActionForm) form).get("questionValue");
 
 	try {
-	    ServiceUtils.executeService("ChangeStudentTestQuestionValue", new Object[] { objectCode,
-		    distributedTestCode, new Double(questionValueString), questionCode, studentCode,
+	    ServiceUtils.executeService("ChangeStudentTestQuestionValue", new Object[] { objectCode, distributedTestCode,
+		    new Double(questionValueString), questionCode, studentCode,
 		    new TestQuestionStudentsChangesType(new Integer(studentTypeString)),
 		    getServlet().getServletContext().getRealPath("/") });
 	} catch (FenixServiceException e) {
@@ -1243,8 +1241,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	final String questionValueString = (String) ((DynaActionForm) form).get("questionValue");
 
 	try {
-	    ServiceUtils.executeService("ChangeStudentTestQuestionMark", new Object[] { objectCode,
-		    distributedTestCode, new Double(questionValueString.replaceAll(",", ".")), questionCode, studentCode,
+	    ServiceUtils.executeService("ChangeStudentTestQuestionMark", new Object[] { objectCode, distributedTestCode,
+		    new Double(questionValueString.replaceAll(",", ".")), questionCode, studentCode,
 		    new TestQuestionStudentsChangesType(new Integer(studentTypeString)),
 		    getServlet().getServletContext().getRealPath("/") });
 	} catch (FenixServiceException e) {
@@ -1316,9 +1314,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 	List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList();
 	try {
-	    infoStudentTestQuestionList = (List) ServiceUtils.executeService("GenetareStudentTestForSimulation",
-		    new Object[] { executionCourseId, testId, getServlet().getServletContext().getRealPath("/"), testTypeArg,
-			    correctionAvailabilityArg, imsFeedbackArg, testInformation });
+	    infoStudentTestQuestionList = (List) ServiceUtils.executeService("GenetareStudentTestForSimulation", new Object[] {
+		    executionCourseId, testId, getServlet().getServletContext().getRealPath("/"), testTypeArg,
+		    correctionAvailabilityArg, imsFeedbackArg, testInformation });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -1367,8 +1365,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	request.setAttribute("objectCode", executionCourseId);
 	Test test = null;
 	try {
-	    test = (Test) ServiceUtils
-		    .executeService( "ReadTest", new Object[] { executionCourseId, distributedTestId });
+	    test = (Test) ServiceUtils.executeService("ReadTest", new Object[] { executionCourseId, distributedTestId });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -1403,9 +1400,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	}
 	InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = null;
 	try {
-	    infoSiteStudentTestFeedback = (InfoSiteStudentTestFeedback) ServiceUtils.executeService("SimulateTest",
-		    new Object[] { executionCourseId, distributedTestId, userResponse, questionCodes, optionsShuffle,
-			    testTypeArg, correctionAvailabilityArg, imsFeedbackArg, testInformation, path });
+	    infoSiteStudentTestFeedback = (InfoSiteStudentTestFeedback) ServiceUtils.executeService("SimulateTest", new Object[] {
+		    executionCourseId, distributedTestId, userResponse, questionCodes, optionsShuffle, testTypeArg,
+		    correctionAvailabilityArg, imsFeedbackArg, testInformation, path });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

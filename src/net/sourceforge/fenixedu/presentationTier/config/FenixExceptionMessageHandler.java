@@ -20,15 +20,14 @@ import org.apache.struts.config.ExceptionConfig;
 
 public class FenixExceptionMessageHandler extends FenixExceptionHandler {
 
-    public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+    public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
 	super.execute(ex, exceptionConfig, mapping, actionForm, request, response);
 
-        ActionForward forward = mapping.getInputForward();
-        ActionError error = new ActionError(ex.getMessage());
-        super.storeException(request, ex.getMessage(), error, forward, exceptionConfig.getScope());
-        return forward;
+	ActionForward forward = mapping.getInputForward();
+	ActionError error = new ActionError(ex.getMessage());
+	super.storeException(request, ex.getMessage(), error, forward, exceptionConfig.getScope());
+	return forward;
     }
 }

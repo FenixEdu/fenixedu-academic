@@ -14,35 +14,35 @@ public class InfoCandidateApprovalGroup extends InfoObject {
     protected List candidates;
 
     public InfoCandidateApprovalGroup() {
-        this.candidates = new ArrayList();
+	this.candidates = new ArrayList();
     }
 
     /**
      * @return
      */
     public List getCandidates() {
-        return candidates;
+	return candidates;
     }
 
     /**
      * @return
      */
     public String getSituationName() {
-        return situationName;
+	return situationName;
     }
 
     /**
      * @param list
      */
     public void setCandidates(List list) {
-        candidates = list;
+	candidates = list;
     }
 
     /**
      * @param string
      */
     public void setSituationName(String string) {
-        situationName = string;
+	situationName = string;
     }
 
 }

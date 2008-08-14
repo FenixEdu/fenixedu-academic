@@ -33,24 +33,26 @@ public abstract class AbstractPrintMarkSheet extends Service {
 	if (!markSheet.getPrinted()) {
 	    markSheet.setPrinted(Boolean.TRUE);
 
-	    /*if(markSheet.getResponsibleTeacher().getPerson().getEmail() != null) {
-	     EmailSender.send(null, "from", Collections.singletonList(markSheet.getResponsibleTeacher().getPerson().getEmail()), 
-	     null, null, "subject", "message");
-	     }*/
+	    /*
+	     * if(markSheet.getResponsibleTeacher().getPerson().getEmail() !=
+	     * null) { EmailSender.send(null, "from",
+	     * Collections.singletonList(markSheet
+	     * .getResponsibleTeacher().getPerson().getEmail()), null, null,
+	     * "subject", "message"); }
+	     */
 	}
     }
 
     private void printRectificationMarkSheet(MarkSheet markSheet, String printerName) throws UnableToPrintServiceException {
-	final EnrolmentEvaluation rectification =  markSheet.getEnrolmentEvaluationsSet().iterator().next();
-	
+	final EnrolmentEvaluation rectification = markSheet.getEnrolmentEvaluationsSet().iterator().next();
+
 	Map parameters = new HashMap();
 	parameters.put("markSheet", markSheet);
 	parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
 	parameters.put("rectification", rectification);
 	parameters.put("rectified", rectification.getRectified());
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language
-		.getLocale());
-	
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language.getLocale());
+
 	boolean result = ReportsUtils.printReport("markSheetRectification", parameters, bundle, Collections.emptyList(),
 		printerName);
 	if (!result) {
@@ -62,14 +64,11 @@ public abstract class AbstractPrintMarkSheet extends Service {
 	Map parameters = new HashMap();
 	parameters.put("markSheet", markSheet);
 	parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language
-		.getLocale());
-	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet
-		.getEnrolmentEvaluations());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language.getLocale());
+	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
 	Collections.sort(evaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
 
-	boolean result = ReportsUtils.printReport("markSheet", parameters, bundle, evaluations,
-		printerName);
+	boolean result = ReportsUtils.printReport("markSheet", parameters, bundle, evaluations, printerName);
 	if (!result) {
 	    throw new UnableToPrintServiceException("error.print.failed");
 	}

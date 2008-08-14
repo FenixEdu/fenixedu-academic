@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
 public class DeleteUnitSpaceOccupation extends Service {
 
     public void run(UnitSpaceOccupation unitSpaceOccupation) {
-	if(unitSpaceOccupation != null) {
+	if (unitSpaceOccupation != null) {
 	    unitSpaceOccupation.delete();
 	}
     }

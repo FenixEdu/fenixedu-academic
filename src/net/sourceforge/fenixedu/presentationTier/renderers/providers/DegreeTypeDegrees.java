@@ -12,11 +12,10 @@ public class DegreeTypeDegrees implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
-	if(markSheetManagementBean.getExecutionPeriod() != null) {
-	    return AccessControl.getPerson().getEmployee().getAdministrativeOffice()
-	    .getAdministratedDegreesForMarkSheets();
+	if (markSheetManagementBean.getExecutionPeriod() != null) {
+	    return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegreesForMarkSheets();
 	}
-	
+
 	return Collections.emptySet();
 
     }

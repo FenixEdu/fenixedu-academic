@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
  * @author cfgi
  */
 public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
-   
+
     protected AvailabilityPolicy() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setContentId(UUID.randomUUID().toString());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setContentId(UUID.randomUUID().toString());
     }
 
     /**
@@ -31,15 +31,15 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
      * @see Functionality#isAvailable(FunctionalityContext)
      */
     public abstract boolean isAvailable(FunctionalityContext context);
-    
+
     /**
      * Deletes this object from persistent storage.
      */
     public void delete() {
-        removeContent();
-        removeRootDomainObject();
-        deleteDomainObject();
+	removeContent();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
-    
+
     public abstract Group getTargetGroup();
 }

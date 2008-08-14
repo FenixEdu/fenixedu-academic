@@ -30,67 +30,67 @@ public class ProjectMemberBudget implements Serializable, IProjectMemberBudget {
     private List rubricBudget;
 
     public Integer getFinancingPercentage() {
-        return financingPercentage;
+	return financingPercentage;
     }
 
     public void setFinancingPercentage(Integer financingPercentage) {
-        this.financingPercentage = financingPercentage;
+	this.financingPercentage = financingPercentage;
     }
 
     public String getInstitutionCode() {
-        return institutionCode;
+	return institutionCode;
     }
 
     public void setInstitutionCode(String institutionCode) {
-        this.institutionCode = institutionCode;
+	this.institutionCode = institutionCode;
     }
 
     public String getInstitutionName() {
-        return institutionName;
+	return institutionName;
     }
 
     public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
+	this.institutionName = institutionName;
     }
 
     public String getOverheads() {
-        return overheads;
+	return overheads;
     }
 
     public void setOverheads(String overheads) {
-        this.overheads = overheads;
+	this.overheads = overheads;
     }
 
     public Integer getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public List getRubricBudget() {
-        return rubricBudget;
+	return rubricBudget;
     }
 
     public void setRubricBudget(List rubricBudget) {
-        this.rubricBudget = rubricBudget;
+	this.rubricBudget = rubricBudget;
     }
 
     public String getTransferences() {
-        return transferences;
+	return transferences;
     }
 
     public void setTransferences(String transferences) {
-        this.transferences = transferences;
+	this.transferences = transferences;
     }
 
     public String getType() {
-        return type;
+	return type;
     }
 
     public void setType(String type) {
-        this.type = type;
+	this.type = type;
     }
 
 }

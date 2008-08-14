@@ -278,7 +278,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 		    stringBuilder.append("3").append(separator);
 		    stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
 		    stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
-		    // stringBuilder.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year()))
+		    // stringBuilder.append(employeeMonthlyBonusInstallment.
+		    // getPartialYearMonth().get(DateTimeFieldType.year()))
 		    // .append(separator);
 		    stringBuilder.append(
 			    getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(

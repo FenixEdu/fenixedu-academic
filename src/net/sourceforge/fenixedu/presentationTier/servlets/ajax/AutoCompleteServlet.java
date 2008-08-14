@@ -25,122 +25,114 @@ public class AutoCompleteServlet extends HttpServlet {
     private static final int DEFAULT_MAX_COUNT = 20;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        process(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	process(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        process(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	process(request, response);
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    	request.setCharacterEncoding("UTF-8");
-    	
-        String service = request.getParameter("serviceName");
-        Class type = getConcreteType(request.getParameter("class"));
-        String value = new String(request.getParameter("value").getBytes(), JAVASCRIPT_LIBRARY_ENCODING);
-        
-        Map<String, String> serviceArgsMap = getServiceArgsMap(request.getParameter("serviceArgs"));
-        int maxCount = getNumber(request.getParameter("maxCount"), DEFAULT_MAX_COUNT);
+	request.setCharacterEncoding("UTF-8");
 
-        IUserView userView = getUserView(request);
-        Collection result = executeService(userView, service, type, value, maxCount, serviceArgsMap);
-        
-        String labelField = request.getParameter("labelField");
-        String format     = request.getParameter("format");
-        String valueField = request.getParameter("valueField");
-        String styleClass = request.getParameter("styleClass");
-        
+	String service = request.getParameter("serviceName");
+	Class type = getConcreteType(request.getParameter("class"));
+	String value = new String(request.getParameter("value").getBytes(), JAVASCRIPT_LIBRARY_ENCODING);
 
-        response.setContentType("text/html");
-        response.getWriter().write(getResponseHtml(result, labelField, format, valueField, styleClass, maxCount));
+	Map<String, String> serviceArgsMap = getServiceArgsMap(request.getParameter("serviceArgs"));
+	int maxCount = getNumber(request.getParameter("maxCount"), DEFAULT_MAX_COUNT);
+
+	IUserView userView = getUserView(request);
+	Collection result = executeService(userView, service, type, value, maxCount, serviceArgsMap);
+
+	String labelField = request.getParameter("labelField");
+	String format = request.getParameter("format");
+	String valueField = request.getParameter("valueField");
+	String styleClass = request.getParameter("styleClass");
+
+	response.setContentType("text/html");
+	response.getWriter().write(getResponseHtml(result, labelField, format, valueField, styleClass, maxCount));
     }
 
     private Class getConcreteType(String className) throws ServletException {
-        try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            throw new ServletException("could not find type " + className, e);
-        }
+	try {
+	    return Class.forName(className);
+	} catch (ClassNotFoundException e) {
+	    throw new ServletException("could not find type " + className, e);
+	}
     }
 
     private int getNumber(String parameter, int defaultValue) {
-        if (parameter == null) {
-            return defaultValue;
-        }
-        
-        try {
-            return Integer.parseInt(parameter);
-        } catch (NumberFormatException e) {
-            return defaultValue;
-        }
+	if (parameter == null) {
+	    return defaultValue;
+	}
+
+	try {
+	    return Integer.parseInt(parameter);
+	} catch (NumberFormatException e) {
+	    return defaultValue;
+	}
     }
 
-    private Collection executeService(IUserView userView, String serviceName,
-            Class type, String value, int maxCount, Map<String, String> arguments) throws ServletException {
-        try {
-            return (Collection) ServiceUtils.executeService(serviceName,
-                    new Object[] { type, value, maxCount, arguments });
-        } catch (Exception e) {
-            throw new ServletException("Error executing service", e);
-        }
+    private Collection executeService(IUserView userView, String serviceName, Class type, String value, int maxCount,
+	    Map<String, String> arguments) throws ServletException {
+	try {
+	    return (Collection) ServiceUtils.executeService(serviceName, new Object[] { type, value, maxCount, arguments });
+	} catch (Exception e) {
+	    throw new ServletException("Error executing service", e);
+	}
     }
 
     private Map<String, String> getServiceArgsMap(String encodedServiceArgs) {
-        String[] serviceArgsArray = StringUtils.split(encodedServiceArgs, ',');
-        Map<String, String> serviceArgsMap = new HashMap<String, String>();
+	String[] serviceArgsArray = StringUtils.split(encodedServiceArgs, ',');
+	Map<String, String> serviceArgsMap = new HashMap<String, String>();
 
-        for (String serviceArg : serviceArgsArray) {
-            String[] argNameArgValue = StringUtils.split(serviceArg, '=');
-            serviceArgsMap.put(argNameArgValue[0], argNameArgValue[1]);
-        }
+	for (String serviceArg : serviceArgsArray) {
+	    String[] argNameArgValue = StringUtils.split(serviceArg, '=');
+	    serviceArgsMap.put(argNameArgValue[0], argNameArgValue[1]);
+	}
 
-        return serviceArgsMap;
+	return serviceArgsMap;
     }
 
     private IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+	return UserView.getUser();
     }
 
-    private String getResponseHtml(Collection result, String labelField, String format, String valueField, String styleClass, int maxCount) {
-        StringBuilder responseHtml = new StringBuilder();
-        responseHtml.append("<ul ").append("class=\"").append(styleClass).append("\">");
+    private String getResponseHtml(Collection result, String labelField, String format, String valueField, String styleClass,
+	    int maxCount) {
+	StringBuilder responseHtml = new StringBuilder();
+	responseHtml.append("<ul ").append("class=\"").append(styleClass).append("\">");
 
-        try {
+	try {
 
-            int count = 0;
-            for (final Object element : result) {
-        	if (count++ >= maxCount) {
-        	    break;
-        	}
-        	final String labelProperty = BeanUtils.getProperty(element, labelField);
-                responseHtml.append("<li id=\"")
-                        .append(BeanUtils.getProperty(element, valueField))
-                        .append("\" name=\"")
-                        .append(labelProperty)
-                        .append("\">");
-                
-                if (format == null) {
-                    responseHtml.append(labelProperty);
-                }
-                else {
-                    responseHtml.append(RenderUtils.getFormattedProperties(format, element));
-                }
-                
-                responseHtml.append("</li>");
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException("Error getting field property (see label and value fields)", ex);
+	    int count = 0;
+	    for (final Object element : result) {
+		if (count++ >= maxCount) {
+		    break;
+		}
+		final String labelProperty = BeanUtils.getProperty(element, labelField);
+		responseHtml.append("<li id=\"").append(BeanUtils.getProperty(element, valueField)).append("\" name=\"").append(
+			labelProperty).append("\">");
 
-        }
+		if (format == null) {
+		    responseHtml.append(labelProperty);
+		} else {
+		    responseHtml.append(RenderUtils.getFormattedProperties(format, element));
+		}
 
-        responseHtml.append("</ul>");
+		responseHtml.append("</li>");
+	    }
+	} catch (Exception ex) {
+	    throw new RuntimeException("Error getting field property (see label and value fields)", ex);
 
-        return responseHtml.toString();
+	}
+
+	responseHtml.append("</ul>");
+
+	return responseHtml.toString();
     }
 }

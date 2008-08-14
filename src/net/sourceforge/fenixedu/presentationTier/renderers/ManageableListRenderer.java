@@ -31,19 +31,19 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderMode;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
- * This renderer allows you get a list as input but delegates part of the
- * list's management to an external action. Each one of the slot's values
- * will be presented in an html list. The renderer manages the removal of
- * values from the list. So a delete action link will appear next to each 
- * object's presentation. An add action link will allow the user to start the
- * external <em>use-case</em> that will add a new value to the list. 
+ * This renderer allows you get a list as input but delegates part of the list's
+ * management to an external action. Each one of the slot's values will be
+ * presented in an html list. The renderer manages the removal of values from
+ * the list. So a delete action link will appear next to each object's
+ * presentation. An add action link will allow the user to start the external
+ * <em>use-case</em> that will add a new value to the list.
  * 
  * <p>
  * Example:
  * <ul>
- *  <li><em>&lt;Object A presentation &gt;</em> <a href="#">Remove</a>
- *  <li><em>&lt;Object B presentation &gt;</em> <a href="#">Remove</a>
- *  <li><em>&lt;Object C presentation &gt;</em> <a href="#">Remove</a>
+ * <li><em>&lt;Object A presentation &gt;</em> <a href="#">Remove</a>
+ * <li><em>&lt;Object B presentation &gt;</em> <a href="#">Remove</a>
+ * <li><em>&lt;Object C presentation &gt;</em> <a href="#">Remove</a>
  * </ul>
  * <a href="#">Add</a>
  * 
@@ -52,16 +52,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public class ManageableListRenderer extends InputRenderer {
 
     public static final String MANAGED_SLOT_NAME = ManageableListRenderer.class.getName() + "/slot/name";
-    public static final String MANAGED_SLOT_KEY  = ManageableListRenderer.class.getName() + "/slot/key";
-    
+    public static final String MANAGED_SLOT_KEY = ManageableListRenderer.class.getName() + "/slot/key";
+
     private String destination;
-    
+
     private String eachSchema;
-    
+
     private String eachLayout;
-    
+
     public String getEachLayout() {
-        return this.eachLayout;
+	return this.eachLayout;
     }
 
     /**
@@ -70,11 +70,11 @@ public class ManageableListRenderer extends InputRenderer {
      * @property
      */
     public void setEachLayout(String eachLayout) {
-        this.eachLayout = eachLayout;
+	this.eachLayout = eachLayout;
     }
 
     public String getEachSchema() {
-        return this.eachSchema;
+	return this.eachSchema;
     }
 
     /**
@@ -83,31 +83,33 @@ public class ManageableListRenderer extends InputRenderer {
      * @property
      */
     public void setEachSchema(String eachSchema) {
-        this.eachSchema = eachSchema;
+	this.eachSchema = eachSchema;
     }
 
     public String getDestination() {
-        return this.destination;
+	return this.destination;
     }
 
     /**
-     * The destination for were control will be forwarded whn pressing
-     * the add button. The destiny action is responsible for keeping the
-     * current <tt>viewstate</tt> during the interaction. The action
-     * is also responsible for changing the viewstate to reflect the intended
-     * changes, that is, adding a new value to the managed list, before
-     * sending the control back to the inicial page.
+     * The destination for were control will be forwarded whn pressing the add
+     * button. The destiny action is responsible for keeping the current
+     * <tt>viewstate</tt> during the interaction. The action is also responsible
+     * for changing the viewstate to reflect the intended changes, that is,
+     * adding a new value to the managed list, before sending the control back
+     * to the inicial page.
      * 
      * <p>
      * The action can obtain a representation of the viewstate suitable for
-     * including in a hidden field by doing: 
+     * including in a hidden field by doing:
+     * 
      * <pre>
-     *   IViewState viewState = RenderUtils.getViewState();
-     *   String encoded = ViewState.encodeToBase64(viewState); 
+     * IViewState viewState = RenderUtils.getViewState();
+     * String encoded = ViewState.encodeToBase64(viewState);
      * </pre>
-
+     * 
      * Retrieving the viewstate from it's encoded state and preparing before
      * sending control to the inicial page can be done with:
+     * 
      * <pre>
      *   IViewState viewState = ViewState.decodeFromBase64(&lt;encoded viewstate&gt;);  
      *   viewState.setUser(UserIdentityFactory.create(request)); 
@@ -115,8 +117,9 @@ public class ManageableListRenderer extends InputRenderer {
      *   RenderUtils.setViewState(viewState);
      * </pre>
      * 
-     * Updating the viewstate consists of adding a new value to the slot's.
-     * This must only be done through the meta-object contained in the viewstate:
+     * Updating the viewstate consists of adding a new value to the slot's. This
+     * must only be done through the meta-object contained in the viewstate:
+     * 
      * <pre>
      *   MetaSlot slot = &lt;find slot in viewState.getMetaObject().getSlots()&gt;;
      *   List values = new ArrayList((List) slot.getObject());
@@ -124,175 +127,175 @@ public class ManageableListRenderer extends InputRenderer {
      *   slot.setObject(values);
      * </pre>
      * 
-     * The slot that was beeing managed is available in viewstate attributes. You can
-     * get information about the slot with:
+     * The slot that was beeing managed is available in viewstate attributes.
+     * You can get information about the slot with:
+     * 
      * <pre>
-     *   String slotName = viewState.getAttribute(ManageableListRenderer.MANAGED_SLOT_NAME);
-     *   MetaSlotKey slotKey = viewState.getAttribute(ManageableListRenderer.MANAGED_SLOT_KEY);
+     * String slotName = viewState.getAttribute(ManageableListRenderer.MANAGED_SLOT_NAME);
+     * MetaSlotKey slotKey = viewState.getAttribute(ManageableListRenderer.MANAGED_SLOT_KEY);
      * </pre>
      * 
      * @property
      */
     public void setDestination(String destination) {
-        this.destination = destination;
+	this.destination = destination;
     }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        MetaObject metaObject = getInputContext().getMetaObject();
-        
-        return new ManageableListLayout((Collection) metaObject.getObject()); 
+	MetaObject metaObject = getInputContext().getMetaObject();
+
+	return new ManageableListLayout((Collection) metaObject.getObject());
     }
 
     private class ManageableListLayout extends TabularLayout {
 
-        private List objects;
-        private HtmlMultipleHiddenField hiddenValues;
+	private List objects;
+	private HtmlMultipleHiddenField hiddenValues;
 
-        public ManageableListLayout(Collection collection) {
-            this.objects = new ArrayList(collection);
-            
-            this.hiddenValues = new HtmlMultipleHiddenField();
-            this.hiddenValues.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
-            
-            // HACK: severe dependecy with fénix project
-            this.hiddenValues.setConverter(new DomainObjectKeyArrayConverter());
-        }
+	public ManageableListLayout(Collection collection) {
+	    this.objects = new ArrayList(collection);
 
-        @Override
-        protected int getNumberOfColumns() {
-            return 2;
-        }
+	    this.hiddenValues = new HtmlMultipleHiddenField();
+	    this.hiddenValues.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
 
-        @Override
-        protected int getNumberOfRows() {
-            return this.objects == null ? 0 : this.objects.size();
-        }
+	    // HACK: severe dependecy with fénix project
+	    this.hiddenValues.setConverter(new DomainObjectKeyArrayConverter());
+	}
 
-        @Override
-        protected HtmlComponent getHeaderComponent(int columnIndex) {
-            return null;
-        }
+	@Override
+	protected int getNumberOfColumns() {
+	    return 2;
+	}
 
-        @Override
-        public HtmlComponent createComponent(Object object, Class type) {
-            HtmlComponent component = super.createComponent(object, type);
-            
-            HtmlContainer container = new HtmlBlockContainer();
-            
-            container.addChild(component);
-            container.addChild(this.hiddenValues);
-            
-            HtmlActionLink link = new HtmlActionLink();
-            link.setName(getInputContext().getMetaObject().getKey().toString() + "/add");
-            link.setText(RenderUtils.getResourceString("renderers.list.management.add")); 
-            link.setController(new FollowDestinationController((MetaSlot) getInputContext().getMetaObject()));
-            
-            container.addChild(link);
-            
-            return container;
-        }
+	@Override
+	protected int getNumberOfRows() {
+	    return this.objects == null ? 0 : this.objects.size();
+	}
 
-        @Override
-        public void applyStyle(HtmlComponent component) {
-            HtmlContainer container = (HtmlContainer) component;
-            
-            super.applyStyle(container.getChildren().get(0));
-        }
+	@Override
+	protected HtmlComponent getHeaderComponent(int columnIndex) {
+	    return null;
+	}
 
-        @Override
-        protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
-            Object object = this.objects.get(rowIndex);
-            
-            Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
-            String layout = getEachLayout();
-            
-            MetaObject metaObject = MetaObjectFactory.createObject(object, schema);
+	@Override
+	public HtmlComponent createComponent(Object object, Class type) {
+	    HtmlComponent component = super.createComponent(object, type);
 
-            if (columnIndex == 0) { 
-                this.hiddenValues.addValue(metaObject.getKey().toString());
-                
-                PresentationContext newContext = getContext().createSubContext(metaObject);
-                newContext.setLayout(layout);
-                newContext.setRenderMode(RenderMode.getMode("output"));
-                
-                RenderKit kit = RenderKit.getInstance();
-                return kit.render(newContext, object);                
-            }
-            else {
-                HtmlActionLink link = new HtmlActionLink();
-                
-                String prefix = getInputContext().getMetaObject().getKey().toString();
-                link.setName(prefix + "/delete/" + rowIndex);
-                link.setText(RenderUtils.getResourceString("renderers.list.management.delete"));
-                
-                HtmlTableRow row = getTable().getRows().get(rowIndex);
-                link.setController(new RemoveLineController(getTable(), this.hiddenValues, row, prefix));
-                return link;
-            }
+	    HtmlContainer container = new HtmlBlockContainer();
 
-        }
-        
+	    container.addChild(component);
+	    container.addChild(this.hiddenValues);
+
+	    HtmlActionLink link = new HtmlActionLink();
+	    link.setName(getInputContext().getMetaObject().getKey().toString() + "/add");
+	    link.setText(RenderUtils.getResourceString("renderers.list.management.add"));
+	    link.setController(new FollowDestinationController((MetaSlot) getInputContext().getMetaObject()));
+
+	    container.addChild(link);
+
+	    return container;
+	}
+
+	@Override
+	public void applyStyle(HtmlComponent component) {
+	    HtmlContainer container = (HtmlContainer) component;
+
+	    super.applyStyle(container.getChildren().get(0));
+	}
+
+	@Override
+	protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
+	    Object object = this.objects.get(rowIndex);
+
+	    Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
+	    String layout = getEachLayout();
+
+	    MetaObject metaObject = MetaObjectFactory.createObject(object, schema);
+
+	    if (columnIndex == 0) {
+		this.hiddenValues.addValue(metaObject.getKey().toString());
+
+		PresentationContext newContext = getContext().createSubContext(metaObject);
+		newContext.setLayout(layout);
+		newContext.setRenderMode(RenderMode.getMode("output"));
+
+		RenderKit kit = RenderKit.getInstance();
+		return kit.render(newContext, object);
+	    } else {
+		HtmlActionLink link = new HtmlActionLink();
+
+		String prefix = getInputContext().getMetaObject().getKey().toString();
+		link.setName(prefix + "/delete/" + rowIndex);
+		link.setText(RenderUtils.getResourceString("renderers.list.management.delete"));
+
+		HtmlTableRow row = getTable().getRows().get(rowIndex);
+		link.setController(new RemoveLineController(getTable(), this.hiddenValues, row, prefix));
+		return link;
+	    }
+
+	}
+
     }
-    
+
     class RemoveLineController extends HtmlActionLinkController {
 
-        private HtmlTable table;
-        private HtmlTableRow row;
-        private HtmlMultipleHiddenField values;
-        private String prefix;
-        
-        public RemoveLineController(HtmlTable table, HtmlMultipleHiddenField values, HtmlTableRow row, String prefix) {
-            this.table = table;
-            this.values = values;
-            this.row = row;
-            this.prefix = prefix;
-        }
+	private HtmlTable table;
+	private HtmlTableRow row;
+	private HtmlMultipleHiddenField values;
+	private String prefix;
 
-        @Override
-        public void linkPressed(IViewState viewState, HtmlActionLink link) {
-            int index = this.table.getRows().indexOf(row);
-            
-            this.table.removeRow(this.row);
-            this.values.removeValue(index);
-            
-            renameLinks();
-        }
+	public RemoveLineController(HtmlTable table, HtmlMultipleHiddenField values, HtmlTableRow row, String prefix) {
+	    this.table = table;
+	    this.values = values;
+	    this.row = row;
+	    this.prefix = prefix;
+	}
 
-        private void renameLinks() {
-            List<HtmlComponent> links = this.table.getChildren(new Predicate() {
+	@Override
+	public void linkPressed(IViewState viewState, HtmlActionLink link) {
+	    int index = this.table.getRows().indexOf(row);
 
-                public boolean evaluate(Object object) {
-                    return object instanceof HtmlActionLink;
-                }
-                
-            });
-            
-            int pos = 0;
-            for (HtmlComponent component : links) {
-                ((HtmlActionLink) component).setName(this.prefix + "/delete/" + pos++);
-            }
-        }
+	    this.table.removeRow(this.row);
+	    this.values.removeValue(index);
+
+	    renameLinks();
+	}
+
+	private void renameLinks() {
+	    List<HtmlComponent> links = this.table.getChildren(new Predicate() {
+
+		public boolean evaluate(Object object) {
+		    return object instanceof HtmlActionLink;
+		}
+
+	    });
+
+	    int pos = 0;
+	    for (HtmlComponent component : links) {
+		((HtmlActionLink) component).setName(this.prefix + "/delete/" + pos++);
+	    }
+	}
 
     }
-    
+
     class FollowDestinationController extends HtmlActionLinkController {
 
-        private MetaSlot slot;
-        
-        public FollowDestinationController(MetaSlot slot) {
-            this.slot = slot;
-        }
-        
-        @Override
-        public void linkPressed(IViewState viewState, HtmlActionLink link) {
-            if (getDestination() != null) {
-                viewState.setAttribute(ManageableListRenderer.MANAGED_SLOT_NAME, slot.getName());
-                viewState.setAttribute(ManageableListRenderer.MANAGED_SLOT_KEY, slot.getKey());
-                
-                viewState.setCurrentDestination(getDestination());
-            }
-        }
-        
+	private MetaSlot slot;
+
+	public FollowDestinationController(MetaSlot slot) {
+	    this.slot = slot;
+	}
+
+	@Override
+	public void linkPressed(IViewState viewState, HtmlActionLink link) {
+	    if (getDestination() != null) {
+		viewState.setAttribute(ManageableListRenderer.MANAGED_SLOT_NAME, slot.getName());
+		viewState.setAttribute(ManageableListRenderer.MANAGED_SLOT_KEY, slot.getKey());
+
+		viewState.setCurrentDestination(getDestination());
+	    }
+	}
+
     }
 }

@@ -9,8 +9,6 @@ import org.joda.time.DateTime;
 
 public class SibsIncommingPaymentFileDetailLine {
 
-
-
     private static final String DATE_TIME_FORMAT = "yyyyMMddHHmm";
 
     private DateTime whenOccuredTransaction;
@@ -21,13 +19,12 @@ public class SibsIncommingPaymentFileDetailLine {
 
     private String code;
 
-    private static final int[] FIELD_SIZES = new int[] { 1, 2, 4, 8, 12, 10, 5, 2, 10, 5, 15, 9, 1, 1,
-	    12, 3 };
+    private static final int[] FIELD_SIZES = new int[] { 1, 2, 4, 8, 12, 10, 5, 2, 10, 5, 15, 9, 1, 1, 12, 3 };
 
     public static SibsIncommingPaymentFileDetailLine buildFrom(String rawLine) {
 	final String[] fields = splitLine(rawLine);
-	return new SibsIncommingPaymentFileDetailLine(getWhenOccuredTransactionFrom(fields),
-		getAmountFrom(fields), getSibsTransactionIdFrom(fields), getCodeFrom(fields));
+	return new SibsIncommingPaymentFileDetailLine(getWhenOccuredTransactionFrom(fields), getAmountFrom(fields),
+		getSibsTransactionIdFrom(fields), getCodeFrom(fields));
     }
 
     private SibsIncommingPaymentFileDetailLine(DateTime whenOccuredTransactionFrom, Money amountFrom,

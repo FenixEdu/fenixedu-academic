@@ -19,17 +19,16 @@ import net.sourceforge.fenixedu.domain.GuideState;
 public class ListGuidesByState extends Service {
 
     public List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
-        List guides = Guide.readByYearAndState(guideYear, situationOfGuide);
+	List guides = Guide.readByYearAndState(guideYear, situationOfGuide);
 
-        Iterator iterator = guides.iterator();
+	Iterator iterator = guides.iterator();
 
-        List result = new ArrayList();
-        while (iterator.hasNext()) {
-            result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor
-                    .newInfoFromDomain((Guide) iterator.next()));
-        }
+	List result = new ArrayList();
+	while (iterator.hasNext()) {
+	    result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain((Guide) iterator.next()));
+	}
 
-        return result;
+	return result;
     }
 
 }

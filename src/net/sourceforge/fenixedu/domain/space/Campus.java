@@ -13,23 +13,23 @@ import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotati
 import org.joda.time.YearMonthDay;
 
 public class Campus extends Campus_Base {
-    
+
     public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
-	super();	
+	super();
 	new CampusInformation(this, name, begin, end, blueprintNumber);
-    }  
+    }
 
     @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted campus", parameters = {})
     public void delete() {
 	super.delete();
     }
-    
+
     @Override
     public void setSuroundingSpace(Space suroundingSpace) {
 	throw new DomainException("error.Space.invalid.suroundingSpace");
     }
-    
+
     @Override
     public CampusInformation getSpaceInformation() {
 	return (CampusInformation) super.getSpaceInformation();
@@ -38,40 +38,39 @@ public class Campus extends Campus_Base {
     @Override
     public CampusInformation getSpaceInformation(final YearMonthDay when) {
 	return (CampusInformation) super.getSpaceInformation(when);
-    }      
-    
-    public String getLocation() {	
-	return getSpaceInformation().hasLocality() ? getSpaceInformation().getLocality().getName() : null;	
+    }
+
+    public String getLocation() {
+	return getSpaceInformation().hasLocality() ? getSpaceInformation().getLocality().getName() : null;
     }
 
     public String getName() {
 	return getSpaceInformation().getName();
     }
-    
+
     public static Campus readActiveCampusByName(String campusName) {
 	for (Resource space : RootDomainObject.getInstance().getResources()) {
-	    if (space.isCampus() && ((Campus)space).isActive() 
-		    && ((Campus)space).getSpaceInformation().getName().equals(campusName)) {
+	    if (space.isCampus() && ((Campus) space).isActive()
+		    && ((Campus) space).getSpaceInformation().getName().equals(campusName)) {
 		return (Campus) space;
 	    }
 	}
 	return null;
     }
-      
+
     public static Campus readCampusByName(String name) {
 	for (Campus campus : Space.getAllCampus()) {
-	    if(campus.getName().equalsIgnoreCase(name)) {
+	    if (campus.getName().equalsIgnoreCase(name)) {
 		return campus;
 	    }
 	}
 	return null;
-    } 
-             
+    }
+
     @Override
     public boolean isCampus() {
 	return true;
     }
-    
 
     @Override
     public Integer getExamCapacity() {
@@ -91,7 +90,7 @@ public class Campus extends Campus_Base {
 	private YearMonthDay begin;
 
 	private YearMonthDay end;
-	
+
 	private String blueprintNumber;
 
 	public YearMonthDay getBegin() {

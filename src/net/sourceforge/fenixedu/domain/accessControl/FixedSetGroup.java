@@ -15,124 +15,121 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 
 public class FixedSetGroup extends LeafGroup {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private List<DomainReference<Person>> persons;
-    
+
     protected FixedSetGroup() {
-        super();
-        
-        this.persons = new ArrayList<DomainReference<Person>>();
+	super();
+
+	this.persons = new ArrayList<DomainReference<Person>>();
     }
-    
-    public FixedSetGroup(Person ... persons) {
-        this();
-        
-        for (Person person : persons) {
-            this.persons.add(new DomainReference<Person>(person));
-        }
+
+    public FixedSetGroup(Person... persons) {
+	this();
+
+	for (Person person : persons) {
+	    this.persons.add(new DomainReference<Person>(person));
+	}
     }
-    
+
     public FixedSetGroup(Collection<Person> persons) {
-        this();
-        
-        for (Person person : persons) {
-            this.persons.add(new DomainReference<Person>(person));
-        }
+	this();
+
+	for (Person person : persons) {
+	    this.persons.add(new DomainReference<Person>(person));
+	}
     }
-    
+
     @Override
     public Set<Person> getElements() {
-        Set<Person> elements = super.buildSet();
-        
-        for (DomainReference<Person> reference : this.persons) {
-            Person person = reference.getObject();
-            
-            if (person != null) {
-                elements.add(person);
-            }
-        }
-        
-        return super.freezeSet(elements);
+	Set<Person> elements = super.buildSet();
+
+	for (DomainReference<Person> reference : this.persons) {
+	    Person person = reference.getObject();
+
+	    if (person != null) {
+		elements.add(person);
+	    }
+	}
+
+	return super.freezeSet(elements);
     }
 
     @Override
     public int getElementsCount() {
-        return this.persons.size();
+	return this.persons.size();
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        
-        if (! (object instanceof FixedSetGroup)) {
-            return false;
-        }
-        
-        return this.persons.equals(((FixedSetGroup) object).persons);
+	if (object == null) {
+	    return false;
+	}
+
+	if (!(object instanceof FixedSetGroup)) {
+	    return false;
+	}
+
+	return this.persons.equals(((FixedSetGroup) object).persons);
     }
 
     @Override
     public int hashCode() {
-        return this.persons.hashCode();
+	return this.persons.hashCode();
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        Collection<Person> persons = getElements();
-        Argument[] arguments = new Argument[persons.size()];
-        
-        int index = 0;
-        for (Person person : persons) {
-            arguments[index++] = new StaticArgument(person.getIdInternal());
-        }
-        
-        return arguments;
+	Collection<Person> persons = getElements();
+	Argument[] arguments = new Argument[persons.size()];
+
+	int index = 0;
+	for (Person person : persons) {
+	    arguments[index++] = new StaticArgument(person.getIdInternal());
+	}
+
+	return arguments;
     }
-    
+
     public static class Builder implements GroupBuilder {
 
-        public Group build(Object[] arguments) {
-            List<Person> persons = new ArrayList<Person>();
-            
-            for (int i = 0; i < arguments.length; i++) {
-                Object object = arguments[i];
-                
-                Person person;
-                if (object instanceof Integer) {
-                    try {
-                        person = (Person) RootDomainObject.getInstance().readPartyByOID((Integer) object);
-                    }
-                    catch (ClassCastException e) {
-                        throw new GroupDynamicExpressionException(
-                        "accessControl.group.builder.fixed.id.notPerson", object.toString());
-                    }
-                }
-                else if (object instanceof Person) {
-                    person = (Person) object;
-                }
-                else {
-                    throw new WrongTypeOfArgumentException(1, Integer.class, object.getClass());
-                }
-                
-                if (person != null) {
-                    persons.add(person);
-                }
-            }
-            
-            return new FixedSetGroup(persons);
-        }
+	public Group build(Object[] arguments) {
+	    List<Person> persons = new ArrayList<Person>();
 
-        public int getMinArguments() {
-            return 0;
-        }
+	    for (int i = 0; i < arguments.length; i++) {
+		Object object = arguments[i];
 
-        public int getMaxArguments() {
-            return Integer.MAX_VALUE;
-        }
-        
+		Person person;
+		if (object instanceof Integer) {
+		    try {
+			person = (Person) RootDomainObject.getInstance().readPartyByOID((Integer) object);
+		    } catch (ClassCastException e) {
+			throw new GroupDynamicExpressionException("accessControl.group.builder.fixed.id.notPerson", object
+				.toString());
+		    }
+		} else if (object instanceof Person) {
+		    person = (Person) object;
+		} else {
+		    throw new WrongTypeOfArgumentException(1, Integer.class, object.getClass());
+		}
+
+		if (person != null) {
+		    persons.add(person);
+		}
+	    }
+
+	    return new FixedSetGroup(persons);
+	}
+
+	public int getMinArguments() {
+	    return 0;
+	}
+
+	public int getMaxArguments() {
+	    return Integer.MAX_VALUE;
+	}
+
     }
 }

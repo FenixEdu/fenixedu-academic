@@ -19,19 +19,17 @@ import org.apache.struts.action.ActionMapping;
  */
 public class PenaltyExemptionDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	GratuitySituation gratuitySituation = (GratuitySituation) getRenderedObject();
-	if(gratuitySituation != null){
+	if (gratuitySituation != null) {
 	    request.setAttribute("degreeType", "MASTER_DEGREE");
-	    request.setAttribute("studentNumber", gratuitySituation.getStudentCurricularPlan()
-		    .getRegistration().getNumber());
+	    request.setAttribute("studentNumber", gratuitySituation.getStudentCurricularPlan().getRegistration().getNumber());
 	    return mapping.findForward("return");
 	}
-	
-	request.setAttribute("gratuitySituation", rootDomainObject
-		.readGratuitySituationByOID(getIntegerFromRequest(request, "gratuitySituationID")));
+
+	request.setAttribute("gratuitySituation", rootDomainObject.readGratuitySituationByOID(getIntegerFromRequest(request,
+		"gratuitySituationID")));
 	return mapping.findForward("edit");
     }
 

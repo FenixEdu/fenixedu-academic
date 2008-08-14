@@ -19,64 +19,62 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
     private static final long serialVersionUID = 1L;
 
     private class AttendPersonTransformer implements Transformer {
-        public Object transform(Object object) {
-            Attends attend = (Attends) object;
-            return attend.getRegistration().getPerson();
-        }
+	public Object transform(Object object) {
+	    Attends attend = (Attends) object;
+	    return attend.getRegistration().getPerson();
+	}
     }
 
     public ExecutionCourseStudentsGroup(ExecutionCourse executionCourse) {
-        super(executionCourse);
+	super(executionCourse);
     }
 
     @Override
     public int getElementsCount() {
-        return this.getExecutionCourse().getAttendsCount();
+	return this.getExecutionCourse().getAttendsCount();
     }
 
     @Override
     public Set<Person> getElements() {
-        return super.freezeSet(new HashSet<Person>(CollectionUtils.collect(getExecutionCourse()
-                .getAttends(), new AttendPersonTransformer())));
+	return super.freezeSet(new HashSet<Person>(CollectionUtils.collect(getExecutionCourse().getAttends(),
+		new AttendPersonTransformer())));
     }
 
     @Override
     public boolean isMember(Person person) {
-        if (person != null && person.hasStudent() && hasExecutionCourse()) {
-            for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-                if (attends.getRegistration().getStudent() == person.getStudent()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+	if (person != null && person.hasStudent() && hasExecutionCourse()) {
+	    for (final Attends attends : getExecutionCourse().getAttendsSet()) {
+		if (attends.getRegistration().getStudent() == person.getStudent()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] {
-                new IdOperator(getObject())
-        };
+	return new Argument[] { new IdOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {
 
-        public Group build(Object[] arguments) {
-            try {
-                return new ExecutionCourseStudentsGroup((ExecutionCourse) arguments[0]);
-            }
-            catch (ClassCastException e) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse", arguments[0].toString());
-            }
-        }
+	public Group build(Object[] arguments) {
+	    try {
+		return new ExecutionCourseStudentsGroup((ExecutionCourse) arguments[0]);
+	    } catch (ClassCastException e) {
+		throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+			arguments[0].toString());
+	    }
+	}
 
-        public int getMinArguments() {
-            return 0;
-        }
+	public int getMinArguments() {
+	    return 0;
+	}
 
-        public int getMaxArguments() {
-            return 1;
-        }
-        
+	public int getMaxArguments() {
+	    return 1;
+	}
+
     }
 }

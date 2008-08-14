@@ -205,24 +205,24 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
      * public ActionForward removeTSDCourseLoad( ActionMapping mapping,
      * ActionForm form, HttpServletRequest request, HttpServletResponse
      * response) throws FenixFilterException, FenixServiceException { IUserView
-     * userView = UserView.getUser(); DynaActionForm dynaForm =
-     * (DynaActionForm) form;
+     * userView = UserView.getUser(); DynaActionForm dynaForm = (DynaActionForm)
+     * form;
      * 
-     * TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm); Map<String,
-     * Object> tsdCourseParameters = obtainRemoveParametersFromForm(dynaForm);
+     * TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm); Map<String, Object>
+     * tsdCourseParameters = obtainRemoveParametersFromForm(dynaForm);
      * 
      * Object[] parameters = new Object[] { tsdCourse.getIdInternal(),
-     * tsdCourseParameters }; ServiceUtils.executeService(
-     * "SetTSDCourse", parameters);
+     * tsdCourseParameters }; ServiceUtils.executeService( "SetTSDCourse",
+     * parameters);
      * 
      * dynaForm.set("shiftType", "");
      * 
      * return loadTSDCourses(mapping, form, request, response,
      * "courseValuationShifts"); }
      * 
-     * private Map<String, Object>
-     * obtainRemoveParametersFromForm(DynaActionForm dynaForm) { Map<String,
-     * Object> tsdParameters = new HashMap<String, Object>();
+     * private Map<String, Object> obtainRemoveParametersFromForm(DynaActionForm
+     * dynaForm) { Map<String, Object> tsdParameters = new HashMap<String,
+     * Object>();
      * 
      * tsdParameters.put("removeTSDLoad", true); tsdParameters.put("shiftType",
      * dynaForm.get("shiftType"));
@@ -315,8 +315,8 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 	TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(Integer.valueOf(request.getParameter("tsdCourse")));
 	TSDProcess process = rootDomainObject.readTSDProcessByOID(Integer.valueOf(request.getParameter("tsdProcessId")));
 	ShiftType type = ShiftType.valueOf(request.getParameter("shiftType"));
-	    
-	request.setAttribute("curricularLoad",tsdCourse.getTSDCurricularLoadByShiftType(type));
+
+	request.setAttribute("curricularLoad", tsdCourse.getTSDCurricularLoadByShiftType(type));
 	request.setAttribute("tsd", tsd);
 	request.setAttribute("tsdCourse", tsdCourse);
 	request.setAttribute("tsdProcess", process);

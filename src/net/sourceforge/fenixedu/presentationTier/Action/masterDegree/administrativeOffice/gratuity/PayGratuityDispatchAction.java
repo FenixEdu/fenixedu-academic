@@ -47,250 +47,234 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class PayGratuityDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseContributor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        String gratuitySituationId = getFromRequest("gratuitySituationId", request);
-        String studentId = getFromRequest("studentId", request);
-        String insuranceExecutionYearId = getFromRequest("insuranceExecutionYearId", request);
+	String gratuitySituationId = getFromRequest("gratuitySituationId", request);
+	String studentId = getFromRequest("studentId", request);
+	String insuranceExecutionYearId = getFromRequest("insuranceExecutionYearId", request);
 
-        DynaActionForm payGratuityForm = (DynaActionForm) form;
-        payGratuityForm.set("studentId", new Integer(studentId));
+	DynaActionForm payGratuityForm = (DynaActionForm) form;
+	payGratuityForm.set("studentId", new Integer(studentId));
 
-        if (gratuitySituationId != null) {
-            payGratuityForm.set("gratuitySituationId", new Integer(gratuitySituationId));
-            request.setAttribute(SessionConstants.PAGE_TITLE,
-                    "link.masterDegree.administrativeOffice.gratuity.payGratuity");
-        }
+	if (gratuitySituationId != null) {
+	    payGratuityForm.set("gratuitySituationId", new Integer(gratuitySituationId));
+	    request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
+	}
 
-        if (insuranceExecutionYearId != null) {
-            payGratuityForm.set("insuranceExecutionYearId", new Integer(insuranceExecutionYearId));
-            request.setAttribute(SessionConstants.PAGE_TITLE,
-                    "link.masterDegree.administrativeOffice.gratuity.payInsurance");
-        }
+	if (insuranceExecutionYearId != null) {
+	    payGratuityForm.set("insuranceExecutionYearId", new Integer(insuranceExecutionYearId));
+	    request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
+	}
 
-        return mapping.findForward("chooseContributor");
+	return mapping.findForward("chooseContributor");
 
     }
 
-    public ActionForward confirmPayment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward confirmPayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        DynaActionForm payGratuityForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+	DynaActionForm payGratuityForm = (DynaActionForm) form;
+	IUserView userView = UserView.getUser();
 
-        Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
-        Integer studentId = (Integer) payGratuityForm.get("studentId");
-        Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
-        Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
+	Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
+	Integer studentId = (Integer) payGratuityForm.get("studentId");
+	Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
+	Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
 
-        // Read Registration
-        InfoStudent infoStudent = readStudent(mapping, userView, studentId);
-        request.setAttribute(SessionConstants.STUDENT, infoStudent);
+	// Read Registration
+	InfoStudent infoStudent = readStudent(mapping, userView, studentId);
+	request.setAttribute(SessionConstants.STUDENT, infoStudent);
 
-        if (gratuitySituationId.intValue() > 0) {
-            // Read Gratuity Situation
-            InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView,
-                    gratuitySituationId);
+	if (gratuitySituationId.intValue() > 0) {
+	    // Read Gratuity Situation
+	    InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
 
-            // Read Insurance Situation
-            InfoInsuranceTransaction infoInsuranceTransaction = null;
-            Integer executionYearID = infoGratuitySituation.getInfoGratuityValues()
-                    .getInfoExecutionDegree().getInfoExecutionYear().getIdInternal();
+	    // Read Insurance Situation
+	    InfoInsuranceTransaction infoInsuranceTransaction = null;
+	    Integer executionYearID = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree()
+		    .getInfoExecutionYear().getIdInternal();
 
-            Object argsInsurance[] = { infoStudent.getIdInternal(), executionYearID };
+	    Object argsInsurance[] = { infoStudent.getIdInternal(), executionYearID };
 
-            try {
-                infoInsuranceTransaction = (InfoInsuranceTransaction) ServiceUtils
-                        .executeService(
-                                "ReadInsuranceTransactionByStudentIDAndExecutionYearID", argsInsurance);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
+	    try {
+		infoInsuranceTransaction = (InfoInsuranceTransaction) ServiceUtils.executeService(
+			"ReadInsuranceTransactionByStudentIDAndExecutionYearID", argsInsurance);
+	    } catch (FenixServiceException e) {
+		throw new FenixActionException(e);
+	    }
 
-            if (infoInsuranceTransaction == null) {
+	    if (infoInsuranceTransaction == null) {
 
-                InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, executionYearID);
+		InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, executionYearID);
 
-                request.setAttribute(SessionConstants.INSURANCE_VALUE_WITH_GRATUITY, infoInsuranceValue);
+		request.setAttribute(SessionConstants.INSURANCE_VALUE_WITH_GRATUITY, infoInsuranceValue);
 
-            }
+	    }
 
-            request.setAttribute(SessionConstants.GRATUITY_SITUATION, infoGratuitySituation);
-            request.setAttribute(SessionConstants.PAGE_TITLE,
-                    "link.masterDegree.administrativeOffice.gratuity.payGratuity");
+	    request.setAttribute(SessionConstants.GRATUITY_SITUATION, infoGratuitySituation);
+	    request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
 
-        }
+	}
 
-        if (insuranceExecutionYearId.intValue() > 0) {
-            // Read Insurance Value
-            InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView,
-                    insuranceExecutionYearId);
+	if (insuranceExecutionYearId.intValue() > 0) {
+	    // Read Insurance Value
+	    InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 
-            request.setAttribute(SessionConstants.INSURANCE_VALUE, infoInsuranceValue);
-            request.setAttribute(SessionConstants.PAGE_TITLE,
-                    "link.masterDegree.administrativeOffice.gratuity.payInsurance");
-        }
+	    request.setAttribute(SessionConstants.INSURANCE_VALUE, infoInsuranceValue);
+	    request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
+	}
 
-        // Read Contributor
-        InfoContributor infoContributor = null;
-        try {
-            infoContributor = readContributor(mapping, userView, contributorNumber);
-        } catch (NonExistingActionException e) {
-            throw new NonExistingActionException(
-                    "error.masterDegree.administrativeOffice.nonExistingContributorSimple", mapping
-                            .findForward("chooseContributor"));
-        } catch (FenixActionException e) {
+	// Read Contributor
+	InfoContributor infoContributor = null;
+	try {
+	    infoContributor = readContributor(mapping, userView, contributorNumber);
+	} catch (NonExistingActionException e) {
+	    throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple", mapping
+		    .findForward("chooseContributor"));
+	} catch (FenixActionException e) {
 
-            e.printStackTrace();
-        }
-        request.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
+	    e.printStackTrace();
+	}
+	request.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
 
-        return mapping.findForward("confirmPayment");
+	return mapping.findForward("confirmPayment");
 
     }
 
-    public ActionForward pay(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward pay(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        DynaActionForm payGratuityForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+	DynaActionForm payGratuityForm = (DynaActionForm) form;
+	IUserView userView = UserView.getUser();
 
-        Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
-        Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
-        Integer studentId = (Integer) payGratuityForm.get("studentId");
-        Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
-        Double adHocValue = (Double) payGratuityForm.get("adHocValue");
+	Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
+	Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
+	Integer studentId = (Integer) payGratuityForm.get("studentId");
+	Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
+	Double adHocValue = (Double) payGratuityForm.get("adHocValue");
 
-        InfoGuide infoGuide = new InfoGuide();
+	InfoGuide infoGuide = new InfoGuide();
 
-        // Read Contributor
-        InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
+	// Read Contributor
+	InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
 
-        // Read Registration
-        InfoStudent infoStudent = readStudent(mapping, userView, studentId);
+	// Read Registration
+	InfoStudent infoStudent = readStudent(mapping, userView, studentId);
 
-        List infoGuideEntries = new ArrayList();
+	List infoGuideEntries = new ArrayList();
 
-        if (gratuitySituationId.intValue() > 0) {
-            // Read Gratuity Situation
-            InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView,
-                    gratuitySituationId);
+	if (gratuitySituationId.intValue() > 0) {
+	    // Read Gratuity Situation
+	    InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
 
-            InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-            infoGuideEntry.setDocumentType(DocumentType.GRATUITY);
-            infoGuideEntry.setPrice(infoGratuitySituation.getRemainingValue());
-            infoGuideEntry.setQuantity(new Integer(1));
-            infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
-            infoGuideEntry.setDescription("");
+	    InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+	    infoGuideEntry.setDocumentType(DocumentType.GRATUITY);
+	    infoGuideEntry.setPrice(infoGratuitySituation.getRemainingValue());
+	    infoGuideEntry.setQuantity(new Integer(1));
+	    infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
+	    infoGuideEntry.setDescription("");
 
-            infoGuide.setInfoExecutionDegree(infoGratuitySituation.getInfoGratuityValues()
-                    .getInfoExecutionDegree());
+	    infoGuide.setInfoExecutionDegree(infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree());
 
-            if (adHocValue.doubleValue() > infoGratuitySituation.getRemainingValue().doubleValue()) {
+	    if (adHocValue.doubleValue() > infoGratuitySituation.getRemainingValue().doubleValue()) {
 
-                ActionErrors errors = new ActionErrors();
-                errors.add("invalidValue", new ActionError(
-                        "error.masterDegree.gratuity.adHocValueGreater"));
-                saveErrors(request, errors);
+		ActionErrors errors = new ActionErrors();
+		errors.add("invalidValue", new ActionError("error.masterDegree.gratuity.adHocValueGreater"));
+		saveErrors(request, errors);
 
-                request.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
-                request.setAttribute(SessionConstants.STUDENT, infoStudent);
-                request.setAttribute(SessionConstants.GRATUITY_SITUATION, infoGratuitySituation);
-                request.setAttribute(SessionConstants.PAGE_TITLE,
-                        "link.masterDegree.administrativeOffice.gratuity.payGratuity");
-                return mapping.findForward("confirmPayment");
+		request.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
+		request.setAttribute(SessionConstants.STUDENT, infoStudent);
+		request.setAttribute(SessionConstants.GRATUITY_SITUATION, infoGratuitySituation);
+		request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
+		return mapping.findForward("confirmPayment");
 
-            } else if (adHocValue.doubleValue() > 0) {
-                infoGuideEntry.setPrice(adHocValue);
-            }
+	    } else if (adHocValue.doubleValue() > 0) {
+		infoGuideEntry.setPrice(adHocValue);
+	    }
 
-            infoGuideEntries.add(infoGuideEntry);
+	    infoGuideEntries.add(infoGuideEntry);
 
-        }
+	}
 
-        if ((insuranceExecutionYearId != null) && (insuranceExecutionYearId.intValue() > 0)) {
-            // Read Insurance Transaction
-            InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView,
-                    insuranceExecutionYearId);
+	if ((insuranceExecutionYearId != null) && (insuranceExecutionYearId.intValue() > 0)) {
+	    // Read Insurance Transaction
+	    InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 
-            InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-            infoGuideEntry.setDocumentType(DocumentType.INSURANCE);
-            infoGuideEntry.setPrice(infoInsuranceValue.getAnnualValue());
-            infoGuideEntry.setQuantity(new Integer(1));
-            infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
-            infoGuideEntry.setDescription("");
+	    InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+	    infoGuideEntry.setDocumentType(DocumentType.INSURANCE);
+	    infoGuideEntry.setPrice(infoInsuranceValue.getAnnualValue());
+	    infoGuideEntry.setQuantity(new Integer(1));
+	    infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
+	    infoGuideEntry.setDescription("");
 
-            List studentCurricularPlans = null;
-            Object argsSCP[] = { infoStudent.getIdInternal() };
-            try {
-                studentCurricularPlans = (List) ServiceUtils.executeService(
-                        "ReadPosGradStudentCurricularPlans", argsSCP);
+	    List studentCurricularPlans = null;
+	    Object argsSCP[] = { infoStudent.getIdInternal() };
+	    try {
+		studentCurricularPlans = (List) ServiceUtils.executeService("ReadPosGradStudentCurricularPlans", argsSCP);
 
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
+	    } catch (FenixServiceException e) {
+		throw new FenixActionException(e);
+	    }
 
-            Iterator iterator = studentCurricularPlans.iterator();
-            InfoExecutionDegree infoExecutionDegree = null;
-            InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-            boolean found = false;
-            while (iterator.hasNext()) {
-                infoStudentCurricularPlan = (InfoStudentCurricularPlan) iterator.next();
-                Object argsDCP[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
-                        .getIdInternal() };
-                List executionDegreesList = null;
-                try {
-                    executionDegreesList = (List) ServiceUtils.executeService(
-                            "ReadExecutionDegreesByDegreeCurricularPlan", argsDCP);
+	    Iterator iterator = studentCurricularPlans.iterator();
+	    InfoExecutionDegree infoExecutionDegree = null;
+	    InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+	    boolean found = false;
+	    while (iterator.hasNext()) {
+		infoStudentCurricularPlan = (InfoStudentCurricularPlan) iterator.next();
+		Object argsDCP[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal() };
+		List executionDegreesList = null;
+		try {
+		    executionDegreesList = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlan",
+			    argsDCP);
 
-                } catch (FenixServiceException e) {
-                    throw new FenixActionException(e);
-                }
+		} catch (FenixServiceException e) {
+		    throw new FenixActionException(e);
+		}
 
-                Iterator it = executionDegreesList.iterator();
-                while (it.hasNext()) {
-                    infoExecutionDegree = (InfoExecutionDegree) it.next();
-                    if (infoExecutionDegree.getInfoExecutionYear().getIdInternal().equals(
-                            insuranceExecutionYearId)) {
-                        found = true;
-                        break;
-                    }
+		Iterator it = executionDegreesList.iterator();
+		while (it.hasNext()) {
+		    infoExecutionDegree = (InfoExecutionDegree) it.next();
+		    if (infoExecutionDegree.getInfoExecutionYear().getIdInternal().equals(insuranceExecutionYearId)) {
+			found = true;
+			break;
+		    }
 
-                }
+		}
 
-                if (found) {
-                    break;
-                }
+		if (found) {
+		    break;
+		}
 
-            }
+	    }
 
-            infoGuideEntries.add(infoGuideEntry);
+	    infoGuideEntries.add(infoGuideEntry);
 
-            infoGuide.setInfoExecutionDegree(infoExecutionDegree);
+	    infoGuide.setInfoExecutionDegree(infoExecutionDegree);
 
-        }
+	}
 
-        infoGuide.setCreationDate(Calendar.getInstance().getTime());
-        infoGuide.setGuideRequester(GuideRequester.STUDENT);
-        infoGuide.setInfoContributor(infoContributor);
+	infoGuide.setCreationDate(Calendar.getInstance().getTime());
+	infoGuide.setGuideRequester(GuideRequester.STUDENT);
+	infoGuide.setInfoContributor(infoContributor);
 
-        infoGuide.setInfoGuideEntries(infoGuideEntries);
-        infoGuide.setInfoPerson(infoStudent.getInfoPerson());
-        infoGuide.setVersion(new Integer(1));
-        infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
+	infoGuide.setInfoGuideEntries(infoGuideEntries);
+	infoGuide.setInfoPerson(infoStudent.getInfoPerson());
+	infoGuide.setVersion(new Integer(1));
+	infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
 
-        Object argsGuide[] = { infoGuide, "", null, "", GuideState.NON_PAYED, "" };
-        try {
-            infoGuide = (InfoGuide) ServiceUtils.executeService("CreateGuide", argsGuide);
+	Object argsGuide[] = { infoGuide, "", null, "", GuideState.NON_PAYED, "" };
+	try {
+	    infoGuide = (InfoGuide) ServiceUtils.executeService("CreateGuide", argsGuide);
 
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute(SessionConstants.GUIDE, infoGuide);
+	request.setAttribute(SessionConstants.GUIDE, infoGuide);
 
-        return mapping.findForward("paymentSuccess");
+	return mapping.findForward("paymentSuccess");
 
     }
 
@@ -302,25 +286,22 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws NonExistingActionException
      * @throws FenixActionException
      */
-    private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView,
-            Integer contributorNumber) throws NonExistingActionException, FenixActionException,
-            FenixFilterException {
+    private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView, Integer contributorNumber)
+	    throws NonExistingActionException, FenixActionException, FenixFilterException {
 
-        InfoContributor infoContributor = null;
-        Object argsContributor[] = { contributorNumber };
-        try {
-            infoContributor = (InfoContributor) ServiceUtils.executeService("ReadContributor",
-                    argsContributor);
+	InfoContributor infoContributor = null;
+	Object argsContributor[] = { contributorNumber };
+	try {
+	    infoContributor = (InfoContributor) ServiceUtils.executeService("ReadContributor", argsContributor);
 
-        } catch (ExcepcaoInexistente e) {
-            throw new NonExistingActionException(
-                    "error.masterDegree.administrativeOffice.nonExistingContributorSimple", errorMapping
-                            .findForward("chooseContributor"));
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	} catch (ExcepcaoInexistente e) {
+	    throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple",
+		    errorMapping.findForward("chooseContributor"));
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        return infoContributor;
+	return infoContributor;
     }
 
     /**
@@ -330,19 +311,19 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws FenixActionException
      */
     private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
-            throws FenixActionException, FenixFilterException {
-        InfoGratuitySituation infoGratuitySituation = null;
-        Object argsGratuitySituation[] = { gratuitySituationId };
-        try {
-            infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService(
-                    "ReadGratuitySituationById", argsGratuitySituation);
+	    throws FenixActionException, FenixFilterException {
+	InfoGratuitySituation infoGratuitySituation = null;
+	Object argsGratuitySituation[] = { gratuitySituationId };
+	try {
+	    infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService("ReadGratuitySituationById",
+		    argsGratuitySituation);
 
-        } catch (ExcepcaoInexistente e) {
-            throw new FenixActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        return infoGratuitySituation;
+	} catch (ExcepcaoInexistente e) {
+	    throw new FenixActionException(e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	return infoGratuitySituation;
     }
 
     /**
@@ -353,23 +334,22 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws FenixActionException
      * @throws NonExistingActionException
      */
-    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId)
-            throws FenixActionException, NonExistingActionException, FenixFilterException {
-        InfoStudent infoStudent = null;
-        Object argsStudent[] = { studentId };
-        try {
-            infoStudent = (InfoStudent) ServiceUtils.executeService("student.ReadStudentById",
-                    argsStudent);
+    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
+	    NonExistingActionException, FenixFilterException {
+	InfoStudent infoStudent = null;
+	Object argsStudent[] = { studentId };
+	try {
+	    infoStudent = (InfoStudent) ServiceUtils.executeService("student.ReadStudentById", argsStudent);
 
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        if (infoStudent == null) {
-            throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent",
-                    mapping.findForward("chooseContributor"));
-        }
-        return infoStudent;
+	if (infoStudent == null) {
+	    throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping
+		    .findForward("chooseContributor"));
+	}
+	return infoStudent;
     }
 
     /**
@@ -379,24 +359,24 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws FenixActionException
      */
     private InfoInsuranceValue readInsuranceValue(IUserView userView, Integer insuranceExecutionYearId)
-            throws FenixActionException, FenixFilterException {
-        InfoInsuranceValue infoInsuranceValue = null;
-        Object argsInsuranceValue[] = { insuranceExecutionYearId };
-        try {
-            infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService(
-                    "ReadInsuranceValueByExecutionYearID", argsInsuranceValue);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        return infoInsuranceValue;
+	    throws FenixActionException, FenixFilterException {
+	InfoInsuranceValue infoInsuranceValue = null;
+	Object argsInsuranceValue[] = { insuranceExecutionYearId };
+	try {
+	    infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService("ReadInsuranceValueByExecutionYearID",
+		    argsInsuranceValue);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	return infoInsuranceValue;
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
+	String parameterString = request.getParameter(parameter);
+	if (parameterString == null) {
+	    parameterString = (String) request.getAttribute(parameter);
+	}
+	return parameterString;
     }
 
 }

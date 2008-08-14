@@ -8,7 +8,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author David Santos
- *  
+ * 
  */
 
 public class DegreeAdministrativeOfficeAuthorizationFilter extends AuthorizationByRoleFilter {
@@ -22,25 +22,25 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     protected RoleType getRoleType() {
-        return RoleType.DEGREE_ADMINISTRATIVE_OFFICE;
+	return RoleType.DEGREE_ADMINISTRATIVE_OFFICE;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
+     * @see
+     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-            Exception {
-        IUserView userView = (IUserView) request.getRequester();
-        if (!userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-            super.execute(request, response);
-        }
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+	IUserView userView = (IUserView) request.getRequester();
+	if (!userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+	    super.execute(request, response);
+	}
 
     }
 

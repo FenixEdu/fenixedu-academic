@@ -15,29 +15,30 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        final ExecutionDegreeListBean executionDegreeListBean = (ExecutionDegreeListBean) source;
-        final List<DegreeModule> result = new ArrayList<DegreeModule>();
-        if (executionDegreeListBean.getDegree() != null && executionDegreeListBean.getDegreeCurricularPlan() != null) {
-            
-            if (executionDegreeListBean.getDegree().hasDegreeCurricularPlans(executionDegreeListBean.getDegreeCurricularPlan())) {
-                if (executionDegreeListBean.getDegree().isBolonhaDegree()) {
-                    result.addAll(executionDegreeListBean.getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class, null));
-                } else {
-                    result.addAll(executionDegreeListBean.getDegreeCurricularPlan().getCurricularCourses());
-                }                
-            } else {
-            	executionDegreeListBean.setDegreeCurricularPlan(null);
-            	executionDegreeListBean.setCurricularCourse(null);
-            }
-        }
+	final ExecutionDegreeListBean executionDegreeListBean = (ExecutionDegreeListBean) source;
+	final List<DegreeModule> result = new ArrayList<DegreeModule>();
+	if (executionDegreeListBean.getDegree() != null && executionDegreeListBean.getDegreeCurricularPlan() != null) {
 
-        Collections.sort(result, DegreeModule.COMPARATOR_BY_NAME);
-        Collections.reverseOrder();
-        return result;
+	    if (executionDegreeListBean.getDegree().hasDegreeCurricularPlans(executionDegreeListBean.getDegreeCurricularPlan())) {
+		if (executionDegreeListBean.getDegree().isBolonhaDegree()) {
+		    result.addAll(executionDegreeListBean.getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class,
+			    null));
+		} else {
+		    result.addAll(executionDegreeListBean.getDegreeCurricularPlan().getCurricularCourses());
+		}
+	    } else {
+		executionDegreeListBean.setDegreeCurricularPlan(null);
+		executionDegreeListBean.setCurricularCourse(null);
+	    }
+	}
+
+	Collections.sort(result, DegreeModule.COMPARATOR_BY_NAME);
+	Collections.reverseOrder();
+	return result;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

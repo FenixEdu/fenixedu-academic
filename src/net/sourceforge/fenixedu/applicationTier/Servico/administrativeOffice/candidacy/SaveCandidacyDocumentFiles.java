@@ -30,43 +30,41 @@ public class SaveCandidacyDocumentFiles extends Service {
 
     public void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
 
-        Group masterDegreeOfficeEmployeesGroup = new RoleGroup(Role
-                .getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
-        Group coordinatorsGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.COORDINATOR));
-        Group permittedGroup = new GroupUnion(masterDegreeOfficeEmployeesGroup, coordinatorsGroup);
+	Group masterDegreeOfficeEmployeesGroup = new RoleGroup(Role
+		.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
+	Group coordinatorsGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.COORDINATOR));
+	Group permittedGroup = new GroupUnion(masterDegreeOfficeEmployeesGroup, coordinatorsGroup);
 
-        for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {
-            if (candidacyDocumentUploadBean.getTemporaryFile() != null) {
+	for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {
+	    if (candidacyDocumentUploadBean.getTemporaryFile() != null) {
 
-                String filename = candidacyDocumentUploadBean.getFilename();
-                CandidacyDocument candidacyDocument = candidacyDocumentUploadBean.getCandidacyDocument();
-                Candidacy candidacy = candidacyDocument.getCandidacy();
-                Person person = candidacy.getPerson();
-              
-                final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
-                		getVirtualPath(candidacy), filename, true, person.getName(), filename,
-                        candidacyDocumentUploadBean.getTemporaryFile());
-                
-                if(candidacyDocument.getFile() != null){
-                    candidacyDocument.getFile().delete();
-                }
+		String filename = candidacyDocumentUploadBean.getFilename();
+		CandidacyDocument candidacyDocument = candidacyDocumentUploadBean.getCandidacyDocument();
+		Candidacy candidacy = candidacyDocument.getCandidacy();
+		Person person = candidacy.getPerson();
 
-                candidacyDocument.setFile(new CandidacyDocumentFile(filename, filename, fileDescriptor
-                        .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-                        .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-                        new GroupUnion(permittedGroup, new PersonGroup(person))));                
+		final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
+			getVirtualPath(candidacy), filename, true, person.getName(), filename,
+			candidacyDocumentUploadBean.getTemporaryFile());
 
-            }
-        }
+		if (candidacyDocument.getFile() != null) {
+		    candidacyDocument.getFile().delete();
+		}
+
+		candidacyDocument.setFile(new CandidacyDocumentFile(filename, filename, fileDescriptor.getMimeType(),
+			fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
+			fileDescriptor.getUniqueId(), new GroupUnion(permittedGroup, new PersonGroup(person))));
+
+	    }
+	}
 
     }
 
     private VirtualPath getVirtualPath(Candidacy candidacy) {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("Candidacies", "Candidacies"));
-        filePath
-                .addNode(new VirtualPathNode("CANDIDACY" + candidacy.getNumber(), candidacy.getNumber().toString()));
-        return filePath;
+	final VirtualPath filePath = new VirtualPath();
+	filePath.addNode(new VirtualPathNode("Candidacies", "Candidacies"));
+	filePath.addNode(new VirtualPathNode("CANDIDACY" + candidacy.getNumber(), candidacy.getNumber().toString()));
+	return filePath;
     }
 
 }

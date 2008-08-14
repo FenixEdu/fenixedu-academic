@@ -52,7 +52,6 @@ public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRu
 	return null;
     }
 
-
     public VerifyRuleExecutor createVerifyRuleExecutor() {
 	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }

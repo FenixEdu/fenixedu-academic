@@ -22,20 +22,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCoordinationTeam extends Service {
 
-    public List run(Integer executionDegreeId) throws FenixServiceException{
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-        if (executionDegree == null) {
-            throw new FenixServiceException("errors.invalid.execution.degree");
-        }
-        List<Coordinator> coordinators = executionDegree.getCoordinatorsList();
-        Iterator iterator = coordinators.iterator();
-        List infoCoordinators = new ArrayList();
-        while (iterator.hasNext()) {
-            Coordinator coordinator = (Coordinator) iterator.next();
-            InfoCoordinator infoCoordinator = InfoCoordinator
-                    .newInfoFromDomain(coordinator);
-            infoCoordinators.add(infoCoordinator);
-        }
-        return infoCoordinators;
+    public List run(Integer executionDegreeId) throws FenixServiceException {
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	if (executionDegree == null) {
+	    throw new FenixServiceException("errors.invalid.execution.degree");
+	}
+	List<Coordinator> coordinators = executionDegree.getCoordinatorsList();
+	Iterator iterator = coordinators.iterator();
+	List infoCoordinators = new ArrayList();
+	while (iterator.hasNext()) {
+	    Coordinator coordinator = (Coordinator) iterator.next();
+	    InfoCoordinator infoCoordinator = InfoCoordinator.newInfoFromDomain(coordinator);
+	    infoCoordinators.add(infoCoordinator);
+	}
+	return infoCoordinators;
     }
 }

@@ -17,8 +17,7 @@ import org.joda.time.YearMonthDay;
 public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageBlueprints")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Created space blueprint", parameters = {
-	    "space", "person" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created space blueprint", parameters = { "space", "person" })
     public Blueprint(Space space, Person person) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -110,8 +109,7 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 
     private void checkNewBluePrintDates(Space space) {
 	Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
-	if (mostRecentBlueprint != null
-		&& mostRecentBlueprint.getValidFrom().isEqual(new YearMonthDay())) {
+	if (mostRecentBlueprint != null && mostRecentBlueprint.getValidFrom().isEqual(new YearMonthDay())) {
 	    throw new DomainException("error.blueprint.validFrom.date.already.exists");
 	}
     }

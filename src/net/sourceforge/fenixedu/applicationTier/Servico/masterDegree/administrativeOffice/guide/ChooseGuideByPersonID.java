@@ -23,56 +23,56 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ChooseGuideByPersonID extends Service {
 
-	public List run(Integer personID) throws Exception {
+    public List run(Integer personID) throws Exception {
 
-		// Check if person exists
-		Person person = (Person) rootDomainObject.readPartyByOID(personID);
+	// Check if person exists
+	Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
-		if (person == null) {
-			throw new NonExistingServiceException();
-		}
-
-        List<Guide> guides = new ArrayList<Guide>(person.getGuides());
-        if (guides.size() == 0) {
-            return null;
-        }
-        
-		BeanComparator numberComparator = new BeanComparator("number");
-		BeanComparator versionComparator = new BeanComparator("version");
-		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(numberComparator);
-		chainComparator.addComparator(versionComparator);
-		Collections.sort(guides, chainComparator);		
-
-		return getLatestVersions(guides);
+	if (person == null) {
+	    throw new NonExistingServiceException();
 	}
 
-	/**
-	 * 
-	 * This function expects to receive a list ordered by number (Ascending) and
-	 * version (Descending)
-	 * 
-	 * @param guides
-	 * @return The latest version for the guides
-	 */
-	private List getLatestVersions(List guides) {
-		List result = new ArrayList();
-
-		Collections.reverse(guides);
-
-		Integer numberAux = null;
-
-		Iterator iterator = guides.iterator();
-		while (iterator.hasNext()) {
-			Guide guide = (Guide) iterator.next();
-
-			if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
-				numberAux = guide.getNumber();
-				result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide));
-			}
-		}
-		Collections.reverse(result);
-		return result;
+	List<Guide> guides = new ArrayList<Guide>(person.getGuides());
+	if (guides.size() == 0) {
+	    return null;
 	}
+
+	BeanComparator numberComparator = new BeanComparator("number");
+	BeanComparator versionComparator = new BeanComparator("version");
+	ComparatorChain chainComparator = new ComparatorChain();
+	chainComparator.addComparator(numberComparator);
+	chainComparator.addComparator(versionComparator);
+	Collections.sort(guides, chainComparator);
+
+	return getLatestVersions(guides);
+    }
+
+    /**
+     * 
+     * This function expects to receive a list ordered by number (Ascending) and
+     * version (Descending)
+     * 
+     * @param guides
+     * @return The latest version for the guides
+     */
+    private List getLatestVersions(List guides) {
+	List result = new ArrayList();
+
+	Collections.reverse(guides);
+
+	Integer numberAux = null;
+
+	Iterator iterator = guides.iterator();
+	while (iterator.hasNext()) {
+	    Guide guide = (Guide) iterator.next();
+
+	    if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
+		numberAux = guide.getNumber();
+		result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide));
+	    }
+	}
+	Collections.reverse(result);
+	return result;
+    }
 
 }

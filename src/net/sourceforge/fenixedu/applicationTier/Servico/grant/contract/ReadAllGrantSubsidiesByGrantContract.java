@@ -22,19 +22,18 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadAllGrantSubsidiesByGrantContract extends Service {
 
-	public List run(Integer idContract) throws FenixServiceException{
-        GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
-		List<GrantSubsidy> subsidies = grantContract.getAssociatedGrantSubsidies();
+    public List run(Integer idContract) throws FenixServiceException {
+	GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
+	List<GrantSubsidy> subsidies = grantContract.getAssociatedGrantSubsidies();
 
-		if (subsidies == null)
-			return new ArrayList();
+	if (subsidies == null)
+	    return new ArrayList();
 
-        final List infoSubsidyList = new ArrayList();
-        for (final GrantSubsidy grantSubsidy : grantContract.getAssociatedGrantSubsidiesSet()) {
-            InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract
-            .newInfoFromDomain(grantSubsidy);
-            infoSubsidyList.add(infoGrantSubsidy);
-        }
-		return infoSubsidyList;
+	final List infoSubsidyList = new ArrayList();
+	for (final GrantSubsidy grantSubsidy : grantContract.getAssociatedGrantSubsidiesSet()) {
+	    InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy);
+	    infoSubsidyList.add(infoGrantSubsidy);
 	}
+	return infoSubsidyList;
+    }
 }

@@ -25,8 +25,8 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ManageGrantQualificationAction extends FenixDispatchAction {
 
-    public ActionForward prepareManageGrantQualificationForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantQualificationForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Integer idInternal = null;
 	Integer idInternalPerson = null;
 	Integer grantOwnerNumber = null;
@@ -47,8 +47,8 @@ public class ManageGrantQualificationAction extends FenixDispatchAction {
 
 	Object[] args = { username };
 	IUserView userView = UserView.getUser();
-	InfoSiteQualifications infoSiteQualifications = (InfoSiteQualifications) ServiceUtils
-		.executeService( "ReadQualifications", args);
+	InfoSiteQualifications infoSiteQualifications = (InfoSiteQualifications) ServiceUtils.executeService(
+		"ReadQualifications", args);
 
 	if (infoSiteQualifications != null) {
 	    if (infoSiteQualifications.getInfoPerson() != null) {
@@ -56,8 +56,7 @@ public class ManageGrantQualificationAction extends FenixDispatchAction {
 	    }
 	    if (infoSiteQualifications.getInfoQualifications() != null
 		    && !infoSiteQualifications.getInfoQualifications().isEmpty()) {
-		request.setAttribute("infoQualificationList", infoSiteQualifications
-			.getInfoQualifications());
+		request.setAttribute("infoQualificationList", infoSiteQualifications.getInfoQualifications());
 	    }
 	}
 	request.setAttribute("grantOwnerNumber", grantOwnerNumber);

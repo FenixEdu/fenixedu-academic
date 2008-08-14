@@ -20,23 +20,23 @@ import org.apache.commons.collections.Predicate;
 public class RemoverTurno extends Service {
 
     public Object run(final InfoShift infoShift, final InfoClass infoClass) {
-        final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
-        if (shift == null) {
-            return Boolean.FALSE;
-        }
-        final SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(shift.getAssociatedClasses(), new Predicate() {
-            public boolean evaluate(Object arg0) {
-                final SchoolClass schoolClass = (SchoolClass) arg0;
-                return schoolClass.getIdInternal().equals(infoClass.getIdInternal());
-            }
-        });
-        if (schoolClass == null) {
-            return Boolean.FALSE;
-        }
+	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+	if (shift == null) {
+	    return Boolean.FALSE;
+	}
+	final SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(shift.getAssociatedClasses(), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		final SchoolClass schoolClass = (SchoolClass) arg0;
+		return schoolClass.getIdInternal().equals(infoClass.getIdInternal());
+	    }
+	});
+	if (schoolClass == null) {
+	    return Boolean.FALSE;
+	}
 
-        shift.getAssociatedClasses().remove(schoolClass);
-        
-        return Boolean.TRUE;
+	shift.getAssociatedClasses().remove(schoolClass);
+
+	return Boolean.TRUE;
     }
 
 }

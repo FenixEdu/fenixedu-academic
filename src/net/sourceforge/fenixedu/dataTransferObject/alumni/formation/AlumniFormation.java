@@ -270,8 +270,7 @@ public class AlumniFormation implements Serializable {
 		}
 	    }
 	    return null;
-	}
-	else {
+	} else {
 	    return getChildInstitution();
 	}
     }

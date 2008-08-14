@@ -10,8 +10,8 @@ import org.joda.time.YearMonthDay;
 public class FloorInformation extends FloorInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Created floor information", parameters = {
-	    "floor", "level", "begin", "end", "blueprintNumber" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created floor information", parameters = { "floor", "level", "begin",
+	    "end", "blueprintNumber" })
     public FloorInformation(Floor floor, Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	super();
 	super.setSpace(floor);
@@ -21,8 +21,8 @@ public class FloorInformation extends FloorInformation_Base {
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Edited floor information", parameters = {
-	    "level", "begin", "end", "blueprintNumber" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited floor information", parameters = { "level", "begin", "end",
+	    "blueprintNumber" })
     public void editFloorCharacteristics(Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	setLevel(level);
 	setBlueprintNumber(blueprintNumber);
@@ -67,22 +67,22 @@ public class FloorInformation extends FloorInformation_Base {
 
     @Override
     public String getPresentationName() {
-	Space suroundingSpace = getSpace().getSuroundingSpace();		
-	if(suroundingSpace != null && suroundingSpace.isFloor()) {	    
-	    FloorInformation suroundingSpaceInformation = ((Floor)suroundingSpace).getSpaceInformation();
-	    if(getLevel().intValue() == 0) {
-		return suroundingSpaceInformation.getPresentationName();		
-	    } else if(getLevel().intValue() == 1 && suroundingSpaceInformation.getPresentationName().contains("i")) {
+	Space suroundingSpace = getSpace().getSuroundingSpace();
+	if (suroundingSpace != null && suroundingSpace.isFloor()) {
+	    FloorInformation suroundingSpaceInformation = ((Floor) suroundingSpace).getSpaceInformation();
+	    if (getLevel().intValue() == 0) {
+		return suroundingSpaceInformation.getPresentationName();
+	    } else if (getLevel().intValue() == 1 && suroundingSpaceInformation.getPresentationName().contains("i")) {
 		return suroundingSpaceInformation.getPresentationName().replace("i", "s");
-	    } else if(getLevel().intValue() == 1 && !suroundingSpaceInformation.getPresentationName().contains("i")) {
+	    } else if (getLevel().intValue() == 1 && !suroundingSpaceInformation.getPresentationName().contains("i")) {
 		return suroundingSpaceInformation.getPresentationName().concat("i");
-	    } 
-	}	
+	    }
+	}
 	return String.valueOf(getLevel());
     }
 
     @Override
-    public RoomClassification getRoomClassification() {	
+    public RoomClassification getRoomClassification() {
 	// Necessary for Renderers
 	return null;
     }

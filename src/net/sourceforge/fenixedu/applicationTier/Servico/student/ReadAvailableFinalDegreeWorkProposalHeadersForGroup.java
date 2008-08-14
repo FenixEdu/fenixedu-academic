@@ -30,12 +30,10 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends Service
 	final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 
 	if (group != null && group.getExecutionDegree() != null) {
-	    final Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling()
-		    .findPublishedProposals();
+	    final Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling().findPublishedProposals();
 
 	    for (final Proposal proposal : finalDegreeWorkProposals) {
-		if (!CollectionUtils.exists(group.getGroupProposals(),
-			new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {
+		if (!CollectionUtils.exists(group.getGroupProposals(), new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {
 		    result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal));
 		}
 	    }

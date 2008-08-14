@@ -21,20 +21,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID extends Service {
 
-    public List<Advise> run(AdviseType adviseType, Integer teacherID, Integer executionYearID)
-            throws FenixServiceException, DomainException {
-        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-        List<Advise> result;
+    public List<Advise> run(AdviseType adviseType, Integer teacherID, Integer executionYearID) throws FenixServiceException,
+	    DomainException {
+	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	List<Advise> result;
 
-        if (executionYearID != null) {
-            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+	if (executionYearID != null) {
+	    ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-            result = teacher.getAdvisesByAdviseTypeAndExecutionYear(adviseType, executionYear);
-        } else {
-            result = teacher.getAdvisesByAdviseType(adviseType);
-        }
+	    result = teacher.getAdvisesByAdviseTypeAndExecutionYear(adviseType, executionYear);
+	} else {
+	    result = teacher.getAdvisesByAdviseType(adviseType);
+	}
 
-        return result;
+	return result;
 
     }
 }

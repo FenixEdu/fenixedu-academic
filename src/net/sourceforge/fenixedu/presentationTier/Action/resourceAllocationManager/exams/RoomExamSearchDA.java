@@ -36,118 +36,117 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class RoomExamSearchDA extends FenixContextDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-      
-        IUserView userView = UserView.getUser();
-        Object args[] = {};
-        List infoBuildings = (List) ServiceUtils.executeService("ReadBuildings", args);
-        List buildingsStrings = (List) CollectionUtils.collect(infoBuildings, new Transformer() {
-            public Object transform(Object arg0) {
-                final InfoBuilding infoBuilding = (InfoBuilding) arg0;
-                return infoBuilding.getName();
-            }});
-        List types = Util.readTypesOfRooms("", null);
-        List buildings = new ArrayList();
-        Iterator iter = buildingsStrings.iterator();
-        while (iter.hasNext()) {
-            String building = (String) iter.next();
-            buildings.add(new LabelValueBean(building, building));
-        }
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        request.setAttribute("public.buildings", buildings);
-        request.setAttribute("public.types", types);
+	IUserView userView = UserView.getUser();
+	Object args[] = {};
+	List infoBuildings = (List) ServiceUtils.executeService("ReadBuildings", args);
+	List buildingsStrings = (List) CollectionUtils.collect(infoBuildings, new Transformer() {
+	    public Object transform(Object arg0) {
+		final InfoBuilding infoBuilding = (InfoBuilding) arg0;
+		return infoBuilding.getName();
+	    }
+	});
+	List types = Util.readTypesOfRooms("", null);
+	List buildings = new ArrayList();
+	Iterator iter = buildingsStrings.iterator();
+	while (iter.hasNext()) {
+	    String building = (String) iter.next();
+	    buildings.add(new LabelValueBean(building, building));
+	}
 
-        final String executionPeriodString = (String) request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
-        request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodString);
-        
-        return mapping.findForward("roomSearch");
+	request.setAttribute("public.buildings", buildings);
+	request.setAttribute("public.types", types);
+
+	final String executionPeriodString = (String) request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
+	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodString);
+
+	return mapping.findForward("roomSearch");
     }
 
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = UserView.getUser();
-        DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
-                
-        String name = (String) roomExamForm.get("name");
-        if (name.equals("")) {
-            name = null;
-        }
-        String building = (String) roomExamForm.get("building");
-        if (building.equals("")) {
-            building = null;
-        }
-        Integer floor = null;
-        Integer type = null;
-        Integer normal = null;
-        Integer exam = null;
-        try {
-            floor = Integer.valueOf((String)roomExamForm.get("floor"));
-        } catch (NumberFormatException ex) {
-        }
-        try {
-            type = Integer.valueOf((String) roomExamForm.get("type"));
-        } catch (NumberFormatException ex) {
-        }
-        try {
-            normal = Integer.valueOf((String) roomExamForm.get("normal"));
-        } catch (NumberFormatException ex) {
-        }
-        try {
-            exam = Integer.valueOf((String) roomExamForm.get("exam"));
-        } catch (NumberFormatException ex) {
-        }
+	IUserView userView = UserView.getUser();
+	DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
 
-        Object args[] = { name, building, floor, type, normal, exam };
-        List rooms = (List) ServiceUtils.executeService("SearchRooms", args);
-        if (rooms != null && !rooms.isEmpty()) {
-            request.setAttribute(SessionConstants.ROOMS_LIST, rooms);
-        }
-        return mapping.findForward("roomChoose");
+	String name = (String) roomExamForm.get("name");
+	if (name.equals("")) {
+	    name = null;
+	}
+	String building = (String) roomExamForm.get("building");
+	if (building.equals("")) {
+	    building = null;
+	}
+	Integer floor = null;
+	Integer type = null;
+	Integer normal = null;
+	Integer exam = null;
+	try {
+	    floor = Integer.valueOf((String) roomExamForm.get("floor"));
+	} catch (NumberFormatException ex) {
+	}
+	try {
+	    type = Integer.valueOf((String) roomExamForm.get("type"));
+	} catch (NumberFormatException ex) {
+	}
+	try {
+	    normal = Integer.valueOf((String) roomExamForm.get("normal"));
+	} catch (NumberFormatException ex) {
+	}
+	try {
+	    exam = Integer.valueOf((String) roomExamForm.get("exam"));
+	} catch (NumberFormatException ex) {
+	}
+
+	Object args[] = { name, building, floor, type, normal, exam };
+	List rooms = (List) ServiceUtils.executeService("SearchRooms", args);
+	if (rooms != null && !rooms.isEmpty()) {
+	    request.setAttribute(SessionConstants.ROOMS_LIST, rooms);
+	}
+	return mapping.findForward("roomChoose");
     }
 
-    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
-        DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
+    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
+	DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
 
-        String rooms[] = (String[]) roomExamForm.get("roomsId");
-        List infoRooms = new ArrayList();
-        for (int i = 0; i < rooms.length; i++) {
-            String roomId = rooms[i];
-            Object args[] = { new Integer(roomId) };
-            InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", args);
-            infoRooms.add(infoRoom);
-        }
+	String rooms[] = (String[]) roomExamForm.get("roomsId");
+	List infoRooms = new ArrayList();
+	for (int i = 0; i < rooms.length; i++) {
+	    String roomId = rooms[i];
+	    Object args[] = { new Integer(roomId) };
+	    InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", args);
+	    infoRooms.add(infoRoom);
+	}
 
-        List infoExamsMap = getExamsMap(request, infoRooms);
+	List infoExamsMap = getExamsMap(request, infoRooms);
 
-        request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+	request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
 
-        return mapping.findForward("showExamsMap");
+	return mapping.findForward("showExamsMap");
     }
 
     private List getExamsMap(HttpServletRequest request, List infoRooms) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        Object[] args = { infoExecutionPeriod, infoRooms };
-        List infoRoomExamsMaps;
+	Object[] args = { infoExecutionPeriod, infoRooms };
+	List infoRoomExamsMaps;
 
-        try {
-            infoRoomExamsMaps = (ArrayList) ServiceUtils.executeService("ReadExamsMapByRooms",
-                    args);
+	try {
+	    infoRoomExamsMaps = (ArrayList) ServiceUtils.executeService("ReadExamsMapByRooms", args);
 
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException(e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        return infoRoomExamsMaps;
+	return infoRoomExamsMaps;
     }
 }

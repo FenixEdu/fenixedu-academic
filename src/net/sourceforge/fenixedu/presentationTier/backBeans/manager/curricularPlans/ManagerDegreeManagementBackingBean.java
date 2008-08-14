@@ -12,25 +12,25 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.cur
 public class ManagerDegreeManagementBackingBean extends DegreeManagementBackingBean {
 
     public List<Degree> getFilteredPreBolonhaDegrees() {
-        final List<Degree> orderedResult = Degree.readOldDegrees();
+	final List<Degree> orderedResult = Degree.readOldDegrees();
 
-        final Iterator<Degree> degrees = orderedResult.iterator();
-        while (degrees.hasNext()) {
-            final Degree degree = degrees.next();
-            if (degree.getDegreeType() != DegreeType.DEGREE) {
-        	degrees.remove();
-            }
-        }
-        
-        Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        return orderedResult;
+	final Iterator<Degree> degrees = orderedResult.iterator();
+	while (degrees.hasNext()) {
+	    final Degree degree = degrees.next();
+	    if (degree.getDegreeType() != DegreeType.DEGREE) {
+		degrees.remove();
+	    }
+	}
+
+	Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	return orderedResult;
     }
 
     @Override
     public List<Degree> getFilteredBolonhaDegrees() {
-        final List<Degree> orderedResult = new ArrayList<Degree>(Degree.readBolonhaDegrees());
-        Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        return orderedResult;
+	final List<Degree> orderedResult = new ArrayList<Degree>(Degree.readBolonhaDegrees());
+	Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	return orderedResult;
     }
 
 }

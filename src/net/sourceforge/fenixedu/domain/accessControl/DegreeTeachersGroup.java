@@ -57,32 +57,30 @@ public class DegreeTeachersGroup extends DegreeGroup {
 	return false;
 
     }
-    
+
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] {
-                new IdOperator(getObject())
-        };
+	return new Argument[] { new IdOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {
 
-        public Group build(Object[] arguments) {
-            try {
-                return new DegreeTeachersGroup((Degree) arguments[0]);
-            }
-            catch (ClassCastException e) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.degreeGroup.notDegree", arguments[0].toString());
-            }
-        }
+	public Group build(Object[] arguments) {
+	    try {
+		return new DegreeTeachersGroup((Degree) arguments[0]);
+	    } catch (ClassCastException e) {
+		throw new GroupDynamicExpressionException("accessControl.group.builder.degreeGroup.notDegree", arguments[0]
+			.toString());
+	    }
+	}
 
-        public int getMinArguments() {
-            return 0;
-        }
+	public int getMinArguments() {
+	    return 0;
+	}
 
-        public int getMaxArguments() {
-            return 1;
-        }
-        
+	public int getMaxArguments() {
+	    return 1;
+	}
+
     }
 }

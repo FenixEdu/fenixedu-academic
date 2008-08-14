@@ -16,56 +16,56 @@ public class InfoDepartmentCourse extends InfoObject {
     private InfoDepartment infoDepartment;
 
     public InfoDepartmentCourse() {
-        setName("");
-        setCode("");
+	setName("");
+	setCode("");
     }
 
     public InfoDepartmentCourse(String name, String code, InfoDepartment infoDepartment) {
-        setName(name);
-        setCode(code);
-        setInfoDepartment(infoDepartment);
+	setName(name);
+	setCode(code);
+	setInfoDepartment(infoDepartment);
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoDepartmentCourse) {
-            InfoDepartmentCourse d = (InfoDepartmentCourse) obj;
-            result = (getName().equals(d.getName()) && getCode().equals(d.getCode()));
-        }
-        return result;
+	boolean result = false;
+	if (obj instanceof InfoDepartmentCourse) {
+	    InfoDepartmentCourse d = (InfoDepartmentCourse) obj;
+	    result = (getName().equals(d.getName()) && getCode().equals(d.getCode()));
+	}
+	return result;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += ", sigla=" + code;
-        result += ", nome=" + name;
-        result += ", departamento=" + infoDepartment;
-        result += "]";
-        return result;
+	String result = "[" + this.getClass().getName() + ": ";
+	result += ", sigla=" + code;
+	result += ", nome=" + name;
+	result += ", departamento=" + infoDepartment;
+	result += "]";
+	return result;
     }
 
     public String getCode() {
-        return code;
+	return code;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public InfoDepartment getInfoDepartment() {
-        return infoDepartment;
+	return infoDepartment;
     }
 
     public void setCode(String code) {
-        this.code = code;
+	this.code = code;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public void setInfoDepartment(InfoDepartment infoDepartment) {
-        this.infoDepartment = infoDepartment;
+	this.infoDepartment = infoDepartment;
     }
 
 }

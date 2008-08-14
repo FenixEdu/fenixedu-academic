@@ -17,37 +17,35 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends Service {
 
-    public InfoDegreeCurricularPlan run(Integer executionDegreeCode) throws FenixServiceException{
+    public InfoDegreeCurricularPlan run(Integer executionDegreeCode) throws FenixServiceException {
 
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-        if (executionDegreeCode == null) {
-            throw new FenixServiceException("nullDegree");
-        }
+	if (executionDegreeCode == null) {
+	    throw new FenixServiceException("nullDegree");
+	}
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
 
-        if (executionDegree == null) {
-            throw new NonExistingServiceException();
-        }
-        DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-        if (degreeCurricularPlan != null) {
+	if (executionDegree == null) {
+	    throw new NonExistingServiceException();
+	}
+	DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+	if (degreeCurricularPlan != null) {
 
-            List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
+	    List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-            if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
+	    if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
 
-                infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(executionDegree,
-                        allCurricularCourses);
-            }
-        }
+		infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(executionDegree, allCurricularCourses);
+	    }
+	}
 
-        return infoDegreeCurricularPlan;
+	return infoDegreeCurricularPlan;
     }
 
-    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(ExecutionDegree executionDegree,
-            List allCurricularCourses) {
-        return InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(ExecutionDegree executionDegree, List allCurricularCourses) {
+	return InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
     }
 
 }

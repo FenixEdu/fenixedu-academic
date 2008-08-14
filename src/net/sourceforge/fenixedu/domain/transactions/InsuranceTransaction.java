@@ -24,10 +24,9 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 	super();
     }
 
-    public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks,
-	    PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-	    Person responsiblePerson, PersonAccount personAccount, GuideEntry guideEntry,
-	    ExecutionYear executionYear, Registration registration) {
+    public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+	    TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+	    GuideEntry guideEntry, ExecutionYear executionYear, Registration registration) {
 	this();
 	setValue(value);
 	setTransactionDate(transactionDate);
@@ -42,9 +41,8 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 	setStudent(registration);
     }
 
-    public InsuranceTransaction(final BigDecimal value, final DateTime whenRegistered,
-	    final PaymentType paymentType, final Person responsiblePerson,
-	    final PersonAccount personAccount, final ExecutionYear executionYear,
+    public InsuranceTransaction(final BigDecimal value, final DateTime whenRegistered, final PaymentType paymentType,
+	    final Person responsiblePerson, final PersonAccount personAccount, final ExecutionYear executionYear,
 	    final Registration registration) {
 	this();
 	setValueBigDecimal(value);
@@ -62,11 +60,9 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 	if (!hasGuideEntry() || getGuideEntry().getReimbursementGuideEntriesCount() == 0) {
 	    return false;
 	} else {
-	    for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry()
-		    .getReimbursementGuideEntries()) {
-		if (reimbursementGuideEntry.getReimbursementGuide()
-			.getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(
-				ReimbursementGuideState.PAYED)) {
+	    for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
+		if (reimbursementGuideEntry.getReimbursementGuide().getActiveReimbursementGuideSituation()
+			.getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
 		    return true;
 		}
 	    }
@@ -74,12 +70,12 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 	    return false;
 	}
     }
-    
+
     @Override
     public void delete() {
-        removeExecutionYear();
-        removeStudent();
-        super.delete();
+	removeExecutionYear();
+	removeStudent();
+	super.delete();
     }
 
 }

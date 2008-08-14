@@ -57,8 +57,7 @@ public class SibsIncommingPaymentFile {
 	try {
 	    inputStream = new FileInputStream(file);
 
-	    return parse(pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(file.getName()),
-		    inputStream);
+	    return parse(pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(file.getName()), inputStream);
 
 	} catch (FileNotFoundException e) {
 	    throw new RuntimeException(e);

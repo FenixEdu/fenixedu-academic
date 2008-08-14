@@ -19,21 +19,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
 
-    public InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType)
-            {
+    public InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType) {
 
-    	final Person person = userView.getPerson();
-    	final Registration registration = person.getStudentByType(degreeType);
+	final Person person = userView.getPerson();
+	final Registration registration = person.getStudentByType(degreeType);
 
-        if(registration != null) {
-        	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-            if (studentCurricularPlan != null) {
-            	final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(studentCurricularPlan);
-                return infoStudentCurricularPlan;
-            }
-        }
+	if (registration != null) {
+	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+	    if (studentCurricularPlan != null) {
+		final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(studentCurricularPlan);
+		return infoStudentCurricularPlan;
+	    }
+	}
 
-        return null;
+	return null;
     }
 
 }

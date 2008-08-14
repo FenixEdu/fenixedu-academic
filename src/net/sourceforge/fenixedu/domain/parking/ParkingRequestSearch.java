@@ -19,7 +19,7 @@ public class ParkingRequestSearch implements Serializable {
     private String personName;
 
     private String carPlateNumber;
-    
+
     private DomainListReference<ParkingRequest> searchResult;
 
     public PartyClassification getPartyClassification() {
@@ -57,8 +57,8 @@ public class ParkingRequestSearch implements Serializable {
     public void doSearch() {
 	List<ParkingRequest> parkingRequests = new ArrayList<ParkingRequest>();
 	for (ParkingRequest request : RootDomainObject.getInstance().getParkingRequests()) {
-	    if (satisfiedPersonClassification(request) && satisfiedPersonName(request)
-		    && satisfiedRequestState(request) && satisfiedCarPlateNumber(request)) {
+	    if (satisfiedPersonClassification(request) && satisfiedPersonName(request) && satisfiedRequestState(request)
+		    && satisfiedCarPlateNumber(request)) {
 		parkingRequests.add(request);
 	    }
 	}
@@ -73,8 +73,7 @@ public class ParkingRequestSearch implements Serializable {
     }
 
     private boolean satisfiedRequestState(ParkingRequest request) {
-	return getParkingRequestState() == null
-		|| request.getParkingRequestState() == getParkingRequestState();
+	return getParkingRequestState() == null || request.getParkingRequestState() == getParkingRequestState();
     }
 
     private boolean satisfiedPersonClassification(ParkingRequest request) {
@@ -93,15 +92,14 @@ public class ParkingRequestSearch implements Serializable {
 
     private boolean satisfiedPersonName(ParkingRequest request) {
 	return org.apache.commons.lang.StringUtils.isEmpty(getPersonName())
-		|| StringUtils.verifyContainsWithEquality(
-			request.getParkingParty().getParty().getName(), getPersonName());
+		|| StringUtils.verifyContainsWithEquality(request.getParkingParty().getParty().getName(), getPersonName());
     }
 
     public List<ParkingRequest> getSearchResult() {
-        return searchResult;
+	return searchResult;
     }
 
     public void setSearchResult(List<ParkingRequest> result) {
-        this.searchResult = new DomainListReference<ParkingRequest>(result);
+	this.searchResult = new DomainListReference<ParkingRequest>(result);
     }
 }

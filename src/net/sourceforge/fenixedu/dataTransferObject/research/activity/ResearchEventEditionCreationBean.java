@@ -18,74 +18,74 @@ public class ResearchEventEditionCreationBean extends ResearchEventCreationBean 
     private String organization;
     private String eventLocation;
     private String editionUrl;
-    
+
     public String getEditionUrl() {
-        return editionUrl;
+	return editionUrl;
     }
 
     public void setEditionUrl(String url) {
-        this.editionUrl = url;
+	this.editionUrl = url;
     }
 
     public String getEventEditionName() {
-        return eventEditionName;
+	return eventEditionName;
     }
 
     public void setEventEditionName(String eventEditionName) {
-        this.eventEditionName = eventEditionName;
+	this.eventEditionName = eventEditionName;
     }
 
     public ResearchActivityParticipationRole getEditionRole() {
-        return editionRole;
+	return editionRole;
     }
 
     public void setEditionRole(ResearchActivityParticipationRole role) {
-        this.editionRole = role;
+	this.editionRole = role;
     }
 
     public ResearchEventEditionCreationBean() {
 	super();
 	this.edition = new DomainReference<EventEdition>(null);
     }
-    
+
     public EventEdition getEventEdition() {
 	return this.edition.getObject();
     }
-    
+
     public void setEventEdition(EventEdition edition) {
 	this.edition = new DomainReference<EventEdition>(edition);
     }
 
     public YearMonthDay getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public void setEndDate(YearMonthDay endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     public String getEventLocation() {
-        return eventLocation;
+	return eventLocation;
     }
 
     public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
+	this.eventLocation = eventLocation;
     }
 
     public String getOrganization() {
-        return organization;
+	return organization;
     }
 
     public void setOrganization(String organization) {
-        this.organization = organization;
+	this.organization = organization;
     }
 
     public YearMonthDay getStartDate() {
-        return startDate;
+	return startDate;
     }
 
     public void setStartDate(YearMonthDay startDate) {
-        this.startDate = startDate;
+	this.startDate = startDate;
     }
-    
+
 }

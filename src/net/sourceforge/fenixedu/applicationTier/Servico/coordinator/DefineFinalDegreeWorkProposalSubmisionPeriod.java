@@ -17,26 +17,25 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DefineFinalDegreeWorkProposalSubmisionPeriod extends Service {
 
-    public void run(Integer executionDegreeOID, Date startOfProposalPeriod, Date endOfProposalPeriod)
-            {
-        if (executionDegreeOID != null && startOfProposalPeriod != null && endOfProposalPeriod != null) {
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+    public void run(Integer executionDegreeOID, Date startOfProposalPeriod, Date endOfProposalPeriod) {
+	if (executionDegreeOID != null && startOfProposalPeriod != null && endOfProposalPeriod != null) {
+	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
-            if (executionDegree != null) {
-                Scheduleing scheduleing = executionDegree.getScheduling();
+	    if (executionDegree != null) {
+		Scheduleing scheduleing = executionDegree.getScheduling();
 
-                if (scheduleing == null) {
-                    scheduleing = new Scheduleing();
-                    scheduleing.setCurrentProposalNumber(new Integer(1));
-                    scheduleing.setAttributionByTeachers(Boolean.FALSE);
-                    scheduleing.setAllowSimultaneousCoorientationAndCompanion(Boolean.FALSE);
-                }
+		if (scheduleing == null) {
+		    scheduleing = new Scheduleing();
+		    scheduleing.setCurrentProposalNumber(new Integer(1));
+		    scheduleing.setAttributionByTeachers(Boolean.FALSE);
+		    scheduleing.setAllowSimultaneousCoorientationAndCompanion(Boolean.FALSE);
+		}
 
-                scheduleing.addExecutionDegrees(executionDegree);
-                scheduleing.setStartOfProposalPeriod(startOfProposalPeriod);
-                scheduleing.setEndOfProposalPeriod(endOfProposalPeriod);
-            }
-        }
+		scheduleing.addExecutionDegrees(executionDegree);
+		scheduleing.setStartOfProposalPeriod(startOfProposalPeriod);
+		scheduleing.setEndOfProposalPeriod(endOfProposalPeriod);
+	    }
+	}
 
     }
 

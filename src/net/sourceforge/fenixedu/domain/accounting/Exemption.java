@@ -74,7 +74,7 @@ public abstract class Exemption extends Exemption_Base {
 	final Event event = getEvent();
 	removeEvent();
 	event.recalculateState(new DateTime());
-	
+
 	super.deleteDomainObject();
     }
 

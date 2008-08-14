@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionPeriod extends Service {
 
-    public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException{
+    public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException {
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	if (executionSemester == null) {
 	    throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);

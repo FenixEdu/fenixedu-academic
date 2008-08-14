@@ -27,8 +27,8 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ManageGrantContractRegimeAction extends FenixDispatchAction {
 
-    public ActionForward prepareManageGrantContractRegime(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantContractRegime(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer idContract = null;
 	try {
@@ -40,39 +40,34 @@ public class ManageGrantContractRegimeAction extends FenixDispatchAction {
 	} catch (Exception e) {
 	    request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
 	    request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
-	    return setError(request, mapping, "errors.grant.unrecoverable",
-		    "manage-grant-contract-regime", null);
+	    return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract-regime", null);
 	}
 
-	//Read Contract
+	// Read Contract
 	Object[] args = { idContract };
 	IUserView userView = UserView.getUser();
-	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
-		"ReadGrantContract", args);
+	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args);
 
 	request.setAttribute("idContract", idContract);
 	request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
 	Object[] argsActiveContractRegime = { idContract, InfoGrantContractRegime.getActiveState() };
 	Object[] argsNotActiveContractRegime = { idContract, InfoGrantContractRegime.getInactiveState() };
-	List infoGrantActiveContractRegimeList = (List) ServiceUtils.executeService(
-		"ReadGrantContractRegimeByContractAndState", argsActiveContractRegime);
+	List infoGrantActiveContractRegimeList = (List) ServiceUtils.executeService("ReadGrantContractRegimeByContractAndState",
+		argsActiveContractRegime);
 	List infoGrantNotActiveContractRegimeList = (List) ServiceUtils.executeService(
 		"ReadGrantContractRegimeByContractAndState", argsNotActiveContractRegime);
 
-	//If they exist put them on request
+	// If they exist put them on request
 	if (infoGrantActiveContractRegimeList != null && !infoGrantActiveContractRegimeList.isEmpty()) {
 	    request.setAttribute("infoGrantActiveContractRegimeList", infoGrantActiveContractRegimeList);
 	}
-	if (infoGrantNotActiveContractRegimeList != null
-		&& !infoGrantNotActiveContractRegimeList.isEmpty()) {
-	    request.setAttribute("infoGrantNotActiveContractRegimeList",
-		    infoGrantNotActiveContractRegimeList);
+	if (infoGrantNotActiveContractRegimeList != null && !infoGrantNotActiveContractRegimeList.isEmpty()) {
+	    request.setAttribute("infoGrantNotActiveContractRegimeList", infoGrantNotActiveContractRegimeList);
 	}
 
-	//Presenting adittional information
-	request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo()
-		.getGrantOwnerNumber());
+	// Presenting adittional information
+	request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo().getGrantOwnerNumber());
 	request.setAttribute("grantContractNumber", infoGrantContract.getContractNumber());
 
 	return mapping.findForward("manage-grant-contract-regime");

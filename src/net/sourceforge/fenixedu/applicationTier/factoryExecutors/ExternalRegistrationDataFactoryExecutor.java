@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 public class ExternalRegistrationDataFactoryExecutor {
 
     @SuppressWarnings("serial")
-    public static class ExternalRegistrationDataEditor extends ExternalRegistrationDataBean implements
-	    FactoryExecutor, Serializable {
+    public static class ExternalRegistrationDataEditor extends ExternalRegistrationDataBean implements FactoryExecutor,
+	    Serializable {
 
 	public ExternalRegistrationDataEditor(ExternalRegistrationData externalRegistrationData) {
 	    super(externalRegistrationData);

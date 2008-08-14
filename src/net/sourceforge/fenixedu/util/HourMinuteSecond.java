@@ -32,9 +32,8 @@ import org.joda.time.format.ISODateTimeFormat;
 public final class HourMinuteSecond extends BasePartial implements ReadablePartial, Serializable {
 
     /** The singleton set of field types */
-    private static final DateTimeFieldType[] FIELD_TYPES = new DateTimeFieldType[] {
-            DateTimeFieldType.hourOfDay(), DateTimeFieldType.minuteOfHour(),
-            DateTimeFieldType.secondOfMinute(), };
+    private static final DateTimeFieldType[] FIELD_TYPES = new DateTimeFieldType[] { DateTimeFieldType.hourOfDay(),
+	    DateTimeFieldType.minuteOfHour(), DateTimeFieldType.secondOfMinute(), };
 
     /** The index of the hour field in the field array */
     public static final int HOUR_OF_DAY = 0;
@@ -68,11 +67,11 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the date is invalid for the ISO chronology
      */
     public static HourMinuteSecond fromCalendarFields(Calendar calendar) {
-        if (calendar == null) {
-            throw new IllegalArgumentException("The calendar must not be null");
-        }
-        return new HourMinuteSecond(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-                calendar.get(Calendar.SECOND));
+	if (calendar == null) {
+	    throw new IllegalArgumentException("The calendar must not be null");
+	}
+	return new HourMinuteSecond(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar
+		.get(Calendar.SECOND));
     }
 
     /**
@@ -95,10 +94,10 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the date is invalid for the ISO chronology
      */
     public static HourMinuteSecond fromDateFields(Date date) {
-        if (date == null) {
-            throw new IllegalArgumentException("The date must not be null");
-        }
-        return new HourMinuteSecond(date.getHours(), date.getMinutes(), date.getSeconds());
+	if (date == null) {
+	    throw new IllegalArgumentException("The date must not be null");
+	}
+	return new HourMinuteSecond(date.getHours(), date.getMinutes(), date.getSeconds());
     }
 
     // -----------------------------------------------------------------------
@@ -112,7 +111,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * to UTC).
      */
     public HourMinuteSecond() {
-        super();
+	super();
     }
 
     /**
@@ -127,7 +126,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *            the chronology, null means ISOChronology in the default zone
      */
     public HourMinuteSecond(Chronology chronology) {
-        super(chronology);
+	super(chronology);
     }
 
     /**
@@ -143,7 +142,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *            the milliseconds from 1970-01-01T00:00:00Z
      */
     public HourMinuteSecond(long instant) {
-        super(instant);
+	super(instant);
     }
 
     /**
@@ -160,7 +159,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *            the chronology, null means ISOChronology in the default zone
      */
     public HourMinuteSecond(long instant, Chronology chronology) {
-        super(instant, chronology);
+	super(instant, chronology);
     }
 
     /**
@@ -184,7 +183,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the instant is invalid
      */
     public HourMinuteSecond(Object instant, Chronology chronology) {
-        super(instant, DateTimeUtils.getChronology(chronology));
+	super(instant, DateTimeUtils.getChronology(chronology));
     }
 
     /**
@@ -202,7 +201,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the instant is invalid
      */
     public HourMinuteSecond(Object instant) {
-        super(instant, null);
+	super(instant, null);
     }
 
     /**
@@ -221,7 +220,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *            the second of the minute
      */
     public HourMinuteSecond(int hour, int minute, int second) {
-        this(hour, minute, second, null);
+	this(hour, minute, second, null);
     }
 
     /**
@@ -241,7 +240,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *            the chronology, null means ISOChronology in the default zone
      */
     public HourMinuteSecond(int hour, int minute, int second, Chronology chronology) {
-        super(new int[] { hour, minute, second }, chronology);
+	super(new int[] { hour, minute, second }, chronology);
     }
 
     /**
@@ -257,7 +256,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *            the chronology, null means ISOChronology in the default zone
      */
     public HourMinuteSecond(int[] values, Chronology chronology) {
-        super(values, chronology);
+	super(values, chronology);
     }
 
     /**
@@ -270,7 +269,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *            the new set of values
      */
     public HourMinuteSecond(BasePartial partial, int[] values) {
-        super(partial, values);
+	super(partial, values);
     }
 
     /**
@@ -283,7 +282,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *            the new chronology
      */
     public HourMinuteSecond(BasePartial partial, Chronology chrono) {
-        super(partial, chrono);
+	super(partial, chrono);
     }
 
     /**
@@ -292,7 +291,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the field count
      */
     public int size() {
-        return 3;
+	return 3;
     }
 
     /**
@@ -308,16 +307,16 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      */
     @Override
     protected DateTimeField getField(int index, Chronology chrono) {
-        switch (index) {
-        case HOUR_OF_DAY:
-            return chrono.hourOfDay();
-        case MINUTE_OF_HOUR:
-            return chrono.minuteOfHour();
-        case SECOND_OF_MINUTE:
-            return chrono.secondOfMinute();
-        default:
-            throw new IndexOutOfBoundsException("Invalid index: " + index);
-        }
+	switch (index) {
+	case HOUR_OF_DAY:
+	    return chrono.hourOfDay();
+	case MINUTE_OF_HOUR:
+	    return chrono.minuteOfHour();
+	case SECOND_OF_MINUTE:
+	    return chrono.secondOfMinute();
+	default:
+	    throw new IndexOutOfBoundsException("Invalid index: " + index);
+	}
     }
 
     /**
@@ -330,7 +329,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the index is invalid
      */
     public DateTimeFieldType getFieldType(int index) {
-        return FIELD_TYPES[index];
+	return FIELD_TYPES[index];
     }
 
     /**
@@ -342,7 +341,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the array of field types (cloned), largest to smallest
      */
     public DateTimeFieldType[] getFieldTypes() {
-        return (DateTimeFieldType[]) FIELD_TYPES.clone();
+	return (DateTimeFieldType[]) FIELD_TYPES.clone();
     }
 
     // -----------------------------------------------------------------------
@@ -363,15 +362,15 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the values are invalid for the new chronology
      */
     public HourMinuteSecond withChronologyRetainFields(Chronology newChronology) {
-        newChronology = DateTimeUtils.getChronology(newChronology);
-        newChronology = newChronology.withUTC();
-        if (newChronology == getChronology()) {
-            return this;
-        } else {
-            HourMinuteSecond newHourMinuteSecond = new HourMinuteSecond(this, newChronology);
-            newChronology.validate(newHourMinuteSecond, getValues());
-            return newHourMinuteSecond;
-        }
+	newChronology = DateTimeUtils.getChronology(newChronology);
+	newChronology = newChronology.withUTC();
+	if (newChronology == getChronology()) {
+	    return this;
+	} else {
+	    HourMinuteSecond newHourMinuteSecond = new HourMinuteSecond(this, newChronology);
+	    newChronology.validate(newHourMinuteSecond, getValues());
+	    return newHourMinuteSecond;
+	}
     }
 
     /**
@@ -399,13 +398,13 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the value is null or invalid
      */
     public HourMinuteSecond withField(DateTimeFieldType fieldType, int value) {
-        int index = indexOfSupported(fieldType);
-        if (value == getValue(index)) {
-            return this;
-        }
-        int[] newValues = getValues();
-        newValues = getField(index).set(this, index, newValues, value);
-        return new HourMinuteSecond(this, newValues);
+	int index = indexOfSupported(fieldType);
+	if (value == getValue(index)) {
+	    return this;
+	}
+	int[] newValues = getValues();
+	newValues = getField(index).set(this, index, newValues, value);
+	return new HourMinuteSecond(this, newValues);
     }
 
     /**
@@ -434,13 +433,13 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the new datetime exceeds the capacity
      */
     public HourMinuteSecond withFieldAdded(DurationFieldType fieldType, int amount) {
-        int index = indexOfSupported(fieldType);
-        if (amount == 0) {
-            return this;
-        }
-        int[] newValues = getValues();
-        newValues = getField(index).add(this, index, newValues, amount);
-        return new HourMinuteSecond(this, newValues);
+	int index = indexOfSupported(fieldType);
+	if (amount == 0) {
+	    return this;
+	}
+	int[] newValues = getValues();
+	newValues = getField(index).add(this, index, newValues, amount);
+	return new HourMinuteSecond(this, newValues);
     }
 
     /**
@@ -463,19 +462,18 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the new datetime exceeds the capacity
      */
     public HourMinuteSecond withPeriodAdded(ReadablePeriod period, int scalar) {
-        if (period == null || scalar == 0) {
-            return this;
-        }
-        int[] newValues = getValues();
-        for (int i = 0; i < period.size(); i++) {
-            DurationFieldType fieldType = period.getFieldType(i);
-            int index = indexOf(fieldType);
-            if (index >= 0) {
-                newValues = getField(index).add(this, index, newValues,
-                        FieldUtils.safeMultiply(period.getValue(i), scalar));
-            }
-        }
-        return new HourMinuteSecond(this, newValues);
+	if (period == null || scalar == 0) {
+	    return this;
+	}
+	int[] newValues = getValues();
+	for (int i = 0; i < period.size(); i++) {
+	    DurationFieldType fieldType = period.getFieldType(i);
+	    int index = indexOf(fieldType);
+	    if (index >= 0) {
+		newValues = getField(index).add(this, index, newValues, FieldUtils.safeMultiply(period.getValue(i), scalar));
+	    }
+	}
+	return new HourMinuteSecond(this, newValues);
     }
 
     // -----------------------------------------------------------------------
@@ -494,7 +492,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the new datetime exceeds the capacity of a long
      */
     public HourMinuteSecond plus(ReadablePeriod period) {
-        return withPeriodAdded(period, 1);
+	return withPeriodAdded(period, 1);
     }
 
     // -----------------------------------------------------------------------
@@ -518,7 +516,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the new date plus the increased hours
      */
     public HourMinuteSecond plusHours(int hours) {
-        return withFieldAdded(DurationFieldType.hours(), hours);
+	return withFieldAdded(DurationFieldType.hours(), hours);
     }
 
     /**
@@ -541,7 +539,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the new date plus the increased minutes
      */
     public HourMinuteSecond plusMinutes(int minutes) {
-        return withFieldAdded(DurationFieldType.minutes(), minutes);
+	return withFieldAdded(DurationFieldType.minutes(), minutes);
     }
 
     /**
@@ -564,7 +562,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the new date plus the increased seconds
      */
     public HourMinuteSecond plusSeconds(int seconds) {
-        return withFieldAdded(DurationFieldType.seconds(), seconds);
+	return withFieldAdded(DurationFieldType.seconds(), seconds);
     }
 
     // -----------------------------------------------------------------------
@@ -584,7 +582,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the new datetime exceeds the capacity of a long
      */
     public HourMinuteSecond minus(ReadablePeriod period) {
-        return withPeriodAdded(period, -1);
+	return withPeriodAdded(period, -1);
     }
 
     // -----------------------------------------------------------------------
@@ -608,7 +606,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the new datetime minus the increased hours
      */
     public HourMinuteSecond minusHours(int hours) {
-        return withFieldAdded(DurationFieldType.hours(), FieldUtils.safeNegate(hours));
+	return withFieldAdded(DurationFieldType.hours(), FieldUtils.safeNegate(hours));
     }
 
     /**
@@ -631,7 +629,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the new datetime minus the increased minutes
      */
     public HourMinuteSecond minusMinutes(int minutes) {
-        return withFieldAdded(DurationFieldType.minutes(), FieldUtils.safeNegate(minutes));
+	return withFieldAdded(DurationFieldType.minutes(), FieldUtils.safeNegate(minutes));
     }
 
     /**
@@ -654,7 +652,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the new datetime minus the increased seconds
      */
     public HourMinuteSecond minusSeconds(int seconds) {
-        return withFieldAdded(DurationFieldType.seconds(), FieldUtils.safeNegate(seconds));
+	return withFieldAdded(DurationFieldType.seconds(), FieldUtils.safeNegate(seconds));
     }
 
     // -----------------------------------------------------------------------
@@ -669,7 +667,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      *             if the field is null or unsupported
      */
     public Property property(DateTimeFieldType type) {
-        return new Property(this, indexOfSupported(type));
+	return new Property(this, indexOfSupported(type));
     }
 
     // -----------------------------------------------------------------------
@@ -680,7 +678,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return this date as a datetime at midnight
      */
     public DateTime toDateTimeAtMidnight() {
-        return toDateTimeAtMidnight(null);
+	return toDateTimeAtMidnight(null);
     }
 
     /**
@@ -695,8 +693,8 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return this date as a datetime at midnight
      */
     public DateTime toDateTimeAtMidnight(DateTimeZone zone) {
-        Chronology chrono = getChronology().withZone(zone);
-        return new DateTime(0, 0, 0, 0, 0, 0, 0, chrono);
+	Chronology chrono = getChronology().withZone(zone);
+	return new DateTime(0, 0, 0, 0, 0, 0, 0, chrono);
     }
 
     // -----------------------------------------------------------------------
@@ -708,7 +706,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return this date as a datetime with the time as the current time
      */
     public DateTime toDateTimeAtCurrentTime() {
-        return toDateTimeAtCurrentTime(null);
+	return toDateTimeAtCurrentTime(null);
     }
 
     /**
@@ -724,10 +722,10 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return this date as a datetime with the time as the current time
      */
     public DateTime toDateTimeAtCurrentTime(DateTimeZone zone) {
-        Chronology chrono = getChronology().withZone(zone);
-        long instantMillis = DateTimeUtils.currentTimeMillis();
-        long resolved = chrono.set(this, instantMillis);
-        return new DateTime(resolved, chrono);
+	Chronology chrono = getChronology().withZone(zone);
+	long instantMillis = DateTimeUtils.currentTimeMillis();
+	long resolved = chrono.set(this, instantMillis);
+	return new DateTime(resolved, chrono);
     }
 
     // -----------------------------------------------------------------------
@@ -737,7 +735,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the DateMidnight instance in the default zone
      */
     public DateMidnight toDateMidnight() {
-        return toDateMidnight(null);
+	return toDateMidnight(null);
     }
 
     /**
@@ -748,8 +746,8 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the DateMidnight instance
      */
     public DateMidnight toDateMidnight(DateTimeZone zone) {
-        Chronology chrono = getChronology().withZone(zone);
-        return new DateMidnight(0, 0, 0, chrono);
+	Chronology chrono = getChronology().withZone(zone);
+	return new DateMidnight(0, 0, 0, chrono);
     }
 
     // -----------------------------------------------------------------------
@@ -767,7 +765,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the DateTime instance
      */
     public DateTime toDateTime(TimeOfDay time) {
-        return toDateTime(time, null);
+	return toDateTime(time, null);
     }
 
     /**
@@ -786,13 +784,13 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the DateTime instance
      */
     public DateTime toDateTime(TimeOfDay time, DateTimeZone zone) {
-        Chronology chrono = getChronology().withZone(zone);
-        long instant = DateTimeUtils.currentTimeMillis();
-        instant = chrono.set(this, instant);
-        if (time != null) {
-            instant = chrono.set(time, instant);
-        }
-        return new DateTime(instant, chrono);
+	Chronology chrono = getChronology().withZone(zone);
+	long instant = DateTimeUtils.currentTimeMillis();
+	instant = chrono.set(this, instant);
+	if (time != null) {
+	    instant = chrono.set(time, instant);
+	}
+	return new DateTime(instant, chrono);
     }
 
     // -----------------------------------------------------------------------
@@ -803,7 +801,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return a interval over the day
      */
     public Interval toInterval() {
-        return toInterval(null);
+	return toInterval(null);
     }
 
     /**
@@ -814,8 +812,8 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return a interval over the day
      */
     public Interval toInterval(DateTimeZone zone) {
-        zone = DateTimeUtils.getZone(zone);
-        return toDateMidnight(zone).toInterval();
+	zone = DateTimeUtils.getZone(zone);
+	return toDateMidnight(zone).toInterval();
     }
 
     // -----------------------------------------------------------------------
@@ -825,7 +823,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the hour
      */
     public int getHour() {
-        return getValue(HOUR_OF_DAY);
+	return getValue(HOUR_OF_DAY);
     }
 
     /**
@@ -834,7 +832,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the minute of hour
      */
     public int getMinuteOfHour() {
-        return getValue(MINUTE_OF_HOUR);
+	return getValue(MINUTE_OF_HOUR);
     }
 
     /**
@@ -843,7 +841,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the second of minute
      */
     public int getSecondOfMinute() {
-        return getValue(SECOND_OF_MINUTE);
+	return getValue(SECOND_OF_MINUTE);
     }
 
     // -----------------------------------------------------------------------
@@ -853,7 +851,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the hour property
      */
     public Property hour() {
-        return new Property(this, HOUR_OF_DAY);
+	return new Property(this, HOUR_OF_DAY);
     }
 
     /**
@@ -862,7 +860,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the minute of hour property
      */
     public Property minuteOfHour() {
-        return new Property(this, MINUTE_OF_HOUR);
+	return new Property(this, MINUTE_OF_HOUR);
     }
 
     /**
@@ -871,7 +869,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return the second of minute property
      */
     public Property secondOfMinute() {
-        return new Property(this, SECOND_OF_MINUTE);
+	return new Property(this, SECOND_OF_MINUTE);
     }
 
     // -----------------------------------------------------------------------
@@ -881,7 +879,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * @return ISO8601 formatted string
      */
     public String toString() {
-        return ISODateTimeFormat.hourMinuteSecond().print(this);
+	return ISODateTimeFormat.hourMinuteSecond().print(this);
     }
 
     /**
@@ -892,7 +890,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
     public HourMinuteSecond setSecondOfMinute(int seconds) {
 	return new HourMinuteSecond(getHour(), getMinuteOfHour(), seconds);
     }
-    
+
     // -----------------------------------------------------------------------
     /**
      * The property class for <code>HourMinuteSecond</code>.
@@ -903,196 +901,199 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      */
     public static class Property extends AbstractPartialFieldProperty implements Serializable {
 
-        /** Serialization version */
-        private static final long serialVersionUID = 5727734012190224363L;
+	/** Serialization version */
+	private static final long serialVersionUID = 5727734012190224363L;
 
-        /** The partial */
-        private final HourMinuteSecond iHourMinuteSecond;
+	/** The partial */
+	private final HourMinuteSecond iHourMinuteSecond;
 
-        /** The field index */
-        private final int iFieldIndex;
+	/** The field index */
+	private final int iFieldIndex;
 
-        /**
-         * Constructs a property.
-         * 
-         * @param partial
-         *            the partial instance
-         * @param fieldIndex
-         *            the index in the partial
-         */
-        Property(HourMinuteSecond partial, int fieldIndex) {
-            super();
-            iHourMinuteSecond = partial;
-            iFieldIndex = fieldIndex;
-        }
+	/**
+	 * Constructs a property.
+	 * 
+	 * @param partial
+	 *            the partial instance
+	 * @param fieldIndex
+	 *            the index in the partial
+	 */
+	Property(HourMinuteSecond partial, int fieldIndex) {
+	    super();
+	    iHourMinuteSecond = partial;
+	    iFieldIndex = fieldIndex;
+	}
 
-        /**
-         * Gets the field that this property uses.
-         * 
-         * @return the field
-         */
-        public DateTimeField getField() {
-            return iHourMinuteSecond.getField(iFieldIndex);
-        }
+	/**
+	 * Gets the field that this property uses.
+	 * 
+	 * @return the field
+	 */
+	public DateTimeField getField() {
+	    return iHourMinuteSecond.getField(iFieldIndex);
+	}
 
-        /**
-         * Gets the partial that this property belongs to.
-         * 
-         * @return the partial
-         */
-        protected ReadablePartial getReadablePartial() {
-            return iHourMinuteSecond;
-        }
+	/**
+	 * Gets the partial that this property belongs to.
+	 * 
+	 * @return the partial
+	 */
+	protected ReadablePartial getReadablePartial() {
+	    return iHourMinuteSecond;
+	}
 
-        /**
-         * Gets the partial that this property belongs to.
-         * 
-         * @return the partial
-         */
-        public HourMinuteSecond getHourMinuteSecond() {
-            return iHourMinuteSecond;
-        }
+	/**
+	 * Gets the partial that this property belongs to.
+	 * 
+	 * @return the partial
+	 */
+	public HourMinuteSecond getHourMinuteSecond() {
+	    return iHourMinuteSecond;
+	}
 
-        /**
-         * Gets the value of this field.
-         * 
-         * @return the field value
-         */
-        public int get() {
-            return iHourMinuteSecond.getValue(iFieldIndex);
-        }
+	/**
+	 * Gets the value of this field.
+	 * 
+	 * @return the field value
+	 */
+	public int get() {
+	    return iHourMinuteSecond.getValue(iFieldIndex);
+	}
 
-        // -----------------------------------------------------------------------
-        /**
-         * Adds to the value of this field in a copy of this HourMinuteSecond.
-         * <p>
-         * The value will be added to this field. If the value is too large to
-         * be added solely to this field then it will affect larger fields.
-         * Smaller fields are unaffected.
-         * <p>
-         * The HourMinuteSecond attached to this property is unchanged by this
-         * call. Instead, a new instance is returned.
-         * 
-         * @param valueToAdd
-         *            the value to add to the field in the copy
-         * @return a copy of the HourMinuteSecond with the field value changed
-         * @throws IllegalArgumentException
-         *             if the value isn't valid
-         */
-        public HourMinuteSecond addToCopy(int valueToAdd) {
-            int[] newValues = iHourMinuteSecond.getValues();
-            newValues = getField().add(iHourMinuteSecond, iFieldIndex, newValues, valueToAdd);
-            return new HourMinuteSecond(iHourMinuteSecond, newValues);
-        }
+	//----------------------------------------------------------------------
+	// -
+	/**
+	 * Adds to the value of this field in a copy of this HourMinuteSecond.
+	 * <p>
+	 * The value will be added to this field. If the value is too large to
+	 * be added solely to this field then it will affect larger fields.
+	 * Smaller fields are unaffected.
+	 * <p>
+	 * The HourMinuteSecond attached to this property is unchanged by this
+	 * call. Instead, a new instance is returned.
+	 * 
+	 * @param valueToAdd
+	 *            the value to add to the field in the copy
+	 * @return a copy of the HourMinuteSecond with the field value changed
+	 * @throws IllegalArgumentException
+	 *             if the value isn't valid
+	 */
+	public HourMinuteSecond addToCopy(int valueToAdd) {
+	    int[] newValues = iHourMinuteSecond.getValues();
+	    newValues = getField().add(iHourMinuteSecond, iFieldIndex, newValues, valueToAdd);
+	    return new HourMinuteSecond(iHourMinuteSecond, newValues);
+	}
 
-        /**
-         * Adds to the value of this field in a copy of this HourMinuteSecond
-         * wrapping within this field if the maximum value is reached.
-         * <p>
-         * The value will be added to this field. If the value is too large to
-         * be added solely to this field then it wraps within this field. Other
-         * fields are unaffected.
-         * <p>
-         * The HourMinuteSecond attached to this property is unchanged by this
-         * call. Instead, a new instance is returned.
-         * 
-         * @param valueToAdd
-         *            the value to add to the field in the copy
-         * @return a copy of the HourMinuteSecond with the field value changed
-         * @throws IllegalArgumentException
-         *             if the value isn't valid
-         */
-        public HourMinuteSecond addWrapFieldToCopy(int valueToAdd) {
-            int[] newValues = iHourMinuteSecond.getValues();
-            newValues = getField().addWrapField(iHourMinuteSecond, iFieldIndex, newValues, valueToAdd);
-            return new HourMinuteSecond(iHourMinuteSecond, newValues);
-        }
+	/**
+	 * Adds to the value of this field in a copy of this HourMinuteSecond
+	 * wrapping within this field if the maximum value is reached.
+	 * <p>
+	 * The value will be added to this field. If the value is too large to
+	 * be added solely to this field then it wraps within this field. Other
+	 * fields are unaffected.
+	 * <p>
+	 * The HourMinuteSecond attached to this property is unchanged by this
+	 * call. Instead, a new instance is returned.
+	 * 
+	 * @param valueToAdd
+	 *            the value to add to the field in the copy
+	 * @return a copy of the HourMinuteSecond with the field value changed
+	 * @throws IllegalArgumentException
+	 *             if the value isn't valid
+	 */
+	public HourMinuteSecond addWrapFieldToCopy(int valueToAdd) {
+	    int[] newValues = iHourMinuteSecond.getValues();
+	    newValues = getField().addWrapField(iHourMinuteSecond, iFieldIndex, newValues, valueToAdd);
+	    return new HourMinuteSecond(iHourMinuteSecond, newValues);
+	}
 
-        // -----------------------------------------------------------------------
-        /**
-         * Sets this field in a copy of the HourMinuteSecond.
-         * <p>
-         * The HourMinuteSecond attached to this property is unchanged by this
-         * call. Instead, a new instance is returned.
-         * 
-         * @param value
-         *            the value to set the field in the copy to
-         * @return a copy of the HourMinuteSecond with the field value changed
-         * @throws IllegalArgumentException
-         *             if the value isn't valid
-         */
-        public HourMinuteSecond setCopy(int value) {
-            int[] newValues = iHourMinuteSecond.getValues();
-            newValues = getField().set(iHourMinuteSecond, iFieldIndex, newValues, value);
-            return new HourMinuteSecond(iHourMinuteSecond, newValues);
-        }
+	//----------------------------------------------------------------------
+	// -
+	/**
+	 * Sets this field in a copy of the HourMinuteSecond.
+	 * <p>
+	 * The HourMinuteSecond attached to this property is unchanged by this
+	 * call. Instead, a new instance is returned.
+	 * 
+	 * @param value
+	 *            the value to set the field in the copy to
+	 * @return a copy of the HourMinuteSecond with the field value changed
+	 * @throws IllegalArgumentException
+	 *             if the value isn't valid
+	 */
+	public HourMinuteSecond setCopy(int value) {
+	    int[] newValues = iHourMinuteSecond.getValues();
+	    newValues = getField().set(iHourMinuteSecond, iFieldIndex, newValues, value);
+	    return new HourMinuteSecond(iHourMinuteSecond, newValues);
+	}
 
-        /**
-         * Sets this field in a copy of the HourMinuteSecond to a parsed text
-         * value.
-         * <p>
-         * The HourMinuteSecond attached to this property is unchanged by this
-         * call. Instead, a new instance is returned.
-         * 
-         * @param text
-         *            the text value to set
-         * @param locale
-         *            optional locale to use for selecting a text symbol
-         * @return a copy of the HourMinuteSecond with the field value changed
-         * @throws IllegalArgumentException
-         *             if the text value isn't valid
-         */
-        public HourMinuteSecond setCopy(String text, Locale locale) {
-            int[] newValues = iHourMinuteSecond.getValues();
-            newValues = getField().set(iHourMinuteSecond, iFieldIndex, newValues, text, locale);
-            return new HourMinuteSecond(iHourMinuteSecond, newValues);
-        }
+	/**
+	 * Sets this field in a copy of the HourMinuteSecond to a parsed text
+	 * value.
+	 * <p>
+	 * The HourMinuteSecond attached to this property is unchanged by this
+	 * call. Instead, a new instance is returned.
+	 * 
+	 * @param text
+	 *            the text value to set
+	 * @param locale
+	 *            optional locale to use for selecting a text symbol
+	 * @return a copy of the HourMinuteSecond with the field value changed
+	 * @throws IllegalArgumentException
+	 *             if the text value isn't valid
+	 */
+	public HourMinuteSecond setCopy(String text, Locale locale) {
+	    int[] newValues = iHourMinuteSecond.getValues();
+	    newValues = getField().set(iHourMinuteSecond, iFieldIndex, newValues, text, locale);
+	    return new HourMinuteSecond(iHourMinuteSecond, newValues);
+	}
 
-        /**
-         * Sets this field in a copy of the HourMinuteSecond to a parsed text
-         * value.
-         * <p>
-         * The HourMinuteSecond attached to this property is unchanged by this
-         * call. Instead, a new instance is returned.
-         * 
-         * @param text
-         *            the text value to set
-         * @return a copy of the HourMinuteSecond with the field value changed
-         * @throws IllegalArgumentException
-         *             if the text value isn't valid
-         */
-        public HourMinuteSecond setCopy(String text) {
-            return setCopy(text, null);
-        }
+	/**
+	 * Sets this field in a copy of the HourMinuteSecond to a parsed text
+	 * value.
+	 * <p>
+	 * The HourMinuteSecond attached to this property is unchanged by this
+	 * call. Instead, a new instance is returned.
+	 * 
+	 * @param text
+	 *            the text value to set
+	 * @return a copy of the HourMinuteSecond with the field value changed
+	 * @throws IllegalArgumentException
+	 *             if the text value isn't valid
+	 */
+	public HourMinuteSecond setCopy(String text) {
+	    return setCopy(text, null);
+	}
 
-        // -----------------------------------------------------------------------
-        /**
-         * Returns a new HourMinuteSecond with this field set to the maximum
-         * value for this field.
-         * 
-         * <p>
-         * The HourMinuteSecond attached to this property is unchanged by this
-         * call.
-         * 
-         * @return a copy of the HourMinuteSecond with this field set to its
-         *         maximum
-         */
-        public HourMinuteSecond withMaximumValue() {
-            return setCopy(getMaximumValue());
-        }
+	//----------------------------------------------------------------------
+	// -
+	/**
+	 * Returns a new HourMinuteSecond with this field set to the maximum
+	 * value for this field.
+	 * 
+	 * <p>
+	 * The HourMinuteSecond attached to this property is unchanged by this
+	 * call.
+	 * 
+	 * @return a copy of the HourMinuteSecond with this field set to its
+	 *         maximum
+	 */
+	public HourMinuteSecond withMaximumValue() {
+	    return setCopy(getMaximumValue());
+	}
 
-        /**
-         * Returns a new HourMinuteSecond with this field set to the minimum
-         * value for this field.
-         * <p>
-         * The HourMinuteSecond attached to this property is unchanged by this
-         * call.
-         * 
-         * @return a copy of the HourMinuteSecond with this field set to its
-         *         minimum
-         */
-        public HourMinuteSecond withMinimumValue() {
-            return setCopy(getMinimumValue());
-        }
+	/**
+	 * Returns a new HourMinuteSecond with this field set to the minimum
+	 * value for this field.
+	 * <p>
+	 * The HourMinuteSecond attached to this property is unchanged by this
+	 * call.
+	 * 
+	 * @return a copy of the HourMinuteSecond with this field set to its
+	 *         minimum
+	 */
+	public HourMinuteSecond withMinimumValue() {
+	    return setCopy(getMinimumValue());
+	}
     }
 }

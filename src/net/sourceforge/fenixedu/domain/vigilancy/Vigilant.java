@@ -30,7 +30,7 @@ import org.joda.time.YearMonthDay;
 
 public class Vigilant extends Vigilant_Base {
 
-	public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("points");
+    public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("points");
 
     public static final Comparator<Vigilant> ESTIMATED_POINTS_COMPARATOR = new BeanComparator("estimatedPoints");
 
@@ -223,7 +223,8 @@ public class Vigilant extends Vigilant_Base {
 	    Assiduousness assiduousness = employee.getAssiduousness();
 	    ExecutionYear year = this.getExecutionYear();
 	    if (assiduousness != null) {
-		return assiduousness.getCampusForInterval(year.getBeginDateYearMonthDay().toLocalDate(), year.getEndDateYearMonthDay().toLocalDate());
+		return assiduousness.getCampusForInterval(year.getBeginDateYearMonthDay().toLocalDate(), year
+			.getEndDateYearMonthDay().toLocalDate());
 	    } else {
 		return new ArrayList<Campus>();
 	    }

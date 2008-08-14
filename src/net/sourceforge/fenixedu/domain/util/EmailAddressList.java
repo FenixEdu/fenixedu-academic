@@ -22,7 +22,7 @@ public class EmailAddressList implements Serializable {
 		if (emailAddresses.length() > 0) {
 		    emailAddresses.append(", ");
 		}
-		
+
 		emailAddresses.append(emailAddressTrimmed);
 	    }
 	}

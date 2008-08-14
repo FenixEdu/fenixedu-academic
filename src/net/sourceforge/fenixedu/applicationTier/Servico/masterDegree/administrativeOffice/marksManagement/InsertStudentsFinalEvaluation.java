@@ -10,14 +10,17 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 public class InsertStudentsFinalEvaluation extends Service {
 
-    public void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final Integer teacherNumber, final Date evaluationDate) throws NonExistingServiceException {
+    public void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final Integer teacherNumber, final Date evaluationDate)
+	    throws NonExistingServiceException {
 	final Teacher teacher = Teacher.readByNumber(teacherNumber);
 	if (teacher == null) {
 	    throw new NonExistingServiceException();
 	}
 
-	final EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(infoEnrolmentEvaluation.getIdInternal());
-	enrolmentEvaluation.insertStudentFinalEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(), teacher.getPerson(), evaluationDate);
+	final EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(infoEnrolmentEvaluation
+		.getIdInternal());
+	enrolmentEvaluation.insertStudentFinalEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(), teacher
+		.getPerson(), evaluationDate);
     }
 
 }

@@ -20,45 +20,44 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateUnitFile extends Service {
 
-	public void run(java.io.File file, String originalFilename, String displayName, String description,
-			String tags, Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
+    public void run(java.io.File file, String originalFilename, String displayName, String description, String tags,
+	    Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
 
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			throw new FenixServiceException(e.getMessage());
-		}
-		
-		final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance()
-				.getSimpleFileManager().saveFile(getVirtualPath(unit), originalFilename,
-						!isPublic(permittedGroup), person.getName(), displayName, is);
-
-		new UnitFile(unit, person, description, tags, fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils
-				.getFilenameOnly(displayName), fileDescriptor.getMimeType(), fileDescriptor
-				.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
-				fileDescriptor.getUniqueId(), !isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);
+	InputStream is = null;
+	try {
+	    is = new FileInputStream(file);
+	} catch (FileNotFoundException e) {
+	    throw new FenixServiceException(e.getMessage());
 	}
 
-	private VirtualPath getVirtualPath(Unit unit) {
+	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getSimpleFileManager().saveFile(
+		getVirtualPath(unit), originalFilename, !isPublic(permittedGroup), person.getName(), displayName, is);
 
-		final VirtualPath filePath = new VirtualPath();
+	new UnitFile(unit, person, description, tags, fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils
+		.getFilenameOnly(displayName), fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
+		.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
+		!isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);
+    }
 
-		filePath.addNode(new VirtualPathNode("Research", "Research"));
-		filePath.addNode(new VirtualPathNode("ResearchUnit" + unit.getIdInternal(), unit.getName()));
+    private VirtualPath getVirtualPath(Unit unit) {
 
-		return filePath;
+	final VirtualPath filePath = new VirtualPath();
+
+	filePath.addNode(new VirtualPathNode("Research", "Research"));
+	filePath.addNode(new VirtualPathNode("ResearchUnit" + unit.getIdInternal(), unit.getName()));
+
+	return filePath;
+    }
+
+    private boolean isPublic(Group permittedGroup) {
+	if (permittedGroup == null) {
+	    return true;
 	}
 
-	private boolean isPublic(Group permittedGroup) {
-		if (permittedGroup == null) {
-			return true;
-		}
-
-		if (permittedGroup instanceof EveryoneGroup) {
-			return true;
-		}
-
-		return false;
+	if (permittedGroup instanceof EveryoneGroup) {
+	    return true;
 	}
+
+	return false;
+    }
 }

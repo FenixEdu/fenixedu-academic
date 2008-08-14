@@ -22,42 +22,40 @@ public class InfoShiftEnrolment extends InfoObject {
     }
 
     public InfoShiftEnrolment(List infoEnrolmentWithShift, List infoEnrolmentWithOutShift) {
-        setInfoEnrolmentWithShift(infoEnrolmentWithShift);
-        setInfoEnrolmentWithOutShift(infoEnrolmentWithOutShift);
+	setInfoEnrolmentWithShift(infoEnrolmentWithShift);
+	setInfoEnrolmentWithOutShift(infoEnrolmentWithOutShift);
     }
 
     public List getInfoEnrolmentWithShift() {
-        return _infoEnrolmentWithShift;
+	return _infoEnrolmentWithShift;
     }
 
     public void setInfoEnrolmentWithShift(List infoEnrolmentWithShift) {
-        _infoEnrolmentWithShift = infoEnrolmentWithShift;
+	_infoEnrolmentWithShift = infoEnrolmentWithShift;
     }
 
     public List getInfoEnrolmentWithOutShift() {
-        return _infoEnrolmentWithOutShift;
+	return _infoEnrolmentWithOutShift;
     }
 
     public void setInfoEnrolmentWithOutShift(List infoEnrolmentWithOutShift) {
-        _infoEnrolmentWithOutShift = infoEnrolmentWithOutShift;
+	_infoEnrolmentWithOutShift = infoEnrolmentWithOutShift;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoShiftEnrolment) {
-            InfoShiftEnrolment infoShiftEnrolment = (InfoShiftEnrolment) obj;
-            result = getInfoEnrolmentWithShift().containsAll(
-                    infoShiftEnrolment.getInfoEnrolmentWithShift())
-                    && getInfoEnrolmentWithOutShift().containsAll(
-                            infoShiftEnrolment.getInfoEnrolmentWithOutShift());
-        }
-        return result;
+	boolean result = false;
+	if (obj instanceof InfoShiftEnrolment) {
+	    InfoShiftEnrolment infoShiftEnrolment = (InfoShiftEnrolment) obj;
+	    result = getInfoEnrolmentWithShift().containsAll(infoShiftEnrolment.getInfoEnrolmentWithShift())
+		    && getInfoEnrolmentWithOutShift().containsAll(infoShiftEnrolment.getInfoEnrolmentWithOutShift());
+	}
+	return result;
     }
 
     public String toString() {
-        String result = "[INFOSHIFTENROLMENT";
-        result += "]";
-        return result;
+	String result = "[INFOSHIFTENROLMENT";
+	result += "]";
+	return result;
     }
 
 }

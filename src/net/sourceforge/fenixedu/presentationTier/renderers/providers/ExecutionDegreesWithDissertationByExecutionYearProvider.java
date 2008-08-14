@@ -33,7 +33,8 @@ public class ExecutionDegreesWithDissertationByExecutionYearProvider implements 
 
     public Object provide(Object source, Object currentValue) {
 	final HasExecutionYear hasExecutionYear = (HasExecutionYear) source;
-	final Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+	final Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(
+		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 	final ExecutionYear executionYear = hasExecutionYear.getExecutionYear();
 	if (executionYear != null) {
 	    for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
@@ -42,7 +43,7 @@ public class ExecutionDegreesWithDissertationByExecutionYearProvider implements 
 		}
 	    }
 	}
-        return executionDegrees;
+	return executionDegrees;
     }
 
     private boolean hasDissertation(final ExecutionDegree executionDegree) {
@@ -53,7 +54,7 @@ public class ExecutionDegreesWithDissertationByExecutionYearProvider implements 
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

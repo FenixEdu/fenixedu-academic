@@ -14,7 +14,8 @@ import org.apache.struts.action.ActionMapping;
 public class GenerateAnnoucementsRSS extends FenixDispatchAction {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	final String executionCourseIdString = request.getParameter("id");
 	final Integer executionCourseId = Integer.valueOf(executionCourseIdString);
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);

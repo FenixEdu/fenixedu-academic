@@ -24,11 +24,13 @@ public class Login extends Login_Base {
     }
 
     public void delete() {
-	for (; !getAlias().isEmpty(); getAlias().get(0).delete());
-	for (; !getLoginPeriods().isEmpty(); getLoginPeriods().get(0).delete());
+	for (; !getAlias().isEmpty(); getAlias().get(0).delete())
+	    ;
+	for (; !getLoginPeriods().isEmpty(); getLoginPeriods().get(0).delete())
+	    ;
 	super.delete();
     }
-    
+
     public LoginPeriod readLoginPeriodByTimeInterval(YearMonthDay begin, YearMonthDay end) {
 	for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
 	    if (loginPeriod.getBeginDate().equals(begin)
@@ -55,26 +57,25 @@ public class Login extends Login_Base {
     }
 
     public String getUsername() {
-        String userUId = getUserUId();
-        if (userUId != null) {
-            return userUId;
-        }
-        else {
-            return getMostImportantAlias();
-        }
+	String userUId = getUserUId();
+	if (userUId != null) {
+	    return userUId;
+	} else {
+	    return getMostImportantAlias();
+	}
     }
-    
+
     public String getMostImportantAlias() {
-        List<Role> personRoles = getUser().getPerson().getPersonRoles();
-        Role mostImportantRole = UsernameUtils.getMostImportantRole(personRoles);
-        if (mostImportantRole != null) {
-            RoleType roleType = mostImportantRole.getRoleType();
-            List<LoginAlias> loginAlias = getRoleLoginAlias(roleType);            
-            if (!loginAlias.isEmpty()) {
-                return loginAlias.get(0).getAlias();
-            }
-        }       
-        return getAlias().isEmpty() ? null : getAlias().get(0).getAlias();
+	List<Role> personRoles = getUser().getPerson().getPersonRoles();
+	Role mostImportantRole = UsernameUtils.getMostImportantRole(personRoles);
+	if (mostImportantRole != null) {
+	    RoleType roleType = mostImportantRole.getRoleType();
+	    List<LoginAlias> loginAlias = getRoleLoginAlias(roleType);
+	    if (!loginAlias.isEmpty()) {
+		return loginAlias.get(0).getAlias();
+	    }
+	}
+	return getAlias().isEmpty() ? null : getAlias().get(0).getAlias();
     }
 
     public String getUserUId() {
@@ -126,8 +127,7 @@ public class Login extends Login_Base {
 	List<LoginAlias> result = new ArrayList<LoginAlias>();
 	if (roleType != null) {
 	    for (LoginAlias loginAlias : getAlias()) {
-		if (loginAlias.getType().equals(LoginAliasType.ROLE_TYPE_ALIAS)
-			&& loginAlias.getRoleType().equals(roleType)) {
+		if (loginAlias.getType().equals(LoginAliasType.ROLE_TYPE_ALIAS) && loginAlias.getRoleType().equals(roleType)) {
 		    result.add(loginAlias);
 		}
 	    }
@@ -166,7 +166,7 @@ public class Login extends Login_Base {
 
     public boolean hasUsername(String username) {
 	return readLoginAliasByAlias(username) != null;
-    }  
+    }
 
     public Set<LoginPeriod> getLoginPeriodsWithoutInvitationPeriods() {
 	Person person = getUser().getPerson();
@@ -174,8 +174,7 @@ public class Login extends Login_Base {
 	Set<LoginPeriod> loginPeriods = new TreeSet<LoginPeriod>(LoginPeriod.COMPARATOR_BY_BEGIN_DATE);
 	loginPeriods.addAll(login.getLoginPeriods());
 	for (Invitation invitation : person.getInvitationsOrderByDate()) {
-	    LoginPeriod period = login.readLoginPeriodByTimeInterval(invitation.getBeginDate(),
-		    invitation.getEndDate());
+	    LoginPeriod period = login.readLoginPeriodByTimeInterval(invitation.getBeginDate(), invitation.getEndDate());
 	    if (period != null) {
 		loginPeriods.remove(period);
 	    }
@@ -190,14 +189,10 @@ public class Login extends Login_Base {
 
     public void closeLoginIfNecessary() {
 	Person person = getUser().getPerson();
-	
-	if (!person.hasRole(RoleType.TEACHER) 
-		&& !person.hasRole(RoleType.EMPLOYEE)
-		&& !person.hasRole(RoleType.STUDENT)
-		&& !person.hasRole(RoleType.ALUMNI)
-		&& !person.hasRole(RoleType.CANDIDATE)
-		&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.PROJECTS_MANAGER) 
+
+	if (!person.hasRole(RoleType.TEACHER) && !person.hasRole(RoleType.EMPLOYEE) && !person.hasRole(RoleType.STUDENT)
+		&& !person.hasRole(RoleType.ALUMNI) && !person.hasRole(RoleType.CANDIDATE)
+		&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER) && !person.hasRole(RoleType.PROJECTS_MANAGER)
 		&& !person.hasRole(RoleType.MANAGER)) {
 
 	    // minusDays(1) -> This is for person dont make login today

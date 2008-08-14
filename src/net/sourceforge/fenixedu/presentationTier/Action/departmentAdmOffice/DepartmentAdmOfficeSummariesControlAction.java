@@ -19,8 +19,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlAction {
 
     @Override
-    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException,
-	    FenixServiceException {
+    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 
 	List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
 	final IUserView userView = UserView.getUser();

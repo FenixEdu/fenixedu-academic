@@ -27,18 +27,18 @@ import org.apache.commons.collections.Transformer;
 public class ReadExecutionYearsByDegreeCurricularPlanID extends Service {
 
     public List run(Integer degreeCurricularPlanID) {
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        List<ExecutionYear> executionYears = (List<ExecutionYear>) CollectionUtils.collect(
-                degreeCurricularPlan.getExecutionDegrees(), new Transformer() {
+	List<ExecutionYear> executionYears = (List<ExecutionYear>) CollectionUtils.collect(degreeCurricularPlan
+		.getExecutionDegrees(), new Transformer() {
 
-                    public Object transform(Object arg0) {
-                        ExecutionDegree executionDegree = (ExecutionDegree) arg0;
-                        return InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
-                    }
+	    public Object transform(Object arg0) {
+		ExecutionDegree executionDegree = (ExecutionDegree) arg0;
+		return InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
+	    }
 
-                });
+	});
 
-        return executionYears;
+	return executionYears;
     }
 }

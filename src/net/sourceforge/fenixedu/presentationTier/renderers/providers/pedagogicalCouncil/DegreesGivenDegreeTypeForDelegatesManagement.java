@@ -7,20 +7,19 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class DegreesGivenDegreeTypeForDelegatesManagement implements DataProvider{
-	
-	public Object provide(Object source, Object currentValue) {
-		
-		if(source instanceof DelegateBean) {
-			return Degree.readAllByDegreeType(((DelegateBean)source).getDegreeType());
-		}
-		else {
-			return Degree.readAllByDegreeType(((DelegateSearchBean)source).getDegreeType());
-		}
-		
+public class DegreesGivenDegreeTypeForDelegatesManagement implements DataProvider {
+
+    public Object provide(Object source, Object currentValue) {
+
+	if (source instanceof DelegateBean) {
+	    return Degree.readAllByDegreeType(((DelegateBean) source).getDegreeType());
+	} else {
+	    return Degree.readAllByDegreeType(((DelegateSearchBean) source).getDegreeType());
+	}
+
     }
 
-	public Converter getConverter() {
-        return new DomainObjectKeyConverter();  
+    public Converter getConverter() {
+	return new DomainObjectKeyConverter();
     }
 }

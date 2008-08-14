@@ -19,7 +19,8 @@ public class EditarTurno extends Service {
 
     public Object run(InfoShift infoShiftOld, InfoShiftEditor infoShiftNew) {
 	final Shift shiftToEdit = rootDomainObject.readShiftByOID(infoShiftOld.getIdInternal());
-	final ExecutionCourse newExecutionCourse = rootDomainObject.readExecutionCourseByOID(infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
+	final ExecutionCourse newExecutionCourse = rootDomainObject.readExecutionCourseByOID(infoShiftNew
+		.getInfoDisciplinaExecucao().getIdInternal());
 	shiftToEdit.edit(infoShiftNew.getTipos(), infoShiftNew.getLotacao(), newExecutionCourse, infoShiftNew.getNome());
 	return InfoShift.newInfoFromDomain(shiftToEdit);
     }

@@ -13,32 +13,32 @@ public class ResidenceApplianceInquiryForm extends Form {
     private String notesAboutApplianceForResidence;
 
     public ResidenceApplianceInquiryForm() {
-        super();
+	super();
     }
 
     public boolean isToApplyForResidence() {
-        return isToApplyForResidence;
+	return isToApplyForResidence;
     }
 
     public void setToApplyForResidence(boolean isToApplyForResidence) {
-        this.isToApplyForResidence = isToApplyForResidence;
+	this.isToApplyForResidence = isToApplyForResidence;
     }
 
     public String getNotesAboutApplianceForResidence() {
-        return notesAboutApplianceForResidence;
+	return notesAboutApplianceForResidence;
     }
 
     public void setNotesAboutApplianceForResidence(String notesAboutApplianceForResidence) {
-        this.notesAboutApplianceForResidence = notesAboutApplianceForResidence;
+	this.notesAboutApplianceForResidence = notesAboutApplianceForResidence;
     }
 
     @Override
     public List<LabelFormatter> validate() {
-        return Collections.EMPTY_LIST;
+	return Collections.EMPTY_LIST;
     }
-    
+
     @Override
     public String getFormName() {
-        return "label.candidacy.workflow.residenceApplianceForm";
+	return "label.candidacy.workflow.residenceApplianceForm";
     }
 }

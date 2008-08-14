@@ -13,22 +13,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionDegreesByDegree extends Service {
 
-    public List run(Integer idDegree) throws FenixServiceException{
+    public List run(Integer idDegree) throws FenixServiceException {
 
-        Degree degree = rootDomainObject.readDegreeByOID(idDegree);
-        
-        List<ExecutionDegree> allExecutionDegrees = ExecutionDegree.getAllByDegreeAndCurricularStage(degree, CurricularStage.OLD);
-        if (allExecutionDegrees == null || allExecutionDegrees.isEmpty()) {
-            throw new FenixServiceException();
-        }
+	Degree degree = rootDomainObject.readDegreeByOID(idDegree);
 
-        List<InfoExecutionDegree> allInfoExecutionDegrees = new ArrayList<InfoExecutionDegree>(allExecutionDegrees.size());
-        for (ExecutionDegree executionDegree : allExecutionDegrees) {
-            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-            allInfoExecutionDegrees.add(infoExecutionDegree);
-        }
+	List<ExecutionDegree> allExecutionDegrees = ExecutionDegree.getAllByDegreeAndCurricularStage(degree, CurricularStage.OLD);
+	if (allExecutionDegrees == null || allExecutionDegrees.isEmpty()) {
+	    throw new FenixServiceException();
+	}
 
-        return allInfoExecutionDegrees;
+	List<InfoExecutionDegree> allInfoExecutionDegrees = new ArrayList<InfoExecutionDegree>(allExecutionDegrees.size());
+	for (ExecutionDegree executionDegree : allExecutionDegrees) {
+	    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	    allInfoExecutionDegrees.add(infoExecutionDegree);
+	}
+
+	return allInfoExecutionDegrees;
     }
 
 }

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class InfoStatGrantContract extends InfoObject {
 

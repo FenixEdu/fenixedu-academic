@@ -23,9 +23,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	    @Override
 	    public void beforeAdd(ExternalCurricularCourse externalCurricularCourse, Unit unit) {
 		if (unit != null) {
-		    if (!unit.isUniversityUnit()
-			    && !unit.isSchoolUnit()
-			    && !unit.isDepartmentUnit()) {
+		    if (!unit.isUniversityUnit() && !unit.isSchoolUnit() && !unit.isDepartmentUnit()) {
 			throw new DomainException("error.extraCurricularCourse.invalid.unit.type");
 		    }
 		}
@@ -49,7 +47,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	setName(name);
 	setCode(code);
     }
-    
+
     public void edit(final String name, final String code) {
 	if (StringUtils.isEmpty(name)) {
 	    throw new DomainException("error.externalCurricularCourse.name.cannot.be.empty");
@@ -88,18 +86,16 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
     public String getFullPathName() {
 	final List<AccountabilityTypeEnum> validAccountabilityTypes = Arrays.asList(new AccountabilityTypeEnum[] {
-		AccountabilityTypeEnum.GEOGRAPHIC,
-		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
+		AccountabilityTypeEnum.GEOGRAPHIC, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
 		AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
 	return UnitUtils.getUnitFullPathName(getUnit(), validAccountabilityTypes).toString() + " > " + getName();
     }
 
     final public Unit getAcademicUnit() {
 	final List<AccountabilityTypeEnum> validAccountabilityTypes = Arrays.asList(new AccountabilityTypeEnum[] {
-		AccountabilityTypeEnum.GEOGRAPHIC,
-		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
+		AccountabilityTypeEnum.GEOGRAPHIC, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
 		AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
-	
+
 	UniversityUnit universityUnit = null;
 	SchoolUnit schoolUnit = null;
 	for (final Unit unit : UnitUtils.getUnitFullPath(getUnit(), validAccountabilityTypes)) {
@@ -113,12 +109,9 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	return (schoolUnit != null) ? schoolUnit : (universityUnit != null) ? universityUnit : null;
     }
 
-    static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String name,
-	    String code) {
-	for (final ExternalCurricularCourse externalCurricularCourse : unit
-		.getExternalCurricularCourses()) {
-	    if (externalCurricularCourse.getCode().equals(code)
-		    && externalCurricularCourse.getName().equals(name)) {
+    static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String name, String code) {
+	for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCourses()) {
+	    if (externalCurricularCourse.getCode().equals(code) && externalCurricularCourse.getName().equals(name)) {
 		return externalCurricularCourse;
 	    }
 	}
@@ -127,8 +120,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
     static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String code) {
 	List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
-	for (final ExternalCurricularCourse externalCurricularCourse : unit
-		.getExternalCurricularCourses()) {
+	for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCourses()) {
 	    if (StringUtils.isEmpty(externalCurricularCourse.getCode()) && StringUtils.isEmpty(code)
 		    || externalCurricularCourse.getCode().equals(code)) {
 		result.add(externalCurricularCourse);

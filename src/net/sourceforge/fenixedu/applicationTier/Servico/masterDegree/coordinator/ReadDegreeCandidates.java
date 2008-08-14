@@ -19,38 +19,36 @@ public class ReadDegreeCandidates extends Service {
 
     public List run(InfoExecutionDegree infoExecutionDegree) {
 
-        final ExecutionDegree executionDegree = rootDomainObject
-                .readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-        return createInfoMasterDegreeCandidates(executionDegree.getMasterDegreeCandidatesSet());
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+	return createInfoMasterDegreeCandidates(executionDegree.getMasterDegreeCandidatesSet());
     }
 
     public List run(Integer degreeCurricularPlanId) {
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
-                .readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-        return createInfoMasterDegreeCandidates(degreeCurricularPlan.readMasterDegreeCandidates());
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+	return createInfoMasterDegreeCandidates(degreeCurricularPlan.readMasterDegreeCandidates());
     }
 
     private List createInfoMasterDegreeCandidates(final Set<MasterDegreeCandidate> masterDegreeCandidates) {
-        final State activeCandidateSituationState = new State(State.ACTIVE);
-        final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
+	final State activeCandidateSituationState = new State(State.ACTIVE);
+	final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
 
-        for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-                    .newInfoFromDomain(masterDegreeCandidate);
+	for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
+	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+		    .newInfoFromDomain(masterDegreeCandidate);
 
-            final List<InfoCandidateSituation> infoCandidateSituations = new ArrayList<InfoCandidateSituation>();
-            for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
-                final InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
-                        .newInfoFromDomain(candidateSituation);
-                infoCandidateSituations.add(infoCandidateSituation);
+	    final List<InfoCandidateSituation> infoCandidateSituations = new ArrayList<InfoCandidateSituation>();
+	    for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
+		final InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
+			.newInfoFromDomain(candidateSituation);
+		infoCandidateSituations.add(infoCandidateSituation);
 
-                if (candidateSituation.getValidation().equals(activeCandidateSituationState)) {
-                    infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-                }
-            }
-            infoMasterDegreeCandidate.setSituationList(infoCandidateSituations);
-            result.add(infoMasterDegreeCandidate);
-        }
-        return result;
+		if (candidateSituation.getValidation().equals(activeCandidateSituationState)) {
+		    infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+		}
+	    }
+	    infoMasterDegreeCandidate.setSituationList(infoCandidateSituations);
+	    result.add(infoMasterDegreeCandidate);
+	}
+	return result;
     }
 }

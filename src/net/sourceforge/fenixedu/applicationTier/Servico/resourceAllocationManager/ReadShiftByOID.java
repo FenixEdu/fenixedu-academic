@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadShiftByOID extends Service {
 
     public InfoShift run(final Integer oid) {
-        final Shift shift = rootDomainObject.readShiftByOID(oid);
-        return shift == null ? null : InfoShift.newInfoFromDomain(shift);
+	final Shift shift = rootDomainObject.readShiftByOID(oid);
+	return shift == null ? null : InfoShift.newInfoFromDomain(shift);
     }
 
 }

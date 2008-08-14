@@ -13,68 +13,68 @@ public class SummariesControlElementDTO extends DataTranferObject {
     String teacherName, executionCourseName, categoryName, executionPeriodName, departmentName, siglas;
 
     BigDecimal lessonHours, summaryHours, courseSummaryHours, shiftDifference, courseDifference;
-    
+
     Integer teacherNumber;
-       
-    public SummariesControlElementDTO(String teacherName, String executionCourseName,
-            Integer teacherNumber, String categoryName, BigDecimal lessonHours, BigDecimal summaryHours,
-            BigDecimal courseSummaryHours, BigDecimal shiftDifference, BigDecimal courseDifference, String siglas) {
-       
-        this.siglas = siglas;
-        this.shiftDifference = shiftDifference;
-        this.courseDifference = courseDifference;
-        this.executionCourseName = executionCourseName;
-        this.lessonHours = lessonHours;
-        this.summaryHours = summaryHours;
-        this.teacherName = teacherName;
-        this.teacherNumber = teacherNumber;
-        this.courseSummaryHours = courseSummaryHours;
-        this.categoryName = categoryName;
+
+    public SummariesControlElementDTO(String teacherName, String executionCourseName, Integer teacherNumber, String categoryName,
+	    BigDecimal lessonHours, BigDecimal summaryHours, BigDecimal courseSummaryHours, BigDecimal shiftDifference,
+	    BigDecimal courseDifference, String siglas) {
+
+	this.siglas = siglas;
+	this.shiftDifference = shiftDifference;
+	this.courseDifference = courseDifference;
+	this.executionCourseName = executionCourseName;
+	this.lessonHours = lessonHours;
+	this.summaryHours = summaryHours;
+	this.teacherName = teacherName;
+	this.teacherNumber = teacherNumber;
+	this.courseSummaryHours = courseSummaryHours;
+	this.categoryName = categoryName;
     }
 
     public BigDecimal getShiftDifference() {
-	if(lessonHours.intValue() == 0) {
+	if (lessonHours.intValue() == 0) {
 	    return null;
 	}
-        return shiftDifference;
+	return shiftDifference;
     }
 
     public BigDecimal getCourseDifference() {
-	if(lessonHours.intValue() == 0) {
+	if (lessonHours.intValue() == 0) {
 	    return null;
 	}
 	return courseDifference;
     }
-    
+
     public String getExecutionCourseName() {
-        return executionCourseName;
+	return executionCourseName;
     }
 
     public BigDecimal getLessonHours() {
-        return lessonHours;
+	return lessonHours;
     }
 
     public BigDecimal getSummaryHours() {
-        return summaryHours;
+	return summaryHours;
     }
 
     public String getTeacherName() {
-        return teacherName;
+	return teacherName;
     }
 
     public Integer getTeacherNumber() {
-        return teacherNumber;
+	return teacherNumber;
     }
 
     public BigDecimal getCourseSummaryHours() {
-        return courseSummaryHours;
+	return courseSummaryHours;
     }
 
     public String getCategoryName() {
-        return categoryName;
+	return categoryName;
     }
-    
+
     public String getSiglas() {
-        return siglas;
+	return siglas;
     }
 }

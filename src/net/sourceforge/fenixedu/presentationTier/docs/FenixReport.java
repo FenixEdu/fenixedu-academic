@@ -16,13 +16,13 @@ abstract public class FenixReport implements Serializable {
     private final Map<String, Object> parameters = new HashMap<String, Object>();
 
     protected ResourceBundle resourceBundle;
-    static protected final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-	    Language.getLocale());
-    
+    static protected final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language
+	    .getLocale());
+
     protected FenixReport() {
 	this.dataSource = new ArrayList();
     }
-    
+
     protected FenixReport(final Collection dataSource) {
 	this.dataSource = (dataSource == null) ? new ArrayList() : dataSource;
     }
@@ -50,15 +50,16 @@ abstract public class FenixReport implements Serializable {
     public void addParameter(final String key, final Object value) {
 	this.parameters.put(key, value);
     }
-    
+
     public void addDataSourceElement(final Object object) {
 	this.dataSource.add(object);
     }
-    
+
     public void addDataSourceElements(final Collection objects) {
 	this.dataSource.addAll(objects);
     }
 
     abstract public String getReportFileName();
+
     abstract protected void fillReport();
 }

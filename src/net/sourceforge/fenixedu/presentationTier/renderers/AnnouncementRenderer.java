@@ -29,7 +29,7 @@ public class AnnouncementRenderer extends OutputRenderer {
     private String authorLabel;
     private String dateFormat;
     private String inLabel;
-    
+
     private String subjectClasses;
     private String dateClasses;
     private String contentClasses;
@@ -37,21 +37,21 @@ public class AnnouncementRenderer extends OutputRenderer {
     private int soonMarkerInDays;
     private String soonMarkerClasses;
     private String soonMarkerLabel;
-    
+
     public String getSoonMarkerClasses() {
-        return soonMarkerClasses;
+	return soonMarkerClasses;
     }
 
     public void setSoonMarkerClasses(String soonMarkerClasses) {
-        this.soonMarkerClasses = soonMarkerClasses;
+	this.soonMarkerClasses = soonMarkerClasses;
     }
 
     public int getSoonMarkerInDays() {
-        return soonMarkerInDays;
+	return soonMarkerInDays;
     }
 
     public void setSoonMarkerInDays(int soonMarkerInDays) {
-        this.soonMarkerInDays = soonMarkerInDays;
+	this.soonMarkerInDays = soonMarkerInDays;
     }
 
     public String getSubjectClasses() {
@@ -160,35 +160,35 @@ public class AnnouncementRenderer extends OutputRenderer {
 	public HtmlComponent createComponent(Object object, Class type) {
 	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 	    blockContainer.addChild(getSubject());
-	    if(isAuthorShown()) {
+	    if (isAuthorShown()) {
 		blockContainer.addChild(getAuthor());
 	    }
 	    blockContainer.addChild(getDate());
 	    blockContainer.addChild(getContent());
-	    
+
 	    return blockContainer;
 	}
 
 	private HtmlComponent getContent() {
 	    HtmlBlockContainer container = new HtmlBlockContainer();
-	    if(announcement.isExcerptEmpty()) {
-		container.addChild(new HtmlText(ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX,false));
-		container.addChild(new HtmlText(announcement.getBody().getContent(),false));
-		container.addChild(new HtmlText(ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX,false));
-	    }else {
-		container.addChild(new HtmlText(ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX,false));
-		container.addChild(new HtmlText(announcement.getExcerpt().getContent(),false));
-		container.addChild(new HtmlText(ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX,false));
+	    if (announcement.isExcerptEmpty()) {
+		container.addChild(new HtmlText(ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX, false));
+		container.addChild(new HtmlText(announcement.getBody().getContent(), false));
+		container.addChild(new HtmlText(ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX, false));
+	    } else {
+		container.addChild(new HtmlText(ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX, false));
+		container.addChild(new HtmlText(announcement.getExcerpt().getContent(), false));
+		container.addChild(new HtmlText(ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX, false));
 		HtmlLink link = new HtmlLink();
 		link.setUrl(RenderUtils.getFormattedProperties(getViewMoreUrl(), announcement));
 		link.setText(RenderUtils.getFormatedResourceString(getBundle(), getViewMoreLabel()));
-		container.addChild(new HtmlText("<br/>",false));
+		container.addChild(new HtmlText("<br/>", false));
 		container.addChild(link);
 	    }
 	    container.setClasses(getContentClasses());
 	    return container;
 	}
-	
+
 	private HtmlComponent getDate() {
 	    StringBuffer buffer = new StringBuffer("");
 	    if (isCurrentAnnouncentAnEvent()) {
@@ -201,12 +201,12 @@ public class AnnouncementRenderer extends OutputRenderer {
 		    buffer.append(RenderUtils.getResourceString(getBundle(), getToLabel()));
 		    buffer.append(" ");
 		    buffer.append(RenderUtils.getFormattedProperties(getDateFormat(), announcement.getReferedSubjectEnd()));
-		}else {
+		} else {
 		    String inLabel = RenderUtils.getResourceString(getBundle(), getInLabel());
 		    buffer.insert(0, inLabel);
 		    buffer.insert(inLabel.length(), " ");
 		}
-		if(!StringUtils.isEmpty(announcement.getPlace())) {
+		if (!StringUtils.isEmpty(announcement.getPlace())) {
 		    buffer.append(getPlaceSeparator());
 		    buffer.append(announcement.getPlace());
 		}
@@ -236,7 +236,7 @@ public class AnnouncementRenderer extends OutputRenderer {
 	    subject.setClasses(getSubjectClasses());
 	    subject.setFace(Face.H3);
 	    blockContainer.addChild(subject);
-	    if(needsMarker()) {
+	    if (needsMarker()) {
 		HtmlText soonMarker = new HtmlText(RenderUtils.getResourceString(getBundle(), getSoonMarkerLabel()));
 		soonMarker.setClasses(getSoonMarkerClasses());
 		blockContainer.addChild(soonMarker);
@@ -248,8 +248,10 @@ public class AnnouncementRenderer extends OutputRenderer {
 	    DateTime date = announcement.getReferedSubjectBegin();
 	    YearMonthDay begin = date != null ? date.toYearMonthDay() : null;
 	    YearMonthDay currentDay = new YearMonthDay();
-	    YearMonthDay useMarkerStartDay = begin != null ? begin.minusDays(getSoonMarkerInDays()) : null ;
-	    return begin != null && (currentDay.equals(useMarkerStartDay) || (currentDay.isAfter(useMarkerStartDay) && currentDay.isBefore(begin)));   
+	    YearMonthDay useMarkerStartDay = begin != null ? begin.minusDays(getSoonMarkerInDays()) : null;
+	    return begin != null
+		    && (currentDay.equals(useMarkerStartDay) || (currentDay.isAfter(useMarkerStartDay) && currentDay
+			    .isBefore(begin)));
 	}
 
 	private boolean isCurrentAnnouncentAnEvent() {
@@ -267,27 +269,27 @@ public class AnnouncementRenderer extends OutputRenderer {
     }
 
     public String getViewMoreLabel() {
-        return viewMoreLabel;
+	return viewMoreLabel;
     }
 
     public void setViewMoreLabel(String viewMoreLabel) {
-        this.viewMoreLabel = viewMoreLabel;
+	this.viewMoreLabel = viewMoreLabel;
     }
 
     public String getInLabel() {
-        return inLabel;
+	return inLabel;
     }
 
     public void setInLabel(String inLabel) {
-        this.inLabel = inLabel;
+	this.inLabel = inLabel;
     }
 
     public String getSoonMarkerLabel() {
-        return soonMarkerLabel;
+	return soonMarkerLabel;
     }
 
     public void setSoonMarkerLabel(String soonMarkerLabel) {
-        this.soonMarkerLabel = soonMarkerLabel;
+	this.soonMarkerLabel = soonMarkerLabel;
     }
 
 }

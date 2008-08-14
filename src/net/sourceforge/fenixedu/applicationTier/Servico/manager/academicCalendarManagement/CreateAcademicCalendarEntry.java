@@ -19,46 +19,56 @@ public class CreateAcademicCalendarEntry extends Service {
 
     public AcademicCalendarEntry run(CalendarEntryBean bean, boolean toCreate) {
 
-	if(toCreate) {
+	if (toCreate) {
 
 	    Class<? extends AcademicCalendarEntry> type = bean.getType();
 
-	    if(type.equals(AcademicCalendarRootEntry.class)) {		
-		return new AcademicCalendarRootEntry(bean.getTitle(), bean.getDescription(), bean.getTemplateEntry()); 
+	    if (type.equals(AcademicCalendarRootEntry.class)) {
+		return new AcademicCalendarRootEntry(bean.getTitle(), bean.getDescription(), bean.getTemplateEntry());
 
-	    } else if(type.equals(AcademicYearCE.class)) {
-		return new AcademicYearCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());		
+	    } else if (type.equals(AcademicYearCE.class)) {
+		return new AcademicYearCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(),
+			bean.getEnd(), bean.getRootEntry());
 
-	    } else if(type.equals(AcademicSemesterCE.class)) {
-		return new AcademicSemesterCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+	    } else if (type.equals(AcademicSemesterCE.class)) {
+		return new AcademicSemesterCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean
+			.getEnd(), bean.getRootEntry());
 
-	    } else if(type.equals(AcademicTrimesterCE.class)) {
-		return new AcademicTrimesterCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+	    } else if (type.equals(AcademicTrimesterCE.class)) {
+		return new AcademicTrimesterCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean
+			.getEnd(), bean.getRootEntry());
 
-	    } else if(type.equals(LessonsPeriodCE.class)) {
-		return new LessonsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+	    } else if (type.equals(LessonsPeriodCE.class)) {
+		return new LessonsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean
+			.getEnd(), bean.getRootEntry());
 
-	    } else if(type.equals(ExamsPeriodInNormalSeasonCE.class)) {
-		return new ExamsPeriodInNormalSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+	    } else if (type.equals(ExamsPeriodInNormalSeasonCE.class)) {
+		return new ExamsPeriodInNormalSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(),
+			bean.getEnd(), bean.getRootEntry());
 
-	    } else if(type.equals(ExamsPeriodInSpecialSeasonCE.class)) {
-		return new ExamsPeriodInSpecialSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
-		
-	    } else if(type.equals(GradeSubmissionInNormalSeasonCE.class)) {
-		return new GradeSubmissionInNormalSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+	    } else if (type.equals(ExamsPeriodInSpecialSeasonCE.class)) {
+		return new ExamsPeriodInSpecialSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(),
+			bean.getEnd(), bean.getRootEntry());
 
-	    }else if(type.equals(GradeSubmissionInSpecialSeasonCE.class)) {
-		return new GradeSubmissionInSpecialSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
-	    
-	    } else if(type.equals(EnrolmentsPeriodCE.class)) {
-		return new EnrolmentsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+	    } else if (type.equals(GradeSubmissionInNormalSeasonCE.class)) {
+		return new GradeSubmissionInNormalSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean
+			.getBegin(), bean.getEnd(), bean.getRootEntry());
 
-	    } else if(type.equals(TeacherCreditsFillingCE.class)) {
-		// Do Nothing: this was created in scientific council interface. 
+	    } else if (type.equals(GradeSubmissionInSpecialSeasonCE.class)) {
+		return new GradeSubmissionInSpecialSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean
+			.getBegin(), bean.getEnd(), bean.getRootEntry());
+
+	    } else if (type.equals(EnrolmentsPeriodCE.class)) {
+		return new EnrolmentsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean
+			.getEnd(), bean.getRootEntry());
+
+	    } else if (type.equals(TeacherCreditsFillingCE.class)) {
+		// Do Nothing: this was created in scientific council interface.
 	    }
 
-	} else {	    	    	 
-	    return bean.getEntry().edit(bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry(), bean.getTemplateEntry());	   	   	    
+	} else {
+	    return bean.getEntry().edit(bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(),
+		    bean.getRootEntry(), bean.getTemplateEntry());
 	}
 
 	return null;

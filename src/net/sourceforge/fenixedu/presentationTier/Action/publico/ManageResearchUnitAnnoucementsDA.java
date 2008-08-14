@@ -23,16 +23,15 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 
     protected ResearchUnitSite getSite(HttpServletRequest request) {
-	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext
-		.getCurrentContext(request);
+	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
 	Container container = (Container) context.getLastContentInPath(Site.class);
 	if (container != null) {
 	    return (ResearchUnitSite) container;
 	}
 	String siteID = request.getParameter("siteID");
 	if (siteID != null) {
-	    ResearchUnitSite site = (ResearchUnitSite) RootDomainObject.readDomainObjectByOID(
-		    ResearchUnitSite.class, Integer.valueOf(siteID));
+	    ResearchUnitSite site = (ResearchUnitSite) RootDomainObject.readDomainObjectByOID(ResearchUnitSite.class, Integer
+		    .valueOf(siteID));
 	    return site;
 	} else {
 	    return null;
@@ -44,8 +43,8 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 	return getSite(request).getUnit();
     }
 
-    public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	ResearchUnitSite site = getSite(request);
 	List<PartyAnnouncementBoard> boards = site.getUnit().getBoards();
 	request.setAttribute("announcementBoards", boards);
@@ -59,13 +58,12 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 
     @Override
     protected MultiLanguageString getBoardName(HttpServletRequest request) {
-	return request.getMethod().equals("viewAnnouncements") ? UnitSiteBoardsDA.ANNOUNCEMENTS
-		: UnitSiteBoardsDA.EVENTS;
+	return request.getMethod().equals("viewAnnouncements") ? UnitSiteBoardsDA.ANNOUNCEMENTS : UnitSiteBoardsDA.EVENTS;
     }
 
     @Override
-    public ActionForward viewAnnouncements(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewAnnouncements(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	setReturnMethodToView(request);
 	return super.viewAnnouncements(mapping, form, request, response);
@@ -94,10 +92,9 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 	    HttpServletResponse response) throws Exception {
 	super.viewArchive(mapping, form, request, response);
 	/*
-         * Major refactor needed :-(
-         */
-	return mapping
-		.findForward(getBoardName(request).equals(UnitSiteBoardsDA.ANNOUNCEMENTS) ? "listAnnouncements"
-			: "listEvents");
+	 * Major refactor needed :-(
+	 */
+	return mapping.findForward(getBoardName(request).equals(UnitSiteBoardsDA.ANNOUNCEMENTS) ? "listAnnouncements"
+		: "listEvents");
     }
 }

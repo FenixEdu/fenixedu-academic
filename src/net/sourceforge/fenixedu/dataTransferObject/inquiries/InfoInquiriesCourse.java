@@ -72,16 +72,16 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     }
 
     /**
-         * @return Returns the classCoordination.
-         */
+     * @return Returns the classCoordination.
+     */
     public Double getClassCoordination() {
 	return classCoordination;
     }
 
     /**
-         * @param classCoordination
-         *                The classCoordination to set.
-         */
+     * @param classCoordination
+     *            The classCoordination to set.
+     */
     public void setClassCoordination(Double classCoordination) {
 	if (InquiriesUtil.isValidAnswer(classCoordination))
 	    this.classCoordination = classCoordination;
@@ -90,16 +90,16 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     }
 
     /**
-         * @return Returns the contributionForGraduation.
-         */
+     * @return Returns the contributionForGraduation.
+     */
     public Double getContributionForGraduation() {
 	return contributionForGraduation;
     }
 
     /**
-         * @param contributionForGraduation
-         *                The contributionForGraduation to set.
-         */
+     * @param contributionForGraduation
+     *            The contributionForGraduation to set.
+     */
     public void setContributionForGraduation(Double contributionForGraduation) {
 	if (InquiriesUtil.isValidAnswerWithExtraOption(contributionForGraduation))
 	    this.contributionForGraduation = contributionForGraduation;
@@ -108,16 +108,16 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     }
 
     /**
-         * @return Returns the evaluationMethodAdequation.
-         */
+     * @return Returns the evaluationMethodAdequation.
+     */
     public Double getEvaluationMethodAdequation() {
 	return evaluationMethodAdequation;
     }
 
     /**
-         * @param evaluationMethodAdequation
-         *                The evaluationMethodAdequation to set.
-         */
+     * @param evaluationMethodAdequation
+     *            The evaluationMethodAdequation to set.
+     */
     public void setEvaluationMethodAdequation(Double evaluationMethodAdequation) {
 	if (InquiriesUtil.isValidAnswer(evaluationMethodAdequation))
 	    this.evaluationMethodAdequation = evaluationMethodAdequation;
@@ -126,76 +126,76 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     }
 
     /**
-         * @return Returns the executionCourse.
-         */
+     * @return Returns the executionCourse.
+     */
     public InfoExecutionCourse getExecutionCourse() {
 	return executionCourse;
     }
 
     /**
-         * @param executionCourse
-         *                The executionCourse to set.
-         */
+     * @param executionCourse
+     *            The executionCourse to set.
+     */
     public void setExecutionCourse(InfoExecutionCourse executionCourse) {
 	this.executionCourse = executionCourse;
     }
 
     /**
-         * @return Returns the executionDegreeCourse.
-         */
+     * @return Returns the executionDegreeCourse.
+     */
     public InfoExecutionDegree getExecutionDegreeCourse() {
 	return executionDegreeCourse;
     }
 
     /**
-         * @param executionDegreeCourse
-         *                The executionDegreeCourse to set.
-         */
+     * @param executionDegreeCourse
+     *            The executionDegreeCourse to set.
+     */
     public void setExecutionDegreeCourse(InfoExecutionDegree executionDegreeCourse) {
 	this.executionDegreeCourse = executionDegreeCourse;
     }
 
     /**
-         * @return Returns the executionDegreeStudent.
-         */
+     * @return Returns the executionDegreeStudent.
+     */
     public InfoExecutionDegree getExecutionDegreeStudent() {
 	return executionDegreeStudent;
     }
 
     /**
-         * @param executionDegreeStudent
-         *                The executionDegreeStudent to set.
-         */
+     * @param executionDegreeStudent
+     *            The executionDegreeStudent to set.
+     */
     public void setExecutionDegreeStudent(InfoExecutionDegree executionDegreeStudent) {
 	this.executionDegreeStudent = executionDegreeStudent;
     }
 
     /**
-         * @return Returns the executionPeriod.
-         */
+     * @return Returns the executionPeriod.
+     */
     public InfoExecutionPeriod getExecutionPeriod() {
 	return executionPeriod;
     }
 
     /**
-         * @param executionPeriod
-         *                The executionPeriod to set.
-         */
+     * @param executionPeriod
+     *            The executionPeriod to set.
+     */
     public void setExecutionPeriod(InfoExecutionPeriod executionPeriod) {
 	this.executionPeriod = executionPeriod;
     }
 
     /**
-         * @return Returns the globalAppreciation.
-         */
+     * @return Returns the globalAppreciation.
+     */
     public Double getGlobalAppreciation() {
 	return globalAppreciation;
     }
 
     /**
-         * @param globalAppreciation
-         *                The globalAppreciation to set.
-         */
+     * @param globalAppreciation
+     *            The globalAppreciation to set.
+     */
     public void setGlobalAppreciation(Double globalAppreciation) {
 	if (InquiriesUtil.isValidAnswer(globalAppreciation))
 	    this.globalAppreciation = globalAppreciation;
@@ -204,91 +204,91 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     }
 
     /**
-         * @return Returns the keyExecutionCourse.
-         */
+     * @return Returns the keyExecutionCourse.
+     */
     public Integer getKeyExecutionCourse() {
 	return keyExecutionCourse;
     }
 
     /**
-         * @param keyExecutionCourse
-         *                The keyExecutionCourse to set.
-         */
+     * @param keyExecutionCourse
+     *            The keyExecutionCourse to set.
+     */
     public void setKeyExecutionCourse(Integer keyExecutionCourse) {
 	this.keyExecutionCourse = keyExecutionCourse;
     }
 
     /**
-         * @return Returns the keyExecutionDegreeCourse.
-         */
+     * @return Returns the keyExecutionDegreeCourse.
+     */
     public Integer getKeyExecutionDegreeCourse() {
 	return keyExecutionDegreeCourse;
     }
 
     /**
-         * @param keyExecutionDegreeCourse
-         *                The keyExecutionDegreeCourse to set.
-         */
+     * @param keyExecutionDegreeCourse
+     *            The keyExecutionDegreeCourse to set.
+     */
     public void setKeyExecutionDegreeCourse(Integer keyExecutionDegreeCourse) {
 	this.keyExecutionDegreeCourse = keyExecutionDegreeCourse;
     }
 
     /**
-         * @return Returns the keyExecutionDegreeStudent.
-         */
+     * @return Returns the keyExecutionDegreeStudent.
+     */
     public Integer getKeyExecutionDegreeStudent() {
 	return keyExecutionDegreeStudent;
     }
 
     /**
-         * @param keyExecutionDegreeStudent
-         *                The keyExecutionDegreeStudent to set.
-         */
+     * @param keyExecutionDegreeStudent
+     *            The keyExecutionDegreeStudent to set.
+     */
     public void setKeyExecutionDegreeStudent(Integer keyExecutionDegreeStudent) {
 	this.keyExecutionDegreeStudent = keyExecutionDegreeStudent;
     }
 
     /**
-         * @return Returns the keyExecutionPeriod.
-         */
+     * @return Returns the keyExecutionPeriod.
+     */
     public Integer getKeyExecutionPeriod() {
 	return keyExecutionPeriod;
     }
 
     /**
-         * @param keyExecutionPeriod
-         *                The keyExecutionPeriod to set.
-         */
+     * @param keyExecutionPeriod
+     *            The keyExecutionPeriod to set.
+     */
     public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
 	this.keyExecutionPeriod = keyExecutionPeriod;
     }
 
     /**
-         * @return Returns the keySchoolClass.
-         */
+     * @return Returns the keySchoolClass.
+     */
     public Integer getKeySchoolClass() {
 	return keySchoolClass;
     }
 
     /**
-         * @param keySchoolClass
-         *                The keySchoolClass to set.
-         */
+     * @param keySchoolClass
+     *            The keySchoolClass to set.
+     */
     public void setKeySchoolClass(Integer keySchoolClass) {
 	this.keySchoolClass = keySchoolClass;
     }
 
     /**
-         * @return Returns the previousKnowledgeArticulation.
-         */
+     * @return Returns the previousKnowledgeArticulation.
+     */
     public Double getPreviousKnowledgeArticulation() {
 	return previousKnowledgeArticulation;
     }
 
     /**
-         * @param previousKnowledgeArticulation
-         *                The previousKnowledgeArticulation to set.
-         */
+     * @param previousKnowledgeArticulation
+     *            The previousKnowledgeArticulation to set.
+     */
     public void setPreviousKnowledgeArticulation(Double previousKnowledgeArticulation) {
 	if (InquiriesUtil.isValidAnswer(previousKnowledgeArticulation))
 	    this.previousKnowledgeArticulation = previousKnowledgeArticulation;
@@ -297,61 +297,61 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     }
 
     /**
-         * @return Returns the studentCurricularYear.
-         */
+     * @return Returns the studentCurricularYear.
+     */
     public Integer getStudentCurricularYear() {
 	return studentCurricularYear;
     }
 
     /**
-         * @param studentCurricularYear
-         *                The studentCurricularYear to set.
-         */
+     * @param studentCurricularYear
+     *            The studentCurricularYear to set.
+     */
     public void setStudentCurricularYear(Integer studentCurricularYear) {
 	this.studentCurricularYear = studentCurricularYear;
     }
 
     /**
-         * @return Returns the studentFirstEnrollment.
-         */
+     * @return Returns the studentFirstEnrollment.
+     */
     public Integer getStudentFirstEnrollment() {
 	return studentFirstEnrollment;
     }
 
     /**
-         * @param studentFirstEnrollment
-         *                The studentFirstEnrollment to set.
-         */
+     * @param studentFirstEnrollment
+     *            The studentFirstEnrollment to set.
+     */
     public void setStudentFirstEnrollment(Integer studentFirstEnrollment) {
 	this.studentFirstEnrollment = studentFirstEnrollment;
     }
 
     /**
-         * @return Returns the studentSchoolClass.
-         */
+     * @return Returns the studentSchoolClass.
+     */
     public InfoClass getStudentSchoolClass() {
 	return studentSchoolClass;
     }
 
     /**
-         * @param studentSchoolClass
-         *                The studentSchoolClass to set.
-         */
+     * @param studentSchoolClass
+     *            The studentSchoolClass to set.
+     */
     public void setStudentSchoolClass(InfoClass studentSchoolClass) {
 	this.studentSchoolClass = studentSchoolClass;
     }
 
     /**
-         * @return Returns the studyElementsContribution.
-         */
+     * @return Returns the studyElementsContribution.
+     */
     public Double getStudyElementsContribution() {
 	return studyElementsContribution;
     }
 
     /**
-         * @param studyElementsContribution
-         *                The studyElementsContribution to set.
-         */
+     * @param studyElementsContribution
+     *            The studyElementsContribution to set.
+     */
     public void setStudyElementsContribution(Double studyElementsContribution) {
 	if (InquiriesUtil.isValidAnswer(studyElementsContribution))
 	    this.studyElementsContribution = studyElementsContribution;
@@ -360,16 +360,16 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     }
 
     /**
-         * @return Returns the weeklySpentHours.
-         */
+     * @return Returns the weeklySpentHours.
+     */
     public Integer getWeeklySpentHours() {
 	return weeklySpentHours;
     }
 
     /**
-         * @param weeklySpentHours
-         *                The weeklySpentHours to set.
-         */
+     * @param weeklySpentHours
+     *            The weeklySpentHours to set.
+     */
     public void setWeeklySpentHours(Integer weeklySpentHours) {
 	if (InquiriesUtil.isValidAnswer(weeklySpentHours))
 	    this.weeklySpentHours = weeklySpentHours;
@@ -381,8 +381,8 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
 	return 0;
     }
 
-    public static InfoInquiriesCourse newInfoFromDomain(InquiriesCourse inquiriesCourse)
-	    throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static InfoInquiriesCourse newInfoFromDomain(InquiriesCourse inquiriesCourse) throws IllegalAccessException,
+	    InvocationTargetException, NoSuchMethodException {
 	InfoInquiriesCourse newInfo = null;
 	if (inquiriesCourse != null) {
 	    newInfo = new InfoInquiriesCourse();
@@ -391,8 +391,8 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
 	return newInfo;
     }
 
-    public void copyFromDomain(InquiriesCourse inquiriesCourse) throws IllegalAccessException,
-	    InvocationTargetException, NoSuchMethodException {
+    public void copyFromDomain(InquiriesCourse inquiriesCourse) throws IllegalAccessException, InvocationTargetException,
+	    NoSuchMethodException {
 	if (inquiriesCourse != null) {
 	    super.copyFromDomain(inquiriesCourse);
 	    this.setOnlineInfo(inquiriesCourse.getOnlineInfo());
@@ -405,16 +405,11 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
 	    this.setStudentFirstEnrollment(inquiriesCourse.getStudentFirstEnrollment());
 	    this.setStudyElementsContribution(inquiriesCourse.getStudyElementsContribution());
 	    this.setWeeklySpentHours(inquiriesCourse.getWeeklySpentHours());
-	    this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(inquiriesCourse
-		    .getExecutionPeriod()));
-	    this.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(inquiriesCourse
-		    .getExecutionCourse()));
-	    this.setExecutionDegreeCourse(InfoExecutionDegree.newInfoFromDomain(inquiriesCourse
-		    .getExecutionDegreeCourse()));
-	    this.setExecutionDegreeStudent(InfoExecutionDegree.newInfoFromDomain(inquiriesCourse
-		    .getExecutionDegreeStudent()));
-	    this.setStudentSchoolClass(InfoClass.newInfoFromDomain(inquiriesCourse
-		    .getStudentSchoolClass()));
+	    this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(inquiriesCourse.getExecutionPeriod()));
+	    this.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(inquiriesCourse.getExecutionCourse()));
+	    this.setExecutionDegreeCourse(InfoExecutionDegree.newInfoFromDomain(inquiriesCourse.getExecutionDegreeCourse()));
+	    this.setExecutionDegreeStudent(InfoExecutionDegree.newInfoFromDomain(inquiriesCourse.getExecutionDegreeStudent()));
+	    this.setStudentSchoolClass(InfoClass.newInfoFromDomain(inquiriesCourse.getStudentSchoolClass()));
 	}
 
     }

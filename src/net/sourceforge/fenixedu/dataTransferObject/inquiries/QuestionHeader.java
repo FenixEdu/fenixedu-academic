@@ -7,14 +7,14 @@ import java.io.Serializable;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
-public class QuestionHeader implements Serializable{
+public class QuestionHeader implements Serializable {
 
     private String title;
 
     private String[] scaleHeaders;
-    
+
     public QuestionHeader(String title) {
 	this.title = title;
     }
@@ -23,7 +23,7 @@ public class QuestionHeader implements Serializable{
 	this(title);
 	this.scaleHeaders = scaleHeaders;
     }
-    
+
     public String getTitle() {
 	return title;
     }
@@ -39,5 +39,5 @@ public class QuestionHeader implements Serializable{
     public int getScaleHeadersCount() {
 	return scaleHeaders != null ? scaleHeaders.length : 1;
     }
-    
+
 }

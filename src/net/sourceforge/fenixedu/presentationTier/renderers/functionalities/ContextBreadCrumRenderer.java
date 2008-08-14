@@ -40,7 +40,7 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
 	    public HtmlComponent createComponent(Object object, Class type) {
 		FilterFunctionalityContext context = (FilterFunctionalityContext) object;
 		List<Content> contents = context.getSelectedContents();
-		
+
 		HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
 
 		Iterator<Content> contentIterator = contents.iterator();
@@ -59,15 +59,16 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
 
 		HtmlComponent component = new HtmlText(targetContent.getName().getContent());
 		List<Content> contents = context.getPathBetween(context.getSelectedTopLevelContainer(), targetContent);
-		
+
 		StringBuffer buffer = new StringBuffer(context.getRequest().getContextPath());
-		for(Content content : contents) {
+		for (Content content : contents) {
 		    buffer.append("/");
 		    buffer.append(content.getNormalizedName().getContent());
 		}
-		
+
 		if (targetContent.isAvailable()) {
-		    final String prefix = targetContent.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		    final String prefix = targetContent.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+			    : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
 		    HtmlLink link = new HtmlLinkWithPreprendedComment(prefix);
 
 		    HtmlInlineContainer container = new HtmlInlineContainer();

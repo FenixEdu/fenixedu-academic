@@ -24,14 +24,12 @@ public class ReadShiftsToEnroll extends Service {
 	return result;
     }
 
-    private void checkStudentRestrictionsForShiftsEnrolments(Registration registration)
-	    throws FenixServiceException {
+    private void checkStudentRestrictionsForShiftsEnrolments(Registration registration) throws FenixServiceException {
 	if (registration == null) {
 	    throw new FenixServiceException("errors.impossible.operation");
 	}
 
-	if (registration.getPayedTuition() == null
-		|| registration.getPayedTuition().equals(Boolean.FALSE)) {
+	if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
 	    if (!registration.getInterruptedStudies())
 		throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
 	}
@@ -54,8 +52,7 @@ public class ReadShiftsToEnroll extends Service {
 	return result;
     }
 
-    private void findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(Attends attend,
-	    ShiftToEnrol result) {
+    private void findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(Attends attend, ShiftToEnrol result) {
 	for (final Shift shift : attend.getRegistration().getShiftsSet()) {
 	    setShiftInformation(attend, result, shift);
 	}
@@ -68,7 +65,7 @@ public class ReadShiftsToEnroll extends Service {
     }
 
     private void setShiftTypeInformation(ShiftToEnrol result, final Shift shift) {
-	
+
 	if (shift.containsType(ShiftType.TEORICA)) {
 	    result.setTheoricType(ShiftType.TEORICA);
 
@@ -99,7 +96,7 @@ public class ReadShiftsToEnroll extends Service {
     }
 
     private void setShiftInformation(Attends attend, ShiftToEnrol result, final Shift shift) {
-	
+
 	if (shift.getExecutionCourse() == attend.getExecutionCourse() && shift.containsType(ShiftType.TEORICA)) {
 	    result.setTheoricShift(shift);
 
@@ -124,7 +121,8 @@ public class ReadShiftsToEnroll extends Service {
 	} else if (shift.getExecutionCourse() == attend.getExecutionCourse() && shift.containsType(ShiftType.TRAINING_PERIOD)) {
 	    result.setTrainingShift(shift);
 
-	} else if (shift.getExecutionCourse() == attend.getExecutionCourse() && shift.containsType(ShiftType.TUTORIAL_ORIENTATION)) {
+	} else if (shift.getExecutionCourse() == attend.getExecutionCourse()
+		&& shift.containsType(ShiftType.TUTORIAL_ORIENTATION)) {
 	    result.setTutorialOrientationShift(shift);
 	}
     }

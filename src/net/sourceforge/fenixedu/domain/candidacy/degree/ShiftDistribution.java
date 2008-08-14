@@ -22,8 +22,7 @@ public class ShiftDistribution extends ShiftDistribution_Base {
 
     private void checkParameters(ExecutionYear executionYear) {
 	if (executionYear == null) {
-	    throw new DomainException(
-		    "error.candidacy.degree.ShiftDistribution.executionYear.cannot.be.null");
+	    throw new DomainException("error.candidacy.degree.ShiftDistribution.executionYear.cannot.be.null");
 	}
     }
 
@@ -36,13 +35,14 @@ public class ShiftDistribution extends ShiftDistribution_Base {
     }
 
     public void delete() {
-	for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntriesSet().iterator().next().delete());
+	for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntriesSet().iterator().next().delete())
+	    ;
 	super.setExecutionYear(null);
-	
+
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-    
+
     public List<ShiftDistributionEntry> getEntriesByStudentNumber(Integer studentNumber) {
 	final List<ShiftDistributionEntry> result = new ArrayList<ShiftDistributionEntry>();
 	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {

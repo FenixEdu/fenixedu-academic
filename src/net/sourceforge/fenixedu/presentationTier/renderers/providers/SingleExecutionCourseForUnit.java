@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SingleExecutionCourseForUnit extends ExecutionCoursesForUnit implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+    @Override
+    public Converter getConverter() {
+	return new DomainObjectKeyConverter();
     }
 }

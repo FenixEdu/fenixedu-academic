@@ -8,7 +8,6 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class InitialContentForSection implements DataProvider {
 
-
     public Object provide(Object source, Object currentValue) {
 	Section section = (Section) source;
 	return section.getChildren(Element.class);

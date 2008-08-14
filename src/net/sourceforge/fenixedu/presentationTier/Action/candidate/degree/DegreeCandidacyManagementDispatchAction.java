@@ -119,8 +119,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
 	try {
 	    final IUserView userView = getUserView(request);
-	    ServiceUtils.executeService("ExecuteStateOperation", new Object[] { candidacyOperation,
-		    getLoggedPerson(request) });
+	    ServiceUtils.executeService("ExecuteStateOperation", new Object[] { candidacyOperation, getLoggedPerson(request) });
 
 	    if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
 		final List<InfoLesson> infoLessons = (List) ServiceUtils.executeService("ReadStudentTimeTable",

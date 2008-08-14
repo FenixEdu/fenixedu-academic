@@ -37,7 +37,7 @@ public class InfoGrantSubsidy extends InfoObject {
      * @return Returns the infoGrantContract.
      */
     public InfoGrantContract getInfoGrantContract() {
-        return infoGrantContract;
+	return infoGrantContract;
     }
 
     /**
@@ -45,14 +45,14 @@ public class InfoGrantSubsidy extends InfoObject {
      *            The infoGrantContract to set.
      */
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
-        this.infoGrantContract = infoGrantContract;
+	this.infoGrantContract = infoGrantContract;
     }
 
     /**
      * @return Returns the totalCost.
      */
     public Double getTotalCost() {
-        return totalCost;
+	return totalCost;
     }
 
     /**
@@ -60,14 +60,14 @@ public class InfoGrantSubsidy extends InfoObject {
      *            The totalCost to set.
      */
     public void setTotalCost(Double totalCost) {
-        this.totalCost = totalCost;
+	this.totalCost = totalCost;
     }
 
     /**
      * @return Returns the value.
      */
     public Double getValue() {
-        return value;
+	return value;
     }
 
     /**
@@ -75,14 +75,14 @@ public class InfoGrantSubsidy extends InfoObject {
      *            The value to set.
      */
     public void setValue(Double value) {
-        this.value = value;
+	this.value = value;
     }
 
     /**
      * @return Returns the valueFullName.
      */
     public String getValueFullName() {
-        return valueFullName;
+	return valueFullName;
     }
 
     /**
@@ -90,14 +90,14 @@ public class InfoGrantSubsidy extends InfoObject {
      *            The valueFullName to set.
      */
     public void setValueFullName(String valueFullName) {
-        this.valueFullName = valueFullName;
+	this.valueFullName = valueFullName;
     }
 
     /**
      * @return Returns the dateBeginSubsidy.
      */
     public Date getDateBeginSubsidy() {
-        return dateBeginSubsidy;
+	return dateBeginSubsidy;
     }
 
     /**
@@ -105,14 +105,14 @@ public class InfoGrantSubsidy extends InfoObject {
      *            The dateBeginSubsidy to set.
      */
     public void setDateBeginSubsidy(Date dateBeginSubsidy) {
-        this.dateBeginSubsidy = dateBeginSubsidy;
+	this.dateBeginSubsidy = dateBeginSubsidy;
     }
 
     /**
      * @return Returns the dateEndSubsidy.
      */
     public Date getDateEndSubsidy() {
-        return dateEndSubsidy;
+	return dateEndSubsidy;
     }
 
     /**
@@ -120,14 +120,14 @@ public class InfoGrantSubsidy extends InfoObject {
      *            The dateEndSubsidy to set.
      */
     public void setDateEndSubsidy(Date dateEndSubsidy) {
-        this.dateEndSubsidy = dateEndSubsidy;
+	this.dateEndSubsidy = dateEndSubsidy;
     }
 
     /**
      * @return Returns the state.
      */
     public Integer getState() {
-        return state;
+	return state;
     }
 
     /**
@@ -135,30 +135,30 @@ public class InfoGrantSubsidy extends InfoObject {
      *            The state to set.
      */
     public void setState(Integer state) {
-        this.state = state;
+	this.state = state;
     }
 
     public static Integer getActiveStateValue() {
-        return new Integer(activeState);
+	return new Integer(activeState);
     }
 
     public static Integer getInactiveStateValue() {
-        return new Integer(inactiveState);
+	return new Integer(inactiveState);
     }
 
     /**
      * @param GrantSubsidy
      */
     public void copyFromDomain(GrantSubsidy grantSubsidy) {
-        super.copyFromDomain(grantSubsidy);
-        if (grantSubsidy != null) {
-            setState(grantSubsidy.getState());
-            setDateBeginSubsidy(grantSubsidy.getDateBeginSubsidy());
-            setDateEndSubsidy(grantSubsidy.getDateEndSubsidy());
-            setValueFullName(grantSubsidy.getValueFullName());
-            setValue(grantSubsidy.getValue());
-            setTotalCost(grantSubsidy.getTotalCost());
-        }
+	super.copyFromDomain(grantSubsidy);
+	if (grantSubsidy != null) {
+	    setState(grantSubsidy.getState());
+	    setDateBeginSubsidy(grantSubsidy.getDateBeginSubsidy());
+	    setDateEndSubsidy(grantSubsidy.getDateEndSubsidy());
+	    setValueFullName(grantSubsidy.getValueFullName());
+	    setValue(grantSubsidy.getValue());
+	    setTotalCost(grantSubsidy.getTotalCost());
+	}
     }
 
     /**
@@ -166,24 +166,23 @@ public class InfoGrantSubsidy extends InfoObject {
      * @return
      */
     public static InfoGrantSubsidy newInfoFromDomain(GrantSubsidy grantSubsidy) {
-        InfoGrantSubsidy infoGrantSubsidy = null;
-        if (grantSubsidy != null) {
-            infoGrantSubsidy = new InfoGrantSubsidy();
-            infoGrantSubsidy.copyFromDomain(grantSubsidy);
-        }
-        return infoGrantSubsidy;
+	InfoGrantSubsidy infoGrantSubsidy = null;
+	if (grantSubsidy != null) {
+	    infoGrantSubsidy = new InfoGrantSubsidy();
+	    infoGrantSubsidy.copyFromDomain(grantSubsidy);
+	}
+	return infoGrantSubsidy;
     }
 
-    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, GrantSubsidy grantSubsidy)
-            {
-        super.copyToDomain(infoGrantSubsidy, grantSubsidy);
+    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, GrantSubsidy grantSubsidy) {
+	super.copyToDomain(infoGrantSubsidy, grantSubsidy);
 
-        grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
-        grantSubsidy.setDateEndSubsidy(infoGrantSubsidy.getDateEndSubsidy());
-        grantSubsidy.setState(infoGrantSubsidy.getState());
-        grantSubsidy.setTotalCost(infoGrantSubsidy.getTotalCost());
-        grantSubsidy.setValue(infoGrantSubsidy.getValue());
-        grantSubsidy.setValueFullName(infoGrantSubsidy.getValueFullName());
+	grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
+	grantSubsidy.setDateEndSubsidy(infoGrantSubsidy.getDateEndSubsidy());
+	grantSubsidy.setState(infoGrantSubsidy.getState());
+	grantSubsidy.setTotalCost(infoGrantSubsidy.getTotalCost());
+	grantSubsidy.setValue(infoGrantSubsidy.getValue());
+	grantSubsidy.setValueFullName(infoGrantSubsidy.getValueFullName());
     }
 
 }

@@ -200,7 +200,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	    if (process.isCandidacyCancelled() || !process.hasAnyPaymentForCandidacy()) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
 		throw new PreConditionNotValidException();
 	    }

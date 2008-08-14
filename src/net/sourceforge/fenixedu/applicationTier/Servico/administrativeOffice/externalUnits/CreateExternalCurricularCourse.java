@@ -7,11 +7,10 @@ import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 
 public class CreateExternalCurricularCourse extends Service {
 
-    public ExternalCurricularCourse run(final CreateExternalCurricularCourseBean bean)
-	    throws FenixServiceException {
+    public ExternalCurricularCourse run(final CreateExternalCurricularCourseBean bean) throws FenixServiceException {
 
-	final ExternalCurricularCourse externalCurricularCourse = new ExternalCurricularCourse(bean
-		.getParentUnit(), bean.getName(), bean.getCode());
+	final ExternalCurricularCourse externalCurricularCourse = new ExternalCurricularCourse(bean.getParentUnit(), bean
+		.getName(), bean.getCode());
 
 	return externalCurricularCourse;
     }

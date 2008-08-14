@@ -26,37 +26,38 @@ public abstract class FenixAction extends Action {
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
-    
+
     protected HttpSession getSession(HttpServletRequest request) throws ExcepcaoSessaoInexistente {
-        HttpSession result = request.getSession(false);
-        if (result == null) {
-            throw new ExcepcaoSessaoInexistente();
-        }
-        return result;
+	HttpSession result = request.getSession(false);
+	if (result == null) {
+	    throw new ExcepcaoSessaoInexistente();
+	}
+	return result;
     }
+
     protected IUserView getUserView(HttpServletRequest request) {
-    	return UserView.getUser();
+	return UserView.getUser();
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) {
 	final IUserView userView = getUserView(request);
-    	return userView == null ? null : userView.getPerson();
+	return userView == null ? null : userView.getPerson();
     }
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        ActionMessages actionMessages = new ActionMessages();
-        request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
-        final ActionForward actionForward = super.execute(mapping, actionForm, request, response);
-        actionMessages = (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
-        if (!actionMessages.isEmpty()) {
-            saveMessages(request, actionMessages);
-            addMessages(request, actionMessages);
-        }
+	ActionMessages actionMessages = new ActionMessages();
+	request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
+	final ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+	actionMessages = (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
+	if (!actionMessages.isEmpty()) {
+	    saveMessages(request, actionMessages);
+	    addMessages(request, actionMessages);
+	}
 
-        return actionForward;
+	return actionForward;
     }
 
     protected void saveMessages(final HttpServletRequest request) {
@@ -72,20 +73,20 @@ public abstract class FenixAction extends Action {
 	    actionMessages = new ActionMessages();
 	    request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
 	}
-        return actionMessages;
-    }
-    
-    protected boolean hasActionMessage(HttpServletRequest request) {
-	final ActionMessages actionMessages = (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
-        return actionMessages != null && !actionMessages.isEmpty();
-    }
-    
-    protected void addActionMessage(HttpServletRequest request, String key, String... args) {
-        this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
+	return actionMessages;
     }
 
-    protected Object executeService(final HttpServletRequest request, final String serviceName,
-	    final Object[] serviceArgs) throws FenixFilterException, FenixServiceException {
+    protected boolean hasActionMessage(HttpServletRequest request) {
+	final ActionMessages actionMessages = (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
+	return actionMessages != null && !actionMessages.isEmpty();
+    }
+
+    protected void addActionMessage(HttpServletRequest request, String key, String... args) {
+	this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
+    }
+
+    protected Object executeService(final HttpServletRequest request, final String serviceName, final Object[] serviceArgs)
+	    throws FenixFilterException, FenixServiceException {
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 

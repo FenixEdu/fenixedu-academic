@@ -10,7 +10,7 @@ import org.apache.struts.action.ActionForward;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class InvalidGuideSituationActionException extends FenixActionException {
 
@@ -20,8 +20,8 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param actionForward
      */
     public InvalidGuideSituationActionException(ActionForward actionForward) {
-        super(actionForward);
-        error = new ActionError(key);
+	super(actionForward);
+	error = new ActionError(key);
     }
 
     /**
@@ -29,22 +29,22 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param actionForward
      */
     public InvalidGuideSituationActionException(String key, ActionForward actionForward) {
-        super(actionForward);
-        error = new ActionError(key);
+	super(actionForward);
+	error = new ActionError(key);
     }
 
     /**
      *  
      */
     public InvalidGuideSituationActionException() {
-        super(key);
+	super(key);
     }
 
     /**
      * @param key
      */
     public InvalidGuideSituationActionException(String key) {
-        super(key);
+	super(key);
     }
 
     /**
@@ -52,7 +52,7 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param value
      */
     public InvalidGuideSituationActionException(String key, Object value) {
-        super(key, value);
+	super(key, value);
     }
 
     /**
@@ -61,7 +61,7 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param value1
      */
     public InvalidGuideSituationActionException(String key, Object value0, Object value1) {
-        super(key, value0, value1);
+	super(key, value0, value1);
     }
 
     /**
@@ -71,7 +71,7 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param value2
      */
     public InvalidGuideSituationActionException(String key, Object value0, Object value1, Object value2) {
-        super(key, value0, value1, value2);
+	super(key, value0, value1, value2);
     }
 
     /**
@@ -81,9 +81,8 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param value2
      * @param value3
      */
-    public InvalidGuideSituationActionException(String key, Object value0, Object value1, Object value2,
-            Object value3) {
-        super(key, value0, value1, value2, value3);
+    public InvalidGuideSituationActionException(String key, Object value0, Object value1, Object value2, Object value3) {
+	super(key, value0, value1, value2, value3);
     }
 
     /**
@@ -91,7 +90,7 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param values
      */
     public InvalidGuideSituationActionException(String key, Object[] values) {
-        super(key, values);
+	super(key, values);
     }
 
     /**
@@ -99,7 +98,7 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param cause
      */
     public InvalidGuideSituationActionException(String key, Throwable cause) {
-        super(key, cause);
+	super(key, cause);
     }
 
     /**
@@ -108,7 +107,7 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param cause
      */
     public InvalidGuideSituationActionException(String key, Object value, Throwable cause) {
-        super(key, value, cause);
+	super(key, value, cause);
     }
 
     /**
@@ -118,7 +117,7 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param cause
      */
     public InvalidGuideSituationActionException(String key, Object value0, Object value1, Throwable cause) {
-        super(key, value0, value1, cause);
+	super(key, value0, value1, cause);
     }
 
     /**
@@ -128,9 +127,8 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param value2
      * @param cause
      */
-    public InvalidGuideSituationActionException(String key, Object value0, Object value1, Object value2,
-            Throwable cause) {
-        super(key, value0, value1, value2, cause);
+    public InvalidGuideSituationActionException(String key, Object value0, Object value1, Object value2, Throwable cause) {
+	super(key, value0, value1, value2, cause);
     }
 
     /**
@@ -141,9 +139,9 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param value3
      * @param cause
      */
-    public InvalidGuideSituationActionException(String key, Object value0, Object value1, Object value2,
-            Object value3, Throwable cause) {
-        super(key, value0, value1, value2, value3, cause);
+    public InvalidGuideSituationActionException(String key, Object value0, Object value1, Object value2, Object value3,
+	    Throwable cause) {
+	super(key, value0, value1, value2, value3, cause);
     }
 
     /**
@@ -152,21 +150,21 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      * @param cause
      */
     public InvalidGuideSituationActionException(String key, Object[] values, Throwable cause) {
-        super(key, values, cause);
+	super(key, values, cause);
     }
 
     /**
      * @param cause
      */
     public InvalidGuideSituationActionException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
      * @return Returns the key.
      */
     public static String getKey() {
-        return key;
+	return key;
     }
 
     /**
@@ -174,16 +172,16 @@ public class InvalidGuideSituationActionException extends FenixActionException {
      *            The key to set.
      */
     public static void setKey(String key) {
-        InvalidGuideSituationActionException.key = key;
+	InvalidGuideSituationActionException.key = key;
     }
 
     public String toString() {
-        String result = "[" + getClass().getName() + "n";
-        result += "property" + this.getProperty() + "\n";
-        result += "error" + this.getError() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[" + getClass().getName() + "n";
+	result += "property" + this.getProperty() + "\n";
+	result += "error" + this.getError() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

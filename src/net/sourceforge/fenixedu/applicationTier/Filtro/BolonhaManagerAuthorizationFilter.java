@@ -7,10 +7,10 @@ public class BolonhaManagerAuthorizationFilter extends AuthorizationByRoleFilter
     public final static BolonhaManagerAuthorizationFilter instance = new BolonhaManagerAuthorizationFilter();
 
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     protected RoleType getRoleType() {
-        return RoleType.BOLONHA_MANAGER;
+	return RoleType.BOLONHA_MANAGER;
     }
 }

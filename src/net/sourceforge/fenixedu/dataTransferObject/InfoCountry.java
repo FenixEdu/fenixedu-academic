@@ -17,11 +17,11 @@ public class InfoCountry extends InfoObject {
     private final DomainReference<Country> countryDomainReference;
 
     public InfoCountry(final Country country) {
-	   countryDomainReference = new DomainReference<Country>(country);
+	countryDomainReference = new DomainReference<Country>(country);
     }
 
     public Country getCountry() {
-        return countryDomainReference == null ? null : countryDomainReference.getObject();
+	return countryDomainReference == null ? null : countryDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
@@ -29,15 +29,15 @@ public class InfoCountry extends InfoObject {
     }
 
     public String getCode() {
-        return getCountry().getCode();
+	return getCountry().getCode();
     }
 
     public String getName() {
-        return getCountry().getName();
+	return getCountry().getName();
     }
 
     public String getNationality() {
-        return getCountry().getNationality();
+	return getCountry().getNationality();
     }
 
     public static InfoCountry newInfoFromDomain(final Country country) {

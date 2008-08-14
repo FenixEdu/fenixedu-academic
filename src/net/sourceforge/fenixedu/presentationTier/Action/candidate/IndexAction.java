@@ -14,8 +14,8 @@ import org.apache.struts.action.ActionMapping;
 public class IndexAction extends FenixAction {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	if (getUserView(request).getPerson().getCandidaciesCount() == 1) {
 	    final Candidacy candidacy = getUserView(request).getPerson().getCandidaciesIterator().next();

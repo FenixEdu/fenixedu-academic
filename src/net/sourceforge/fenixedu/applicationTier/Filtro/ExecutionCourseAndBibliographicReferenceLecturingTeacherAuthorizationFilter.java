@@ -21,52 +21,52 @@ import pt.utl.ist.berserk.ServiceResponse;
  * @author João Mota
  * 
  */
-public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter extends
-        AuthorizationByRoleFilter {
+public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter() {
 
     }
 
     protected RoleType getRoleType() {
-        return RoleType.TEACHER;
+	return RoleType.TEACHER;
     }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
-        if ((id == null) || (id.getRoleTypes() == null)
-                || !id.hasRoleType(getRoleType())
-                || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, arguments)) {
-            throw new NotAuthorizedFilterException();
-        }
+	IUserView id = getRemoteUser(request);
+	Object[] arguments = getServiceCallArguments(request);
+	if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+		|| !bibliographicReferenceBelongsToTeacherExecutionCourse(id, arguments)) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 
     private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, Object[] args) {
-        if (args == null)
-            return false;
+	if (args == null)
+	    return false;
 
-        boolean result = false;
-        final Integer bibliographicReferenceID = getBibliographicReference(args);
-        final BibliographicReference bibliographicReference = rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceID);
-        final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+	boolean result = false;
+	final Integer bibliographicReferenceID = getBibliographicReference(args);
+	final BibliographicReference bibliographicReference = rootDomainObject
+		.readBibliographicReferenceByOID(bibliographicReferenceID);
+	final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-        if (bibliographicReference != null && teacher != null) {
-            final ExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();
-            final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
-            // Check if Teacher has a professorship to ExecutionCourse BibliographicReference
-            while (associatedProfessorships.hasNext()) {
-                Professorship professorship = (Professorship) associatedProfessorships.next();
-                if (professorship.getExecutionCourse().equals(executionCourse)) {
-                    result = true;
-                    break;
-                }
-            }
-        }
-        return result;
+	if (bibliographicReference != null && teacher != null) {
+	    final ExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();
+	    final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
+	    // Check if Teacher has a professorship to ExecutionCourse
+	    // BibliographicReference
+	    while (associatedProfessorships.hasNext()) {
+		Professorship professorship = (Professorship) associatedProfessorships.next();
+		if (professorship.getExecutionCourse().equals(executionCourse)) {
+		    result = true;
+		    break;
+		}
+	    }
+	}
+	return result;
     }
 
     private Integer getBibliographicReference(Object[] args) {
-        return (Integer) args[0];
+	return (Integer) args[0];
     }
 }

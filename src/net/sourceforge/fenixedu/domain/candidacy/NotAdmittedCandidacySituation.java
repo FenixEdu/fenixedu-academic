@@ -13,7 +13,7 @@ public class NotAdmittedCandidacySituation extends NotAdmittedCandidacySituation
     public CandidacySituationType getCandidacySituationType() {
 	return CandidacySituationType.NOT_ADMITTED;
     }
-    
+
     @Override
     public boolean canExecuteOperationAutomatically() {
 	return false;

@@ -29,7 +29,7 @@ public class InfoExecutionCourseEditor extends InfoObject {
     private Double _trainingPeriodHours;
 
     private Double _tutorialOrientationHours;
-    
+
     private Boolean availableGradeSubmission;
 
     protected String comment;
@@ -37,7 +37,7 @@ public class InfoExecutionCourseEditor extends InfoObject {
     protected InfoExecutionPeriod infoExecutionPeriod;
 
     protected List associatedInfoCurricularCourses;
-    
+
     private EntryPhase entryPhase;
 
     public InfoExecutionCourseEditor() {
@@ -47,10 +47,10 @@ public class InfoExecutionCourseEditor extends InfoObject {
 	boolean resultado = false;
 	if (obj instanceof InfoExecutionCourseEditor) {
 	    InfoExecutionCourseEditor infoExecutionCourse = (InfoExecutionCourseEditor) obj;
-	    resultado = (getIdInternal() != null && infoExecutionCourse.getIdInternal() != null && getIdInternal()
-		    .equals(infoExecutionCourse.getIdInternal()))
-		    || (getSigla().equals(infoExecutionCourse.getSigla()) && getInfoExecutionPeriod()
-			    .equals(infoExecutionCourse.getInfoExecutionPeriod()));
+	    resultado = (getIdInternal() != null && infoExecutionCourse.getIdInternal() != null && getIdInternal().equals(
+		    infoExecutionCourse.getIdInternal()))
+		    || (getSigla().equals(infoExecutionCourse.getSigla()) && getInfoExecutionPeriod().equals(
+			    infoExecutionCourse.getInfoExecutionPeriod()));
 	}
 	return resultado;
     }
@@ -180,19 +180,19 @@ public class InfoExecutionCourseEditor extends InfoObject {
     }
 
     public Boolean getAvailableGradeSubmission() {
-        return availableGradeSubmission;
+	return availableGradeSubmission;
     }
 
     public void setAvailableGradeSubmission(Boolean availableGradeSubmission) {
-        this.availableGradeSubmission = availableGradeSubmission;
+	this.availableGradeSubmission = availableGradeSubmission;
     }
 
     public EntryPhase getEntryPhase() {
-        return entryPhase;
+	return entryPhase;
     }
 
     public void setEntryPhase(EntryPhase entryPhase) {
-        this.entryPhase = entryPhase;
+	this.entryPhase = entryPhase;
     }
 
 }

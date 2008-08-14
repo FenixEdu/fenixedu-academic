@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class SmsNotSentServiceException extends FenixServiceException {
 
@@ -17,28 +17,28 @@ public class SmsNotSentServiceException extends FenixServiceException {
      *  
      */
     public SmsNotSentServiceException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public SmsNotSentServiceException(int errorType) {
-        super(errorType);
+	super(errorType);
     }
 
     /**
      * @param s
      */
     public SmsNotSentServiceException(String s) {
-        super(s);
+	super(s);
     }
 
     /**
      * @param cause
      */
     public SmsNotSentServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -46,14 +46,14 @@ public class SmsNotSentServiceException extends FenixServiceException {
      * @param cause
      */
     public SmsNotSentServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[SmsNotSentServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[SmsNotSentServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

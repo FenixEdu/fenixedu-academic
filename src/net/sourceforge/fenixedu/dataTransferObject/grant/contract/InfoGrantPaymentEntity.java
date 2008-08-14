@@ -24,7 +24,7 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
      * @return Returns the designation.
      */
     public String getDesignation() {
-        return designation;
+	return designation;
     }
 
     /**
@@ -32,14 +32,14 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
      *            The designation to set.
      */
     public void setDesignation(String designation) {
-        this.designation = designation;
+	this.designation = designation;
     }
 
     /**
      * @return Returns the number.
      */
     public String getNumber() {
-        return number;
+	return number;
     }
 
     /**
@@ -47,14 +47,14 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
      *            The number to set.
      */
     public void setNumber(String number) {
-        this.number = number;
+	this.number = number;
     }
 
     /**
      * @return Returns the infoResponsibleTeacher.
      */
     public InfoTeacher getInfoResponsibleTeacher() {
-        return infoResponsibleTeacher;
+	return infoResponsibleTeacher;
     }
 
     /**
@@ -62,20 +62,18 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
      *            The infoResponsibleTeacher to set.
      */
     public void setInfoResponsibleTeacher(InfoTeacher infoResponsibleTeacher) {
-        this.infoResponsibleTeacher = infoResponsibleTeacher;
+	this.infoResponsibleTeacher = infoResponsibleTeacher;
     }
 
     public static InfoGrantPaymentEntity newInfoFromDomain(GrantPaymentEntity grantPaymentEntity) {
-        if (grantPaymentEntity != null) {
-            if (grantPaymentEntity instanceof GrantProject) {
-                return InfoGrantProjectWithTeacherAndCostCenter
-                        .newInfoFromDomain((GrantProject) grantPaymentEntity);
-            } else if (grantPaymentEntity instanceof GrantCostCenter) {
-                return InfoGrantCostCenterWithTeacher
-                        .newInfoFromDomain((GrantCostCenter) grantPaymentEntity);
-            }
-        }
-        return null;
+	if (grantPaymentEntity != null) {
+	    if (grantPaymentEntity instanceof GrantProject) {
+		return InfoGrantProjectWithTeacherAndCostCenter.newInfoFromDomain((GrantProject) grantPaymentEntity);
+	    } else if (grantPaymentEntity instanceof GrantCostCenter) {
+		return InfoGrantCostCenterWithTeacher.newInfoFromDomain((GrantCostCenter) grantPaymentEntity);
+	    }
+	}
+	return null;
     }
 
 }

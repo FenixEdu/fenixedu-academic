@@ -10,14 +10,13 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 public class ValuesAsListRenderer extends ValuesRenderer {
 
     private String itemClasses;
-    
-    
+
     public String getItemClasses() {
-        return itemClasses;
+	return itemClasses;
     }
 
     public void setItemClasses(String itemClasses) {
-        this.itemClasses = itemClasses;
+	this.itemClasses = itemClasses;
     }
 
     @Override
@@ -29,31 +28,31 @@ public class ValuesAsListRenderer extends ValuesRenderer {
 
 	String[] classes;
 	HtmlList list;
-	
+
 	public ValuesAsListLayout(MetaObject object) {
 	    super(object);
 	    classes = getItemClasses() != null ? getItemClasses().split(",") : null;
 	}
 
 	public String getClasses(int index) {
-	   return (classes != null && index < classes.length) ? classes[index].trim() : null;
+	    return (classes != null && index < classes.length) ? classes[index].trim() : null;
 	}
-	
+
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
 	    list = new HtmlList();
-	   
+
 	    while (hasMoreComponents()) {
 		HtmlListItem item = list.createItem();
 		item.addChild(getNextComponent());
 	    }
 	    return list;
 	}
-	
+
 	@Override
 	public void applyStyle(HtmlComponent component) {
 	    int index = 0;
-	    for(HtmlComponent item : list.getChildren()) {
+	    for (HtmlComponent item : list.getChildren()) {
 		item.setClasses(getClasses(index++));
 	    }
 	}

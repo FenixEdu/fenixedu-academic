@@ -14,18 +14,15 @@ public class CreateGratuityExemption extends Service {
 	super();
     }
 
-    public void run(final Employee employee,
-	    final CreateGratuityExemptionBean createGratuityExemptionBean) {
+    public void run(final Employee employee, final CreateGratuityExemptionBean createGratuityExemptionBean) {
 	if (createGratuityExemptionBean.isPercentageExemption()) {
-	    new PercentageGratuityExemption(employee, createGratuityExemptionBean.getGratuityEvent(),
-		    createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean
-			    .getReason(), createGratuityExemptionBean.getDispatchDate(),
-		    createGratuityExemptionBean.getSelectedPercentage().divide(BigDecimal.valueOf(100)));
+	    new PercentageGratuityExemption(employee, createGratuityExemptionBean.getGratuityEvent(), createGratuityExemptionBean
+		    .getExemptionJustificationType(), createGratuityExemptionBean.getReason(), createGratuityExemptionBean
+		    .getDispatchDate(), createGratuityExemptionBean.getSelectedPercentage().divide(BigDecimal.valueOf(100)));
 	} else {
-	    new ValueGratuityExemption(employee, createGratuityExemptionBean.getGratuityEvent(),
-		    createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean
-			    .getReason(), createGratuityExemptionBean.getDispatchDate(),
-		    createGratuityExemptionBean.getAmount());
+	    new ValueGratuityExemption(employee, createGratuityExemptionBean.getGratuityEvent(), createGratuityExemptionBean
+		    .getExemptionJustificationType(), createGratuityExemptionBean.getReason(), createGratuityExemptionBean
+		    .getDispatchDate(), createGratuityExemptionBean.getAmount());
 	}
     }
 

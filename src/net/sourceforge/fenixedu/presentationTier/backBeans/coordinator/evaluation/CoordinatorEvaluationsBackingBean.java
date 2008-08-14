@@ -487,7 +487,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	    final Object[] args = { getExecutionCourseID(), getName(), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBegin()),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEnd()), getDescription(), getOnlineSubmissionsAllowed(),
 		    getMaxSubmissionsToKeep(), getGroupingID() };
-	    ServiceUtils.executeService( "CreateProject", args);
+	    ServiceUtils.executeService("CreateProject", args);
 	} catch (final ParseException e) {
 	    setErrorMessage("error.invalidDate");
 	    return "viewCreationPage";
@@ -511,7 +511,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 		    DateFormatUtil.parse("HH:mm", getBeginTime()), DateFormatUtil.parse("HH:mm", getEndTime()),
 		    executionCourseIDs, degreeModuleScopeIDs, null, null, getDescription() };
 
-	    ServiceUtils.executeService( "CreateWrittenEvaluation", args);
+	    ServiceUtils.executeService("CreateWrittenEvaluation", args);
 
 	} catch (ParseException ex) {
 	    setErrorMessage("error.invalid.date");
@@ -534,7 +534,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 		    DateFormatUtil.parse("HH:mm", getBeginTime()), DateFormatUtil.parse("HH:mm", getEndTime()),
 		    executionCourseIDs, degreeModuleScopeIDs, null, getEvaluationID(), null, getDescription() };
 
-	    ServiceUtils.executeService( "EditWrittenEvaluation", args);
+	    ServiceUtils.executeService("EditWrittenEvaluation", args);
 
 	} catch (ParseException ex) {
 	    setErrorMessage("error.invalid.date");
@@ -552,7 +552,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	    final Object[] args = { getExecutionCourseID(), getEvaluationID(), getName(),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBegin()), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEnd()),
 		    getDescription(), getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID() };
-	    ServiceUtils.executeService( "EditProject", args);
+	    ServiceUtils.executeService("EditProject", args);
 	} catch (ParseException ex) {
 	    setErrorMessage("error.invalid.date");
 	    return "viewCreationPage";
@@ -628,7 +628,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	final Object[] args = { getExecutionCourseID(), getEvaluationID() };
 	if (evaluationType.equals(WrittenEvaluation.class.getName())) {
 	    try {
-		ServiceUtils.executeService( "DeleteWrittenEvaluation", args);
+		ServiceUtils.executeService("DeleteWrittenEvaluation", args);
 	    } catch (NotAuthorizedFilterException ex) {
 		setErrorMessage(ex.getMessage());
 		return "viewDeletePage";
@@ -638,7 +638,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	    }
 	} else {
 	    try {
-		ServiceUtils.executeService( "DeleteEvaluation", args);
+		ServiceUtils.executeService("DeleteEvaluation", args);
 	    } catch (DomainException ex) {
 		setErrorMessage(ex.getKey());
 		return "viewDeletePage";

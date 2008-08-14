@@ -9,10 +9,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     private static SuportePersistenteOJB _instance = null;
 
     public static synchronized SuportePersistenteOJB getInstance() {
-        if (_instance == null) {
-            _instance = new SuportePersistenteOJB();
-        }
-        return _instance;
+	if (_instance == null) {
+	    _instance = new SuportePersistenteOJB();
+	}
+	return _instance;
     }
 
     /** Creates a new instance of SuportePersistenteOJB */
@@ -20,34 +20,34 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     }
 
     public void iniciarTransaccao() {
-        // commit any current transaction
-        if (Transaction.current() != null) {
-            Transaction.commit();
-        }
-        Transaction.begin();
+	// commit any current transaction
+	if (Transaction.current() != null) {
+	    Transaction.commit();
+	}
+	Transaction.begin();
     }
 
     public void confirmarTransaccao() {
-        Transaction.checkpoint();
-        Transaction.currentFenixTransaction().setReadOnly();
+	Transaction.checkpoint();
+	Transaction.currentFenixTransaction().setReadOnly();
     }
 
     public void cancelarTransaccao() {
-        Transaction.abort();
-        Transaction.begin();
-        Transaction.currentFenixTransaction().setReadOnly();
+	Transaction.abort();
+	Transaction.begin();
+	Transaction.currentFenixTransaction().setReadOnly();
     }
 
     public void beginTransaction() {
-        this.iniciarTransaccao();
+	this.iniciarTransaccao();
     }
 
     public void commitTransaction() {
-        this.confirmarTransaccao();
+	this.confirmarTransaccao();
     }
 
     public void abortTransaction() throws StorageException {
-        this.cancelarTransaccao();
+	this.cancelarTransaccao();
     }
 
     public void lockRead(java.util.List list) throws StorageException {

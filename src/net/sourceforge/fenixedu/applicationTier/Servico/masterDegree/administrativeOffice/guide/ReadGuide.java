@@ -17,16 +17,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGuide extends Service {
 
-	public InfoGuide run(Integer guideId) throws FenixServiceException{
-		Guide guide;
-		InfoGuide infoGuide = null;
-		guide = rootDomainObject.readGuideByOID(guideId);
-		if (guide == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-		infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
-
-		return infoGuide;
+    public InfoGuide run(Integer guideId) throws FenixServiceException {
+	Guide guide;
+	InfoGuide infoGuide = null;
+	guide = rootDomainObject.readGuideByOID(guideId);
+	if (guide == null) {
+	    throw new InvalidArgumentsServiceException();
 	}
+	infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
+
+	return infoGuide;
+    }
 
 }

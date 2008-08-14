@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPl
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class DegreeCurricularPlanServiceAgreementTemplate extends
-	DegreeCurricularPlanServiceAgreementTemplate_Base {
+public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricularPlanServiceAgreementTemplate_Base {
 
     private DegreeCurricularPlanServiceAgreementTemplate() {
 	super();
@@ -54,13 +53,12 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends
 		"error.accounting.agreement.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.cannot.modify.degreeCurricularPlan");
     }
 
-    public GratuityPaymentPlan getGratuityPaymentPlanFor(
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+    public GratuityPaymentPlan getGratuityPaymentPlanFor(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear) {
 	GratuityPaymentPlan result = null;
 	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
 	    if (paymentPlan instanceof GratuityPaymentPlan
-		    && ((GratuityPaymentPlan) paymentPlan).isAppliableFor(studentCurricularPlan,
-			    executionYear)) {
+		    && ((GratuityPaymentPlan) paymentPlan).isAppliableFor(studentCurricularPlan, executionYear)) {
 		if (result == null) {
 		    result = (GratuityPaymentPlan) paymentPlan;
 		} else {
@@ -92,16 +90,14 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends
 
     public boolean hasFullGratuityPaymentPlanFor(final ExecutionYear executionYear) {
 	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-	    if (paymentPlan instanceof FullGratuityPaymentPlan
-		    && paymentPlan.getExecutionYear() == executionYear) {
+	    if (paymentPlan instanceof FullGratuityPaymentPlan && paymentPlan.getExecutionYear() == executionYear) {
 		return true;
 	    }
 	}
 	return false;
     }
 
-    public boolean hasGratuityPaymentPlanForStudentsEnroledOnlyInSecondSemesterBy(
-	    final ExecutionYear executionYear) {
+    public boolean hasGratuityPaymentPlanForStudentsEnroledOnlyInSecondSemesterBy(final ExecutionYear executionYear) {
 	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
 	    if (paymentPlan instanceof GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester
 		    && paymentPlan.getExecutionYear() == executionYear) {

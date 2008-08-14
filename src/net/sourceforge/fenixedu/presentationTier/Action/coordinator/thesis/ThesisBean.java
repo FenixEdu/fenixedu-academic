@@ -19,12 +19,12 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class ThesisBean implements Serializable {
 
     /**
-     * Serial version id. 
+     * Serial version id.
      */
     private static final long serialVersionUID = 1L;
-    
+
     private DomainReference<Student> student;
-    
+
     private PersonTarget targetType;
     private DomainReference<ThesisEvaluationParticipant> target;
 
@@ -34,157 +34,155 @@ public class ThesisBean implements Serializable {
     private DomainReference<PersonName> personName;
     private DomainReference<UnitName> unitName;
     private String rawUnitName;
-    
+
     private MultiLanguageString title;
     private String comment;
-    
+
     private String mark;
     private DateTime discussion;
 
     public ThesisBean() {
-        super();
-        
-        this.degree     = new DomainReference<Degree>(null);
-        this.student    = new DomainReference<Student>(null);
-        this.personName = new DomainReference<PersonName>(null);
-        this.unitName   = new DomainReference<UnitName>(null);
-        this.target     = new DomainReference<ThesisEvaluationParticipant>(null);
-        
-        this.internal = true;
+	super();
+
+	this.degree = new DomainReference<Degree>(null);
+	this.student = new DomainReference<Student>(null);
+	this.personName = new DomainReference<PersonName>(null);
+	this.unitName = new DomainReference<UnitName>(null);
+	this.target = new DomainReference<ThesisEvaluationParticipant>(null);
+
+	this.internal = true;
     }
 
     public Degree getDegree() {
-        return this.degree.getObject();
+	return this.degree.getObject();
     }
 
     public void setDegree(Degree degree) {
-        this.degree = new DomainReference<Degree>(degree);
+	this.degree = new DomainReference<Degree>(degree);
     }
 
     public Student getStudent() {
-        return this.student.getObject();
+	return this.student.getObject();
     }
 
     public void setStudent(Student student) {
-        this.student = new DomainReference<Student>(student);
+	this.student = new DomainReference<Student>(student);
     }
 
     public PersonTarget getTargetType() {
-        return this.targetType;
+	return this.targetType;
     }
 
     public void setTargetType(PersonTarget target) {
-        this.targetType = target;
+	this.targetType = target;
     }
-    
+
     public ThesisEvaluationParticipant getTarget() {
-        return this.target.getObject();
+	return this.target.getObject();
     }
 
     public void setTarget(ThesisEvaluationParticipant target) {
-        this.target = new DomainReference<ThesisEvaluationParticipant>(target);
+	this.target = new DomainReference<ThesisEvaluationParticipant>(target);
     }
 
     public Person getPerson() {
-        PersonName personName = getPersonName();
-        
-        if (personName == null) {
-            return null;
-        }
-        else {
-            return personName.getPerson();
-        }
+	PersonName personName = getPersonName();
+
+	if (personName == null) {
+	    return null;
+	} else {
+	    return personName.getPerson();
+	}
     }
-    
+
     public PersonName getPersonName() {
-        return this.personName.getObject();
+	return this.personName.getObject();
     }
 
     public boolean isInternal() {
-        return this.internal;
+	return this.internal;
     }
 
     public void setInternal(boolean internal) {
-        this.internal = internal;
+	this.internal = internal;
     }
 
     public void setPersonName(PersonName personName) {
-        this.personName = new DomainReference<PersonName>(personName);
+	this.personName = new DomainReference<PersonName>(personName);
     }
 
     public Unit getUnit() {
-        UnitName unitName = getUnitName();
-        
-        if (unitName == null) {
-            return null;
-        }
-        else {
-            return unitName.getUnit();
-        }
+	UnitName unitName = getUnitName();
+
+	if (unitName == null) {
+	    return null;
+	} else {
+	    return unitName.getUnit();
+	}
     }
-    
+
     public UnitName getUnitName() {
-        return this.unitName.getObject();
+	return this.unitName.getObject();
     }
 
     public void setUnitName(UnitName unitName) {
-        this.unitName = new DomainReference<UnitName>(unitName);
+	this.unitName = new DomainReference<UnitName>(unitName);
     }
 
     public String getRawPersonName() {
-        return this.rawPersonName;
+	return this.rawPersonName;
     }
 
     public void setRawPersonName(String rawPersonName) {
-        this.rawPersonName = rawPersonName;
+	this.rawPersonName = rawPersonName;
     }
 
     public String getRawUnitName() {
-        return this.rawUnitName;
+	return this.rawUnitName;
     }
 
     public void setRawUnitName(String rawUnitName) {
-        this.rawUnitName = rawUnitName;
+	this.rawUnitName = rawUnitName;
     }
 
     public MultiLanguageString getTitle() {
-        return this.title;
+	return this.title;
     }
 
     public void setTitle(MultiLanguageString title) {
-        this.title = title;
+	this.title = title;
     }
 
     public MultiLanguageString getFinalTitle() {
-        return getTitle();
+	return getTitle();
     }
 
     public void setFinalTitle(MultiLanguageString title) {
-        setTitle(title);
+	setTitle(title);
     }
 
     public String getComment() {
-        return this.comment;
+	return this.comment;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+	this.comment = comment;
     }
 
     public DateTime getDiscussion() {
-        return this.discussion;
+	return this.discussion;
     }
 
     public void setDiscussion(DateTime discussion) {
-        this.discussion = discussion;
+	this.discussion = discussion;
     }
 
     public String getMark() {
-        return this.mark;
+	return this.mark;
     }
 
     public void setMark(String mark) {
-        this.mark = mark;
+	this.mark = mark;
     }
 
 }

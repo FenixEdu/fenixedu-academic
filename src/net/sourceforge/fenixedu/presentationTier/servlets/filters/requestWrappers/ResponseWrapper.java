@@ -17,8 +17,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
     protected BufferedFacadPrintWriter bufferedFacadPrintWriter = null;
 
-    public ResponseWrapper(final HttpServletResponse httpServletResponse)
-    		throws IOException {
+    public ResponseWrapper(final HttpServletResponse httpServletResponse) throws IOException {
 	super(httpServletResponse);
 	this.httpServletResponse = httpServletResponse;
     }

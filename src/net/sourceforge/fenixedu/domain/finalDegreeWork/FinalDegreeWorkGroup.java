@@ -9,45 +9,48 @@ import pt.utl.ist.fenix.tools.util.CollectionUtils;
 
 public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 
-	public static final Comparator<FinalDegreeWorkGroup> COMPARATOR_BY_STUDENT_NUMBERS = new Comparator<FinalDegreeWorkGroup>() {
-		public int compare(final FinalDegreeWorkGroup group1, final FinalDegreeWorkGroup group2) {
-			final GroupStudent groupStudent1 = Collections.min(group1.getGroupStudentsSet(), GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
-			final GroupStudent groupStudent2 = Collections.min(group2.getGroupStudentsSet(), GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
-			return groupStudent1.getRegistration().getNumber().compareTo(groupStudent2.getRegistration().getNumber());
-		}
-	};
-
-	public FinalDegreeWorkGroup() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
+    public static final Comparator<FinalDegreeWorkGroup> COMPARATOR_BY_STUDENT_NUMBERS = new Comparator<FinalDegreeWorkGroup>() {
+	public int compare(final FinalDegreeWorkGroup group1, final FinalDegreeWorkGroup group2) {
+	    final GroupStudent groupStudent1 = Collections.min(group1.getGroupStudentsSet(),
+		    GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
+	    final GroupStudent groupStudent2 = Collections.min(group2.getGroupStudentsSet(),
+		    GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
+	    return groupStudent1.getRegistration().getNumber().compareTo(groupStudent2.getRegistration().getNumber());
 	}
+    };
 
-	public SortedSet<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal> getGroupProposalsSortedByPreferenceOrder() {
-		return CollectionUtils.constructSortedSet(getGroupProposalsSet(), net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal.COMPARATOR_BY_PREFERENCE_ORDER);
-	}
+    public FinalDegreeWorkGroup() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public boolean isConfirmedByStudents(final Proposal proposal) {
-		for (GroupStudent groupStudent : getGroupStudentsSet()) {
-			if (groupStudent.getFinalDegreeWorkProposalConfirmation() != proposal) {
-				return false;
-			}
-		}
+    public SortedSet<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal> getGroupProposalsSortedByPreferenceOrder() {
+	return CollectionUtils.constructSortedSet(getGroupProposalsSet(),
+		net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal.COMPARATOR_BY_PREFERENCE_ORDER);
+    }
 
-		return true;
-	}
-
-	public void delete() {
-	    removeExecutionDegree();
-	    for (final GroupProposal groupProposal : getGroupProposalsSet()) {
-		groupProposal.delete();
+    public boolean isConfirmedByStudents(final Proposal proposal) {
+	for (GroupStudent groupStudent : getGroupStudentsSet()) {
+	    if (groupStudent.getFinalDegreeWorkProposalConfirmation() != proposal) {
+		return false;
 	    }
-	    for (final GroupStudent groupStudent : getGroupStudentsSet()) {
-		groupStudent.delete();
-	    }
-	    removeProposalAttributed();
-	    removeProposalAttributedByTeacher();
-	    removeRootDomainObject();
-	    deleteDomainObject();
 	}
+
+	return true;
+    }
+
+    public void delete() {
+	removeExecutionDegree();
+	for (final GroupProposal groupProposal : getGroupProposalsSet()) {
+	    groupProposal.delete();
+	}
+	for (final GroupStudent groupStudent : getGroupStudentsSet()) {
+	    groupStudent.delete();
+	}
+	removeProposalAttributed();
+	removeProposalAttributedByTeacher();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 
 }

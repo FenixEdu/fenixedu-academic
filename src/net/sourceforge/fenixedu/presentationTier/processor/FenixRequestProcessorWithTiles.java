@@ -16,9 +16,9 @@ import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor;
 public class FenixRequestProcessorWithTiles extends RenderersRequestProcessor {
 
     protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession httpSession = request.getSession(false);
-        FenixRequestProcessor.setLocal(request, httpSession);
-        return true;
+	HttpSession httpSession = request.getSession(false);
+	FenixRequestProcessor.setLocal(request, httpSession);
+	return true;
     }
 
 }

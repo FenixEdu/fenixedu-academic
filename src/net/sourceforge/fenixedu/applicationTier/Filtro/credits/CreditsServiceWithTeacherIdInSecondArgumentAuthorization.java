@@ -4,26 +4,26 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
-
 /**
  * @author jpvl
  */
-public class CreditsServiceWithTeacherIdInSecondArgumentAuthorization extends
-        AbstractTeacherDepartmentAuthorization {
+public class CreditsServiceWithTeacherIdInSecondArgumentAuthorization extends AbstractTeacherDepartmentAuthorization {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
+     * @see
+     * ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization
+     * #getTeacherId(java.lang.Object[])
      */
     protected Integer getTeacherId(Object[] arguments) {
-        Integer teacherId = (Integer) arguments[1];
-        return teacherId;
+	Integer teacherId = (Integer) arguments[1];
+	return teacherId;
     }
 
     /**
      *  
      */
     public CreditsServiceWithTeacherIdInSecondArgumentAuthorization() {
-        super();
+	super();
     }
 }

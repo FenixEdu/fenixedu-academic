@@ -18,7 +18,7 @@ public class InsertExternalPerson extends Service {
     public static class ServiceArguments {
 	private Unit unit;
 	private String personName;
-	
+
 	public ServiceArguments(String personName, Unit unit) {
 	    this.unit = unit;
 	    this.personName = personName;
@@ -31,77 +31,73 @@ public class InsertExternalPerson extends Service {
 	public Unit getUnit() {
 	    return unit;
 	}
-	
-	
+
     }
-    
-    public ExternalContract run(String name, String sex, String address, Integer institutionID,
-            String phone, String mobile, String homepage, String email) throws FenixServiceException {
 
-        final ExternalContract storedExternalContract = ExternalContract
-                .readByPersonNameAddressAndInstitutionID(name, address, institutionID);
-        if (storedExternalContract != null)
-            throw new ExistingServiceException(
-                    "error.exception.commons.ExternalContract.existingExternalContract");
+    public ExternalContract run(String name, String sex, String address, Integer institutionID, String phone, String mobile,
+	    String homepage, String email) throws FenixServiceException {
 
-        final Unit institutionLocation = (Unit) rootDomainObject.readPartyByOID(institutionID);
-        Person externalPerson = Person.createExternalPerson(name, Gender.valueOf(sex),
-                new PhysicalAddressData().setAddress(address), phone, mobile, homepage, email, String
-                        .valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	final ExternalContract storedExternalContract = ExternalContract.readByPersonNameAddressAndInstitutionID(name, address,
+		institutionID);
+	if (storedExternalContract != null)
+	    throw new ExistingServiceException("error.exception.commons.ExternalContract.existingExternalContract");
 
-        return new ExternalContract(externalPerson, institutionLocation, new YearMonthDay(), null);
+	final Unit institutionLocation = (Unit) rootDomainObject.readPartyByOID(institutionID);
+	Person externalPerson = Person.createExternalPerson(name, Gender.valueOf(sex), new PhysicalAddressData()
+		.setAddress(address), phone, mobile, homepage, email, String.valueOf(System.currentTimeMillis()),
+		IDDocumentType.EXTERNAL);
+
+	return new ExternalContract(externalPerson, institutionLocation, new YearMonthDay(), null);
     }
 
     public ExternalContract run(String personName, String organizationName) {
-        final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
-        Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null,
-                null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
+	Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null, null, null, String
+		.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
 
-        return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
+	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
     public ExternalContract run(String personName, String organizationName, Country country) {
-        final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName, country);
-        Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null,
-                null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName, country);
+	Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null, null, null, String
+		.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
 
-        return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
+	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(ServiceArguments arguments)
-            throws FenixServiceException {
-        
+    public ExternalContract run(ServiceArguments arguments) throws FenixServiceException {
+
 	ExternalContract storedExternalContract = null;
-        String personName = arguments.getPersonName();
+	String personName = arguments.getPersonName();
 	Unit organization = arguments.getUnit();
-	storedExternalContract = ExternalContract.readByPersonNameAddressAndInstitutionID(personName,
-                null, organization.getIdInternal());
-        if (storedExternalContract != null)
-            throw new ExistingServiceException(
-                    "error.exception.commons.ExternalContract.existingExternalContract");
+	storedExternalContract = ExternalContract.readByPersonNameAddressAndInstitutionID(personName, null, organization
+		.getIdInternal());
+	if (storedExternalContract != null)
+	    throw new ExistingServiceException("error.exception.commons.ExternalContract.existingExternalContract");
 
-        Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null,
-                null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
-        return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
+	Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null, null, null, String
+		.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(String name, String organizationName, String phone, String mobile,
-            String email) throws FenixServiceException {
+    public ExternalContract run(String name, String organizationName, String phone, String mobile, String email)
+	    throws FenixServiceException {
 
-        final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
-        Person externalPerson = Person.createExternalPerson(name, Gender.MALE, null, phone, mobile,
-                null, email, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
+	Person externalPerson = Person.createExternalPerson(name, Gender.MALE, null, phone, mobile, null, email, String
+		.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
 
-        return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
+	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(String name, Integer institutionID, String phone, String mobile,
-            String email) throws FenixServiceException {
+    public ExternalContract run(String name, Integer institutionID, String phone, String mobile, String email)
+	    throws FenixServiceException {
 
-        final Unit institutionLocation = (Unit) rootDomainObject.readPartyByOID(institutionID);
-        Person externalPerson = Person.createExternalPerson(name, Gender.MALE, null, phone, mobile,
-                null, email, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	final Unit institutionLocation = (Unit) rootDomainObject.readPartyByOID(institutionID);
+	Person externalPerson = Person.createExternalPerson(name, Gender.MALE, null, phone, mobile, null, email, String
+		.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
 
-        return new ExternalContract(externalPerson, institutionLocation, new YearMonthDay(), null);
+	return new ExternalContract(externalPerson, institutionLocation, new YearMonthDay(), null);
     }
 }

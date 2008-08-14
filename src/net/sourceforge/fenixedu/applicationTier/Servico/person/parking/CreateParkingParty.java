@@ -7,6 +7,6 @@ import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 public class CreateParkingParty extends Service {
 
     public ParkingParty run(final Party party) {
-        return new ParkingParty(party);
+	return new ParkingParty(party);
     }
 }

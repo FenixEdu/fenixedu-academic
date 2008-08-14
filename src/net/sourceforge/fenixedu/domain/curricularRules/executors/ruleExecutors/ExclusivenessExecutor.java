@@ -113,7 +113,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 	for (CycleCourseGroup cycleCourseGroup : cycleCourseGroups) {
 	    CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) enrolmentContext.getStudentCurricularPlan()
 		    .findCurriculumGroupFor(cycleCourseGroup);
-	    if(cycleCurriculumGroup != null) {
+	    if (cycleCurriculumGroup != null) {
 		return true;
 	    }
 	}

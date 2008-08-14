@@ -13,13 +13,13 @@ public class VehiclePlainRenderer extends OutputRenderer {
 	return new Layout() {
 
 	    @Override
-	    public HtmlComponent createComponent(Object object, Class type) {                
+	    public HtmlComponent createComponent(Object object, Class type) {
 		if (object == null) {
 		    return new HtmlText();
-		}               
-		Vehicle vehicle = (Vehicle) object;		
-		return new HtmlText(vehicle.getPresentationName());                               
-	    }            
+		}
+		Vehicle vehicle = (Vehicle) object;
+		return new HtmlText(vehicle.getPresentationName());
+	    }
 	};
     }
 

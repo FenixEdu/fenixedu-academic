@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditBranch extends Service {
 
-    public void run(InfoBranch infoBranch) throws FenixServiceException{
-		Branch branch = rootDomainObject.readBranchByOID(infoBranch.getIdInternal());
+    public void run(InfoBranch infoBranch) throws FenixServiceException {
+	Branch branch = rootDomainObject.readBranchByOID(infoBranch.getIdInternal());
 
-        if (branch == null) {
-            throw new NonExistingServiceException();
-        }
-		
-		branch.edit(infoBranch.getName(),infoBranch.getNameEn(),infoBranch.getCode());
+	if (branch == null) {
+	    throw new NonExistingServiceException();
+	}
+
+	branch.edit(infoBranch.getName(), infoBranch.getNameEn(), infoBranch.getCode());
     }
-    
+
 }

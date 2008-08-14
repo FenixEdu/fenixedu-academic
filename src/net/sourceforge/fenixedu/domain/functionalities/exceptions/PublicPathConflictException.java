@@ -25,7 +25,7 @@ public class PublicPathConflictException extends DomainException {
     private static final String MESSAGE = "functionalities.functionality.publicPath.conflict";
 
     public PublicPathConflictException(String path) {
-        super(MESSAGE, path);
+	super(MESSAGE, path);
     }
 
 }

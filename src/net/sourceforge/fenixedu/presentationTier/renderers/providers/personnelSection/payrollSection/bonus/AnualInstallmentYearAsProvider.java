@@ -14,8 +14,7 @@ public class AnualInstallmentYearAsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	List<Integer> years = new ArrayList<Integer>();
-	for (AnualBonusInstallment anualBonusInstallment : RootDomainObject.getInstance()
-		.getAnualBonusInstallments()) {
+	for (AnualBonusInstallment anualBonusInstallment : RootDomainObject.getInstance().getAnualBonusInstallments()) {
 	    if (!years.contains(anualBonusInstallment.getYear())) {
 		years.add(anualBonusInstallment.getYear());
 	    }

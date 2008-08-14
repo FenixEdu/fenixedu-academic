@@ -84,7 +84,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     public boolean isCreditsDismissal() {
 	return false;
     }
-    
+
     public boolean isCurriculumLine() {
 	return isLeaf();
     }

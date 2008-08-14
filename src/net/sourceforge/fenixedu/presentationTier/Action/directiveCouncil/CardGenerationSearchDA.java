@@ -20,7 +20,8 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class CardGenerationSearchDA extends FenixDispatchAction {
 
-    public ActionForward search(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+    public ActionForward search(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) throws Exception {
 
 	SearchParameters searchParameters = (SearchParameters) getRenderedObject();
 	if (searchParameters == null) {
@@ -47,12 +48,13 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
 	if (!searchParameters.emptyParameters()) {
 	    final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 	    final Object[] args = { searchParameters, predicate };
-	    final CollectionPager<Person> searchPersonCollectionPager = (CollectionPager<Person>) executeService(request, "SearchPerson", args);
+	    final CollectionPager<Person> searchPersonCollectionPager = (CollectionPager<Person>) executeService(request,
+		    "SearchPerson", args);
 	    request.setAttribute("searchPersonCollectionPager", searchPersonCollectionPager);
 	    request.setAttribute("numberOfPages", searchPersonCollectionPager.getNumberOfPages());
 	    final String pageNumberString = request.getParameter("pageNumber");
-	    final Integer pageNumber = pageNumberString != null && pageNumberString.length() > 0 ? 
-		    Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+	    final Integer pageNumber = pageNumberString != null && pageNumberString.length() > 0 ? Integer
+		    .valueOf(pageNumberString) : Integer.valueOf(1);
 	    request.setAttribute("pageNumber", pageNumber);
 	    final Collection<Person> people = searchPersonCollectionPager.getPage(pageNumber.intValue());
 	    request.setAttribute("people", people);
@@ -61,7 +63,8 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
 	return mapping.findForward("showSearchPage");
     }
 
-    public ActionForward viewPersonCards(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+    public ActionForward viewPersonCards(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final String personIdString = request.getParameter("personId");
 	final Integer personId = personIdString != null && personIdString.length() > 0 ? Integer.valueOf(personIdString) : null;
 	if (personId != null) {
@@ -71,9 +74,12 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
 	return mapping.findForward("viewPersonCards");
     }
 
-    public ActionForward viewPersonCard(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+    public ActionForward viewPersonCard(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final String cardGenerationEntryIdString = request.getParameter("cardGenerationEntryId");
-	final Integer cardGenerationEntryId = cardGenerationEntryIdString != null && cardGenerationEntryIdString.length() > 0 ? Integer.valueOf(cardGenerationEntryIdString) : null;
+	final Integer cardGenerationEntryId = cardGenerationEntryIdString != null && cardGenerationEntryIdString.length() > 0 ? Integer
+		.valueOf(cardGenerationEntryIdString)
+		: null;
 	if (cardGenerationEntryId != null) {
 	    final CardGenerationEntry cardGenerationEntry = rootDomainObject.readCardGenerationEntryByOID(cardGenerationEntryId);
 	    request.setAttribute("cardGenerationEntry", cardGenerationEntry);

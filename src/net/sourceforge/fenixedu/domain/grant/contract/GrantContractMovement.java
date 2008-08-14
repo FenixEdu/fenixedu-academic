@@ -4,15 +4,15 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class GrantContractMovement extends GrantContractMovement_Base {
 
-	public GrantContractMovement() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public GrantContractMovement() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
     public void delete() {
-        removeRootDomainObject();
-        removeGrantContract();
-        super.deleteDomainObject();
+	removeRootDomainObject();
+	removeGrantContract();
+	super.deleteDomainObject();
     }
 
 }

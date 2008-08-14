@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteModelRestriction extends Service {
-	public void run(NewModelRestriction modelRestriction) throws FenixServiceException{
-		modelRestriction.delete();
-	}
+    public void run(NewModelRestriction modelRestriction) throws FenixServiceException {
+	modelRestriction.delete();
+    }
 }

@@ -20,8 +20,8 @@ public class DomainConstants {
 
     // Marcacoes
     // TODO um bocado foleiro...
-    public final static EnumSet<AttributeType> WORKED_ATTRIBUTES_SET = EnumSet.range(
-            AttributeType.WORKED1, AttributeType.WORKED5);
+    public final static EnumSet<AttributeType> WORKED_ATTRIBUTES_SET = EnumSet
+	    .range(AttributeType.WORKED1, AttributeType.WORKED5);
 
     public final static Attributes WORKED_ATTRIBUTES = new Attributes(WORKED_ATTRIBUTES_SET);
 

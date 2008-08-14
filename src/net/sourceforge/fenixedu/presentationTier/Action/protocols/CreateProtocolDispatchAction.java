@@ -97,8 +97,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("prepareCreate-protocol-responsibles");
 	    }
 	    return prepareCreateProtocolUnits(mapping, actionForm, request, response);
-	    //	    request.setAttribute("protocolFactory", protocolFactory);
-	    //	    return mapping.findForward("prepareCreate-protocol-units");
+	    // request.setAttribute("protocolFactory", protocolFactory);
+	    // return mapping.findForward("prepareCreate-protocol-units");
 	}
 
 	if (request.getParameter("cancel") != null) {

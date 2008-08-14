@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
  * 
  */
 public class ReadGrantType extends ReadDomainObjectService {
-    
+
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-        return InfoGrantType.newInfoFromDomain((GrantType) domainObject);
+	return InfoGrantType.newInfoFromDomain((GrantType) domainObject);
     }
 
-	@Override
-	protected DomainObject readDomainObject(final Integer idInternal) {
-		return rootDomainObject.readGrantTypeByOID(idInternal);
-	}
+    @Override
+    protected DomainObject readDomainObject(final Integer idInternal) {
+	return rootDomainObject.readGrantTypeByOID(idInternal);
+    }
 
 }

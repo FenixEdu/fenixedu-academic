@@ -15,33 +15,31 @@ import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotati
 import org.joda.time.YearMonthDay;
 
 public class Room extends Room_Base {
-    
-    public Room(Space suroundingSpace, String blueprintNumber, String identification,
-	    String description, RoomClassification roomClassification, BigDecimal area,
-	    Boolean heightQuality, Boolean illuminationQuality,
-	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
-	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end, 
-	    String doorNumber, Integer normalCapacity, Integer examCapacity) {
 
-	super();		
-	
-	setSuroundingSpace(suroundingSpace);		
+    public Room(Space suroundingSpace, String blueprintNumber, String identification, String description,
+	    RoomClassification roomClassification, BigDecimal area, Boolean heightQuality, Boolean illuminationQuality,
+	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality, Boolean ageQuality, String observations,
+	    YearMonthDay begin, YearMonthDay end, String doorNumber, Integer normalCapacity, Integer examCapacity) {
+
+	super();
+
+	setSuroundingSpace(suroundingSpace);
 	setNormalCapacity(normalCapacity);
 	setExamCapacity(examCapacity);
-	
-	new RoomInformation(this, blueprintNumber, identification, description, roomClassification,
-		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
-		securityQuality, ageQuality, observations, begin, end, doorNumber);
+
+	new RoomInformation(this, blueprintNumber, identification, description, roomClassification, area, heightQuality,
+		illuminationQuality, distanceFromSanitaryInstalationsQuality, securityQuality, ageQuality, observations, begin,
+		end, doorNumber);
     }
-    
+
     @Override
-    public void setSuroundingSpace(Space suroundingSpace) {	
-	if(suroundingSpace == null || suroundingSpace.isRoomSubdivision()) {
-            throw new DomainException("error.Space.invalid.suroundingSpace");
-        }        
+    public void setSuroundingSpace(Space suroundingSpace) {
+	if (suroundingSpace == null || suroundingSpace.isRoomSubdivision()) {
+	    throw new DomainException("error.Space.invalid.suroundingSpace");
+	}
 	super.setSuroundingSpace(suroundingSpace);
     }
-    
+
     @Override
     public RoomInformation getSpaceInformation() {
 	return (RoomInformation) super.getSpaceInformation();
@@ -60,37 +58,35 @@ public class Room extends Room_Base {
 	}
 	super.delete();
     }
-    
+
     private boolean canBeDeleted() {
-	return !hasAnyAssociatedSummaries()
-		&& !hasAnyWrittenEvaluationEnrolments() 
-		&& !hasAnyAssociatedInquiriesRooms(); 		
-    } 
-    
+	return !hasAnyAssociatedSummaries() && !hasAnyWrittenEvaluationEnrolments() && !hasAnyAssociatedInquiriesRooms();
+    }
+
     @Override
     public boolean isRoom() {
 	return true;
     }
-         
+
     @Override
-    public List<ResourceAllocation> getResourceAllocationsForCheck() {	
+    public List<ResourceAllocation> getResourceAllocationsForCheck() {
 	List<RoomSubdivision> roomSubdivisions = getRoomSubdivisions();
-	if(roomSubdivisions.isEmpty()) {
-	    return getResourceAllocations(); 
+	if (roomSubdivisions.isEmpty()) {
+	    return getResourceAllocations();
 	} else {
 	    List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();
-	    result.addAll(getResourceAllocations());        
+	    result.addAll(getResourceAllocations());
 	    for (RoomSubdivision roomSubdivision : getRoomSubdivisions()) {
 		result.addAll(roomSubdivision.getResourceAllocations());
-	    }                    
+	    }
 	    return result;
 	}
-    }   
-    
-    private List<RoomSubdivision> getRoomSubdivisions() {	
-	List<RoomSubdivision> result = new ArrayList<RoomSubdivision>(); 
+    }
+
+    private List<RoomSubdivision> getRoomSubdivisions() {
+	List<RoomSubdivision> result = new ArrayList<RoomSubdivision>();
 	for (Space subSpace : getContainedSpaces()) {
-	    if(subSpace.isRoomSubdivision()) {
+	    if (subSpace.isRoomSubdivision()) {
 		result.add((RoomSubdivision) subSpace);
 	    }
 	}
@@ -99,40 +95,40 @@ public class Room extends Room_Base {
 
     @Deprecated
     public RoomClassification getTipo() {
-	return getSpaceInformation().getRoomClassification();	
+	return getSpaceInformation().getRoomClassification();
     }
-    
+
     @Override
     public RoomClassification getRoomClassification() {
 	return getSpaceInformation().getRoomClassification();
-    }  
-    
+    }
+
     @Deprecated
     public Integer getCapacidadeNormal() {
 	return getNormalCapacity();
     }
-    
+
     @Deprecated
     public Integer getCapacidadeExame() {
 	return getExamCapacity();
     }
-    
+
     @Override
     public Integer getNormalCapacity() {
 	return super.getNormalCapacity() != null ? super.getNormalCapacity() : Integer.valueOf(0);
     }
-    
+
     @Override
     public Integer getExamCapacity() {
 	return super.getExamCapacity() != null ? super.getExamCapacity() : Integer.valueOf(0);
     }
-    
+
     public String getIdentification() {
-	return getSpaceInformation().getIdentification(); 
+	return getSpaceInformation().getIdentification();
     }
-    
+
     public static abstract class RoomFactory implements Serializable, FactoryExecutor {
-	
+
 	private String blueprintNumber;
 
 	private String identification;
@@ -156,15 +152,15 @@ public class Room extends Room_Base {
 	private YearMonthDay begin;
 
 	private YearMonthDay end;
-	
+
 	private String doorNumber;
 
 	private DomainReference<RoomClassification> roomClassificationReference;
 
 	private Integer examCapacity;
-	
+
 	private Integer normalCapacity;
-	
+
 	public YearMonthDay getBegin() {
 	    return begin;
 	}
@@ -217,8 +213,7 @@ public class Room extends Room_Base {
 	    return distanceFromSanitaryInstalationsQuality;
 	}
 
-	public void setDistanceFromSanitaryInstalationsQuality(
-		Boolean distanceFromSanitaryInstalationsQuality) {
+	public void setDistanceFromSanitaryInstalationsQuality(Boolean distanceFromSanitaryInstalationsQuality) {
 	    this.distanceFromSanitaryInstalationsQuality = distanceFromSanitaryInstalationsQuality;
 	}
 
@@ -263,14 +258,12 @@ public class Room extends Room_Base {
 	}
 
 	public RoomClassification getRoomClassification() {
-	    return (this.roomClassificationReference != null) ? this.roomClassificationReference
-		    .getObject() : null;
+	    return (this.roomClassificationReference != null) ? this.roomClassificationReference.getObject() : null;
 	}
 
 	public void setRoomClassification(RoomClassification roomClassification) {
 	    this.roomClassificationReference = (roomClassification != null) ? new DomainReference<RoomClassification>(
-		    roomClassification)
-		    : null;
+		    roomClassification) : null;
 	}
 
 	public String getDoorNumber() {
@@ -299,7 +292,7 @@ public class Room extends Room_Base {
     }
 
     public static class RoomFactoryCreator extends RoomFactory {
-	
+
 	private DomainReference<Space> surroundingSpaceReference;
 
 	public Space getSurroundingSpace() {
@@ -313,16 +306,15 @@ public class Room extends Room_Base {
 	}
 
 	public Room execute() {
-	    return new Room(getSurroundingSpace(), getBlueprintNumber(), getIdentification(),
-		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),
-		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
-		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), 
-		    getEnd(), getDoorNumber(), getNormalCapacity(), getExamCapacity());
+	    return new Room(getSurroundingSpace(), getBlueprintNumber(), getIdentification(), getDescription(),
+		    getRoomClassification(), getArea(), getHeightQuality(), getIlluminationQuality(),
+		    getDistanceFromSanitaryInstalationsQuality(), getSecurityQuality(), getAgeQuality(), getObservations(),
+		    getBegin(), getEnd(), getDoorNumber(), getNormalCapacity(), getExamCapacity());
 	}
     }
 
     public static class RoomFactoryEditor extends RoomFactory {
-	
+
 	private DomainReference<Room> roomReference;
 
 	public Room getSpace() {
@@ -336,18 +328,17 @@ public class Room extends Room_Base {
 	}
 
 	public RoomInformation execute() {
-	    
+
 	    Room space = getSpace();
 	    space.setNormalCapacity(getNormalCapacity());
 	    space.setExamCapacity(getExamCapacity());
-	    
+
 	    RoomInformation roomInformation = new RoomInformation(getSpace(), getBlueprintNumber(), getIdentification(),
-		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),
-		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
-		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), 
-		    getEnd(), getDoorNumber());
-	     
-	     return roomInformation;
+		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(), getIlluminationQuality(),
+		    getDistanceFromSanitaryInstalationsQuality(), getSecurityQuality(), getAgeQuality(), getObservations(),
+		    getBegin(), getEnd(), getDoorNumber());
+
+	    return roomInformation;
 	}
-    }  
+    }
 }

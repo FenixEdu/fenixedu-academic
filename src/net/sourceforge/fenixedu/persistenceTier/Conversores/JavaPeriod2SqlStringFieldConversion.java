@@ -13,8 +13,8 @@ import org.joda.time.Period;
 public class JavaPeriod2SqlStringFieldConversion implements FieldConversion {
 
     public Object javaToSql(final Object object) {
-        if (object != null && object instanceof Period) {
-            final Period period = (Period) object;
+	if (object != null && object instanceof Period) {
+	    final Period period = (Period) object;
 	    final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 	    try {
 		final ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
@@ -23,13 +23,13 @@ public class JavaPeriod2SqlStringFieldConversion implements FieldConversion {
 		throw new ConversionException(exception);
 	    }
 	    return byteArrayOutputStream.toByteArray();
-        }
-        return null;
+	}
+	return null;
     }
 
     public Object sqlToJava(final Object object) {
-        if (object != null && object instanceof byte[]) {
-            final byte[] bytes = (byte[]) object;
+	if (object != null && object instanceof byte[]) {
+	    final byte[] bytes = (byte[]) object;
 	    final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 	    try {
 		final ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
@@ -39,8 +39,8 @@ public class JavaPeriod2SqlStringFieldConversion implements FieldConversion {
 	    } catch (final ClassNotFoundException exception) {
 		throw new ConversionException(exception);
 	    }
-        }
-        return object;
+	}
+	return object;
     }
 
 }

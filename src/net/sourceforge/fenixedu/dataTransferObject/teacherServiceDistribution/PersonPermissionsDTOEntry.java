@@ -3,91 +3,89 @@ package net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution;
 import net.sourceforge.fenixedu.domain.Person;
 
 public class PersonPermissionsDTOEntry {
-	Person person;
-	Boolean phaseManagementPermission = false;
-	Boolean automaticValuationPermission = false;
-	Boolean omissionConfigurationPermission = false;
-	Boolean tsdCoursesAndTeachersManagementPermission = false;
-	Boolean coursesValuationPermission = false;
-	Boolean teachersValuationPermission = false;
-	Boolean teachersManagementPermission = false;
-	Boolean coursesManagementPermission = false;
-	
-	
-	public PersonPermissionsDTOEntry(Person person) {
-		this.person = person;
-	}
+    Person person;
+    Boolean phaseManagementPermission = false;
+    Boolean automaticValuationPermission = false;
+    Boolean omissionConfigurationPermission = false;
+    Boolean tsdCoursesAndTeachersManagementPermission = false;
+    Boolean coursesValuationPermission = false;
+    Boolean teachersValuationPermission = false;
+    Boolean teachersManagementPermission = false;
+    Boolean coursesManagementPermission = false;
 
-	public Boolean getPhaseManagementPermission() {
-		return phaseManagementPermission;
-	}
+    public PersonPermissionsDTOEntry(Person person) {
+	this.person = person;
+    }
 
-	public void setPhaseManagementPermission(Boolean phaseManagementPermission) {
-		this.phaseManagementPermission = phaseManagementPermission;
-	}
+    public Boolean getPhaseManagementPermission() {
+	return phaseManagementPermission;
+    }
 
-	public Person getPerson() {
-		return person;
-	}
+    public void setPhaseManagementPermission(Boolean phaseManagementPermission) {
+	this.phaseManagementPermission = phaseManagementPermission;
+    }
 
-	public Boolean getAutomaticValuationPermission() {
-		return automaticValuationPermission;
-	}
+    public Person getPerson() {
+	return person;
+    }
 
-	public void setAutomaticValuationPermission(Boolean automaticValuationPermission) {
-		this.automaticValuationPermission = automaticValuationPermission;
-	}
+    public Boolean getAutomaticValuationPermission() {
+	return automaticValuationPermission;
+    }
 
-	public Boolean getOmissionConfigurationPermission() {
-		return omissionConfigurationPermission;
-	}
+    public void setAutomaticValuationPermission(Boolean automaticValuationPermission) {
+	this.automaticValuationPermission = automaticValuationPermission;
+    }
 
-	public void setOmissionConfigurationPermission(Boolean omissionConfiguration) {
-		this.omissionConfigurationPermission = omissionConfiguration;
-	}
+    public Boolean getOmissionConfigurationPermission() {
+	return omissionConfigurationPermission;
+    }
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+    public void setOmissionConfigurationPermission(Boolean omissionConfiguration) {
+	this.omissionConfigurationPermission = omissionConfiguration;
+    }
 
-	public Boolean getCoursesValuationPermission() {
-	    return coursesValuationPermission;
-	}
+    public void setPerson(Person person) {
+	this.person = person;
+    }
 
-	public void setCoursesValuationPermission(Boolean coursesValuationPermission) {
-	    this.coursesValuationPermission = coursesValuationPermission;
-	}
+    public Boolean getCoursesValuationPermission() {
+	return coursesValuationPermission;
+    }
 
-	public Boolean getTeachersValuationPermission() {
-	    return teachersValuationPermission;
-	}
+    public void setCoursesValuationPermission(Boolean coursesValuationPermission) {
+	this.coursesValuationPermission = coursesValuationPermission;
+    }
 
-	public void setTeachersValuationPermission(Boolean teachersValuationPermission) {
-	    this.teachersValuationPermission = teachersValuationPermission;
-	}
+    public Boolean getTeachersValuationPermission() {
+	return teachersValuationPermission;
+    }
 
-	public Boolean getTeachersManagementPermission() {
-	    return teachersManagementPermission;
-	}
+    public void setTeachersValuationPermission(Boolean teachersValuationPermission) {
+	this.teachersValuationPermission = teachersValuationPermission;
+    }
 
-	public void setTeachersManagementPermission(Boolean teachersManagementPermission) {
-	    this.teachersManagementPermission = teachersManagementPermission;
-	}
+    public Boolean getTeachersManagementPermission() {
+	return teachersManagementPermission;
+    }
 
-	public Boolean getCoursesManagementPermission() {
-	    return coursesManagementPermission;
-	}
+    public void setTeachersManagementPermission(Boolean teachersManagementPermission) {
+	this.teachersManagementPermission = teachersManagementPermission;
+    }
 
-	public void setCoursesManagementPermission(Boolean coursesManagementPermission) {
-	    this.coursesManagementPermission = coursesManagementPermission;
-	}
+    public Boolean getCoursesManagementPermission() {
+	return coursesManagementPermission;
+    }
 
-	public Boolean getCompetenceCoursesAndTeachersManagementPermission() {
-		return tsdCoursesAndTeachersManagementPermission;
-	}
+    public void setCoursesManagementPermission(Boolean coursesManagementPermission) {
+	this.coursesManagementPermission = coursesManagementPermission;
+    }
 
-	public void setCompetenceCoursesAndTeachersManagementPermission(
-			Boolean tsdCoursesAndTeachersManagementPermission) {
-		this.tsdCoursesAndTeachersManagementPermission = tsdCoursesAndTeachersManagementPermission;
-	}
+    public Boolean getCompetenceCoursesAndTeachersManagementPermission() {
+	return tsdCoursesAndTeachersManagementPermission;
+    }
+
+    public void setCompetenceCoursesAndTeachersManagementPermission(Boolean tsdCoursesAndTeachersManagementPermission) {
+	this.tsdCoursesAndTeachersManagementPermission = tsdCoursesAndTeachersManagementPermission;
+    }
 }

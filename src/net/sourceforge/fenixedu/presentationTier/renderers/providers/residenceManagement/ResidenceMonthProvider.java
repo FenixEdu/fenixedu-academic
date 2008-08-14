@@ -19,8 +19,7 @@ public class ResidenceMonthProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 	ImportResidenceEventBean residenceEventBean = (ImportResidenceEventBean) source;
 	ResidenceYear residenceYear = residenceEventBean.getResidenceYear();
-	return residenceYear != null ? residenceYear.getMonthsSet() : Collections
-		.emptyList();
+	return residenceYear != null ? residenceYear.getMonthsSet() : Collections.emptyList();
     }
 
 }

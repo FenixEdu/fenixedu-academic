@@ -12,8 +12,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 
+public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 
     public ActionForward innerProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -80,7 +80,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
     private Job getJob(HttpServletRequest request) {
 	return rootDomainObject.readJobByOID(getIntegerFromRequest(request, "jobId"));
     }
-    
+
     public ActionForward updateProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

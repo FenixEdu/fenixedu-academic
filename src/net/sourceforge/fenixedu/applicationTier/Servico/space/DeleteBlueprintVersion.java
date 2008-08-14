@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.space.Blueprint;
 public class DeleteBlueprintVersion extends Service {
 
     public void run(Blueprint blueprint) {
-        if(blueprint == null) {
-            throw new DomainException("error.delete.blueprint.no.blueprint");
-        }
-        blueprint.delete();
-    }    
+	if (blueprint == null) {
+	    throw new DomainException("error.delete.blueprint.no.blueprint");
+	}
+	blueprint.delete();
+    }
 }

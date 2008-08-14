@@ -8,7 +8,7 @@ public class AnnouncementsDA extends UnitSiteAnnouncementManagement {
 
     @Override
     protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-        return "/manageDepartmentSiteAnnouncements.do";
+	return "/manageDepartmentSiteAnnouncements.do";
     }
 
 }

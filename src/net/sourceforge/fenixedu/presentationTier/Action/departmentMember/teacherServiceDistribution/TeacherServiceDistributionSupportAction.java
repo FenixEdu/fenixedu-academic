@@ -526,12 +526,14 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
      * Integer selectedGroupingId = (Integer) dynaForm.get("tsd"); Integer
      * otherGroupingId = (Integer) dynaForm.get("otherGrouping");
      * 
-     * Object[] parameters = new Object[]{ selectedGroupingId, otherGroupingId };
+     * Object[] parameters = new Object[]{ selectedGroupingId, otherGroupingId
+     * };
      * 
-     * ServiceUtils.executeService(
-     * "MergeTeacherServiceDistributions", parameters);
+     * ServiceUtils.executeService( "MergeTeacherServiceDistributions",
+     * parameters);
      * 
-     * return loadTeacherServiceDistributions(mapping, form, request, response); }
+     * return loadTeacherServiceDistributions(mapping, form, request, response);
+     * }
      */
 
     public ActionForward changeTeacherServiceDistributionName(ActionMapping mapping, ActionForm form, HttpServletRequest request,

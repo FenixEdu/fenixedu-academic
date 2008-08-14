@@ -98,7 +98,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
     public int compareTo(Process process) {
 	return getIdInternal().compareTo(process.getIdInternal());
     }
-    
+
     public List<Activity> getAllowedActivities(final IUserView userView) {
 	final List<Activity> result = new ArrayList<Activity>();
 	for (final Activity activity : getActivities()) {

@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 1/Set/2003, 15:30:27
- *  
+ *         Created at 1/Set/2003, 15:30:27
+ * 
  */
 public class InfoCandidacyDetails extends InfoObject {
     private InfoStudent student;
@@ -45,112 +45,112 @@ public class InfoCandidacyDetails extends InfoObject {
      * @return
      */
     public List getCases() {
-        return cases;
+	return cases;
     }
 
     /**
      * @return
      */
     public InfoModality getModality() {
-        return modality;
+	return modality;
     }
 
     /**
      * @return
      */
     public InfoSeminary getSeminary() {
-        return seminary;
+	return seminary;
     }
 
     /**
      * @return
      */
     public InfoStudent getStudent() {
-        return student;
+	return student;
     }
 
     /**
      * @return
      */
     public InfoTheme getTheme() {
-        return theme;
+	return theme;
     }
 
     /**
      * @param list
      */
     public void setCases(List list) {
-        cases = list;
+	cases = list;
     }
 
     /**
      * @param modality
      */
     public void setModality(InfoModality modality) {
-        this.modality = modality;
+	this.modality = modality;
     }
 
     /**
      * @param seminary
      */
     public void setSeminary(InfoSeminary seminary) {
-        this.seminary = seminary;
+	this.seminary = seminary;
     }
 
     /**
      * @param student
      */
     public void setStudent(InfoStudent student) {
-        this.student = student;
+	this.student = student;
     }
 
     /**
      * @param theme
      */
     public void setTheme(InfoTheme theme) {
-        this.theme = theme;
+	this.theme = theme;
     }
 
     /**
      * @return
      */
     public String getMotivation() {
-        return motivation;
+	return motivation;
     }
 
     /**
      * @param string
      */
     public void setMotivation(String string) {
-        motivation = string;
+	motivation = string;
     }
 
     /**
      * @return
      */
     public InfoCurricularCourse getCurricularCourse() {
-        return curricularCourse;
+	return curricularCourse;
     }
 
     /**
      * @param course
      */
     public void setCurricularCourse(InfoCurricularCourse course) {
-        curricularCourse = course;
+	curricularCourse = course;
     }
 
     /**
      * @return @deprecated
      */
     public Double getClassification() {
-        return classification;
+	return classification;
     }
 
     /**
      * @return @deprecated
      */
     public Integer getCompletedCourses() {
-        return completedCourses;
+	return completedCourses;
     }
 
     /**
@@ -158,7 +158,7 @@ public class InfoCandidacyDetails extends InfoObject {
      * @deprecated
      */
     public void setClassification(Double integer) {
-        classification = integer;
+	classification = integer;
     }
 
     /**
@@ -166,35 +166,35 @@ public class InfoCandidacyDetails extends InfoObject {
      * @deprecated
      */
     public void setCompletedCourses(Integer integer) {
-        completedCourses = integer;
+	completedCourses = integer;
     }
 
     /**
      * @return
      */
     public Boolean getApproved() {
-        return approved;
+	return approved;
     }
 
     /**
      * @param boolean1
      */
     public void setApproved(Boolean boolean1) {
-        approved = boolean1;
+	approved = boolean1;
     }
 
     /**
      * @return
      */
     public InfoClassification getInfoClassification() {
-        return infoClassification;
+	return infoClassification;
     }
 
     /**
      * @param classification
      */
     public void setInfoClassification(InfoClassification classification) {
-        infoClassification = classification;
+	infoClassification = classification;
     }
 
 }

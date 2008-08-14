@@ -45,8 +45,8 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchAction {
 
-    public ActionForward addJury(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+    public ActionForward addJury(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException {
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
@@ -54,10 +54,9 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers",
-		    SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs",
-		    SessionConstants.EXTERNAL_JURIES_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
 	} catch (Exception e1) {
@@ -70,16 +69,15 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     }
 
-    public ActionForward removeJuries(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward removeJuries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException {
 
 	DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
 	Integer[] teachersNumbersList = (Integer[]) changeMasterDegreeProofForm.get("juriesNumbers");
 	Integer[] removedJuries = (Integer[]) changeMasterDegreeProofForm.get("removedJuriesNumbers");
 
-	changeMasterDegreeProofForm.set("juriesNumbers", subtractArray(teachersNumbersList,
-		removedJuries));
+	changeMasterDegreeProofForm.set("juriesNumbers", subtractArray(teachersNumbersList, removedJuries));
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
@@ -87,10 +85,9 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers",
-		    SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs",
-		    SessionConstants.EXTERNAL_JURIES_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
 	} catch (Exception e1) {
@@ -103,8 +100,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     }
 
-    public ActionForward externalJury(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward externalJury(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException {
 
 	// to display the external persons search form
 	request.setAttribute(SessionConstants.SEARCH_EXTERNAL_JURIES, new Boolean(true));
@@ -115,10 +112,9 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers",
-		    SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs",
-		    SessionConstants.EXTERNAL_JURIES_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
 	} catch (Exception e1) {
@@ -131,8 +127,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     }
 
-    public ActionForward searchExternalJury(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward searchExternalJury(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException {
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
@@ -140,10 +136,9 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers",
-		    SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs",
-		    SessionConstants.EXTERNAL_JURIES_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByName(form, request, "externalJuryName",
 		    SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS, actionErrors);
@@ -158,8 +153,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     }
 
-    public ActionForward addExternalJury(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward addExternalJury(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException {
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
@@ -167,10 +162,9 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers",
-		    SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs",
-		    SessionConstants.EXTERNAL_JURIES_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
 	} catch (Exception e1) {
@@ -183,17 +177,15 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     }
 
-    public ActionForward removeExternalJuries(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward removeExternalJuries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException {
 
 	DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
 
 	Integer[] externalPersonsIDsList = (Integer[]) masterDegreeProofForm.get("externalJuriesIDs");
-	Integer[] removedExternalJuries = (Integer[]) masterDegreeProofForm
-		.get("removedExternalJuriesIDs");
+	Integer[] removedExternalJuries = (Integer[]) masterDegreeProofForm.get("removedExternalJuriesIDs");
 
-	masterDegreeProofForm.set("externalJuriesIDs", subtractArray(externalPersonsIDsList,
-		removedExternalJuries));
+	masterDegreeProofForm.set("externalJuriesIDs", subtractArray(externalPersonsIDsList, removedExternalJuries));
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
@@ -201,10 +193,9 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers",
-		    SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs",
-		    SessionConstants.EXTERNAL_JURIES_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
 	} catch (Exception e1) {
@@ -217,9 +208,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     }
 
-    public ActionForward changeMasterDegreeProof(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
+    public ActionForward changeMasterDegreeProof(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	IUserView userView = UserView.getUser();
 
@@ -238,18 +228,14 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	String proofDateYear = (String) changeMasterDegreeProofForm.get("proofDateYear");
 
 	String thesisDeliveryDateDay = (String) changeMasterDegreeProofForm.get("thesisDeliveryDateDay");
-	String thesisDeliveryDateMonth = (String) changeMasterDegreeProofForm
-		.get("thesisDeliveryDateMonth");
-	String thesisDeliveryDateYear = (String) changeMasterDegreeProofForm
-		.get("thesisDeliveryDateYear");
+	String thesisDeliveryDateMonth = (String) changeMasterDegreeProofForm.get("thesisDeliveryDateMonth");
+	String thesisDeliveryDateYear = (String) changeMasterDegreeProofForm.get("thesisDeliveryDateYear");
 
 	Date proofDate = buildProofDate(proofDateDay, proofDateMonth, proofDateYear);
 
-	Date thesisDeliveryDate = buildThesisDeliveryDate(thesisDeliveryDateDay,
-		thesisDeliveryDateMonth, thesisDeliveryDateYear);
+	Date thesisDeliveryDate = buildThesisDeliveryDate(thesisDeliveryDateDay, thesisDeliveryDateMonth, thesisDeliveryDateYear);
 
-	StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance()
-		.readStudentCurricularPlanByOID(scpID);
+	StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(scpID);
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
@@ -257,8 +243,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	List<Integer> externalJuriesIDs = null;
 
 	try {
-	    operations
-		    .transportStudentCurricularPlan(form, request, actionErrors, studentCurricularPlan);
+	    operations.transportStudentCurricularPlan(form, request, actionErrors, studentCurricularPlan);
 
 	    juriesNumbers = operations.getTeachersNumbers(form, "juriesNumbers");
 	    externalJuriesIDs = operations.getExternalPersonsIDs(form, "externalJuriesIDs");
@@ -276,20 +261,19 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
 	}
 
-	executeChangeMasterDegreeProofService(mapping, userView, finalResult, attachedCopiesNumber,
-		proofDate, thesisDeliveryDate, scpID, juriesNumbers, externalJuriesIDs);
+	executeChangeMasterDegreeProofService(mapping, userView, finalResult, attachedCopiesNumber, proofDate,
+		thesisDeliveryDate, scpID, juriesNumbers, externalJuriesIDs);
 
 	return mapping.findForward("success");
 
     }
 
     private void executeChangeMasterDegreeProofService(ActionMapping mapping, IUserView userView,
-	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, Date proofDate,
-	    Date thesisDeliveryDate, Integer scpID, List<Integer> juriesNumbers,
-	    List<Integer> externalJuriesIDs) throws NonExistingActionException,
+	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, Date proofDate, Date thesisDeliveryDate,
+	    Integer scpID, List<Integer> juriesNumbers, List<Integer> externalJuriesIDs) throws NonExistingActionException,
 	    ScholarshipNotFinishedActionException, ExistingActionException, FenixFilterException {
-	Object args2[] = { userView, scpID, proofDate, thesisDeliveryDate, finalResult,
-		attachedCopiesNumber, juriesNumbers, externalJuriesIDs };
+	Object args2[] = { userView, scpID, proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber, juriesNumbers,
+		externalJuriesIDs };
 
 	try {
 	    ServiceUtils.executeService("ChangeMasterDegreeProof", args2);
@@ -308,34 +292,31 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
 	if ((thesisDeliveryDateDay.length() > 0) && (thesisDeliveryDateMonth.length() > 0)
 		&& (thesisDeliveryDateYear.length() > 0)) {
-	    Calendar thesisDeliveryDateCalendar = new GregorianCalendar(Integer
-		    .parseInt(thesisDeliveryDateYear), Integer.parseInt(thesisDeliveryDateMonth),
-		    Integer.parseInt(thesisDeliveryDateDay));
+	    Calendar thesisDeliveryDateCalendar = new GregorianCalendar(Integer.parseInt(thesisDeliveryDateYear), Integer
+		    .parseInt(thesisDeliveryDateMonth), Integer.parseInt(thesisDeliveryDateDay));
 
 	    thesisDeliveryDate = thesisDeliveryDateCalendar.getTime();
 	}
 	return thesisDeliveryDate;
     }
 
-    private Date buildProofDate(String proofDateDay, String proofDateMonth, String proofDateYear)
-	    throws NumberFormatException {
+    private Date buildProofDate(String proofDateDay, String proofDateMonth, String proofDateYear) throws NumberFormatException {
 	Date proofDate = null;
 
 	if ((proofDateDay.length() > 0) && (proofDateMonth.length() > 0) && (proofDateYear.length() > 0)) {
-	    Calendar proofDateCalendar = new GregorianCalendar(Integer.parseInt(proofDateYear), Integer
-		    .parseInt(proofDateMonth), Integer.parseInt(proofDateDay));
+	    Calendar proofDateCalendar = new GregorianCalendar(Integer.parseInt(proofDateYear), Integer.parseInt(proofDateMonth),
+		    Integer.parseInt(proofDateDay));
 
 	    proofDate = proofDateCalendar.getTime();
 	}
 	return proofDate;
     }
 
-    public ActionForward cancelChangeMasterDegreeProof(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward cancelChangeMasterDegreeProof(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	PrepareStudentDataForThesisOperationsDispatchAction prepareStudentDataForThesisOperations = new PrepareStudentDataForThesisOperationsDispatchAction();
-	return prepareStudentDataForThesisOperations.getStudentAndDegreeTypeForThesisOperations(mapping,
-		form, request, response);
+	return prepareStudentDataForThesisOperations.getStudentAndDegreeTypeForThesisOperations(mapping, form, request, response);
 
     }
 
@@ -367,10 +348,10 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
     }
 
     /*
-         * (non-Javadoc)
-         * 
-         * @see org.apache.struts.actions.LookupDispatchAction#getKeyMethodMap()
-         */
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.actions.LookupDispatchAction#getKeyMethodMap()
+     */
     protected Map getKeyMethodMap() {
 
 	Map map = new HashMap();

@@ -8,11 +8,10 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 public class ProtocolsManagementGroup extends Filtro {
 
-    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-            Exception {
+    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
-        if (!ManagementGroups.isProtocolManagerMember(getRemoteUser(request).getPerson())) {
-            throw new NotAuthorizedFilterException();
-        }
+	if (!ManagementGroups.isProtocolManagerMember(getRemoteUser(request).getPerson())) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 }

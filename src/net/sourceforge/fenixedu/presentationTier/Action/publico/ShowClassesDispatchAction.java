@@ -118,7 +118,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
     private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) throws FenixServiceException,
 	    FenixFilterException {
 	Object[] args = { degree.getIdInternal() };
-	InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService( "ReadDegreeByOID", args);
+	InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService("ReadDegreeByOID", args);
 	request.setAttribute("infoDegree", infoDegree);
     }
 

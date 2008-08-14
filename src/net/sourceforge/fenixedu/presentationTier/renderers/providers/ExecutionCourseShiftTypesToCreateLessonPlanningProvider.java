@@ -9,18 +9,18 @@ import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
-public class ExecutionCourseShiftTypesToCreateLessonPlanningProvider implements DataProvider{
+public class ExecutionCourseShiftTypesToCreateLessonPlanningProvider implements DataProvider {
 
     public ExecutionCourse getExecutionCourse(Object source) {
-	return ((CreateLessonPlanningBean)source).getExecutionCourse();
+	return ((CreateLessonPlanningBean) source).getExecutionCourse();
     }
-    
+
     public Object provide(Object source, Object currentValue) {
-        ExecutionCourse executionCourse = getExecutionCourse(source);        
-        return (getExecutionCourse(source) != null) ? executionCourse.getShiftTypes() : new HashSet<ShiftType>();        
+	ExecutionCourse executionCourse = getExecutionCourse(source);
+	return (getExecutionCourse(source) != null) ? executionCourse.getShiftTypes() : new HashSet<ShiftType>();
     }
 
     public Converter getConverter() {
-        return new EnumConverter();       
+	return new EnumConverter();
     }
 }

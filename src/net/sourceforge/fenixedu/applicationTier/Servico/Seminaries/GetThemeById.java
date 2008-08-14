@@ -13,18 +13,18 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 26/Ago/2003, 9:14:57
+ *         Created at 26/Ago/2003, 9:14:57
  * 
  */
 public class GetThemeById extends Service {
 
-	public InfoTheme run(Integer themeID) {
-		InfoTheme infoTheme = null;
-		if (themeID != null) {
-			Theme theme = rootDomainObject.readThemeByOID(themeID);
-			infoTheme = InfoTheme.newInfoFromDomain(theme);
+    public InfoTheme run(Integer themeID) {
+	InfoTheme infoTheme = null;
+	if (themeID != null) {
+	    Theme theme = rootDomainObject.readThemeByOID(themeID);
+	    infoTheme = InfoTheme.newInfoFromDomain(theme);
 
-		}
-		return infoTheme;
 	}
+	return infoTheme;
+    }
 }

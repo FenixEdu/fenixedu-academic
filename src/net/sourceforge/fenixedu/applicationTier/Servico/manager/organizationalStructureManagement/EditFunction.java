@@ -13,14 +13,14 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditFunction extends Service {
 
-    public void run(Integer functionID, MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end,
-            FunctionType type) throws FenixServiceException, DomainException {
+    public void run(Integer functionID, MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end, FunctionType type)
+	    throws FenixServiceException, DomainException {
 
-        Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
-        if (function == null) {
-            throw new FenixServiceException("error.noFunction");
-        }
-       
-        function.edit(functionName, begin, end, type);
+	Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
+	if (function == null) {
+	    throw new FenixServiceException("error.noFunction");
+	}
+
+	function.edit(functionName, begin, end, type);
     }
 }

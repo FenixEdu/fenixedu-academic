@@ -9,6 +9,6 @@ public class EditInvitationResponsible extends Service {
     public void run(Invitation invitation, Party responsible) {
 	if (invitation != null && responsible != null) {
 	    invitation.setResponsible(responsible);
-	}	
+	}
     }
 }

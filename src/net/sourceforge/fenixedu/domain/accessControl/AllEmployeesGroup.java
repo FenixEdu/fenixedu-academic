@@ -7,5 +7,5 @@ public class AllEmployeesGroup extends RoleTypeGroup {
     public AllEmployeesGroup() {
 	super(RoleType.EMPLOYEE);
     }
-    
+
 }

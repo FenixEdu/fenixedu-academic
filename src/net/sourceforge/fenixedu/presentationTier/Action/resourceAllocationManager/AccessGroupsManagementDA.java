@@ -23,34 +23,34 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class AccessGroupsManagementDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form,	   	        
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws InvalidArgumentException {
 
 	Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
 	request.setAttribute("resourceAllocationRole", role);
-	return mapping.findForward("prepareAccessGroupsManagement");	
+	return mapping.findForward("prepareAccessGroupsManagement");
     }
 
-    public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form,	   	        
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, 
-	    FenixFilterException, FenixServiceException {		
+    public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
 	AccessGroupBean bean = (AccessGroupBean) getRenderedObject("PersonToAccessGroupBeanID");
 	ResourceAllocationAccessGroupType accessGroupType = bean != null ? bean.getAccessGroupType() : null;
 	Person person = bean != null ? bean.getPerson() : null;
 	Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
-	
-	if(person == null) {
+
+	if (person == null) {
 	    addActionMessage(request, "error.ResourceAllocation.access.groups.empty.person");
 	    request.setAttribute("resourceAllocationRole", role);
-	    return mapping.findForward("prepareAccessGroupsManagement");	
+	    return mapping.findForward("prepareAccessGroupsManagement");
 	}
-	
-	try {
-	    PersonGroup personGroup = new PersonGroup(person);	
-	    executeService(request, "AddPersonToAccessGroup", new Object[] {accessGroupType, personGroup.getExpression(), true, role});
 
-	} catch(DomainException domainException) {
+	try {
+	    PersonGroup personGroup = new PersonGroup(person);
+	    executeService(request, "AddPersonToAccessGroup", new Object[] { accessGroupType, personGroup.getExpression(), true,
+		    role });
+
+	} catch (DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());
 	    request.setAttribute("resourceAllocationRole", role);
 	    return mapping.findForward("prepareAccessGroupsManagement");
@@ -58,19 +58,18 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
 
 	RenderUtils.invalidateViewState("PersonToAccessGroupBeanID");
 	request.setAttribute("resourceAllocationRole", role);
-	return mapping.findForward("prepareAccessGroupsManagement");	
+	return mapping.findForward("prepareAccessGroupsManagement");
     }
 
-    public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form,	   	        
-	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, 
-	    FenixFilterException, FenixServiceException {		
+    public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
 	Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
 	String groupExpression = getGroupExpressionFromRequest(request);
 	ResourceAllocationAccessGroupType groupType = getAccessGroupTypeFromRequest(request);
 
-	try {	    
-	    executeService(request, "AddPersonToAccessGroup", new Object[] {groupType, groupExpression, false, role});
+	try {
+	    executeService(request, "AddPersonToAccessGroup", new Object[] { groupType, groupExpression, false, role });
 
 	} catch (DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());
@@ -79,14 +78,13 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
 	}
 
 	request.setAttribute("resourceAllocationRole", role);
-	return mapping.findForward("prepareAccessGroupsManagement");	
+	return mapping.findForward("prepareAccessGroupsManagement");
     }
-
 
     // Private Methods
 
     private String getGroupExpressionFromRequest(final HttpServletRequest request) {
-	return request.getParameter("expression");	
+	return request.getParameter("expression");
     }
 
     private ResourceAllocationAccessGroupType getAccessGroupTypeFromRequest(final HttpServletRequest request) {

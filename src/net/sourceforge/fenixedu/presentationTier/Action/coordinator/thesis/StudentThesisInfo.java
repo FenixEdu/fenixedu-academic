@@ -11,85 +11,85 @@ public class StudentThesisInfo {
     private Enrolment enrolment;
     private Thesis thesis;
     private ThesisPresentationState state;
-    
+
     public StudentThesisInfo(Student student, Enrolment enrolment) {
-        setStudent(student);
-        setEnrolment(enrolment);
-        setThesis(enrolment.getThesis());
+	setStudent(student);
+	setEnrolment(enrolment);
+	setThesis(enrolment.getThesis());
     }
 
     public Student getStudent() {
-        return this.student;
+	return this.student;
     }
 
     protected void setStudent(Student student) {
-        this.student = student;
+	this.student = student;
     }
-   
+
     public Enrolment getEnrolment() {
-        return this.enrolment;
+	return this.enrolment;
     }
-    
+
     protected void setEnrolment(Enrolment enrolment) {
-        this.enrolment = enrolment;
+	this.enrolment = enrolment;
     }
 
     public Thesis getThesis() {
-        return this.thesis;
+	return this.thesis;
     }
 
     protected void setThesis(Thesis thesis) {
-        this.thesis = thesis;
-        
-        setState(thesis);
+	this.thesis = thesis;
+
+	setState(thesis);
     }
 
     public MultiLanguageString getTitle() {
-        Thesis thesis = getThesis();
-        
-        return thesis == null ? new MultiLanguageString("-") : thesis.getTitle();
+	Thesis thesis = getThesis();
+
+	return thesis == null ? new MultiLanguageString("-") : thesis.getTitle();
     }
-    
+
     public ThesisPresentationState getState() {
-        return this.state;
+	return this.state;
     }
 
     private void setState(Thesis thesis) {
 	this.state = ThesisPresentationState.getThesisPresentationState(thesis);
     }
-    
+
     public Integer getThesisId() {
-        Thesis thesis = getThesis();
-        
-        return thesis == null ? null : thesis.getIdInternal();
+	Thesis thesis = getThesis();
+
+	return thesis == null ? null : thesis.getIdInternal();
     }
-    
+
     public boolean isUnassigned() {
-        return getThesis() == null;
+	return getThesis() == null;
     }
 
     public boolean isDraft() {
-        return getThesis() != null && getThesis().isDraft();
+	return getThesis() != null && getThesis().isDraft();
     }
-    
+
     public boolean isSubmitted() {
-        return getThesis() != null && getThesis().isSubmitted();
+	return getThesis() != null && getThesis().isSubmitted();
     }
-    
+
     public boolean isWaitingConfirmation() {
-        return getThesis() != null && getThesis().isWaitingConfirmation();
+	return getThesis() != null && getThesis().isWaitingConfirmation();
     }
-    
+
     public boolean isConfirmed() {
-        return getThesis() != null && getThesis().isConfirmed();
+	return getThesis() != null && getThesis().isConfirmed();
     }
-    
+
     public boolean isEvaluated() {
-        return getThesis() != null && getThesis().isEvaluated();
+	return getThesis() != null && getThesis().isEvaluated();
     }
-    
+
     public boolean isPreEvaluated() {
-        return isEvaluated() && !getThesis().isFinalThesis();
+	return isEvaluated() && !getThesis().isFinalThesis();
     }
-    
+
 }

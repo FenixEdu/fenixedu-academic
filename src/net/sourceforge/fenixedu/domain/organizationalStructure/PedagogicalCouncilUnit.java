@@ -48,9 +48,12 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
 	 * NECESSARY? IT CREATES A ENOURMOUS LIST OF GROUPS TO CHOOSE FROM
 	 */
 	/*
-	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType(DegreeType.BOLONHA_DEGREE));
-	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
-	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType(DegreeType.BOLONHA_DEGREE
+	 * ));
+	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType(DegreeType
+	 * .BOLONHA_MASTER_DEGREE));
+	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType
+	 * (DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
 	 */
 
 	return groups;
@@ -81,12 +84,12 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
 	    if (!delegateFunctions.isEmpty()) {
 		for (PersonFunction personFunction : delegateFunctions) {
 		    personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1)); // if
-														    // consistent,
-														    // there
-														    // can
-														    // be
-														    // only
-														    // one
+		    // consistent,
+		    // there
+		    // can
+		    // be
+		    // only
+		    // one
 		}
 	    }
 	}

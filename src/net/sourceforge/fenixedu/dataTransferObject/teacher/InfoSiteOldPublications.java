@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.OldPublicationType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoSiteOldPublications extends DataTranferObject implements ISiteComponent {
 
@@ -28,14 +28,14 @@ public class InfoSiteOldPublications extends DataTranferObject implements ISiteC
     }
 
     public Integer getNumberOldPublications() {
-        return new Integer(infoOldPublications.size());
+	return new Integer(infoOldPublications.size());
     }
 
     /**
      * @return Returns the infoOldPublications.
      */
     public List getInfoOldPublications() {
-        return infoOldPublications;
+	return infoOldPublications;
     }
 
     /**
@@ -43,14 +43,14 @@ public class InfoSiteOldPublications extends DataTranferObject implements ISiteC
      *            The infoOldPublications to set.
      */
     public void setInfoOldPublications(List infoOldPublications) {
-        this.infoOldPublications = infoOldPublications;
+	this.infoOldPublications = infoOldPublications;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -58,14 +58,14 @@ public class InfoSiteOldPublications extends DataTranferObject implements ISiteC
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
      * @return Returns the oldPublicationType.
      */
     public OldPublicationType getOldPublicationType() {
-        return oldPublicationType;
+	return oldPublicationType;
     }
 
     /**
@@ -73,7 +73,7 @@ public class InfoSiteOldPublications extends DataTranferObject implements ISiteC
      *            The oldPublicationType to set.
      */
     public void setOldPublicationType(OldPublicationType oldPublicationType) {
-        this.oldPublicationType = oldPublicationType;
+	this.oldPublicationType = oldPublicationType;
     }
 
 }

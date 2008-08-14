@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * @author João Mota
  * 
- * 24/Jul/2003 fenix-head DataBeans
- *  
+ *         24/Jul/2003 fenix-head DataBeans
+ * 
  */
 public class InfoSiteDegreeCurricularPlans extends DataTranferObject implements ISiteComponent {
     private List degreeCurricularPlans;
@@ -26,14 +26,14 @@ public class InfoSiteDegreeCurricularPlans extends DataTranferObject implements 
      * @return
      */
     public List getDegreeCurricularPlans() {
-        return degreeCurricularPlans;
+	return degreeCurricularPlans;
     }
 
     /**
      * @param degreeCurricularPlans
      */
     public void setDegreeCurricularPlans(List degreeCurricularPlans) {
-        this.degreeCurricularPlans = degreeCurricularPlans;
+	this.degreeCurricularPlans = degreeCurricularPlans;
     }
 
 }

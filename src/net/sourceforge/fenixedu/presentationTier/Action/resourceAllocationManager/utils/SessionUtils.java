@@ -36,75 +36,68 @@ public final class SessionUtils {
 
     public static List getExecutionCourses(HttpServletRequest request) throws Exception {
 
-        List infoCourseList = new ArrayList();
+	List infoCourseList = new ArrayList();
 
-        // Nao verifica se ja existem em sessao porque podem
-        // ser de um periodo execucao diferente
+	// Nao verifica se ja existem em sessao porque podem
+	// ser de um periodo execucao diferente
 
-        IUserView userView = UserView.getUser();
-        // Ler Disciplinas em Execucao
-        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
-                .getAttribute(SessionConstants.CURRICULAR_YEAR);
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-                .getAttribute(SessionConstants.EXECUTION_DEGREE);
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-        Object[] args = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
+	IUserView userView = UserView.getUser();
+	// Ler Disciplinas em Execucao
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	Object[] args = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-        infoCourseList = (ArrayList) ServiceUtils.executeService(
-                "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
+	infoCourseList = (ArrayList) ServiceUtils.executeService("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
+		args);
 
-        request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
+	request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
 
-        return infoCourseList;
+	return infoCourseList;
 
     }
 
-    public static List getExecutionCoursesForAssociateToExam(HttpServletRequest request, ActionForm form)
-            throws Exception {
+    public static List getExecutionCoursesForAssociateToExam(HttpServletRequest request, ActionForm form) throws Exception {
 
-        List infoCourseList = new ArrayList();
+	List infoCourseList = new ArrayList();
 
-        // Nao verifica se ja existem em sessao porque podem
-        // ser de um periodo execucao diferente
+	// Nao verifica se ja existem em sessao porque podem
+	// ser de um periodo execucao diferente
 
-        IUserView userView = UserView.getUser();
-        // Ler Disciplinas em Execucao
-        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
-                .getAttribute(SessionConstants.CURRICULAR_YEAR);
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-                .getAttribute(SessionConstants.EXECUTION_DEGREE);
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	IUserView userView = UserView.getUser();
+	// Ler Disciplinas em Execucao
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        Object[] args = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
+	Object[] args = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-        infoCourseList = (ArrayList) ServiceUtils.executeService(
-                "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
+	infoCourseList = (ArrayList) ServiceUtils.executeService("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
+		args);
 
-        DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
-        String[] executionCourseIDArray = (String[]) chooseCourseForm.get("executionCourses");
+	DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
+	String[] executionCourseIDArray = (String[]) chooseCourseForm.get("executionCourses");
 
-        List newInfoCourseList = new ArrayList();
-        Iterator iter = infoCourseList.iterator();
-        boolean ignore = false;
-        while (iter.hasNext()) {
-            InfoExecutionCourse element = (InfoExecutionCourse) iter.next();
-            for (int i = 0; i < executionCourseIDArray.length; i++) {
-                Integer idExecutionCourse = new Integer(executionCourseIDArray[i]);
-                if (idExecutionCourse.equals(element.getIdInternal())) {
-                    ignore = true;
-                    break;
-                }
-            }
-            if (!ignore)
-                newInfoCourseList.add(element);
-            ignore = false;
-        }
+	List newInfoCourseList = new ArrayList();
+	Iterator iter = infoCourseList.iterator();
+	boolean ignore = false;
+	while (iter.hasNext()) {
+	    InfoExecutionCourse element = (InfoExecutionCourse) iter.next();
+	    for (int i = 0; i < executionCourseIDArray.length; i++) {
+		Integer idExecutionCourse = new Integer(executionCourseIDArray[i]);
+		if (idExecutionCourse.equals(element.getIdInternal())) {
+		    ignore = true;
+		    break;
+		}
+	    }
+	    if (!ignore)
+		newInfoCourseList.add(element);
+	    ignore = false;
+	}
 
-        request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, newInfoCourseList);
+	request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, newInfoCourseList);
 
-        return infoCourseList;
+	return infoCourseList;
 
     }
 
@@ -113,19 +106,19 @@ public final class SessionUtils {
      * case-sensitive search.
      */
     public static void removeAttributtes(HttpSession session, String prefix) {
-        if (session != null) {
-            Enumeration attNames = session.getAttributeNames();
-            Vector toRemoveAtts = new Vector();
-            while (attNames.hasMoreElements()) {
-                String attName = (String) attNames.nextElement();
-                if (attName.startsWith(prefix)) {
-                    toRemoveAtts.add(attName);
-                }
-            }
-            for (int i = 0; i < toRemoveAtts.size(); i++) {
-                session.removeAttribute((String) toRemoveAtts.elementAt(i));
-            }
-        }
+	if (session != null) {
+	    Enumeration attNames = session.getAttributeNames();
+	    Vector toRemoveAtts = new Vector();
+	    while (attNames.hasMoreElements()) {
+		String attName = (String) attNames.nextElement();
+		if (attName.startsWith(prefix)) {
+		    toRemoveAtts.add(attName);
+		}
+	    }
+	    for (int i = 0; i < toRemoveAtts.size(); i++) {
+		session.removeAttribute((String) toRemoveAtts.elementAt(i));
+	    }
+	}
     }
 
 }

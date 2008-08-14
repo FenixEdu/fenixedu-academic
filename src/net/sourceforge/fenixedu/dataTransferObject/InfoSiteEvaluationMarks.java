@@ -22,33 +22,33 @@ public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteC
     private DomainReference<ExecutionCourse> executionCourse;
 
     public Evaluation getEvaluation() {
-        return evaluation == null ? null : evaluation.getObject();
+	return evaluation == null ? null : evaluation.getObject();
     }
 
     public void setEvaluation(Evaluation evaluation) {
-        this.evaluation = new DomainReference<Evaluation>(evaluation);
+	this.evaluation = new DomainReference<Evaluation>(evaluation);
     }
 
     public Integer getEvaluationID() {
-        return evaluationID;
+	return evaluationID;
     }
 
     public void setEvaluationID(Integer evaluationID) {
-        this.evaluationID = evaluationID;
+	this.evaluationID = evaluationID;
     }
 
     public Collection<Mark> getSortedMarks() {
-        final Collection<Mark> sortedMarks = new TreeSet<Mark>(comparator);
-        sortedMarks.addAll(getEvaluation().getMarks());
-        return sortedMarks;
+	final Collection<Mark> sortedMarks = new TreeSet<Mark>(comparator);
+	sortedMarks.addAll(getEvaluation().getMarks());
+	return sortedMarks;
     }
 
     public ExecutionCourse getExecutionCourse() {
-        return executionCourse == null ? null : executionCourse.getObject();
+	return executionCourse == null ? null : executionCourse.getObject();
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-        this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
     }
 
 }

@@ -31,20 +31,16 @@ import org.joda.time.YearMonthDay;
 
 public class ChangeApplicationInfo extends Service {
 
-    public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
-	    InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson)
-	    throws FenixServiceException {
+    public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate, InfoPersonEditor infoPersonEditor,
+	    IUserView userView, Boolean isNewPerson) throws FenixServiceException {
 
-	final ExecutionDegree executionDegree = rootDomainObject
-		.readExecutionDegreeByOID(newMasterDegreeCandidate.getInfoExecutionDegree()
-			.getIdInternal());
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(newMasterDegreeCandidate
+		.getInfoExecutionDegree().getIdInternal());
 
-	Person person = Person.readByDocumentIdNumberAndIdDocumentType(newMasterDegreeCandidate
-		.getInfoPerson().getNumeroDocumentoIdentificacao(), newMasterDegreeCandidate
-		.getInfoPerson().getTipoDocumentoIdentificacao());
+	Person person = Person.readByDocumentIdNumberAndIdDocumentType(newMasterDegreeCandidate.getInfoPerson()
+		.getNumeroDocumentoIdentificacao(), newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
 
-	MasterDegreeCandidate existingMasterDegreeCandidate = person
-		.getMasterDegreeCandidateByExecutionDegree(executionDegree);
+	MasterDegreeCandidate existingMasterDegreeCandidate = person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
 	if (existingMasterDegreeCandidate == null) {
 	    throw new ExcepcaoInexistente("error.changeApplicationInfo.noCandidate");
 	}
@@ -52,8 +48,7 @@ public class ChangeApplicationInfo extends Service {
 	if (isNewPerson) {
 	    Country country = null;
 	    if ((infoPersonEditor.getInfoPais() != null)) {
-		country = Country.readCountryByNationality(infoPersonEditor.getInfoPais()
-			.getNationality());
+		country = Country.readCountryByNationality(infoPersonEditor.getInfoPais().getNationality());
 	    }
 
 	    person = existingMasterDegreeCandidate.getPerson();
@@ -68,14 +63,11 @@ public class ChangeApplicationInfo extends Service {
 	// Change Candidate Information
 	existingMasterDegreeCandidate.setAverage(newMasterDegreeCandidate.getAverage());
 	existingMasterDegreeCandidate.setMajorDegree(newMasterDegreeCandidate.getMajorDegree());
-	existingMasterDegreeCandidate.setMajorDegreeSchool(newMasterDegreeCandidate
-		.getMajorDegreeSchool());
+	existingMasterDegreeCandidate.setMajorDegreeSchool(newMasterDegreeCandidate.getMajorDegreeSchool());
 	existingMasterDegreeCandidate.setMajorDegreeYear(newMasterDegreeCandidate.getMajorDegreeYear());
-	existingMasterDegreeCandidate.setSpecializationArea(newMasterDegreeCandidate
-		.getSpecializationArea());
+	existingMasterDegreeCandidate.setSpecializationArea(newMasterDegreeCandidate.getSpecializationArea());
 
-	CandidateSituation oldCandidateSituation = existingMasterDegreeCandidate
-		.getActiveCandidateSituation();
+	CandidateSituation oldCandidateSituation = existingMasterDegreeCandidate.getActiveCandidateSituation();
 	oldCandidateSituation.setValidation(new State(State.INACTIVE));
 
 	CandidateSituation activeCandidateSituation = new CandidateSituation();

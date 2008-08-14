@@ -24,8 +24,7 @@ public class ParkingRequestPeriod extends ParkingRequestPeriod_Base {
 	setBeginDate(beginDateTime);
 	setEndDate(endDateTime);
 	Interval thisInterval = getRequestPeriodInterval();
-	for (ParkingRequestPeriod parkingRequestPeriod : RootDomainObject.getInstance()
-		.getParkingRequestPeriods()) {
+	for (ParkingRequestPeriod parkingRequestPeriod : RootDomainObject.getInstance().getParkingRequestPeriods()) {
 	    if (parkingRequestPeriod.getRequestPeriodInterval().overlaps(thisInterval)) {
 		throw new DomainException("error.overlapsAnotherInterval");
 	    }
@@ -45,8 +44,7 @@ public class ParkingRequestPeriod extends ParkingRequestPeriod_Base {
 	    throw new DomainException("error.beginDateBeforeOrEqualEndDate");
 	}
 	Interval thisInterval = new Interval(beginDateTime, endDateTime);
-	for (ParkingRequestPeriod parkingRequestPeriod : RootDomainObject.getInstance()
-		.getParkingRequestPeriods()) {
+	for (ParkingRequestPeriod parkingRequestPeriod : RootDomainObject.getInstance().getParkingRequestPeriods()) {
 	    if ((!parkingRequestPeriod.getIdInternal().equals(getIdInternal()))
 		    && parkingRequestPeriod.getRequestPeriodInterval().overlaps(thisInterval)) {
 		throw new DomainException("error.overlapsAnotherInterval");
@@ -61,10 +59,8 @@ public class ParkingRequestPeriod extends ParkingRequestPeriod_Base {
     }
 
     public static boolean isDateInAnyRequestPeriod(DateTime date) {
-	for (ParkingRequestPeriod parkingRequestPeriod : RootDomainObject.getInstance()
-		.getParkingRequestPeriods()) {
-	    if (new Interval(parkingRequestPeriod.getBeginDate(), parkingRequestPeriod.getEndDate())
-		    .contains(date)) {
+	for (ParkingRequestPeriod parkingRequestPeriod : RootDomainObject.getInstance().getParkingRequestPeriods()) {
+	    if (new Interval(parkingRequestPeriod.getBeginDate(), parkingRequestPeriod.getEndDate()).contains(date)) {
 		return Boolean.TRUE;
 	    }
 	}

@@ -63,443 +63,420 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     /** request params * */
     public static final String REQUEST_DOCUMENT_TYPE = "documentType";
 
-    public ActionForward prepareChoose(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareChoose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	HttpSession session = request.getSession(false);
 
-	    DynaActionForm listCandidatesForm = (DynaActionForm) form;
+	DynaActionForm listCandidatesForm = (DynaActionForm) form;
 
-	    String action = request.getParameter("action");
+	String action = request.getParameter("action");
 
-	    if (action.equals("visualize")) {
-		session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
-		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION,
-			"label.action.visualize");
-	    } else if (action.equals("edit")) {
-		session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
-		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION,
-			"label.action.edit");
+	if (action.equals("visualize")) {
+	    session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
+	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
+	} else if (action.equals("edit")) {
+	    session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
+	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
 
-	    }
+	}
 
-	    // Get the chosen exectionYear
-	    String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
-	    listCandidatesForm.set("executionYear", executionYear);
+	// Get the chosen exectionYear
+	String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
+	listCandidatesForm.set("executionYear", executionYear);
 
-	    // Get the Degree List
+	// Get the Degree List
 
-	    List degreeList = null;
+	List degreeList = null;
 
-	    Object args[] = { executionYear };
+	Object args[] = { executionYear };
 
-	    try {
-		degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(
-			"ReadMasterDegrees", args);
-	    } catch (Exception e) {
-		throw new Exception(e);
-	    }
+	try {
+	    degreeList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadMasterDegrees", args);
+	} catch (Exception e) {
+	    throw new Exception(e);
+	}
 
-	    // BeanComparator nameComparator = new
-	    // BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
-	    // Collections.sort(degreeList, nameComparator);
-	    Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
-	    List newDegreeList = degreeList;
-	    List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
+	// BeanComparator nameComparator = new
+	// BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
+	// Collections.sort(degreeList, nameComparator);
+	Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
+	List newDegreeList = degreeList;
+	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
 
-	    session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
+	session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
 
-	    // Create the Candidate Situation List
+	// Create the Candidate Situation List
 
-	    session.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
+	session.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
 
-	    return mapping.findForward("PrepareReady");
+	return mapping.findForward("PrepareReady");
 
     }
 
-    public ActionForward getCandidates(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	HttpSession session = request.getSession(false);
 
-	    DynaActionForm listCandidatesForm = (DynaActionForm) form;
+	DynaActionForm listCandidatesForm = (DynaActionForm) form;
 
-	    // Get the Information
-	    String degreeTypeTemp = (String) listCandidatesForm.get("specialization");
-	    String degreeName = (String) listCandidatesForm.get("degree");
-	    String executionDegree = request.getParameter("executionDegreeOID");
+	// Get the Information
+	String degreeTypeTemp = (String) listCandidatesForm.get("specialization");
+	String degreeName = (String) listCandidatesForm.get("degree");
+	String executionDegree = request.getParameter("executionDegreeOID");
 
-	    String candidateSituationTemp = (String) listCandidatesForm.get("candidateSituation");
-	    String candidateNumberTemp = (String) listCandidatesForm.get("candidateNumber");
-	    String executionYear = (String) listCandidatesForm.get("executionYear");
+	String candidateSituationTemp = (String) listCandidatesForm.get("candidateSituation");
+	String candidateNumberTemp = (String) listCandidatesForm.get("candidateNumber");
+	String executionYear = (String) listCandidatesForm.get("executionYear");
 
-	    Integer candidateNumber = null;
-	    Specialization specialization = null;
-	    SituationName situationName = null;
+	Integer candidateNumber = null;
+	Specialization specialization = null;
+	SituationName situationName = null;
 
-	    if (degreeName.length() == 0)
-		degreeName = null;
-	    if (candidateNumberTemp.length() != 0)
-		candidateNumber = Integer.valueOf(candidateNumberTemp);
-	    if (degreeTypeTemp != null && degreeTypeTemp.length() != 0)
-		specialization = Specialization.valueOf(degreeTypeTemp);
-	    if (candidateSituationTemp != null && candidateSituationTemp.length() != 0)
-		situationName = new SituationName(candidateSituationTemp);
+	if (degreeName.length() == 0)
+	    degreeName = null;
+	if (candidateNumberTemp.length() != 0)
+	    candidateNumber = Integer.valueOf(candidateNumberTemp);
+	if (degreeTypeTemp != null && degreeTypeTemp.length() != 0)
+	    specialization = Specialization.valueOf(degreeTypeTemp);
+	if (candidateSituationTemp != null && candidateSituationTemp.length() != 0)
+	    situationName = new SituationName(candidateSituationTemp);
 
-	    Object args[] = { executionDegree, specialization, situationName, candidateNumber,
-		    executionYear };
-	    List result = null;
+	Object args[] = { executionDegree, specialization, situationName, candidateNumber, executionYear };
+	List result = null;
 
-	    try {
-		result = (List) ServiceManagerServiceFactory.executeService(
-			"ReadCandidateList", args);
-	    } catch (Exception e) {
-		throw new Exception(e);
-	    }
-	    if (result.size() != 0) {
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result
-			.get(0);
-		degreeName = infoMasterDegreeCandidate.getInfoExecutionDegree()
-			.getInfoDegreeCurricularPlan().getInfoDegree().getNome()
-			+ "-"
-			+ infoMasterDegreeCandidate.getInfoExecutionDegree()
-				.getInfoDegreeCurricularPlan().getName();
-	    }
-	    if (result.size() == 1) {
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result
-			.get(0);
-		request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
-		request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
-		return mapping.findForward("ActionReady");
-	    }
-	    // Create find query String
-	    String query = new String();
-	    query = "  - Ano Lectivo : " + executionYear + "<br />";
-	    // query = " - Degree : " + degreeName + "<br />";
-	    if (specialization == null && situationName == null && candidateNumber == null)
-		query += "  - Todos os criterios";
-	    else {
-		if (degreeName != null)
-		    query += "  - Degree: " + degreeName + "<br />";
-		if (specialization != null)
-		    query += "  - Tipo de Especializa��o: " + specialization.toString() + "<br />";
-		if (situationName != null)
-		    query += "  - Situa��o do Candidato: " + situationName.toString() + "<br />";
-		if (candidateNumber != null)
-		    query += "  - N�mero de Candidato: " + candidateNumber + "<br />";
-	    }
-
-	    session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
-	    session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY);
-	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
-	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
-
-	    return mapping.findForward("ChooseCandidate");
-
-    }
-
-    public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	    Integer personID = Integer.valueOf(request.getParameter("personID"));
-	    request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
-
-	    // Read the Candidates for This Person
-
-	    List result = null;
-
-	    Object args[] = { personID };
-	    try {
-		result = (List) ServiceManagerServiceFactory.executeService(
-			"GetCandidatesByPerson", args);
-	    } catch (Exception e) {
-		throw new Exception(e);
-	    }
-
+	try {
+	    result = (List) ServiceManagerServiceFactory.executeService("ReadCandidateList", args);
+	} catch (Exception e) {
+	    throw new Exception(e);
+	}
+	if (result.size() != 0) {
+	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+	    degreeName = infoMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
+		    .getNome()
+		    + "-" + infoMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName();
+	}
+	if (result.size() == 1) {
+	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+	    request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
 	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
-
 	    return mapping.findForward("ActionReady");
+	}
+	// Create find query String
+	String query = new String();
+	query = "  - Ano Lectivo : " + executionYear + "<br />";
+	// query = " - Degree : " + degreeName + "<br />";
+	if (specialization == null && situationName == null && candidateNumber == null)
+	    query += "  - Todos os criterios";
+	else {
+	    if (degreeName != null)
+		query += "  - Degree: " + degreeName + "<br />";
+	    if (specialization != null)
+		query += "  - Tipo de Especializa��o: " + specialization.toString() + "<br />";
+	    if (situationName != null)
+		query += "  - Situa��o do Candidato: " + situationName.toString() + "<br />";
+	    if (candidateNumber != null)
+		query += "  - N�mero de Candidato: " + candidateNumber + "<br />";
+	}
+
+	session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
+	session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY);
+	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
+	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
+
+	return mapping.findForward("ChooseCandidate");
+
+    }
+
+    public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	Integer personID = Integer.valueOf(request.getParameter("personID"));
+	request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
+
+	// Read the Candidates for This Person
+
+	List result = null;
+
+	Object args[] = { personID };
+	try {
+	    result = (List) ServiceManagerServiceFactory.executeService("GetCandidatesByPerson", args);
+	} catch (Exception e) {
+	    throw new Exception(e);
+	}
+
+	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
+
+	return mapping.findForward("ActionReady");
     }
 
     public ActionForward visualize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	    IUserView userView = getUserView(request);
-	    Integer candidateID = (Integer) request.getAttribute("candidateID");
+	IUserView userView = getUserView(request);
+	Integer candidateID = (Integer) request.getAttribute("candidateID");
 
-	    if (candidateID == null) {
-		candidateID = Integer.valueOf(request.getParameter("candidateID"));
-	    }
+	if (candidateID == null) {
+	    candidateID = Integer.valueOf(request.getParameter("candidateID"));
+	}
 
-	    // Read the Candidates for This Person
+	// Read the Candidates for This Person
 
-	    InfoMasterDegreeCandidate result = null;
+	InfoMasterDegreeCandidate result = null;
 
-	    Object args[] = { candidateID };
-	    try {
-		result = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-			userView, "GetCandidatesByID", args);
-	    } catch (Exception e) {
-		throw new Exception(e);
-	    }
+	Object args[] = { candidateID };
+	try {
+	    result = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
+	} catch (Exception e) {
+	    throw new Exception(e);
+	}
 
-	    List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
+	List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
 
-	    if (candidateStudyPlan != null)
-		request.setAttribute("studyPlan", candidateStudyPlan);
+	if (candidateStudyPlan != null)
+	    request.setAttribute("studyPlan", candidateStudyPlan);
 
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, result);
-	    return mapping.findForward("VisualizeCandidate");
+	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, result);
+	return mapping.findForward("VisualizeCandidate");
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	    DynaActionForm editCandidateForm = (DynaActionForm) form;
+	DynaActionForm editCandidateForm = (DynaActionForm) form;
 
-	    Integer candidateID = (Integer) request.getAttribute("candidateID");
-	    if (candidateID == null) {
-		candidateID = Integer.valueOf(request.getParameter("candidateID"));
-	    }
+	Integer candidateID = (Integer) request.getAttribute("candidateID");
+	if (candidateID == null) {
+	    candidateID = Integer.valueOf(request.getParameter("candidateID"));
+	}
 
-	    // Read the Candidates for This Person
+	// Read the Candidates for This Person
 
-	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
-	    Object args[] = { candidateID };
-	    try {
-		infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-			.executeService( "GetCandidatesByID", args);
-	    } catch (Exception e) {
-		throw new Exception(e);
-	    }
+	Object args[] = { candidateID };
+	try {
+	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
+		    "GetCandidatesByID", args);
+	} catch (Exception e) {
+	    throw new Exception(e);
+	}
 
-	    boolean validationError = request.getParameter("error") != null;
-	    if (!validationError) {
-		populateForm(editCandidateForm, infoMasterDegreeCandidate);
-	    }
+	boolean validationError = request.getParameter("error") != null;
+	if (!validationError) {
+	    populateForm(editCandidateForm, infoMasterDegreeCandidate);
+	}
 
-	    // Get List of available Countries
-	    Object result = null;
-	    result = ServiceManagerServiceFactory.executeService( "ReadAllCountries", null);
-	    List country = (ArrayList) result;
+	// Get List of available Countries
+	Object result = null;
+	result = ServiceManagerServiceFactory.executeService("ReadAllCountries", null);
+	List country = (ArrayList) result;
 
-	    // Build List of Countries for the Form
-	    Iterator iterador = country.iterator();
+	// Build List of Countries for the Form
+	Iterator iterador = country.iterator();
 
-	    List nationalityList = new ArrayList();
-	    while (iterador.hasNext()) {
-		InfoCountry countryTemp = (InfoCountry) iterador.next();
-		nationalityList.add(new LabelValueBean(countryTemp.getNationality(), countryTemp
-			.getNationality()));
-	    }
+	List nationalityList = new ArrayList();
+	while (iterador.hasNext()) {
+	    InfoCountry countryTemp = (InfoCountry) iterador.next();
+	    nationalityList.add(new LabelValueBean(countryTemp.getNationality(), countryTemp.getNationality()));
+	}
 
-	    request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-	    request.setAttribute(SessionConstants.SEX_LIST_KEY, GenderHelper
-		    .getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
-	    request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	    request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-	    request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
+	request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
+	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+	request.setAttribute(SessionConstants.SEX_LIST_KEY, GenderHelper.getSexLabelValues((Locale) request
+		.getAttribute(Globals.LOCALE_KEY)));
+	request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
+	request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
 
-	    request.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
+	request.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
 
-	    request.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
+	request.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
 
-	    return mapping.findForward("PrepareReady");
+	return mapping.findForward("PrepareReady");
     }
 
-    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
+	DynaActionForm editCandidateForm = (DynaActionForm) form;
+
+	Integer candidateID = (Integer) editCandidateForm.get("candidateID");
+
+	// FIXME: Check All if fields are empty
+
+	Calendar birthDate = Calendar.getInstance();
+	Calendar idDocumentIssueDate = Calendar.getInstance();
+	Calendar idDocumentExpirationDate = Calendar.getInstance();
+
+	InfoPersonEditor infoPerson = new InfoPersonEditor();
+
+	String day = (String) editCandidateForm.get("birthDay");
+	String month = (String) editCandidateForm.get("birthMonth");
+	String year = (String) editCandidateForm.get("birthYear");
+
+	if (StringUtils.isEmpty(day) || StringUtils.isEmpty(month) || StringUtils.isEmpty(year)) {
+	    infoPerson.setNascimento(null);
+	} else {
+	    birthDate.set(new Integer(((String) editCandidateForm.get("birthYear"))).intValue(), new Integer(
+		    ((String) editCandidateForm.get("birthMonth"))).intValue(), new Integer(((String) editCandidateForm
+		    .get("birthDay"))).intValue());
+	    infoPerson.setNascimento(birthDate.getTime());
+	}
+
+	day = (String) editCandidateForm.get("idIssueDateDay");
+	month = (String) editCandidateForm.get("idIssueDateMonth");
+	year = (String) editCandidateForm.get("idIssueDateYear");
+
+	if (StringUtils.isEmpty(day) || StringUtils.isEmpty(month) || StringUtils.isEmpty(year)) {
+	    infoPerson.setDataEmissaoDocumentoIdentificacao(null);
+	} else {
+	    idDocumentIssueDate.set(new Integer(((String) editCandidateForm.get("idIssueDateYear"))).intValue(), new Integer(
+		    ((String) editCandidateForm.get("idIssueDateMonth"))).intValue(), new Integer(((String) editCandidateForm
+		    .get("idIssueDateDay"))).intValue());
+	    infoPerson.setDataEmissaoDocumentoIdentificacao(idDocumentIssueDate.getTime());
+	}
+
+	day = (String) editCandidateForm.get("idExpirationDateDay");
+	month = (String) editCandidateForm.get("idExpirationDateMonth");
+	year = (String) editCandidateForm.get("idExpirationDateYear");
+
+	if (StringUtils.isEmpty(day) || StringUtils.isEmpty(month) || StringUtils.isEmpty(year)) {
+	    infoPerson.setDataValidadeDocumentoIdentificacao(null);
+	} else {
+	    idDocumentExpirationDate.set(new Integer(((String) editCandidateForm.get("idExpirationDateYear"))).intValue(),
+		    new Integer(((String) editCandidateForm.get("idExpirationDateMonth"))).intValue(), new Integer(
+			    ((String) editCandidateForm.get("idExpirationDateDay"))).intValue());
+	    infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
+	}
+	InfoCountryEditor nationality = new InfoCountryEditor();
+	nationality.setNationality((String) editCandidateForm.get("nationality"));
+
+	infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editCandidateForm
+		.get("identificationDocumentType")));
+	infoPerson.setNumeroDocumentoIdentificacao((String) editCandidateForm.get("identificationDocumentNumber"));
+	infoPerson.setLocalEmissaoDocumentoIdentificacao((String) editCandidateForm.get("identificationDocumentIssuePlace"));
+	infoPerson.setNome((String) editCandidateForm.get("name"));
+
+	String sex = (String) editCandidateForm.get("sex");
+	if (StringUtils.isEmpty(sex)) {
+	    infoPerson.setSexo(null);
+	} else {
+	    infoPerson.setSexo(Gender.valueOf(sex));
+	}
+
+	String maritalStatus = (String) editCandidateForm.get("maritalStatus");
+	if (StringUtils.isEmpty(maritalStatus)) {
+	    infoPerson.setMaritalStatus(null);
+	} else {
+	    infoPerson.setMaritalStatus(MaritalStatus.valueOf(maritalStatus));
+	}
+
+	infoPerson.setInfoPais(nationality);
+	infoPerson.setNomePai((String) editCandidateForm.get("fatherName"));
+	infoPerson.setNomeMae((String) editCandidateForm.get("motherName"));
+	infoPerson.setFreguesiaNaturalidade((String) editCandidateForm.get("birthPlaceParish"));
+	infoPerson.setConcelhoNaturalidade((String) editCandidateForm.get("birthPlaceMunicipality"));
+	infoPerson.setDistritoNaturalidade((String) editCandidateForm.get("birthPlaceDistrict"));
+	infoPerson.setMorada((String) editCandidateForm.get("address"));
+	infoPerson.setLocalidade((String) editCandidateForm.get("place"));
+	infoPerson.setCodigoPostal((String) editCandidateForm.get("postCode"));
+	infoPerson.setFreguesiaMorada((String) editCandidateForm.get("addressParish"));
+	infoPerson.setConcelhoMorada((String) editCandidateForm.get("addressMunicipality"));
+	infoPerson.setDistritoMorada((String) editCandidateForm.get("addressDistrict"));
+	infoPerson.setTelefone((String) editCandidateForm.get("telephone"));
+	infoPerson.setTelemovel((String) editCandidateForm.get("mobilePhone"));
+	infoPerson.setEmail((String) editCandidateForm.get("email"));
+	infoPerson.setEnderecoWeb((String) editCandidateForm.get("webSite"));
+	infoPerson.setNumContribuinte((String) editCandidateForm.get("contributorNumber"));
+	infoPerson.setProfissao((String) editCandidateForm.get("occupation"));
+	infoPerson.setUsername((String) editCandidateForm.get("username"));
+	infoPerson.setLocalidadeCodigoPostal((String) editCandidateForm.get("areaOfAreaCode"));
+
+	InfoMasterDegreeCandidate newCandidate = new InfoMasterDegreeCandidate();
+
+	newCandidate.setMajorDegree((String) editCandidateForm.get("majorDegree"));
+	newCandidate.setMajorDegreeSchool((String) editCandidateForm.get("majorDegreeSchool"));
+	newCandidate.setSpecializationArea((String) editCandidateForm.get("specializationArea"));
+
+	String majorDegreeYearString = (String) editCandidateForm.get("majorDegreeYear");
+
+	if ((majorDegreeYearString == null) || (majorDegreeYearString.length() == 0))
+	    newCandidate.setMajorDegreeYear(null);
+	else
+	    newCandidate.setMajorDegreeYear(new Integer(majorDegreeYearString));
+
+	String averageString = (String) editCandidateForm.get("average");
+	if ((averageString != null) && (averageString.length() != 0))
+	    newCandidate.setAverage(new Double(averageString));
+	else
+	    newCandidate.setAverage(null);
+
+	String situation = (String) editCandidateForm.get("situation");
+	String situationRemarks = (String) editCandidateForm.get("situationRemarks");
+	InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
+	infoCandidateSituation.setRemarks(situationRemarks);
+
+	infoCandidateSituation.setSituation(new SituationName(situation));
+	newCandidate.setInfoCandidateSituation(infoCandidateSituation);
+
+	InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
+	try {
+	    final MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+	    final Object args[] = { masterDegreeCandidate, newCandidate, infoPerson };
+	    infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
+		    "EditMasterDegreeCandidate", args);
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException("Esta Person", e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+
+	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidateChanged);
+	return mapping.findForward("ChangeSuccess");
+    }
+
+    public ActionForward changePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	    DynaActionForm editCandidateForm = (DynaActionForm) form;
-
-	    Integer candidateID = (Integer) editCandidateForm.get("candidateID");
-
-	    // FIXME: Check All if fields are empty
-
-	    Calendar birthDate = Calendar.getInstance();
-	    Calendar idDocumentIssueDate = Calendar.getInstance();
-	    Calendar idDocumentExpirationDate = Calendar.getInstance();
-
-	    InfoPersonEditor infoPerson = new InfoPersonEditor();
-
-	    String day = (String) editCandidateForm.get("birthDay");
-	    String month = (String) editCandidateForm.get("birthMonth");
-	    String year = (String) editCandidateForm.get("birthYear");
-
-	    if (StringUtils.isEmpty(day) || StringUtils.isEmpty(month) || StringUtils.isEmpty(year)) {
-		infoPerson.setNascimento(null);
-	    } else {
-		birthDate.set(new Integer(((String) editCandidateForm.get("birthYear"))).intValue(),
-			new Integer(((String) editCandidateForm.get("birthMonth"))).intValue(),
-			new Integer(((String) editCandidateForm.get("birthDay"))).intValue());
-		infoPerson.setNascimento(birthDate.getTime());
-	    }
-
-	    day = (String) editCandidateForm.get("idIssueDateDay");
-	    month = (String) editCandidateForm.get("idIssueDateMonth");
-	    year = (String) editCandidateForm.get("idIssueDateYear");
-
-	    if (StringUtils.isEmpty(day) || StringUtils.isEmpty(month) || StringUtils.isEmpty(year)) {
-		infoPerson.setDataEmissaoDocumentoIdentificacao(null);
-	    } else {
-		idDocumentIssueDate.set(new Integer(((String) editCandidateForm.get("idIssueDateYear")))
-			.intValue(), new Integer(((String) editCandidateForm.get("idIssueDateMonth")))
-			.intValue(), new Integer(((String) editCandidateForm.get("idIssueDateDay")))
-			.intValue());
-		infoPerson.setDataEmissaoDocumentoIdentificacao(idDocumentIssueDate.getTime());
-	    }
-
-	    day = (String) editCandidateForm.get("idExpirationDateDay");
-	    month = (String) editCandidateForm.get("idExpirationDateMonth");
-	    year = (String) editCandidateForm.get("idExpirationDateYear");
-
-	    if (StringUtils.isEmpty(day) || StringUtils.isEmpty(month) || StringUtils.isEmpty(year)) {
-		infoPerson.setDataValidadeDocumentoIdentificacao(null);
-	    } else {
-		idDocumentExpirationDate.set(new Integer(((String) editCandidateForm
-			.get("idExpirationDateYear"))).intValue(), new Integer(
-			((String) editCandidateForm.get("idExpirationDateMonth"))).intValue(),
-			new Integer(((String) editCandidateForm.get("idExpirationDateDay"))).intValue());
-		infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
-	    }
-	    InfoCountryEditor nationality = new InfoCountryEditor();
-	    nationality.setNationality((String) editCandidateForm.get("nationality"));
-
-	    infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editCandidateForm
-		    .get("identificationDocumentType")));
-	    infoPerson.setNumeroDocumentoIdentificacao((String) editCandidateForm
-		    .get("identificationDocumentNumber"));
-	    infoPerson.setLocalEmissaoDocumentoIdentificacao((String) editCandidateForm
-		    .get("identificationDocumentIssuePlace"));
-	    infoPerson.setNome((String) editCandidateForm.get("name"));
-
-	    String sex = (String) editCandidateForm.get("sex");
-	    if (StringUtils.isEmpty(sex)) {
-		infoPerson.setSexo(null);
-	    } else {
-		infoPerson.setSexo(Gender.valueOf(sex));
-	    }
-
-	    String maritalStatus = (String) editCandidateForm.get("maritalStatus");
-	    if (StringUtils.isEmpty(maritalStatus)) {
-		infoPerson.setMaritalStatus(null);
-	    } else {
-		infoPerson.setMaritalStatus(MaritalStatus.valueOf(maritalStatus));
-	    }
-
-	    infoPerson.setInfoPais(nationality);
-	    infoPerson.setNomePai((String) editCandidateForm.get("fatherName"));
-	    infoPerson.setNomeMae((String) editCandidateForm.get("motherName"));
-	    infoPerson.setFreguesiaNaturalidade((String) editCandidateForm.get("birthPlaceParish"));
-	    infoPerson.setConcelhoNaturalidade((String) editCandidateForm.get("birthPlaceMunicipality"));
-	    infoPerson.setDistritoNaturalidade((String) editCandidateForm.get("birthPlaceDistrict"));
-	    infoPerson.setMorada((String) editCandidateForm.get("address"));
-	    infoPerson.setLocalidade((String) editCandidateForm.get("place"));
-	    infoPerson.setCodigoPostal((String) editCandidateForm.get("postCode"));
-	    infoPerson.setFreguesiaMorada((String) editCandidateForm.get("addressParish"));
-	    infoPerson.setConcelhoMorada((String) editCandidateForm.get("addressMunicipality"));
-	    infoPerson.setDistritoMorada((String) editCandidateForm.get("addressDistrict"));
-	    infoPerson.setTelefone((String) editCandidateForm.get("telephone"));
-	    infoPerson.setTelemovel((String) editCandidateForm.get("mobilePhone"));
-	    infoPerson.setEmail((String) editCandidateForm.get("email"));
-	    infoPerson.setEnderecoWeb((String) editCandidateForm.get("webSite"));
-	    infoPerson.setNumContribuinte((String) editCandidateForm.get("contributorNumber"));
-	    infoPerson.setProfissao((String) editCandidateForm.get("occupation"));
-	    infoPerson.setUsername((String) editCandidateForm.get("username"));
-	    infoPerson.setLocalidadeCodigoPostal((String) editCandidateForm.get("areaOfAreaCode"));
-
-	    InfoMasterDegreeCandidate newCandidate = new InfoMasterDegreeCandidate();
-
-	    newCandidate.setMajorDegree((String) editCandidateForm.get("majorDegree"));
-	    newCandidate.setMajorDegreeSchool((String) editCandidateForm.get("majorDegreeSchool"));
-	    newCandidate.setSpecializationArea((String) editCandidateForm.get("specializationArea"));
-
-	    String majorDegreeYearString = (String) editCandidateForm.get("majorDegreeYear");
-
-	    if ((majorDegreeYearString == null) || (majorDegreeYearString.length() == 0))
-		newCandidate.setMajorDegreeYear(null);
-	    else
-		newCandidate.setMajorDegreeYear(new Integer(majorDegreeYearString));
-
-	    String averageString = (String) editCandidateForm.get("average");
-	    if ((averageString != null) && (averageString.length() != 0))
-		newCandidate.setAverage(new Double(averageString));
-	    else
-		newCandidate.setAverage(null);
-
-	    String situation = (String) editCandidateForm.get("situation");
-	    String situationRemarks = (String) editCandidateForm.get("situationRemarks");
-	    InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
-	    infoCandidateSituation.setRemarks(situationRemarks);
-
-	    infoCandidateSituation.setSituation(new SituationName(situation));
-	    newCandidate.setInfoCandidateSituation(infoCandidateSituation);
-
-	    InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
-	    try {
-		final MasterDegreeCandidate masterDegreeCandidate = rootDomainObject
-			.readMasterDegreeCandidateByOID(candidateID);
-		final Object args[] = { masterDegreeCandidate, newCandidate, infoPerson };
-		infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-			.executeService( "EditMasterDegreeCandidate", args);
-	    } catch (ExistingServiceException e) {
-		throw new ExistingActionException("Esta Person", e);
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException(e);
-	    }
-
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE,
-		    infoMasterDegreeCandidateChanged);
-	    return mapping.findForward("ChangeSuccess");
-    }
-
-    public ActionForward changePassword(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	HttpSession session = request.getSession(false);
 
-	    // Read the Candidate
+	// Read the Candidate
 
-	    final Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
-	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+	final Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
-	    try {
-		Object args[] = { candidateID };
-		infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-			.executeService( "GetCandidatesByID", args);
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException();
-	    }
-        String pass = null;
-	    try {
-		final Person person = (Person) rootDomainObject.readPartyByOID(infoMasterDegreeCandidate
-			.getInfoPerson().getIdInternal());
-        pass = (String)ServiceManagerServiceFactory.executeService( "GenerateNewPassword",
-			new Object[] { person });
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException();
-	    }
-        request.setAttribute("password",pass);
-	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-	    session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
-	    return mapping.findForward("ChangePasswordSuccess");
+	try {
+	    Object args[] = { candidateID };
+	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
+		    "GetCandidatesByID", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException();
+	}
+	String pass = null;
+	try {
+	    final Person person = (Person) rootDomainObject.readPartyByOID(infoMasterDegreeCandidate.getInfoPerson()
+		    .getIdInternal());
+	    pass = (String) ServiceManagerServiceFactory.executeService("GenerateNewPassword", new Object[] { person });
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException();
+	}
+	request.setAttribute("password", pass);
+	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+	session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
+	return mapping.findForward("ChangePasswordSuccess");
 
     }
 
-    private void populateForm(DynaActionForm editCandidateForm,
-	    InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
+    private void populateForm(DynaActionForm editCandidateForm, InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
 	// Fill in The Form
 
 	InfoPerson infoPerson = infoMasterDegreeCandidate.getInfoPerson();
 
-	editCandidateForm.set("identificationDocumentNumber", infoPerson
-		.getNumeroDocumentoIdentificacao());
-	editCandidateForm.set("identificationDocumentType", infoPerson.getTipoDocumentoIdentificacao()
-		.toString());
-	editCandidateForm.set("identificationDocumentIssuePlace", infoPerson
-		.getLocalEmissaoDocumentoIdentificacao());
+	editCandidateForm.set("identificationDocumentNumber", infoPerson.getNumeroDocumentoIdentificacao());
+	editCandidateForm.set("identificationDocumentType", infoPerson.getTipoDocumentoIdentificacao().toString());
+	editCandidateForm.set("identificationDocumentIssuePlace", infoPerson.getLocalEmissaoDocumentoIdentificacao());
 	editCandidateForm.set("name", infoPerson.getNome());
 
 	Calendar birthDate = Calendar.getInstance();
@@ -509,8 +486,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    editCandidateForm.set("birthYear", Data.OPTION_DEFAULT);
 	} else {
 	    birthDate.setTime(infoPerson.getNascimento());
-	    editCandidateForm.set("birthDay", new Integer(birthDate.get(Calendar.DAY_OF_MONTH))
-		    .toString());
+	    editCandidateForm.set("birthDay", new Integer(birthDate.get(Calendar.DAY_OF_MONTH)).toString());
 	    editCandidateForm.set("birthMonth", new Integer(birthDate.get(Calendar.MONTH)).toString());
 	    editCandidateForm.set("birthYear", new Integer(birthDate.get(Calendar.YEAR)).toString());
 	}
@@ -522,12 +498,11 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    editCandidateForm.set("idIssueDateYear", Data.OPTION_DEFAULT);
 	} else {
 	    identificationDocumentIssueDate.setTime(infoPerson.getDataEmissaoDocumentoIdentificacao());
-	    editCandidateForm.set("idIssueDateDay", new Integer(identificationDocumentIssueDate
-		    .get(Calendar.DAY_OF_MONTH)).toString());
-	    editCandidateForm.set("idIssueDateMonth", new Integer(identificationDocumentIssueDate
-		    .get(Calendar.MONTH)).toString());
-	    editCandidateForm.set("idIssueDateYear", new Integer(identificationDocumentIssueDate
-		    .get(Calendar.YEAR)).toString());
+	    editCandidateForm.set("idIssueDateDay", new Integer(identificationDocumentIssueDate.get(Calendar.DAY_OF_MONTH))
+		    .toString());
+	    editCandidateForm
+		    .set("idIssueDateMonth", new Integer(identificationDocumentIssueDate.get(Calendar.MONTH)).toString());
+	    editCandidateForm.set("idIssueDateYear", new Integer(identificationDocumentIssueDate.get(Calendar.YEAR)).toString());
 	}
 
 	Calendar identificationDocumentExpirationDate = Calendar.getInstance();
@@ -536,14 +511,13 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    editCandidateForm.set("idExpirationDateMonth", Data.OPTION_DEFAULT);
 	    editCandidateForm.set("idExpirationDateYear", Data.OPTION_DEFAULT);
 	} else {
-	    identificationDocumentExpirationDate.setTime(infoPerson
-		    .getDataValidadeDocumentoIdentificacao());
-	    editCandidateForm.set("idExpirationDateDay", new Integer(
-		    identificationDocumentExpirationDate.get(Calendar.DAY_OF_MONTH)).toString());
-	    editCandidateForm.set("idExpirationDateMonth", new Integer(
-		    identificationDocumentExpirationDate.get(Calendar.MONTH)).toString());
-	    editCandidateForm.set("idExpirationDateYear", new Integer(
-		    identificationDocumentExpirationDate.get(Calendar.YEAR)).toString());
+	    identificationDocumentExpirationDate.setTime(infoPerson.getDataValidadeDocumentoIdentificacao());
+	    editCandidateForm.set("idExpirationDateDay", new Integer(identificationDocumentExpirationDate
+		    .get(Calendar.DAY_OF_MONTH)).toString());
+	    editCandidateForm.set("idExpirationDateMonth", new Integer(identificationDocumentExpirationDate.get(Calendar.MONTH))
+		    .toString());
+	    editCandidateForm.set("idExpirationDateYear", new Integer(identificationDocumentExpirationDate.get(Calendar.YEAR))
+		    .toString());
 	}
 
 	editCandidateForm.set("fatherName", infoPerson.getNomePai());
@@ -573,8 +547,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	editCandidateForm.set("occupation", infoPerson.getProfissao());
 	editCandidateForm.set("username", infoPerson.getUsername());
 	editCandidateForm.set("areaOfAreaCode", infoPerson.getLocalidadeCodigoPostal());
-	editCandidateForm.set("situation", infoMasterDegreeCandidate.getInfoCandidateSituation()
-		.getSituation().toString());
+	editCandidateForm.set("situation", infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().toString());
 	editCandidateForm.set("specializationArea", infoMasterDegreeCandidate.getSpecializationArea());
 	if (infoMasterDegreeCandidate.getAverage() != null) {
 	    editCandidateForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
@@ -593,8 +566,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    if ((infoMasterDegreeCandidate.getMajorDegreeYear().intValue() == 0))
 		editCandidateForm.set("majorDegreeYear", null);
 	    else
-		editCandidateForm.set("majorDegreeYear", String.valueOf(infoMasterDegreeCandidate
-			.getMajorDegreeYear()));
+		editCandidateForm.set("majorDegreeYear", String.valueOf(infoMasterDegreeCandidate.getMajorDegreeYear()));
 	}
 
     }
@@ -606,15 +578,13 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-		    .toString()
-		    + " em " + name;
+	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
 
 	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
 		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-	    executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree
-		    .getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
+	    executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+		    .getNome()));
 	    //
 	}
 	return executionDegreeLabels;
@@ -638,8 +608,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	Object[] args = { candidateID };
 
 	try {
-	    return (List) ServiceManagerServiceFactory.executeService(
-		    "ReadCandidateEnrolmentsByCandidateID", args);
+	    return (List) ServiceManagerServiceFactory.executeService("ReadCandidateEnrolmentsByCandidateID", args);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    return null;

@@ -9,5 +9,5 @@ import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 import org.jdom.Element;
 
 public interface PredicateElementProcessable {
-	public Predicate process(Element element, HashMap<String, NewTestElement> transformationMap, NewQuestionType questionType);
+    public Predicate process(Element element, HashMap<String, NewTestElement> transformationMap, NewQuestionType questionType);
 }

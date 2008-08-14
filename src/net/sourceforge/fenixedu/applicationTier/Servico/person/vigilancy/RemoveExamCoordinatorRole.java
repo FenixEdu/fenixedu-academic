@@ -9,7 +9,7 @@ public class RemoveExamCoordinatorRole extends Service {
 
     public void run(Person person) {
 
-        person.removeRoleByType(RoleType.EXAM_COORDINATOR);
+	person.removeRoleByType(RoleType.EXAM_COORDINATOR);
 
     }
 

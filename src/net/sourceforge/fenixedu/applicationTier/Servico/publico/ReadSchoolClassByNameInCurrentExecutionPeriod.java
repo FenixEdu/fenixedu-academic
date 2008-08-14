@@ -22,32 +22,30 @@ import org.apache.commons.collections.Predicate;
  */
 public class ReadSchoolClassByNameInCurrentExecutionPeriod extends Service {
 
-	public SchoolClassDTO run(final String schoolClassName) throws FenixServiceException{
-		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-		SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(executionSemester
-				.getSchoolClasses(), new Predicate() {
+    public SchoolClassDTO run(final String schoolClassName) throws FenixServiceException {
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+	SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(executionSemester.getSchoolClasses(), new Predicate() {
 
-			public boolean evaluate(Object arg0) {
-				SchoolClass schoolClass = (SchoolClass) arg0;
-				return schoolClass.getNome().equalsIgnoreCase(schoolClassName);
-			}
-		});
-		if (schoolClass != null) {
-			DegreeCurricularPlan degreeCurricularPlan = schoolClass.getExecutionDegree()
-					.getDegreeCurricularPlan();
-			Degree degree = degreeCurricularPlan.getDegree();
-			SchoolClassDTO schoolClassDTO = new SchoolClassDTO();
-			schoolClassDTO.setExecutionPeriodId(executionSemester.getIdInternal());
-			schoolClassDTO.setSchoolClassId(schoolClass.getIdInternal());
-			schoolClassDTO.setSchoolClassName(schoolClass.getNome());
-			schoolClassDTO.setDegreeCurricularPlanId(degreeCurricularPlan.getIdInternal());
-			schoolClassDTO.setDegreeCurricularPlanName(degreeCurricularPlan.getName());
-			schoolClassDTO.setDegreeId(degree.getIdInternal());
-			schoolClassDTO.setDegreeInitials(degree.getSigla());
-			return schoolClassDTO;
-		}
-		return null;
-
+	    public boolean evaluate(Object arg0) {
+		SchoolClass schoolClass = (SchoolClass) arg0;
+		return schoolClass.getNome().equalsIgnoreCase(schoolClassName);
+	    }
+	});
+	if (schoolClass != null) {
+	    DegreeCurricularPlan degreeCurricularPlan = schoolClass.getExecutionDegree().getDegreeCurricularPlan();
+	    Degree degree = degreeCurricularPlan.getDegree();
+	    SchoolClassDTO schoolClassDTO = new SchoolClassDTO();
+	    schoolClassDTO.setExecutionPeriodId(executionSemester.getIdInternal());
+	    schoolClassDTO.setSchoolClassId(schoolClass.getIdInternal());
+	    schoolClassDTO.setSchoolClassName(schoolClass.getNome());
+	    schoolClassDTO.setDegreeCurricularPlanId(degreeCurricularPlan.getIdInternal());
+	    schoolClassDTO.setDegreeCurricularPlanName(degreeCurricularPlan.getName());
+	    schoolClassDTO.setDegreeId(degree.getIdInternal());
+	    schoolClassDTO.setDegreeInitials(degree.getSigla());
+	    return schoolClassDTO;
 	}
+	return null;
+
+    }
 
 }

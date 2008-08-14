@@ -22,7 +22,8 @@ import org.apache.commons.collections.Transformer;
 /**
  * 
  * 
- * This class contains all the information regarding a Reimbursement Guide. <br/>
+ * This class contains all the information regarding a Reimbursement Guide.
+ * <br/>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  * 
@@ -50,83 +51,82 @@ public class InfoReimbursementGuide extends InfoObject {
      * @param reimbursementGuideId
      */
     public InfoReimbursementGuide(Integer reimbursementGuideId) {
-        setIdInternal(reimbursementGuideId);
+	setIdInternal(reimbursementGuideId);
     }
 
     /**
      * @return
      */
     public Calendar getCreationDate() {
-        return creationDate;
+	return creationDate;
     }
 
     /**
      * @param creationDate
      */
     public void setCreationDate(Calendar creationDate) {
-        this.creationDate = creationDate;
+	this.creationDate = creationDate;
     }
 
     /**
      * @return
      */
     public InfoGuide getInfoGuide() {
-        return infoGuide;
+	return infoGuide;
     }
 
     /**
      * @param paymentGuide
      */
     public void setInfoGuide(InfoGuide paymentGuide) {
-        this.infoGuide = paymentGuide;
+	this.infoGuide = paymentGuide;
     }
 
     /**
      * @return
      */
     public Integer getNumber() {
-        return number;
+	return number;
     }
 
     /**
      * @param number
      */
     public void setNumber(Integer number) {
-        this.number = number;
+	this.number = number;
     }
 
     /**
      * @return
      */
     public List getInfoReimbursementGuideSituations() {
-        return infoReimbursementGuideSituations;
+	return infoReimbursementGuideSituations;
     }
 
     /**
      * @param infoReimbursementGuideSituations
      */
     public void setInfoReimbursementGuideSituations(List infoReimbursementGuideSituations) {
-        this.infoReimbursementGuideSituations = infoReimbursementGuideSituations;
+	this.infoReimbursementGuideSituations = infoReimbursementGuideSituations;
     }
 
     /**
      * @return
      */
     public InfoReimbursementGuideSituation getActiveInfoReimbursementGuideSituation() {
-        return (InfoReimbursementGuideSituation) CollectionUtils.find(
-                getInfoReimbursementGuideSituations(), new Predicate() {
-                    public boolean evaluate(Object obj) {
-                        InfoReimbursementGuideSituation situation = (InfoReimbursementGuideSituation) obj;
-                        return situation.getState().getState().intValue() == State.ACTIVE;
-                    }
-                });
+	return (InfoReimbursementGuideSituation) CollectionUtils.find(getInfoReimbursementGuideSituations(), new Predicate() {
+	    public boolean evaluate(Object obj) {
+		InfoReimbursementGuideSituation situation = (InfoReimbursementGuideSituation) obj;
+		return situation.getState().getState().intValue() == State.ACTIVE;
+	    }
+	});
     }
 
     /**
      * @return Returns the infoReimbursementGuideEntries.
      */
     public List getInfoReimbursementGuideEntries() {
-        return infoReimbursementGuideEntries;
+	return infoReimbursementGuideEntries;
     }
 
     /**
@@ -134,50 +134,49 @@ public class InfoReimbursementGuide extends InfoObject {
      *            The infoReimbursementGuideEntries to set.
      */
     public void setInfoReimbursementGuideEntries(List infoReimbursementGuideEntries) {
-        this.infoReimbursementGuideEntries = infoReimbursementGuideEntries;
+	this.infoReimbursementGuideEntries = infoReimbursementGuideEntries;
     }
 
     public void copyFromDomain(ReimbursementGuide reimbursementGuide) {
-        super.copyFromDomain(reimbursementGuide);
-        if (reimbursementGuide != null) {
-            setCreationDate(reimbursementGuide.getCreationDate());
-            setInfoGuide(InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor
-                    .newInfoFromDomain(reimbursementGuide.getGuide()));
-            setNumber(reimbursementGuide.getNumber());
+	super.copyFromDomain(reimbursementGuide);
+	if (reimbursementGuide != null) {
+	    setCreationDate(reimbursementGuide.getCreationDate());
+	    setInfoGuide(InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor
+		    .newInfoFromDomain(reimbursementGuide.getGuide()));
+	    setNumber(reimbursementGuide.getNumber());
 
-            List infoReimbursementGuideEntries = (List) CollectionUtils.collect(reimbursementGuide
-                    .getReimbursementGuideEntries(), new Transformer() {
+	    List infoReimbursementGuideEntries = (List) CollectionUtils.collect(
+		    reimbursementGuide.getReimbursementGuideEntries(), new Transformer() {
 
-                public Object transform(Object arg0) {
-                    ReimbursementGuideEntry reimbursementGuideEntry = (ReimbursementGuideEntry) arg0;
-                    return InfoReimbursementGuideEntry.newInfoFromDomain(reimbursementGuideEntry);
-                }
-            });
+			public Object transform(Object arg0) {
+			    ReimbursementGuideEntry reimbursementGuideEntry = (ReimbursementGuideEntry) arg0;
+			    return InfoReimbursementGuideEntry.newInfoFromDomain(reimbursementGuideEntry);
+			}
+		    });
 
-            setInfoReimbursementGuideEntries(infoReimbursementGuideEntries);
+	    setInfoReimbursementGuideEntries(infoReimbursementGuideEntries);
 
-            List infoReimbursementGuideSituations = (List) CollectionUtils.collect(reimbursementGuide
-                    .getReimbursementGuideSituations(), new Transformer() {
+	    List infoReimbursementGuideSituations = (List) CollectionUtils.collect(reimbursementGuide
+		    .getReimbursementGuideSituations(), new Transformer() {
 
-                public Object transform(Object arg0) {
-                    ReimbursementGuideSituation reimbursementGuideSituation = (ReimbursementGuideSituation) arg0;
-                    return InfoReimbursementGuideSituation
-                            .newInfoFromDomain(reimbursementGuideSituation);
-                }
-            });
+		public Object transform(Object arg0) {
+		    ReimbursementGuideSituation reimbursementGuideSituation = (ReimbursementGuideSituation) arg0;
+		    return InfoReimbursementGuideSituation.newInfoFromDomain(reimbursementGuideSituation);
+		}
+	    });
 
-            setInfoReimbursementGuideSituations(infoReimbursementGuideSituations);
+	    setInfoReimbursementGuideSituations(infoReimbursementGuideSituations);
 
-        }
+	}
     }
 
     public static InfoReimbursementGuide newInfoFromDomain(ReimbursementGuide reimbursementGuide) {
-        InfoReimbursementGuide infoReimbursementGuide = null;
-        if (reimbursementGuide != null) {
-            infoReimbursementGuide = new InfoReimbursementGuide();
-            infoReimbursementGuide.copyFromDomain(reimbursementGuide);
-        }
-        return infoReimbursementGuide;
+	InfoReimbursementGuide infoReimbursementGuide = null;
+	if (reimbursementGuide != null) {
+	    infoReimbursementGuide = new InfoReimbursementGuide();
+	    infoReimbursementGuide.copyFromDomain(reimbursementGuide);
+	}
+	return infoReimbursementGuide;
     }
 
 }

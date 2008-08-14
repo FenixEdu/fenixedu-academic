@@ -21,13 +21,10 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void edit(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
 
 	Unit institution = precedentDegreeInformationBean.getInstitution();
-	if (institution == null
-		&& !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
-	    institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean
-		    .getInstitutionName());
+	if (institution == null && !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
+	    institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getInstitutionName());
 	    if (institution == null) {
-		institution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean
-			.getInstitutionName());
+		institution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean.getInstitutionName());
 	    }
 	}
 
@@ -37,13 +34,13 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	this.setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
 	this.setCountry(precedentDegreeInformationBean.getCountry());
     }
-    
+
     public void delete() {
 	removeCountry();
 	removeInstitution();
 	removeStudent();
 	removeStudentCandidacy();
-	
+
 	removeRootDomainObject();
 	deleteDomainObject();
     }

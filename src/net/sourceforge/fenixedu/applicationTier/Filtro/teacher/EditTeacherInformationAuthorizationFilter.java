@@ -23,36 +23,36 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRoleFilter {
 
     protected RoleType getRoleType() {
-        return RoleType.TEACHER;
+	return RoleType.TEACHER;
     }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
-        try {
-            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
-                    || (id == null)
-                    || (id.getRoleTypes() == null)
-                    || (!argumentsBelongToTeacher(id, (InfoServiceProviderRegime) arguments[0],
-                            (InfoWeeklyOcupation) arguments[1]))) {
-                throw new NotAuthorizedException();
-            }
-        } catch (RuntimeException e) {
-            throw new NotAuthorizedException(e.getMessage());
-        }
+	IUserView id = getRemoteUser(request);
+	Object[] arguments = getServiceCallArguments(request);
+	try {
+	    if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
+		    || (id == null)
+		    || (id.getRoleTypes() == null)
+		    || (!argumentsBelongToTeacher(id, (InfoServiceProviderRegime) arguments[0],
+			    (InfoWeeklyOcupation) arguments[1]))) {
+		throw new NotAuthorizedException();
+	    }
+	} catch (RuntimeException e) {
+	    throw new NotAuthorizedException(e.getMessage());
+	}
     }
 
-    private boolean argumentsBelongToTeacher(IUserView id,
-            InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation) {
-        final Person person = id.getPerson();
-        final Teacher teacher = person != null ? person.getTeacher() : null;
-        Integer teacherId = teacher.getIdInternal();
+    private boolean argumentsBelongToTeacher(IUserView id, InfoServiceProviderRegime infoServiceProviderRegime,
+	    InfoWeeklyOcupation infoWeeklyOcupation) {
+	final Person person = id.getPerson();
+	final Teacher teacher = person != null ? person.getTeacher() : null;
+	Integer teacherId = teacher.getIdInternal();
 
-        if (!infoServiceProviderRegime.getInfoTeacher().getIdInternal().equals(teacherId))
-            return false;
+	if (!infoServiceProviderRegime.getInfoTeacher().getIdInternal().equals(teacherId))
+	    return false;
 
-        if (!infoWeeklyOcupation.getInfoTeacher().getIdInternal().equals(teacherId))
-            return false;
-        return true;
+	if (!infoWeeklyOcupation.getInfoTeacher().getIdInternal().equals(teacherId))
+	    return false;
+	return true;
     }
 }

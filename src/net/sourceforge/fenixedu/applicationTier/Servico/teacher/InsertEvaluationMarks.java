@@ -32,122 +32,116 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Fernanda Quitério
- *  
+ * 
  */
 public class InsertEvaluationMarks extends Service {
 
-    public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
-            throws ExcepcaoInexistente, FenixServiceException{
+    public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks) throws ExcepcaoInexistente,
+	    FenixServiceException {
 
-        ExecutionCourseSite site = null;
-        Evaluation evaluation = null;
-        List<InfoMarkEditor> marksErrorsInvalidMark = null;
-        List attendList = null;
-        HashMap<String, String> newHashMarks = new HashMap<String, String>();
+	ExecutionCourseSite site = null;
+	Evaluation evaluation = null;
+	List<InfoMarkEditor> marksErrorsInvalidMark = null;
+	List attendList = null;
+	HashMap<String, String> newHashMarks = new HashMap<String, String>();
 
-        //Site
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-        site = executionCourse.getSite();
+	// Site
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+	site = executionCourse.getSite();
 
-        //Evaluation
-        evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
+	// Evaluation
+	evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
 
-        //Attend List
-        attendList = executionCourse.getAttends();
+	// Attend List
+	attendList = executionCourse.getAttends();
 
-        marksErrorsInvalidMark = new ArrayList<InfoMarkEditor>();
-        ListIterator iterAttends = attendList.listIterator();
+	marksErrorsInvalidMark = new ArrayList<InfoMarkEditor>();
+	ListIterator iterAttends = attendList.listIterator();
 
-        while (iterAttends.hasNext()) {
-            Attends attend = (Attends) iterAttends.next();
+	while (iterAttends.hasNext()) {
+	    Attends attend = (Attends) iterAttends.next();
 
-            String mark = (String) hashMarks.get(attend.getRegistration().getNumber().toString());
-            hashMarks.remove(attend.getRegistration().getNumber().toString());
+	    String mark = (String) hashMarks.get(attend.getRegistration().getNumber().toString());
+	    hashMarks.remove(attend.getRegistration().getNumber().toString());
 
-            if (mark != null && mark.length() > 0) {
-                if (!isValidMark(evaluation, mark, attend.getRegistration())) {
-                    InfoMarkEditor infoMark = new InfoMarkEditor();
-                    infoMark.setMark(mark);
+	    if (mark != null && mark.length() > 0) {
+		if (!isValidMark(evaluation, mark, attend.getRegistration())) {
+		    InfoMarkEditor infoMark = new InfoMarkEditor();
+		    infoMark.setMark(mark);
 
-                    infoMark.setInfoFrequenta(InfoFrequentaWithInfoStudentAndPerson
-                            .newInfoFromDomain(attend));
-                    marksErrorsInvalidMark.add(infoMark);
-                } else {
-                    newHashMarks.put(attend.getRegistration().getNumber().toString(), mark);
-                    Mark domainMark = evaluation.getMarkByAttend(attend);
-                    //verify if the student has already a mark
-                    if (domainMark == null) {
-                        domainMark = new Mark();
-                        domainMark.setAttend(attend);
-                        domainMark.setEvaluation(evaluation);
-                        domainMark.setMark(mark.toUpperCase());
+		    infoMark.setInfoFrequenta(InfoFrequentaWithInfoStudentAndPerson.newInfoFromDomain(attend));
+		    marksErrorsInvalidMark.add(infoMark);
+		} else {
+		    newHashMarks.put(attend.getRegistration().getNumber().toString(), mark);
+		    Mark domainMark = evaluation.getMarkByAttend(attend);
+		    // verify if the student has already a mark
+		    if (domainMark == null) {
+			domainMark = new Mark();
+			domainMark.setAttend(attend);
+			domainMark.setEvaluation(evaluation);
+			domainMark.setMark(mark.toUpperCase());
 
-                    } else {
-                        if (!domainMark.getMark().equals(mark)) {
-                            domainMark.setMark(mark.toUpperCase());
-                        }
-                    }
+		    } else {
+			if (!domainMark.getMark().equals(mark)) {
+			    domainMark.setMark(mark.toUpperCase());
+			}
+		    }
 
-                }
-            } else {
-                Mark domainMark = evaluation.getMarkByAttend(attend);
-                if (domainMark != null) {
-                	domainMark.delete();
-                }
-            }
-        }
+		}
+	    } else {
+		Mark domainMark = evaluation.getMarkByAttend(attend);
+		if (domainMark != null) {
+		    domainMark.delete();
+		}
+	    }
+	}
 
-        return createSiteView(site, evaluation, newHashMarks, marksErrorsInvalidMark, attendList,
-                hashMarks);
+	return createSiteView(site, evaluation, newHashMarks, marksErrorsInvalidMark, attendList, hashMarks);
     }
 
     private Object createSiteView(ExecutionCourseSite site, Evaluation evaluation, HashMap hashMarks,
-            List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents)
-            throws FenixServiceException{
-        InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
+	    List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents) throws FenixServiceException {
+	InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
 
-        infoSiteMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
-        infoSiteMarks.setHashMarks(hashMarks);
-        infoSiteMarks.setMarksListErrors(marksErrorsInvalidMark);
-        infoSiteMarks.setInfoAttends(attendList);
+	infoSiteMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
+	infoSiteMarks.setHashMarks(hashMarks);
+	infoSiteMarks.setMarksListErrors(marksErrorsInvalidMark);
+	infoSiteMarks.setInfoAttends(attendList);
 
-        List studentsListErrors = new ArrayList();
-        Iterator iter = nonExistingStudents.keySet().iterator();
-        while (iter.hasNext()) {
-            studentsListErrors.add(iter.next());
-        }
-        infoSiteMarks.setStudentsListErrors(studentsListErrors);
+	List studentsListErrors = new ArrayList();
+	Iterator iter = nonExistingStudents.keySet().iterator();
+	while (iter.hasNext()) {
+	    studentsListErrors.add(iter.next());
+	}
+	infoSiteMarks.setStudentsListErrors(studentsListErrors);
 
-        TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
-                null, null);
+	TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
+	ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent,
-                infoSiteMarks);
+	TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
 
-        return siteView;
+	return siteView;
     }
 
     private boolean isValidMark(Evaluation evaluation, String mark, Registration registration) {
-        StudentCurricularPlan studentCurricularPlan = null;
-        if(registration != null) {
-        	studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-        }
+	StudentCurricularPlan studentCurricularPlan = null;
+	if (registration != null) {
+	    studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	}
 
-        DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+	DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
-        // test marks by execution course: strategy
-        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
-                .getInstance();
-        IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
-                .getDegreeCurricularPlanStrategy(degreeCurricularPlan);
+	// test marks by execution course: strategy
+	IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+		.getInstance();
+	IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
+		.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
 
-        if (mark == null || mark.length() == 0) {
-            return true;
-        }
+	if (mark == null || mark.length() == 0) {
+	    return true;
+	}
 
-        return degreeCurricularPlanStrategy.checkMark(mark, InfoEvaluation.newInfoFromDomain(evaluation)
-                .getEvaluationType());
+	return degreeCurricularPlanStrategy.checkMark(mark, InfoEvaluation.newInfoFromDomain(evaluation).getEvaluationType());
 
     }
 }

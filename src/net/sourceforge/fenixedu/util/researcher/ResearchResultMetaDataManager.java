@@ -32,8 +32,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class ResearchResultMetaDataManager {
 
-    private static IContentFileManager fileManager = FileManagerFactory.getFactoryInstance()
-	    .getContentFileManager();
+    private static IContentFileManager fileManager = FileManagerFactory.getFactoryInstance().getContentFileManager();
 
     public static Collection<FileSetMetaData> createMetaData(ResearchResult researchResult) {
 	ArrayList<FileSetMetaData> metadata = new ArrayList<FileSetMetaData>();
@@ -57,21 +56,18 @@ public class ResearchResultMetaDataManager {
 	}
 
 	for (Unit unit : units) {
-	    metadata.add(new FileSetMetaData("unit", null, null, StringNormalizer.normalize(unit
-		    .getName())));
+	    metadata.add(new FileSetMetaData("unit", null, null, StringNormalizer.normalize(unit.getName())));
 	}
 
-	metadata.add(FileSetMetaData.createTitleMeta(StringNormalizer.normalize(researchResult
-		.getTitle())));
-	metadata.add(new FileSetMetaData("creator", null, null, StringNormalizer
-		.normalize(researchResult.getCreator().getName())));
+	metadata.add(FileSetMetaData.createTitleMeta(StringNormalizer.normalize(researchResult.getTitle())));
+	metadata
+		.add(new FileSetMetaData("creator", null, null, StringNormalizer.normalize(researchResult.getCreator().getName())));
 
 	MultiLanguageString note = researchResult.getNote();
 	if (note != null) {
 	    for (String abstractInAGivenLanguage : note.getAllContents()) {
 		if (abstractInAGivenLanguage != null && abstractInAGivenLanguage.length() > 0)
-		    metadata.add(new FileSetMetaData("description", "abstract", null,
-			    abstractInAGivenLanguage));
+		    metadata.add(new FileSetMetaData("description", "abstract", null, abstractInAGivenLanguage));
 	    }
 	}
 
@@ -79,8 +75,7 @@ public class ResearchResultMetaDataManager {
 	    ResearchResultPublication publication = (ResearchResultPublication) researchResult;
 	    String publisher = publication.getPublisher();
 	    if (publisher != null) {
-		metadata.add(new FileSetMetaData("publisher", null, null, StringNormalizer
-			.normalize(publisher)));
+		metadata.add(new FileSetMetaData("publisher", null, null, StringNormalizer.normalize(publisher)));
 	    }
 	    Integer year = publication.getYear();
 	    if (year != null) {
@@ -110,17 +105,15 @@ public class ResearchResultMetaDataManager {
 	InputStream inputStream;
 
 	inputStream = new StringInputStream("For index purpose only!");
-	FileDescriptor fileDescriptor = fileManager.createItemWithFile(getVirtualPath(result),
-		"default.txt", false, ResearchResultMetaDataManager.createMetaData(result), inputStream);
+	FileDescriptor fileDescriptor = fileManager.createItemWithFile(getVirtualPath(result), "default.txt", false,
+		ResearchResultMetaDataManager.createMetaData(result), inputStream);
 
 	result.setUniqueStorageId(fileDescriptor.getItemStorageId());
 
-	final Group permittedGroup = ResearchResultDocumentFile
-		.getPermittedGroup(FileResultPermittedGroupType.PUBLIC);
+	final Group permittedGroup = ResearchResultDocumentFile.getPermittedGroup(FileResultPermittedGroupType.PUBLIC);
 
-	result.addDocumentFile(fileDescriptor.getFilename(), "default.txt",
-		FileResultPermittedGroupType.PUBLIC, fileDescriptor.getMimeType(), fileDescriptor
-			.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
+	result.addDocumentFile(fileDescriptor.getFilename(), "default.txt", FileResultPermittedGroupType.PUBLIC, fileDescriptor
+		.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
 		fileDescriptor.getUniqueId(), permittedGroup, Boolean.FALSE);
 
 	return result;
@@ -134,13 +127,11 @@ public class ResearchResultMetaDataManager {
 
 	if (result instanceof ResearchResultPublication) {
 	    filePath.addNode(new VirtualPathNode("Publications", "Publications"));
-	    filePath.addNode(new VirtualPathNode("pub" + result.getIdInternal(), "pub"
-		    + result.getIdInternal().toString()));
+	    filePath.addNode(new VirtualPathNode("pub" + result.getIdInternal(), "pub" + result.getIdInternal().toString()));
 	}
 	if (result instanceof ResearchResultPatent) {
 	    filePath.addNode(new VirtualPathNode("Patents", "Patents"));
-	    filePath.addNode(new VirtualPathNode("pat" + result.getIdInternal(), "pat"
-		    + result.getIdInternal().toString()));
+	    filePath.addNode(new VirtualPathNode("pat" + result.getIdInternal(), "pat" + result.getIdInternal().toString()));
 	}
 
 	return filePath;

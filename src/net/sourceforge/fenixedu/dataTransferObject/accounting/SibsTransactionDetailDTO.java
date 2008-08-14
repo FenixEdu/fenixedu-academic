@@ -14,8 +14,7 @@ public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {
 	this(whenRegistered, sibsTransactionId, sibsCode, null);
     }
 
-    public SibsTransactionDetailDTO(DateTime whenRegistered, String sibsTransactionId,
-	    String sibsCode, String comments) {
+    public SibsTransactionDetailDTO(DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
 	super(whenRegistered, PaymentMode.ATM, comments);
 	this.sibsTransactionId = sibsTransactionId;
 	this.sibsCode = sibsCode;
@@ -37,7 +36,7 @@ public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {
     public void setSibsCode(String sibsCode) {
 	this.sibsCode = sibsCode;
     }
-    
+
     @Override
     public boolean isSibsTransactionDetail() {
 	return true;

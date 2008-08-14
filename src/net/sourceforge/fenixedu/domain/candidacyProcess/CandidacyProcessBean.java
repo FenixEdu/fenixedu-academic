@@ -15,7 +15,7 @@ public class CandidacyProcessBean implements Serializable {
 
     protected CandidacyProcessBean() {
     }
-    
+
     public CandidacyProcessBean(final ExecutionInterval executionInterval) {
 	setExecutionInterval(executionInterval);
     }

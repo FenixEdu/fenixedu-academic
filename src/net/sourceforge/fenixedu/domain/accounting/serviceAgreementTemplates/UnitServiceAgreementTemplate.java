@@ -29,8 +29,7 @@ public class UnitServiceAgreementTemplate extends UnitServiceAgreementTemplate_B
 
     @Override
     public void setUnit(Unit unit) {
-	throw new DomainException(
-		"error.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate.cannot.modify.unit");
+	throw new DomainException("error.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate.cannot.modify.unit");
     }
 
 }

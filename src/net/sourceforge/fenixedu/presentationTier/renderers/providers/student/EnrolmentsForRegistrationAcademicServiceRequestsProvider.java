@@ -14,7 +14,8 @@ public class EnrolmentsForRegistrationAcademicServiceRequestsProvider implements
 
     public Object provide(Object source, Object currentValue) {
 	final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
-	final List<Enrolment> enrolments = new ArrayList<Enrolment>(bean.getRegistration().getLastStudentCurricularPlan().getStudentEnrollmentsWithEnrolledState());
+	final List<Enrolment> enrolments = new ArrayList<Enrolment>(bean.getRegistration().getLastStudentCurricularPlan()
+		.getStudentEnrollmentsWithEnrolledState());
 	Collections.sort(enrolments, Enrolment.COMPARATOR_BY_NAME_AND_ID);
 	return enrolments;
     }

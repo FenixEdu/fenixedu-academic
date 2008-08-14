@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
-
 public abstract class ExamsPeriodCE extends ExamsPeriodCE_Base {
 
     protected ExamsPeriodCE() {
-	super();	
+	super();
     }
 
     @Override
     public boolean isExamsPeriod() {
 	return true;
     }
-   
+
     @Override
     protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
 	return !parentEntry.isAcademicSemester() && !parentEntry.isAcademicTrimester();
@@ -23,17 +22,17 @@ public abstract class ExamsPeriodCE extends ExamsPeriodCE_Base {
     }
 
     @Override
-    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
 	return false;
     }
 
     @Override
-    protected boolean isPossibleToChangeTimeInterval() {      
-        return false;
-    } 
-    
+    protected boolean isPossibleToChangeTimeInterval() {
+	return false;
+    }
+
     @Override
-    protected boolean associatedWithDomainEntities() {       
-        return false;
+    protected boolean associatedWithDomainEntities() {
+	return false;
     }
 }

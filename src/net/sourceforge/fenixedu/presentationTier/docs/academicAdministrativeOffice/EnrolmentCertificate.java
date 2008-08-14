@@ -41,8 +41,8 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	    final ExecutionYear executionYear = getDocumentRequest().getExecutionYear();
 	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration()
 		    .getCurricularYear(executionYear));
-	    final ResourceBundle enumerationResources = ResourceBundle
-		    .getBundle("resources/EnumerationResources", Language.getLocale());
+	    final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources/EnumerationResources", Language
+		    .getLocale());
 
 	    result.append(enumerationResources.getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");

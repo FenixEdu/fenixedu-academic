@@ -20,38 +20,38 @@ public class TeacherPersonalExpectationsDefinitionPeriodDA extends FenixDispatch
 
     public ActionForward showPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
+
 	ExecutionYear year = ExecutionYear.readCurrentExecutionYear();
 	readAndSetPeriod(request, year);
 	request.setAttribute("bean", new ExecutionYearBean(year));
 	return mapping.findForward("showDefinitionPeriod");
     }
-    
+
     public ActionForward showPeriodWithSelectedYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
+
 	IViewState viewState = RenderUtils.getViewState("executionYear");
 	ExecutionYear executionYear = (ExecutionYear) viewState.getMetaObject().getObject();
-	readAndSetPeriod(request, executionYear);            	
+	readAndSetPeriod(request, executionYear);
 	request.setAttribute("bean", new ExecutionYearBean(executionYear));
 	return mapping.findForward("showDefinitionPeriod");
     }
-  
+
     public ActionForward showPeriodInExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
-	ExecutionYear executionYear = getExecutionYearFromParameter(request);		
-	readAndSetPeriod(request, executionYear);	      	
+
+	ExecutionYear executionYear = getExecutionYearFromParameter(request);
+	readAndSetPeriod(request, executionYear);
 	request.setAttribute("bean", new ExecutionYearBean(executionYear));
 	return mapping.findForward("showDefinitionPeriod");
-    }    
-     
-    public ActionForward createPeriod(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
-	ExecutionYear executionYear = getExecutionYearFromParameter(request);		
+    }
+
+    public ActionForward createPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	ExecutionYear executionYear = getExecutionYearFromParameter(request);
 	request.setAttribute("executionYear", executionYear);
-        request.setAttribute("department", getDepartment(request));	
+	request.setAttribute("department", getDepartment(request));
 	return mapping.findForward("editDefinitionPeriod");
     }
 
@@ -59,25 +59,26 @@ public class TeacherPersonalExpectationsDefinitionPeriodDA extends FenixDispatch
 	    HttpServletResponse response) throws Exception {
 
 	ExecutionYear executionYear = getExecutionYearFromParameter(request);
-	readAndSetPeriod(request, executionYear);		
+	readAndSetPeriod(request, executionYear);
 	return mapping.findForward("editDefinitionPeriod");
     }
-    
+
     // Private Methods
 
     protected void readAndSetPeriod(HttpServletRequest request, ExecutionYear executionYear) {
-	if(executionYear != null) {
-	    TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getDepartment(request).getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
+	if (executionYear != null) {
+	    TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getDepartment(request)
+		    .getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
 	    request.setAttribute("period", teacherExpectationDefinitionPeriod);
-	}  
+	}
     }
-    
+
     protected ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
 	final String executionYearIDString = request.getParameter("executionYearId");
 	final Integer executionYearID = Integer.valueOf(executionYearIDString);
 	return rootDomainObject.readExecutionYearByOID(executionYearID);
-    }   
-    
+    }
+
     protected Department getDepartment(HttpServletRequest request) {
 	return getLoggedPerson(request).getEmployee().getCurrentDepartmentWorkingPlace();
     }

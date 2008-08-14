@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
  * <p>
  * The user creates an archive with a servlet response. Then, for each resource
  * to include in the archive, she calls {@link #getStream(Resource)} and writes
- * the resource content to it. After all resources are retrived {@link #finish()}
- * is called ensuring that all content is written to the servlet response. 
+ * the resource content to it. After all resources are retrived
+ * {@link #finish()} is called ensuring that all content is written to the
+ * servlet response.
  * 
  * <p>
- * <strong>Note</strong>
- * however that each intermediary stream may already be writing to the response
- * so the user should not use the response after creating the archive.
+ * <strong>Note</strong> however that each intermediary stream may already be
+ * writing to the response so the user should not use the response after
+ * creating the archive.
  * 
  * @see #getStream(Resource)
  * @see #finish()
@@ -30,42 +31,43 @@ public abstract class Archive {
     private String name;
 
     public Archive(HttpServletResponse response, String name) {
-        super();
-    
-        this.response = response;
-        this.name = name;
+	super();
+
+	this.response = response;
+	this.name = name;
     }
 
     public HttpServletResponse getResponse() {
-        return this.response;
+	return this.response;
     }
 
     public String getName() {
-        return this.name;
+	return this.name;
     }
 
     protected void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
-    
+
     /**
      * Obtains a new stream that can use to store the resource. In this
      * operation the resource name is important but each archive may process the
      * name differently. As a general rule, the resource name should use a path
-     * like format that does not start with <tt>'/'</tt> like <tt>"file"</tt>
-     * or <tt>"dira/dirb/file"</tt>.
+     * like format that does not start with <tt>'/'</tt> like <tt>"file"</tt> or
+     * <tt>"dira/dirb/file"</tt>.
      * 
      * @param resource
      *            the target resource
      * @return a stream where the resource's contents should be written
-     *         
-     * @throws IOException when an io error occurs 
+     * 
+     * @throws IOException
+     *             when an io error occurs
      */
     public abstract OutputStream getStream(Resource resource) throws IOException;
-    
+
     /**
-     * Finishes the archive ensuring that all content is written to the response and
-     * terminating any pending resources.
+     * Finishes the archive ensuring that all content is written to the response
+     * and terminating any pending resources.
      * 
      * @throws IOException
      */

@@ -15,8 +15,7 @@ import org.apache.struts.action.DynaActionForm;
 
 public abstract class AbstractBolonhaTransitionManagementDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	final List<Registration> registrations = getRegistrations(request);
 	if (registrations.size() == 1) {
@@ -32,8 +31,8 @@ public abstract class AbstractBolonhaTransitionManagementDA extends FenixDispatc
 
     }
 
-    private void setParametersToShowStudentCurricularPlan(final ActionForm form,
-	    final HttpServletRequest request, final Registration registration) {
+    private void setParametersToShowStudentCurricularPlan(final ActionForm form, final HttpServletRequest request,
+	    final Registration registration) {
 
 	setRegistration(request, registration);
 
@@ -45,8 +44,8 @@ public abstract class AbstractBolonhaTransitionManagementDA extends FenixDispatc
 	request.setAttribute("registration", registration);
     }
 
-    public ActionForward showStudentCurricularPlan(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	setParametersToShowStudentCurricularPlan(form, request, getRegistration(request, form));
 

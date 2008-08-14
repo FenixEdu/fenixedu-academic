@@ -26,55 +26,48 @@ import org.apache.struts.action.ActionMapping;
 
 public class VisualizeMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
-    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject
-		.readStudentCurricularPlanByOID(scpID);
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
 
-	new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request,
-		new ActionErrors(), studentCurricularPlan);
+	new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
+		studentCurricularPlan);
 
 	List<MasterDegreeThesisDataVersion> masterDegreeThesisDataHistory = studentCurricularPlan
 		.readNotActiveMasterDegreeThesisDataVersions();
 	if (masterDegreeThesisDataHistory.isEmpty() == false) {
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_HISTORY,
-		    masterDegreeThesisDataHistory);
+	    request.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_HISTORY, masterDegreeThesisDataHistory);
 	}
 
-	MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = studentCurricularPlan
-		.getMasterDegreeThesis().getActiveMasterDegreeThesisDataVersion();
+	MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = studentCurricularPlan.getMasterDegreeThesis()
+		.getActiveMasterDegreeThesisDataVersion();
 
 	if (masterDegreeThesisDataVersion.getGuiders().isEmpty() == false) {
-	    request.setAttribute(SessionConstants.GUIDERS_LIST, masterDegreeThesisDataVersion
-		    .getGuiders());
+	    request.setAttribute(SessionConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());
 	}
 
 	if (masterDegreeThesisDataVersion.getAssistentGuiders().isEmpty() == false) {
-	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
-		    .getAssistentGuiders());
+	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion.getAssistentGuiders());
 	}
 
 	if (masterDegreeThesisDataVersion.getExternalAssistentGuiders().isEmpty() == false) {
-	    request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
-		    masterDegreeThesisDataVersion.getExternalAssistentGuiders());
+	    request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
+		    .getExternalAssistentGuiders());
 	}
 
 	if (masterDegreeThesisDataVersion.getExternalGuiders().isEmpty() == false) {
-	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, masterDegreeThesisDataVersion
-		    .getExternalGuiders());
+	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, masterDegreeThesisDataVersion.getExternalGuiders());
 	}
 
 	Date lastModification = new Date(masterDegreeThesisDataVersion.getLastModification().getTime());
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy k:mm:ss");
 	String formattedLastModification = simpleDateFormat.format(lastModification);
 
-	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeThesisDataVersion
-		.getResponsibleEmployee());
+	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeThesisDataVersion.getResponsibleEmployee());
 	request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
-	request.setAttribute(SessionConstants.DISSERTATION_TITLE, masterDegreeThesisDataVersion
-		.getDissertationTitle());
+	request.setAttribute(SessionConstants.DISSERTATION_TITLE, masterDegreeThesisDataVersion.getDissertationTitle());
 
 	return mapping.findForward("start");
 

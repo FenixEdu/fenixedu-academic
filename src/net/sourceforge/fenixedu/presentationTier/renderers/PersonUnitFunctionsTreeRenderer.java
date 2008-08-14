@@ -18,126 +18,125 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 
 public class PersonUnitFunctionsTreeRenderer extends AbstractUnitFunctionsTreeRenderer {
 
-	private String addPersonFunctionLink;
-	private String editPersonFunctionLink;
-	private String deletePersonFunctionLink;
-	
-	private String activePersonFunctionImage;
-	
-	public String getAddPersonFunctionLink() {
-		return addPersonFunctionLink;
-	}
+    private String addPersonFunctionLink;
+    private String editPersonFunctionLink;
+    private String deletePersonFunctionLink;
 
-	public void setAddPersonFunctionLink(String addPersonFunctionLink) {
-		this.addPersonFunctionLink = addPersonFunctionLink;
-	}
+    private String activePersonFunctionImage;
 
-	public String getDeletePersonFunctionLink() {
-		return deletePersonFunctionLink;
-	}
-
-	public void setDeletePersonFunctionLink(String deletePersonFunctionLink) {
-		this.deletePersonFunctionLink = deletePersonFunctionLink;
-	}
-
-	public String getEditPersonFunctionLink() {
-		return editPersonFunctionLink;
-	}
-
-	public void setEditPersonFunctionLink(String editPersonFunctionLink) {
-		this.editPersonFunctionLink = editPersonFunctionLink;
-	}
-
-	public String getActivePersonFunctionImage() {
-		return activePersonFunctionImage;
-	}
-
-	public void setActivePersonFunctionImage(String activePersonfunctionImage) {
-		this.activePersonFunctionImage = activePersonfunctionImage;
-	}
-
-	@Override
-    public boolean isIncludeImage() {
-        return super.isIncludeImage() && getActivePersonFunctionImage() == null;
+    public String getAddPersonFunctionLink() {
+	return addPersonFunctionLink;
     }
-	
-	@Override
-	protected String getLinkSequenceFor(Function function) {
-		return createLinkSequence(getAddPersonFunctionLink());
-	}
-	
-	@Override
-	protected String getLinkSequenceFor(PersonFunction personFunction) {
-		if (personFunction.hasCredits()) {
-			return null;
-		}
-		
-		YearMonthDay today = new YearMonthDay();
-		
-		if (personFunction.belongsToPeriod(today, null)) {
-		    return createLinkSequence(getEditPersonFunctionLink(), getDeletePersonFunctionLink());
-		}
 
-		if (personFunction.isActive(today)) {
-			return createLinkSequence(getEditPersonFunctionLink());
-		} 
-		
-		if (isFirstInactive(personFunction)) {
-			return createLinkSequence(getEditPersonFunctionLink());
-		}
-		
-		return null;
-	}
-	
-	private boolean isFirstInactive(PersonFunction personFunction) {
-		for (PersonFunction pf : getChildrenCollectionFor(personFunction.getFunction())) {
-			if (pf == personFunction) {
-				return true;
-			}
+    public void setAddPersonFunctionLink(String addPersonFunctionLink) {
+	this.addPersonFunctionLink = addPersonFunctionLink;
+    }
 
-			return false;
-		}
+    public String getDeletePersonFunctionLink() {
+	return deletePersonFunctionLink;
+    }
 
-		return false;
-	}
+    public void setDeletePersonFunctionLink(String deletePersonFunctionLink) {
+	this.deletePersonFunctionLink = deletePersonFunctionLink;
+    }
 
-	@Override
-	protected String getNoChildrenFor(Object object) {
-		if (object instanceof PersonFunction) {
-			return "true";
-		}
-		else {
-			return super.getNoChildrenFor(object);
-		}
+    public String getEditPersonFunctionLink() {
+	return editPersonFunctionLink;
+    }
+
+    public void setEditPersonFunctionLink(String editPersonFunctionLink) {
+	this.editPersonFunctionLink = editPersonFunctionLink;
+    }
+
+    public String getActivePersonFunctionImage() {
+	return activePersonFunctionImage;
+    }
+
+    public void setActivePersonFunctionImage(String activePersonfunctionImage) {
+	this.activePersonFunctionImage = activePersonfunctionImage;
+    }
+
+    @Override
+    public boolean isIncludeImage() {
+	return super.isIncludeImage() && getActivePersonFunctionImage() == null;
+    }
+
+    @Override
+    protected String getLinkSequenceFor(Function function) {
+	return createLinkSequence(getAddPersonFunctionLink());
+    }
+
+    @Override
+    protected String getLinkSequenceFor(PersonFunction personFunction) {
+	if (personFunction.hasCredits()) {
+	    return null;
 	}
 
-	@Override
-	protected Collection<PersonFunction> getChildrenCollectionFor(Function function) {
-		Person person = getPerson();
-		
-		SortedSet<PersonFunction> result = new TreeSet<PersonFunction>(new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
-		result.addAll(person.getPersonFunctions(function));
-		
-		return result;
+	YearMonthDay today = new YearMonthDay();
+
+	if (personFunction.belongsToPeriod(today, null)) {
+	    return createLinkSequence(getEditPersonFunctionLink(), getDeletePersonFunctionLink());
 	}
 
-	@Override
-	protected String getImagePathFor(PersonFunction personFunction) {
-		if (personFunction.isActive(new YearMonthDay())) {
-			return getActivePersonFunctionImage();
-		}
-		else {
-			return null;
-		}
+	if (personFunction.isActive(today)) {
+	    return createLinkSequence(getEditPersonFunctionLink());
 	}
-	
-	private Person getPerson() {
-		return ((PersonFunctionsBean) getContext().getMetaObject().getObject()).getPerson();
+
+	if (isFirstInactive(personFunction)) {
+	    return createLinkSequence(getEditPersonFunctionLink());
 	}
-	
-	@Override
-	public HtmlComponent render(Object object, Class type) {
-		PersonFunctionsBean bean = (PersonFunctionsBean) object;
-		return super.render(Collections.singleton(bean.getUnit()), Set.class);
+
+	return null;
+    }
+
+    private boolean isFirstInactive(PersonFunction personFunction) {
+	for (PersonFunction pf : getChildrenCollectionFor(personFunction.getFunction())) {
+	    if (pf == personFunction) {
+		return true;
+	    }
+
+	    return false;
 	}
+
+	return false;
+    }
+
+    @Override
+    protected String getNoChildrenFor(Object object) {
+	if (object instanceof PersonFunction) {
+	    return "true";
+	} else {
+	    return super.getNoChildrenFor(object);
+	}
+    }
+
+    @Override
+    protected Collection<PersonFunction> getChildrenCollectionFor(Function function) {
+	Person person = getPerson();
+
+	SortedSet<PersonFunction> result = new TreeSet<PersonFunction>(new ReverseComparator(
+		PersonFunction.COMPARATOR_BY_BEGIN_DATE));
+	result.addAll(person.getPersonFunctions(function));
+
+	return result;
+    }
+
+    @Override
+    protected String getImagePathFor(PersonFunction personFunction) {
+	if (personFunction.isActive(new YearMonthDay())) {
+	    return getActivePersonFunctionImage();
+	} else {
+	    return null;
+	}
+    }
+
+    private Person getPerson() {
+	return ((PersonFunctionsBean) getContext().getMetaObject().getObject()).getPerson();
+    }
+
+    @Override
+    public HtmlComponent render(Object object, Class type) {
+	PersonFunctionsBean bean = (PersonFunctionsBean) object;
+	return super.render(Collections.singleton(bean.getUnit()), Set.class);
+    }
 }

@@ -16,22 +16,20 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
 
     @Override
     protected RoleType getRoleType() {
-        return RoleType.COORDINATOR;
+	return RoleType.COORDINATOR;
     }
 
     @Override
-    protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID)
-            {
-        final Person person = id.getPerson();
-        final Teacher teacher = person == null ? null : person.getTeacher();
+    protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID) {
+	final Person person = id.getPerson();
+	final Teacher teacher = person == null ? null : person.getTeacher();
 
-        for (final Coordinator coordinator : person.getCoordinators()) {
-            if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(
-                    degreeCurricularPlanID)) {
-                return true;
-            }
-        }
-        return false;
+	for (final Coordinator coordinator : person.getCoordinators()) {
+	    if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

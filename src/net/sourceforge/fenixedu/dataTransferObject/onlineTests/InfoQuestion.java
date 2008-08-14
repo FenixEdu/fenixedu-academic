@@ -45,51 +45,51 @@ public class InfoQuestion extends InfoObject {
     }
 
     public InfoMetadata getInfoMetadata() {
-        return infoMetadata;
+	return infoMetadata;
     }
 
     public String getXmlFile() {
-        return xmlFile;
+	return xmlFile;
     }
 
     public String getXmlFileName() {
-        return xmlFileName;
+	return xmlFileName;
     }
 
     public void setInfoMetadata(InfoMetadata metadata) {
-        infoMetadata = metadata;
+	infoMetadata = metadata;
     }
 
     public void setXmlFile(String string) {
-        xmlFile = string;
+	xmlFile = string;
     }
 
     public void setXmlFileName(String string) {
-        xmlFileName = string;
+	xmlFileName = string;
     }
 
     public List getQuestion() {
-        return question;
+	return question;
     }
 
     public void setQuestion(List list) {
-        question = list;
+	question = list;
     }
 
     public List getOptions() {
-        return options;
+	return options;
     }
 
     public void setOptions(List list) {
-        options = list;
+	options = list;
     }
 
     public Double getQuestionValue() {
-        return questionValue;
+	return questionValue;
     }
 
     public void setQuestionValue(Double value) {
-        questionValue = value;
+	questionValue = value;
     }
 
     /*
@@ -98,74 +98,79 @@ public class InfoQuestion extends InfoObject {
      * public void setCorrectResponse(List list) { correctResponse = list; }
      */
     public Integer getOptionNumber() {
-        return optionNumber;
+	return optionNumber;
     }
 
     public void setOptionNumber(Integer integer) {
-        optionNumber = integer;
+	optionNumber = integer;
     }
 
     public Boolean getVisibility() {
-        return visibility;
+	return visibility;
     }
 
     public void setVisibility(Boolean boolean1) {
-        visibility = boolean1;
+	visibility = boolean1;
     }
 
     public QuestionType getQuestionType() {
-        return questionType;
+	return questionType;
     }
 
     public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
+	this.questionType = questionType;
     }
 
     public List<ResponseProcessing> getResponseProcessingInstructions() {
-        return responseProcessingInstructions;
+	return responseProcessingInstructions;
     }
 
     public void setResponseProcessingInstructions(List responseProcessingInstructions) {
-        this.responseProcessingInstructions = responseProcessingInstructions;
+	this.responseProcessingInstructions = responseProcessingInstructions;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoQuestion) {
-            InfoQuestion infoQuestion = (InfoQuestion) obj;
-            result = getIdInternal().equals(infoQuestion.getIdInternal());
-            result = result
-                    || (getXmlFile().equals(infoQuestion.getXmlFile()) && (getXmlFileName().equals(infoQuestion.getXmlFileName()))
-                            && (getInfoMetadata().equals(infoQuestion.getInfoMetadata()))
-                            && (getQuestionValue().equals(infoQuestion.getQuestionValue()))
-                            && (getQuestion().containsAll(infoQuestion.getQuestion())) && (infoQuestion.getQuestion().containsAll(getQuestion()))
-                            && (getOptions().containsAll(infoQuestion.getOptions())) && (infoQuestion.getOptions().containsAll(getOptions()))
-                            // && (getCorrectResponse().containsAll(infoQuestion
-                            // .getCorrectResponse()))
-                            // &&
-                            // (infoQuestion.getCorrectResponse().containsAll(getCorrectResponse()))
+	boolean result = false;
+	if (obj instanceof InfoQuestion) {
+	    InfoQuestion infoQuestion = (InfoQuestion) obj;
+	    result = getIdInternal().equals(infoQuestion.getIdInternal());
+	    result = result
+		    || (getXmlFile().equals(infoQuestion.getXmlFile())
+			    && (getXmlFileName().equals(infoQuestion.getXmlFileName()))
+			    && (getInfoMetadata().equals(infoQuestion.getInfoMetadata()))
+			    && (getQuestionValue().equals(infoQuestion.getQuestionValue()))
+			    && (getQuestion().containsAll(infoQuestion.getQuestion()))
+			    && (infoQuestion.getQuestion().containsAll(getQuestion()))
+			    && (getOptions().containsAll(infoQuestion.getOptions()))
+			    && (infoQuestion.getOptions().containsAll(getOptions()))
+			    // && (getCorrectResponse().containsAll(infoQuestion
+			    // .getCorrectResponse()))
+			    // &&
+			    // (infoQuestion.getCorrectResponse().containsAll(
+			    // getCorrectResponse()))
 
-                            && (getOptionNumber().equals(infoQuestion.getOptionNumber())) && (getVisibility().equals(infoQuestion.getVisibility())) && (getQuestionType()
-                            .getType().equals(infoQuestion.getQuestionType().getType())));
-        }
-        return result;
+			    && (getOptionNumber().equals(infoQuestion.getOptionNumber()))
+			    && (getVisibility().equals(infoQuestion.getVisibility())) && (getQuestionType().getType()
+			    .equals(infoQuestion.getQuestionType().getType())));
+	}
+	return result;
     }
 
     public void copyFromDomain(Question question) {
-        super.copyFromDomain(question);
-        if (question != null) {
-            setXmlFile(question.getXmlFile());
-            setXmlFileName(question.getXmlFileName());
-            setVisibility(question.getVisibility());
-        }
+	super.copyFromDomain(question);
+	if (question != null) {
+	    setXmlFile(question.getXmlFile());
+	    setXmlFileName(question.getXmlFileName());
+	    setVisibility(question.getVisibility());
+	}
     }
 
     public static InfoQuestion newInfoFromDomain(Question question) {
-        InfoQuestion infoQuestion = null;
-        if (question != null) {
-            infoQuestion = new InfoQuestion();
-            infoQuestion.copyFromDomain(question);
-        }
-        return infoQuestion;
+	InfoQuestion infoQuestion = null;
+	if (question != null) {
+	    infoQuestion = new InfoQuestion();
+	    infoQuestion.copyFromDomain(question);
+	}
+	return infoQuestion;
     }
 }

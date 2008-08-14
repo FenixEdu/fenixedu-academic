@@ -31,51 +31,48 @@ import pt.ist.fenixWebFramework.security.UserView;
  * @author jpvl
  */
 public abstract class AbstractReadProfessorshipsAction extends Action {
-    
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
-        DynaActionForm dynaForm = (DynaActionForm) form;
 
-        InfoTeacher infoTeacher = getInfoTeacher(request, dynaForm);
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
+	DynaActionForm dynaForm = (DynaActionForm) form;
 
-        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoTeacher
-                .getIdInternal(), dynaForm, request);
+	InfoTeacher infoTeacher = getInfoTeacher(request, dynaForm);
 
-        ComparatorChain chain = new ComparatorChain();
+	List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoTeacher.getIdInternal(), dynaForm, request);
 
-        Comparator executionPeriodComparator = new BeanComparator(
-                "infoProfessorship.infoExecutionCourse.infoExecutionPeriod.semester");
-        Comparator nameComparator = new BeanComparator("infoProfessorship.infoExecutionCourse.nome");
+	ComparatorChain chain = new ComparatorChain();
 
-        chain.addComparator(executionPeriodComparator);
-        chain.addComparator(nameComparator);
-        Collections.sort(detailedInfoProfessorshipList, chain);
+	Comparator executionPeriodComparator = new BeanComparator(
+		"infoProfessorship.infoExecutionCourse.infoExecutionPeriod.semester");
+	Comparator nameComparator = new BeanComparator("infoProfessorship.infoExecutionCourse.nome");
 
-        request.setAttribute("detailedProfessorshipList", detailedInfoProfessorshipList);
+	chain.addComparator(executionPeriodComparator);
+	chain.addComparator(nameComparator);
+	Collections.sort(detailedInfoProfessorshipList, chain);
 
-        extraPreparation(userView, infoTeacher, request, dynaForm);
-        return mapping.findForward("list-professorships");
+	request.setAttribute("detailedProfessorshipList", detailedInfoProfessorshipList);
+
+	extraPreparation(userView, infoTeacher, request, dynaForm);
+	return mapping.findForward("list-professorships");
     }
 
-    protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher,
-            HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
+    protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request,
+	    DynaActionForm dynaForm) throws Exception {
     }
 
-    protected InfoTeacher getInfoTeacher(HttpServletRequest request, DynaActionForm dynaForm)
-            throws Exception {
-        InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        if (infoTeacher == null) {
-            final IUserView userView = UserView.getUser();
-            infoTeacher = (InfoTeacher) ServiceUtils.executeService(
-                    "ReadTeacherByOID", new Object[] { Integer.valueOf(dynaForm.get("idInternal")
-                            .toString()) });
-            request.setAttribute("infoTeacher", infoTeacher);
+    protected InfoTeacher getInfoTeacher(HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
+	InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
+	if (infoTeacher == null) {
+	    final IUserView userView = UserView.getUser();
+	    infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByOID", new Object[] { Integer.valueOf(dynaForm
+		    .get("idInternal").toString()) });
+	    request.setAttribute("infoTeacher", infoTeacher);
 
-        }
-        return infoTeacher;
+	}
+	return infoTeacher;
     }
 
-    abstract List getDetailedProfessorships(IUserView userView, Integer teacherId,
-            DynaActionForm actionForm, HttpServletRequest request) throws FenixServiceException, FenixFilterException;
+    abstract List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
+	    HttpServletRequest request) throws FenixServiceException, FenixFilterException;
 }

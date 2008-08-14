@@ -26,103 +26,105 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
 
     public List<TeacherCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
-            ExecutionSemester untilExecutionPeriod) throws ParseException {
+	    ExecutionSemester untilExecutionPeriod) throws ParseException {
 
-        SortedSet<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
-                untilExecutionPeriod);
-        
-        List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
-                untilExecutionPeriod.getEndDateYearMonthDay());
-        
-        List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
-        for (Teacher teacher : teachers) {            
-            if (!teacher.isMonitor(executionPeriodsBetween.last())
-                    && !teacher.isInactive(executionPeriodsBetween.last()) 
-                    && !teacher.isDeceased()) {                
-                Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod.getEndDateYearMonthDay());
-                Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
-                if(workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {               
-                    TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
-                    creditsReportDTO.setTeacher(teacher);
-                    for (ExecutionSemester executionSemester : executionPeriodsBetween) {
-                        updateCreditLine(teacher, executionSemester, creditsReportDTO, true);
-                    }                    
-                    creditsReportDTO.setUnit(workingUnit);
-                    creditsReportDTO.setPastCredits(teacher.getBalanceOfCreditsUntil(fromExecutionPeriod.getPreviousExecutionPeriod()));
-                    creditLines.add(creditsReportDTO);
-                }
-            }
-        }
-        return creditLines;
+	SortedSet<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
+		untilExecutionPeriod);
+
+	List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod
+		.getEndDateYearMonthDay());
+
+	List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
+	for (Teacher teacher : teachers) {
+	    if (!teacher.isMonitor(executionPeriodsBetween.last()) && !teacher.isInactive(executionPeriodsBetween.last())
+		    && !teacher.isDeceased()) {
+		Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
+			untilExecutionPeriod.getEndDateYearMonthDay());
+		Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
+		if (workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {
+		    TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
+		    creditsReportDTO.setTeacher(teacher);
+		    for (ExecutionSemester executionSemester : executionPeriodsBetween) {
+			updateCreditLine(teacher, executionSemester, creditsReportDTO, true);
+		    }
+		    creditsReportDTO.setUnit(workingUnit);
+		    creditsReportDTO.setPastCredits(teacher.getBalanceOfCreditsUntil(fromExecutionPeriod
+			    .getPreviousExecutionPeriod()));
+		    creditLines.add(creditsReportDTO);
+		}
+	    }
+	}
+	return creditLines;
     }
 
-    private void updateCreditLine(Teacher teacher, ExecutionSemester executionSemester,
-            TeacherCreditsReportDTO creditLine, boolean countCredits) throws ParseException {
+    private void updateCreditLine(Teacher teacher, ExecutionSemester executionSemester, TeacherCreditsReportDTO creditLine,
+	    boolean countCredits) throws ParseException {
 
-        double totalCredits = 0.0;
-        if (countCredits) {
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-            if (teacherService != null) {
-                totalCredits = teacherService.getCredits();
-            }
-            totalCredits -= teacher.getMandatoryLessonHours(executionSemester);
-            totalCredits += teacher.getManagementFunctionsCredits(executionSemester);
-            totalCredits += teacher.getServiceExemptionCredits(executionSemester);
-        }
-        creditLine.getCreditsByExecutionPeriod().put(executionSemester, totalCredits);
+	double totalCredits = 0.0;
+	if (countCredits) {
+	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+	    if (teacherService != null) {
+		totalCredits = teacherService.getCredits();
+	    }
+	    totalCredits -= teacher.getMandatoryLessonHours(executionSemester);
+	    totalCredits += teacher.getManagementFunctionsCredits(executionSemester);
+	    totalCredits += teacher.getServiceExemptionCredits(executionSemester);
+	}
+	creditLine.getCreditsByExecutionPeriod().put(executionSemester, totalCredits);
     }
 
     private SortedSet<ExecutionSemester> getExecutionPeriodsBetween(ExecutionSemester fromExecutionPeriod,
-            ExecutionSemester untilExecutionPeriod) {
-        
-        SortedSet<ExecutionSemester> executionPeriodsBetween = new TreeSet<ExecutionSemester>(ExecutionSemester.
-                EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
-        
-        ExecutionSemester tempExecutionPeriod = fromExecutionPeriod;
-        while (tempExecutionPeriod != untilExecutionPeriod) {
-            executionPeriodsBetween.add(tempExecutionPeriod);
-            tempExecutionPeriod = tempExecutionPeriod.getNextExecutionPeriod();
-        }
-        executionPeriodsBetween.add(untilExecutionPeriod);
-        return executionPeriodsBetween;
+	    ExecutionSemester untilExecutionPeriod) {
+
+	SortedSet<ExecutionSemester> executionPeriodsBetween = new TreeSet<ExecutionSemester>(
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+
+	ExecutionSemester tempExecutionPeriod = fromExecutionPeriod;
+	while (tempExecutionPeriod != untilExecutionPeriod) {
+	    executionPeriodsBetween.add(tempExecutionPeriod);
+	    tempExecutionPeriod = tempExecutionPeriod.getNextExecutionPeriod();
+	}
+	executionPeriodsBetween.add(untilExecutionPeriod);
+	return executionPeriodsBetween;
     }
 
     public static class TeacherCreditsReportDTO {
-                     
-        Map<ExecutionSemester, Double> creditsByExecutionPeriod = new TreeMap<ExecutionSemester, Double>(ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 
-        Teacher teacher;
+	Map<ExecutionSemester, Double> creditsByExecutionPeriod = new TreeMap<ExecutionSemester, Double>(
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 
-        Unit unit;
+	Teacher teacher;
 
-        double pastCredits;
+	Unit unit;
 
-        public Teacher getTeacher() {
-            return teacher;
-        }
+	double pastCredits;
 
-        public void setTeacher(Teacher teacher) {
-            this.teacher = teacher;
-        }
+	public Teacher getTeacher() {
+	    return teacher;
+	}
 
-        public Unit getUnit() {
-            return unit;
-        }
+	public void setTeacher(Teacher teacher) {
+	    this.teacher = teacher;
+	}
 
-        public void setUnit(Unit unit) {
-            this.unit = unit;
-        }
+	public Unit getUnit() {
+	    return unit;
+	}
 
-        public Map<ExecutionSemester, Double> getCreditsByExecutionPeriod() {
-            return creditsByExecutionPeriod;
-        }
+	public void setUnit(Unit unit) {
+	    this.unit = unit;
+	}
 
-        public double getPastCredits() {
-            return pastCredits;
-        }
+	public Map<ExecutionSemester, Double> getCreditsByExecutionPeriod() {
+	    return creditsByExecutionPeriod;
+	}
 
-        public void setPastCredits(double pastCredits) {
-            this.pastCredits = pastCredits;
-        }
+	public double getPastCredits() {
+	    return pastCredits;
+	}
+
+	public void setPastCredits(double pastCredits) {
+	    this.pastCredits = pastCredits;
+	}
     }
 }

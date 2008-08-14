@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class InfoSiteFirstPage extends DataTranferObject implements ISiteComponent {
 
@@ -32,95 +32,95 @@ public class InfoSiteFirstPage extends DataTranferObject implements ISiteCompone
      * @return
      */
     public String getAlternativeSite() {
-        return alternativeSite;
+	return alternativeSite;
     }
 
     /**
      * @return
      */
     public String getInitialStatement() {
-        return initialStatement;
+	return initialStatement;
     }
 
     /**
      * @return
      */
     public String getIntroduction() {
-        return introduction;
+	return introduction;
     }
 
     /**
      * @return
      */
     public List getLecturingTeachers() {
-        return lecturingTeachers;
+	return lecturingTeachers;
     }
 
     /**
      * @return
      */
     public List getResponsibleTeachers() {
-        return responsibleTeachers;
+	return responsibleTeachers;
     }
 
     /**
      * @param string
      */
     public void setAlternativeSite(String string) {
-        alternativeSite = string;
+	alternativeSite = string;
     }
 
     /**
      * @param string
      */
     public void setInitialStatement(String string) {
-        initialStatement = string;
+	initialStatement = string;
     }
 
     /**
      * @param string
      */
     public void setIntroduction(String string) {
-        introduction = string;
+	introduction = string;
     }
 
     /**
      * @param list
      */
     public void setLecturingTeachers(List list) {
-        lecturingTeachers = list;
+	lecturingTeachers = list;
     }
 
     /**
      * @param list
      */
     public void setResponsibleTeachers(List list) {
-        responsibleTeachers = list;
+	responsibleTeachers = list;
     }
 
     /**
      * @return
      */
     public Integer getSiteIdInternal() {
-        return siteIdInternal;
+	return siteIdInternal;
     }
 
     /**
      * @param integer
      */
     public void setSiteIdInternal(Integer integer) {
-        siteIdInternal = integer;
+	siteIdInternal = integer;
     }
 
     /**
      * @param infoAnnouncements
      */
     public void setLastFiveAnnouncements(List infoAnnouncements) {
-        lastFiveAnnouncements = infoAnnouncements;
+	lastFiveAnnouncements = infoAnnouncements;
     }
 
     public List getLastFiveAnnouncements() {
-        return lastFiveAnnouncements;
+	return lastFiveAnnouncements;
     }
 
 }

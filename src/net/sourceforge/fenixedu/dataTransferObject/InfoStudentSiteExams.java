@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class InfoStudentSiteExams extends DataTranferObject implements ISiteComponent {
     private List examsToEnroll;
@@ -20,18 +20,18 @@ public class InfoStudentSiteExams extends DataTranferObject implements ISiteComp
      * @param studentDistributions
      */
     public void setExamsEnrolledDistributions(List studentDistributions) {
-        this.examsEnrolledDistributions = studentDistributions;
+	this.examsEnrolledDistributions = studentDistributions;
     }
 
     public InfoWrittenEvaluationEnrolment getInfoWrittenEvaluationEnrolment(int examIdInternal) {
-        InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = null;
-        for (int i = 0; i < examsEnrolledDistributions.size(); i++) {
-            infoWrittenEvaluationEnrolment = (InfoWrittenEvaluationEnrolment) examsEnrolledDistributions.get(0);
-            if (infoWrittenEvaluationEnrolment.getIdInternal().intValue() == examIdInternal) {
-                break;
-            }
-        }
-        return infoWrittenEvaluationEnrolment;
+	InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = null;
+	for (int i = 0; i < examsEnrolledDistributions.size(); i++) {
+	    infoWrittenEvaluationEnrolment = (InfoWrittenEvaluationEnrolment) examsEnrolledDistributions.get(0);
+	    if (infoWrittenEvaluationEnrolment.getIdInternal().intValue() == examIdInternal) {
+		break;
+	    }
+	}
+	return infoWrittenEvaluationEnrolment;
     }
 
     /**
@@ -42,32 +42,32 @@ public class InfoStudentSiteExams extends DataTranferObject implements ISiteComp
 
     public InfoStudentSiteExams(List examEnrollmentsToEnroll, List studentDistributions) {
 
-        setExamsToEnroll(examEnrollmentsToEnroll);
-        setExamsEnrolledDistributions(studentDistributions);
+	setExamsToEnroll(examEnrollmentsToEnroll);
+	setExamsEnrolledDistributions(studentDistributions);
     }
 
     /**
      * @return
      */
     public List getExamsToEnroll() {
-        return examsToEnroll;
+	return examsToEnroll;
     }
 
     /**
      * @param list
      */
     public void setExamsToEnroll(List list) {
-        examsToEnroll = list;
+	examsToEnroll = list;
     }
 
     public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof InfoStudentSiteExams) {
-            InfoStudentSiteExams component = (InfoStudentSiteExams) arg0;
-            result = listEquals(getExamsToEnroll(), component.getExamsToEnroll());
+	boolean result = false;
+	if (arg0 instanceof InfoStudentSiteExams) {
+	    InfoStudentSiteExams component = (InfoStudentSiteExams) arg0;
+	    result = listEquals(getExamsToEnroll(), component.getExamsToEnroll());
 
-        }
-        return result;
+	}
+	return result;
     }
 
     /**
@@ -75,21 +75,21 @@ public class InfoStudentSiteExams extends DataTranferObject implements ISiteComp
      * @param list2
      */
     private boolean listEquals(List list, List list2) {
-        boolean result = false;
-        if (list == null && list2 == null) {
-            result = true;
-        } else if (list != null && list2 != null && list.containsAll(list2) && list2.containsAll(list)) {
-            result = true;
-        }
+	boolean result = false;
+	if (list == null && list2 == null) {
+	    result = true;
+	} else if (list != null && list2 != null && list.containsAll(list2) && list2.containsAll(list)) {
+	    result = true;
+	}
 
-        return result;
+	return result;
     }
 
     /**
      * @return
      */
     public List getExamsEnrolledDistributions() {
-        return examsEnrolledDistributions;
+	return examsEnrolledDistributions;
     }
 
 }

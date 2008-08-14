@@ -24,77 +24,74 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class UploadUnitSiteLogo extends Service {
 
-	public File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
+    public File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
 
-		if (site.hasLogo()) {
-			UnitSiteFile logo = site.getLogo();
-			new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
-			
-			logo.delete();
-		}
+	if (site.hasLogo()) {
+	    UnitSiteFile logo = site.getLogo();
+	    new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
 
-		if (fileToUpload == null || name == null) {
-			return null;
-		}
-
-		VirtualPath filePath = getVirtualPath(site);
-		Collection<FileSetMetaData> metaData = createMetaData(site, name);
-
-		FileDescriptor descriptor = saveFile(filePath, name, false, metaData, fileToUpload);
-
-		UnitSiteFile file = new UnitSiteFile(descriptor.getUniqueId(), name);
-		file.setSize(descriptor.getSize());
-		file.setMimeType(descriptor.getMimeType());
-		file.setChecksum(descriptor.getChecksum());
-		file.setChecksumAlgorithm(descriptor.getChecksumAlgorithm());
-
-		file.setPermittedGroup(null);
-
-		site.setLogo(file);
-
-		return file;
+	    logo.delete();
 	}
 
-	private VirtualPath getVirtualPath(UnitSite site) {
-
-		VirtualPathNode[] nodes = {
-				new VirtualPathNode("Site", "Site"),
-				new VirtualPathNode("Unit", "Unit"),
-				new VirtualPathNode(site.getUnit().getNameWithAcronym(), site.getUnit()
-						.getNameWithAcronym()),
-				new VirtualPathNode("Logo" + site.getIdInternal(), "Logo") };
-
-		VirtualPath path = new VirtualPath();
-		for (VirtualPathNode node : nodes) {
-			path.addNode(node);
-		}
-
-		return path;
+	if (fileToUpload == null || name == null) {
+	    return null;
 	}
 
-	private Collection<FileSetMetaData> createMetaData(UnitSite site, String fileName) {
-		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+	VirtualPath filePath = getVirtualPath(site);
+	Collection<FileSetMetaData> metaData = createMetaData(site, name);
 
-		metaData.add(FileSetMetaData.createAuthorMeta(AccessControl.getPerson().getName()));
-		metaData.add(FileSetMetaData.createTitleMeta(site.getUnit().getNameWithAcronym() + " Logo"));
+	FileDescriptor descriptor = saveFile(filePath, name, false, metaData, fileToUpload);
 
-		return metaData;
+	UnitSiteFile file = new UnitSiteFile(descriptor.getUniqueId(), name);
+	file.setSize(descriptor.getSize());
+	file.setMimeType(descriptor.getMimeType());
+	file.setChecksum(descriptor.getChecksum());
+	file.setChecksumAlgorithm(descriptor.getChecksumAlgorithm());
+
+	file.setPermittedGroup(null);
+
+	site.setLogo(file);
+
+	return file;
+    }
+
+    private VirtualPath getVirtualPath(UnitSite site) {
+
+	VirtualPathNode[] nodes = { new VirtualPathNode("Site", "Site"), new VirtualPathNode("Unit", "Unit"),
+		new VirtualPathNode(site.getUnit().getNameWithAcronym(), site.getUnit().getNameWithAcronym()),
+		new VirtualPathNode("Logo" + site.getIdInternal(), "Logo") };
+
+	VirtualPath path = new VirtualPath();
+	for (VirtualPathNode node : nodes) {
+	    path.addNode(node);
 	}
 
-	private FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
-			Collection<FileSetMetaData> metaData, java.io.File file) throws IOException, FenixServiceException {
-		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-			return fileManager.saveFile(filePath, fileName, isPrivate, metaData, file);
-		} catch (FileNotFoundException e) {
-			throw new FenixServiceException(e.getMessage());
-		} finally {
-			if (is != null) {
-				is.close();
-			}
-		}
+	return path;
+    }
 
+    private Collection<FileSetMetaData> createMetaData(UnitSite site, String fileName) {
+	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+
+	metaData.add(FileSetMetaData.createAuthorMeta(AccessControl.getPerson().getName()));
+	metaData.add(FileSetMetaData.createTitleMeta(site.getUnit().getNameWithAcronym() + " Logo"));
+
+	return metaData;
+    }
+
+    private FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
+	    Collection<FileSetMetaData> metaData, java.io.File file) throws IOException, FenixServiceException {
+	IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+	InputStream is = null;
+	try {
+	    is = new FileInputStream(file);
+	    return fileManager.saveFile(filePath, fileName, isPrivate, metaData, file);
+	} catch (FileNotFoundException e) {
+	    throw new FenixServiceException(e.getMessage());
+	} finally {
+	    if (is != null) {
+		is.close();
+	    }
 	}
+
+    }
 }

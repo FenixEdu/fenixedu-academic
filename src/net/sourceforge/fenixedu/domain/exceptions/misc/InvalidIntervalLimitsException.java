@@ -5,31 +5,31 @@ import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 public class InvalidIntervalLimitsException extends FenixDomainException {
 
     public InvalidIntervalLimitsException() {
-        super();
+	super();
     }
-    
+
     /**
      * @param errorType
      */
     public InvalidIntervalLimitsException(int errorType) {
-        super(errorType);
-        // TODO Auto-generated constructor stub
+	super(errorType);
+	// TODO Auto-generated constructor stub
     }
 
     /**
      * @param s
      */
     public InvalidIntervalLimitsException(String s) {
-        super(s);
-        // TODO Auto-generated constructor stub
+	super(s);
+	// TODO Auto-generated constructor stub
     }
 
     /**
      * @param cause
      */
     public InvalidIntervalLimitsException(Throwable cause) {
-        super(cause);
-        // TODO Auto-generated constructor stub
+	super(cause);
+	// TODO Auto-generated constructor stub
     }
 
     /**
@@ -37,8 +37,8 @@ public class InvalidIntervalLimitsException extends FenixDomainException {
      * @param cause
      */
     public InvalidIntervalLimitsException(String message, Throwable cause) {
-        super(message, cause);
-        // TODO Auto-generated constructor stub
+	super(message, cause);
+	// TODO Auto-generated constructor stub
     }
 
 }

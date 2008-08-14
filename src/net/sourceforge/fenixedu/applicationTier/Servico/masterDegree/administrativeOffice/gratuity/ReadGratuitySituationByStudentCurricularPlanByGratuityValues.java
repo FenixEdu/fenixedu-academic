@@ -19,22 +19,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extends Service {
 
-    public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID)
-            throws FenixServiceException{
+    public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID) throws FenixServiceException {
 
-        GratuitySituation gratuitySituation = null;
+	GratuitySituation gratuitySituation = null;
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                .readStudentCurricularPlanByOID(studentCurricularPlanID);
-        GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(gratuityValuesID);
-        gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+	GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(gratuityValuesID);
+	gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
-        InfoGratuitySituation infoGratuitySituation = null;
-        if (gratuitySituation != null) {
-            infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-                    .newInfoFromDomain(gratuitySituation);
-        }
+	InfoGratuitySituation infoGratuitySituation = null;
+	if (gratuitySituation != null) {
+	    infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+		    .newInfoFromDomain(gratuitySituation);
+	}
 
-        return infoGratuitySituation;
+	return infoGratuitySituation;
     }
 }

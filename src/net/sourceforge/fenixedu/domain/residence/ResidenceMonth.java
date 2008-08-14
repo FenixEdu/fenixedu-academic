@@ -45,7 +45,8 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 
     public DateTime getPaymentLimitDateTime() {
 	ResidenceYear residenceYear = getYear();
-	LocalDate date = new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(), getManagementUnit().getCurrentPaymentLimitDay());
+	LocalDate date = new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(), getManagementUnit()
+		.getCurrentPaymentLimitDay());
 	return date.toDateTimeAtStartOfDay();
     }
 

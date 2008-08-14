@@ -20,9 +20,9 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	/*
-         * for(Message message : RenderUtils.getViewState().getMessages()) {
-         * addActionMessage(request, message.getMessage()); }
-         */
+	 * for(Message message : RenderUtils.getViewState().getMessages()) {
+	 * addActionMessage(request, message.getMessage()); }
+	 */
 
 	request.setAttribute("resultPatents", getLoggedPerson(request).getResearchResultPatents());
 
@@ -83,8 +83,8 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	return mapping.findForward("editPatentData");
     }
 
-    public ActionForward updateMetaInformation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward updateMetaInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
 	if (patent == null) {
 	    return management(mapping, form, request, response);
@@ -110,8 +110,8 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	return mapping.findForward("editPatent");
     }
 
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 	final Integer resultId = getRequestParameterAsInteger(request, "resultId");
 
 	if (getFromRequest(request, "cancel") != null) {

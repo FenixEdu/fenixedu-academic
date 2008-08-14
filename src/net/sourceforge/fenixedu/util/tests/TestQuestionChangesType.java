@@ -28,52 +28,50 @@ public class TestQuestionChangesType extends FenixUtil {
     }
 
     public TestQuestionChangesType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public TestQuestionChangesType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public TestQuestionChangesType(String typeString) {
-        this.type = getTypeCode(typeString);
+	this.type = getTypeCode(typeString);
     }
 
     public Integer getType() {
-        return type;
+	return type;
     }
 
     public void setType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public void setType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public List getAllTypes() {
-        List result = new ArrayList();
-        result
-                .add(new LabelValueBean(CHANGE_VARIATION_STRING, new Integer(CHANGE_VARIATION)
-                        .toString()));
-        result.add(new LabelValueBean(CHANGE_EXERCISE_STRING, new Integer(CHANGE_EXERCISE).toString()));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(CHANGE_VARIATION_STRING, new Integer(CHANGE_VARIATION).toString()));
+	result.add(new LabelValueBean(CHANGE_EXERCISE_STRING, new Integer(CHANGE_EXERCISE).toString()));
+	return result;
     }
 
     public Integer getTypeCode(String typeName) {
-        if (typeName.equals(CHANGE_VARIATION_STRING))
-            return new Integer(CHANGE_VARIATION);
-        else if (typeName.equals(CHANGE_EXERCISE_STRING))
-            return new Integer(CHANGE_EXERCISE);
-        return null;
+	if (typeName.equals(CHANGE_VARIATION_STRING))
+	    return new Integer(CHANGE_VARIATION);
+	else if (typeName.equals(CHANGE_EXERCISE_STRING))
+	    return new Integer(CHANGE_EXERCISE);
+	return null;
     }
 
     public String getTypeString() {
-        if (type.intValue() == CHANGE_VARIATION)
-            return new String(CHANGE_VARIATION_STRING);
-        else if (type.intValue() == CHANGE_EXERCISE)
-            return new String(CHANGE_EXERCISE_STRING);
-        return null;
+	if (type.intValue() == CHANGE_VARIATION)
+	    return new String(CHANGE_VARIATION_STRING);
+	else if (type.intValue() == CHANGE_EXERCISE)
+	    return new String(CHANGE_EXERCISE_STRING);
+	return null;
     }
 
 }

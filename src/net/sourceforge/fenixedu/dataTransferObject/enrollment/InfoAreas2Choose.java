@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class InfoAreas2Choose extends DataTranferObject implements Serializable {
 
@@ -23,7 +23,7 @@ public class InfoAreas2Choose extends DataTranferObject implements Serializable 
      * @return Returns the finalSecundaryAreas.
      */
     public List getFinalSecundaryAreas() {
-        return finalSecundaryAreas;
+	return finalSecundaryAreas;
     }
 
     /**
@@ -31,14 +31,14 @@ public class InfoAreas2Choose extends DataTranferObject implements Serializable 
      *            The finalSecundaryAreas to set.
      */
     public void setFinalSecundaryAreas(List finalSecundaryAreas) {
-        this.finalSecundaryAreas = finalSecundaryAreas;
+	this.finalSecundaryAreas = finalSecundaryAreas;
     }
 
     /**
      * @return Returns the finalSpecializationAreas.
      */
     public List getFinalSpecializationAreas() {
-        return finalSpecializationAreas;
+	return finalSpecializationAreas;
     }
 
     /**
@@ -46,6 +46,6 @@ public class InfoAreas2Choose extends DataTranferObject implements Serializable 
      *            The finalSpecializationAreas to set.
      */
     public void setFinalSpecializationAreas(List finalSpecializationAreas) {
-        this.finalSpecializationAreas = finalSpecializationAreas;
+	this.finalSpecializationAreas = finalSpecializationAreas;
     }
 }

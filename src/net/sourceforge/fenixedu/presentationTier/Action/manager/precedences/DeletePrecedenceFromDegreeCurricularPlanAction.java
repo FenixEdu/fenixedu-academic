@@ -24,30 +24,29 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class DeletePrecedenceFromDegreeCurricularPlanAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
-        Integer precedenceID = new Integer(request.getParameter("precedenceId"));
+	Integer degreeID = new Integer(request.getParameter("degreeId"));
+	Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+	Integer precedenceID = new Integer(request.getParameter("precedenceId"));
 
-        Object args1[] = { precedenceID };
-        Object args2[] = { degreeCurricularPlanID };
+	Object args1[] = { precedenceID };
+	Object args2[] = { degreeCurricularPlanID };
 
-        try {
-            ServiceUtils.executeService("DeletePrecedenceFromDegreeCurricularPlan", args1);
-            Map result = (Map) ServiceUtils.executeService(
-                    "ReadPrecedencesFromDegreeCurricularPlan", args2);
-            request.setAttribute("precedences", result);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	try {
+	    ServiceUtils.executeService("DeletePrecedenceFromDegreeCurricularPlan", args1);
+	    Map result = (Map) ServiceUtils.executeService("ReadPrecedencesFromDegreeCurricularPlan", args2);
+	    request.setAttribute("precedences", result);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("degreeId", degreeID);
-        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+	request.setAttribute("degreeId", degreeID);
+	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-        return mapping.findForward("showPrecedences");
+	return mapping.findForward("showPrecedences");
     }
 }

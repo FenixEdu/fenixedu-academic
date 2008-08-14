@@ -20,39 +20,37 @@ public class DocumentRequestSearchBean implements Serializable {
     public DocumentRequestSearchBean() {
 
     }
-    
+
     public Registration getRegistration() {
-        return (this.registration == null) ? null : this.registration.getObject();
+	return (this.registration == null) ? null : this.registration.getObject();
     }
 
     public void setRegistration(Registration registration) {
-        this.registration = (registration != null) ? new DomainReference<Registration>(registration)
-                : null;
+	this.registration = (registration != null) ? new DomainReference<Registration>(registration) : null;
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
-        return chosenDocumentRequestType;
+	return chosenDocumentRequestType;
     }
 
     public void setChosenDocumentRequestType(DocumentRequestType chosenDocumentRequestType) {
-        this.chosenDocumentRequestType = chosenDocumentRequestType;
+	this.chosenDocumentRequestType = chosenDocumentRequestType;
     }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
-        return academicServiceRequestSituationType;
+	return academicServiceRequestSituationType;
     }
 
-    public void setAcademicServiceRequestSituationType(
-            AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-        this.academicServiceRequestSituationType = academicServiceRequestSituationType;
+    public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+	this.academicServiceRequestSituationType = academicServiceRequestSituationType;
     }
 
     public Boolean getUrgentRequest() {
-        return urgentRequest;
+	return urgentRequest;
     }
 
     public void setUrgentRequest(Boolean urgentRequest) {
-        this.urgentRequest = urgentRequest;
+	this.urgentRequest = urgentRequest;
     }
 
 }

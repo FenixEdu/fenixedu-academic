@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.domain.Lesson;
  */
 public class ReadLessonByOID extends Service {
 
-	public InfoLesson run(Integer oid) {
-		final Lesson lesson = rootDomainObject.readLessonByOID(oid);
-		return (lesson != null) ? InfoLesson.newInfoFromDomain(lesson) : null; 
+    public InfoLesson run(Integer oid) {
+	final Lesson lesson = rootDomainObject.readLessonByOID(oid);
+	return (lesson != null) ? InfoLesson.newInfoFromDomain(lesson) : null;
 
-	}
+    }
 }

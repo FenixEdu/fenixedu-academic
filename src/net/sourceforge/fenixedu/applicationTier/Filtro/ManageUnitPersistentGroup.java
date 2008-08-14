@@ -10,23 +10,22 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class ManageUnitPersistentGroup extends Filtro {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		IUserView userView = getRemoteUser(request);
-		Person person = userView.getPerson();
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+	IUserView userView = getRemoteUser(request);
+	Person person = userView.getPerson();
 
-		PersistentGroupMembers group = null;
-		if (request.getServiceParameters().getParameter(0) instanceof PersistentGroupMembers) {
-			group = (PersistentGroupMembers) request.getServiceParameters().getParameter(0);
-		}
-
-		Unit unit = (group == null) ? (Unit) request.getServiceParameters().getParameter(0) : group
-				.getUnit();
-
-		if (!(unit.getSite() != null &&  unit.getSite().hasManagers(person))) {
-			throw new NotAuthorizedFilterException("error.person.not.manager.of.site");
-		}
-
+	PersistentGroupMembers group = null;
+	if (request.getServiceParameters().getParameter(0) instanceof PersistentGroupMembers) {
+	    group = (PersistentGroupMembers) request.getServiceParameters().getParameter(0);
 	}
+
+	Unit unit = (group == null) ? (Unit) request.getServiceParameters().getParameter(0) : group.getUnit();
+
+	if (!(unit.getSite() != null && unit.getSite().hasManagers(person))) {
+	    throw new NotAuthorizedFilterException("error.person.not.manager.of.site");
+	}
+
+    }
 
 }

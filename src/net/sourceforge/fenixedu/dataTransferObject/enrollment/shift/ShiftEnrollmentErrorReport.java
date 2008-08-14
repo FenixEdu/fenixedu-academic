@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 /**
  * @author jmota
- *  
+ * 
  */
 public class ShiftEnrollmentErrorReport extends DataTranferObject {
 
@@ -22,15 +22,15 @@ public class ShiftEnrollmentErrorReport extends DataTranferObject {
      *  
      */
     public ShiftEnrollmentErrorReport() {
-        setUnAvailableShifts(new ArrayList());
-        setUnExistingShifts(new ArrayList());
+	setUnAvailableShifts(new ArrayList());
+	setUnExistingShifts(new ArrayList());
     }
 
     /**
      * @return Returns the unAvailableShifts.
      */
     public List getUnAvailableShifts() {
-        return unAvailableShifts;
+	return unAvailableShifts;
     }
 
     /**
@@ -38,14 +38,14 @@ public class ShiftEnrollmentErrorReport extends DataTranferObject {
      *            The unAvailableShifts to set.
      */
     public void setUnAvailableShifts(List unAvailableShifts) {
-        this.unAvailableShifts = unAvailableShifts;
+	this.unAvailableShifts = unAvailableShifts;
     }
 
     /**
      * @return Returns the unExistingShifts.
      */
     public List getUnExistingShifts() {
-        return unExistingShifts;
+	return unExistingShifts;
     }
 
     /**
@@ -53,6 +53,6 @@ public class ShiftEnrollmentErrorReport extends DataTranferObject {
      *            The unExistingShifts to set.
      */
     public void setUnExistingShifts(List unExistingShifts) {
-        this.unExistingShifts = unExistingShifts;
+	this.unExistingShifts = unExistingShifts;
     }
 }

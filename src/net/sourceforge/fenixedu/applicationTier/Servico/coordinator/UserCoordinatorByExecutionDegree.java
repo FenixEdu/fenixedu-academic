@@ -12,15 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class UserCoordinatorByExecutionDegree extends Service {
 
-    public Boolean run(Integer executionDegreeCode, final Person person, String degree2Compare)
-            throws FenixServiceException{
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
-        final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
-        
-        if (coordinator == null) {
-            throw new FenixServiceException("error.exception.notAuthorized");
-        }
-        return Boolean.valueOf(coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree()
-                .getSigla().startsWith(degree2Compare));
+    public Boolean run(Integer executionDegreeCode, final Person person, String degree2Compare) throws FenixServiceException {
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
+	final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+
+	if (coordinator == null) {
+	    throw new FenixServiceException("error.exception.notAuthorized");
+	}
+	return Boolean.valueOf(coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla().startsWith(
+		degree2Compare));
     }
 }

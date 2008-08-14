@@ -16,63 +16,62 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ResultDocumentFilesManagementAction extends ResultsManagementAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        final ResearchResult result = getResultFromRequest(request);
-        if (result == null) {
-            return backToResultList(mapping, form, request, response);
-        }
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final ResearchResult result = getResultFromRequest(request);
+	if (result == null) {
+	    return backToResultList(mapping, form, request, response);
+	}
 
-        setResDocFileRequestAttributes(request, result);
-        return mapping.findForward("editDocumentFiles");
+	setResDocFileRequestAttributes(request, result);
+	return mapping.findForward("editDocumentFiles");
     }
 
-    public ActionForward prepareAlter(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
-        request.setAttribute("editExisting", "editExisting");
-        return prepareEdit(mapping, form, request, response);
+    public ActionForward prepareAlter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	request.setAttribute("editExisting", "editExisting");
+	return prepareEdit(mapping, form, request, response);
     }
 
-    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final ResultDocumentFileSubmissionBean bean = getRenderedObject("editBean");
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	final ResultDocumentFileSubmissionBean bean = getRenderedObject("editBean");
 
-        try {
-            final Object[] args = { bean };
-            executeService(request, "CreateResultDocumentFile", args);
-        } catch (Exception e) {
-            final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-            return processException(request, mapping, defaultForward, e);
-        }
+	try {
+	    final Object[] args = { bean };
+	    executeService(request, "CreateResultDocumentFile", args);
+	} catch (Exception e) {
+	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
+	    return processException(request, mapping, defaultForward, e);
+	}
 
-        RenderUtils.invalidateViewState("editBean");
-        return prepareEdit(mapping, form, request, response);
+	RenderUtils.invalidateViewState("editBean");
+	return prepareEdit(mapping, form, request, response);
     }
 
-    public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final Integer documentFileId = getRequestParameterAsInteger(request, "documentFileId");
+    public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	final Integer documentFileId = getRequestParameterAsInteger(request, "documentFileId");
 
-        try {
-            final Object[] args = { documentFileId };
-            executeService(request, "DeleteResultDocumentFile", args);
-        } catch (Exception e) {
-            final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-            return processException(request, mapping, defaultForward, e);
-        }
+	try {
+	    final Object[] args = { documentFileId };
+	    executeService(request, "DeleteResultDocumentFile", args);
+	} catch (Exception e) {
+	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
+	    return processException(request, mapping, defaultForward, e);
+	}
 
-        return prepareEdit(mapping, form, request, response);
+	return prepareEdit(mapping, form, request, response);
     }
 
-    private void setResDocFileRequestAttributes(HttpServletRequest request, ResearchResult result)
-            throws FenixFilterException, FenixServiceException {
-        final ResultDocumentFileSubmissionBean bean = new ResultDocumentFileSubmissionBean(result);
-        request.setAttribute("bean", bean);
-        request.setAttribute("result", result);
+    private void setResDocFileRequestAttributes(HttpServletRequest request, ResearchResult result) throws FenixFilterException,
+	    FenixServiceException {
+	final ResultDocumentFileSubmissionBean bean = new ResultDocumentFileSubmissionBean(result);
+	request.setAttribute("bean", bean);
+	request.setAttribute("result", result);
     }
 
     @Override
     public ResultDocumentFileSubmissionBean getRenderedObject(String id) {
-        return (ResultDocumentFileSubmissionBean) super.getRenderedObject(id);
+	return (ResultDocumentFileSubmissionBean) super.getRenderedObject(id);
     }
 }

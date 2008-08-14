@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ExamsMapSlot {
 
@@ -18,23 +18,23 @@ public class ExamsMapSlot {
     private List exams;
 
     public ExamsMapSlot(Calendar day, List exams) {
-        setDay(day);
-        setExams(exams);
+	setDay(day);
+	setExams(exams);
     }
 
     public Calendar getDay() {
-        return day;
+	return day;
     }
 
     public List getExams() {
-        return exams;
+	return exams;
     }
 
     public void setDay(Calendar calendar) {
-        day = calendar;
+	day = calendar;
     }
 
     public void setExams(List list) {
-        exams = list;
+	exams = list;
     }
 }

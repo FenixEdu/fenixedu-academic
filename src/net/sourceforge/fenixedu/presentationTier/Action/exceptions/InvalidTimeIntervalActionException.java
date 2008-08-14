@@ -15,19 +15,19 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      *  
      */
     public InvalidTimeIntervalActionException() {
-        super();
+	super();
 
     }
 
     public InvalidTimeIntervalActionException(Throwable cause) {
-        super(key, cause);
+	super(key, cause);
     }
 
     /**
      * @param key
      */
     public InvalidTimeIntervalActionException(String key) {
-        super(key);
+	super(key);
 
     }
 
@@ -36,7 +36,7 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param value
      */
     public InvalidTimeIntervalActionException(String key, Object value) {
-        super(key, value);
+	super(key, value);
 
     }
 
@@ -46,7 +46,7 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param value1
      */
     public InvalidTimeIntervalActionException(String key, Object value0, Object value1) {
-        super(key, value0, value1);
+	super(key, value0, value1);
 
     }
 
@@ -57,7 +57,7 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param value2
      */
     public InvalidTimeIntervalActionException(String key, Object value0, Object value1, Object value2) {
-        super(key, value0, value1, value2);
+	super(key, value0, value1, value2);
 
     }
 
@@ -68,9 +68,8 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param value2
      * @param value3
      */
-    public InvalidTimeIntervalActionException(String key, Object value0, Object value1, Object value2,
-            Object value3) {
-        super(key, value0, value1, value2, value3);
+    public InvalidTimeIntervalActionException(String key, Object value0, Object value1, Object value2, Object value3) {
+	super(key, value0, value1, value2, value3);
 
     }
 
@@ -79,7 +78,7 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param values
      */
     public InvalidTimeIntervalActionException(String key, Object[] values) {
-        super(key, values);
+	super(key, values);
 
     }
 
@@ -88,7 +87,7 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param cause
      */
     public InvalidTimeIntervalActionException(String key, Throwable cause) {
-        super(key, cause);
+	super(key, cause);
 
     }
 
@@ -98,7 +97,7 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param cause
      */
     public InvalidTimeIntervalActionException(String key, Object value, Throwable cause) {
-        super(key, value, cause);
+	super(key, value, cause);
 
     }
 
@@ -109,7 +108,7 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param cause
      */
     public InvalidTimeIntervalActionException(String key, Object value0, Object value1, Throwable cause) {
-        super(key, value0, value1, cause);
+	super(key, value0, value1, cause);
 
     }
 
@@ -120,9 +119,8 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param value2
      * @param cause
      */
-    public InvalidTimeIntervalActionException(String key, Object value0, Object value1, Object value2,
-            Throwable cause) {
-        super(key, value0, value1, value2, cause);
+    public InvalidTimeIntervalActionException(String key, Object value0, Object value1, Object value2, Throwable cause) {
+	super(key, value0, value1, value2, cause);
 
     }
 
@@ -134,9 +132,9 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param value3
      * @param cause
      */
-    public InvalidTimeIntervalActionException(String key, Object value0, Object value1, Object value2,
-            Object value3, Throwable cause) {
-        super(key, value0, value1, value2, value3, cause);
+    public InvalidTimeIntervalActionException(String key, Object value0, Object value1, Object value2, Object value3,
+	    Throwable cause) {
+	super(key, value0, value1, value2, value3, cause);
 
     }
 
@@ -146,16 +144,16 @@ public class InvalidTimeIntervalActionException extends FenixActionException {
      * @param cause
      */
     public InvalidTimeIntervalActionException(String key, Object[] values, Throwable cause) {
-        super(key, values, cause);
+	super(key, values, cause);
 
     }
 
     public String toString() {
-        String result = "[InvalidTimeIntervalActionException\n";
-        result += "property" + this.getProperty() + "\n";
-        result += "error" + this.getError() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[InvalidTimeIntervalActionException\n";
+	result += "property" + this.getProperty() + "\n";
+	result += "error" + this.getError() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

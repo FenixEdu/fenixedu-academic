@@ -23,36 +23,34 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentCurricularPlans extends Service {
 
-    public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
-            FenixServiceException{
+    public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente, FenixServiceException {
 
-    	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-    	if(registration == null) {
-    		throw new NonExistingServiceException("student does not exist");
-    	}
-    	List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans(); 
+	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+	if (registration == null) {
+	    throw new NonExistingServiceException("student does not exist");
+	}
+	List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
 
-        if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
-            throw new NonExistingServiceException();
-        }
+	if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
+	    throw new NonExistingServiceException();
+	}
 
-        Iterator iterator = studentCurricularPlans.iterator();
-        List result = new ArrayList();
+	Iterator iterator = studentCurricularPlans.iterator();
+	List result = new ArrayList();
 
-        // FIXME: There's a problem with data of the Graduation Students
-        // For now only Master Degree Students can view their Curriculum
+	// FIXME: There's a problem with data of the Graduation Students
+	// For now only Master Degree Students can view their Curriculum
 
-        while (iterator.hasNext()) {
-            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
+	while (iterator.hasNext()) {
+	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
-            result.add(InfoStudentCurricularPlan
-                    .newInfoFromDomain(studentCurricularPlan));
-        }
+	    result.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+	}
 
-        if (result.size() == 0) {
-            throw new NonExistingServiceException();
-        }
+	if (result.size() == 0) {
+	    throw new NonExistingServiceException();
+	}
 
-        return result;
+	return result;
     }
 }

@@ -11,23 +11,23 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class ExecutionDataIsForNotYetOpenedPeriodFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Object[] serviceArgs = getServiceCallArguments(request);
-        Integer executionCourseDestinationId = (Integer) serviceArgs[0];
-        Integer executionCourseSourceId = (Integer) serviceArgs[1];
+	Object[] serviceArgs = getServiceCallArguments(request);
+	Integer executionCourseDestinationId = (Integer) serviceArgs[0];
+	Integer executionCourseSourceId = (Integer) serviceArgs[1];
 
-        ExecutionCourse executionCourseDestination = rootDomainObject.readExecutionCourseByOID( executionCourseDestinationId);
-        ExecutionCourse executionCourseSource = rootDomainObject.readExecutionCourseByOID( executionCourseSourceId);
+	ExecutionCourse executionCourseDestination = rootDomainObject.readExecutionCourseByOID(executionCourseDestinationId);
+	ExecutionCourse executionCourseSource = rootDomainObject.readExecutionCourseByOID(executionCourseSourceId);
 
-        long now = System.currentTimeMillis();
-        if (executionCourseDestination.getExecutionPeriod().getBeginDate().getTime() < now
-                || executionCourseSource.getExecutionPeriod().getBeginDate().getTime() < now) {
-            throw new NotAuthorizedException();
-        }
+	long now = System.currentTimeMillis();
+	if (executionCourseDestination.getExecutionPeriod().getBeginDate().getTime() < now
+		|| executionCourseSource.getExecutionPeriod().getBeginDate().getTime() < now) {
+	    throw new NotAuthorizedException();
+	}
     }
 
 }

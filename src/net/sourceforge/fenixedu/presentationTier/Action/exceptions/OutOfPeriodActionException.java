@@ -19,12 +19,11 @@ public abstract class OutOfPeriodActionException extends FenixActionException {
 
     private Date endDate;
 
-    public OutOfPeriodActionException(String messageKey, Date startDate, Date endDate,
-            ActionForward actionForward) {
-        super(actionForward);
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.messageKey = messageKey;
+    public OutOfPeriodActionException(String messageKey, Date startDate, Date endDate, ActionForward actionForward) {
+	super(actionForward);
+	this.startDate = startDate;
+	this.endDate = endDate;
+	this.messageKey = messageKey;
     }
 
     /*
@@ -33,13 +32,13 @@ public abstract class OutOfPeriodActionException extends FenixActionException {
      * @see presentationTier.Action.exceptions.FenixActionException#getError()
      */
     public ActionError getError() {
-        ActionError actionError = null;
-        if (startDate == null || endDate == null) {
-            actionError = new ActionError(this.getDefaultMessageKey());
-        } else {
-            actionError = new ActionError(this.messageKey, startDate, endDate);
-        }
-        return actionError;
+	ActionError actionError = null;
+	if (startDate == null || endDate == null) {
+	    actionError = new ActionError(this.getDefaultMessageKey());
+	} else {
+	    actionError = new ActionError(this.messageKey, startDate, endDate);
+	}
+	return actionError;
     }
 
     /**

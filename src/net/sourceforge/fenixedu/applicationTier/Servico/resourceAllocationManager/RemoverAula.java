@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 public class RemoverAula extends Service {
 
     public Object run(final InfoLesson infoLesson, final InfoShift infoShift) {
-        rootDomainObject.readLessonByOID(infoLesson.getIdInternal()).delete();
-        return Boolean.TRUE;
+	rootDomainObject.readLessonByOID(infoLesson.getIdInternal()).delete();
+	return Boolean.TRUE;
     }
 
 }

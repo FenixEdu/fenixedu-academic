@@ -22,49 +22,49 @@ public class InfoRubric extends DataTranferObject {
     }
 
     public InfoRubric(String code, String description) {
-        setCode(code);
-        setDescription(description);
+	setCode(code);
+	setDescription(description);
     }
 
     public String getCode() {
-        return code;
+	return code;
     }
 
     public void setCode(String code) {
-        this.code = code;
+	this.code = code;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     public Double getValue() {
-        return value;
+	return value;
     }
 
     public void setValue(Double value) {
-        this.value = value;
+	this.value = value;
     }
 
     public void copyFromDomain(IRubric rubric) {
-        if (rubric != null) {
-            setCode(rubric.getCode());
-            setDescription(rubric.getDescription());
-            setValue(rubric.getValue());
-        }
+	if (rubric != null) {
+	    setCode(rubric.getCode());
+	    setDescription(rubric.getDescription());
+	    setValue(rubric.getValue());
+	}
     }
 
     public static InfoRubric newInfoFromDomain(IRubric rubric) {
-        InfoRubric infoRubric = null;
-        if (rubric != null) {
-            infoRubric = new InfoRubric();
-            infoRubric.copyFromDomain(rubric);
-        }
-        return infoRubric;
+	InfoRubric infoRubric = null;
+	if (rubric != null) {
+	    infoRubric = new InfoRubric();
+	    infoRubric.copyFromDomain(rubric);
+	}
+	return infoRubric;
     }
 
 }

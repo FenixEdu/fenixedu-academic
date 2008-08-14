@@ -26,84 +26,80 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-        // super.execute(mapping, form, request, response);
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException, FenixServiceException {
+	// super.execute(mapping, form, request, response);
 
-        Object argsReadExecutionPeriods[] = {};
-        List executionPeriods;
-        try {
-            executionPeriods = (ArrayList) ServiceUtils.executeService(
-                    "ReadNotClosedPublicExecutionPeriods", argsReadExecutionPeriods);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException();
-        }
-        List executionPeriodsLabelValueList = new ArrayList();
-        for (int i = 0; i < executionPeriods.size(); i++) {
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
-            executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), "" + i));
-        }
-        if (executionPeriodsLabelValueList.size() > 1) {
-            request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
-                    executionPeriodsLabelValueList);
+	Object argsReadExecutionPeriods[] = {};
+	List executionPeriods;
+	try {
+	    executionPeriods = (ArrayList) ServiceUtils.executeService("ReadNotClosedPublicExecutionPeriods",
+		    argsReadExecutionPeriods);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException();
+	}
+	List executionPeriodsLabelValueList = new ArrayList();
+	for (int i = 0; i < executionPeriods.size(); i++) {
+	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
+	    executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
+		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), "" + i));
+	}
+	if (executionPeriodsLabelValueList.size() > 1) {
+	    request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
-        } else {
-            request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
-        }
-        /*------------------------------------*/
+	} else {
+	    request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+	}
+	/* ------------------------------------ */
 
-        // If executionPeriod was previously selected,form has that value as
-        // default
-        InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	// If executionPeriod was previously selected,form has that value as
+	// default
+	InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        if (selectedExecutionPeriod != null) {
-            DynaActionForm indexForm = (DynaActionForm) form;
+	if (selectedExecutionPeriod != null) {
+	    DynaActionForm indexForm = (DynaActionForm) form;
 
-            indexForm.set("index", new Integer(executionPeriods.indexOf((selectedExecutionPeriod))));
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod
-                    .getIdInternal().toString());
-        }
-        //----------------------------------------------------------
+	    indexForm.set("index", new Integer(executionPeriods.indexOf((selectedExecutionPeriod))));
+	    request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
+	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+	}
+	// ----------------------------------------------------------
 
-        //TODO: No futuro, os edificios devem ser lidos da BD
-        List buildings = Util.readExistingBuldings("*", null);
-        request.setAttribute("publico.buildings", buildings);
+	// TODO: No futuro, os edificios devem ser lidos da BD
+	List buildings = Util.readExistingBuldings("*", null);
+	request.setAttribute("publico.buildings", buildings);
 
-        //TODO: No futuro, os tipos de salas devem ser lidos da BD        
-        List types = Util.readTypesOfRooms("*", null);
-        request.setAttribute("publico.types", types);
+	// TODO: No futuro, os tipos de salas devem ser lidos da BD
+	List types = Util.readTypesOfRooms("*", null);
+	request.setAttribute("publico.types", types);
 
-        return mapping.findForward("Sucess");
-        // }
-        // throw new Exception();
+	return mapping.findForward("Sucess");
+	// }
+	// throw new Exception();
     }
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        DynaActionForm indexForm = (DynaActionForm) form;
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	DynaActionForm indexForm = (DynaActionForm) form;
 
-        Object argsReadExecutionPeriods[] = {};
-        List infoExecutionPeriods;
-        try {
-            infoExecutionPeriods = (ArrayList) ServiceUtils.executeService(
-                    "ReadNotClosedPublicExecutionPeriods", argsReadExecutionPeriods);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException();
-        }
+	Object argsReadExecutionPeriods[] = {};
+	List infoExecutionPeriods;
+	try {
+	    infoExecutionPeriods = (ArrayList) ServiceUtils.executeService("ReadNotClosedPublicExecutionPeriods",
+		    argsReadExecutionPeriods);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException();
+	}
 
-        Integer index = (Integer) indexForm.get("index");
-        if (infoExecutionPeriods != null && index != null) {
-            InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) infoExecutionPeriods
-                    .get(index.intValue());
-            // Set selected executionPeriod in request
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod
-                    .getIdInternal().toString());
-        }
+	Integer index = (Integer) indexForm.get("index");
+	if (infoExecutionPeriods != null && index != null) {
+	    InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) infoExecutionPeriods.get(index.intValue());
+	    // Set selected executionPeriod in request
+	    request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
+	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+	}
 
-        return mapping.findForward("choose");
+	return mapping.findForward("choose");
     }
 }

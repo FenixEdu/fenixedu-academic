@@ -40,10 +40,10 @@ public class RootDomainObjectDefiner extends BodyTagSupport {
 	    return PageContext.PAGE_SCOPE;
 	}
     }
-    
+
     @Override
     public int doEndTag() throws JspException {
-	pageContext.setAttribute(getId(),RootDomainObject.getInstance(), getPageScope());
+	pageContext.setAttribute(getId(), RootDomainObject.getInstance(), getPageScope());
 	return super.doEndTag();
     }
 

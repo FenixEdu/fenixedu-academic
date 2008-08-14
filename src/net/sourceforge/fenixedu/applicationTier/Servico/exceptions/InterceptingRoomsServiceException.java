@@ -17,15 +17,15 @@ public class InterceptingRoomsServiceException extends FenixServiceException {
     }
 
     public InterceptingRoomsServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public InterceptingRoomsServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public InterceptingRoomsServiceException(String message) {
-        super(message);
+	super(message);
     }
 
 }

@@ -19,22 +19,23 @@ public abstract class GrantPaymentEntity extends GrantPaymentEntity_Base {
     }
 
     public static GrantPaymentEntity findGrantPaymentEntityByNumberAndConcreteClass(String entityNumber, String entityClass) {
-        for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitysSet()) {
-            if (grantPaymentEntity.getNumber().equals(entityNumber) && grantPaymentEntity.getClass().getName().equals(entityClass)) {
-                return grantPaymentEntity;
-            }
-        }
-        return null;
+	for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitysSet()) {
+	    if (grantPaymentEntity.getNumber().equals(entityNumber)
+		    && grantPaymentEntity.getClass().getName().equals(entityClass)) {
+		return grantPaymentEntity;
+	    }
+	}
+	return null;
     }
 
     public static Set<GrantPaymentEntity> findGrantPaymentEntityByConcreteClass(final String classname) {
-        final Set<GrantPaymentEntity> grantPaymentEntities = new HashSet<GrantPaymentEntity>();
-        for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitysSet()) {
-            if (grantPaymentEntity.getClass().getName().equals(classname)) {
-                grantPaymentEntities.add(grantPaymentEntity);
-            }
-        }
-        return grantPaymentEntities;
+	final Set<GrantPaymentEntity> grantPaymentEntities = new HashSet<GrantPaymentEntity>();
+	for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitysSet()) {
+	    if (grantPaymentEntity.getClass().getName().equals(classname)) {
+		grantPaymentEntities.add(grantPaymentEntity);
+	    }
+	}
+	return grantPaymentEntities;
     }
 
 }

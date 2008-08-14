@@ -21,42 +21,41 @@ public class TypeLessonAndInfoShift extends InfoObject {
     }
 
     public TypeLessonAndInfoShift(ShiftType typeLesson, InfoShift infoShift) {
-        setTypeLesson(typeLesson);
-        setInfoShift(infoShift);
+	setTypeLesson(typeLesson);
+	setInfoShift(infoShift);
     }
 
     public ShiftType getTypeLesson() {
-        return _typeLesson;
+	return _typeLesson;
     }
 
     public void setTypeLesson(ShiftType typeLesson) {
-        _typeLesson = typeLesson;
+	_typeLesson = typeLesson;
     }
 
     public InfoShift getInfoShift() {
-        return _infoShift;
+	return _infoShift;
     }
 
     public void setInfoShift(InfoShift infoShift) {
-        _infoShift = infoShift;
+	_infoShift = infoShift;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof TypeLessonAndInfoShift) {
-            TypeLessonAndInfoShift tLAIS = (TypeLessonAndInfoShift) obj;
-            resultado = getTypeLesson().equals(tLAIS.getTypeLesson())
-                    && getInfoShift().equals(tLAIS.getInfoShift());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof TypeLessonAndInfoShift) {
+	    TypeLessonAndInfoShift tLAIS = (TypeLessonAndInfoShift) obj;
+	    resultado = getTypeLesson().equals(tLAIS.getTypeLesson()) && getInfoShift().equals(tLAIS.getInfoShift());
+	}
+	return resultado;
     }
 
     public String toString() {
-        String result = "[TYPELESSONANDINFOSHIFT";
-        result += ", typeLesson=" + _typeLesson;
-        result += ", infoShift=" + _infoShift;
-        result += "]";
-        return result;
+	String result = "[TYPELESSONANDINFOSHIFT";
+	result += ", typeLesson=" + _typeLesson;
+	result += ", infoShift=" + _infoShift;
+	result += "]";
+	return result;
     }
 
 }

@@ -8,31 +8,31 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestionGroup;
 
 public class GroupElementBean implements Serializable {
 
-	DomainReference<NewQuestionGroup> parent;
+    DomainReference<NewQuestionGroup> parent;
 
-	DomainReference<NewQuestion> child;
+    DomainReference<NewQuestion> child;
 
-	public GroupElementBean(NewQuestion child) {
-		super();
+    public GroupElementBean(NewQuestion child) {
+	super();
 
-		this.setChild(child);
-		this.setParent(null);
-	}
+	this.setChild(child);
+	this.setParent(null);
+    }
 
-	public NewQuestion getChild() {
-		return child.getObject();
-	}
+    public NewQuestion getChild() {
+	return child.getObject();
+    }
 
-	public void setChild(NewQuestion child) {
-		this.child = new DomainReference<NewQuestion>(child);
-	}
+    public void setChild(NewQuestion child) {
+	this.child = new DomainReference<NewQuestion>(child);
+    }
 
-	public NewQuestionGroup getParent() {
-		return parent.getObject();
-	}
+    public NewQuestionGroup getParent() {
+	return parent.getObject();
+    }
 
-	public void setParent(NewQuestionGroup parent) {
-		this.parent = new DomainReference<NewQuestionGroup>(parent);
-	}
+    public void setParent(NewQuestionGroup parent) {
+	this.parent = new DomainReference<NewQuestionGroup>(parent);
+    }
 
 }

@@ -11,39 +11,39 @@ public class BreadCrumbsTag extends UIComponentTag {
     private String trailingCrumb;
 
     public String getComponentType() {
-        return UIBreadCrumbs.COMPONENT_TYPE;
+	return UIBreadCrumbs.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return null;
+	return null;
     }
 
     protected void setProperties(final UIComponent component) {
-        super.setProperties(component);
-        JsfTagUtils.setString(component, "degree", this.degree);
-        JsfTagUtils.setString(component, "trailingCrumb", this.trailingCrumb);
+	super.setProperties(component);
+	JsfTagUtils.setString(component, "degree", this.degree);
+	JsfTagUtils.setString(component, "trailingCrumb", this.trailingCrumb);
     }
 
     public void release() {
-        super.release();
-        setDegree(null);
-        setTrailingCrumb(null);
+	super.release();
+	setDegree(null);
+	setTrailingCrumb(null);
     }
 
     public String getDegree() {
-        return degree;
+	return degree;
     }
 
     public void setDegree(final String degree) {
-        this.degree = degree;
+	this.degree = degree;
     }
 
     public String getTrailingCrumb() {
-        return trailingCrumb;
+	return trailingCrumb;
     }
 
     public void setTrailingCrumb(String trailingCrumb) {
-        this.trailingCrumb = trailingCrumb;
+	this.trailingCrumb = trailingCrumb;
     }
 
 }

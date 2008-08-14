@@ -19,12 +19,11 @@ public class RegisterCandidate extends Service {
 
     public void run(RegisterCandidacyBean candidacyBean) {
 
-	StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(),
-		CandidacySituationType.REGISTERED.toString());
+	StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), CandidacySituationType.REGISTERED
+		.toString());
 
 	final Registration registration = candidacyBean.getCandidacy().getRegistration();
-	registration.setStartDate(candidacyBean.getStartDate() != null ? candidacyBean.getStartDate()
-		: new YearMonthDay());
+	registration.setStartDate(candidacyBean.getStartDate() != null ? candidacyBean.getStartDate() : new YearMonthDay());
 	registration.setEnrolmentModelForCurrentExecutionYear(candidacyBean.getEnrolmentModel());
     }
 

@@ -88,10 +88,10 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
     }
 
     private Section getSideSection(Site site) {
-	for(Node node: site.getChildren()) {
-	    Content child = node.getChild(); 
-	    if(child instanceof Section && child.getName().equals(getTargetSectionName())) {
-		return (Section)child;
+	for (Node node : site.getChildren()) {
+	    Content child = node.getChild();
+	    if (child instanceof Section && child.getName().equals(getTargetSectionName())) {
+		return (Section) child;
 	    }
 	}
 	return null;

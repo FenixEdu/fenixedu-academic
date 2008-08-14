@@ -37,18 +37,17 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
 	return mapping.findForward("PrepareReady");
     }
 
-    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer number = new Integer((String) ((DynaActionForm) form).get("requesterNumber"));
-	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number,
-		DegreeType.MASTER_DEGREE));
+	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE));
 
 	request.setAttribute(SessionConstants.DOCUMENT_REASON, DocumentReason.values());
 	request.setAttribute(SessionConstants.CERTIFICATE_LIST, new CertificateList().toArrayList());
@@ -72,12 +71,10 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 	    request.setAttribute(SessionConstants.DOCUMENT_REASON_LIST, destination);
 	}
 
-	InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan
-		.newInfoFromDomain(rootDomainObject
-			.readStudentCurricularPlanByOID(studentCurricularPlanID));
+	InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan.newInfoFromDomain(rootDomainObject
+		.readStudentCurricularPlanByOID(studentCurricularPlanID));
 
-	int initialYear = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInitialDate()
-		.getYear() + 1900;
+	int initialYear = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInitialDate().getYear() + 1900;
 	String initialExecutionYear = initialYear + "/" + ++initialYear;
 	request.setAttribute("initialExecutionYear", initialExecutionYear);
 
@@ -87,26 +84,21 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
 	try {
 	    if (certificateString.equals("Fim de curso de Mestrado discriminada com média")
-		    || certificateString.equals("Fim de curso de Mestrado simples")
-		    || certificateString.equals("Carta de Curso")) {
+		    || certificateString.equals("Fim de curso de Mestrado simples") || certificateString.equals("Carta de Curso")) {
 		Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
 		try {
-		    infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) ServiceUtils
-			    .executeService(
-				    "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
-				    argsMasterDegreeThesisDataVersion);
+		    infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
+			    "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan", argsMasterDegreeThesisDataVersion);
 		} catch (NonExistingServiceException e) {
 		    throw new NonExistingActionException("O registo da tese ", e);
 
 		}
 
-		/* * * get master degree proof * * */
+		/*  get master degree proof */
 		Object argsMasterDegreeProofVersion[] = { studentCurricularPlanID };
 		try {
-		    infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) ServiceUtils
-			    .executeService(
-				    "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
-				    argsMasterDegreeProofVersion);
+		    infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) ServiceUtils.executeService(
+			    "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan", argsMasterDegreeProofVersion);
 		} catch (NonExistingServiceException e) {
 		    throw new NonExistingActionException("O registo da tese ", e);
 		} catch (ScholarshipNotFinishedServiceException e) {
@@ -115,8 +107,8 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
 	    }
 
-	    infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(
-		    userView, "ReadCurrentExecutionYear", null);
+	    infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(userView,
+		    "ReadCurrentExecutionYear", null);
 
 	} catch (RuntimeException e) {
 	    throw new RuntimeException("Error", e);
@@ -124,13 +116,11 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
 	Locale locale = new Locale("pt", "PT");
 	Date date = new Date();
-	String formatedDate = "Lisboa, "
-		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+	String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 	request.setAttribute(SessionConstants.DATE, formatedDate);
 
-	request.setAttribute(SessionConstants.CERTIFICATE_TYPE, certificateString);	 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION,
-		infoMasterDegreeThesisDataVersion);
+	request.setAttribute(SessionConstants.CERTIFICATE_TYPE, certificateString);
+	request.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION, infoMasterDegreeThesisDataVersion);
 	request.setAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY, infoMasterDegreeProofVersion);
 	request.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);
 	request.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);

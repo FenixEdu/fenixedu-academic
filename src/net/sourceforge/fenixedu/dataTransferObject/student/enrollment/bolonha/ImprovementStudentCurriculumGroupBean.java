@@ -14,48 +14,51 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import org.apache.commons.beanutils.BeanComparator;
 
 public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
-    
+
     public ImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
 	super(curriculumGroup, executionSemester, null);
     }
 
     @Override
     protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group, ExecutionSemester executionSemester) {
-        return Collections.emptyList();
+	return Collections.emptyList();
     }
-    
+
     @Override
-    protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group, ExecutionSemester executionSemester) {
+    protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
+	    ExecutionSemester executionSemester) {
 	List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
 	for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
-	    if(curriculumModule.isEnrolment()) {
+	    if (curriculumModule.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumModule;
-		if(enrolment.isImprovementEnroled() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
+		if (enrolment.isImprovementEnroled() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
 		    result.add(new StudentCurriculumEnrolmentBean(enrolment));
 		}
 	    }
 	}
-	
-        return result;
+
+	return result;
     }
-    
+
     @Override
-    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group, ExecutionSemester executionSemester) {
+    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
+	    ExecutionSemester executionSemester) {
 	List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
-	    if(curriculumModule.isEnrolment()) {
+	    if (curriculumModule.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumModule;
-		if(enrolment.canBeImproved() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
+		if (enrolment.canBeImproved() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
 		    result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
 		}
 	    }
 	}
-	
+
 	return result;
     }
-    
+
     @Override
-    protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup, ExecutionSemester executionSemester, int[] curricularYears) {
+    protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
+	    ExecutionSemester executionSemester, int[] curricularYears) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroups()) {
 	    result.add(new ImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
@@ -63,20 +66,19 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
 
 	return result;
     }
-    
+
     @Override
     public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
-	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(
-		getCurricularCoursesToEnrol());
+	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
 	Collections.sort(result, new BeanComparator("executionPeriod"));
 
 	return result;
 
     }
-    
+
     @Override
     public boolean isToBeDisabled() {
-        return true;
+	return true;
     }
 
 }

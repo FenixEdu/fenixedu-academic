@@ -21,34 +21,33 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        VigilantGroupBean bean = (VigilantGroupBean) source;
-        VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
-        List<Vigilant> vigilants = new ArrayList<Vigilant>();
+	VigilantGroupBean bean = (VigilantGroupBean) source;
+	VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
+	List<Vigilant> vigilants = new ArrayList<Vigilant>();
 
-        if (source instanceof ConvokeBean) {
-            ConvokeBean convokeBean = (ConvokeBean) bean;
-            vigilants.addAll(convokeBean.getVigilantsSugestion());
-            WrittenEvaluation evaluation = convokeBean.getWrittenEvaluation();
-            if(evaluation!=null && evaluation.getVigilancies().size()>0) {
-            	for(Vigilancy convoke : evaluation.getVigilancies()) {
-            		vigilants.remove(convoke.getVigilant());
-            	}
-            }
-        } else {
-            vigilants.addAll(vigilantGroup.getVigilants());
-            ComparatorChain chain = new ComparatorChain();
-            chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
-            chain.addComparator(Vigilant.USERNAME_COMPARATOR);
-            Collections.sort(vigilants,chain);
-        }
+	if (source instanceof ConvokeBean) {
+	    ConvokeBean convokeBean = (ConvokeBean) bean;
+	    vigilants.addAll(convokeBean.getVigilantsSugestion());
+	    WrittenEvaluation evaluation = convokeBean.getWrittenEvaluation();
+	    if (evaluation != null && evaluation.getVigilancies().size() > 0) {
+		for (Vigilancy convoke : evaluation.getVigilancies()) {
+		    vigilants.remove(convoke.getVigilant());
+		}
+	    }
+	} else {
+	    vigilants.addAll(vigilantGroup.getVigilants());
+	    ComparatorChain chain = new ComparatorChain();
+	    chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
+	    chain.addComparator(Vigilant.USERNAME_COMPARATOR);
+	    Collections.sort(vigilants, chain);
+	}
 
-        
-       return vigilants;
+	return vigilants;
 
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 
 }

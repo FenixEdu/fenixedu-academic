@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class FilterChainDiscriptorProperty2XML extends FileUtil {
 
@@ -22,26 +22,26 @@ public class FilterChainDiscriptorProperty2XML extends FileUtil {
      *  
      */
     public FilterChainDiscriptorProperty2XML() {
-        super();
-        filterChainIDs = new HashMap();
+	super();
+	filterChainIDs = new HashMap();
     }
 
     /**
      * args[0] input filename args[0] output filename
-     *  
+     * 
      */
     public static void main(String[] args) {
-        FilterChainDiscriptorProperty2XML instance = new FilterChainDiscriptorProperty2XML();
-        exec(args[0], args[1], args[2], instance);
+	FilterChainDiscriptorProperty2XML instance = new FilterChainDiscriptorProperty2XML();
+	exec(args[0], args[1], args[2], instance);
     }
 
     public static HashMap exec(String inputFile, String outputFile, String implementationClassPackage,
-            FilterChainDiscriptorProperty2XML instance) {
-        FileUtil.inputFile = inputFile;
-        FileUtil.outputFile = outputFile;
-        FilterChainDiscriptorProperty2XML.implementationClassPackage = implementationClassPackage;
-        instance.processFile();
-        return filterChainIDs;
+	    FilterChainDiscriptorProperty2XML instance) {
+	FileUtil.inputFile = inputFile;
+	FileUtil.outputFile = outputFile;
+	FilterChainDiscriptorProperty2XML.implementationClassPackage = implementationClassPackage;
+	instance.processFile();
+	return filterChainIDs;
     }
 
     /*
@@ -50,32 +50,31 @@ public class FilterChainDiscriptorProperty2XML extends FileUtil {
      * @see ServidorAplicacao.utils.FileUtil#processLine(java.lang.String)
      */
     protected String processLine(Integer i, String line) {
-        if (line != null) {
-            if (i.intValue() == 1) {
-                // What do we do with the filter order???
-            } else {
-                String filterAlias = StringUtils.trim(StringUtils.chomp(line, "="));
-                String implementationClassName = "AccessControlFilter";
-                String discription = "";
-                String invocationTiming = "1";
-                String filterDescriptor = "\t<filterChain>\n";
-                filterDescriptor += "\t\t<idInternal>" + i + "</idInternal>\n";
-                filterDescriptor += "\t\t<name>" + filterAlias + "</name>\n";
-                filterDescriptor += "\t\t<expression>" + filterAlias + "</expression>\n";
-                filterDescriptor += "\t\t<description>" + discription + "</description>\n";
-                filterDescriptor += "\t\t<invocationTiming>" + invocationTiming
-                        + "</invocationTiming>\n";
-                // CONFIRM THIS!!!!!!
-                filterDescriptor += "\t\t<filterClass>" + implementationClassPackage + "."
-                        + implementationClassName + "</filterClass>\n";
-                filterDescriptor += "\t</filterChain>\n";
+	if (line != null) {
+	    if (i.intValue() == 1) {
+		// What do we do with the filter order???
+	    } else {
+		String filterAlias = StringUtils.trim(StringUtils.chomp(line, "="));
+		String implementationClassName = "AccessControlFilter";
+		String discription = "";
+		String invocationTiming = "1";
+		String filterDescriptor = "\t<filterChain>\n";
+		filterDescriptor += "\t\t<idInternal>" + i + "</idInternal>\n";
+		filterDescriptor += "\t\t<name>" + filterAlias + "</name>\n";
+		filterDescriptor += "\t\t<expression>" + filterAlias + "</expression>\n";
+		filterDescriptor += "\t\t<description>" + discription + "</description>\n";
+		filterDescriptor += "\t\t<invocationTiming>" + invocationTiming + "</invocationTiming>\n";
+		// CONFIRM THIS!!!!!!
+		filterDescriptor += "\t\t<filterClass>" + implementationClassPackage + "." + implementationClassName
+			+ "</filterClass>\n";
+		filterDescriptor += "\t</filterChain>\n";
 
-                filterChainIDs.put(filterAlias, i);
+		filterChainIDs.put(filterAlias, i);
 
-                return filterDescriptor;
-            }
-        }
-        return new String();
+		return filterDescriptor;
+	    }
+	}
+	return new String();
     }
 
     /*
@@ -84,8 +83,8 @@ public class FilterChainDiscriptorProperty2XML extends FileUtil {
      * @see ServidorAplicacao.utils.FileUtil#generateHeader()
      */
     protected String generateHeader() {
-        String header = "<filterChainsDefinitions>\n";
-        return header;
+	String header = "<filterChainsDefinitions>\n";
+	return header;
     }
 
     /*
@@ -94,15 +93,15 @@ public class FilterChainDiscriptorProperty2XML extends FileUtil {
      * @see ServidorAplicacao.utils.FileUtil#generateFooter()
      */
     protected String generateFooter() {
-        String footer = "</filterChainsDefinitions>\n";
-        return footer;
+	String footer = "</filterChainsDefinitions>\n";
+	return footer;
     }
 
     /**
      * @return Returns the filterIDs.
      */
     public static HashMap getFilterIDs() {
-        return filterChainIDs;
+	return filterChainIDs;
     }
 
     /**
@@ -110,7 +109,7 @@ public class FilterChainDiscriptorProperty2XML extends FileUtil {
      *            The filterIDs to set.
      */
     public static void setFilterIDs(HashMap filterChainIDs) {
-        FilterChainDiscriptorProperty2XML.filterChainIDs = filterChainIDs;
+	FilterChainDiscriptorProperty2XML.filterChainIDs = filterChainIDs;
     }
 
 }

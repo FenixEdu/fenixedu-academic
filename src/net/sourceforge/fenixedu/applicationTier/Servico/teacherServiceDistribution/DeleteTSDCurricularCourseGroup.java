@@ -5,13 +5,14 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularC
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 
 public class DeleteTSDCurricularCourseGroup extends Service {
-	public void run(Integer tsdCurricularCourseGroupId) {
-		TSDCurricularCourseGroup tsdCurricularCourseGroup = (TSDCurricularCourseGroup) rootDomainObject.readTSDCourseByOID(tsdCurricularCourseGroupId);
-		
-		for (TSDCurricularCourse tsdCurricularCourse : tsdCurricularCourseGroup.getTSDCurricularCourses()) {
-			tsdCurricularCourse.setTSDCurricularCourseGroup(null);
-		}
-			
-		tsdCurricularCourseGroup.delete();
+    public void run(Integer tsdCurricularCourseGroupId) {
+	TSDCurricularCourseGroup tsdCurricularCourseGroup = (TSDCurricularCourseGroup) rootDomainObject
+		.readTSDCourseByOID(tsdCurricularCourseGroupId);
+
+	for (TSDCurricularCourse tsdCurricularCourse : tsdCurricularCourseGroup.getTSDCurricularCourses()) {
+	    tsdCurricularCourse.setTSDCurricularCourseGroup(null);
 	}
+
+	tsdCurricularCourseGroup.delete();
+    }
 }

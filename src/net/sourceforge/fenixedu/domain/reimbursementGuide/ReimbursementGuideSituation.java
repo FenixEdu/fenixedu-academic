@@ -58,7 +58,7 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
 
     /**
      * @param officialDate
-     *                The officialDate to set.
+     *            The officialDate to set.
      */
     public void setOfficialDate(Calendar officialDate) {
 	if (officialDate != null) {

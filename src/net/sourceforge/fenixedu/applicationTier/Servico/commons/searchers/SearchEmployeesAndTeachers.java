@@ -25,8 +25,7 @@ public class SearchEmployeesAndTeachers extends Service implements AutoCompleteS
 	if (value == null) {
 	    result = new ArrayList<Person>(Person.findInternalPerson(""));
 	} else {
-	    for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value)
-		    .toLowerCase())) {
+	    for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value).toLowerCase())) {
 		PartyClassification partyClassification = person.getPartyClassification();
 		if (partyClassification.equals(PartyClassification.TEACHER)
 			|| partyClassification.equals(PartyClassification.EMPLOYEE)) {

@@ -9,21 +9,21 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 abstract public class FenixFilterException extends FilterException {
     /**
      *  
      */
     public FenixFilterException() {
-        super();
+	super();
     }
 
     /**
      * @param message
      */
     public FenixFilterException(String message) {
-        super(message);
+	super(message);
     }
 
     /**
@@ -31,14 +31,14 @@ abstract public class FenixFilterException extends FilterException {
      * @param cause
      */
     public FenixFilterException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     /**
      * @param cause
      */
     public FenixFilterException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
 }

@@ -17,51 +17,51 @@ public class TransferedOverheadsReportLine implements Serializable, ITransferedO
     private Double overheadValue;
 
     public String getDate() {
-        return date;
+	return date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+	this.date = date;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     public Integer getExplorationUnit() {
-        return explorationUnit;
+	return explorationUnit;
     }
 
     public void setExplorationUnit(Integer explorationUnit) {
-        this.explorationUnit = explorationUnit;
+	this.explorationUnit = explorationUnit;
     }
 
     public String getMovementId() {
-        return movementId;
+	return movementId;
     }
 
     public void setMovementId(String movementId) {
-        this.movementId = movementId;
+	this.movementId = movementId;
     }
 
     public Double getOverheadValue() {
-        return overheadValue;
+	return overheadValue;
     }
 
     public void setOverheadValue(Double overheadValue) {
-        this.overheadValue = overheadValue;
+	this.overheadValue = overheadValue;
     }
 
     public String getType() {
-        return type;
+	return type;
     }
 
     public void setType(String type) {
-        this.type = type;
+	this.type = type;
     }
 
 }

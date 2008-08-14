@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- * This is the Action to display all the master degrees.
+ *         This is the Action to display all the master degrees.
  * 
  */
 public class CourseListingDispatchAction extends FenixDispatchAction {

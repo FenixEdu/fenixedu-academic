@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author David Santos
- *  
+ * 
  */
 
 public class DegreeAdministrativeOfficeSuperUserAuthorizationFilter extends AuthorizationByRoleFilter {
@@ -18,10 +18,10 @@ public class DegreeAdministrativeOfficeSuperUserAuthorizationFilter extends Auth
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     protected RoleType getRoleType() {
-        return RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER;
+	return RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER;
     }
 }

@@ -44,8 +44,8 @@ public class CreateScormFile extends CreateFileContent {
 
 	private EducationalResourceType educationalResourceType;
 
-	public CreateScormFileItemForItemArgs(Site site, Container container, File file, String originalFilename, String displayName,
-		Group permittedGroup, ScormMetaDataHash scormParameters, Person person,
+	public CreateScormFileItemForItemArgs(Site site, Container container, File file, String originalFilename,
+		String displayName, Group permittedGroup, ScormMetaDataHash scormParameters, Person person,
 		EducationalResourceType educationalResourceType) {
 	    this.site = site;
 	    this.container = container;
@@ -134,8 +134,7 @@ public class CreateScormFile extends CreateFileContent {
 
     private ThreadLocal<ScormMetaDataHash> extraScormParam = null;
 
-    public void run(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException,
-	    IOException {
+    public void run(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException, IOException {
 	extraScormParam = new ThreadLocal<ScormMetaDataHash>();
 	extraScormParam.set(args.getScormParameters());
 

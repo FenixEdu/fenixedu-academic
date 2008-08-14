@@ -17,8 +17,8 @@ public class ResidenceEventBean implements Serializable {
     private String name;
     private DomainReference<Student> student;
     private Money roomValue;
-    private String statusMessage;    
-    
+    private String statusMessage;
+
     public ResidenceEventBean(String userName, String fiscalNumber, String name, Double roomValue) {
 	this.userName = userName;
 	this.fiscalNumber = fiscalNumber;
@@ -62,15 +62,15 @@ public class ResidenceEventBean implements Serializable {
     public void setStudent(Student student) {
 	this.student = new DomainReference<Student>(student);
     }
-    
+
     public Student getStudent() {
 	return this.student.getObject();
     }
-    
+
     public String getStatusMessage() {
 	return statusMessage;
     }
-    
+
     public boolean getStatus() {
 	if (!StringUtils.isNumeric(userName)) {
 	    statusMessage = "label.error.invalid.student.number";
@@ -83,21 +83,20 @@ public class ResidenceEventBean implements Serializable {
 	    return false;
 	}
 	setStudent(student);
-	
-	
-	ResidenceYear year = ResidenceYear.getCurrentYear();	
+
+	ResidenceYear year = ResidenceYear.getCurrentYear();
 	ResidenceManagementUnit unit = year.getUnit();
 	if (!roomValue.equals(unit.getCurrentSingleRoomValue()) && !roomValue.equals(unit.getCurrentDoubleRoomValue())) {
 	    statusMessage = "label.error.invalid.payment.amount";
 	    return false;
 	}
-	
+
 	String socialSecurityNumber = student.getPerson().getSocialSecurityNumber();
 	if (socialSecurityNumber != null && !socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim())) {
 	    statusMessage = "label.error.invalid.fiscalNumber";
 	    return false;
 	}
 
-	 return true;
+	return true;
     }
 }

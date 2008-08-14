@@ -29,46 +29,43 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 public class ReadTeacherInformationCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
     protected RoleType getRoleType() {
-        return RoleType.COORDINATOR;
+	return RoleType.COORDINATOR;
     }
 
     public void execute(ServiceRequest arg0, ServiceResponse arg1) throws FilterException, Exception {
-        IUserView id = (IUserView) arg0.getRequester();
-        Object[] arguments = arg0.getArguments();
-        if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
-                || (id == null) || (id.getRoleTypes() == null)
-                || !verifyCondition(id, (String) arguments[0])) {
-            throw new NotAuthorizedFilterException();
-        }
+	IUserView id = (IUserView) arg0.getRequester();
+	Object[] arguments = arg0.getArguments();
+	if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
+		|| (id.getRoleTypes() == null) || !verifyCondition(id, (String) arguments[0])) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 
     protected boolean verifyCondition(IUserView id, String user) {
-        final Person person = id.getPerson();
-        final Teacher teacher = Teacher.readTeacherByUsername(user);
+	final Person person = id.getPerson();
+	final Teacher teacher = Teacher.readTeacherByUsername(user);
 
-        List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllCoordinatedByTeacher(person);
+	List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllCoordinatedByTeacher(person);
 
-        List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
-        ExecutionYear executionDegressExecutionYearID = (!degreeCurricularPlans.isEmpty()) ? executionDegrees
-                .get(0).getExecutionYear()
-                : null;
+	List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
+	ExecutionYear executionDegressExecutionYearID = (!degreeCurricularPlans.isEmpty()) ? executionDegrees.get(0)
+		.getExecutionYear() : null;
 
-        List<Professorship> professorships = Professorship.readByDegreeCurricularPlansAndExecutionYear(
-                degreeCurricularPlans, executionDegressExecutionYearID);
-        for (final Professorship professorship : professorships) {
-            if (professorship.getTeacher() == teacher) {
-                return true;
-            }
-        }
-        return false;
+	List<Professorship> professorships = Professorship.readByDegreeCurricularPlansAndExecutionYear(degreeCurricularPlans,
+		executionDegressExecutionYearID);
+	for (final Professorship professorship : professorships) {
+	    if (professorship.getTeacher() == teacher) {
+		return true;
+	    }
+	}
+	return false;
     }
 
-    private List<DegreeCurricularPlan> getDegreeCurricularPlans(
-            final List<ExecutionDegree> executionDegrees) {
-        final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-        for (final ExecutionDegree executionDegree : executionDegrees) {
-            result.add(executionDegree.getDegreeCurricularPlan());
-        }
-        return result;
+    private List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
+	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+	for (final ExecutionDegree executionDegree : executionDegrees) {
+	    result.add(executionDegree.getDegreeCurricularPlan());
+	}
+	return result;
     }
 }

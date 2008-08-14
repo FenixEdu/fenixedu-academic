@@ -40,7 +40,7 @@ public class Researcher extends Researcher_Base {
     }
 
     public boolean hasAtLeastOneKeyword(String... keywords) {
-	for(String keyword : keywords) {
+	for (String keyword : keywords) {
 	    if (hasKeyword(keyword)) {
 		return true;
 	    }
@@ -68,7 +68,7 @@ public class Researcher extends Researcher_Base {
 
 	return orderedInterests;
     }
-    
+
     public void setAvailableContacts(List<PartyContact> contacts) {
 	getAvailableContacts().clear();
 	for (PartyContact contact : contacts) {

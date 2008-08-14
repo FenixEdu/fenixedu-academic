@@ -8,15 +8,15 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 
 public abstract class MergeResearchActivityPageContainerBean extends PageContainerBean implements Serializable {
-    
+
     private List<DomainReference<DomainObject>> selectedObjects = new ArrayList<DomainReference<DomainObject>>();
-    
+
     private PageContainerBean pageContainerBean;
-    
+
     public MergeResearchActivityPageContainerBean() {
 	pageContainerBean = new PageContainerBean();
     }
-    
+
     public List<DomainObject> getSelectedObjects() {
 	List<DomainObject> result = new ArrayList<DomainObject>();
 	for (DomainReference<DomainObject> domainReference : this.selectedObjects) {
@@ -33,39 +33,39 @@ public abstract class MergeResearchActivityPageContainerBean extends PageContain
     }
 
     public PageContainerBean getPageContainerBean() {
-        return pageContainerBean;
+	return pageContainerBean;
     }
 
     public void setPageContainerBean(PageContainerBean pageContainerBean) {
-        this.pageContainerBean = pageContainerBean;
+	this.pageContainerBean = pageContainerBean;
     }
-    
+
     @Override
     public List<DomainObject> getObjects() {
-        return getSelectedObjects();
+	return getSelectedObjects();
     }
-    
+
     @Override
     public void setObjects(List<? extends DomainObject> objects) {
 	List<DomainObject> result = new ArrayList<DomainObject>(objects);
 	result.removeAll(getSelectedObjects());
-        getPageContainerBean().setObjects(result);
+	getPageContainerBean().setObjects(result);
     }
 
     public void addSelected() {
-	if(getPageContainerBean().getSelected() != null) {
+	if (getPageContainerBean().getSelected() != null) {
 	    this.selectedObjects.add(new DomainReference<DomainObject>(getPageContainerBean().getSelected()));
 	    getPageContainerBean().setSelected(null);
 	}
     }
 
     public void removeSelected() {
-	if(getSelected() != null) {
+	if (getSelected() != null) {
 	    this.selectedObjects.remove(new DomainReference<DomainObject>(getSelected()));
 	    setSelected(null);
 	}
     }
-    
+
     public void reset() {
 	setSelected(null);
 	selectedObjects = new ArrayList<DomainReference<DomainObject>>();

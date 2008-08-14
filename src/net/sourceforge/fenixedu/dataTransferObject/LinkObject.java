@@ -7,37 +7,37 @@ public class LinkObject implements Serializable {
     private Integer id;
     private String method;
     private String label;
-    
+
     public LinkObject() {
     }
-    
+
     public LinkObject(Integer id, String method, String label) {
 	this.id = id;
 	this.method = method;
 	this.label = label;
     }
-    
+
     public Integer getId() {
-        return id;
+	return id;
     }
-    
+
     public void setId(Integer id) {
-        this.id = id;
+	this.id = id;
     }
-    
+
     public String getLabel() {
-        return label;
+	return label;
     }
-    
+
     public void setLabel(String label) {
-        this.label = label;
+	this.label = label;
     }
-    
+
     public String getMethod() {
-        return method;
+	return method;
     }
-    
+
     public void setMethod(String method) {
-        this.method = method;
+	this.method = method;
     }
 }

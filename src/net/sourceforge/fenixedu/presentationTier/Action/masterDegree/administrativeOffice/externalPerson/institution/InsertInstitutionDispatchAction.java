@@ -21,35 +21,35 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class InsertInstitutionDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        return mapping.findForward("start");
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	return mapping.findForward("start");
     }
 
-    public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+    public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm insertInstitutionForm = (DynaActionForm) form;
+	DynaActionForm insertInstitutionForm = (DynaActionForm) form;
 
-        String institutionName = (String) insertInstitutionForm.get("name");
+	String institutionName = (String) insertInstitutionForm.get("name");
 
-        Object args[] = { institutionName };
+	Object args[] = { institutionName };
 
-        try {
-            ServiceUtils.executeService("InsertInstitution", args);
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        } 
+	try {
+	    ServiceUtils.executeService("InsertInstitution", args);
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+	}
 
-        return mapping.findForward("success");
+	return mapping.findForward("success");
     }
 
 }

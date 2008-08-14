@@ -8,9 +8,8 @@ public class EnrolmentPeriodInImprovementOfApprovedEnrolment extends EnrolmentPe
 	super();
     }
 
-    public EnrolmentPeriodInImprovementOfApprovedEnrolment(
-	    final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester,
-	    final Date startDate, final Date endDate) {
+    public EnrolmentPeriodInImprovementOfApprovedEnrolment(final DegreeCurricularPlan degreeCurricularPlan,
+	    final ExecutionSemester executionSemester, final Date startDate, final Date endDate) {
 	super();
 	init(degreeCurricularPlan, executionSemester, startDate, endDate);
     }

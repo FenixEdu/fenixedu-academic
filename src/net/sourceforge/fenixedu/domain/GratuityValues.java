@@ -28,8 +28,7 @@ public class GratuityValues extends GratuityValues_Base {
 	    // we have to use the components information (scholarship +
 	    // final
 	    // proof)
-	    totalValue = this.getScholarShipValue()
-		    + (this.getFinalProofValue() == null ? 0.0 : this.getFinalProofValue());
+	    totalValue = this.getScholarShipValue() + (this.getFinalProofValue() == null ? 0.0 : this.getFinalProofValue());
 	}
 
 	return totalValue;
@@ -71,8 +70,7 @@ public class GratuityValues extends GratuityValues_Base {
     }
 
     public PaymentPhase getLastPaymentPhase() {
-	return hasAnyPaymentPhaseList() ? Collections.max(getPaymentPhaseList(),
-		PaymentPhase.COMPARATOR_BY_END_DATE) : null;
+	return hasAnyPaymentPhaseList() ? Collections.max(getPaymentPhaseList(), PaymentPhase.COMPARATOR_BY_END_DATE) : null;
     }
 
     public boolean isPenaltyApplicable() {

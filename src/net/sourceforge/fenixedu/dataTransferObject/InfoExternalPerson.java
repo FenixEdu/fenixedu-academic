@@ -10,26 +10,26 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class InfoExternalPerson extends InfoObject {
-    
+
     private DomainReference<ExternalContract> externalPersonDomainReference;
 
     public InfoExternalPerson(final ExternalContract externalPerson) {
 	externalPersonDomainReference = new DomainReference<ExternalContract>(externalPerson);
     }
-    
+
     public static InfoExternalPerson newInfoFromDomain(final ExternalContract externalPerson) {
-        return externalPerson == null ? null : new InfoExternalPerson(externalPerson);
+	return externalPerson == null ? null : new InfoExternalPerson(externalPerson);
     }
-    
+
     private ExternalContract getExternalPerson() {
 	return externalPersonDomainReference == null ? null : externalPersonDomainReference.getObject();
     }
-    
+
     public boolean equals(Object obj) {
-        return obj instanceof InfoExternalPerson && getExternalPerson() == ((InfoExternalPerson) obj).getExternalPerson();
+	return obj instanceof InfoExternalPerson && getExternalPerson() == ((InfoExternalPerson) obj).getExternalPerson();
     }
 
     @Override
@@ -46,14 +46,14 @@ public class InfoExternalPerson extends InfoObject {
      * @return Returns the infoPerson.
      */
     public InfoPerson getInfoPerson() {
-        return InfoPerson.newInfoFromDomain(getExternalPerson().getPerson());
+	return InfoPerson.newInfoFromDomain(getExternalPerson().getPerson());
     }
 
     /**
      * @return Returns the infoInstitution.
      */
     public InfoInstitution getInfoInstitution() {
-        return InfoInstitution.newInfoFromDomain(getExternalPerson().getInstitutionUnit());
+	return InfoInstitution.newInfoFromDomain(getExternalPerson().getInstitutionUnit());
     }
 
 }

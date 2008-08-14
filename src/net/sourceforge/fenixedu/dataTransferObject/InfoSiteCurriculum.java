@@ -8,8 +8,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author João Mota
  * 
- * 29/Jul/2003 fenix-head DataBeans
- *  
+ *         29/Jul/2003 fenix-head DataBeans
+ * 
  */
 public class InfoSiteCurriculum extends DataTranferObject implements ISiteComponent {
 
@@ -21,35 +21,35 @@ public class InfoSiteCurriculum extends DataTranferObject implements ISiteCompon
      * @return
      */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     /**
      * @param infoCurricularCourse
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
     /**
      * @return
      */
     public InfoCurriculum getInfoCurriculum() {
-        return infoCurriculum;
+	return infoCurriculum;
     }
 
     /**
      * @param infoCurriculum
      */
     public void setInfoCurriculum(InfoCurriculum infoCurriculum) {
-        this.infoCurriculum = infoCurriculum;
+	this.infoCurriculum = infoCurriculum;
     }
 
     /**
      *  
      */
     public InfoSiteCurriculum() {
-        super();
+	super();
 
     }
 

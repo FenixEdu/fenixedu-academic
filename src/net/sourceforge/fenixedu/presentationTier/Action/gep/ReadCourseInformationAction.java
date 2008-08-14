@@ -28,29 +28,29 @@ public class ReadCourseInformationAction extends FenixAction {
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
+     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+     * ActionMapping, org.apache.struts.action.ActionForm,
+     * javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
-        
-        Object[] args1 = { new Integer(request.getParameter("executionCourseId")) };
-        TeacherAdministrationSiteView teacherAdministrationSiteView = (TeacherAdministrationSiteView) ServiceUtils
-                .executeService( "ReadCourseInformation", args1);
-        InfoSiteCourseInformation infoSiteCourseInformation = (InfoSiteCourseInformation) teacherAdministrationSiteView
-                .getComponent();
-        request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = UserView.getUser();
 
-        if (request.getParameter("executionDegreeId") != null) {
-            Object[] args2 = { new Integer(request.getParameter("executionDegreeId")) };
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-                    "ReadExecutionDegreeByOID", args2);
-            request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-        }
+	Object[] args1 = { new Integer(request.getParameter("executionCourseId")) };
+	TeacherAdministrationSiteView teacherAdministrationSiteView = (TeacherAdministrationSiteView) ServiceUtils
+		.executeService("ReadCourseInformation", args1);
+	InfoSiteCourseInformation infoSiteCourseInformation = (InfoSiteCourseInformation) teacherAdministrationSiteView
+		.getComponent();
+	request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);
 
-        return mapping.findForward("show");
+	if (request.getParameter("executionDegreeId") != null) {
+	    Object[] args2 = { new Integer(request.getParameter("executionDegreeId")) };
+	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
+		    "ReadExecutionDegreeByOID", args2);
+	    request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+	}
+
+	return mapping.findForward("show");
     }
 }

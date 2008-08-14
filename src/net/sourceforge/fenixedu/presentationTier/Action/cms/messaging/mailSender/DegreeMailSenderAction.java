@@ -21,34 +21,34 @@ import org.apache.struts.action.ActionMapping;
 public class DegreeMailSenderAction extends SimpleMailSenderAction {
 
     private static final String fromName = "Coordenação do curso";
-    
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        request.setAttribute("degree",getDegree(request));
-        return super.execute(mapping, actionForm, request, response);
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("degree", getDegree(request));
+	return super.execute(mapping, actionForm, request, response);
     }
 
     private Degree getDegree(HttpServletRequest request) {
 	String degreeId = request.getParameter("degreeId");
 	return (degreeId != null) ? RootDomainObject.getInstance().readDegreeByOID(Integer.valueOf(degreeId)) : null;
     }
-    
+
     @Override
     protected List<IGroup> getPossibleReceivers(HttpServletRequest request) {
 	Degree degree = getDegree(request);
-        List<IGroup> groups = new ArrayList<IGroup>();
-        groups.add(new DegreeTeachersGroup(degree));
-        groups.add(new DegreeStudentsGroup(degree));
-        groups.add(new AllTeachersGroup());
-        groups.add(new AllStudentsGroup());
-        return groups;
+	List<IGroup> groups = new ArrayList<IGroup>();
+	groups.add(new DegreeTeachersGroup(degree));
+	groups.add(new DegreeStudentsGroup(degree));
+	groups.add(new AllTeachersGroup());
+	groups.add(new AllStudentsGroup());
+	return groups;
     }
-    
+
     @Override
     protected String getFromName(HttpServletRequest request) {
 	StringBuffer buffer = new StringBuffer(fromName);
-	buffer.append(" " );
+	buffer.append(" ");
 	buffer.append(getDegree(request).getName());
 	return buffer.toString();
     }

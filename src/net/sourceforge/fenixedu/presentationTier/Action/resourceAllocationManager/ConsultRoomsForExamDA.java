@@ -20,16 +20,16 @@ public class ConsultRoomsForExamDA extends FenixDispatchAction {
     /**
      * Prepares the information for the form used to search salas.
      */
-    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        List edificios = Util.readExistingBuldings("*", null);
-        List tipos = Util.readTypesOfRooms("*", null);
+	List edificios = Util.readExistingBuldings("*", null);
+	List tipos = Util.readTypesOfRooms("*", null);
 
-        request.setAttribute("publico.buildings", edificios);
-        request.setAttribute("publico.types", tipos);
+	request.setAttribute("publico.buildings", edificios);
+	request.setAttribute("publico.types", tipos);
 
-        return mapping.findForward("Search Rooms");
+	return mapping.findForward("Search Rooms");
     }
 
 }

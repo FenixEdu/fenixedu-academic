@@ -9,7 +9,7 @@ import org.xml.sax.InputSource;
 
 /**
  * @author Susana Fernandes
- *  
+ * 
  */
 public class QuestionResolver implements EntityResolver {
     private String path;
@@ -17,11 +17,11 @@ public class QuestionResolver implements EntityResolver {
     private String xmlDocumentDtd = "WEB-INF/ims/qtiasiv1p2.dtd";
 
     public QuestionResolver(String dtdPath) {
-        this.path = dtdPath;
+	this.path = dtdPath;
     }
 
     public InputSource resolveEntity(String publicId, String systemId) {
-        return new InputSource("file:///" + path.concat(xmlDocumentDtd));
+	return new InputSource("file:///" + path.concat(xmlDocumentDtd));
 
     }
 

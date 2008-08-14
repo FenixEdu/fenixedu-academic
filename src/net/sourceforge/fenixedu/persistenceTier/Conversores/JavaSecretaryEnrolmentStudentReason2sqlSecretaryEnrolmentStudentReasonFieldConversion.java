@@ -11,27 +11,25 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
- *
+ * 
  */
-public class JavaSecretaryEnrolmentStudentReason2sqlSecretaryEnrolmentStudentReasonFieldConversion
-        implements FieldConversion {
-
+public class JavaSecretaryEnrolmentStudentReason2sqlSecretaryEnrolmentStudentReasonFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object source) throws ConversionException {
-        if (source instanceof SecretaryEnrolmentStudentReason) {
-            SecretaryEnrolmentStudentReason s = (SecretaryEnrolmentStudentReason) source;
-            return new Integer(s.getValue());
-        }
+	if (source instanceof SecretaryEnrolmentStudentReason) {
+	    SecretaryEnrolmentStudentReason s = (SecretaryEnrolmentStudentReason) source;
+	    return new Integer(s.getValue());
+	}
 
-        return source;
+	return source;
     }
 
     public Object sqlToJava(Object source) throws ConversionException {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return SecretaryEnrolmentStudentReason.getEnum(src.intValue());
-        }
-        return source;
+	if (source instanceof Integer) {
+	    Integer src = (Integer) source;
+	    return SecretaryEnrolmentStudentReason.getEnum(src.intValue());
+	}
+	return source;
     }
 
 }

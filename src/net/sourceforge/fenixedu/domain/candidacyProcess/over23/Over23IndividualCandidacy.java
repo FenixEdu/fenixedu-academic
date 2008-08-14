@@ -144,12 +144,12 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	    }
 	}
     }
-    
+
     @Override
     protected ExecutionYear getCandidacyExecutionInterval() {
-        return (ExecutionYear) super.getCandidacyExecutionInterval();
+	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
-    
+
     @Override
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
 	    Ingression ingression) {

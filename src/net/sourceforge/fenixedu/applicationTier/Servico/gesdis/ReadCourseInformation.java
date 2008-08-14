@@ -15,19 +15,20 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class ReadCourseInformation extends Service {
 
     public TeacherAdministrationSiteView run(final Integer executionCourseOID) throws FenixServiceException {
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
 	final InfoSiteCourseInformation resultComponent = new InfoSiteCourseInformation(executionCourse);
-        
-        final TeacherAdministrationSiteView result = new TeacherAdministrationSiteView();
-        result.setCommonComponent(TeacherAdministrationSiteComponentBuilder.getInstance().getComponent(new InfoSiteCommon(), executionCourse.getSite(), null, null, null));
-        result.setComponent(resultComponent);
 
-        return result;
+	final TeacherAdministrationSiteView result = new TeacherAdministrationSiteView();
+	result.setCommonComponent(TeacherAdministrationSiteComponentBuilder.getInstance().getComponent(new InfoSiteCommon(),
+		executionCourse.getSite(), null, null, null));
+	result.setComponent(resultComponent);
+
+	return result;
     }
 
 }

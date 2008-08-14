@@ -43,9 +43,8 @@ public class StudentCurricularPlanFactoryExecutor {
 		throw new DomainException("error.registrationAlreadyHasSCPWithGivenDCP");
 	    }
 
-	    return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(),
-		    getDegreeCurricularPlan(), new YearMonthDay(), ExecutionSemester
-			    .readActualExecutionSemester(), getCycleType());
+	    return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(), getDegreeCurricularPlan(),
+		    new YearMonthDay(), ExecutionSemester.readActualExecutionSemester(), getCycleType());
 	}
 
 	public DegreeCurricularPlan getDegreeCurricularPlan() {
@@ -58,13 +57,11 @@ public class StudentCurricularPlanFactoryExecutor {
 
 	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	    this.degreeCurricularPlan = degreeCurricularPlan != null ? new DomainReference<DegreeCurricularPlan>(
-		    degreeCurricularPlan)
-		    : null;
+		    degreeCurricularPlan) : null;
 	}
 
 	public void setRegistration(Registration registration) {
-	    this.registration = registration != null ? new DomainReference<Registration>(registration)
-		    : null;
+	    this.registration = registration != null ? new DomainReference<Registration>(registration) : null;
 	}
 
 	public Degree getDegree() {

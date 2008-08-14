@@ -28,11 +28,11 @@ public class ThesisSearchBean implements Serializable {
 
     public ThesisSearchBean() {
 	ExecutionYear last = null;
-        for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
-            if (last == null || thesis.getEnrolment().getExecutionYear().isAfter(last))
-        	last = thesis.getEnrolment().getExecutionYear();
-        }
-        setYear(last);
+	for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
+	    if (last == null || thesis.getEnrolment().getExecutionYear().isAfter(last))
+		last = thesis.getEnrolment().getExecutionYear();
+	}
+	setYear(last);
     }
 
     public ThesisSearchBean(String text, String state, String year) {

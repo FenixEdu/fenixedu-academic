@@ -22,7 +22,7 @@ public class AcademicSemesterDateTimeFieldType extends DateTimeFieldType {
     public static DateTimeFieldType academicSemester() {
 	return ACADEMIC_SEMESTER_TYPE;
     }
-    
+
     @Override
     public DurationFieldType getDurationType() {
 	return AcademicSemestersDurationFieldType.academicSemesters();
@@ -30,18 +30,18 @@ public class AcademicSemesterDateTimeFieldType extends DateTimeFieldType {
 
     @Override
     public DateTimeField getField(Chronology chronology) {
-	if(chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology)chronology).academicSemester();
+	if (chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology) chronology).academicSemester();
 	}
-	throw unsupported();	
+	throw unsupported();
     }
 
     @Override
-    public DurationFieldType getRangeDurationType() {	
+    public DurationFieldType getRangeDurationType() {
 	return null;
     }
-    
+
     private UnsupportedOperationException unsupported() {
-        return new UnsupportedOperationException(ACADEMIC_SEMESTER_TYPE + " field is unsupported");
+	return new UnsupportedOperationException(ACADEMIC_SEMESTER_TYPE + " field is unsupported");
     }
 }

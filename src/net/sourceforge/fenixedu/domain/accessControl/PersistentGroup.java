@@ -11,55 +11,55 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 public class PersistentGroup extends DomainBackedGroup<PersistentGroupMembers> {
 
     private static final long serialVersionUID = 156456365385985497L;
-    
+
     public PersistentGroup(PersistentGroupMembers object) {
-	super(object);	
+	super(object);
     }
 
     public PersistentGroupMembers getPersistentGroupMembers() {
 	return getObject();
     }
-    
+
     public String getName() {
-    	return getObject().getName();
+	return getObject().getName();
     }
-    
+
     @Override
-    public Set<Person> getElements() {	
+    public Set<Person> getElements() {
 	PersistentGroupMembers groupMembers = getObject();
-	return Collections.unmodifiableSet(groupMembers.getPersonsSet());	
+	return Collections.unmodifiableSet(groupMembers.getPersonsSet());
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-	return new Argument[] {new IdOperator(getObject())};
+	return new Argument[] { new IdOperator(getObject()) };
     }
-    
+
     @Override
     public boolean isMember(Person person) {
-	if(person != null) {
+	if (person != null) {
 	    PersistentGroupMembers groupMembers = getObject();
 	    for (Person groupPerson : groupMembers.getPersons()) {
-		if(person.equals(groupPerson)) {
+		if (person.equals(groupPerson)) {
 		    return true;
 		}
 	    }
 	}
 	return false;
     }
-    
+
     public static class Builder implements GroupBuilder {
-	
-        public Group build(Object[] arguments) {
-            return new PersistentGroup((PersistentGroupMembers) arguments[0]);
-        }
 
-        public int getMinArguments() {
-            return 1;
-        }
+	public Group build(Object[] arguments) {
+	    return new PersistentGroup((PersistentGroupMembers) arguments[0]);
+	}
 
-        public int getMaxArguments() {
-            return 1;
-        }        
+	public int getMinArguments() {
+	    return 1;
+	}
+
+	public int getMaxArguments() {
+	    return 1;
+	}
     }
 }

@@ -19,55 +19,54 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
     private String slotName;
 
     public SlotSelector(String relationName, String slotName) {
-        super();
+	super();
 
-        this.relationName = relationName;
-        this.slotName = slotName;
+	this.relationName = relationName;
+	this.slotName = slotName;
     }
 
     public Collection<ObjectType> getObjects(HolderType holder) {
-        try {
-            return (Collection<ObjectType>) PropertyUtils.getProperty(holder, this.relationName);
-        } catch (IllegalAccessException e) {
-            throw new DomainException("adapter.ordered.relation.no.slot.access", e);
-        } catch (InvocationTargetException e) {
-            throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
-        } catch (NoSuchMethodException e) {
-            throw new DomainException("adapter.ordered.relation.no.slot", e);
-        }
+	try {
+	    return (Collection<ObjectType>) PropertyUtils.getProperty(holder, this.relationName);
+	} catch (IllegalAccessException e) {
+	    throw new DomainException("adapter.ordered.relation.no.slot.access", e);
+	} catch (InvocationTargetException e) {
+	    throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
+	} catch (NoSuchMethodException e) {
+	    throw new DomainException("adapter.ordered.relation.no.slot", e);
+	}
     }
 
     private RuntimeException handleInvocationTargetException(InvocationTargetException e, String message) {
-        if (e.getCause() instanceof RuntimeException) {
-            return (RuntimeException) e.getCause();
-        }
-        else {
-            return new DomainException(message, e.getCause());
-        }
+	if (e.getCause() instanceof RuntimeException) {
+	    return (RuntimeException) e.getCause();
+	} else {
+	    return new DomainException(message, e.getCause());
+	}
     }
 
     public Integer getOrder(ObjectType target) {
-        try {
-            return (Integer) PropertyUtils.getProperty(target, this.slotName);
-        } catch (IllegalAccessException e) {
-            throw new DomainException("adapter.ordered.relation.no.slot.access", e);
-        } catch (InvocationTargetException e) {
-            throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
-        } catch (NoSuchMethodException e) {
-            throw new DomainException("adapter.ordered.relation.no.slot", e);
-        }
+	try {
+	    return (Integer) PropertyUtils.getProperty(target, this.slotName);
+	} catch (IllegalAccessException e) {
+	    throw new DomainException("adapter.ordered.relation.no.slot.access", e);
+	} catch (InvocationTargetException e) {
+	    throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
+	} catch (NoSuchMethodException e) {
+	    throw new DomainException("adapter.ordered.relation.no.slot", e);
+	}
     }
 
     public void setOrder(ObjectType target, Integer order) {
-        try {
-            PropertyUtils.setProperty(target, this.slotName, order);
-        } catch (IllegalAccessException e) {
-            throw new DomainException("adapter.ordered.relation.no.slot.access", e);
-        } catch (InvocationTargetException e) {
-            throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
-        } catch (NoSuchMethodException e) {
-            throw new DomainException("adapter.ordered.relation.no.slot", e);
-        }
+	try {
+	    PropertyUtils.setProperty(target, this.slotName, order);
+	} catch (IllegalAccessException e) {
+	    throw new DomainException("adapter.ordered.relation.no.slot.access", e);
+	} catch (InvocationTargetException e) {
+	    throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
+	} catch (NoSuchMethodException e) {
+	    throw new DomainException("adapter.ordered.relation.no.slot", e);
+	}
     }
 
 }

@@ -74,7 +74,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
 	return labelFormatter;
     }
-    
+
     @Override
     protected AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {
 	return getAdministrativeOffice().getServiceAgreementTemplate();

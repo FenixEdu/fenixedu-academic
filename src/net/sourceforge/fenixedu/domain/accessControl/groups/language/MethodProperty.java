@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 public class MethodProperty extends NestedProperty {
 
     private static final long serialVersionUID = 1L;
-    
+
     private ArgumentList arguments;
 
     public MethodProperty(String name) {
-        super(name);
+	super(name);
 
-        this.arguments = new ArgumentList();
+	this.arguments = new ArgumentList();
     }
 
     /**
@@ -29,14 +29,14 @@ public class MethodProperty extends NestedProperty {
      *         this property
      */
     protected List<Argument> getArguments() {
-        return this.arguments;
+	return this.arguments;
     }
 
     /**
      * @return the internal argument list
      */
     protected ArgumentList getArgumentList() {
-        return this.arguments;
+	return this.arguments;
     }
 
     /**
@@ -47,17 +47,15 @@ public class MethodProperty extends NestedProperty {
      *            the argument to be added
      */
     public void addArgument(Argument argument) {
-        argument.setContextProvider(this);
+	argument.setContextProvider(this);
 
-        this.arguments.add(argument);
+	this.arguments.add(argument);
     }
 
     /**
-     * @inheritDoc
-     * 
-     * Obtains the value by considering the name of the property the name of a
-     * getter. All the arguments defined for this property are used to further
-     * specify the getter to be invoked.
+     * @inheritDoc Obtains the value by considering the name of the property the
+     *             name of a getter. All the arguments defined for this property
+     *             are used to further specify the getter to be invoked.
      * 
      * @exception MethodNotAvailableException
      *                when it wasn't possible to obtain the value from the
@@ -65,16 +63,16 @@ public class MethodProperty extends NestedProperty {
      */
     @Override
     public Object getValue(Object target) {
-        Object[] arguments = getArgumentList().getArgumentValues();
-        Class[] argumentTypes = getArgumentList().getArgumentTypes();
+	Object[] arguments = getArgumentList().getArgumentValues();
+	Class[] argumentTypes = getArgumentList().getArgumentTypes();
 
-        try {
-            Method method = target.getClass().getMethod(getMethodName(), argumentTypes);
+	try {
+	    Method method = target.getClass().getMethod(getMethodName(), argumentTypes);
 
-            return method.invoke(target, arguments);
-        } catch (Exception e) {
-            throw new MethodNotAvailableException(e, target, getMethodName(), argumentTypes);
-        }
+	    return method.invoke(target, arguments);
+	} catch (Exception e) {
+	    throw new MethodNotAvailableException(e, target, getMethodName(), argumentTypes);
+	}
     }
 
     /**
@@ -83,13 +81,13 @@ public class MethodProperty extends NestedProperty {
      * @return the name of the method to be invoked
      */
     protected String getMethodName() {
-        String name = getName();
-        
-        return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
+	String name = getName();
+
+	return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
     @Override
     public String toString() {
-        return getName() + getArgumentList();
+	return getName() + getArgumentList();
     }
 }

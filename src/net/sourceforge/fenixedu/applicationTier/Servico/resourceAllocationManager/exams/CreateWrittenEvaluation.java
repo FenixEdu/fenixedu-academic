@@ -17,30 +17,26 @@ import net.sourceforge.fenixedu.util.Season;
 
 public class CreateWrittenEvaluation extends Service {
 
-
-    public void run(Integer executionCourseID, Date writtenEvaluationDate,
-	    Date writtenEvaluationStartTime, Date writtenEvaluationEndTime,
-	    List<String> executionCourseIDs, List<String> degreeModuleScopeIDs, 
-	    List<String> roomIDs, Season examSeason, String writtenTestDescription) throws FenixServiceException{
+    public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
+	    Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
+	    List<String> roomIDs, Season examSeason, String writtenTestDescription) throws FenixServiceException {
 
 	final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(executionCourseIDs);
 	final List<DegreeModuleScope> degreeModuleScopesToAssociate = readCurricularCourseScopesAndContexts(degreeModuleScopeIDs);
 
 	List<AllocatableSpace> roomsToAssociate = null;
 	if (roomIDs != null) {
-	    roomsToAssociate = readRooms(roomIDs);        
+	    roomsToAssociate = readRooms(roomIDs);
 	}
 
-	// creating the new written evaluation, according to the service arguments
+	// creating the new written evaluation, according to the service
+	// arguments
 	if (examSeason != null) {
-	    new Exam(writtenEvaluationDate,
-		    writtenEvaluationStartTime, writtenEvaluationEndTime,
-		    executionCoursesToAssociate, degreeModuleScopesToAssociate, roomsToAssociate,
-		    examSeason);
+	    new Exam(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime, executionCoursesToAssociate,
+		    degreeModuleScopesToAssociate, roomsToAssociate, examSeason);
 	} else if (writtenTestDescription != null) {
-	    new WrittenTest(writtenEvaluationDate, writtenEvaluationStartTime,
-		    writtenEvaluationEndTime, executionCoursesToAssociate,
-		    degreeModuleScopesToAssociate, roomsToAssociate, writtenTestDescription);
+	    new WrittenTest(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
+		    executionCoursesToAssociate, degreeModuleScopesToAssociate, roomsToAssociate, writtenTestDescription);
 	} else {
 	    throw new InvalidArgumentsServiceException();
 	}
@@ -62,20 +58,21 @@ public class CreateWrittenEvaluation extends Service {
 	return result;
     }
 
-    private List<DegreeModuleScope> readCurricularCourseScopesAndContexts(final List<String> degreeModuleScopeIDs) throws FenixServiceException{
+    private List<DegreeModuleScope> readCurricularCourseScopesAndContexts(final List<String> degreeModuleScopeIDs)
+	    throws FenixServiceException {
 
 	List<DegreeModuleScope> result = new ArrayList<DegreeModuleScope>();
 	for (String key : degreeModuleScopeIDs) {
 	    DegreeModuleScope degreeModuleScope = DegreeModuleScope.getDegreeModuleScopeByKey(key);
-	    if(degreeModuleScope != null) {
+	    if (degreeModuleScope != null) {
 		result.add(degreeModuleScope);
 	    }
-	}	
+	}
 
 	if (result.isEmpty()) {
 	    throw new FenixServiceException("error.invalidCurricularCourseScope");
 	}
-	
+
 	return result;
     }
 
@@ -89,5 +86,5 @@ public class CreateWrittenEvaluation extends Service {
 	    result.add(room);
 	}
 	return result;
-    }   
+    }
 }

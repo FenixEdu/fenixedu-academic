@@ -22,14 +22,14 @@ public class ManagerFilter implements Filter {
     }
 
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
-            throws IOException, ServletException {
+	    throws IOException, ServletException {
 
-        final IUserView userView = UserView.getUser();
-        if (userView == null || !userView.hasRoleType(RoleType.MANAGER)) {
-            throw new RuntimeException();
-        }
+	final IUserView userView = UserView.getUser();
+	if (userView == null || !userView.hasRoleType(RoleType.MANAGER)) {
+	    throw new RuntimeException();
+	}
 
-        chain.doFilter(request, response);
+	chain.doFilter(request, response);
     }
 
 }

@@ -20,18 +20,16 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 
-    final static Comparator<MasterDegreeProofVersion> LAST_MODIFICATION_COMPARATOR = new BeanComparator(
-	    "lastModification");
+    final static Comparator<MasterDegreeProofVersion> LAST_MODIFICATION_COMPARATOR = new BeanComparator("lastModification");
 
     public MasterDegreeProofVersion() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee,
-	    Date lastModification, Date proofDate, Date thesisDeliveryDate,
-	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, State currentState,
-	    List juries, List externalJuries) {
+    public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee, Date lastModification,
+	    Date proofDate, Date thesisDeliveryDate, MasterDegreeClassification finalResult, Integer attachedCopiesNumber,
+	    State currentState, List juries, List externalJuries) {
 	this();
 	this.setMasterDegreeThesis(masterDegreeThesis);
 	this.setResponsibleEmployee(responsibleEmployee);
@@ -49,19 +47,16 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 	return getFinalResult().equals(MasterDegreeClassification.APPROVED);
     }
 
-    public static List<MasterDegreeProofVersion> getConcludedForDegreeAndSinceYear(Degree degree,
-	    Integer year) {
+    public static List<MasterDegreeProofVersion> getConcludedForDegreeAndSinceYear(Degree degree, Integer year) {
 
 	List<MasterDegreeProofVersion> result = new ArrayList<MasterDegreeProofVersion>();
 
 	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-	    for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-		    .getStudentCurricularPlansSet()) {
+	    for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
 
 		final MasterDegreeThesis thesis = studentCurricularPlan.getMasterDegreeThesis();
 		if (thesis != null) {
-		    final MasterDegreeProofVersion masterDegreeProofVersion = thesis
-			    .getActiveMasterDegreeProofVersion();
+		    final MasterDegreeProofVersion masterDegreeProofVersion = thesis.getActiveMasterDegreeProofVersion();
 		    if (masterDegreeProofVersion != null && masterDegreeProofVersion.isConcluded()
 			    && masterDegreeProofVersion.getProofDateYearMonthDay().getYear() == year) {
 			result.add(masterDegreeProofVersion);

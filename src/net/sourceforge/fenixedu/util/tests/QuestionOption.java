@@ -15,35 +15,35 @@ public class QuestionOption extends FenixUtil {
     private boolean emptyResponse = false;
 
     public QuestionOption() {
-        super();
+	super();
     }
 
     public QuestionOption(String optionId) {
-        super();
-        this.optionId = optionId;
+	super();
+	this.optionId = optionId;
     }
 
     public boolean getEmptyResponse() {
-        return emptyResponse;
+	return emptyResponse;
     }
 
     public void setEmptyResponse(boolean emptyResponse) {
-        this.emptyResponse = emptyResponse;
+	this.emptyResponse = emptyResponse;
     }
 
     public List<LabelValueBean> getOptionContent() {
-        return optionContent;
+	return optionContent;
     }
 
     public void setOptionContent(List<LabelValueBean> optionContent) {
-        this.optionContent = optionContent;
+	this.optionContent = optionContent;
     }
 
     public String getOptionId() {
-        return optionId;
+	return optionId;
     }
 
     public void setOptionId(String optionId) {
-        this.optionId = optionId;
+	this.optionId = optionId;
     }
 }

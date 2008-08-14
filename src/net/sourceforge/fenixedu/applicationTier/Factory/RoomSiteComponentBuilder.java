@@ -62,8 +62,8 @@ public class RoomSiteComponentBuilder {
 	return null;
     }
 
-    private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
-	    AllocatableSpace room, ExecutionSemester executionSemester) throws Exception {
+    private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day, AllocatableSpace room,
+	    ExecutionSemester executionSemester) throws Exception {
 
 	List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
@@ -80,18 +80,20 @@ public class RoomSiteComponentBuilder {
 
 	for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {
 
-	    if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {                
-		List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluations();                                   
-		getWrittenEvaluationRoomOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, writtenEvaluations);
+	    if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
+		List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation) roomOccupation)
+			.getWrittenEvaluations();
+		getWrittenEvaluationRoomOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay,
+			writtenEvaluations);
 	    }
 
-	    if(roomOccupation.isLessonSpaceOccupation()) {
-		final Lesson lesson = ((LessonSpaceOccupation)roomOccupation).getLesson();
+	    if (roomOccupation.isLessonSpaceOccupation()) {
+		final Lesson lesson = ((LessonSpaceOccupation) roomOccupation).getLesson();
 		getLessonOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, lesson);
 	    }
 
-	    if(roomOccupation.isLessonInstanceSpaceOccupation()) {
-		List<LessonInstance> lessonInstances = ((LessonInstanceSpaceOccupation)roomOccupation).getLessonInstances();
+	    if (roomOccupation.isLessonInstanceSpaceOccupation()) {
+		List<LessonInstance> lessonInstances = ((LessonInstanceSpaceOccupation) roomOccupation).getLessonInstances();
 		getLessonInstanceOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, lessonInstances);
 	    }
 	}
@@ -102,39 +104,41 @@ public class RoomSiteComponentBuilder {
 	return component;
     }
 
-    private void getLessonOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay, 
+    private void getLessonOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
 	    YearMonthDay weekEndYearMonthDay, Lesson lesson) {
 
-	if(lesson != null && lesson.hasShift() 
+	if (lesson != null
+		&& lesson.hasShift()
 		&& lesson.containsWithoutCheckInstanceDates(new Interval(weekStartYearMonthDay.toDateTimeAtMidnight(),
-			weekEndYearMonthDay.toDateTimeAtMidnight()))) {	    	   
+			weekEndYearMonthDay.toDateTimeAtMidnight()))) {
 	    infoShowOccupations.add(InfoLesson.newInfoFromDomain(lesson));
-	}	
+	}
     }
 
     private void getLessonInstanceOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
 	    YearMonthDay weekEndYearMonthDay, List<LessonInstance> lessonInstances) {
 
-	if(lessonInstances != null) {
+	if (lessonInstances != null) {
 	    for (LessonInstance lessonInstance : lessonInstances) {
-		final YearMonthDay lessonInstanceDay = lessonInstance.getDay();	    
-		if (!lessonInstanceDay.isBefore(weekStartYearMonthDay) && !lessonInstanceDay.isAfter(weekEndYearMonthDay)) {		
+		final YearMonthDay lessonInstanceDay = lessonInstance.getDay();
+		if (!lessonInstanceDay.isBefore(weekStartYearMonthDay) && !lessonInstanceDay.isAfter(weekEndYearMonthDay)) {
 		    InfoLessonInstance infoLessonInstance = new InfoLessonInstance(lessonInstance);
-		    infoShowOccupations.add(infoLessonInstance);		
-		}	
-	    }	    	 
+		    infoShowOccupations.add(infoLessonInstance);
+		}
+	    }
 	}
     }
 
-    private void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations, final YearMonthDay weekStartYearMonthDay,
-	    final YearMonthDay weekEndYearMonthDay, final List<WrittenEvaluation> writtenEvaluations) {
+    private void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations,
+	    final YearMonthDay weekStartYearMonthDay, final YearMonthDay weekEndYearMonthDay,
+	    final List<WrittenEvaluation> writtenEvaluations) {
 
 	if (writtenEvaluations != null) {
 
 	    for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
-		
+
 		final YearMonthDay evaluationDate = writtenEvaluation.getDayDateYearMonthDay();
-		
+
 		if (!evaluationDate.isBefore(weekStartYearMonthDay) && !evaluationDate.isAfter(weekEndYearMonthDay)) {
 
 		    if (writtenEvaluation instanceof Exam) {
@@ -145,8 +149,8 @@ public class RoomSiteComponentBuilder {
 			final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
 			infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
 		    }
-		}   
+		}
 	    }
 	}
-    }   
+    }
 }

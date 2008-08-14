@@ -20,42 +20,41 @@ import org.apache.struts.action.ActionMapping;
 public class ExecutionCourseAnnouncementManagement extends AnnouncementManagement {
 
     protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
-        return Integer.valueOf(request.getParameter("objectCode"));
+	return Integer.valueOf(request.getParameter("objectCode"));
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-        return RootDomainObject.getInstance().readExecutionCourseByOID(
-                this.getRequestedExecutionCourseId(request));
+	return RootDomainObject.getInstance().readExecutionCourseByOID(this.getRequestedExecutionCourseId(request));
     }
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation",
-                new Object[] { this.getRequestedExecutionCourseId(request) });
-        request.setAttribute("siteView", siteView);
-        return super.execute(mapping, actionForm, request, response);
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation", new Object[] { this
+		.getRequestedExecutionCourseId(request) });
+	request.setAttribute("siteView", siteView);
+	return super.execute(mapping, actionForm, request, response);
     }
-    
+
     @Override
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-        return rootDomainObject.readExecutionCourseByOID(this.getRequestedExecutionCourseId(request)).getBoard();
+	return rootDomainObject.readExecutionCourseByOID(this.getRequestedExecutionCourseId(request)).getBoard();
     }
 
     @Override
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {        
-        return super.viewAnnouncements(mapping, actionForm, request, response);
+	    HttpServletResponse response) throws Exception {
+	return super.viewAnnouncements(mapping, actionForm, request, response);
     }
 
     @Override
     protected String getExtraRequestParameters(HttpServletRequest request) {
-        return "objectCode=" + this.getRequestedExecutionCourseId(request);
+	return "objectCode=" + this.getRequestedExecutionCourseId(request);
     }
 
     @Override
     protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-        return "/announcementManagement.do";
+	return "/announcementManagement.do";
 
     }
 

@@ -110,21 +110,21 @@ public class Category extends Category_Base implements Comparable<Category> {
 	Set<Category> result = new HashSet<Category>();
 	Set<Category> categorysSet = RootDomainObject.getInstance().getCategorysSet();
 	for (Category category : categorysSet) {
-	    if(category.isTeacherCategoryType()) {
+	    if (category.isTeacherCategoryType()) {
 		result.add(category);
 	    }
-	}	
+	}
 	return result;
     }
-    
+
     public static Set<Category> readEmployeeCategories() {
 	Set<Category> result = new HashSet<Category>();
 	Set<Category> categorysSet = RootDomainObject.getInstance().getCategorysSet();
 	for (Category category : categorysSet) {
-	    if(!category.isTeacherCategoryType()) {
+	    if (!category.isTeacherCategoryType()) {
 		result.add(category);
 	    }
-	}	
+	}
 	return result;
     }
 }

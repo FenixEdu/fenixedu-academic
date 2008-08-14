@@ -12,18 +12,18 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionDegreesByDegreeCurricularPlan extends Service {
 
-    public List<InfoExecutionDegree> run(Integer idDegreeCurricularPlan) throws FenixServiceException{
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
+    public List<InfoExecutionDegree> run(Integer idDegreeCurricularPlan) throws FenixServiceException {
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
 
-        final List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+	final List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
-        final List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>(executionDegrees.size());
-        for (final ExecutionDegree executionDegree : executionDegrees) {
-            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-            result.add(infoExecutionDegree);
-        }
+	final List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>(executionDegrees.size());
+	for (final ExecutionDegree executionDegree : executionDegrees) {
+	    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	    result.add(infoExecutionDegree);
+	}
 
-        return result;
+	return result;
     }
 
 }

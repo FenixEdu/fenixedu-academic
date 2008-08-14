@@ -25,8 +25,8 @@ public class PersonFunction extends PersonFunction_Base {
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin,
-	    YearMonthDay end, Double credits) {
+    public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end,
+	    Double credits) {
 	super();
 	setParentParty(parentParty);
 	setChildParty(childParty);
@@ -35,13 +35,11 @@ public class PersonFunction extends PersonFunction_Base {
 	setOccupationInterval(begin, end);
     }
 
-    public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin,
-	    YearMonthDay end) {
+    public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end) {
 	this(parentParty, childParty, function, begin, end, 0.0);
     }
 
-    public PersonFunction(Person parentParty, Person childParty, Function function, YearMonthDay begin,
-	    YearMonthDay end) {
+    public PersonFunction(Person parentParty, Person childParty, Function function, YearMonthDay begin, YearMonthDay end) {
 	super();
 	setParentParty(parentParty);
 	setChildParty(childParty);
@@ -119,8 +117,8 @@ public class PersonFunction extends PersonFunction_Base {
 	return true;
     }
 
-    private void checkPersonFunctionDatesIntersection(Person person, Unit unit, Function function,
-	    YearMonthDay begin, YearMonthDay end) {
+    private void checkPersonFunctionDatesIntersection(Person person, Unit unit, Function function, YearMonthDay begin,
+	    YearMonthDay end) {
 	checkBeginDateAndEndDate(begin, end);
 	for (PersonFunction personFunction : person.getPersonFunctions(unit)) {
 	    if (!personFunction.equals(this) && personFunction.getFunction().equals(function)
@@ -131,8 +129,7 @@ public class PersonFunction extends PersonFunction_Base {
     }
 
     private boolean checkDatesIntersections(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !getBeginDate().isAfter(end)) && (getEndDate() == null || !getEndDate()
-		.isBefore(begin)));
+	return ((end == null || !getBeginDate().isAfter(end)) && (getEndDate() == null || !getEndDate().isBefore(begin)));
     }
 
     private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {
@@ -151,17 +148,16 @@ public class PersonFunction extends PersonFunction_Base {
 	return getCredits() > 0d;
     }
 
-    public static void createYearDelegatePersonFunction(DegreeUnit unit, Person person,
-	    YearMonthDay startDate, YearMonthDay endDate, Function function,
-	    CurricularYear curricularYear) {
+    public static void createYearDelegatePersonFunction(DegreeUnit unit, Person person, YearMonthDay startDate,
+	    YearMonthDay endDate, Function function, CurricularYear curricularYear) {
 	if (function == null)
 	    throw new DomainException("error.delegates.noDelegateFunction");
 	PersonFunction personFunction = new PersonFunction(unit, person, function, startDate, endDate);
 	personFunction.setCurricularYear(curricularYear);
     }
 
-    public static void createDelegatePersonFunction(Unit unit, Person person, YearMonthDay startDate,
-	    YearMonthDay endDate, Function function) {
+    public static void createDelegatePersonFunction(Unit unit, Person person, YearMonthDay startDate, YearMonthDay endDate,
+	    Function function) {
 	if (function == null)
 	    throw new DomainException("error.delegates.noDelegateFunction");
 	new PersonFunction(unit, person, function, startDate, endDate);

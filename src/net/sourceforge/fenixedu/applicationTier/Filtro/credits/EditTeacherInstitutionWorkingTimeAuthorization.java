@@ -10,19 +10,18 @@ import net.sourceforge.fenixedu.domain.Teacher;
 /**
  * @author jpvl
  */
-public class EditTeacherInstitutionWorkingTimeAuthorization extends
-        AbstractTeacherDepartmentAuthorization {
+public class EditTeacherInstitutionWorkingTimeAuthorization extends AbstractTeacherDepartmentAuthorization {
     public final static EditTeacherInstitutionWorkingTimeAuthorization filter = new EditTeacherInstitutionWorkingTimeAuthorization();
 
     public static EditTeacherInstitutionWorkingTimeAuthorization getInstance() {
-        return filter;
+	return filter;
     }
 
     protected Integer getTeacherId(Object[] arguments) {
-        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) arguments[1];
+	InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) arguments[1];
 
-        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
-        return teacher != null ? teacher.getIdInternal() : null;
+	Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
+	return teacher != null ? teacher.getIdInternal() : null;
     }
 
 }

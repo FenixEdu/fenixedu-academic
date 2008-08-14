@@ -8,74 +8,74 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 public class TutorTutorshipsHistoryBean implements Serializable {
-	
-	private DomainReference<Teacher> teacher;
 
-	private List<StudentsByTutorBean> activeTutorshipsByEntryYear;
-	
-	private List<StudentsByTutorBean> pastTutorshipsByEntryYear;
-	
-	private Integer numberOfCurrentTutorships;
-	
-	private Integer numberOfPastTutorships;
+    private DomainReference<Teacher> teacher;
 
-	public TutorTutorshipsHistoryBean(Teacher teacher) {
-		setTeacher(teacher);
-		this.activeTutorshipsByEntryYear = new ArrayList<StudentsByTutorBean>();
-		this.pastTutorshipsByEntryYear = new ArrayList<StudentsByTutorBean>();
-	}
+    private List<StudentsByTutorBean> activeTutorshipsByEntryYear;
 
-	public List<StudentsByTutorBean> getActiveTutorshipsByEntryYear() {
-		return this.activeTutorshipsByEntryYear;
-	}
+    private List<StudentsByTutorBean> pastTutorshipsByEntryYear;
 
-	public void setActiveTutorshipsByEntryYear(List<StudentsByTutorBean> tutorshipsByEntryYear) {
-		this.activeTutorshipsByEntryYear = tutorshipsByEntryYear;
-		setNumberOfCurrentTutorships();
-	}
+    private Integer numberOfCurrentTutorships;
 
-	public List<StudentsByTutorBean> getPastTutorshipsByEntryYear() {
-		return this.pastTutorshipsByEntryYear;
-	}
+    private Integer numberOfPastTutorships;
 
-	public void setPastTutorshipsByEntryYear(List<StudentsByTutorBean> tutorshipsByEntryYear) {
-		this.pastTutorshipsByEntryYear = tutorshipsByEntryYear;
-		setNumberOfPastTutorships();
-	}
+    public TutorTutorshipsHistoryBean(Teacher teacher) {
+	setTeacher(teacher);
+	this.activeTutorshipsByEntryYear = new ArrayList<StudentsByTutorBean>();
+	this.pastTutorshipsByEntryYear = new ArrayList<StudentsByTutorBean>();
+    }
 
-	public Teacher getTeacher() {
-		return (teacher == null ? null : teacher.getObject());
-	}
+    public List<StudentsByTutorBean> getActiveTutorshipsByEntryYear() {
+	return this.activeTutorshipsByEntryYear;
+    }
 
-	public void setTeacher(Teacher teacher) {
-		this.teacher = new DomainReference<Teacher>(teacher);
-	}
+    public void setActiveTutorshipsByEntryYear(List<StudentsByTutorBean> tutorshipsByEntryYear) {
+	this.activeTutorshipsByEntryYear = tutorshipsByEntryYear;
+	setNumberOfCurrentTutorships();
+    }
 
-	public Integer getNumberOfCurrentTutorships() {
-		return this.numberOfCurrentTutorships;
-	}
-	
-	private void setNumberOfCurrentTutorships() {
-		Integer numberOfCurrentTutorships = 0;
-		for(StudentsByTutorBean studentsByEntryYear : this.activeTutorshipsByEntryYear) {
-			numberOfCurrentTutorships +=  studentsByEntryYear.getStudentsList().size();
-		}
-		this.numberOfCurrentTutorships = numberOfCurrentTutorships;
-	}
+    public List<StudentsByTutorBean> getPastTutorshipsByEntryYear() {
+	return this.pastTutorshipsByEntryYear;
+    }
 
-	public Integer getNumberOfPastTutorships() {
-		return this.numberOfPastTutorships;
+    public void setPastTutorshipsByEntryYear(List<StudentsByTutorBean> tutorshipsByEntryYear) {
+	this.pastTutorshipsByEntryYear = tutorshipsByEntryYear;
+	setNumberOfPastTutorships();
+    }
+
+    public Teacher getTeacher() {
+	return (teacher == null ? null : teacher.getObject());
+    }
+
+    public void setTeacher(Teacher teacher) {
+	this.teacher = new DomainReference<Teacher>(teacher);
+    }
+
+    public Integer getNumberOfCurrentTutorships() {
+	return this.numberOfCurrentTutorships;
+    }
+
+    private void setNumberOfCurrentTutorships() {
+	Integer numberOfCurrentTutorships = 0;
+	for (StudentsByTutorBean studentsByEntryYear : this.activeTutorshipsByEntryYear) {
+	    numberOfCurrentTutorships += studentsByEntryYear.getStudentsList().size();
 	}
-	
-	private void setNumberOfPastTutorships() {
-		Integer numberOfPastTutorships = 0;
-		for(StudentsByTutorBean studentsByEntryYear : this.pastTutorshipsByEntryYear) {
-			numberOfPastTutorships +=  studentsByEntryYear.getStudentsList().size();
-		}
-		this.numberOfPastTutorships = numberOfPastTutorships;
+	this.numberOfCurrentTutorships = numberOfCurrentTutorships;
+    }
+
+    public Integer getNumberOfPastTutorships() {
+	return this.numberOfPastTutorships;
+    }
+
+    private void setNumberOfPastTutorships() {
+	Integer numberOfPastTutorships = 0;
+	for (StudentsByTutorBean studentsByEntryYear : this.pastTutorshipsByEntryYear) {
+	    numberOfPastTutorships += studentsByEntryYear.getStudentsList().size();
 	}
-	
-	public Integer getNumberOfTutorships() {
-		return this.numberOfCurrentTutorships + this.numberOfPastTutorships;
-	}
+	this.numberOfPastTutorships = numberOfPastTutorships;
+    }
+
+    public Integer getNumberOfTutorships() {
+	return this.numberOfCurrentTutorships + this.numberOfPastTutorships;
+    }
 }

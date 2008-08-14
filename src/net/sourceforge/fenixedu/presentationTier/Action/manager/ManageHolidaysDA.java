@@ -18,27 +18,27 @@ import org.apache.struts.action.ActionMapping;
 public class ManageHolidaysDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        final Set<Holiday> holidays = rootDomainObject.getHolidaysSet();
-        request.setAttribute("holidays", holidays);
-    	return mapping.findForward("showHolidays");
+	final Set<Holiday> holidays = rootDomainObject.getHolidaysSet();
+	request.setAttribute("holidays", holidays);
+	return mapping.findForward("showHolidays");
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
-        executeFactoryMethod(request);
-        return prepare(mapping, form, request, response);
+	    throws FenixFilterException, FenixServiceException {
+	executeFactoryMethod(request);
+	return prepare(mapping, form, request, response);
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
-        final String holidayIDString = request.getParameter("holidayID");
-        if (holidayIDString != null && StringUtils.isNumeric(holidayIDString)) {
-            final Integer holidayID = Integer.valueOf(holidayIDString);
-            final Holiday holiday = rootDomainObject.readHolidayByOID(holidayID);
-            final Object[] args = { holiday };
-            executeService(request, "DeleteHoliday", args);
-        }
-        return prepare(mapping, form, request, response);
+	    throws FenixFilterException, FenixServiceException {
+	final String holidayIDString = request.getParameter("holidayID");
+	if (holidayIDString != null && StringUtils.isNumeric(holidayIDString)) {
+	    final Integer holidayID = Integer.valueOf(holidayIDString);
+	    final Holiday holiday = rootDomainObject.readHolidayByOID(holidayID);
+	    final Object[] args = { holiday };
+	    executeService(request, "DeleteHoliday", args);
+	}
+	return prepare(mapping, form, request, response);
     }
 
 }

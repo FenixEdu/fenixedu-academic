@@ -16,27 +16,26 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditExamRooms extends Service {
 
-    public InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws
-            FenixServiceException {
+    public InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws FenixServiceException {
 
-        final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();
-        for (final Integer id : roomsForExam) {
-            finalRoomList.add((AllocatableSpace) rootDomainObject.readResourceByOID(id));
-        }
+	final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();
+	for (final Integer id : roomsForExam) {
+	    finalRoomList.add((AllocatableSpace) rootDomainObject.readResourceByOID(id));
+	}
 
-        final Exam exam = (Exam) rootDomainObject.readEvaluationByOID( infoExam.getIdInternal());
-        if (exam == null) {
-            throw new NonExistingServiceException();
-        }
- 
-        // Remove all elements
-        // TODO : Do this more intelegently.
-        exam.getAssociatedRooms().clear();
+	final Exam exam = (Exam) rootDomainObject.readEvaluationByOID(infoExam.getIdInternal());
+	if (exam == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        // Add all elements
-        exam.getAssociatedRooms().addAll(finalRoomList);
+	// Remove all elements
+	// TODO : Do this more intelegently.
+	exam.getAssociatedRooms().clear();
 
-        return InfoExam.newInfoFromDomain(exam);
+	// Add all elements
+	exam.getAssociatedRooms().addAll(finalRoomList);
+
+	return InfoExam.newInfoFromDomain(exam);
     }
 
 }

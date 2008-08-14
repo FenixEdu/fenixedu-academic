@@ -25,18 +25,17 @@ import org.apache.commons.collections.Transformer;
 public class ReadShiftsByClass extends Service {
 
     public Object run(InfoClass infoClass) {
-        SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(
-                infoClass.getIdInternal());
+	SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
 
-        List<Shift> shifts = schoolClass.getAssociatedShifts();
+	List<Shift> shifts = schoolClass.getAssociatedShifts();
 
-        return CollectionUtils.collect(shifts, new Transformer() {
-            public Object transform(Object arg0) {
-                Shift shift = (Shift) arg0;
-                InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                return infoShift;
-            }
-        });
+	return CollectionUtils.collect(shifts, new Transformer() {
+	    public Object transform(Object arg0) {
+		Shift shift = (Shift) arg0;
+		InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+		return infoShift;
+	    }
+	});
     }
 
 }

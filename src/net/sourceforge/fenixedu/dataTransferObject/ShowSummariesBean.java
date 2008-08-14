@@ -12,104 +12,103 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 public class ShowSummariesBean implements Serializable {
 
     private SummaryTeacherBean summaryTeacher;
-    
+
     private DomainReference<Shift> shiftReference;
 
     private ShiftType shiftType;
-    
+
     private ListSummaryType listSummaryType;
-    
+
     private DomainReference<ExecutionCourse> executionCourseReference;
-    
+
     private DomainReference<Professorship> professorshipLoggedReference;
-    
+
     private SummariesOrder summariesOrder;
-    
+
     protected ShowSummariesBean() {
 	// TODO Auto-generated constructor stub
     }
-    
-    public ShowSummariesBean(SummaryTeacherBean teacher, ExecutionCourse executionCourse, ListSummaryType type, Professorship loggedProfessorship) {
-	setSummaryTeacher(teacher);	
+
+    public ShowSummariesBean(SummaryTeacherBean teacher, ExecutionCourse executionCourse, ListSummaryType type,
+	    Professorship loggedProfessorship) {
+	setSummaryTeacher(teacher);
 	setExecutionCourse(executionCourse);
 	setListSummaryType(type);
 	setProfessorshipLogged(loggedProfessorship);
 	setSummariesOrder(SummariesOrder.DECREASING);
     }
-    
+
     public Professorship getProfessorshipLogged() {
 	return (this.professorshipLoggedReference != null) ? this.professorshipLoggedReference.getObject() : null;
     }
 
     public void setProfessorshipLogged(Professorship professorship) {
-	this.professorshipLoggedReference = (professorship != null) ? new DomainReference<Professorship>(
-		professorship) : null;
+	this.professorshipLoggedReference = (professorship != null) ? new DomainReference<Professorship>(professorship) : null;
     }
-    
+
     public SummaryTeacherBean getSummaryTeacher() {
-        return summaryTeacher;
+	return summaryTeacher;
     }
 
     public void setSummaryTeacher(SummaryTeacherBean summaryTeacher) {
-        this.summaryTeacher = summaryTeacher;
+	this.summaryTeacher = summaryTeacher;
     }
-       
+
     public Shift getShift() {
-        return (this.shiftReference != null) ? this.shiftReference.getObject() : null;
+	return (this.shiftReference != null) ? this.shiftReference.getObject() : null;
     }
 
     public void setShift(Shift shift) {
-        this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
+	this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
     }
 
     public ShiftType getShiftType() {
-        return shiftType;
+	return shiftType;
     }
 
     public void setShiftType(ShiftType shiftType) {
-        this.shiftType = shiftType;
-    }    
-    
+	this.shiftType = shiftType;
+    }
+
     public ListSummaryType getListSummaryType() {
-        return listSummaryType;
+	return listSummaryType;
     }
 
     public void setListSummaryType(ListSummaryType listSummaryType) {
-        this.listSummaryType = listSummaryType;
+	this.listSummaryType = listSummaryType;
     }
-    
+
     public ExecutionCourse getExecutionCourse() {
-        return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
+	return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-        this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(
-                executionCourse) : null;
+	this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
     }
-     
+
     public SummariesOrder getSummariesOrder() {
-        return summariesOrder;
+	return summariesOrder;
     }
 
     public void setSummariesOrder(SummariesOrder summariesOrder) {
-        this.summariesOrder = summariesOrder;
+	this.summariesOrder = summariesOrder;
     }
-    
+
     public static enum ListSummaryType {
-    
+
 	ALL_CONTENT, SUMMARIZED;
-        
+
 	public String getName() {
-            return name();
-        }
+	    return name();
+	}
     }
-    
+
     public static enum SummariesOrder {
-	
+
 	GROWING, DECREASING;
-        
+
 	public String getName() {
-            return name();
-        }
-    }   
+	    return name();
+	}
+    }
 }

@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCourseByOID extends Service {
 
     public InfoExecutionCourse run(Integer oid) {
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(oid);
-        return (executionCourse != null) ? InfoExecutionCourse.newInfoFromDomain(executionCourse) : null;
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(oid);
+	return (executionCourse != null) ? InfoExecutionCourse.newInfoFromDomain(executionCourse) : null;
     }
-    
+
 }

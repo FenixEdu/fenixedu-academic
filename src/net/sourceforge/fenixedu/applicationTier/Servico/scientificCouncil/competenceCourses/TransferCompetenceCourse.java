@@ -8,13 +8,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 
 public class TransferCompetenceCourse extends Service {
 
-    public void run(CompetenceCourse competenceCourse, CompetenceCourseGroupUnit competenceCourseGroupUnit) throws FenixServiceException {
+    public void run(CompetenceCourse competenceCourse, CompetenceCourseGroupUnit competenceCourseGroupUnit)
+	    throws FenixServiceException {
 
-        if (competenceCourse == null || competenceCourseGroupUnit == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-        
-        competenceCourse.transfer(competenceCourseGroupUnit);
+	if (competenceCourse == null || competenceCourseGroupUnit == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
+
+	competenceCourse.transfer(competenceCourseGroupUnit);
     }
 
 }

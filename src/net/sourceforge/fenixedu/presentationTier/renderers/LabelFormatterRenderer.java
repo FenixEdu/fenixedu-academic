@@ -14,25 +14,24 @@ public class LabelFormatterRenderer extends OutputRenderer {
     private Properties bundleMappings;
 
     public LabelFormatterRenderer() {
-        super();
+	super();
 
-        this.bundleMappings = new Properties();
+	this.bundleMappings = new Properties();
 
     }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new Layout() {
+	return new Layout() {
 
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
 
-                return new HtmlText(((LabelFormatter) object)
-                        .toString(new RendererMessageResourceProvider(
-                                LabelFormatterRenderer.this.bundleMappings)));
-            }
+		return new HtmlText(((LabelFormatter) object).toString(new RendererMessageResourceProvider(
+			LabelFormatterRenderer.this.bundleMappings)));
+	    }
 
-        };
+	};
     }
 
     /**
@@ -41,11 +40,11 @@ public class LabelFormatterRenderer extends OutputRenderer {
      * @property
      */
     public void setBundleName(String bundle, String name) {
-        this.bundleMappings.put(bundle, name);
+	this.bundleMappings.put(bundle, name);
     }
 
     public String getBundleName(String bundle) {
-        return this.bundleMappings.getProperty(bundle);
+	return this.bundleMappings.getProperty(bundle);
     }
 
 }

@@ -17,16 +17,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SelectShifts extends Service {
 
     public Object run(InfoShift infoShift) {
-    	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
-    	final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-        final Set<Shift> shifts = executionCourse.getAssociatedShifts();
+	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+	final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+	final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
-        List<InfoShift> infoShifts = new ArrayList<InfoShift>();
-        for (Shift taux : shifts) {
-            infoShifts.add(InfoShift.newInfoFromDomain(taux));
-        }
+	List<InfoShift> infoShifts = new ArrayList<InfoShift>();
+	for (Shift taux : shifts) {
+	    infoShifts.add(InfoShift.newInfoFromDomain(taux));
+	}
 
-        return infoShifts;
+	return infoShifts;
     }
 
 }

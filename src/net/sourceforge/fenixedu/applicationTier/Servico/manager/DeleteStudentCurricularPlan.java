@@ -19,19 +19,18 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
  */
 public class DeleteStudentCurricularPlan extends Service {
 
-    public void run(final Integer studentCurricularPlanId) throws DomainException,
-	    NonExistingServiceException {
+    public void run(final Integer studentCurricularPlanId) throws DomainException, NonExistingServiceException {
 	final StudentCurricularPlan studentCurricularPlan = rootDomainObject
 		.readStudentCurricularPlanByOID(studentCurricularPlanId);
 
 	if (studentCurricularPlan != null) {
-	    
+
 	    for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 		for (EnrolmentEvaluation evaluation : enrolment.getEvaluations()) {
 		    evaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 		}
 	    }
-	    
+
 	    studentCurricularPlan.delete();
 	} else {
 	    throw new NonExistingServiceException();

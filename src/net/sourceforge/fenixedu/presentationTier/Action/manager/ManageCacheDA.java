@@ -34,8 +34,7 @@ import dml.Role;
 public class ManageCacheDA extends FenixDispatchAction {
 
     /**
-     * Prepare information to show existing execution periods and working
-     * areas.
+     * Prepare information to show existing execution periods and working areas.
      */
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
@@ -54,8 +53,7 @@ public class ManageCacheDA extends FenixDispatchAction {
     }
 
     /**
-     * Prepare information to show existing execution periods and working
-     * areas.
+     * Prepare information to show existing execution periods and working areas.
      */
     public ActionForward clearCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

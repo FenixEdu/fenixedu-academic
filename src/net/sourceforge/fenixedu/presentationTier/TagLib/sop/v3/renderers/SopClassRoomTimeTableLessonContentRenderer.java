@@ -15,57 +15,59 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
 public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
 
     public StringBuilder render(String context, LessonSlot lessonSlot) {
-        StringBuilder strBuffer = new StringBuilder();
+	StringBuilder strBuffer = new StringBuilder();
 
-        //InfoLesson lesson =
-        // lessonSlot.getInfoLessonWrapper().getInfoLesson();
-        InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
+	// InfoLesson lesson =
+	// lessonSlot.getInfoLessonWrapper().getInfoLesson();
+	InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
-        if (showOccupation instanceof InfoLesson) {
-            InfoLesson lesson = (InfoLesson) showOccupation;
+	if (showOccupation instanceof InfoLesson) {
+	    InfoLesson lesson = (InfoLesson) showOccupation;
 
-            InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='").append(context).append("/publico/");
-            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
-            strBuffer.append(infoExecutionCourse.getIdInternal());
-            strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")").append("</a>");
-            
-        } else if (showOccupation instanceof InfoLessonInstance) {
-            
-            InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
-            InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='").append(context).append("/publico/");
-            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
-            strBuffer.append(infoExecutionCourse.getIdInternal());
-            strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")").append("</a>");                                                    
-            
-        } else if (showOccupation instanceof InfoExam) {
-            InfoExam infoExam = (InfoExam) showOccupation;
-            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
+	    InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+	    strBuffer.append("<a href='").append(context).append("/publico/");
+	    strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
+	    strBuffer.append(infoExecutionCourse.getIdInternal());
+	    strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(
+		    lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")").append("</a>");
 
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append("ª época");
-            
-        } else if (showOccupation instanceof InfoWrittenTest) {
-            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = (InfoExecutionCourse) infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoWrittenTest.getDescription());
-        }
+	} else if (showOccupation instanceof InfoLessonInstance) {
 
-        return strBuffer;
+	    InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+	    InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+	    strBuffer.append("<a href='").append(context).append("/publico/");
+	    strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
+	    strBuffer.append(infoExecutionCourse.getIdInternal());
+	    strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(
+		    lesson.getShiftTypeCodesPrettyPrint()).append(")").append("</a>");
+
+	} else if (showOccupation instanceof InfoExam) {
+	    InfoExam infoExam = (InfoExam) showOccupation;
+	    for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
+		InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam.getAssociatedExecutionCourse().get(iterEC);
+		if (iterEC != 0) {
+		    strBuffer.append(", ");
+		}
+		strBuffer.append(infoEC.getSigla());
+
+	    }
+	    strBuffer.append(" - ");
+	    strBuffer.append(infoExam.getSeason().getSeason());
+	    strBuffer.append("ª época");
+
+	} else if (showOccupation instanceof InfoWrittenTest) {
+	    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
+	    for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
+		InfoExecutionCourse infoEC = (InfoExecutionCourse) infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
+		if (iterEC != 0) {
+		    strBuffer.append(", ");
+		}
+		strBuffer.append(infoEC.getSigla());
+	    }
+	    strBuffer.append(" - ");
+	    strBuffer.append(infoWrittenTest.getDescription());
+	}
+
+	return strBuffer;
     }
 }

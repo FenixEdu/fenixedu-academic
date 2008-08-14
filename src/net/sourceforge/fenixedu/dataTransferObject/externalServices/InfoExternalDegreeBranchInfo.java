@@ -8,39 +8,40 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
- *
- * Created at 3:33:02 PM, Mar 11, 2005
+ * 
+ *         Created at 3:33:02 PM, Mar 11, 2005
  */
-public class InfoExternalDegreeBranchInfo
-{
+public class InfoExternalDegreeBranchInfo {
     private String name;
     private String code;
+
     /**
      * @return Returns the code.
      */
-    public String getCode()
-    {
-        return this.code;
+    public String getCode() {
+	return this.code;
     }
+
     /**
-     * @param code The code to set.
+     * @param code
+     *            The code to set.
      */
-    public void setCode(String code)
-    {
-        this.code = code;
+    public void setCode(String code) {
+	this.code = code;
     }
+
     /**
      * @return Returns the name.
      */
-    public String getName()
-    {
-        return this.name;
+    public String getName() {
+	return this.name;
     }
+
     /**
-     * @param name The name to set.
+     * @param name
+     *            The name to set.
      */
-    public void setName(String name)
-    {
-        this.name = name;
+    public void setName(String name) {
+	this.name = name;
     }
 }

@@ -38,8 +38,7 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
 	final List<Proposal> orientatingProposals = person.getAssociatedProposalsByOrientator();
 	final List<Proposal> coorientatingProposals = person.getAssociatedProposalsByCoorientator();
 
-	final List<Proposal> proposals = new ArrayList(orientatingProposals.size()
-		+ coorientatingProposals.size());
+	final List<Proposal> proposals = new ArrayList(orientatingProposals.size() + coorientatingProposals.size());
 	proposals.addAll(orientatingProposals);
 	proposals.addAll(coorientatingProposals);
 
@@ -48,8 +47,7 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
 		final FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
 		for (final GroupStudent groupStudent : group.getGroupStudents()) {
 		    final Registration registration = groupStudent.getRegistration();
-		    for (final StudentCurricularPlan studentCurricularPlan : registration
-			    .getStudentCurricularPlans()) {
+		    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
 			if (studentCurricularPlan.getIdInternal().equals(studentCurricularPlanId)) {
 			    return;
 			}

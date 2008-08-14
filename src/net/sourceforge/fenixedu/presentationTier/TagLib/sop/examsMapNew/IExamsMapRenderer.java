@@ -10,7 +10,7 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Ana & Ricardo
- *  
+ * 
  */
 public interface IExamsMapRenderer {
     public abstract StringBuilder render(Locale locale, PageContext pageContext);

@@ -12,30 +12,30 @@ public class GenerateSummariesRSS extends GenerateExecutionCourseRSS {
 
     @Override
     public String getDescriptionPrefix() {
-        return "Sumários";
+	return "Sumários";
     }
 
     @Override
     public String getMethodName() {
-        return "summaries";
+	return "summaries";
     }
 
     @Override
     public Set getObjects(final ExecutionCourse executionCourse) {
-        return executionCourse.getAssociatedSummariesSet();
+	return executionCourse.getAssociatedSummariesSet();
     }
 
     @Override
     public void fillItem(final ItemIF item, final DomainObject domainObject) {
-        final Summary summary = (Summary) domainObject;
-        item.setTitle(summary.getTitle().getContent(Language.pt));
-        item.setDate(summary.getLastModifiedDate());
-        item.setDescription(summary.getSummaryText().getContent(Language.pt));
+	final Summary summary = (Summary) domainObject;
+	item.setTitle(summary.getTitle().getContent(Language.pt));
+	item.setDate(summary.getLastModifiedDate());
+	item.setDescription(summary.getSummaryText().getContent(Language.pt));
     }
 
     @Override
     public String getIdPrefix() {
-        return "s";
+	return "s";
     }
 
 }

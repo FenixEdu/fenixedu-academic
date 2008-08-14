@@ -11,7 +11,7 @@ public class EquivalencyPlanEntryWrapper {
 	public int compare(EquivalencyPlanEntryWrapper o1, EquivalencyPlanEntryWrapper o2) {
 	    return EquivalencePlanEntry.COMPARATOR.compare(o1.equivalencePlanEntry, o2.equivalencePlanEntry);
 	}
-	
+
     };
 
     private final EquivalencePlanEntry equivalencePlanEntry;
@@ -24,11 +24,11 @@ public class EquivalencyPlanEntryWrapper {
     }
 
     public EquivalencePlanEntry getEquivalencePlanEntry() {
-        return equivalencePlanEntry;
+	return equivalencePlanEntry;
     }
 
     public boolean isRemovalEntry() {
-        return isRemovalEntry;
+	return isRemovalEntry;
     }
 
 }

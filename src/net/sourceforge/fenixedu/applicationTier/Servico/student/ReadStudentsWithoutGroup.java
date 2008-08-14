@@ -34,8 +34,7 @@ public class ReadStudentsWithoutGroup extends Service {
     public class NewStudentGroupAlreadyExists extends FenixServiceException {
     }
 
-    public ISiteComponent run(final Integer groupPropertiesCode, final String username)
-	    throws FenixServiceException{
+    public ISiteComponent run(final Integer groupPropertiesCode, final String username) throws FenixServiceException {
 
 	final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -81,8 +80,7 @@ public class ReadStudentsWithoutGroup extends Service {
 	    }
 	}
 
-	final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>(attendsWithOutGroupsSet
-		.size());
+	final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>(attendsWithOutGroupsSet.size());
 	for (final Iterator iterator = attendsWithOutGroupsSet.iterator(); iterator.hasNext();) {
 	    final Attends attend = (Attends) iterator.next();
 	    final Registration registration = attend.getRegistration();

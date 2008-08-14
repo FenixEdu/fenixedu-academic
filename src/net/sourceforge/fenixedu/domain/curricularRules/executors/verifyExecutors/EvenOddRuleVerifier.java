@@ -13,10 +13,11 @@ public class EvenOddRuleVerifier extends VerifyRuleExecutor {
     protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
 	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 	final EvenOddRule evenOddRule = (EvenOddRule) curricularRule;
-	
-	if(evenOddRule.getCurricularPeriodOrder().equals(enrolmentContext.getExecutionPeriod().getSemester())) {
-	    if(evenOddRule.getEven() && ((enrolmentContext.getRegistration().getStudent().getNumber().intValue() & 1) == 0) || 
-		    !evenOddRule.getEven() && ((enrolmentContext.getRegistration().getStudent().getNumber().intValue() & 1) != 0)) {
+
+	if (evenOddRule.getCurricularPeriodOrder().equals(enrolmentContext.getExecutionPeriod().getSemester())) {
+	    if (evenOddRule.getEven() && ((enrolmentContext.getRegistration().getStudent().getNumber().intValue() & 1) == 0)
+		    || !evenOddRule.getEven()
+		    && ((enrolmentContext.getRegistration().getStudent().getNumber().intValue() & 1) != 0)) {
 		return RuleResult.createTrue(degreeModuleToVerify);
 	    }
 

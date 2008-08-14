@@ -16,12 +16,12 @@ import org.apache.commons.collections.Transformer;
 public abstract class TransformationUtils {
 
     public static List transformToIds(List domainList) {
-        return (List) CollectionUtils.collect(domainList, new Transformer() {
+	return (List) CollectionUtils.collect(domainList, new Transformer() {
 
-            public Object transform(Object input) {
-                DomainObject domainObject = (DomainObject) input;
-                return domainObject == null ? null : domainObject.getIdInternal();
-            }
-        });
+	    public Object transform(Object input) {
+		DomainObject domainObject = (DomainObject) input;
+		return domainObject == null ? null : domainObject.getIdInternal();
+	    }
+	});
     }
 }

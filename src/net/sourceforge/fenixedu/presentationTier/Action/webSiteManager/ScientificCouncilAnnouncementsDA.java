@@ -8,7 +8,7 @@ public class ScientificCouncilAnnouncementsDA extends UnitSiteAnnouncementManage
 
     @Override
     protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-        return "/manageScientificCouncilAnnouncements.do";
+	return "/manageScientificCouncilAnnouncements.do";
     }
 
 }

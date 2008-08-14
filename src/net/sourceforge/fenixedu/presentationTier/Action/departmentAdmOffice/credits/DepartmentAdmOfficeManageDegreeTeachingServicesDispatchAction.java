@@ -22,46 +22,43 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
-public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction extends
-        ManageDegreeTeachingServicesDispatchAction {
+public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction extends ManageDegreeTeachingServicesDispatchAction {
 
-    public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+    public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-        DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer professorshipID = (Integer) dynaForm.get("professorshipID");
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+	DynaActionForm dynaForm = (DynaActionForm) form;
+	Integer professorshipID = (Integer) dynaForm.get("professorshipID");
+	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
 
-        if (professorship == null
-                || getTeacherOfManageableDepartments(professorship.getTeacher().getTeacherNumber(),
-                        professorship.getExecutionCourse().getExecutionPeriod(), request) == null) {
-            return mapping.findForward("teacher-not-found");
-        }
+	if (professorship == null
+		|| getTeacherOfManageableDepartments(professorship.getTeacher().getTeacherNumber(), professorship
+			.getExecutionCourse().getExecutionPeriod(), request) == null) {
+	    return mapping.findForward("teacher-not-found");
+	}
 
-        teachingServiceDetailsProcess(professorship, request, dynaForm);
-        return mapping.findForward("show-teaching-service-percentages");
+	teachingServiceDetailsProcess(professorship, request, dynaForm);
+	return mapping.findForward("show-teaching-service-percentages");
     }
 
-    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber,
-            ExecutionSemester executionSemester, HttpServletRequest request) {
+    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber, ExecutionSemester executionSemester,
+	    HttpServletRequest request) {
 
-        IUserView userView = UserView.getUser();
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-        Teacher teacher = null;
-        for (Department department : manageableDepartments) {
-            teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
-                    executionSemester.getEndDateYearMonthDay());
-            if (teacher != null) {
-                break;
-            }
-        }
-        return teacher;
+	IUserView userView = UserView.getUser();
+	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+	Teacher teacher = null;
+	for (Department department : manageableDepartments) {
+	    teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+		    executionSemester.getEndDateYearMonthDay());
+	    if (teacher != null) {
+		break;
+	    }
+	}
+	return teacher;
     }
-    
-    public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {        
-        return updateTeachingServices(mapping, form, request, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+
+    public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	return updateTeachingServices(mapping, form, request, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
     }
 }

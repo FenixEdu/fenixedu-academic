@@ -8,16 +8,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteDistributedTest extends Service {
 
     public void run(Integer executionCourseId, final Integer distributedTestId) {
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 
-        for (Metadata metadata : rootDomainObject.getMetadatasSet()) {
-            if (metadata.getVisibility() != null && !metadata.getVisibility().booleanValue()
-            		&& metadata.getQuestionsSet().size() == 0) {
-            	metadata.delete();
-            }
-        }
+	for (Metadata metadata : rootDomainObject.getMetadatasSet()) {
+	    if (metadata.getVisibility() != null && !metadata.getVisibility().booleanValue()
+		    && metadata.getQuestionsSet().size() == 0) {
+		metadata.delete();
+	    }
+	}
 
-        distributedTest.delete();
+	distributedTest.delete();
     }
 
 }

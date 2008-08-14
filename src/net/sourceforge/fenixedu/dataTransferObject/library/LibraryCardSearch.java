@@ -46,7 +46,8 @@ public class LibraryCardSearch implements Serializable {
 		if (person.hasLibraryCard()) {
 		    libraryCardDTOs.add(new LibraryCardDTO(person.getLibraryCard()));
 		} else {
-		    libraryCardDTOs.add(new LibraryCardDTO(person, getPartyClassification(), studentCurricularPlan.getDegree().getUnit()));
+		    libraryCardDTOs.add(new LibraryCardDTO(person, getPartyClassification(), studentCurricularPlan.getDegree()
+			    .getUnit()));
 		}
 		return super.add(person);
 	    }
@@ -64,7 +65,8 @@ public class LibraryCardSearch implements Serializable {
 
 	private boolean satisfiesCategory(final Person person) {
 	    if (getPartyClassification() == PartyClassification.PERSON) {
-		if (person.getLibraryCard() != null && person.getLibraryCard().getPartyClassification() == getPartyClassification()) {
+		if (person.getLibraryCard() != null
+			&& person.getLibraryCard().getPartyClassification() == getPartyClassification()) {
 		    final PartyClassification personClassification = person.getPartyClassification();
 		    if (personClassification == PartyClassification.PERSON) {
 			return true;
@@ -77,15 +79,16 @@ public class LibraryCardSearch implements Serializable {
 	}
 
 	private boolean satisfiesNumber(Person person) {
-	    //return getNumber() == null || getNumber().equals(person.getMostSignificantNumber());
+	    // return getNumber() == null ||
+	    // getNumber().equals(person.getMostSignificantNumber());
 	    if (getNumber() == null) {
 		return true;
 	    }
 	    final int n = getNumber().intValue();
 	    return (person.getTeacher() != null && person.getTeacher().getTeacherNumber().intValue() == n)
-	    		|| (person.getEmployee() != null && person.getEmployee().getEmployeeNumber().intValue() == n)
-	    		|| (person.getStudent() != null && person.getStudent().getNumber().intValue() == n)
-	    		|| (person.getGrantOwner() != null && person.getGrantOwner().getNumber().intValue() == n);
+		    || (person.getEmployee() != null && person.getEmployee().getEmployeeNumber().intValue() == n)
+		    || (person.getStudent() != null && person.getStudent().getNumber().intValue() == n)
+		    || (person.getGrantOwner() != null && person.getGrantOwner().getNumber().intValue() == n);
 	}
     }
 

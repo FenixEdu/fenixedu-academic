@@ -19,22 +19,22 @@ public class GrantTypeNotFoundException extends FenixServiceException {
     }
 
     public GrantTypeNotFoundException(String message) {
-        super(message);
+	super(message);
     }
 
     public GrantTypeNotFoundException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public GrantTypeNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[GrantTypeNotFoundException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[GrantTypeNotFoundException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

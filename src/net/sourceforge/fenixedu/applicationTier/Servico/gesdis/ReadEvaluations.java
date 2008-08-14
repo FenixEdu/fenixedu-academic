@@ -13,19 +13,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadEvaluations extends Service {
 
-    public List run(Integer executionCourseCode) throws FenixServiceException{
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-        if (executionCourse == null) {
-            throw new NonExistingServiceException();
-        }
+    public List run(Integer executionCourseCode) throws FenixServiceException {
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+	if (executionCourse == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        List<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
-        List<InfoEvaluation> infoEvaluations = new ArrayList<InfoEvaluation>(evaluations.size());
-        for (Evaluation evaluation : evaluations) {
-            infoEvaluations.add(InfoEvaluation.newInfoFromDomain(evaluation));
-        }
+	List<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
+	List<InfoEvaluation> infoEvaluations = new ArrayList<InfoEvaluation>(evaluations.size());
+	for (Evaluation evaluation : evaluations) {
+	    infoEvaluations.add(InfoEvaluation.newInfoFromDomain(evaluation));
+	}
 
-        return infoEvaluations;
+	return infoEvaluations;
     }
 
 }

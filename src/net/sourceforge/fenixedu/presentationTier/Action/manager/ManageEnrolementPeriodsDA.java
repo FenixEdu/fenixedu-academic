@@ -29,104 +29,100 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-    	final IUserView userView = getUserView(request);
-        final DynaActionForm actionForm = (DynaActionForm) form;
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	final IUserView userView = getUserView(request);
+	final DynaActionForm actionForm = (DynaActionForm) form;
 
-        setInfoExecutionPeriods(request, userView);
+	setInfoExecutionPeriods(request, userView);
 
-        final String executionPeriodIDString = (String) actionForm.get("executionPeriodID");
-        if (isValidObjectID(executionPeriodIDString)) {
-            setInfoEnrolmentPeriods(request, userView, executionPeriodIDString);
-        }
+	final String executionPeriodIDString = (String) actionForm.get("executionPeriodID");
+	if (isValidObjectID(executionPeriodIDString)) {
+	    setInfoEnrolmentPeriods(request, userView, executionPeriodIDString);
+	}
 
-        return mapping.findForward("showEnrolementPeriods");
+	return mapping.findForward("showEnrolementPeriods");
     }
 
     public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-        final DynaActionForm actionForm = (DynaActionForm) form;
+	    HttpServletResponse response) throws Exception {
+	final IUserView userView = getUserView(request);
+	final DynaActionForm actionForm = (DynaActionForm) form;
 
-        final String enrolmentPeriodIDString = (String) actionForm.get("enrolmentPeriodID");
-        final String startDateString = (String) actionForm.get("startDate");
-        final String endDateString = (String) actionForm.get("endDate");
-        
-        final String startTimeString = (String) actionForm.get("startTime");
-        final String endTimeString = (String) actionForm.get("endTime");
+	final String enrolmentPeriodIDString = (String) actionForm.get("enrolmentPeriodID");
+	final String startDateString = (String) actionForm.get("startDate");
+	final String endDateString = (String) actionForm.get("endDate");
 
+	final String startTimeString = (String) actionForm.get("startTime");
+	final String endTimeString = (String) actionForm.get("endTime");
 
-        final Object[] args = { Integer.valueOf(enrolmentPeriodIDString), getDate(startDateString, startTimeString),
-        		getDate(endDateString, endTimeString)};
-        ServiceManagerServiceFactory.executeService( "ChangeEnrolmentPeriodValues", args);
+	final Object[] args = { Integer.valueOf(enrolmentPeriodIDString), getDate(startDateString, startTimeString),
+		getDate(endDateString, endTimeString) };
+	ServiceManagerServiceFactory.executeService("ChangeEnrolmentPeriodValues", args);
 
-        return prepare(mapping, form, request, response);
+	return prepare(mapping, form, request, response);
     }
 
     public ActionForward createPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-        final DynaActionForm actionForm = (DynaActionForm) form;
+	    HttpServletResponse response) throws Exception {
+	final IUserView userView = getUserView(request);
+	final DynaActionForm actionForm = (DynaActionForm) form;
 
-        final String executionPeriodIDString = (String) actionForm.get("executionPeriodID");
-        final String degreeTypeString = (String) actionForm.get("degreeType");
-        final String enrolmentPeriodClassString = (String) actionForm.get("enrolmentPeriodClass");
-        final String startDateString = (String) actionForm.get("startDate");
-        final String endDateString = (String) actionForm.get("endDate");
-        
-        final String startTimeString = (String) actionForm.get("startTime");
-        final String endTimeString = (String) actionForm.get("endTime");
+	final String executionPeriodIDString = (String) actionForm.get("executionPeriodID");
+	final String degreeTypeString = (String) actionForm.get("degreeType");
+	final String enrolmentPeriodClassString = (String) actionForm.get("enrolmentPeriodClass");
+	final String startDateString = (String) actionForm.get("startDate");
+	final String endDateString = (String) actionForm.get("endDate");
 
+	final String startTimeString = (String) actionForm.get("startTime");
+	final String endTimeString = (String) actionForm.get("endTime");
 
-        final DegreeType degreeType = degreeTypeString.length() == 0 ? null : DegreeType.valueOf(degreeTypeString);
+	final DegreeType degreeType = degreeTypeString.length() == 0 ? null : DegreeType.valueOf(degreeTypeString);
 
-        final Object[] args = { Integer.valueOf(executionPeriodIDString),
-        		degreeType, enrolmentPeriodClassString,
-        		getDate(startDateString, startTimeString),
-        		getDate(endDateString, endTimeString)};
-        ServiceManagerServiceFactory.executeService( "CreateEnrolmentPeriods", args);
+	final Object[] args = { Integer.valueOf(executionPeriodIDString), degreeType, enrolmentPeriodClassString,
+		getDate(startDateString, startTimeString), getDate(endDateString, endTimeString) };
+	ServiceManagerServiceFactory.executeService("CreateEnrolmentPeriods", args);
 
-        return prepare(mapping, form, request, response);
+	return prepare(mapping, form, request, response);
     }
 
-    private void setInfoEnrolmentPeriods(final HttpServletRequest request, final IUserView userView, 
-            final String executionPeriodIDString) throws FenixFilterException, FenixServiceException {
-        final Object[] args = { Integer.valueOf(executionPeriodIDString) };
-        final List<InfoEnrolmentPeriod> infoEnrolmentPeriods = (List<InfoEnrolmentPeriod>) 
-                ServiceManagerServiceFactory.executeService( "ReadEnrolmentPeriods", args);
-        sortInfoEnrolmentPeriods(infoEnrolmentPeriods);
-        request.setAttribute("infoEnrolmentPeriods", infoEnrolmentPeriods);
+    private void setInfoEnrolmentPeriods(final HttpServletRequest request, final IUserView userView,
+	    final String executionPeriodIDString) throws FenixFilterException, FenixServiceException {
+	final Object[] args = { Integer.valueOf(executionPeriodIDString) };
+	final List<InfoEnrolmentPeriod> infoEnrolmentPeriods = (List<InfoEnrolmentPeriod>) ServiceManagerServiceFactory
+		.executeService("ReadEnrolmentPeriods", args);
+	sortInfoEnrolmentPeriods(infoEnrolmentPeriods);
+	request.setAttribute("infoEnrolmentPeriods", infoEnrolmentPeriods);
     }
 
-    private void setInfoExecutionPeriods(final HttpServletRequest request, final IUserView userView) 
-            throws FenixFilterException, FenixServiceException {
-        final List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) 
-                ServiceManagerServiceFactory.executeService( "ReadExecutionPeriods", null);
-        sortInfoExecutionPeriods(infoExecutionPeriods);
-        request.setAttribute("infoExecutionPeriods", infoExecutionPeriods);
+    private void setInfoExecutionPeriods(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
+	    FenixServiceException {
+	final List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory
+		.executeService("ReadExecutionPeriods", null);
+	sortInfoExecutionPeriods(infoExecutionPeriods);
+	request.setAttribute("infoExecutionPeriods", infoExecutionPeriods);
     }
 
     private void sortInfoExecutionPeriods(final List<InfoExecutionPeriod> infoExecutionPeriods) {
-        final ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-        comparatorChain.addComparator(new BeanComparator("semester"));
-        Collections.sort(infoExecutionPeriods, comparatorChain);
+	final ComparatorChain comparatorChain = new ComparatorChain();
+	comparatorChain.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+	comparatorChain.addComparator(new BeanComparator("semester"));
+	Collections.sort(infoExecutionPeriods, comparatorChain);
     }
 
     private void sortInfoEnrolmentPeriods(final List<InfoEnrolmentPeriod> infoEnrolmentPeriods) {
-        final ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.tipoCurso"));
-        comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
-        Collections.sort(infoEnrolmentPeriods, comparatorChain);
+	final ComparatorChain comparatorChain = new ComparatorChain();
+	comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.tipoCurso"));
+	comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+	Collections.sort(infoEnrolmentPeriods, comparatorChain);
     }
 
     private boolean isValidObjectID(final String objectIDString) {
-        return objectIDString != null && objectIDString.length() > 0 && StringUtils.isNumeric(objectIDString);
+	return objectIDString != null && objectIDString.length() > 0 && StringUtils.isNumeric(objectIDString);
     }
-    
+
     private Date getDate(String date, String time) throws ParseException {
-	return DateFormatUtil.parse("yyyy/MM/ddHH:mm", date + time); 
+	return DateFormatUtil.parse("yyyy/MM/ddHH:mm", date + time);
     }
 
 }

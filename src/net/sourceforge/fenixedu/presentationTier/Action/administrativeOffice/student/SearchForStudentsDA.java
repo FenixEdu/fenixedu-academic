@@ -18,28 +18,28 @@ import org.apache.struts.action.ActionMapping;
 
 public class SearchForStudentsDA extends FenixDispatchAction {
 
-    public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-	
-        StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
-        
-        if (studentsSearchBean == null) { //1st time
-            studentsSearchBean = new StudentsSearchBean();
-        } else {
-            final Employee employee = AccessControl.getPerson().getEmployee();
-            final AdministrativeOffice administrativeOffice = employee.getAdministrativeOffice(); 
-            
-            final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
-        
-            if(students.size() == 1) {
-                request.setAttribute("student", students.iterator().next());
-                return mapping.findForward("viewStudentDetails");
-            }
-            request.setAttribute("students", students);
-        }
+    public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        request.setAttribute("studentsSearchBean", studentsSearchBean);
-        return mapping.findForward("search");
+	StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
+
+	if (studentsSearchBean == null) { // 1st time
+	    studentsSearchBean = new StudentsSearchBean();
+	} else {
+	    final Employee employee = AccessControl.getPerson().getEmployee();
+	    final AdministrativeOffice administrativeOffice = employee.getAdministrativeOffice();
+
+	    final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
+
+	    if (students.size() == 1) {
+		request.setAttribute("student", students.iterator().next());
+		return mapping.findForward("viewStudentDetails");
+	    }
+	    request.setAttribute("students", students);
+	}
+
+	request.setAttribute("studentsSearchBean", studentsSearchBean);
+	return mapping.findForward("search");
     }
-    
 
 }

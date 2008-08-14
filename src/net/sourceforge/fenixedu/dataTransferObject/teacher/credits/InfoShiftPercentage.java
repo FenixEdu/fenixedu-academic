@@ -23,53 +23,53 @@ public class InfoShiftPercentage extends DataTranferObject {
     private List infoShiftProfessorshipList;
 
     public InfoShiftPercentage() {
-        infoShiftProfessorshipList = new ArrayList();
+	infoShiftProfessorshipList = new ArrayList();
     }
 
     /**
      * @return
      */
     public Double getAvailablePercentage() {
-        return availablePercentage;
+	return availablePercentage;
     }
 
     /**
      * @return
      */
     public InfoShift getShift() {
-        return shift;
+	return shift;
     }
 
     /**
      * @return
      */
     public List getInfoShiftProfessorshipList() {
-        return infoShiftProfessorshipList;
+	return infoShiftProfessorshipList;
     }
 
     /**
      * @param double1
      */
     public void setAvailablePercentage(Double double1) {
-        availablePercentage = double1;
+	availablePercentage = double1;
     }
 
     /**
      * @param shift
      */
     public void setShift(InfoShift shift) {
-        this.shift = shift;
+	this.shift = shift;
     }
 
     public void addInfoShiftProfessorship(InfoShiftProfessorship infoTeacherShiftPercentage) {
-        infoShiftProfessorshipList.add(infoTeacherShiftPercentage);
+	infoShiftProfessorshipList.add(infoTeacherShiftPercentage);
     }
 
     public void setInfoLessons(List lessons) {
-        this.lessons = lessons;
+	this.lessons = lessons;
     }
 
     public List getInfoLessons() {
-        return this.lessons;
+	return this.lessons;
     }
 }

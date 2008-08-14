@@ -21,8 +21,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    public DomainObjectActionLog(Person person, DomainObject domainObject, String action,
-	    Map<String, Object> parameters) {
+    public DomainObjectActionLog(Person person, DomainObject domainObject, String action, Map<String, Object> parameters) {
 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -90,8 +89,9 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 	return stringBuilder.toString();
     }
 
-    public static Set<DomainObjectActionLog> readDomainObjectActionLogsOrderedByInstant(Set<Class<? extends DomainObject>> domainObjectClasss) {
-	
+    public static Set<DomainObjectActionLog> readDomainObjectActionLogsOrderedByInstant(
+	    Set<Class<? extends DomainObject>> domainObjectClasss) {
+
 	Set<DomainObjectActionLog> resultList = new TreeSet<DomainObjectActionLog>(DomainObjectActionLog.COMPARATOR_BY_INSTANT);
 	for (DomainObjectActionLog log : RootDomainObject.getInstance().getDomainObjectActionLogsSet()) {
 	    try {

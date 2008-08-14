@@ -7,7 +7,7 @@ public class FenixDefaultValueTag extends DefaultValueTag {
 
     @Override
     protected CreateObjectTag getParentCreateTag() {
-        return (CreateObjectTag) findAncestorWithClass(this, FenixCreateObjectTag.class);
+	return (CreateObjectTag) findAncestorWithClass(this, FenixCreateObjectTag.class);
     }
 
 }

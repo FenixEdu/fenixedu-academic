@@ -16,16 +16,16 @@ public class ListExecutionCourseTeachersToShowSummariesProvider implements DataP
 
     public Object provide(Object source, Object currentValue) {
 	ExecutionCourse executionCourse = ((ShowSummariesBean) source).getExecutionCourse();
-    	List<SummaryTeacherBean> teachers = new ArrayList<SummaryTeacherBean>();
-    	Set<Professorship> professorships = new TreeSet<Professorship>(Professorship.COMPARATOR_BY_PERSON_NAME);
-    	if(executionCourse != null) {    	    
-    	    professorships.addAll(executionCourse.getProfessorshipsSet());
-    	    for (Professorship professorship : professorships) {
+	List<SummaryTeacherBean> teachers = new ArrayList<SummaryTeacherBean>();
+	Set<Professorship> professorships = new TreeSet<Professorship>(Professorship.COMPARATOR_BY_PERSON_NAME);
+	if (executionCourse != null) {
+	    professorships.addAll(executionCourse.getProfessorshipsSet());
+	    for (Professorship professorship : professorships) {
 		teachers.add(teachers.size(), new SummaryTeacherBean(professorship));
 	    }
-    	    teachers.add(teachers.size(), new SummaryTeacherBean(Boolean.TRUE));
-    	}
-    	return teachers;
+	    teachers.add(teachers.size(), new SummaryTeacherBean(Boolean.TRUE));
+	}
+	return teachers;
     }
 
     public Converter getConverter() {

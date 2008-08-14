@@ -37,8 +37,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public CardGenerationEntry() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public void setLine(final StudentCurricularPlan studentCurricularPlan) {
@@ -82,7 +82,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(fillString(normalizeStudentNumber(student), ' ', 8));
 	stringBuilder.append("        ");
 	stringBuilder.append(normalizeDegreeType12(degreeType));
-	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("     "); // Academic year - no longer specified
+				       // because the cards last for more than
+				       // one year.
 	stringBuilder.append("        ");
 	stringBuilder.append("                       ");
 	stringBuilder.append(fillString(normalizeDegreeName(degree), ' ', 42));
@@ -108,7 +110,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
 	final String subCategory = line.substring(108, 131).replace('.', ' ').replace('-', ' ').replace('/', ' ');
 	sb.append(subCategory);
-	
+
 	final String workPlace = line.substring(131, 178).replace('&', ' ').replace('_', ' ').replace('/', ' ').replace(':', ' ');
 	sb.append(workPlace);
 
@@ -128,14 +130,14 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     protected String getCampus(final DegreeCurricularPlan degreeCurricularPlan) {
-        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-            final ExecutionYear executionYear = executionDegree.getExecutionYear();
-            if (executionYear.getState().equals(PeriodState.CURRENT)) {
-                final Campus campus = executionDegree.getCampus();
-                return campus.getName();
-            }
-        }
-        return null;
+	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
+	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
+		final Campus campus = executionDegree.getCampus();
+		return campus.getName();
+	    }
+	}
+	return null;
     }
 
     public static Category getCategoryFromDegreeType(final DegreeType degreeType) {
@@ -158,20 +160,20 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     protected String fillLeftString(final String uppered, final char c, final int fillTo) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (int i = uppered.length(); i < fillTo; i++) {
-            stringBuilder.append(c);
-        }
-        stringBuilder.append(uppered);
-        return stringBuilder.toString();
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (int i = uppered.length(); i < fillTo; i++) {
+	    stringBuilder.append(c);
+	}
+	stringBuilder.append(uppered);
+	return stringBuilder.toString();
     }
 
     protected static String fillString(final String uppered, final char c, final int fillTo) {
-        final StringBuilder stringBuilder = new StringBuilder(uppered);
-        for (int i = uppered.length(); i < fillTo; i++) {
-            stringBuilder.append(c);
-        }
-        return stringBuilder.toString();
+	final StringBuilder stringBuilder = new StringBuilder(uppered);
+	for (int i = uppered.length(); i < fillTo; i++) {
+	    stringBuilder.append(c);
+	}
+	return stringBuilder.toString();
     }
 
     protected String normalizeDegreeType17(final DegreeType degreeType) {
@@ -203,8 +205,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     protected String normalizeStudentNumber(final Student student) {
-        final Integer number = student.getNumber();
-        return number.toString();
+	final Integer number = student.getNumber();
+	return number.toString();
     }
 
     protected String normalizeDegreeType12(final DegreeType degreeType) {
@@ -236,26 +238,26 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     protected String normalizeDegreeName(final Degree degree) {
-        final String degreeName = normalize(degree.getIdCardName());
-        if (degreeName.length() > 42) {
-            throw new Error("Degree name exceeds max length: " + degreeName + " has length: " + degreeName.length());
-        }
-        return degreeName;
+	final String degreeName = normalize(degree.getIdCardName());
+	if (degreeName.length() > 42) {
+	    throw new Error("Degree name exceeds max length: " + degreeName + " has length: " + degreeName.length());
+	}
+	return degreeName;
     }
 
     public static String normalize(final String string) {
-        final String normalized = StringNormalizer.normalize(string);
-        return StringUtils.upperCase(normalized);
+	final String normalized = StringNormalizer.normalize(string);
+	return StringUtils.upperCase(normalized);
     }
 
     public static String normalizePersonName(final Person person) {
-	final String  normalizedName = normalize(person.getName());
-        if (normalizedName.length() > 84) {
-            throw new Error("Name exceeds max length of 84: " + normalizedName);
-        } else if (normalizedName.length() < 84) {
-            return fillString(normalizedName, ' ', 84);
-        }
-        return normalizedName;
+	final String normalizedName = normalize(person.getName());
+	if (normalizedName.length() > 84) {
+	    throw new Error("Name exceeds max length of 84: " + normalizedName);
+	} else if (normalizedName.length() < 84) {
+	    return fillString(normalizedName, ' ', 84);
+	}
+	return normalizedName;
     }
 
     public void delete() {

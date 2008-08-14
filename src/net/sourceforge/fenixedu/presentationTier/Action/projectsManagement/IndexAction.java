@@ -26,18 +26,17 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class IndexAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 
-        final IUserView userView = UserView.getUser();
-        String costCenter = request.getParameter("costCenter");
-        ServiceManagerServiceFactory.executeService( "ReviewProjectAccess", new Object[] {
-                userView.getPerson(), costCenter });
+	final IUserView userView = UserView.getUser();
+	String costCenter = request.getParameter("costCenter");
+	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(), costCenter });
 
-        if (costCenter != null && !costCenter.equals("")) {
-            request.setAttribute("infoCostCenter", ServiceUtils.executeService(
-                    "ReadCostCenter", new Object[] { userView.getUtilizador(), costCenter }));
-        }
-        return mapping.findForward("success");
+	if (costCenter != null && !costCenter.equals("")) {
+	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {
+		    userView.getUtilizador(), costCenter }));
+	}
+	return mapping.findForward("success");
     }
 }

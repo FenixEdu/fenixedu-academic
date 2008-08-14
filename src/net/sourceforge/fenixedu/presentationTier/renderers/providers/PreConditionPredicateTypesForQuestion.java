@@ -8,15 +8,15 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PreConditionPredicateTypesForQuestion implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		PredicateBean predicateBean = (PredicateBean) source;
-		NewQuestion question = (NewQuestion) predicateBean.getQuestion();
+    public Object provide(Object source, Object currentValue) {
+	PredicateBean predicateBean = (PredicateBean) source;
+	NewQuestion question = (NewQuestion) predicateBean.getQuestion();
 
-		return question.getPreConditionPredicates();
-	}
+	return question.getPreConditionPredicates();
+    }
 
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    public Converter getConverter() {
+	return new EnumConverter();
+    }
 
 }

@@ -48,8 +48,7 @@ public class SibsTransactionDetail extends SibsTransactionDetail_Base {
 
     @Override
     public void setSibsCode(String sibsCode) {
-	throw new DomainException(
-		"error.accounting.accountingTransactions.detail.SibsTransactionDetail.cannot.modify.sibsCode");
+	throw new DomainException("error.accounting.accountingTransactions.detail.SibsTransactionDetail.cannot.modify.sibsCode");
     }
 
 }

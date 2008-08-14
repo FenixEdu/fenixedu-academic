@@ -24,33 +24,33 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 10/Set/2003, 20:47:24
+ *         Created at 10/Set/2003, 20:47:24
  * 
  */
 public class GetProjectsGroupsByExecutionCourseID extends Service {
 
-    public List run(Integer executionCourseID) throws BDException{
+    public List run(Integer executionCourseID) throws BDException {
 
-        final List infosGroupProjectStudents = new LinkedList();
+	final List infosGroupProjectStudents = new LinkedList();
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-        final List<Grouping> groupings = executionCourse.getGroupings();
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	final List<Grouping> groupings = executionCourse.getGroupings();
 
-        for (final Grouping grouping : groupings) {
-            final List<StudentGroup> studentGroups = grouping.getStudentGroups();
-            for (final StudentGroup studentGroup : studentGroups) {
-                List<Attends> attends = studentGroup.getAttends();
-                List infoStudents = new ArrayList();
-                for (final Attends attend : attends) {
-                    infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
-                }
-                InfoStudentGroup infoStudentGroup = InfoStudentGroup.newInfoFromDomain(studentGroup);
-                InfoGroupProjectStudents infoGroupProjectStudents = new InfoGroupProjectStudents();
-                infoGroupProjectStudents.setStudentList(infoStudents);
-                infoGroupProjectStudents.setStudentGroup(infoStudentGroup);
-                infosGroupProjectStudents.add(infoGroupProjectStudents);
-            }
-        }
-        return infosGroupProjectStudents;
+	for (final Grouping grouping : groupings) {
+	    final List<StudentGroup> studentGroups = grouping.getStudentGroups();
+	    for (final StudentGroup studentGroup : studentGroups) {
+		List<Attends> attends = studentGroup.getAttends();
+		List infoStudents = new ArrayList();
+		for (final Attends attend : attends) {
+		    infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
+		}
+		InfoStudentGroup infoStudentGroup = InfoStudentGroup.newInfoFromDomain(studentGroup);
+		InfoGroupProjectStudents infoGroupProjectStudents = new InfoGroupProjectStudents();
+		infoGroupProjectStudents.setStudentList(infoStudents);
+		infoGroupProjectStudents.setStudentGroup(infoStudentGroup);
+		infosGroupProjectStudents.add(infoGroupProjectStudents);
+	    }
+	}
+	return infosGroupProjectStudents;
     }
 }

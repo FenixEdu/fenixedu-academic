@@ -124,8 +124,8 @@ public class Section extends Section_Base {
      * then this section will be the last
      * 
      * @param section
-     *                the section that should appear after this section or
-     *                <code>null</code> if this section should be last
+     *            the section that should appear after this section or
+     *            <code>null</code> if this section should be last
      */
     public void setNextSection(Section section) {
 	if (section != null) {

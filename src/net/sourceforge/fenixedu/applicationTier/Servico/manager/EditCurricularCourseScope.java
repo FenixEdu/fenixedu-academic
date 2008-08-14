@@ -9,39 +9,35 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-
 public class EditCurricularCourseScope extends Service {
 
-    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException{
+    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException {
 
-        CurricularCourseScope oldCurricularCourseScope = null;
-        CurricularSemester newCurricularSemester = null;
-        Branch newBranch = null;
+	CurricularCourseScope oldCurricularCourseScope = null;
+	CurricularSemester newCurricularSemester = null;
+	Branch newBranch = null;
 
-        Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
-        newBranch = rootDomainObject.readBranchByOID(branchId);
+	Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
+	newBranch = rootDomainObject.readBranchByOID(branchId);
 
-        if (newBranch == null) {
-            throw new NonExistingServiceException("message.non.existing.branch", null);
-        }
+	if (newBranch == null) {
+	    throw new NonExistingServiceException("message.non.existing.branch", null);
+	}
 
-		
-        Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
-        newCurricularSemester = rootDomainObject.readCurricularSemesterByOID(curricularSemesterId);
+	Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
+	newCurricularSemester = rootDomainObject.readCurricularSemesterByOID(curricularSemesterId);
 
-        if (newCurricularSemester == null) {
-            throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
-        }
+	if (newCurricularSemester == null) {
+	    throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
+	}
 
-		
-        oldCurricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getIdInternal());
+	oldCurricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getIdInternal());
 
-        if (oldCurricularCourseScope == null) {
-            throw new NonExistingServiceException("message.non.existing.curricular.course.scope",
-                    null);
-        }
+	if (oldCurricularCourseScope == null) {
+	    throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
+	}
 
-		oldCurricularCourseScope.edit(newBranch, newCurricularSemester, newInfoCurricularCourseScope.getBeginDate(),
-				null, newInfoCurricularCourseScope.getAnotation());
+	oldCurricularCourseScope.edit(newBranch, newCurricularSemester, newInfoCurricularCourseScope.getBeginDate(), null,
+		newInfoCurricularCourseScope.getAnotation());
     }
 }

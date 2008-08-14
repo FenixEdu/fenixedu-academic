@@ -32,63 +32,58 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class UnEnrollGroupShift extends Service {
 
-    public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
-            throws FenixServiceException{
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+    public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username) throws FenixServiceException {
+	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
-        if (groupProperties == null) {
-            throw new ExistingServiceException();
-        }
+	if (groupProperties == null) {
+	    throw new ExistingServiceException();
+	}
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
-        if (studentGroup == null)
-            throw new InvalidArgumentsServiceException();
+	if (studentGroup == null)
+	    throw new InvalidArgumentsServiceException();
 
-        if (!(studentGroup.getShift() != null && groupProperties.getShiftType() == null)
-                || studentGroup.getShift() == null) {
-            throw new InvalidStudentNumberServiceException();
-        }
+	if (!(studentGroup.getShift() != null && groupProperties.getShiftType() == null) || studentGroup.getShift() == null) {
+	    throw new InvalidStudentNumberServiceException();
+	}
 
-        Registration registration = Registration.readByUsername(username);
+	Registration registration = Registration.readByUsername(username);
 
-        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                .getInstance();
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                .getGroupEnrolmentStrategyInstance(groupProperties);
+	IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+	IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
-        if (!strategy.checkStudentInGrouping(groupProperties, username)) {
-            throw new NotAuthorizedException();
-        }
+	if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+	    throw new NotAuthorizedException();
+	}
 
-        if (!checkStudentInStudentGroup(registration, studentGroup)) {
-            throw new InvalidSituationServiceException();
-        }
+	if (!checkStudentInStudentGroup(registration, studentGroup)) {
+	    throw new InvalidSituationServiceException();
+	}
 
-        Shift shift = null;
-        boolean result = strategy.checkNumberOfGroups(groupProperties, shift);
-        if (!result) {
-            throw new InvalidChangeServiceException();
-        }
-        studentGroup.setShift(shift);
+	Shift shift = null;
+	boolean result = strategy.checkNumberOfGroups(groupProperties, shift);
+	if (!result) {
+	    throw new InvalidChangeServiceException();
+	}
+	studentGroup.setShift(shift);
 
-        return true;
+	return true;
     }
 
-    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
-            {
-        boolean found = false;
+    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) {
+	boolean found = false;
 
-        List studentGroupAttends = studentGroup.getAttends();
-        Attends attend = null;
-        Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
-        while (iterStudentGroupAttends.hasNext() && !found) {
-            attend = ((Attends) iterStudentGroupAttends.next());
-            if (attend.getRegistration().equals(registration)) {
-                found = true;
-            }
-        }
-        return found;
+	List studentGroupAttends = studentGroup.getAttends();
+	Attends attend = null;
+	Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
+	while (iterStudentGroupAttends.hasNext() && !found) {
+	    attend = ((Attends) iterStudentGroupAttends.next());
+	    if (attend.getRegistration().equals(registration)) {
+		found = true;
+	    }
+	}
+	return found;
     }
 
 }

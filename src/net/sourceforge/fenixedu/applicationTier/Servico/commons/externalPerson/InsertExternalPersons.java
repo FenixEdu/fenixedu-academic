@@ -23,14 +23,15 @@ public class InsertExternalPersons extends Service {
 	final List<ExternalContract> externalPersons = new ArrayList<ExternalContract>();
 	for (final InfoExternalPersonEditor infoExternalPerson : infoExternalPersons) {
 	    // Retrieving existing work location
-	    Unit currentInstitution = UnitUtils.readExternalInstitutionUnitByName(infoExternalPerson.getInfoInstitution().getName());
+	    Unit currentInstitution = UnitUtils.readExternalInstitutionUnitByName(infoExternalPerson.getInfoInstitution()
+		    .getName());
 	    if (currentInstitution == null) {
 		currentInstitution = new InsertInstitution().run(infoExternalPerson.getInfoInstitution().getName());
 	    }
 
-	    final Person externalPerson = Person.createExternalPerson(infoExternalPerson.getName(),
-		    Gender.MALE, null, null, null, null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
-	    
+	    final Person externalPerson = Person.createExternalPerson(infoExternalPerson.getName(), Gender.MALE, null, null,
+		    null, null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+
 	    externalPersons.add(new ExternalContract(externalPerson, currentInstitution, new YearMonthDay(), null));
 	}
 	return externalPersons;

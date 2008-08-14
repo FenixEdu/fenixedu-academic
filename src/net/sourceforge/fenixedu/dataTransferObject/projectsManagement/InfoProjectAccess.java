@@ -28,92 +28,92 @@ public class InfoProjectAccess extends InfoObject {
     private Calendar endDate;
 
     public Calendar getBeginDate() {
-        return beginDate;
+	return beginDate;
     }
 
     public void setBeginDate(Calendar beginDate) {
-        this.beginDate = beginDate;
+	this.beginDate = beginDate;
     }
 
     public Calendar getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     public InfoPerson getInfoPerson() {
-        return infoPerson;
+	return infoPerson;
     }
 
     public void setInfoPerson(InfoPerson infoPerson) {
-        this.infoPerson = infoPerson;
+	this.infoPerson = infoPerson;
     }
 
     public InfoProject getInfoProject() {
-        return infoProject;
+	return infoProject;
     }
 
     public void setInfoProject(InfoProject infoProject) {
-        this.infoProject = infoProject;
+	this.infoProject = infoProject;
     }
 
     public Integer getKeyProject() {
-        return keyProject;
+	return keyProject;
     }
 
     public void setKeyProject(Integer keyProject) {
-        this.keyProject = keyProject;
+	this.keyProject = keyProject;
     }
 
     public Integer getProjectCoordinator() {
-        return projectCoordinator;
+	return projectCoordinator;
     }
 
     public void setProjectCoordinator(Integer projectCoordinator) {
-        this.projectCoordinator = projectCoordinator;
+	this.projectCoordinator = projectCoordinator;
     }
 
     public String getBeginDateFormatted() {
-        String result = new String();
-        Calendar date = getBeginDate();
-        result += date.get(Calendar.DAY_OF_MONTH);
-        result += "/";
-        result += date.get(Calendar.MONTH) + 1;
-        result += "/";
-        result += date.get(Calendar.YEAR);
-        return result;
+	String result = new String();
+	Calendar date = getBeginDate();
+	result += date.get(Calendar.DAY_OF_MONTH);
+	result += "/";
+	result += date.get(Calendar.MONTH) + 1;
+	result += "/";
+	result += date.get(Calendar.YEAR);
+	return result;
     }
 
     public String getEndDateFormatted() {
-        String result = new String();
-        Calendar date = getEndDate();
-        result += date.get(Calendar.DAY_OF_MONTH);
-        result += "/";
-        result += date.get(Calendar.MONTH) + 1;
-        result += "/";
-        result += date.get(Calendar.YEAR);
-        return result;
+	String result = new String();
+	Calendar date = getEndDate();
+	result += date.get(Calendar.DAY_OF_MONTH);
+	result += "/";
+	result += date.get(Calendar.MONTH) + 1;
+	result += "/";
+	result += date.get(Calendar.YEAR);
+	return result;
     }
 
     public void copyFromDomain(ProjectAccess projectAccess) {
-        super.copyFromDomain(projectAccess);
-        if (projectAccess != null) {
-            setInfoPerson(InfoPerson.newInfoFromDomain(projectAccess.getPerson()));
-            setProjectCoordinator(projectAccess.getKeyProjectCoordinator());
-            setKeyProject(projectAccess.getKeyProject());
-            setBeginDate(projectAccess.getBeginDate());
-            setEndDate(projectAccess.getEndDate());
-        }
+	super.copyFromDomain(projectAccess);
+	if (projectAccess != null) {
+	    setInfoPerson(InfoPerson.newInfoFromDomain(projectAccess.getPerson()));
+	    setProjectCoordinator(projectAccess.getKeyProjectCoordinator());
+	    setKeyProject(projectAccess.getKeyProject());
+	    setBeginDate(projectAccess.getBeginDate());
+	    setEndDate(projectAccess.getEndDate());
+	}
     }
 
     public static InfoProjectAccess newInfoFromDomain(ProjectAccess projectAccess) {
-        InfoProjectAccess infoProjectAccess = null;
-        if (projectAccess != null) {
-            infoProjectAccess = new InfoProjectAccess();
-            infoProjectAccess.copyFromDomain(projectAccess);
-        }
-        return infoProjectAccess;
+	InfoProjectAccess infoProjectAccess = null;
+	if (projectAccess != null) {
+	    infoProjectAccess = new InfoProjectAccess();
+	    infoProjectAccess.copyFromDomain(projectAccess);
+	}
+	return infoProjectAccess;
     }
 }

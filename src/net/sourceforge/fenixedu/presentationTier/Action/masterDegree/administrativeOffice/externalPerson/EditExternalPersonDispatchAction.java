@@ -35,132 +35,128 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = UserView.getUser();
-        DynaActionForm editExternalPersonForm = (DynaActionForm) form;
+	IUserView userView = UserView.getUser();
+	DynaActionForm editExternalPersonForm = (DynaActionForm) form;
 
-        Integer externalPersonId;
-        try {
-            externalPersonId = new Integer(this.getFromRequest("id", request));
-        } catch (NumberFormatException e1) {
-            externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
-        }
+	Integer externalPersonId;
+	try {
+	    externalPersonId = new Integer(this.getFromRequest("id", request));
+	} catch (NumberFormatException e1) {
+	    externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
+	}
 
-        ActionErrors actionErrors = new ActionErrors();
-        InfoExternalPerson infoExternalPerson = null;
+	ActionErrors actionErrors = new ActionErrors();
+	InfoExternalPerson infoExternalPerson = null;
 
-        Object args[] = { externalPersonId };
-        try {
-            infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService(
-                    "ReadExternalPersonByID", args);
-        } catch (NonExistingServiceException e) {
-            throw new FenixActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	Object args[] = { externalPersonId };
+	try {
+	    infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService("ReadExternalPersonByID", args);
+	} catch (NonExistingServiceException e) {
+	    throw new FenixActionException(e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        editExternalPersonForm.set("externalPersonID", externalPersonId);
-        editExternalPersonForm.set("name", infoExternalPerson.getInfoPerson().getNome());
-        editExternalPersonForm.set("institutionID", infoExternalPerson.getInfoInstitution()
-                .getIdInternal());
-        editExternalPersonForm.set("address", infoExternalPerson.getInfoPerson().getMorada());
-        editExternalPersonForm.set("phone", infoExternalPerson.getInfoPerson().getTelefone());
-        editExternalPersonForm.set("mobile", infoExternalPerson.getInfoPerson().getTelemovel());
-        editExternalPersonForm.set("homepage", infoExternalPerson.getInfoPerson().getEnderecoWeb());
-        editExternalPersonForm.set("email", infoExternalPerson.getInfoPerson().getEmail());
+	editExternalPersonForm.set("externalPersonID", externalPersonId);
+	editExternalPersonForm.set("name", infoExternalPerson.getInfoPerson().getNome());
+	editExternalPersonForm.set("institutionID", infoExternalPerson.getInfoInstitution().getIdInternal());
+	editExternalPersonForm.set("address", infoExternalPerson.getInfoPerson().getMorada());
+	editExternalPersonForm.set("phone", infoExternalPerson.getInfoPerson().getTelefone());
+	editExternalPersonForm.set("mobile", infoExternalPerson.getInfoPerson().getTelemovel());
+	editExternalPersonForm.set("homepage", infoExternalPerson.getInfoPerson().getEnderecoWeb());
+	editExternalPersonForm.set("email", infoExternalPerson.getInfoPerson().getEmail());
 
-        List institutions = getInstitutions(request);
+	List institutions = getInstitutions(request);
 
-        if ((institutions == null) || (institutions.isEmpty())) {
-            actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions",
-                    new ActionError("label.masterDegree.administrativeOffice.nonExistingInstitutions"));
+	if ((institutions == null) || (institutions.isEmpty())) {
+	    actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions", new ActionError(
+		    "label.masterDegree.administrativeOffice.nonExistingInstitutions"));
 
-            saveErrors(request, actionErrors);
-            return mapping.findForward("error");
-        }
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("error");
+	}
 
-        return mapping.findForward("start");
+	return mapping.findForward("start");
 
     }
 
     private List getInstitutions(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-        IUserView userView = UserView.getUser();
-        List institutions = null;
+	IUserView userView = UserView.getUser();
+	List institutions = null;
 
-        Object args[] = {};
-        try {
-            institutions = (ArrayList) ServiceUtils.executeService("ReadAllInstitutions",
-                    args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	Object args[] = {};
+	try {
+	    institutions = (ArrayList) ServiceUtils.executeService("ReadAllInstitutions", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        if (institutions != null)
-            if (institutions.isEmpty() == false) {
-                List institutionsValueBeanList = new ArrayList();
-                Iterator it = institutions.iterator();
-                Unit infoInstitution = null;
+	if (institutions != null)
+	    if (institutions.isEmpty() == false) {
+		List institutionsValueBeanList = new ArrayList();
+		Iterator it = institutions.iterator();
+		Unit infoInstitution = null;
 
-                while (it.hasNext()) {
-                    infoInstitution = (Unit) it.next();
-                    institutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(),
-                            infoInstitution.getIdInternal().toString()));
-                }
+		while (it.hasNext()) {
+		    infoInstitution = (Unit) it.next();
+		    institutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution.getIdInternal()
+			    .toString()));
+		}
 
-                request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, institutionsValueBeanList);
-            }
-        return institutions;
+		request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, institutionsValueBeanList);
+	    }
+	return institutions;
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm editExternalPersonForm = (DynaActionForm) form;
-               
-        Integer externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
-        String name = (String) editExternalPersonForm.get("name");
-        Integer institutionID = (Integer) editExternalPersonForm.get("institutionID");
-        String address = (String) editExternalPersonForm.get("address");
-        String phone = (String) editExternalPersonForm.get("phone");
-        String mobile = (String) editExternalPersonForm.get("mobile");
-        String homepage = (String) editExternalPersonForm.get("homepage");
-        String email = (String) editExternalPersonForm.get("email");
+	DynaActionForm editExternalPersonForm = (DynaActionForm) form;
 
-        Object args[] = { externalPersonId, name, address, institutionID, phone, mobile, homepage,
-                email };
+	Integer externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
+	String name = (String) editExternalPersonForm.get("name");
+	Integer institutionID = (Integer) editExternalPersonForm.get("institutionID");
+	String address = (String) editExternalPersonForm.get("address");
+	String phone = (String) editExternalPersonForm.get("phone");
+	String mobile = (String) editExternalPersonForm.get("mobile");
+	String homepage = (String) editExternalPersonForm.get("homepage");
+	String email = (String) editExternalPersonForm.get("email");
 
-        try {
-            ServiceUtils.executeService("EditExternalPerson", args);
-        } catch (ExistingServiceException e) {
-            getInstitutions(request);
-            throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
-        } catch (FenixServiceException e) {
-            getInstitutions(request);
-            throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
-        } catch (DomainException e){
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error", new ActionError(e.getMessage()));
-            saveErrors(request, actionErrors);              
-            return mapping.findForward("error");
-        }
+	Object args[] = { externalPersonId, name, address, institutionID, phone, mobile, homepage, email };
 
-        return mapping.findForward("success");
+	try {
+	    ServiceUtils.executeService("EditExternalPerson", args);
+	} catch (ExistingServiceException e) {
+	    getInstitutions(request);
+	    throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
+	} catch (FenixServiceException e) {
+	    getInstitutions(request);
+	    throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
+	} catch (DomainException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("error", new ActionError(e.getMessage()));
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("error");
+	}
+
+	return mapping.findForward("success");
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
+	String parameterString = request.getParameter(parameter);
+	if (parameterString == null) {
+	    parameterString = (String) request.getAttribute(parameter);
+	}
+	return parameterString;
     }
 
 }

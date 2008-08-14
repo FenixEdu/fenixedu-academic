@@ -7,11 +7,10 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 
-
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class InfoSibsPaymentFileEntry extends InfoObject {
 
@@ -31,86 +30,86 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
      *  
      */
     public InfoSibsPaymentFileEntry() {
-        super();
+	super();
     }
 
     /**
      * @param idInternal
      */
     public InfoSibsPaymentFileEntry(Integer idInternal) {
-        super(idInternal);
+	super(idInternal);
     }
 
     public Double getPayedValue() {
-        return payedValue;
+	return payedValue;
     }
 
     public void setPayedValue(Double payedValue) {
-        this.payedValue = payedValue;
+	this.payedValue = payedValue;
     }
 
     public SibsPaymentStatus getPaymentStatus() {
-        return paymentStatus;
+	return paymentStatus;
     }
 
     public void setPaymentStatus(SibsPaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
+	this.paymentStatus = paymentStatus;
     }
 
     public SibsPaymentType getPaymentType() {
-        return paymentType;
+	return paymentType;
     }
 
     public void setPaymentType(SibsPaymentType paymentType) {
-        this.paymentType = paymentType;
+	this.paymentType = paymentType;
     }
 
     public Integer getStudentNumber() {
-        return studentNumber;
+	return studentNumber;
     }
 
     public void setStudentNumber(Integer studentNumber) {
-        this.studentNumber = studentNumber;
+	this.studentNumber = studentNumber;
     }
 
     public Timestamp getTransactionDate() {
-        return transactionDate;
+	return transactionDate;
     }
 
     public void setTransactionDate(Timestamp transactionDate) {
-        this.transactionDate = transactionDate;
+	this.transactionDate = transactionDate;
     }
 
     public Integer getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(Integer year) {
-        this.year = year;
+	this.year = year;
     }
 
     public void copyFromDomain(SibsPaymentFileEntry sibsPaymentFileEntry) {
 
-        setPayedValue(sibsPaymentFileEntry.getPayedValue());
-        setPaymentStatus(sibsPaymentFileEntry.getPaymentStatus());
-        setPaymentType(sibsPaymentFileEntry.getPaymentType());
-        setStudentNumber(sibsPaymentFileEntry.getStudentNumber());
-        if (sibsPaymentFileEntry.getTransactionDate() != null) {
-            this.setTransactionDate(new Timestamp(sibsPaymentFileEntry.getTransactionDate().getTime()));
-        }
-        setYear(sibsPaymentFileEntry.getYear());
-        setIdInternal(sibsPaymentFileEntry.getIdInternal());
+	setPayedValue(sibsPaymentFileEntry.getPayedValue());
+	setPaymentStatus(sibsPaymentFileEntry.getPaymentStatus());
+	setPaymentType(sibsPaymentFileEntry.getPaymentType());
+	setStudentNumber(sibsPaymentFileEntry.getStudentNumber());
+	if (sibsPaymentFileEntry.getTransactionDate() != null) {
+	    this.setTransactionDate(new Timestamp(sibsPaymentFileEntry.getTransactionDate().getTime()));
+	}
+	setYear(sibsPaymentFileEntry.getYear());
+	setIdInternal(sibsPaymentFileEntry.getIdInternal());
 
     }
 
     public static InfoSibsPaymentFileEntry newInfoFromDomain(SibsPaymentFileEntry sibsPaymentFileEntry) {
-        InfoSibsPaymentFileEntry infoSibsPaymentFileEntry = null;
+	InfoSibsPaymentFileEntry infoSibsPaymentFileEntry = null;
 
-        if (sibsPaymentFileEntry != null) {
-            infoSibsPaymentFileEntry = new InfoSibsPaymentFileEntry();
-            infoSibsPaymentFileEntry.copyFromDomain(sibsPaymentFileEntry);
-        }
+	if (sibsPaymentFileEntry != null) {
+	    infoSibsPaymentFileEntry = new InfoSibsPaymentFileEntry();
+	    infoSibsPaymentFileEntry.copyFromDomain(sibsPaymentFileEntry);
+	}
 
-        return infoSibsPaymentFileEntry;
+	return infoSibsPaymentFileEntry;
     }
 }

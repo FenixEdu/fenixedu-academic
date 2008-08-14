@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntryCreator;
 
-
 public class StudentEquivalencyPlanEntryCreator extends EquivalencePlanEntryCreator {
 
     private final DomainReference<DegreeCurricularPlanEquivalencePlan> degreeCurricularPlanEquivalencePlan;
@@ -13,8 +12,8 @@ public class StudentEquivalencyPlanEntryCreator extends EquivalencePlanEntryCrea
     public StudentEquivalencyPlanEntryCreator(final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan,
 	    final DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan) {
 	super(studentCurricularPlanEquivalencePlan);
-        this.degreeCurricularPlanEquivalencePlan = degreeCurricularPlanEquivalencePlan == null ?
-        	null : new DomainReference<DegreeCurricularPlanEquivalencePlan>(degreeCurricularPlanEquivalencePlan);
+	this.degreeCurricularPlanEquivalencePlan = degreeCurricularPlanEquivalencePlan == null ? null
+		: new DomainReference<DegreeCurricularPlanEquivalencePlan>(degreeCurricularPlanEquivalencePlan);
     }
 
     public DegreeCurricularPlanEquivalencePlan getDegreeCurricularPlanEquivalencePlan() {

@@ -8,13 +8,11 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 
-public class CreateInstallmentPenaltyExemptionBean extends CreatePenaltyExemptionBean implements
-	Serializable {
+public class CreateInstallmentPenaltyExemptionBean extends CreatePenaltyExemptionBean implements Serializable {
 
     private List<DomainReference<Installment>> installments;
 
-    public CreateInstallmentPenaltyExemptionBean(
-	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
+    public CreateInstallmentPenaltyExemptionBean(GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
 	super(gratuityEventWithPaymentPlan);
 	setGratuityEventWithPaymentPlan(gratuityEventWithPaymentPlan);
 	setInstallments(new ArrayList<Installment>());
@@ -24,8 +22,7 @@ public class CreateInstallmentPenaltyExemptionBean extends CreatePenaltyExemptio
 	return (GratuityEventWithPaymentPlan) getEvent();
     }
 
-    private void setGratuityEventWithPaymentPlan(
-	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
+    private void setGratuityEventWithPaymentPlan(GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
 	setEvent(gratuityEventWithPaymentPlan);
     }
 

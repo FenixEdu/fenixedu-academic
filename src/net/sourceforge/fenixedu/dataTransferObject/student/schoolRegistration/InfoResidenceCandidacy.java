@@ -28,41 +28,40 @@ public class InfoResidenceCandidacy extends InfoObject {
 
     }
 
-    public InfoResidenceCandidacy(InfoStudent infostudent, Date creationDate, String observations,
-            Boolean dislocated) {
+    public InfoResidenceCandidacy(InfoStudent infostudent, Date creationDate, String observations, Boolean dislocated) {
 
-        setCreationDate(creationDate);
-        setObservations(observations);
-        setInfoStudent(infostudent);
-        setCandidate(dislocated);
+	setCreationDate(creationDate);
+	setObservations(observations);
+	setInfoStudent(infostudent);
+	setCandidate(dislocated);
     }
 
     /**
      * @return Returns the creationDate.
      */
     public Date getCreationDate() {
-        return creationDate;
+	return creationDate;
     }
 
     /**
      * @return Returns the dislocated.
      */
     public Boolean getCandidate() {
-        return candidate;
+	return candidate;
     }
 
     /**
      * @return Returns the infoStudent.
      */
     public InfoStudent getInfoStudent() {
-        return infoStudent;
+	return infoStudent;
     }
 
     /**
      * @return Returns the observations.
      */
     public String getObservations() {
-        return observations;
+	return observations;
     }
 
     /**
@@ -70,7 +69,7 @@ public class InfoResidenceCandidacy extends InfoObject {
      *            The creationDate to set.
      */
     public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+	this.creationDate = creationDate;
     }
 
     /**
@@ -78,7 +77,7 @@ public class InfoResidenceCandidacy extends InfoObject {
      *            The dislocated to set.
      */
     public void setCandidate(Boolean dislocated) {
-        this.candidate = dislocated;
+	this.candidate = dislocated;
     }
 
     /**
@@ -86,7 +85,7 @@ public class InfoResidenceCandidacy extends InfoObject {
      *            The infoStudent to set.
      */
     public void setInfoStudent(InfoStudent infoStudent) {
-        this.infoStudent = infoStudent;
+	this.infoStudent = infoStudent;
     }
 
     /**
@@ -94,35 +93,35 @@ public class InfoResidenceCandidacy extends InfoObject {
      *            The observations to set.
      */
     public void setObservations(String observations) {
-        this.observations = observations;
+	this.observations = observations;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoResidenceCandidacy) {
-            InfoResidenceCandidacy infoResidenceCandidacy = (InfoResidenceCandidacy) obj;
-            result = (this.getInfoStudent().equals(infoResidenceCandidacy.getInfoStudent()) && this
-                    .getCreationDate().equals(infoResidenceCandidacy.getCreationDate()));
-        }
-        return result;
+	boolean result = false;
+	if (obj instanceof InfoResidenceCandidacy) {
+	    InfoResidenceCandidacy infoResidenceCandidacy = (InfoResidenceCandidacy) obj;
+	    result = (this.getInfoStudent().equals(infoResidenceCandidacy.getInfoStudent()) && this.getCreationDate().equals(
+		    infoResidenceCandidacy.getCreationDate()));
+	}
+	return result;
     }
 
     public void copyFromDomain(ResidenceCandidacies residentCandidacy) {
-        super.copyFromDomain(residentCandidacy);
+	super.copyFromDomain(residentCandidacy);
 
-        if (residentCandidacy != null) {
-            setCreationDate(residentCandidacy.getCreationDate());
-            setCandidate(residentCandidacy.getCandidate());
-            setObservations(residentCandidacy.getObservations());
-        }
+	if (residentCandidacy != null) {
+	    setCreationDate(residentCandidacy.getCreationDate());
+	    setCandidate(residentCandidacy.getCandidate());
+	    setObservations(residentCandidacy.getObservations());
+	}
     }
 
     public static InfoResidenceCandidacy newInfoFromDomain(ResidenceCandidacies residenceCandidacy) {
-        InfoResidenceCandidacy infoResidenceCandidacy = null;
-        if (residenceCandidacy != null) {
-            infoResidenceCandidacy = new InfoResidenceCandidacy();
-            infoResidenceCandidacy.copyFromDomain(residenceCandidacy);
-        }
-        return infoResidenceCandidacy;
+	InfoResidenceCandidacy infoResidenceCandidacy = null;
+	if (residenceCandidacy != null) {
+	    infoResidenceCandidacy = new InfoResidenceCandidacy();
+	    infoResidenceCandidacy.copyFromDomain(residenceCandidacy);
+	}
+	return infoResidenceCandidacy;
     }
 }

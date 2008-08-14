@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class RequiredJustificationServiceException extends FenixServiceException {
 
@@ -17,28 +17,28 @@ public class RequiredJustificationServiceException extends FenixServiceException
      *  
      */
     public RequiredJustificationServiceException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public RequiredJustificationServiceException(int errorType) {
-        super(errorType);
+	super(errorType);
     }
 
     /**
      * @param s
      */
     public RequiredJustificationServiceException(String s) {
-        super(s);
+	super(s);
     }
 
     /**
      * @param cause
      */
     public RequiredJustificationServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -46,14 +46,14 @@ public class RequiredJustificationServiceException extends FenixServiceException
      * @param cause
      */
     public RequiredJustificationServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[RequiredJustificationServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[RequiredJustificationServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadFAQEntries extends Service {
 
     public Collection run() {
-        List<InfoFAQEntry> result = new ArrayList<InfoFAQEntry>();
-        
-        for (FAQEntry faqEntry : rootDomainObject.getFAQEntrys()) {
-            result.add(InfoFAQEntry.newInfoFromDomain(faqEntry));
-        }
-        
-        return result;
+	List<InfoFAQEntry> result = new ArrayList<InfoFAQEntry>();
+
+	for (FAQEntry faqEntry : rootDomainObject.getFAQEntrys()) {
+	    result.add(InfoFAQEntry.newInfoFromDomain(faqEntry));
+	}
+
+	return result;
     }
 
 }

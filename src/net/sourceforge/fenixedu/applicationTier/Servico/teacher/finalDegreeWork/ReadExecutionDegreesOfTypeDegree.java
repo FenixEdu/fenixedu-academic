@@ -22,22 +22,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesOfTypeDegree extends Service {
 
-	public List run() {
-		String year = ExecutionYear.readCurrentExecutionYear().getYear();
-        List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(year, DegreeType.DEGREE);
-        
-        List infoExecutionDegrees = new ArrayList();
-        
-		if (executionDegrees != null) {
-			Iterator iterator = executionDegrees.iterator();
-			while (iterator.hasNext()) {
-                ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
-                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+    public List run() {
+	String year = ExecutionYear.readCurrentExecutionYear().getYear();
+	List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(year, DegreeType.DEGREE);
 
-                infoExecutionDegrees.add(infoExecutionDegree);
-			}
-		}
+	List infoExecutionDegrees = new ArrayList();
 
-		return infoExecutionDegrees;
+	if (executionDegrees != null) {
+	    Iterator iterator = executionDegrees.iterator();
+	    while (iterator.hasNext()) {
+		ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
+		InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+
+		infoExecutionDegrees.add(infoExecutionDegree);
+	    }
 	}
+
+	return infoExecutionDegrees;
+    }
 }

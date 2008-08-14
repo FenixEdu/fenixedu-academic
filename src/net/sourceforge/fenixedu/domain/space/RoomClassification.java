@@ -26,36 +26,35 @@ public class RoomClassification extends RoomClassification_Base {
     private transient String absoluteCode;
 
     private transient String presentationCode;
-    
+
     public static final String LABORATORY_FOR_EDUCATION_CODE = "2.1", LABORATORY_FOR_RESEARCHER_CODE = "2.2";
-    
-    public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator("absoluteCode");
-    
+
+    public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator(
+	    "absoluteCode");
+
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Created room classification", parameters = {
-	    "parentRoomClassification", "code", "name" })
-    public RoomClassification(final RoomClassification parentRoomClassification, final Integer code, final MultiLanguageString name) {
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created room classification", parameters = { "parentRoomClassification",
+	    "code", "name" })
+    public RoomClassification(final RoomClassification parentRoomClassification, final Integer code,
+	    final MultiLanguageString name) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	edit(parentRoomClassification, code, name);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room classification", parameters = {
-	    "parentRoomClassification", "code", "name" })
-    public void edit(final RoomClassification parentRoomClassification, final Integer code,
-	    final MultiLanguageString name) {
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room classification", parameters = { "parentRoomClassification",
+	    "code", "name" })
+    public void edit(final RoomClassification parentRoomClassification, final Integer code, final MultiLanguageString name) {
 
 	final Set<RoomClassification> childRoomClassifications = parentRoomClassification == null ? getRootDomainObject()
-		.getRoomClassificationSet()
-		: parentRoomClassification.getChildRoomClassificationsSet();
+		.getRoomClassificationSet() : parentRoomClassification.getChildRoomClassificationsSet();
 
-	final RoomClassification existingRoomClassification = findRoomClassificationByCode(
-		childRoomClassifications, parentRoomClassification, code);
+	final RoomClassification existingRoomClassification = findRoomClassificationByCode(childRoomClassifications,
+		parentRoomClassification, code);
 
 	if (existingRoomClassification != null && existingRoomClassification != this) {
-	    throw new DomainException("error.room.classification.with.same.code.exists",
-		    new String[] { code.toString() });
+	    throw new DomainException("error.room.classification.with.same.code.exists", new String[] { code.toString() });
 	}
 	if (code == null) {
 	    throw new DomainException("error.room.classification.cannot.have.null.code");
@@ -75,20 +74,19 @@ public class RoomClassification extends RoomClassification_Base {
 	    childRoomClassification.presentationCode = null;
 	}
     }
-    
+
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room classification", parameters = {})
     public void delete() {
-	if (getChildRoomClassificationsSet().isEmpty()) {	    
-	    while(hasAnyRoomInformations()) {
+	if (getChildRoomClassificationsSet().isEmpty()) {
+	    while (hasAnyRoomInformations()) {
 		getRoomInformations().get(0).setRoomClassification(null);
-	    }	    
+	    }
 	    super.setParentRoomClassification(null);
 	    setRootDomainObject(null);
 	    deleteDomainObject();
 	} else {
-	    throw new DomainException(
-		    "error.cannot.delete.room.classification.with.existing.child.classifications");
+	    throw new DomainException("error.cannot.delete.room.classification.with.existing.child.classifications");
 	}
     }
 
@@ -106,7 +104,7 @@ public class RoomClassification extends RoomClassification_Base {
     public void setParentRoomClassification(final RoomClassification parentRoomClassification) {
 	throw new Error("Use edit method to change an instance of: " + getClass().getName());
     }
-    
+
     public String getAbsoluteCode() {
 	if (absoluteCode == null) {
 	    final String code = getCode().toString();
@@ -134,8 +132,7 @@ public class RoomClassification extends RoomClassification_Base {
 	return presentationCode;
     }
 
-    public static RoomClassification findRoomClassificationByCode(
-	    final Collection<RoomClassification> roomClassifications,
+    public static RoomClassification findRoomClassificationByCode(final Collection<RoomClassification> roomClassifications,
 	    final RoomClassification parentRoomClassification, final Integer code) {
 
 	if (code != null) {
@@ -149,31 +146,30 @@ public class RoomClassification extends RoomClassification_Base {
 	return null;
     }
 
-    public static RoomClassification findRoomClassificationByPresentationCode(
-	    final String presentationCode) {
-	for (final RoomClassification roomClassification : RootDomainObject.getInstance()
-		.getRoomClassificationSet()) {
+    public static RoomClassification findRoomClassificationByPresentationCode(final String presentationCode) {
+	for (final RoomClassification roomClassification : RootDomainObject.getInstance().getRoomClassificationSet()) {
 	    if (roomClassification.getPresentationCode().equals(presentationCode)) {
 		return roomClassification;
 	    }
 	}
 	return null;
     }
-    
-    public static SortedSet<RoomClassification> sortByRoomClassificationAndCode(final Collection<RoomClassification> roomClassifications) {
-	return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE);	
+
+    public static SortedSet<RoomClassification> sortByRoomClassificationAndCode(
+	    final Collection<RoomClassification> roomClassifications) {
+	return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE);
     }
-    
+
     public static Set<RoomClassification> readClassificationsWithParentSortedByCode() {
 	Set<RoomClassification> result = new TreeSet<RoomClassification>(COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE);
 	for (RoomClassification roomClassification : RootDomainObject.getInstance().getRoomClassificationSet()) {
-	    if(roomClassification.hasParentRoomClassification()) {
+	    if (roomClassification.hasParentRoomClassification()) {
 		result.add(roomClassification);
 	    }
-	}	
-	return result;	
-    }  
-    
+	}
+	return result;
+    }
+
     public static abstract class RoomClassificationFactory implements Serializable, FactoryExecutor {
 	private String code;
 
@@ -215,9 +211,8 @@ public class RoomClassification extends RoomClassification_Base {
 	    if (getCode() == null || StringUtils.isEmpty(getCode().trim())) {
 		return null;
 	    } else if ((!getCode().contains(".") && !StringUtils.isNumeric(getCode()))
-		    || (getCode().contains(".") && (!StringUtils.isNumeric(getCode().substring(0,
-			    getCode().indexOf("."))) || !StringUtils.isNumeric(getCode().substring(
-			    getCode().indexOf(".") + 1, getCode().length()))))) {
+		    || (getCode().contains(".") && (!StringUtils.isNumeric(getCode().substring(0, getCode().indexOf("."))) || !StringUtils
+			    .isNumeric(getCode().substring(getCode().indexOf(".") + 1, getCode().length()))))) {
 		throw new DomainException("error.roomClassification.code.isnt.a.number");
 	    }
 

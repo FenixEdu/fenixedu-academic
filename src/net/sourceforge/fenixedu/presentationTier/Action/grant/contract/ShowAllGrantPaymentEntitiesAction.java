@@ -27,8 +27,8 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ShowAllGrantPaymentEntitiesAction extends FenixDispatchAction {
 
-    public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
 	IUserView userView = UserView.getUser();
 	String grantPaymentEntity = null;
@@ -44,8 +44,7 @@ public class ShowAllGrantPaymentEntitiesAction extends FenixDispatchAction {
 	}
 
 	Object[] args = { grantPaymentEntity };
-	List grantPaymentList = (List) ServiceUtils.executeService(
-		"ReadAllGrantPaymentEntitiesByClassName", args);
+	List grantPaymentList = (List) ServiceUtils.executeService("ReadAllGrantPaymentEntitiesByClassName", args);
 	request.setAttribute("grantPaymentList", grantPaymentList);
 
 	return mapping.findForward("show-payment-entities");

@@ -50,7 +50,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
     public String createAdHocEvaluation() {
 	try {
 	    final Object[] args = { getExecutionCourseID(), getName(), getDescription(), getGradeScale() };
-	    ServiceUtils.executeService( "CreateAdHocEvaluation", args);
+	    ServiceUtils.executeService("CreateAdHocEvaluation", args);
 	} catch (final FenixFilterException e) {
 	    return "";
 	} catch (final FenixServiceException e) {
@@ -66,7 +66,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
     public String editAdHocEvaluation() {
 	try {
 	    final Object[] args = { getExecutionCourseID(), getAdHocEvaluationID(), getName(), getDescription(), getGradeScale() };
-	    ServiceUtils.executeService( "EditAdHocEvaluation", args);
+	    ServiceUtils.executeService("EditAdHocEvaluation", args);
 	} catch (final FenixFilterException e) {
 	} catch (final FenixServiceException e) {
 	    setErrorMessage(e.getMessage());
@@ -88,7 +88,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
     public String deleteAdHocEvaluation() {
 	try {
 	    final Object[] args = { getExecutionCourseID(), getAdHocEvaluationID() };
-	    ServiceUtils.executeService( "DeleteEvaluation", args);
+	    ServiceUtils.executeService("DeleteEvaluation", args);
 	} catch (FenixFilterException e) {
 	} catch (FenixServiceException e) {
 	    setErrorMessage(e.getMessage());

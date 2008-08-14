@@ -8,12 +8,12 @@ abstract public class SimpleCurriculumEntry extends CurriculumEntry {
     private final DomainReference<CurricularCourse> curricularCourseDomainReference;
 
     public SimpleCurriculumEntry(final CurricularCourse curricularCourse) {
-        super();
-        this.curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
+	super();
+	this.curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
     }
 
     public CurricularCourse getCurricularCourse() {
-        return curricularCourseDomainReference.getObject();
+	return curricularCourseDomainReference.getObject();
     }
 
 }

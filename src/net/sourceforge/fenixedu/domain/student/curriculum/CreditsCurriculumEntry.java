@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.Grade;
 
-
 public abstract class CreditsCurriculumEntry extends CurriculumEntry {
 
     public BigDecimal getWeigthForCurriculum() {

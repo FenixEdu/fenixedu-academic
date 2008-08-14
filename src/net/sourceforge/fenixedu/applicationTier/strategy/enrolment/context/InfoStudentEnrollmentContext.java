@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
  */
 
 public class InfoStudentEnrollmentContext extends InfoObject implements Serializable {
-    //deprecated
+    // deprecated
     private InfoExecutionPeriod infoExecutionPeriod;
 
     private List finalInfoCurricularCoursesWhereStudentCanBeEnrolled;
@@ -21,7 +21,7 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
 
     private Integer creditsInSpecializationArea;
 
-    //not deprecated
+    // not deprecated
     private List studentCurrentSemesterInfoEnrollments;
 
     private List curricularCourses2Enroll;
@@ -35,7 +35,7 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      * @return Returns the studentCurrentSemesterInfoEnrollments.
      */
     public List getStudentInfoEnrollmentsWithStateEnrolled() {
-        return studentCurrentSemesterInfoEnrollments;
+	return studentCurrentSemesterInfoEnrollments;
     }
 
     /**
@@ -43,14 +43,14 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      *            The studentCurrentSemesterInfoEnrollments to set.
      */
     public void setStudentInfoEnrollmentsWithStateEnrolled(List studentInfoEnrollmentsWithStateEnrolled) {
-        this.studentCurrentSemesterInfoEnrollments = studentInfoEnrollmentsWithStateEnrolled;
+	this.studentCurrentSemesterInfoEnrollments = studentInfoEnrollmentsWithStateEnrolled;
     }
 
     /**
      * @return Returns the finalInfoCurricularCoursesWhereStudentCanBeEnrolled.
      */
     public List getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled() {
-        return finalInfoCurricularCoursesWhereStudentCanBeEnrolled;
+	return finalInfoCurricularCoursesWhereStudentCanBeEnrolled;
     }
 
     /**
@@ -58,16 +58,15 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      *            The finalInfoCurricularCoursesWhereStudentCanBeEnrolled to
      *            set.
      */
-    public void setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(
-            List finalInfoCurricularCoursesWhereStudentCanBeEnrolled) {
-        this.finalInfoCurricularCoursesWhereStudentCanBeEnrolled = finalInfoCurricularCoursesWhereStudentCanBeEnrolled;
+    public void setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(List finalInfoCurricularCoursesWhereStudentCanBeEnrolled) {
+	this.finalInfoCurricularCoursesWhereStudentCanBeEnrolled = finalInfoCurricularCoursesWhereStudentCanBeEnrolled;
     }
 
     /**
      * @return Returns the infoExecutionPeriod.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return infoExecutionPeriod;
+	return infoExecutionPeriod;
     }
 
     /**
@@ -75,14 +74,14 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      *            The infoExecutionPeriod to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
      * @return Returns the infoStudentCurricularPlan.
      */
     public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
-        return infoStudentCurricularPlan;
+	return infoStudentCurricularPlan;
     }
 
     /**
@@ -90,14 +89,14 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      *            The infoStudentCurricularPlan to set.
      */
     public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan) {
-        this.infoStudentCurricularPlan = infoStudentCurricularPlan;
+	this.infoStudentCurricularPlan = infoStudentCurricularPlan;
     }
 
     /**
      * @return Returns the studentCurrentSemesterInfoEnrollments.
      */
     public List getStudentCurrentSemesterInfoEnrollments() {
-        return studentCurrentSemesterInfoEnrollments;
+	return studentCurrentSemesterInfoEnrollments;
     }
 
     /**
@@ -105,17 +104,17 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      *            The studentCurrentSemesterInfoEnrollments to set.
      */
     public void setStudentCurrentSemesterInfoEnrollments(List studentCurrentSemesterInfoEnrollments) {
-        this.studentCurrentSemesterInfoEnrollments = studentCurrentSemesterInfoEnrollments;
+	this.studentCurrentSemesterInfoEnrollments = studentCurrentSemesterInfoEnrollments;
     }
 
     /**
      * @return Returns the creditsInSecundaryArea.
      */
     public Integer getCreditsInSecundaryArea() {
-        if (creditsInSecundaryArea != null) {
-            return creditsInSecundaryArea;
-        }
-        return new Integer(0);
+	if (creditsInSecundaryArea != null) {
+	    return creditsInSecundaryArea;
+	}
+	return new Integer(0);
     }
 
     /**
@@ -123,17 +122,17 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      *            The creditsInSecundaryArea to set.
      */
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
-        this.creditsInSecundaryArea = creditsInSecundaryArea;
+	this.creditsInSecundaryArea = creditsInSecundaryArea;
     }
 
     /**
      * @return Returns the creditsInSpecializationArea.
      */
     public Integer getCreditsInSpecializationArea() {
-        if (creditsInSpecializationArea != null) {
-            return creditsInSpecializationArea;
-        }
-        return new Integer(0);
+	if (creditsInSpecializationArea != null) {
+	    return creditsInSpecializationArea;
+	}
+	return new Integer(0);
     }
 
     /**
@@ -141,14 +140,14 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      *            The creditsInSpecializationArea to set.
      */
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
-        this.creditsInSpecializationArea = creditsInSpecializationArea;
+	this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
 
     /**
      * @return Returns the curricularCourses2Enroll.
      */
     public List getCurricularCourses2Enroll() {
-        return curricularCourses2Enroll;
+	return curricularCourses2Enroll;
     }
 
     /**
@@ -156,6 +155,6 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
      *            The curricularCourses2Enroll to set.
      */
     public void setCurricularCourses2Enroll(List curricularCourses2Enroll) {
-        this.curricularCourses2Enroll = curricularCourses2Enroll;
+	this.curricularCourses2Enroll = curricularCourses2Enroll;
     }
 }

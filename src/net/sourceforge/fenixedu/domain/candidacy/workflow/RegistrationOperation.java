@@ -44,12 +44,12 @@ public class RegistrationOperation extends CandidacyOperation {
     protected void associateShiftsFor(final Registration registration) {
 
 	if (getExecutionYear().hasShiftDistribution()) {
-            for (final ShiftDistributionEntry shiftEntry : getExecutionDegree().getNextFreeShiftDistributions()) {
-                shiftEntry.setDistributed(Boolean.TRUE);
-                shiftEntry.getShift().addStudents(registration);
-                correctExecutionCourseIfNecessary(registration, shiftEntry.getShift());
-            }
-        }
+	    for (final ShiftDistributionEntry shiftEntry : getExecutionDegree().getNextFreeShiftDistributions()) {
+		shiftEntry.setDistributed(Boolean.TRUE);
+		shiftEntry.getShift().addStudents(registration);
+		correctExecutionCourseIfNecessary(registration, shiftEntry.getShift());
+	    }
+	}
     }
 
     private void correctExecutionCourseIfNecessary(Registration registration, Shift shift) {

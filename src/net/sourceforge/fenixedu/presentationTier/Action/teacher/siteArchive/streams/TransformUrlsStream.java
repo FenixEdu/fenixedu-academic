@@ -22,11 +22,11 @@ public class TransformUrlsStream extends OutputStream {
 
     private static Pattern PATTERN = Pattern.compile("(href|action|src)\\p{Space}*=\\p{Space}*(\"|')([^\"']*)(\"|')");
 
-    private ByteArrayOutputStream buffer; 
-    
+    private ByteArrayOutputStream buffer;
+
     private Fetcher fetcher;
     private Resource resource;
-    
+
     private OutputStream stream;
     private String encoding;
 
@@ -43,82 +43,79 @@ public class TransformUrlsStream extends OutputStream {
      *            the encoding to use for the content
      */
     public TransformUrlsStream(Fetcher fetcher, Resource resource, OutputStream stream, String encoding) {
-        this.buffer = new ByteArrayOutputStream();
-        
-        this.fetcher = fetcher;
-        this.resource = resource;
-        
-        this.stream = stream;
-        this.encoding = encoding;
+	this.buffer = new ByteArrayOutputStream();
+
+	this.fetcher = fetcher;
+	this.resource = resource;
+
+	this.stream = stream;
+	this.encoding = encoding;
     }
 
     @Override
     public void flush() throws IOException {
-        processBuffer();
-        this.stream.flush();
+	processBuffer();
+	this.stream.flush();
     }
 
     @Override
     public void close() throws IOException {
-        flush();
-        super.close();
+	flush();
+	super.close();
     }
 
     @Override
     public void write(int b) throws IOException {
-        this.buffer.write(b);
-        
-        char c = (char) b;
-        if (c == '\n') {
-            processBuffer();
-        }
+	this.buffer.write(b);
+
+	char c = (char) b;
+	if (c == '\n') {
+	    processBuffer();
+	}
     }
 
     private void processBuffer() throws IOException {
-        String line = new String(buffer.toByteArray(), this.encoding);
-        Matcher matcher = PATTERN.matcher(line);
-        
-        int pos = 0;
-        while (matcher.find()) {
-            String attribute = matcher.group(1);
-            
-            String foundUrl = matcher.group(3);
-            String transformedUrl = processRules(foundUrl);
-            
-            write(String.format("%s%s=\"%s\"", 
-                    line.substring(pos, matcher.start()), 
-                    attribute, 
-                    transformedUrl));
-            
-            pos = matcher.end();
-        }
-        
-        // write what is left and reset buffer
-        write(line.substring(pos));
-        buffer.reset();
+	String line = new String(buffer.toByteArray(), this.encoding);
+	Matcher matcher = PATTERN.matcher(line);
+
+	int pos = 0;
+	while (matcher.find()) {
+	    String attribute = matcher.group(1);
+
+	    String foundUrl = matcher.group(3);
+	    String transformedUrl = processRules(foundUrl);
+
+	    write(String.format("%s%s=\"%s\"", line.substring(pos, matcher.start()), attribute, transformedUrl));
+
+	    pos = matcher.end();
+	}
+
+	// write what is left and reset buffer
+	write(line.substring(pos));
+	buffer.reset();
     }
 
     private String processRules(String url) {
-        String transformedUrl = url;
-        
-        for (Rule rule : this.resource.getRules()) {
-            if (rule.matches(url)) {
-                transformedUrl = rule.transform(url);
-                
-                Resource resource = rule.getResource(url, transformedUrl);
-                if (resource != null) {
-                    this.fetcher.queue(resource);
-                }
-                
-                break;
-            }
-        }
-        
-        return transformedUrl;
+	String transformedUrl = url;
+
+	for (Rule rule : this.resource.getRules()) {
+	    if (rule.matches(url)) {
+		transformedUrl = rule.transform(url);
+
+		Resource resource = rule.getResource(url, transformedUrl);
+		if (resource != null) {
+		    this.fetcher.queue(resource);
+		}
+
+		break;
+	    }
+	}
+
+	return transformedUrl;
     }
 
     private void write(String string) throws IOException {
-        this.stream.write(string.getBytes());
+	this.stream.write(string.getBytes());
     }
 
 }

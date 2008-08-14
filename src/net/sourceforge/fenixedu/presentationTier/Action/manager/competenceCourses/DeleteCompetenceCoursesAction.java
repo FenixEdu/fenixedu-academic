@@ -18,20 +18,20 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.security.UserView;
 
 public class DeleteCompetenceCoursesAction extends FenixDispatchAction {
-	
+
     public ActionForward deleteCompetenceCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException{
-       	IUserView userView = UserView.getUser();
-       	DynaActionForm actionForm = (DynaActionForm) form;
-       	
-       	Integer[] competenceCoursesIDs = (Integer[]) actionForm.get("competenceCoursesIds");
-       	Object[] args = {competenceCoursesIDs};
-       	
-       	try {
-            ServiceUtils.executeService("DeleteCompetenceCourses", args);
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
-       	return mapping.findForward("showAllCompetenceCourses");
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	IUserView userView = UserView.getUser();
+	DynaActionForm actionForm = (DynaActionForm) form;
+
+	Integer[] competenceCoursesIDs = (Integer[]) actionForm.get("competenceCoursesIds");
+	Object[] args = { competenceCoursesIDs };
+
+	try {
+	    ServiceUtils.executeService("DeleteCompetenceCourses", args);
+	} catch (FenixServiceException fenixServiceException) {
+	    throw new FenixActionException(fenixServiceException.getMessage());
+	}
+	return mapping.findForward("showAllCompetenceCourses");
     }
 }

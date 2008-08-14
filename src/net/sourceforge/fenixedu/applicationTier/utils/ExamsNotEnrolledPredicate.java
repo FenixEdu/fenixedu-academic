@@ -11,7 +11,7 @@ import org.apache.commons.collections.Predicate;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class ExamsNotEnrolledPredicate implements Predicate {
     private List examsEnrolled;
@@ -22,12 +22,12 @@ public class ExamsNotEnrolledPredicate implements Predicate {
      * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
      */
     public ExamsNotEnrolledPredicate(List exams) {
-        this.examsEnrolled = exams;
+	this.examsEnrolled = exams;
     }
 
     public boolean evaluate(Object arg0) {
 
-        return !examsEnrolled.contains(arg0);
+	return !examsEnrolled.contains(arg0);
     }
 
 }

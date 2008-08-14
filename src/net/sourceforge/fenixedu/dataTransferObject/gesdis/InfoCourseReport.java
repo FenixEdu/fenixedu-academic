@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoCourseReport extends InfoObject {
 
@@ -27,26 +27,26 @@ public class InfoCourseReport extends InfoObject {
     }
 
     public String getReport() {
-        return report;
+	return report;
     }
 
     public InfoExecutionCourse getInfoExecutionCourse() {
-        return infoExecutionCourse;
+	return infoExecutionCourse;
     }
 
     public void setReport(String report) {
-        this.report = report;
+	this.report = report;
     }
 
     public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-        this.infoExecutionCourse = infoExecutionCourse;
+	this.infoExecutionCourse = infoExecutionCourse;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
     public Date getLastModificationDate() {
-        return lastModificationDate;
+	return lastModificationDate;
     }
 
     /**
@@ -54,24 +54,24 @@ public class InfoCourseReport extends InfoObject {
      *            The lastModificationDate to set.
      */
     public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
+	this.lastModificationDate = lastModificationDate;
     }
 
     public void copyFromDomain(CourseReport courseReport) {
-        super.copyFromDomain(courseReport);
-        if (courseReport != null) {
-            setLastModificationDate(courseReport.getLastModificationDate());
-            setReport(courseReport.getReport());
-            setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(courseReport.getExecutionCourse()));
-        }
+	super.copyFromDomain(courseReport);
+	if (courseReport != null) {
+	    setLastModificationDate(courseReport.getLastModificationDate());
+	    setReport(courseReport.getReport());
+	    setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(courseReport.getExecutionCourse()));
+	}
     }
 
     public static InfoCourseReport newInfoFromDomain(CourseReport courseReport) {
-        InfoCourseReport infoCourseReport = null;
-        if (courseReport != null) {
-            infoCourseReport = new InfoCourseReport();
-            infoCourseReport.copyFromDomain(courseReport);
-        }
-        return infoCourseReport;
+	InfoCourseReport infoCourseReport = null;
+	if (courseReport != null) {
+	    infoCourseReport = new InfoCourseReport();
+	    infoCourseReport.copyFromDomain(courseReport);
+	}
+	return infoCourseReport;
     }
 }

@@ -8,16 +8,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class OrderDegreeModule extends Service {
 
     public void run(final Integer contextID, final Integer position) throws FenixServiceException {
-        if (contextID == null) {
-            throw new FenixServiceException();
-        }
-        
-        final Context context = rootDomainObject.readContextByOID(contextID);
-        if (context == null) {
-            throw new FenixServiceException("error.noContext");
-        }
-        
-        context.getParentCourseGroup().orderChild(context, position);
+	if (contextID == null) {
+	    throw new FenixServiceException();
+	}
+
+	final Context context = rootDomainObject.readContextByOID(contextID);
+	if (context == null) {
+	    throw new FenixServiceException("error.noContext");
+	}
+
+	context.getParentCourseGroup().orderChild(context, position);
     }
-    
+
 }

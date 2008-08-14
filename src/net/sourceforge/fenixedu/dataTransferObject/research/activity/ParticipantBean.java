@@ -34,35 +34,35 @@ public abstract class ParticipantBean implements Serializable {
     private ParticipationType participationType;
 
     private MultiLanguageString roleMessage;
-    
+
     private YearMonthDay beginDate;
-    
+
     private YearMonthDay endDate;
-    
+
     public YearMonthDay getBeginDate() {
-		return beginDate;
-	}
+	return beginDate;
+    }
 
-	public void setBeginDate(YearMonthDay beginDate) {
-		this.beginDate = beginDate;
-	}
+    public void setBeginDate(YearMonthDay beginDate) {
+	this.beginDate = beginDate;
+    }
 
-	public YearMonthDay getEndDate() {
-		return endDate;
-	}
+    public YearMonthDay getEndDate() {
+	return endDate;
+    }
 
-	public void setEndDate(YearMonthDay endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(YearMonthDay endDate) {
+	this.endDate = endDate;
+    }
 
-	public MultiLanguageString getRoleMessage() {
-		return roleMessage;
-	}
+    public MultiLanguageString getRoleMessage() {
+	return roleMessage;
+    }
 
-	public void setRoleMessage(MultiLanguageString roleMessage) {
-		this.roleMessage = roleMessage;
-	}
-	
+    public void setRoleMessage(MultiLanguageString roleMessage) {
+	this.roleMessage = roleMessage;
+    }
+
     public ParticipantBean() {
 	setPerson(null);
 	setUnit(null);
@@ -148,12 +148,13 @@ public abstract class ParticipantBean implements Serializable {
 	    return type;
 	}
     }
-    
+
     public abstract List<ResearchActivityParticipationRole> getAllowedRoles();
+
     public abstract DomainObject getActivity();
 
     public static ParticipantBean getParticipantBean(ParticipationsInterface objectWithParticipations) {
-	
+
 	ParticipantBean bean = null;
 	if (objectWithParticipations instanceof ResearchEvent) {
 	    bean = new EventParticipantBean();
@@ -165,12 +166,11 @@ public abstract class ParticipantBean implements Serializable {
 	}
 	if (objectWithParticipations instanceof ScientificJournal) {
 	    bean = new ScientificJournalParticipantBean();
-	    ((ScientificJournalParticipantBean) bean)
-		    .setScientificJournal((ScientificJournal) objectWithParticipations);
+	    ((ScientificJournalParticipantBean) bean).setScientificJournal((ScientificJournal) objectWithParticipations);
 	}
 	if (objectWithParticipations instanceof JournalIssue) {
 	    bean = new JournalIssueParticipantBean();
-	    ((JournalIssueParticipantBean) bean).setJournalIssue((JournalIssue)objectWithParticipations);
+	    ((JournalIssueParticipantBean) bean).setJournalIssue((JournalIssue) objectWithParticipations);
 	}
 	if (objectWithParticipations instanceof Cooperation) {
 	    bean = new CooperationParticipantBean();

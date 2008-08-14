@@ -3,6 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 public class StudentEquivalencesDA extends StudentDismissalsDA {
     @Override
     protected String getServiceName() {
-        return "CreateNewEquivalenceDismissal";
+	return "CreateNewEquivalenceDismissal";
     }
 }

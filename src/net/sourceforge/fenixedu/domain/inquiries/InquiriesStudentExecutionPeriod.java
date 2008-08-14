@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public class InquiriesStudentExecutionPeriod extends InquiriesStudentExecutionPeriod_Base {
-    
+
     public InquiriesStudentExecutionPeriod() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public InquiriesStudentExecutionPeriod(final Student student) {
@@ -16,11 +16,11 @@ public class InquiriesStudentExecutionPeriod extends InquiriesStudentExecutionPe
 	setStudent(student);
 	setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
     }
-    
+
     public InquiriesStudentExecutionPeriod(final Student student, final ExecutionSemester executionSemester) {
 	this();
 	setStudent(student);
 	setExecutionPeriod(executionSemester);
     }
-    
+
 }

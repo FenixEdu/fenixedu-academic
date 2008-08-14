@@ -21,7 +21,7 @@ public class DirectiveCouncilAuthorizationFilter extends AuthorizationByRoleFilt
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -30,7 +30,7 @@ public class DirectiveCouncilAuthorizationFilter extends AuthorizationByRoleFilt
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.DIRECTIVE_COUNCIL;
+	return RoleType.DIRECTIVE_COUNCIL;
     }
 
 }

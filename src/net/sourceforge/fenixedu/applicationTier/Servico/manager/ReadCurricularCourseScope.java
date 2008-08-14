@@ -15,20 +15,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCurricularCourseScope extends Service {
 
-	/**
-	 * Executes the service. Returns the current InfoCurricularCourseScope.
-	 * @throws ExcepcaoPersistencia 
-	 */
-	public InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException{
-		CurricularCourseScope curricularCourseScope;
+    /**
+     * Executes the service. Returns the current InfoCurricularCourseScope.
+     * 
+     * @throws ExcepcaoPersistencia
+     */
+    public InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException {
+	CurricularCourseScope curricularCourseScope;
 
-        curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(idInternal);
+	curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(idInternal);
 
-		if (curricularCourseScope == null) {
-			throw new NonExistingServiceException();
-		}
-
-		return InfoCurricularCourseScope
-				.newInfoFromDomain(curricularCourseScope);
+	if (curricularCourseScope == null) {
+	    throw new NonExistingServiceException();
 	}
+
+	return InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
+    }
 }

@@ -41,59 +41,59 @@ public class InfoGrantContract extends InfoObject {
      * contract is active and running.
      */
     public boolean getEndContractMotiveSet() {
-        if (endContractMotive == null || endContractMotive.equals("")) {
-            return false;
-        }
-        return true;
+	if (endContractMotive == null || endContractMotive.equals("")) {
+	    return false;
+	}
+	return true;
     }
 
     /**
      * @return
      */
     public Integer getContractNumber() {
-        return contractNumber;
+	return contractNumber;
     }
 
     /**
      * @param contractNumber
      */
     public void setContractNumber(Integer contractNumber) {
-        this.contractNumber = contractNumber;
+	this.contractNumber = contractNumber;
     }
 
     /**
      * @return
      */
     public String getEndContractMotive() {
-        return endContractMotive;
+	return endContractMotive;
     }
 
     /**
      * @param endContractMotive
      */
     public void setEndContractMotive(String endContractMotive) {
-        this.endContractMotive = endContractMotive;
+	this.endContractMotive = endContractMotive;
     }
 
     /**
      * @return
      */
     public InfoGrantOwner getGrantOwnerInfo() {
-        return grantOwnerInfo;
+	return grantOwnerInfo;
     }
 
     /**
      * @param grantOwnerInfo
      */
     public void setGrantOwnerInfo(InfoGrantOwner grantOwnerInfo) {
-        this.grantOwnerInfo = grantOwnerInfo;
+	this.grantOwnerInfo = grantOwnerInfo;
     }
 
     /**
      * @return Returns the grantOrientationTeacherInfo.
      */
     public InfoGrantOrientationTeacher getGrantOrientationTeacherInfo() {
-        return grantOrientationTeacherInfo;
+	return grantOrientationTeacherInfo;
     }
 
     /**
@@ -101,14 +101,14 @@ public class InfoGrantContract extends InfoObject {
      *            The grantOrientationTeacherInfo to set.
      */
     public void setGrantOrientationTeacherInfo(InfoGrantOrientationTeacher grantOrientationTeacherInfo) {
-        this.grantOrientationTeacherInfo = grantOrientationTeacherInfo;
+	this.grantOrientationTeacherInfo = grantOrientationTeacherInfo;
     }
 
     /**
      * @return Returns the grantTypeInfo.
      */
     public InfoGrantType getGrantTypeInfo() {
-        return grantTypeInfo;
+	return grantTypeInfo;
     }
 
     /**
@@ -116,14 +116,14 @@ public class InfoGrantContract extends InfoObject {
      *            The grantTypeInfo to set.
      */
     public void setGrantTypeInfo(InfoGrantType grantTypeInfo) {
-        this.grantTypeInfo = grantTypeInfo;
+	this.grantTypeInfo = grantTypeInfo;
     }
 
     /**
      * @return Returns the dateAcceptTerm.
      */
     public Date getDateAcceptTerm() {
-        return dateAcceptTerm;
+	return dateAcceptTerm;
     }
 
     /**
@@ -131,14 +131,14 @@ public class InfoGrantContract extends InfoObject {
      *            The dateAcceptTerm to set.
      */
     public void setDateAcceptTerm(Date dateAcceptTerm) {
-        this.dateAcceptTerm = dateAcceptTerm;
+	this.dateAcceptTerm = dateAcceptTerm;
     }
 
     /**
      * @return Returns the active.
      */
     public Boolean getActive() {
-        return active;
+	return active;
     }
 
     /**
@@ -146,26 +146,26 @@ public class InfoGrantContract extends InfoObject {
      *            The active to set.
      */
     public void setActive(Boolean active) {
-        this.active = active;
+	this.active = active;
     }
 
     public boolean getContractActive() {
-        if (active == null) {
-            return false;
-        }
-        return active.booleanValue();
+	if (active == null) {
+	    return false;
+	}
+	return active.booleanValue();
     }
 
     /**
      * @param GrantContract
      */
     public void copyFromDomain(GrantContract grantContract) {
-        super.copyFromDomain(grantContract);
-        if (grantContract != null) {
-            setContractNumber(grantContract.getContractNumber());
-            setEndContractMotive(grantContract.getEndContractMotive());
-            setDateAcceptTerm(grantContract.getDateAcceptTerm());
-        }
+	super.copyFromDomain(grantContract);
+	if (grantContract != null) {
+	    setContractNumber(grantContract.getContractNumber());
+	    setEndContractMotive(grantContract.getEndContractMotive());
+	    setDateAcceptTerm(grantContract.getDateAcceptTerm());
+	}
     }
 
     /**
@@ -173,31 +173,30 @@ public class InfoGrantContract extends InfoObject {
      * @return
      */
     public static InfoGrantContract newInfoFromDomain(GrantContract grantContract) {
-        InfoGrantContract infoGrantContract = null;
-        if (grantContract != null) {
-            infoGrantContract = new InfoGrantContract();
-            infoGrantContract.copyFromDomain(grantContract);
-        }
-        return infoGrantContract;
+	InfoGrantContract infoGrantContract = null;
+	if (grantContract != null) {
+	    infoGrantContract = new InfoGrantContract();
+	    infoGrantContract.copyFromDomain(grantContract);
+	}
+	return infoGrantContract;
     }
 
-    public void copyToDomain(InfoGrantContract infoGrantContract, GrantContract grantContract)
-            {
-        super.copyToDomain(infoGrantContract, grantContract);
+    public void copyToDomain(InfoGrantContract infoGrantContract, GrantContract grantContract) {
+	super.copyToDomain(infoGrantContract, grantContract);
 
-        grantContract.setContractNumber(infoGrantContract.getContractNumber());
-        grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
-        grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
-        if (infoGrantContract.getGrantCostCenterInfo() != null) {
-            grantContract.setKeyGrantCostCenter(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
-        }
+	grantContract.setContractNumber(infoGrantContract.getContractNumber());
+	grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
+	grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
+	if (infoGrantContract.getGrantCostCenterInfo() != null) {
+	    grantContract.setKeyGrantCostCenter(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+	}
     }
 
     /**
      * @return Returns the costCenterKey.
      */
     public Integer getCostCenterKey() {
-        return costCenterKey;
+	return costCenterKey;
     }
 
     /**
@@ -205,14 +204,14 @@ public class InfoGrantContract extends InfoObject {
      *            The costCenterKey to set.
      */
     public void setCostCenterKey(Integer costCenterKey) {
-        this.costCenterKey = costCenterKey;
+	this.costCenterKey = costCenterKey;
     }
 
     /**
      * @return Returns the grantCostCenterInfo.
      */
     public InfoGrantCostCenter getGrantCostCenterInfo() {
-        return grantCostCenterInfo;
+	return grantCostCenterInfo;
     }
 
     /**
@@ -220,7 +219,7 @@ public class InfoGrantContract extends InfoObject {
      *            The grantCostCenterInfo to set.
      */
     public void setGrantCostCenterInfo(InfoGrantCostCenter grantCostCenterInfo) {
-        this.grantCostCenterInfo = grantCostCenterInfo;
+	this.grantCostCenterInfo = grantCostCenterInfo;
     }
 
 }

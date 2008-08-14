@@ -18,12 +18,14 @@ public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
     public int getEstimatedPoints() {
 	return getAssociatedVigilantGroup().getPointsForTeacher();
     }
-    
+
     @Override
     public int getPoints() {
 	if (isActive() && !isStatusUndefined()) {
 	    return isAttended() ? getAssociatedVigilantGroup().getPointsForTeacher()
-		    : (isDismissed() ? getAssociatedVigilantGroup().getPointsForDismissedTeacher() : (hasPointsAttributed() ? getAssociatedVigilantGroup().getPointsForMissingTeacher() : this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN));
+		    : (isDismissed() ? getAssociatedVigilantGroup().getPointsForDismissedTeacher()
+			    : (hasPointsAttributed() ? getAssociatedVigilantGroup().getPointsForMissingTeacher()
+				    : this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN));
 	}
 	return getAssociatedVigilantGroup().getPointsForDisconvoked();
 

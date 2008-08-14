@@ -23,13 +23,10 @@ public class ExternalRegistrationData extends ExternalRegistrationData_Base {
     public void edit(ExternalRegistrationDataBean externalRegistrationDataBean) {
 
 	Unit institution = externalRegistrationDataBean.getInstitution();
-	if (institution == null
-		&& !StringUtils.isEmpty(externalRegistrationDataBean.getInstitutionName())) {
-	    institution = UnitUtils.readExternalInstitutionUnitByName(externalRegistrationDataBean
-		    .getInstitutionName());
+	if (institution == null && !StringUtils.isEmpty(externalRegistrationDataBean.getInstitutionName())) {
+	    institution = UnitUtils.readExternalInstitutionUnitByName(externalRegistrationDataBean.getInstitutionName());
 	    if (institution == null) {
-		institution = Unit.createNewNoOfficialExternalInstitution(externalRegistrationDataBean
-			.getInstitutionName());
+		institution = Unit.createNewNoOfficialExternalInstitution(externalRegistrationDataBean.getInstitutionName());
 	    }
 	}
 

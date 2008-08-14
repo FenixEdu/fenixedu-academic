@@ -22,75 +22,71 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 
 public abstract class ResultPublicationService extends Service {
 
-	protected static CreateResultPublication getCreateService() {
-		return new CreateResultPublication();
-	}
+    protected static CreateResultPublication getCreateService() {
+	return new CreateResultPublication();
+    }
 
-	protected static DeleteResultPublication getDeleteService() {
-		return new DeleteResultPublication();
-	}
+    protected static DeleteResultPublication getDeleteService() {
+	return new DeleteResultPublication();
+    }
 
-	/*
-	 * Methods used by CreateResultPublication and ImportBibtexPublication to
-	 * create publications with one participator
-	 */
-	protected Book createBookFromBean(BookBean bean) {
-		return new Book(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(),
-				bean.getPublisher(), bean.getYear(), bean.getVolume(), bean.getSeries(), bean.getAddress(),
-				bean.getEdition(), bean.getIsbn(), bean.getNumberPages(), bean.getLanguage(), bean
-						.getCountry(), bean.getScope(), bean.getNote(), bean.getMonth(), bean.getUrl());
-	}
+    /*
+     * Methods used by CreateResultPublication and ImportBibtexPublication to
+     * create publications with one participator
+     */
+    protected Book createBookFromBean(BookBean bean) {
+	return new Book(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(), bean.getPublisher(), bean
+		.getYear(), bean.getVolume(), bean.getSeries(), bean.getAddress(), bean.getEdition(), bean.getIsbn(), bean
+		.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean.getScope(), bean.getNote(), bean.getMonth(), bean
+		.getUrl());
+    }
 
-	protected BookPart createBookPartFromBean(BookPartBean bean) {
-	    return new BookPart(bean.getPerson(), bean.getRole(), bean.getTitle(), bean
-			.getKeywords(), bean.getBookTitle(), bean.getChapter(), bean.getVolume(), bean.getPublisher(), bean.getYear(), bean.getFirstPage(), bean.getLastPage(),
-			bean.getSeries(), bean.getEdition(), bean.getOrganization(),
-				bean.getCountry(), bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
-	}
+    protected BookPart createBookPartFromBean(BookPartBean bean) {
+	return new BookPart(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(), bean.getBookTitle(), bean
+		.getChapter(), bean.getVolume(), bean.getPublisher(), bean.getYear(), bean.getFirstPage(), bean.getLastPage(),
+		bean.getSeries(), bean.getEdition(), bean.getOrganization(), bean.getCountry(), bean.getAddress(),
+		bean.getNote(), bean.getMonth(), bean.getUrl());
+    }
 
-	protected Article createArticleFromBean(ArticleBean bean) {
-	    return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getJournalIssue(), bean.getFirstPage(),
-				bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getUrl());
-	}
+    protected Article createArticleFromBean(ArticleBean bean) {
+	return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getJournalIssue(), bean.getFirstPage(),
+		bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getUrl());
+    }
 
-	protected Inproceedings createInproceedingsFromBean(InproceedingsBean bean) {
+    protected Inproceedings createInproceedingsFromBean(InproceedingsBean bean) {
 
-		return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(), bean.getEventEdition(),
-				bean.getPublisher(), bean.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getUrl());
-	}
+	return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(), bean.getEventEdition(),
+		bean.getPublisher(), bean.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean
+			.getLanguage(), bean.getUrl());
+    }
 
-	protected Proceedings createProceedingsFromBean(ProceedingsBean bean) {
+    protected Proceedings createProceedingsFromBean(ProceedingsBean bean) {
 
-		return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getEventEdition(), bean.getPublisher(),
-				bean.getAddress(), bean.getNote(), bean.getUrl(), bean.getRole());
-	}
+	return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getEventEdition(),
+		bean.getPublisher(), bean.getAddress(), bean.getNote(), bean.getUrl(), bean.getRole());
+    }
 
-	protected Thesis createThesisFromBean(ThesisBean bean) {
-		return new Thesis(bean.getPerson(), bean.getThesisType(), bean.getTitle(), bean.getKeywords(),
-				bean.getOrganization(), bean.getYear(), bean.getAddress(), bean.getNote(), bean
-						.getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getYearBegin(), bean
-						.getMonthBegin(), bean.getUrl());
-	}
+    protected Thesis createThesisFromBean(ThesisBean bean) {
+	return new Thesis(bean.getPerson(), bean.getThesisType(), bean.getTitle(), bean.getKeywords(), bean.getOrganization(),
+		bean.getYear(), bean.getAddress(), bean.getNote(), bean.getNumberPages(), bean.getLanguage(), bean.getMonth(),
+		bean.getYearBegin(), bean.getMonthBegin(), bean.getUrl());
+    }
 
-	protected Manual createManualFromBean(ManualBean bean) {
-		return new Manual(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getOrganization(), bean
-				.getYear(), bean.getAddress(), bean.getNote(), bean.getEdition(), bean.getMonth(), bean
-				.getUrl());
-	}
+    protected Manual createManualFromBean(ManualBean bean) {
+	return new Manual(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getOrganization(), bean.getYear(), bean
+		.getAddress(), bean.getNote(), bean.getEdition(), bean.getMonth(), bean.getUrl());
+    }
 
-	protected TechnicalReport createTechnicalReportFromBean(TechnicalReportBean bean) {
-		return new TechnicalReport(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
-				bean.getOrganization(), bean.getYear(), bean.getTechnicalReportType(), bean.getNumber(), bean
-						.getAddress(), bean.getNote(), bean.getNumberPages(), bean.getLanguage(), bean
-						.getMonth(), bean.getUrl());
-	}
+    protected TechnicalReport createTechnicalReportFromBean(TechnicalReportBean bean) {
+	return new TechnicalReport(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getOrganization(), bean.getYear(),
+		bean.getTechnicalReportType(), bean.getNumber(), bean.getAddress(), bean.getNote(), bean.getNumberPages(), bean
+			.getLanguage(), bean.getMonth(), bean.getUrl());
+    }
 
-	protected OtherPublication createOtherPublicationFromBean(OtherPublicationBean bean) {
-		return new OtherPublication(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
-				bean.getPublisher(), bean.getYear(), bean.getHowPublished(), bean.getNote(),
-				bean.getAddress(), bean.getOtherPublicationType(), bean.getNumberPages(), bean.getLanguage(),
-				bean.getCountry(), bean.getMonth(), bean.getUrl());
-	}
+    protected OtherPublication createOtherPublicationFromBean(OtherPublicationBean bean) {
+	return new OtherPublication(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getPublisher(), bean.getYear(),
+		bean.getHowPublished(), bean.getNote(), bean.getAddress(), bean.getOtherPublicationType(), bean.getNumberPages(),
+		bean.getLanguage(), bean.getCountry(), bean.getMonth(), bean.getUrl());
+    }
 
-	}
-
+}

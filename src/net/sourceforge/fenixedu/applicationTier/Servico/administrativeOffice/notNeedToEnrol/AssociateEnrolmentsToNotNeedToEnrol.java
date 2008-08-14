@@ -11,8 +11,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class AssociateEnrolmentsToNotNeedToEnrol extends Service {
 
-    public void run(Student student,
-	    NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse,
+    public void run(Student student, NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse,
 	    Collection<Enrolment> selectedEnrolments, Collection<ExternalEnrolment> externalEnrolments)
 	    throws FenixServiceException {
 
@@ -51,8 +50,7 @@ public class AssociateEnrolmentsToNotNeedToEnrol extends Service {
 
     }
 
-    private Enrolment getAprovedEnrolment(Collection<Enrolment> aprovedEnrolments,
-	    Enrolment selectedEnrolment) {
+    private Enrolment getAprovedEnrolment(Collection<Enrolment> aprovedEnrolments, Enrolment selectedEnrolment) {
 	for (Enrolment enrolment : aprovedEnrolments) {
 	    if (enrolment.equals(selectedEnrolment)) {
 		return enrolment;

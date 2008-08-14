@@ -21,49 +21,49 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ChooseContextDA extends FenixDateAndTimeDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+	ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
 
-        return mapping.findForward("ShowChooseForm");
+	return mapping.findForward("ShowChooseForm");
     }
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        DynaActionForm chooseScheduleContext = (DynaActionForm) form;
+	DynaActionForm chooseScheduleContext = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        /* Determine Selected Curricular Year */
-        Integer anoCurricular = new Integer((String) chooseScheduleContext.get("curricularYear"));
+	/* Determine Selected Curricular Year */
+	Integer anoCurricular = new Integer((String) chooseScheduleContext.get("curricularYear"));
 
-        Object argsReadCurricularYearByOID[] = { anoCurricular };
-        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) executeService("ReadCurricularYearByOID", argsReadCurricularYearByOID);
+	Object argsReadCurricularYearByOID[] = { anoCurricular };
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) executeService("ReadCurricularYearByOID",
+		argsReadCurricularYearByOID);
 
-        request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
+	request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
 
-        /* Determine Selected Execution Degree */
-        Integer executionDegreeOID = new Integer((String) chooseScheduleContext
-                .get("executionDegreeOID"));
+	/* Determine Selected Execution Degree */
+	Integer executionDegreeOID = new Integer((String) chooseScheduleContext.get("executionDegreeOID"));
 
-        Object argsReadExecutionDegreeByOID[] = { executionDegreeOID };
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) executeService("ReadExecutionDegreeByOID", argsReadExecutionDegreeByOID);
+	Object argsReadExecutionDegreeByOID[] = { executionDegreeOID };
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) executeService("ReadExecutionDegreeByOID",
+		argsReadExecutionDegreeByOID);
 
-        if (infoExecutionDegree == null) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("errors.invalid.execution.degree", new ActionError(
-                    "errors.invalid.execution.degree"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
-        request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-        return mapping.findForward("ManageSchedules");
+	if (infoExecutionDegree == null) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("errors.invalid.execution.degree", new ActionError("errors.invalid.execution.degree"));
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
+	}
+	request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	return mapping.findForward("ManageSchedules");
 
     }
 

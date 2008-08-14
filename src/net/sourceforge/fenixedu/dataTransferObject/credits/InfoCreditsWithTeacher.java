@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class InfoCreditsWithTeacher extends InfoCreditsWrapper {
 
@@ -12,7 +12,7 @@ public class InfoCreditsWithTeacher extends InfoCreditsWrapper {
      * @param infoCredits
      */
     public InfoCreditsWithTeacher(InfoCredits infoCredits) {
-        super(infoCredits);
+	super(infoCredits);
     }
 
     private InfoTeacher infoTeacher;
@@ -21,7 +21,7 @@ public class InfoCreditsWithTeacher extends InfoCreditsWrapper {
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -29,6 +29,6 @@ public class InfoCreditsWithTeacher extends InfoCreditsWrapper {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 }

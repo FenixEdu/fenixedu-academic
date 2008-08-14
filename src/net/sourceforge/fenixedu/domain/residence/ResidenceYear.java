@@ -28,11 +28,11 @@ public class ResidenceYear extends ResidenceYear_Base {
     }
 
     public Set<ResidenceMonth> getSortedMonths() {
-		TreeSet<ResidenceMonth> months = new TreeSet<ResidenceMonth>(new BeanComparator("month"));
-		months.addAll(getMonths());
-		return months;
+	TreeSet<ResidenceMonth> months = new TreeSet<ResidenceMonth>(new BeanComparator("month"));
+	months.addAll(getMonths());
+	return months;
     }
-    
+
     private static Integer getNextYear() {
 	Integer next = null;
 	for (ResidenceYear year : RootDomainObject.getInstance().getResidenceYears()) {
@@ -47,7 +47,7 @@ public class ResidenceYear extends ResidenceYear_Base {
     public static ResidenceYear getCurrentYear() {
 	Integer currentYear = new LocalDate().getYear();
 	for (ResidenceYear year : RootDomainObject.getInstance().getResidenceYears()) {
-	    if ( year.getYear().equals(currentYear)) {
+	    if (year.getYear().equals(currentYear)) {
 		return year;
 	    }
 	}
@@ -57,5 +57,5 @@ public class ResidenceYear extends ResidenceYear_Base {
     public static boolean hasCurrentYear() {
 	return getCurrentYear() != null;
     }
-    
+
 }

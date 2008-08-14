@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class RearrangeUnitSiteFunctions extends ManageVirtualFunction {
 
-	public void run(UnitSite site, Unit unit, Collection<Function> functions) {
-		checkUnit(site, unit);
-		unit.setFunctionsOrder(functions);
-	}
-	
+    public void run(UnitSite site, Unit unit, Collection<Function> functions) {
+	checkUnit(site, unit);
+	unit.setFunctionsOrder(functions);
+    }
+
 }

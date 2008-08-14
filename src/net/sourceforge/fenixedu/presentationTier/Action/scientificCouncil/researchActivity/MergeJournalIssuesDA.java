@@ -20,7 +20,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-
 public class MergeJournalIssuesDA extends MergeResearchActivityDA {
 
     public static final Comparator<JournalIssue> COMPARE_BY_VOLUME_AND_NUMBER = new ComparatorChain();
@@ -28,10 +27,9 @@ public class MergeJournalIssuesDA extends MergeResearchActivityDA {
 	((ComparatorChain) COMPARE_BY_VOLUME_AND_NUMBER).addComparator(new BeanComparator("volume"));
 	((ComparatorChain) COMPARE_BY_VOLUME_AND_NUMBER).addComparator(new BeanComparator("number"));
     }
-    
-    
-    public ActionForward chooseJournalIssue(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward chooseJournalIssue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	MergeJournalIssuePageContainerBean researchActivityPageContainerBean = (MergeJournalIssuePageContainerBean) getRenderedObject("mergeList");
 	JournalIssue journalIssue = (JournalIssue) researchActivityPageContainerBean.getSelected();
 	researchActivityPageContainerBean.setSelected(null);
@@ -43,17 +41,15 @@ public class MergeJournalIssuesDA extends MergeResearchActivityDA {
 	return mapping.findForward("show-research-activity-merge-list");
     }
 
-    private void copyProperties(JournalIssue journalIssue,
-	    MergeJournalIssuePageContainerBean researchActivityPageContainerBean) {
+    private void copyProperties(JournalIssue journalIssue, MergeJournalIssuePageContainerBean researchActivityPageContainerBean) {
 	researchActivityPageContainerBean.setVolume(journalIssue.getVolume());
 	researchActivityPageContainerBean.setYear(journalIssue.getYear());
 	researchActivityPageContainerBean.setNumber(journalIssue.getNumber());
 	researchActivityPageContainerBean.setMonth(journalIssue.getMonth());
 	researchActivityPageContainerBean.setUrl(journalIssue.getUrl());
 	researchActivityPageContainerBean.setSpecialIssue(journalIssue.getSpecialIssue());
-	researchActivityPageContainerBean.setSpecialIssueComment(journalIssue.getSpecialIssueComment());	
+	researchActivityPageContainerBean.setSpecialIssueComment(journalIssue.getSpecialIssueComment());
     }
-
 
     @Override
     protected MergeResearchActivityPageContainerBean getNewBean() {
@@ -63,7 +59,8 @@ public class MergeJournalIssuesDA extends MergeResearchActivityDA {
     @Override
     protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
 	MergeJournalIssuePageContainerBean mergeJournalIssuePageContainerBean = (MergeJournalIssuePageContainerBean) researchActivityPageContainerBean;
-	List<JournalIssue> journalIssues = new ArrayList<JournalIssue>(mergeJournalIssuePageContainerBean.getScientificJournal().getJournalIssues());
+	List<JournalIssue> journalIssues = new ArrayList<JournalIssue>(mergeJournalIssuePageContainerBean.getScientificJournal()
+		.getJournalIssues());
 	Collections.sort(journalIssues, COMPARE_BY_VOLUME_AND_NUMBER);
 	return journalIssues;
     }

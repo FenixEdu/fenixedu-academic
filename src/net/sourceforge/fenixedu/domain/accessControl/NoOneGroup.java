@@ -20,12 +20,12 @@ public class NoOneGroup extends LeafGroup {
 
     @Override
     public Set<Person> getElements() {
-        return super.buildSet();
+	return super.buildSet();
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[0];
+	return new Argument[0];
     }
 
     /**
@@ -33,7 +33,7 @@ public class NoOneGroup extends LeafGroup {
      */
     @Override
     public boolean allows(IUserView userView) {
-        return false;
+	return false;
     }
 
     /**
@@ -41,7 +41,7 @@ public class NoOneGroup extends LeafGroup {
      */
     @Override
     public boolean isMember(Person person) {
-        return false;
+	return false;
     }
-    
+
 }

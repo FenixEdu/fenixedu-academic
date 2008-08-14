@@ -33,11 +33,8 @@ public class IMDCandidacy extends IMDCandidacy_Base {
 
     @Override
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale())
-		.getString("label.imdCandidacy")
-		+ " - "
-		+ getExecutionDegree().getDegreeCurricularPlan().getName()
-		+ " - "
+	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString("label.imdCandidacy")
+		+ " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
 		+ getExecutionDegree().getExecutionYear().getYear();
     }
 

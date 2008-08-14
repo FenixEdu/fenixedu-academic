@@ -13,12 +13,13 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
 
     private DomainReference<ExternalCurricularCourse> externalCurricularCourse;
 
-    public ExternalCurricularCourseResultBean(final ExternalCurricularCourse externalCurricularCourse, PartyTypeEnum parentUnitType) {
+    public ExternalCurricularCourseResultBean(final ExternalCurricularCourse externalCurricularCourse,
+	    PartyTypeEnum parentUnitType) {
 	super();
 	setExternalCurricularCourse(externalCurricularCourse);
 	setParentUnitType(parentUnitType);
     }
-    
+
     public ExternalCurricularCourseResultBean(final ExternalCurricularCourse externalCurricularCourse) {
 	this(externalCurricularCourse, null);
     }
@@ -28,23 +29,24 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
     }
 
     public void setExternalCurricularCourse(ExternalCurricularCourse externalCurricularCourse) {
-	this.externalCurricularCourse = (externalCurricularCourse != null) ? new DomainReference<ExternalCurricularCourse>(externalCurricularCourse) : null;
+	this.externalCurricularCourse = (externalCurricularCourse != null) ? new DomainReference<ExternalCurricularCourse>(
+		externalCurricularCourse) : null;
     }
-    
+
     @Override
     public Unit getUnit() {
 	return getExternalCurricularCourse().getUnit();
     }
-    
+
     @Override
     public ExternalDegreeModuleType getType() {
-        return ExternalDegreeModuleType.CURRICULAR_COURSE;
+	return ExternalDegreeModuleType.CURRICULAR_COURSE;
     }
-    
+
     public int getNumberOfExternalEnrolments() {
-        return getExternalCurricularCourse().getExternalEnrolmentsCount();
+	return getExternalCurricularCourse().getExternalEnrolmentsCount();
     }
-    
+
     @Override
     public List<LinkObject> getFullPath() {
 	final List<LinkObject> result = new ArrayList<LinkObject>();
@@ -55,21 +57,21 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
 	    linkObject.setMethod("viewUnit");
 	    result.add(linkObject);
 	}
-	
+
 	final LinkObject linkObject = new LinkObject();
 	linkObject.setId(getExternalCurricularCourse().getIdInternal());
 	linkObject.setLabel(getExternalCurricularCourse().getName());
 	linkObject.setMethod("viewExternalCurricularCourse");
 	result.add(linkObject);
-	
+
 	return result;
     }
-    
+
     @Override
     public String getName() {
-        return getExternalCurricularCourse().getName();
+	return getExternalCurricularCourse().getName();
     }
-    
+
     private static enum ExternalDegreeModuleType {
 	CURRICULAR_COURSE;
 	public String getName() {
@@ -84,13 +86,13 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
 	}
 	return result;
     }
-    
+
     static private List<ExternalCurricularCourse> getChildExternalCurricularCoursesFor(final Unit unit) {
 	final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
 	getChildsWithType(result, unit);
 	return result;
     }
-    
+
     static private void getChildsWithType(final List<ExternalCurricularCourse> result, final Unit unit) {
 
 	result.addAll(unit.getExternalCurricularCourses());
@@ -112,14 +114,13 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
 	    break;
 	}
     }
-    
-    static private void addChildExternalCurricularCourses(
-	    final List<ExternalCurricularCourse> result,
-	    final Unit unit, final PartyTypeEnum parentUnitType) {
-	
-        for (final Unit each : unit.getSubUnits(parentUnitType)) {
-            getChildsWithType(result, each);
-        }
+
+    static private void addChildExternalCurricularCourses(final List<ExternalCurricularCourse> result, final Unit unit,
+	    final PartyTypeEnum parentUnitType) {
+
+	for (final Unit each : unit.getSubUnits(parentUnitType)) {
+	    getChildsWithType(result, each);
+	}
     }
 
 }

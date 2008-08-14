@@ -7,9 +7,10 @@ import net.sourceforge.fenixedu.domain.Job;
 public class CreateProfessionalInformation extends Service {
 
     public Job run(final AlumniJobBean bean) {
-	
+
 	return new Job(bean.getAlumni().getStudent().getPerson(), bean.getEmployerName(), bean.getCity(), bean.getCountry(), bean
-		.getChildBusinessArea(), bean.getPosition(), bean.getBeginDateAsLocalDate(), bean.getEndDateAsLocalDate(), bean.getContractType());
+		.getChildBusinessArea(), bean.getPosition(), bean.getBeginDateAsLocalDate(), bean.getEndDateAsLocalDate(), bean
+		.getContractType());
     }
 
 }

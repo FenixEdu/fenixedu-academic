@@ -12,8 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends
-	AcademicAdminOfficeBolonhaStudentEnrollmentDA {
+public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends AcademicAdminOfficeBolonhaStudentEnrollmentDA {
 
     @Override
     protected CurricularRuleLevel getCurricularRuleLevel(ActionForm form) {
@@ -21,17 +20,18 @@ public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends
     }
 
     @Override
-    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
+    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 	request.setAttribute("action", getAction());
-	request.setAttribute("bolonhaStudentEnrollmentBean", new ImprovementBolonhaStudentEnrolmentBean(
-		studentCurricularPlan, executionSemester));
+	request.setAttribute("bolonhaStudentEnrollmentBean", new ImprovementBolonhaStudentEnrolmentBean(studentCurricularPlan,
+		executionSemester));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
-    
+
     @Override
     protected String getAction() {
-        return "/improvementBolonhaStudentEnrollment.do";
+	return "/improvementBolonhaStudentEnrollment.do";
     }
 
 }

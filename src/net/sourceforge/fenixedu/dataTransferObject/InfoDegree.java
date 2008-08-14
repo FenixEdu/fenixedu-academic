@@ -24,7 +24,7 @@ public class InfoDegree extends InfoObject implements Comparable {
     }
 
     public Degree getDegree() {
-        return degreeDomainReference == null ? null : degreeDomainReference.getObject();
+	return degreeDomainReference == null ? null : degreeDomainReference.getObject();
     }
 
     public String toString() {
@@ -58,8 +58,7 @@ public class InfoDegree extends InfoObject implements Comparable {
     public List getInfoDegreeCurricularPlans() {
 	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegree().getDegreeCurricularPlansSet()) {
-	    infoDegreeCurricularPlans.add(InfoDegreeCurricularPlan
-		    .newInfoFromDomain(degreeCurricularPlan));
+	    infoDegreeCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
 	}
 	return infoDegreeCurricularPlans;
     }

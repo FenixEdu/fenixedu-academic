@@ -25,8 +25,7 @@ import org.apache.commons.collections.Transformer;
  *          DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup.java
  *          23397 2006-11-17 14:31:10Z cfgi $
  */
-public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extends
-	DegreeCurricularPlanGroup {
+public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extends DegreeCurricularPlanGroup {
     private static final long serialVersionUID = 1052397518994080993L;
 
     private class StudentCurricularStateIsActiveOrSchoolPartConcluded implements Predicate {
@@ -52,8 +51,7 @@ public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extend
 	}
     }
 
-    public DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup(
-	    DegreeCurricularPlan degreeCurricularPlan) {
+    public DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup(DegreeCurricularPlan degreeCurricularPlan) {
 	super(degreeCurricularPlan);
     }
 
@@ -62,7 +60,7 @@ public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extend
 	int elementsCount = 0;
 	for (StudentCurricularPlan scp : this.getDegreeCurricularPlan().getStudentCurricularPlans()) {
 
-	    if(scp.isLastStudentCurricularPlanFromRegistration() && scp.getRegistration().isActive()){
+	    if (scp.isLastStudentCurricularPlanFromRegistration() && scp.getRegistration().isActive()) {
 		elementsCount++;
 	    }
 	}
@@ -73,14 +71,11 @@ public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extend
     @Override
     public Set<Person> getElements() {
 	Set<Person> elements = super.buildSet();
-	Collection<StudentCurricularPlan> studentCurricularPlans = this.getDegreeCurricularPlan()
-		.getStudentCurricularPlans();
-	Collection<StudentCurricularPlan> activeOrSchoolPartConcludedStudentCurricularPlans = CollectionUtils
-		.select(studentCurricularPlans,
-			new StudentCurricularStateIsActiveOrSchoolPartConcluded());
+	Collection<StudentCurricularPlan> studentCurricularPlans = this.getDegreeCurricularPlan().getStudentCurricularPlans();
+	Collection<StudentCurricularPlan> activeOrSchoolPartConcludedStudentCurricularPlans = CollectionUtils.select(
+		studentCurricularPlans, new StudentCurricularStateIsActiveOrSchoolPartConcluded());
 	Collection<Person> activeOrSchoolPartConcludedPersons = CollectionUtils.collect(
-		activeOrSchoolPartConcludedStudentCurricularPlans,
-		new StudentCurricularPlanPersonTransformer());
+		activeOrSchoolPartConcludedStudentCurricularPlans, new StudentCurricularPlanPersonTransformer());
 	elements.addAll(activeOrSchoolPartConcludedPersons);
 
 	return super.freezeSet(elements);
@@ -95,8 +90,7 @@ public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extend
 
 	public Group build(Object[] arguments) {
 	    try {
-		return new DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup(
-			(DegreeCurricularPlan) arguments[0]);
+		return new DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup((DegreeCurricularPlan) arguments[0]);
 	    } catch (ClassCastException e) {
 		throw new GroupDynamicExpressionException(
 			"accessControl.group.builder.degreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup.notDegreeCurricularPlan",

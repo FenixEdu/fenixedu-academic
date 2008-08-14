@@ -18,35 +18,34 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class PrepareCandidateApprovalDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseExecutionDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        InfoExecutionDegree infoExecutionDegree;
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
-        
-        Object args[] = { degreeCurricularPlanID, new Integer(1) };
+	InfoExecutionDegree infoExecutionDegree;
+	Integer degreeCurricularPlanID = null;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
 
-        try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils
-                    .executeService( "ReadExecutionDegreeByDegreeCurricularPlanID", args);
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            throw new FenixActionException();
-        }
+	Object args[] = { degreeCurricularPlanID, new Integer(1) };
 
-        request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                .getSigla());
-        request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
-        
-        request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
-        
-        return mapping.findForward("ExecutionDegreeChosen");
+	try {
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
+		    "ReadExecutionDegreeByDegreeCurricularPlanID", args);
+	} catch (FenixServiceException e) {
+	    e.printStackTrace();
+	    throw new FenixActionException();
+	}
+
+	request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
+	request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
+
+	request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
+
+	return mapping.findForward("ExecutionDegreeChosen");
     }
 
 }

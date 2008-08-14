@@ -11,98 +11,98 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import org.joda.time.YearMonthDay;
 
 public class ResearchScientificJournalCreationBean implements Serializable {
-	private DomainReference<ScientificJournal> scientificJournal;
+    private DomainReference<ScientificJournal> scientificJournal;
 
-	private String scientificJournalName;
+    private String scientificJournalName;
 
-	private ResearchActivityParticipationRole role;
+    private ResearchActivityParticipationRole role;
 
-	private ScopeType locationType;
+    private ScopeType locationType;
 
-	private String issn;
+    private String issn;
 
-	private String publisher;
+    private String publisher;
 
-	private MultiLanguageString roleMessage;
+    private MultiLanguageString roleMessage;
 
-	private YearMonthDay beginDate;
-	
-	private YearMonthDay endDate;
-	
-	public YearMonthDay getBeginDate() {
-		return beginDate;
-	}
+    private YearMonthDay beginDate;
 
-	public void setBeginDate(YearMonthDay beginDate) {
-		this.beginDate = beginDate;
-	}
+    private YearMonthDay endDate;
 
-	public YearMonthDay getEndDate() {
-		return endDate;
-	}
+    public YearMonthDay getBeginDate() {
+	return beginDate;
+    }
 
-	public void setEndDate(YearMonthDay endDate) {
-		this.endDate = endDate;
-	}
+    public void setBeginDate(YearMonthDay beginDate) {
+	this.beginDate = beginDate;
+    }
 
-	public MultiLanguageString getRoleMessage() {
-		return roleMessage;
-	}
+    public YearMonthDay getEndDate() {
+	return endDate;
+    }
 
-	public void setRoleMessage(MultiLanguageString roleMessage) {
-		this.roleMessage = roleMessage;
-	}
+    public void setEndDate(YearMonthDay endDate) {
+	this.endDate = endDate;
+    }
 
-	public String getIssn() {
-		return issn;
-	}
+    public MultiLanguageString getRoleMessage() {
+	return roleMessage;
+    }
 
-	public void setIssn(String issn) {
-		this.issn = issn;
-	}
+    public void setRoleMessage(MultiLanguageString roleMessage) {
+	this.roleMessage = roleMessage;
+    }
 
-	public ResearchScientificJournalCreationBean() {
-		setScientificJournal(null);
-	}
+    public String getIssn() {
+	return issn;
+    }
 
-	public ResearchActivityParticipationRole getRole() {
-		return role;
-	}
+    public void setIssn(String issn) {
+	this.issn = issn;
+    }
 
-	public void setRole(ResearchActivityParticipationRole participationRole) {
-		this.role = participationRole;
-	}
+    public ResearchScientificJournalCreationBean() {
+	setScientificJournal(null);
+    }
 
-	public String getScientificJournalName() {
-		return scientificJournalName;
-	}
+    public ResearchActivityParticipationRole getRole() {
+	return role;
+    }
 
-	public void setScientificJournalName(String scientificJournalName) {
-		this.scientificJournalName = scientificJournalName;
-	}
+    public void setRole(ResearchActivityParticipationRole participationRole) {
+	this.role = participationRole;
+    }
 
-	public ScientificJournal getScientificJournal() {
-		return this.scientificJournal.getObject();
-	}
+    public String getScientificJournalName() {
+	return scientificJournalName;
+    }
 
-	public void setScientificJournal(ScientificJournal scientificJournal) {
-		this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
-	}
+    public void setScientificJournalName(String scientificJournalName) {
+	this.scientificJournalName = scientificJournalName;
+    }
 
-	public ScopeType getLocationType() {
-		return locationType;
-	}
+    public ScientificJournal getScientificJournal() {
+	return this.scientificJournal.getObject();
+    }
 
-	public void setLocationType(ScopeType locationType) {
-		this.locationType = locationType;
-	}
+    public void setScientificJournal(ScientificJournal scientificJournal) {
+	this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
+    }
 
-	public String getPublisher() {
-		return publisher;
-	}
+    public ScopeType getLocationType() {
+	return locationType;
+    }
 
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
+    public void setLocationType(ScopeType locationType) {
+	this.locationType = locationType;
+    }
+
+    public String getPublisher() {
+	return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+	this.publisher = publisher;
+    }
 
 }

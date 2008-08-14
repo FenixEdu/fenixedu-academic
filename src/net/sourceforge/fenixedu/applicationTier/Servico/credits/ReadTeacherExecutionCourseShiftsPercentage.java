@@ -35,67 +35,68 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
 
-    public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse) throws FenixServiceException{
+    public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse)
+	    throws FenixServiceException {
 
-        TeacherExecutionCourseProfessorshipShiftsDTO result = new TeacherExecutionCourseProfessorshipShiftsDTO();
+	TeacherExecutionCourseProfessorshipShiftsDTO result = new TeacherExecutionCourseProfessorshipShiftsDTO();
 
-        List<InfoShiftPercentage> infoShiftPercentageList = new ArrayList<InfoShiftPercentage>();
+	List<InfoShiftPercentage> infoShiftPercentageList = new ArrayList<InfoShiftPercentage>();
 
-        ExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse);
-        Teacher teacher = readTeacher(infoTeacher);
+	ExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse);
+	Teacher teacher = readTeacher(infoTeacher);
 
-        result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-        result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
+	result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+	result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
 
-        Set<Shift> executionCourseShiftsList = executionCourse.getAssociatedShifts();
+	Set<Shift> executionCourseShiftsList = executionCourse.getAssociatedShifts();
 
-        Iterator<Shift> iterator = executionCourseShiftsList.iterator();
-        while (iterator.hasNext()) {
-            
-            Shift shift = (Shift) iterator.next();
-            InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
-            final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-            infoShiftPercentage.setShift(infoShift);
-            double availablePercentage = 100;
-            InfoShiftProfessorship infoShiftProfessorship = null;
+	Iterator<Shift> iterator = executionCourseShiftsList.iterator();
+	while (iterator.hasNext()) {
 
-            Iterator<ShiftProfessorship> iter = shift.getAssociatedShiftProfessorship().iterator();
-            while (iter.hasNext()) {
-                ShiftProfessorship shiftProfessorship = (ShiftProfessorship) iter.next();
-                /**
-                 * if shift's type is LABORATORIAL the shift professorship
-                 * percentage can exceed 100%
-                 */
-                if ((shift.getCourseLoadsCount() != 1 || !shift.containsType(ShiftType.LABORATORIAL)) 
-                	&& shiftProfessorship.getProfessorship().getTeacher() != teacher) {
-                    availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
-                }
-                infoShiftProfessorship = InfoShiftProfessorshipAndTeacher.newInfoFromDomain(shiftProfessorship);
-                infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
-            }
+	    Shift shift = (Shift) iterator.next();
+	    InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
+	    final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+	    infoShiftPercentage.setShift(infoShift);
+	    double availablePercentage = 100;
+	    InfoShiftProfessorship infoShiftProfessorship = null;
 
-            List<InfoLesson> infoLessons = (List<InfoLesson>) CollectionUtils.collect(shift.getAssociatedLessons(),
-                    new Transformer() {
-                        public Object transform(Object input) {
-                            Lesson lesson = (Lesson) input;
-                            return InfoLesson.newInfoFromDomain(lesson);
-                        }
-                    });
-            
-            infoShiftPercentage.setInfoLessons(infoLessons);
-            infoShiftPercentage.setAvailablePercentage(Double.valueOf(availablePercentage));
-            infoShiftPercentageList.add(infoShiftPercentage);
-        }
+	    Iterator<ShiftProfessorship> iter = shift.getAssociatedShiftProfessorship().iterator();
+	    while (iter.hasNext()) {
+		ShiftProfessorship shiftProfessorship = (ShiftProfessorship) iter.next();
+		/**
+		 * if shift's type is LABORATORIAL the shift professorship
+		 * percentage can exceed 100%
+		 */
+		if ((shift.getCourseLoadsCount() != 1 || !shift.containsType(ShiftType.LABORATORIAL))
+			&& shiftProfessorship.getProfessorship().getTeacher() != teacher) {
+		    availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
+		}
+		infoShiftProfessorship = InfoShiftProfessorshipAndTeacher.newInfoFromDomain(shiftProfessorship);
+		infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
+	    }
 
-        result.setInfoShiftPercentageList(infoShiftPercentageList);
-        return result;
+	    List<InfoLesson> infoLessons = (List<InfoLesson>) CollectionUtils.collect(shift.getAssociatedLessons(),
+		    new Transformer() {
+			public Object transform(Object input) {
+			    Lesson lesson = (Lesson) input;
+			    return InfoLesson.newInfoFromDomain(lesson);
+			}
+		    });
+
+	    infoShiftPercentage.setInfoLessons(infoLessons);
+	    infoShiftPercentage.setAvailablePercentage(Double.valueOf(availablePercentage));
+	    infoShiftPercentageList.add(infoShiftPercentage);
+	}
+
+	result.setInfoShiftPercentageList(infoShiftPercentageList);
+	return result;
     }
 
     private Teacher readTeacher(InfoTeacher infoTeacher) {
-        return rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+	return rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
     }
 
     private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-        return rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
+	return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
     }
 }

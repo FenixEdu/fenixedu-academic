@@ -8,7 +8,7 @@ public class SearchExternalPersons extends SearchParties {
 
     @Override
     protected Collection search(String value, int size) {
-        return PersonName.findExternalPerson(value, size);
+	return PersonName.findExternalPerson(value, size);
     }
 
 }

@@ -18,7 +18,7 @@ public class BibtexParticipatorBean implements Serializable {
     private String bibtexPerson;
 
     private DomainReference<PersonName> personNameObject;
-    
+
     private DomainReference<Person> person;
 
     private String personName;
@@ -26,7 +26,7 @@ public class BibtexParticipatorBean implements Serializable {
     private ResultParticipationRole personRole;
 
     private DomainReference<UnitName> organizatioNameObject;
-    
+
     private DomainReference<Unit> organization;
 
     private String organizationName;
@@ -42,32 +42,33 @@ public class BibtexParticipatorBean implements Serializable {
     private ParticipatorBean personChosen;
 
     private ParticipationType personType;
-    
+
     private ParticipationType organizationType;
-       
+
     public BibtexParticipatorBean() {
-    	setPerson(null);
-    	setOrganization(null);
-    	setPersonType(ParticipationType.INTERNAL);
-    	setOrganizationType(ParticipationType.INTERNAL);
+	setPerson(null);
+	setOrganization(null);
+	setPersonType(ParticipationType.INTERNAL);
+	setOrganizationType(ParticipationType.INTERNAL);
     }
+
     /**/
 
     public UnitName getOrganizationNameObject() {
 	return organizatioNameObject.getObject();
     }
-    
+
     public void setOrganizationNameObject(UnitName unitName) {
 	organizatioNameObject = new DomainReference<UnitName>(unitName);
     }
-    
+
     public Unit getOrganization() {
 	UnitName unitName = getOrganizationNameObject();
 	return (unitName == null) ? null : unitName.getUnit();
     }
 
     public void setOrganization(Unit organization) {
-	setOrganizationNameObject((organization!=null) ? organization.getUnitName() : null);
+	setOrganizationNameObject((organization != null) ? organization.getUnitName() : null);
     }
 
     public String getOrganizationName() {
@@ -79,22 +80,22 @@ public class BibtexParticipatorBean implements Serializable {
     }
 
     public Person getPerson() {
-    	PersonName personName = personNameObject.getObject();
-    	return (personName == null) ? null : personName.getPerson();
+	PersonName personName = personNameObject.getObject();
+	return (personName == null) ? null : personName.getPerson();
     }
 
     public void setPerson(Person person) {
-    	setPersonNameObject((person==null) ? null : person.getPersonName());
+	setPersonNameObject((person == null) ? null : person.getPersonName());
     }
 
     public PersonName getPersonNameObject() {
-    	return personNameObject.getObject();
+	return personNameObject.getObject();
     }
 
     public void setPersonNameObject(PersonName personName) {
-    	this.personNameObject = new DomainReference<PersonName>(personName);
+	this.personNameObject = new DomainReference<PersonName>(personName);
     }
-    
+
     public String getPersonName() {
 	return personName;
     }
@@ -184,45 +185,45 @@ public class BibtexParticipatorBean implements Serializable {
 	this.participatorProcessed = participatorProcessed;
     }
 
-	public ParticipationType getPersonType() {
-		return personType;
-	}
+    public ParticipationType getPersonType() {
+	return personType;
+    }
 
-	public void setPersonType(ParticipationType personType) {
-		this.personType = personType;
-	}
+    public void setPersonType(ParticipationType personType) {
+	this.personType = personType;
+    }
 
-	public ParticipationType getOrganizationType() {
-		return organizationType;
-	}
+    public ParticipationType getOrganizationType() {
+	return organizationType;
+    }
 
-	public void setOrganizationType(ParticipationType organizationType) {
-		this.organizationType = organizationType;
-	}
-	
-	public boolean isExternalUnit() {
-		return this.organizationType.equals(ParticipationType.EXTERNAL);
-	}
-	
-	public boolean isExternalPerson() {
-		return this.personType.equals(ParticipationType.EXTERNAL);
-	}
-	
-	public void reset() {
-		this.setParticipatorProcessed(false);
-		this.setActiveSchema("bibtex.participator.internal");
-		this.setPersonType(ParticipationType.INTERNAL);
-		this.setOrganizationType(ParticipationType.INTERNAL);
-		this.setPerson(null);
-		this.setOrganization(null);
-		this.setOrganizationName(null);
-		this.setPersonName(null);
-	}
-	
-	public String getName() {
-		if(getPerson()!=null) { 
-			return getPerson().getName(); 
-		}
-		else return personName;
-	}
+    public void setOrganizationType(ParticipationType organizationType) {
+	this.organizationType = organizationType;
+    }
+
+    public boolean isExternalUnit() {
+	return this.organizationType.equals(ParticipationType.EXTERNAL);
+    }
+
+    public boolean isExternalPerson() {
+	return this.personType.equals(ParticipationType.EXTERNAL);
+    }
+
+    public void reset() {
+	this.setParticipatorProcessed(false);
+	this.setActiveSchema("bibtex.participator.internal");
+	this.setPersonType(ParticipationType.INTERNAL);
+	this.setOrganizationType(ParticipationType.INTERNAL);
+	this.setPerson(null);
+	this.setOrganization(null);
+	this.setOrganizationName(null);
+	this.setPersonName(null);
+    }
+
+    public String getName() {
+	if (getPerson() != null) {
+	    return getPerson().getName();
+	} else
+	    return personName;
+    }
 }

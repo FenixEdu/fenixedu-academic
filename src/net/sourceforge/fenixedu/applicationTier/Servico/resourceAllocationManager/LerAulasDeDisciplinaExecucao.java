@@ -22,22 +22,23 @@ import net.sourceforge.fenixedu.domain.Shift;
 public class LerAulasDeDisciplinaExecucao extends Service {
 
     public Object run(final InfoExecutionCourse infoExecutionCourse) {
-    	
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
-        final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
-        // An estimated upper bound for the number of elements is three lessons per shift.
-        final int estimatedNumberOfLessons = shifts.size() * 3;
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+	final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
-        final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(estimatedNumberOfLessons);
+	// An estimated upper bound for the number of elements is three lessons
+	// per shift.
+	final int estimatedNumberOfLessons = shifts.size() * 3;
 
-        for (final Shift shift : shifts) {
-            for (final Lesson lesson : shift.getAssociatedLessons()) {
-                infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
-            }
-        }
+	final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(estimatedNumberOfLessons);
 
-        return infoLessons;
+	for (final Shift shift : shifts) {
+	    for (final Lesson lesson : shift.getAssociatedLessons()) {
+		infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
+	    }
+	}
+
+	return infoLessons;
     }
 
 }

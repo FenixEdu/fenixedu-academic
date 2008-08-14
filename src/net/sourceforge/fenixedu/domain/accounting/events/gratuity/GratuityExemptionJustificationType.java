@@ -28,7 +28,7 @@ public enum GratuityExemptionJustificationType {
 
     // Directive council authorization dispatch
     DIRECTIVE_COUNCIL_AUTHORIZATION,
-    
+
     // Used to mark exemptions created by separation cycles
     SEPARATION_CYCLES_AUTHORIZATION;
 
@@ -50,14 +50,13 @@ public enum GratuityExemptionJustificationType {
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:
 	case BOLONHA_DEGREE:
 	case DEGREE:
-	    return Arrays.asList(new GratuityExemptionJustificationType[] { SON_OF_DECORATED_MILITARY,
-		    SOCIAL_SHARE_GRANT_OWNER });
+	    return Arrays
+		    .asList(new GratuityExemptionJustificationType[] { SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER });
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-	    return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION,
-		    INSTITUTION_GRANT_OWNER, OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH,
-		    DIRECTIVE_COUNCIL_AUTHORIZATION });
+	    return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, INSTITUTION_GRANT_OWNER,
+		    OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH, DIRECTIVE_COUNCIL_AUTHORIZATION });
 	case BOLONHA_PHD_PROGRAM:
-	    return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, OTHER_INSTITUTION, PALOP_TEACHER});
+	    return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, OTHER_INSTITUTION, PALOP_TEACHER });
 	default:
 	    throw new RuntimeException("Unknown degree type");
 	}

@@ -27,51 +27,55 @@ import org.apache.struts.action.ActionMapping;
 
 public class SearchStudentsDA extends FenixDispatchAction {
 
-    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = (SearchStudentsWithEnrolmentsByDepartment) getRenderedObject();
-        if (searchStudentsWithEnrolmentsByDepartment == null) {
-            final Department department = getDepartment(request);
-            searchStudentsWithEnrolmentsByDepartment = new SearchStudentsWithEnrolmentsByDepartment(department);
-        }
-        request.setAttribute("searchStudentsWithEnrolmentsByDepartment", searchStudentsWithEnrolmentsByDepartment);
-        return mapping.findForward("searchStudents");
+    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = (SearchStudentsWithEnrolmentsByDepartment) getRenderedObject();
+	if (searchStudentsWithEnrolmentsByDepartment == null) {
+	    final Department department = getDepartment(request);
+	    searchStudentsWithEnrolmentsByDepartment = new SearchStudentsWithEnrolmentsByDepartment(department);
+	}
+	request.setAttribute("searchStudentsWithEnrolmentsByDepartment", searchStudentsWithEnrolmentsByDepartment);
+	return mapping.findForward("searchStudents");
     }
 
     private Department getDepartment(final HttpServletRequest request) {
-        return getUserView(request).getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+	return getUserView(request).getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
     }
 
-    public ActionForward download(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        response.setContentType("text/plain");
-        response.setHeader("Content-disposition", "attachment; filename=students.xls");
+    public ActionForward download(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	response.setContentType("text/plain");
+	response.setHeader("Content-disposition", "attachment; filename=students.xls");
 
-        final SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = (SearchStudentsWithEnrolmentsByDepartment) getRenderedObject();
-        final Set<StudentCurricularPlan> studentCurricularPlans = searchStudentsWithEnrolmentsByDepartment.search();
-        final ExecutionYear executionYear = searchStudentsWithEnrolmentsByDepartment.getExecutionYear();
-        final Spreadsheet spreadsheet = getSpreadsheet(executionYear);
-        for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
-            final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-            final Degree degree = degreeCurricularPlan.getDegree();
-            final Registration registration = studentCurricularPlan.getStudent();
-            final Student student = registration.getStudent();
-            final Person person = student.getPerson();
+	final SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = (SearchStudentsWithEnrolmentsByDepartment) getRenderedObject();
+	final Set<StudentCurricularPlan> studentCurricularPlans = searchStudentsWithEnrolmentsByDepartment.search();
+	final ExecutionYear executionYear = searchStudentsWithEnrolmentsByDepartment.getExecutionYear();
+	final Spreadsheet spreadsheet = getSpreadsheet(executionYear);
+	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+	    final Degree degree = degreeCurricularPlan.getDegree();
+	    final Registration registration = studentCurricularPlan.getStudent();
+	    final Student student = registration.getStudent();
+	    final Person person = student.getPerson();
 
-            final Row row = spreadsheet.addRow();
-            row.setCell(degree.getSigla());
-            row.setCell(student.getNumber().toString());
-            row.setCell(person.getName());
-            row.setCell(person.getEmail());
-            row.setCell(Integer.toString(registration.getCurricularYear(executionYear)));
-        }
-        final OutputStream outputStream = response.getOutputStream();
-        spreadsheet.exportToXLSSheet(outputStream);
-        outputStream.close();
-        return null;
+	    final Row row = spreadsheet.addRow();
+	    row.setCell(degree.getSigla());
+	    row.setCell(student.getNumber().toString());
+	    row.setCell(person.getName());
+	    row.setCell(person.getEmail());
+	    row.setCell(Integer.toString(registration.getCurricularYear(executionYear)));
+	}
+	final OutputStream outputStream = response.getOutputStream();
+	spreadsheet.exportToXLSSheet(outputStream);
+	outputStream.close();
+	return null;
     }
 
     private Spreadsheet getSpreadsheet(final ExecutionYear executionYear) {
-	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt", "PT"));
-	final Spreadsheet spreadsheet = new Spreadsheet(enumResourceBundle.getString("label.student.for.academic.year") + " " + executionYear.getYear().replace('/', ' '));
+	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt",
+		"PT"));
+	final Spreadsheet spreadsheet = new Spreadsheet(enumResourceBundle.getString("label.student.for.academic.year") + " "
+		+ executionYear.getYear().replace('/', ' '));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.degree.code"));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.student.number"));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.person.name"));

@@ -12,8 +12,7 @@ public class CreateConversationMessage extends ForumService {
     public void run(CreateConversationMessageBean createConversationMessageBean) {
 
 	ConversationMessage conversationMessage = createConversationMessageBean.getConversationThread()
-		.createConversationMessage(createConversationMessageBean.getCreator(),
-			createConversationMessageBean.getBody());
+		.createConversationMessage(createConversationMessageBean.getCreator(), createConversationMessageBean.getBody());
 	super.sendNotifications(conversationMessage);
 
     }

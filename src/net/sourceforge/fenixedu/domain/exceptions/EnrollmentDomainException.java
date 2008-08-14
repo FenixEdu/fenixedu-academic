@@ -8,7 +8,7 @@ public class EnrollmentDomainException extends DomainException {
      * 
      */
     private static final long serialVersionUID = 1L;
-    
+
     private RuleResult falseResult;
 
     public EnrollmentDomainException(String key, String... args) {

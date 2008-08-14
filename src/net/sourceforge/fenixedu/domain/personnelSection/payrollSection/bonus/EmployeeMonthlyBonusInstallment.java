@@ -6,8 +6,7 @@ import org.joda.time.Partial;
 
 public class EmployeeMonthlyBonusInstallment extends EmployeeMonthlyBonusInstallment_Base {
 
-    public EmployeeMonthlyBonusInstallment(EmployeeBonusInstallment employeeBonusInstallment,
-	    Partial yearMonth, double value) {
+    public EmployeeMonthlyBonusInstallment(EmployeeBonusInstallment employeeBonusInstallment, Partial yearMonth, double value) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setEmployeeBonusInstallment(employeeBonusInstallment);

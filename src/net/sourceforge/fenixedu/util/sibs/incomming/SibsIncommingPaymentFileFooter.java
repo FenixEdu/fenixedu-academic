@@ -17,8 +17,7 @@ public class SibsIncommingPaymentFileFooter {
 
     public static SibsIncommingPaymentFileFooter buildFrom(String rawLine) {
 	final String[] fields = splitLine(rawLine);
-	return new SibsIncommingPaymentFileFooter(getTransactionsTotalAmountFrom(fields),
-		getCostFrom(fields));
+	return new SibsIncommingPaymentFileFooter(getTransactionsTotalAmountFrom(fields), getCostFrom(fields));
     }
 
     private static Money getCostFrom(String[] fields) {

@@ -21,8 +21,8 @@ import bibtex.dom.BibtexString;
  */
 public class TechnicalReport extends TechnicalReport_Base {
 
-	private static final String usedSchema = "result.publication.presentation.TechnicalReport";
-	
+    private static final String usedSchema = "result.publication.presentation.TechnicalReport";
+
     public TechnicalReport() {
 	super();
     }
@@ -34,18 +34,18 @@ public class TechnicalReport extends TechnicalReport_Base {
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, institution, year);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(title, keywords, institution, year, technicalReportType, number, address, note,
-		numberPages, language, month, url);
+	fillAllAttributes(title, keywords, institution, year, technicalReportType, number, address, note, numberPages, language,
+		month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, String institution, Integer year, String technicalReportType,
-	    String number, String address, MultiLanguageString note, Integer numberPages, String language,
-	    Month month, String url) {
+    public void setEditAll(String title, MultiLanguageString keywords, String institution, Integer year,
+	    String technicalReportType, String number, String address, MultiLanguageString note, Integer numberPages,
+	    String language, Month month, String url) {
 	super.checkRequiredParameters(keywords, note);
-    checkRequiredParameters(title, institution, year);
-	fillAllAttributes(title, keywords, institution, year, technicalReportType, number, address, note,
-		numberPages, language, month, url);
+	checkRequiredParameters(title, institution, year);
+	fillAllAttributes(title, keywords, institution, year, technicalReportType, number, address, note, numberPages, language,
+		month, url);
 	super.setModifiedByAndDate();
     }
 
@@ -183,8 +183,8 @@ public class TechnicalReport extends TechnicalReport_Base {
 	throw new DomainException("error.researcher.TechnicalReport.call", "setPublisher");
     }
 
-	@Override
-	public String getSchema() {
-		return usedSchema;
-	}
+    @Override
+    public String getSchema() {
+	return usedSchema;
+    }
 }

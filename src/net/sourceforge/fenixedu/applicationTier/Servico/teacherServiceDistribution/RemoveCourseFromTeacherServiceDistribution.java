@@ -10,18 +10,18 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveCourseFromTeacherServiceDistribution extends Service {
 
-	public void run(Integer tsdId, Integer courseId) throws FenixServiceException{
+    public void run(Integer tsdId, Integer courseId) throws FenixServiceException {
 
-		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
-		TSDCourse course = rootDomainObject.readTSDCourseByOID(courseId);
-		CompetenceCourse competenceCourse = course.getCompetenceCourse();
-		
-		if(course instanceof TSDVirtualCourseGroup){
-			course.delete();
-		} else {
-			for(TSDCourse tsdCourse : tsd.getTSDCoursesByCompetenceCourse(competenceCourse)) {
-				tsdCourse.delete();
-			}
-		}
+	TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+	TSDCourse course = rootDomainObject.readTSDCourseByOID(courseId);
+	CompetenceCourse competenceCourse = course.getCompetenceCourse();
+
+	if (course instanceof TSDVirtualCourseGroup) {
+	    course.delete();
+	} else {
+	    for (TSDCourse tsdCourse : tsd.getTSDCoursesByCompetenceCourse(competenceCourse)) {
+		tsdCourse.delete();
+	    }
 	}
+    }
 }

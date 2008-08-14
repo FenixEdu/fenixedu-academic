@@ -11,7 +11,7 @@ public class ExcepcaoInexistente extends FenixServiceException {
      * Constructor for ExcepcaoInexistente.
      */
     public ExcepcaoInexistente() {
-        super();
+	super();
     }
 
     /**
@@ -20,7 +20,7 @@ public class ExcepcaoInexistente extends FenixServiceException {
      * @param message
      */
     public ExcepcaoInexistente(String message) {
-        super(message);
+	super(message);
     }
 
     /**
@@ -30,7 +30,7 @@ public class ExcepcaoInexistente extends FenixServiceException {
      * @param cause
      */
     public ExcepcaoInexistente(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     /**
@@ -39,7 +39,7 @@ public class ExcepcaoInexistente extends FenixServiceException {
      * @param cause
      */
     public ExcepcaoInexistente(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
 }

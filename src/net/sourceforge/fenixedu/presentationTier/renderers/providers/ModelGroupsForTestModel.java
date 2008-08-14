@@ -7,15 +7,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ModelGroupsForTestModel implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		TestModelBean bean = (TestModelBean) source;
+    public Object provide(Object source, Object currentValue) {
+	TestModelBean bean = (TestModelBean) source;
 
-		return bean.getTestModel().getAllChildModelGroups();
+	return bean.getTestModel().getAllChildModelGroups();
 
-	}
+    }
 
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    public Converter getConverter() {
+	return new DomainObjectKeyConverter();
+    }
 
 }

@@ -37,8 +37,7 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 	    public void beforeAdd(Event event, Person person) {
 		if (event instanceof InsuranceEvent) {
 		    final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);
-		    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent
-			    .getExecutionYear())
+		    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent.getExecutionYear())
 			    || person.hasInsuranceEventFor(insuranceEvent.getExecutionYear())) {
 			throw new DomainException(
 				"error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
@@ -73,8 +72,7 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" - ").appendLabel(
-		getExecutionYear().getYear());
+	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" - ").appendLabel(getExecutionYear().getYear());
 
 	return labelFormatter;
     }
@@ -108,8 +106,8 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-	getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
-		entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+	getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(),
+		entryDTO.getAmountToPay());
 
 	return getNonProcessedPaymentCodes();
 
@@ -119,9 +117,9 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSURANCE,
-		new YearMonthDay(), calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(),
-		entryDTO.getAmountToPay(), getPerson().getStudent()));
+	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSURANCE, new YearMonthDay(),
+		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()
+			.getStudent()));
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {
@@ -129,10 +127,10 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
-	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(
-		EntryType.INSURANCE_FEE, this, amountToPay)), transactionDetail);
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections
+		.singletonList(new EntryDTO(EntryType.INSURANCE_FEE, this, amountToPay)), transactionDetail);
     }
 
 }

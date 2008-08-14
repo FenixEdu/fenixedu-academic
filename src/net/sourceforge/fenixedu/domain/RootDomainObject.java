@@ -14,7 +14,7 @@ public class RootDomainObject extends RootDomainObject_Base {
 	if (instance == null) {
 	    Transaction.withTransaction(new jvstm.TransactionalCommand() {
 		public void doIt() {
-		    instance = (RootDomainObject)Transaction.getDomainObject(RootDomainObject.class.getName(), 1);
+		    instance = (RootDomainObject) Transaction.getDomainObject(RootDomainObject.class.getName(), 1);
 		    instance.initAccessClosures();
 		}
 	    });
@@ -36,6 +36,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     protected RootDomainObject getRootDomainObject() {
-        return this;
+	return this;
     }
 }

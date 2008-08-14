@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentByNumberAndDegreeType extends Service {
 
     public Object run(Integer number, DegreeType degreeType) {
-        
-        final Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
-        
-        if (registration != null) {
-            return InfoStudent.newInfoFromDomain(registration);
-        }
 
-        return null;
+	final Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
+
+	if (registration != null) {
+	    return InfoStudent.newInfoFromDomain(registration);
+	}
+
+	return null;
     }
 
 }

@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.research.Prize;
 
 public class DeletePrize extends Service {
 
-	public void run(Prize prize) {
-		prize.delete();
-	}
+    public void run(Prize prize) {
+	prize.delete();
+    }
 }

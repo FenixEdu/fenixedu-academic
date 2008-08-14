@@ -20,11 +20,11 @@ public class JournalIssuesForScienficalJournalProvider implements DataProvider {
 	ScientificJournal scientificJournal;
 	try {
 	    scientificJournal = (ScientificJournal) MethodUtils.invokeMethod(source, "getScientificJournal", null);
-	}catch(Exception e) {
-		throw new RuntimeException(e);
+	} catch (Exception e) {
+	    throw new RuntimeException(e);
 	}
-	
-	return scientificJournal==null ? Collections.EMPTY_LIST : scientificJournal.getJournalIssues();
+
+	return scientificJournal == null ? Collections.EMPTY_LIST : scientificJournal.getJournalIssues();
     }
 
 }

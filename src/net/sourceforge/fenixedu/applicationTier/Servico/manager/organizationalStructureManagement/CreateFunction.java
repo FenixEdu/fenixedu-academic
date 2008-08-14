@@ -21,7 +21,7 @@ public class CreateFunction extends Service {
 	if (unit == null) {
 	    throw new FenixServiceException("error.function.no.unit");
 	}
-			
+
 	new Function(functionName, begin, end, type, unit);
     }
 }

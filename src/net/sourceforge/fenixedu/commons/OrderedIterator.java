@@ -15,40 +15,38 @@ public class OrderedIterator<T> implements Iterator {
 
     private Iterator<T> iterator;
 
-    private List<T> buildBackingList(Iterator<T> iterator)
-    {
-    	List<T> backingList = new ArrayList<T>();
-        while(iterator.hasNext())
-        {
-        	backingList.add(iterator.next());
-        }
-        
-        return backingList;
-    }
-    public OrderedIterator(Iterator<T> iterator, Comparator<T> comparator) {
-        super();
-        List<T> backingList = this.buildBackingList(iterator);
-        Collections.sort(backingList,comparator);
-        this.iterator = backingList.iterator();
-    }
-    
-    public OrderedIterator(Iterator<T> iterator) {
-        super();
-        List backingList = this.buildBackingList(iterator);
-        Collections.sort(backingList);
-        this.iterator = backingList.iterator();
+    private List<T> buildBackingList(Iterator<T> iterator) {
+	List<T> backingList = new ArrayList<T>();
+	while (iterator.hasNext()) {
+	    backingList.add(iterator.next());
+	}
+
+	return backingList;
     }
 
+    public OrderedIterator(Iterator<T> iterator, Comparator<T> comparator) {
+	super();
+	List<T> backingList = this.buildBackingList(iterator);
+	Collections.sort(backingList, comparator);
+	this.iterator = backingList.iterator();
+    }
+
+    public OrderedIterator(Iterator<T> iterator) {
+	super();
+	List backingList = this.buildBackingList(iterator);
+	Collections.sort(backingList);
+	this.iterator = backingList.iterator();
+    }
 
     public boolean hasNext() {
-        return this.iterator.hasNext();
+	return this.iterator.hasNext();
     }
 
     public T next() {
-        return this.iterator.next();
+	return this.iterator.next();
     }
 
     public void remove() {
-        throw new UnsupportedOperationException();
+	throw new UnsupportedOperationException();
     }
 }

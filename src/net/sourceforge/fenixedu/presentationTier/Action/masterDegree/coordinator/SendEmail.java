@@ -22,62 +22,63 @@ import org.apache.struts.action.ActionMapping;
 public class SendEmail extends SimpleMailSenderAction {
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        String parameter = request.getParameter("degreeCurricularPlanID");
-        
-        if (parameter == null) {
-            return null;
-        }
-        
-        try {
-            Integer oid = new Integer(parameter);
-            return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
-        } catch (NumberFormatException e) {
-            return null;
-        }
+	String parameter = request.getParameter("degreeCurricularPlanID");
+
+	if (parameter == null) {
+	    return null;
+	}
+
+	try {
+	    Integer oid = new Integer(parameter);
+	    return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
+	} catch (NumberFormatException e) {
+	    return null;
+	}
     }
-    
+
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        if (degreeCurricularPlan != null) {
-            request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-        }
-        
-        return super.execute(mapping, actionForm, request, response);
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	if (degreeCurricularPlan != null) {
+	    request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+	}
+
+	return super.execute(mapping, actionForm, request, response);
     }
-    
+
     @Override
     protected MailBean createMailBean(HttpServletRequest request) {
-        MailBean mailBean = super.createMailBean(request);
+	MailBean mailBean = super.createMailBean(request);
 
-        boolean studentsPreselected = request.getParameter("students") != null;
-        if (studentsPreselected) {
-            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-            if (degreeCurricularPlan != null) {
-                Degree degree = degreeCurricularPlan.getDegree();
-                
-                mailBean.addReceiversGroup(new DegreeStudentsGroup(degree));
-            }
-        }
-        
-        return mailBean;
+	boolean studentsPreselected = request.getParameter("students") != null;
+	if (studentsPreselected) {
+	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	    if (degreeCurricularPlan != null) {
+		Degree degree = degreeCurricularPlan.getDegree();
+
+		mailBean.addReceiversGroup(new DegreeStudentsGroup(degree));
+	    }
+	}
+
+	return mailBean;
     }
 
     @Override
     protected List<IGroup> getPossibleReceivers(HttpServletRequest request) {
-        List<IGroup> groups = super.getPossibleReceivers(request);
-        
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        if (degreeCurricularPlan == null) {
-            return groups;
-        }
-        
-        Degree degree = degreeCurricularPlan.getDegree();
-        groups.add(new CurrentDegreeCoordinatorsGroup(degree));
-        groups.add(new DegreeTeachersGroup(degree));
-        groups.add(new DegreeStudentsGroup(degree));
-        
-        return groups;
+	List<IGroup> groups = super.getPossibleReceivers(request);
+
+	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	if (degreeCurricularPlan == null) {
+	    return groups;
+	}
+
+	Degree degree = degreeCurricularPlan.getDegree();
+	groups.add(new CurrentDegreeCoordinatorsGroup(degree));
+	groups.add(new DegreeTeachersGroup(degree));
+	groups.add(new DegreeStudentsGroup(degree));
+
+	return groups;
     }
-    
+
 }

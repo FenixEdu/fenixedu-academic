@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotati
 import org.joda.time.YearMonthDay;
 
 public class Building extends Building_Base {
-    
-    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {	
+
+    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	super();
 	setSuroundingSpace(surroundingSpace);
 	new BuildingInformation(this, name, begin, end, blueprintNumber);
@@ -24,12 +24,12 @@ public class Building extends Building_Base {
 
     @Override
     public void setSuroundingSpace(Space suroundingSpace) {
-        if(suroundingSpace != null && !suroundingSpace.isCampus()) {
-            throw new DomainException("error.Space.invalid.suroundingSpace");
-        }
+	if (suroundingSpace != null && !suroundingSpace.isCampus()) {
+	    throw new DomainException("error.Space.invalid.suroundingSpace");
+	}
 	super.setSuroundingSpace(suroundingSpace);
     }
-    
+
     @Override
     public BuildingInformation getSpaceInformation() {
 	return (BuildingInformation) super.getSpaceInformation();
@@ -50,28 +50,29 @@ public class Building extends Building_Base {
     public boolean isBuilding() {
 	return true;
     }
-    
+
     @Deprecated
     public String getName() {
 	return getNameWithCampus();
     }
-    
+
     public String getNameWithCampus() {
 	Campus campus = getSpaceCampus();
 	BuildingInformation spaceInformation = getSpaceInformation();
-	return campus == null ? spaceInformation.getName() : spaceInformation.getName() + " (" + campus.getSpaceInformation().getName() + ")";	
+	return campus == null ? spaceInformation.getName() : spaceInformation.getName() + " ("
+		+ campus.getSpaceInformation().getName() + ")";
     }
-         
-    public static List<Building> getActiveBuildingsByNames(List<String> names){
+
+    public static List<Building> getActiveBuildingsByNames(List<String> names) {
 	List<Building> result = new ArrayList<Building>();
 	for (Resource space : RootDomainObject.getInstance().getResources()) {
-	    if(space.isBuilding() && ((Building)space).isActive()) {
+	    if (space.isBuilding() && ((Building) space).isActive()) {
 		Building building = (Building) space;
 		for (String name : names) {
 		    if (building.getName().equals(name)) {
 			result.add((Building) space);
 		    }
-		}	 
+		}
 	    }
 	}
 	return result;
@@ -80,13 +81,13 @@ public class Building extends Building_Base {
     public Floor readFloorByLevel(Integer floorNumber) {
 	List<Space> containedSpaces = getContainedSpaces();
 	for (Space space : containedSpaces) {
-	    if(space.isFloor() && ((Floor)space).getSpaceInformation().getLevel().equals(floorNumber)) {
+	    if (space.isFloor() && ((Floor) space).getSpaceInformation().getLevel().equals(floorNumber)) {
 		return (Floor) space;
 	    }
 	}
 	return null;
     }
-      
+
     @Override
     public Integer getExamCapacity() {
 	// Necessary for Renderers
@@ -98,7 +99,7 @@ public class Building extends Building_Base {
 	// Necessary for Renderers
 	return null;
     }
-    
+
     public static abstract class BuildingFactory implements Serializable, FactoryExecutor {
 	private String name;
 
@@ -156,8 +157,7 @@ public class Building extends Building_Base {
 	}
 
 	public Building execute() {
-	    return new Building(getSurroundingSpace(), getName(), getBegin(), getEnd(),
-		    getBlueprintNumber());
+	    return new Building(getSurroundingSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
     }
 
@@ -176,8 +176,7 @@ public class Building extends Building_Base {
 	}
 
 	public BuildingInformation execute() {
-	    return new BuildingInformation(getSpace(), getName(), getBegin(), getEnd(),
-		    getBlueprintNumber());
+	    return new BuildingInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
-    }   
+    }
 }

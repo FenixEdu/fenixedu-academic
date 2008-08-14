@@ -24,28 +24,27 @@ public class UserPermissionCheck extends ExternalInterfaceDispatchAction {
 
     private static final String SUCCESS_CODE = "SUCCESS";
 
-    public ActionForward canUserAccessFile(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward canUserAccessFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        if (!HostAccessControl.isAllowed(this, request)) {
-            writeResponse(response, NOT_AUTHORIZED_CODE, "");
-        } else {
-            String dspaceBitstreamIdentification = request.getParameter("dspaceBitstreamIdentification");
-            String username = request.getParameter("username");
+	if (!HostAccessControl.isAllowed(this, request)) {
+	    writeResponse(response, NOT_AUTHORIZED_CODE, "");
+	} else {
+	    String dspaceBitstreamIdentification = request.getParameter("dspaceBitstreamIdentification");
+	    String username = request.getParameter("username");
 
-            try {
-                Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(
-                        "CheckIfUserCanAccessFile", new Object[] { username,
-                                dspaceBitstreamIdentification });
+	    try {
+		Boolean result = (Boolean) ServiceManagerServiceFactory.executeService("CheckIfUserCanAccessFile", new Object[] {
+			username, dspaceBitstreamIdentification });
 
-                writeResponse(response, SUCCESS_CODE, result.toString());
+		writeResponse(response, SUCCESS_CODE, result.toString());
 
-            } catch (Exception e) {
-                writeResponse(response, UNEXPECTED_ERROR_CODE, "");
-            }
-        }
+	    } catch (Exception e) {
+		writeResponse(response, UNEXPECTED_ERROR_CODE, "");
+	    }
+	}
 
-        return null;
+	return null;
     }
 
 }

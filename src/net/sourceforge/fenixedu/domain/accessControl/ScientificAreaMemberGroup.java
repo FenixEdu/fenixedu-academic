@@ -19,8 +19,8 @@ public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaU
     }
 
     public String getName() {
-	return RenderUtils.getResourceString("DEPARTMENT_MEMBER_RESOURCES",
-		"label.scientificUnitElement", new Object[] { getObject().getName() });
+	return RenderUtils.getResourceString("DEPARTMENT_MEMBER_RESOURCES", "label.scientificUnitElement",
+		new Object[] { getObject().getName() });
     }
 
     @Override
@@ -41,26 +41,26 @@ public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaU
     protected Argument[] getExpressionArguments() {
 	return new Argument[] { new IdOperator(getObject()) };
     }
-    
+
     public static class Builder implements GroupBuilder {
 
 	public Group build(Object[] arguments) {
-		ScientificAreaUnit unit = (ScientificAreaUnit) arguments[0];
-		if( unit == null) {
-			throw new VariableNotDefinedException("unit"); 
-		}
-		return new ScientificAreaMemberGroup(unit);
-		
+	    ScientificAreaUnit unit = (ScientificAreaUnit) arguments[0];
+	    if (unit == null) {
+		throw new VariableNotDefinedException("unit");
+	    }
+	    return new ScientificAreaMemberGroup(unit);
+
 	}
 
 	public int getMaxArguments() {
-		return 1;
+	    return 1;
 	}
 
 	public int getMinArguments() {
-		return 1;
+	    return 1;
 	}
-	
-}
+
+    }
 
 }

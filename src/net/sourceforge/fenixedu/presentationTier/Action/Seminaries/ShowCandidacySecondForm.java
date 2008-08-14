@@ -28,100 +28,96 @@ import org.apache.struts.action.ActionMapping;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 4/Ago/2003, 18:29:26
- *  
+ *         Created at 4/Ago/2003, 18:29:26
+ * 
  */
 public class ShowCandidacySecondForm extends FenixAction {
 
     public InfoStudent readStudentByUserView(IUserView userView) throws FenixActionException {
-        InfoStudent student = null;
-        try {
-            Object[] argsReadStudent = { userView.getUtilizador() };
-            student = (InfoStudent) ServiceManagerServiceFactory.executeService(
-                    "ReadStudentByUsername", argsReadStudent);
-        } catch (Exception e) {
-            throw new FenixActionException();
-        }
-        return student;
+	InfoStudent student = null;
+	try {
+	    Object[] argsReadStudent = { userView.getUtilizador() };
+	    student = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByUsername", argsReadStudent);
+	} catch (Exception e) {
+	    throw new FenixActionException();
+	}
+	return student;
     }
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
-        //idInternal is equivalency's IdInternal
-        String equivalencyIDString = request.getParameter("idInternal");
-        String themeIDString = request.getParameter("themeID");
-        Integer equivalencyID = null;
-        Integer themeID = null;
-        if (equivalencyIDString == null)
-            throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        try {
-            if (themeIDString != null)
-                themeID = new Integer(themeIDString);
-            equivalencyID = new Integer(equivalencyIDString);
-        } catch (Exception ex) {
-            throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        }
-        InfoEquivalency equivalency = null;
-        List cases = null;
-        ActionForward destiny = null;
-        try {
-            Object[] argsReadEquivalency = { equivalencyID };
-            equivalency = (InfoEquivalency) ServiceManagerServiceFactory.executeService(
-                    "Seminaries.GetEquivalency", argsReadEquivalency);
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException {
+	IUserView userView = getUserView(request);
+	// idInternal is equivalency's IdInternal
+	String equivalencyIDString = request.getParameter("idInternal");
+	String themeIDString = request.getParameter("themeID");
+	Integer equivalencyID = null;
+	Integer themeID = null;
+	if (equivalencyIDString == null)
+	    throw new FenixActionException(mapping.findForward("invalidQueryString"));
+	try {
+	    if (themeIDString != null)
+		themeID = new Integer(themeIDString);
+	    equivalencyID = new Integer(equivalencyIDString);
+	} catch (Exception ex) {
+	    throw new FenixActionException(mapping.findForward("invalidQueryString"));
+	}
+	InfoEquivalency equivalency = null;
+	List cases = null;
+	ActionForward destiny = null;
+	try {
+	    Object[] argsReadEquivalency = { equivalencyID };
+	    equivalency = (InfoEquivalency) ServiceManagerServiceFactory.executeService("Seminaries.GetEquivalency",
+		    argsReadEquivalency);
 
-            //
-            if (themeID != null) // we want the cases of ONE theme
-            {
-                Object[] argsReadCases = { themeID };
-                cases = (List) ServiceManagerServiceFactory.executeService(
-                        "Seminaries.GetCaseStudiesByThemeID", argsReadCases);
-            } else // we want ALL the cases of the equivalency (its a "Completa"
-            // modality)
-            {
-                Object[] argsReadCases = { equivalencyID };
-                cases = (List) ServiceManagerServiceFactory.executeService(
-                        "Seminaries.GetCaseStudiesByEquivalencyID", argsReadCases);
-            }
-        } catch (Exception e) {
-            throw new FenixActionException();
-        }
-        if (equivalency.getHasCaseStudy().booleanValue()) {
-            //   String motivation = request.getParameter("motivation");
-            request.setAttribute("equivalency", equivalency);
-            request.setAttribute("unselectedCases", cases);
-            request.setAttribute("selectedCases", new LinkedList());
-            request.setAttribute("hiddenSelectedCases", new LinkedList());
-            destiny = mapping.findForward("showCandidacyFormNonCompleteModalitySecondInfo");
-        } else {
-            InfoTheme theme = null;
-            String motivation = request.getParameter("motivation");
-            InfoCandidacy infoCandidacy = new InfoCandidacy();
-            infoCandidacy.setCurricularCourse(equivalency.getCurricularCourse());
-            infoCandidacy.setInfoModality(equivalency.getModality());
-            infoCandidacy.setInfoSeminary(equivalency.getInfoSeminary());
-            infoCandidacy.setSeminaryName(equivalency.getSeminaryName());
-            infoCandidacy.setInfoStudent(this.readStudentByUserView(userView));
-            infoCandidacy.setTheme(new InfoTheme(themeID));
-            infoCandidacy.setMotivation(motivation);
-            infoCandidacy.setCaseStudyChoices(new LinkedList());
-            try {
-                Object[] argsWriteCandidacy = { infoCandidacy };
-                ServiceManagerServiceFactory.executeService( "Seminaries.WriteCandidacy",
-                        argsWriteCandidacy);
-                Object[] argsReadTheme = { themeID };
-                theme = (InfoTheme) ServiceManagerServiceFactory.executeService(
-                        "Seminaries.GetThemeById", argsReadTheme);
-            } catch (Exception e) {
-                throw new FenixActionException();
-            }
-            request.setAttribute("cases", new LinkedList());
-            request.setAttribute("motivation", motivation);
-            request.setAttribute("modalityName", equivalency.getModality().getName());
-            request.setAttribute("theme", theme);
-            request.setAttribute("seminaryName", infoCandidacy.getSeminaryName());
-            destiny = mapping.findForward("candidacySubmited");
-        }
-        return destiny;
+	    //
+	    if (themeID != null) // we want the cases of ONE theme
+	    {
+		Object[] argsReadCases = { themeID };
+		cases = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetCaseStudiesByThemeID", argsReadCases);
+	    } else // we want ALL the cases of the equivalency (its a "Completa"
+	    // modality)
+	    {
+		Object[] argsReadCases = { equivalencyID };
+		cases = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetCaseStudiesByEquivalencyID",
+			argsReadCases);
+	    }
+	} catch (Exception e) {
+	    throw new FenixActionException();
+	}
+	if (equivalency.getHasCaseStudy().booleanValue()) {
+	    // String motivation = request.getParameter("motivation");
+	    request.setAttribute("equivalency", equivalency);
+	    request.setAttribute("unselectedCases", cases);
+	    request.setAttribute("selectedCases", new LinkedList());
+	    request.setAttribute("hiddenSelectedCases", new LinkedList());
+	    destiny = mapping.findForward("showCandidacyFormNonCompleteModalitySecondInfo");
+	} else {
+	    InfoTheme theme = null;
+	    String motivation = request.getParameter("motivation");
+	    InfoCandidacy infoCandidacy = new InfoCandidacy();
+	    infoCandidacy.setCurricularCourse(equivalency.getCurricularCourse());
+	    infoCandidacy.setInfoModality(equivalency.getModality());
+	    infoCandidacy.setInfoSeminary(equivalency.getInfoSeminary());
+	    infoCandidacy.setSeminaryName(equivalency.getSeminaryName());
+	    infoCandidacy.setInfoStudent(this.readStudentByUserView(userView));
+	    infoCandidacy.setTheme(new InfoTheme(themeID));
+	    infoCandidacy.setMotivation(motivation);
+	    infoCandidacy.setCaseStudyChoices(new LinkedList());
+	    try {
+		Object[] argsWriteCandidacy = { infoCandidacy };
+		ServiceManagerServiceFactory.executeService("Seminaries.WriteCandidacy", argsWriteCandidacy);
+		Object[] argsReadTheme = { themeID };
+		theme = (InfoTheme) ServiceManagerServiceFactory.executeService("Seminaries.GetThemeById", argsReadTheme);
+	    } catch (Exception e) {
+		throw new FenixActionException();
+	    }
+	    request.setAttribute("cases", new LinkedList());
+	    request.setAttribute("motivation", motivation);
+	    request.setAttribute("modalityName", equivalency.getModality().getName());
+	    request.setAttribute("theme", theme);
+	    request.setAttribute("seminaryName", infoCandidacy.getSeminaryName());
+	    destiny = mapping.findForward("candidacySubmited");
+	}
+	return destiny;
     }
 }

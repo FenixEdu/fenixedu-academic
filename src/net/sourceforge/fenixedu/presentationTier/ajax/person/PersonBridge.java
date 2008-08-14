@@ -14,13 +14,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
  */
 public class PersonBridge {
 
-    public static String readNameByPersonUsername(String username) throws FenixFilterException,
-            FenixServiceException {
+    public static String readNameByPersonUsername(String username) throws FenixFilterException, FenixServiceException {
 
-        Object[] args = { username };
-        InfoPerson person = (InfoPerson) ServiceUtils.executeService("ReadPersonByUsername", args);
+	Object[] args = { username };
+	InfoPerson person = (InfoPerson) ServiceUtils.executeService("ReadPersonByUsername", args);
 
-        return person.getNome();
+	return person.getNome();
     }
 
 }

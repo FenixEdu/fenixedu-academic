@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class InfoSiteObjectives extends DataTranferObject implements ISiteComponent {
 
@@ -19,34 +19,34 @@ public class InfoSiteObjectives extends DataTranferObject implements ISiteCompon
     private List infoCurriculums;
 
     public int getSize() {
-        return infoCurriculums.size();
+	return infoCurriculums.size();
     }
 
     /**
      * @return
      */
     public List getInfoCurricularCourses() {
-        return infoCurricularCourses;
+	return infoCurricularCourses;
     }
 
     /**
      * @param infoCurricularCourses
      */
     public void setInfoCurricularCourses(List infoCurricularCourses) {
-        this.infoCurricularCourses = infoCurricularCourses;
+	this.infoCurricularCourses = infoCurricularCourses;
     }
 
     /**
      * @return
      */
     public List getInfoCurriculums() {
-        return infoCurriculums;
+	return infoCurriculums;
     }
 
     /**
      * @param infoCurriculums
      */
     public void setInfoCurriculums(List infoCurriculums) {
-        this.infoCurriculums = infoCurriculums;
+	this.infoCurriculums = infoCurriculums;
     }
 }

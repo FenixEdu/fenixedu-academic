@@ -16,18 +16,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 26/Ago/2003, 14:50:16
+ *         Created at 26/Ago/2003, 14:50:16
  * 
  */
 public class GetCandidacyById extends Service {
 
-	public InfoCandidacy run(Integer id) throws BDException{
-		InfoCandidacy infoCandidacy = null;
+    public InfoCandidacy run(Integer id) throws BDException {
+	InfoCandidacy infoCandidacy = null;
 
-		SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
-		infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
+	SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
+	infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
-		return infoCandidacy;
-	}
-    
+	return infoCandidacy;
+    }
+
 }

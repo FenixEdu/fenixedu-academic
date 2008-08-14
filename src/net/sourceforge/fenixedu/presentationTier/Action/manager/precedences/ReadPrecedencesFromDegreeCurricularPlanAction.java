@@ -24,27 +24,26 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ReadPrecedencesFromDegreeCurricularPlanAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+	Integer degreeID = new Integer(request.getParameter("degreeId"));
+	Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-        Object args[] = { degreeCurricularPlanID };
+	Object args[] = { degreeCurricularPlanID };
 
-        try {
-            Map result = (Map) ServiceManagerServiceFactory.executeService(
-                    "ReadPrecedencesFromDegreeCurricularPlan", args);
-            request.setAttribute("precedences", result);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	try {
+	    Map result = (Map) ServiceManagerServiceFactory.executeService("ReadPrecedencesFromDegreeCurricularPlan", args);
+	    request.setAttribute("precedences", result);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("degreeId", degreeID);
-        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+	request.setAttribute("degreeId", degreeID);
+	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-        return mapping.findForward("showPrecedences");
+	return mapping.findForward("showPrecedences");
     }
 }

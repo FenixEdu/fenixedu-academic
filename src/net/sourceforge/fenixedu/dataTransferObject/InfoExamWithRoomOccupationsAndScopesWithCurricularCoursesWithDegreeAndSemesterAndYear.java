@@ -14,40 +14,37 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
-public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
-        extends InfoExamWithRoomOccupations {
+public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear extends
+	InfoExamWithRoomOccupations {
 
     public void copyFromDomain(Exam exam) {
-        super.copyFromDomain(exam);
-        if (exam != null) {
-            setAssociatedCurricularCourseScope(copyICurricularCourseScope2InfoCurricularCourseScope(exam
-                    .getAssociatedCurricularCourseScope()));
-        }
+	super.copyFromDomain(exam);
+	if (exam != null) {
+	    setAssociatedCurricularCourseScope(copyICurricularCourseScope2InfoCurricularCourseScope(exam
+		    .getAssociatedCurricularCourseScope()));
+	}
     }
 
-    private List copyICurricularCourseScope2InfoCurricularCourseScope(
-            List associatedCurricularCourseScopes) {
-        List associatedInfoCCScopes = (List) CollectionUtils.collect(associatedCurricularCourseScopes,
-                new Transformer() {
+    private List copyICurricularCourseScope2InfoCurricularCourseScope(List associatedCurricularCourseScopes) {
+	List associatedInfoCCScopes = (List) CollectionUtils.collect(associatedCurricularCourseScopes, new Transformer() {
 
-                    public Object transform(Object arg0) {
-                        return InfoCurricularCourseScope
-                                .newInfoFromDomain((CurricularCourseScope) arg0);
-                    }
-                });
+	    public Object transform(Object arg0) {
+		return InfoCurricularCourseScope.newInfoFromDomain((CurricularCourseScope) arg0);
+	    }
+	});
 
-        return associatedInfoCCScopes;
+	return associatedInfoCCScopes;
     }
 
     public static InfoExam newInfoFromDomain(Exam exam) {
-        InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear infoExam = null;
-        if (exam != null) {
-            infoExam = new InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear();
-            infoExam.copyFromDomain(exam);
-        }
+	InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear infoExam = null;
+	if (exam != null) {
+	    infoExam = new InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear();
+	    infoExam.copyFromDomain(exam);
+	}
 
-        return infoExam;
+	return infoExam;
     }
 }

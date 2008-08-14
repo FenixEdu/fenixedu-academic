@@ -16,7 +16,8 @@ import org.apache.struts.action.ActionMapping;
 
 public class SetEmail extends FenixDispatchAction {
 
-    public ActionForward setEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward setEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	final String host = HostAccessControl.getRemoteAddress(request);
 	final String ip = request.getRemoteAddr();
 	final String password = request.getParameter("password");

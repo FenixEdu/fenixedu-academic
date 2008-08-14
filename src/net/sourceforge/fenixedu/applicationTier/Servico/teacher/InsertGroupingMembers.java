@@ -23,26 +23,26 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertGroupingMembers extends Service {
 
     public Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final List studentCodes)
-            throws FenixServiceException{
+	    throws FenixServiceException {
 
-        final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-        if (groupProperties == null) {
-            throw new ExistingServiceException();
-        }
+	final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+	if (groupProperties == null) {
+	    throw new ExistingServiceException();
+	}
 
-        final List<ExecutionCourse> executionCourses = groupProperties.getExecutionCourses();
+	final List<ExecutionCourse> executionCourses = groupProperties.getExecutionCourses();
 
-        for (final Integer studentCode : (List<Integer>) studentCodes) {
-            final Registration registration = rootDomainObject.readRegistrationByOID(studentCode);
-            if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
-        	final Attends attends = findAttends(registration, executionCourses);
-        	if (attends != null) {
-        	    groupProperties.addAttends(attends);
-        	}
-            }
-        }
+	for (final Integer studentCode : (List<Integer>) studentCodes) {
+	    final Registration registration = rootDomainObject.readRegistrationByOID(studentCode);
+	    if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
+		final Attends attends = findAttends(registration, executionCourses);
+		if (attends != null) {
+		    groupProperties.addAttends(attends);
+		}
+	    }
+	}
 
-        return Boolean.TRUE;
+	return Boolean.TRUE;
     }
 
     public static boolean studentHasSomeAttendsInGrouping(final Registration registration, final Grouping groupProperties) {

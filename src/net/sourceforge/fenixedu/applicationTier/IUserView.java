@@ -22,11 +22,11 @@ public interface IUserView extends Serializable, User {
     public String getFullName();
 
     public Collection<RoleType> getRoleTypes();
-    
+
     public DateTime getExpirationDate();
 
     boolean hasRoleType(final RoleType roleType);
-    
+
     public String getPrivateConstantForDigestCalculation();
 
 }

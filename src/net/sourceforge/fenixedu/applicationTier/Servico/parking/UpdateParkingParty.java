@@ -17,35 +17,32 @@ import org.joda.time.DateTime;
 
 public class UpdateParkingParty extends Service {
 
-    public void run(ParkingRequest parkingRequest, final ParkingRequestState parkingRequestState,
-            final Long cardCode, final Integer groupId, final String note, final DateTime cardStartDate,
-            final DateTime cardEndDate) {
-        
-        ParkingParty parkingParty = parkingRequest.getParkingParty();
-        if (parkingRequestState == ParkingRequestState.ACCEPTED) {               
-            parkingParty.setCardStartDate(cardStartDate);
-            parkingParty.setCardEndDate(cardEndDate);
-            parkingParty.setAuthorized(true);
-            parkingParty.setCardNumber(cardCode);
-            
-            parkingParty.edit(parkingRequest);
+    public void run(ParkingRequest parkingRequest, final ParkingRequestState parkingRequestState, final Long cardCode,
+	    final Integer groupId, final String note, final DateTime cardStartDate, final DateTime cardEndDate) {
 
-            ParkingGroup parkingGroup = rootDomainObject.readParkingGroupByOID(groupId);
-            parkingParty.setParkingGroup(parkingGroup);
-        }
-        parkingRequest.setParkingRequestState(parkingRequestState);
-        parkingRequest.setNote(note);
+	ParkingParty parkingParty = parkingRequest.getParkingParty();
+	if (parkingRequestState == ParkingRequestState.ACCEPTED) {
+	    parkingParty.setCardStartDate(cardStartDate);
+	    parkingParty.setCardEndDate(cardEndDate);
+	    parkingParty.setAuthorized(true);
+	    parkingParty.setCardNumber(cardCode);
 
-        String email = ((Person) parkingParty.getParty()).getEmail();
+	    parkingParty.edit(parkingRequest);
 
-        if (note != null && note.trim().length() != 0 && email != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language
-                    .getLocale());
-            List<String> to = new ArrayList<String>();
-            to.add(email);
-            new Email(bundle.getString("label.fromName"),
-                    bundle.getString("label.fromAddress"), null, to, null, null,
-                    bundle.getString("label.subject"), note);
-        }
+	    ParkingGroup parkingGroup = rootDomainObject.readParkingGroupByOID(groupId);
+	    parkingParty.setParkingGroup(parkingGroup);
+	}
+	parkingRequest.setParkingRequestState(parkingRequestState);
+	parkingRequest.setNote(note);
+
+	String email = ((Person) parkingParty.getParty()).getEmail();
+
+	if (note != null && note.trim().length() != 0 && email != null) {
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+	    List<String> to = new ArrayList<String>();
+	    to.add(email);
+	    new Email(bundle.getString("label.fromName"), bundle.getString("label.fromAddress"), null, to, null, null, bundle
+		    .getString("label.subject"), note);
+	}
     }
 }

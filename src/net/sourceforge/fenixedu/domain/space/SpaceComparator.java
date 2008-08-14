@@ -44,7 +44,8 @@ public class SpaceComparator {
 	    } else if (clazz == Room.class) {
 		return Room.COMPARATOR_BY_PRESENTATION_NAME.compare((Room) space1, (Room) space2);
 	    } else if (clazz == RoomSubdivision.class) {
-		return RoomSubdivision.COMPARATOR_BY_PRESENTATION_NAME.compare((RoomSubdivision) space1, (RoomSubdivision) space2);
+		return RoomSubdivision.COMPARATOR_BY_PRESENTATION_NAME
+			.compare((RoomSubdivision) space1, (RoomSubdivision) space2);
 	    } else {
 		throw new IllegalArgumentException("Unknown space type: " + clazz);
 	    }

@@ -40,10 +40,8 @@ public class PrecedentDegreeInformationBean implements Serializable {
 	degreeDesignation = information.getDegreeDesignation();
 	conclusionGrade = information.getConclusionGrade();
 	conclusionYear = information.getConclusionYear();
-	country = (information.getCountry() == null) ? null : new DomainReference<Country>(information
-		.getCountry());
-	institution = information.getInstitution() == null ? null : new DomainReference<Unit>(
-		information.getInstitution());
+	country = (information.getCountry() == null) ? null : new DomainReference<Country>(information.getCountry());
+	institution = information.getInstitution() == null ? null : new DomainReference<Unit>(information.getInstitution());
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation() {
@@ -103,8 +101,7 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(
-		institutionUnitName.getUnit());
+	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
     }
 
 }

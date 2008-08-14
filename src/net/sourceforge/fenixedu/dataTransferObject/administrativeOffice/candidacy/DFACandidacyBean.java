@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 public class DFACandidacyBean implements Serializable {
 
     private DegreeType degreeType;
-    
+
     private DomainReference<Degree> degree;
 
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
@@ -24,7 +24,7 @@ public class DFACandidacyBean implements Serializable {
     public DFACandidacyBean() {
 	degreeType = DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
     }
-    
+
     public Degree getDegree() {
 	return (this.degree == null) ? null : this.degree.getObject();
     }
@@ -39,18 +39,16 @@ public class DFACandidacyBean implements Serializable {
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		degreeCurricularPlan)
-		: null;
+		degreeCurricularPlan) : null;
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return (this.executionYear == null || this.degreeCurricularPlan == null) ? null
-		: getDegreeCurricularPlan().getExecutionDegreeByYear(getExecutionYear());
+	return (this.executionYear == null || this.degreeCurricularPlan == null) ? null : getDegreeCurricularPlan()
+		.getExecutionDegreeByYear(getExecutionYear());
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = (executionDegree != null) ? new DomainReference<ExecutionDegree>(
-		executionDegree) : null;
+	this.executionDegree = (executionDegree != null) ? new DomainReference<ExecutionDegree>(executionDegree) : null;
     }
 
     public ExecutionYear getExecutionYear() {
@@ -58,17 +56,15 @@ public class DFACandidacyBean implements Serializable {
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear)
-		: null;
+	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
     }
 
     public DegreeType getDegreeType() {
-        return degreeType;
+	return degreeType;
     }
 
     public void setDegreeType(DegreeType degreeType) {
-        this.degreeType = degreeType;
+	this.degreeType = degreeType;
     }
-
 
 }

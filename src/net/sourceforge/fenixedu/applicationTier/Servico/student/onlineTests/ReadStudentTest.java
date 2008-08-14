@@ -24,13 +24,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentTest extends Service {
 
     public List<StudentTestQuestion> run(Registration registration, Integer distributedTestId, Boolean log, String path)
-	    throws FenixServiceException{
+	    throws FenixServiceException {
 	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 	return run(registration, distributedTest, log, path);
     }
 
     public List<StudentTestQuestion> run(Registration someRegistration, DistributedTest distributedTest, Boolean log, String path)
-	    throws FenixServiceException{
+	    throws FenixServiceException {
 	if (distributedTest == null) {
 	    throw new InvalidArgumentsServiceException();
 	}

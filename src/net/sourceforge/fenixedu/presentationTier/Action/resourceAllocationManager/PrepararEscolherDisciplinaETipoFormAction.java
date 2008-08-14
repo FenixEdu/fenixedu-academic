@@ -26,34 +26,33 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class PrepararEscolherDisciplinaETipoFormAction extends Action {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-            IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-            InfoExecutionDegree iLE = (InfoExecutionDegree) request
-                    .getAttribute("infoLicenciaturaExecucao");
-            Integer semestre = (Integer) request.getAttribute("semestre");
-            Integer anoCurricular = (Integer) request.getAttribute("anoCurricular");
+	InfoExecutionDegree iLE = (InfoExecutionDegree) request.getAttribute("infoLicenciaturaExecucao");
+	Integer semestre = (Integer) request.getAttribute("semestre");
+	Integer anoCurricular = (Integer) request.getAttribute("anoCurricular");
 
-            Object argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular[] = { new CurricularYearAndSemesterAndInfoExecutionDegree(
-                    anoCurricular, semestre, iLE) };
-            List infoDisciplinasExecucao = (ArrayList) ServiceManagerServiceFactory.executeService(
-                    userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
-                    argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
+	Object argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular[] = { new CurricularYearAndSemesterAndInfoExecutionDegree(
+		anoCurricular, semestre, iLE) };
+	List infoDisciplinasExecucao = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+		"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
+		argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 
-            List disciplinasExecucao = new ArrayList();
-            disciplinasExecucao.add(new LabelValueBean("escolher", ""));
-            Iterator iterator = infoDisciplinasExecucao.iterator();
-            while (iterator.hasNext()) {
-                InfoExecutionCourse elem = (InfoExecutionCourse) iterator.next();
-                disciplinasExecucao.add(new LabelValueBean(elem.getNome(), (new Integer(
-                        infoDisciplinasExecucao.indexOf(elem) + 1)).toString()));
-            }
+	List disciplinasExecucao = new ArrayList();
+	disciplinasExecucao.add(new LabelValueBean("escolher", ""));
+	Iterator iterator = infoDisciplinasExecucao.iterator();
+	while (iterator.hasNext()) {
+	    InfoExecutionCourse elem = (InfoExecutionCourse) iterator.next();
+	    disciplinasExecucao.add(new LabelValueBean(elem.getNome(), (new Integer(infoDisciplinasExecucao.indexOf(elem) + 1))
+		    .toString()));
+	}
 
-            request.setAttribute("disciplinasExecucao", disciplinasExecucao);
-            request.setAttribute("infoDisciplinasExecucao", infoDisciplinasExecucao);
+	request.setAttribute("disciplinasExecucao", disciplinasExecucao);
+	request.setAttribute("infoDisciplinasExecucao", infoDisciplinasExecucao);
 
-            return mapping.findForward("Sucesso");
+	return mapping.findForward("Sucesso");
     }
 }

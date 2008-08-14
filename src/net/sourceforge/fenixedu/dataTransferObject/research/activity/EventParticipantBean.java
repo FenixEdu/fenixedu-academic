@@ -11,16 +11,16 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 public class EventParticipantBean extends ParticipantBean implements Serializable {
 
     DomainReference<ResearchEvent> event;
-    
+
     public EventParticipantBean() {
 	super();
 	this.setEvent(null);
     }
-    
+
     public ResearchEvent getEvent() {
 	return this.event.getObject();
     }
-    
+
     public void setEvent(ResearchEvent event) {
 	this.event = new DomainReference<ResearchEvent>(event);
     }
@@ -34,4 +34,4 @@ public class EventParticipantBean extends ParticipantBean implements Serializabl
     public DomainObject getActivity() {
 	return getEvent();
     }
-} 
+}

@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
  */
 public class ChangeUnitSiteLayout extends Service {
 
-    public void run (UnitSite site, UnitSiteLayoutType layout) {
-        site.setLayout(layout);
+    public void run(UnitSite site, UnitSiteLayoutType layout) {
+	site.setLayout(layout);
     }
-    
+
 }

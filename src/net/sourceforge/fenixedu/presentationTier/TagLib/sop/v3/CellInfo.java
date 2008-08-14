@@ -9,7 +9,7 @@ public class CellInfo {
 
     private LinkedList lessonViewList;
 
-    //cuidado ao modificar os constructores, olhar para o getContent
+    // cuidado ao modificar os constructores, olhar para o getContent
     /**
      * 
      * @deprecated
@@ -24,40 +24,40 @@ public class CellInfo {
      * @deprecated
      */
     public CellInfo(int rowSpan, InfoLesson lessonView) {
-        this(rowSpan, 0, lessonView);
+	this(rowSpan, 0, lessonView);
     }
 
     public CellInfo() {
-        this.lessonViewList = new LinkedList();
+	this.lessonViewList = new LinkedList();
     }
 
     public void addLessonView(InfoLesson lessonView) {
-        this.lessonViewList.add(lessonView);
+	this.lessonViewList.add(lessonView);
     }
 
     public String getContent() {
-        StringBuilder buffer = new StringBuilder("");
+	StringBuilder buffer = new StringBuilder("");
 
-        if (lessonViewList.isEmpty()) {
-            buffer = buffer.append("&nbsp;");
-        } else {
-            Iterator iterator = this.lessonViewList.iterator();
-            while (iterator.hasNext()) {
+	if (lessonViewList.isEmpty()) {
+	    buffer = buffer.append("&nbsp;");
+	} else {
+	    Iterator iterator = this.lessonViewList.iterator();
+	    while (iterator.hasNext()) {
 
-                InfoLesson infoLesson = (InfoLesson) iterator.next();
+		InfoLesson infoLesson = (InfoLesson) iterator.next();
 
-                buffer = buffer.append(infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
-                buffer = buffer.append(" (").append(infoLesson.getInfoShift().getShiftTypesCodePrettyPrint());
-                buffer = buffer.append(") ");
-                if(infoLesson.getInfoRoomOccupation() != null) {
-                    buffer = buffer.append(infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
-                }
-                if (iterator.hasNext()) {
-                    buffer.append("<br/>");
-                }
-            }
-        }
-        return buffer.toString();
+		buffer = buffer.append(infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
+		buffer = buffer.append(" (").append(infoLesson.getInfoShift().getShiftTypesCodePrettyPrint());
+		buffer = buffer.append(") ");
+		if (infoLesson.getInfoRoomOccupation() != null) {
+		    buffer = buffer.append(infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
+		}
+		if (iterator.hasNext()) {
+		    buffer.append("<br/>");
+		}
+	    }
+	}
+	return buffer.toString();
     }
 
 }

@@ -30,45 +30,44 @@ public class LogOffAction extends Action {
     private static final boolean useCASAuthentication;
 
     static {
-        useCASAuthentication = Boolean.valueOf(PropertiesManager.getProperty("cas.enabled"));
+	useCASAuthentication = Boolean.valueOf(PropertiesManager.getProperty("cas.enabled"));
     }
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        ActionForward result = null;
+	ActionForward result = null;
 
-        if (useCASAuthentication) {
-            if (request.getParameter("logoutFromCAS") != null
-                    && request.getParameter("logoutFromCAS").equals("true")) {
-                killSession(request);
-                result = mapping.findForward("showBlankPage");
-            } else {
-                result = getCasLogoutActionForward();
-            }
-        } else {
-            killSession(request);
-            result = mapping.findForward("showLoginPage");
-        }
-        // this way, we always put the locale as the default we want
-        I18NFilter.setDefaultLocale(request, request.getSession());
-        return result;
+	if (useCASAuthentication) {
+	    if (request.getParameter("logoutFromCAS") != null && request.getParameter("logoutFromCAS").equals("true")) {
+		killSession(request);
+		result = mapping.findForward("showBlankPage");
+	    } else {
+		result = getCasLogoutActionForward();
+	    }
+	} else {
+	    killSession(request);
+	    result = mapping.findForward("showLoginPage");
+	}
+	// this way, we always put the locale as the default we want
+	I18NFilter.setDefaultLocale(request, request.getSession());
+	return result;
     }
 
     private ActionForward getCasLogoutActionForward() {
-        ActionForward actionForward = new ActionForward();
+	ActionForward actionForward = new ActionForward();
 
-        actionForward.setRedirect(true);
-        actionForward.setPath(PropertiesManager.getProperty("cas.logoutUrl"));
+	actionForward.setRedirect(true);
+	actionForward.setPath(PropertiesManager.getProperty("cas.logoutUrl"));
 
-        return actionForward;
+	return actionForward;
     }
 
     private void killSession(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+	HttpSession session = request.getSession(false);
+	if (session != null) {
+	    session.invalidate();
+	}
     }
 
 }

@@ -25,7 +25,7 @@ public class MatchPathConflictException extends DomainException {
     private static final String MESSAGE = "functionalities.functionality.matchPath.conflict";
 
     public MatchPathConflictException(String path) {
-        super(MESSAGE, path);
+	super(MESSAGE, path);
     }
 
 }

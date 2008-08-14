@@ -28,202 +28,192 @@ public class ExamsMap {
 
     private InfoExecutionPeriod infoExecutionPeriod;
 
-    public ExamsMap(InfoRoomExamsMap infoRoomExamsMap,Locale locale) {
-        Calendar firstDayOfSeason = infoRoomExamsMap.getStartSeason1();
-        Calendar lastDayOfSeason = infoRoomExamsMap.getEndSeason2();
-        this.firstDayOfSeason = infoRoomExamsMap.getStartSeason1();
-        this.lastDayOfSeason = infoRoomExamsMap.getEndSeason2();
-        
-        days = new ArrayList<ExamsMapSlot>();
-        if (firstDayOfSeason.get(Calendar.YEAR) != lastDayOfSeason.get(Calendar.YEAR)) {
-            for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < makeLastDayOfYear(
-                    firstDayOfSeason,locale).get(Calendar.DAY_OF_YEAR); day++) {
-                Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
-                        - firstDayOfSeason.get(Calendar.DAY_OF_YEAR),locale);
-                if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-                    days.add(new ExamsMapSlot(tempDayToAdd, findExamsFromListOfExams(tempDayToAdd,
-                            infoRoomExamsMap.getExams())));
-                }
-            }
-            firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason,locale);
-        }
-        for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < lastDayOfSeason
-                .get(Calendar.DAY_OF_YEAR) + 1; day++) {
-            Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
-                    - firstDayOfSeason.get(Calendar.DAY_OF_YEAR),locale);
-            if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-                days.add(new ExamsMapSlot(tempDayToAdd, findExamsFromListOfExams(tempDayToAdd,
-                        infoRoomExamsMap.getExams())));
-            }
-        }
+    public ExamsMap(InfoRoomExamsMap infoRoomExamsMap, Locale locale) {
+	Calendar firstDayOfSeason = infoRoomExamsMap.getStartSeason1();
+	Calendar lastDayOfSeason = infoRoomExamsMap.getEndSeason2();
+	this.firstDayOfSeason = infoRoomExamsMap.getStartSeason1();
+	this.lastDayOfSeason = infoRoomExamsMap.getEndSeason2();
+
+	days = new ArrayList<ExamsMapSlot>();
+	if (firstDayOfSeason.get(Calendar.YEAR) != lastDayOfSeason.get(Calendar.YEAR)) {
+	    for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < makeLastDayOfYear(firstDayOfSeason, locale).get(
+		    Calendar.DAY_OF_YEAR); day++) {
+		Calendar tempDayToAdd = makeDay(firstDayOfSeason, day - firstDayOfSeason.get(Calendar.DAY_OF_YEAR), locale);
+		if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+		    days.add(new ExamsMapSlot(tempDayToAdd, findExamsFromListOfExams(tempDayToAdd, infoRoomExamsMap.getExams())));
+		}
+	    }
+	    firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason, locale);
+	}
+	for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < lastDayOfSeason.get(Calendar.DAY_OF_YEAR) + 1; day++) {
+	    Calendar tempDayToAdd = makeDay(firstDayOfSeason, day - firstDayOfSeason.get(Calendar.DAY_OF_YEAR), locale);
+	    if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+		days.add(new ExamsMapSlot(tempDayToAdd, findExamsFromListOfExams(tempDayToAdd, infoRoomExamsMap.getExams())));
+	    }
+	}
     }
 
-    public ExamsMap(InfoExamsMap infoExamsMap,Locale locale) {
-        this.firstDayOfSeason = infoExamsMap.getStartSeason1();
-        this.lastDayOfSeason = infoExamsMap.getEndSeason2();
+    public ExamsMap(InfoExamsMap infoExamsMap, Locale locale) {
+	this.firstDayOfSeason = infoExamsMap.getStartSeason1();
+	this.lastDayOfSeason = infoExamsMap.getEndSeason2();
 
-        setInfoExecutionPeriod(infoExamsMap.getInfoExecutionPeriod());
-        setInfoExecutionDegree(infoExamsMap.getInfoExecutionDegree());
+	setInfoExecutionPeriod(infoExamsMap.getInfoExecutionPeriod());
+	setInfoExecutionDegree(infoExamsMap.getInfoExecutionDegree());
 
-        Calendar firstDayOfSeason = infoExamsMap.getStartSeason1();
-        Calendar lastDayOfSeason = infoExamsMap.getEndSeason2();
+	Calendar firstDayOfSeason = infoExamsMap.getStartSeason1();
+	Calendar lastDayOfSeason = infoExamsMap.getEndSeason2();
 
-        curricularYears = infoExamsMap.getCurricularYears();
-        executionCourses = infoExamsMap.getExecutionCourses();
+	curricularYears = infoExamsMap.getCurricularYears();
+	executionCourses = infoExamsMap.getExecutionCourses();
 
-        days = new ArrayList<ExamsMapSlot>();
-        if (firstDayOfSeason.get(Calendar.YEAR) != lastDayOfSeason.get(Calendar.YEAR)) {
-            for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day <= makeLastDayOfYear(
-                    firstDayOfSeason,locale).get(Calendar.DAY_OF_YEAR); day++) {
-                Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
-                        - firstDayOfSeason.get(Calendar.DAY_OF_YEAR),locale);
-                if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
-                    days.add(new ExamsMapSlot(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap
-                            .getExecutionCourses())));
-            }
+	days = new ArrayList<ExamsMapSlot>();
+	if (firstDayOfSeason.get(Calendar.YEAR) != lastDayOfSeason.get(Calendar.YEAR)) {
+	    for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day <= makeLastDayOfYear(firstDayOfSeason, locale).get(
+		    Calendar.DAY_OF_YEAR); day++) {
+		Calendar tempDayToAdd = makeDay(firstDayOfSeason, day - firstDayOfSeason.get(Calendar.DAY_OF_YEAR), locale);
+		if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+		    days.add(new ExamsMapSlot(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap.getExecutionCourses())));
+	    }
 
-            firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason,locale);
-        }
+	    firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason, locale);
+	}
 
-        for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < lastDayOfSeason
-                .get(Calendar.DAY_OF_YEAR) + 1; day++) {
+	for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < lastDayOfSeason.get(Calendar.DAY_OF_YEAR) + 1; day++) {
 
-            Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
-                    - firstDayOfSeason.get(Calendar.DAY_OF_YEAR),locale);
-            if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
-                days.add(new ExamsMapSlot(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap
-                        .getExecutionCourses())));
-        }
+	    Calendar tempDayToAdd = makeDay(firstDayOfSeason, day - firstDayOfSeason.get(Calendar.DAY_OF_YEAR), locale);
+	    if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+		days.add(new ExamsMapSlot(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap.getExecutionCourses())));
+	}
     }
 
     private List<InfoExam> findExams(Calendar day, List executionCourses) {
-        List<InfoExam> result = new ArrayList<InfoExam>();
+	List<InfoExam> result = new ArrayList<InfoExam>();
 
-        for (int i = 0; i < executionCourses.size(); i++) {
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) executionCourses.get(i);
-            List infoExams = infoExecutionCourse.getAssociatedInfoExams();
+	for (int i = 0; i < executionCourses.size(); i++) {
+	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) executionCourses.get(i);
+	    List infoExams = infoExecutionCourse.getAssociatedInfoExams();
 
-            for (int j = 0; j < infoExams.size(); j++) {
-                InfoExam infoExam = (InfoExam) infoExams.get(j);
+	    for (int j = 0; j < infoExams.size(); j++) {
+		InfoExam infoExam = (InfoExam) infoExams.get(j);
 
-                if (sameDayAsExam(day, infoExam)) {
-                    infoExam.setInfoExecutionCourse(infoExecutionCourse);
-                    result.add(infoExam);
-                }
-            }
-        }
+		if (sameDayAsExam(day, infoExam)) {
+		    infoExam.setInfoExecutionCourse(infoExecutionCourse);
+		    result.add(infoExam);
+		}
+	    }
+	}
 
-        return result;
+	return result;
     }
 
     private List<InfoExam> findExamsFromListOfExams(Calendar day, List infoExams) {
-        List<InfoExam> result = new ArrayList<InfoExam>();
+	List<InfoExam> result = new ArrayList<InfoExam>();
 
-        for (int j = 0; j < infoExams.size(); j++) {
-            InfoExam infoExam = (InfoExam) infoExams.get(j);
+	for (int j = 0; j < infoExams.size(); j++) {
+	    InfoExam infoExam = (InfoExam) infoExams.get(j);
 
-            if (sameDayAsExam(day, infoExam)) {
-                result.add(infoExam);
-            }
-        }
+	    if (sameDayAsExam(day, infoExam)) {
+		result.add(infoExam);
+	    }
+	}
 
-        return result;
+	return result;
     }
 
     private boolean sameDayAsExam(Calendar day, InfoExam infoExam) {
-        return day.get(Calendar.YEAR) == infoExam.getDay().get(Calendar.YEAR)
-                && day.get(Calendar.MONTH) == infoExam.getDay().get(Calendar.MONTH)
-                && day.get(Calendar.DAY_OF_MONTH) == infoExam.getDay().get(Calendar.DAY_OF_MONTH);
+	return day.get(Calendar.YEAR) == infoExam.getDay().get(Calendar.YEAR)
+		&& day.get(Calendar.MONTH) == infoExam.getDay().get(Calendar.MONTH)
+		&& day.get(Calendar.DAY_OF_MONTH) == infoExam.getDay().get(Calendar.DAY_OF_MONTH);
     }
 
-    private Calendar makeFirstDayOfYear(Calendar someDayOfSameYear,Locale locale) {
-        Calendar result = Calendar.getInstance(locale);
+    private Calendar makeFirstDayOfYear(Calendar someDayOfSameYear, Locale locale) {
+	Calendar result = Calendar.getInstance(locale);
 
-        result.set(Calendar.YEAR, someDayOfSameYear.get(Calendar.YEAR));
-        result.set(Calendar.MONTH, Calendar.JANUARY);
-        result.set(Calendar.DAY_OF_MONTH, 1);
-        result.set(Calendar.HOUR_OF_DAY, 0);
-        result.set(Calendar.MINUTE, 0);
-        result.set(Calendar.SECOND, 0);
+	result.set(Calendar.YEAR, someDayOfSameYear.get(Calendar.YEAR));
+	result.set(Calendar.MONTH, Calendar.JANUARY);
+	result.set(Calendar.DAY_OF_MONTH, 1);
+	result.set(Calendar.HOUR_OF_DAY, 0);
+	result.set(Calendar.MINUTE, 0);
+	result.set(Calendar.SECOND, 0);
 
-        return result;
+	return result;
     }
 
-    private Calendar makeLastDayOfYear(Calendar someDayOfSameYear,Locale locale) {
-        Calendar result = Calendar.getInstance();
+    private Calendar makeLastDayOfYear(Calendar someDayOfSameYear, Locale locale) {
+	Calendar result = Calendar.getInstance();
 
-        result.set(Calendar.YEAR, someDayOfSameYear.get(Calendar.YEAR));
-        result.set(Calendar.MONTH, Calendar.DECEMBER);
-        result.set(Calendar.DAY_OF_MONTH, 31);
-        result.set(Calendar.HOUR_OF_DAY, 0);
-        result.set(Calendar.MINUTE, 0);
-        result.set(Calendar.SECOND, 0);
+	result.set(Calendar.YEAR, someDayOfSameYear.get(Calendar.YEAR));
+	result.set(Calendar.MONTH, Calendar.DECEMBER);
+	result.set(Calendar.DAY_OF_MONTH, 31);
+	result.set(Calendar.HOUR_OF_DAY, 0);
+	result.set(Calendar.MINUTE, 0);
+	result.set(Calendar.SECOND, 0);
 
-        return result;
+	return result;
     }
 
-    private Calendar makeDay(Calendar dayToCopy, int offset,Locale locale) {
-        Calendar result = Calendar.getInstance(locale);
-        result.set(Calendar.YEAR, dayToCopy.get(Calendar.YEAR));
-        result.set(Calendar.DAY_OF_YEAR, dayToCopy.get(Calendar.DAY_OF_YEAR) + offset);
-        result.set(Calendar.HOUR_OF_DAY, 0);
-        result.set(Calendar.MINUTE, 0);
-        result.set(Calendar.SECOND, 0);
+    private Calendar makeDay(Calendar dayToCopy, int offset, Locale locale) {
+	Calendar result = Calendar.getInstance(locale);
+	result.set(Calendar.YEAR, dayToCopy.get(Calendar.YEAR));
+	result.set(Calendar.DAY_OF_YEAR, dayToCopy.get(Calendar.DAY_OF_YEAR) + offset);
+	result.set(Calendar.HOUR_OF_DAY, 0);
+	result.set(Calendar.MINUTE, 0);
+	result.set(Calendar.SECOND, 0);
 
-        return result;
+	return result;
     }
 
     public List getDays() {
-        return days;
+	return days;
     }
 
     public List getCurricularYears() {
-        return curricularYears;
+	return curricularYears;
     }
 
     public List getExecutionCourses() {
-        return executionCourses;
+	return executionCourses;
     }
 
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return infoExecutionDegree;
+	return infoExecutionDegree;
     }
 
     public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
-        this.infoExecutionDegree = infoExecutionDegree;
+	this.infoExecutionDegree = infoExecutionDegree;
     }
 
     public Calendar getFirstDayOfSeason() {
-        return firstDayOfSeason;
+	return firstDayOfSeason;
     }
 
     public void setFirstDayOfSeason(Calendar firstDayOfSeason) {
-        this.firstDayOfSeason = firstDayOfSeason;
+	this.firstDayOfSeason = firstDayOfSeason;
     }
 
     public Calendar getLastDayOfSeason() {
-        return lastDayOfSeason;
+	return lastDayOfSeason;
     }
 
     public void setLastDayOfSeason(Calendar lastDayOfSeason) {
-        this.lastDayOfSeason = lastDayOfSeason;
+	this.lastDayOfSeason = lastDayOfSeason;
     }
 
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return infoExecutionPeriod;
+	return infoExecutionPeriod;
     }
 
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     public boolean hasExecutionCoursesForGivenCurricularYear(Integer curricularYear) {
-        for (InfoExecutionCourse infoExecutionCourse : executionCourses) {
-            if (infoExecutionCourse.getCurricularYear() == curricularYear) {
-                return true;
-            }
-        }
-        return false;
+	for (InfoExecutionCourse infoExecutionCourse : executionCourses) {
+	    if (infoExecutionCourse.getCurricularYear() == curricularYear) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

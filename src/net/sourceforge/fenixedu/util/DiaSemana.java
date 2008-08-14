@@ -69,7 +69,7 @@ public class DiaSemana extends FenixUtil {
 
     public String toString() {
 	int diaSemana = this._diaSemana.intValue();
-	switch (diaSemana) {                   
+	switch (diaSemana) {
 	case SEGUNDA_FEIRA:
 	    return new DateTime().withDayOfWeek(1).toString("E");
 	case TERCA_FEIRA:

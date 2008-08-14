@@ -25,42 +25,40 @@ public class InfoAttendWithEnrollment extends InfoObject implements Serializable
     }
 
     public InfoAttendWithEnrollment(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao) {
-        setAluno(aluno);
-        setDisciplinaExecucao(disciplinaExecucao);
+	setAluno(aluno);
+	setDisciplinaExecucao(disciplinaExecucao);
     }
 
     public InfoStudent getAluno() {
-        return _aluno;
+	return _aluno;
     }
 
     public void setAluno(InfoStudent aluno) {
-        _aluno = aluno;
+	_aluno = aluno;
     }
 
     public InfoExecutionCourse getDisciplinaExecucao() {
-        return _disciplinaExecucao;
+	return _disciplinaExecucao;
     }
 
     public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao) {
-        _disciplinaExecucao = disciplinaExecucao;
+	_disciplinaExecucao = disciplinaExecucao;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoFrequenta) {
-            InfoFrequenta frequenta = (InfoFrequenta) obj;
-            resultado =
-            getAluno().equals(frequenta.getAluno())
-                    && getDisciplinaExecucao().equals(getDisciplinaExecucao());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoFrequenta) {
+	    InfoFrequenta frequenta = (InfoFrequenta) obj;
+	    resultado = getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(getDisciplinaExecucao());
+	}
+	return resultado;
     }
 
     /**
      * @return Returns the enrollments.
      */
     public Integer getEnrollments() {
-        return enrollments;
+	return enrollments;
     }
 
     /**
@@ -68,14 +66,14 @@ public class InfoAttendWithEnrollment extends InfoObject implements Serializable
      *            The enrollments to set.
      */
     public void setEnrollments(Integer enrollments) {
-        this.enrollments = enrollments;
+	this.enrollments = enrollments;
     }
 
     /**
      * @return Returns the infoEnrolment.
      */
     public InfoEnrolment getInfoEnrolment() {
-        return infoEnrolment;
+	return infoEnrolment;
     }
 
     /**
@@ -83,14 +81,14 @@ public class InfoAttendWithEnrollment extends InfoObject implements Serializable
      *            The infoEnrolment to set.
      */
     public void setInfoEnrolment(InfoEnrolment infoEnrolment) {
-        this.infoEnrolment = infoEnrolment;
+	this.infoEnrolment = infoEnrolment;
     }
 
     /**
      * @return Returns the infoShifts.
      */
     public Map getInfoShifts() {
-        return infoShifts;
+	return infoShifts;
     }
 
     /**
@@ -98,6 +96,6 @@ public class InfoAttendWithEnrollment extends InfoObject implements Serializable
      *            The infoShifts to set.
      */
     public void setInfoShifts(Map infoShifts) {
-        this.infoShifts = infoShifts;
+	this.infoShifts = infoShifts;
     }
 }

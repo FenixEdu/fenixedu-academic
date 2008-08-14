@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 /**
  * @author Ângela
  * 
- * 25/6/2003
+ *         25/6/2003
  */
 public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent {
 
@@ -22,91 +22,91 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
     private EvaluationType evaluationType;
 
     public InfoEvaluation() {
-        setPublishmentMessage(null);
-        setEvaluationType(null);
+	setPublishmentMessage(null);
+	setEvaluationType(null);
     }
 
     public InfoEvaluation(String publishmentMessage, EvaluationType type) {
-        this();
-        setPublishmentMessage(publishmentMessage);
-        setEvaluationType(type);
+	this();
+	setPublishmentMessage(publishmentMessage);
+	setEvaluationType(type);
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoEvaluation) {
-            InfoEvaluation infoEvaluation = (InfoEvaluation) obj;
-            resultado = this.getPublishmentMessage().equals(infoEvaluation.getPublishmentMessage())
-                    && this.getEvaluationType() == infoEvaluation.getEvaluationType();
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof InfoEvaluation) {
+	    InfoEvaluation infoEvaluation = (InfoEvaluation) obj;
+	    resultado = this.getPublishmentMessage().equals(infoEvaluation.getPublishmentMessage())
+		    && this.getEvaluationType() == infoEvaluation.getEvaluationType();
+	}
+	return resultado;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "publishmentMessage = " + this.publishmentMessage + "; ";
-        result += "type = " + this.evaluationType + "]";
-        return result;
+	String result = "[" + this.getClass().getName() + ": ";
+	result += "publishmentMessage = " + this.publishmentMessage + "; ";
+	result += "type = " + this.evaluationType + "]";
+	return result;
     }
 
     /**
      * @return
      */
     public String getPublishmentMessage() {
-        return publishmentMessage;
+	return publishmentMessage;
     }
 
     /**
      * @param string
      */
     public void setPublishmentMessage(String string) {
-        this.publishmentMessage = string;
+	this.publishmentMessage = string;
     }
 
     /**
      * @return
      */
     public EvaluationType getEvaluationType() {
-        return evaluationType;
+	return evaluationType;
     }
 
     /**
      * @param type
      */
     public void setEvaluationType(EvaluationType type) {
-        evaluationType = type;
+	evaluationType = type;
     }
 
-    //Methods inherited from abstract InfoShowOccupations - not used
+    // Methods inherited from abstract InfoShowOccupations - not used
     public InfoShift getInfoShift() {
-        return null;
+	return null;
     }
 
     public ShiftType getTipo() {
-        return null;
+	return null;
     }
 
     public InfoRoomOccupation getInfoRoomOccupation() {
-        return null;
+	return null;
     }
 
     public DiaSemana getDiaSemana() {
-        return null;
+	return null;
     }
 
     public Calendar getInicio() {
-        return null;
+	return null;
     }
 
     public Calendar getFim() {
-        return null;
+	return null;
     }
 
     public void copyFromDomain(Evaluation evaluation) {
-        super.copyFromDomain(evaluation);
-        if (evaluation != null) {
-            setPublishmentMessage(evaluation.getPublishmentMessage());
-        }
+	super.copyFromDomain(evaluation);
+	if (evaluation != null) {
+	    setPublishmentMessage(evaluation.getPublishmentMessage());
+	}
     }
 
     /**
@@ -114,20 +114,19 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
      * @return
      */
     public static InfoEvaluation newInfoFromDomain(Evaluation evaluation) {
-        InfoEvaluation infoEvaluation = null;
-        if (evaluation != null) {
-            if (evaluation instanceof WrittenEvaluation) {
-                infoEvaluation = InfoWrittenEvaluation
-                        .newInfoFromDomain((WrittenEvaluation) evaluation);
-            } else if (evaluation instanceof FinalEvaluation) {
-                infoEvaluation = InfoFinalEvaluation.newInfoFromDomain((FinalEvaluation) evaluation);
-            } else if (evaluation instanceof OnlineTest) {
-                infoEvaluation = InfoOnlineTest.newInfoFromDomain((OnlineTest) evaluation);
-            } else {
-                infoEvaluation = new InfoEvaluation();
-                infoEvaluation.copyFromDomain(evaluation);
-            }
-        }
-        return infoEvaluation;
+	InfoEvaluation infoEvaluation = null;
+	if (evaluation != null) {
+	    if (evaluation instanceof WrittenEvaluation) {
+		infoEvaluation = InfoWrittenEvaluation.newInfoFromDomain((WrittenEvaluation) evaluation);
+	    } else if (evaluation instanceof FinalEvaluation) {
+		infoEvaluation = InfoFinalEvaluation.newInfoFromDomain((FinalEvaluation) evaluation);
+	    } else if (evaluation instanceof OnlineTest) {
+		infoEvaluation = InfoOnlineTest.newInfoFromDomain((OnlineTest) evaluation);
+	    } else {
+		infoEvaluation = new InfoEvaluation();
+		infoEvaluation.copyFromDomain(evaluation);
+	    }
+	}
+	return infoEvaluation;
     }
 }

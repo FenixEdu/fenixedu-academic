@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 
 public abstract class SupportRequest extends SupportRequest_Base {
-    
-    protected  SupportRequest() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        super.setRequestTime(new DateTime());
+
+    protected SupportRequest() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	super.setRequestTime(new DateTime());
     }
 
     protected SupportRequest(SupportRequestPriority requestPriority) {
@@ -21,12 +21,14 @@ public abstract class SupportRequest extends SupportRequest_Base {
 	setRequestPriority(requestPriority);
     }
 
-    protected SupportRequest(Content requestContext, SupportRequestPriority requestPriority, Person person, String responseEmail, String subject, String body) {
+    protected SupportRequest(Content requestContext, SupportRequestPriority requestPriority, Person person, String responseEmail,
+	    String subject, String body) {
 	this(requestPriority);
 	init(requestContext, requestPriority, person, responseEmail, subject, body);
     }
-    
-    protected void init(Content requestContext, SupportRequestPriority requestPriority, Person person, String responseEmail, String subject, String body) {
+
+    protected void init(Content requestContext, SupportRequestPriority requestPriority, Person person, String responseEmail,
+	    String subject, String body) {
 	checkParameters(requestPriority);
 	setRequestContext(requestContext);
 	setRequestPriority(requestPriority);
@@ -37,12 +39,12 @@ public abstract class SupportRequest extends SupportRequest_Base {
     }
 
     protected void checkParameters(SupportRequestPriority requestPriority) {
-	
+
 	if (requestPriority == null) {
 	    throw new DomainException("error.domain.support.SupportRequest.priority.null");
 	}
     }
-    
+
     @Override
     public void setRequestTime(DateTime requestTime) {
 	throw new DomainException("error.domain.support.SupportRequest.requestTime.cannot.be.changed");

@@ -26,47 +26,46 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class FindExternalPersonDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        return mapping.findForward("start");
+	return mapping.findForward("start");
 
     }
 
-    public ActionForward find(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
-        ActionErrors actionErrors = new ActionErrors();
+    public ActionForward find(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = UserView.getUser();
+	ActionErrors actionErrors = new ActionErrors();
 
-        DynaActionForm findExternalPersonForm = (DynaActionForm) form;
-        String externalPersonName = (String) findExternalPersonForm.get("name");
+	DynaActionForm findExternalPersonForm = (DynaActionForm) form;
+	String externalPersonName = (String) findExternalPersonForm.get("name");
 
-        List infoExternalPersonsList = null;
-        Object args[] = { externalPersonName };
+	List infoExternalPersonsList = null;
+	Object args[] = { externalPersonName };
 
-        try {
-            if (!externalPersonName.equals(""))
-                infoExternalPersonsList = (ArrayList) ServiceUtils.executeService(
-                        "SearchExternalPersonsByName", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	try {
+	    if (!externalPersonName.equals(""))
+		infoExternalPersonsList = (ArrayList) ServiceUtils.executeService("SearchExternalPersonsByName", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        if ((infoExternalPersonsList != null) && (infoExternalPersonsList.isEmpty() == false)) {
-            request.setAttribute(SessionConstants.EXTERNAL_PERSONS_LIST, infoExternalPersonsList);
+	if ((infoExternalPersonsList != null) && (infoExternalPersonsList.isEmpty() == false)) {
+	    request.setAttribute(SessionConstants.EXTERNAL_PERSONS_LIST, infoExternalPersonsList);
 
-            return mapping.findForward("success");
-        }
-        actionErrors.add("label.masterDegree.administrativeOffice.searchResultsEmpty", new ActionError(
-                "label.masterDegree.administrativeOffice.searchResultsEmpty"));
+	    return mapping.findForward("success");
+	}
+	actionErrors.add("label.masterDegree.administrativeOffice.searchResultsEmpty", new ActionError(
+		"label.masterDegree.administrativeOffice.searchResultsEmpty"));
 
-        saveErrors(request, actionErrors);
-        return mapping.findForward("error");
+	saveErrors(request, actionErrors);
+	return mapping.findForward("error");
 
     }
 

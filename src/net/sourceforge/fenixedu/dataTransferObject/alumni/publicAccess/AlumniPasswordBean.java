@@ -95,11 +95,11 @@ public class AlumniPasswordBean implements Serializable {
     public void setParishOfBirth(String parishOfBirth) {
 	this.parishOfBirth = parishOfBirth;
     }
-    
+
     public String getParishOfBirth() {
 	return parishOfBirth;
     }
-    
+
     public String getSocialSecurityNumber() {
 	return socialSecurityNumber;
     }
@@ -123,7 +123,7 @@ public class AlumniPasswordBean implements Serializable {
     public void setNameOfMother(String nameOfMother) {
 	this.nameOfMother = nameOfMother;
     }
-    
+
     public String getPassword() {
 	return password;
     }

@@ -13,17 +13,16 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import org.joda.time.YearMonthDay;
 
 public class CreateExternalUnit extends Service {
-    
+
     public Unit run(final CreateExternalUnitBean externalUnitBean) throws FenixServiceException {
-	
+
 	if (externalUnitBean.getUnitType() == PartyTypeEnum.DEPARTMENT) {
-	    return DepartmentUnit.createNewOfficialExternalDepartmentUnit(
-		    externalUnitBean.getUnitName(), externalUnitBean.getUnitCode(), externalUnitBean.getParentUnit());
+	    return DepartmentUnit.createNewOfficialExternalDepartmentUnit(externalUnitBean.getUnitName(), externalUnitBean
+		    .getUnitCode(), externalUnitBean.getParentUnit());
 	} else {
-	    return new CreateUnit().run(externalUnitBean.getParentUnit(),
-		    new MultiLanguageString(Language.getDefaultLanguage(), externalUnitBean.getUnitName()),
-		    null, externalUnitBean.getUnitCode(), new YearMonthDay(), null, externalUnitBean.getUnitType(),
-		    null, null, null, null, null, null, null, null);
+	    return new CreateUnit().run(externalUnitBean.getParentUnit(), new MultiLanguageString(Language.getDefaultLanguage(),
+		    externalUnitBean.getUnitName()), null, externalUnitBean.getUnitCode(), new YearMonthDay(), null,
+		    externalUnitBean.getUnitType(), null, null, null, null, null, null, null, null);
 	}
     }
 }

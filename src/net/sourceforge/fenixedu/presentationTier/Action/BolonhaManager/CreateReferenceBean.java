@@ -12,43 +12,53 @@ public class CreateReferenceBean implements Serializable {
     private String reference;
     private String url;
     private BibliographicReferenceType type;
-    
+
     public String getAuthors() {
-        return authors;
+	return authors;
     }
+
     public void setAuthors(String authors) {
-        this.authors = authors;
+	this.authors = authors;
     }
+
     public String getReference() {
-        return reference;
+	return reference;
     }
+
     public void setReference(String reference) {
-        this.reference = reference;
+	this.reference = reference;
     }
+
     public String getTitle() {
-        return title;
+	return title;
     }
+
     public void setTitle(String title) {
-        this.title = title;
+	this.title = title;
     }
+
     public BibliographicReferenceType getType() {
-        return type;
+	return type;
     }
+
     public void setType(BibliographicReferenceType type) {
-        this.type = type;
+	this.type = type;
     }
+
     public String getUrl() {
-        return url;
+	return url;
     }
+
     public void setUrl(String url) {
-        this.url = url;
+	this.url = url;
     }
+
     public String getYear() {
-        return year;
+	return year;
     }
+
     public void setYear(String year) {
-        this.year = year;
+	this.year = year;
     }
-    
-    
+
 }

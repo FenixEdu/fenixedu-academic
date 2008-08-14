@@ -19,11 +19,11 @@ public class JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion imple
      */
 
     public Object javaToSql(Object obj) throws ConversionException {
-        if (obj instanceof EnrolmentAction) {
-            EnrolmentAction enrollmentAction = (EnrolmentAction) obj;
-            return new Integer(enrollmentAction.getValue());
-        }
-        return obj;
+	if (obj instanceof EnrolmentAction) {
+	    EnrolmentAction enrollmentAction = (EnrolmentAction) obj;
+	    return new Integer(enrollmentAction.getValue());
+	}
+	return obj;
     }
 
     /*
@@ -31,19 +31,18 @@ public class JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion imple
      */
 
     public Object sqlToJava(Object obj) throws ConversionException {
-        EnrolmentAction enrollmentAction = null;
-        if (obj instanceof Integer) {
-            Integer enrollmentStateId = (Integer) obj;
+	EnrolmentAction enrollmentAction = null;
+	if (obj instanceof Integer) {
+	    Integer enrollmentStateId = (Integer) obj;
 
-            enrollmentAction = EnrolmentAction.getEnum(enrollmentStateId.intValue());
-            if (enrollmentAction == null) {
-                throw new IllegalArgumentException(this.getClass().getName()
-                        + ": Illegal EnrolmentAction type!(" + obj + ")");
-            }
-        } else {
-            throw new IllegalArgumentException("Illegal EnrolmentAction type!(" + obj + ")");
-        }
-        return enrollmentAction;
+	    enrollmentAction = EnrolmentAction.getEnum(enrollmentStateId.intValue());
+	    if (enrollmentAction == null) {
+		throw new IllegalArgumentException(this.getClass().getName() + ": Illegal EnrolmentAction type!(" + obj + ")");
+	    }
+	} else {
+	    throw new IllegalArgumentException("Illegal EnrolmentAction type!(" + obj + ")");
+	}
+	return enrollmentAction;
 
     }
 

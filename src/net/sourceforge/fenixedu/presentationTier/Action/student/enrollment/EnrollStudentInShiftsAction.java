@@ -23,8 +23,8 @@ import org.apache.struts.action.ActionMapping;
 
 public class EnrollStudentInShiftsAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException {
 
 	final IUserView userView = getUserView(request);
 
@@ -34,9 +34,8 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 	}
 
 	try {
-	    ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils
-		    .executeService( "EnrollStudentInShifts", new Object[] {
-			    getRegistration(request), shiftId });
+	    ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils.executeService(
+		    "EnrollStudentInShifts", new Object[] { getRegistration(request), shiftId });
 
 	    if (errorReport.getUnAvailableShifts().size() > 0) {
 		for (final Shift shift : (List<Shift>) errorReport.getUnAvailableShifts()) {
@@ -60,7 +59,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 	saveMessages(request);
 	return mapping.findForward("enrollmentConfirmation");
     }
-    
+
     private Registration getRegistration(HttpServletRequest request) {
 	return rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationOID")));
     }

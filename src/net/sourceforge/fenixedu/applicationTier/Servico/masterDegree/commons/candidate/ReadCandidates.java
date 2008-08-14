@@ -13,19 +13,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCandidates extends Service {
 
-	public List run(String[] candidateList) throws FenixServiceException{
+    public List run(String[] candidateList) throws FenixServiceException {
 
-		List result = new ArrayList();
+	List result = new ArrayList();
 
-		// Read the admited candidates
-		int size = candidateList.length;
-		int i = 0;
-		for (i = 0; i < size; i++) {
+	// Read the admited candidates
+	int size = candidateList.length;
+	int i = 0;
+	for (i = 0; i < size; i++) {
 
-			result.add(InfoMasterDegreeCandidateWithInfoPerson
-					.newInfoFromDomain(rootDomainObject.readMasterDegreeCandidateByOID(new Integer(candidateList[i]))));
-		}
-
-		return result;
+	    result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(rootDomainObject
+		    .readMasterDegreeCandidateByOID(new Integer(candidateList[i]))));
 	}
+
+	return result;
+    }
 }

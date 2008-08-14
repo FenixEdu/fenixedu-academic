@@ -12,16 +12,16 @@ public class CreateExternalCurricularCourseBean implements Serializable {
     private String code;
     private boolean enrolStudent;
     private CreateExternalEnrolmentBean externalEnrolmentBean;
-    
+
     protected CreateExternalCurricularCourseBean() {
-	
+
     }
-    
+
     public CreateExternalCurricularCourseBean(final Unit parentUnit) {
 	setParentUnit(parentUnit);
 	setExternalEnrolmentBean(new CreateExternalEnrolmentBean());
     }
-    
+
     public Unit getParentUnit() {
 	return (this.parentUnit != null) ? this.parentUnit.getObject() : null;
     }
@@ -29,40 +29,40 @@ public class CreateExternalCurricularCourseBean implements Serializable {
     public void setParentUnit(Unit parentUnit) {
 	this.parentUnit = (parentUnit != null) ? new DomainReference<Unit>(parentUnit) : null;
     }
-    
+
     public String getCode() {
-        return code;
+	return code;
     }
-    
+
     public void setCode(String code) {
-        this.code = code;
+	this.code = code;
     }
-    
+
     public String getName() {
-        return name;
+	return name;
     }
-    
+
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public boolean isEnrolStudent() {
-        return enrolStudent;
+	return enrolStudent;
     }
-    
+
     public boolean isToEnrolStudent() {
 	return isEnrolStudent();
     }
 
     public void setEnrolStudent(boolean enrolStudent) {
-        this.enrolStudent = enrolStudent;
+	this.enrolStudent = enrolStudent;
     }
 
     public CreateExternalEnrolmentBean getExternalEnrolmentBean() {
-        return externalEnrolmentBean;
+	return externalEnrolmentBean;
     }
 
     public void setExternalEnrolmentBean(CreateExternalEnrolmentBean externalEnrolmentBean) {
-        this.externalEnrolmentBean = externalEnrolmentBean;
+	this.externalEnrolmentBean = externalEnrolmentBean;
     }
 }

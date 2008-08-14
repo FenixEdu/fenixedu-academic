@@ -12,9 +12,9 @@ public class DayColumn {
     private String label;
 
     public DayColumn(int index, String label) {
-        maxColisionSize = new Integer(1);
-        this.index = index;
-        this.label = label;
+	maxColisionSize = new Integer(1);
+	this.index = index;
+	this.label = label;
     }
 
     /**
@@ -23,7 +23,7 @@ public class DayColumn {
      * @return Integer
      */
     public Integer getMaxColisionSize() {
-        return maxColisionSize;
+	return maxColisionSize;
     }
 
     /**
@@ -33,8 +33,7 @@ public class DayColumn {
      *            The maxColisionSize to set
      */
     public void setMaxColisionSize(Integer maxColisionSize) {
-        this.maxColisionSize = new Integer(Math.max(maxColisionSize.intValue(), this.maxColisionSize
-                .intValue()));
+	this.maxColisionSize = new Integer(Math.max(maxColisionSize.intValue(), this.maxColisionSize.intValue()));
     }
 
     /**
@@ -43,7 +42,7 @@ public class DayColumn {
      * @return int
      */
     public int getIndex() {
-        return index;
+	return index;
     }
 
     /**
@@ -53,7 +52,7 @@ public class DayColumn {
      *            The index to set
      */
     public void setIndex(int index) {
-        this.index = index;
+	this.index = index;
     }
 
     /**
@@ -62,7 +61,7 @@ public class DayColumn {
      * @return String
      */
     public String getLabel() {
-        return label;
+	return label;
     }
 
 }

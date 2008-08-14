@@ -15,8 +15,8 @@ public abstract class InstallmentWithPenalty extends InstallmentWithPenalty_Base
 	super();
     }
 
-    protected void init(final PaymentPlan paymentCondition, final Money amount, YearMonthDay startDate,
-	    YearMonthDay endDate, final BigDecimal penaltyPercentage) {
+    protected void init(final PaymentPlan paymentCondition, final Money amount, YearMonthDay startDate, YearMonthDay endDate,
+	    final BigDecimal penaltyPercentage) {
 
 	super.init(paymentCondition, amount, startDate, endDate);
 	checkParameters(penaltyPercentage);
@@ -27,8 +27,7 @@ public abstract class InstallmentWithPenalty extends InstallmentWithPenalty_Base
 
     private void checkParameters(BigDecimal penaltyPercentage) {
 	if (penaltyPercentage == null) {
-	    throw new DomainException(
-		    "error.accounting.installments.InstallmentWithPenalty.penaltyPercentage.cannot.be.null");
+	    throw new DomainException("error.accounting.installments.InstallmentWithPenalty.penaltyPercentage.cannot.be.null");
 	}
     }
 

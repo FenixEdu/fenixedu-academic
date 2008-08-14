@@ -122,7 +122,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public Student getCandidacyStudent() {
 	return hasCandidacyPerson() && getCandidacyPerson().hasStudent() ? getCandidacyPerson().getStudent() : null;
     }
-    
+
     public boolean hasCandidacyStudent() {
 	return getCandidacyStudent() != null;
     }

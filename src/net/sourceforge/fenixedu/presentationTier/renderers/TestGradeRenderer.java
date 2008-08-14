@@ -9,29 +9,31 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class TestGradeRenderer extends OutputRenderer {
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+	return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				if(object == null) {
-					return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "msg.enrolled"));
-				}
-				
-				IGrade grade = (IGrade) object;
-				switch (grade.getGradeType()) {
-				case GRADENA:
-				case GRADERE:
-				case GRADEAP: return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", grade.getGradeType().toString()));
-				case GRADEFIVE:
-				case GRADETWENTY: return new HtmlText(((Integer)grade.getGradeValue()).toString());
-				}
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		if (object == null) {
+		    return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "msg.enrolled"));
+		}
 
-				return new HtmlText("");
-			}
-			
-		};
-	}
+		IGrade grade = (IGrade) object;
+		switch (grade.getGradeType()) {
+		case GRADENA:
+		case GRADERE:
+		case GRADEAP:
+		    return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", grade.getGradeType().toString()));
+		case GRADEFIVE:
+		case GRADETWENTY:
+		    return new HtmlText(((Integer) grade.getGradeValue()).toString());
+		}
+
+		return new HtmlText("");
+	    }
+
+	};
+    }
 
 }

@@ -19,12 +19,12 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
      * @param GrantCostCenter
      */
     public void copyFromDomain(GrantCostCenter grantCostCenter) {
-        super.copyFromDomain(grantCostCenter);
-        if (grantCostCenter != null) {
+	super.copyFromDomain(grantCostCenter);
+	if (grantCostCenter != null) {
 
-            setNumber(grantCostCenter.getNumber());
-            setDesignation(grantCostCenter.getDesignation());
-        }
+	    setNumber(grantCostCenter.getNumber());
+	    setDesignation(grantCostCenter.getDesignation());
+	}
     }
 
     /**
@@ -32,20 +32,19 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
      * @return
      */
     public static InfoGrantCostCenter newInfoFromDomain(GrantCostCenter grantCostCenter) {
-        InfoGrantCostCenter infoGrantCostCenter = null;
-        if (grantCostCenter != null) {
-            infoGrantCostCenter = new InfoGrantCostCenter();
-            infoGrantCostCenter.copyFromDomain(grantCostCenter);
-        }
-        return infoGrantCostCenter;
+	InfoGrantCostCenter infoGrantCostCenter = null;
+	if (grantCostCenter != null) {
+	    infoGrantCostCenter = new InfoGrantCostCenter();
+	    infoGrantCostCenter.copyFromDomain(grantCostCenter);
+	}
+	return infoGrantCostCenter;
     }
 
-    public void copyToDomain(InfoGrantCostCenter infoGrantCostCenter, GrantCostCenter grantCostCenter)
-            {
-        super.copyToDomain(infoGrantCostCenter, grantCostCenter);
+    public void copyToDomain(InfoGrantCostCenter infoGrantCostCenter, GrantCostCenter grantCostCenter) {
+	super.copyToDomain(infoGrantCostCenter, grantCostCenter);
 
-        grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());
-        grantCostCenter.setNumber(infoGrantCostCenter.getNumber());
+	grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());
+	grantCostCenter.setNumber(infoGrantCostCenter.getNumber());
     }
 
 }

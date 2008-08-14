@@ -48,29 +48,27 @@ public class StudentGroupStudentsGroup extends DomainBackedGroup<StudentGroup> {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] {
-                new IdOperator(getObject())
-        };
+	return new Argument[] { new IdOperator(getObject()) };
     }
-    
+
     public static class Builder implements GroupBuilder {
 
-        public Group build(Object[] arguments) {
-            try {
-                return new StudentGroupStudentsGroup((StudentGroup) arguments[0]);
-            }
-            catch (ClassCastException e) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.studentGroupStudents.notStudentGroup", arguments[0].toString());
-            }
-        }
+	public Group build(Object[] arguments) {
+	    try {
+		return new StudentGroupStudentsGroup((StudentGroup) arguments[0]);
+	    } catch (ClassCastException e) {
+		throw new GroupDynamicExpressionException("accessControl.group.builder.studentGroupStudents.notStudentGroup",
+			arguments[0].toString());
+	    }
+	}
 
-        public int getMinArguments() {
-            return 0;
-        }
+	public int getMinArguments() {
+	    return 0;
+	}
 
-        public int getMaxArguments() {
-            return 1;
-        }
-        
+	public int getMaxArguments() {
+	    return 1;
+	}
+
     }
 }

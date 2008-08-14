@@ -26,83 +26,81 @@ public class UnitExtraWorkAmountFactory implements Serializable, FactoryExecutor
     private DomainReference<UnitExtraWorkAmount> unitExtraWorkAmount;
 
     public UnitExtraWorkAmountFactory() {
-        super();
-        YearMonthDay date = new YearMonthDay();
-        setYear(date.getYear());
+	super();
+	YearMonthDay date = new YearMonthDay();
+	setYear(date.getYear());
     }
 
     public UnitExtraWorkAmountFactory(YearMonthDay date) {
-        super();
-        setYear(date.getYear());
+	super();
+	setYear(date.getYear());
     }
 
     public UnitExtraWorkAmountFactory(UnitExtraWorkAmount unitExtraWorkAmount) {
-        setUnitExtraWorkAmount(unitExtraWorkAmount);
-        setUnit(unitExtraWorkAmount.getUnit());
-        setYear(unitExtraWorkAmount.getYear());
+	setUnitExtraWorkAmount(unitExtraWorkAmount);
+	setUnit(unitExtraWorkAmount.getUnit());
+	setYear(unitExtraWorkAmount.getYear());
     }
 
     public Integer getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(Integer year) {
-        this.year = year;
+	this.year = year;
     }
 
     public Double getAmount() {
-        return amount;
+	return amount;
     }
 
     public void setAmount(Double amount) {
-        this.amount = amount;
+	this.amount = amount;
     }
 
     public Integer getCostCenterCode() {
-        return costCenterCode;
+	return costCenterCode;
     }
 
     public void setCostCenterCode(Integer costCenterCode) {
-        this.costCenterCode = costCenterCode;
+	this.costCenterCode = costCenterCode;
     }
 
     public Unit getUnit() {
-        return unit == null ? null : unit.getObject();
+	return unit == null ? null : unit.getObject();
     }
 
     public void setUnit(Unit unit) {
-        this.unit = unit != null ? new DomainReference<Unit>(unit) : null;
+	this.unit = unit != null ? new DomainReference<Unit>(unit) : null;
     }
 
     public UnitExtraWorkAmount getUnitExtraWorkAmount() {
-        return unitExtraWorkAmount == null ? null : unitExtraWorkAmount.getObject();
+	return unitExtraWorkAmount == null ? null : unitExtraWorkAmount.getObject();
     }
 
     public void setUnitExtraWorkAmount(UnitExtraWorkAmount unitExtraWorkAmount) {
-        this.unitExtraWorkAmount = unitExtraWorkAmount != null ? new DomainReference<UnitExtraWorkAmount>(
-                unitExtraWorkAmount)
-                : null;
+	this.unitExtraWorkAmount = unitExtraWorkAmount != null ? new DomainReference<UnitExtraWorkAmount>(unitExtraWorkAmount)
+		: null;
     }
 
     public List<UnitExtraWorkMovement> getOrderedMovements() {
-        List<UnitExtraWorkMovement> unitExtraWorkMovements = new ArrayList<UnitExtraWorkMovement>();
-        for (UnitExtraWorkMovement extraWorkMovement : getUnitExtraWorkAmount()
-                .getUnitExtraWorkMovements()) {
-            unitExtraWorkMovements.add(extraWorkMovement);
-        }
-        Collections.sort(unitExtraWorkMovements, new BeanComparator("date"));
-        return unitExtraWorkMovements;
+	List<UnitExtraWorkMovement> unitExtraWorkMovements = new ArrayList<UnitExtraWorkMovement>();
+	for (UnitExtraWorkMovement extraWorkMovement : getUnitExtraWorkAmount().getUnitExtraWorkMovements()) {
+	    unitExtraWorkMovements.add(extraWorkMovement);
+	}
+	Collections.sort(unitExtraWorkMovements, new BeanComparator("date"));
+	return unitExtraWorkMovements;
     }
 
     public Object execute() {
-        if (getUnit() == null) {
-            UnitExtraWorkAmount unitExtraWorkAmount = new UnitExtraWorkAmount(getYear(), Unit
-                    .readByCostCenterCode(getCostCenterCode()));
-            new UnitExtraWorkMovement(unitExtraWorkAmount, getAmount());
-            return unitExtraWorkAmount;
-        } else {
-            new UnitExtraWorkMovement(getUnitExtraWorkAmount(), getAmount());
-            return getUnitExtraWorkAmount();
-        }
+	if (getUnit() == null) {
+	    UnitExtraWorkAmount unitExtraWorkAmount = new UnitExtraWorkAmount(getYear(), Unit
+		    .readByCostCenterCode(getCostCenterCode()));
+	    new UnitExtraWorkMovement(unitExtraWorkAmount, getAmount());
+	    return unitExtraWorkAmount;
+	} else {
+	    new UnitExtraWorkMovement(getUnitExtraWorkAmount(), getAmount());
+	    return getUnitExtraWorkAmount();
+	}
     }
 }

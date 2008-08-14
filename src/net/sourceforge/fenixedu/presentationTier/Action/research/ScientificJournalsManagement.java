@@ -13,14 +13,14 @@ import org.apache.struts.action.ActionMapping;
 public class ScientificJournalsManagement extends FenixDispatchAction {
 
     public ActionForward showScientificJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-	
-	String journalId  = request.getParameter("journalId");
-	if(journalId!=null) {
+	    HttpServletResponse response) {
+
+	String journalId = request.getParameter("journalId");
+	if (journalId != null) {
 	    ScientificJournal scientificJournal = rootDomainObject.readScientificJournalByOID(Integer.valueOf(journalId));
-	    request.setAttribute("journal",scientificJournal);
+	    request.setAttribute("journal", scientificJournal);
 	}
-	
+
 	return mapping.findForward("showJournal");
     }
 }

@@ -6,7 +6,7 @@ public class NotAuthorizeException extends Exception {
     }
 
     public NotAuthorizeException(String s) {
-        super(s);
+	super(s);
     }
 
 }

@@ -228,9 +228,9 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 	}
 	return false;
     }
-    
+
     public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod().getExecutionYear();
     }
-    
+
 }

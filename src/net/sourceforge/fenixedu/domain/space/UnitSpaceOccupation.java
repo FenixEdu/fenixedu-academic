@@ -23,8 +23,8 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Created unit space occupation", parameters = {
-	    "space", "unit", "begin", "end" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created unit space occupation", parameters = { "space", "unit", "begin",
+	    "end" })
     public UnitSpaceOccupation(Unit unit, Space space, YearMonthDay begin, YearMonthDay end) {
 	super();
 	setResource(space);
@@ -40,10 +40,9 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	super.setUnit(null);
 	super.delete();
     }
-    
+
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Edited unit space occupation", parameters = {
-	    "begin", "end" })
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited unit space occupation", parameters = { "begin", "end" })
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
 	checkUnitSpaceOccupationIntersection(begin, end, getSpace(), getUnit());
 	super.setBegin(begin);
@@ -52,15 +51,15 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 
     @Override
     public boolean isUnitSpaceOccupation() {
-        return true;
+	return true;
     }
-    
+
     @Override
     public void setUnit(Unit unit) {
 	if (unit == null) {
 	    throw new DomainException("error.unitSpaceOccupation.empty.unit");
 	}
-	if(unit.isAggregateUnit()) {
+	if (unit.isAggregateUnit()) {
 	    throw new DomainException("error.space.aggregate.unit");
 	}
 	super.setUnit(unit);
@@ -80,7 +79,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     public void setEnd(YearMonthDay end) {
 	throw new DomainException("error.invalid.operation");
     }
-    
+
     public boolean isActive(YearMonthDay currentDate) {
 	return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
     }
@@ -107,11 +106,11 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	    throw new DomainException("error.begin.after.end");
 	}
     }
-    
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
 	final YearMonthDay start = getBegin();
-	final YearMonthDay end = getEnd();	
+	final YearMonthDay end = getEnd();
 	return start != null && (end == null || end.isAfter(start));
     }
 }

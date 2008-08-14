@@ -15,20 +15,20 @@ import org.joda.time.YearMonthDay;
 public class Invitation extends Invitation_Base {
 
     private static final int MAX_USER_UID = 99999;
-        
+
     public Invitation(Person person, Unit unit, Party responsible, YearMonthDay begin, YearMonthDay end) {
-	
+
 	super();
-	
+
 	AccountabilityType accountabilityType = getInvitationAccountabilityType();
 
 	setAccountabilityType(accountabilityType);
 	setChildParty(person);
 	setParentParty(unit);
 	setResponsible(responsible);
-	setInvitationInterval(begin, end);	
-	
-	if(isActive(new YearMonthDay())) {
+	setInvitationInterval(begin, end);
+
+	if (isActive(new YearMonthDay())) {
 	    person.addPersonRoleByRoleType(RoleType.PERSON);
 	}
     }
@@ -43,7 +43,7 @@ public class Invitation extends Invitation_Base {
 	super.setBeginDate(beginDate);
 	super.setEndDate(endDate);
     }
-            
+
     @Override
     public void setResponsible(Party responsible) {
 	if (responsible == null) {
@@ -61,13 +61,13 @@ public class Invitation extends Invitation_Base {
     public void setEndDate(YearMonthDay endDate) {
 	throw new DomainException("error.Invitation.invalid.operation");
     }
-    
+
     public Unit getHostUnit() {
 	return getUnit();
     }
 
     public Person getInvitedPerson() {
-	return getPerson();	
+	return getPerson();
     }
 
     public Person getResponsiblePerson() {
@@ -80,7 +80,8 @@ public class Invitation extends Invitation_Base {
 
     @Override
     public void delete() {
-	LoginPeriod period = getInvitedPerson().getLoginIdentification().readLoginPeriodByTimeInterval(getBeginDate(), getEndDate());
+	LoginPeriod period = getInvitedPerson().getLoginIdentification().readLoginPeriodByTimeInterval(getBeginDate(),
+		getEndDate());
 	if (period != null) {
 	    period.delete();
 	}
@@ -90,11 +91,10 @@ public class Invitation extends Invitation_Base {
 
     private void checkInvitationDatesIntersection(Person person, YearMonthDay begin, YearMonthDay end) {
 	checkBeginDateAndEndDate(begin, end);
-	for (Invitation invitation : (Collection<Invitation>) person.getParentAccountabilities(
-		AccountabilityTypeEnum.INVITATION, Invitation.class)) {
+	for (Invitation invitation : (Collection<Invitation>) person.getParentAccountabilities(AccountabilityTypeEnum.INVITATION,
+		Invitation.class)) {
 	    if (!invitation.equals(this) && invitation.getHostUnit().equals(this.getHostUnit())
-		    && invitation.getResponsible().equals(this.getResponsible())
-		    && invitation.hasDatesIntersection(begin, end)) {
+		    && invitation.getResponsible().equals(this.getResponsible()) && invitation.hasDatesIntersection(begin, end)) {
 		throw new DomainException("error.invitation.dates.intersection");
 	    }
 	}
@@ -116,8 +116,7 @@ public class Invitation extends Invitation_Base {
 	}
     }
 
-    private void editLoginPeriod(YearMonthDay oldBegin, YearMonthDay oldEnd, YearMonthDay newBeginDate,
-	    YearMonthDay newEndDate) {
+    private void editLoginPeriod(YearMonthDay oldBegin, YearMonthDay oldEnd, YearMonthDay newBeginDate, YearMonthDay newEndDate) {
 
 	Login login = getInvitedPerson().getLoginIdentification();
 	LoginPeriod period = login.readLoginPeriodByTimeInterval(oldBegin, oldEnd);
@@ -127,7 +126,7 @@ public class Invitation extends Invitation_Base {
 	    new LoginPeriod(newBeginDate, newEndDate, getInvitedPerson().getLoginIdentification());
 	}
     }
-    
+
     public static AccountabilityType getInvitationAccountabilityType() {
 	return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.INVITATION);
     }

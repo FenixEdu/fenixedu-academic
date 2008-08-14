@@ -8,15 +8,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class ResourceAllocationPredicates {
-    
+
     public static final AccessControlPredicate<VehicleAllocation> checkPermissionsToManageVehicleAllocations = new AccessControlPredicate<VehicleAllocation>() {
 	public boolean evaluate(VehicleAllocation allocation) {
 	    Person loggedPerson = AccessControl.getPerson();
-	    if(!loggedPerson.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+	    if (!loggedPerson.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
 		throw new DomainException("error.logged.person.not.authorized.to.make.operation");
 	    }
 	    return true;
 	}
-    };   
-    
+    };
+
 }

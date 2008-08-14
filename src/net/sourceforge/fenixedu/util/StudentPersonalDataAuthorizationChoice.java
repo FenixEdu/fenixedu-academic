@@ -11,26 +11,26 @@ package net.sourceforge.fenixedu.util;
 public enum StudentPersonalDataAuthorizationChoice {
 
     PROFESSIONAL_ENDS, /*
-                         * only to professional ends (job propositions,
-                         * scholarships, internship, etc)
-                         */
+		        * only to professional ends (job propositions,
+		        * scholarships, internship, etc)
+		        */
     SEVERAL_ENDS, /*
-                     * several non comercial ends (biographic, recreational,
-                     * cultural, etc)
-                     */
+		   * several non comercial ends (biographic, recreational,
+		   * cultural, etc)
+		   */
     ALL_ENDS, /* all ends, including comercial ones */
 
     NO_END; /* doesn't authorize the use of the data */
 
     public String getName() {
-        return name();
+	return name();
     }
 
     public String getQualifiedName() {
-        return StudentPersonalDataAuthorizationChoice.class.getSimpleName() + "." + name();
+	return StudentPersonalDataAuthorizationChoice.class.getSimpleName() + "." + name();
     }
 
     public String getFullyQualifiedName() {
-        return StudentPersonalDataAuthorizationChoice.class.getName() + "." + name();
+	return StudentPersonalDataAuthorizationChoice.class.getName() + "." + name();
     }
 }

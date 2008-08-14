@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 public class CooperationParticipantBean extends ParticipantBean implements Serializable {
 
     DomainReference<Cooperation> cooperation;
-    
+
     public CooperationParticipantBean() {
 	super();
 	this.setCooperation(null);
     }
-    
+
     public Cooperation getCooperation() {
 	return this.cooperation.getObject();
     }
-    
+
     public void setCooperation(Cooperation cooperation) {
 	this.cooperation = new DomainReference<Cooperation>(cooperation);
     }
-    
+
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
 	return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();

@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.UnitSite;
  */
 public class RemoveUnitSiteManager extends Service {
 
-    public void run (UnitSite site, Person person) {
-        site.removeManagers(person);
+    public void run(UnitSite site, Person person) {
+	site.removeManagers(person);
     }
-    
+
 }

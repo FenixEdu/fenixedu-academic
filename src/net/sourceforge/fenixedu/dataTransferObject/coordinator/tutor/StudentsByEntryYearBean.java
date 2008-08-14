@@ -12,146 +12,152 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.Month;
 
 public class StudentsByEntryYearBean implements Serializable {
-	private Integer teacherNumber;
-	
-	private DomainReference<Teacher> teacher;
-	
-	private Integer executionDegreeID;
-	
-	private Integer degreeCurricularPlanID;
-	
-	private Month tutorshipEndMonth;
-	
-	private Integer tutorshipEndYear;
-	
-	private List<DomainReference<StudentCurricularPlan>> studentsList;
-	
-	private List<DomainReference<StudentCurricularPlan>> studentsToCreateTutorshipList;
-	
-	private Integer numberOfStudentsToCreateTutorship;
-	
-	private DomainReference<ExecutionYear> executionYear;
+    private Integer teacherNumber;
 
-	public Integer getTeacherNumber() {
-		return teacherNumber;
-	}
+    private DomainReference<Teacher> teacher;
 
-	public void setTeacherNumber(Integer teacherNumber) {
-		this.teacherNumber = teacherNumber;
-	}
+    private Integer executionDegreeID;
 
-	public StudentsByEntryYearBean(ExecutionYear executionYear) {
-		this.studentsList = new ArrayList<DomainReference<StudentCurricularPlan>>();
-		this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
-		this.executionYear = new DomainReference<ExecutionYear>(executionYear);
-	}
+    private Integer degreeCurricularPlanID;
 
-	public List<StudentCurricularPlan> getStudentsList() {
-		List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
-		for (DomainReference<StudentCurricularPlan> student : this.studentsList) {
-			students.add(student.getObject());
-		}
-		return students;
-	}
+    private Month tutorshipEndMonth;
 
-	public void setStudentsList(List<StudentCurricularPlan> students) {
-		this.studentsList = new ArrayList<DomainReference<StudentCurricularPlan>>();
-		for (StudentCurricularPlan student : students) {
-			this.studentsList.add(new DomainReference<StudentCurricularPlan>(student));
-		}
-	}
-	
-	public ExecutionYear getExecutionYear() {
-		return (executionYear == null ? null : executionYear.getObject());
-	}
+    private Integer tutorshipEndYear;
 
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = new DomainReference<ExecutionYear>(executionYear);
-	}
-	
-	public Teacher getTeacher() {
-		return (teacher == null ? null : teacher.getObject());
-	}
+    private List<DomainReference<StudentCurricularPlan>> studentsList;
 
-	public void setTeacher(Teacher teacher) {
-		this.teacher = new DomainReference<Teacher>(teacher);
-	}
+    private List<DomainReference<StudentCurricularPlan>> studentsToCreateTutorshipList;
 
-	public Integer getNumberOfStudentsWithoutTutor() {
-		return studentsList.size();
-	}
+    private Integer numberOfStudentsToCreateTutorship;
 
-	public Integer getDegreeCurricularPlanID() {
-		return degreeCurricularPlanID;
-	}
+    private DomainReference<ExecutionYear> executionYear;
 
-	public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
-		this.degreeCurricularPlanID = degreeCurricularPlanID;
-	}
+    public Integer getTeacherNumber() {
+	return teacherNumber;
+    }
 
-	public Integer getExecutionDegreeID() {
-		return executionDegreeID;
-	}
+    public void setTeacherNumber(Integer teacherNumber) {
+	this.teacherNumber = teacherNumber;
+    }
 
-	public void setExecutionDegreeID(Integer executionDegreeID) {
-		this.executionDegreeID = executionDegreeID;
-	}
+    public StudentsByEntryYearBean(ExecutionYear executionYear) {
+	this.studentsList = new ArrayList<DomainReference<StudentCurricularPlan>>();
+	this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
+	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+    }
 
-	public List<StudentCurricularPlan> getStudentsToCreateTutorshipList() {
-		List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
-		for (DomainReference<StudentCurricularPlan> student : this.studentsToCreateTutorshipList) {
-			students.add(student.getObject());
-		}
-		return students;
+    public List<StudentCurricularPlan> getStudentsList() {
+	List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
+	for (DomainReference<StudentCurricularPlan> student : this.studentsList) {
+	    students.add(student.getObject());
 	}
+	return students;
+    }
 
-	public void setStudentsToCreateTutorshipList(List<StudentCurricularPlan> students) {
-		this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
-		for (StudentCurricularPlan student : students) {
-			this.studentsToCreateTutorshipList.add(new DomainReference<StudentCurricularPlan>(student));
-		}
+    public void setStudentsList(List<StudentCurricularPlan> students) {
+	this.studentsList = new ArrayList<DomainReference<StudentCurricularPlan>>();
+	for (StudentCurricularPlan student : students) {
+	    this.studentsList.add(new DomainReference<StudentCurricularPlan>(student));
 	}
+    }
 
-	public Integer getNumberOfStudentsToCreateTutorship() {
-		return numberOfStudentsToCreateTutorship;
-	}
+    public ExecutionYear getExecutionYear() {
+	return (executionYear == null ? null : executionYear.getObject());
+    }
 
-	public void setNumberOfStudentsToCreateTutorship(Integer numberOfStudentsToCreateTutorship) {
-		this.numberOfStudentsToCreateTutorship = numberOfStudentsToCreateTutorship;
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+    }
 
-	public Month getTutorshipEndMonth() {
-		return tutorshipEndMonth;
-	}
+    public Teacher getTeacher() {
+	return (teacher == null ? null : teacher.getObject());
+    }
 
-	public void setTutorshipEndMonth(Month tutorshipEndMonth) {
-		this.tutorshipEndMonth = tutorshipEndMonth;
-	}
+    public void setTeacher(Teacher teacher) {
+	this.teacher = new DomainReference<Teacher>(teacher);
+    }
 
-	public Integer getTutorshipEndYear() {
-		return tutorshipEndYear;
-	}
+    public Integer getNumberOfStudentsWithoutTutor() {
+	return studentsList.size();
+    }
 
-	public void setTutorshipEndYear(Integer tutorshipEndYear) {
-		this.tutorshipEndYear = tutorshipEndYear;
+    public Integer getDegreeCurricularPlanID() {
+	return degreeCurricularPlanID;
+    }
+
+    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+	this.degreeCurricularPlanID = degreeCurricularPlanID;
+    }
+
+    public Integer getExecutionDegreeID() {
+	return executionDegreeID;
+    }
+
+    public void setExecutionDegreeID(Integer executionDegreeID) {
+	this.executionDegreeID = executionDegreeID;
+    }
+
+    public List<StudentCurricularPlan> getStudentsToCreateTutorshipList() {
+	List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
+	for (DomainReference<StudentCurricularPlan> student : this.studentsToCreateTutorshipList) {
+	    students.add(student.getObject());
 	}
-	
-	public void selectStudentsToCreateTutorshipList() {
-		this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
-		int i = 0;
-		Iterator iterator = this.studentsList.iterator();
-		while(iterator.hasNext() && i < this.numberOfStudentsToCreateTutorship) {
-			StudentCurricularPlan scp = ((DomainReference<StudentCurricularPlan>)iterator.next()).getObject();
-			if (scp.isLastStudentCurricularPlanFromRegistration() && scp.getRegistration().isActive()) {
-				this.studentsToCreateTutorshipList.add(new DomainReference<StudentCurricularPlan>(scp));
-				i++;
-			}
-		}
-		setNumberOfStudentsToCreateTutorship(this.studentsToCreateTutorshipList.size());//subtract students without active registration state type
+	return students;
+    }
+
+    public void setStudentsToCreateTutorshipList(List<StudentCurricularPlan> students) {
+	this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
+	for (StudentCurricularPlan student : students) {
+	    this.studentsToCreateTutorshipList.add(new DomainReference<StudentCurricularPlan>(student));
 	}
-	
-	public void clearSelectedStudentsToCreateTutorshipList() {
-		this.studentsToCreateTutorshipList.clear();
+    }
+
+    public Integer getNumberOfStudentsToCreateTutorship() {
+	return numberOfStudentsToCreateTutorship;
+    }
+
+    public void setNumberOfStudentsToCreateTutorship(Integer numberOfStudentsToCreateTutorship) {
+	this.numberOfStudentsToCreateTutorship = numberOfStudentsToCreateTutorship;
+    }
+
+    public Month getTutorshipEndMonth() {
+	return tutorshipEndMonth;
+    }
+
+    public void setTutorshipEndMonth(Month tutorshipEndMonth) {
+	this.tutorshipEndMonth = tutorshipEndMonth;
+    }
+
+    public Integer getTutorshipEndYear() {
+	return tutorshipEndYear;
+    }
+
+    public void setTutorshipEndYear(Integer tutorshipEndYear) {
+	this.tutorshipEndYear = tutorshipEndYear;
+    }
+
+    public void selectStudentsToCreateTutorshipList() {
+	this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
+	int i = 0;
+	Iterator iterator = this.studentsList.iterator();
+	while (iterator.hasNext() && i < this.numberOfStudentsToCreateTutorship) {
+	    StudentCurricularPlan scp = ((DomainReference<StudentCurricularPlan>) iterator.next()).getObject();
+	    if (scp.isLastStudentCurricularPlanFromRegistration() && scp.getRegistration().isActive()) {
+		this.studentsToCreateTutorshipList.add(new DomainReference<StudentCurricularPlan>(scp));
+		i++;
+	    }
 	}
-	
+	setNumberOfStudentsToCreateTutorship(this.studentsToCreateTutorshipList.size());// subtract
+											// students
+											// without
+											// active
+											// registration
+											// state
+											// type
+    }
+
+    public void clearSelectedStudentsToCreateTutorshipList() {
+	this.studentsToCreateTutorshipList.clear();
+    }
+
 }

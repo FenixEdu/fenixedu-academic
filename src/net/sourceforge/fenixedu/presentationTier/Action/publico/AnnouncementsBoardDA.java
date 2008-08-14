@@ -6,9 +6,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AnnouncementsBoardDA extends UnitSiteBoardsDA {
 
-	@Override
-	protected MultiLanguageString getBoardName(HttpServletRequest request) {
-		return UnitSiteBoardsDA.ANNOUNCEMENTS;
-	}
+    @Override
+    protected MultiLanguageString getBoardName(HttpServletRequest request) {
+	return UnitSiteBoardsDA.ANNOUNCEMENTS;
+    }
 
 }

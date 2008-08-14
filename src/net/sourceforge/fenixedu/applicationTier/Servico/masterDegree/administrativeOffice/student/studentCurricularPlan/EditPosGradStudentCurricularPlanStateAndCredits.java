@@ -19,7 +19,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 
     public void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits, String startDate,
 	    List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)
-	    throws FenixServiceException{
+	    throws FenixServiceException {
 	final StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
 	if (scp == null) {
 	    throw new InvalidArgumentsServiceException();

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.LoginPeriod;
 public class DeleteLoginPeriod extends Service {
 
     public void run(LoginPeriod loginPeriod) {
-	if(loginPeriod != null) {
+	if (loginPeriod != null) {
 	    loginPeriod.delete();
 	}
     }

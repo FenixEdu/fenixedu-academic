@@ -48,8 +48,8 @@ public class CheckAvailabilityFilter implements Filter {
      * 
      * <ul>
      * <li><strong>error.page</strong>: the page were the user will be
-     * redirected when a functionality is not available</li>
-     * <li><strong>testing.prefix</strong>: the prefix that is being used for
+     * redirected when a functionality is not available</li> <li>
+     * <strong>testing.prefix</strong>: the prefix that is being used for
      * testing and that will be removed when redirecting (does not affect the
      * <code>error.page</code> address)</li>
      * </ul>
@@ -78,7 +78,7 @@ public class CheckAvailabilityFilter implements Filter {
 	Content content = functionalityContext.getSelectedContent();
 
 	if (content != null && !content.isAvailable(functionalityContext)) {
-	    if (functionalityContext.getLastContentInPath(Site.class) == null 
+	    if (functionalityContext.getLastContentInPath(Site.class) == null
 		    || !((content instanceof Section) || (content instanceof Item))) {
 
 		showUnavailablePage(content, httpServletRequest, httpServletResponse);

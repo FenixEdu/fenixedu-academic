@@ -19,60 +19,57 @@ import org.apache.struts.action.ActionMapping;
 
 public class ShowStudyPlanForCandidateAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = getUserView(request);
-        ArrayList candidateStudyPlan = null;
+	IUserView userView = getUserView(request);
+	ArrayList candidateStudyPlan = null;
 
-        // transport candidate ID
-        request.setAttribute("candidateID", request.getParameter("candidateID"));
-        
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, request.getSession(false));
+	// transport candidate ID
+	request.setAttribute("candidateID", request.getParameter("candidateID"));
 
-        if (infoMasterDegreeCandidate != null) {
-            candidateStudyPlan = getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate
-                    .getIdInternal(), userView);
+	InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, request.getSession(false));
 
-            request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
-            request.setAttribute("candidateStudyPlan", candidateStudyPlan);
-        }
+	if (infoMasterDegreeCandidate != null) {
+	    candidateStudyPlan = getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate.getIdInternal(), userView);
 
-        return mapping.findForward("Sucess");
+	    request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
+	    request.setAttribute("candidateStudyPlan", candidateStudyPlan);
+	}
+
+	return mapping.findForward("Sucess");
     }
 
     private InfoMasterDegreeCandidate getMasterDegreeCandidate(IUserView userView, HttpSession session) {
-        if (session != null) {
+	if (session != null) {
 
-            Object args[] = { userView.getUtilizador() };
-            List candidates = null;
-            try {
-                candidates = (List) ServiceManagerServiceFactory.executeService(
-                        "ReadPersonCandidates", args);
-            } catch (Exception e) {
-                return null;
-            }
+	    Object args[] = { userView.getUtilizador() };
+	    List candidates = null;
+	    try {
+		candidates = (List) ServiceManagerServiceFactory.executeService("ReadPersonCandidates", args);
+	    } catch (Exception e) {
+		return null;
+	    }
 
-            if (candidates.size() == 1) {
-                session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
-                return (InfoMasterDegreeCandidate) candidates.get(0);
-            }
+	    if (candidates.size() == 1) {
+		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
+		return (InfoMasterDegreeCandidate) candidates.get(0);
+	    }
 
-            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
-            return (InfoMasterDegreeCandidate) candidates.get(0);
-        }
-        return null;
+	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+	    return (InfoMasterDegreeCandidate) candidates.get(0);
+	}
+	return null;
     }
 
     private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
-        Object[] args = { candidateID };
+	Object[] args = { candidateID };
 
-        try {
-            return (ArrayList) ServiceManagerServiceFactory.executeService(
-                    "ReadCandidateEnrolmentsByCandidateID", args);
-        } catch (Exception e) {
-            return null;
-        }
+	try {
+	    return (ArrayList) ServiceManagerServiceFactory.executeService("ReadCandidateEnrolmentsByCandidateID", args);
+	} catch (Exception e) {
+	    return null;
+	}
     }
 
 }

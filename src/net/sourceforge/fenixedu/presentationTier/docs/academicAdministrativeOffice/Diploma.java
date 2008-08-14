@@ -44,7 +44,6 @@ public class Diploma extends AdministrativeOfficeDocument {
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
 
-
 	if (diplomaRequest.hasFinalAverageDescription()) {
 	    addParameter("finalAverageDescription", StringUtils.capitalize(ResourceBundle.getBundle(
 		    "resources.EnumerationResources").getString(registrationConclusionBean.getFinalAverage().toString())));

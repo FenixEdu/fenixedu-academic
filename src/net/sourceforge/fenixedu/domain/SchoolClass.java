@@ -15,7 +15,8 @@ import org.apache.commons.lang.StringUtils;
 public class SchoolClass extends SchoolClass_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
-    public SchoolClass(final ExecutionDegree executionDegree, final ExecutionSemester executionSemester, final String name, final Integer curricularYear) {
+    public SchoolClass(final ExecutionDegree executionDegree, final ExecutionSemester executionSemester, final String name,
+	    final Integer curricularYear) {
 	super();
 
 	checkIfExistsSchoolClassWithSameName(executionDegree, executionSemester, curricularYear, name);
@@ -29,8 +30,9 @@ public class SchoolClass extends SchoolClass_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
     public void edit(String name) {
-	if(name != null && !StringUtils.isEmpty(name.trim())) {
-	    final SchoolClass otherClassWithSameNewName = getExecutionDegree().findSchoolClassesByExecutionPeriodAndName(getExecutionPeriod(), name.trim());
+	if (name != null && !StringUtils.isEmpty(name.trim())) {
+	    final SchoolClass otherClassWithSameNewName = getExecutionDegree().findSchoolClassesByExecutionPeriodAndName(
+		    getExecutionPeriod(), name.trim());
 	    if (otherClassWithSameNewName != null && !otherClassWithSameNewName.equals(this)) {
 		throw new DomainException("Duplicate Entry: " + otherClassWithSameNewName.getNome());
 	    }
@@ -40,16 +42,16 @@ public class SchoolClass extends SchoolClass_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
     public void delete() {
-	getAssociatedShifts().clear();	
+	getAssociatedShifts().clear();
 	super.setExecutionDegree(null);
-	super.setExecutionPeriod(null);	
+	super.setExecutionPeriod(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }
 
     @Override
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	if(executionDegree == null) {
+	if (executionDegree == null) {
 	    throw new DomainException("error.SchoolClass.empty.executionDegree");
 	}
 	super.setExecutionDegree(executionDegree);
@@ -57,7 +59,7 @@ public class SchoolClass extends SchoolClass_Base {
 
     @Override
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	if(executionSemester == null) {
+	if (executionSemester == null) {
 	    throw new DomainException("error.SchoolClass.empty.executionPeriod");
 	}
 	super.setExecutionPeriod(executionSemester);
@@ -65,7 +67,7 @@ public class SchoolClass extends SchoolClass_Base {
 
     @Override
     public void setAnoCurricular(Integer anoCurricular) {
-	if(anoCurricular == null || anoCurricular.intValue() < 1) {
+	if (anoCurricular == null || anoCurricular.intValue() < 1) {
 	    throw new DomainException("error.SchoolClass.invalid.curricularYear");
 	}
 	super.setAnoCurricular(anoCurricular);
@@ -73,7 +75,7 @@ public class SchoolClass extends SchoolClass_Base {
 
     @Override
     public void setNome(String name) {
-	if(name == null || StringUtils.isEmpty(name.trim())) {
+	if (name == null || StringUtils.isEmpty(name.trim())) {
 	    throw new DomainException("error.SchoolClass.empty.name");
 	}
 	final DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
@@ -81,19 +83,21 @@ public class SchoolClass extends SchoolClass_Base {
 	super.setNome(constructName(degree, name.trim(), getAnoCurricular()));
     }
 
-    private void checkIfExistsSchoolClassWithSameName(ExecutionDegree executionDegree, ExecutionSemester executionSemester, 
+    private void checkIfExistsSchoolClassWithSameName(ExecutionDegree executionDegree, ExecutionSemester executionSemester,
 	    Integer curricularYear, String className) {
 
-	if(executionDegree != null && executionSemester != null && curricularYear != null && className != null) {
+	if (executionDegree != null && executionSemester != null && curricularYear != null && className != null) {
 
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    final Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionSemester, curricularYear);
+	    final Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(
+		    executionSemester, curricularYear);
 	    final Degree degree = degreeCurricularPlan.getDegree();
 	    final String schoolClassName = degree.constructSchoolClassPrefix(curricularYear) + className;
 
 	    for (final SchoolClass schoolClass : classes) {
 		if (!schoolClass.equals(this) && schoolClassName.equalsIgnoreCase(schoolClass.getNome())) {
-		    throw new DomainException("Duplicate Entry: " + className + " for curricular year " + curricularYear + " and degree curricular plan " + degreeCurricularPlan.getName());
+		    throw new DomainException("Duplicate Entry: " + className + " for curricular year " + curricularYear
+			    + " and degree curricular plan " + degreeCurricularPlan.getName());
 		}
 	    }
 	}
@@ -136,8 +140,7 @@ public class SchoolClass extends SchoolClass_Base {
     public Object getEditablePartOfName() {
 	final DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
 	final Degree degree = degreeCurricularPlan.getDegree();
-	return StringUtils.substringAfter(getNome(), degree
-		.constructSchoolClassPrefix(getAnoCurricular()));
+	return StringUtils.substringAfter(getNome(), degree.constructSchoolClassPrefix(getAnoCurricular()));
     }
 
 }

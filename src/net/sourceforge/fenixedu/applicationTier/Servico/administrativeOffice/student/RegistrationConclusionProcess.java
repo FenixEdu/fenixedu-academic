@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusio
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class RegistrationConclusionProcess extends Service {
-    
+
     public void run(final RegistrationConclusionBean conclusionBean) {
 	final Registration registration = conclusionBean.getRegistration();
 	if (registration.isBolonha()) {

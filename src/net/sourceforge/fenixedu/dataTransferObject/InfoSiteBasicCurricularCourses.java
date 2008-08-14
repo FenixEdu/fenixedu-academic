@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * @author João Mota
  * 
- * 24/Jul/2003 fenix-head DataBeans
- *  
+ *         24/Jul/2003 fenix-head DataBeans
+ * 
  */
 public class InfoSiteBasicCurricularCourses extends DataTranferObject implements ISiteComponent {
 
@@ -27,39 +27,39 @@ public class InfoSiteBasicCurricularCourses extends DataTranferObject implements
      * @return
      */
     public List getNonBasicCurricularCourses() {
-        return nonBasicCurricularCourses;
+	return nonBasicCurricularCourses;
     }
 
     public List getBasicCurricularCoursesIds() {
-        Iterator iter = basicCurricularCourses.iterator();
-        List result = new ArrayList();
-        while (iter.hasNext()) {
-            result.add(((InfoCurricularCourse) iter.next()).getIdInternal());
-        }
-        return result;
+	Iterator iter = basicCurricularCourses.iterator();
+	List result = new ArrayList();
+	while (iter.hasNext()) {
+	    result.add(((InfoCurricularCourse) iter.next()).getIdInternal());
+	}
+	return result;
     }
 
     /**
      * @param nonBasicCurricularCourses
      */
     public void setNonBasicCurricularCourses(List nonBasicCurricularCourses) {
-        this.nonBasicCurricularCourses = nonBasicCurricularCourses;
+	this.nonBasicCurricularCourses = nonBasicCurricularCourses;
     }
 
     /**
      * @return
      */
     public List getBasicCurricularCourses() {
-        return basicCurricularCourses;
+	return basicCurricularCourses;
     }
 
     /**
      * @param curricularCourses
      */
     public void setBasicCurricularCourses(List curricularCourses) {
-        this.basicCurricularCourses = curricularCourses;
-        //TODO: uncomment the sort when the test data is fixed
-        //Collections.sort(this.curricularCourses);
+	this.basicCurricularCourses = curricularCourses;
+	// TODO: uncomment the sort when the test data is fixed
+	// Collections.sort(this.curricularCourses);
     }
 
     /**
@@ -72,14 +72,14 @@ public class InfoSiteBasicCurricularCourses extends DataTranferObject implements
      * @return
      */
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-        return infoDegreeCurricularPlan;
+	return infoDegreeCurricularPlan;
     }
 
     /**
      * @param plan
      */
     public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan plan) {
-        infoDegreeCurricularPlan = plan;
+	infoDegreeCurricularPlan = plan;
     }
 
 }

@@ -35,83 +35,83 @@ public class Project implements Serializable {
     }
 
     public String getCoordination() {
-        return coordination;
+	return coordination;
     }
 
     public void setCoordination(String coordination) {
-        this.coordination = coordination;
+	this.coordination = coordination;
     }
 
     public String getCoordinatorName() {
-        return coordinatorName;
+	return coordinatorName;
     }
 
     public void setCoordinatorName(String coordinatorName) {
-        this.coordinatorName = coordinatorName;
+	this.coordinatorName = coordinatorName;
     }
 
     public String getCost() {
-        return cost;
+	return cost;
     }
 
     public void setCost(String cost) {
-        this.cost = cost;
+	this.cost = cost;
     }
 
     public Integer getExplorationUnit() {
-        return explorationUnit;
+	return explorationUnit;
     }
 
     public void setExplorationUnit(Integer explorationUnit) {
-        this.explorationUnit = explorationUnit;
+	this.explorationUnit = explorationUnit;
     }
 
     public Integer getCoordinatorCode() {
-        return coordinatorCode;
+	return coordinatorCode;
     }
 
     public void setCoordinatorCode(Integer coordinatorCode) {
-        this.coordinatorCode = coordinatorCode;
+	this.coordinatorCode = coordinatorCode;
     }
 
     public String getOrigin() {
-        return origin;
+	return origin;
     }
 
     public void setOrigin(String origin) {
-        this.origin = origin;
+	this.origin = origin;
     }
 
     public String getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(String projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public String getTitle() {
-        return title;
+	return title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+	this.title = title;
     }
 
     public LabelValueBean getType() {
-        return type;
+	return type;
     }
 
     public void setType(LabelValueBean type) {
-        this.type = type;
+	this.type = type;
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof Project) {
-            final Project project = (Project) obj;
-            return this.getProjectCode().equals(project.getProjectCode());
-        }
-        return false;
+	if (obj instanceof Project) {
+	    final Project project = (Project) obj;
+	    return this.getProjectCode().equals(project.getProjectCode());
+	}
+	return false;
     }
 
 }

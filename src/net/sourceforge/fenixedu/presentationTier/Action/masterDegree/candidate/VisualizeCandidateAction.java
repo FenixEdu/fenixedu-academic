@@ -20,31 +20,31 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class VisualizeCandidateAction extends FenixAction {
-    
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
-        
-        Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
-        request.setAttribute("candidateID", candidateID);
-        
-        InfoMasterDegreeCandidate masterDegreeCandidate = null;
-        try {
-            Object args[] = { candidateID };
-            masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceUtils.executeService(
-                    "ReadMasterDegreeCandidateByID", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        
-        request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
-        
-        return mapping.findForward("Success");
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
+	IUserView userView = UserView.getUser();
+
+	Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+	request.setAttribute("candidateID", candidateID);
+
+	InfoMasterDegreeCandidate masterDegreeCandidate = null;
+	try {
+	    Object args[] = { candidateID };
+	    masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceUtils
+		    .executeService("ReadMasterDegreeCandidateByID", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+
+	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
+
+	return mapping.findForward("Success");
 
     }
-    
+
 }

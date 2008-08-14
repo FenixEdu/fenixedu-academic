@@ -19,7 +19,7 @@ public class ScientificCouncilPathProcessor extends AbstractPathProcessor {
     public Content getInitialContent() {
 	return ScientificCouncilSite.getSite();
     }
-    
+
     public boolean keepPortalInContentsPath() {
 	return false;
     }

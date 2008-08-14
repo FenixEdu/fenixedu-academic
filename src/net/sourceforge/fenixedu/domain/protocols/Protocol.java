@@ -49,8 +49,7 @@ public class Protocol extends Protocol_Base {
 	setProtocolNumber(protocolFactory.getProtocolNumber());
 	setSignedDate(protocolFactory.getSignedDate());
 	setDates(protocolFactory);
-	setProtocolAction(new ProtocolAction(protocolFactory.getActionTypes(), protocolFactory
-		.getOtherActionTypes()));
+	setProtocolAction(new ProtocolAction(protocolFactory.getActionTypes(), protocolFactory.getOtherActionTypes()));
 	setObservations(protocolFactory.getObservations());
 	setScientificAreas(protocolFactory.getScientificAreas());
 	setResponsables(protocolFactory.getResponsibles());
@@ -65,10 +64,9 @@ public class Protocol extends Protocol_Base {
 	}
     }
 
-    public Protocol(String protocolNumber, YearMonthDay signedDate, Boolean renewable, Boolean active,
-	    String scientificAreas, String observations, ProtocolHistory protocolHistory,
-	    ProtocolAction protocolAction, Person responsible, List<Unit> unitList,
-	    List<Unit> partnersList) {
+    public Protocol(String protocolNumber, YearMonthDay signedDate, Boolean renewable, Boolean active, String scientificAreas,
+	    String observations, ProtocolHistory protocolHistory, ProtocolAction protocolAction, Person responsible,
+	    List<Unit> unitList, List<Unit> partnersList) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setProtocolNumber(protocolNumber);
 	setRenewable(renewable);
@@ -90,19 +88,18 @@ public class Protocol extends Protocol_Base {
     }
 
     private void setDates(ProtocolFactory protocolFactory) {
-	ProtocolHistory protocolHistory = new ProtocolHistory(protocolFactory.getBeginDate(),
-		protocolFactory.getEndDate());
+	ProtocolHistory protocolHistory = new ProtocolHistory(protocolFactory.getBeginDate(), protocolFactory.getEndDate());
 	getProtocolHistories().add(protocolHistory);
     }
 
-    private void writeFile(VirtualPath filePath, File file, String fileName,
-	    FilePermissionType filePermissionType) throws FileNotFoundException {
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
-		.saveFile(filePath, fileName, false, null, fileName, new FileInputStream(file));
+    private void writeFile(VirtualPath filePath, File file, String fileName, FilePermissionType filePermissionType)
+	    throws FileNotFoundException {
+	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
+		fileName, false, null, fileName, new FileInputStream(file));
 
-	final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor
-		.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
-		fileDescriptor.getSize(), fileDescriptor.getUniqueId(), getGroup(filePermissionType));
+	final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor.getMimeType(), fileDescriptor
+		.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
+		getGroup(filePermissionType));
 	getProtocolFiles().add(protocolFile);
     }
 
@@ -124,8 +121,7 @@ public class Protocol extends Protocol_Base {
 		    unionGroup = new GroupUnion(unionGroup, personGroup);
 		}
 	    }
-	    final RoleGroup roleGroup = new RoleGroup(Role
-		    .getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
+	    final RoleGroup roleGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
 	    return unionGroup != null ? new GroupUnion(unionGroup, roleGroup) : roleGroup;
 	} else if (filePermissionType.equals(FilePermissionType.IST_PEOPLE)) {
 	    return new InternalPersonGroup();
@@ -166,8 +162,7 @@ public class Protocol extends Protocol_Base {
     public void editData(ProtocolFactory protocolFactory) {
 	setProtocolNumber(protocolFactory.getProtocolNumber());
 	setSignedDate(protocolFactory.getSignedDate());
-	setProtocolAction(new ProtocolAction(protocolFactory.getActionTypes(), protocolFactory
-		.getOtherActionTypes()));
+	setProtocolAction(new ProtocolAction(protocolFactory.getActionTypes(), protocolFactory.getOtherActionTypes()));
 	setObservations(protocolFactory.getObservations());
 	setScientificAreas(protocolFactory.getScientificAreas());
 	setActive(protocolFactory.getActive());
@@ -225,8 +220,7 @@ public class Protocol extends Protocol_Base {
 	}
     }
 
-    public void addFile(File file, String fileName, FilePermissionType filePermissionType)
-	    throws FileNotFoundException {
+    public void addFile(File file, String fileName, FilePermissionType filePermissionType) throws FileNotFoundException {
 	writeFile(getFilePath(), file, fileName, filePermissionType);
     }
 
@@ -266,15 +260,13 @@ public class Protocol extends Protocol_Base {
     }
 
     public List<ProtocolHistory> getOrderedProtocolHistories() {
-	List<ProtocolHistory> protocolHistoryListToReturn = new ArrayList<ProtocolHistory>(
-		getProtocolHistories());
+	List<ProtocolHistory> protocolHistoryListToReturn = new ArrayList<ProtocolHistory>(getProtocolHistories());
 	Collections.sort(protocolHistoryListToReturn, new BeanComparator("beginDate"));
 	return protocolHistoryListToReturn;
     }
 
     public List<ProtocolHistory> getOrderedProtocolHistoriesMinusLast() {
-	List<ProtocolHistory> protocolHistoryListToReturn = new ArrayList<ProtocolHistory>(
-		getProtocolHistories());
+	List<ProtocolHistory> protocolHistoryListToReturn = new ArrayList<ProtocolHistory>(getProtocolHistories());
 	Collections.sort(protocolHistoryListToReturn, new BeanComparator("beginDate"));
 	return getOrderedProtocolHistories().subList(0, protocolHistoryListToReturn.size() - 1);
     }
@@ -333,8 +325,7 @@ public class Protocol extends Protocol_Base {
 	if (protocolHistory != null) {
 	    YearMonthDay today = new YearMonthDay();
 	    if (!today.isBefore(protocolHistory.getBeginDate())
-		    && (protocolHistory.getEndDate() == null || !today.isAfter(protocolHistory
-			    .getEndDate()))) {
+		    && (protocolHistory.getEndDate() == null || !today.isAfter(protocolHistory.getEndDate()))) {
 		return true;
 	    }
 	}
@@ -348,30 +339,28 @@ public class Protocol extends Protocol_Base {
 	spreadsheet.addHeader(bundle.getString("label.protocol.endDate"));
 	spreadsheet.addHeader(bundle.getString("label.protocol.signedDate"));
 	spreadsheet.addHeader(bundle.getString("label.protocol.scientificAreas"), 9000);
-	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-		Language.getLocale());
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.STUDENTS_INTERCHANGE
-		.toString()), spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.TEACHERS_INTERCHANGE
-		.toString()), spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.INVESTIGATION_AND_DEVELOPMENT
-		.toString()), spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
+	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.STUDENTS_INTERCHANGE.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.TEACHERS_INTERCHANGE.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.INVESTIGATION_AND_DEVELOPMENT.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.RENDERING_SERVICES.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.RENDERING_SERVICE_IST_TEACHER.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
 	spreadsheet.addHeader(
-		resourceBundle.getString(ProtocolActionType.RENDERING_SERVICES.toString()), spreadsheet
+		resourceBundle.getString(ProtocolActionType.RENDERING_SERVICE_OTHER_INSTITUTION_TEACHER.toString()), spreadsheet
 			.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.RENDERING_SERVICE_IST_TEACHER
-		.toString()), spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle
-		.getString(ProtocolActionType.RENDERING_SERVICE_OTHER_INSTITUTION_TEACHER.toString()),
-		spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.WORKSHOPS.toString()),
-		spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.FORMATION_TRAINEE.toString()),
-		spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.DOCUMENTATION.toString()),
-		spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.TECHNICAL_COOPERATION
-		.toString()), spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.WORKSHOPS.toString()), spreadsheet.getExcelStyle()
+		.getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.FORMATION_TRAINEE.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.DOCUMENTATION.toString()), spreadsheet.getExcelStyle()
+		.getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.TECHNICAL_COOPERATION.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
 	spreadsheet.addHeader(bundle.getString("label.protocol.otherActionTypes"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.protocol.observations"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.protocol.units"), 10000);
@@ -389,29 +378,26 @@ public class Protocol extends Protocol_Base {
 	spreadsheet.addCell(last.getEndDate() == null ? "" : last.getEndDate().toString());
 	spreadsheet.addCell(getSignedDate() == null ? "" : getSignedDate().toString());
 	spreadsheet.addCell(getScientificAreas() == null ? "" : getScientificAreas());
-	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.STUDENTS_INTERCHANGE) ? "X"
-		: "", spreadsheet.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.TEACHERS_INTERCHANGE) ? "X"
-		: "", spreadsheet.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(
-		ProtocolActionType.INVESTIGATION_AND_DEVELOPMENT) ? "X" : "", spreadsheet
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.STUDENTS_INTERCHANGE) ? "X" : "", spreadsheet
 		.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.RENDERING_SERVICES) ? "X"
-		: "", spreadsheet.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(
-		ProtocolActionType.RENDERING_SERVICE_IST_TEACHER) ? "X" : "", spreadsheet
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.TEACHERS_INTERCHANGE) ? "X" : "", spreadsheet
 		.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(
-		ProtocolActionType.RENDERING_SERVICE_OTHER_INSTITUTION_TEACHER) ? "X" : "", spreadsheet
-		.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.WORKSHOPS) ? "X" : "",
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.INVESTIGATION_AND_DEVELOPMENT) ? "X" : "",
 		spreadsheet.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.FORMATION_TRAINEE) ? "X"
-		: "", spreadsheet.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.DOCUMENTATION) ? "X" : "",
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.RENDERING_SERVICES) ? "X" : "", spreadsheet
+		.getExcelStyle().getStringStyle());
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.RENDERING_SERVICE_IST_TEACHER) ? "X" : "",
 		spreadsheet.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.TECHNICAL_COOPERATION) ? "X"
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.RENDERING_SERVICE_OTHER_INSTITUTION_TEACHER) ? "X"
 		: "", spreadsheet.getExcelStyle().getStringStyle());
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.WORKSHOPS) ? "X" : "", spreadsheet.getExcelStyle()
+		.getStringStyle());
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.FORMATION_TRAINEE) ? "X" : "", spreadsheet
+		.getExcelStyle().getStringStyle());
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.DOCUMENTATION) ? "X" : "", spreadsheet
+		.getExcelStyle().getStringStyle());
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.TECHNICAL_COOPERATION) ? "X" : "", spreadsheet
+		.getExcelStyle().getStringStyle());
 	spreadsheet.addCell(getProtocolAction().getOtherTypes(), true);
 	spreadsheet.addCell(getObservations(), true);
 	spreadsheet.addCell(getCommaSeparatedPartyNames(getUnits()));

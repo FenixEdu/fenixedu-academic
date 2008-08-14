@@ -26,25 +26,23 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class RemoveProfessorshipAction extends Action {
 
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+	Integer teacherId = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherId"));
+	Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
 
-        Integer teacherId = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherId"));
-        Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm
-                .get("executionCourseId"));
+	IUserView userView = UserView.getUser();
+	Object[] arguments = { executionCourseId, teacherId };
+	try {
+	    ServiceUtils.executeService("RemoveProfessorshipByDepartment", arguments);
+	} catch (DomainException e) {
+	    ActionErrors errors = new ActionErrors();
+	    errors.add("error", new ActionError(e.getMessage()));
+	    saveErrors(request, errors);
+	}
 
-        IUserView userView = UserView.getUser();
-        Object[] arguments = { executionCourseId, teacherId };
-        try {
-            ServiceUtils.executeService("RemoveProfessorshipByDepartment", arguments);            
-        } catch (DomainException e) {
-            ActionErrors errors = new ActionErrors();
-            errors.add("error", new ActionError(e.getMessage()));
-            saveErrors(request, errors);
-        }
-        
-        return mapping.findForward("successfull-delete");
+	return mapping.findForward("successfull-delete");
     }
 }

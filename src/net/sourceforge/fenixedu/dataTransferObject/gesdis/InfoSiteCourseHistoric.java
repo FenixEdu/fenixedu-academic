@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class InfoSiteCourseHistoric extends DataTranferObject {
     List infoCourseHistorics;
@@ -26,7 +26,7 @@ public class InfoSiteCourseHistoric extends DataTranferObject {
      * @return Returns the infoCourseHistorics.
      */
     public List getInfoCourseHistorics() {
-        return infoCourseHistorics;
+	return infoCourseHistorics;
     }
 
     /**
@@ -34,14 +34,14 @@ public class InfoSiteCourseHistoric extends DataTranferObject {
      *            The infoCourseHistorics to set.
      */
     public void setInfoCourseHistorics(List infoCourseHistorics) {
-        this.infoCourseHistorics = infoCourseHistorics;
+	this.infoCourseHistorics = infoCourseHistorics;
     }
 
     /**
      * @return Returns the infoCurricularCourse.
      */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     /**
@@ -49,7 +49,7 @@ public class InfoSiteCourseHistoric extends DataTranferObject {
      *            The infoCurricularCourse to set.
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
 }

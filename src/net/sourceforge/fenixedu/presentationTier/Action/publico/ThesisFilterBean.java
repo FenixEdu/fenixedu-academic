@@ -19,57 +19,57 @@ public class ThesisFilterBean implements Serializable {
     private DomainListReference<Degree> options;
 
     private ThesisState state;
-    
+
     private DomainReference<Degree> degree;
 
     public ThesisFilterBean() {
-        super();
-        
-        this.department = new DomainReference<Department>(null);
-        this.year       = new DomainReference<ExecutionYear>(null);
-        this.degree     = new DomainReference<Degree>(null);
-        
-        this.options    = new DomainListReference<Degree>();
+	super();
+
+	this.department = new DomainReference<Department>(null);
+	this.year = new DomainReference<ExecutionYear>(null);
+	this.degree = new DomainReference<Degree>(null);
+
+	this.options = new DomainListReference<Degree>();
     }
 
     public Department getDepartment() {
-        return department.getObject();
+	return department.getObject();
     }
 
     public void setDepartment(Department department) {
-        this.department = new DomainReference<Department>(department);
+	this.department = new DomainReference<Department>(department);
     }
 
     public Collection<Degree> getDegreeOptions() {
-        return this.options;
+	return this.options;
     }
-    
+
     public void setDegreeOptions(Collection<Degree> degrees) {
-        this.options = new DomainListReference<Degree>(degrees);
+	this.options = new DomainListReference<Degree>(degrees);
     }
-    
+
     public Degree getDegree() {
-        return degree.getObject();
+	return degree.getObject();
     }
 
     public void setDegree(Degree degree) {
-        this.degree = new DomainReference<Degree>(degree);
+	this.degree = new DomainReference<Degree>(degree);
     }
 
     public ThesisState getState() {
-        return state;
+	return state;
     }
 
     public void setState(ThesisState state) {
-        this.state = state;
+	this.state = state;
     }
 
     public ExecutionYear getYear() {
-        return year.getObject();
+	return year.getObject();
     }
 
     public void setYear(ExecutionYear year) {
-        this.year = new DomainReference<ExecutionYear>(year);
+	this.year = new DomainReference<ExecutionYear>(year);
     }
 
 }

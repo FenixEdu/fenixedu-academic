@@ -30,18 +30,17 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class SearchResearchersAction extends FenixDispatchAction {
 
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
 	VariantBean nameBean = getBean("nameSearch");
 	VariantBean keywordBean = getBean("keywordSearch");
 	request.setAttribute("nameBean", nameBean);
 	request.setAttribute("keywordBean", keywordBean);
-	
+
 	return mapping.findForward("showResearchersResults");
-    
+
     }
-    
+
     public ActionForward searchByKeyword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 

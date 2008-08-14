@@ -65,8 +65,8 @@ public class SearchDSpaceBean implements Serializable {
 	String parameters = "";
 
 	for (SearchElement element : getSearchElements()) {
-	    parameters += "&amp;criteria=" + element.getConjunction() + ":" + element.getSearchField()
-		    + ":" + element.getQueryValue();
+	    parameters += "&amp;criteria=" + element.getConjunction() + ":" + element.getSearchField() + ":"
+		    + element.getQueryValue();
 	}
 	return parameters;
     }

@@ -15,11 +15,9 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	super();
     }
 
-    public RootCourseGroup(final DegreeCurricularPlan degreeCurricularPlan, final String name,
-	    final String nameEn) {
+    public RootCourseGroup(final DegreeCurricularPlan degreeCurricularPlan, final String name, final String nameEn) {
 	if (degreeCurricularPlan == null) {
-	    throw new DomainException(
-		    "error.degreeStructure.CourseGroup.degreeCurricularPlan.cannot.be.null");
+	    throw new DomainException("error.degreeStructure.CourseGroup.degreeCurricularPlan.cannot.be.null");
 	}
 	init(name, nameEn);
 	setParentDegreeCurricularPlan(degreeCurricularPlan);
@@ -30,16 +28,13 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	if (courseGroupType.isBolonhaType()) {
 	    ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	    if (courseGroupType.isFirstCycle()) {
-		new CycleCourseGroup(this, "1º Ciclo", "First Cycle", CycleType.FIRST_CYCLE,
-			executionSemester, null);
+		new CycleCourseGroup(this, "1º Ciclo", "First Cycle", CycleType.FIRST_CYCLE, executionSemester, null);
 	    }
 	    if (courseGroupType.isSecondCycle()) {
-		new CycleCourseGroup(this, "2º Ciclo", "Second Cycle", CycleType.SECOND_CYCLE,
-			executionSemester, null);
+		new CycleCourseGroup(this, "2º Ciclo", "Second Cycle", CycleType.SECOND_CYCLE, executionSemester, null);
 	    }
 	    if (courseGroupType.isThirdCycle()) {
-		new CycleCourseGroup(this, "3º Ciclo", "Third Cycle", CycleType.THIRD_CYCLE,
-			executionSemester, null);
+		new CycleCourseGroup(this, "3º Ciclo", "Third Cycle", CycleType.THIRD_CYCLE, executionSemester, null);
 	    }
 	}
     }
@@ -79,8 +74,8 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	return true;
     }
 
-    static public RootCourseGroup createRoot(final DegreeCurricularPlan degreeCurricularPlan,
-	    final String name, final String nameEn) {
+    static public RootCourseGroup createRoot(final DegreeCurricularPlan degreeCurricularPlan, final String name,
+	    final String nameEn) {
 	return new RootCourseGroup(degreeCurricularPlan, name, nameEn);
     }
 
@@ -126,10 +121,10 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     public boolean hasCycleGroups() {
 	return !getCycleCourseGroups().isEmpty();
     }
-    
+
     @Override
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
-        return Collections.emptySet();
+	return Collections.emptySet();
     }
 
 }

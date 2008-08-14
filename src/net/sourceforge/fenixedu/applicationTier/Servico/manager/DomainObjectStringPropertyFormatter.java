@@ -19,22 +19,21 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public class DomainObjectStringPropertyFormatter extends Service {
 
-    public void run(Class clazz, String slotName) throws IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException {
+    public void run(Class clazz, String slotName) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
-        Collection<DomainObject> domainObjects = rootDomainObject.readAllDomainObjects(clazz);
-        for (DomainObject domainObject : domainObjects) {
+	Collection<DomainObject> domainObjects = rootDomainObject.readAllDomainObjects(clazz);
+	for (DomainObject domainObject : domainObjects) {
 
-            Object propertyToFormat = PropertyUtils.getSimpleProperty(domainObject, slotName);
+	    Object propertyToFormat = PropertyUtils.getSimpleProperty(domainObject, slotName);
 
-            if (propertyToFormat != null && propertyToFormat instanceof String) {
-                String strPropertyToFormat = (String) propertyToFormat;
-                strPropertyToFormat = strPropertyToFormat.trim();
-                String propertyFormatted = StringFormatter.prettyPrint(strPropertyToFormat);
-                PropertyUtils.setSimpleProperty(domainObject, slotName, propertyFormatted);
-            }
+	    if (propertyToFormat != null && propertyToFormat instanceof String) {
+		String strPropertyToFormat = (String) propertyToFormat;
+		strPropertyToFormat = strPropertyToFormat.trim();
+		String propertyFormatted = StringFormatter.prettyPrint(strPropertyToFormat);
+		PropertyUtils.setSimpleProperty(domainObject, slotName, propertyFormatted);
+	    }
 
-        }
+	}
     }
 
 }

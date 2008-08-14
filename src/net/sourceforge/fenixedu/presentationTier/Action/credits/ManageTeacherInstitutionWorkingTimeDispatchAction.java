@@ -106,8 +106,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 
 	try {
 	    if (institutionWorkTimeDTO.getIdInternal() != null && institutionWorkTimeDTO.getIdInternal() != 0) {
-		executeService("EditTeacherInstitutionWorkTime", new Object[] {
-			institutionWorkTimeDTO, roleType });
+		executeService("EditTeacherInstitutionWorkTime", new Object[] { institutionWorkTimeDTO, roleType });
 	    } else {
 		DynaActionForm institutionWorkingTimeForm = (DynaActionForm) form;
 		Integer teacherID = Integer.valueOf(institutionWorkingTimeForm.getString("teacherId"));
@@ -127,8 +126,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 	DynaActionForm institutionWorkTimeForm = (DynaActionForm) actionForm;
 	Integer institutionWorkTimeID = (Integer) institutionWorkTimeForm.get("institutionWorkTimeID");
 	try {
-	    executeService("DeleteInstitutionWorkTimeByOID", new Object[] {
-		    institutionWorkTimeID, roleType });
+	    executeService("DeleteInstitutionWorkTimeByOID", new Object[] { institutionWorkTimeID, roleType });
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	}

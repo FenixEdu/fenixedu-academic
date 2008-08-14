@@ -32,56 +32,56 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
      *  
      */
     public InfoTeacherInstitutionWorkTime() {
-        super();
+	super();
     }
 
     /**
      * @param idInternal
      */
     public InfoTeacherInstitutionWorkTime(Integer idInternal) {
-        super(idInternal);
+	super(idInternal);
     }
 
     /**
      * @return Returns the endTime.
      */
     public Date getEndTime() {
-        return this.endTime;
+	return this.endTime;
     }
 
     /**
      * @return Returns the infoExecutionPeriod.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return this.infoExecutionPeriod;
+	return this.infoExecutionPeriod;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return this.infoTeacher;
+	return this.infoTeacher;
     }
 
     /**
      * @return Returns the keyTeacher.
      */
     public Integer getKeyTeacher() {
-        return this.keyTeacher;
+	return this.keyTeacher;
     }
 
     /**
      * @return Returns the startTime.
      */
     public Date getStartTime() {
-        return this.startTime;
+	return this.startTime;
     }
 
     /**
      * @return Returns the weekDay.
      */
     public DiaSemana getWeekDay() {
-        return this.weekDay;
+	return this.weekDay;
     }
 
     /**
@@ -89,7 +89,7 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
      *            The endTime to set.
      */
     public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+	this.endTime = endTime;
     }
 
     /**
@@ -97,7 +97,7 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
      *            The infoExecutionPeriod to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
@@ -105,7 +105,7 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
@@ -113,7 +113,7 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
      *            The keyTeacher to set.
      */
     public void setKeyTeacher(Integer keyTeacher) {
-        this.keyTeacher = keyTeacher;
+	this.keyTeacher = keyTeacher;
     }
 
     /**
@@ -121,7 +121,7 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
      *            The startTime to set.
      */
     public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+	this.startTime = startTime;
     }
 
     /**
@@ -129,23 +129,23 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
      *            The weekDay to set.
      */
     public void setWeekDay(DiaSemana weekDay) {
-        this.weekDay = weekDay;
+	this.weekDay = weekDay;
     }
 
     public static InfoTeacherInstitutionWorkTime newInfoFromDomain(TeacherInstitutionWorkTime item) {
-        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(item.getTeacher());
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(item.getExecutionPeriod());
+	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(item.getTeacher());
+	InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(item.getExecutionPeriod());
 
-        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = new InfoTeacherInstitutionWorkTime();
-        infoTeacherInstitutionWorkTime.setEndTime(item.getEndTime());
-        infoTeacherInstitutionWorkTime.setIdInternal(item.getIdInternal());
-        infoTeacherInstitutionWorkTime.setStartTime(item.getStartTime());
-        infoTeacherInstitutionWorkTime.setWeekDay(item.getWeekDay());
+	InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = new InfoTeacherInstitutionWorkTime();
+	infoTeacherInstitutionWorkTime.setEndTime(item.getEndTime());
+	infoTeacherInstitutionWorkTime.setIdInternal(item.getIdInternal());
+	infoTeacherInstitutionWorkTime.setStartTime(item.getStartTime());
+	infoTeacherInstitutionWorkTime.setWeekDay(item.getWeekDay());
 
-        infoTeacherInstitutionWorkTime.setInfoTeacher(infoTeacher);
-        infoTeacherInstitutionWorkTime.setInfoExecutionPeriod(infoExecutionPeriod);
+	infoTeacherInstitutionWorkTime.setInfoTeacher(infoTeacher);
+	infoTeacherInstitutionWorkTime.setInfoExecutionPeriod(infoExecutionPeriod);
 
-        return infoTeacherInstitutionWorkTime;
+	return infoTeacherInstitutionWorkTime;
     }
 
 }

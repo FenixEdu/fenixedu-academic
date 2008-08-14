@@ -24,19 +24,19 @@ public class InfoInquiryStatistics extends DataTranferObject implements ISiteCom
     }
 
     public List getOptionStatistics() {
-        return optionStatistics;
+	return optionStatistics;
     }
 
     public StudentTestQuestion getInfoStudentTestQuestion() {
-        return infoStudentTestQuestion;
+	return infoStudentTestQuestion;
     }
 
     public void setOptionStatistics(List list) {
-        optionStatistics = list;
+	optionStatistics = list;
     }
 
     public void setInfoStudentTestQuestion(StudentTestQuestion question) {
-        infoStudentTestQuestion = question;
+	infoStudentTestQuestion = question;
     }
 
 }

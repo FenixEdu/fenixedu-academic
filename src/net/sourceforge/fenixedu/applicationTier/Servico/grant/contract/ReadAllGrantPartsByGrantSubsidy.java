@@ -13,17 +13,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllGrantPartsByGrantSubsidy extends Service {
 
-	public List run(Integer grantSubsidyId) throws FenixServiceException{
-		List<InfoGrantPart> result = new ArrayList<InfoGrantPart>();
+    public List run(Integer grantSubsidyId) throws FenixServiceException {
+	List<InfoGrantPart> result = new ArrayList<InfoGrantPart>();
 
-		GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(grantSubsidyId);
-        List<GrantPart> grantParts = grantSubsidy.getAssociatedGrantParts();
+	GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(grantSubsidyId);
+	List<GrantPart> grantParts = grantSubsidy.getAssociatedGrantParts();
 
-        for (GrantPart grantPart : grantParts) {
-            result.add(InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain(grantPart));
-        }
-        
-		return result;
+	for (GrantPart grantPart : grantParts) {
+	    result.add(InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain(grantPart));
 	}
-    
+
+	return result;
+    }
+
 }

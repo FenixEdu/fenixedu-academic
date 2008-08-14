@@ -17,78 +17,78 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
 
     public void run(Department department, Integer[] add, Integer[] remove) {
-        List<Person> toAdd = materializePersons(add);
-        List<Person> toRemove = materializePersons(remove);
-        List<Person> finalList = new ArrayList<Person>();
-        
-        Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER); 
-        
-        Group group = department.getCompetenceCourseMembersGroup();
-        if (group == null) {
-            group = new FixedSetGroup();
-        }
-        
-        for(Person person: group.getElements()) {
-            
-            if (! toRemove.contains(person)) {
-                finalList.add(person);
-                addBolonhaRole(person, bolonhaRole);
-            } else if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(department, person)) {
-                person.removeRoleByType(RoleType.BOLONHA_MANAGER);
-            }
-        }
-        
-        for (Person person : toAdd) {
-            if (! finalList.contains(person)) {
-                finalList.add(person);
-                addBolonhaRole(person, bolonhaRole);
-            }
-        }
-        
-        department.setCompetenceCourseMembersGroup(new FixedSetGroup(finalList));
+	List<Person> toAdd = materializePersons(add);
+	List<Person> toRemove = materializePersons(remove);
+	List<Person> finalList = new ArrayList<Person>();
+
+	Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
+
+	Group group = department.getCompetenceCourseMembersGroup();
+	if (group == null) {
+	    group = new FixedSetGroup();
+	}
+
+	for (Person person : group.getElements()) {
+
+	    if (!toRemove.contains(person)) {
+		finalList.add(person);
+		addBolonhaRole(person, bolonhaRole);
+	    } else if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(department, person)) {
+		person.removeRoleByType(RoleType.BOLONHA_MANAGER);
+	    }
+	}
+
+	for (Person person : toAdd) {
+	    if (!finalList.contains(person)) {
+		finalList.add(person);
+		addBolonhaRole(person, bolonhaRole);
+	    }
+	}
+
+	department.setCompetenceCourseMembersGroup(new FixedSetGroup(finalList));
     }
 
     private List<Person> materializePersons(Integer[] personsIDs) {
-        if (personsIDs != null) {
-            List<Person> result = new ArrayList<Person>();
-            
-            for (Integer personID : personsIDs) {
-                result.add((Person) rootDomainObject.readPartyByOID(personID));
-            }
-            
-            return result;
-        } else {
-            return new ArrayList<Person>();    
-        }
+	if (personsIDs != null) {
+	    List<Person> result = new ArrayList<Person>();
+
+	    for (Integer personID : personsIDs) {
+		result.add((Person) rootDomainObject.readPartyByOID(personID));
+	    }
+
+	    return result;
+	} else {
+	    return new ArrayList<Person>();
+	}
     }
 
     private void addBolonhaRole(Person person, Role bolonhaRole) {
-        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
-            person.addPersonRoles(bolonhaRole);    
-        }
+	if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
+	    person.addPersonRoles(bolonhaRole);
+	}
     }
 
     private boolean belongsToOtherGroupsWithSameRole(Department departmentWhoAsks, Person person) {
-        List<Department> departments = rootDomainObject.getDepartments();
-        for (Department department : departments) {
-            if (department != departmentWhoAsks) {
-                Group group = department.getCompetenceCourseMembersGroup();
-                if (group != null && group.isMember(person)) {
-                    return true;
-                }
-            }
-        }
+	List<Department> departments = rootDomainObject.getDepartments();
+	for (Department department : departments) {
+	    if (department != departmentWhoAsks) {
+		Group group = department.getCompetenceCourseMembersGroup();
+		if (group != null && group.isMember(person)) {
+		    return true;
+		}
+	    }
+	}
 
-        for (Degree degree : Degree.readBolonhaDegrees()) {
-            for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-                Group group = dcp.getCurricularPlanMembersGroup();
-                if (group != null && group.isMember(person)) {
-                    return true;
-                }
-            }
-        }
+	for (Degree degree : Degree.readBolonhaDegrees()) {
+	    for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+		Group group = dcp.getCurricularPlanMembersGroup();
+		if (group != null && group.isMember(person)) {
+		    return true;
+		}
+	    }
+	}
 
-        return false;
+	return false;
     }
 
 }

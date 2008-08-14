@@ -24,30 +24,28 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteStudentGroupMembers extends Service {
 
-    public boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID,
-            List studentUsernames) throws FenixServiceException{
+    public boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List studentUsernames)
+	    throws FenixServiceException {
 
-        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
-        if (studentGroup == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+	final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
+	if (studentGroup == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        final Grouping grouping = studentGroup.getGrouping();
-        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                .getInstance();
-        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                .getGroupEnrolmentStrategyInstance(grouping);
+	final Grouping grouping = studentGroup.getGrouping();
+	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
-        if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
-            throw new InvalidArgumentsServiceException();
-        }
+	if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        for (final String studentUsername : (List<String>) studentUsernames) {
-            Attends attend = grouping.getStudentAttend(studentUsername);
-            if (attend != null) {
-                attend.removeStudentGroups(studentGroup);
-            }
-        }
-        return true;
+	for (final String studentUsername : (List<String>) studentUsernames) {
+	    Attends attend = grouping.getStudentAttend(studentUsername);
+	    if (attend != null) {
+		attend.removeStudentGroups(studentGroup);
+	    }
+	}
+	return true;
     }
 }

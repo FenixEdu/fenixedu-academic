@@ -41,8 +41,8 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Groups are considered a value type. Because of this no group should provide a
  * mutator (or setter). All the required information is passed to the group in
  * the construction. New groups are formed though the composition of existing
- * groups in a
- * {@link net.sourceforge.fenixedu.domain.accessControl.NodeGroup NodeGroup}.
+ * groups in a {@link net.sourceforge.fenixedu.domain.accessControl.NodeGroup
+ * NodeGroup}.
  * <p>
  * Groups are {@link java.io.Serializable Serializable} to allow an easy
  * conversion to it's persisted format. Each sub group must ensure that any
@@ -68,8 +68,8 @@ public abstract class Group implements Serializable, IGroup {
 
     /**
      * Provides a standard implementation to <code>count()</code><br/> It
-     * accesses the elements set and invokes the <code>size()</code> method.
-     * If any group subclassing this class can provide a more efficient way of
+     * accesses the elements set and invokes the <code>size()</code> method. If
+     * any group subclassing this class can provide a more efficient way of
      * calculating its size, then override this method
      */
     public int getElementsCount() {
@@ -78,10 +78,10 @@ public abstract class Group implements Serializable, IGroup {
 
     /**
      * Provides a standard implementation to <code>isMember()</code><br/> It
-     * accesses the elements set and invokes the <code>contains()</code>
-     * method. If any group subclassing this class can provide a more efficient
-     * way of calculating wether the person is member of the group, then
-     * override this method
+     * accesses the elements set and invokes the <code>contains()</code> method.
+     * If any group subclassing this class can provide a more efficient way of
+     * calculating wether the person is member of the group, then override this
+     * method
      */
     public boolean isMember(Person person) {
 	return (person == null) ? false : getElements().contains(person);
@@ -107,10 +107,10 @@ public abstract class Group implements Serializable, IGroup {
      * when a group depend on elements that are no longer available.
      * 
      * @return the string representation of this groups in a form understandable
-     *         by the groups language parse or <code>null</code> when this
-     *         group instance can no longer be represented as an expression
+     *         by the groups language parse or <code>null</code> when this group
+     *         instance can no longer be represented as an expression
      * 
-     * TODO: move this default implementation to LeafGroup
+     *         TODO: move this default implementation to LeafGroup
      */
     public String getExpression() {
 	return getGroupExpressionName() + getExpressionArgumentsList();

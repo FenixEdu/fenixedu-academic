@@ -32,8 +32,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadFilteredExamsMapList extends Service {
 
-    public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears, InfoExecutionPeriod infoExecutionPeriod)
-	    {
+    public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears, InfoExecutionPeriod infoExecutionPeriod) {
 	// Object to be returned
 	InfoExamsMap infoExamsMap = new InfoExamsMap();
 
@@ -84,7 +83,7 @@ public class ReadFilteredExamsMapList extends Service {
 				    .get(i), infoExecutionPeriod.getSemester());
 
 		    // For each execution course obtain curricular courses
-			// and
+		    // and
 		    // exams
 		    for (int j = 0; j < executionCourses.size(); j++) {
 			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse

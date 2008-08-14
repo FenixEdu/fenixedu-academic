@@ -18,69 +18,68 @@ import org.apache.commons.collections.Predicate;
 
 public class EditMarkSheet extends Service {
 
-    public void run(MarkSheet markSheet, Teacher responsibleTeacher, Date evaluationDate)
-            throws FenixServiceException {
+    public void run(MarkSheet markSheet, Teacher responsibleTeacher, Date evaluationDate) throws FenixServiceException {
 
-        if (markSheet == null) {
-            throw new InvalidArgumentsServiceException("error.noMarkSheet");
-        }
-        markSheet.editNormal(responsibleTeacher, evaluationDate);
+	if (markSheet == null) {
+	    throw new InvalidArgumentsServiceException("error.noMarkSheet");
+	}
+	markSheet.editNormal(responsibleTeacher, evaluationDate);
     }
 
     public void run(MarkSheetManagementEditBean markSheetManagementEditBean) throws FenixServiceException {
 
-        MarkSheet markSheet = markSheetManagementEditBean.getMarkSheet();
-        if (markSheet == null) {
-            throw new InvalidArgumentsServiceException("error.noMarkSheet");
-        }
-        
-        if (markSheet.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
-            editNormalMarkSheet(markSheetManagementEditBean);
-            
-        } else if (markSheet.getMarkSheetState() == MarkSheetState.RECTIFICATION_NOT_CONFIRMED) {
-            editRectificationMarkSheet(markSheetManagementEditBean);
-            
-        } else {
-            throw new InvalidArgumentsServiceException("error.markSheet.invalid.state");
-        }
+	MarkSheet markSheet = markSheetManagementEditBean.getMarkSheet();
+	if (markSheet == null) {
+	    throw new InvalidArgumentsServiceException("error.noMarkSheet");
+	}
+
+	if (markSheet.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
+	    editNormalMarkSheet(markSheetManagementEditBean);
+
+	} else if (markSheet.getMarkSheetState() == MarkSheetState.RECTIFICATION_NOT_CONFIRMED) {
+	    editRectificationMarkSheet(markSheetManagementEditBean);
+
+	} else {
+	    throw new InvalidArgumentsServiceException("error.markSheet.invalid.state");
+	}
     }
 
     private void editRectificationMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
-        
-        Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList =
-            getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean.getEnrolmentEvaluationBeansToEdit());
-        
-        /*
-         * Rectification MarkSheet MUST have ONLY ONE EnrolmentEvaluation
-         */
-        Iterator<MarkSheetEnrolmentEvaluationBean> iterator = filteredEnrolmentEvaluationBeansToEditList.iterator();
-        markSheetManagementEditBean.getMarkSheet().editRectification(iterator.hasNext() ? iterator.next() : null);
+
+	Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList = getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean
+		.getEnrolmentEvaluationBeansToEdit());
+
+	/*
+	 * Rectification MarkSheet MUST have ONLY ONE EnrolmentEvaluation
+	 */
+	Iterator<MarkSheetEnrolmentEvaluationBean> iterator = filteredEnrolmentEvaluationBeansToEditList.iterator();
+	markSheetManagementEditBean.getMarkSheet().editRectification(iterator.hasNext() ? iterator.next() : null);
     }
 
     private void editNormalMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
-        Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList =
-                getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean.getEnrolmentEvaluationBeansToEdit());
-        
-        Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToAppendList =
-                getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean.getEnrolmentEvaluationBeansToAppend());
-        
-        Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemoveList = CollectionUtils
-                .subtract(markSheetManagementEditBean.getEnrolmentEvaluationBeansToEdit(), filteredEnrolmentEvaluationBeansToEditList);
+	Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList = getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean
+		.getEnrolmentEvaluationBeansToEdit());
 
-        markSheetManagementEditBean.getMarkSheet().editNormal(filteredEnrolmentEvaluationBeansToEditList,
-                enrolmentEvaluationBeansToAppendList, enrolmentEvaluationBeansToRemoveList);
+	Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToAppendList = getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean
+		.getEnrolmentEvaluationBeansToAppend());
+
+	Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemoveList = CollectionUtils.subtract(
+		markSheetManagementEditBean.getEnrolmentEvaluationBeansToEdit(), filteredEnrolmentEvaluationBeansToEditList);
+
+	markSheetManagementEditBean.getMarkSheet().editNormal(filteredEnrolmentEvaluationBeansToEditList,
+		enrolmentEvaluationBeansToAppendList, enrolmentEvaluationBeansToRemoveList);
     }
 
     private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationsWithValidGrades(
-            Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans) {
 
-        return CollectionUtils.select(enrolmentEvaluationBeans, new Predicate() {
-            public boolean evaluate(Object arg0) {
-                MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = (MarkSheetEnrolmentEvaluationBean) arg0;
-                return markSheetEnrolmentEvaluationBean.getGradeValue() != null
-                        && markSheetEnrolmentEvaluationBean.getGradeValue().length() != 0;
-            }
-        });
+	return CollectionUtils.select(enrolmentEvaluationBeans, new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = (MarkSheetEnrolmentEvaluationBean) arg0;
+		return markSheetEnrolmentEvaluationBean.getGradeValue() != null
+			&& markSheetEnrolmentEvaluationBean.getGradeValue().length() != 0;
+	    }
+	});
     }
 
 }

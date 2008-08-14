@@ -7,5 +7,5 @@ public class AllResearchersGroup extends RoleTypeGroup {
     public AllResearchersGroup() {
 	super(RoleType.RESEARCHER);
     }
-    
+
 }

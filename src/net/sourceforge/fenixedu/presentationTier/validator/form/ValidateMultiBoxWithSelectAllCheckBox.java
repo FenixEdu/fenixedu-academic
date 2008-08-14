@@ -16,33 +16,30 @@ import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ValidateMultiBoxWithSelectAllCheckBox {
 
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
-            HttpServletRequest request, ServletContext application) {
+	    HttpServletRequest request, ServletContext application) {
 
-        try {
+	try {
 
-            DynaActionForm form = (DynaActionForm) bean;
-            Boolean selectAllBox = (Boolean) form.get(field.getProperty());
-            String sProperty2 = field.getVarValue("secondProperty");
-            String[] multiBox = (String[]) form.get(sProperty2);
+	    DynaActionForm form = (DynaActionForm) bean;
+	    Boolean selectAllBox = (Boolean) form.get(field.getProperty());
+	    String sProperty2 = field.getVarValue("secondProperty");
+	    String[] multiBox = (String[]) form.get(sProperty2);
 
-            if (((selectAllBox != null) && selectAllBox.booleanValue()) || (multiBox != null)
-                    && (multiBox.length > 0)) {
-                return true;
-            }
-            errors.add(field.getKey(), new ActionMessage("errors.required.checkbox", field.getArg(0)
-                    .getKey()));
-            return false;
+	    if (((selectAllBox != null) && selectAllBox.booleanValue()) || (multiBox != null) && (multiBox.length > 0)) {
+		return true;
+	    }
+	    errors.add(field.getKey(), new ActionMessage("errors.required.checkbox", field.getArg(0).getKey()));
+	    return false;
 
-        } catch (Exception e) {
-            errors.add(field.getKey(), new ActionMessage("errors.required.checkbox", field.getArg(0)
-                    .getKey()));
-            return false;
-        }
+	} catch (Exception e) {
+	    errors.add(field.getKey(), new ActionMessage("errors.required.checkbox", field.getArg(0).getKey()));
+	    return false;
+	}
 
     }
 

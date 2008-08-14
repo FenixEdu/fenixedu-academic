@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadAllGrantPaymentEntitiesByClassName extends Service {
 
-	public List run(String className) throws FenixServiceException{
-        final Set<GrantPaymentEntity> grantPaymentEntities = GrantPaymentEntity.findGrantPaymentEntityByConcreteClass(className);
-        final List<InfoGrantPaymentEntity> infoGrantPaymentEntities = new ArrayList<InfoGrantPaymentEntity>();
-        for (final GrantPaymentEntity grantPaymentEntity : grantPaymentEntities) {
-            infoGrantPaymentEntities.add(InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity));
-        }
-		return infoGrantPaymentEntities;
+    public List run(String className) throws FenixServiceException {
+	final Set<GrantPaymentEntity> grantPaymentEntities = GrantPaymentEntity.findGrantPaymentEntityByConcreteClass(className);
+	final List<InfoGrantPaymentEntity> infoGrantPaymentEntities = new ArrayList<InfoGrantPaymentEntity>();
+	for (final GrantPaymentEntity grantPaymentEntity : grantPaymentEntities) {
+	    infoGrantPaymentEntities.add(InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity));
 	}
+	return infoGrantPaymentEntities;
+    }
 
 }

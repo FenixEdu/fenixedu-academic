@@ -23,7 +23,7 @@ public class InvalidSituationServiceException extends FenixServiceException {
      * @param s
      */
     public InvalidSituationServiceException(String s) {
-        super(s);
+	super(s);
 
     }
 
@@ -31,7 +31,7 @@ public class InvalidSituationServiceException extends FenixServiceException {
      * @param cause
      */
     public InvalidSituationServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
 
     }
 
@@ -40,15 +40,15 @@ public class InvalidSituationServiceException extends FenixServiceException {
      * @param cause
      */
     public InvalidSituationServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
 
     }
 
     public String toString() {
-        String result = "[InvalidArgumentsServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[InvalidArgumentsServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

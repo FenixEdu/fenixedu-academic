@@ -23,13 +23,10 @@ public class DegreeCurricularPlansForCreateStudentCurricularPlan implements Data
     public Object provide(Object source, Object currentValue) {
 
 	final StudentCurricularPlanCreator creator = (StudentCurricularPlanCreator) source;
-	final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(
-		new BeanComparator("name"));
+	final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(new BeanComparator("name"));
 	if (creator.getDegree() != null) {
-	    Set<DegreeCurricularPlan> degreeCurricularPlans = creator.getRegistration()
-		    .getDegreeCurricularPlans();
-	    for (DegreeCurricularPlan degreeCurricularPlan : creator.getDegree()
-		    .getDegreeCurricularPlansSet()) {
+	    Set<DegreeCurricularPlan> degreeCurricularPlans = creator.getRegistration().getDegreeCurricularPlans();
+	    for (DegreeCurricularPlan degreeCurricularPlan : creator.getDegree().getDegreeCurricularPlansSet()) {
 		if (!degreeCurricularPlans.contains(degreeCurricularPlan)) {
 		    result.add(degreeCurricularPlan);
 		}

@@ -38,7 +38,7 @@ public class ChoosePersonBean implements Serializable {
     public void setPerson(Person person) {
 	this.person = (person != null) ? new DomainReference<Person>(person) : null;
     }
-    
+
     public boolean hasPerson() {
 	return getPerson() != null;
     }

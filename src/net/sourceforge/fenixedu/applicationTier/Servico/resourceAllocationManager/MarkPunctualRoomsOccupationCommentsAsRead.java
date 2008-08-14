@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 public class MarkPunctualRoomsOccupationCommentsAsRead extends Service {
 
     public void run(PunctualRoomsOccupationRequest request, boolean forTeacher) {
-	if(request != null) {
-	    if(forTeacher) {
+	if (request != null) {
+	    if (forTeacher) {
 		request.setTeacherReadComments(request.getCommentsCount());
 	    } else {
 		request.setEmployeeReadComments(request.getCommentsCount());
 	    }
 	}
-    }   
+    }
 }

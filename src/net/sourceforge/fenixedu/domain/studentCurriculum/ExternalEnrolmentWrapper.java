@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 
 public class ExternalEnrolmentWrapper extends ExternalEnrolmentWrapper_Base {
-    
+
     private ExternalEnrolmentWrapper() {
-        super();
+	super();
     }
-    
+
     protected ExternalEnrolmentWrapper(final Credits credits, final ExternalEnrolment externalEnrolment) {
 	this();
 	super.init(credits);
@@ -20,7 +20,7 @@ public class ExternalEnrolmentWrapper extends ExternalEnrolmentWrapper_Base {
 	}
 	super.setEnrolment(externalEnrolment);
     }
-    
+
     @Override
     public void setEnrolment(ExternalEnrolment enrolment) {
 	throw new RuntimeException("error.EnrolmentWrapper.cannot.modify.enrolment");
@@ -30,10 +30,10 @@ public class ExternalEnrolmentWrapper extends ExternalEnrolmentWrapper_Base {
     public IEnrolment getIEnrolment() {
 	return getEnrolment();
     }
-    
+
     @Override
     public void delete() {
-        super.setEnrolment(null);
-        super.delete();
+	super.setEnrolment(null);
+	super.delete();
     }
 }

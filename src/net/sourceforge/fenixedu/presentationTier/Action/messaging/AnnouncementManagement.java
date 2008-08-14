@@ -39,8 +39,8 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created
- *         on May 30, 2006, 12:21:56 PM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
+ *         May 30, 2006, 12:21:56 PM
  * 
  */
 public abstract class AnnouncementManagement extends FenixDispatchAction {
@@ -332,29 +332,28 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	FileContent fileContent = getFileContent(request);
-	
-	executeService("DeleteFileContent",  fileContent);
+
+	executeService("DeleteFileContent", fileContent);
 	return prepareAddFile(mapping, form, request, response);
     }
 
-    public ActionForward editFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward editFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
 	AnnouncementBoard board = getRequestedAnnouncementBoard(request);
 	FileContent fileContent = getFileContent(request);
-	
+
 	request.setAttribute("board", board);
 	request.setAttribute("fileContent", fileContent);
-	
+
 	return mapping.findForward("editFile");
     }
-    
+
     private FileContent getFileContent(HttpServletRequest request) {
 	Integer fileContentId = Integer.valueOf(request.getParameter("fileId"));
 	FileContent fileContent = (FileContent) rootDomainObject.readFileByOID(fileContentId);
 	return fileContent;
     }
-
 
     /**
      * Method to override in action specific context, to allow specification of
@@ -372,7 +371,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
      * necessary
      * 
      * @param mapping
-     *                TODO
+     *            TODO
      * 
      * 
      * 

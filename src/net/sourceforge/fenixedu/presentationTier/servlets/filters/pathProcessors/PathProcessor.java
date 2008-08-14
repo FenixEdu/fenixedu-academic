@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class is the case for all the path processors. A path processor is responsible
- * for interpreting one or more elements of the requested path and redirecting the 
- * user to a new page or provide a certain context to subprocessors, that is, processors
- * that will process the remaining of the requested path.
+ * This class is the case for all the path processors. A path processor is
+ * responsible for interpreting one or more elements of the requested path and
+ * redirecting the user to a new page or provide a certain context to
+ * subprocessors, that is, processors that will process the remaining of the
+ * requested path.
  * 
  * @author cfgi
  */
@@ -21,11 +22,11 @@ public abstract class PathProcessor {
 
     private String forwardURI;
     private List<PathProcessor> children;
-    
+
     public PathProcessor() {
-        super();
-        
-        this.children = new ArrayList<PathProcessor>();
+	super();
+
+	this.children = new ArrayList<PathProcessor>();
     }
 
     /**
@@ -36,13 +37,13 @@ public abstract class PathProcessor {
      *            {@link #doForward(ProcessingContext, Object[])} is called
      */
     public PathProcessor(String forwardURI) {
-        this();
-        
-        this.forwardURI = forwardURI;
+	this();
+
+	this.forwardURI = forwardURI;
     }
-    
+
     public String getForwardURI() {
-        return this.forwardURI;
+	return this.forwardURI;
     }
 
     /**
@@ -52,11 +53,11 @@ public abstract class PathProcessor {
      *            the child processor
      */
     protected void addChild(PathProcessor processor) {
-        this.children.add(processor);
+	this.children.add(processor);
     }
-    
+
     public abstract ProcessingContext getProcessingContext(ProcessingContext parentContext);
-    
+
     /**
      * Processing a path consists of the following steps.
      * <ol>
@@ -81,19 +82,19 @@ public abstract class PathProcessor {
      *             if the redirection of the user failed
      */
     public boolean process(ProcessingContext parentContext, PathElementsProvider provider) throws IOException, ServletException {
-        ProcessingContext context = getProcessingContext(parentContext);
+	ProcessingContext context = getProcessingContext(parentContext);
 
-        if (! accepts(context, provider)) {
-            return false;
-        }
-        
-        context.accept();
-        
-        if (forward(context, provider)) {
-            return true;
-        }
-        
-        return processChildren(context, provider);
+	if (!accepts(context, provider)) {
+	    return false;
+	}
+
+	context.accept();
+
+	if (forward(context, provider)) {
+	    return true;
+	}
+
+	return processChildren(context, provider);
     }
 
     /**
@@ -126,7 +127,7 @@ public abstract class PathProcessor {
      *            the current context
      * @param provider
      *            the path element provider
-     *            
+     * 
      * @return <code>true</code> if the user was redirected
      * 
      * @throws IOException
@@ -134,8 +135,9 @@ public abstract class PathProcessor {
      * @throws ServletException
      *             if the redirection of the user failed
      */
-    protected abstract boolean forward(ProcessingContext context, PathElementsProvider provider) throws IOException, ServletException;
-    
+    protected abstract boolean forward(ProcessingContext context, PathElementsProvider provider) throws IOException,
+	    ServletException;
+
     /**
      * When the processor accepts the provider but does not redirect the user to
      * the final page then all the children processor will be allowed to process
@@ -153,24 +155,25 @@ public abstract class PathProcessor {
      * @throws ServletException
      *             if the redirection of the user failed
      */
-    protected boolean processChildren(ProcessingContext context, PathElementsProvider provider) throws IOException, ServletException {
-        if (!provider.hasNext()) {
-            return false;
-        }
-        
-        provider.next();
-        
-        for (PathProcessor child : this.children) {
-            if (child.process(context, provider)) {
-                return true;
-            }
-            
-            if (context.isChildAccepted()) {
-                return false;
-            }
-        }
-        
-        return false;
+    protected boolean processChildren(ProcessingContext context, PathElementsProvider provider) throws IOException,
+	    ServletException {
+	if (!provider.hasNext()) {
+	    return false;
+	}
+
+	provider.next();
+
+	for (PathProcessor child : this.children) {
+	    if (child.process(context, provider)) {
+		return true;
+	    }
+
+	    if (context.isChildAccepted()) {
+		return false;
+	    }
+	}
+
+	return false;
     }
 
     /**
@@ -178,15 +181,15 @@ public abstract class PathProcessor {
      * {@link #doForward(ProcessingContext, String, Object[])} where the URI
      * used is the one given in {@link #PathProcessor(String)}.
      */
-    protected boolean doForward(ProcessingContext context, Object ... args) throws IOException, ServletException {
-       return doForward(context, this.forwardURI, args);
+    protected boolean doForward(ProcessingContext context, Object... args) throws IOException, ServletException {
+	return doForward(context, this.forwardURI, args);
     }
 
     /**
      * Redirects the user to the given URI after formating the URI with the
      * given args. This allow you to have an URI like
-     * <code>"/path.do?id=%s"</code> and provide the value for the id
-     * parameter when redirecting.
+     * <code>"/path.do?id=%s"</code> and provide the value for the id parameter
+     * when redirecting.
      * 
      * @param context
      *            the current context
@@ -201,24 +204,26 @@ public abstract class PathProcessor {
      * @throws ServletException
      *             if the redirection of the user failed
      */
-    protected static boolean doForward(ProcessingContext context, String uriFormat, Object ... args) throws IOException, ServletException {
-        // use client redirect
-        // String path = context.getContextPath() + String.format(uriFormat, args);
-        // context.getResponse().sendRedirect(path);
+    protected static boolean doForward(ProcessingContext context, String uriFormat, Object... args) throws IOException,
+	    ServletException {
+	// use client redirect
+	// String path = context.getContextPath() + String.format(uriFormat,
+	// args);
+	// context.getResponse().sendRedirect(path);
 
-        // try internal forward unless impossible
-        dispatch(context.getRequest(), context.getResponse(), String.format(uriFormat, args));
-        return true;
+	// try internal forward unless impossible
+	dispatch(context.getRequest(), context.getResponse(), String.format(uriFormat, args));
+	return true;
     }
-    
-    protected static void dispatch(HttpServletRequest request, HttpServletResponse response, String path) throws IOException, ServletException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 
-        if (dispatcher == null) {
-            response.sendRedirect(request.getContextPath() + path);
-        }
-        else {
-            dispatcher.forward(request, response);
-        }
+    protected static void dispatch(HttpServletRequest request, HttpServletResponse response, String path) throws IOException,
+	    ServletException {
+	RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+
+	if (dispatcher == null) {
+	    response.sendRedirect(request.getContextPath() + path);
+	} else {
+	    dispatcher.forward(request, response);
+	}
     }
 }

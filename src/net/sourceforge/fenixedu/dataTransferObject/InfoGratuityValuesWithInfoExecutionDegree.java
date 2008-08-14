@@ -15,22 +15,23 @@ public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValue
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues#copyFromDomain(Dominio.GratuityValues)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues#copyFromDomain
+     * (Dominio.GratuityValues)
      */
     public void copyFromDomain(GratuityValues gratuityValues) {
-        super.copyFromDomain(gratuityValues);
-        if (gratuityValues != null) {
-            setInfoExecutionDegree(InfoExecutionDegree
-                    .newInfoFromDomain(gratuityValues.getExecutionDegree()));
-        }
+	super.copyFromDomain(gratuityValues);
+	if (gratuityValues != null) {
+	    setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(gratuityValues.getExecutionDegree()));
+	}
     }
 
     public static InfoGratuityValues newInfoFromDomain(GratuityValues gratuityValues) {
-        InfoGratuityValuesWithInfoExecutionDegree infoGratuityValues = null;
-        if (gratuityValues != null) {
-            infoGratuityValues = new InfoGratuityValuesWithInfoExecutionDegree();
-            infoGratuityValues.copyFromDomain(gratuityValues);
-        }
-        return infoGratuityValues;
+	InfoGratuityValuesWithInfoExecutionDegree infoGratuityValues = null;
+	if (gratuityValues != null) {
+	    infoGratuityValues = new InfoGratuityValuesWithInfoExecutionDegree();
+	    infoGratuityValues.copyFromDomain(gratuityValues);
+	}
+	return infoGratuityValues;
     }
 }

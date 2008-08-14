@@ -13,14 +13,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExecutionPeriodsReverseOrderProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriodsSet());
-        Collections.sort(executionSemesters, ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
-        Collections.reverse(executionSemesters);
-        return executionSemesters; 
+	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(RootDomainObject.getInstance()
+		.getExecutionPeriodsSet());
+	Collections.sort(executionSemesters, ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	Collections.reverse(executionSemesters);
+	return executionSemesters;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

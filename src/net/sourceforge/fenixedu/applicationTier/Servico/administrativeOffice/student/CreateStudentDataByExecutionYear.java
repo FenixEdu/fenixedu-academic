@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDataByExecutionYearBean;
 
 public class CreateStudentDataByExecutionYear extends Service {
-    
+
     public void run(final StudentDataByExecutionYearBean studentData) {
 	new StudentDataByExecutionYear(studentData.getStudent(), studentData.getExecutionYear(), studentData.getChoice());
     }

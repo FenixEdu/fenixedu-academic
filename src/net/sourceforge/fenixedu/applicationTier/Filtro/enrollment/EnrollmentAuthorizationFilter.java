@@ -62,18 +62,17 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
     protected String checkDegreeAdministrativeOfficeInformation(Object[] args) {
 
-	final StudentCurricularPlan studentCurricularPlan = readStudent(args)
-		.getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = readStudent(args).getActiveStudentCurricularPlan();
 	if (studentCurricularPlan == null) {
 	    return "noAuthorization";
 	}
 	/*
-         * if (insideEnrollmentPeriod(studentCurricularPlan)) { final Tutor
-         * tutor = studentCurricularPlan.getAssociatedTutor(); if (tutor !=
-         * null) { return "error.enrollment.student.withTutor+" +
-         * tutor.getTeacher().getTeacherNumber().toString() + "+" +
-         * tutor.getTeacher().getPerson().getNome(); } }
-         */
+	 * if (insideEnrollmentPeriod(studentCurricularPlan)) { final Tutor
+	 * tutor = studentCurricularPlan.getAssociatedTutor(); if (tutor !=
+	 * null) { return "error.enrollment.student.withTutor+" +
+	 * tutor.getTeacher().getTeacherNumber().toString() + "+" +
+	 * tutor.getTeacher().getPerson().getNome(); } }
+	 */
 	return null;
     }
 
@@ -89,8 +88,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	    return "noAuthorization";
 	}
 
-	if (registration.getActiveTutorship() == null
-		|| !registration.getActiveTutorship().getTeacher().equals(teacher)) {
+	if (registration.getActiveTutorship() == null || !registration.getActiveTutorship().getTeacher().equals(teacher)) {
 	    return "error.enrollment.notStudentTutor+" + registration.getNumber().toString();
 	}
 
@@ -160,8 +158,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
     protected boolean verifyCoordinator(Person person, Object[] args) {
 
-	final ExecutionDegree executionDegree = rootDomainObject
-		.readExecutionDegreeByOID((Integer) args[0]);
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) args[0]);
 	if (executionDegree == null) {
 	    return false;
 	}
@@ -176,12 +173,10 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	    return false;
 	}
 
-	final StudentCurricularPlan studentCurricularPlan = readStudent(args)
-		.getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = readStudent(args).getActiveStudentCurricularPlan();
 	if (studentCurricularPlan == null) {
 	    return false;
 	}
-	return studentCurricularPlan.getDegreeCurricularPlan().equals(
-		coordinator.getExecutionDegree().getDegreeCurricularPlan());
+	return studentCurricularPlan.getDegreeCurricularPlan().equals(coordinator.getExecutionDegree().getDegreeCurricularPlan());
     }
 }

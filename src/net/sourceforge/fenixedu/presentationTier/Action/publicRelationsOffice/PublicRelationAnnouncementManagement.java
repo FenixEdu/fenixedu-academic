@@ -16,8 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import org.apache.struts.action.ActionMapping;
 
 @Mapping(path = "/announcementsManagement", module = "publicRelations")
-@Forwards( {
-	@Forward(name = "add", path = "publicRelationsOffice-add-announcement"),
+@Forwards( { @Forward(name = "add", path = "publicRelationsOffice-add-announcement"),
 	@Forward(name = "edit", path = "publicRelationsOffice-edit-announcement"),
 	@Forward(name = "listAnnouncementBoards", path = "publicRelationsOffice-list-announcement-boards"),
 	@Forward(name = "listAnnouncements", path = "publicRelationsOffice-list-announcements"),
@@ -25,7 +24,6 @@ import org.apache.struts.action.ActionMapping;
 	@Forward(name = "viewAnnouncement", path = "publicRelationsOffice-view-announcement"),
 	@Forward(name = "uploadFile", path = "publicRelationsOffice-uploadFile"),
 	@Forward(name = "editFile", path = "publicRelationsOffice-editFile") })
-	
 public class PublicRelationAnnouncementManagement extends AnnouncementManagement {
 
     @Override

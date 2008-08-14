@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 public class InsertInstitution extends Service {
 
     public Unit run(String institutionName) throws FenixServiceException {
-        if (UnitUtils.readExternalInstitutionUnitByName(institutionName) != null) {
-            throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
-        }      
-        return Unit.createNewNoOfficialExternalInstitution(institutionName);
+	if (UnitUtils.readExternalInstitutionUnitByName(institutionName) != null) {
+	    throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
+	}
+	return Unit.createNewNoOfficialExternalInstitution(institutionName);
     }
 }

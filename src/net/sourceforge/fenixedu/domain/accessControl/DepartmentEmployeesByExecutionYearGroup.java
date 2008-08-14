@@ -16,20 +16,19 @@ public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecuti
     private static final long serialVersionUID = 8466471514890333054L;
 
     public DepartmentEmployeesByExecutionYearGroup(ExecutionYear executionYear, Department department) {
-    	super(executionYear, department);
+	super(executionYear, department);
     }
-    
+
     public DepartmentEmployeesByExecutionYearGroup(String executionYear, String department) {
 	super(executionYear, department);
 
     }
- 
+
     @Override
     public Set<Person> getElements() {
 	Set<Person> elements = super.buildSet();
 	Collection<Employee> departmentEmployees = getDepartment().getAllWorkingEmployees(
-		getExecutionYear().getBeginDateYearMonthDay(),
-		getExecutionYear().getEndDateYearMonthDay());
+		getExecutionYear().getBeginDateYearMonthDay(), getExecutionYear().getEndDateYearMonthDay());
 
 	for (Employee employee : departmentEmployees) {
 	    elements.add(employee.getPerson());
@@ -41,21 +40,19 @@ public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecuti
     @Override
     public boolean isMember(Person person) {
 	if (person != null && person.hasEmployee()) {
-	    final Department lastDepartmentWorkingPlace = person.getEmployee()
-		    .getLastDepartmentWorkingPlace(getExecutionYear().getBeginDateYearMonthDay(),
-			    getExecutionYear().getEndDateYearMonthDay());
-	    return (lastDepartmentWorkingPlace != null && lastDepartmentWorkingPlace
-		    .equals(getDepartment()));
+	    final Department lastDepartmentWorkingPlace = person.getEmployee().getLastDepartmentWorkingPlace(
+		    getExecutionYear().getBeginDateYearMonthDay(), getExecutionYear().getEndDateYearMonthDay());
+	    return (lastDepartmentWorkingPlace != null && lastDepartmentWorkingPlace.equals(getDepartment()));
 	}
 	return false;
     }
-    
+
     public static class Builder extends DepartmentByExecutionYearGroup.Builder {
 
-        @Override
-        protected DepartmentByExecutionYearGroup buildConcreteGroup(String year, String department) {
-            return new DepartmentEmployeesByExecutionYearGroup(year, department);
-        }
-        
+	@Override
+	protected DepartmentByExecutionYearGroup buildConcreteGroup(String year, String department) {
+	    return new DepartmentEmployeesByExecutionYearGroup(year, department);
+	}
+
     }
 }

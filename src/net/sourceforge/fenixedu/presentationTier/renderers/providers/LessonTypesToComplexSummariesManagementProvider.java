@@ -12,7 +12,7 @@ public class LessonTypesToComplexSummariesManagementProvider implements DataProv
 
     public Object provide(Object source, Object currentValue) {
 	NextPossibleSummaryLessonsAndDatesBean bean = (NextPossibleSummaryLessonsAndDatesBean) source;
-	if(bean.getLesson() != null) {
+	if (bean.getLesson() != null) {
 	    return bean.getLesson().getShift().getTypes();
 	}
 	return new ArrayList<ShiftType>();

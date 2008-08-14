@@ -26,8 +26,7 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
 	DegreeCurricularPlanForPrintDTO selectedCurricularPlan = getSelectedCurricularPlan(scope);
 
-	CurricularYearForPrintDTO selectedCurricularYear = getSelectedCurricularYear(scope,
-		selectedCurricularPlan);
+	CurricularYearForPrintDTO selectedCurricularYear = getSelectedCurricularYear(scope, selectedCurricularPlan);
 
 	BranchForPrintDTO selectedBranch = getSelectedBranch(scope, selectedCurricularYear);
 
@@ -37,8 +36,7 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
     }
 
-    private void addScope(final InfoCurricularCourseScope scope,
-	    CurricularSemesterForPrintDTO selectedSemester) {
+    private void addScope(final InfoCurricularCourseScope scope, CurricularSemesterForPrintDTO selectedSemester) {
 	selectedSemester.getScopes().add(scope);
 	sortScopes(selectedSemester.getScopes());
     }
@@ -52,8 +50,8 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 		return 1; // o1 is greater than o2
 	    }
 	    int result = o1.getAnotation().compareTo(o2.getAnotation());
-	    return (result == 0) ? o1.getInfoCurricularCourse().getName().compareTo(
-		    o2.getInfoCurricularCourse().getName()) : result;
+	    return (result == 0) ? o1.getInfoCurricularCourse().getName().compareTo(o2.getInfoCurricularCourse().getName())
+		    : result;
 	}
     };
 
@@ -63,22 +61,20 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
     private CurricularSemesterForPrintDTO getSelectedSemester(final InfoCurricularCourseScope scope,
 	    BranchForPrintDTO selectedBranch) {
-	CurricularSemesterForPrintDTO selectedSemester = (CurricularSemesterForPrintDTO) CollectionUtils
-		.find(selectedBranch.getSemesters(), new Predicate() {
+	CurricularSemesterForPrintDTO selectedSemester = (CurricularSemesterForPrintDTO) CollectionUtils.find(selectedBranch
+		.getSemesters(), new Predicate() {
 
-		    public boolean evaluate(Object arg0) {
-			CurricularSemesterForPrintDTO curricularSemesterForPrintDTO = (CurricularSemesterForPrintDTO) arg0;
-			if (curricularSemesterForPrintDTO.getSemester().equals(
-				scope.getInfoCurricularSemester().getSemester())) {
-			    return true;
-			}
-			return false;
-		    }
+	    public boolean evaluate(Object arg0) {
+		CurricularSemesterForPrintDTO curricularSemesterForPrintDTO = (CurricularSemesterForPrintDTO) arg0;
+		if (curricularSemesterForPrintDTO.getSemester().equals(scope.getInfoCurricularSemester().getSemester())) {
+		    return true;
+		}
+		return false;
+	    }
 
-		});
+	});
 	if (selectedSemester == null) {
-	    selectedSemester = new CurricularSemesterForPrintDTO(scope.getInfoCurricularSemester()
-		    .getSemester());
+	    selectedSemester = new CurricularSemesterForPrintDTO(scope.getInfoCurricularSemester().getSemester());
 	    selectedBranch.getSemesters().add(selectedSemester);
 	}
 
@@ -87,8 +83,8 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
     private BranchForPrintDTO getSelectedBranch(final InfoCurricularCourseScope scope,
 	    CurricularYearForPrintDTO selectedCurricularYear) {
-	BranchForPrintDTO selectedBranch = (BranchForPrintDTO) CollectionUtils.find(
-		selectedCurricularYear.getBranches(), new Predicate() {
+	BranchForPrintDTO selectedBranch = (BranchForPrintDTO) CollectionUtils.find(selectedCurricularYear.getBranches(),
+		new Predicate() {
 
 		    public boolean evaluate(Object arg0) {
 			BranchForPrintDTO branchForPrintDTO = (BranchForPrintDTO) arg0;
@@ -112,8 +108,8 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
     private CurricularYearForPrintDTO getSelectedCurricularYear(final InfoCurricularCourseScope scope,
 	    DegreeCurricularPlanForPrintDTO selectedCurricularPlan) {
-	CurricularYearForPrintDTO selectedCurricularYear = (CurricularYearForPrintDTO) CollectionUtils
-		.find(selectedCurricularPlan.getYears(), new Predicate() {
+	CurricularYearForPrintDTO selectedCurricularYear = (CurricularYearForPrintDTO) CollectionUtils.find(
+		selectedCurricularPlan.getYears(), new Predicate() {
 
 		    public boolean evaluate(Object arg0) {
 			CurricularYearForPrintDTO curricularYearForPrintDTO = (CurricularYearForPrintDTO) arg0;
@@ -127,8 +123,8 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
 		});
 	if (selectedCurricularYear == null) {
-	    selectedCurricularYear = new CurricularYearForPrintDTO(scope.getInfoCurricularSemester()
-		    .getInfoCurricularYear().getYear());
+	    selectedCurricularYear = new CurricularYearForPrintDTO(scope.getInfoCurricularSemester().getInfoCurricularYear()
+		    .getYear());
 	    selectedCurricularPlan.getYears().add(selectedCurricularYear);
 
 	}
@@ -136,10 +132,9 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 	return selectedCurricularYear;
     }
 
-    private DegreeCurricularPlanForPrintDTO getSelectedCurricularPlan(
-	    final InfoCurricularCourseScope scope) {
-	DegreeCurricularPlanForPrintDTO selectedCurricularPlan = (DegreeCurricularPlanForPrintDTO) CollectionUtils
-		.find(getDegreeCurricularPlans(), new Predicate() {
+    private DegreeCurricularPlanForPrintDTO getSelectedCurricularPlan(final InfoCurricularCourseScope scope) {
+	DegreeCurricularPlanForPrintDTO selectedCurricularPlan = (DegreeCurricularPlanForPrintDTO) CollectionUtils.find(
+		getDegreeCurricularPlans(), new Predicate() {
 
 		    public boolean evaluate(Object arg0) {
 			DegreeCurricularPlanForPrintDTO degreeCurricularPlanForPrintDTO = (DegreeCurricularPlanForPrintDTO) arg0;
@@ -153,10 +148,9 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 		});
 
 	if (selectedCurricularPlan == null) {
-	    InfoDegreeCurricularPlan degreeCurricularPlan = scope.getInfoCurricularCourse()
-		    .getInfoDegreeCurricularPlan();
-	    selectedCurricularPlan = new DegreeCurricularPlanForPrintDTO(degreeCurricularPlan.getName(),
-		    degreeCurricularPlan.getInfoDegree().getNome(), degreeCurricularPlan.getAnotation());
+	    InfoDegreeCurricularPlan degreeCurricularPlan = scope.getInfoCurricularCourse().getInfoDegreeCurricularPlan();
+	    selectedCurricularPlan = new DegreeCurricularPlanForPrintDTO(degreeCurricularPlan.getName(), degreeCurricularPlan
+		    .getInfoDegree().getNome(), degreeCurricularPlan.getAnotation());
 	    this.getDegreeCurricularPlans().add(selectedCurricularPlan);
 	}
 

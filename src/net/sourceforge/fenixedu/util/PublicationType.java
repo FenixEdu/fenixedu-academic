@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class PublicationType extends FenixValuedEnum {
 
@@ -33,37 +33,36 @@ public class PublicationType extends FenixValuedEnum {
 
     public static PublicationType EDITOR_BOOK = new PublicationType("EditBook", EDITOR_BOOK_TYPE);
 
-    public static PublicationType ARTICLES_CHAPTERS = new PublicationType("ArticlesChapters",
-            ARTICLES_CHAPTERS_TYPE);
+    public static PublicationType ARTICLES_CHAPTERS = new PublicationType("ArticlesChapters", ARTICLES_CHAPTERS_TYPE);
 
     public PublicationType(String name, int value) {
-        super(name, value);
+	super(name, value);
     }
 
     public static PublicationType getEnum(String publicationType) {
-        return (PublicationType) getEnum(PublicationType.class, publicationType);
+	return (PublicationType) getEnum(PublicationType.class, publicationType);
     }
 
     public static PublicationType getEnum(int publicationType) {
-        return (PublicationType) getEnum(PublicationType.class, publicationType);
+	return (PublicationType) getEnum(PublicationType.class, publicationType);
     }
 
     public static Map getEnumMap() {
-        return getEnumMap(PublicationType.class);
+	return getEnumMap(PublicationType.class);
     }
 
     public static List getEnumList() {
-        return getEnumList(PublicationType.class);
+	return getEnumList(PublicationType.class);
     }
 
     public static Iterator iterator() {
-        return iterator(PublicationType.class);
+	return iterator(PublicationType.class);
     }
 
     public String toString() {
-        String result = "Publication Type Type :\n";
-        result += "\n  - Publication Type : " + this.getName();
+	String result = "Publication Type Type :\n";
+	result += "\n  - Publication Type : " + this.getName();
 
-        return result;
+	return result;
     }
 }

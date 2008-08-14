@@ -14,43 +14,45 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class InfoGuideWithGuideEntries extends InfoGuide {
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(Dominio.Guide)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(
+     * Dominio.Guide)
      */
     public void copyFromDomain(Guide guide) {
-        super.copyFromDomain(guide);
-        if (guide != null) {
-            setInfoGuideEntries(copyIGuideEntry2InfoGuide(guide.getGuideEntries()));
-        }
+	super.copyFromDomain(guide);
+	if (guide != null) {
+	    setInfoGuideEntries(copyIGuideEntry2InfoGuide(guide.getGuideEntries()));
+	}
     }
 
     private List copyIGuideEntry2InfoGuide(List guideEntries) {
-        List infoGuideEntryList = null;
+	List infoGuideEntryList = null;
 
-        infoGuideEntryList = (List) CollectionUtils.collect(guideEntries, new Transformer() {
+	infoGuideEntryList = (List) CollectionUtils.collect(guideEntries, new Transformer() {
 
-            public Object transform(Object arg0) {
-                GuideEntry guideEntry = (GuideEntry) arg0;
-                return InfoGuideEntry.newInfoFromDomain(guideEntry);
-            }
-        });
+	    public Object transform(Object arg0) {
+		GuideEntry guideEntry = (GuideEntry) arg0;
+		return InfoGuideEntry.newInfoFromDomain(guideEntry);
+	    }
+	});
 
-        return infoGuideEntryList;
+	return infoGuideEntryList;
     }
 
     public static InfoGuide newInfoFromDomain(Guide guide) {
-        InfoGuideWithGuideEntries infoGuide = new InfoGuideWithGuideEntries();
-        if (guide != null) {
-            infoGuide = new InfoGuideWithGuideEntries();
-            infoGuide.copyFromDomain(guide);
-        }
+	InfoGuideWithGuideEntries infoGuide = new InfoGuideWithGuideEntries();
+	if (guide != null) {
+	    infoGuide = new InfoGuideWithGuideEntries();
+	    infoGuide.copyFromDomain(guide);
+	}
 
-        return infoGuide;
+	return infoGuide;
     }
 }

@@ -8,13 +8,13 @@ package net.sourceforge.fenixedu.domain;
 
 public class ScientificArea extends ScientificArea_Base {
 
-	public ScientificArea() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public ScientificArea() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public ScientificArea(final String name) {
-		this();
-		super.setName(name);
-	}
+    public ScientificArea(final String name) {
+	this();
+	super.setName(name);
+    }
 }

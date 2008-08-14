@@ -16,21 +16,18 @@ public class ReadStudentEnrolmentEvaluation extends Service {
 
     public InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) {
 
-	final EnrolmentEvaluation enrolmentEvaluation = rootDomainObject
-		.readEnrolmentEvaluationByOID(studentEvaluationCode);
-	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(enrolmentEvaluation
-		.getPersonResponsibleForGrade().getTeacher());
+	final EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(studentEvaluationCode);
+	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(enrolmentEvaluation.getPersonResponsibleForGrade()
+		.getTeacher());
 
 	final List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
-	final InfoEnrolment infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolmentEvaluation
-		.getEnrolment());
+	final InfoEnrolment infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
 
 	final InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
 		.newInfoFromDomain(enrolmentEvaluation);
 	infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
 	if (enrolmentEvaluation.hasEmployee()) {
-	    infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation
-		    .getEmployee().getPerson()));
+	    infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getEmployee().getPerson()));
 	}
 	infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 	infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);

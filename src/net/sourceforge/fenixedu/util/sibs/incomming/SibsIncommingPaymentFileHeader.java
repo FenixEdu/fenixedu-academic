@@ -22,14 +22,12 @@ public class SibsIncommingPaymentFileHeader {
 
     public static SibsIncommingPaymentFileHeader buildFrom(String rawLine) {
 	final String[] fields = splitLine(rawLine);
-	return new SibsIncommingPaymentFileHeader(getWhenProcessedBySibsFrom(fields),
-		getVersionFrom(fields));
+	return new SibsIncommingPaymentFileHeader(getWhenProcessedBySibsFrom(fields), getVersionFrom(fields));
     }
 
     private static YearMonthDay getWhenProcessedBySibsFrom(String[] fields) {
 	try {
-	    return new YearMonthDay(new SimpleDateFormat(DATE_FORMAT).parse(fields[4].substring(0,
-		    DATE_FORMAT.length())));
+	    return new YearMonthDay(new SimpleDateFormat(DATE_FORMAT).parse(fields[4].substring(0, DATE_FORMAT.length())));
 	} catch (ParseException e) {
 	    throw new RuntimeException(e);
 	}

@@ -19,24 +19,24 @@ import org.apache.struts.action.DynaActionForm;
 
 public class AddShiftsDA extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        final InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	final InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        final DynaActionForm addShiftsForm = (DynaActionForm) form;
-        List<String> selectedShifts = Arrays.asList((String[]) addShiftsForm.get("selectedItems"));
-        
-        Object args[] = { infoClass, selectedShifts };
-        try {
-            ServiceUtils.executeService("AddShiftsToSchoolClass", args);
-        } catch (ExistingServiceException ex) {
-            // No problem, the user refreshed the page after adding classes
-            request.setAttribute("selectMultipleItemsForm", null);
-            return mapping.getInputForward();
-        }
+	final DynaActionForm addShiftsForm = (DynaActionForm) form;
+	List<String> selectedShifts = Arrays.asList((String[]) addShiftsForm.get("selectedItems"));
 
-        return mapping.findForward("EditClass");
+	Object args[] = { infoClass, selectedShifts };
+	try {
+	    ServiceUtils.executeService("AddShiftsToSchoolClass", args);
+	} catch (ExistingServiceException ex) {
+	    // No problem, the user refreshed the page after adding classes
+	    request.setAttribute("selectMultipleItemsForm", null);
+	    return mapping.getInputForward();
+	}
+
+	return mapping.findForward("EditClass");
     }
 
 }

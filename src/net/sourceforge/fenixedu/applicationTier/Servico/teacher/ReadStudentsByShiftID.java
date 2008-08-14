@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentsByShiftID extends Service {
 
     public List run(final Integer executionCourseID, final Integer shiftID) {
-        final List infoStudents = new LinkedList();
-        final Shift shift = rootDomainObject.readShiftByOID(shiftID);
-        final List<Registration> students = shift.getStudents();
-        for (final Registration registration : students) {
-            infoStudents.add(InfoStudent.newInfoFromDomain(registration));
-        }
+	final List infoStudents = new LinkedList();
+	final Shift shift = rootDomainObject.readShiftByOID(shiftID);
+	final List<Registration> students = shift.getStudents();
+	for (final Registration registration : students) {
+	    infoStudents.add(InfoStudent.newInfoFromDomain(registration));
+	}
 
-        return infoStudents;
+	return infoStudents;
     }
 
 }

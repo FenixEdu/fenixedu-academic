@@ -21,55 +21,53 @@ import org.jfree.data.time.TimeSeriesCollection;
 public class TimeLineChart extends Chart {
 
     public TimeLineChart(SortedSet requestEntries, String fileName) {
-        super("Execution Time");
+	super("Execution Time");
 
-        Paint[] colors = new Paint[requestEntries.size()];
-        int i = 0;
-        TimeSeriesCollection collection = new TimeSeriesCollection();
-        Iterator iterator = requestEntries.iterator();
-        while (iterator.hasNext()) {
-            RequestEntry requestEntry = (RequestEntry) iterator.next();
-            TimeSeries series = createTimeSeries(requestEntry, i);
-            collection.addSeries(series);
-            colors[i] = OutputUtils.getStringColor(series.getName());
-            i++;
-        }
-        createLOCChart(collection, colors, "title");
-        createChart();
-        saveChart(500, 500, fileName);
+	Paint[] colors = new Paint[requestEntries.size()];
+	int i = 0;
+	TimeSeriesCollection collection = new TimeSeriesCollection();
+	Iterator iterator = requestEntries.iterator();
+	while (iterator.hasNext()) {
+	    RequestEntry requestEntry = (RequestEntry) iterator.next();
+	    TimeSeries series = createTimeSeries(requestEntry, i);
+	    collection.addSeries(series);
+	    colors[i] = OutputUtils.getStringColor(series.getName());
+	    i++;
+	}
+	createLOCChart(collection, colors, "title");
+	createChart();
+	saveChart(500, 500, fileName);
     }
 
     private TimeSeries createTimeSeries(RequestEntry requestEntry, int requestClassification) {
-        TimeSeries result = new TimeSeries(new Integer(requestClassification + 1).toString(),
-                Millisecond.class);
-        for (int i = 0; i < requestEntry.getExecutionTimes().size(); i++) {
-            Integer executionTime = (Integer) requestEntry.getExecutionTimes().get(i);
-            Date logTime = (Date) requestEntry.getLogTimes().get(i);
-            try {
-                result.add(new Millisecond(logTime), executionTime.doubleValue());
-            } catch (Exception ex) {
-                // Ignore duplicate entries
-            }
-        }
-        return result;
+	TimeSeries result = new TimeSeries(new Integer(requestClassification + 1).toString(), Millisecond.class);
+	for (int i = 0; i < requestEntry.getExecutionTimes().size(); i++) {
+	    Integer executionTime = (Integer) requestEntry.getExecutionTimes().get(i);
+	    Date logTime = (Date) requestEntry.getLogTimes().get(i);
+	    try {
+		result.add(new Millisecond(logTime), executionTime.doubleValue());
+	    } catch (Exception ex) {
+		// Ignore duplicate entries
+	    }
+	}
+	return result;
     }
 
     private void createLOCChart(TimeSeriesCollection collection, Paint[] colors, String title) {
-        XYDataset data = collection;
-        boolean legend = (collection.getSeriesCount() > 1);
-        setChart(ChartFactory.createTimeSeriesChart("Requests", "Log Time", "Execution Time", data,
-                legend, false, false));
+	XYDataset data = collection;
+	boolean legend = (collection.getSeriesCount() > 1);
+	setChart(ChartFactory.createTimeSeriesChart("Requests", "Log Time", "Execution Time", data, legend, false, false));
 
-        // getChart().getPlot().setSeriesPaint(colors);
-        XYPlot plot = getChart().getXYPlot();
-        for (int i = 0; i < colors.length; i++) {
-            plot.getRenderer().setSeriesPaint(0, colors[i]);
-        }
-        DateAxis domainAxis = (DateAxis) plot.getDomainAxis();
-        domainAxis.setVerticalTickLabels(true);
-        ValueAxis valueAxis = plot.getRangeAxis();
-        valueAxis.setLowerBound(0);
-        plot.setRenderer(new XYStepRenderer());
+	// getChart().getPlot().setSeriesPaint(colors);
+	XYPlot plot = getChart().getXYPlot();
+	for (int i = 0; i < colors.length; i++) {
+	    plot.getRenderer().setSeriesPaint(0, colors[i]);
+	}
+	DateAxis domainAxis = (DateAxis) plot.getDomainAxis();
+	domainAxis.setVerticalTickLabels(true);
+	ValueAxis valueAxis = plot.getRangeAxis();
+	valueAxis.setLowerBound(0);
+	plot.setRenderer(new XYStepRenderer());
     }
 
 }

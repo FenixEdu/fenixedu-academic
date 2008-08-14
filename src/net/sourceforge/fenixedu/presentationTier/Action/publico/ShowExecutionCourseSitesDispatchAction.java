@@ -27,7 +27,8 @@ import org.apache.struts.action.ActionMapping;
 
 public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatchAction {
 
-    public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Degree degree = ShowDegreeSiteAction.getDegree(request);
 
 	// degreeID
@@ -51,7 +52,8 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
     }
 
     private InfoExecutionPeriod getPreviousExecutionPeriod(HttpServletRequest request) {
-	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(SessionConstants.EXECUTION_PERIOD);
 	final InfoExecutionPeriod previousInfoExecutionPeriod = infoExecutionPeriod.getPreviousInfoExecutionPeriod();
 
 	request.setAttribute("previousInfoExecutionPeriod", previousInfoExecutionPeriod);
@@ -61,15 +63,16 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
     private List<ExecutionCourseView> getExecutionCourseViews(HttpServletRequest request, Degree degree)
 	    throws FenixServiceException, FenixFilterException {
 	final Object[] args = { degree };
-	List<ExecutionCourseView> result = new ArrayList((Collection<ExecutionCourseView>)
-		ServiceManagerServiceFactory.executeService( "ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args));
+	List<ExecutionCourseView> result = new ArrayList((Collection<ExecutionCourseView>) ServiceManagerServiceFactory
+		.executeService("ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args));
 	BeanComparator beanComparator = new BeanComparator("executionCourseName", Collator.getInstance());
 	Collections.sort(result, beanComparator);
 
 	return result;
     }
 
-    private void organizeExecutionCourseViews(HttpServletRequest request, List<ExecutionCourseView> executionCourseViews, InfoExecutionPeriod previousExecutionPeriod) {
+    private void organizeExecutionCourseViews(HttpServletRequest request, List<ExecutionCourseView> executionCourseViews,
+	    InfoExecutionPeriod previousExecutionPeriod) {
 	Table executionCourseViewsTableCurrent1_2 = new Table(2);
 	Table executionCourseViewsTableCurrent3_4 = new Table(2);
 	Table executionCourseViewsTableCurrent5 = new Table(1);
@@ -79,7 +82,8 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
 
 	for (ExecutionCourseView executionCourseView : executionCourseViews) {
 	    int curricularYear = executionCourseView.getCurricularYear();
-	    boolean previousExecPeriod = previousExecutionPeriod != null && executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal());
+	    boolean previousExecPeriod = previousExecutionPeriod != null
+		    && executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal());
 
 	    switch (curricularYear) {
 	    case 1:

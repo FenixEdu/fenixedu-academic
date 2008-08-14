@@ -114,8 +114,7 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
 	DynaActionForm otherServiceForm = (DynaActionForm) form;
 	Integer otherServiceID = (Integer) otherServiceForm.get("otherServiceID");
-	ServiceUtils
-		.executeService( "DeleteOtherServiceByOID", new Object[] { otherServiceID });
+	ServiceUtils.executeService("DeleteOtherServiceByOID", new Object[] { otherServiceID });
 	return mapping.findForward("successful-delete");
     }
 

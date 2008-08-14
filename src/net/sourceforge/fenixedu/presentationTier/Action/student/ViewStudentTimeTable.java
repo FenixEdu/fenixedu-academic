@@ -27,9 +27,8 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ViewStudentTimeTable extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException,
-	    FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
 	List<Registration> registrations = getUserView(request).getPerson().getStudent().getRegistrations();
 	if (registrations.size() == 1) {
@@ -40,22 +39,16 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException, FenixServiceException {
+    public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
 	return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
     }
 
-    private ActionForward forwardToShowTimeTable(Registration registration, 
-	    ActionMapping mapping, 
-	    HttpServletRequest request) 
-    throws FenixActionException, FenixFilterException, FenixServiceException {
+    private ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request)
+	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	List<InfoLesson> infoLessons = 
-	    (List) ServiceUtils.executeService(
-		    "ReadStudentTimeTable", 
-		    new Object[] { registration });
+	List<InfoLesson> infoLessons = (List) ServiceUtils.executeService("ReadStudentTimeTable", new Object[] { registration });
 
 	request.setAttribute("infoLessons", infoLessons);
 	return mapping.findForward("showTimeTable");

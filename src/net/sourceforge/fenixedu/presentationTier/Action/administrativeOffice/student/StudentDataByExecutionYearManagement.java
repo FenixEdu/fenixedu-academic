@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class StudentDataByExecutionYearManagement extends FenixDispatchAction {
-    
+
     public ActionForward show(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -29,9 +29,10 @@ public class StudentDataByExecutionYearManagement extends FenixDispatchAction {
 	request.setAttribute("sortedStudentDataByExecutionYear", getSortedStudentDataByExecutionYear(student));
 	return mapping.findForward("showStudentData");
     }
-    
+
     private List<StudentDataByExecutionYear> getSortedStudentDataByExecutionYear(final Student student) {
-	final List<StudentDataByExecutionYear> result = new ArrayList<StudentDataByExecutionYear>(student.getStudentDataByExecutionYear());
+	final List<StudentDataByExecutionYear> result = new ArrayList<StudentDataByExecutionYear>(student
+		.getStudentDataByExecutionYear());
 	Collections.sort(result, new ReverseComparator(StudentDataByExecutionYear.COMPARATOR_BY_EXECUTION_YEAR));
 	return result;
     }
@@ -39,37 +40,37 @@ public class StudentDataByExecutionYearManagement extends FenixDispatchAction {
     private Student getStudent(final HttpServletRequest request) {
 	return rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
     }
-    
+
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("createBean", new StudentDataByExecutionYearBean(getStudent(request)));
 	return show(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward prepareCreateInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("createBean", getRenderedObject());
 	return show(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final StudentDataByExecutionYearBean studentDataByExecutionYearBean = (StudentDataByExecutionYearBean) getRenderedObject();
 	try {
-	    executeService("CreateStudentDataByExecutionYear", new Object[] {studentDataByExecutionYearBean});
+	    executeService("CreateStudentDataByExecutionYear", new Object[] { studentDataByExecutionYearBean });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getKey());
 	    request.setAttribute("createBean", studentDataByExecutionYearBean);
 	}
 	return show(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	
+
 	try {
-	    executeService("DeleteStudentDataByExecutionYear", new Object[] {getStudentDataByExecutionYear(request)});
+	    executeService("DeleteStudentDataByExecutionYear", new Object[] { getStudentDataByExecutionYear(request) });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}

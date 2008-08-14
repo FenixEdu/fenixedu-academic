@@ -13,7 +13,8 @@ public class CurricularCoursePathsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	SelectedCurricularCourse selectedCurricularCourse = (SelectedCurricularCourse) source;
-	return selectedCurricularCourse.getStudentCurricularPlan().getCurricularCoursePossibleGroups(selectedCurricularCourse.getCurricularCourse());
+	return selectedCurricularCourse.getStudentCurricularPlan().getCurricularCoursePossibleGroups(
+		selectedCurricularCourse.getCurricularCourse());
     }
 
 }

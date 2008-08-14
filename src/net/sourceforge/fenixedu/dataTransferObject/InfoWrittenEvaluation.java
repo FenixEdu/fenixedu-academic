@@ -47,151 +47,147 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
     protected Integer enrolledStudents;
 
     public List<InfoCurricularCourseScope> getAssociatedCurricularCourseScope() {
-        return associatedCurricularCourseScope;
+	return associatedCurricularCourseScope;
     }
 
     public List<InfoRoomOccupation> getWrittenEvaluationSpaceOccupations() {
-        return associatedRoomOccupation;
+	return associatedRoomOccupation;
     }
 
     public Calendar getBeginning() {
-        return beginning;
+	return beginning;
     }
 
     public Calendar getDay() {
-        return day;
+	return day;
     }
 
     public Calendar getEnd() {
-        return end;
+	return end;
     }
 
     public Calendar getEnrollmentBeginDay() {
-        return enrollmentBeginDay;
+	return enrollmentBeginDay;
     }
 
     public Calendar getEnrollmentBeginTime() {
-        return enrollmentBeginTime;
+	return enrollmentBeginTime;
     }
 
     public Calendar getEnrollmentEndDay() {
-        return enrollmentEndDay;
+	return enrollmentEndDay;
     }
 
     public Calendar getEnrollmentEndTime() {
-        return enrollmentEndTime;
+	return enrollmentEndTime;
     }
 
     public void setAssociatedCurricularCourseScope(List<InfoCurricularCourseScope> list) {
-        associatedCurricularCourseScope = list;
+	associatedCurricularCourseScope = list;
     }
 
     public void setWrittenEvaluationSpaceOccupations(List<InfoRoomOccupation> list) {
-        associatedRoomOccupation = list;
+	associatedRoomOccupation = list;
     }
 
     public void setBeginning(Calendar calendar) {
-        beginning = calendar;
+	beginning = calendar;
     }
 
     public void setDay(Calendar calendar) {
-        day = calendar;
+	day = calendar;
     }
 
     public void setEnd(Calendar calendar) {
-        end = calendar;
+	end = calendar;
     }
 
     public void setEnrollmentBeginDay(Calendar calendar) {
-        enrollmentBeginDay = calendar;
+	enrollmentBeginDay = calendar;
     }
 
     public void setEnrollmentBeginTime(Calendar calendar) {
-        enrollmentBeginTime = calendar;
+	enrollmentBeginTime = calendar;
     }
 
     public void setEnrollmentEndDay(Calendar calendar) {
-        enrollmentEndDay = calendar;
+	enrollmentEndDay = calendar;
     }
 
     public void setEnrollmentEndTime(Calendar calendar) {
-        enrollmentEndTime = calendar;
+	enrollmentEndTime = calendar;
     }
 
     public List<InfoExecutionCourse> getAssociatedExecutionCourse() {
-        return associatedExecutionCourse;
+	return associatedExecutionCourse;
     }
 
     public void setAssociatedExecutionCourse(List<InfoExecutionCourse> list) {
-        associatedExecutionCourse = list;
+	associatedExecutionCourse = list;
     }
 
     public Integer getEnrolledStudents() {
-        return enrolledStudents;
+	return enrolledStudents;
     }
 
     public void setEnrolledStudents(Integer enrolledStudents) {
-        this.enrolledStudents = enrolledStudents;
+	this.enrolledStudents = enrolledStudents;
     }
 
     public Calendar getInicio() {
-        return getBeginning();
+	return getBeginning();
     }
 
     public Calendar getFim() {
-        return getEnd();
+	return getEnd();
     }
 
     public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
-        super.copyFromDomain(writtenEvaluation);
-        if (writtenEvaluation != null) {
-            setWrittenEvaluation(writtenEvaluation);
-            associatedExecutionCourse = new ArrayList<InfoExecutionCourse>();
-            associatedRoomOccupation = new ArrayList<InfoRoomOccupation>();
-            associatedCurricularCourseScope = new ArrayList<InfoCurricularCourseScope>();
-            for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
-                associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-            }
-            for (WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupations()) {
-                associatedRoomOccupation.add(InfoRoomOccupation.newInfoFromDomain(roomOccupation));
-            }
-            for (CurricularCourseScope curricularCourseScope : writtenEvaluation
-                    .getAssociatedCurricularCourseScope()) {
-                associatedCurricularCourseScope.add(InfoCurricularCourseScope
-                        .newInfoFromDomain(curricularCourseScope));
-            }
-            setBeginning(writtenEvaluation.getBeginning());
-            setDay(writtenEvaluation.getDay());
-            setEnd(writtenEvaluation.getEnd());
-            setEnrollmentBeginDay(writtenEvaluation.getEnrollmentBeginDay());
-            setEnrollmentBeginTime(writtenEvaluation.getEnrollmentBeginTime());
-            setEnrollmentEndDay(writtenEvaluation.getEnrollmentEndDay());
-            setEnrollmentEndTime(writtenEvaluation.getEnrollmentEndTime());
-        }
+	super.copyFromDomain(writtenEvaluation);
+	if (writtenEvaluation != null) {
+	    setWrittenEvaluation(writtenEvaluation);
+	    associatedExecutionCourse = new ArrayList<InfoExecutionCourse>();
+	    associatedRoomOccupation = new ArrayList<InfoRoomOccupation>();
+	    associatedCurricularCourseScope = new ArrayList<InfoCurricularCourseScope>();
+	    for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
+		associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+	    }
+	    for (WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupations()) {
+		associatedRoomOccupation.add(InfoRoomOccupation.newInfoFromDomain(roomOccupation));
+	    }
+	    for (CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScope()) {
+		associatedCurricularCourseScope.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+	    }
+	    setBeginning(writtenEvaluation.getBeginning());
+	    setDay(writtenEvaluation.getDay());
+	    setEnd(writtenEvaluation.getEnd());
+	    setEnrollmentBeginDay(writtenEvaluation.getEnrollmentBeginDay());
+	    setEnrollmentBeginTime(writtenEvaluation.getEnrollmentBeginTime());
+	    setEnrollmentEndDay(writtenEvaluation.getEnrollmentEndDay());
+	    setEnrollmentEndTime(writtenEvaluation.getEnrollmentEndTime());
+	}
     }
 
     public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
-        InfoWrittenEvaluation infoWrittenEvaluation = null;
-        if (writtenEvaluation != null) {
-            if (writtenEvaluation instanceof Exam) {
-                infoWrittenEvaluation = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
-            } else if (writtenEvaluation instanceof WrittenTest) {
-                infoWrittenEvaluation = InfoWrittenTest
-                        .newInfoFromDomain((WrittenTest) writtenEvaluation);
-            } else {
-                infoWrittenEvaluation = new InfoWrittenEvaluation();
-                infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
-            }
-        }
-        return infoWrittenEvaluation;
+	InfoWrittenEvaluation infoWrittenEvaluation = null;
+	if (writtenEvaluation != null) {
+	    if (writtenEvaluation instanceof Exam) {
+		infoWrittenEvaluation = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
+	    } else if (writtenEvaluation instanceof WrittenTest) {
+		infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((WrittenTest) writtenEvaluation);
+	    } else {
+		infoWrittenEvaluation = new InfoWrittenEvaluation();
+		infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
+	    }
+	}
+	return infoWrittenEvaluation;
     }
 
     public WrittenEvaluation getWrittenEvaluation() {
-        return writtenEvaluation == null ? null : writtenEvaluation.getObject();
+	return writtenEvaluation == null ? null : writtenEvaluation.getObject();
     }
 
     public void setWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-        this.writtenEvaluation = writtenEvaluation == null ? null
-                : new DomainReference<WrittenEvaluation>(writtenEvaluation);
+	this.writtenEvaluation = writtenEvaluation == null ? null : new DomainReference<WrittenEvaluation>(writtenEvaluation);
     }
 }

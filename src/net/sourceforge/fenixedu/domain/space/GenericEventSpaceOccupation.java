@@ -13,53 +13,54 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Base {
-    
-    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")   
-    public GenericEventSpaceOccupation(AllocatableSpace allocatableSpace, GenericEvent genericEvent) {	
-	
-	super();          
-        
+
+    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
+    public GenericEventSpaceOccupation(AllocatableSpace allocatableSpace, GenericEvent genericEvent) {
+
+	super();
+
 	setGenericEvent(genericEvent);
-	
-        if(allocatableSpace != null && !allocatableSpace.isFree(this)) {
-            throw new DomainException("error.roomOccupation.room.is.not.free");
-        }      
-	
-        setResource(allocatableSpace);                     
-    }   
-    
-    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")   
-    public void delete() {	
+
+	if (allocatableSpace != null && !allocatableSpace.isFree(this)) {
+	    throw new DomainException("error.roomOccupation.room.is.not.free");
+	}
+
+	setResource(allocatableSpace);
+    }
+
+    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
+    public void delete() {
 	super.setGenericEvent(null);
 	super.delete();
     }
-    
+
     @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
-    public void verifyIfIsPossibleCloseGenericEvent() {}
-    
+    public void verifyIfIsPossibleCloseGenericEvent() {
+    }
+
     @Override
     public void setGenericEvent(GenericEvent genericEvent) {
-	if(genericEvent == null) {
+	if (genericEvent == null) {
 	    throw new DomainException("error.GenericEventSpaceOccupation.empty.genericEvent");
 	}
 	super.setGenericEvent(genericEvent);
-    }      
-        
+    }
+
     @Override
     public boolean isGenericEventSpaceOccupation() {
 	return true;
     }
-    
+
     @Override
     public Group getAccessGroup() {
 	return getSpace().getGenericEventOccupationsAccessGroupWithChainOfResponsibility();
     }
-    
+
     @Override
     public FrequencyType getFrequency() {
 	return getGenericEvent().getFrequency();
     }
-         
+
     @Override
     public YearMonthDay getBeginDate() {
 	return getGenericEvent().getBeginDate();
@@ -69,7 +70,7 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
     public YearMonthDay getEndDate() {
 	return getGenericEvent().getEndDate();
     }
-    
+
     @Override
     public Boolean getDailyFrequencyMarkSaturday() {
 	return getGenericEvent().getDailyFrequencyMarkSaturday();
@@ -79,12 +80,12 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
     public Boolean getDailyFrequencyMarkSunday() {
 	return getGenericEvent().getDailyFrequencyMarkSunday();
     }
-  
+
     @Override
     public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
 	return getGenericEvent().getStartTimeDateHourMinuteSecond();
     }
-    
+
     @Override
     public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
 	return getGenericEvent().getEndTimeDateHourMinuteSecond();

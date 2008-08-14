@@ -28,8 +28,8 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ManageGrantSubsidyAction extends FenixDispatchAction {
 
-    public ActionForward prepareManageGrantSubsidyForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantSubsidyForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer idContract = null;
 	try {
@@ -44,24 +44,23 @@ public class ManageGrantSubsidyAction extends FenixDispatchAction {
 	    return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-subsidy", null);
 	}
 
-	//Read Contract
+	// Read Contract
 	Object[] args = { idContract };
 	IUserView userView = UserView.getUser();
-	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
-		"ReadGrantContract", args);
+	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args);
 
 	request.setAttribute("idContract", idContract);
 	request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
-	//Read Subsidies
+	// Read Subsidies
 	Object[] argsActiveSubsidy = { idContract, InfoGrantSubsidy.getActiveStateValue() };
 	Object[] argsNotActiveSubsidy = { idContract, InfoGrantSubsidy.getInactiveStateValue() };
-	List infoGrantActiveSubsidyList = (List) ServiceUtils.executeService(
-		"ReadAllGrantSubsidiesByGrantContractAndState", argsActiveSubsidy);
-	List infoGrantNotActiveSubsidyList = (List) ServiceUtils.executeService(
-		"ReadAllGrantSubsidiesByGrantContractAndState", argsNotActiveSubsidy);
+	List infoGrantActiveSubsidyList = (List) ServiceUtils.executeService("ReadAllGrantSubsidiesByGrantContractAndState",
+		argsActiveSubsidy);
+	List infoGrantNotActiveSubsidyList = (List) ServiceUtils.executeService("ReadAllGrantSubsidiesByGrantContractAndState",
+		argsNotActiveSubsidy);
 
-	//If they exist put them on request
+	// If they exist put them on request
 	if (infoGrantActiveSubsidyList != null && !infoGrantActiveSubsidyList.isEmpty()) {
 	    request.setAttribute("infoGrantActiveSubsidyList", infoGrantActiveSubsidyList);
 	}
@@ -69,9 +68,8 @@ public class ManageGrantSubsidyAction extends FenixDispatchAction {
 	    request.setAttribute("infoGrantNotActiveSubsidyList", infoGrantNotActiveSubsidyList);
 	}
 
-	//Presenting adittional information
-	request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo()
-		.getGrantOwnerNumber());
+	// Presenting adittional information
+	request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo().getGrantOwnerNumber());
 	request.setAttribute("grantContractNumber", infoGrantContract.getContractNumber());
 
 	return mapping.findForward("manage-grant-subsidy");

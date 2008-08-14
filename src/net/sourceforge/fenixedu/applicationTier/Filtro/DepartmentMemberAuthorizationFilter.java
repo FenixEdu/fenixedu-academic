@@ -22,7 +22,7 @@ public class DepartmentMemberAuthorizationFilter extends AuthorizationByRoleFilt
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -31,6 +31,6 @@ public class DepartmentMemberAuthorizationFilter extends AuthorizationByRoleFilt
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.DEPARTMENT_MEMBER;
+	return RoleType.DEPARTMENT_MEMBER;
     }
 }

@@ -19,7 +19,7 @@ public class StudentsSiteProcessor extends AbstractPathProcessor {
 	if (site == null) {
 	    for (UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
 		if (acronym.getAcronym().equalsIgnoreCase("ACD")) {
-		    Unit studentsUnit= acronym.getUnits().get(0);
+		    Unit studentsUnit = acronym.getUnits().get(0);
 		    site = (StudentsSite) studentsUnit.getSite();
 		    return site;
 		}

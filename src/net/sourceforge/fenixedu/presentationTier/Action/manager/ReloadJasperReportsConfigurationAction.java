@@ -15,19 +15,20 @@ import org.apache.struts.action.ActionMapping;
 
 public class ReloadJasperReportsConfigurationAction extends Action {
     private static final Logger logger = Logger.getLogger(ReloadJasperReportsConfigurationAction.class);
-    
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	ReportsUtils.getReportsMap().clear(); 
-	
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
+	ReportsUtils.getReportsMap().clear();
+
 	ReportsUtils.getProperties().clear();
 	PropertiesManager.loadProperties(ReportsUtils.getProperties(), ReportsUtils.getReportsPropertiesFile());
 
 	if (LogLevel.INFO) {
-            logger.info("reloaded jasper reports configuration");
+	    logger.info("reloaded jasper reports configuration");
 	}
-        return null;
+	return null;
     }
-    
+
 }

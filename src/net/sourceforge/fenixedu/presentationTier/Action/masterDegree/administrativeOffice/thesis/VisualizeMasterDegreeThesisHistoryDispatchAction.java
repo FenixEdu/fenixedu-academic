@@ -24,44 +24,37 @@ import org.apache.struts.action.ActionMapping;
 
 public class VisualizeMasterDegreeThesisHistoryDispatchAction extends FenixDispatchAction {
 
-    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	Integer masterDegreeThesisDataVersionID = Integer.valueOf(request
-		.getParameter("masterDegreeThesisDataVersionID"));
+	Integer masterDegreeThesisDataVersionID = Integer.valueOf(request.getParameter("masterDegreeThesisDataVersionID"));
 
-	new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request,
-		new ActionErrors());
+	new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request, new ActionErrors());
 
 	MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = rootDomainObject
 		.readMasterDegreeThesisDataVersionByOID(masterDegreeThesisDataVersionID);
 
 	if (!masterDegreeThesisDataVersion.getGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.GUIDERS_LIST, masterDegreeThesisDataVersion
-		    .getGuiders());
+	    request.setAttribute(SessionConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());
 
 	if (!masterDegreeThesisDataVersion.getAssistentGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
-		    .getAssistentGuiders());
+	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion.getAssistentGuiders());
 
 	if (!masterDegreeThesisDataVersion.getExternalAssistentGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
-		    masterDegreeThesisDataVersion.getExternalAssistentGuiders());
+	    request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
+		    .getExternalAssistentGuiders());
 
 	if (!masterDegreeThesisDataVersion.getExternalGuiders().isEmpty()) {
-	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, masterDegreeThesisDataVersion
-		    .getExternalGuiders());
+	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, masterDegreeThesisDataVersion.getExternalGuiders());
 	}
 
 	Date lastModification = new Date(masterDegreeThesisDataVersion.getLastModification().getTime());
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy k:mm:ss");
 	String formattedLastModification = simpleDateFormat.format(lastModification);
 
-	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeThesisDataVersion
-		.getResponsibleEmployee());
+	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeThesisDataVersion.getResponsibleEmployee());
 	request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
-	request.setAttribute(SessionConstants.DISSERTATION_TITLE, masterDegreeThesisDataVersion
-		.getDissertationTitle());
+	request.setAttribute(SessionConstants.DISSERTATION_TITLE, masterDegreeThesisDataVersion.getDissertationTitle());
 
 	return mapping.findForward("start");
 

@@ -9,22 +9,22 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class DeletePrizeFilter extends Filtro {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		IUserView userView = getRemoteUser(request);
-		Person person = userView.getPerson();
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+	IUserView userView = getRemoteUser(request);
+	Person person = userView.getPerson();
 
-		Prize prize = null;
-		if (request.getServiceParameters().getParameter(0) instanceof Prize) {
-			prize = (Prize) request.getServiceParameters().getParameter(0);
-		}
-		if (prize != null) {
-			if (!prize.isDeletableByUser(person)) {
-				throw new NotAuthorizedFilterException("error.not.authorized");
-			}
-		} else {
-			throw new NotAuthorizedFilterException("error.not.authorized");
-		}
+	Prize prize = null;
+	if (request.getServiceParameters().getParameter(0) instanceof Prize) {
+	    prize = (Prize) request.getServiceParameters().getParameter(0);
 	}
+	if (prize != null) {
+	    if (!prize.isDeletableByUser(person)) {
+		throw new NotAuthorizedFilterException("error.not.authorized");
+	    }
+	} else {
+	    throw new NotAuthorizedFilterException("error.not.authorized");
+	}
+    }
 
 }

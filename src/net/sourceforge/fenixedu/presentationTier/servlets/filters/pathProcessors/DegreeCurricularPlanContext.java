@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 public interface DegreeCurricularPlanContext {
 
     public Degree getDegree();
+
     public DegreeCurricularPlan getDegreeCurricularPlan();
-    
+
 }

@@ -16,26 +16,25 @@ import org.apache.struts.action.ActionMapping;
 /**
  * 
  * @author naat
- * @author pcma 
+ * @author pcma
  */
 public class ExecutionCourseForumManagementDispatchAction extends ForunsManagement {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ManageExecutionCourseDA.propageContextIds(request);
-        return super.execute(mapping, actionForm, request, response);
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ManageExecutionCourseDA.propageContextIds(request);
+	return super.execute(mapping, actionForm, request, response);
     }
 
     public ActionForward viewForuns(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException,
-            FenixServiceException {
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-        ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
-        request.setAttribute("foruns", executionCourse.getForuns());
+	request.setAttribute("foruns", executionCourse.getForuns());
 
-        return mapping.findForward("viewForuns");
+	return mapping.findForward("viewForuns");
     }
 
 }

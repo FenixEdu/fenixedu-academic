@@ -24,126 +24,123 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ExamCoordinatorManagement extends FenixDispatchAction {
 
-    public ActionForward prepareExamCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareExamCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IViewState viewState = RenderUtils.getViewState("preserveState");
-        if (viewState == null) {
-            prepareManagementBean(request);
-        } else {
-            VigilantGroupBean bean = (VigilantGroupBean) viewState.getMetaObject().getObject();
-            request.setAttribute("bean", bean);
-        }
-        return mapping.findForward("prepareExamCoordinator");
+	IViewState viewState = RenderUtils.getViewState("preserveState");
+	if (viewState == null) {
+	    prepareManagementBean(request);
+	} else {
+	    VigilantGroupBean bean = (VigilantGroupBean) viewState.getMetaObject().getObject();
+	    request.setAttribute("bean", bean);
+	}
+	return mapping.findForward("prepareExamCoordinator");
     }
 
-    public ActionForward addExamCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addExamCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IViewState viewState = RenderUtils.getViewState("preserveState");
-        VigilantGroupBean bean = (VigilantGroupBean) viewState.getMetaObject().getObject();
-        request.setAttribute("bean", bean);
+	IViewState viewState = RenderUtils.getViewState("preserveState");
+	VigilantGroupBean bean = (VigilantGroupBean) viewState.getMetaObject().getObject();
+	request.setAttribute("bean", bean);
 
-        String username = bean.getUsername();
-        User user = User.readUserByUserUId(username);
-		if (user != null && user.getPerson() != null) {
-			Object args[] = { user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit() };
-	        executeService(request, "AddExamCoordinator", args);
-		} else {
-			addActionMessage(request, "label.vigilancy.inexistingUsername");
-		}
+	String username = bean.getUsername();
+	User user = User.readUserByUserUId(username);
+	if (user != null && user.getPerson() != null) {
+	    Object args[] = { user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit() };
+	    executeService(request, "AddExamCoordinator", args);
+	} else {
+	    addActionMessage(request, "label.vigilancy.inexistingUsername");
+	}
 
-        return mapping.findForward("prepareExamCoordinator");
+	return mapping.findForward("prepareExamCoordinator");
     }
 
-    public ActionForward deleteExamCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteExamCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        String oid = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(oid);
-        String departmentId = request.getParameter("deparmentId");
-        String unitId = request.getParameter("unitId");
+	String oid = request.getParameter("oid");
+	Integer idInternal = Integer.valueOf(oid);
+	String departmentId = request.getParameter("deparmentId");
+	String unitId = request.getParameter("unitId");
 
-        ExamCoordinator coordinator = (ExamCoordinator) RootDomainObject.readDomainObjectByOID(
-                ExamCoordinator.class, idInternal);
+	ExamCoordinator coordinator = (ExamCoordinator) RootDomainObject.readDomainObjectByOID(ExamCoordinator.class, idInternal);
 
-        Object[] args = { coordinator };
-        executeService(request, "DeleteExamCoordinator", args);
+	Object[] args = { coordinator };
+	executeService(request, "DeleteExamCoordinator", args);
 
-        Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class,
-                Integer.valueOf(departmentId));
-        Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
+	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
+		.valueOf(departmentId));
+	Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
 
-        VigilantGroupBean bean = new VigilantGroupBean();
-        bean.setSelectedDepartment(deparment);
-        bean.setSelectedUnit(unit);
-        bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	VigilantGroupBean bean = new VigilantGroupBean();
+	bean.setSelectedDepartment(deparment);
+	bean.setSelectedUnit(unit);
+	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 
-        request.setAttribute("bean", bean);
-        return mapping.findForward("prepareExamCoordinator");
+	request.setAttribute("bean", bean);
+	return mapping.findForward("prepareExamCoordinator");
     }
 
-    public ActionForward prepareAddExamCoordinatorWithState(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareAddExamCoordinatorWithState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        String departmentId = request.getParameter("deparmentId");
-        String unitId = request.getParameter("unitId");
+	String departmentId = request.getParameter("deparmentId");
+	String unitId = request.getParameter("unitId");
 
-        Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class,
-                Integer.valueOf(departmentId));
-        Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
+	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
+		.valueOf(departmentId));
+	Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
 
-        VigilantGroupBean bean = new VigilantGroupBean();
-        bean.setSelectedDepartment(deparment);
-        bean.setSelectedUnit(unit);
-        bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	VigilantGroupBean bean = new VigilantGroupBean();
+	bean.setSelectedDepartment(deparment);
+	bean.setSelectedUnit(unit);
+	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 
-        request.setAttribute("bean", bean);
-        return mapping.findForward("prepareExamCoordinator");
+	request.setAttribute("bean", bean);
+	return mapping.findForward("prepareExamCoordinator");
     }
 
-    public ActionForward editExamCoordinators(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editExamCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        String departmentId = request.getParameter("deparmentId");
-        String unitId = request.getParameter("unitId");
+	String departmentId = request.getParameter("deparmentId");
+	String unitId = request.getParameter("unitId");
 
-        Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class,
-                Integer.valueOf(departmentId));
-        Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
+	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
+		.valueOf(departmentId));
+	Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
 
-        VigilantGroupBean bean = new VigilantGroupBean();
-        bean.setSelectedDepartment(deparment);
-        bean.setSelectedUnit(unit);
-        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        bean.setExecutionYear(executionYear);
-        bean.setExamCoordinators(unit.getExamCoordinatorsForGivenYear(executionYear));
-        request.setAttribute("bean", bean);
-        return mapping.findForward("editExamCoordinator");
+	VigilantGroupBean bean = new VigilantGroupBean();
+	bean.setSelectedDepartment(deparment);
+	bean.setSelectedUnit(unit);
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	bean.setExecutionYear(executionYear);
+	bean.setExamCoordinators(unit.getExamCoordinatorsForGivenYear(executionYear));
+	request.setAttribute("bean", bean);
+	return mapping.findForward("editExamCoordinator");
     }
 
-    public ActionForward selectUnitForCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward selectUnitForCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectUnit")
-                .getMetaObject().getObject();
-        request.setAttribute("bean", bean);
-        RenderUtils.invalidateViewState("selectUnit");
-        return mapping.findForward("prepareExamCoordinator");
+	VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectUnit").getMetaObject().getObject();
+	request.setAttribute("bean", bean);
+	RenderUtils.invalidateViewState("selectUnit");
+	return mapping.findForward("prepareExamCoordinator");
     }
 
-    private void prepareManagementBean(HttpServletRequest request) throws FenixFilterException,
-            FenixServiceException {
+    private void prepareManagementBean(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 
-        VigilantGroupBean bean = new VigilantGroupBean();
-        ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-        bean.setExecutionYear(currentYear);
-        Person person = getLoggedPerson(request);
-        Employee employee = person.getEmployee();
-        if (employee != null) {
-            bean.setSelectedDepartment(employee.getCurrentDepartmentWorkingPlace());
-        }
-        request.setAttribute("bean", bean);
+	VigilantGroupBean bean = new VigilantGroupBean();
+	ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+	bean.setExecutionYear(currentYear);
+	Person person = getLoggedPerson(request);
+	Employee employee = person.getEmployee();
+	if (employee != null) {
+	    bean.setSelectedDepartment(employee.getCurrentDepartmentWorkingPlace());
+	}
+	request.setAttribute("bean", bean);
     }
 
 }

@@ -26,59 +26,59 @@ public class MovementReportLine implements Serializable, IMovementReportLine {
     private Double tax;
 
     public String getDate() {
-        return date;
+	return date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+	this.date = date;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     public String getMovementId() {
-        return movementId;
+	return movementId;
     }
 
     public void setMovementId(String movementId) {
-        this.movementId = movementId;
+	this.movementId = movementId;
     }
 
     public Integer getRubricId() {
-        return rubricId;
+	return rubricId;
     }
 
     public void setRubricId(Integer rubricId) {
-        this.rubricId = rubricId;
+	this.rubricId = rubricId;
     }
 
     public Double getTax() {
-        return tax;
+	return tax;
     }
 
     public void setTax(Double tax) {
-        this.tax = tax;
+	this.tax = tax;
     }
 
     public String getType() {
-        return type;
+	return type;
     }
 
     public void setType(String type) {
-        this.type = type;
+	this.type = type;
     }
 
     public Double getValue() {
-        return value;
+	return value;
     }
 
     public void setValue(Double value) {
-        this.value = value;
+	this.value = value;
     }
 
 }

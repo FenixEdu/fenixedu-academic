@@ -18,19 +18,18 @@ public class VigilantsForGivenCoordinator implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        UnavailablePeriodBean bean = (UnavailablePeriodBean) source;
+	UnavailablePeriodBean bean = (UnavailablePeriodBean) source;
 
-        ExamCoordinator coordinator = bean.getCoordinator();
+	ExamCoordinator coordinator = bean.getCoordinator();
 
-        List<Vigilant> vigilantsToReturn = new ArrayList<Vigilant>(coordinator
-                .getVigilantsThatCanManage());
+	List<Vigilant> vigilantsToReturn = new ArrayList<Vigilant>(coordinator.getVigilantsThatCanManage());
 
-        Collections.sort(vigilantsToReturn, new BeanComparator("person.name"));
-        return vigilantsToReturn;
+	Collections.sort(vigilantsToReturn, new BeanComparator("person.name"));
+	return vigilantsToReturn;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

@@ -21,8 +21,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class ListConcludedMasterDegreeProofsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	ListMasterDegreeProofsBean bean = null;
 

@@ -15,8 +15,8 @@ public abstract class Transaction extends Transaction_Base {
 	public int compare(Transaction leftTransaction, Transaction rightTransaction) {
 	    int comparationResult = leftTransaction.getTransactionDateDateTime().compareTo(
 		    rightTransaction.getTransactionDateDateTime());
-	    return (comparationResult == 0) ? leftTransaction.getIdInternal().compareTo(
-		    rightTransaction.getIdInternal()) : comparationResult;
+	    return (comparationResult == 0) ? leftTransaction.getIdInternal().compareTo(rightTransaction.getIdInternal())
+		    : comparationResult;
 	}
     };
 
@@ -34,12 +34,12 @@ public abstract class Transaction extends Transaction_Base {
     public void setValue(Double value) {
 	setValueBigDecimal(BigDecimal.valueOf(value));
     }
-    
+
     public void delete() {
 	removePersonAccount();
 	removeResponsiblePerson();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-    
+
 }

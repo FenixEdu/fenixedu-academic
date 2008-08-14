@@ -26,42 +26,41 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
 
     private static final String ENCODING = "UTF-8";
 
-    public ActionForward getUserEmailAndUniqueUsername(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getUserEmailAndUniqueUsername(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        if (!HostAccessControl.isAllowed(this, request)) {
-            writeResponse(response, NOT_AUTHORIZED_CODE, "");
-        } else {
+	if (!HostAccessControl.isAllowed(this, request)) {
+	    writeResponse(response, NOT_AUTHORIZED_CODE, "");
+	} else {
 
-            final String username = request.getParameter("username");
+	    final String username = request.getParameter("username");
 
-            String responseMessage = "";
-            String responseCode = null;
+	    String responseMessage = "";
+	    String responseCode = null;
 
-            try {
-                final Person person = (Person) ServiceUtils.executeService(
-                        "ReadPersonByUsernameOrIstUsername", new Object[] { username });
+	    try {
+		final Person person = (Person) ServiceUtils.executeService("ReadPersonByUsernameOrIstUsername",
+			new Object[] { username });
 
-                if (person == null) {
-                    responseCode = USER_NOT_FOUND_CODE;
-                } else {
-                    responseCode = SUCCESS_CODE;
+		if (person == null) {
+		    responseCode = USER_NOT_FOUND_CODE;
+		} else {
+		    responseCode = SUCCESS_CODE;
 
-                    String email = (person.getEmail() != null) ? person.getEmail() : "";
-                    String uniqueUsername = (person.getIstUsername() != null) ? person.getIstUsername()
-                            : "";
+		    String email = (person.getEmail() != null) ? person.getEmail() : "";
+		    String uniqueUsername = (person.getIstUsername() != null) ? person.getIstUsername() : "";
 
-                    responseMessage = "email=" + URLEncoder.encode(email, ENCODING) + "&"
-                            + "uniqueUsername=" + URLEncoder.encode(uniqueUsername, ENCODING);
-                }
-            } catch (FenixServiceException e) {
-                responseCode = UNEXPECTED_ERROR_CODE;
-            }
+		    responseMessage = "email=" + URLEncoder.encode(email, ENCODING) + "&" + "uniqueUsername="
+			    + URLEncoder.encode(uniqueUsername, ENCODING);
+		}
+	    } catch (FenixServiceException e) {
+		responseCode = UNEXPECTED_ERROR_CODE;
+	    }
 
-            writeResponse(response, responseCode, responseMessage);
-        }
+	    writeResponse(response, responseCode, responseMessage);
+	}
 
-        return null;
+	return null;
 
     }
 
@@ -73,8 +72,8 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
      * @return
      */
     public String getPersonInformationAsCSV() {
-        // TODO: finish
-        return null;
+	// TODO: finish
+	return null;
     }
 
 }

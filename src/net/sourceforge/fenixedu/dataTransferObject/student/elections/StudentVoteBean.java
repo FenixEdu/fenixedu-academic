@@ -18,80 +18,77 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.beanutils.BeanComparator;
 
 public class StudentVoteBean implements Serializable {
-	
-	private DomainReference<Student> student;
-	private boolean selectedStudent;
-	
-	
 
-	public StudentVoteBean() {}
-	
-	public StudentVoteBean(Student student) {
-		setStudent(student);
-		setSelectedStudent(false);
-	}
-	
-	
-	
-	public Student getStudent() {
-		return (this.student == null) ? null : student.getObject();
-		
-	}
+    private DomainReference<Student> student;
+    private boolean selectedStudent;
 
-	public void setStudent(Student student) {
-		this.student = (student != null) ? new DomainReference<Student>(student):null;
-		
-	}
-	
-	public boolean getSelectedStudent() {
-		return selectedStudent;
-	}
+    public StudentVoteBean() {
+    }
 
-	public void setSelectedStudent(boolean selectedStudent) {
-		this.selectedStudent = selectedStudent;
-	}
-	
-	public List<Student> getSelectedStudentVote(String studentType) {
-		final IUserView userView = AccessControl.getUserView();
-    	final Student student = userView.getPerson().getStudent();
-		final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(student);
-		
-		final DelegateElectionPeriod currentPeriod = (yearDelegateElection != null ? yearDelegateElection.getCurrentElectionPeriod() : null);
-		List<Student> otherStudentsList = new ArrayList<Student>();
-		
-		if(currentPeriod != null && currentPeriod.isVotingPeriod()) {		
-			if(studentType.equals("notCandidate")){
-					otherStudentsList = yearDelegateElection.getNotCandidatedStudents();
-			}
-			if(studentType.equals("candidate")){
-					otherStudentsList = yearDelegateElection.getCandidates();
-			}
-			List<Student> otherStudentsBeanList = new ArrayList<Student>();
-			for(final Student studentList : otherStudentsList) {
-				otherStudentsBeanList.add(studentList);
-			}
+    public StudentVoteBean(Student student) {
+	setStudent(student);
+	setSelectedStudent(false);
+    }
 
-				Collections.sort(otherStudentsBeanList, new BeanComparator("person.name"));
-				return otherStudentsBeanList;
-		}
-		return new ArrayList<Student>();
+    public Student getStudent() {
+	return (this.student == null) ? null : student.getObject();
+
+    }
+
+    public void setStudent(Student student) {
+	this.student = (student != null) ? new DomainReference<Student>(student) : null;
+
+    }
+
+    public boolean getSelectedStudent() {
+	return selectedStudent;
+    }
+
+    public void setSelectedStudent(boolean selectedStudent) {
+	this.selectedStudent = selectedStudent;
+    }
+
+    public List<Student> getSelectedStudentVote(String studentType) {
+	final IUserView userView = AccessControl.getUserView();
+	final Student student = userView.getPerson().getStudent();
+	final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(student);
+
+	final DelegateElectionPeriod currentPeriod = (yearDelegateElection != null ? yearDelegateElection
+		.getCurrentElectionPeriod() : null);
+	List<Student> otherStudentsList = new ArrayList<Student>();
+
+	if (currentPeriod != null && currentPeriod.isVotingPeriod()) {
+	    if (studentType.equals("notCandidate")) {
+		otherStudentsList = yearDelegateElection.getNotCandidatedStudents();
 	    }
-	
-	public  YearDelegateElection getYearDelegateElectionForStudent(Student student) {
-		YearDelegateElection yearDelegateElection = null;
-		
-		final Registration registration = student.getLastActiveRegistration();
-		
-		final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-		if(registration != null){
-			final int curricularYear = registration.getCurricularYear(currentExecutionYear);
-			yearDelegateElection =  (YearDelegateElection)registration.getDegree().getYearDelegateElectionWithLastCandidacyPeriod(
-					currentExecutionYear, CurricularYear.readByYear(curricularYear));
-			return yearDelegateElection;
-		}
-		return null;
+	    if (studentType.equals("candidate")) {
+		otherStudentsList = yearDelegateElection.getCandidates();
+	    }
+	    List<Student> otherStudentsBeanList = new ArrayList<Student>();
+	    for (final Student studentList : otherStudentsList) {
+		otherStudentsBeanList.add(studentList);
+	    }
+
+	    Collections.sort(otherStudentsBeanList, new BeanComparator("person.name"));
+	    return otherStudentsBeanList;
 	}
-	
-	
-	
+	return new ArrayList<Student>();
+    }
+
+    public YearDelegateElection getYearDelegateElectionForStudent(Student student) {
+	YearDelegateElection yearDelegateElection = null;
+
+	final Registration registration = student.getLastActiveRegistration();
+
+	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	if (registration != null) {
+	    final int curricularYear = registration.getCurricularYear(currentExecutionYear);
+	    yearDelegateElection = (YearDelegateElection) registration.getDegree()
+		    .getYearDelegateElectionWithLastCandidacyPeriod(currentExecutionYear,
+			    CurricularYear.readByYear(curricularYear));
+	    return yearDelegateElection;
+	}
+	return null;
+    }
+
 }

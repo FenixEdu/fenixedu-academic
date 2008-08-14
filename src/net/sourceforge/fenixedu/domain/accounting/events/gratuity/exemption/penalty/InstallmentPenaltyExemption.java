@@ -37,26 +37,22 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
 
     public InstallmentPenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
 	    final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, final Employee employee,
-	    final Installment installment, final String comments,
-	    final YearMonthDay directiveCouncilDispatchDate) {
+	    final Installment installment, final String comments, final YearMonthDay directiveCouncilDispatchDate) {
 	this();
-	init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, installment, comments,
-		directiveCouncilDispatchDate);
+	init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, installment, comments, directiveCouncilDispatchDate);
 
     }
 
     protected void init(PenaltyExemptionJustificationType penaltyExemptionType,
-	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, Employee employee,
-	    Installment installment, String comments, YearMonthDay directiveCouncilDispatchDate) {
-	super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, comments,
-		directiveCouncilDispatchDate);
+	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, Employee employee, Installment installment,
+	    String comments, YearMonthDay directiveCouncilDispatchDate) {
+	super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, comments, directiveCouncilDispatchDate);
 	checkParameters(installment);
 	checkRulesToCreate(gratuityEventWithPaymentPlan, installment);
 	super.setInstallment(installment);
     }
 
-    private void checkRulesToCreate(final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan,
-	    final Installment installment) {
+    private void checkRulesToCreate(final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, final Installment installment) {
 	if (gratuityEventWithPaymentPlan.hasPenaltyExemptionFor(installment)) {
 	    throw new DomainException(
 		    "error.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.event.already.has.penalty.exemption.for.installment");

@@ -46,7 +46,7 @@ public class UnitStructureRenderer extends OutputRenderer {
     private boolean showEmployeesSection;
 
     private boolean showOnlyPeopleWithFunctions;
-    
+
     private boolean showEmptyEmployeesSection;
 
     private boolean showEmptyFunctions;
@@ -67,13 +67,12 @@ public class UnitStructureRenderer extends OutputRenderer {
 
     private String dateSinceKey;
 
-    
     public boolean isShowOnlyPeopleWithFunctions() {
-        return showOnlyPeopleWithFunctions;
+	return showOnlyPeopleWithFunctions;
     }
 
     public void setShowOnlyPeopleWithFunctions(boolean showPeopleWithFunctions) {
-        this.showOnlyPeopleWithFunctions = showPeopleWithFunctions;
+	this.showOnlyPeopleWithFunctions = showPeopleWithFunctions;
     }
 
     public boolean isShowEmployeesSection() {
@@ -85,11 +84,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Chooses the bundle for all messages. If no bundle is specified the
-         * default bundle for the current module is used.
-         * 
-         * @property
-         */
+     * Chooses the bundle for all messages. If no bundle is specified the
+     * default bundle for the current module is used.
+     * 
+     * @property
+     */
     public void setBundle(String bundle) {
 	this.bundle = bundle;
     }
@@ -99,11 +98,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * The resource key to be used when displaying a date in the form:
-         * <em>key</em> &lt;begin&gt; to &lt;end&gt;.
-         * 
-         * @property
-         */
+     * The resource key to be used when displaying a date in the form:
+     * <em>key</em> &lt;begin&gt; to &lt;end&gt;.
+     * 
+     * @property
+     */
     public void setDateFromKey(String dateFromKey) {
 	this.dateFromKey = dateFromKey;
     }
@@ -113,11 +112,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * The resource key to be used when displaying a date in the form:
-         * <em>key</em> &lt;begin&gt;.
-         * 
-         * @property
-         */
+     * The resource key to be used when displaying a date in the form:
+     * <em>key</em> &lt;begin&gt;.
+     * 
+     * @property
+     */
     public void setDateSinceKey(String dateSinceKey) {
 	this.dateSinceKey = dateSinceKey;
     }
@@ -127,11 +126,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * The resource key to be used when displaying a date in the form: From
-         * &lt;begin&gt; <em>key</em> &lt;end&gt;.
-         * 
-         * @property
-         */
+     * The resource key to be used when displaying a date in the form: From
+     * &lt;begin&gt; <em>key</em> &lt;end&gt;.
+     * 
+     * @property
+     */
     public void setDateToKey(String dateToKey) {
 	this.dateToKey = dateToKey;
     }
@@ -141,10 +140,10 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the classes to be used when displaying each employee item.
-         * 
-         * @property
-         */
+     * Sets the classes to be used when displaying each employee item.
+     * 
+     * @property
+     */
     public void setEmployeesClasses(String employeesClasses) {
 	this.employeesClasses = employeesClasses;
     }
@@ -154,10 +153,10 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the classes to be used in the employees section item.
-         * 
-         * @property
-         */
+     * Sets the classes to be used in the employees section item.
+     * 
+     * @property
+     */
     public void setEmployeesSectionClasses(String employeesSectionClasses) {
 	this.employeesSectionClasses = employeesSectionClasses;
     }
@@ -167,10 +166,10 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the key to be used has the label of the employees section.
-         * 
-         * @property
-         */
+     * Sets the key to be used has the label of the employees section.
+     * 
+     * @property
+     */
     public void setEmployeesSectionKey(String employeesSectionKey) {
 	this.employeesSectionKey = employeesSectionKey;
     }
@@ -180,10 +179,10 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the classes to use in each function item.
-         * 
-         * @property
-         */
+     * Sets the classes to use in each function item.
+     * 
+     * @property
+     */
     public void setFunctionsClasses(String functionsClasses) {
 	this.functionsClasses = functionsClasses;
     }
@@ -193,12 +192,12 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Indicates the url for each person's homepage. The url can have the
-         * form <code>/path/%s/subpath</code> where <code>%s</code> will be
-         * replaced by the person's system's username.
-         * 
-         * @property
-         */
+     * Indicates the url for each person's homepage. The url can have the form
+     * <code>/path/%s/subpath</code> where <code>%s</code> will be replaced by
+     * the person's system's username.
+     * 
+     * @property
+     */
     public void setHomepageLocation(String homepageLocation) {
 	this.homepageLocation = homepageLocation;
     }
@@ -208,12 +207,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the classe sto use when displaying an implicit function item. If
-         * this property is not set then the normal function classes will be
-         * used.
-         * 
-         * @param implicitFunctionsClasses
-         */
+     * Sets the classe sto use when displaying an implicit function item. If
+     * this property is not set then the normal function classes will be used.
+     * 
+     * @param implicitFunctionsClasses
+     */
     public void setImplicitFunctionsClasses(String implicitFunctionsClasses) {
 	this.implicitFunctionsClasses = implicitFunctionsClasses;
     }
@@ -223,11 +221,10 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the key to be used has the label used to mark implicity
-         * functions.
-         * 
-         * @property
-         */
+     * Sets the key to be used has the label used to mark implicity functions.
+     * 
+     * @property
+     */
     public void setImplicityFunctionKey(String implicityFunctionKey) {
 	this.implicityFunctionKey = implicityFunctionKey;
     }
@@ -237,11 +234,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the classes to use to mark each successive list. To the value
-         * given here, the renderer will append the depth of the inner list.
-         * 
-         * @property
-         */
+     * Sets the classes to use to mark each successive list. To the value given
+     * here, the renderer will append the depth of the inner list.
+     * 
+     * @property
+     */
     public void setLevelClasses(String levelClasses) {
 	this.levelClasses = levelClasses;
     }
@@ -251,10 +248,10 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the classes to use when displaying each person's item.
-         * 
-         * @property
-         */
+     * Sets the classes to use when displaying each person's item.
+     * 
+     * @property
+     */
     public void setMembersClasses(String membersClasses) {
 	this.membersClasses = membersClasses;
     }
@@ -264,10 +261,10 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Chooses the classes to apply to he root unit.
-         * 
-         * @property
-         */
+     * Chooses the classes to apply to he root unit.
+     * 
+     * @property
+     */
     public void setRootUnitClasses(String rootUnitClasses) {
 	this.rootUnitClasses = rootUnitClasses;
     }
@@ -277,11 +274,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Chooses if the employees sections is shown when there are not direct
-         * employees.
-         * 
-         * @property
-         */
+     * Chooses if the employees sections is shown when there are not direct
+     * employees.
+     * 
+     * @property
+     */
     public void setShowEmptyEmployeesSection(boolean showEmptyEmployeesSection) {
 	this.showEmptyEmployeesSection = showEmptyEmployeesSection;
     }
@@ -291,11 +288,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Chooses if each function is shown when there aren't persons under
-         * that function.
-         * 
-         * @property
-         */
+     * Chooses if each function is shown when there aren't persons under that
+     * function.
+     * 
+     * @property
+     */
     public void setShowEmptyFunctions(boolean showEmptyFunctions) {
 	this.showEmptyFunctions = showEmptyFunctions;
     }
@@ -305,20 +302,19 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Sets the classes to be used when generating each unit's item.
-         * 
-         * @property
-         */
+     * Sets the classes to be used when generating each unit's item.
+     * 
+     * @property
+     */
     public void setUnitClasses(String unitClasses) {
 	this.unitClasses = unitClasses;
     }
 
     /**
-         * Indicates if all employees should be grouped under an employees
-         * section.
-         * 
-         * @property
-         */
+     * Indicates if all employees should be grouped under an employees section.
+     * 
+     * @property
+     */
     public void setShowEmployeesSection(boolean showEmployeesSection) {
 	this.showEmployeesSection = showEmployeesSection;
     }
@@ -328,10 +324,10 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     /**
-         * Indicates if each implicity function should be added a label.
-         * 
-         * @property
-         */
+     * Indicates if each implicity function should be added a label.
+     * 
+     * @property
+     */
     public void setShowImplicityFunctionLabel(boolean showImplicityFunctionLabel) {
 	this.showImplicityFunctionLabel = showImplicityFunctionLabel;
     }
@@ -352,12 +348,11 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     protected HtmlComponent createStructure(Unit unit, HtmlList root, int level) {
-	HtmlListItem item = createItem(root, getUnitClasses(level), generateUnitName(unit,
-		getUnitFace(level)));
+	HtmlListItem item = createItem(root, getUnitClasses(level), generateUnitName(unit, getUnitFace(level)));
 
 	HtmlList elements = createList(level, null);
 
-	if(!isShowOnlyPeopleWithFunctions()) {
+	if (!isShowOnlyPeopleWithFunctions()) {
 	    addEmployees(unit, elements, level);
 	}
 	addFunctions(unit, elements, level);
@@ -399,14 +394,12 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     protected void addEmployees(Unit unit, HtmlList root, int level) {
-	SortedSet<Person> persons = getPersonsWithContract(unit, new TreeSet<Person>(
-		Person.COMPARATOR_BY_NAME_AND_ID));
+	SortedSet<Person> persons = getPersonsWithContract(unit, new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID));
 
 	HtmlList destiny = root;
 
 	if ((isShowEmployeesSection() && !persons.isEmpty()) || isShowEmptyEmployeesSection()) {
-	    HtmlListItem employeesItem = createItem(root, getEmployeesSectionClasses(),
-		    getEmployeesSectionKey(), Face.STRONG);
+	    HtmlListItem employeesItem = createItem(root, getEmployeesSectionClasses(), getEmployeesSectionKey(), Face.STRONG);
 
 	    if (!persons.isEmpty()) {
 		destiny = createList(level + 1, employeesItem);
@@ -434,8 +427,7 @@ public class UnitStructureRenderer extends OutputRenderer {
 	return createItem(root, classes, key, true, face);
     }
 
-    protected HtmlListItem createItem(HtmlList root, String classes, String key, boolean resource,
-	    Face face) {
+    protected HtmlListItem createItem(HtmlList root, String classes, String key, boolean resource, Face face) {
 	return createItem(root, classes, createLabel(key, resource, face));
     }
 
@@ -483,8 +475,7 @@ public class UnitStructureRenderer extends OutputRenderer {
 
     private HtmlComponent generatePersonName(Person person) {
 	RenderKit instance = RenderKit.getInstance();
-	return instance.renderUsing(new PersonNameRenderer(), getContext(), person.getName(),
-		String.class);
+	return instance.renderUsing(new PersonNameRenderer(), getContext(), person.getName(), String.class);
     }
 
     protected void addFunctions(Unit unit, HtmlList root, int level) {
@@ -493,8 +484,8 @@ public class UnitStructureRenderer extends OutputRenderer {
 		    PersonFunction.COMPARATOR_BY_PERSON_NAME));
 
 	    if (!pfs.isEmpty() || isShowEmptyFunctions()) {
-		HtmlListItem item = createItem(root, getFunctionClasses(function), function
-			.getTypeName().getContent(), false, Face.STRONG);
+		HtmlListItem item = createItem(root, getFunctionClasses(function), function.getTypeName().getContent(), false,
+			Face.STRONG);
 
 		if (function.isInherentFunction() && isShowImplicityFunctionLabel()) {
 		    addImplicitMark(item);
@@ -526,8 +517,7 @@ public class UnitStructureRenderer extends OutputRenderer {
 	item.addChild(mark);
     }
 
-    protected SortedSet<PersonFunction> getPersonFunctions(Function function,
-	    TreeSet<PersonFunction> collection) {
+    protected SortedSet<PersonFunction> getPersonFunctions(Function function, TreeSet<PersonFunction> collection) {
 	for (PersonFunction pf : function.getPersonFunctions()) {
 	    if (!isAccountabilityVisible(pf)) {
 		continue;
@@ -558,8 +548,8 @@ public class UnitStructureRenderer extends OutputRenderer {
 	if (endDate == null) {
 	    text.setText(String.format("(%s %s)", getString(getDateSinceKey()), beginDate));
 	} else {
-	    text.setText(String.format("(%s %s %s %s)", getString(getDateFromKey()), beginDate,
-		    getString(getDateToKey()), endDate));
+	    text.setText(String.format("(%s %s %s %s)", getString(getDateFromKey()), beginDate, getString(getDateToKey()),
+		    endDate));
 	}
 
 	text.setFace(Face.STANDARD);
@@ -571,7 +561,7 @@ public class UnitStructureRenderer extends OutputRenderer {
 	units.addAll(unit.getActiveSubUnits(new YearMonthDay()));
 
 	for (Unit sub : units) {
-	    if(hasPersonFunctions(sub)) {
+	    if (hasPersonFunctions(sub)) {
 		createStructure(sub, root, level + 1);
 	    }
 	}
@@ -587,11 +577,10 @@ public class UnitStructureRenderer extends OutputRenderer {
 
     private boolean hasPersonFunctions(Unit unit) {
 
-	for(Function function : unit.getOrderedActiveFunctions()) {
-	  if(!getPersonFunctions(function, new TreeSet<PersonFunction>(
-		    PersonFunction.COMPARATOR_BY_PERSON_NAME)).isEmpty()) {
-	      return true;
-	  }
+	for (Function function : unit.getOrderedActiveFunctions()) {
+	    if (!getPersonFunctions(function, new TreeSet<PersonFunction>(PersonFunction.COMPARATOR_BY_PERSON_NAME)).isEmpty()) {
+		return true;
+	    }
 	}
 	return false;
 

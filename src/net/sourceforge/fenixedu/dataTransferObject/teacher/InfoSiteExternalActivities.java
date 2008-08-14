@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoSiteExternalActivities extends DataTranferObject implements ISiteComponent {
 
@@ -28,7 +28,7 @@ public class InfoSiteExternalActivities extends DataTranferObject implements ISi
      * @return Returns the infoExternalActivities.
      */
     public List getInfoExternalActivities() {
-        return infoExternalActivities;
+	return infoExternalActivities;
     }
 
     /**
@@ -36,14 +36,14 @@ public class InfoSiteExternalActivities extends DataTranferObject implements ISi
      *            The infoExternalActivities to set.
      */
     public void setInfoExternalActivities(List infoExternalActivities) {
-        this.infoExternalActivities = infoExternalActivities;
+	this.infoExternalActivities = infoExternalActivities;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -51,7 +51,7 @@ public class InfoSiteExternalActivities extends DataTranferObject implements ISi
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
 }

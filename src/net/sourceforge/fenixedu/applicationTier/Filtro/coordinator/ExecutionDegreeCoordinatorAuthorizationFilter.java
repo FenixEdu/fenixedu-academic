@@ -36,59 +36,60 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        final IUserView userView = getRemoteUser(request);
-        final Object[] arguments = getServiceCallArguments(request);
-        if (arguments == null || arguments.length < 1 || arguments[0] == null) {
-            throw new NotAuthorizedFilterException();
-        }
-        final Integer idInternal = (arguments[0] instanceof Integer) ? (Integer) arguments[0] : ((InfoObject)arguments[0]).getIdInternal();
+	final IUserView userView = getRemoteUser(request);
+	final Object[] arguments = getServiceCallArguments(request);
+	if (arguments == null || arguments.length < 1 || arguments[0] == null) {
+	    throw new NotAuthorizedFilterException();
+	}
+	final Integer idInternal = (arguments[0] instanceof Integer) ? (Integer) arguments[0] : ((InfoObject) arguments[0])
+		.getIdInternal();
 
-        if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, idInternal)) {
-            throw new NotAuthorizedFilterException();
-        }
+	if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, idInternal)) {
+	    throw new NotAuthorizedFilterException();
+	}
 
-        if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, idInternal)))
-                || (userView == null) || (userView.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
-        }
+	if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, idInternal)))
+		|| (userView == null) || (userView.getRoleTypes() == null)) {
+	    throw new NotAuthorizedFilterException();
+	}
 
     }
 
     public static boolean verifyCondition(IUserView id, Integer objectId) {
-    	if (id != null) {
-        final Person person = id.getPerson();
-        if (person != null) {
-            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(objectId);
-            if (person.hasRole(RoleType.COORDINATOR)) {
-                for (final Coordinator coordinator : person.getCoordinators()) {
-                    if (executionDegree.getCoordinatorsListSet().contains(coordinator)) {
-                        return true;
-                    }
-                }
-            }
-            if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
-                final Employee employee = person.getEmployee();
-                final Department department = employee.getCurrentDepartmentWorkingPlace();
-                final Set<CompetenceCourse> competenceCourses = department.getCompetenceCoursesSet();
-                return hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourses)
-                	|| hasDissertationCompetenceCourseForDepartment(executionDegree, department.getDepartmentUnit());
-            }
-        }
-    	}
+	if (id != null) {
+	    final Person person = id.getPerson();
+	    if (person != null) {
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(objectId);
+		if (person.hasRole(RoleType.COORDINATOR)) {
+		    for (final Coordinator coordinator : person.getCoordinators()) {
+			if (executionDegree.getCoordinatorsListSet().contains(coordinator)) {
+			    return true;
+			}
+		    }
+		}
+		if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+		    final Employee employee = person.getEmployee();
+		    final Department department = employee.getCurrentDepartmentWorkingPlace();
+		    final Set<CompetenceCourse> competenceCourses = department.getCompetenceCoursesSet();
+		    return hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourses)
+			    || hasDissertationCompetenceCourseForDepartment(executionDegree, department.getDepartmentUnit());
+		}
+	    }
+	}
 
-        return false;
+	return false;
     }
 
     protected static boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree,
 	    final Set<CompetenceCourse> competenceCourses) {
 	for (final CompetenceCourse competenceCourse : competenceCourses) {
 	    for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
-	        if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
-	            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-	            if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
-	                return true;
-	            }
-	        }
+		if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
+		    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+		    if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
+			return true;
+		    }
+		}
 	    }
 	}
 	return false;

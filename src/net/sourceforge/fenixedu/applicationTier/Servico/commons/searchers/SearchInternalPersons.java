@@ -8,7 +8,7 @@ public class SearchInternalPersons extends SearchParties {
 
     @Override
     protected Collection search(String value, int size) {
-        return PersonName.findInternalPerson(value, size);
+	return PersonName.findInternalPerson(value, size);
     }
 
 }

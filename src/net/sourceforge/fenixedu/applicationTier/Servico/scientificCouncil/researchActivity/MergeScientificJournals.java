@@ -7,22 +7,21 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
 
 public class MergeScientificJournals extends Service {
-    
+
     public void run(MergeScientificJournalPageContainerBean mergeScientificJournalPageContainerBean) {
-	ScientificJournal scientificJournal = new ScientificJournal(mergeScientificJournalPageContainerBean.getName(), 
+	ScientificJournal scientificJournal = new ScientificJournal(mergeScientificJournalPageContainerBean.getName(),
 		mergeScientificJournalPageContainerBean.getResearchActivityLocationType());
 	scientificJournal.setIssn(mergeScientificJournalPageContainerBean.getIssn());
 	scientificJournal.setUrl(mergeScientificJournalPageContainerBean.getUrl());
-	
-	
+
 	for (DomainObject domainObject : mergeScientificJournalPageContainerBean.getSelectedObjects()) {
 	    ScientificJournal journal = (ScientificJournal) domainObject;
 	    scientificJournal.getJournalIssuesSet().addAll(journal.getJournalIssuesSet());
-	    
+
 	    for (ScientificJournalParticipation scientificJournalParticipation : journal.getParticipationsSet()) {
 		scientificJournal.addUniqueParticipation(scientificJournalParticipation);
 	    }
-	    
+
 	    journal.delete();
 	}
     }

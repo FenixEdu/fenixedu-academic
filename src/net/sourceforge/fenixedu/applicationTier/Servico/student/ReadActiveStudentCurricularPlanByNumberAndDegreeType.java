@@ -16,23 +16,21 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 24/Set/2003, 11:26:29
+ *         Created at 24/Set/2003, 11:26:29
  * 
  */
 public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Service {
 
-    public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
-            {
-        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-        if(registration == null) {
-        	return null;
-        }
-        StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-        if (studentCurricularPlan != null) {
-            return InfoStudentCurricularPlan
-                    .newInfoFromDomain(studentCurricularPlan);
-        }
-        return null;
+    public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
+	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+	if (registration == null) {
+	    return null;
+	}
+	StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+	if (studentCurricularPlan != null) {
+	    return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+	}
+	return null;
     }
 
 }

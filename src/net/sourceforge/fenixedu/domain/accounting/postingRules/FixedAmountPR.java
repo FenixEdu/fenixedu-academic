@@ -34,8 +34,7 @@ public class FixedAmountPR extends FixedAmountPR_Base {
 
     private void checkParameters(Money fixedAmount) {
 	if (fixedAmount == null) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.FixedAmountPR.fixedAmount.cannot.be.null");
+	    throw new DomainException("error.accounting.postingRules.FixedAmountPR.fixedAmount.cannot.be.null");
 	}
 
     }
@@ -48,43 +47,39 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    Event event, Account fromAccount, Account toAccount,
-	    AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.FixedAmountPR.invalid.number.of.entryDTOs");
+	    throw new DomainException("error.accounting.postingRules.FixedAmountPR.invalid.number.of.entryDTOs");
 	}
 
 	final EntryDTO entryDTO = entryDTOs.get(0);
 	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
-	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-		entryDTO.getEntryType(), entryDTO.getAmountToPay(), transactionDetail));
+	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
+		entryDTO.getAmountToPay(), transactionDetail));
 
     }
 
     @Override
     public void setFixedAmount(Money fixedAmount) {
-	throw new DomainException(
-		"error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
+	throw new DomainException("error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
     }
 
     private void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
-		    event.getDescriptionForEntryType(getEntryType()));
+		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay", event
+			    .getDescriptionForEntryType(getEntryType()));
 	}
     }
 
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 	final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
-	return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay,
-		Money.ZERO, totalAmountToPay, event.getDescriptionForEntryType(getEntryType()),
-		totalAmountToPay));
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, Money.ZERO, totalAmountToPay,
+		event.getDescriptionForEntryType(getEntryType()), totalAmountToPay));
     }
 
     @Override
@@ -96,8 +91,8 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     public FixedAmountPR edit(final Money fixedAmount) {
 
 	deactivate();
-	return new FixedAmountPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
-		getServiceAgreementTemplate(), fixedAmount);
+	return new FixedAmountPR(getEntryType(), getEventType(), new DateTime().minus(1000), null, getServiceAgreementTemplate(),
+		fixedAmount);
     }
 
 }

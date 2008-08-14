@@ -37,8 +37,8 @@ public class AccessControl {
 
 	if (!result) {
 	    StringBuilder message = new StringBuilder();
-	    message.append("User ").append(requester.getUsername()).append(
-		    " tried to execute access content instance number").append(c.getIdInternal());
+	    message.append("User ").append(requester.getUsername()).append(" tried to execute access content instance number")
+		    .append(c.getIdInternal());
 	    message.append("but he/she is not authorized to do so");
 
 	    throw new IllegalDataAccessException(message.toString(), requester);

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain.curricularPeriod;
 
-
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -15,15 +14,15 @@ public enum CurricularPeriodType {
     private float weight;
 
     private CurricularPeriodType(float weight) {
-        this.weight = weight;
+	this.weight = weight;
     }
 
     public float getWeight() {
-        return weight;
+	return weight;
     }
-    
+
     public String getAbbreviatedName() {
-        return name() + ".ABBREVIATION";
+	return name() + ".ABBREVIATION";
     }
 
 }

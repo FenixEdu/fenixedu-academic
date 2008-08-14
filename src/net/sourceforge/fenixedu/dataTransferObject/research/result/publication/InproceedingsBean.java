@@ -45,8 +45,8 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 	this.setFirstPage(((Inproceedings) publication).getFirstPage());
 	this.setLastPage(((Inproceedings) publication).getLastPage());
 	this.setLanguage(((Inproceedings) publication).getLanguage());
-//	this.setConference(((Inproceedings) publication).getConference());
-//	this.setScope(((Inproceedings) publication).getScope());
+	// this.setConference(((Inproceedings) publication).getConference());
+	// this.setScope(((Inproceedings) publication).getScope());
 	this.setEvent(((Inproceedings) publication).getEvent());
 	this.setEventEdition(((Inproceedings) publication).getEventEdition());
 	this.setEventName(((Inproceedings) publication).getEvent().getName());
@@ -54,8 +54,8 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	//setUnitFromBibtexEntry("publisher", bibtexEntry);
-	//setUnitFromBibtexEntry("organization", bibtexEntry);
+	// setUnitFromBibtexEntry("publisher", bibtexEntry);
+	// setUnitFromBibtexEntry("organization", bibtexEntry);
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 

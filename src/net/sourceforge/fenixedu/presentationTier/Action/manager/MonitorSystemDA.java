@@ -23,18 +23,18 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class MonitorSystemDA extends FenixDispatchAction {
 
-    public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        SystemInfo systemInfoApplicationServer = ServiceManagerServiceFactory.getSystemInfo(userView);
-        request.setAttribute("systemInfoApplicationServer", systemInfoApplicationServer);
+	SystemInfo systemInfoApplicationServer = ServiceManagerServiceFactory.getSystemInfo(userView);
+	request.setAttribute("systemInfoApplicationServer", systemInfoApplicationServer);
 
-        SystemInfo systemInfoWebContainer = ServiceManagerServiceFactory.getSystemInfo(userView);
-        request.setAttribute("systemInfoWebContainer", systemInfoWebContainer);
+	SystemInfo systemInfoWebContainer = ServiceManagerServiceFactory.getSystemInfo(userView);
+	request.setAttribute("systemInfoWebContainer", systemInfoWebContainer);
 
-        return mapping.findForward("Show");
+	return mapping.findForward("Show");
     }
 
 }

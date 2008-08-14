@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.util.FenixUtil;
 public class Render extends FenixUtil {
 
     public Render() {
-        super();
+	super();
     }
 
     public String toXML(String inside) {
-        return null;
+	return null;
     }
 }

@@ -43,9 +43,9 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
     public Over23CandidacyProcess getOver23CandidacyProcess() {
 	return (Over23CandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
     }
-    
+
     @Override
     public ExecutionYear getExecutionInterval() {
-        return (ExecutionYear) super.getExecutionInterval();
+	return (ExecutionYear) super.getExecutionInterval();
     }
 }

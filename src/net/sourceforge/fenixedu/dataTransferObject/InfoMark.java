@@ -15,21 +15,21 @@ import net.sourceforge.fenixedu.domain.Mark;
  */
 
 public class InfoMark extends InfoObject {
-    
+
     private final DomainReference<Mark> markDomainReference;
-    
+
     public InfoMark(final Mark mark) {
 	markDomainReference = new DomainReference<Mark>(mark);
     }
 
     public static InfoMark newInfoFromDomain(Mark mark) {
-        return mark == null ? null : new InfoMark(mark);
+	return mark == null ? null : new InfoMark(mark);
     }
 
     private Mark getMarkObject() {
 	return (markDomainReference == null) ? null : markDomainReference.getObject();
     }
-    
+
     @Override
     public Integer getIdInternal() {
 	return getMarkObject().getIdInternal();
@@ -44,21 +44,21 @@ public class InfoMark extends InfoObject {
      * @return
      */
     public String getMark() {
-        return getMarkObject().getMark();
+	return getMarkObject().getMark();
     }
 
     /**
      * @return
      */
     public String getPublishedMark() {
-        return getMarkObject().getPublishedMark();
+	return getMarkObject().getPublishedMark();
     }
 
     /**
      * @return
      */
     public InfoEvaluation getInfoEvaluation() {
-        return InfoEvaluation.newInfoFromDomain(getMarkObject().getEvaluation());
+	return InfoEvaluation.newInfoFromDomain(getMarkObject().getEvaluation());
     }
 
     /**

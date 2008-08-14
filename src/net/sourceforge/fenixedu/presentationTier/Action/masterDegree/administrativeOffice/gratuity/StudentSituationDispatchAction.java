@@ -122,8 +122,8 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 	    Object argsInsuranceValue[] = { infoExecutionYear.getIdInternal() };
 
 	    try {
-		infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService(
-			"ReadInsuranceValueByExecutionYearID", argsInsuranceValue);
+		infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService("ReadInsuranceValueByExecutionYearID",
+			argsInsuranceValue);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }

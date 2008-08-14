@@ -18,12 +18,11 @@ public interface GroupBuilder {
      *            the arguments to pass to the group creation
      * @return the created group
      * 
-     * @exception
-     * net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException
-     * if the number of arguments does not match the expectations
+     * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException
+     *                if the number of arguments does not match the expectations
      * 
      * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException
-     * when one of the arguments does not have the expected type
+     *                when one of the arguments does not have the expected type
      */
     Group build(Object[] arguments);
 

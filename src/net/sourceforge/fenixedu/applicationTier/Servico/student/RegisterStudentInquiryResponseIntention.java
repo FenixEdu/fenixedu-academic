@@ -16,7 +16,8 @@ public class RegisterStudentInquiryResponseIntention extends Service {
     }
 
     private InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod(final Student student) {
-	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : student.getInquiriesStudentExecutionPeriodsSet()) {
+	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : student
+		.getInquiriesStudentExecutionPeriodsSet()) {
 	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 		return inquiriesStudentExecutionPeriod;
 	    }

@@ -15,8 +15,7 @@ public class GetEnrolmentList extends Service {
     public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState) {
 
 	final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
-	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID)
-		.getEnrolmentsByState(enrollmentState)) {
+	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID).getEnrolmentsByState(enrollmentState)) {
 	    if (enrolment.isExtraCurricular()) {
 		continue;
 	    }
@@ -29,8 +28,7 @@ public class GetEnrolmentList extends Service {
 
     public List<InfoEnrolment> run(Integer studentCurricularPlanID) {
 	final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
-	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID)
-		.getEnrolments()) {
+	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID).getEnrolments()) {
 	    if (enrolment.isExtraCurricular()) {
 		continue;
 	    }
@@ -41,13 +39,12 @@ public class GetEnrolmentList extends Service {
 	return result;
     }
 
-    public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
-	    Boolean pTypeEnrolments) {
+    public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState, Boolean pTypeEnrolments) {
 	return run(studentCurricularPlanID, enrollmentState, pTypeEnrolments, Boolean.FALSE);
     }
-    
-    public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
-	    Boolean pTypeEnrolments, Boolean includeExtraCurricular) {
+
+    public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState, Boolean pTypeEnrolments,
+	    Boolean includeExtraCurricular) {
 
 	if (!pTypeEnrolments.booleanValue()) {
 	    return this.run(studentCurricularPlanID, enrollmentState);
@@ -55,8 +52,7 @@ public class GetEnrolmentList extends Service {
 
 	final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
 
-	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID)
-		.getEnrolmentsByState(enrollmentState)) {
+	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID).getEnrolmentsByState(enrollmentState)) {
 	    if (enrolment.isExtraCurricular() && !includeExtraCurricular) {
 		continue;
 	    }

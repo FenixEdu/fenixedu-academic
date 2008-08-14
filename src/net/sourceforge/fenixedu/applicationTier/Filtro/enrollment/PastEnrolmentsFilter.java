@@ -15,41 +15,40 @@ public class PastEnrolmentsFilter extends Filtro {
 
     @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Object[] args = request.getServiceParameters().parametersArray();
+	Object[] args = request.getServiceParameters().parametersArray();
 
-        Registration registration = null;
-        if (args[1] != null) {
-            Integer studentCurricularPlanID = (Integer) args[1];
-            StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                    .readStudentCurricularPlanByOID(studentCurricularPlanID);
-            registration = studentCurricularPlan.getRegistration();
-        } else if (args.length > 2 && args[2] != null) {
-            Integer studentNumber = (Integer) args[2];
-            registration = Registration.readByUsername("L" + studentNumber);
-        }
+	Registration registration = null;
+	if (args[1] != null) {
+	    Integer studentCurricularPlanID = (Integer) args[1];
+	    StudentCurricularPlan studentCurricularPlan = rootDomainObject
+		    .readStudentCurricularPlanByOID(studentCurricularPlanID);
+	    registration = studentCurricularPlan.getRegistration();
+	} else if (args.length > 2 && args[2] != null) {
+	    Integer studentNumber = (Integer) args[2];
+	    registration = Registration.readByUsername("L" + studentNumber);
+	}
 
-        if (registration == null) {
-            throw new NotAuthorizedFilterException("noAuthorization");
-        }
+	if (registration == null) {
+	    throw new NotAuthorizedFilterException("noAuthorization");
+	}
 
-        ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-        ExecutionSemester previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
-        ExecutionSemester beforePreviousExecutionPeriod = previousExecutionPeriod
-                .getPreviousExecutionPeriod();
+	ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
+	ExecutionSemester previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
+	ExecutionSemester beforePreviousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
 
-        for (StudentCurricularPlan scp : registration.getStudentCurricularPlans()) {
-            for (Enrolment enrolment : scp.getEnrolments()) {
-                if (enrolment.getExecutionPeriod().equals(previousExecutionPeriod)
-                        || enrolment.getExecutionPeriod().equals(beforePreviousExecutionPeriod)) {
-                    return;
-                }
-            }
-        }
-        throw new NotAuthorizedFilterException("error.no.enrolment.two.previous.executions");
+	for (StudentCurricularPlan scp : registration.getStudentCurricularPlans()) {
+	    for (Enrolment enrolment : scp.getEnrolments()) {
+		if (enrolment.getExecutionPeriod().equals(previousExecutionPeriod)
+			|| enrolment.getExecutionPeriod().equals(beforePreviousExecutionPeriod)) {
+		    return;
+		}
+	    }
+	}
+	throw new NotAuthorizedFilterException("error.no.enrolment.two.previous.executions");
     }
 
     protected Registration readStudent(IUserView id) {
-        return Registration.readByUsername(id.getUtilizador());
+	return Registration.readByUsername(id.getUtilizador());
     }
 
 }

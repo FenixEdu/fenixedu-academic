@@ -14,8 +14,7 @@ public class EditPrecedentDegreeInformation extends Service {
 
     public void run(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
 
-	precedentDegreeInformationBean.getPrecedentDegreeInformation().edit(
-		precedentDegreeInformationBean);
+	precedentDegreeInformationBean.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
 
     }
 

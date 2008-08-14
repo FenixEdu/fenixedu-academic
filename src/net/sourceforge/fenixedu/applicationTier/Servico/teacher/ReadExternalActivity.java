@@ -18,14 +18,13 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 public class ReadExternalActivity extends ReadDomainObjectService {
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-        InfoExternalActivity infoExternalActivity = InfoExternalActivity
-                .newInfoFromDomain((ExternalActivity) domainObject);
-        return infoExternalActivity;
+	InfoExternalActivity infoExternalActivity = InfoExternalActivity.newInfoFromDomain((ExternalActivity) domainObject);
+	return infoExternalActivity;
     }
 
-	@Override
-	protected DomainObject readDomainObject(final Integer idInternal) {
-		return rootDomainObject.readExternalActivityByOID(idInternal);
-	}
+    @Override
+    protected DomainObject readDomainObject(final Integer idInternal) {
+	return rootDomainObject.readExternalActivityByOID(idInternal);
+    }
 
 }

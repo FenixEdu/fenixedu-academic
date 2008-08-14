@@ -9,10 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> <br/>
- *         <strong>Description: </strong> <br/>
- *         This exception is throw when one tries to create a reimbursement
- *         guide associated with a payment guide and value of the reimbursement
- *         guide exceeds the payment guide total.
+ *         <strong>Description: </strong> <br/> This exception is throw when one
+ *         tries to create a reimbursement guide associated with a payment guide
+ *         and value of the reimbursement guide exceeds the payment guide total.
  */
 public class InvalidReimbursementValueServiceException extends InvalidArgumentsServiceException {
 
@@ -27,7 +26,7 @@ public class InvalidReimbursementValueServiceException extends InvalidArgumentsS
      * @param s
      */
     public InvalidReimbursementValueServiceException(String s) {
-        super(s);
+	super(s);
 
     }
 
@@ -35,7 +34,7 @@ public class InvalidReimbursementValueServiceException extends InvalidArgumentsS
      * @param cause
      */
     public InvalidReimbursementValueServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
 
     }
 
@@ -44,15 +43,15 @@ public class InvalidReimbursementValueServiceException extends InvalidArgumentsS
      * @param cause
      */
     public InvalidReimbursementValueServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
 
     }
 
     public String toString() {
-        String result = "[InvalidReimbursementValueServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[InvalidReimbursementValueServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

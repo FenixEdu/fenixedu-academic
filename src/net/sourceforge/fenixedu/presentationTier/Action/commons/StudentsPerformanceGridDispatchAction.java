@@ -38,7 +38,6 @@ public abstract class StudentsPerformanceGridDispatchAction extends FenixDispatc
 
     /*
      * AUXILIARY METHODS
-     * 
      */
     protected void getStatisticsAndPutInTheRequest(HttpServletRequest request, PerformanceGridTableDTO performanceGridTable) {
 	final List<PerformanceGridLine> performanceGridLines = performanceGridTable.getPerformanceGridTableLines();

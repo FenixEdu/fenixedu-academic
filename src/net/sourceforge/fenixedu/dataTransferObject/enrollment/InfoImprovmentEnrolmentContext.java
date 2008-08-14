@@ -13,62 +13,72 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
  * @author nmgo
  */
 public class InfoImprovmentEnrolmentContext extends DataTranferObject {
-    
+
     InfoExecutionPeriod infoExecutionPeriod;
-    
+
     InfoStudent infoStudent;
-    
+
     List improvmentsToEnroll;
-    
+
     List alreadyEnrolled;
-    
+
     /**
      * @return Returns the improvmentsToEnroll.
      */
     public List getImprovmentsToEnroll() {
-        return improvmentsToEnroll;
+	return improvmentsToEnroll;
     }
+
     /**
-     * @param improvmentsToEnroll The improvmentsToEnroll to set.
+     * @param improvmentsToEnroll
+     *            The improvmentsToEnroll to set.
      */
     public void setImprovmentsToEnroll(List improvmentsToEnroll) {
-        this.improvmentsToEnroll = improvmentsToEnroll;
+	this.improvmentsToEnroll = improvmentsToEnroll;
     }
+
     /**
      * @return Returns the infoExecutionPeriod.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return infoExecutionPeriod;
+	return infoExecutionPeriod;
     }
+
     /**
-     * @param infoExecutionPeriod The infoExecutionPeriod to set.
+     * @param infoExecutionPeriod
+     *            The infoExecutionPeriod to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
+
     /**
      * @return Returns the infoStudent.
      */
     public InfoStudent getInfoStudent() {
-        return infoStudent;
+	return infoStudent;
     }
+
     /**
-     * @param infoStudent The infoStudent to set.
+     * @param infoStudent
+     *            The infoStudent to set.
      */
     public void setInfoStudent(InfoStudent infoStudent) {
-        this.infoStudent = infoStudent;
+	this.infoStudent = infoStudent;
     }
+
     /**
      * @return Returns the alreadyEnrolled.
      */
     public List getAlreadyEnrolled() {
-        return alreadyEnrolled;
+	return alreadyEnrolled;
     }
-    
+
     /**
-     * @param alreadyEnrolled The alreadyEnrolled to set.
+     * @param alreadyEnrolled
+     *            The alreadyEnrolled to set.
      */
     public void setAlreadyEnrolled(List alreadyEnrolled) {
-        this.alreadyEnrolled = alreadyEnrolled;
+	this.alreadyEnrolled = alreadyEnrolled;
     }
 }

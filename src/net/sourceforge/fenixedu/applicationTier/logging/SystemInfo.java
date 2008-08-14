@@ -9,7 +9,7 @@ import java.util.Properties;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class SystemInfo implements Serializable {
 
@@ -27,48 +27,48 @@ public class SystemInfo implements Serializable {
      *  
      */
     public SystemInfo() {
-        super();
-        Runtime rt = Runtime.getRuntime();
-        this.availableProcessors = new Integer(rt.availableProcessors());
-        this.freeMemory = new Long(rt.freeMemory());
-        this.maxMemory = new Long(rt.maxMemory());
-        this.totalMemory = new Long(rt.totalMemory());
-        this.properties = System.getProperties();
+	super();
+	Runtime rt = Runtime.getRuntime();
+	this.availableProcessors = new Integer(rt.availableProcessors());
+	this.freeMemory = new Long(rt.freeMemory());
+	this.maxMemory = new Long(rt.maxMemory());
+	this.totalMemory = new Long(rt.totalMemory());
+	this.properties = System.getProperties();
     }
 
     /**
      * @return Returns the availableProcessors.
      */
     public Integer getAvailableProcessors() {
-        return availableProcessors;
+	return availableProcessors;
     }
 
     /**
      * @return Returns the freeMemory.
      */
     public Long getFreeMemory() {
-        return freeMemory;
+	return freeMemory;
     }
 
     /**
      * @return Returns the maxMemory.
      */
     public Long getMaxMemory() {
-        return maxMemory;
+	return maxMemory;
     }
 
     /**
      * @return Returns the totalMemory.
      */
     public Long getTotalMemory() {
-        return totalMemory;
+	return totalMemory;
     }
 
     /**
      * @return Returns the properties.
      */
     public Properties getProperties() {
-        return properties;
+	return properties;
     }
 
 }

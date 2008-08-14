@@ -7,54 +7,54 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class RoomsReserveBean implements Serializable{
+public class RoomsReserveBean implements Serializable {
 
     private MultiLanguageString subject;
-    
+
     private MultiLanguageString description;
-    
+
     private DomainReference<Person> personReference;
-    
+
     private DomainReference<PunctualRoomsOccupationRequest> requestReference;
-    
+
     public RoomsReserveBean(Person requestor) {
-	setRequestor(requestor);	
+	setRequestor(requestor);
     }
-    
+
     public RoomsReserveBean(Person requestor, PunctualRoomsOccupationRequest request) {
 	setRequestor(requestor);
 	setReserveRequest(request);
     }
-    
+
     public Person getRequestor() {
-        return (this.personReference != null) ? this.personReference.getObject() : null;
+	return (this.personReference != null) ? this.personReference.getObject() : null;
     }
 
     public void setRequestor(Person requestor) {
-        this.personReference = (requestor != null) ? new DomainReference<Person>(requestor) : null;        
+	this.personReference = (requestor != null) ? new DomainReference<Person>(requestor) : null;
     }
-    
+
     public PunctualRoomsOccupationRequest getReserveRequest() {
-        return (this.requestReference != null) ? this.requestReference.getObject() : null;
+	return (this.requestReference != null) ? this.requestReference.getObject() : null;
     }
 
     public void setReserveRequest(PunctualRoomsOccupationRequest request) {
-        this.requestReference = (request != null) ? new DomainReference<PunctualRoomsOccupationRequest>(request) : null;        
+	this.requestReference = (request != null) ? new DomainReference<PunctualRoomsOccupationRequest>(request) : null;
     }
 
     public MultiLanguageString getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(MultiLanguageString description) {
-        this.description = description;
+	this.description = description;
     }
 
     public MultiLanguageString getSubject() {
-        return subject;
+	return subject;
     }
 
     public void setSubject(MultiLanguageString subject) {
-        this.subject = subject;
+	this.subject = subject;
     }
 }

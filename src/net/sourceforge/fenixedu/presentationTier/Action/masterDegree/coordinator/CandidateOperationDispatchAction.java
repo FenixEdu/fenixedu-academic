@@ -26,60 +26,58 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
     /** request params * */
     public static final String REQUEST_DOCUMENT_TYPE = "documentType";
 
-    public ActionForward getCandidates(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-            IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-            Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanID"));
+	Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanID"));
 
-            List candidates = null;
-            Object args[] = { degreeCurricularPlanId };
+	List candidates = null;
+	Object args[] = { degreeCurricularPlanId };
 
-            try {
-                candidates = (List) ServiceManagerServiceFactory.executeService(
-                        "ReadDegreeCandidates", args);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
+	try {
+	    candidates = (List) ServiceManagerServiceFactory.executeService("ReadDegreeCandidates", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-            if (candidates.size() == 0)
-                throw new NonExistingActionException("error.exception.nonExistingCandidates", "", null);
+	if (candidates.size() == 0)
+	    throw new NonExistingActionException("error.exception.nonExistingCandidates", "", null);
 
-            request.setAttribute("masterDegreeCandidateList", candidates);
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+	request.setAttribute("masterDegreeCandidateList", candidates);
+	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-            return mapping.findForward("ViewList");
+	return mapping.findForward("ViewList");
 
     }
 
-    public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+    public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-        Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+	Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+	Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
 
-        Object[] args = { candidateID };
+	Object[] args = { candidateID };
 
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate;
-        try {
-            infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService( "ReadMasterDegreeCandidateByID", args);
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            throw new FenixActionException();
-        }
+	InfoMasterDegreeCandidate infoMasterDegreeCandidate;
+	try {
+	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
+		    "ReadMasterDegreeCandidateByID", args);
+	} catch (FenixServiceException e) {
+	    e.printStackTrace();
+	    throw new FenixActionException();
+	}
 
-        List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
+	List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
 
-        request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        request.setAttribute("candidateStudyPlan", candidateStudyPlan);
+	request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
+	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	request.setAttribute("candidateStudyPlan", candidateStudyPlan);
 
-        return mapping.findForward("ActionReady");
+	return mapping.findForward("ActionReady");
     }
 
     /**
@@ -90,14 +88,13 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
      * @return
      */
     private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
-        Object[] args = { candidateID };
+	Object[] args = { candidateID };
 
-        try {
-            return (ArrayList) ServiceManagerServiceFactory.executeService(
-                    "ReadCandidateEnrolmentsByCandidateID", args);
-        } catch (Exception e) {
-            return null;
-        }
+	try {
+	    return (ArrayList) ServiceManagerServiceFactory.executeService("ReadCandidateEnrolmentsByCandidateID", args);
+	} catch (Exception e) {
+	    return null;
+	}
     }
 
 }

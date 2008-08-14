@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class CreateReimbursementTransaction extends Service {
 

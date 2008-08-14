@@ -22,19 +22,19 @@ import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
  * @author nmgo
  */
 public class ExecutionPeriodsEnrollmentFenix extends Filtro {
-    
-    private static final DomainReference<ExecutionSemester> since = new DomainReference<ExecutionSemester>(ExecutionSemester.class, 81);
 
+    private static final DomainReference<ExecutionSemester> since = new DomainReference<ExecutionSemester>(
+	    ExecutionSemester.class, 81);
 
-    private Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER,
-	    01).getTime();
+    private Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER, 01).getTime();
 
     /*
-         * (non-Javadoc)
-         * 
-         * @see ServidorAplicacao.Filtro.AccessControlFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-         *      pt.utl.ist.berserk.ServiceResponse)
-         */
+     * (non-Javadoc)
+     * 
+     * @see
+     * ServidorAplicacao.Filtro.AccessControlFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	List serviceResult = (List) response.getReturnObject();
 	ServiceParameters parameters = request.getServiceParameters();

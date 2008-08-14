@@ -3,36 +3,36 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 public enum ThesisPresentationState {
-    UNEXISTING,
-    DRAFT,
-    SUBMITTED,
-    REJECTED,
-    APPROVED,
-    DOCUMENTS_SUBMITTED,
-    DOCUMENTS_CONFIRMED,
-    CONFIRMED,
-    EVALUATED_1ST, // Indicates that the student has a thesis evaluated but he
-                   // can reevaluate the Thesis (or a new) in the second semester
-    EVALUATED,
-    UNKNOWN;
+    UNEXISTING, DRAFT, SUBMITTED, REJECTED, APPROVED, DOCUMENTS_SUBMITTED, DOCUMENTS_CONFIRMED, CONFIRMED, EVALUATED_1ST, // Indicates
+															  // that
+															  // the
+															  // student
+															  // has
+															  // a
+															  // thesis
+															  // evaluated
+															  // but
+															  // he
+    // can reevaluate the Thesis (or a new) in the second semester
+    EVALUATED, UNKNOWN;
 
     public static ThesisPresentationState getThesisPresentationState(final Thesis thesis) {
-        if (thesis == null) {
-            return ThesisPresentationState.UNEXISTING;
-        }
+	if (thesis == null) {
+	    return ThesisPresentationState.UNEXISTING;
+	}
 	if (thesis.isRejected()) {
 	    return ThesisPresentationState.REJECTED;
 	}
-        if (thesis.isDraft()) {
-            return ThesisPresentationState.DRAFT;
+	if (thesis.isDraft()) {
+	    return ThesisPresentationState.DRAFT;
 	}
 	if (thesis.isSubmitted()) {
 	    return ThesisPresentationState.SUBMITTED;
 	}
 	if (thesis.isWaitingConfirmation()) {
 	    if (thesis.getConfirmmedDocuments() == null) {
-		return areAllDocumentsSubmitted(thesis) ?
-			ThesisPresentationState.DOCUMENTS_SUBMITTED : ThesisPresentationState.APPROVED;
+		return areAllDocumentsSubmitted(thesis) ? ThesisPresentationState.DOCUMENTS_SUBMITTED
+			: ThesisPresentationState.APPROVED;
 	    } else {
 		return ThesisPresentationState.DOCUMENTS_CONFIRMED;
 	    }
@@ -48,8 +48,8 @@ public enum ThesisPresentationState {
     }
 
     private static boolean areAllDocumentsSubmitted(final Thesis thesis) {
-	return thesis.isThesisAbstractInBothLanguages() && thesis.isKeywordsInBothLanguages()
-			&& thesis.hasExtendedAbstract() && thesis.hasDissertation() && thesis.getDiscussed() != null;
+	return thesis.isThesisAbstractInBothLanguages() && thesis.isKeywordsInBothLanguages() && thesis.hasExtendedAbstract()
+		&& thesis.hasDissertation() && thesis.getDiscussed() != null;
     }
 
     public String getName() {

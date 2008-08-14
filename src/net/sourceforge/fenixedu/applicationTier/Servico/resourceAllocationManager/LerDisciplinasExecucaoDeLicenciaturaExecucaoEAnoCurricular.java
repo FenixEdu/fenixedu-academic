@@ -23,8 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends Service {
 
-    public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYearID)
-	    {
+    public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYearID) {
 
 	List listInfoDE = new ArrayList();
 

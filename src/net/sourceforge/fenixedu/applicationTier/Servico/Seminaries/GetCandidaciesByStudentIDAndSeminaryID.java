@@ -20,26 +20,26 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 5/Ago/2003, 19:44:39
+ *         Created at 5/Ago/2003, 19:44:39
  * 
  */
 public class GetCandidaciesByStudentIDAndSeminaryID extends Service {
 
-    public List run(Integer studentID, Integer seminaryID) throws BDException{
-        List candidaciesInfo = new LinkedList();
+    public List run(Integer studentID, Integer seminaryID) throws BDException {
+	List candidaciesInfo = new LinkedList();
 
-        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
-        Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);
+	Registration registration = rootDomainObject.readRegistrationByOID(studentID);
+	Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);
 
-        List<SeminaryCandidacy> candidacies = SeminaryCandidacy.getByStudentAndSeminary(registration, seminary);
+	List<SeminaryCandidacy> candidacies = SeminaryCandidacy.getByStudentAndSeminary(registration, seminary);
 
-        for (SeminaryCandidacy candidacy : candidacies) {
-            InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
-            infoCandidacy.setSeminaryName(seminary.getName());
+	for (SeminaryCandidacy candidacy : candidacies) {
+	    InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
+	    infoCandidacy.setSeminaryName(seminary.getName());
 
-            candidaciesInfo.add(infoCandidacy);
-        }
+	    candidaciesInfo.add(infoCandidacy);
+	}
 
-        return candidaciesInfo;
+	return candidaciesInfo;
     }
 }

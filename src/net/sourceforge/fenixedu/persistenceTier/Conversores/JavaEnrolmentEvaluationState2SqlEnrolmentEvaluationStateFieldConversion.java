@@ -10,19 +10,18 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion implements
-        FieldConversion {
+public class JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)
      */
     public Object javaToSql(Object source) {
-        if (source instanceof EnrolmentEvaluationState) {
-            EnrolmentEvaluationState s = (EnrolmentEvaluationState) source;
-            return s.getState();
-        }
+	if (source instanceof EnrolmentEvaluationState) {
+	    EnrolmentEvaluationState s = (EnrolmentEvaluationState) source;
+	    return s.getState();
+	}
 
-        return source;
+	return source;
 
     }
 
@@ -30,12 +29,12 @@ public class JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConver
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return EnrolmentEvaluationState.valueOf(src);
-        }
+	if (source instanceof Integer) {
+	    Integer src = (Integer) source;
+	    return EnrolmentEvaluationState.valueOf(src);
+	}
 
-        return source;
+	return source;
 
     }
 }

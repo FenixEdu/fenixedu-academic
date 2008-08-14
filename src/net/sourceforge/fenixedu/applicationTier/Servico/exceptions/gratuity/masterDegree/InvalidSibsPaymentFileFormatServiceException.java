@@ -16,21 +16,21 @@ public class InvalidSibsPaymentFileFormatServiceException extends FenixServiceEx
      *  
      */
     public InvalidSibsPaymentFileFormatServiceException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public InvalidSibsPaymentFileFormatServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     /**
      * @param cause
      */
     public InvalidSibsPaymentFileFormatServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -38,14 +38,14 @@ public class InvalidSibsPaymentFileFormatServiceException extends FenixServiceEx
      * @param cause
      */
     public InvalidSibsPaymentFileFormatServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[InvalidSibsFileFormatServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[InvalidSibsFileFormatServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

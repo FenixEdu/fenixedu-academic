@@ -15,24 +15,24 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExecutionPeriodsForExecutionYear implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-    	
-    	ExecutionYear executionYear;
-		try {
-			executionYear = (ExecutionYear) MethodUtils.invokeMethod(source, "getExecutionYear", null);
-		}catch(Exception e) {
-			throw new RuntimeException(e);
-		}
-		
-    	List<ExecutionSemester> periods = new ArrayList<ExecutionSemester>();
-    	if(executionYear!=null) {
-    		periods.addAll(executionYear.getExecutionPeriods());
-    	}
-       
-        return periods;
+
+	ExecutionYear executionYear;
+	try {
+	    executionYear = (ExecutionYear) MethodUtils.invokeMethod(source, "getExecutionYear", null);
+	} catch (Exception e) {
+	    throw new RuntimeException(e);
+	}
+
+	List<ExecutionSemester> periods = new ArrayList<ExecutionSemester>();
+	if (executionYear != null) {
+	    periods.addAll(executionYear.getExecutionPeriods());
+	}
+
+	return periods;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

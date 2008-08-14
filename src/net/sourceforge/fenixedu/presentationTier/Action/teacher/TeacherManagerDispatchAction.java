@@ -35,95 +35,93 @@ import org.apache.struts.action.DynaActionForm;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class TeacherManagerDispatchAction extends FenixDispatchAction {
 
-    public ActionForward viewTeachersByProfessorship(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward viewTeachersByProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        try {
+	try {
 
-            HttpSession session = getSession(request);
-            session.removeAttribute(SessionConstants.INFO_SECTION);
-            IUserView userView = getUserView(request);
-            InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-            Object args[] = { infoSite.getInfoExecutionCourse() };
-            boolean result = false;
-            List teachers = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadTeachersByExecutionCourseProfessorship", args);
-            if (teachers != null && !teachers.isEmpty()) {
-                session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
-            }
+	    HttpSession session = getSession(request);
+	    session.removeAttribute(SessionConstants.INFO_SECTION);
+	    IUserView userView = getUserView(request);
+	    InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+	    Object args[] = { infoSite.getInfoExecutionCourse() };
+	    boolean result = false;
+	    List teachers = (List) ServiceManagerServiceFactory
+		    .executeService("ReadTeachersByExecutionCourseProfessorship", args);
+	    if (teachers != null && !teachers.isEmpty()) {
+		session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
+	    }
 
-            List responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadTeachersByExecutionCourseResponsibility", args);
+	    List responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(
+		    "ReadTeachersByExecutionCourseResponsibility", args);
 
-            Object[] args1 = { userView.getUtilizador() };
-            InfoTeacher teacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(
-                    "ReadTeacherByUsername", args1);
-            if (responsibleTeachers != null && !responsibleTeachers.isEmpty()
-                    && responsibleTeachers.contains(teacher)) {
-                result = true;
-            }
-            session.setAttribute(SessionConstants.IS_RESPONSIBLE, new Boolean(result));
+	    Object[] args1 = { userView.getUtilizador() };
+	    InfoTeacher teacher = (InfoTeacher) ServiceManagerServiceFactory.executeService("ReadTeacherByUsername", args1);
+	    if (responsibleTeachers != null && !responsibleTeachers.isEmpty() && responsibleTeachers.contains(teacher)) {
+		result = true;
+	    }
+	    session.setAttribute(SessionConstants.IS_RESPONSIBLE, new Boolean(result));
 
-            return mapping.findForward("viewTeachers");
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	    return mapping.findForward("viewTeachers");
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
     }
 
-    public ActionForward removeTeacher(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward removeTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        HttpSession session = getSession(request);
-        session.removeAttribute(SessionConstants.INFO_SECTION);
-        IUserView userView = getUserView(request);
-        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-        String teacherNumberString = request.getParameter("teacherNumber");
+	HttpSession session = getSession(request);
+	session.removeAttribute(SessionConstants.INFO_SECTION);
+	IUserView userView = getUserView(request);
+	InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+	String teacherNumberString = request.getParameter("teacherNumber");
 
-        Integer teacherNumber = new Integer(teacherNumberString);
-        Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
-        try {
-            ServiceManagerServiceFactory.executeService( "RemoveTeacher", args);
+	Integer teacherNumber = new Integer(teacherNumberString);
+	Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
+	try {
+	    ServiceManagerServiceFactory.executeService("RemoveTeacher", args);
 
-        } catch (notAuthorizedServiceDeleteException e) {
-            throw new notAuthorizedActionDeleteException("error.invalidTeacherRemoval");
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        return viewTeachersByProfessorship(mapping, form, request, response);
+	} catch (notAuthorizedServiceDeleteException e) {
+	    throw new notAuthorizedActionDeleteException("error.invalidTeacherRemoval");
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	return viewTeachersByProfessorship(mapping, form, request, response);
     }
 
-    public ActionForward associateTeacher(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward associateTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        HttpSession session = getSession(request);
-        session.removeAttribute(SessionConstants.INFO_SECTION);
-        IUserView userView = getUserView(request);
-        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-        DynaActionForm teacherForm = (DynaActionForm) form;
+	HttpSession session = getSession(request);
+	session.removeAttribute(SessionConstants.INFO_SECTION);
+	IUserView userView = getUserView(request);
+	InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+	DynaActionForm teacherForm = (DynaActionForm) form;
 
-        Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
-        Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
-        try {
-            ServiceManagerServiceFactory.executeService( "AssociateTeacher", args);
+	Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
+	Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
+	try {
+	    ServiceManagerServiceFactory.executeService("AssociateTeacher", args);
 
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException("A associação do professor número " + teacherNumber, e);
-        } catch (InvalidArgumentsServiceException e) {
-            throw new InvalidArgumentsActionException("Professor número " + teacherNumber, e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        return viewTeachersByProfessorship(mapping, form, request, response);
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException("A associação do professor número " + teacherNumber, e);
+	} catch (InvalidArgumentsServiceException e) {
+	    throw new InvalidArgumentsActionException("Professor número " + teacherNumber, e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	return viewTeachersByProfessorship(mapping, form, request, response);
     }
 
-    public ActionForward prepareAssociateTeacher(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareAssociateTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-        return mapping.findForward("associateTeacher");
+	return mapping.findForward("associateTeacher");
     }
 }

@@ -28,48 +28,47 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Service {
 
-	public Object run(Integer degreeCurricularPlanID, String executionYearName)
-			throws FenixServiceException{
-		if (degreeCurricularPlanID == null || executionYearName == null) {
-			throw new FenixServiceException("error.impossible.noGratuityValues");
-		}
-
-		GratuityValues gratuityValues = null;
-		List infoPaymentPhases = null;
-
-		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-		final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
-		if (degreeCurricularPlan == null || executionYear == null) {
-			throw new FenixServiceException("error.impossible.noGratuityValues");
-		}
-
-		// read execution degree
-		ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());
-
-		if (executionDegree == null) {
-			throw new FenixServiceException("error.impossible.noGratuityValues");
-		}
-
-		// read execution degree's gratuity values
-		gratuityValues = executionDegree.getGratuityValues();
-
-		InfoGratuityValues infoGratuityValues = null;
-		if (gratuityValues != null) {
-			infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree
-					.newInfoFromDomain(gratuityValues);
-
-			infoPaymentPhases = new ArrayList();
-			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
-				public Object transform(Object input) {
-					PaymentPhase paymentPhase = (PaymentPhase) input;
-					return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
-				}
-			}, infoPaymentPhases);
-
-			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
-
-		}
-
-		return infoGratuityValues;
+    public Object run(Integer degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
+	if (degreeCurricularPlanID == null || executionYearName == null) {
+	    throw new FenixServiceException("error.impossible.noGratuityValues");
 	}
+
+	GratuityValues gratuityValues = null;
+	List infoPaymentPhases = null;
+
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
+	if (degreeCurricularPlan == null || executionYear == null) {
+	    throw new FenixServiceException("error.impossible.noGratuityValues");
+	}
+
+	// read execution degree
+	ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
+		executionYear.getYear());
+
+	if (executionDegree == null) {
+	    throw new FenixServiceException("error.impossible.noGratuityValues");
+	}
+
+	// read execution degree's gratuity values
+	gratuityValues = executionDegree.getGratuityValues();
+
+	InfoGratuityValues infoGratuityValues = null;
+	if (gratuityValues != null) {
+	    infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree.newInfoFromDomain(gratuityValues);
+
+	    infoPaymentPhases = new ArrayList();
+	    CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
+		public Object transform(Object input) {
+		    PaymentPhase paymentPhase = (PaymentPhase) input;
+		    return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
+		}
+	    }, infoPaymentPhases);
+
+	    infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
+
+	}
+
+	return infoGratuityValues;
+    }
 }

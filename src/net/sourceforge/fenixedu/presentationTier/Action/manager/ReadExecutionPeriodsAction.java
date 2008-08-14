@@ -31,34 +31,33 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ReadExecutionPeriodsAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        try {
-            List infoExecutionPeriods = (List) ServiceUtils.executeService(
-                    "ReadExecutionPeriods", null);
+	try {
+	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
-            if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
-                //				Collections.sort(infoExecutionPeriods, new
-                // ExecutionPeriodComparator());
-                ComparatorChain comparator = new ComparatorChain();
-                comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-                comparator.addComparator(new BeanComparator("name"), true);
-                Collections.sort(infoExecutionPeriods, comparator);
+		// Collections.sort(infoExecutionPeriods, new
+		// ExecutionPeriodComparator());
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+		comparator.addComparator(new BeanComparator("name"), true);
+		Collections.sort(infoExecutionPeriods, comparator);
 
-                if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-                    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-                }
+		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+		    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
+		}
 
-            }
-        } catch (FenixServiceException ex) {
-            throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
-        }
+	    }
+	} catch (FenixServiceException ex) {
+	    throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
+	}
 
-        return mapping.findForward("readExecutionPeriods");
+	return mapping.findForward("readExecutionPeriods");
 
     }
 }

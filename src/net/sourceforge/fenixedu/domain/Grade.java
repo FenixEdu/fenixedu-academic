@@ -149,8 +149,7 @@ public class Grade implements Serializable, Comparable<Grade> {
 	return GradeDistribution.ECTS_SCALE_20.getDistribution(this).getScale();
     }
 
-    static public Grade average(@SuppressWarnings("unused")
-    final Collection<Grade> grades) {
+    static public Grade average(@SuppressWarnings("unused") final Collection<Grade> grades) {
 	return null;
     }
 

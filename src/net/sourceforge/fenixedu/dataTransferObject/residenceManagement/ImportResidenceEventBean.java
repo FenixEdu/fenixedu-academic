@@ -12,12 +12,12 @@ public class ImportResidenceEventBean extends SimpleFileBean {
     private Integer paymentLimitDay;
 
     private String spreadsheetName;
-    
+
     public ImportResidenceEventBean(ResidenceMonth month) {
 	setResidenceMonth(month);
 	setResidenceYear(month.getYear());
     }
-    
+
     public ImportResidenceEventBean() {
 	setResidenceYear(null);
 	setResidenceMonth(null);
@@ -51,10 +51,10 @@ public class ImportResidenceEventBean extends SimpleFileBean {
     }
 
     public String getSpreadsheetName() {
-        return spreadsheetName;
+	return spreadsheetName;
     }
 
     public void setSpreadsheetName(String spreadsheetName) {
-        this.spreadsheetName = spreadsheetName;
+	this.spreadsheetName = spreadsheetName;
     }
 }

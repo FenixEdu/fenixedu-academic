@@ -10,13 +10,13 @@ public class TeacherNumberStringInputRenderer extends StringInputRenderer {
 
     @Override
     protected HtmlComponent createTextField(Object object, Class type) {
-        
-        Teacher teacher = (Teacher) object; 
-        String number = (teacher != null) ? teacher.getTeacherNumber().toString() : null; 
-        
-        HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(number, type);        
-        formComponent.setConverter(new TeacherNumberConverter());
-        
-        return formComponent;        
+
+	Teacher teacher = (Teacher) object;
+	String number = (teacher != null) ? teacher.getTeacherNumber().toString() : null;
+
+	HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(number, type);
+	formComponent.setConverter(new TeacherNumberConverter());
+
+	return formComponent;
     }
 }

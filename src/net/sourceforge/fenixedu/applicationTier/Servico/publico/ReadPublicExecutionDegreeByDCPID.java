@@ -17,31 +17,32 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadPublicExecutionDegreeByDCPID extends Service {
 
-    public List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException{
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        
-        List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
-        for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-            result.add(copyExecutionDegree2InfoExecutionDegree(executionDegree));
-        }
+    public List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException {
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        return result;
+	List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
+	for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+	    result.add(copyExecutionDegree2InfoExecutionDegree(executionDegree));
+	}
+
+	return result;
     }
 
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) {
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
-        
-        ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());
-        if (executionDegree == null) {
-            return null;
-        }
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-        return copyExecutionDegree2InfoExecutionDegree(executionDegree);
+	ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
+		executionYear.getYear());
+	if (executionDegree == null) {
+	    return null;
+	}
+
+	return copyExecutionDegree2InfoExecutionDegree(executionDegree);
     }
 
     protected InfoExecutionDegree copyExecutionDegree2InfoExecutionDegree(ExecutionDegree executionDegree) {
-        return InfoExecutionDegree.newInfoFromDomain(executionDegree);        
+	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 
 }

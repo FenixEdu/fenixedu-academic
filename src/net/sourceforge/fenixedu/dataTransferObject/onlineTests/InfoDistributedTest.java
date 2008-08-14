@@ -41,232 +41,235 @@ public class InfoDistributedTest extends InfoObject {
     }
 
     public String getTitle() {
-        return title;
+	return title;
     }
 
     public String getTestInformation() {
-        return testInformation;
+	return testInformation;
     }
 
     public Calendar getBeginDate() {
-        return beginDate;
+	return beginDate;
     }
 
     public Calendar getBeginHour() {
-        return beginHour;
+	return beginHour;
     }
 
     public CorrectionAvailability getCorrectionAvailability() {
-        return correctionAvailability;
+	return correctionAvailability;
     }
 
     public Calendar getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public Calendar getEndHour() {
-        return endHour;
+	return endHour;
     }
 
     public TestType getTestType() {
-        return testType;
+	return testType;
     }
 
     public Integer getNumberOfQuestions() {
-        return numberOfQuestions;
+	return numberOfQuestions;
     }
 
     public void setTitle(String string) {
-        title = string;
+	title = string;
     }
 
     public void setTestInformation(String string) {
-        testInformation = string;
+	testInformation = string;
     }
 
     public void setBeginDate(Calendar calendar) {
-        beginDate = calendar;
+	beginDate = calendar;
     }
 
     public void setBeginHour(Calendar calendar) {
-        beginHour = calendar;
+	beginHour = calendar;
     }
 
     public void setCorrectionAvailability(CorrectionAvailability availability) {
-        correctionAvailability = availability;
+	correctionAvailability = availability;
     }
 
     public void setEndDate(Calendar calendar) {
-        endDate = calendar;
+	endDate = calendar;
     }
 
     public void setEndHour(Calendar calendar) {
-        endHour = calendar;
+	endHour = calendar;
     }
 
     public void setTestType(TestType type) {
-        testType = type;
+	testType = type;
     }
 
     public void setNumberOfQuestions(Integer integer) {
-        numberOfQuestions = integer;
+	numberOfQuestions = integer;
     }
 
     public InfoTestScope getInfoTestScope() {
-        return infoTestScope;
+	return infoTestScope;
     }
 
     public void setInfoTestScope(InfoTestScope scope) {
-        infoTestScope = scope;
+	infoTestScope = scope;
     }
 
     public Boolean getImsFeedback() {
-        return imsFeedback;
+	return imsFeedback;
     }
 
     public void setImsFeedback(Boolean imsFeedback) {
-        this.imsFeedback = imsFeedback;
+	this.imsFeedback = imsFeedback;
     }
 
     public String getBeginDateTimeFormatted() {
-        String result = new String();
-        Calendar date = getBeginDate();
-        result += date.get(Calendar.DAY_OF_MONTH);
-        result += "/";
-        result += date.get(Calendar.MONTH) + 1;
-        result += "/";
-        result += date.get(Calendar.YEAR);
-        result += " ";
-        date = getBeginHour();
-        result += date.get(Calendar.HOUR_OF_DAY);
-        result += ":";
-        if (date.get(Calendar.MINUTE) < 10)
-            result += "0";
-        result += date.get(Calendar.MINUTE);
-        return result;
+	String result = new String();
+	Calendar date = getBeginDate();
+	result += date.get(Calendar.DAY_OF_MONTH);
+	result += "/";
+	result += date.get(Calendar.MONTH) + 1;
+	result += "/";
+	result += date.get(Calendar.YEAR);
+	result += " ";
+	date = getBeginHour();
+	result += date.get(Calendar.HOUR_OF_DAY);
+	result += ":";
+	if (date.get(Calendar.MINUTE) < 10)
+	    result += "0";
+	result += date.get(Calendar.MINUTE);
+	return result;
     }
 
     public String getEndDateTimeFormatted() {
-        String result = new String();
-        Calendar date = getEndDate();
-        result += date.get(Calendar.DAY_OF_MONTH);
-        result += "/";
-        result += date.get(Calendar.MONTH) + 1;
-        result += "/";
-        result += date.get(Calendar.YEAR);
-        result += " ";
-        date = getEndHour();
-        result += date.get(Calendar.HOUR_OF_DAY);
-        result += ":";
-        if (date.get(Calendar.MINUTE) < 10)
-            result += "0";
-        result += date.get(Calendar.MINUTE);
-        return result;
+	String result = new String();
+	Calendar date = getEndDate();
+	result += date.get(Calendar.DAY_OF_MONTH);
+	result += "/";
+	result += date.get(Calendar.MONTH) + 1;
+	result += "/";
+	result += date.get(Calendar.YEAR);
+	result += " ";
+	date = getEndHour();
+	result += date.get(Calendar.HOUR_OF_DAY);
+	result += ":";
+	if (date.get(Calendar.MINUTE) < 10)
+	    result += "0";
+	result += date.get(Calendar.MINUTE);
+	return result;
     }
 
     public String getBeginDayFormatted() {
-        String result = new String();
-        if (getBeginDate().get(Calendar.DAY_OF_MONTH) < 10)
-            result += "0";
-        return result.concat(new Integer(getBeginDate().get(Calendar.DAY_OF_MONTH)).toString());
+	String result = new String();
+	if (getBeginDate().get(Calendar.DAY_OF_MONTH) < 10)
+	    result += "0";
+	return result.concat(new Integer(getBeginDate().get(Calendar.DAY_OF_MONTH)).toString());
 
     }
 
     public String getBeginMonthFormatted() {
-        String result = new String();
-        if (getBeginDate().get(Calendar.MONTH) + 1 < 10)
-            result += "0";
-        return result.concat(new Integer(getBeginDate().get(Calendar.MONTH) + 1).toString());
+	String result = new String();
+	if (getBeginDate().get(Calendar.MONTH) + 1 < 10)
+	    result += "0";
+	return result.concat(new Integer(getBeginDate().get(Calendar.MONTH) + 1).toString());
     }
 
     public String getBeginYearFormatted() {
-        return new Integer(getBeginDate().get(Calendar.YEAR)).toString();
+	return new Integer(getBeginDate().get(Calendar.YEAR)).toString();
     }
 
     public String getBeginHourFormatted() {
-        String result = new String();
-        if (getBeginHour().get(Calendar.HOUR_OF_DAY) < 10)
-            result += "0";
-        return result.concat(new Integer(getBeginHour().get(Calendar.HOUR_OF_DAY)).toString());
+	String result = new String();
+	if (getBeginHour().get(Calendar.HOUR_OF_DAY) < 10)
+	    result += "0";
+	return result.concat(new Integer(getBeginHour().get(Calendar.HOUR_OF_DAY)).toString());
     }
 
     public String getBeginMinuteFormatted() {
-        String result = new String();
-        if (getBeginHour().get(Calendar.MINUTE) < 10)
-            result += "0";
-        return result.concat(new Integer(getBeginHour().get(Calendar.MINUTE)).toString());
+	String result = new String();
+	if (getBeginHour().get(Calendar.MINUTE) < 10)
+	    result += "0";
+	return result.concat(new Integer(getBeginHour().get(Calendar.MINUTE)).toString());
     }
 
     public String getEndDayFormatted() {
-        String result = new String();
-        if (getEndDate().get(Calendar.DAY_OF_MONTH) < 10)
-            result += "0";
-        return result.concat(new Integer(getEndDate().get(Calendar.DAY_OF_MONTH)).toString());
+	String result = new String();
+	if (getEndDate().get(Calendar.DAY_OF_MONTH) < 10)
+	    result += "0";
+	return result.concat(new Integer(getEndDate().get(Calendar.DAY_OF_MONTH)).toString());
     }
 
     public String getEndMonthFormatted() {
-        String result = new String();
-        if (getEndDate().get(Calendar.MONTH) + 1 < 10)
-            result += "0";
-        return result.concat(new Integer(getEndDate().get(Calendar.MONTH) + 1).toString());
+	String result = new String();
+	if (getEndDate().get(Calendar.MONTH) + 1 < 10)
+	    result += "0";
+	return result.concat(new Integer(getEndDate().get(Calendar.MONTH) + 1).toString());
     }
 
     public String getEndYearFormatted() {
-        return new Integer(getEndDate().get(Calendar.YEAR)).toString();
+	return new Integer(getEndDate().get(Calendar.YEAR)).toString();
     }
 
     public String getEndHourFormatted() {
-        String result = new String();
-        if (getEndHour().get(Calendar.HOUR_OF_DAY) < 10)
-            result += "0";
-        return result.concat(new Integer(getEndHour().get(Calendar.HOUR_OF_DAY)).toString());
+	String result = new String();
+	if (getEndHour().get(Calendar.HOUR_OF_DAY) < 10)
+	    result += "0";
+	return result.concat(new Integer(getEndHour().get(Calendar.HOUR_OF_DAY)).toString());
 
     }
 
     public String getEndMinuteFormatted() {
-        String result = new String();
-        if (getEndHour().get(Calendar.MINUTE) < 10)
-            result += "0";
-        return result.concat(new Integer(getEndHour().get(Calendar.MINUTE)).toString());
+	String result = new String();
+	if (getEndHour().get(Calendar.MINUTE) < 10)
+	    result += "0";
+	return result.concat(new Integer(getEndHour().get(Calendar.MINUTE)).toString());
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoDistributedTest) {
-            InfoDistributedTest infoDistributedTest = (InfoDistributedTest) obj;
-            result = (getIdInternal().equals(infoDistributedTest.getIdInternal())) && (getTitle().equals(infoDistributedTest.getTitle()))
-                    && (getBeginDate().equals(infoDistributedTest.getBeginDate())) && (getBeginHour().equals(infoDistributedTest.getBeginHour()))
-                    && (getEndDate().equals(infoDistributedTest.getEndDate())) && (getEndHour().equals(infoDistributedTest.getEndHour()))
-                    && (getTestType().equals(infoDistributedTest.getTestType()))
-                    && (getCorrectionAvailability().equals(infoDistributedTest.getCorrectionAvailability()))
-                    && (getImsFeedback().equals(infoDistributedTest.getImsFeedback()))
-                    && (getNumberOfQuestions().equals(infoDistributedTest.getNumberOfQuestions()));
-        }
-        return result;
+	boolean result = false;
+	if (obj instanceof InfoDistributedTest) {
+	    InfoDistributedTest infoDistributedTest = (InfoDistributedTest) obj;
+	    result = (getIdInternal().equals(infoDistributedTest.getIdInternal()))
+		    && (getTitle().equals(infoDistributedTest.getTitle()))
+		    && (getBeginDate().equals(infoDistributedTest.getBeginDate()))
+		    && (getBeginHour().equals(infoDistributedTest.getBeginHour()))
+		    && (getEndDate().equals(infoDistributedTest.getEndDate()))
+		    && (getEndHour().equals(infoDistributedTest.getEndHour()))
+		    && (getTestType().equals(infoDistributedTest.getTestType()))
+		    && (getCorrectionAvailability().equals(infoDistributedTest.getCorrectionAvailability()))
+		    && (getImsFeedback().equals(infoDistributedTest.getImsFeedback()))
+		    && (getNumberOfQuestions().equals(infoDistributedTest.getNumberOfQuestions()));
+	}
+	return result;
     }
 
     public void copyFromDomain(DistributedTest distributedTest) {
-        super.copyFromDomain(distributedTest);
-        if (distributedTest != null) {
-            setTitle(distributedTest.getTitle());
-            setTestInformation(distributedTest.getTestInformation());
-            setBeginDate(distributedTest.getBeginDate());
-            setBeginHour(distributedTest.getBeginHour());
-            setEndDate(distributedTest.getEndDate());
-            setEndHour(distributedTest.getEndHour());
-            setTestType(distributedTest.getTestType());
-            setCorrectionAvailability(distributedTest.getCorrectionAvailability());
-            setImsFeedback(distributedTest.getImsFeedback());
-            setNumberOfQuestions(distributedTest.getNumberOfQuestions());
-        }
+	super.copyFromDomain(distributedTest);
+	if (distributedTest != null) {
+	    setTitle(distributedTest.getTitle());
+	    setTestInformation(distributedTest.getTestInformation());
+	    setBeginDate(distributedTest.getBeginDate());
+	    setBeginHour(distributedTest.getBeginHour());
+	    setEndDate(distributedTest.getEndDate());
+	    setEndHour(distributedTest.getEndHour());
+	    setTestType(distributedTest.getTestType());
+	    setCorrectionAvailability(distributedTest.getCorrectionAvailability());
+	    setImsFeedback(distributedTest.getImsFeedback());
+	    setNumberOfQuestions(distributedTest.getNumberOfQuestions());
+	}
     }
 
     public static InfoDistributedTest newInfoFromDomain(DistributedTest distributedTest) {
-        InfoDistributedTest infoDistributedTest = null;
-        if (distributedTest != null) {
-            infoDistributedTest = new InfoDistributedTest();
-            infoDistributedTest.copyFromDomain(distributedTest);
-        }
-        return infoDistributedTest;
+	InfoDistributedTest infoDistributedTest = null;
+	if (distributedTest != null) {
+	    infoDistributedTest = new InfoDistributedTest();
+	    infoDistributedTest.copyFromDomain(distributedTest);
+	}
+	return infoDistributedTest;
     }
 }

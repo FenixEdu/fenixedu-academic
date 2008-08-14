@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.CourseLoad;
 public class DeleteCourseLoad extends Service {
 
     public void run(CourseLoad courseLoad) {
-	if(courseLoad != null) {
+	if (courseLoad != null) {
 	    courseLoad.delete();
-	}	
+	}
     }
 }

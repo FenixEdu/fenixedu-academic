@@ -24,13 +24,13 @@ import org.apache.commons.beanutils.BeanComparator;
 public class ReadStudentListByCurricularCourseScope extends Service {
 
     public List run(IUserView userView, Integer curricularCourseScopeID) throws FenixServiceException {
-        CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(curricularCourseScopeID);
+	CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(curricularCourseScopeID);
 
-        final List<Enrolment> enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
-        if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
-            throw new NonExistingServiceException();
-        }
-        return cleanList(enrolmentList);
+	final List<Enrolment> enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
+	if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
+	    throw new NonExistingServiceException();
+	}
+	return cleanList(enrolmentList);
     }
 
     private List cleanList(final List<Enrolment> enrolmentList) throws FenixServiceException {
@@ -44,8 +44,7 @@ public class ReadStudentListByCurricularCourseScope extends Service {
 	for (final Enrolment enrolment : enrolmentList) {
 
 	    if (studentNumber == null
-		    || studentNumber.intValue() != enrolment.getStudentCurricularPlan().getRegistration()
-			    .getNumber().intValue()) {
+		    || studentNumber.intValue() != enrolment.getStudentCurricularPlan().getRegistration().getNumber().intValue()) {
 
 		studentNumber = enrolment.getStudentCurricularPlan().getRegistration().getNumber();
 		result.add(InfoEnrolment.newInfoFromDomain(enrolment));

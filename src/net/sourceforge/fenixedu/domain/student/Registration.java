@@ -2773,9 +2773,9 @@ public class Registration extends Registration_Base {
     final public Boolean getPayedTuition() {
 	return !hasAnyNotPayedGratuityEventsForPreviousYears();
     }
-    
+
     @Deprecated
-    public void setPayedTuition(Boolean value){
+    public void setPayedTuition(Boolean value) {
 	throw new UnsupportedOperationException();
     }
 
@@ -2867,7 +2867,7 @@ public class Registration extends Registration_Base {
 	    if (getDegreeType() == DegreeType.MASTER_DEGREE) {
 		return getLastStudentCurricularPlan().getMasterDegreeThesis().getProofDateYearMonthDay().toLocalDate();
 	    } else {
-		final Thesis  thesis = getDissertationEnrolment().getThesis();
+		final Thesis thesis = getDissertationEnrolment().getThesis();
 		return thesis.hasCurrentDiscussedDate() ? thesis.getCurrentDiscussedDate().toLocalDate() : null;
 	    }
 	}

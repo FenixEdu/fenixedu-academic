@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 public class LessonsPeriodCE extends LessonsPeriodCE_Base {
 
-    public LessonsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 	    
+    public LessonsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title,
 	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
 	super();
@@ -21,7 +21,7 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     @Override
     public boolean isLessonsPerid() {
 	return true;
-    }  
+    }
 
     @Override
     protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
@@ -34,22 +34,22 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     }
 
     @Override
-    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
 	return false;
     }
 
     @Override
-    protected boolean isPossibleToChangeTimeInterval() {     
-        return false;
+    protected boolean isPossibleToChangeTimeInterval() {
+	return false;
     }
 
     @Override
     protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
-	return new LessonsPeriodCE(parentEntry, this);	
+	return new LessonsPeriodCE(parentEntry, this);
     }
 
     @Override
-    protected boolean associatedWithDomainEntities() {	
+    protected boolean associatedWithDomainEntities() {
 	return false;
     }
 }

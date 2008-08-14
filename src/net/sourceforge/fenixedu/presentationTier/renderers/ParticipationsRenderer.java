@@ -203,9 +203,9 @@ public class ParticipationsRenderer extends OutputRenderer {
 	    if (!person.isHomePageAvailable()) {
 		component = personComponent;
 	    } else {
-		HtmlLink link = iscontextAvailable() ? 
-			new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX) : 
-			new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX);
+		HtmlLink link = iscontextAvailable() ? new HtmlLinkWithPreprendedComment(
+			ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX) : new HtmlLinkWithPreprendedComment(
+			ChecksumRewriter.NO_CHECKSUM_PREFIX);
 
 		link.setTarget(Target.BLANK);
 		link.setModuleRelative(isModuleRelative());

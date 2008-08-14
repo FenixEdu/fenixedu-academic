@@ -92,17 +92,17 @@ public class InfoPersonEditor extends InfoObject {
 
     private Boolean availablePhoto;
 
-    public InfoPersonEditor() {}
+    public InfoPersonEditor() {
+    }
 
     public InfoPersonEditor(String numeroDocumentoIdentificacao, IDDocumentType tipoDocumentoIdentificacao,
 	    String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-	    Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
-	    Date nascimento, String nomePai, String nomeMae, String freguesiaNaturalidade,
-	    String concelhoNaturalidade, String distritoNaturalidade, String morada, String localidade,
-	    String codigoPostal, String localidadeCodigoPostal, String freguesiaMorada,
-	    String concelhoMorada, String distritoMorada, String telefone, String telemovel,
-	    String email, String enderecoWeb, String numContribuinte, String profissao, String username,
-	    String istUsername, String password, InfoCountryEditor infoPais, String codigoFiscal) {
+	    Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil, Date nascimento,
+	    String nomePai, String nomeMae, String freguesiaNaturalidade, String concelhoNaturalidade,
+	    String distritoNaturalidade, String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
+	    String freguesiaMorada, String concelhoMorada, String distritoMorada, String telefone, String telemovel,
+	    String email, String enderecoWeb, String numContribuinte, String profissao, String username, String istUsername,
+	    String password, InfoCountryEditor infoPais, String codigoFiscal) {
 
 	setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
 	setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
@@ -140,8 +140,7 @@ public class InfoPersonEditor extends InfoObject {
 
     public boolean equals(Object o) {
 	return ((o instanceof InfoPerson)
-		&& (numeroDocumentoIdentificacao.equals(((InfoPerson) o)
-			.getNumeroDocumentoIdentificacao())) && (tipoDocumentoIdentificacao
+		&& (numeroDocumentoIdentificacao.equals(((InfoPerson) o).getNumeroDocumentoIdentificacao())) && (tipoDocumentoIdentificacao
 		.equals(((InfoPerson) o).getTipoDocumentoIdentificacao())));
     }
 
@@ -151,8 +150,7 @@ public class InfoPersonEditor extends InfoObject {
 	result += "\n  - Identification Document Type : " + tipoDocumentoIdentificacao;
 	result += "\n  - Identification Document Issue Place : " + localEmissaoDocumentoIdentificacao;
 	result += "\n  - Identification Document Issue Date : " + dataEmissaoDocumentoIdentificacao;
-	result += "\n  - Identification Document Expiration Date : "
-		+ dataValidadeDocumentoIdentificacao;
+	result += "\n  - Identification Document Expiration Date : " + dataValidadeDocumentoIdentificacao;
 	result += "\n  - Name : " + nome;
 	result += "\n  - Birth : " + nascimento;
 	result += "\n  - Father Name : " + nomePai;
@@ -495,8 +493,7 @@ public class InfoPersonEditor extends InfoObject {
 	return infoStudentCurricularPlanList;
     }
 
-    public void setInfoStudentCurricularPlanList(
-	    List<InfoStudentCurricularPlan> infoStudentCurricularPlanList) {
+    public void setInfoStudentCurricularPlanList(List<InfoStudentCurricularPlan> infoStudentCurricularPlanList) {
 	this.infoStudentCurricularPlanList = infoStudentCurricularPlanList;
     }
 
@@ -515,8 +512,9 @@ public class InfoPersonEditor extends InfoObject {
     public void setIstUsername(String istUsername) {
 	this.istUsername = istUsername;
     }
-    
+
     public PhysicalAddressData getPhysicalAddressData() {
-	return new PhysicalAddressData(getMorada(), getCodigoPostal(), getLocalidadeCodigoPostal(), getLocalidade(), getFreguesiaMorada(), getConcelhoMorada(), getDistritoMorada(), null);
+	return new PhysicalAddressData(getMorada(), getCodigoPostal(), getLocalidadeCodigoPostal(), getLocalidade(),
+		getFreguesiaMorada(), getConcelhoMorada(), getDistritoMorada(), null);
     }
 }

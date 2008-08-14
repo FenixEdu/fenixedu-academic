@@ -28,7 +28,7 @@ public class EditWrittenEvaluation extends Service {
     public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
 	    Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
 	    List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason, String writtenTestDescription)
-	    throws FenixServiceException{
+	    throws FenixServiceException {
 
 	final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject
 		.readEvaluationByOID(writtenEvaluationOID);
@@ -83,7 +83,7 @@ public class EditWrittenEvaluation extends Service {
     }
 
     private List<DegreeModuleScope> readCurricularCourseScopesAndContexts(final List<String> degreeModuleScopeIDs)
-	    throws FenixServiceException{
+	    throws FenixServiceException {
 
 	List<DegreeModuleScope> result = new ArrayList<DegreeModuleScope>();
 	for (String key : degreeModuleScopeIDs) {
@@ -100,8 +100,7 @@ public class EditWrittenEvaluation extends Service {
 	return result;
     }
 
-    private List<ExecutionCourse> readExecutionCourses(final List<String> executionCourseIDs) throws
-	    FenixServiceException {
+    private List<ExecutionCourse> readExecutionCourses(final List<String> executionCourseIDs) throws FenixServiceException {
 
 	if (executionCourseIDs.isEmpty()) {
 	    throw new FenixServiceException("error.invalidExecutionCourse");

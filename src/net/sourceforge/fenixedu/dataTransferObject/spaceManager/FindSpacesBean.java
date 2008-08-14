@@ -41,10 +41,10 @@ public class FindSpacesBean implements Serializable {
 
     public FindSpacesBean(Space space, ExecutionSemester executionSemester) {
 	this();
-	setSpace(space);	
+	setSpace(space);
 	setExecutionPeriod(executionSemester);
     }
-    
+
     public FindSpacesBean(Space space, SpacesSearchCriteriaType criteriaType, ExecutionSemester executionSemester) {
 	setSpace(space);
 	setExtraOptions(false);
@@ -53,21 +53,21 @@ public class FindSpacesBean implements Serializable {
     }
 
     public List<LinkObject> getSuroundingSpacePath() {
-	Space space = getSpace();	
-	return space != null ? getPath(space.getSuroundingSpace()) : getPath(null);	
+	Space space = getSpace();
+	return space != null ? getPath(space.getSuroundingSpace()) : getPath(null);
     }
 
     public List<LinkObject> getSpacePath() {
-	return getPath(getSpace());        
+	return getPath(getSpace());
     }
 
     private List<LinkObject> getPath(Space space) {
 	List<LinkObject> result = new ArrayList<LinkObject>();
-	if(space != null) {
+	if (space != null) {
 	    List<Space> spaceFullPath = space.getSpaceFullPath();
 	    for (Space surroundingSpace : spaceFullPath) {
-		result.add(new LinkObject(surroundingSpace.getIdInternal(), "viewSpace", 
-			surroundingSpace.getSpaceInformation().getPresentationName()));
+		result.add(new LinkObject(surroundingSpace.getIdInternal(), "viewSpace", surroundingSpace.getSpaceInformation()
+			.getPresentationName()));
 	    }
 	}
 	return result;
@@ -79,7 +79,7 @@ public class FindSpacesBean implements Serializable {
 
 	public String getName() {
 	    return name();
-	}	
+	}
     }
 
     public void setSpacePath(List<LinkObject> spacePath) {
@@ -92,23 +92,24 @@ public class FindSpacesBean implements Serializable {
 
     public Space getSpace() {
 	return this.selectedSpaceReference != null ? this.selectedSpaceReference.getObject() : null;
-    }  
+    }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionPeriodReference = executionSemester != null ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionPeriodReference = executionSemester != null ? new DomainReference<ExecutionSemester>(executionSemester)
+		: null;
     }
 
     public ExecutionSemester getExecutionPeriod() {
 	return this.executionPeriodReference != null ? this.executionPeriodReference.getObject() : null;
-    }  
-    
+    }
+
     public void setBuilding(Building building) {
 	this.buildingReference = building != null ? new DomainReference<Building>(building) : null;
     }
 
     public Building getBuilding() {
 	return this.buildingReference != null ? this.buildingReference.getObject() : null;
-    }     
+    }
 
     public void setCampus(Campus floor) {
 	this.campusReference = floor != null ? new DomainReference<Campus>(floor) : null;
@@ -136,7 +137,7 @@ public class FindSpacesBean implements Serializable {
 
     public Boolean getWithSchedule() {
 	Space space = getSpace();
-	if(space != null && space.isAllocatableSpace() && ((AllocatableSpace)space).isForEducation()) {
+	if (space != null && space.isAllocatableSpace() && ((AllocatableSpace) space).isForEducation()) {
 	    return Boolean.TRUE;
 	}
 	return Boolean.FALSE;

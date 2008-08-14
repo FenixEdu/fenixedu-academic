@@ -13,7 +13,7 @@ public class SubstituteCandidacySituation extends SubstituteCandidacySituation_B
     public CandidacySituationType getCandidacySituationType() {
 	return CandidacySituationType.SUBSTITUTE;
     }
-    
+
     @Override
     public boolean canExecuteOperationAutomatically() {
 	// TODO Auto-generated method stub

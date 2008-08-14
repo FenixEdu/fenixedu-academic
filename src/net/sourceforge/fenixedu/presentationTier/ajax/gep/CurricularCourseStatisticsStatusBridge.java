@@ -24,18 +24,18 @@ public class CurricularCourseStatisticsStatusBridge {
     public static Map<IUserView, Collection<String>> toProcessDegreeCurricularPlans = new HashMap<IUserView, Collection<String>>();
 
     public static Collection<String> readProcessedDegreeCurricularPlans() {
-        Collection<String> degreeCurricularPlans = processedDegreeCurricularPlans.get(getUserVIew());
-        return (degreeCurricularPlans != null) ? degreeCurricularPlans : new ArrayList<String>();
+	Collection<String> degreeCurricularPlans = processedDegreeCurricularPlans.get(getUserVIew());
+	return (degreeCurricularPlans != null) ? degreeCurricularPlans : new ArrayList<String>();
     }
 
     public static Collection<String> readProcessingDegreeCurricularPlans() {
-        Collection<String> degreeCurricularPlans = processingDegreeCurricularPlans.get(getUserVIew());
-        return (degreeCurricularPlans != null) ? degreeCurricularPlans : new ArrayList<String>();
+	Collection<String> degreeCurricularPlans = processingDegreeCurricularPlans.get(getUserVIew());
+	return (degreeCurricularPlans != null) ? degreeCurricularPlans : new ArrayList<String>();
     }
 
     public static Collection<String> readToProcessDegreeCurricularPlans() {
-        Collection<String> degreeCurricularPlans = toProcessDegreeCurricularPlans.get(getUserVIew());
-        return (degreeCurricularPlans != null) ? degreeCurricularPlans : new ArrayList<String>();
+	Collection<String> degreeCurricularPlans = toProcessDegreeCurricularPlans.get(getUserVIew());
+	return (degreeCurricularPlans != null) ? degreeCurricularPlans : new ArrayList<String>();
     }
 
     private static IUserView getUserVIew() {

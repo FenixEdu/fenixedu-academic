@@ -20,7 +20,7 @@ public class StudentAuthorizationFilter extends AuthorizationByRoleFilter {
      *         authorization access to services.
      */
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -29,7 +29,7 @@ public class StudentAuthorizationFilter extends AuthorizationByRoleFilter {
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.STUDENT;
+	return RoleType.STUDENT;
     }
 
 }

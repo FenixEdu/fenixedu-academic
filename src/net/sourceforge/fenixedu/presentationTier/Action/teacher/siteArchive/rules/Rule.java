@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rul
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
 
 /**
- * A <tt>Rule</tt> has the responsability of transforming urls present in a
- * page and possibly generate a new resource to be dowloaded. This allows rules
- * to download required resources and update the url present in the page to the
- * new local location of the downloaded resource.
+ * A <tt>Rule</tt> has the responsability of transforming urls present in a page
+ * and possibly generate a new resource to be dowloaded. This allows rules to
+ * download required resources and update the url present in the page to the new
+ * local location of the downloaded resource.
  * 
  * @author cfgi
  */
@@ -23,7 +23,7 @@ public interface Rule {
      * @return <code>true</code> if this rule will transform the given url
      */
     public boolean matches(String url);
-    
+
     /**
      * Transforms the url. If {@link #matches(String)} returned
      * <code>false</code> then this will not change the given url.
@@ -44,9 +44,9 @@ public interface Rule {
      * @param transformedUrl
      *            the url returned by {@link #transform(String)}
      * 
-     * @return a new resource to be downloaded or <code>null</code> if no
-     *         extra resource needs to be downloaded
+     * @return a new resource to be downloaded or <code>null</code> if no extra
+     *         resource needs to be downloaded
      */
     public Resource getResource(String url, String transformedUrl);
-    
+
 }

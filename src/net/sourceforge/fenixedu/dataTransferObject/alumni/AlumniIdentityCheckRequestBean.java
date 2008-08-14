@@ -21,7 +21,7 @@ public class AlumniIdentityCheckRequestBean implements Serializable {
     private String nameOfFather;
     private String nameOfMother;
     private AlumniRequestType requestType;
-    
+
     public AlumniIdentityCheckRequestBean(AlumniRequestType requestType) {
 	setRequestType(requestType);
     }
@@ -77,11 +77,11 @@ public class AlumniIdentityCheckRequestBean implements Serializable {
     public void setParishOfBirth(String parishOfBirth) {
 	this.parishOfBirth = parishOfBirth;
     }
-    
+
     public String getParishOfBirth() {
 	return parishOfBirth;
     }
-    
+
     public String getSocialSecurityNumber() {
 	return socialSecurityNumber;
     }
@@ -105,7 +105,7 @@ public class AlumniIdentityCheckRequestBean implements Serializable {
     public void setNameOfMother(String nameOfMother) {
 	this.nameOfMother = nameOfMother;
     }
-    
+
     public AlumniRequestType getRequestType() {
 	return requestType;
     }

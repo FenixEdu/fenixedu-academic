@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class InfoCurricularCourse2Enroll extends DataTranferObject implements Serializable {
 
@@ -32,7 +32,7 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
      * @return Returns the curricularYear.
      */
     public InfoCurricularYear getCurricularYear() {
-        return curricularYear;
+	return curricularYear;
     }
 
     /**
@@ -40,22 +40,22 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
      *            The curricularYear to set.
      */
     public void setCurricularYear(InfoCurricularYear curricularYear) {
-        this.curricularYear = curricularYear;
+	this.curricularYear = curricularYear;
     }
 
     /**
      * @return Returns the enrollmentRuleType.
      */
     public CurricularCourseEnrollmentType getEnrollmentType() {
-        return enrollmentType;
+	return enrollmentType;
     }
 
     public Boolean getOptionalCurricularCourse() {
-        return optionalCurricularCourse;
+	return optionalCurricularCourse;
     }
 
     public void setOptionalCurricularCourse(Boolean optionalCurricularCourse) {
-        this.optionalCurricularCourse = optionalCurricularCourse;
+	this.optionalCurricularCourse = optionalCurricularCourse;
     }
 
     /**
@@ -63,14 +63,14 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
      *            The enrollmentRuleType to set.
      */
     public void setEnrollmentType(CurricularCourseEnrollmentType enrollmentRuleType) {
-        this.enrollmentType = enrollmentRuleType;
+	this.enrollmentType = enrollmentRuleType;
     }
 
     /**
      * @return Returns the infoCurricularCourse.
      */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     /**
@@ -78,32 +78,31 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
      *            The infoCurricularCourse to set.
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
     public void copyFromDomain(CurricularCourse2Enroll curricularCourse2Enroll) {
-        if (curricularCourse2Enroll != null) {
-            setEnrollmentType(curricularCourse2Enroll.getEnrollmentType());
-            setAccumulatedWeight(curricularCourse2Enroll.getAccumulatedWeight());
-            setOptionalCurricularCourse(curricularCourse2Enroll.getOptionalCurricularCourse());
-        }
+	if (curricularCourse2Enroll != null) {
+	    setEnrollmentType(curricularCourse2Enroll.getEnrollmentType());
+	    setAccumulatedWeight(curricularCourse2Enroll.getAccumulatedWeight());
+	    setOptionalCurricularCourse(curricularCourse2Enroll.getOptionalCurricularCourse());
+	}
     }
 
-    public static InfoCurricularCourse2Enroll newInfoFromDomain(
-            CurricularCourse2Enroll curricularCourse2Enroll) {
-        InfoCurricularCourse2Enroll infoCurricularCourse2Enroll = null;
-        if (curricularCourse2Enroll != null) {
-            infoCurricularCourse2Enroll = new InfoCurricularCourse2Enroll();
-            infoCurricularCourse2Enroll.copyFromDomain(curricularCourse2Enroll);
-        }
-        return infoCurricularCourse2Enroll;
+    public static InfoCurricularCourse2Enroll newInfoFromDomain(CurricularCourse2Enroll curricularCourse2Enroll) {
+	InfoCurricularCourse2Enroll infoCurricularCourse2Enroll = null;
+	if (curricularCourse2Enroll != null) {
+	    infoCurricularCourse2Enroll = new InfoCurricularCourse2Enroll();
+	    infoCurricularCourse2Enroll.copyFromDomain(curricularCourse2Enroll);
+	}
+	return infoCurricularCourse2Enroll;
     }
 
     /**
      * @return Returns the accumulatedWeight.
      */
     public Integer getAccumulatedWeight() {
-        return accumulatedWeight;
+	return accumulatedWeight;
     }
 
     /**
@@ -111,10 +110,10 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
      *            The accumulatedWeight to set.
      */
     public void setAccumulatedWeight(Integer accumulatedWeight) {
-        this.accumulatedWeight = accumulatedWeight;
+	this.accumulatedWeight = accumulatedWeight;
     }
 
     public boolean isOptionalCurricularCourse() {
-        return optionalCurricularCourse.booleanValue();
+	return optionalCurricularCourse.booleanValue();
     }
 }

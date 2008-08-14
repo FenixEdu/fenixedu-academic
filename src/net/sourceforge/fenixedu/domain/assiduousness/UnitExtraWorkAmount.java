@@ -177,7 +177,8 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 		spreadsheet.newHeaderRow();
 		spreadsheet.newHeaderRow();
 		// int rowNum = spreadsheet.getRow().getRowNum();
-		// spreadsheet.addCell(bundle.getString("message.extraWorkFirstYearMonthNote"));
+		// spreadsheet.addCell(bundle.getString(
+		// "message.extraWorkFirstYearMonthNote"));
 		spreadsheet.newHeaderRow();
 		EmployeeExtraWorkAuthorization.getExcelHeader(spreadsheet, bundle, enumBundle);
 		spreadsheet.getSheet().addMergedRegion(new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));

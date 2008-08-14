@@ -57,8 +57,8 @@ public class AcademicSemesterDateTimeField extends DateTimeField {
 
     @Override
     public int get(long instant) {
-	if(chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology)chronology).getAcademicSemester(instant);
+	if (chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology) chronology).getAcademicSemester(instant);
 	}
 	throw unsupported();
     }
@@ -227,7 +227,7 @@ public class AcademicSemesterDateTimeField extends DateTimeField {
 
     @Override
     public DateTimeFieldType getType() {
-	
+
 	throw unsupported();
     }
 

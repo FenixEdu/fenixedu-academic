@@ -14,8 +14,8 @@ public class ReadAllAssiduousnessWorkSheets extends Service {
 	final List<EmployeeWorkSheet> employeeWorkSheetList = new ArrayList<EmployeeWorkSheet>();
 	ReadAssiduousnessWorkSheet workSheet = new ReadAssiduousnessWorkSheet();
 	for (Assiduousness assiduousness : assiduousnessExportChoices.getAssiduousnesses()) {
-	    employeeWorkSheetList.add(workSheet.run(assiduousness, assiduousnessExportChoices
-		    .getBeginDate(), assiduousnessExportChoices.getEndDate()));
+	    employeeWorkSheetList.add(workSheet.run(assiduousness, assiduousnessExportChoices.getBeginDate(),
+		    assiduousnessExportChoices.getEndDate()));
 	}
 	return employeeWorkSheetList;
     }

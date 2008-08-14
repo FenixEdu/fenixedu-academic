@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.domain.gesdis;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
@@ -16,9 +15,9 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class StudentCourseReport extends StudentCourseReport_Base {
 
-	public StudentCourseReport() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public StudentCourseReport() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
 }

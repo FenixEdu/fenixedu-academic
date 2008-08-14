@@ -15,28 +15,28 @@ public class InfoEnrollmentGrade extends DataTranferObject {
      * @return
      */
     public String getGradeValue() {
-        return gradeValue;
+	return gradeValue;
     }
 
     /**
      * @param string
      */
     public void setGradeValue(String string) {
-        gradeValue = string;
+	gradeValue = string;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "infoEnrollment = " + this.infoEnrollment + "; ";
-        result += "grade = " + this.gradeValue + "]\n";
-        return result;
+	String result = "[" + this.getClass().getName() + "; ";
+	result += "infoEnrollment = " + this.infoEnrollment + "; ";
+	result += "grade = " + this.gradeValue + "]\n";
+	return result;
     }
 
     /**
      * @return Returns the infoEnrollment.
      */
     public InfoEnrolment getInfoEnrollment() {
-        return infoEnrollment;
+	return infoEnrollment;
     }
 
     /**
@@ -44,6 +44,6 @@ public class InfoEnrollmentGrade extends DataTranferObject {
      *            The infoEnrollment to set.
      */
     public void setInfoEnrollment(InfoEnrolment infoEnrollment) {
-        this.infoEnrollment = infoEnrollment;
+	this.infoEnrollment = infoEnrollment;
     }
 }

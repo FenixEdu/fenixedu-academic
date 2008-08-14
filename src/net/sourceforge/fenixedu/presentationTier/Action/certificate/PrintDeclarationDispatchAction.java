@@ -14,20 +14,20 @@ import org.apache.struts.action.ActionMapping;
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- *  
+ * 
  */
 public class PrintDeclarationDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);
 
-        if (session != null) {
+	if (session != null) {
 
-            return mapping.findForward("PrintReady");
-        }
-        throw new Exception();
+	    return mapping.findForward("PrintReady");
+	}
+	throw new Exception();
 
     }
 

@@ -20,12 +20,12 @@ public class NotifyStudentGroup extends Service {
 	}
 
 	String from = course.getSite().getMail();
-	if(from==null || from.length()==0) {
+	if (from == null || from.length() == 0) {
 	    from = person.getEmail();
 	}
 	String[] replyTo = { from };
 
-	new Email(course.getNome(), from, replyTo, emails, null, null, submission
-		.getProject().getName(), submission.getTeacherObservation());
+	new Email(course.getNome(), from, replyTo, emails, null, null, submission.getProject().getName(), submission
+		.getTeacherObservation());
     }
 }

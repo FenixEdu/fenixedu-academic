@@ -28,8 +28,8 @@ public class ManageGrantContractMovementAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data
      */
-    public ActionForward prepareManageGrantContractMovement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantContractMovement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer idContract = null;
 	try {
@@ -41,29 +41,25 @@ public class ManageGrantContractMovementAction extends FenixDispatchAction {
 	} catch (Exception e) {
 	    request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
 	    request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
-	    return setError(request, mapping, "errors.grant.unrecoverable",
-		    "manage-grant-contract-movement", null);
+	    return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract-movement", null);
 	}
 
-	//Read Contract
+	// Read Contract
 	Object[] args = { idContract };
 	IUserView userView = UserView.getUser();
-	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
-		"ReadGrantContract", args);
+	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args);
 
 	request.setAttribute("idContract", idContract);
 	request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
-	List infoGrantContractMovementsList = (List) ServiceUtils.executeService(
-		"ReadAllGrantMovementsByContract", args);
+	List infoGrantContractMovementsList = (List) ServiceUtils.executeService("ReadAllGrantMovementsByContract", args);
 
 	if (infoGrantContractMovementsList != null && !infoGrantContractMovementsList.isEmpty())
 	    request.setAttribute("infoGrantContractMovementsList", infoGrantContractMovementsList);
 
-	//Presenting adittional information
+	// Presenting adittional information
 	request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-	request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo()
-		.getGrantOwnerNumber());
+	request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo().getGrantOwnerNumber());
 	return mapping.findForward("manage-grant-contract-movement");
     }
 }

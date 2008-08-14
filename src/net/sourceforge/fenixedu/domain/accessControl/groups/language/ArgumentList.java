@@ -14,16 +14,16 @@ public class ArgumentList extends ArrayList<Argument> {
      *         arguments
      */
     public Object[] getArgumentValues() {
-        Object[] result = new Object[size()];
+	Object[] result = new Object[size()];
 
-        int index = 0;
-        for (Argument argument : this) {
-            result[index] = argument.getValue();
+	int index = 0;
+	for (Argument argument : this) {
+	    result[index] = argument.getValue();
 
-            index++;
-        }
+	    index++;
+	}
 
-        return result;
+	return result;
     }
 
     /**
@@ -33,35 +33,35 @@ public class ArgumentList extends ArrayList<Argument> {
      * @return an array with the types of every argument
      */
     public Class[] getArgumentTypes() {
-        Class[] result = new Class[size()];
-        
-        int index = 0;
-        for (Object value : getArgumentValues()) {
-            result[index] = value.getClass();
-            
-            index++;
-        }
-        
-        return result;
+	Class[] result = new Class[size()];
+
+	int index = 0;
+	for (Object value : getArgumentValues()) {
+	    result[index] = value.getClass();
+
+	    index++;
+	}
+
+	return result;
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        
-        builder.append("(");
-        
-        Iterator<Argument> iterator = iterator();
-        while (iterator.hasNext()) {
-            builder.append(iterator.next().toString());
-            
-            if (iterator.hasNext()) {
-                builder.append(", ");
-            }
-        }
-        
-        builder.append(")");
-        
-        return builder.toString();
+	StringBuilder builder = new StringBuilder();
+
+	builder.append("(");
+
+	Iterator<Argument> iterator = iterator();
+	while (iterator.hasNext()) {
+	    builder.append(iterator.next().toString());
+
+	    if (iterator.hasNext()) {
+		builder.append(", ");
+	    }
+	}
+
+	builder.append(")");
+
+	return builder.toString();
     }
 }

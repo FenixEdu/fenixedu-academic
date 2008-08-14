@@ -34,8 +34,7 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
 
     List<EmployeeExtraWorkAuthorizationBean> employeesExtraWorkAuthorizations = new ArrayList<EmployeeExtraWorkAuthorizationBean>();
 
-    public ExtraWorkAuthorizationFactory(Employee modifiedBy,
-	    ExtraWorkAuthorization extraWorkAuthorization) {
+    public ExtraWorkAuthorizationFactory(Employee modifiedBy, ExtraWorkAuthorization extraWorkAuthorization) {
 	setBeginDate(extraWorkAuthorization.getBeginDate());
 	setEndDate(extraWorkAuthorization.getEndDate());
 	setExtraWorkAuthorization(extraWorkAuthorization);
@@ -58,8 +57,7 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
     }
 
     public void addEmployeeExtraWorkAuthorization() {
-	getEmployeesExtraWorkAuthorizations().add(
-		new EmployeeExtraWorkAuthorizationBean(getModifiedBy()));
+	getEmployeesExtraWorkAuthorizations().add(new EmployeeExtraWorkAuthorizationBean(getModifiedBy()));
     }
 
     public Object execute() {
@@ -76,8 +74,7 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
     }
 
     private ExtraWorkAuthorization findEqualExtraWorkAuthorization() {
-	for (ExtraWorkAuthorization extraWorkAuthorization : RootDomainObject.getInstance()
-		.getExtraWorkAuthorizations()) {
+	for (ExtraWorkAuthorization extraWorkAuthorization : RootDomainObject.getInstance().getExtraWorkAuthorizations()) {
 	    if (extraWorkAuthorization.getWorkingUnit() == getWorkingUnit()
 		    && extraWorkAuthorization.getPayingUnit() == getPayingUnit()
 		    && extraWorkAuthorization.getBeginDate().equals(getBeginDate())
@@ -100,14 +97,12 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
 	return employeesExtraWorkAuthorizations;
     }
 
-    public void setEmployeesExtraWorkAuthorizations(
-	    List<EmployeeExtraWorkAuthorization> employeesExtraWorkAuthorizations) {
+    public void setEmployeesExtraWorkAuthorizations(List<EmployeeExtraWorkAuthorization> employeesExtraWorkAuthorizations) {
 	if (employeesExtraWorkAuthorizations != null) {
 	    List<EmployeeExtraWorkAuthorizationBean> employeesExtraWorkAuthorizationsList = new ArrayList<EmployeeExtraWorkAuthorizationBean>();
 	    for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : employeesExtraWorkAuthorizations) {
-		employeesExtraWorkAuthorizationsList.add(new EmployeeExtraWorkAuthorizationBean(
-			employeeExtraWorkAuthorization.getExtraWorkAuthorization(),
-			employeeExtraWorkAuthorization));
+		employeesExtraWorkAuthorizationsList.add(new EmployeeExtraWorkAuthorizationBean(employeeExtraWorkAuthorization
+			.getExtraWorkAuthorization(), employeeExtraWorkAuthorization));
 	    }
 	    this.employeesExtraWorkAuthorizations = employeesExtraWorkAuthorizationsList;
 	}
@@ -163,8 +158,7 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
 
     public void setExtraWorkAuthorization(ExtraWorkAuthorization extraWorkAuthorization) {
 	if (extraWorkAuthorization != null) {
-	    this.extraWorkAuthorization = new DomainReference<ExtraWorkAuthorization>(
-		    extraWorkAuthorization);
+	    this.extraWorkAuthorization = new DomainReference<ExtraWorkAuthorization>(extraWorkAuthorization);
 	} else {
 	    this.extraWorkAuthorization = null;
 	}

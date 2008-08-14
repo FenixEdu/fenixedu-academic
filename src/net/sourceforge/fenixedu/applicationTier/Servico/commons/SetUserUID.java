@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.Person;
 public class SetUserUID extends Service {
 
     public void run(final Person person) {
-    	person.hasIstUsername();
+	person.hasIstUsername();
     }
 
 }

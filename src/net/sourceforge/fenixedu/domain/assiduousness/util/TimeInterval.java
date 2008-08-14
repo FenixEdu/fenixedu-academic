@@ -39,8 +39,7 @@ public class TimeInterval implements Serializable {
 	setStartTime(startTime);
 	setEndTime(startTime.plus(duration.toPeriod()));
 	DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
-	Duration maxDuration = new Duration(startTime.toDateTime(now).getMillis(), now.plusDays(1)
-		.getMillis());
+	Duration maxDuration = new Duration(startTime.toDateTime(now).getMillis(), now.plusDays(1).getMillis());
 	if (duration.compareTo(maxDuration) > 0) {
 	    setNextDay(true);
 	} else {
@@ -112,7 +111,7 @@ public class TimeInterval implements Serializable {
     }
 
     // TimeInterval e' antes de timeOfDay? Se timeinterval nao esta definido
-        // no
+    // no
     // dia seguinte e timeofday
     // e' no dia seguinte entao nat�rlich devolve true
     public boolean timeIntervalIsBefore(TimeOfDay timeOfDay, boolean nextDay) {
@@ -140,13 +139,13 @@ public class TimeInterval implements Serializable {
 	// Next day e inicio e' depois do fim (pq fim e' no dia seguinte)
 	if (this.getNextDay()) {
 	    // se inicio e' antes da data e data e' antes ou igual
-                // meia-noite
+	    // meia-noite
 	    // ou data e' depois ou igual 'a meia-noite e fim e' depois da
-                // data
+	    // data
 	    if ((this.startIsBeforeOrEqual(dateTimeOfDay) && (dateTimeOfDay.isBefore(TimeOfDay.MIDNIGHT) || (dateTimeOfDay
 		    .isEqual(TimeOfDay.MIDNIGHT))))
-		    || ((dateTimeOfDay.isAfter(TimeOfDay.MIDNIGHT) || (dateTimeOfDay
-			    .isEqual(TimeOfDay.MIDNIGHT))) && this.endIsAfterOrEqual(dateTimeOfDay))) {
+		    || ((dateTimeOfDay.isAfter(TimeOfDay.MIDNIGHT) || (dateTimeOfDay.isEqual(TimeOfDay.MIDNIGHT))) && this
+			    .endIsAfterOrEqual(dateTimeOfDay))) {
 		return true;
 	    }
 	} else {
@@ -200,8 +199,7 @@ public class TimeInterval implements Serializable {
 
     // Return true if
     public Boolean startIsBefore(DateTime date) {
-	TimeOfDay timeOfDay = new TimeOfDay(date.getHourOfDay(), date.getMinuteOfDay(), date
-		.getSecondOfDay());
+	TimeOfDay timeOfDay = new TimeOfDay(date.getHourOfDay(), date.getMinuteOfDay(), date.getSecondOfDay());
 	if (this.getStartTime().isBefore(timeOfDay)) {
 	    return true;
 	} else {
@@ -210,8 +208,7 @@ public class TimeInterval implements Serializable {
     }
 
     public Boolean startIsAfter(DateTime date) {
-	TimeOfDay timeOfDay = new TimeOfDay(date.getHourOfDay(), date.getMinuteOfDay(), date
-		.getSecondOfDay());
+	TimeOfDay timeOfDay = new TimeOfDay(date.getHourOfDay(), date.getMinuteOfDay(), date.getSecondOfDay());
 	if (this.getStartTime().isAfter(timeOfDay)) {
 	    return true;
 	} else {
@@ -231,16 +228,14 @@ public class TimeInterval implements Serializable {
 	    datePartial.plusDays(1); // adds a day if the interval ends the
 	    // next day
 	}
-	return (new Interval(datePartial.toDateTime(getStartTime()), datePartial
-		.toDateTime(getEndTime())));
+	return (new Interval(datePartial.toDateTime(getStartTime()), datePartial.toDateTime(getEndTime())));
     }
 
     // TODO change to more suitable class
     // Overlaps the clocking interval with the working (fixed
     // period/lunch/whatever) interval and
     // calculates the amount of time the employee worked.
-    public static Duration countDurationFromClockings(Clocking clockIn, Clocking clockOut,
-	    TimeInterval timeInterval) {
+    public static Duration countDurationFromClockings(Clocking clockIn, Clocking clockOut, TimeInterval timeInterval) {
 
 	Interval intervalFromTimeInterval = timeInterval.toInterval(clockIn.getDate());
 	Interval clockingInterval = new Interval(clockIn.getDate(), clockOut.getDate());
@@ -270,9 +265,8 @@ public class TimeInterval implements Serializable {
     }
 
     public boolean equals(TimeInterval timeInterval) {
-	return (getStartTime().equals(timeInterval.getStartTime())
-		&& (getEndTime().equals(timeInterval.getEndTime())) && (getNextDay().equals(timeInterval
-		.getNextDay())));
+	return (getStartTime().equals(timeInterval.getStartTime()) && (getEndTime().equals(timeInterval.getEndTime())) && (getNextDay()
+		.equals(timeInterval.getNextDay())));
     }
 
     public boolean isTimeIntervalBeforeTime(TimeOfDay timeOfDay, boolean nextDay) {
@@ -311,7 +305,7 @@ public class TimeInterval implements Serializable {
     // }
     //
     // public NormalWorkPeriod setNormalWorkPeriod2(Interval
-        // normalWorkPeriod2)
+    // normalWorkPeriod2)
     // {
     // if (normalWorkPeriod2.equals(this.normalWorkPeriod2)) {
     // return this;
@@ -320,7 +314,7 @@ public class TimeInterval implements Serializable {
     // getNormalWorkPeriod2());
     // // NormalWorkPeriod clonedNormalWorkPeriod = this.clone();
     // //
-        // clonedNormalWorkPeriod.regularSetNormalWorkPeriod2(normalWorkPeriod2);
+    // clonedNormalWorkPeriod.regularSetNormalWorkPeriod2(normalWorkPeriod2);
     // // return new NormalWorkPeriod(normalWorkPeriod2);
     // }
     // }

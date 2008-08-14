@@ -25,35 +25,35 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
 
     @Override
     protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-            throws FenixFilterException, FenixServiceException {
+	    throws FenixFilterException, FenixServiceException {
 
-        if (!useCASAuthentication) {
-            throw new ExcepcaoAutenticacao("errors.noAuthorization");
-        }
+	if (!useCASAuthentication) {
+	    throw new ExcepcaoAutenticacao("errors.noAuthorization");
+	}
 
-        IUserView userView = getCurrentUserView(request);
+	IUserView userView = getCurrentUserView(request);
 
-        if (userView == null) {
-            final String casTicket = (String) request.getParameter("ticket");
-            final String requestURL = request.getRequestURL().toString();
-            final CASReceipt receipt = Authenticate.getCASReceipt(casTicket, requestURL);
-            final Object authenticationArgs[] = { receipt, requestURL , remoteHostName};
+	if (userView == null) {
+	    final String casTicket = (String) request.getParameter("ticket");
+	    final String requestURL = request.getRequestURL().toString();
+	    final CASReceipt receipt = Authenticate.getCASReceipt(casTicket, requestURL);
+	    final Object authenticationArgs[] = { receipt, requestURL, remoteHostName };
 
-            userView = (IUserView) ServiceManagerServiceFactory.executeService( PropertiesManager.getProperty("authenticationService"),
-                    authenticationArgs);
+	    userView = (IUserView) ServiceManagerServiceFactory.executeService(PropertiesManager
+		    .getProperty("authenticationService"), authenticationArgs);
 
-        }
+	}
 
-        return userView;
+	return userView;
     }
 
     @Override
-    protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping,
-            final HttpServletRequest request, final String actionKey, final String messageKey) {
-        final ActionErrors actionErrors = new ActionErrors();        
-        actionErrors.add(actionKey, new ActionError(messageKey));
-        saveErrors(request, actionErrors);
-        return mapping.findForward("error");
+    protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
+	    final String actionKey, final String messageKey) {
+	final ActionErrors actionErrors = new ActionErrors();
+	actionErrors.add(actionKey, new ActionError(messageKey));
+	saveErrors(request, actionErrors);
+	return mapping.findForward("error");
     }
 
     private IUserView getCurrentUserView(HttpServletRequest request) {

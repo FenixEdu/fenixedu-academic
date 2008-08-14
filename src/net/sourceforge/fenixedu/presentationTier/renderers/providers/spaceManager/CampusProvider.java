@@ -11,8 +11,8 @@ import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CampusProvider implements DataProvider {
-    
-    public Object provide(Object source, Object currentValue) {	
+
+    public Object provide(Object source, Object currentValue) {
 	Set<Campus> result = new TreeSet<Campus>(Campus.COMPARATOR_BY_PRESENTATION_NAME);
 	List<Campus> allActiveCampus = Space.getAllActiveCampus();
 	result.addAll(allActiveCampus);

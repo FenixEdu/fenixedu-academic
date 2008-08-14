@@ -9,37 +9,37 @@ public class ModifiedContentBean {
     private Container newParent;
     private Content content;
     private int order;
-	
+
     public int getOrder() {
-        return order;
+	return order;
     }
 
     public void setOrder(int order) {
-        this.order = order;
+	this.order = order;
     }
 
     public Content getContent() {
-        return content;
+	return content;
     }
 
     public void setContent(Content content) {
-        this.content = content;
+	this.content = content;
     }
 
     public Container getCurrentParent() {
-        return currentParent;
+	return currentParent;
     }
 
     public void setCurrentParent(Container currentParent) {
-        this.currentParent = currentParent;
+	this.currentParent = currentParent;
     }
 
     public Container getNewParent() {
-        return newParent;
+	return newParent;
     }
 
     public void setNewParent(Container newParent) {
-        this.newParent = newParent;
+	this.newParent = newParent;
     }
 
     public ModifiedContentBean(Container currentContainer, Content content, Container newParentContainer, Integer order) {

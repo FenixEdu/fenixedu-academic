@@ -21,14 +21,13 @@ public class ContentHierarchyTreeRenderer extends TreeRenderer {
     private Stack<DomainObject> stack;
 
     private String parentParameterName;
-    
-    
+
     public String getParentParameterName() {
-        return parentParameterName;
+	return parentParameterName;
     }
 
     public void setParentParameterName(String parentParameterName) {
-        this.parentParameterName = parentParameterName;
+	this.parentParameterName = parentParameterName;
     }
 
     public ContentHierarchyTreeRenderer() {

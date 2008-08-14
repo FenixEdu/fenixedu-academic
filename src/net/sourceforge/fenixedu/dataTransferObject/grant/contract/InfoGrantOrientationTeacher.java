@@ -31,89 +31,88 @@ public class InfoGrantOrientationTeacher extends InfoObject {
      * @return
      */
     public Date getBeginDate() {
-        return beginDate;
+	return beginDate;
     }
 
     /**
      * @param beginDate
      */
     public void setBeginDate(Date beginDate) {
-        this.beginDate = beginDate;
+	this.beginDate = beginDate;
     }
 
     /**
      * @return
      */
     public Date getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     /**
      * @param endDate
      */
     public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     /**
      * @return
      */
     public InfoGrantContract getGrantContractInfo() {
-        return grantContractInfo;
+	return grantContractInfo;
     }
 
     /**
      * @param grantContractInfo
      */
     public void setGrantContractInfo(InfoGrantContract grantContractInfo) {
-        this.grantContractInfo = grantContractInfo;
+	this.grantContractInfo = grantContractInfo;
     }
 
     /**
      * @return
      */
     public InfoTeacher getOrientationTeacherInfo() {
-        return orientationTeacherInfo;
+	return orientationTeacherInfo;
     }
 
     /**
      * @param orientationTeacherInfo
      */
     public void setOrientationTeacherInfo(InfoTeacher orientationTeacher) {
-        orientationTeacherInfo = orientationTeacher;
+	orientationTeacherInfo = orientationTeacher;
     }
 
     /**
      * @param GrantOrientationTeacher
      */
     public void copyFromDomain(GrantOrientationTeacher grantOrientationTeacher) {
-        super.copyFromDomain(grantOrientationTeacher);
-        if (grantOrientationTeacher != null) {
-            setBeginDate(grantOrientationTeacher.getBeginDate());
-            setEndDate(grantOrientationTeacher.getEndDate());
-        }
+	super.copyFromDomain(grantOrientationTeacher);
+	if (grantOrientationTeacher != null) {
+	    setBeginDate(grantOrientationTeacher.getBeginDate());
+	    setEndDate(grantOrientationTeacher.getEndDate());
+	}
     }
 
     /**
      * @param GrantOrientationTeacher
      * @return
      */
-    public static InfoGrantOrientationTeacher newInfoFromDomain(
-            GrantOrientationTeacher grantOrientationTeacher) {
-        InfoGrantOrientationTeacher infoGrantOrientationTeacher = null;
-        if (grantOrientationTeacher != null) {
-            infoGrantOrientationTeacher = new InfoGrantOrientationTeacher();
-            infoGrantOrientationTeacher.copyFromDomain(grantOrientationTeacher);
-        }
-        return infoGrantOrientationTeacher;
+    public static InfoGrantOrientationTeacher newInfoFromDomain(GrantOrientationTeacher grantOrientationTeacher) {
+	InfoGrantOrientationTeacher infoGrantOrientationTeacher = null;
+	if (grantOrientationTeacher != null) {
+	    infoGrantOrientationTeacher = new InfoGrantOrientationTeacher();
+	    infoGrantOrientationTeacher.copyFromDomain(grantOrientationTeacher);
+	}
+	return infoGrantOrientationTeacher;
     }
 
     public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher,
-            GrantOrientationTeacher grantOrientationTeacher) {
-        super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
+	    GrantOrientationTeacher grantOrientationTeacher) {
+	super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
 
-        grantOrientationTeacher.setBeginDate(infoGrantOrientationTeacher.getBeginDate());
-        grantOrientationTeacher.setEndDate(infoGrantOrientationTeacher.getEndDate());
+	grantOrientationTeacher.setBeginDate(infoGrantOrientationTeacher.getBeginDate());
+	grantOrientationTeacher.setEndDate(infoGrantOrientationTeacher.getEndDate());
     }
 
 }

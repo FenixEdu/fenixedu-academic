@@ -22,59 +22,59 @@ public class InfoRoomOccupationEditor extends InfoObject {
     protected Integer weekOfQuinzenalStart;
 
     public FrequencyType getFrequency() {
-        return frequency;
+	return frequency;
     }
 
     public void setFrequency(FrequencyType frequency) {
-        this.frequency = frequency;
+	this.frequency = frequency;
     }
-    
+
     public Integer getWeekOfQuinzenalStart() {
-        return weekOfQuinzenalStart;
+	return weekOfQuinzenalStart;
     }
 
     public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
-        this.weekOfQuinzenalStart = weekOfQuinzenalStart;
+	this.weekOfQuinzenalStart = weekOfQuinzenalStart;
     }
 
     public DiaSemana getDayOfWeek() {
-        return dayOfWeek;
+	return dayOfWeek;
     }
 
     public Calendar getEndTime() {
-        return endTime;
+	return endTime;
     }
 
     public Calendar getStartTime() {
-        return startTime;
+	return startTime;
     }
 
     public void setDayOfWeek(DiaSemana semana) {
-        dayOfWeek = semana;
+	dayOfWeek = semana;
     }
 
     public void setEndTime(Calendar calendar) {
-        endTime = calendar;
+	endTime = calendar;
     }
 
     public void setStartTime(Calendar calendar) {
-        startTime = calendar;
+	startTime = calendar;
     }
 
     public InfoPeriod getInfoPeriod() {
-        return infoPeriod;
+	return infoPeriod;
     }
 
     public void setInfoPeriod(InfoPeriod infoPeriod) {
-        this.infoPeriod = infoPeriod;
+	this.infoPeriod = infoPeriod;
     }
 
     public InfoRoom getInfoRoom() {
-        return infoRoom;
+	return infoRoom;
     }
 
     public void setInfoRoom(InfoRoom infoRoom) {
-        this.infoRoom = infoRoom;
+	this.infoRoom = infoRoom;
     }
 
 }

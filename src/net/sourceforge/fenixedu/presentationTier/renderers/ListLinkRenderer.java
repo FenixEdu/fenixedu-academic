@@ -15,9 +15,9 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 
 public class ListLinkRenderer extends OutputRenderer {
-    
+
     private static String DEFAULT_SEPARATOR = " > ";
-    
+
     private String linkFormat;
     private String separator;
 
@@ -25,73 +25,75 @@ public class ListLinkRenderer extends OutputRenderer {
     private boolean moduleRelative;
 
     public String getSeparator() {
-        return hasSeparator() ? this.separator : DEFAULT_SEPARATOR;
+	return hasSeparator() ? this.separator : DEFAULT_SEPARATOR;
     }
 
     /**
      * Indicates the separator between generated links. If not specified then
      * " > " default sting is used
+     * 
      * @property
      */
     public void setSeparator(String separator) {
-        this.separator = separator;
+	this.separator = separator;
     }
-    
+
     private boolean hasSeparator() {
 	return !StringUtils.isEmpty(this.separator);
     }
 
     public boolean isContextRelative() {
-        return contextRelative;
+	return contextRelative;
     }
 
     public void setContextRelative(boolean contextRelative) {
-        this.contextRelative = contextRelative;
+	this.contextRelative = contextRelative;
     }
 
     public String getLinkFormat() {
-        return linkFormat;
+	return linkFormat;
     }
 
     public void setLinkFormat(String linkFormat) {
-        this.linkFormat = linkFormat;
+	this.linkFormat = linkFormat;
     }
 
     public boolean isModuleRelative() {
-        return moduleRelative;
+	return moduleRelative;
     }
 
     public void setModuleRelative(boolean moduleRelative) {
-        this.moduleRelative = moduleRelative;
+	this.moduleRelative = moduleRelative;
     }
-    
+
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new Layout() {
+	return new Layout() {
 
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
 
 		final HtmlBlockContainer blockContainer = new HtmlBlockContainer();
-		
+
 		final List<LinkObject> objects = (List<LinkObject>) object;
 		final Iterator<LinkObject> iterator = objects.iterator();
-		
-		while(iterator.hasNext()) {
+
+		while (iterator.hasNext()) {
 		    final LinkObject each = iterator.next();
-		    
+
 		    final ObjectLinkRenderer linkRenderer = new ObjectLinkRenderer();
-		    
+
 		    linkRenderer.setText(each.getLabel());
 		    linkRenderer.setLinkFormat(getLinkFormat());
 		    linkRenderer.setModuleRelative(isModuleRelative());
 		    linkRenderer.setContextRelative(isContextRelative());
 
-		    blockContainer.addChild(RenderKit.getInstance().renderUsing(linkRenderer, getContext(), each, LinkObject.class));
+		    blockContainer.addChild(RenderKit.getInstance().renderUsing(linkRenderer, getContext(), each,
+			    LinkObject.class));
 		    blockContainer.addChild(iterator.hasNext() ? new HtmlText(getSeparator()) : new HtmlText());
 		}
 		return blockContainer;
 	    }
-        };
+	};
     }
 }

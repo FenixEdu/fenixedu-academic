@@ -8,48 +8,48 @@ public class FenixServiceException extends Exception {
      * @return
      */
     public int getErrorType() {
-        return this.errorType;
+	return this.errorType;
     }
 
     public FenixServiceException() {
     }
 
     public FenixServiceException(int errorType) {
-        this.errorType = errorType;
+	this.errorType = errorType;
     }
 
     public FenixServiceException(String s) {
-        super(s);
+	super(s);
     }
 
     public FenixServiceException(String s, String[] args) {
-        super(s);
-        this.args = args;
+	super(s);
+	this.args = args;
     }
 
     public FenixServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public FenixServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + "\n";
-        result += "message " + this.getMessage() + "\n";
-        result += "cause " + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[" + this.getClass().getName() + "\n";
+	result += "message " + this.getMessage() + "\n";
+	result += "cause " + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
-	public String[] getArgs() {
-		return args;
-	}
+    public String[] getArgs() {
+	return args;
+    }
 
-	public void setArgs(String[] args) {
-		this.args = args;
-	}
+    public void setArgs(String[] args) {
+	this.args = args;
+    }
 
 }
 

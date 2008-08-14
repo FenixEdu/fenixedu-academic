@@ -26,53 +26,54 @@ public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
     private static final long serialVersionUID = 1L;
 
     public CurrentDegreeCoordinatorsGroup(Degree degree) {
-        super(degree);
+	super(degree);
     }
 
     @Override
     public String getName() {
-	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(), new Object[]{getDegree().getNameI18N().getContent()});
+	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
+		new Object[] { getDegree().getNameI18N().getContent() });
 	return name != null ? name : getExpression();
     }
-    
+
     @Override
     public Set<Person> getElements() {
-        Degree degree = getDegree();
+	Degree degree = getDegree();
 
-        Set<Person> persons = buildSet();
-        
-        for (Coordinator coordinator: degree.getCurrentCoordinators()) {
-            persons.add(coordinator.getPerson());
-        }
+	Set<Person> persons = buildSet();
 
-        return persons;
+	for (Coordinator coordinator : degree.getCurrentCoordinators()) {
+	    persons.add(coordinator.getPerson());
+	}
+
+	return persons;
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getDegree()) };
+	return new Argument[] { new IdOperator(getDegree()) };
     }
 
     public static class Builder implements GroupBuilder {
-        
-        public Group build(Object[] arguments) {
-            Degree degree;
 
-            try {
-                degree = (Degree) arguments[0];
-            } catch (ClassCastException e) {
-                throw new WrongTypeOfArgumentException(0, Degree.class, arguments[0].getClass());
-            }
-            
-            return new CurrentDegreeCoordinatorsGroup(degree);
-        }
+	public Group build(Object[] arguments) {
+	    Degree degree;
 
-        public int getMinArguments() {
-            return 1;
-        }
+	    try {
+		degree = (Degree) arguments[0];
+	    } catch (ClassCastException e) {
+		throw new WrongTypeOfArgumentException(0, Degree.class, arguments[0].getClass());
+	    }
 
-        public int getMaxArguments() {
-            return 1;
-        }   
+	    return new CurrentDegreeCoordinatorsGroup(degree);
+	}
+
+	public int getMinArguments() {
+	    return 1;
+	}
+
+	public int getMaxArguments() {
+	    return 1;
+	}
     }
 }

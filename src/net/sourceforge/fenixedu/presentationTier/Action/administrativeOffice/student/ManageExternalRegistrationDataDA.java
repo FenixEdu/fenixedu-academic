@@ -22,16 +22,15 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ManageExternalRegistrationDataDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final ExternalRegistrationDataEditor bean;
 	if (getRenderedObject() != null) {
 	    bean = (ExternalRegistrationDataEditor) getRenderedObject();
 	    request.setAttribute("registration", bean.getExternalRegistrationData().getRegistration());
 	} else {
-	    bean = new ExternalRegistrationDataEditor(getAndTransportRegistration(request)
-		    .getExternalRegistrationData());
+	    bean = new ExternalRegistrationDataEditor(getAndTransportRegistration(request).getExternalRegistrationData());
 	}
 	request.setAttribute("externalRegistrationDataBean", bean);
 
@@ -45,8 +44,8 @@ public class ManageExternalRegistrationDataDA extends FenixDispatchAction {
     }
 
     private Registration getAndTransportRegistration(final HttpServletRequest request) {
-	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(
-		request, "registrationId"));
+	final Registration registration = rootDomainObject
+		.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
 	request.setAttribute("registration", registration);
 	return registration;
     }

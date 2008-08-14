@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author jpvl
  * 
- *  
+ * 
  */
 public final class InfoEnrolmentServiceResult extends InfoObject {
     public static final int NOT_ENROLED_INTO_EXECUTION_COURSE = 0;
@@ -30,17 +30,17 @@ public final class InfoEnrolmentServiceResult extends InfoObject {
     }
 
     public InfoEnrolmentServiceResult(int messageType) {
-        switch (messageType) {
-        case NOT_ENROLED_INTO_EXECUTION_COURSE:
-        case SHIFT_FULL:
-        case ENROLMENT_SUCESS:
-        case NON_EXISTING_STUDENT:
-        case NON_EXISTING_SHIFT:
-            _messageType = messageType;
-            break;
-        default:
-            throw new IllegalArgumentException("Message type not recognized!");
-        }
+	switch (messageType) {
+	case NOT_ENROLED_INTO_EXECUTION_COURSE:
+	case SHIFT_FULL:
+	case ENROLMENT_SUCESS:
+	case NON_EXISTING_STUDENT:
+	case NON_EXISTING_SHIFT:
+	    _messageType = messageType;
+	    break;
+	default:
+	    throw new IllegalArgumentException("Message type not recognized!");
+	}
     }
 
     /**
@@ -49,7 +49,7 @@ public final class InfoEnrolmentServiceResult extends InfoObject {
      * @return int
      */
     public int getMessageType() {
-        return _messageType;
+	return _messageType;
     }
 
     /**
@@ -59,7 +59,7 @@ public final class InfoEnrolmentServiceResult extends InfoObject {
      *            The messageType to set
      */
     public void setMessageType(int messageType) {
-        _messageType = messageType;
+	_messageType = messageType;
     }
 
 }

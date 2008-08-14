@@ -12,38 +12,36 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LoggedCoordinatorCanEdit extends Service {
 
-    public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
-            throws FenixServiceException{
-        Boolean result = new Boolean(false);
+    public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username) throws FenixServiceException {
+	Boolean result = new Boolean(false);
 
-        if (executionDegreeCode == null) {
-            throw new FenixServiceException("nullExecutionDegreeCode");
-        }
-        if (curricularCourseCode == null) {
-            throw new FenixServiceException("nullCurricularCourseCode");
-        }
-        if (username == null) {
-            throw new FenixServiceException("nullUsername");
-        }
+	if (executionDegreeCode == null) {
+	    throw new FenixServiceException("nullExecutionDegreeCode");
+	}
+	if (curricularCourseCode == null) {
+	    throw new FenixServiceException("nullCurricularCourseCode");
+	}
+	if (username == null) {
+	    throw new FenixServiceException("nullUsername");
+	}
 
-        final Person person = Person.readPersonByUsername(username);
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
-        ExecutionYear executionYear = executionDegree.getExecutionYear();
+	final Person person = Person.readPersonByUsername(username);
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
+	ExecutionYear executionYear = executionDegree.getExecutionYear();
 
-        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-        if (curricularCourse == null) {
-            throw new NonExistingServiceException();
-        }
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+	if (curricularCourse == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        // if user is coordinator and is the current coordinator and
-        // curricular course is not basic
-        // coordinator can edit
-        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
-        result = Boolean.valueOf((coordinator != null)
-                && executionYear.isCurrent()
-                && curricularCourse.getBasic().equals(Boolean.FALSE));
+	// if user is coordinator and is the current coordinator and
+	// curricular course is not basic
+	// coordinator can edit
+	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+	result = Boolean.valueOf((coordinator != null) && executionYear.isCurrent()
+		&& curricularCourse.getBasic().equals(Boolean.FALSE));
 
-        return result;
+	return result;
     }
-    
+
 }

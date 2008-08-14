@@ -13,17 +13,17 @@ public class VigilantGroupsOfExamCoordinatorSelectMany implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        VigilantGroupBean bean = (VigilantGroupBean) source;
-        ExamCoordinator coordinator = bean.getExamCoordinator();
+	VigilantGroupBean bean = (VigilantGroupBean) source;
+	ExamCoordinator coordinator = bean.getExamCoordinator();
 
-        List<VigilantGroup> vigilantGroups = coordinator.getVigilantGroups();
+	List<VigilantGroup> vigilantGroups = coordinator.getVigilantGroups();
 
-        return vigilantGroups;
+	return vigilantGroups;
 
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 
 }

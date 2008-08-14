@@ -93,7 +93,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 
 	CollectionPager<Person> result = null;
 	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService( "SearchPerson", args);
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
@@ -148,7 +148,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	Object[] args = { searchParameters, predicate };
 
 	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService( "SearchPerson", args);
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    request.setAttribute("anyPersonSearchBean", bean);

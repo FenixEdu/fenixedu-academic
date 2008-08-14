@@ -35,147 +35,143 @@ public class EmployeeExtraWorkAuthorizationBean implements Serializable {
     DomainReference<Employee> modifiedBy;
 
     public EmployeeExtraWorkAuthorizationBean(ExtraWorkAuthorization extraWorkAuthorization,
-            EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization) {
-        setExtraWorkAuthorization(extraWorkAuthorization);
-        setEmployeeExtraWorkAuthorization(employeeExtraWorkAuthorization);
-        setEmployee(employeeExtraWorkAuthorization.getAssiduousness().getEmployee());
-        setModifiedBy(employeeExtraWorkAuthorization.getModifiedBy());
-        setNormalExtraWork(employeeExtraWorkAuthorization.getNormalExtraWork());
-        setNormalExtraWorkPlusTwoHours(employeeExtraWorkAuthorization.getNormalExtraWorkPlusTwoHours());
-        setNormalExtraWorkPlusOneHundredHours(employeeExtraWorkAuthorization
-                .getNormalExtraWorkPlusOneHundredHours());
-        setNightExtraWork(employeeExtraWorkAuthorization.getNightExtraWork());
-        setWeeklyRestExtraWork(employeeExtraWorkAuthorization.getWeeklyRestExtraWork());
-        setAuxiliarPersonel(employeeExtraWorkAuthorization.getAuxiliarPersonel());
-        setExecutiveAuxiliarPersonel(employeeExtraWorkAuthorization.getExecutiveAuxiliarPersonel());
-        setDelete(false);
+	    EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization) {
+	setExtraWorkAuthorization(extraWorkAuthorization);
+	setEmployeeExtraWorkAuthorization(employeeExtraWorkAuthorization);
+	setEmployee(employeeExtraWorkAuthorization.getAssiduousness().getEmployee());
+	setModifiedBy(employeeExtraWorkAuthorization.getModifiedBy());
+	setNormalExtraWork(employeeExtraWorkAuthorization.getNormalExtraWork());
+	setNormalExtraWorkPlusTwoHours(employeeExtraWorkAuthorization.getNormalExtraWorkPlusTwoHours());
+	setNormalExtraWorkPlusOneHundredHours(employeeExtraWorkAuthorization.getNormalExtraWorkPlusOneHundredHours());
+	setNightExtraWork(employeeExtraWorkAuthorization.getNightExtraWork());
+	setWeeklyRestExtraWork(employeeExtraWorkAuthorization.getWeeklyRestExtraWork());
+	setAuxiliarPersonel(employeeExtraWorkAuthorization.getAuxiliarPersonel());
+	setExecutiveAuxiliarPersonel(employeeExtraWorkAuthorization.getExecutiveAuxiliarPersonel());
+	setDelete(false);
     }
 
     public EmployeeExtraWorkAuthorizationBean(Employee modifiedBy) {
-        setModifiedBy(modifiedBy);
+	setModifiedBy(modifiedBy);
     }
 
     public Employee getEmployee() {
-        return employee == null ? null : employee.getObject();
+	return employee == null ? null : employee.getObject();
     }
 
     public void setEmployee(Employee employee) {
-        if (employee != null) {
-            this.employee = new DomainReference<Employee>(employee);
-        } else {
-            this.employee = null;
-        }
+	if (employee != null) {
+	    this.employee = new DomainReference<Employee>(employee);
+	} else {
+	    this.employee = null;
+	}
     }
 
     public EmployeeExtraWorkAuthorization getEmployeeExtraWorkAuthorization() {
-        return employeeExtraWorkAuthorization == null ? null : employeeExtraWorkAuthorization
-                .getObject();
+	return employeeExtraWorkAuthorization == null ? null : employeeExtraWorkAuthorization.getObject();
     }
 
-    public void setEmployeeExtraWorkAuthorization(
-            EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization) {
-        if (employeeExtraWorkAuthorization != null) {
-            this.employeeExtraWorkAuthorization = new DomainReference<EmployeeExtraWorkAuthorization>(
-                    employeeExtraWorkAuthorization);
-        } else {
-            this.employeeExtraWorkAuthorization = null;
-        }
+    public void setEmployeeExtraWorkAuthorization(EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization) {
+	if (employeeExtraWorkAuthorization != null) {
+	    this.employeeExtraWorkAuthorization = new DomainReference<EmployeeExtraWorkAuthorization>(
+		    employeeExtraWorkAuthorization);
+	} else {
+	    this.employeeExtraWorkAuthorization = null;
+	}
     }
 
     public ExtraWorkAuthorization getExtraWorkAuthorization() {
-        return extraWorkAuthorization == null ? null : extraWorkAuthorization.getObject();
+	return extraWorkAuthorization == null ? null : extraWorkAuthorization.getObject();
     }
 
     public void setExtraWorkAuthorization(ExtraWorkAuthorization extraWorkAuthorization) {
-        if (extraWorkAuthorization != null) {
-            this.extraWorkAuthorization = new DomainReference<ExtraWorkAuthorization>(
-                    extraWorkAuthorization);
-        } else {
-            this.extraWorkAuthorization = null;
-        }
+	if (extraWorkAuthorization != null) {
+	    this.extraWorkAuthorization = new DomainReference<ExtraWorkAuthorization>(extraWorkAuthorization);
+	} else {
+	    this.extraWorkAuthorization = null;
+	}
     }
 
     public Employee getModifiedBy() {
-        return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy == null ? null : modifiedBy.getObject();
     }
 
     public void setModifiedBy(Employee modifiedBy) {
-        if (modifiedBy != null) {
-            this.modifiedBy = new DomainReference<Employee>(modifiedBy);
-        } else {
-            this.modifiedBy = null;
-        }
+	if (modifiedBy != null) {
+	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	} else {
+	    this.modifiedBy = null;
+	}
     }
 
     public Boolean getExecutiveAuxiliarPersonel() {
-        return executiveAuxiliarPersonel;
+	return executiveAuxiliarPersonel;
     }
 
     public void setExecutiveAuxiliarPersonel(Boolean executiveAuxiliarPersonel) {
-        this.executiveAuxiliarPersonel = executiveAuxiliarPersonel;
+	this.executiveAuxiliarPersonel = executiveAuxiliarPersonel;
     }
 
     public Boolean getAuxiliarPersonel() {
-        return auxiliarPersonel;
+	return auxiliarPersonel;
     }
 
     public void setAuxiliarPersonel(Boolean auxiliarPersonel) {
-        this.auxiliarPersonel = auxiliarPersonel;
+	this.auxiliarPersonel = auxiliarPersonel;
     }
 
     public Boolean getNightExtraWork() {
-        return nightExtraWork;
+	return nightExtraWork;
     }
 
     public void setNightExtraWork(Boolean nightExtraWork) {
-        this.nightExtraWork = nightExtraWork;
+	this.nightExtraWork = nightExtraWork;
     }
 
     public Boolean getNormalExtraWork() {
-        return normalExtraWork;
+	return normalExtraWork;
     }
 
     public void setNormalExtraWork(Boolean normalExtraWork) {
-        this.normalExtraWork = normalExtraWork;
+	this.normalExtraWork = normalExtraWork;
     }
 
     public Boolean getNormalExtraWorkPlusOneHundredHours() {
-        return normalExtraWorkPlusOneHundredHours;
+	return normalExtraWorkPlusOneHundredHours;
     }
 
     public void setNormalExtraWorkPlusOneHundredHours(Boolean normalExtraWorkPlusOneHundredHours) {
-        this.normalExtraWorkPlusOneHundredHours = normalExtraWorkPlusOneHundredHours;
+	this.normalExtraWorkPlusOneHundredHours = normalExtraWorkPlusOneHundredHours;
     }
 
     public Boolean getNormalExtraWorkPlusTwoHours() {
-        return normalExtraWorkPlusTwoHours;
+	return normalExtraWorkPlusTwoHours;
     }
 
     public void setNormalExtraWorkPlusTwoHours(Boolean normalExtraWorkPlusTwoHours) {
-        this.normalExtraWorkPlusTwoHours = normalExtraWorkPlusTwoHours;
+	this.normalExtraWorkPlusTwoHours = normalExtraWorkPlusTwoHours;
     }
 
     public Boolean getWeeklyRestExtraWork() {
-        return weeklyRestExtraWork;
+	return weeklyRestExtraWork;
     }
 
     public void setWeeklyRestExtraWork(Boolean weeklyRestExtraWork) {
-        this.weeklyRestExtraWork = weeklyRestExtraWork;
+	this.weeklyRestExtraWork = weeklyRestExtraWork;
     }
 
     public String getEmployeeNumber() {
-        return employeeNumber;
+	return employeeNumber;
     }
 
     public void setEmployeeNumber(String employeeNumber) {
-        this.employeeNumber = employeeNumber;
+	this.employeeNumber = employeeNumber;
     }
 
     public Boolean getDelete() {
-        return delete;
+	return delete;
     }
 
     public void setDelete(Boolean delete) {
-        this.delete = delete;
+	this.delete = delete;
     }
 }

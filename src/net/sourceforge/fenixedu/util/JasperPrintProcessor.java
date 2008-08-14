@@ -10,6 +10,6 @@ import net.sf.jasperreports.engine.JasperPrint;
  */
 public interface JasperPrintProcessor {
 
-	public JasperPrint process(JasperPrint jasperPrint);
-	
+    public JasperPrint process(JasperPrint jasperPrint);
+
 }

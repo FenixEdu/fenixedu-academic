@@ -15,23 +15,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
 public class EditQualification extends Service {
 
-    public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException{
-		Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
-		//If it doesn't exist in the database, a new one has to be created
-		Country country = rootDomainObject.readCountryByOID(infoQualification.getInfoCountry().getIdInternal());
-		if(qualification == null) {
-			Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
-			qualification = new Qualification(person, country, infoQualification);
-		
-		} else {
-			qualification.edit(infoQualification, country);
-		}
-		
-		
+    public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException {
+	Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
+	// If it doesn't exist in the database, a new one has to be created
+	Country country = rootDomainObject.readCountryByOID(infoQualification.getInfoCountry().getIdInternal());
+	if (qualification == null) {
+	    Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
+	    qualification = new Qualification(person, country, infoQualification);
+
+	} else {
+	    qualification.edit(infoQualification, country);
+	}
+
     }
 
 }

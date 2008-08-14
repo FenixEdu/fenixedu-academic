@@ -15,32 +15,32 @@ public class InfoRestrictionPeriodToApply extends InfoRestriction {
     }
 
     public PeriodToApplyRestriction getPeriodToApplyRestriction() {
-        return periodToApplyRestriction;
+	return periodToApplyRestriction;
     }
 
     public void setPeriodToApplyRestriction(PeriodToApplyRestriction periodToApplyRestriction) {
-        this.periodToApplyRestriction = periodToApplyRestriction;
+	this.periodToApplyRestriction = periodToApplyRestriction;
     }
 
     public void copyFromDomain(RestrictionPeriodToApply restriction) {
-        super.copyFromDomain(restriction);
-        this.setPeriodToApplyRestriction(restriction.getPeriodToApplyRestriction());
-        this.setRestrictionKindResourceKey("label.manager.restrictionPeriodToApply");
+	super.copyFromDomain(restriction);
+	this.setPeriodToApplyRestriction(restriction.getPeriodToApplyRestriction());
+	this.setRestrictionKindResourceKey("label.manager.restrictionPeriodToApply");
     }
 
     public static InfoRestrictionPeriodToApply newInfoFromDomain(RestrictionPeriodToApply restriction) {
 
-        InfoRestrictionPeriodToApply infoRestriction = null;
+	InfoRestrictionPeriodToApply infoRestriction = null;
 
-        if (restriction != null) {
-            infoRestriction = new InfoRestrictionPeriodToApply();
-            infoRestriction.copyFromDomain(restriction);
-        }
+	if (restriction != null) {
+	    infoRestriction = new InfoRestrictionPeriodToApply();
+	    infoRestriction.copyFromDomain(restriction);
+	}
 
-        return infoRestriction;
+	return infoRestriction;
     }
 
     public String getArg() {
-        return String.valueOf(periodToApplyRestriction.getValue());
+	return String.valueOf(periodToApplyRestriction.getValue());
     }
 }

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-
 public enum AcademicServiceRequestSituationType {
 
     NEW,

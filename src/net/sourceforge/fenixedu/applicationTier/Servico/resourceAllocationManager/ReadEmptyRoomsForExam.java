@@ -17,20 +17,22 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadEmptyRoomsForExam extends Service {
 
-    public List run(InfoExam infoExam) throws FenixServiceException{
-        List availableInfoRooms = null;
+    public List run(InfoExam infoExam) throws FenixServiceException {
+	List availableInfoRooms = null;
 
-        Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
-            public Object transform(Object input) {
-                return InfoRoom.newInfoFromDomain((AllocatableSpace) input);
-            }
-        };
+	Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
+	    public Object transform(Object input) {
+		return InfoRoom.newInfoFromDomain((AllocatableSpace) input);
+	    }
+	};
 
-        // TODO : checkthis
-        throw new NotImplementedException();
-//        List availableRooms = persistentRoom.readAvailableRooms(infoExam.getIdInternal());
-//        availableInfoRooms = (List) CollectionUtils.collect(availableRooms, TRANSFORM_TO_INFOROOM);
-//        return availableInfoRooms;
+	// TODO : checkthis
+	throw new NotImplementedException();
+	// List availableRooms =
+	// persistentRoom.readAvailableRooms(infoExam.getIdInternal());
+	// availableInfoRooms = (List) CollectionUtils.collect(availableRooms,
+	// TRANSFORM_TO_INFOROOM);
+	// return availableInfoRooms;
     }
 
 }

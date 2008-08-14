@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
 public class DeleteQualification extends Service {
-	
-	public void run(Integer qualificationId) {
-		Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
-		qualification.delete();		
-	}
+
+    public void run(Integer qualificationId) {
+	Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
+	qualification.delete();
+    }
 
 }

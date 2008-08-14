@@ -28,36 +28,36 @@ public class ConditionalObjectLinkRenderer extends ObjectLinkRenderer {
     private String visibleIf;
 
     public String getVisibleIf() {
-        return visibleIf;
+	return visibleIf;
     }
 
     public void setVisibleIf(String visibleIf) {
-        this.visibleIf = visibleIf;
+	this.visibleIf = visibleIf;
     }
 
     protected Layout getLayout(Object object, Class type) {
-        final Layout layout = super.getLayout(object, type);
+	final Layout layout = super.getLayout(object, type);
 
-        return new Layout() {
+	return new Layout() {
 
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                Boolean visible = Boolean.FALSE;
-                try {
-                    visible = (Boolean) RendererPropertyUtils.getProperty(getTargetObject(object), getVisibleIf(), false);
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
-                }
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		Boolean visible = Boolean.FALSE;
+		try {
+		    visible = (Boolean) RendererPropertyUtils.getProperty(getTargetObject(object), getVisibleIf(), false);
+		} catch (ClassCastException e) {
+		    e.printStackTrace();
+		}
 
-                if (visible) {
-                    return layout.createComponent(object, type);
-                } else {
-                    String text = getText();
-                    return (text != null) ? new HtmlText(text) : renderValue(object, RenderKit
-                            .getInstance().findSchema(getSubSchema()), getSubLayout());
-                }
-            }
+		if (visible) {
+		    return layout.createComponent(object, type);
+		} else {
+		    String text = getText();
+		    return (text != null) ? new HtmlText(text) : renderValue(object, RenderKit.getInstance().findSchema(
+			    getSubSchema()), getSubLayout());
+		}
+	    }
 
-        };
+	};
     }
 }

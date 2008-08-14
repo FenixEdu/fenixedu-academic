@@ -23,15 +23,15 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
 
     private String labelClass;
     private String labelStyle;
-    
+
     public PersonNameWithAliasRenderer() {
-        super();
-        
-        setKey(true);
+	super();
+
+	setKey(true);
     }
 
     public String getBundle() {
-        return this.bundle;
+	return this.bundle;
     }
 
     /**
@@ -41,24 +41,24 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
      * @property
      */
     public void setBundle(String bundle) {
-        this.bundle = bundle;
+	this.bundle = bundle;
     }
 
     public boolean isKey() {
-        return this.key;
+	return this.key;
     }
 
     /**
-     * Indicates if the label is a resource message. 
+     * Indicates if the label is a resource message.
      * 
      * @property
      */
     public void setKey(boolean key) {
-        this.key = key;
+	this.key = key;
     }
 
     public String getLabel() {
-        return this.label;
+	return this.label;
     }
 
     /**
@@ -69,11 +69,11 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
      * @property
      */
     public void setLabel(String label) {
-        this.label = label;
+	this.label = label;
     }
 
     public String getLabelClass() {
-        return this.labelClass;
+	return this.labelClass;
     }
 
     /**
@@ -82,11 +82,11 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
      * @property
      */
     public void setLabelClass(String labelClass) {
-        this.labelClass = labelClass;
+	this.labelClass = labelClass;
     }
 
     public String getLabelStyle() {
-        return this.labelStyle;
+	return this.labelStyle;
     }
 
     /**
@@ -95,58 +95,55 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
      * @property
      */
     public void setLabelStyle(String labelStyle) {
-        this.labelStyle = labelStyle;
+	this.labelStyle = labelStyle;
     }
 
     @Override
     public HtmlComponent render(Object object, Class type) {
-        Person person = (Person) object;
-        
-        if (person == null) {
-            return super.render(object, type);
-        }
-        
-        String name = person.getName();
-        HtmlComponent component = super.render(name, String.class);
-        
-        if (person.hasExternalContract()) {
-            return addLabel(person, component, getExternalLabel());
-        }
-        else {
-            return addLabel(person, component, person.getMostImportantAlias());
-        }
+	Person person = (Person) object;
+
+	if (person == null) {
+	    return super.render(object, type);
+	}
+
+	String name = person.getName();
+	HtmlComponent component = super.render(name, String.class);
+
+	if (person.hasExternalContract()) {
+	    return addLabel(person, component, getExternalLabel());
+	} else {
+	    return addLabel(person, component, person.getMostImportantAlias());
+	}
     }
 
     private String getExternalLabel() {
-        if (! isKey()) {
-            return getLabel();
-        }
-        else {
-            return RenderUtils.getResourceString(getBundle(), getLabel());
-        }
+	if (!isKey()) {
+	    return getLabel();
+	} else {
+	    return RenderUtils.getResourceString(getBundle(), getLabel());
+	}
     }
-    
+
     private HtmlComponent addLabel(Person person, HtmlComponent component, String label) {
-        if (label == null) {
-            return component;
-        }
-        else {
-            HtmlInlineContainer container = new HtmlInlineContainer();
-            
-            container.addChild(component);
-            container.addChild(getStyledLabel(label));
-            
-            return container;
-        }
+	if (label == null) {
+	    return component;
+	} else {
+	    HtmlInlineContainer container = new HtmlInlineContainer();
+
+	    container.addChild(component);
+	    container.addChild(getStyledLabel(label));
+
+	    return container;
+	}
     }
 
     private HtmlText getStyledLabel(String label) {
-        HtmlText text = new HtmlText("(" + label + ")");
-        
-        text.setClasses(getLabelClass());
-        text.setStyle(getLabelStyle());
-        
-        return text;
+	HtmlText text = new HtmlText("(" + label + ")");
+
+	text.setClasses(getLabelClass());
+	text.setStyle(getLabelStyle());
+
+	return text;
     }
-    
+
 }

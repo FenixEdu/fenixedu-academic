@@ -36,17 +36,16 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	return mapping.findForward("PrepareReady");
     }
 
-    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer number = new Integer((String) ((DynaActionForm) form).get("requesterNumber"));
-	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number,
-		DegreeType.MASTER_DEGREE));
+	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE));
 
 	return mapping.findForward("ChooseStudentCurricularPlan");
     }
@@ -65,8 +64,8 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
 	Object args[] = { studentCurricularPlanID };
 	try {
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-		    .executeService( "ReadStudentCurricularPlan", args);
+	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+		    "ReadStudentCurricularPlan", args);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("O aluno");
 	}
@@ -75,8 +74,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	InfoFinalResult infoFinalResult = null;
 	try {
 	    Object argsFinalResult[] = { infoStudentCurricularPlan };
-	    infoFinalResult = (InfoFinalResult) ServiceManagerServiceFactory.executeService(
-		    "FinalResult", argsFinalResult);
+	    infoFinalResult = (InfoFinalResult) ServiceManagerServiceFactory.executeService("FinalResult", argsFinalResult);
 	} catch (FenixServiceException e) {
 	    throw new FenixServiceException("");
 	}
@@ -86,10 +84,8 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	}
 
 	try {
-	    Object argsEnrolmentList[] = { infoStudentCurricularPlan.getIdInternal(),
-		    EnrollmentState.APROVED };
-	    enrolmentList = (List) ServiceManagerServiceFactory.executeService(
-		    "GetEnrolmentList", argsEnrolmentList);
+	    Object argsEnrolmentList[] = { infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED };
+	    enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", argsEnrolmentList);
 
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("Inscrição", e);
@@ -103,8 +99,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	Date endOfScholarshipDate = null;
 	try {
 	    Object argsTemp[] = { studentCurricularPlanID };
-	    endOfScholarshipDate = (Date) ServiceManagerServiceFactory.executeService(
-		    "GetEndOfScholarshipDate", argsTemp);
+	    endOfScholarshipDate = (Date) ServiceManagerServiceFactory.executeService("GetEndOfScholarshipDate", argsTemp);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -135,11 +130,16 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	}
 
 	BigDecimal roundedSum = new BigDecimal(sum);
-	request.setAttribute("total", roundedSum.setScale(1, BigDecimal.ROUND_HALF_UP));// .toBigInteger());
+	request.setAttribute("total", roundedSum.setScale(1, BigDecimal.ROUND_HALF_UP));// .
+											// toBigInteger
+											// (
+											// )
+											// )
+											// ;
 
 	request.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);
 	try {
-	    ServiceManagerServiceFactory.executeService( "ReadCurrentExecutionYear", null);
+	    ServiceManagerServiceFactory.executeService("ReadCurrentExecutionYear", null);
 
 	} catch (RuntimeException e) {
 	    throw new RuntimeException("Error", e);
@@ -148,19 +148,16 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	Date date = new Date();
 	String anoLectivo = "";
 	if (newEnrolmentList != null && newEnrolmentList.size() > 0) {
-	    anoLectivo = ((InfoEnrolment) newEnrolmentList.get(0)).getInfoExecutionPeriod()
-		    .getInfoExecutionYear().getYear();
+	    anoLectivo = ((InfoEnrolment) newEnrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
 	}
-	String formatedDate = "Lisboa, "
-		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+	String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 
 	request.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
 
 	request.setAttribute(SessionConstants.DATE, formatedDate);
 	if (infoStudentCurricularPlan.getInfoBranch() != null
 		&& infoStudentCurricularPlan.getInfoBranch().getName().length() != 0)
-	    request.setAttribute(SessionConstants.INFO_BRANCH, infoStudentCurricularPlan.getInfoBranch()
-		    .getName());
+	    request.setAttribute(SessionConstants.INFO_BRANCH, infoStudentCurricularPlan.getInfoBranch().getName());
 	request.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, anoLectivo);
 	request.setAttribute(SessionConstants.ENROLMENT_LIST, newEnrolmentList);
 

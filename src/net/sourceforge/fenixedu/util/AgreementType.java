@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.util;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class AgreementType extends FenixUtil {
 
@@ -39,11 +39,11 @@ public class AgreementType extends FenixUtil {
     }
 
     public AgreementType(int state) {
-        this.state = new Integer(state);
+	this.state = new Integer(state);
     }
 
     public AgreementType(Integer state) {
-        this.state = state;
+	this.state = state;
     }
 
     /**
@@ -52,7 +52,7 @@ public class AgreementType extends FenixUtil {
      * @return Value of property state.
      */
     public java.lang.Integer getState() {
-        return state;
+	return state;
     }
 
     /**
@@ -62,63 +62,63 @@ public class AgreementType extends FenixUtil {
      *            New value of property state.
      */
     public void setState(Integer state) {
-        this.state = state;
+	this.state = state;
     }
 
     public boolean equals(Object o) {
-        if (o instanceof AgreementType) {
-            AgreementType aux = (AgreementType) o;
-            return this.state.equals(aux.getState());
-        }
+	if (o instanceof AgreementType) {
+	    AgreementType aux = (AgreementType) o;
+	    return this.state.equals(aux.getState());
+	}
 
-        return false;
+	return false;
 
     }
 
     public String toString() {
 
-        int value = this.state.intValue();
-        String valueS = null;
+	int value = this.state.intValue();
+	String valueS = null;
 
-        switch (value) {
-        case NONE:
-            valueS = "NONE";
-            break;
-        case AIR_FORCE_ACADEMY:
-            valueS = "AIR_FORCE_ACADEMY";
-            break;
-        case MILITARY_ACADEMY:
-            valueS = "MILITARY_ACADEMY";
-            break;
-        case NC:
-            valueS = "NC";
-            break;
-        case ERASMUS:
-            valueS = "ERASMUS";
-            break;
-        case SOCRATES:
-            valueS = "SOCRATES";
-            break;
-        case SOCRATES_ERASMUS:
-            valueS = "SOCRATES_ERASMUS";
-            break;
-        case TEMPUS:
-            valueS = "TEMPUS";
-            break;
-        case BILATERAL_AGREEMENT:
-            valueS = "BILATERAL_AGREEMENT";
-            break;
-        case ALFA2:
-            valueS = "ALFA2";
-            break;
-        case UNIFOR:
-            valueS = "UNIFOR";
-            break;
-        default:
-            break;
-        }
+	switch (value) {
+	case NONE:
+	    valueS = "NONE";
+	    break;
+	case AIR_FORCE_ACADEMY:
+	    valueS = "AIR_FORCE_ACADEMY";
+	    break;
+	case MILITARY_ACADEMY:
+	    valueS = "MILITARY_ACADEMY";
+	    break;
+	case NC:
+	    valueS = "NC";
+	    break;
+	case ERASMUS:
+	    valueS = "ERASMUS";
+	    break;
+	case SOCRATES:
+	    valueS = "SOCRATES";
+	    break;
+	case SOCRATES_ERASMUS:
+	    valueS = "SOCRATES_ERASMUS";
+	    break;
+	case TEMPUS:
+	    valueS = "TEMPUS";
+	    break;
+	case BILATERAL_AGREEMENT:
+	    valueS = "BILATERAL_AGREEMENT";
+	    break;
+	case ALFA2:
+	    valueS = "ALFA2";
+	    break;
+	case UNIFOR:
+	    valueS = "UNIFOR";
+	    break;
+	default:
+	    break;
+	}
 
-        return "[" + this.getClass().getName() + ": " + valueS + "]";
+	return "[" + this.getClass().getName() + ": " + valueS + "]";
     }
 
 }

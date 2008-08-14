@@ -153,27 +153,26 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	    // Create the Degree Type List
+	// Create the Degree Type List
 
-	    String executionDegreeId = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	    if (executionDegreeId == null) {
-		executionDegreeId = request.getParameter(SessionConstants.EXECUTION_DEGREE);
-	    }
-	    session.setAttribute(SessionConstants.EXECUTION_YEAR, session.getAttribute(SessionConstants.EXECUTION_YEAR));
+	String executionDegreeId = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	if (executionDegreeId == null) {
+	    executionDegreeId = request.getParameter(SessionConstants.EXECUTION_DEGREE);
+	}
+	session.setAttribute(SessionConstants.EXECUTION_YEAR, session.getAttribute(SessionConstants.EXECUTION_YEAR));
 
-	    Integer curricularPlanID = null;
-	    String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
-	    if (degreeCurricularPlanID != null) {
-		curricularPlanID = Integer.valueOf(degreeCurricularPlanID);
-	    } else {
-		curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
-	    }
+	Integer curricularPlanID = null;
+	String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
+	if (degreeCurricularPlanID != null) {
+	    curricularPlanID = Integer.valueOf(degreeCurricularPlanID);
+	} else {
+	    curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+	}
 
-	    request.setAttribute("curricularPlanID", curricularPlanID);
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegreeId);
+	request.setAttribute("curricularPlanID", curricularPlanID);
+	request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegreeId);
 
-
-	    return mapping.findForward("PrepareSuccess");
+	return mapping.findForward("PrepareSuccess");
 
     }
 

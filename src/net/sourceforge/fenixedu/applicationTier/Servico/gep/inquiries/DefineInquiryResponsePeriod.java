@@ -9,8 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DefineInquiryResponsePeriod extends Service {
 
-    public void run(final Integer executionPeriodID, final Date inquiryResponseBegin, final Date inquiryResponseEnd)
-	    {
+    public void run(final Integer executionPeriodID, final Date inquiryResponseBegin, final Date inquiryResponseEnd) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	final InquiryResponsePeriod inquiryResponsePeriod = executionSemester.getInquiryResponsePeriod();
 	if (inquiryResponsePeriod == null) {

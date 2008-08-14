@@ -13,8 +13,8 @@ public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
 	super();
     }
 
-    public DeclarationRequestEvent(final AdministrativeOffice administrativeOffice,
-	    final EventType eventType, final Person person, final DeclarationRequest declarationRequest) {
+    public DeclarationRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
+	    final Person person, final DeclarationRequest declarationRequest) {
 	this();
 	super.init(administrativeOffice, eventType, person, declarationRequest);
     }
@@ -25,17 +25,15 @@ public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
 
 	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
 	labelFormatter.appendLabel(" (");
-	labelFormatter.appendLabel(getDegree().getDegreeType().name(),
-		LabelFormatter.ENUMERATION_RESOURCES);
+	labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
 	labelFormatter.appendLabel(")");
 	if (getAcademicServiceRequest().hasExecutionYear()) {
-	    labelFormatter.appendLabel(" - " + getExecutionYear().getYear());    
+	    labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
 	}
-	
 
 	return labelFormatter;
     }

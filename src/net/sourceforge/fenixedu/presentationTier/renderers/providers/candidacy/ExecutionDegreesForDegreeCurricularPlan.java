@@ -17,19 +17,19 @@ public class ExecutionDegreesForDegreeCurricularPlan implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        final DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) source;
-        final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        if (dfaCandidacyBean.getDegree() != null && dfaCandidacyBean.getDegreeCurricularPlan() != null) {
-            result.addAll(dfaCandidacyBean.getDegreeCurricularPlan().getExecutionDegreesSet());
-            Collections.sort(result, new BeanComparator("year"));
-        } else {
-            dfaCandidacyBean.setExecutionDegree(null);
-        }
-        return result;
+	final DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) source;
+	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+	if (dfaCandidacyBean.getDegree() != null && dfaCandidacyBean.getDegreeCurricularPlan() != null) {
+	    result.addAll(dfaCandidacyBean.getDegreeCurricularPlan().getExecutionDegreesSet());
+	    Collections.sort(result, new BeanComparator("year"));
+	} else {
+	    dfaCandidacyBean.setExecutionDegree(null);
+	}
+	return result;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

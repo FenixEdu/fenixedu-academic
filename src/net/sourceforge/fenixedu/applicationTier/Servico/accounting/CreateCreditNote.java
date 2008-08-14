@@ -16,5 +16,5 @@ public class CreateCreditNote extends Service {
 	return createCreditNoteBean.getReceipt().createCreditNote(employee, PaymentMode.CASH,
 		createCreditNoteBean.getSelectedEntries());
     }
-   
+
 }

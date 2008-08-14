@@ -86,13 +86,14 @@ abstract public class BaseAmountPlusAmountPerPagePR extends BaseAmountPlusAmount
 		    event.getDescriptionForEntryType(getEntryType()));
 	}
     }
-    
+
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	final Money result = isUrgent(event) ? getBaseAmount().multiply(BigDecimal.valueOf(2d)): getBaseAmount();
+	final Money result = isUrgent(event) ? getBaseAmount().multiply(BigDecimal.valueOf(2d)) : getBaseAmount();
 	return result.add(getAmountForPages(event));
     }
 
     abstract protected boolean isUrgent(final Event event);
+
     abstract protected Money getAmountForPages(final Event event);
 }

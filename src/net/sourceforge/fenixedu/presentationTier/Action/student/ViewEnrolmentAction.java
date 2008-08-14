@@ -18,32 +18,30 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author tfc130
- *  
+ * 
  */
 public class ViewEnrolmentAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);
 
-        Object argsReadShiftEnrolment[] = { (InfoStudent) session.getAttribute("infoStudent") };
+	Object argsReadShiftEnrolment[] = { (InfoStudent) session.getAttribute("infoStudent") };
 
-        InfoShiftEnrolment iSE = (InfoShiftEnrolment) ServiceUtils.executeService(
-                "ReadShiftEnrolment", argsReadShiftEnrolment);
+	InfoShiftEnrolment iSE = (InfoShiftEnrolment) ServiceUtils.executeService("ReadShiftEnrolment", argsReadShiftEnrolment);
 
-        session.removeAttribute("infoShiftEnrolment");
-        session.removeAttribute("index");
-        if (iSE != null) {
-            if (iSE.getInfoEnrolmentWithOutShift() != null
-                    && iSE.getInfoEnrolmentWithOutShift().isEmpty())
-                iSE.setInfoEnrolmentWithOutShift(null);
-            session.setAttribute("infoShiftEnrolment", iSE);
-        }
+	session.removeAttribute("infoShiftEnrolment");
+	session.removeAttribute("index");
+	if (iSE != null) {
+	    if (iSE.getInfoEnrolmentWithOutShift() != null && iSE.getInfoEnrolmentWithOutShift().isEmpty())
+		iSE.setInfoEnrolmentWithOutShift(null);
+	    session.setAttribute("infoShiftEnrolment", iSE);
+	}
 
-        return mapping.findForward("sucess");
+	return mapping.findForward("sucess");
 
     }
 

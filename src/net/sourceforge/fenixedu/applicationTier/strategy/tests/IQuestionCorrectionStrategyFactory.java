@@ -12,6 +12,5 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
  * 
  */
 public interface IQuestionCorrectionStrategyFactory {
-    public abstract IQuestionCorrectionStrategy getQuestionCorrectionStrategy(
-            StudentTestQuestion studentTestQuestion);
+    public abstract IQuestionCorrectionStrategy getQuestionCorrectionStrategy(StudentTestQuestion studentTestQuestion);
 }

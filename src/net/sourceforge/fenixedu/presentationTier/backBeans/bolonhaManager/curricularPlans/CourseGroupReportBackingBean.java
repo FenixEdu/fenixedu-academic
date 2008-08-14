@@ -34,251 +34,260 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     private Map<Context, String> contextPaths = new HashMap<Context, String>();
 
     private enum InfoToExport {
-        CURRICULAR_STRUCTURE,
-        STUDIES_PLAN;
+	CURRICULAR_STRUCTURE, STUDIES_PLAN;
     }
-    
+
     public CourseGroupReportBackingBean() throws FenixFilterException, FenixServiceException {
-        super();
-        rootWasClicked = this.getDegreeCurricularPlan().getRoot().equals(this.getCourseGroup());
+	super();
+	rootWasClicked = this.getDegreeCurricularPlan().getRoot().equals(this.getCourseGroup());
     }
-    
+
     public Boolean getRootWasClicked() {
-        return rootWasClicked;
+	return rootWasClicked;
     }
-    
+
     public Integer getDegreeCurricularPlanID() {
-        return getAndHoldIntegerParameter("degreeCurricularPlanID");
+	return getAndHoldIntegerParameter("degreeCurricularPlanID");
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanID());
+	return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanID());
     }
-    
+
     public Integer getCourseGroupID() {
-        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
+	return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
     }
 
     public void setCourseGroupID(Integer courseGroupID) {
-        this.courseGroupID = courseGroupID;
+	this.courseGroupID = courseGroupID;
     }
-    
+
     public CourseGroup getCourseGroup() {
-        return (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID());
+	return (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID());
     }
 
     public String getName() throws FenixFilterException, FenixServiceException {
-        return (name == null && getCourseGroupID() != null) ? this.getCourseGroup().getName() : name;    
+	return (name == null && getCourseGroupID() != null) ? this.getCourseGroup().getName() : name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
-    
+
     public void exportCourseGroupCurricularStructureToExcel() throws FenixFilterException, FenixServiceException {
-        infoToExport = InfoToExport.CURRICULAR_STRUCTURE;
-        exportToExcel();
+	infoToExport = InfoToExport.CURRICULAR_STRUCTURE;
+	exportToExcel();
     }
-    
+
     public void exportCourseGroupStudiesPlanToExcel() throws FenixFilterException, FenixServiceException {
-        infoToExport = InfoToExport.STUDIES_PLAN; 
-        exportToExcel();
+	infoToExport = InfoToExport.STUDIES_PLAN;
+	exportToExcel();
     }
-    
+
     public Map<Context, String> getContextPaths() {
-        return contextPaths;
+	return contextPaths;
     }
-    
+
     public void exportToExcel() throws FenixFilterException, FenixServiceException {
-        String filename = this.getDegreeCurricularPlan().getName().replace(" ","_") + "-"; 
-        filename += (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) ? "Estrutura_Curricular" : "Plano_de_Estudos";
-        if (!rootWasClicked) {
-            filename += "-" + this.getCourseGroup().getName().replace(" ", "_");
-        }
-        filename += "-" + getFileName(Calendar.getInstance().getTime());
+	String filename = this.getDegreeCurricularPlan().getName().replace(" ", "_") + "-";
+	filename += (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) ? "Estrutura_Curricular" : "Plano_de_Estudos";
+	if (!rootWasClicked) {
+	    filename += "-" + this.getCourseGroup().getName().replace(" ", "_");
+	}
+	filename += "-" + getFileName(Calendar.getInstance().getTime());
 
-        try {
-            exportToXls(filename);
-        } catch (IOException e) {
-            throw new FenixServiceException();
-        }
+	try {
+	    exportToXls(filename);
+	} catch (IOException e) {
+	    throw new FenixServiceException();
+	}
     }
 
-    private List<Context> contextsWithCurricularCoursesToList(CourseGroup startingPoint) throws FenixFilterException, FenixServiceException {
-        List<Context> result = new ArrayList<Context>();
-        getContextPaths().clear();
-        collectChildDegreeModules(result, startingPoint, startingPoint.getName());
-        return result;
+    private List<Context> contextsWithCurricularCoursesToList(CourseGroup startingPoint) throws FenixFilterException,
+	    FenixServiceException {
+	List<Context> result = new ArrayList<Context>();
+	getContextPaths().clear();
+	collectChildDegreeModules(result, startingPoint, startingPoint.getName());
+	return result;
     }
-    
-    private void collectChildDegreeModules(final List<Context> result, CourseGroup courseGroup, String previousPath) throws FenixFilterException, FenixServiceException {
-        for (final Context context : courseGroup.getSortedChildContextsWithCurricularCourses()) {
-            result.add(context);
-            getContextPaths().put(context, previousPath);
-        }
-        for (final Context context : courseGroup.getSortedChildContextsWithCourseGroups()) {
-            collectChildDegreeModules(result, (CourseGroup) context.getChildDegreeModule(), previousPath + " > " + context.getChildDegreeModule().getName());
-        }
+
+    private void collectChildDegreeModules(final List<Context> result, CourseGroup courseGroup, String previousPath)
+	    throws FenixFilterException, FenixServiceException {
+	for (final Context context : courseGroup.getSortedChildContextsWithCurricularCourses()) {
+	    result.add(context);
+	    getContextPaths().put(context, previousPath);
+	}
+	for (final Context context : courseGroup.getSortedChildContextsWithCourseGroups()) {
+	    collectChildDegreeModules(result, (CourseGroup) context.getChildDegreeModule(), previousPath + " > "
+		    + context.getChildDegreeModule().getName());
+	}
     }
 
     private String getFileName(Date date) throws FenixFilterException, FenixServiceException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minutes = calendar.get(Calendar.MINUTE);
-        return (day + "_" + month + "_" + year + "-" + hour + ":" + minutes);
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(date);
+	int day = calendar.get(Calendar.DAY_OF_MONTH);
+	int month = calendar.get(Calendar.MONTH) + 1;
+	int year = calendar.get(Calendar.YEAR);
+	int hour = calendar.get(Calendar.HOUR_OF_DAY);
+	int minutes = calendar.get(Calendar.MINUTE);
+	return (day + "_" + month + "_" + year + "-" + hour + ":" + minutes);
     }
-    
+
     private void exportToXls(String filename) throws IOException, FenixFilterException, FenixServiceException {
-        this.getResponse().setContentType("application/vnd.ms-excel");
-        this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
-        ServletOutputStream outputStream = this.getResponse().getOutputStream();
-        
-        List<Object> headers = null;
-        String spreadSheetName = null;
-        Spreadsheet spreadsheet = null;
-        if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
-            spreadSheetName = "Estrutura Curricular do Grupo";
-            headers = getCurricularStructureHeader();
-            spreadsheet = new Spreadsheet(spreadSheetName, headers);
-            reportInfo(spreadsheet);
-        } else {
-            spreadSheetName = "Plano de Estudos do Grupo";
-            headers = getStudiesPlanHeaders();
-            spreadsheet = new Spreadsheet(spreadSheetName, headers);
-            reportInfo(spreadsheet);
-        }
-        
-        spreadsheet.exportToXLSSheet(outputStream);
-        outputStream.flush();
-        this.getResponse().flushBuffer();
+	this.getResponse().setContentType("application/vnd.ms-excel");
+	this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	ServletOutputStream outputStream = this.getResponse().getOutputStream();
+
+	List<Object> headers = null;
+	String spreadSheetName = null;
+	Spreadsheet spreadsheet = null;
+	if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
+	    spreadSheetName = "Estrutura Curricular do Grupo";
+	    headers = getCurricularStructureHeader();
+	    spreadsheet = new Spreadsheet(spreadSheetName, headers);
+	    reportInfo(spreadsheet);
+	} else {
+	    spreadSheetName = "Plano de Estudos do Grupo";
+	    headers = getStudiesPlanHeaders();
+	    spreadsheet = new Spreadsheet(spreadSheetName, headers);
+	    reportInfo(spreadsheet);
+	}
+
+	spreadsheet.exportToXLSSheet(outputStream);
+	outputStream.flush();
+	this.getResponse().flushBuffer();
     }
 
     private void reportInfo(Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
-        List<Context> contextsWithCurricularCourses = null;
+	List<Context> contextsWithCurricularCourses = null;
 
-        contextsWithCurricularCourses = contextsWithCurricularCoursesToList(this.getCourseGroup());
-        
-        if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
-            fillCurricularStructure(this.getCourseGroup().getName(), contextsWithCurricularCourses, spreadsheet);
-        } else {
-            fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);            
-        }
+	contextsWithCurricularCourses = contextsWithCurricularCoursesToList(this.getCourseGroup());
+
+	if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
+	    fillCurricularStructure(this.getCourseGroup().getName(), contextsWithCurricularCourses, spreadsheet);
+	} else {
+	    fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);
+	}
     }
 
     private List<Object> getCurricularStructureHeader() {
-        final List<Object> headers = new ArrayList<Object>();
-        if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
-            headers.add("Grupo");
-        }
-        headers.add("Área Científica");
-        headers.add("Sigla");
-        headers.add("Créditos Obrigatórios");
-        headers.add("Créditos Optativos");
-        return headers;
+	final List<Object> headers = new ArrayList<Object>();
+	if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
+	    headers.add("Grupo");
+	}
+	headers.add("Área Científica");
+	headers.add("Sigla");
+	headers.add("Créditos Obrigatórios");
+	headers.add("Créditos Optativos");
+	return headers;
     }
-    
-    private void fillCurricularStructure(String courseGroupBeingReported, List<Context> contextsWithCurricularCourses, final Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
-        Set<Unit> scientificAreaUnits = new HashSet<Unit>();
-        
-        for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
-            CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
-            
-            if (!curricularCourse.isOptional()
-                    && !scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
-                final Row row = spreadsheet.addRow();
-                
-                if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
-                    row.setCell(courseGroupBeingReported);
-                }
-                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
-                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
-                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getScientificAreaUnitEctsCredits(contextsWithCurricularCourses).toString());
-                
-                scientificAreaUnits.add(curricularCourse.getCompetenceCourse().getScientificAreaUnit());
-            }
-        }
+
+    private void fillCurricularStructure(String courseGroupBeingReported, List<Context> contextsWithCurricularCourses,
+	    final Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
+	Set<Unit> scientificAreaUnits = new HashSet<Unit>();
+
+	for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
+	    CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
+
+	    if (!curricularCourse.isOptional()
+		    && !scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
+		final Row row = spreadsheet.addRow();
+
+		if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
+		    row.setCell(courseGroupBeingReported);
+		}
+		row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
+		row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
+		row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getScientificAreaUnitEctsCredits(
+			contextsWithCurricularCourses).toString());
+
+		scientificAreaUnits.add(curricularCourse.getCompetenceCourse().getScientificAreaUnit());
+	    }
+	}
     }
 
     private List<Object> getStudiesPlanHeaders() {
-        final List<Object> headers = new ArrayList<Object>();
-        headers.add("Unidade Curricular");
-        headers.add("Grupo");
-        headers.add("Área Científica");
-        headers.add("Sigla");
-        headers.add("Tipo");
-        headers.add("Ano");
-        headers.add("Semestre");
-        headers.add("Créditos");
-        headers.add("T");
-        headers.add("TP");
-        headers.add("PL");
-        headers.add("TC");
-        headers.add("S");
-        headers.add("E");
-        headers.add("OT");
-        headers.add("TA");
-        headers.add("Observações");
-        return headers;
-    }
-    
-    private void fillStudiesPlan(List<Context> contextsWithCurricularCourses, final Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
-        for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
-            CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
-            CurricularPeriod curricularPeriod = contextWithCurricularCourse.getCurricularPeriod();
-            String parentCourseGroupName = getContextPaths().get(contextWithCurricularCourse);
-            
-            fillCurricularCourse(spreadsheet, curricularCourse, curricularPeriod, parentCourseGroupName);
-            if (curricularCourse.isAnual()) {
-                fillCurricularCourse(spreadsheet, curricularCourse, curricularPeriod.getNext(), parentCourseGroupName);
-            }
-        }
+	final List<Object> headers = new ArrayList<Object>();
+	headers.add("Unidade Curricular");
+	headers.add("Grupo");
+	headers.add("Área Científica");
+	headers.add("Sigla");
+	headers.add("Tipo");
+	headers.add("Ano");
+	headers.add("Semestre");
+	headers.add("Créditos");
+	headers.add("T");
+	headers.add("TP");
+	headers.add("PL");
+	headers.add("TC");
+	headers.add("S");
+	headers.add("E");
+	headers.add("OT");
+	headers.add("TA");
+	headers.add("Observações");
+	return headers;
     }
 
-    private void fillCurricularCourse(final Spreadsheet spreadsheet, CurricularCourse curricularCourse, CurricularPeriod curricularPeriod, String parentCourseGroupName) {
-        final Row row = spreadsheet.addRow();
-        
-        row.setCell(curricularCourse.getName());
-        row.setCell(parentCourseGroupName);
-        if (curricularCourse.isOptional()) {
-            row.setCell(""); // scientific area unit name
-            row.setCell(""); // scientific area unit acronym
-            
-            row.setCell(""); // regime
-            row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getChildOrder().toString());
-            row.setCell(curricularPeriod.getChildOrder().toString());
+    private void fillStudiesPlan(List<Context> contextsWithCurricularCourses, final Spreadsheet spreadsheet)
+	    throws FenixFilterException, FenixServiceException {
+	for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
+	    CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
+	    CurricularPeriod curricularPeriod = contextWithCurricularCourse.getCurricularPeriod();
+	    String parentCourseGroupName = getContextPaths().get(contextWithCurricularCourse);
 
-            row.setCell(""); // ects
-            row.setCell(""); // t
-            row.setCell(""); // tp
-            row.setCell(""); // pl
-            row.setCell(""); // tc
-            row.setCell(""); // s
-            row.setCell(""); // e
-            row.setCell(""); // ot
-            row.setCell(""); // ta
-        } else {
-            row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
-            row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
-            
-            row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
-            row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getChildOrder().toString());
-            row.setCell(curricularPeriod.getChildOrder().toString());
-        
-            row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
-            row.setCell(curricularCourse.getTheoreticalHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getProblemsHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getLaboratorialHours(curricularPeriod).toString());    
-            row.setCell(curricularCourse.getFieldWorkHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getSeminaryHours().toString());    
-            row.setCell(curricularCourse.getTrainingPeriodHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getTutorialOrientationHours(curricularPeriod).toString());    
-            row.setCell(curricularCourse.getAutonomousWorkHours(curricularPeriod).toString());
-        }
-        row.setCell(""); // notes
+	    fillCurricularCourse(spreadsheet, curricularCourse, curricularPeriod, parentCourseGroupName);
+	    if (curricularCourse.isAnual()) {
+		fillCurricularCourse(spreadsheet, curricularCourse, curricularPeriod.getNext(), parentCourseGroupName);
+	    }
+	}
+    }
+
+    private void fillCurricularCourse(final Spreadsheet spreadsheet, CurricularCourse curricularCourse,
+	    CurricularPeriod curricularPeriod, String parentCourseGroupName) {
+	final Row row = spreadsheet.addRow();
+
+	row.setCell(curricularCourse.getName());
+	row.setCell(parentCourseGroupName);
+	if (curricularCourse.isOptional()) {
+	    row.setCell(""); // scientific area unit name
+	    row.setCell(""); // scientific area unit acronym
+
+	    row.setCell(""); // regime
+	    row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getChildOrder()
+		    .toString());
+	    row.setCell(curricularPeriod.getChildOrder().toString());
+
+	    row.setCell(""); // ects
+	    row.setCell(""); // t
+	    row.setCell(""); // tp
+	    row.setCell(""); // pl
+	    row.setCell(""); // tc
+	    row.setCell(""); // s
+	    row.setCell(""); // e
+	    row.setCell(""); // ot
+	    row.setCell(""); // ta
+	} else {
+	    row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
+	    row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
+
+	    row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime()
+		    .toString()));
+	    row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getChildOrder()
+		    .toString());
+	    row.setCell(curricularPeriod.getChildOrder().toString());
+
+	    row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
+	    row.setCell(curricularCourse.getTheoreticalHours(curricularPeriod).toString());
+	    row.setCell(curricularCourse.getProblemsHours(curricularPeriod).toString());
+	    row.setCell(curricularCourse.getLaboratorialHours(curricularPeriod).toString());
+	    row.setCell(curricularCourse.getFieldWorkHours(curricularPeriod).toString());
+	    row.setCell(curricularCourse.getSeminaryHours().toString());
+	    row.setCell(curricularCourse.getTrainingPeriodHours(curricularPeriod).toString());
+	    row.setCell(curricularCourse.getTutorialOrientationHours(curricularPeriod).toString());
+	    row.setCell(curricularCourse.getAutonomousWorkHours(curricularPeriod).toString());
+	}
+	row.setCell(""); // notes
     }
 
 }

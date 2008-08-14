@@ -28,33 +28,33 @@ public class DynamicGroup extends Group implements GroupContextProvider {
     private ArgumentList arguments;
 
     public DynamicGroup(GroupContextProvider provider, String name) {
-        super();
+	super();
 
-        this.provider = provider;
-        this.name = name;
+	this.provider = provider;
+	this.name = name;
 
-        this.arguments = new ArgumentList();
+	this.arguments = new ArgumentList();
     }
 
     /**
      * @return the original group's name in the expression
      */
     public String getName() {
-        return this.name;
+	return this.name;
     }
 
     /**
      * @return the list of arguments available to this dynamic group
      */
     protected List<Argument> getArguments() {
-        return this.arguments;
+	return this.arguments;
     }
 
     /**
      * @return the internal argument list
      */
     protected ArgumentList getArgumentList() {
-        return this.arguments;
+	return this.arguments;
     }
 
     /**
@@ -65,63 +65,62 @@ public class DynamicGroup extends Group implements GroupContextProvider {
      *            the argument to be added
      */
     public void addArgument(Argument argument) {
-        argument.setContextProvider(this);
+	argument.setContextProvider(this);
 
-        this.arguments.add(argument);
+	this.arguments.add(argument);
     }
 
     /**
      * @return the current expression group context
      */
     public GroupContext getContext() {
-        return this.provider.getContext();
+	return this.provider.getContext();
     }
 
     @Override
     public Set<Person> getElements() {
-        return assembleGroup().getElements();
+	return assembleGroup().getElements();
     }
 
     @Override
-	public boolean isMember(Person person) {
-		return assembleGroup().isMember(person);
-	}
+    public boolean isMember(Person person) {
+	return assembleGroup().isMember(person);
+    }
 
-	/**
+    /**
      * Creates the group from the current context.
      * 
      * @return the newly created group
      */
     protected Group assembleGroup() {
-        Object[] argumentValues = getArgumentList().getArgumentValues();
-        return getGroupBuilder().build(argumentValues);
+	Object[] argumentValues = getArgumentList().getArgumentValues();
+	return getGroupBuilder().build(argumentValues);
     }
 
-	/**
+    /**
      * Gets a group builder from the registry.
      * 
      * @return the registered group builder
-     * @exception
-     *         net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException
-     *         if a group builder is not registered for this group name
+     * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException
+     *                if a group builder is not registered for this group name
      */
     protected GroupBuilder getGroupBuilder() {
-        return GroupBuilderRegistry.getGroupBuilder(getName());
+	return GroupBuilderRegistry.getGroupBuilder(getName());
     }
 
     public String getExpression() {
-        return toString();
+	return toString();
     }
 
     @Override
     public String toString() {
-        return getName() + getArgumentList();
+	return getName() + getArgumentList();
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        // not used since getExpression is overriden
-        return null;
+	// not used since getExpression is overriden
+	return null;
     }
 
 }

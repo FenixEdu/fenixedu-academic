@@ -17,12 +17,12 @@ public class SearchOtherFormationInstitutions extends Service implements AutoCom
 
 	value = value.toLowerCase();
 	List<DomainObject> result = new ArrayList<DomainObject>();
-	//TODO filter by foreign units only
+	// TODO filter by foreign units only
 	for (AcademicalInstitutionUnit unit : AcademicalInstitutionUnit.readOtherAcademicUnits()) {
 	    if (unit.getName().toLowerCase().contains(value)) {
 		result.add(unit);
 	    }
-	    
+
 	    if (result.size() >= limit) {
 		break;
 	    }

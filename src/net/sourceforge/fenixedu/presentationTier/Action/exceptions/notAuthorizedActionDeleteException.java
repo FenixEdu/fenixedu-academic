@@ -15,7 +15,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      *  
      */
     public notAuthorizedActionDeleteException() {
-        super();
+	super();
 
     }
 
@@ -23,7 +23,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param key
      */
     public notAuthorizedActionDeleteException(String key) {
-        super(key);
+	super(key);
 
     }
 
@@ -32,7 +32,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param value
      */
     public notAuthorizedActionDeleteException(String key, Object value) {
-        super(key, value);
+	super(key, value);
 
     }
 
@@ -42,7 +42,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param value1
      */
     public notAuthorizedActionDeleteException(String key, Object value0, Object value1) {
-        super(key, value0, value1);
+	super(key, value0, value1);
 
     }
 
@@ -53,7 +53,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param value2
      */
     public notAuthorizedActionDeleteException(String key, Object value0, Object value1, Object value2) {
-        super(key, value0, value1, value2);
+	super(key, value0, value1, value2);
 
     }
 
@@ -64,9 +64,8 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param value2
      * @param value3
      */
-    public notAuthorizedActionDeleteException(String key, Object value0, Object value1, Object value2,
-            Object value3) {
-        super(key, value0, value1, value2, value3);
+    public notAuthorizedActionDeleteException(String key, Object value0, Object value1, Object value2, Object value3) {
+	super(key, value0, value1, value2, value3);
 
     }
 
@@ -75,7 +74,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param values
      */
     public notAuthorizedActionDeleteException(String key, Object[] values) {
-        super(key, values);
+	super(key, values);
 
     }
 
@@ -84,7 +83,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param cause
      */
     public notAuthorizedActionDeleteException(String key, Throwable cause) {
-        super(key, cause);
+	super(key, cause);
 
     }
 
@@ -94,7 +93,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param cause
      */
     public notAuthorizedActionDeleteException(String key, Object value, Throwable cause) {
-        super(key, value, cause);
+	super(key, value, cause);
 
     }
 
@@ -105,7 +104,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param cause
      */
     public notAuthorizedActionDeleteException(String key, Object value0, Object value1, Throwable cause) {
-        super(key, value0, value1, cause);
+	super(key, value0, value1, cause);
 
     }
 
@@ -116,9 +115,8 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param value2
      * @param cause
      */
-    public notAuthorizedActionDeleteException(String key, Object value0, Object value1, Object value2,
-            Throwable cause) {
-        super(key, value0, value1, value2, cause);
+    public notAuthorizedActionDeleteException(String key, Object value0, Object value1, Object value2, Throwable cause) {
+	super(key, value0, value1, value2, cause);
 
     }
 
@@ -130,9 +128,9 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param value3
      * @param cause
      */
-    public notAuthorizedActionDeleteException(String key, Object value0, Object value1, Object value2,
-            Object value3, Throwable cause) {
-        super(key, value0, value1, value2, value3, cause);
+    public notAuthorizedActionDeleteException(String key, Object value0, Object value1, Object value2, Object value3,
+	    Throwable cause) {
+	super(key, value0, value1, value2, value3, cause);
 
     }
 
@@ -142,7 +140,7 @@ public class notAuthorizedActionDeleteException extends FenixActionException {
      * @param cause
      */
     public notAuthorizedActionDeleteException(String key, Object[] values, Throwable cause) {
-        super(key, values, cause);
+	super(key, values, cause);
 
     }
 

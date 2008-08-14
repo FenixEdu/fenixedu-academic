@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteGrade extends Service {
-	public void run(NewQuestion question) throws FenixServiceException{
-		question.setGrade(null);
-	}
+    public void run(NewQuestion question) throws FenixServiceException {
+	question.setGrade(null);
+    }
 }

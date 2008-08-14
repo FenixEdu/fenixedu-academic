@@ -89,9 +89,10 @@ public class DFACandidacy extends DFACandidacy_Base {
 
 	if (!executionDegree.getDegree().getSigla().equalsIgnoreCase("POSI")) {
 	    final AdministrativeOffice administrativeOffice = AdministrativeOffice
-	    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+		    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
 	    new DFACandidacyEvent(administrativeOffice, person, this);
-	    new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
+	    new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan()
+		    .getServiceAgreementTemplate());
 	}
     }
 
@@ -105,11 +106,8 @@ public class DFACandidacy extends DFACandidacy_Base {
 
     @Override
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale())
-		.getString("label.dfaCandidacy")
-		+ " - "
-		+ getExecutionDegree().getDegreeCurricularPlan().getName()
-		+ " - "
+	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString("label.dfaCandidacy")
+		+ " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
 		+ getExecutionDegree().getExecutionYear().getYear();
     }
 

@@ -11,23 +11,23 @@ public class RequiredGuidersServiceException extends FenixServiceException {
     }
 
     public RequiredGuidersServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     public RequiredGuidersServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public RequiredGuidersServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[RequiredGuidersServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[RequiredGuidersServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

@@ -28,21 +28,19 @@ import org.apache.struts.action.DynaActionForm;
 
 public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
-    public boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request,
-	    ActionErrors actionErrors) throws FenixActionException, FenixFilterException {
+    public boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request, ActionErrors actionErrors)
+	    throws FenixActionException, FenixFilterException {
 
 	DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 
-	Integer scpID = getIntegerFromRequestOrForm(request, getStudentByNumberAndDegreeTypeForm,
-		"scpID");
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject
-		.readStudentCurricularPlanByOID(scpID);
+	Integer scpID = getIntegerFromRequestOrForm(request, getStudentByNumberAndDegreeTypeForm, "scpID");
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
 
 	return transportStudentCurricularPlan(form, request, actionErrors, studentCurricularPlan);
     }
 
-    public boolean transportStudentCurricularPlan(ActionForm form, HttpServletRequest request,
-	    ActionErrors actionErrors, StudentCurricularPlan studentCurricularPlan) {
+    public boolean transportStudentCurricularPlan(ActionForm form, HttpServletRequest request, ActionErrors actionErrors,
+	    StudentCurricularPlan studentCurricularPlan) {
 
 	if (studentCurricularPlan != null) {
 	    request.setAttribute(SessionConstants.STUDENT, studentCurricularPlan.getRegistration());
@@ -57,18 +55,15 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 	    return true;
 	}
 
-	actionErrors
-		.add("error.no.student.in.database", new ActionError("error.no.student.in.database"));
+	actionErrors.add("error.no.student.in.database", new ActionError("error.no.student.in.database"));
 	return false;
 
     }
 
-    public List<Teacher> getTeachersByNumbers(ActionForm form, HttpServletRequest request,
-	    String teachersNumbersListField, String sessionConstant, ActionErrors actionErrors)
-	    throws FenixActionException, FenixFilterException {
+    public List<Teacher> getTeachersByNumbers(ActionForm form, HttpServletRequest request, String teachersNumbersListField,
+	    String sessionConstant, ActionErrors actionErrors) throws FenixActionException, FenixFilterException {
 
-	final List<Teacher> teachers = Teacher.readByNumbers(getTeachersNumbers(form,
-		teachersNumbersListField));
+	final List<Teacher> teachers = Teacher.readByNumbers(getTeachersNumbers(form, teachersNumbersListField));
 	if (!teachers.isEmpty()) {
 	    request.setAttribute(sessionConstant, teachers);
 	}
@@ -81,29 +76,25 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
 	DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 
-	Integer[] teachersNumbersArray = (Integer[]) masterDegreeThesisForm
-		.get(teachersNumbersListField);
+	Integer[] teachersNumbersArray = (Integer[]) masterDegreeThesisForm.get(teachersNumbersListField);
 	List<Integer> teachersNumbersList = CollectionUtils.toList(teachersNumbersArray);
 	teachersNumbersList.remove(new Integer(0));
 	return teachersNumbersList;
 
     }
 
-    public void getExternalPersonsByName(ActionForm form, HttpServletRequest request,
-	    String externalPersonNameField, String sessionConstant, ActionErrors actionErrors)
-	    throws FenixActionException, FenixFilterException {
+    public void getExternalPersonsByName(ActionForm form, HttpServletRequest request, String externalPersonNameField,
+	    String sessionConstant, ActionErrors actionErrors) throws FenixActionException, FenixFilterException {
 
 	DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
-	String externalAssistentGuiderName = (String) masterDegreeThesisForm
-		.get(externalPersonNameField);
+	String externalAssistentGuiderName = (String) masterDegreeThesisForm.get(externalPersonNameField);
 
-	List<ExternalContract> externalPersons = ExternalContract
-		.readByPersonName(externalAssistentGuiderName);
+	List<ExternalContract> externalPersons = ExternalContract.readByPersonName(externalAssistentGuiderName);
 	if (!externalPersons.isEmpty()) {
 	    request.setAttribute(sessionConstant, externalPersons);
 	} else {
-	    actionErrors.add("label.masterDegree.administrativeOffice.searchResultsEmpty",
-		    new ActionError("label.masterDegree.administrativeOffice.searchResultsEmpty"));
+	    actionErrors.add("label.masterDegree.administrativeOffice.searchResultsEmpty", new ActionError(
+		    "label.masterDegree.administrativeOffice.searchResultsEmpty"));
 	}
 
     }
@@ -112,8 +103,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
 	DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 
-	Integer[] externalPersonsIDsArray = (Integer[]) masterDegreeThesisForm
-		.get(externalPersonNameField);
+	Integer[] externalPersonsIDsArray = (Integer[]) masterDegreeThesisForm.get(externalPersonNameField);
 	List<Integer> externalPersonsIDsList = CollectionUtils.toList(externalPersonsIDsArray);
 	externalPersonsIDsList.remove(new Integer(0));
 	return externalPersonsIDsList;
@@ -121,8 +111,8 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
     }
 
     public List<ExternalContract> getExternalPersonsByIDs(ActionForm form, HttpServletRequest request,
-	    String externalPersonsIDsListField, String sessionConstant, ActionErrors actionErrors)
-	    throws FenixActionException, FenixFilterException {
+	    String externalPersonsIDsListField, String sessionConstant, ActionErrors actionErrors) throws FenixActionException,
+	    FenixFilterException {
 
 	List<ExternalContract> externalPersons = ExternalContract.readByIDs(getExternalPersonsIDs(form,
 		externalPersonsIDsListField));

@@ -60,7 +60,7 @@ public final class RenderTimeTableTag extends TagSupport {
     private Integer endTimeTableHour = new Integer(24);
 
     private final Integer slotSizeMinutes = new Integer(30);
-   
+
     private boolean definedWidth = true;
 
     private ColorPicker colorPicker;
@@ -76,51 +76,51 @@ public final class RenderTimeTableTag extends TagSupport {
     private InfoExecutionDegree infoExecutionDegree = null;
 
     public String getName() {
-        return (this.name);
+	return (this.name);
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public int doStartTag() throws JspException {
 
-        try {
-            infoCurricularYear = (InfoCurricularYear) pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR);
-            infoExecutionDegree = (InfoExecutionDegree) pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE);
+	try {
+	    infoCurricularYear = (InfoCurricularYear) pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR);
+	    infoExecutionDegree = (InfoExecutionDegree) pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE);
 
-        } catch (ClassCastException e) {
-            infoCurricularYear = null;
-            infoExecutionDegree = null;
-        }
+	} catch (ClassCastException e) {
+	    infoCurricularYear = null;
+	    infoExecutionDegree = null;
+	}
 
-        setLessonSlotRendererAndColorPicker();
-                
-        List infoLessonList = null;
-        try {
-            infoLessonList = (ArrayList) pageContext.findAttribute(name);
-        } catch (ClassCastException e) {
-        	e.printStackTrace();
-            infoLessonList = null;
-        }
-        if (infoLessonList == null)
-            throw new JspException(messages.getMessage("gerarHorario.listaAulas.naoExiste", name));
+	setLessonSlotRendererAndColorPicker();
 
-        // Gera o horário a partir da lista de aulas.
-        Locale locale = (Locale) pageContext.findAttribute(Globals.LOCALE_KEY);
-        JspWriter writer = pageContext.getOut();
-        TimeTable timeTable = generateTimeTable(infoLessonList, locale, pageContext);
+	List infoLessonList = null;
+	try {
+	    infoLessonList = (ArrayList) pageContext.findAttribute(name);
+	} catch (ClassCastException e) {
+	    e.printStackTrace();
+	    infoLessonList = null;
+	}
+	if (infoLessonList == null)
+	    throw new JspException(messages.getMessage("gerarHorario.listaAulas.naoExiste", name));
 
-        TimeTableRenderer renderer = new TimeTableRenderer(timeTable, lessonSlotContentRenderer,
-                this.slotSizeMinutes, this.startTimeTableHour, this.endTimeTableHour, colorPicker);
+	// Gera o horário a partir da lista de aulas.
+	Locale locale = (Locale) pageContext.findAttribute(Globals.LOCALE_KEY);
+	JspWriter writer = pageContext.getOut();
+	TimeTable timeTable = generateTimeTable(infoLessonList, locale, pageContext);
 
-        try {
-            writer.print(renderer.render(locale, pageContext, getDefinedWidth()));
-            writer.print(legenda(infoLessonList, locale));
-        } catch (IOException e) {
-            throw new JspException(messages.getMessage("gerarHorario.io", e.toString()));
-        }
-        return (SKIP_BODY);
+	TimeTableRenderer renderer = new TimeTableRenderer(timeTable, lessonSlotContentRenderer, this.slotSizeMinutes,
+		this.startTimeTableHour, this.endTimeTableHour, colorPicker);
+
+	try {
+	    writer.print(renderer.render(locale, pageContext, getDefinedWidth()));
+	    writer.print(legenda(infoLessonList, locale));
+	} catch (IOException e) {
+	    throw new JspException(messages.getMessage("gerarHorario.io", e.toString()));
+	}
+	return (SKIP_BODY);
     }
 
     /**
@@ -131,109 +131,109 @@ public final class RenderTimeTableTag extends TagSupport {
      */
     private TimeTable generateTimeTable(List lessonList, Locale locale, PageContext pageContext) {
 
-        Calendar calendar = Calendar.getInstance();
+	Calendar calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.HOUR_OF_DAY, this.startTimeTableHour.intValue());
-        calendar.set(Calendar.MINUTE, 0);
+	calendar.set(Calendar.HOUR_OF_DAY, this.startTimeTableHour.intValue());
+	calendar.set(Calendar.MINUTE, 0);
 
-        Integer numberOfDays = new Integer(6);
-        Integer numberOfHours = new Integer((endTimeTableHour.intValue() - startTimeTableHour.intValue()) * (60 / slotSizeMinutes.intValue()));
+	Integer numberOfDays = new Integer(6);
+	Integer numberOfHours = new Integer((endTimeTableHour.intValue() - startTimeTableHour.intValue())
+		* (60 / slotSizeMinutes.intValue()));
 
-        TimeTable timeTable = new TimeTable(numberOfHours, numberOfDays, calendar, slotSizeMinutes, locale, pageContext);
-        Iterator lessonIterator = lessonList.iterator();
+	TimeTable timeTable = new TimeTable(numberOfHours, numberOfDays, calendar, slotSizeMinutes, locale, pageContext);
+	Iterator lessonIterator = lessonList.iterator();
 
-        while (lessonIterator.hasNext()) {
-            InfoShowOccupation infoShowOccupation = (InfoShowOccupation) lessonIterator.next();
-            timeTable.addLesson(infoShowOccupation);
-        }
-        return timeTable;
+	while (lessonIterator.hasNext()) {
+	    InfoShowOccupation infoShowOccupation = (InfoShowOccupation) lessonIterator.next();
+	    timeTable.addLesson(infoShowOccupation);
+	}
+	return timeTable;
     }
 
     public int doEndTag() {
-        return (EVAL_PAGE);
+	return (EVAL_PAGE);
     }
 
     public void release() {
-        super.release();
-        
-        this.application = null;
-        this.studentID = null;
-        this.classID = null;
-        this.executionCourseID = null;
-        this.action = null;
-        this.endTime = null;
+	super.release();
+
+	this.application = null;
+	this.studentID = null;
+	this.classID = null;
+	this.executionCourseID = null;
+	this.action = null;
+	this.endTime = null;
     }
 
     private String getMessageResource(PageContext pageContext, String key) {
-        try {
-            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
-        } catch (JspException e) {
-            return "???" + key + "???";
-        }
+	try {
+	    return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
+	} catch (JspException e) {
+	    return "???" + key + "???";
+	}
     }
 
     private StringBuilder legenda(List listaAulas, Locale locale) {
-       
+
 	StringBuilder result = new StringBuilder("");
-        List<SubtitleEntry> listaAuxiliar = new ArrayList<SubtitleEntry>();
-        Iterator<InfoShowOccupation> iterator = listaAulas.iterator();
-        
-        while (iterator.hasNext()) {
-            
-            InfoShowOccupation elem = iterator.next();
-            
-            if (elem instanceof InfoLesson || elem instanceof InfoLessonInstance) {
-                SubtitleEntry subtitleEntry = new SubtitleEntry(
-                	elem.getInfoShift().getInfoDisciplinaExecucao().getSigla(), 
-                	elem.getInfoShift().getInfoDisciplinaExecucao().getNome());
-                
-                if (!listaAuxiliar.contains(subtitleEntry))
-                    listaAuxiliar.add(subtitleEntry);            
-            }         
-        }
+	List<SubtitleEntry> listaAuxiliar = new ArrayList<SubtitleEntry>();
+	Iterator<InfoShowOccupation> iterator = listaAulas.iterator();
 
-        if (listaAuxiliar.size() > 1) {
-           
-            Collections.sort(listaAuxiliar);
-            
-            result.append("<br/><b>");
-            result.append(getMessageResource(pageContext, "public.degree.information.label.legend"));
-            result.append("</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
-            
-            for (int i = 0; i < listaAuxiliar.size(); i++) {
-                
-        	SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
-                
-                boolean oddElement = (i % 2 == 1);
-                if (!oddElement) {
-                    result.append("<tr>\r\n");
-                }
-                result.append("<td width='60'><b>");
-                result.append(elem.getKey());
-                result.append("</b></td><td  style='vertical-align:top'>-</td><td>");
-                result.append(elem.getValue());
-                result.append("</td>");
-                
-                if (oddElement) {
-                    result.append("</tr>\r\n");
-                }
-            }
-            if (listaAuxiliar.size() % 2 == 1) {
-                result.append("<td colspan='3'>&nbsp;</td></tr>");
-            }
+	while (iterator.hasNext()) {
 
-            // TODO(rspl): Will it stay like this the interface for showing
-            // the legend of a quinzenal lesson?
-            result.append("<tr><td style='vertical-align:top'><b>[Q]</b></td>");
-            result.append("<td  style='vertical-align:top'>-</td>");
-            result.append("<td>");
-            result.append(getMessageResource(pageContext, "public.degree.information.label.biweekly"));
-            result.append("</td></tr>");
+	    InfoShowOccupation elem = iterator.next();
 
-            result.append("</table>");
+	    if (elem instanceof InfoLesson || elem instanceof InfoLessonInstance) {
+		SubtitleEntry subtitleEntry = new SubtitleEntry(elem.getInfoShift().getInfoDisciplinaExecucao().getSigla(), elem
+			.getInfoShift().getInfoDisciplinaExecucao().getNome());
 
-        }
-        return result;
+		if (!listaAuxiliar.contains(subtitleEntry))
+		    listaAuxiliar.add(subtitleEntry);
+	    }
+	}
+
+	if (listaAuxiliar.size() > 1) {
+
+	    Collections.sort(listaAuxiliar);
+
+	    result.append("<br/><b>");
+	    result.append(getMessageResource(pageContext, "public.degree.information.label.legend"));
+	    result.append("</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
+
+	    for (int i = 0; i < listaAuxiliar.size(); i++) {
+
+		SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
+
+		boolean oddElement = (i % 2 == 1);
+		if (!oddElement) {
+		    result.append("<tr>\r\n");
+		}
+		result.append("<td width='60'><b>");
+		result.append(elem.getKey());
+		result.append("</b></td><td  style='vertical-align:top'>-</td><td>");
+		result.append(elem.getValue());
+		result.append("</td>");
+
+		if (oddElement) {
+		    result.append("</tr>\r\n");
+		}
+	    }
+	    if (listaAuxiliar.size() % 2 == 1) {
+		result.append("<td colspan='3'>&nbsp;</td></tr>");
+	    }
+
+	    // TODO(rspl): Will it stay like this the interface for showing
+	    // the legend of a quinzenal lesson?
+	    result.append("<tr><td style='vertical-align:top'><b>[Q]</b></td>");
+	    result.append("<td  style='vertical-align:top'>-</td>");
+	    result.append("<td>");
+	    result.append(getMessageResource(pageContext, "public.degree.information.label.biweekly"));
+	    result.append("</td></tr>");
+
+	    result.append("</table>");
+
+	}
+	return result;
     }
 
     /**
@@ -242,7 +242,7 @@ public final class RenderTimeTableTag extends TagSupport {
      * @return int
      */
     public int getType() {
-        return type;
+	return type;
     }
 
     /**
@@ -252,84 +252,85 @@ public final class RenderTimeTableTag extends TagSupport {
      *            The type to set
      */
     public void setType(int timeTableType) {
-        this.type = timeTableType;
-        setLessonSlotRendererAndColorPicker();
+	this.type = timeTableType;
+	setLessonSlotRendererAndColorPicker();
     }
 
     private void setLessonSlotRendererAndColorPicker() {
-        switch (this.type) {
-        
-        case TimeTableType.SHIFT_TIMETABLE:
-            this.lessonSlotContentRenderer = new ShiftTimeTableLessonContentRenderer();
-            this.colorPicker = new ClassTimeTableColorPicker();
-            break;
-        
-        case TimeTableType.EXECUTION_COURSE_TIMETABLE:
-            this.lessonSlotContentRenderer = new ExecutionCourseTimeTableLessonContentRenderer();
-            this.colorPicker = new ExecutionCourseTimeTableColorPicker();
-            break;
-        
-        case TimeTableType.ROOM_TIMETABLE:
-            this.lessonSlotContentRenderer = new RoomTimeTableLessonContentRenderer();
-            this.colorPicker = new RoomTimeTableColorPicker();
-            break;
+	switch (this.type) {
 
-        case TimeTableType.SOP_CLASS_TIMETABLE:
-            this.lessonSlotContentRenderer = new SopClassTimeTableLessonContentRenderer(infoExecutionDegree, infoCurricularYear);
-            this.colorPicker = new ClassTimeTableColorPicker();
-            break;
+	case TimeTableType.SHIFT_TIMETABLE:
+	    this.lessonSlotContentRenderer = new ShiftTimeTableLessonContentRenderer();
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    break;
 
-        case TimeTableType.SOP_ROOM_TIMETABLE:
-            this.lessonSlotContentRenderer = new SopRoomTimeTableLessonContentRenderer();
-            this.colorPicker = new ClassTimeTableColorPicker();
-            break;
-        
-        case TimeTableType.SPACE_MANAGER_TIMETABLE:
-            this.lessonSlotContentRenderer = new SpaceManagerRoomTimeTableLessonContentRenderer();
-            this.colorPicker = new ClassTimeTableColorPicker();
-            break;
-            
-        case TimeTableType.SOP_CLASS_ROOM_TIMETABLE:
-            this.lessonSlotContentRenderer = new SopClassRoomTimeTableLessonContentRenderer();
-            this.colorPicker = new ClassTimeTableColorPicker();
-            break;
-        
-        case TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS:
-            this.lessonSlotContentRenderer = new ClassTimeTableWithoutLinksLessonContentRenderer();
-            this.colorPicker = new ClassTimeTableColorPicker();
-            break;
-        
-        case TimeTableType.CLASS_TIMETABLE:
-            this.lessonSlotContentRenderer = new ClassTimeTableWithLinksLessonContentRenderer(getApplication());
-            this.colorPicker = new ClassTimeTableColorPicker();
-            break;
-        
-        case TimeTableType.SHIFT_ENROLLMENT_TIMETABLE:
-            this.lessonSlotContentRenderer = new ShiftEnrollmentTimeTableLessonContentRenderer(getStudentID(), getApplication(), getClassID(), getExecutionCourseID(), getAction());
-            this.colorPicker = new ClassTimeTableColorPicker();            
-            Integer defaultTime = new Integer(19);
-            Integer endTime = defaultTime;            
-            if (!getEndTime().equals("")) {
-                endTime = new Integer(getEndTime());                
-                if (endTime < defaultTime) {
-                    endTime = defaultTime;
-                }
-            }
-            this.endTimeTableHour = endTime;
-            break;
+	case TimeTableType.EXECUTION_COURSE_TIMETABLE:
+	    this.lessonSlotContentRenderer = new ExecutionCourseTimeTableLessonContentRenderer();
+	    this.colorPicker = new ExecutionCourseTimeTableColorPicker();
+	    break;
 
-        default:
-            this.lessonSlotContentRenderer = new ClassTimeTableLessonContentRenderer();
-            this.colorPicker = new ClassTimeTableColorPicker();
-            break;
-        }
+	case TimeTableType.ROOM_TIMETABLE:
+	    this.lessonSlotContentRenderer = new RoomTimeTableLessonContentRenderer();
+	    this.colorPicker = new RoomTimeTableColorPicker();
+	    break;
+
+	case TimeTableType.SOP_CLASS_TIMETABLE:
+	    this.lessonSlotContentRenderer = new SopClassTimeTableLessonContentRenderer(infoExecutionDegree, infoCurricularYear);
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    break;
+
+	case TimeTableType.SOP_ROOM_TIMETABLE:
+	    this.lessonSlotContentRenderer = new SopRoomTimeTableLessonContentRenderer();
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    break;
+
+	case TimeTableType.SPACE_MANAGER_TIMETABLE:
+	    this.lessonSlotContentRenderer = new SpaceManagerRoomTimeTableLessonContentRenderer();
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    break;
+
+	case TimeTableType.SOP_CLASS_ROOM_TIMETABLE:
+	    this.lessonSlotContentRenderer = new SopClassRoomTimeTableLessonContentRenderer();
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    break;
+
+	case TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS:
+	    this.lessonSlotContentRenderer = new ClassTimeTableWithoutLinksLessonContentRenderer();
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    break;
+
+	case TimeTableType.CLASS_TIMETABLE:
+	    this.lessonSlotContentRenderer = new ClassTimeTableWithLinksLessonContentRenderer(getApplication());
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    break;
+
+	case TimeTableType.SHIFT_ENROLLMENT_TIMETABLE:
+	    this.lessonSlotContentRenderer = new ShiftEnrollmentTimeTableLessonContentRenderer(getStudentID(), getApplication(),
+		    getClassID(), getExecutionCourseID(), getAction());
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    Integer defaultTime = new Integer(19);
+	    Integer endTime = defaultTime;
+	    if (!getEndTime().equals("")) {
+		endTime = new Integer(getEndTime());
+		if (endTime < defaultTime) {
+		    endTime = defaultTime;
+		}
+	    }
+	    this.endTimeTableHour = endTime;
+	    break;
+
+	default:
+	    this.lessonSlotContentRenderer = new ClassTimeTableLessonContentRenderer();
+	    this.colorPicker = new ClassTimeTableColorPicker();
+	    break;
+	}
     }
 
     /**
      * @return Returns the application.
      */
     public String getApplication() {
-        return application;
+	return application;
     }
 
     /**
@@ -337,55 +338,55 @@ public final class RenderTimeTableTag extends TagSupport {
      *            The application to set.
      */
     public void setApplication(String application) {
-        this.application = application;
+	this.application = application;
     }
 
     public String getStudentID() {
-        return studentID;
+	return studentID;
     }
 
     public void setStudentID(String studentID) {
-        this.studentID = studentID;
+	this.studentID = studentID;
     }
 
     public String getAction() {
-        return action;
+	return action;
     }
 
     public void setAction(String action) {
-        this.action = action;
+	this.action = action;
     }
 
     public String getClassID() {
-        return classID;
+	return classID;
     }
 
     public void setClassID(String classID) {
-        this.classID = classID;
+	this.classID = classID;
     }
 
     public String getExecutionCourseID() {
-        return executionCourseID;
+	return executionCourseID;
     }
 
     public void setExecutionCourseID(String executionCourseID) {
-        this.executionCourseID = executionCourseID;
+	this.executionCourseID = executionCourseID;
     }
 
     public String getEndTime() {
-        return endTime;
+	return endTime;
     }
 
     public void setEndTime(String endTime) {
-        this.endTime = endTime;
+	this.endTime = endTime;
     }
 
     public boolean getDefinedWidth() {
-        return definedWidth;
+	return definedWidth;
     }
 
     public void setDefinedWidth(boolean definedWidth) {
-        this.definedWidth = definedWidth;
+	this.definedWidth = definedWidth;
     }
 
 }

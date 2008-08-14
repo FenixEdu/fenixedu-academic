@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class ExecutionCourseView {
 
-    private final DomainReference<ExecutionCourse> executionCourseDomainReference; 
+    private final DomainReference<ExecutionCourse> executionCourseDomainReference;
 
     public ExecutionCourseView(final ExecutionCourse executionCourse) {
-        executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
     }
 
     private Integer curricularYear;
@@ -29,39 +29,47 @@ public class ExecutionCourseView {
     private String degreeCurricularPlanAnotation;
 
     public String getAnotation() {
-        return anotation;
+	return anotation;
     }
+
     public void setAnotation(String anotation) {
-        this.anotation = anotation;
+	this.anotation = anotation;
     }
+
     public Integer getCurricularYear() {
-        return curricularYear;
+	return curricularYear;
     }
+
     public void setCurricularYear(Integer curricularYear) {
-        this.curricularYear = curricularYear;
+	this.curricularYear = curricularYear;
     }
+
     public String getDegreeCurricularPlanAnotation() {
-        return degreeCurricularPlanAnotation;
+	return degreeCurricularPlanAnotation;
     }
+
     public void setDegreeCurricularPlanAnotation(String degreeCurricularPlanAnotation) {
-        this.degreeCurricularPlanAnotation = degreeCurricularPlanAnotation;
+	this.degreeCurricularPlanAnotation = degreeCurricularPlanAnotation;
     }
 
     public ExecutionCourse getExecutionCourse() {
-        return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
+	return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
     }
 
     public String getExecutionCourseName() {
-        return getExecutionCourse().getNome();
+	return getExecutionCourse().getNome();
     }
+
     public Integer getExecutionCourseOID() {
-        return getExecutionCourse().getIdInternal();
+	return getExecutionCourse().getIdInternal();
     }
+
     public Integer getSemester() {
-        return getExecutionCourse().getExecutionPeriod().getSemester();
+	return getExecutionCourse().getExecutionPeriod().getSemester();
     }
+
     public Integer getExecutionPeriodOID() {
-        return getExecutionCourse().getExecutionPeriod().getIdInternal();
+	return getExecutionCourse().getExecutionPeriod().getIdInternal();
     }
 
     @Override

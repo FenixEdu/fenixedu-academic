@@ -11,7 +11,7 @@ public class CreateVehicle extends Service {
 
     public void run(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
 	    BigDecimal allocationCostMultiplier) {
-	
+
 	new Vehicle(numberPlate, make, model, acquisition, cease, allocationCostMultiplier);
     }
 }

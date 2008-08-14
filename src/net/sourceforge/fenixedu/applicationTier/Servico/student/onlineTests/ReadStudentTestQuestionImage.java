@@ -15,18 +15,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Susana Fernandes
  */
 public class ReadStudentTestQuestionImage extends Service {
-    public String run(Integer registrationId, Integer distributedTestId, Integer questionId,
-            Integer imageId, String feedbackId, Integer itemIndex, String path)
-            throws FenixServiceException{
-        final DistributedTest distributedTest = rootDomainObject
-                .readDistributedTestByOID(distributedTestId);
-        final Registration registration = rootDomainObject.readRegistrationByOID(registrationId);
-        return run(registration, distributedTest, questionId, imageId, feedbackId, itemIndex, path);
+    public String run(Integer registrationId, Integer distributedTestId, Integer questionId, Integer imageId, String feedbackId,
+	    Integer itemIndex, String path) throws FenixServiceException {
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+	final Registration registration = rootDomainObject.readRegistrationByOID(registrationId);
+	return run(registration, distributedTest, questionId, imageId, feedbackId, itemIndex, path);
     }
 
-    public String run(Registration otherRegistration, DistributedTest distributedTest, Integer questionId,
-            Integer imageId, String feedbackId, Integer itemIndex, String path)
-            throws FenixServiceException{
+    public String run(Registration otherRegistration, DistributedTest distributedTest, Integer questionId, Integer imageId,
+	    String feedbackId, Integer itemIndex, String path) throws FenixServiceException {
 	for (final Registration registration : otherRegistration.getStudent().getRegistrationsSet()) {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getKeyDistributedTest().equals(distributedTest.getIdInternal())
@@ -41,7 +38,7 @@ public class ReadStudentTestQuestionImage extends Service {
 		}
 	    }
 	}
-        return null;
+	return null;
     }
 
 }

@@ -14,27 +14,27 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadShiftsByExecutionCourseID extends Service {
 
     public InfoExecutionCourseOccupancy run(Integer executionCourseID) {
-       
+
 	final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
-        infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
+	infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-        final Set<Shift> shifts = executionCourse.getAssociatedShifts();
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
-        infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+	infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
-        for (final Shift shift : shifts) {
-            Integer capacity = Integer.valueOf(1);
-            if (shift.getLotacao() != null && shift.getLotacao().intValue() != 0) {
-                capacity = shift.getLotacao();
-            }
+	for (final Shift shift : shifts) {
+	    Integer capacity = Integer.valueOf(1);
+	    if (shift.getLotacao() != null && shift.getLotacao().intValue() != 0) {
+		capacity = shift.getLotacao();
+	    }
 
-            final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+	    final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
-            infoExecutionCourseOccupancy.getInfoShifts().add(infoShift);
-        }
+	    infoExecutionCourseOccupancy.getInfoShifts().add(infoShift);
+	}
 
-        return infoExecutionCourseOccupancy;
+	return infoExecutionCourseOccupancy;
     }
 
 }

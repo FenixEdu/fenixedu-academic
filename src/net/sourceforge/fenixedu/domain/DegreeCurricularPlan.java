@@ -1455,7 +1455,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     final public String getGraduateTitle(final CycleType cycleType) {
 	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), cycleType);
     }
-    
+
     final public String getGraduateTitle(ExecutionYear executionYear, final CycleType cycleType) {
 	if (cycleType == null) {
 	    return getGraduateTitle();

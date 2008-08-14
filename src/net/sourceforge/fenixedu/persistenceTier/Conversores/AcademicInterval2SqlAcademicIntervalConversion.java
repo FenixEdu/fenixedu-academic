@@ -13,7 +13,7 @@ public class AcademicInterval2SqlAcademicIntervalConversion implements FieldConv
 
     public Object javaToSql(Object source) throws ConversionException {
 	if (source instanceof AcademicInterval) {
-	    AcademicInterval academicInterval = (AcademicInterval) source;	    
+	    AcademicInterval academicInterval = (AcademicInterval) source;
 	    return academicInterval.getRepresentationInStringFormat();
 	}
 	return source;
@@ -23,8 +23,8 @@ public class AcademicInterval2SqlAcademicIntervalConversion implements FieldConv
 	if (source == null || source.equals("")) {
 	    return null;
 	}
-	if (source instanceof String) {	    	    
-	    return AcademicInterval.getAcademicIntervalFromString((String) source);	    	   
+	if (source instanceof String) {
+	    return AcademicInterval.getAcademicIntervalFromString((String) source);
 	}
 	return source;
     }

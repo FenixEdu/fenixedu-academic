@@ -9,37 +9,38 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 public class CreateBlueprintSubmissionBean implements Serializable {
 
     private DomainReference<SpaceInformation> spaceInformationReference;
-    
+
     private String filename;
-    
+
     private transient InputStream inputStream;
-    
+
     public CreateBlueprintSubmissionBean(SpaceInformation spaceInformationReference) {
-        super();
-        this.spaceInformationReference = new DomainReference<SpaceInformation>(spaceInformationReference);
+	super();
+	this.spaceInformationReference = new DomainReference<SpaceInformation>(spaceInformationReference);
     }
 
     public String getFilename() {
-        return filename;
+	return filename;
     }
 
     public void setFilename(String filename) {
-        this.filename = filename;
+	this.filename = filename;
     }
 
     public InputStream getInputStream() {
-        return inputStream;
+	return inputStream;
     }
 
     public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
+	this.inputStream = inputStream;
     }
 
     public void setSpaceInformation(SpaceInformation spaceInformationReference) {
-        this.spaceInformationReference = (spaceInformationReference != null) ? new DomainReference<SpaceInformation>(spaceInformationReference) : null;
+	this.spaceInformationReference = (spaceInformationReference != null) ? new DomainReference<SpaceInformation>(
+		spaceInformationReference) : null;
     }
-    
+
     public SpaceInformation getSpaceInformation() {
-        return (this.spaceInformationReference != null) ? this.spaceInformationReference.getObject() : null;
+	return (this.spaceInformationReference != null) ? this.spaceInformationReference.getObject() : null;
     }
 }

@@ -37,86 +37,80 @@ import org.apache.struts.util.MessageResources;
 
 public class EditGroupShift extends Service {
 
-    private static final MessageResources messages = MessageResources
-            .getMessageResources("resources/GlobalResources");
+    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
     public boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
-            throws FenixServiceException{
+	    throws FenixServiceException {
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
-        if (grouping == null) {
-            throw new ExistingServiceException();
-        }
+	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+	if (grouping == null) {
+	    throw new ExistingServiceException();
+	}
 
-        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
-        if (studentGroup == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+	final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
+	if (studentGroup == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        final Shift shift = rootDomainObject.readShiftByOID(newShiftID);
-        if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
-            throw new InvalidStudentNumberServiceException();
-        }
+	final Shift shift = rootDomainObject.readShiftByOID(newShiftID);
+	if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
+	    throw new InvalidStudentNumberServiceException();
+	}
 
-        final Registration registration = Registration.readByUsername(username);
+	final Registration registration = Registration.readByUsername(username);
 
-        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                .getInstance();
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                .getGroupEnrolmentStrategyInstance(grouping);
+	IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+	IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
-        if (!strategy.checkStudentInGrouping(grouping, username)) {
-            throw new NotAuthorizedException();
-        }
+	if (!strategy.checkStudentInGrouping(grouping, username)) {
+	    throw new NotAuthorizedException();
+	}
 
-        if (!checkStudentInStudentGroup(registration, studentGroup)) {
-            throw new InvalidSituationServiceException();
-        }
+	if (!checkStudentInStudentGroup(registration, studentGroup)) {
+	    throw new InvalidSituationServiceException();
+	}
 
-        boolean result = strategy.checkNumberOfGroups(grouping, shift);
-        if (!result) {
-            throw new InvalidChangeServiceException();
-        }
-        studentGroup.setShift(shift);
+	boolean result = strategy.checkNumberOfGroups(grouping, shift);
+	if (!result) {
+	    throw new InvalidChangeServiceException();
+	}
+	studentGroup.setShift(shift);
 
-        informStudents(studentGroup, registration, grouping);
+	informStudents(studentGroup, registration, grouping);
 
-        return true;
+	return true;
     }
 
-    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
-            throws FenixServiceException {
-        boolean found = false;
-        List studentGroupAttends = studentGroup.getAttends();
-        Attends attend = null;
-        Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
-        while (iterStudentGroupAttends.hasNext() && !found) {
-            attend = ((Attends) iterStudentGroupAttends.next());
-            if (attend.getRegistration().equals(registration)) {
-                found = true;
-            }
-        }
-        return found;
+    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) throws FenixServiceException {
+	boolean found = false;
+	List studentGroupAttends = studentGroup.getAttends();
+	Attends attend = null;
+	Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
+	while (iterStudentGroupAttends.hasNext() && !found) {
+	    attend = ((Attends) iterStudentGroupAttends.next());
+	    if (attend.getRegistration().equals(registration)) {
+		found = true;
+	    }
+	}
+	return found;
     }
 
-    private void informStudents(final StudentGroup studentGroup, final Registration registration,
-            final Grouping grouping) {
-        final List<String> emails = new ArrayList<String>();
-        for (final Attends attends : studentGroup.getAttends()) {
-            emails.add(attends.getRegistration().getPerson().getEmail());
-        }
+    private void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
+	final List<String> emails = new ArrayList<String>();
+	for (final Attends attends : studentGroup.getAttends()) {
+	    emails.add(attends.getRegistration().getPerson().getEmail());
+	}
 
-        final StringBuilder executionCourseNames = new StringBuilder();
-        for (final ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
-            if (executionCourseNames.length() > 0) {
-                executionCourseNames.append(", ");
-            }
-            executionCourseNames.append(executionCourse.getNome());
-        }
-        new Email("Fenix System", messages.getMessage("noreply.mail"), null, emails, null, null,
-                messages.getMessage("message.subject.grouping.change"), messages.getMessage(
-                        "message.body.grouping.change.shift", registration.getNumber().toString(),
-                        studentGroup.getGroupNumber().toString()));
+	final StringBuilder executionCourseNames = new StringBuilder();
+	for (final ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
+	    if (executionCourseNames.length() > 0) {
+		executionCourseNames.append(", ");
+	    }
+	    executionCourseNames.append(executionCourse.getNome());
+	}
+	new Email("Fenix System", messages.getMessage("noreply.mail"), null, emails, null, null, messages
+		.getMessage("message.subject.grouping.change"), messages.getMessage("message.body.grouping.change.shift",
+		registration.getNumber().toString(), studentGroup.getGroupNumber().toString()));
     }
 
 }

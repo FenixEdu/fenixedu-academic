@@ -26,47 +26,45 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class EscolherContextoFormAction extends FenixContextAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        super.execute(mapping, form, request, response);
+	super.execute(mapping, form, request, response);
 
-        DynaActionForm escolherContextoForm = (DynaActionForm) form;
+	DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                    .getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-            Integer semestre = infoExecutionPeriod.getSemester();
-            Integer anoCurricular = (Integer) escolherContextoForm.get("anoCurricular");
+	Integer semestre = infoExecutionPeriod.getSemester();
+	Integer anoCurricular = (Integer) escolherContextoForm.get("anoCurricular");
 
-            Object argsReadCurricularYearByOID[] = { anoCurricular };
-            InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService(
-                    "ReadCurricularYearByOID", argsReadCurricularYearByOID);
+	Object argsReadCurricularYearByOID[] = { anoCurricular };
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService("ReadCurricularYearByOID",
+		argsReadCurricularYearByOID);
 
-            int index = Integer.parseInt((String) escolherContextoForm.get("index"));
+	int index = Integer.parseInt((String) escolherContextoForm.get("index"));
 
-            request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
+	request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
 
-            Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
+	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-            List infoExecutionDegreeList = (List) ServiceUtils.executeService(
-                    "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+	List infoExecutionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
+		argsLerLicenciaturas);
 
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList
-                    .get(index);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index);
 
-            if (infoExecutionDegree != null) {
-                CurricularYearAndSemesterAndInfoExecutionDegree cYSiED = new CurricularYearAndSemesterAndInfoExecutionDegree(
-                        anoCurricular, semestre, infoExecutionDegree);
-                request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
+	if (infoExecutionDegree != null) {
+	    CurricularYearAndSemesterAndInfoExecutionDegree cYSiED = new CurricularYearAndSemesterAndInfoExecutionDegree(
+		    anoCurricular, semestre, infoExecutionDegree);
+	    request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
 
-                request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            } else {
+	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	} else {
 
-                return mapping.findForward("Licenciatura execucao inexistente");
-            }
-            return mapping.findForward("Sucesso");
+	    return mapping.findForward("Licenciatura execucao inexistente");
+	}
+	return mapping.findForward("Sucesso");
     }
 }

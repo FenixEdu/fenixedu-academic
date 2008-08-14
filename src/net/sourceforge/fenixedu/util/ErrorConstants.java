@@ -11,8 +11,7 @@ public class ErrorConstants extends FenixUtil {
 
     public final static String TURMAS_NOT_EXIST_ERROR = "error.turmas.notExist";
 
-    public final static String LICENCIATURAS_EXECUCAO_NOT_EXIST_ERROR = 
-            "error.licenciaturasExecucao.notExist";
+    public final static String LICENCIATURAS_EXECUCAO_NOT_EXIST_ERROR = "error.licenciaturasExecucao.notExist";
 }
 
 // Created by Nuno Antão

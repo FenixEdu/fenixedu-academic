@@ -287,7 +287,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
 		    HtmlLink link = getLink(usedObject);
 		    link.setIndented(isIndentation());
 
- 		    String text = getLinkText();
+		    String text = getLinkText();
 		    if (text != null) {
 			link.setText(text);
 		    } else {

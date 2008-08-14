@@ -16,10 +16,9 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
  * 
- * Created at 4:02:48 PM, Mar 11, 2005
+ *         Created at 4:02:48 PM, Mar 11, 2005
  */
-public class InfoExternalCurricularCourseInfo
-{
+public class InfoExternalCurricularCourseInfo {
 
     private String name;
     private String code;
@@ -28,118 +27,94 @@ public class InfoExternalCurricularCourseInfo
     private String weigth;
     private String curricularYear;
 
-
-    public String getCredits()
-    {
-        return this.credits;
+    public String getCredits() {
+	return this.credits;
     }
 
-
-    public void setCredits(String credits)
-    {
-        this.credits = credits;
+    public void setCredits(String credits) {
+	this.credits = credits;
     }
 
-    public String getECTSCredits()
-    {
-        return this.ECTSCredits;
+    public String getECTSCredits() {
+	return this.ECTSCredits;
     }
 
-    public void setECTSCredits(String credits)
-    {
-        ECTSCredits = credits;
+    public void setECTSCredits(String credits) {
+	ECTSCredits = credits;
     }
 
     /**
      * @return Returns the code.
      */
-    public String getCode()
-    {
-        return this.code;
+    public String getCode() {
+	return this.code;
     }
 
     /**
      * @param code
      *            The code to set.
      */
-    public void setCode(String code)
-    {
-        this.code = code;
+    public void setCode(String code) {
+	this.code = code;
     }
 
     /**
      * @return Returns the name.
      */
-    public String getName()
-    {
-        return this.name;
+    public String getName() {
+	return this.name;
     }
 
     /**
      * @param name
      *            The name to set.
      */
-    public void setName(String name)
-    {
-        this.name = name;
+    public void setName(String name) {
+	this.name = name;
     }
 
-    static public InfoExternalCurricularCourseInfo newFromDomain(CurricularCourse course)
-    {
-        Integer year = null;
-        for (Iterator iter = course.getDegreeModuleScopes().iterator(); iter.hasNext();)
-        {
-            DegreeModuleScope element = (DegreeModuleScope) iter.next();
-            int currentYear = element.getCurricularYear().intValue();
-            if (year == null || currentYear < year.intValue())
-                year = currentYear;
-        }
+    static public InfoExternalCurricularCourseInfo newFromDomain(CurricularCourse course) {
+	Integer year = null;
+	for (Iterator iter = course.getDegreeModuleScopes().iterator(); iter.hasNext();) {
+	    DegreeModuleScope element = (DegreeModuleScope) iter.next();
+	    int currentYear = element.getCurricularYear().intValue();
+	    if (year == null || currentYear < year.intValue())
+		year = currentYear;
+	}
 
-        InfoExternalCurricularCourseInfo info = new InfoExternalCurricularCourseInfo();
+	InfoExternalCurricularCourseInfo info = new InfoExternalCurricularCourseInfo();
 
-        if (year != null)
-        {
-            info.setCurricularYear(new Integer(year).toString());
-        }
-        info.setCode(course.getAcronym());
-        info.setName(course.getName());
-        if (course.getWeigth() != null)
-        {
-            info.setWeigth(course.getWeigth().toString());
-        }
-        if (course.getEctsCredits() != null)
-        {
-            info.setECTSCredits(course.getEctsCredits().toString());
-        }
-        if (course.getCredits() != null)
-        {
-            info.setCredits(course.getCredits().toString());
-        }
+	if (year != null) {
+	    info.setCurricularYear(new Integer(year).toString());
+	}
+	info.setCode(course.getAcronym());
+	info.setName(course.getName());
+	if (course.getWeigth() != null) {
+	    info.setWeigth(course.getWeigth().toString());
+	}
+	if (course.getEctsCredits() != null) {
+	    info.setECTSCredits(course.getEctsCredits().toString());
+	}
+	if (course.getCredits() != null) {
+	    info.setCredits(course.getCredits().toString());
+	}
 
-        return info;
+	return info;
     }
 
-
-    public String getWeigth()
-    {
-        return this.weigth;
+    public String getWeigth() {
+	return this.weigth;
     }
 
-
-    public void setWeigth(String weigth)
-    {
-        this.weigth = weigth;
+    public void setWeigth(String weigth) {
+	this.weigth = weigth;
     }
 
-
-    public String getCurricularYear()
-    {
-        return this.curricularYear;
+    public String getCurricularYear() {
+	return this.curricularYear;
     }
 
-
-    public void setCurricularYear(String curricularYear)
-    {
-        this.curricularYear = curricularYear;
+    public void setCurricularYear(String curricularYear) {
+	this.curricularYear = curricularYear;
     }
 }

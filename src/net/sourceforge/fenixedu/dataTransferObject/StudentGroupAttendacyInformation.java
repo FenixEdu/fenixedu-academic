@@ -11,8 +11,8 @@ import java.util.List;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 10/Set/2003, 21:48:21
- *  
+ *         Created at 10/Set/2003, 21:48:21
+ * 
  */
 public class StudentGroupAttendacyInformation extends InfoObject {
     private Integer groupNumber;
@@ -29,28 +29,28 @@ public class StudentGroupAttendacyInformation extends InfoObject {
      * @return
      */
     public Integer getGroupNumber() {
-        return groupNumber;
+	return groupNumber;
     }
 
     /**
      * @return
      */
     public String getShiftName() {
-        return shiftName;
+	return shiftName;
     }
 
     /**
      * @param integer
      */
     public void setGroupNumber(Integer integer) {
-        groupNumber = integer;
+	groupNumber = integer;
     }
 
     /**
      * @param string
      */
     public void setShiftName(String string) {
-        shiftName = string;
+	shiftName = string;
     }
 
     /**
@@ -58,55 +58,55 @@ public class StudentGroupAttendacyInformation extends InfoObject {
      */
 
     public String toString() {
-        String result = "[StudentGroupAttendacyInformation ";
-        result += "GroupNumber: " + this.getGroupNumber() + ";";
-        result += "GroupAttends:: " + this.getGroupAttends() + ";";
-        result += "ShiftName: " + this.getShiftName() + ";";
-        result += "Lessons:" + this.getLessons() + "]";
+	String result = "[StudentGroupAttendacyInformation ";
+	result += "GroupNumber: " + this.getGroupNumber() + ";";
+	result += "GroupAttends:: " + this.getGroupAttends() + ";";
+	result += "ShiftName: " + this.getShiftName() + ";";
+	result += "Lessons:" + this.getLessons() + "]";
 
-        return result;
+	return result;
     }
 
     /**
      * @return
      */
     public List getLessons() {
-        return lessons;
+	return lessons;
     }
 
     /**
      * @param list
      */
     public void setLessons(List list) {
-        lessons = list;
+	lessons = list;
     }
 
     /**
      * @return
      */
     public List getDegreesNames() {
-        return degreesNames;
+	return degreesNames;
     }
 
     /**
      * @param list
      */
     public void setDegreesNames(List list) {
-        degreesNames = list;
+	degreesNames = list;
     }
 
     /**
      * @return
      */
     public List getGroupAttends() {
-        return groupAttends;
+	return groupAttends;
     }
 
     /**
      * @param list
      */
     public void setGroupAttends(List list) {
-        groupAttends = list;
+	groupAttends = list;
     }
 
 }

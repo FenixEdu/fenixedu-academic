@@ -321,18 +321,19 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 	request.setAttribute("shift", shift);
 
 	/*
-	 * Integer degreeId = getFromRequest("degreeID", request); if (degreeId ==
-	 * null ) degreeId =
-	 * infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
-	 * request.setAttribute("degreeID", degreeId);
+	 * Integer degreeId = getFromRequest("degreeID", request); if (degreeId
+	 * == null ) degreeId =
+	 * infoExecutionDegree.getInfoDegreeCurricularPlan()
+	 * .getInfoDegree().getIdInternal(); request.setAttribute("degreeID",
+	 * degreeId);
 	 * 
 	 * Integer executionDegreeId = getFromRequest("executionDegreeID",
 	 * request); if (executionDegreeId == null) executionDegreeId =
 	 * infoExecutionDegree.getIdInternal();
 	 * request.setAttribute("executionDegreeID", executionDegreeId); Integer
 	 * degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID",
-	 * request); if (degreeCurricularPlanId == null) degreeCurricularPlanId =
-	 * infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
+	 * request); if (degreeCurricularPlanId == null) degreeCurricularPlanId
+	 * = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
 	 * request.setAttribute("degreeCurricularPlanID",
 	 * degreeCurricularPlanId);
 	 */

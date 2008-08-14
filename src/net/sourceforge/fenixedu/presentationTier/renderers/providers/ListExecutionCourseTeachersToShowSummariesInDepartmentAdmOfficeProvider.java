@@ -14,13 +14,13 @@ public class ListExecutionCourseTeachersToShowSummariesInDepartmentAdmOfficeProv
 
     public Object provide(Object source, Object currentValue) {
 	ExecutionCourse executionCourse = ((ShowSummariesBean) source).getExecutionCourse();
-	Professorship professorshipLogged = ((ShowSummariesBean) source).getProfessorshipLogged();    	
-	List<SummaryTeacherBean> teachers = new ArrayList<SummaryTeacherBean>();    	
-    	if(executionCourse != null && professorshipLogged != null) {    	        	       	   
-    	    teachers.add(teachers.size(), new SummaryTeacherBean(professorshipLogged));	    
-    	    teachers.add(teachers.size(), new SummaryTeacherBean(Boolean.TRUE));
-    	}
-    	return teachers;
+	Professorship professorshipLogged = ((ShowSummariesBean) source).getProfessorshipLogged();
+	List<SummaryTeacherBean> teachers = new ArrayList<SummaryTeacherBean>();
+	if (executionCourse != null && professorshipLogged != null) {
+	    teachers.add(teachers.size(), new SummaryTeacherBean(professorshipLogged));
+	    teachers.add(teachers.size(), new SummaryTeacherBean(Boolean.TRUE));
+	}
+	return teachers;
     }
 
     public Converter getConverter() {

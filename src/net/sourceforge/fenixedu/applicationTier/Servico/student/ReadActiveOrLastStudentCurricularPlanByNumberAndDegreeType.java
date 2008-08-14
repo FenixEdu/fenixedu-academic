@@ -14,20 +14,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType extends Service {
 
-    public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
-            {
-        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
-                degreeType);
-        if (registration == null) {
-            return null;
-        }
-        StudentCurricularPlan studentCurricularPlan = registration
-                .getLastStudentCurricularPlan();
+    public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
+	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+	if (registration == null) {
+	    return null;
+	}
+	StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
-        if (studentCurricularPlan != null) {
-            return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
-        }
-        return null;
+	if (studentCurricularPlan != null) {
+	    return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+	}
+	return null;
     }
 
 }

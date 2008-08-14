@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.PublicationType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoPublicationsNumber extends InfoObject {
     private PublicationType publicationType;
@@ -31,7 +31,7 @@ public class InfoPublicationsNumber extends InfoObject {
      *  
      */
     public InfoPublicationsNumber() {
-        super();
+	super();
 
     }
 
@@ -39,7 +39,7 @@ public class InfoPublicationsNumber extends InfoObject {
      * @return Returns the international.
      */
     public Integer getInternational() {
-        return international;
+	return international;
     }
 
     /**
@@ -47,14 +47,14 @@ public class InfoPublicationsNumber extends InfoObject {
      *            The international to set.
      */
     public void setInternational(Integer international) {
-        this.international = international;
+	this.international = international;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
     public Date getLastModificationDate() {
-        return lastModificationDate;
+	return lastModificationDate;
     }
 
     /**
@@ -62,14 +62,14 @@ public class InfoPublicationsNumber extends InfoObject {
      *            The lastModificationDate to set.
      */
     public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
+	this.lastModificationDate = lastModificationDate;
     }
 
     /**
      * @return Returns the national.
      */
     public Integer getNational() {
-        return national;
+	return national;
     }
 
     /**
@@ -77,14 +77,14 @@ public class InfoPublicationsNumber extends InfoObject {
      *            The national to set.
      */
     public void setNational(Integer national) {
-        this.national = national;
+	this.national = national;
     }
 
     /**
      * @return Returns the publicationType.
      */
     public PublicationType getPublicationType() {
-        return publicationType;
+	return publicationType;
     }
 
     /**
@@ -92,14 +92,14 @@ public class InfoPublicationsNumber extends InfoObject {
      *            The publicationType to set.
      */
     public void setPublicationType(PublicationType publicationType) {
-        this.publicationType = publicationType;
+	this.publicationType = publicationType;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -107,30 +107,32 @@ public class InfoPublicationsNumber extends InfoObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(PublicationsNumber publicationsNumber) {
-        super.copyFromDomain(publicationsNumber);
-        if (publicationsNumber != null) {
-            setInternational(publicationsNumber.getInternational());
-            setNational(publicationsNumber.getNational());
-            setPublicationType(publicationsNumber.getPublicationType());
-            setLastModificationDate(publicationsNumber.getLastModificationDate());
-        }
+	super.copyFromDomain(publicationsNumber);
+	if (publicationsNumber != null) {
+	    setInternational(publicationsNumber.getInternational());
+	    setNational(publicationsNumber.getNational());
+	    setPublicationType(publicationsNumber.getPublicationType());
+	    setLastModificationDate(publicationsNumber.getLastModificationDate());
+	}
     }
 
     public static InfoPublicationsNumber newInfoFromDomain(PublicationsNumber publicationsNumber) {
-        InfoPublicationsNumber infoPublicationsNumber = null;
-        if (publicationsNumber != null) {
-            infoPublicationsNumber = new InfoPublicationsNumber();
-            infoPublicationsNumber.copyFromDomain(publicationsNumber);
-        }
-        return infoPublicationsNumber;
+	InfoPublicationsNumber infoPublicationsNumber = null;
+	if (publicationsNumber != null) {
+	    infoPublicationsNumber = new InfoPublicationsNumber();
+	    infoPublicationsNumber.copyFromDomain(publicationsNumber);
+	}
+	return infoPublicationsNumber;
     }
 }

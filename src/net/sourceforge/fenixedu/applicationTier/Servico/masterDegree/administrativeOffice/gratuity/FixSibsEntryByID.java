@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class FixSibsEntryByID extends Service {
 
-	public void run(Integer sibsEntryId) throws FenixServiceException{
-		SibsPaymentFileEntry sibsPaymentFileEntry = rootDomainObject.readSibsPaymentFileEntryByOID(sibsEntryId);
-		if (sibsPaymentFileEntry == null) {
-			throw new FenixServiceException();
-		}
-
-		sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.PROCESSED_PAYMENT);
+    public void run(Integer sibsEntryId) throws FenixServiceException {
+	SibsPaymentFileEntry sibsPaymentFileEntry = rootDomainObject.readSibsPaymentFileEntryByOID(sibsEntryId);
+	if (sibsPaymentFileEntry == null) {
+	    throw new FenixServiceException();
 	}
+
+	sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.PROCESSED_PAYMENT);
+    }
 
 }

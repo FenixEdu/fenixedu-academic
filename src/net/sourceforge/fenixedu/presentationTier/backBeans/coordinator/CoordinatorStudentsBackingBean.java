@@ -238,7 +238,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 		    }
 
 		    return left.getRegistration().getAverage().compareTo(right.getRegistration().getAverage());
-		    		
+
 		}
 
 		private boolean isConcludedAndRegistrationConclusionProcessed(final Registration registration) {

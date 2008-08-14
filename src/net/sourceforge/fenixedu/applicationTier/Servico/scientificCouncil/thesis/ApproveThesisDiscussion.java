@@ -54,23 +54,19 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	IFileManager fileManager = DSpaceFileManagerFactory.getFactoryInstance().getSimpleFileManager();
 	InputStream stream = fileManager.retrieveFile(dissertation.getExternalStorageIdentification());
 
-	FileDescriptor descriptor = fileManager.saveFile(getVirtualPath(thesis), dissertation.getFilename(), thesis.getVisibility().equals(ThesisVisibilityType.INTRANET), getMetadata(thesis), stream);
-	net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = 
-	    new net.sourceforge.fenixedu.domain.research.result.publication.Thesis(
-		    author,
-		    ThesisType.Graduation_Thesis,
-		    thesis.getFinalFullTitle().getContent(thesis.getLanguage()), 
-		    thesis.getKeywords(), 
-		    RootDomainObject.getInstance().getInstitutionUnit().getName(), 
-		    thesis.getDiscussed().getYear(), // publication year 
-		    getAddress(RootDomainObject.getInstance().getInstitutionUnit()), // address
-		    thesis.getThesisAbstract(), 
-		    null, // number of pages
-		    RenderUtils.getEnumString(thesis.getLanguage()), // language 
-		    getMonth(thesis), // publication month
-		    null, // year begin
-		    null, // month begin
-		    null); // url
+	FileDescriptor descriptor = fileManager.saveFile(getVirtualPath(thesis), dissertation.getFilename(), thesis
+		.getVisibility().equals(ThesisVisibilityType.INTRANET), getMetadata(thesis), stream);
+	net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = new net.sourceforge.fenixedu.domain.research.result.publication.Thesis(
+		author, ThesisType.Graduation_Thesis, thesis.getFinalFullTitle().getContent(thesis.getLanguage()), thesis
+			.getKeywords(), RootDomainObject.getInstance().getInstitutionUnit().getName(), thesis.getDiscussed()
+			.getYear(), // publication year
+		getAddress(RootDomainObject.getInstance().getInstitutionUnit()), // address
+		thesis.getThesisAbstract(), null, // number of pages
+		RenderUtils.getEnumString(thesis.getLanguage()), // language
+		getMonth(thesis), // publication month
+		null, // year begin
+		null, // month begin
+		null); // url
 
 	FileResultPermittedGroupType groupType;
 	switch (thesis.getVisibility()) {
@@ -82,13 +78,13 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	    break;
 	default:
 	    groupType = FileResultPermittedGroupType.INSTITUTION;
-	break;
+	    break;
 	}
 
 	Group group = ResearchResultDocumentFile.getPermittedGroup(groupType);
-	publication.addDocumentFile(descriptor.getFilename(), descriptor.getFilename(), groupType, descriptor
-		.getMimeType(), descriptor.getChecksum(), descriptor.getChecksumAlgorithm(), descriptor.getSize(),
-		descriptor.getUniqueId(), group);
+	publication.addDocumentFile(descriptor.getFilename(), descriptor.getFilename(), groupType, descriptor.getMimeType(),
+		descriptor.getChecksum(), descriptor.getChecksumAlgorithm(), descriptor.getSize(), descriptor.getUniqueId(),
+		group);
 
 	publication.setThesis(thesis);
 	author.addPersonRoleByRoleType(RoleType.RESEARCHER);
@@ -126,11 +122,8 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     }
 
     private VirtualPath getVirtualPath(Thesis thesis) {
-	VirtualPathNode[] nodes = { 
-		new VirtualPathNode("Research", "Research"), 
-		new VirtualPathNode("Results", "Results"), 
-		new VirtualPathNode("Publications", "Publications")
-	};
+	VirtualPathNode[] nodes = { new VirtualPathNode("Research", "Research"), new VirtualPathNode("Results", "Results"),
+		new VirtualPathNode("Publications", "Publications") };
 
 	VirtualPath path = new VirtualPath();
 	for (VirtualPathNode node : nodes) {
@@ -155,13 +148,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	String currentPersonName = currentPerson.getNickname();
 
 	bean.setSubject(getMessage(SUBJECT_KEY, title));
-	bean.setMessage(getMessage(BODY_KEY,
-		year,
-		degreeName,
-		studentName, studentNumber,
-		date,
-		currentPersonName
-	));
+	bean.setMessage(getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, date, currentPersonName));
     }
 
     @Override
@@ -169,7 +156,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	Person student = thesis.getStudent().getPerson();
 	Person president = getPerson(thesis.getPresident());
 
-	Set<Person> persons = personSet(student, president); 
+	Set<Person> persons = personSet(student, president);
 
 	ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
 	for (ScientificCommission member : thesis.getDegree().getScientificCommissionMembers(executionYear)) {

@@ -37,21 +37,19 @@ public class BibliographicReferences implements Serializable {
 	return getBibliographicReferencesList().get(oid);
     }
 
-    public void createBibliographicReference(String year, String title, String authors,
-	    String reference, String url, BibliographicReferenceType type) {
+    public void createBibliographicReference(String year, String title, String authors, String reference, String url,
+	    BibliographicReferenceType type) {
 	getBibliographicReferencesList().add(
-		new BibliographicReference(year, title, authors, reference, url, type,
-			getBibliographicReferencesListCount()));
+		new BibliographicReference(year, title, authors, reference, url, type, getBibliographicReferencesListCount()));
     }
 
-    public void createBibliographicReference(String year, String title, String authors,
-	    String reference, String url, BibliographicReferenceType type, int order) {
-	getBibliographicReferencesList().add(
-		new BibliographicReference(year, title, authors, reference, url, type, order));
+    public void createBibliographicReference(String year, String title, String authors, String reference, String url,
+	    BibliographicReferenceType type, int order) {
+	getBibliographicReferencesList().add(new BibliographicReference(year, title, authors, reference, url, type, order));
     }
 
-    public void editBibliographicReference(int oid, String year, String title, String authors,
-	    String reference, String url, BibliographicReferenceType type) {
+    public void editBibliographicReference(int oid, String year, String title, String authors, String reference, String url,
+	    BibliographicReferenceType type) {
 	getBibliographicReferencesList().get(oid).edit(year, title, authors, reference, url, type);
     }
 
@@ -74,8 +72,7 @@ public class BibliographicReferences implements Serializable {
     }
 
     private boolean validPositions(int oldPosition, int newPosition) {
-	if (oldPosition == newPosition || newPosition < 0
-		|| newPosition == getBibliographicReferencesListCount()) {
+	if (oldPosition == newPosition || newPosition < 0 || newPosition == getBibliographicReferencesListCount()) {
 	    return false;
 	}
 	return true;
@@ -91,8 +88,7 @@ public class BibliographicReferences implements Serializable {
 	}
     }
 
-    public static class BibliographicReference implements Comparable<BibliographicReference>,
-	    Serializable {
+    public static class BibliographicReference implements Comparable<BibliographicReference>, Serializable {
 	private String year;
 
 	private String title;
@@ -107,22 +103,21 @@ public class BibliographicReferences implements Serializable {
 
 	private int order;
 
-	public BibliographicReference(String year, String title, String authors, String reference,
-		String url, BibliographicReferenceType type, int order) {
+	public BibliographicReference(String year, String title, String authors, String reference, String url,
+		BibliographicReferenceType type, int order) {
 	    if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(authors)) {
 		setInformation(year, title, authors, reference, url, type, order);
 	    }
 	}
 
-	public void edit(String year, String title, String authors, String reference, String url,
-		BibliographicReferenceType type) {
+	public void edit(String year, String title, String authors, String reference, String url, BibliographicReferenceType type) {
 	    if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(authors)) {
 		setInformation(year, title, authors, reference, url, type, getOrder());
 	    }
 	}
 
-	private void setInformation(String year, String title, String authors, String reference,
-		String url, BibliographicReferenceType type, int order) {
+	private void setInformation(String year, String title, String authors, String reference, String url,
+		BibliographicReferenceType type, int order) {
 	    setYear(year);
 	    setTitle(title);
 	    setAuthors(authors);

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 
 public class UpdateMetaInformation extends Service {
 
-	public void run(ResearchResult result) {
-		ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
-	}
+    public void run(ResearchResult result) {
+	ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
+    }
 }

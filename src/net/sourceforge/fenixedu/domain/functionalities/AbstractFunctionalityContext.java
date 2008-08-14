@@ -28,24 +28,24 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
     protected String encoding = "ISO-8859-1";
 
     public AbstractFunctionalityContext(HttpServletRequest request) {
-        super();
-        
-        this.request = request;
-        this.userView = UserView.getUser();
-        this.userView = UserView.getUser();
+	super();
+
+	this.request = request;
+	this.userView = UserView.getUser();
+	this.userView = UserView.getUser();
     }
 
     public HttpServletRequest getRequest() {
-        return this.request;
+	return this.request;
     }
 
     public IUserView getUserView() {
-        return this.userView;
+	return this.userView;
     }
 
     public User getLoggedUser() {
-        final IUserView userView = getUserView();
-        return userView == null ? null : userView.getPerson().getUser();
+	final IUserView userView = getUserView();
+	return userView == null ? null : userView.getPerson().getUser();
     }
 
     protected String getPath(final String encoding) {
@@ -82,14 +82,14 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
 	// TODO Auto-generated method stub
 	return null;
     }
-    
+
     public abstract Container getSelectedTopLevelContainer();
-    
+
     public static FunctionalityContext getCurrentContext(HttpServletRequest request) {
 	FunctionalityContext context = (FunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
 	return context;
     }
-    
+
     public Content getLastContentInPath(Class type) {
 	return getSelectedContainer();
     }
@@ -97,7 +97,7 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
     public List<Content> getSelectedContents() {
 	return Collections.emptyList();
     }
-    
+
     public Content getSelectedContent() {
 	return null;
     }

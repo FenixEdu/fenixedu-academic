@@ -26,68 +26,67 @@ public class LabelFormatterTagLib extends BodyTagSupport implements PropertyCont
 
     public LabelFormatterTagLib() {
 
-        this.properties = new Properties();
+	this.properties = new Properties();
     }
 
     public void addProperty(String name, String value) {
-        this.properties.put(name, value);
+	this.properties.put(name, value);
     }
 
     @Override
     public int doEndTag() throws JspException {
 
-        final LabelFormatter labelFormatter = (LabelFormatter) TagUtils.getInstance().lookup(
-                this.pageContext, this.name, this.property, this.scope);
+	final LabelFormatter labelFormatter = (LabelFormatter) TagUtils.getInstance().lookup(this.pageContext, this.name,
+		this.property, this.scope);
 
-        final JspWriter out = this.pageContext.getOut();
+	final JspWriter out = this.pageContext.getOut();
 
-        try {
-            out.write(labelFormatter.toString(new StrutsMessageResourceProvider(this.properties,
-                    getUserLocale(), this.pageContext.getServletContext(),
-                    (HttpServletRequest) this.pageContext.getRequest())));
-        } catch (IOException e) {
-            throw new JspException(e);
-        }
+	try {
+	    out.write(labelFormatter.toString(new StrutsMessageResourceProvider(this.properties, getUserLocale(),
+		    this.pageContext.getServletContext(), (HttpServletRequest) this.pageContext.getRequest())));
+	} catch (IOException e) {
+	    throw new JspException(e);
+	}
 
-        return EVAL_PAGE;
+	return EVAL_PAGE;
     }
 
     private Locale getUserLocale() {
-        return TagUtils.getInstance().getUserLocale(this.pageContext, null);
+	return TagUtils.getInstance().getUserLocale(this.pageContext, null);
     }
 
     @Override
     public void release() {
-        super.release();
+	super.release();
 
-        this.properties = new Properties();
-        this.name = null;
-        this.property = null;
-        this.scope = null;
+	this.properties = new Properties();
+	this.name = null;
+	this.property = null;
+	this.scope = null;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public String getProperty() {
-        return property;
+	return property;
     }
 
     public void setProperty(String property) {
-        this.property = property;
+	this.property = property;
     }
 
     public String getScope() {
-        return scope;
+	return scope;
     }
 
     public void setScope(String scope) {
-        this.scope = scope;
+	this.scope = scope;
     }
 
 }

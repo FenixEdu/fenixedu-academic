@@ -25,7 +25,7 @@ public class InsertTestQuestion extends Service {
     private String path = new String();
 
     public void run(Integer executionCourseId, Integer testId, String[] metadataId, Integer questionOrder, Double questionValue,
-	    CorrectionFormula formula, String path) throws FenixServiceException{
+	    CorrectionFormula formula, String path) throws FenixServiceException {
 	this.path = path.replace('\\', '/');
 
 	for (int i = 0; i < metadataId.length; i++) {

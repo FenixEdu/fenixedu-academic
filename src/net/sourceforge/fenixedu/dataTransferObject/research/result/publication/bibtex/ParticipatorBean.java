@@ -54,7 +54,7 @@ public class ParticipatorBean implements Serializable {
 	    return false;
 
 	ParticipatorBean bean = (ParticipatorBean) obj;
-	return ((bean.getPerson() == null && this.getPerson() == null) || (bean.getPerson() != null
-		&& this.getPerson() != null && bean.getPerson().equals(this.getPerson())));
+	return ((bean.getPerson() == null && this.getPerson() == null) || (bean.getPerson() != null && this.getPerson() != null && bean
+		.getPerson().equals(this.getPerson())));
     }
 }

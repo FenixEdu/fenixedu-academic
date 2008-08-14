@@ -13,8 +13,7 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 public abstract class CandidacyOperation extends Operation {
 
     public static Comparator<CandidacyOperation> COMPARATOR_BY_TYPE = new Comparator<CandidacyOperation>() {
-	public int compare(CandidacyOperation leftCandidacyOperation,
-		CandidacyOperation rightCandidacyOperation) {
+	public int compare(CandidacyOperation leftCandidacyOperation, CandidacyOperation rightCandidacyOperation) {
 	    return leftCandidacyOperation.getType().compareTo(rightCandidacyOperation.getType());
 
 	}

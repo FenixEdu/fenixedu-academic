@@ -19,19 +19,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateGrouping extends Service {
 
-    public boolean run(Integer executionCourseID, InfoGrouping infoGrouping)
-            throws FenixServiceException{
+    public boolean run(Integer executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-        if (executionCourse == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	if (executionCourse == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        Grouping.create(infoGrouping.getName(), infoGrouping.getEnrolmentBeginDay().getTime(),
-                infoGrouping.getEnrolmentEndDay().getTime(), infoGrouping.getEnrolmentPolicy(),
-                infoGrouping.getGroupMaximumNumber(), infoGrouping.getIdealCapacity(), infoGrouping
-                        .getMaximumCapacity(), infoGrouping.getMinimumCapacity(), infoGrouping
-                        .getProjectDescription(), infoGrouping.getShiftType(), executionCourse);
-        return true;
+	Grouping.create(infoGrouping.getName(), infoGrouping.getEnrolmentBeginDay().getTime(), infoGrouping.getEnrolmentEndDay()
+		.getTime(), infoGrouping.getEnrolmentPolicy(), infoGrouping.getGroupMaximumNumber(), infoGrouping
+		.getIdealCapacity(), infoGrouping.getMaximumCapacity(), infoGrouping.getMinimumCapacity(), infoGrouping
+		.getProjectDescription(), infoGrouping.getShiftType(), executionCourse);
+	return true;
     }
 }

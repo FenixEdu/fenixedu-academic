@@ -18,26 +18,26 @@ public class DeclarationBean implements Serializable {
     private DateTime availableAfter;
 
     public DeclarationBean(Thesis thesis) {
-        super();
-        
-        setVisibility(thesis.getVisibility());
-        setAvailableAfter(thesis.getDocumentsAvailableAfter());
+	super();
+
+	setVisibility(thesis.getVisibility());
+	setAvailableAfter(thesis.getDocumentsAvailableAfter());
     }
 
     public ThesisVisibilityType getVisibility() {
-        return this.visibility;
+	return this.visibility;
     }
 
     public void setVisibility(ThesisVisibilityType visibility) {
-        this.visibility = visibility;
+	this.visibility = visibility;
     }
 
     public DateTime getAvailableAfter() {
-        return this.availableAfter;
+	return this.availableAfter;
     }
 
     public void setAvailableAfter(DateTime availableAfter) {
-        this.availableAfter = availableAfter;
+	this.availableAfter = availableAfter;
     }
-    
+
 }

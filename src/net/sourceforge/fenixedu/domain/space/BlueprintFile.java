@@ -10,11 +10,10 @@ public class BlueprintFile extends BlueprintFile_Base {
 
     static {
 	BlueprintBlueprintFile.addListener(new BlueprintBlueprintFileListener());
-    }  
+    }
 
-    public BlueprintFile(Blueprint blueprint, String filename, String displayName, String mimeType,
-	    String checksum, String checksumAlgorithm, Integer size,
-	    String externalStorageIdentification, Group permittedGroup) {
+    public BlueprintFile(Blueprint blueprint, String filename, String displayName, String mimeType, String checksum,
+	    String checksumAlgorithm, Integer size, String externalStorageIdentification, Group permittedGroup) {
 
 	super();
 	setBlueprint(blueprint);
@@ -37,11 +36,12 @@ public class BlueprintFile extends BlueprintFile_Base {
     }
 
     private void deleteFile() {
-    	new DeleteFileRequest(AccessControl.getPerson(),getExternalStorageIdentification());
+	new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification());
     }
 
     public String getDirectDownloadUrlFormat() {
-        return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(), getDisplayName());
+	return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(),
+		getDisplayName());
     }
 
     private static class BlueprintBlueprintFileListener extends dml.runtime.RelationAdapter<BlueprintFile, Blueprint> {

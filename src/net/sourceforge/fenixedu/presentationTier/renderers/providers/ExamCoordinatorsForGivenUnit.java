@@ -19,25 +19,25 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExamCoordinatorsForGivenUnit implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        VigilantGroupBean bean = (VigilantGroupBean) source;
-        ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-        Unit unit = bean.getSelectedUnit();
-        List<ExamCoordinator> coordinators = new ArrayList<ExamCoordinator>();
-        if (unit != null) {
-            coordinators.addAll(unit.getExamCoordinatorsForGivenYear(currentYear));
-        }
-        VigilantGroup group = bean.getSelectedVigilantGroup();
-        if (group != null) {
-            coordinators.removeAll(group.getExamCoordinators());
-        }
+	VigilantGroupBean bean = (VigilantGroupBean) source;
+	ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+	Unit unit = bean.getSelectedUnit();
+	List<ExamCoordinator> coordinators = new ArrayList<ExamCoordinator>();
+	if (unit != null) {
+	    coordinators.addAll(unit.getExamCoordinatorsForGivenYear(currentYear));
+	}
+	VigilantGroup group = bean.getSelectedVigilantGroup();
+	if (group != null) {
+	    coordinators.removeAll(group.getExamCoordinators());
+	}
 
-        Collections.sort(coordinators, new BeanComparator("person.name"));
-        return coordinators;
+	Collections.sort(coordinators, new BeanComparator("person.name"));
+	return coordinators;
 
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 
 }

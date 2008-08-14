@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorsh
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 
 public class DeleteTSDProfessorship extends Service {
-	public void run(Integer tsdProfessorshipId) {
-		TSDProfessorship tsdProfessorship = rootDomainObject.readTSDProfessorshipByOID(tsdProfessorshipId);
-		TSDTeacher tsdTeacher = tsdProfessorship.getTSDTeacher();
-		TSDCourse tsdCourse = tsdProfessorship.getTSDCourse();
-		
-		for(TSDProfessorship professorship : tsdTeacher.getTSDProfessorShipsByCourse(tsdCourse)){
-			professorship.delete();
-		}
+    public void run(Integer tsdProfessorshipId) {
+	TSDProfessorship tsdProfessorship = rootDomainObject.readTSDProfessorshipByOID(tsdProfessorshipId);
+	TSDTeacher tsdTeacher = tsdProfessorship.getTSDTeacher();
+	TSDCourse tsdCourse = tsdProfessorship.getTSDCourse();
+
+	for (TSDProfessorship professorship : tsdTeacher.getTSDProfessorShipsByCourse(tsdCourse)) {
+	    professorship.delete();
 	}
+    }
 }

@@ -12,59 +12,59 @@ public class MergeEventEditionPageContainerBean extends MergeResearchActivityPag
     private String organization;
     private YearMonthDay startDate;
     private YearMonthDay endDate;
-    
+
     private DomainReference<ResearchEvent> event;
-    
+
     public MergeEventEditionPageContainerBean(ResearchEvent event) {
 	this.event = new DomainReference<ResearchEvent>(event);
     }
 
     public String getEdition() {
-        return edition;
+	return edition;
     }
 
     public void setEdition(String edition) {
-        this.edition = edition;
+	this.edition = edition;
     }
 
     public String getEventLocation() {
-        return eventLocation;
+	return eventLocation;
     }
 
     public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
+	this.eventLocation = eventLocation;
     }
 
     public String getUrl() {
-        return url;
+	return url;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+	this.url = url;
     }
 
     public String getOrganization() {
-        return organization;
+	return organization;
     }
 
     public void setOrganization(String organization) {
-        this.organization = organization;
+	this.organization = organization;
     }
 
     public YearMonthDay getStartDate() {
-        return startDate;
+	return startDate;
     }
 
     public void setStartDate(YearMonthDay startDate) {
-        this.startDate = startDate;
+	this.startDate = startDate;
     }
 
     public YearMonthDay getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public void setEndDate(YearMonthDay endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     public ResearchEvent getEvent() {

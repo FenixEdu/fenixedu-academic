@@ -7,9 +7,9 @@ public enum GuideState {
     PAYED,
 
     ANNULLED;
-    
+
     public String getName() {
-        return name();
+	return name();
     }
 
 }

@@ -9,6 +9,6 @@ import org.joda.time.DateTime;
 public class AcceptThesisDeclaration extends Service {
 
     public void run(Thesis thesis, ThesisVisibilityType visibility, DateTime availableAfter) {
-        thesis.acceptDeclaration(visibility, availableAfter);
+	thesis.acceptDeclaration(visibility, availableAfter);
     }
 }

@@ -13,7 +13,7 @@ public class Over23IndividualCandidacySelectedDegreesProvider implements DataPro
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

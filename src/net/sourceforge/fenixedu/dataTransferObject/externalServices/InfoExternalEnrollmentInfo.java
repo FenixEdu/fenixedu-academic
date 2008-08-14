@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
  * 
- * Created at 3:59:51 PM, Mar 11, 2005
+ *         Created at 3:59:51 PM, Mar 11, 2005
  */
 public class InfoExternalEnrollmentInfo {
     private Collection evaluations;
@@ -57,7 +57,7 @@ public class InfoExternalEnrollmentInfo {
 
     /**
      * @param course
-     *                The course to set.
+     *            The course to set.
      */
     public void setCourse(InfoExternalCurricularCourseInfo course) {
 	this.course = course;
@@ -109,7 +109,7 @@ public class InfoExternalEnrollmentInfo {
 
     /**
      * @param evaluations
-     *                The evaluations to set.
+     *            The evaluations to set.
      */
     public void setEvaluations(Collection evaluations) {
 	this.evaluations = evaluations;

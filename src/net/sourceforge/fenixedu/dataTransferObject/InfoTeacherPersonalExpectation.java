@@ -83,319 +83,317 @@ public class InfoTeacherPersonalExpectation extends InfoObject {
     protected String tutorComment;
 
     public Integer getBookPublications() {
-        return bookPublications;
+	return bookPublications;
     }
 
     public void setBookPublications(Integer bookPublications) {
-        this.bookPublications = bookPublications;
+	this.bookPublications = bookPublications;
     }
 
     public String getCientificComunityService() {
-        return cientificComunityService;
+	return cientificComunityService;
     }
 
     public void setCientificComunityService(String cientificComunityService) {
-        this.cientificComunityService = cientificComunityService;
+	this.cientificComunityService = cientificComunityService;
     }
 
     public Integer getCientificPosGraduations() {
-        return cientificPosGraduations;
+	return cientificPosGraduations;
     }
 
     public void setCientificPosGraduations(Integer cientificPosGraduations) {
-        this.cientificPosGraduations = cientificPosGraduations;
+	this.cientificPosGraduations = cientificPosGraduations;
     }
 
     public String getCientificPosGraduationsDescription() {
-        return cientificPosGraduationsDescription;
+	return cientificPosGraduationsDescription;
     }
 
     public void setCientificPosGraduationsDescription(String cientificPosGraduationsDescription) {
-        this.cientificPosGraduationsDescription = cientificPosGraduationsDescription;
+	this.cientificPosGraduationsDescription = cientificPosGraduationsDescription;
     }
 
     public String getCompanyPositions() {
-        return companyPositions;
+	return companyPositions;
     }
 
     public void setCompanyPositions(String companyPositions) {
-        this.companyPositions = companyPositions;
+	this.companyPositions = companyPositions;
     }
 
     public String getCompanySocialOrgans() {
-        return companySocialOrgans;
+	return companySocialOrgans;
     }
 
     public void setCompanySocialOrgans(String companySocialOrgans) {
-        this.companySocialOrgans = companySocialOrgans;
+	this.companySocialOrgans = companySocialOrgans;
     }
 
     public Integer getConferencePublications() {
-        return conferencePublications;
+	return conferencePublications;
     }
 
     public void setConferencePublications(Integer conferencePublications) {
-        this.conferencePublications = conferencePublications;
+	this.conferencePublications = conferencePublications;
     }
 
     public String getConsulting() {
-        return consulting;
+	return consulting;
     }
 
     public void setConsulting(String consulting) {
-        this.consulting = consulting;
+	this.consulting = consulting;
     }
 
     public String getDepartmentOrgans() {
-        return departmentOrgans;
+	return departmentOrgans;
     }
 
     public void setDepartmentOrgans(String departmentOrgans) {
-        this.departmentOrgans = departmentOrgans;
+	this.departmentOrgans = departmentOrgans;
     }
 
     public String getEducationMainFocus() {
-        return educationMainFocus;
+	return educationMainFocus;
     }
 
     public void setEducationMainFocus(String educationMainFocus) {
-        this.educationMainFocus = educationMainFocus;
+	this.educationMainFocus = educationMainFocus;
     }
 
     public Integer getFinalDegreeWorkOrientations() {
-        return finalDegreeWorkOrientations;
+	return finalDegreeWorkOrientations;
     }
 
     public void setFinalDegreeWorkOrientations(Integer finalDegreeWorkOrientations) {
-        this.finalDegreeWorkOrientations = finalDegreeWorkOrientations;
+	this.finalDegreeWorkOrientations = finalDegreeWorkOrientations;
     }
 
     public Integer getGraduations() {
-        return graduations;
+	return graduations;
     }
 
     public void setGraduations(Integer graduations) {
-        this.graduations = graduations;
+	this.graduations = graduations;
     }
 
     public String getGraduationsDescription() {
-        return graduationsDescription;
+	return graduationsDescription;
     }
 
     public void setGraduationsDescription(String graduationsDescription) {
-        this.graduationsDescription = graduationsDescription;
+	this.graduationsDescription = graduationsDescription;
     }
 
     public String getIstOrgans() {
-        return istOrgans;
+	return istOrgans;
     }
 
     public void setIstOrgans(String istOrgans) {
-        this.istOrgans = istOrgans;
+	this.istOrgans = istOrgans;
     }
 
     public Integer getJornalArticlePublications() {
-        return jornalArticlePublications;
+	return jornalArticlePublications;
     }
 
     public void setJornalArticlePublications(Integer jornalArticlePublications) {
-        this.jornalArticlePublications = jornalArticlePublications;
+	this.jornalArticlePublications = jornalArticlePublications;
     }
 
     public Integer getMasterDegreeOrientations() {
-        return masterDegreeOrientations;
+	return masterDegreeOrientations;
     }
 
     public void setMasterDegreeOrientations(Integer masterDegreeOrientations) {
-        this.masterDegreeOrientations = masterDegreeOrientations;
+	this.masterDegreeOrientations = masterDegreeOrientations;
     }
 
     public String getOrientationsMainFocus() {
-        return orientationsMainFocus;
+	return orientationsMainFocus;
     }
 
     public void setOrientationsMainFocus(String orientationsMainFocus) {
-        this.orientationsMainFocus = orientationsMainFocus;
+	this.orientationsMainFocus = orientationsMainFocus;
     }
 
     public Integer getOtherPublications() {
-        return otherPublications;
+	return otherPublications;
     }
 
     public void setOtherPublications(Integer otherPublications) {
-        this.otherPublications = otherPublications;
+	this.otherPublications = otherPublications;
     }
 
     public String getOtherPublicationsDescription() {
-        return otherPublicationsDescription;
+	return otherPublicationsDescription;
     }
 
     public void setOtherPublicationsDescription(String otherPublicationsDescription) {
-        this.otherPublicationsDescription = otherPublicationsDescription;
+	this.otherPublicationsDescription = otherPublicationsDescription;
     }
 
     public Integer getPatentPublications() {
-        return patentPublications;
+	return patentPublications;
     }
 
     public void setPatentPublications(Integer patentPublications) {
-        this.patentPublications = patentPublications;
+	this.patentPublications = patentPublications;
     }
 
     public Integer getPhdOrientations() {
-        return phdOrientations;
+	return phdOrientations;
     }
 
     public void setPhdOrientations(Integer phdOrientations) {
-        this.phdOrientations = phdOrientations;
+	this.phdOrientations = phdOrientations;
     }
 
     public String getProfessionalActivityMainFocus() {
-        return professionalActivityMainFocus;
+	return professionalActivityMainFocus;
     }
 
     public void setProfessionalActivityMainFocus(String professionalActivityMainFocus) {
-        this.professionalActivityMainFocus = professionalActivityMainFocus;
+	this.professionalActivityMainFocus = professionalActivityMainFocus;
     }
 
     public Integer getProfessionalPosGraduations() {
-        return professionalPosGraduations;
+	return professionalPosGraduations;
     }
 
     public void setProfessionalPosGraduations(Integer professionalPosGraduations) {
-        this.professionalPosGraduations = professionalPosGraduations;
+	this.professionalPosGraduations = professionalPosGraduations;
     }
 
     public String getProfessionalPosGraduationsDescription() {
-        return professionalPosGraduationsDescription;
+	return professionalPosGraduationsDescription;
     }
 
     public void setProfessionalPosGraduationsDescription(String professionalPosGraduationsDescription) {
-        this.professionalPosGraduationsDescription = professionalPosGraduationsDescription;
+	this.professionalPosGraduationsDescription = professionalPosGraduationsDescription;
     }
 
     public String getResearchAndDevMainFocus() {
-        return researchAndDevMainFocus;
+	return researchAndDevMainFocus;
     }
 
     public void setResearchAndDevMainFocus(String researchAndDevMainFocus) {
-        this.researchAndDevMainFocus = researchAndDevMainFocus;
+	this.researchAndDevMainFocus = researchAndDevMainFocus;
     }
 
     public Integer getResearchAndDevProjects() {
-        return researchAndDevProjects;
+	return researchAndDevProjects;
     }
 
     public void setResearchAndDevProjects(Integer researchAndDevProjects) {
-        this.researchAndDevProjects = researchAndDevProjects;
+	this.researchAndDevProjects = researchAndDevProjects;
     }
 
     public Integer getSeminaries() {
-        return seminaries;
+	return seminaries;
     }
 
     public void setSeminaries(Integer seminaries) {
-        this.seminaries = seminaries;
+	this.seminaries = seminaries;
     }
 
     public String getSeminariesDescription() {
-        return seminariesDescription;
+	return seminariesDescription;
     }
 
     public void setSeminariesDescription(String seminariesDescription) {
-        this.seminariesDescription = seminariesDescription;
+	this.seminariesDescription = seminariesDescription;
     }
 
     public String getSocietyService() {
-        return societyService;
+	return societyService;
     }
 
     public void setSocietyService(String societyService) {
-        this.societyService = societyService;
+	this.societyService = societyService;
     }
 
     public Integer getTechnicalReportPublications() {
-        return technicalReportPublications;
+	return technicalReportPublications;
     }
 
     public void setTechnicalReportPublications(Integer technicalReportPublications) {
-        this.technicalReportPublications = technicalReportPublications;
+	this.technicalReportPublications = technicalReportPublications;
     }
 
     public String getTutorComment() {
-        return tutorComment;
+	return tutorComment;
     }
 
     public void setTutorComment(String tutorComment) {
-        this.tutorComment = tutorComment;
+	this.tutorComment = tutorComment;
     }
 
     public String getUniversityServiceMainFocus() {
-        return universityServiceMainFocus;
+	return universityServiceMainFocus;
     }
 
     public void setUniversityServiceMainFocus(String universityServiceMainFocus) {
-        this.universityServiceMainFocus = universityServiceMainFocus;
+	this.universityServiceMainFocus = universityServiceMainFocus;
     }
 
     public String getUtlOrgans() {
-        return utlOrgans;
+	return utlOrgans;
     }
 
     public void setUtlOrgans(String utlOrgans) {
-        this.utlOrgans = utlOrgans;
+	this.utlOrgans = utlOrgans;
     }
 
-    public static InfoTeacherPersonalExpectation newInfoFromDomain(
-            TeacherPersonalExpectation teacherPersonalExpectation) {
-        InfoTeacherPersonalExpectation infoTeacherPersonalExpectation = null;
-        if (teacherPersonalExpectation != null) {
-            infoTeacherPersonalExpectation = new InfoTeacherPersonalExpectation();
-            infoTeacherPersonalExpectation.copyFromDomain(teacherPersonalExpectation);
-        }
+    public static InfoTeacherPersonalExpectation newInfoFromDomain(TeacherPersonalExpectation teacherPersonalExpectation) {
+	InfoTeacherPersonalExpectation infoTeacherPersonalExpectation = null;
+	if (teacherPersonalExpectation != null) {
+	    infoTeacherPersonalExpectation = new InfoTeacherPersonalExpectation();
+	    infoTeacherPersonalExpectation.copyFromDomain(teacherPersonalExpectation);
+	}
 
-        return infoTeacherPersonalExpectation;
+	return infoTeacherPersonalExpectation;
     }
 
     public void copyFromDomain(TeacherPersonalExpectation teacherPersonalExpectation) {
-        if (teacherPersonalExpectation != null) {
-            super.copyFromDomain(teacherPersonalExpectation);
-            setBookPublications(teacherPersonalExpectation.getBookPublications());
-            setCientificComunityService(teacherPersonalExpectation.getCientificComunityService());
-            setCientificPosGraduations(teacherPersonalExpectation.getCientificPosGraduations());
-            setCientificPosGraduationsDescription(teacherPersonalExpectation.getCientificPosGraduationsDescription());
-            setCompanyPositions(teacherPersonalExpectation.getCompanyPositions());
-            setCompanySocialOrgans(teacherPersonalExpectation.getCompanySocialOrgans());
-            setConferencePublications(teacherPersonalExpectation.getConferencePublications());
-            setConsulting(teacherPersonalExpectation.getConsulting());
-            setDepartmentOrgans(teacherPersonalExpectation.getDepartmentOrgans());
-            setEducationMainFocus(teacherPersonalExpectation.getEducationMainFocus());
-            setFinalDegreeWorkOrientations(teacherPersonalExpectation.getFinalDegreeWorkOrientations());
-            setGraduations(teacherPersonalExpectation.getGraduations());
-            setGraduationsDescription(teacherPersonalExpectation.getGraduationsDescription());
-            setIstOrgans(teacherPersonalExpectation.getIstOrgans());
-            setJornalArticlePublications(teacherPersonalExpectation.getJornalArticlePublications());
-            setMasterDegreeOrientations(teacherPersonalExpectation.getMasterDegreeOrientations());
-            setOtherPublications(teacherPersonalExpectation.getOtherPublications());
-            setOtherPublicationsDescription(teacherPersonalExpectation.getOtherPublicationsDescription());
-            setOrientationsMainFocus(teacherPersonalExpectation.getOrientationsMainFocus());
-            setPatentPublications(teacherPersonalExpectation.getPatentPublications());
-            setPhdOrientations(teacherPersonalExpectation.getPhdOrientations());
-            setProfessionalActivityMainFocus(teacherPersonalExpectation
-                    .getProfessionalActivityMainFocus());
-            setProfessionalPosGraduations(teacherPersonalExpectation.getProfessionalPosGraduations());
-            setProfessionalPosGraduationsDescription(teacherPersonalExpectation.getProfessionalPosGraduationsDescription());
-            setResearchAndDevProjects(teacherPersonalExpectation.getResearchAndDevProjects());
-            setResearchAndDevMainFocus(teacherPersonalExpectation.getResearchAndDevMainFocus());
-            setSeminaries(teacherPersonalExpectation.getSeminaries());
-            setSeminariesDescription(teacherPersonalExpectation.getSeminariesDescription());
-            setSocietyService(teacherPersonalExpectation.getSocietyService());
-            setTechnicalReportPublications(teacherPersonalExpectation.getTechnicalReportPublications());
-            setTutorComment(teacherPersonalExpectation.getTutorComment());
-            setUniversityServiceMainFocus(teacherPersonalExpectation.getUniversityServiceMainFocus());
-            setUtlOrgans(teacherPersonalExpectation.getUtlOrgans());
+	if (teacherPersonalExpectation != null) {
+	    super.copyFromDomain(teacherPersonalExpectation);
+	    setBookPublications(teacherPersonalExpectation.getBookPublications());
+	    setCientificComunityService(teacherPersonalExpectation.getCientificComunityService());
+	    setCientificPosGraduations(teacherPersonalExpectation.getCientificPosGraduations());
+	    setCientificPosGraduationsDescription(teacherPersonalExpectation.getCientificPosGraduationsDescription());
+	    setCompanyPositions(teacherPersonalExpectation.getCompanyPositions());
+	    setCompanySocialOrgans(teacherPersonalExpectation.getCompanySocialOrgans());
+	    setConferencePublications(teacherPersonalExpectation.getConferencePublications());
+	    setConsulting(teacherPersonalExpectation.getConsulting());
+	    setDepartmentOrgans(teacherPersonalExpectation.getDepartmentOrgans());
+	    setEducationMainFocus(teacherPersonalExpectation.getEducationMainFocus());
+	    setFinalDegreeWorkOrientations(teacherPersonalExpectation.getFinalDegreeWorkOrientations());
+	    setGraduations(teacherPersonalExpectation.getGraduations());
+	    setGraduationsDescription(teacherPersonalExpectation.getGraduationsDescription());
+	    setIstOrgans(teacherPersonalExpectation.getIstOrgans());
+	    setJornalArticlePublications(teacherPersonalExpectation.getJornalArticlePublications());
+	    setMasterDegreeOrientations(teacherPersonalExpectation.getMasterDegreeOrientations());
+	    setOtherPublications(teacherPersonalExpectation.getOtherPublications());
+	    setOtherPublicationsDescription(teacherPersonalExpectation.getOtherPublicationsDescription());
+	    setOrientationsMainFocus(teacherPersonalExpectation.getOrientationsMainFocus());
+	    setPatentPublications(teacherPersonalExpectation.getPatentPublications());
+	    setPhdOrientations(teacherPersonalExpectation.getPhdOrientations());
+	    setProfessionalActivityMainFocus(teacherPersonalExpectation.getProfessionalActivityMainFocus());
+	    setProfessionalPosGraduations(teacherPersonalExpectation.getProfessionalPosGraduations());
+	    setProfessionalPosGraduationsDescription(teacherPersonalExpectation.getProfessionalPosGraduationsDescription());
+	    setResearchAndDevProjects(teacherPersonalExpectation.getResearchAndDevProjects());
+	    setResearchAndDevMainFocus(teacherPersonalExpectation.getResearchAndDevMainFocus());
+	    setSeminaries(teacherPersonalExpectation.getSeminaries());
+	    setSeminariesDescription(teacherPersonalExpectation.getSeminariesDescription());
+	    setSocietyService(teacherPersonalExpectation.getSocietyService());
+	    setTechnicalReportPublications(teacherPersonalExpectation.getTechnicalReportPublications());
+	    setTutorComment(teacherPersonalExpectation.getTutorComment());
+	    setUniversityServiceMainFocus(teacherPersonalExpectation.getUniversityServiceMainFocus());
+	    setUtlOrgans(teacherPersonalExpectation.getUtlOrgans());
 
-        }
+	}
 
     }
 

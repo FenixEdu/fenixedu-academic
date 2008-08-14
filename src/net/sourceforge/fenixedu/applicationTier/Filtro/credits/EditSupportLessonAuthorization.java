@@ -14,15 +14,15 @@ public class EditSupportLessonAuthorization extends AbstractTeacherDepartmentAut
     public final static EditSupportLessonAuthorization filter = new EditSupportLessonAuthorization();
 
     public static EditSupportLessonAuthorization getInstance() {
-        return filter;
+	return filter;
     }
 
     protected Integer getTeacherId(Object[] arguments) {
-        InfoSupportLesson supportLesson = (InfoSupportLesson) arguments[1];
+	InfoSupportLesson supportLesson = (InfoSupportLesson) arguments[1];
 
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(
-                supportLesson.getInfoProfessorship().getIdInternal());
-        return professorship != null ? professorship.getTeacher().getIdInternal() : null;
+	Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLesson.getInfoProfessorship()
+		.getIdInternal());
+	return professorship != null ? professorship.getTeacher().getIdInternal() : null;
     }
 
 }

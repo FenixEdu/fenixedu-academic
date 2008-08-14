@@ -21,57 +21,54 @@ import org.joda.time.YearMonthDay;
  */
 public class PersonsInFunctionGroup extends DomainBackedGroup<Function> {
 
-	/**
-	 * Serial version id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serial version id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	public PersonsInFunctionGroup(Function object) {
-		super(object);
+    public PersonsInFunctionGroup(Function object) {
+	super(object);
+    }
+
+    @Override
+    public Set<Person> getElements() {
+	Set<Person> set = buildSet();
+
+	YearMonthDay today = new YearMonthDay();
+	for (PersonFunction function : getObject().getPersonFunctions()) {
+	    if (function.isActive(today)) {
+		set.add(function.getPerson());
+	    }
 	}
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> set = buildSet();
-		
-		YearMonthDay today = new YearMonthDay();
-		for (PersonFunction function : getObject().getPersonFunctions()) {
-			if (function.isActive(today)) {
-				set.add(function.getPerson());
-			}
-		}
-		
-		return set;
+	return set;
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+	return new Argument[] { new IdOperator(getObject()) };
+    }
+
+    @Override
+    public String getName() {
+	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
+		getObject().getName(), getObject().getUnit().getName());
+    }
+
+    public static class Builder implements GroupBuilder {
+
+	public Group build(Object[] arguments) {
+	    return new PersonsInFunctionGroup((Function) arguments[0]);
 	}
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] {
-			new IdOperator(getObject())	
-		};
+	public int getMaxArguments() {
+	    return 1;
 	}
 
-	@Override
-	public String getName() {
-		return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(), 
-				getObject().getName(), 
-				getObject().getUnit().getName());
+	public int getMinArguments() {
+	    return 1;
 	}
-	
-	public static class Builder implements GroupBuilder {
 
-		public Group build(Object[] arguments) {
-			return new PersonsInFunctionGroup((Function) arguments[0]);
-		}
+    }
 
-		public int getMaxArguments() {
-			return 1;
-		}
-
-		public int getMinArguments() {
-			return 1;
-		}
-		
-	}
-	
 }

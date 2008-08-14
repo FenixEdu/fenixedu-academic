@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlanBaseService {
 
     public List run(Integer degreeCurricularPlanId, Integer executionPeriodId, Locale locale, String arg)
-	    throws FenixServiceException{
+	    throws FenixServiceException {
 	if (degreeCurricularPlanId == null) {
 	    throw new FenixServiceException("null degreeCurricularPlanId");
 	}
@@ -48,7 +48,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     }
 
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYear,
-	    Locale locale) throws FenixServiceException{
+	    Locale locale) throws FenixServiceException {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	if (degreeCurricularPlan == null) {
@@ -113,7 +113,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     }
 
     public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanId, Integer executionYear, String arg)
-	    throws FenixServiceException{
+	    throws FenixServiceException {
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 	if (degreeCurricularPlan == null) {
 	    throw new FenixServiceException("nullDegree");

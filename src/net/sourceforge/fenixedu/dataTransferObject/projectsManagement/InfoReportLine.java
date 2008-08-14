@@ -20,11 +20,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 public class InfoReportLine extends DataTranferObject implements IReportLine {
 
     public int getNumberOfColumns() {
-        return 0;
+	return 0;
     }
 
     public Double getValue(int column) {
-        return null;
+	return null;
     }
 
     public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
@@ -37,6 +37,6 @@ public class InfoReportLine extends DataTranferObject implements IReportLine {
     }
 
     protected String getString(String label) {
-        return (ResourceBundle.getBundle("resources.ProjectsManagementResources", Language.getLocale())).getString(label);
+	return (ResourceBundle.getBundle("resources.ProjectsManagementResources", Language.getLocale())).getString(label);
     }
 }

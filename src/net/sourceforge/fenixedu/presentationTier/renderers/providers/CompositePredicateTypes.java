@@ -12,33 +12,33 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class CompositePredicateTypes implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		PredicateBean predicateBean = (PredicateBean) source;
+    public Object provide(Object source, Object currentValue) {
+	PredicateBean predicateBean = (PredicateBean) source;
 
-		List<CompositePredicateType> compositePredicateTypes;
-		List<CompositePredicateType> suggestedTypes = CompositePredicate.getCompositePredicateTypes();
+	List<CompositePredicateType> compositePredicateTypes;
+	List<CompositePredicateType> suggestedTypes = CompositePredicate.getCompositePredicateTypes();
 
-		compositePredicateTypes = new ArrayList<CompositePredicateType>();
+	compositePredicateTypes = new ArrayList<CompositePredicateType>();
 
-		switch (predicateBean.getPredicates().size()) {
-		case 0:
-			break;
-		case 1:
-			for (CompositePredicateType predicateType : suggestedTypes) {
-				if (predicateType.isUnary()) {
-					compositePredicateTypes.add(predicateType);
-				}
-			}
-			break;
-		default:
-			compositePredicateTypes.addAll(suggestedTypes);
+	switch (predicateBean.getPredicates().size()) {
+	case 0:
+	    break;
+	case 1:
+	    for (CompositePredicateType predicateType : suggestedTypes) {
+		if (predicateType.isUnary()) {
+		    compositePredicateTypes.add(predicateType);
 		}
-
-		return compositePredicateTypes;
+	    }
+	    break;
+	default:
+	    compositePredicateTypes.addAll(suggestedTypes);
 	}
 
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+	return compositePredicateTypes;
+    }
+
+    public Converter getConverter() {
+	return new EnumConverter();
+    }
 
 }

@@ -20,8 +20,8 @@ public class FenixAccessControlCallsGenerator implements CodeGenerator {
 	StringBuilder buffer = new StringBuilder();
 
 	buffer.append("{net.sourceforge.fenixedu.injectionCode.AccessControl.check(this,");
-	buffer.append("net.sourceforge.fenixedu.predicates.").append(
-		((String) annotationParameters.get("value")).trim()).append(");}");
+	buffer.append("net.sourceforge.fenixedu.predicates.").append(((String) annotationParameters.get("value")).trim()).append(
+		");}");
 
 	return buffer.toString();
     }

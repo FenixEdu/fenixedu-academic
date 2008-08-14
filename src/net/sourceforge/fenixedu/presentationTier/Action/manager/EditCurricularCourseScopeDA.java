@@ -40,138 +40,133 @@ import org.apache.struts.validator.DynaValidatorForm;
 public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        DynaActionForm dynaForm = (DynaActionForm) form;
+	DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
-        InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
+	Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+	Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+	InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
-        Object args[] = { curricularCourseScopeId };
-        try {
-            oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService(
-                    "ReadCurricularCourseScope", args);
-        } catch (NonExistingServiceException ex) {
-            throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
-                    .findForward("readCurricularCourse"));
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
+	Object args[] = { curricularCourseScopeId };
+	try {
+	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService("ReadCurricularCourseScope",
+		    args);
+	} catch (NonExistingServiceException ex) {
+	    throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
+		    .findForward("readCurricularCourse"));
+	} catch (FenixServiceException fenixServiceException) {
+	    throw new FenixActionException(fenixServiceException.getMessage());
+	}
 
-        if (oldInfoCurricularCourseScope.getBeginDate() != null)
-            dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope
-                    .getBeginDate().getTime(), "/"));
-        if(oldInfoCurricularCourseScope.getAnotation() != null)
-            dynaForm.set("anotation",oldInfoCurricularCourseScope.getAnotation() );
+	if (oldInfoCurricularCourseScope.getBeginDate() != null)
+	    dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/"));
+	if (oldInfoCurricularCourseScope.getAnotation() != null)
+	    dynaForm.set("anotation", oldInfoCurricularCourseScope.getAnotation());
 
-        dynaForm
-                .set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
-        dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester()
-                .getIdInternal().toString());
+	dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
+	dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
 
-        Object[] args1 = { degreeCurricularPlanId };
-        List result = null;
-        try {
-            result = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan",
-                    args1);
-        } catch (NonExistingServiceException ex) {
-            throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping
-                    .findForward("readDegree"));
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	Object[] args1 = { degreeCurricularPlanId };
+	List result = null;
+	try {
+	    result = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan", args1);
+	} catch (NonExistingServiceException ex) {
+	    throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        if (result == null)
-            throw new NonExistingActionException("message.insert.degreeCurricularCourseScope.error",
-                    mapping.findForward("readCurricularCourse"));
+	if (result == null)
+	    throw new NonExistingActionException("message.insert.degreeCurricularCourseScope.error", mapping
+		    .findForward("readCurricularCourse"));
 
-        //	creation of bean of InfoBranches for use in jsp
-        List branchesList = new ArrayList();
-        InfoBranch infoBranch;
-        Iterator iter = result.iterator();
-        String label, value;
-        while (iter.hasNext()) {
-            infoBranch = (InfoBranch) iter.next();
-            value = infoBranch.getIdInternal().toString();
-            label = infoBranch.getCode() + " - " + infoBranch.getName();
-            branchesList.add(new LabelValueBean(label, value));
-        }
+	// creation of bean of InfoBranches for use in jsp
+	List branchesList = new ArrayList();
+	InfoBranch infoBranch;
+	Iterator iter = result.iterator();
+	String label, value;
+	while (iter.hasNext()) {
+	    infoBranch = (InfoBranch) iter.next();
+	    value = infoBranch.getIdInternal().toString();
+	    label = infoBranch.getCode() + " - " + infoBranch.getName();
+	    branchesList.add(new LabelValueBean(label, value));
+	}
 
-        // obtain execution periods to show in jsp
-        List<InfoExecutionPeriod> infoExecutionPeriods = null;
-        try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
+	// obtain execution periods to show in jsp
+	List<InfoExecutionPeriod> infoExecutionPeriods = null;
+	try {
+	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
 
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        if (infoExecutionPeriods == null)
-            throw new NonExistingActionException("message.insert.executionPeriods.error", mapping
-                    .findForward("readCurricularCourse"));
+	if (infoExecutionPeriods == null)
+	    throw new NonExistingActionException("message.insert.executionPeriods.error", mapping
+		    .findForward("readCurricularCourse"));
 
-        List executionPeriodsLabels = new ArrayList();
-        String labelExecutionPeriod = Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/");
-        executionPeriodsLabels.add(new LabelValueBean(labelExecutionPeriod, labelExecutionPeriod));
-        for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
-            labelExecutionPeriod = Data.format2DayMonthYear(infoExecutionPeriod.getBeginDate(), "/");
-            executionPeriodsLabels.add(new LabelValueBean(labelExecutionPeriod, labelExecutionPeriod));
-        }
+	List executionPeriodsLabels = new ArrayList();
+	String labelExecutionPeriod = Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/");
+	executionPeriodsLabels.add(new LabelValueBean(labelExecutionPeriod, labelExecutionPeriod));
+	for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
+	    labelExecutionPeriod = Data.format2DayMonthYear(infoExecutionPeriod.getBeginDate(), "/");
+	    executionPeriodsLabels.add(new LabelValueBean(labelExecutionPeriod, labelExecutionPeriod));
+	}
 
-        request.setAttribute("executionPeriodsLabels", executionPeriodsLabels);
-        request.setAttribute("branchesList", branchesList);
+	request.setAttribute("executionPeriodsLabels", executionPeriodsLabels);
+	request.setAttribute("branchesList", branchesList);
 
-        return mapping.findForward("editCurricularCourseScope");
+	return mapping.findForward("editCurricularCourseScope");
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        DynaActionForm dynaForm = (DynaValidatorForm) form;
+	DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-        Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+	Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 
-        InfoCurricularCourseScopeEditor newInfoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
+	InfoCurricularCourseScopeEditor newInfoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
 
-        String curricularSemesterIdString = (String) dynaForm.get("curricularSemesterId");
-        String branchIdString = (String) dynaForm.get("branchId");
-        String beginDateString = (String) dynaForm.get("beginDate");
-        String anotationString = (String) dynaForm.get("anotation");
+	String curricularSemesterIdString = (String) dynaForm.get("curricularSemesterId");
+	String branchIdString = (String) dynaForm.get("branchId");
+	String beginDateString = (String) dynaForm.get("beginDate");
+	String anotationString = (String) dynaForm.get("anotation");
 
-        Integer curricularSemesterId = new Integer(curricularSemesterIdString);
+	Integer curricularSemesterId = new Integer(curricularSemesterIdString);
 
-        InfoCurricularSemester infoCurricularSemester = InfoCurricularSemester.newInfoFromDomain(rootDomainObject.readCurricularSemesterByOID(curricularSemesterId));
-        newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
+	InfoCurricularSemester infoCurricularSemester = InfoCurricularSemester.newInfoFromDomain(rootDomainObject
+		.readCurricularSemesterByOID(curricularSemesterId));
+	newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
-        Integer branchId = new Integer(branchIdString);
+	Integer branchId = new Integer(branchIdString);
 
-        InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(branchId));
-        newInfoCurricularCourseScope.setInfoBranch(infoBranch);
-        newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
+	InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(branchId));
+	newInfoCurricularCourseScope.setInfoBranch(infoBranch);
+	newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
 
-        if (beginDateString.compareTo("") != 0) {
-            Calendar beginDateCalendar = Calendar.getInstance();
-            beginDateCalendar.setTime(Data.convertStringDate(beginDateString, "/"));
-            newInfoCurricularCourseScope.setBeginDate(beginDateCalendar);
-        }
-        newInfoCurricularCourseScope.setAnotation(anotationString);
+	if (beginDateString.compareTo("") != 0) {
+	    Calendar beginDateCalendar = Calendar.getInstance();
+	    beginDateCalendar.setTime(Data.convertStringDate(beginDateString, "/"));
+	    newInfoCurricularCourseScope.setBeginDate(beginDateCalendar);
+	}
+	newInfoCurricularCourseScope.setAnotation(anotationString);
 
-        Object args[] = { newInfoCurricularCourseScope };
+	Object args[] = { newInfoCurricularCourseScope };
 
-        try {
-            ServiceUtils.executeService("EditCurricularCourseScope", args);
-        } catch (NonExistingServiceException ex) {
-            throw new NonExistingActionException(ex.getMessage(), mapping
-                    .findForward("readCurricularCourse"));
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException("message.manager.existing.curricular.course.scope");
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
+	try {
+	    ServiceUtils.executeService("EditCurricularCourseScope", args);
+	} catch (NonExistingServiceException ex) {
+	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readCurricularCourse"));
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException("message.manager.existing.curricular.course.scope");
+	} catch (FenixServiceException fenixServiceException) {
+	    throw new FenixActionException(fenixServiceException.getMessage());
+	}
 
-        request.setAttribute("infoCurricularCourseScope", newInfoCurricularCourseScope);
+	request.setAttribute("infoCurricularCourseScope", newInfoCurricularCourseScope);
 
-        return mapping.findForward("readCurricularCourse");
+	return mapping.findForward("readCurricularCourse");
     }
 }

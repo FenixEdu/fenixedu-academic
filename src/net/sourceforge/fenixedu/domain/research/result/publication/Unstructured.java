@@ -11,12 +11,12 @@ import bibtex.dom.BibtexEntry;
  */
 public class Unstructured extends Unstructured_Base {
 
-	private static final String usedSchema = "result.publication.presentation.Unstructured";
-    
-	public Unstructured() {
+    private static final String usedSchema = "result.publication.presentation.Unstructured";
+
+    public Unstructured() {
 	super();
     }
-    
+
     public Unstructured(Person participator, String title, Integer year) {
 	this();
 	if (title == null || title.length() == 0)
@@ -41,10 +41,9 @@ public class Unstructured extends Unstructured_Base {
 	return resume;
     }
 
-	@Override
-	public String getSchema() {
-		return usedSchema;
-	}
+    @Override
+    public String getSchema() {
+	return usedSchema;
+    }
 
-    
 }

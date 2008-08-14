@@ -9,10 +9,11 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 
 public class EditarTurma extends Service {
 
-    public Object run(final Integer idInternal, final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
-	    final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
+    public Object run(final Integer idInternal, final String className, final Integer curricularYear,
+	    final InfoExecutionDegree infoExecutionDegree, final InfoExecutionPeriod infoExecutionPeriod)
+	    throws ExistingServiceException {
 
-	final SchoolClass classToEdit = rootDomainObject.readSchoolClassByOID(idInternal);	
+	final SchoolClass classToEdit = rootDomainObject.readSchoolClassByOID(idInternal);
 	classToEdit.edit(className);
 	return InfoClass.newInfoFromDomain(classToEdit);
     }

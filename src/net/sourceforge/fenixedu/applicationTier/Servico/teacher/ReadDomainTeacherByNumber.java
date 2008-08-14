@@ -13,20 +13,20 @@ import org.apache.commons.collections.Predicate;
 public class ReadDomainTeacherByNumber extends Service {
 
     public Teacher run(final Integer teacherNumber) throws FenixServiceException {
-        List<Teacher> teachers = rootDomainObject.getTeachers();
-        
-        Teacher teacher = (Teacher) CollectionUtils.find(teachers, new Predicate() {
+	List<Teacher> teachers = rootDomainObject.getTeachers();
 
-            public boolean evaluate(Object object) {
-                Teacher tempTeacher = (Teacher) object;
-                return tempTeacher.getTeacherNumber().equals(teacherNumber);
-            }
-        });
+	Teacher teacher = (Teacher) CollectionUtils.find(teachers, new Predicate() {
 
-        if (teacher == null) {
-            throw new FenixServiceException("errors.invalid.teacher-number");
-        }
-        return teacher;
+	    public boolean evaluate(Object object) {
+		Teacher tempTeacher = (Teacher) object;
+		return tempTeacher.getTeacherNumber().equals(teacherNumber);
+	    }
+	});
+
+	if (teacher == null) {
+	    throw new FenixServiceException("errors.invalid.teacher-number");
+	}
+	return teacher;
     }
-    
+
 }

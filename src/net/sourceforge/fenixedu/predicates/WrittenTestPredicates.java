@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 public class WrittenTestPredicates {
 
     public static final AccessControlPredicate<WrittenTest> changeDatePredicate = new AccessControlPredicate<WrittenTest>() {
-        public boolean evaluate(WrittenTest writtenTest) {
-            final IUserView requestor = AccessControl.getUserView();
-            return requestor != null;
-        }
+	public boolean evaluate(WrittenTest writtenTest) {
+	    final IUserView requestor = AccessControl.getUserView();
+	    return requestor != null;
+	}
     };
 
 }

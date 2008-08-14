@@ -9,66 +9,58 @@ import java.util.ListIterator;
 
 /**
  * @author joaosa & rmalo
- *
+ * 
  */
 
-public class InfoSiteSentedProjectProposalsWaiting extends DataTranferObject implements ISiteComponent{
+public class InfoSiteSentedProjectProposalsWaiting extends DataTranferObject implements ISiteComponent {
 
-	private List infoSentedProjectProposalsWaitingList;
+    private List infoSentedProjectProposalsWaitingList;
 
+    public List getInfoGroupPropertiesList() {
+	return infoSentedProjectProposalsWaitingList;
+    }
 
-	public List getInfoGroupPropertiesList() {
-		return infoSentedProjectProposalsWaitingList;
+    public void setInfoGroupPropertiesList(List infoGroupPropertiesList) {
+	this.infoSentedProjectProposalsWaitingList = infoGroupPropertiesList;
+    }
+
+    public boolean equals(Object objectToCompare) {
+	boolean result = false;
+	if (objectToCompare instanceof InfoSiteSentedProjectProposalsWaiting)
+	    result = true;
+
+	if (((InfoSiteSentedProjectProposalsWaiting) objectToCompare).getInfoGroupPropertiesList() == null
+		&& this.getInfoGroupPropertiesList() == null) {
+	    return true;
 	}
 
-	
-	public void setInfoGroupPropertiesList(List infoGroupPropertiesList) {
-		this.infoSentedProjectProposalsWaitingList = infoGroupPropertiesList;
+	if (((InfoSiteSentedProjectProposalsWaiting) objectToCompare).getInfoGroupPropertiesList() == null
+		|| this.getInfoGroupPropertiesList() == null
+		|| ((InfoSiteSentedProjectProposalsWaiting) objectToCompare).getInfoGroupPropertiesList().size() != this
+			.getInfoGroupPropertiesList().size()) {
+	    return false;
 	}
 
-	
-	
-	public boolean equals(Object objectToCompare) {
-		boolean result = false;
-		if(objectToCompare instanceof InfoSiteSentedProjectProposalsWaiting)
-			result = true;
-			
-		if (((InfoSiteSentedProjectProposalsWaiting) objectToCompare).getInfoGroupPropertiesList() == null
-			&& this.getInfoGroupPropertiesList() == null) {	
-			return true;
-		}
+	ListIterator iter1 = ((InfoSiteSentedProjectProposalsWaiting) objectToCompare).getInfoGroupPropertiesList()
+		.listIterator();
+	ListIterator iter2 = this.getInfoGroupPropertiesList().listIterator();
+	while (result && iter1.hasNext()) {
 
-		if (((InfoSiteSentedProjectProposalsWaiting) objectToCompare).getInfoGroupPropertiesList() == null
-			|| this.getInfoGroupPropertiesList() == null
-			|| ((InfoSiteSentedProjectProposalsWaiting) objectToCompare).getInfoGroupPropertiesList().size()
-				!= this.getInfoGroupPropertiesList().size()) {
-			return false;
-		}
-		
-		ListIterator iter1 =
-			((InfoSiteSentedProjectProposalsWaiting) objectToCompare)
-				.getInfoGroupPropertiesList()
-				.listIterator();
-		ListIterator iter2 = this.getInfoGroupPropertiesList().listIterator();
-		while (result && iter1.hasNext()) {
-			
-			InfoGrouping groupProperties1 = (InfoGrouping) iter1.next();
-			InfoGrouping groupProperties2 = (InfoGrouping) iter2.next();
-			if (!groupProperties1.equals(groupProperties2)) {
-			
-				result = false;
-			}
-		}
-		
-		return result;
+	    InfoGrouping groupProperties1 = (InfoGrouping) iter1.next();
+	    InfoGrouping groupProperties2 = (InfoGrouping) iter2.next();
+	    if (!groupProperties1.equals(groupProperties2)) {
+
+		result = false;
+	    }
 	}
-    
-    
-	public String toString()
-    {
-        String result = "[InfoSiteSentedProjectProposalsWaiting: ";
-        result += "infoSiteSentedProjectProposalsWaitingList - " + this.getInfoGroupPropertiesList() + "]";
-        return result;
+
+	return result;
+    }
+
+    public String toString() {
+	String result = "[InfoSiteSentedProjectProposalsWaiting: ";
+	result += "infoSiteSentedProjectProposalsWaitingList - " + this.getInfoGroupPropertiesList() + "]";
+	return result;
     }
 
 }

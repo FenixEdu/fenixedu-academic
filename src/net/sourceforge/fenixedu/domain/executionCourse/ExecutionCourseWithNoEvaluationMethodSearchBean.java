@@ -39,7 +39,8 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
 	if (executionSemester == null || degreeTypes == null) {
 	    return null;
 	}
-	final Set<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+	final Set<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(
+		ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
 	    if (isLecturedIn(executionCourse, degreeTypes)) {
 		total++;
@@ -73,31 +74,31 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
     }
 
     public List<DegreeType> getDegreeTypes() {
-        return degreeTypes;
+	return degreeTypes;
     }
 
     public void setDegreeTypes(List<DegreeType> degreeTypes) {
-        this.degreeTypes = degreeTypes;
+	this.degreeTypes = degreeTypes;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-        return executionSemester == null ? null : executionSemester.getObject();
+	return executionSemester == null ? null : executionSemester.getObject();
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester == null ? null : new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester == null ? null : new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public int getTotal() {
-        return total;
+	return total;
     }
 
     public int getWithEvaluationMethod() {
-        return withEvaluationMethod;
+	return withEvaluationMethod;
     }
 
     public int getWithoutEvaluationMethod() {
-        return withoutEvaluationMethod;
+	return withoutEvaluationMethod;
     }
 
 }

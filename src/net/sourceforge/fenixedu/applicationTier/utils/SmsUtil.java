@@ -24,7 +24,7 @@ import org.apache.commons.httpclient.util.EncodingUtil;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class SmsUtil {
     private static SmsUtil _instance = null;
@@ -56,30 +56,30 @@ public class SmsUtil {
     private String deliveryProtocol;
 
     public static synchronized SmsUtil getInstance() {
-        if (_instance == null) {
-            _instance = new SmsUtil();
-        }
+	if (_instance == null) {
+	    _instance = new SmsUtil();
+	}
 
-        return _instance;
+	return _instance;
     }
 
     /**
      * Default constructor (reads "/SMSCofiguration.properties")
      */
     private SmsUtil() {
-        this.host = PropertiesManager.getProperty("sms.gateway.host");
-        this.uri = PropertiesManager.getProperty("sms.gateway.uri");
-        this.port = (new Integer(PropertiesManager.getProperty("sms.gateway.port"))).intValue();
-        this.protocol = PropertiesManager.getProperty("sms.gateway.protocol");
-        this.username = PropertiesManager.getProperty("sms.gateway.username").trim();
-        this.password = PropertiesManager.getProperty("sms.gateway.password").trim();
-        this.monthlySmsLimit = (new Integer(PropertiesManager.getProperty("monthlySmsLimit"))).intValue();
-        this.deliveryUsername = PropertiesManager.getProperty("sms.delivery.username").trim();
-        this.deliveryPassword = PropertiesManager.getProperty("sms.delivery.password").trim();
-        this.deliveryHost = PropertiesManager.getProperty("sms.delivery.host");
-        this.deliveryPort = (new Integer(PropertiesManager.getProperty("sms.delivery.port"))).intValue();
-        this.deliveryUri = PropertiesManager.getProperty("sms.delivery.uri");
-        this.deliveryProtocol = PropertiesManager.getProperty("sms.delivery.protocol");
+	this.host = PropertiesManager.getProperty("sms.gateway.host");
+	this.uri = PropertiesManager.getProperty("sms.gateway.uri");
+	this.port = (new Integer(PropertiesManager.getProperty("sms.gateway.port"))).intValue();
+	this.protocol = PropertiesManager.getProperty("sms.gateway.protocol");
+	this.username = PropertiesManager.getProperty("sms.gateway.username").trim();
+	this.password = PropertiesManager.getProperty("sms.gateway.password").trim();
+	this.monthlySmsLimit = (new Integer(PropertiesManager.getProperty("monthlySmsLimit"))).intValue();
+	this.deliveryUsername = PropertiesManager.getProperty("sms.delivery.username").trim();
+	this.deliveryPassword = PropertiesManager.getProperty("sms.delivery.password").trim();
+	this.deliveryHost = PropertiesManager.getProperty("sms.delivery.host");
+	this.deliveryPort = (new Integer(PropertiesManager.getProperty("sms.delivery.port"))).intValue();
+	this.deliveryUri = PropertiesManager.getProperty("sms.delivery.uri");
+	this.deliveryProtocol = PropertiesManager.getProperty("sms.delivery.protocol");
     }
 
     /**
@@ -92,60 +92,59 @@ public class SmsUtil {
      * @param smsId
      * @throws FenixUtilException
      */
-    public void sendSms(Integer destinationPhoneNumber, String message, Integer smsId)
-            throws FenixUtilException {
+    public void sendSms(Integer destinationPhoneNumber, String message, Integer smsId) throws FenixUtilException {
 
-        HttpClient client = new HttpClient();
-        client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
-        HttpMethod httpMethod = new GetMethod(this.uri);
+	HttpClient client = new HttpClient();
+	client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
+	HttpMethod httpMethod = new GetMethod(this.uri);
 
-        NameValuePair deliveryUsername = new NameValuePair("deliveryUsername", this.deliveryUsername);
-        NameValuePair deliveryPassword = new NameValuePair("deliveryPassword", this.deliveryPassword);
-        NameValuePair deliveryMethod = new NameValuePair("method", "updateDeliveryReport");
-        NameValuePair deliverySmsId = new NameValuePair("smsId", smsId.toString());
+	NameValuePair deliveryUsername = new NameValuePair("deliveryUsername", this.deliveryUsername);
+	NameValuePair deliveryPassword = new NameValuePair("deliveryPassword", this.deliveryPassword);
+	NameValuePair deliveryMethod = new NameValuePair("method", "updateDeliveryReport");
+	NameValuePair deliverySmsId = new NameValuePair("smsId", smsId.toString());
 
-        String deliveryQuery = EncodingUtil.formUrlEncode(new NameValuePair[] { deliveryUsername,
-                deliveryPassword, deliverySmsId, deliveryMethod }, "8859_1")
-                + "&deliveryType=%d";
+	String deliveryQuery = EncodingUtil.formUrlEncode(new NameValuePair[] { deliveryUsername, deliveryPassword,
+		deliverySmsId, deliveryMethod }, "8859_1")
+		+ "&deliveryType=%d";
 
-        URL url = null;
-        try {
-            url = new URL(this.deliveryProtocol, this.deliveryHost, this.deliveryPort, this.deliveryUri);
-        } catch (MalformedURLException e2) {
-            throw new SmsSendUtilException();
-        }
+	URL url = null;
+	try {
+	    url = new URL(this.deliveryProtocol, this.deliveryHost, this.deliveryPort, this.deliveryUri);
+	} catch (MalformedURLException e2) {
+	    throw new SmsSendUtilException();
+	}
 
-        String deliveryUrl = url.toExternalForm() + "?" + deliveryQuery;
+	String deliveryUrl = url.toExternalForm() + "?" + deliveryQuery;
 
-        NameValuePair username = new NameValuePair("username", this.username);
-        NameValuePair password = new NameValuePair("password", this.password);
-        NameValuePair to = new NameValuePair("to", destinationPhoneNumber.toString());
-        NameValuePair text = new NameValuePair("text", message);
-        NameValuePair dlrmaks = new NameValuePair("dlrmask", "31");
-        NameValuePair dlrurl = new NameValuePair("dlrurl", deliveryUrl);
+	NameValuePair username = new NameValuePair("username", this.username);
+	NameValuePair password = new NameValuePair("password", this.password);
+	NameValuePair to = new NameValuePair("to", destinationPhoneNumber.toString());
+	NameValuePair text = new NameValuePair("text", message);
+	NameValuePair dlrmaks = new NameValuePair("dlrmask", "31");
+	NameValuePair dlrurl = new NameValuePair("dlrurl", deliveryUrl);
 
-        String query = EncodingUtil.formUrlEncode(new NameValuePair[] { username, password, to, text,
-                dlrmaks, dlrurl }, "8859_1");
+	String query = EncodingUtil
+		.formUrlEncode(new NameValuePair[] { username, password, to, text, dlrmaks, dlrurl }, "8859_1");
 
-        httpMethod.setQueryString(query);
+	httpMethod.setQueryString(query);
 
-        try {
-            client.executeMethod(httpMethod);
+	try {
+	    client.executeMethod(httpMethod);
 
-            String result = httpMethod.getResponseBodyAsString();
-            System.err.println(result);
+	    String result = httpMethod.getResponseBodyAsString();
+	    System.err.println(result);
 
-            httpMethod.releaseConnection();
+	    httpMethod.releaseConnection();
 
-            if (result.equals("Sent.") == false) {
-                throw new SmsSendUtilException();
-            }
+	    if (result.equals("Sent.") == false) {
+		throw new SmsSendUtilException();
+	    }
 
-        } catch (HttpException e) {
-            throw new SmsSendUtilException();
-        } catch (IOException e) {
-            throw new SmsSendUtilException();
-        }
+	} catch (HttpException e) {
+	    throw new SmsSendUtilException();
+	} catch (IOException e) {
+	    throw new SmsSendUtilException();
+	}
 
     }
 
@@ -158,40 +157,38 @@ public class SmsUtil {
      * @param smsId
      * @throws FenixUtilException
      */
-    public void sendSmsWithoutDeliveryReports(Integer destinationPhoneNumber, String message)
-            throws FenixUtilException {
+    public void sendSmsWithoutDeliveryReports(Integer destinationPhoneNumber, String message) throws FenixUtilException {
 
-        HttpClient client = new HttpClient();
-        client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
-        HttpMethod httpMethod = new GetMethod(this.uri);
+	HttpClient client = new HttpClient();
+	client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
+	HttpMethod httpMethod = new GetMethod(this.uri);
 
-        NameValuePair username = new NameValuePair("username", this.username);
-        NameValuePair password = new NameValuePair("password", this.password);
-        NameValuePair to = new NameValuePair("to", destinationPhoneNumber.toString());
-        NameValuePair text = new NameValuePair("text", message);
+	NameValuePair username = new NameValuePair("username", this.username);
+	NameValuePair password = new NameValuePair("password", this.password);
+	NameValuePair to = new NameValuePair("to", destinationPhoneNumber.toString());
+	NameValuePair text = new NameValuePair("text", message);
 
-        String query = EncodingUtil.formUrlEncode(new NameValuePair[] { username, password, to, text },
-                "8859_1");
+	String query = EncodingUtil.formUrlEncode(new NameValuePair[] { username, password, to, text }, "8859_1");
 
-        httpMethod.setQueryString(query);
+	httpMethod.setQueryString(query);
 
-        try {
-            client.executeMethod(httpMethod);
+	try {
+	    client.executeMethod(httpMethod);
 
-            String result = httpMethod.getResponseBodyAsString();
-            System.err.println(result);
+	    String result = httpMethod.getResponseBodyAsString();
+	    System.err.println(result);
 
-            httpMethod.releaseConnection();
+	    httpMethod.releaseConnection();
 
-            if (result.equals("Sent.") == false) {
-                throw new SmsSendUtilException();
-            }
+	    if (result.equals("Sent.") == false) {
+		throw new SmsSendUtilException();
+	    }
 
-        } catch (HttpException e) {
-            throw new SmsSendUtilException();
-        } catch (IOException e) {
-            throw new SmsSendUtilException();
-        }
+	} catch (HttpException e) {
+	    throw new SmsSendUtilException();
+	} catch (IOException e) {
+	    throw new SmsSendUtilException();
+	}
 
     }
 
@@ -202,44 +199,44 @@ public class SmsUtil {
      * @return
      */
     public List splitMessage(StringBuilder message, int messageLenght) {
-        List responseMessagesList = new ArrayList();
-        while (message.length() > messageLenght) {
+	List responseMessagesList = new ArrayList();
+	while (message.length() > messageLenght) {
 
-            responseMessagesList.add(message.substring(0, messageLenght));
-            message.delete(0, messageLenght);
+	    responseMessagesList.add(message.substring(0, messageLenght));
+	    message.delete(0, messageLenght);
 
-        }
-        responseMessagesList.add(message.toString());
+	}
+	responseMessagesList.add(message.toString());
 
-        return responseMessagesList;
+	return responseMessagesList;
     }
 
     /**
      * @return Returns the monthlySmsLimit.
      */
     public int getMonthlySmsLimit() {
-        return monthlySmsLimit;
+	return monthlySmsLimit;
     }
 
     /**
      * @return Returns the host.
      */
     public String getHost() {
-        return host;
+	return host;
     }
 
     /**
      * @return Returns the deliveryPassword.
      */
     public String getDeliveryPassword() {
-        return deliveryPassword;
+	return deliveryPassword;
     }
 
     /**
      * @return Returns the deliveryUsername.
      */
     public String getDeliveryUsername() {
-        return deliveryUsername;
+	return deliveryUsername;
     }
 
 }

@@ -145,7 +145,8 @@ public class RegisterAlumniData extends Service {
     //
     // private String buildEmailBody(final Integer studentNumber) {
     // String message =
-    // MessageFormat.format(RESOURCES.getString("alumni.public.student.number.info"),
+    // MessageFormat.format(RESOURCES.getString(
+    // "alumni.public.student.number.info"),
     // studentNumber);
     // System.out.println(message);
     // return message;

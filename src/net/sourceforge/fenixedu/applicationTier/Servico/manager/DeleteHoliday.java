@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteHoliday extends Service {
 
     public void run(final Holiday holiday) {
-        holiday.delete();
+	holiday.delete();
     }
 
 }

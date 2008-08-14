@@ -30,62 +30,60 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
 
     public void run(String year) {
 
-        gratuitySituationsToDelete = new HashSet<GratuitySituation>();
+	gratuitySituationsToDelete = new HashSet<GratuitySituation>();
 
-        ExecutionYear executionYear = readExecutionYear(year);
+	ExecutionYear executionYear = readExecutionYear(year);
 
-        // read master degree and persistentSupportecialization execution degrees
-        Collection<ExecutionDegree> executionDegrees = executionYear
-                .getExecutionDegreesByType(DegreeType.MASTER_DEGREE);
+	// read master degree and persistentSupportecialization execution
+	// degrees
+	Collection<ExecutionDegree> executionDegrees = executionYear.getExecutionDegreesByType(DegreeType.MASTER_DEGREE);
 
-        for (ExecutionDegree executionDegree : executionDegrees) {
+	for (ExecutionDegree executionDegree : executionDegrees) {
 
-            GratuityValues gratuityValues = executionDegree.getGratuityValues();
+	    GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
-            if (gratuityValues == null) {
-                continue;
-            }
+	    if (gratuityValues == null) {
+		continue;
+	    }
 
-            this.firstYear = executionDegree.isFirstYear();
+	    this.firstYear = executionDegree.isFirstYear();
 
-            List<StudentCurricularPlan> studentCurricularPlans = executionDegree
-                    .getDegreeCurricularPlan().getStudentCurricularPlans();
-            for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+	    List<StudentCurricularPlan> studentCurricularPlans = executionDegree.getDegreeCurricularPlan()
+		    .getStudentCurricularPlans();
+	    for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
-                GratuitySituation gratuitySituation = studentCurricularPlan
-                        .getGratuitySituationByGratuityValues(gratuityValues);
-                
-                if(year.equals("2002/2003") && gratuitySituation.getTransactionListCount() == 0){
-                    gratuitySituation.removeEmployee();
-                    gratuitySituation.removeGratuityValues();
-                    gratuitySituation.removeStudentCurricularPlan();
-                    this.gratuitySituationsToDelete.add(gratuitySituation);
-                    continue;
-                }
+		GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
-                if (gratuitySituation == null) {
-                    createGratuitySituation(gratuityValues, studentCurricularPlan);
-                } else {
-                    updateGratuitySituation(gratuitySituation);
-                }
-            }
-        }
+		if (year.equals("2002/2003") && gratuitySituation.getTransactionListCount() == 0) {
+		    gratuitySituation.removeEmployee();
+		    gratuitySituation.removeGratuityValues();
+		    gratuitySituation.removeStudentCurricularPlan();
+		    this.gratuitySituationsToDelete.add(gratuitySituation);
+		    continue;
+		}
 
-        for (GratuitySituation gratuitySituationToDelete : this.gratuitySituationsToDelete) {
-            gratuitySituationToDelete.delete();
-        }
+		if (gratuitySituation == null) {
+		    createGratuitySituation(gratuityValues, studentCurricularPlan);
+		} else {
+		    updateGratuitySituation(gratuitySituation);
+		}
+	    }
+	}
+
+	for (GratuitySituation gratuitySituationToDelete : this.gratuitySituationsToDelete) {
+	    gratuitySituationToDelete.delete();
+	}
     }
 
-    private ExecutionYear readExecutionYear(String year)
-            {
-        
-        final ExecutionYear executionYear;
-        if (year == null || year.equals("")) {
-            executionYear = ExecutionYear.readCurrentExecutionYear();
-        } else {
-            executionYear = ExecutionYear.readExecutionYearByName(year);
-        }
-        return executionYear;
+    private ExecutionYear readExecutionYear(String year) {
+
+	final ExecutionYear executionYear;
+	if (year == null || year.equals("")) {
+	    executionYear = ExecutionYear.readCurrentExecutionYear();
+	} else {
+	    executionYear = ExecutionYear.readExecutionYearByName(year);
+	}
+	return executionYear;
     }
 
     /**
@@ -93,47 +91,45 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
      */
     private void updateGratuitySituation(GratuitySituation gratuitySituation) {
 
-        // check if there isnt any persistentSupportecialization for a 2nd year
-        if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
-                Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
+	// check if there isnt any persistentSupportecialization for a 2nd year
+	if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
+		Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
 
-            if (this.firstYear == null) {
-                this.firstYear = gratuitySituation.getGratuityValues().getExecutionDegree()
-                        .isFirstYear();
-            }
+	    if (this.firstYear == null) {
+		this.firstYear = gratuitySituation.getGratuityValues().getExecutionDegree().isFirstYear();
+	    }
 
-            if (!this.firstYear) {
-                // SHIT!!!!!!!!!!!!
-                removeWrongGratuitySituation(gratuitySituation);
-                return;
-            }
-        }
+	    if (!this.firstYear) {
+		// SHIT!!!!!!!!!!!!
+		removeWrongGratuitySituation(gratuitySituation);
+		return;
+	    }
+	}
 
-        gratuitySituation.updateValues();
+	gratuitySituation.updateValues();
 
     }
 
     private void removeWrongGratuitySituation(GratuitySituation gratuitySituation) {
 
-        // find gratuity situation of first persistentSupportecialization year
-        for (GratuitySituation correctSituation : gratuitySituation.getStudentCurricularPlan()
-                .getGratuitySituations()) {
-            if (correctSituation.getGratuityValues().getExecutionDegree().isFirstYear()) {
+	// find gratuity situation of first persistentSupportecialization year
+	for (GratuitySituation correctSituation : gratuitySituation.getStudentCurricularPlan().getGratuitySituations()) {
+	    if (correctSituation.getGratuityValues().getExecutionDegree().isFirstYear()) {
 
-                // transfer transactions from wrong to correct gratuity
-                // situation
-                for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
-                    correctSituation.addTransactionList(gratuityTransaction);
-                }
+		// transfer transactions from wrong to correct gratuity
+		// situation
+		for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
+		    correctSituation.addTransactionList(gratuityTransaction);
+		}
 
-                break;
-            }
-        }
+		break;
+	    }
+	}
 
-        gratuitySituation.removeEmployee();
-        gratuitySituation.removeGratuityValues();
-        gratuitySituation.removeStudentCurricularPlan();
-        this.gratuitySituationsToDelete.add(gratuitySituation);
+	gratuitySituation.removeEmployee();
+	gratuitySituation.removeGratuityValues();
+	gratuitySituation.removeStudentCurricularPlan();
+	this.gratuitySituationsToDelete.add(gratuitySituation);
     }
 
     /**
@@ -141,15 +137,14 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
      * @param studentCurricularPlan
      * @throws ExcepcaoPersistencia
      */
-    private void createGratuitySituation(GratuityValues gratuityValues,
-            StudentCurricularPlan studentCurricularPlan) {
+    private void createGratuitySituation(GratuityValues gratuityValues, StudentCurricularPlan studentCurricularPlan) {
 
-        if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)
-                && !this.firstYear) {
-            return;
-        }
+	if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)
+		&& !this.firstYear) {
+	    return;
+	}
 
-        new GratuitySituation(gratuityValues, studentCurricularPlan);
+	new GratuitySituation(gratuityValues, studentCurricularPlan);
     }
 
 }

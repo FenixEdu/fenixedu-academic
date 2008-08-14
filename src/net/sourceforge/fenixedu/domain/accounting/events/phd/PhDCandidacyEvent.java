@@ -20,22 +20,21 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import org.joda.time.DateTime;
 
 public class PhDCandidacyEvent extends PhDCandidacyEvent_Base {
-    
-    private  PhDCandidacyEvent() {
-        super();
+
+    private PhDCandidacyEvent() {
+	super();
     }
 
-    public PhDCandidacyEvent(AdministrativeOffice administrativeOffice, Person person,
-	    PHDProgramCandidacy candidacy) {
+    public PhDCandidacyEvent(AdministrativeOffice administrativeOffice, Person person, PHDProgramCandidacy candidacy) {
 	this();
 	init(administrativeOffice, person, candidacy);
     }
-    
+
     private void init(AdministrativeOffice administrativeOffice, Person person, PHDProgramCandidacy candidacy) {
 	init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
 	super.setPhdCandidacy(candidacy);
     }
-    
+
     @Override
     public Account getToAccount() {
 	return getUnit().getAccountBy(AccountType.INTERNAL);
@@ -58,10 +57,9 @@ public class PhDCandidacyEvent extends PhDCandidacyEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
-		getDegree().getDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
-			getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
-		.appendLabel(")");
+	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
+		"enum").appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent())
+		.appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
 	return labelFormatter;
 
@@ -86,8 +84,8 @@ public class PhDCandidacyEvent extends PhDCandidacyEvent_Base {
 
     @Override
     public PostingRule getPostingRule() {
-	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate()
-		.findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(
+		getEventType(), getWhenOccured());
     }
 
     public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriodInDegreeCurricularPlan() {

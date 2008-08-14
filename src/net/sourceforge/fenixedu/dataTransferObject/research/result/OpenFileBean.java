@@ -4,23 +4,23 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 public class OpenFileBean implements Serializable {
-    
+
     private transient InputStream inputStream;
     private String fileName;
 
     public String getFileName() {
-        return fileName;
+	return fileName;
     }
 
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+	this.fileName = fileName;
     }
 
     public InputStream getInputStream() {
-        return inputStream;
+	return inputStream;
     }
 
     public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
+	this.inputStream = inputStream;
     }
 }

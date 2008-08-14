@@ -15,7 +15,7 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
     public int getEstimatedPoints() {
 	return getAssociatedVigilantGroup().getPointsForConvoked();
     }
-    
+
     @Override
     public int getPoints() {
 
@@ -28,7 +28,7 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 	    return this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
 
 	if (!isActive() || isStatusUndefined()) {
-		return getAssociatedVigilantGroup().getPointsForDisconvoked();
+	    return getAssociatedVigilantGroup().getPointsForDisconvoked();
 	}
 	if (isDismissed()) {
 	    return getAssociatedVigilantGroup().getPointsForDismissed();
@@ -41,11 +41,10 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 	}
 	if (this.getAttendedToConvoke())
 	    return getAssociatedVigilantGroup().getPointsForConvoked();
-	
+
 	return getAssociatedVigilantGroup().getPointsForMissing();
     }
 
-    
     public OtherCourseVigilancy(WrittenEvaluation writtenEvaluation) {
 	this();
 	super.setWrittenEvaluation(writtenEvaluation);

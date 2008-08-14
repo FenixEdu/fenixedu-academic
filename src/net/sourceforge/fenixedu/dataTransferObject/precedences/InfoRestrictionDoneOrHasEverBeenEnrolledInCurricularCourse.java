@@ -6,29 +6,26 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse
  * @author David Santos on Jul 27, 2004
  */
 
-public class InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse extends
-        InfoRestrictionDoneCurricularCourse {
+public class InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse extends InfoRestrictionDoneCurricularCourse {
 
     public InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse() {
     }
 
     public void copyFromDomain(RestrictionByCurricularCourse restriction) {
-        super.copyFromDomain(restriction);
-        super
-                .setRestrictionKindResourceKey("label.manager.restrictionDoneOrHasEverBeenEnrolledInCurricularCourse");
+	super.copyFromDomain(restriction);
+	super.setRestrictionKindResourceKey("label.manager.restrictionDoneOrHasEverBeenEnrolledInCurricularCourse");
     }
 
-    public static InfoRestrictionByCurricularCourse newInfoFromDomain(
-            RestrictionByCurricularCourse restriction) {
+    public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
 
-        InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse infoRestriction = null;
+	InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse infoRestriction = null;
 
-        if (restriction != null) {
-            infoRestriction = new InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse();
-            infoRestriction.copyFromDomain(restriction);
-        }
+	if (restriction != null) {
+	    infoRestriction = new InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse();
+	    infoRestriction.copyFromDomain(restriction);
+	}
 
-        return infoRestriction;
+	return infoRestriction;
     }
 
 }

@@ -34,68 +34,70 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
-            // inEnglish
-            Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-            request.setAttribute("inEnglish", inEnglish);
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixServiceException, FenixFilterException {
+	// inEnglish
+	Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+	request.setAttribute("inEnglish", inEnglish);
 
-            // index
-            Integer index = getFromRequest("index", request);
-            request.setAttribute("index", index);
-            
-            // degreeID
-            Integer degreeId = getFromRequest("degreeID", request);
-            request.setAttribute("degreeID", degreeId);
+	// index
+	Integer index = getFromRequest("index", request);
+	request.setAttribute("index", index);
 
-            // degreeCurricularPlanID
-            Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+	// degreeID
+	Integer degreeId = getFromRequest("degreeID", request);
+	request.setAttribute("degreeID", degreeId);
 
-            // curricularYearList
-            List<Integer> curricularYears = (List<Integer>) request.getAttribute("curricularYearList");
-            if (curricularYears == null) {
-                curricularYears = rootDomainObject.readDegreeByOID(degreeId).buildFullCurricularYearList();
-            }
-            request.setAttribute("curricularYearList", curricularYears);
-            
-            // lista
-            List lista = (List) request.getAttribute("lista");
-            request.setAttribute("lista", lista);
+	// degreeCurricularPlanID
+	Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-            // SessionConstants.EXECUTION_DEGREE, infoDegreeCurricularPlan
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-            request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            if (infoExecutionDegree == null) {
-                request.setAttribute("infoDegreeCurricularPlan", "");
-            } else {
-                request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
-            }
+	// curricularYearList
+	List<Integer> curricularYears = (List<Integer>) request.getAttribute("curricularYearList");
+	if (curricularYears == null) {
+	    curricularYears = rootDomainObject.readDegreeByOID(degreeId).buildFullCurricularYearList();
+	}
+	request.setAttribute("curricularYearList", curricularYears);
 
-            // indice
-            Integer indice = getFromRequest("indice", request);
-            request.setAttribute("indice", indice);
+	// lista
+	List lista = (List) request.getAttribute("lista");
+	request.setAttribute("lista", lista);
 
-            // SessionConstants.EXECUTION_PERIOD, SessionConstants.EXECUTION_PERIOD_OID
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+	// SessionConstants.EXECUTION_DEGREE, infoDegreeCurricularPlan
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	if (infoExecutionDegree == null) {
+	    request.setAttribute("infoDegreeCurricularPlan", "");
+	} else {
+	    request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
+	}
 
-            // executionDegreeID
-            Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-            request.setAttribute("executionDegreeID", executionDegreeId);
+	// indice
+	Integer indice = getFromRequest("indice", request);
+	request.setAttribute("indice", indice);
 
-            // SessionConstants.INFO_EXAMS_MAP
-            request.removeAttribute(SessionConstants.INFO_EXAMS_MAP);
-            try {
-                final IUserView userView = getUserView(request);
-                final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-                final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
-                request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
-            } catch (NonExistingServiceException e) {
-                return mapping.findForward("viewExamsMap");
-            }
+	// SessionConstants.EXECUTION_PERIOD,
+	// SessionConstants.EXECUTION_PERIOD_OID
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
-        return mapping.findForward("viewExamsMap");
+	// executionDegreeID
+	Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+	request.setAttribute("executionDegreeID", executionDegreeId);
+
+	// SessionConstants.INFO_EXAMS_MAP
+	request.removeAttribute(SessionConstants.INFO_EXAMS_MAP);
+	try {
+	    final IUserView userView = getUserView(request);
+	    final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
+	    final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
+	    request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+	} catch (NonExistingServiceException e) {
+	    return mapping.findForward("viewExamsMap");
+	}
+
+	return mapping.findForward("viewExamsMap");
     }
 
 }

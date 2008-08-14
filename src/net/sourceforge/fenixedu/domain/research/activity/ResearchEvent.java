@@ -41,9 +41,9 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
     }
 
     /**
-         * This method is responsible for checking if the object still has
-         * active connections if not, the object is deleted.
-         */
+     * This method is responsible for checking if the object still has active
+     * connections if not, the object is deleted.
+     */
     public void sweep() {
 	if (!(this.hasAnyParticipations() || this.hasAnyEventEditions())) {
 	    delete();
@@ -64,39 +64,39 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
 
     public List<EventParticipation> getParticipationsFor(Party party) {
 	List<EventParticipation> participations = new ArrayList<EventParticipation>();
-	for(EventParticipation participation : getParticipations()) {
-	    if(participation.getParty().equals(party)) {
+	for (EventParticipation participation : getParticipations()) {
+	    if (participation.getParty().equals(party)) {
 		participations.add(participation);
 	    }
 	}
 	return participations;
     }
-    
+
     public boolean canBeEditedByUser(Person person) {
-	for(EventEdition edition: getEventEditions()) {
-	    if(!edition.canBeEditedByUser(person)) {
+	for (EventEdition edition : getEventEditions()) {
+	    if (!edition.canBeEditedByUser(person)) {
 		return false;
 	    }
 	}
 	return getParticipations().size() == getParticipationsFor(person).size();
-	
+
     }
-    
+
     public boolean canBeEditedByCurrentUser() {
 	return canBeEditedByUser(AccessControl.getPerson());
     }
 
     public void addUniqueParticipation(Participation participation) {
-	if(participation instanceof EventParticipation) {
+	if (participation instanceof EventParticipation) {
 	    EventParticipation eventParticipation = (EventParticipation) participation;
 	    for (EventParticipation eventParticipation2 : getParticipationsSet()) {
-		if(eventParticipation2.getParty().equals(eventParticipation.getParty()) &&
-			eventParticipation2.getRole().equals(eventParticipation.getRole())) {
+		if (eventParticipation2.getParty().equals(eventParticipation.getParty())
+			&& eventParticipation2.getRole().equals(eventParticipation.getRole())) {
 		    return;
 		}
 	    }
 	    addParticipations(eventParticipation);
 	}
-	
+
     }
 }

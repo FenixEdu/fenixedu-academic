@@ -17,8 +17,7 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
 	init(penaltyExemption, justificationType, reason);
     }
 
-    protected void init(PenaltyExemption penaltyExemption,
-	    PenaltyExemptionJustificationType justificationType, String reason) {
+    protected void init(PenaltyExemption penaltyExemption, PenaltyExemptionJustificationType justificationType, String reason) {
 	checkParameters(justificationType);
 	super.init(penaltyExemption, reason);
 	super.setPenaltyExemptionJustificationType(justificationType);
@@ -33,8 +32,7 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
     }
 
     @Override
-    public void setPenaltyExemptionJustificationType(
-	    PenaltyExemptionJustificationType penaltyExemptionJustificationType) {
+    public void setPenaltyExemptionJustificationType(PenaltyExemptionJustificationType penaltyExemptionJustificationType) {
 	throw new DomainException(
 		"error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.cannot.modify.penaltyExemptionJustificationType");
     }

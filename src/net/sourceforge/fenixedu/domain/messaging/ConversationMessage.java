@@ -12,51 +12,50 @@ import org.joda.time.DateTime;
 public class ConversationMessage extends ConversationMessage_Base implements IDateContent {
 
     public ConversationMessage() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setCreationDate(new DateTime());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setCreationDate(new DateTime());
     }
 
     public ConversationMessage(ConversationThread conversationThread, Person creator, MultiLanguageString body) {
-        this();
-        init(conversationThread, creator, body);
+	this();
+	init(conversationThread, creator, body);
     }
 
     private void init(ConversationThread conversationThread, Person creator, MultiLanguageString body) {
-        setConversationThread(conversationThread);
-        setBody(body);
-        setCreator(creator);
+	setConversationThread(conversationThread);
+	setBody(body);
+	setCreator(creator);
     }
 
     @Override
     public void setCreator(Person creator) {
-        if (creator == null) {
-            throw new DomainException("conversationMessage.creator.cannot.be.null");
-        }
+	if (creator == null) {
+	    throw new DomainException("conversationMessage.creator.cannot.be.null");
+	}
 
-        super.setCreator(creator);
+	super.setCreator(creator);
     }
 
     @Override
     public void setBody(MultiLanguageString body) {
-        if (body == null) {
-            throw new DomainException("conversationMessage.body.cannot.be.null");
-        }
+	if (body == null) {
+	    throw new DomainException("conversationMessage.body.cannot.be.null");
+	}
 
-        super.setBody(body);
+	super.setBody(body);
     }
 
     public void setConversationThread(ConversationThread conversationThread) {
-        if (conversationThread == null) {
-            throw new DomainException("conversationMessage.conversationThread.cannot.be.null");
-        }
+	if (conversationThread == null) {
+	    throw new DomainException("conversationMessage.conversationThread.cannot.be.null");
+	}
 
-        if(getParents().isEmpty()) {
-            new DateOrderedNode(conversationThread,this,Boolean.TRUE);
-        }
-        else {
-            getParents().get(0).setParent(conversationThread);
-        }
+	if (getParents().isEmpty()) {
+	    new DateOrderedNode(conversationThread, this, Boolean.TRUE);
+	} else {
+	    getParents().get(0).setParent(conversationThread);
+	}
     }
 
     public ConversationThread getConversationThread() {
@@ -66,5 +65,5 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
     public DateTime getContentDate() {
 	return getCreationDate();
     }
-    
+
 }

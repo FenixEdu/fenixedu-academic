@@ -23,7 +23,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     public DateTime getCandidacyEnd() {
 	return hasCandidacyPeriod() ? getCandidacyPeriod().getEnd() : null;
     }
-    
+
     public boolean hasStarted() {
 	return !getCandidacyStart().isAfterNow();
     }

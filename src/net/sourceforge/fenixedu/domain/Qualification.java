@@ -16,21 +16,24 @@ public class Qualification extends Qualification_Base {
     }
 
     public Qualification(Person person, Country country, InfoQualification infoQualification) {
-	this();	
+	this();
 	setPerson(person);
 	if (country != null) {
 	    setCountry(country);
-	}	
+	}
 	setBasicProperties(infoQualification);
     }
 
     public Qualification(Person person, PrecedentDegreeInformation precedentDegreeInformation) {
-	this();	
+	this();
 	setPerson(person);
 	setMark(precedentDegreeInformation.getConclusionGrade() == null ? null : precedentDegreeInformation.getConclusionGrade());
-	setSchool(precedentDegreeInformation.getInstitution() == null ? null : precedentDegreeInformation.getInstitution().getName());
-	setDegree(precedentDegreeInformation.getDegreeDesignation() == null ? null	: precedentDegreeInformation.getDegreeDesignation());
-	setDateYearMonthDay(precedentDegreeInformation.getConclusionYear() == null ? null : new YearMonthDay(precedentDegreeInformation.getConclusionYear(), 1, 1));
+	setSchool(precedentDegreeInformation.getInstitution() == null ? null : precedentDegreeInformation.getInstitution()
+		.getName());
+	setDegree(precedentDegreeInformation.getDegreeDesignation() == null ? null : precedentDegreeInformation
+		.getDegreeDesignation());
+	setDateYearMonthDay(precedentDegreeInformation.getConclusionYear() == null ? null : new YearMonthDay(
+		precedentDegreeInformation.getConclusionYear(), 1, 1));
 	setCountry(precedentDegreeInformation.getCountry() == null ? null : precedentDegreeInformation.getCountry());
     }
 
@@ -41,15 +44,15 @@ public class Qualification extends Qualification_Base {
 	}
 	super.setPerson(person);
     }
-    
-    public void delete() {	
+
+    public void delete() {
 	super.setPerson(null);
 	removeCountry();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
 
-    public void edit(InfoQualification infoQualification, Country country) {	
+    public void edit(InfoQualification infoQualification, Country country) {
 	setBasicProperties(infoQualification);
 	if (country == null) {
 	    removeCountry();
@@ -57,7 +60,7 @@ public class Qualification extends Qualification_Base {
 	    setCountry(country);
 	}
     }
-    
+
     private void setBasicProperties(InfoQualification infoQualification) {
 	setBranch(infoQualification.getBranch());
 	setDate(infoQualification.getDate());

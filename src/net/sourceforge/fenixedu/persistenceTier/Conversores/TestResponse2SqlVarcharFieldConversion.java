@@ -32,14 +32,14 @@ public class TestResponse2SqlVarcharFieldConversion implements FieldConversion {
     public Object sqlToJava(Object source) {
 	if (source instanceof String) {
 	    String xmlResponse2 = (String) source;
-	    
+
 	    String xmlResponse = null;
 	    try {
 		xmlResponse = new String(xmlResponse2.getBytes("latin1"), "UTF-8");
 	    } catch (UnsupportedEncodingException e) {
 		e.printStackTrace();
 	    }
-	    
+
 	    Response response = getResponse(xmlResponse);
 
 	    return response;

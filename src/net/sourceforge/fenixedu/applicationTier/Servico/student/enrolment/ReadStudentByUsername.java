@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentByUsername extends Service {
-    
+
     public Registration run(String studentUsername) throws FenixServiceException {
-        final Registration registration = Registration.readByUsername(studentUsername);
-        if (registration == null) {
-            throw new FenixServiceException("error.noStudent");
-        }
-        return registration;
+	final Registration registration = Registration.readByUsername(studentUsername);
+	if (registration == null) {
+	    throw new FenixServiceException("error.noStudent");
+	}
+	return registration;
     }
 
 }

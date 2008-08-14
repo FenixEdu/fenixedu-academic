@@ -18,39 +18,38 @@ import org.apache.struts.action.ActionMapping;
 
 public class ViewProjectDispatchAction extends FenixDispatchAction {
 
-    
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        for( Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
-                request.setAttribute("selectedProject", project);
-                List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
-                for (ProjectParticipation participation : project.getProjectParticipations()) {
-                    if (participation.getParty() instanceof Person) {
-                        participations.add(participation);                        
-                    }
-                }
-                request.setAttribute("participations", participations);
-            }
-        }
-        
-        for( Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
-                request.setAttribute("selectedProject", project);
-                List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
-                for (ProjectParticipation participation : project.getProjectParticipations()) {
-                    if (participation.getParty() instanceof Unit) {
-                        unitParticipations.add(participation);                        
-                    }
-                }
-                request.setAttribute("unitParticipations", unitParticipations);
-            }
-        }
-        
-        request.setAttribute("party", getUserView(request).getPerson());
-        return mapping.findForward("ViewProject");  
+	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+
+	for (Project project : rootDomainObject.getProjects()) {
+	    if (project.getIdInternal().equals(oid)) {
+		request.setAttribute("selectedProject", project);
+		List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
+		for (ProjectParticipation participation : project.getProjectParticipations()) {
+		    if (participation.getParty() instanceof Person) {
+			participations.add(participation);
+		    }
+		}
+		request.setAttribute("participations", participations);
+	    }
+	}
+
+	for (Project project : rootDomainObject.getProjects()) {
+	    if (project.getIdInternal().equals(oid)) {
+		request.setAttribute("selectedProject", project);
+		List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
+		for (ProjectParticipation participation : project.getProjectParticipations()) {
+		    if (participation.getParty() instanceof Unit) {
+			unitParticipations.add(participation);
+		    }
+		}
+		request.setAttribute("unitParticipations", unitParticipations);
+	    }
+	}
+
+	request.setAttribute("party", getUserView(request).getPerson());
+	return mapping.findForward("ViewProject");
     }
 }

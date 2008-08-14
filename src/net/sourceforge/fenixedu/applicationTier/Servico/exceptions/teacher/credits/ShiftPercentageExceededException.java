@@ -20,14 +20,14 @@ public class ShiftPercentageExceededException extends FenixServiceException {
      *            List of InfoShifts...
      */
     public ShiftPercentageExceededException(List shiftWithErrors) {
-        this.shiftWithErrors = shiftWithErrors;
+	this.shiftWithErrors = shiftWithErrors;
     }
 
     /**
      * @return
      */
     public List getShiftWithErrors() {
-        return shiftWithErrors;
+	return shiftWithErrors;
     }
 
 }

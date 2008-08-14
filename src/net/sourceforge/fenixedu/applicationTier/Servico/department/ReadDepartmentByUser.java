@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDepartmentByUser extends Service {
 
-    public InfoDepartment run(String username) throws FenixServiceException{
-        InfoDepartment infoDepartment = null;
+    public InfoDepartment run(String username) throws FenixServiceException {
+	InfoDepartment infoDepartment = null;
 
-        final Person person = Person.readPersonByUsername(username);
-        final List<Department> departmentList = person.getManageableDepartmentCredits();
-        if (! departmentList.isEmpty()) {
-            infoDepartment = InfoDepartment.newInfoFromDomain((Department) departmentList.get(0));
-        }
-        return infoDepartment;
+	final Person person = Person.readPersonByUsername(username);
+	final List<Department> departmentList = person.getManageableDepartmentCredits();
+	if (!departmentList.isEmpty()) {
+	    infoDepartment = InfoDepartment.newInfoFromDomain((Department) departmentList.get(0));
+	}
+	return infoDepartment;
     }
 }

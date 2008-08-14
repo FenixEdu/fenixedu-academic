@@ -10,28 +10,29 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoCourseHistoricWithInfoCurricularCourse extends InfoCourseHistoric {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
      */
     public void copyFromDomain(CourseHistoric courseHistoric) {
-        super.copyFromDomain(courseHistoric);
-        if (courseHistoric != null) {
-            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(courseHistoric
-                    .getCurricularCourse()));
-        }
+	super.copyFromDomain(courseHistoric);
+	if (courseHistoric != null) {
+	    setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(courseHistoric.getCurricularCourse()));
+	}
     }
 
     public static InfoCourseHistoric newInfoFromDomain(CourseHistoric courseHistoric) {
-        InfoCourseHistoricWithInfoCurricularCourse infoCourseHistoric = null;
-        if (courseHistoric != null) {
-            infoCourseHistoric = new InfoCourseHistoricWithInfoCurricularCourse();
-            infoCourseHistoric.copyFromDomain(courseHistoric);
-        }
-        return infoCourseHistoric;
+	InfoCourseHistoricWithInfoCurricularCourse infoCourseHistoric = null;
+	if (courseHistoric != null) {
+	    infoCourseHistoric = new InfoCourseHistoricWithInfoCurricularCourse();
+	    infoCourseHistoric.copyFromDomain(courseHistoric);
+	}
+	return infoCourseHistoric;
     }
 }

@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadNonProcessedSibsEntries extends Service {
 
-	public List run() throws FenixServiceException{
-		final List<InfoSibsPaymentFileEntry> result = new ArrayList<InfoSibsPaymentFileEntry>();
-        for (final SibsPaymentFileEntry sibsPaymentFileEntry : SibsPaymentFileEntry.readNonProcessed()) {
-            result.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));
-        }
-		return result;
+    public List run() throws FenixServiceException {
+	final List<InfoSibsPaymentFileEntry> result = new ArrayList<InfoSibsPaymentFileEntry>();
+	for (final SibsPaymentFileEntry sibsPaymentFileEntry : SibsPaymentFileEntry.readNonProcessed()) {
+	    result.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));
 	}
+	return result;
+    }
 }

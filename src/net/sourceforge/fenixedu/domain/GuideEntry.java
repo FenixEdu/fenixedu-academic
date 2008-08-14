@@ -15,8 +15,8 @@ public class GuideEntry extends GuideEntry_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public GuideEntry(GraduationType graduationType, DocumentType documentType, String description,
-	    Integer quantity, BigDecimal price, Guide guide) {
+    public GuideEntry(GraduationType graduationType, DocumentType documentType, String description, Integer quantity,
+	    BigDecimal price, Guide guide) {
 	this();
 	this.setDescription(description);
 	this.setGuide(guide);

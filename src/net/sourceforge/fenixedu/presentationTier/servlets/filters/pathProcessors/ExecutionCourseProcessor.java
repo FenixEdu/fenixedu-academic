@@ -146,7 +146,6 @@ public class ExecutionCourseProcessor extends PathProcessor {
 
     }
 
-
     public static String getExecutionCoursePath(ExecutionCourse executionCourse) {
 	StringBuilder result = new StringBuilder();
 

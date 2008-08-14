@@ -52,7 +52,7 @@ public abstract class Evaluation extends Evaluation_Base {
 	}
 	return null;
     }
-    
+
     public boolean isFinal() {
 	return false;
     }

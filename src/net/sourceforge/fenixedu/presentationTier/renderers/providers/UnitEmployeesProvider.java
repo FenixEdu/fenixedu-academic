@@ -16,12 +16,10 @@ public class UnitEmployeesProvider implements DataProvider {
 	    Unit unit = bean.getUnit();
 
 	    ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	    return unit.getAllWorkingEmployees(executionYear.getBeginDateYearMonthDay(), executionYear
-		    .getEndDateYearMonthDay());
+	    return unit.getAllWorkingEmployees(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
 	} else if (source instanceof AssiduousnessPersonFunctionFactory) {
 	    AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) source;
-	    return ((Unit) assiduousnessPersonFunctionFactory.getParty())
-		    .getAllCurrentNonTeacherEmployees();
+	    return ((Unit) assiduousnessPersonFunctionFactory.getParty()).getAllCurrentNonTeacherEmployees();
 	}
 	return null;
 

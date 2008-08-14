@@ -33,26 +33,26 @@ public class CorrectionFormula extends FenixUtil {
     }
 
     public CorrectionFormula(int formula) {
-        this.formula = new Integer(formula);
+	this.formula = new Integer(formula);
     }
 
     public CorrectionFormula(Integer formula) {
-        this.formula = formula;
+	this.formula = formula;
     }
 
     public Integer getFormula() {
-        return formula;
+	return formula;
     }
 
     public void setFormula(Integer formula) {
-        this.formula = formula;
+	this.formula = formula;
     }
 
     public static List getFormulas() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(IMS_STRING, new Integer(IMS).toString()));
-        //+ LID_SIMPLE_FORMULA + LID_MULTIPLE_FORMULA,
-        result.add(new LabelValueBean(FENIX_STRING, new Integer(FENIX).toString()));
-        return result;
+	List result = new ArrayList();
+	result.add(new LabelValueBean(IMS_STRING, new Integer(IMS).toString()));
+	// + LID_SIMPLE_FORMULA + LID_MULTIPLE_FORMULA,
+	result.add(new LabelValueBean(FENIX_STRING, new Integer(FENIX).toString()));
+	return result;
     }
 }

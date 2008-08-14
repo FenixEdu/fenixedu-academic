@@ -21,28 +21,27 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
 
-    public List run(Integer executionCourseID) throws FenixServiceException{
+    public List run(Integer executionCourseID) throws FenixServiceException {
 
-        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+	final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
-        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-            final Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
-                    executionSemester.getBeginDate(), executionSemester.getEndDate());
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+	    final Set<CurricularCourseScope> curricularCourseScopes = curricularCourse
+		    .findCurricularCourseScopesIntersectingPeriod(executionSemester.getBeginDate(), executionSemester
+			    .getEndDate());
 
-            final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(
-                    curricularCourse);
-            infoCurricularCourse.setInfoScopes(new ArrayList());
+	    final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+	    infoCurricularCourse.setInfoScopes(new ArrayList());
 
-            for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-                infoCurricularCourse.getInfoScopes().add(
-                        InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-            }
-            infoCurricularCourses.add(infoCurricularCourse);
-        }
+	    for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+		infoCurricularCourse.getInfoScopes().add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+	    }
+	    infoCurricularCourses.add(infoCurricularCourse);
+	}
 
-        return infoCurricularCourses;
+	return infoCurricularCourses;
     }
 }

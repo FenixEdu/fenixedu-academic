@@ -26,16 +26,16 @@ public class LerTurnosDeDisciplinaExecucao extends Service {
 
     public List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) {
 
-        List<InfoShift> infoShifts = new ArrayList<InfoShift>();
-        
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());        
-        Iterator<Shift> itShiftList = executionCourse.getAssociatedShifts().iterator();
+	List<InfoShift> infoShifts = new ArrayList<InfoShift>();
 
-        while (itShiftList.hasNext()) {
-            Shift shift = itShiftList.next();
-            infoShifts.add(InfoShift.newInfoFromDomain(shift));
-        }
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+	Iterator<Shift> itShiftList = executionCourse.getAssociatedShifts().iterator();
 
-        return infoShifts;
+	while (itShiftList.hasNext()) {
+	    Shift shift = itShiftList.next();
+	    infoShifts.add(InfoShift.newInfoFromDomain(shift));
+	}
+
+	return infoShifts;
     }
 }

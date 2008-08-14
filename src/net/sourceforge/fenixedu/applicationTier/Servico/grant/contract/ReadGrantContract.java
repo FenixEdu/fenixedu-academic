@@ -24,27 +24,26 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadGrantContract extends ReadDomainObjectService {
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-        return InfoGrantContractWithGrantOwnerAndGrantType
-                .newInfoFromDomain((GrantContract) domainObject);
+	return InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain((GrantContract) domainObject);
     }
 
-    public InfoObject run(Integer objectId) throws FenixServiceException{
+    public InfoObject run(Integer objectId) throws FenixServiceException {
 
-        GrantContract grantContract = rootDomainObject.readGrantContractByOID(objectId);
-        InfoGrantContract infoGrantContract = (InfoGrantContract) newInfoFromDomain(grantContract);
+	GrantContract grantContract = rootDomainObject.readGrantContractByOID(objectId);
+	InfoGrantContract infoGrantContract = (InfoGrantContract) newInfoFromDomain(grantContract);
 
-        // get the GrantOrientationTeacher for the contract
-        GrantOrientationTeacher orientationTeacher = grantContract.readActualGrantOrientationTeacher();
-        InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
-                .newInfoFromDomain(orientationTeacher);
-        infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
+	// get the GrantOrientationTeacher for the contract
+	GrantOrientationTeacher orientationTeacher = grantContract.readActualGrantOrientationTeacher();
+	InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
+		.newInfoFromDomain(orientationTeacher);
+	infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
 
-        return infoGrantContract;
+	return infoGrantContract;
     }
 
-	@Override
-	protected DomainObject readDomainObject(final Integer idInternal) {
-		return rootDomainObject.readGrantContractByOID(idInternal);
-	}
+    @Override
+    protected DomainObject readDomainObject(final Integer idInternal) {
+	return rootDomainObject.readGrantContractByOID(idInternal);
+    }
 
 }

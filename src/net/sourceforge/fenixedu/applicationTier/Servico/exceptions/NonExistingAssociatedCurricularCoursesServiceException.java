@@ -8,23 +8,23 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 public class NonExistingAssociatedCurricularCoursesServiceException extends FenixServiceException {
 
     public NonExistingAssociatedCurricularCoursesServiceException() {
-        super();
+	super();
     }
 
     public NonExistingAssociatedCurricularCoursesServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public NonExistingAssociatedCurricularCoursesServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[NonExistingAssociatedCurricularCoursesServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[NonExistingAssociatedCurricularCoursesServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

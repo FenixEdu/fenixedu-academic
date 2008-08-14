@@ -13,22 +13,22 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class SituationTypesForCandidacySelection implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        
-        Collection<CandidacySituationType> result = new ArrayList<CandidacySituationType>();
-        result.add(CandidacySituationType.ADMITTED);
-        result.add(CandidacySituationType.SUBSTITUTE);
-        result.add(CandidacySituationType.NOT_ADMITTED);
-        
-        return result;
+
+	Collection<CandidacySituationType> result = new ArrayList<CandidacySituationType>();
+	result.add(CandidacySituationType.ADMITTED);
+	result.add(CandidacySituationType.SUBSTITUTE);
+	result.add(CandidacySituationType.NOT_ADMITTED);
+
+	return result;
     }
 
     public Converter getConverter() {
-        return new EnumConverter();
+	return new EnumConverter();
     }
 
 }

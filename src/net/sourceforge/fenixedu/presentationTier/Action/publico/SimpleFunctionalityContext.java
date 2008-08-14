@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityCont
 public class SimpleFunctionalityContext extends AbstractFunctionalityContext {
 
     public SimpleFunctionalityContext(HttpServletRequest request) {
-        super(request);
+	super(request);
     }
 
     @Override
@@ -20,5 +20,4 @@ public class SimpleFunctionalityContext extends AbstractFunctionalityContext {
 	return null;
     }
 
-       
 }

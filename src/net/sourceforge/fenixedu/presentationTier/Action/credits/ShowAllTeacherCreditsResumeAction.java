@@ -23,25 +23,25 @@ import org.apache.commons.beanutils.BeanComparator;
  * 
  */
 
-public class ShowAllTeacherCreditsResumeAction extends FenixDispatchAction {  
-         
-    protected void readAllTeacherCredits(HttpServletRequest request, Teacher teacher)
-            throws FenixServiceException, FenixFilterException {
+public class ShowAllTeacherCreditsResumeAction extends FenixDispatchAction {
 
-        request.setAttribute("teacher", teacher);
-        Department department = teacher.getCurrentWorkingDepartment();
-        if (department != null) {
-            request.setAttribute("department", department.getRealName());
-        }
+    protected void readAllTeacherCredits(HttpServletRequest request, Teacher teacher) throws FenixServiceException,
+	    FenixFilterException {
 
-        Object[] args = new Object[] { teacher.getIdInternal() };
-        List<CreditLineDTO> creditsLines = (List<CreditLineDTO>) executeService("ReadAllTeacherCredits", args);
+	request.setAttribute("teacher", teacher);
+	Department department = teacher.getCurrentWorkingDepartment();
+	if (department != null) {
+	    request.setAttribute("department", department.getRealName());
+	}
 
-        request.setAttribute("creditsLinesSize", creditsLines.size());
+	Object[] args = new Object[] { teacher.getIdInternal() };
+	List<CreditLineDTO> creditsLines = (List<CreditLineDTO>) executeService("ReadAllTeacherCredits", args);
 
-        BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
-        Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
+	request.setAttribute("creditsLinesSize", creditsLines.size());
 
-        request.setAttribute("creditsLines", orderedCreditsLines);
+	BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
+	Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
+
+	request.setAttribute("creditsLines", orderedCreditsLines);
     }
 }

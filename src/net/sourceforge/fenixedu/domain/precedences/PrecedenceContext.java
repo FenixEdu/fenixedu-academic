@@ -20,26 +20,26 @@ public class PrecedenceContext {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-        return executionSemester;
+	return executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+	this.executionSemester = executionSemester;
     }
 
     public List getCurricularCourses2Enroll() {
-        return curricularCourses2Enroll;
+	return curricularCourses2Enroll;
     }
 
     public void setCurricularCourses2Enroll(List curricularCourses2Enroll) {
-        this.curricularCourses2Enroll = curricularCourses2Enroll;
+	this.curricularCourses2Enroll = curricularCourses2Enroll;
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-        return studentCurricularPlan;
+	return studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-        this.studentCurricularPlan = studentCurricularPlan;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 }

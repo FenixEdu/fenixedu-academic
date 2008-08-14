@@ -39,7 +39,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author jpvl
  * 
- *  
+ * 
  */
 public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
     private static final String CLASS_NAME_PARAM = "className";
@@ -133,12 +133,12 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
     public ActionForward viewClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	//String className = getClassName(form);
+	// String className = getClassName(form);
 	IUserView userView = UserView.getUser();
-	//InfoClass classView = getInfoTurma(userView, className, request);
+	// InfoClass classView = getInfoTurma(userView, className, request);
 	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 	setLessonListToSession(request, userView, infoClass.getNome());
-	//request.setAttribute(SessionConstants.CLASS_VIEW, classView);
+	// request.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 	return mapping.getInputForward();
     }

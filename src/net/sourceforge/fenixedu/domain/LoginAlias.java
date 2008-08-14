@@ -20,7 +20,7 @@ public class LoginAlias extends LoginAlias_Base {
     static {
 	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("type"));
 	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new Comparator<LoginAlias>() {
-	    public int compare(LoginAlias loginAlias1, LoginAlias loginAlias2) {		
+	    public int compare(LoginAlias loginAlias1, LoginAlias loginAlias2) {
 		if (loginAlias1.getRoleType() != null && loginAlias2.getRoleType() != null) {
 		    List<RoleType> rolesImportance = RoleType.getRolesImportance();
 		    Integer indexOfRoleType1 = Integer.valueOf(rolesImportance.indexOf(loginAlias1.getRoleType()));
@@ -34,9 +34,10 @@ public class LoginAlias extends LoginAlias_Base {
 		return 0;
 	    }
 	});
-	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("alias", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("alias", Collator
+		.getInstance()));
     }
-        
+
     public static void createNewCustomLoginAlias(Login login, String alias) {
 	new LoginAlias(login, alias, LoginAliasType.CUSTOM_ALIAS);
     }
@@ -50,7 +51,7 @@ public class LoginAlias extends LoginAlias_Base {
     }
 
     private LoginAlias(Login login, String alias, LoginAliasType loginAliasType) {
-	
+
 	super();
 	checkIfAliasAlreadyExists(alias, login);
 	if (loginAliasType != null && loginAliasType.equals(LoginAliasType.INSTITUTION_ALIAS)) {
@@ -64,7 +65,7 @@ public class LoginAlias extends LoginAlias_Base {
     }
 
     private LoginAlias(Login login, String alias, RoleType roleType, LoginAliasType loginAliasType) {
-	
+
 	super();
 	checkIfAliasAlreadyExists(alias, login);
 	checkRoleTypeAlias(login, roleType);
@@ -77,13 +78,13 @@ public class LoginAlias extends LoginAlias_Base {
     }
 
     public void editCustomAlias(String alias) {
-	if(getType().equals(LoginAliasType.CUSTOM_ALIAS)) {
-	   checkIfAliasAlreadyExists(alias, getLogin());
-	   setAlias(alias);
+	if (getType().equals(LoginAliasType.CUSTOM_ALIAS)) {
+	    checkIfAliasAlreadyExists(alias, getLogin());
+	    setAlias(alias);
 	}
     }
-    
-    public void delete() {	
+
+    public void delete() {
 	super.setLogin(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();
@@ -91,8 +92,8 @@ public class LoginAlias extends LoginAlias_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getType() != null && !StringUtils.isEmpty(getAlias()); 	
-    }  
+	return getType() != null && !StringUtils.isEmpty(getAlias());
+    }
 
     @Override
     public void setLogin(Login login) {
@@ -117,7 +118,7 @@ public class LoginAlias extends LoginAlias_Base {
 	}
 	super.setType(loginAliasType);
     }
-    
+
     @Override
     public void setRoleType(RoleType roleType) {
 	if (roleType == null) {
@@ -146,10 +147,9 @@ public class LoginAlias extends LoginAlias_Base {
 	    }
 	}
     }
-    
+
     /**
-     * This map is a temporary solution until DML provides indexed
-     * relations.
+     * This map is a temporary solution until DML provides indexed relations.
      * 
      */
     private static final Map<String, SoftReference<LoginAlias>> loginAliasMap = new Hashtable<String, SoftReference<LoginAlias>>();
@@ -161,14 +161,14 @@ public class LoginAlias extends LoginAlias_Base {
 	if (loginAliasReference != null) {
 	    final LoginAlias loginAlias = loginAliasReference.get();
 	    try {
-	        if (loginAlias != null && loginAlias.getRootDomainObject() == RootDomainObject.getInstance()
-	                && loginAlias.getLogin() != null && loginAlias.getLogin().hasUsername(lowerCaseUsername)) {
-	            return loginAlias;
-	        } else {
-	            loginAliasMap.remove(lowerCaseUsername);
-	        }
+		if (loginAlias != null && loginAlias.getRootDomainObject() == RootDomainObject.getInstance()
+			&& loginAlias.getLogin() != null && loginAlias.getLogin().hasUsername(lowerCaseUsername)) {
+		    return loginAlias;
+		} else {
+		    loginAliasMap.remove(lowerCaseUsername);
+		}
 	    } catch (NullPointerException npe) {
-	        loginAliasMap.remove(lowerCaseUsername);
+		loginAliasMap.remove(lowerCaseUsername);
 	    }
 	}
 	// *** end of hack
@@ -186,5 +186,5 @@ public class LoginAlias extends LoginAlias_Base {
 	    }
 	}
 	return null;
-    } 
+    }
 }

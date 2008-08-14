@@ -45,12 +45,10 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 	if (enrolment != null) {
 
 	    EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
-	    enrolmentEvaluations = enrolment
-		    .getEnrolmentEvaluationsByEnrolmentEvaluationState(enrolmentEvaluationState);
+	    enrolmentEvaluations = enrolment.getEnrolmentEvaluationsByEnrolmentEvaluationState(enrolmentEvaluationState);
 
 	    if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-		Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0))
-			.getPersonResponsibleForGrade();
+		Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
 		if (person != null) {
 		    Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
 		    infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
@@ -68,8 +66,8 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		    infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 
 		    if (enrolmentEvaluation != null && enrolmentEvaluation.hasEmployee()) {
-			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson
-				.newInfoFromDomain(enrolmentEvaluation.getEmployee().getPerson()));
+			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getEmployee()
+				.getPerson()));
 
 		    }
 		    infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
@@ -86,10 +84,9 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 	return infoSiteEnrolmentEvaluations;
     }
 
-    private Enrolment getEnrolment(Integer curricularCourseID, Integer studentNumber, String executionYear) throws ExistingServiceException {
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
-		.readDegreeModuleByOID(curricularCourseID);
-		
+    private Enrolment getEnrolment(Integer curricularCourseID, Integer studentNumber, String executionYear)
+	    throws ExistingServiceException {
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
 	final CurricularCourse curricularCourseTemp = curricularCourse;
 
@@ -103,15 +100,15 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 	if (registration == null) {
 	    registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
 	}
-	
+
 	if (registration == null) {
 	    throw new ExistingServiceException();
 	}
 
 	studentCurricularPlans = registration.getStudentCurricularPlans();
 
-	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
-		studentCurricularPlans, new Predicate() {
+	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(studentCurricularPlans,
+		new Predicate() {
 		    public boolean evaluate(Object object) {
 			StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
 			if (studentCurricularPlanElem.getDegreeCurricularPlan().equals(
@@ -123,17 +120,16 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		});
 	if (studentCurricularPlan == null) {
 
-	    studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(studentCurricularPlans,
-		    new Predicate() {
-			public boolean evaluate(Object object) {
-			    StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
-			    if (studentCurricularPlanElem.getDegreeCurricularPlan().getDegree().equals(
-				    curricularCourseTemp.getDegreeCurricularPlan().getDegree())) {
-				return true;
-			    }
-			    return false;
-			}
-		    });
+	    studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(studentCurricularPlans, new Predicate() {
+		public boolean evaluate(Object object) {
+		    StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
+		    if (studentCurricularPlanElem.getDegreeCurricularPlan().getDegree().equals(
+			    curricularCourseTemp.getDegreeCurricularPlan().getDegree())) {
+			return true;
+		    }
+		    return false;
+		}
+	    });
 
 	    if (studentCurricularPlan == null) {
 		throw new ExistingServiceException();
@@ -143,8 +139,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 	// }
 	Enrolment enrolment = null;
 	if (executionYear != null) {
-	    enrolment = curricularCourse.getEnrolmentByStudentAndYear(
-		    studentCurricularPlan.getRegistration(), executionYear);
+	    enrolment = curricularCourse.getEnrolmentByStudentAndYear(studentCurricularPlan.getRegistration(), executionYear);
 
 	} else {
 	    // TODO: Não se sabe se este comportamento está correcto!

@@ -12,7 +12,7 @@ public class NotClosedExecutionPeriodsProvider implements DataProvider {
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

@@ -26,13 +26,12 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ManageGrantProjectAction extends FenixDispatchAction {
 
-    public ActionForward prepareManageGrantProject(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantProject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Object[] args = { GrantProject.class.getName() };
 	IUserView userView = UserView.getUser();
-	List infoGrantProjectList = (List) ServiceUtils.executeService(
-		"ReadAllGrantPaymentEntitiesByClassName", args);
+	List infoGrantProjectList = (List) ServiceUtils.executeService("ReadAllGrantPaymentEntitiesByClassName", args);
 
 	if (infoGrantProjectList != null && !infoGrantProjectList.isEmpty())
 	    request.setAttribute("infoGrantProjectList", infoGrantProjectList);

@@ -12,22 +12,21 @@ import net.sourceforge.fenixedu.domain.Attends;
 public class InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan extends InfoFrequenta {
 
     public void copyFromDomain(Attends frequenta) {
-        super.copyFromDomain(frequenta);
-        if (frequenta != null) {
-            setAluno(InfoStudent.newInfoFromDomain(frequenta.getRegistration()));
-            setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta
-                    .getExecutionCourse()));
-            setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
-        }
+	super.copyFromDomain(frequenta);
+	if (frequenta != null) {
+	    setAluno(InfoStudent.newInfoFromDomain(frequenta.getRegistration()));
+	    setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta.getExecutionCourse()));
+	    setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
+	}
     }
 
     public static InfoFrequenta newInfoFromDomain(Attends frequenta) {
-        InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan infoFrequenta = null;
-        if (frequenta != null) {
-            infoFrequenta = new InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan();
-            infoFrequenta.copyFromDomain(frequenta);
-        }
+	InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan infoFrequenta = null;
+	if (frequenta != null) {
+	    infoFrequenta = new InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan();
+	    infoFrequenta.copyFromDomain(frequenta);
+	}
 
-        return infoFrequenta;
+	return infoFrequenta;
     }
 }

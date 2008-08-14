@@ -17,7 +17,7 @@ public class TeacherCategoriesManagement extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	Set<Category> sortedCategories = new TreeSet<Category>(Category.readTeacherCategories());
 
 	request.setAttribute("categories", sortedCategories);

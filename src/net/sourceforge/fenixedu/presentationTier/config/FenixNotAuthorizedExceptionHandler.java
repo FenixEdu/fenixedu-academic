@@ -19,7 +19,7 @@ import org.apache.struts.config.ExceptionConfig;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class FenixNotAuthorizedExceptionHandler extends ExceptionHandler {
 
@@ -27,12 +27,12 @@ public class FenixNotAuthorizedExceptionHandler extends ExceptionHandler {
      *  
      */
     public FenixNotAuthorizedExceptionHandler() {
-        super();
+	super();
     }
 
     /**
-     * Handle the exception. Return the <code>ActionForward</code> instance
-     * (if any) returned by the called <code>ExceptionHandler</code>.
+     * Handle the exception. Return the <code>ActionForward</code> instance (if
+     * any) returned by the called <code>ExceptionHandler</code>.
      * 
      * @param ex
      *            The exception to handle
@@ -52,26 +52,24 @@ public class FenixNotAuthorizedExceptionHandler extends ExceptionHandler {
      * 
      * @since Struts 1.1
      */
-    public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
-        try {
-            ActionForward forward = mapping.getInputForward();
+    public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	try {
+	    ActionForward forward = mapping.getInputForward();
 
-            ActionForward newForward = new ActionForward();
-            PropertyUtils.copyProperties(newForward, forward);
-            StringBuilder path = new StringBuilder();
-            path.append("/teacherAdministrationViewer.do?method=instructions").append("&objectCode=")
-                    .append(request.getParameter("executionCourseId"));
-            newForward.setPath(path.toString());
-            // Store the exception
-            ActionError actionError = new ActionError(exceptionConfig.getKey());
-            super.storeException(request, exceptionConfig.getKey(), actionError, newForward,
-                    exceptionConfig.getScope());
-            return newForward;
-        } catch (Exception e) {
-            throw new ServletException(e.getMessage());
-        }
+	    ActionForward newForward = new ActionForward();
+	    PropertyUtils.copyProperties(newForward, forward);
+	    StringBuilder path = new StringBuilder();
+	    path.append("/teacherAdministrationViewer.do?method=instructions").append("&objectCode=").append(
+		    request.getParameter("executionCourseId"));
+	    newForward.setPath(path.toString());
+	    // Store the exception
+	    ActionError actionError = new ActionError(exceptionConfig.getKey());
+	    super.storeException(request, exceptionConfig.getKey(), actionError, newForward, exceptionConfig.getScope());
+	    return newForward;
+	} catch (Exception e) {
+	    throw new ServletException(e.getMessage());
+	}
     }
 
 }

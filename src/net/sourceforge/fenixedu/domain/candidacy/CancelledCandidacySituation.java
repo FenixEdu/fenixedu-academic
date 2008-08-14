@@ -31,7 +31,7 @@ public class CancelledCandidacySituation extends CancelledCandidacySituation_Bas
 
     @Override
     public boolean getCanGeneratePass() {
-        return false;
+	return false;
     }
-    
+
 }

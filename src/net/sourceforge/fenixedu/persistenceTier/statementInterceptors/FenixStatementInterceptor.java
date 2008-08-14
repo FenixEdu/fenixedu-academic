@@ -412,9 +412,9 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	}
 
 	public String toSqlName(String name) {
-	    return name.replaceAll(
-			"([a-z]*)([A-Z])(.*?)", "$1_$2$3").toUpperCase();
+	    return name.replaceAll("([a-z]*)([A-Z])(.*?)", "$1_$2$3").toUpperCase();
 	}
+
 	private boolean shouldBeLogged(Class itemClass) {
 	    for (Class clazz : loggingClasses) {
 		if (clazz.isAssignableFrom(itemClass)) {

@@ -24,49 +24,50 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class WriteCandidacy extends Service {
 
     public void run(InfoCandidacy infoCandidacy) {
-        SeminaryCandidacy candidacy = new SeminaryCandidacy();
-        candidacy.setApproved(infoCandidacy.getApproved());
-        candidacy.setMotivation(infoCandidacy.getMotivation());
-        
-        // Modality
-        final Modality modality = rootDomainObject.readModalityByOID(infoCandidacy.getInfoModality().getIdInternal());        
-        candidacy.setModality(modality);
+	SeminaryCandidacy candidacy = new SeminaryCandidacy();
+	candidacy.setApproved(infoCandidacy.getApproved());
+	candidacy.setMotivation(infoCandidacy.getMotivation());
 
-        // Registration
-        final Registration readStudent = rootDomainObject.readRegistrationByOID(infoCandidacy.getInfoStudent().getIdInternal());
-        candidacy.setStudent(readStudent);
+	// Modality
+	final Modality modality = rootDomainObject.readModalityByOID(infoCandidacy.getInfoModality().getIdInternal());
+	candidacy.setModality(modality);
 
-        // Seminary
-        final Seminary readSeminary = rootDomainObject.readSeminaryByOID(infoCandidacy.getInfoSeminary().getIdInternal());
-        candidacy.setSeminary(readSeminary);
-        
-        // Curricular Course
-        final CurricularCourse readCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCandidacy.getCurricularCourse().getIdInternal());
-        candidacy.setCurricularCourse(readCurricularCourse);
+	// Registration
+	final Registration readStudent = rootDomainObject.readRegistrationByOID(infoCandidacy.getInfoStudent().getIdInternal());
+	candidacy.setStudent(readStudent);
 
-        // Theme
-        if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
-            candidacy.setTheme(null);
-        } else {
-            final Theme readTheme = rootDomainObject.readThemeByOID(infoCandidacy.getTheme().getIdInternal());
-            candidacy.setTheme(readTheme);
-        }
-        if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
-            candidacy.setTheme(null);
-        }
+	// Seminary
+	final Seminary readSeminary = rootDomainObject.readSeminaryByOID(infoCandidacy.getInfoSeminary().getIdInternal());
+	candidacy.setSeminary(readSeminary);
 
-        // Seminary Case Study Choices
-        for (InfoCaseStudyChoice infoCaseStudyChoice : infoCandidacy.getCaseStudyChoices()) {
-            final CaseStudyChoice caseStudyChoice = new CaseStudyChoice();
-            
-            caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
+	// Curricular Course
+	final CurricularCourse readCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCandidacy
+		.getCurricularCourse().getIdInternal());
+	candidacy.setCurricularCourse(readCurricularCourse);
 
-            final CaseStudy caseStudy = rootDomainObject.readCaseStudyByOID(infoCaseStudyChoice.getCaseStudy().getIdInternal());
-            caseStudyChoice.setCaseStudy(caseStudy);
+	// Theme
+	if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
+	    candidacy.setTheme(null);
+	} else {
+	    final Theme readTheme = rootDomainObject.readThemeByOID(infoCandidacy.getTheme().getIdInternal());
+	    candidacy.setTheme(readTheme);
+	}
+	if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
+	    candidacy.setTheme(null);
+	}
 
-            caseStudyChoice.setCandidacy(candidacy);
-            candidacy.addCaseStudyChoices(caseStudyChoice);
-        }
+	// Seminary Case Study Choices
+	for (InfoCaseStudyChoice infoCaseStudyChoice : infoCandidacy.getCaseStudyChoices()) {
+	    final CaseStudyChoice caseStudyChoice = new CaseStudyChoice();
+
+	    caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
+
+	    final CaseStudy caseStudy = rootDomainObject.readCaseStudyByOID(infoCaseStudyChoice.getCaseStudy().getIdInternal());
+	    caseStudyChoice.setCaseStudy(caseStudy);
+
+	    caseStudyChoice.setCandidacy(candidacy);
+	    candidacy.addCaseStudyChoices(caseStudyChoice);
+	}
     }
 
 }

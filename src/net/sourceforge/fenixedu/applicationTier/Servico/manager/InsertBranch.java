@@ -17,14 +17,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertBranch extends Service {
 
     public void run(InfoBranch infoBranch) throws NonExistingServiceException {
-        final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+	final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
-        if (degreeCurricularPlan == null)
-            throw new NonExistingServiceException();
+	if (degreeCurricularPlan == null)
+	    throw new NonExistingServiceException();
 
-        new Branch(infoBranch.getName(), infoBranch.getNameEn(), infoBranch.getCode(),
-                degreeCurricularPlan);
+	new Branch(infoBranch.getName(), infoBranch.getNameEn(), infoBranch.getCode(), degreeCurricularPlan);
     }
 
 }

@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadTeacherByUsername extends Service {
 
-    public InfoTeacher run(String username) {        
-        final Teacher teacher = Teacher.readTeacherByUsername(username);
+    public InfoTeacher run(String username) {
+	final Teacher teacher = Teacher.readTeacherByUsername(username);
 
-        if (teacher != null) {
-            return InfoTeacher.newInfoFromDomain(teacher);
-        }
-        return null;
+	if (teacher != null) {
+	    return InfoTeacher.newInfoFromDomain(teacher);
+	}
+	return null;
     }
 }

@@ -20,27 +20,26 @@ public class TransferDomainObjectProperty extends Service {
     public void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws Throwable {
 	try {
 	    Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);
-	    
-	    if (srcProperty != null && srcProperty instanceof Collection) {
-	        Collection srcCollection = (Collection) srcProperty;
 
-	        Object dstProperty = PropertyUtils.getSimpleProperty(dstObject, slotName);
-	        if (dstProperty instanceof Collection) {
-	            Collection dstCollection = (Collection) dstProperty;
-	            dstCollection.addAll(srcCollection);
-	        }
+	    if (srcProperty != null && srcProperty instanceof Collection) {
+		Collection srcCollection = (Collection) srcProperty;
+
+		Object dstProperty = PropertyUtils.getSimpleProperty(dstObject, slotName);
+		if (dstProperty instanceof Collection) {
+		    Collection dstCollection = (Collection) dstProperty;
+		    dstCollection.addAll(srcCollection);
+		}
 
 	    } else {
-	        PropertyUtils.setSimpleProperty(dstObject, slotName, srcProperty);
+		PropertyUtils.setSimpleProperty(dstObject, slotName, srcProperty);
 	    }
 	} catch (InvocationTargetException e) {
 	    if (e.getTargetException() != null) {
 		throw e.getTargetException();
 	    }
 	    throw e;
-	} 
+	}
 
     }
-
 
 }

@@ -36,60 +36,56 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class CreateClassificationsForStudentsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService(
-                "ReadCurrentExecutionYear", null);
+	InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadCurrentExecutionYear", null);
 
-        Object[] argsDCPs = { executionYear.getIdInternal() };
-        List degreeCurricularPlans = (List) ServiceUtils.executeService(
-                "ReadActiveDegreeCurricularPlansByExecutionYear", argsDCPs);
-        final ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
-        comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
-        Collections.sort(degreeCurricularPlans, comparatorChain);
+	Object[] argsDCPs = { executionYear.getIdInternal() };
+	List degreeCurricularPlans = (List) ServiceUtils.executeService("ReadActiveDegreeCurricularPlansByExecutionYear",
+		argsDCPs);
+	final ComparatorChain comparatorChain = new ComparatorChain();
+	comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
+	comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
+	Collections.sort(degreeCurricularPlans, comparatorChain);
 
-        request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
+	request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
 
-        DynaActionForm dynaActionForm = (DynaActionForm) form;
-        Integer[] defaultLimits = { 0, 10, 35, 65, 90, 100 };
-        dynaActionForm.set("entryGradeLimits", defaultLimits);
-        dynaActionForm.set("approvationRatioLimits", defaultLimits);
-        dynaActionForm.set("arithmeticMeanLimits", defaultLimits);
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+	Integer[] defaultLimits = { 0, 10, 35, 65, 90, 100 };
+	dynaActionForm.set("entryGradeLimits", defaultLimits);
+	dynaActionForm.set("approvationRatioLimits", defaultLimits);
+	dynaActionForm.set("arithmeticMeanLimits", defaultLimits);
 
-        return mapping.findForward("chooseDegreeCurricularPlan");
+	return mapping.findForward("chooseDegreeCurricularPlan");
 
     }
 
-    public ActionForward createClassifications(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException, IOException {
+    public ActionForward createClassifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm dynaActionForm = (DynaActionForm) form;
-        Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
-        Integer[] entryGradeLimits = (Integer[]) dynaActionForm.get("entryGradeLimits");
-        Integer[] approvationRatioLimits = (Integer[]) dynaActionForm.get("approvationRatioLimits");
-        Integer[] arithmeticMeanLimits = (Integer[]) dynaActionForm.get("arithmeticMeanLimits");
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+	Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
+	Integer[] entryGradeLimits = (Integer[]) dynaActionForm.get("entryGradeLimits");
+	Integer[] approvationRatioLimits = (Integer[]) dynaActionForm.get("approvationRatioLimits");
+	Integer[] arithmeticMeanLimits = (Integer[]) dynaActionForm.get("arithmeticMeanLimits");
 
-        Object[] args = { entryGradeLimits, approvationRatioLimits, arithmeticMeanLimits,
-                degreeCurricularPlanID };
-        ByteArrayOutputStream resultStream = (ByteArrayOutputStream) ServiceUtils.executeService(
-                "CreateClassificationsForStudents", args);
+	Object[] args = { entryGradeLimits, approvationRatioLimits, arithmeticMeanLimits, degreeCurricularPlanID };
+	ByteArrayOutputStream resultStream = (ByteArrayOutputStream) ServiceUtils.executeService(
+		"CreateClassificationsForStudents", args);
 
-        String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
-        response.setHeader("Content-disposition", "attachment;filename=" + degreeCurricularPlanID + "_" + currentDate
-                + ".zip");
-        response.setContentType("application/zip");
-        DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-        dos.write(resultStream.toByteArray());
-        dos.close();
+	String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
+	response.setHeader("Content-disposition", "attachment;filename=" + degreeCurricularPlanID + "_" + currentDate + ".zip");
+	response.setContentType("application/zip");
+	DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+	dos.write(resultStream.toByteArray());
+	dos.close();
 
-        return null;
+	return null;
     }
 
 }

@@ -23,7 +23,7 @@ public class TeacherOtherTypeCreditLineDTO extends DataTranferObject {
      * @return Returns the creditLines.
      */
     public List getCreditLines() {
-        return creditLines;
+	return creditLines;
     }
 
     /**
@@ -31,14 +31,14 @@ public class TeacherOtherTypeCreditLineDTO extends DataTranferObject {
      *            The creditLines to set.
      */
     public void setCreditLines(List creditLines) {
-        this.creditLines = creditLines;
+	this.creditLines = creditLines;
     }
 
     /**
      * @return Returns the infoExecutionPeriod.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return infoExecutionPeriod;
+	return infoExecutionPeriod;
     }
 
     /**
@@ -46,14 +46,14 @@ public class TeacherOtherTypeCreditLineDTO extends DataTranferObject {
      *            The infoExecutionPeriod to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -61,7 +61,7 @@ public class TeacherOtherTypeCreditLineDTO extends DataTranferObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
 }

@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteFinalDegreeWorkProposal extends Service {
 
-	public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException{
-		rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID).delete();
-	}
-    
+    public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
+	rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID).delete();
+    }
+
 }

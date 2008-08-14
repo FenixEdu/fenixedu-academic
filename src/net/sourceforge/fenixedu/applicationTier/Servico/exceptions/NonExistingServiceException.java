@@ -10,23 +10,23 @@ public class NonExistingServiceException extends FenixServiceException {
     }
 
     public NonExistingServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     public NonExistingServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public NonExistingServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[NonExistingServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[NonExistingServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

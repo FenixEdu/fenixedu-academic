@@ -31,96 +31,95 @@ import org.apache.commons.beanutils.BeanComparator;
 public class ReadShiftsAndGroups extends Service {
 
     public static ISiteComponent run(Integer groupingCode, String username) throws FenixServiceException {
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
-        if (grouping == null) {
-            throw new InvalidSituationServiceException();
-        }
+	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+	if (grouping == null) {
+	    throw new InvalidSituationServiceException();
+	}
 
-        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
-        if (!strategy.checkStudentInGrouping(grouping, username)) {
-            throw new NotAuthorizedException();
-        }
+	if (!strategy.checkStudentInGrouping(grouping, username)) {
+	    throw new NotAuthorizedException();
+	}
 
-        return run(grouping);
+	return run(grouping);
     }
 
     public static InfoSiteShiftsAndGroups run(Grouping grouping) throws FenixServiceException {
-        final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
+	final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
 
-        final List<InfoSiteGroupsByShift> infoSiteGroupsByShiftList = new ArrayList<InfoSiteGroupsByShift>();
-        infoSiteShiftsAndGroups.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
-        infoSiteShiftsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
+	final List<InfoSiteGroupsByShift> infoSiteGroupsByShiftList = new ArrayList<InfoSiteGroupsByShift>();
+	infoSiteShiftsAndGroups.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
+	infoSiteShiftsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
 
-        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
-        if (strategy.checkHasShift(grouping)) {
-            for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
-                final ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
-                for (final Shift shift : executionCourse.getAssociatedShifts()) {
-                    if (shift.containsType(grouping.getShiftType())) {
-                        infoSiteGroupsByShiftList.add(createInfoSiteGroupByShift(shift, grouping));
-                    }
-                }
-            }
-            Collections.sort(infoSiteGroupsByShiftList, new BeanComparator("infoSiteShift.infoShift.nome"));
+	if (strategy.checkHasShift(grouping)) {
+	    for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
+		final ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
+		for (final Shift shift : executionCourse.getAssociatedShifts()) {
+		    if (shift.containsType(grouping.getShiftType())) {
+			infoSiteGroupsByShiftList.add(createInfoSiteGroupByShift(shift, grouping));
+		    }
+		}
+	    }
+	    Collections.sort(infoSiteGroupsByShiftList, new BeanComparator("infoSiteShift.infoShift.nome"));
 
-            if (!grouping.getStudentGroupsWithoutShift().isEmpty()) {
-                infoSiteGroupsByShiftList.add(createInfoSiteGroupByShift(grouping));
-            }
-        } else {
-            infoSiteGroupsByShiftList.add(createInfoSiteGroupByShift(grouping));
-        }
+	    if (!grouping.getStudentGroupsWithoutShift().isEmpty()) {
+		infoSiteGroupsByShiftList.add(createInfoSiteGroupByShift(grouping));
+	    }
+	} else {
+	    infoSiteGroupsByShiftList.add(createInfoSiteGroupByShift(grouping));
+	}
 
-        return infoSiteShiftsAndGroups;
+	return infoSiteShiftsAndGroups;
 
     }
 
     private static InfoSiteGroupsByShift createInfoSiteGroupByShift(final Shift shift, final Grouping grouping) {
-        final InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+	final InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
 
-        final InfoSiteShift infoSiteShift = new InfoSiteShift();
-        infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-        infoSiteShift.setInfoShift(InfoShift.newInfoFromDomain(shift));
-        Collections.sort(infoSiteShift.getInfoShift().getInfoLessons());
-        final List<StudentGroup> studentGroups = grouping.readAllStudentGroupsBy(shift);
-        infoSiteShift.setNrOfGroups(calculateVacancies(grouping.getGroupMaximumNumber(), studentGroups.size()));
-        
-        infoSiteGroupsByShift.setInfoSiteStudentGroupsList(createInfoStudentGroupsList(studentGroups));
+	final InfoSiteShift infoSiteShift = new InfoSiteShift();
+	infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+	infoSiteShift.setInfoShift(InfoShift.newInfoFromDomain(shift));
+	Collections.sort(infoSiteShift.getInfoShift().getInfoLessons());
+	final List<StudentGroup> studentGroups = grouping.readAllStudentGroupsBy(shift);
+	infoSiteShift.setNrOfGroups(calculateVacancies(grouping.getGroupMaximumNumber(), studentGroups.size()));
 
-        return infoSiteGroupsByShift;
+	infoSiteGroupsByShift.setInfoSiteStudentGroupsList(createInfoStudentGroupsList(studentGroups));
+
+	return infoSiteGroupsByShift;
     }
 
     private static InfoSiteGroupsByShift createInfoSiteGroupByShift(final Grouping grouping) {
-        final InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+	final InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
 
-        final InfoSiteShift infoSiteShift = new InfoSiteShift();
-        infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-        final List<StudentGroup> studentGroups = grouping.getStudentGroupsWithoutShift();
-        infoSiteShift.setNrOfGroups(calculateVacancies(grouping.getGroupMaximumNumber(), studentGroups.size()));
-        
-        infoSiteGroupsByShift.setInfoSiteStudentGroupsList(createInfoStudentGroupsList(studentGroups));
+	final InfoSiteShift infoSiteShift = new InfoSiteShift();
+	infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+	final List<StudentGroup> studentGroups = grouping.getStudentGroupsWithoutShift();
+	infoSiteShift.setNrOfGroups(calculateVacancies(grouping.getGroupMaximumNumber(), studentGroups.size()));
 
-        return infoSiteGroupsByShift;
+	infoSiteGroupsByShift.setInfoSiteStudentGroupsList(createInfoStudentGroupsList(studentGroups));
+
+	return infoSiteGroupsByShift;
     }
 
     private static Object calculateVacancies(Integer groupMaximumNumber, int studentGroupsCount) {
-        return (groupMaximumNumber != null) ?
-            Integer.valueOf((groupMaximumNumber.intValue() - studentGroupsCount))
-            : "Sem limite";
+	return (groupMaximumNumber != null) ? Integer.valueOf((groupMaximumNumber.intValue() - studentGroupsCount))
+		: "Sem limite";
     }
 
     private static List<InfoSiteStudentGroup> createInfoStudentGroupsList(final List<StudentGroup> studentGroups) {
-        final List<InfoSiteStudentGroup> infoSiteStudentGroups = new ArrayList<InfoSiteStudentGroup>();
-        for (final StudentGroup studentGroup : studentGroups) {
-            final InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-            infoSiteStudentGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
-            infoSiteStudentGroups.add(infoSiteStudentGroup);
-        }
-        Collections.sort(infoSiteStudentGroups, new BeanComparator("infoStudentGroup.groupNumber"));
-        return infoSiteStudentGroups;
+	final List<InfoSiteStudentGroup> infoSiteStudentGroups = new ArrayList<InfoSiteStudentGroup>();
+	for (final StudentGroup studentGroup : studentGroups) {
+	    final InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+	    infoSiteStudentGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
+	    infoSiteStudentGroups.add(infoSiteStudentGroup);
+	}
+	Collections.sort(infoSiteStudentGroups, new BeanComparator("infoStudentGroup.groupNumber"));
+	return infoSiteStudentGroups;
     }
 
 }

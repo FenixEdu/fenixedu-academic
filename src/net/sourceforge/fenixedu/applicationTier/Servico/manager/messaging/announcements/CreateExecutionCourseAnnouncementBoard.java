@@ -19,68 +19,66 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jun 30, 2006,5:19:09 PM
  * 
  */
 public class CreateExecutionCourseAnnouncementBoard extends Service {
     public static class ExecutionCourseBoardAnnouncementBoardParameters {
-        public Integer executionCourseId;
+	public Integer executionCourseId;
 
-        public String name;
+	public String name;
 
-        public Boolean mandatory;
+	public Boolean mandatory;
 
-        public ExecutionCourseBoardPermittedGroupType readersGroupType;
+	public ExecutionCourseBoardPermittedGroupType readersGroupType;
 
-        public ExecutionCourseBoardPermittedGroupType writersGroupType;
+	public ExecutionCourseBoardPermittedGroupType writersGroupType;
 
-        public ExecutionCourseBoardPermittedGroupType managementGroupType;
+	public ExecutionCourseBoardPermittedGroupType managementGroupType;
     }
 
-    public void run(ExecutionCourseBoardAnnouncementBoardParameters parameters)
-            throws FenixServiceException {
-        ExecutionCourseAnnouncementBoard board = new ExecutionCourseAnnouncementBoard();
-        ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject
-                .readExecutionCourseByOID(parameters.executionCourseId);
+    public void run(ExecutionCourseBoardAnnouncementBoardParameters parameters) throws FenixServiceException {
+	ExecutionCourseAnnouncementBoard board = new ExecutionCourseAnnouncementBoard();
+	ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject
+		.readExecutionCourseByOID(parameters.executionCourseId);
 
-        board.setExecutionCourse(executionCourse);
-        board.setExecutionCoursePermittedManagementGroupType(parameters.readersGroupType);
-        board.setExecutionCoursePermittedWriteGroupType(parameters.writersGroupType);
-        board.setExecutionCoursePermittedManagementGroupType(parameters.managementGroupType);
-        board.setName(new MultiLanguageString(parameters.name));
-        board.setMandatory(parameters.mandatory);
-        board.setReaders(this.buildGroup(parameters.readersGroupType, executionCourse));
-        board.setWriters(this.buildGroup(parameters.writersGroupType, executionCourse));
-        board.setManagers(this.buildGroup(parameters.managementGroupType, executionCourse));
+	board.setExecutionCourse(executionCourse);
+	board.setExecutionCoursePermittedManagementGroupType(parameters.readersGroupType);
+	board.setExecutionCoursePermittedWriteGroupType(parameters.writersGroupType);
+	board.setExecutionCoursePermittedManagementGroupType(parameters.managementGroupType);
+	board.setName(new MultiLanguageString(parameters.name));
+	board.setMandatory(parameters.mandatory);
+	board.setReaders(this.buildGroup(parameters.readersGroupType, executionCourse));
+	board.setWriters(this.buildGroup(parameters.writersGroupType, executionCourse));
+	board.setManagers(this.buildGroup(parameters.managementGroupType, executionCourse));
 
     }
 
-    protected Group buildGroup(ExecutionCourseBoardPermittedGroupType type,
-            ExecutionCourse executionCourse) {
-        Group group = null;
-        Group managers = new RoleTypeGroup(RoleType.MANAGER);
-        switch (type) {
-        case ECB_PUBLIC:
-            break;
-        case ECB_MANAGER:
-            group = managers;
-            break;
-        case ECB_EXECUTION_COURSE_TEACHERS:
-            group = new ExecutionCourseTeachersGroup(executionCourse);
-            break;
-        case ECB_EXECUTION_COURSE_STUDENTS:
-            group = new ExecutionCourseStudentsGroup(executionCourse);
-            break;
-        case ECB_EXECUTION_COURSE_PERSONS:
-            group = new ExecutionCourseStudentsGroup(executionCourse);
-            group = new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse), group);
-            break;
-        }
+    protected Group buildGroup(ExecutionCourseBoardPermittedGroupType type, ExecutionCourse executionCourse) {
+	Group group = null;
+	Group managers = new RoleTypeGroup(RoleType.MANAGER);
+	switch (type) {
+	case ECB_PUBLIC:
+	    break;
+	case ECB_MANAGER:
+	    group = managers;
+	    break;
+	case ECB_EXECUTION_COURSE_TEACHERS:
+	    group = new ExecutionCourseTeachersGroup(executionCourse);
+	    break;
+	case ECB_EXECUTION_COURSE_STUDENTS:
+	    group = new ExecutionCourseStudentsGroup(executionCourse);
+	    break;
+	case ECB_EXECUTION_COURSE_PERSONS:
+	    group = new ExecutionCourseStudentsGroup(executionCourse);
+	    group = new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse), group);
+	    break;
+	}
 
-        if (group != null) {
-            group = new GroupUnion(managers, group);
-        }
-        return group;
+	if (group != null) {
+	    group = new GroupUnion(managers, group);
+	}
+	return group;
     }
 }

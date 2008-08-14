@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class WriteStudentInquiry extends Service {
 
-    public void run(final StudentInquiryDTO studentInquiry){
+    public void run(final StudentInquiryDTO studentInquiry) {
 	InquiriesCourse.makeNew(studentInquiry);
     }
-    
+
 }

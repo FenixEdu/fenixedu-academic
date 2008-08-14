@@ -18,10 +18,9 @@ import org.apache.struts.util.RequestUtils;
 
 public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 
-
     @Override
-    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return frontPage(mapping, form, request, response);
     }
 
@@ -30,8 +29,8 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 	return presentation(mapping, form, request, response);
     }
 
-    public ActionForward showResearchers(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showResearchers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	ResearchUnitSite site = getSite(request);
 	request.setAttribute("researchUnit", site.getUnit());
 	return mapping.findForward("showResearchers");
@@ -48,8 +47,7 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
     }
 
     private ResearchUnitSite getSite(HttpServletRequest request) {
-	Container container = AbstractFunctionalityContext.getCurrentContext(request)
-		.getSelectedContainer();
+	Container container = AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
 	if (container == null) {
 	    String siteID = request.getParameter(getContextParamName(request));
 	    return (ResearchUnitSite) rootDomainObject.readContentByOID(Integer.valueOf(siteID));
@@ -58,15 +56,15 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 	}
     }
 
-   @Override
+    @Override
     protected String getDirectLinkContext(HttpServletRequest request) {
 	ResearchUnitSite site = getSite(request);
 
 	try {
 	    MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(ResearchUnitSite.class);
-	    String path = metaDomainObject.getAssociatedPortal().getNormalizedName().getContent() + "/" + site.getUnit().getUnitPath("/");
-	    return RequestUtils.absoluteURL(request,
-		    path).toString();
+	    String path = metaDomainObject.getAssociatedPortal().getNormalizedName().getContent() + "/"
+		    + site.getUnit().getUnitPath("/");
+	    return RequestUtils.absoluteURL(request, path).toString();
 	} catch (MalformedURLException e) {
 	    return null;
 	}

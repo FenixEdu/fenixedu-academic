@@ -16,12 +16,12 @@ public class EntryPhase2SqlEntryPhaseFieldConversion implements FieldConversion 
      * @see FieldConversion#javaToSql(Object)
      */
     public Object javaToSql(Object source) {
-        if (source instanceof EntryPhase) {
-            EntryPhase s = (EntryPhase) source;
-            return s.getEntryPhase();
-        }
+	if (source instanceof EntryPhase) {
+	    EntryPhase s = (EntryPhase) source;
+	    return s.getEntryPhase();
+	}
 
-        return source;
+	return source;
 
     }
 
@@ -29,12 +29,12 @@ public class EntryPhase2SqlEntryPhaseFieldConversion implements FieldConversion 
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new EntryPhase(src);
-        }
+	if (source instanceof Integer) {
+	    Integer src = (Integer) source;
+	    return new EntryPhase(src);
+	}
 
-        return source;
+	return source;
 
     }
 }

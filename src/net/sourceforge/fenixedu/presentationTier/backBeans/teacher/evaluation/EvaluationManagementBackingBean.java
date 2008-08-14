@@ -550,7 +550,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 		enrolmentEndDay.getTime(), enrolmentBeginTime.getTime(), enrolmentEndTime.getTime() };
 
 	try {
-	    ServiceUtils.executeService( "EditWrittenEvaluationEnrolmentPeriod", args);
+	    ServiceUtils.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
 	} catch (Exception e) {
 	    addErrorMessage(e.getMessage());
 	    String errorMessage = e.getMessage();
@@ -567,7 +567,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String editMarks() throws FenixFilterException, FenixServiceException {
 	final Object[] args = { getExecutionCourseID(), getEvaluationID(), this.marks };
 	try {
-	    ServiceUtils.executeService( "WriteMarks", args);
+	    ServiceUtils.executeService("WriteMarks", args);
 	} catch (FenixServiceMultipleException e) {
 	    for (DomainException domainException : e.getExceptionList()) {
 		addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException
@@ -616,7 +616,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
 		this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, null, season, this.getDescription() };
 	try {
-	    ServiceUtils.executeService( "CreateWrittenEvaluation", args);
+	    ServiceUtils.executeService("CreateWrittenEvaluation", args);
 
 	} catch (Exception e) {
 	    String errorMessage = e.getMessage();
@@ -670,7 +670,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
 	    final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
 
-	    ServiceUtils.executeService( "WriteMarks", args);
+	    ServiceUtils.executeService("WriteMarks", args);
 
 	    return "success";
 
@@ -749,9 +749,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
 		this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, null, this.evaluationID, season,
 		this.getDescription() };
-	
+
 	try {
-	    ServiceUtils.executeService( "EditWrittenEvaluation", args);
+	    ServiceUtils.executeService("EditWrittenEvaluation", args);
 	} catch (Exception e) {
 	    String errorMessage = e.getMessage();
 	    if (e instanceof NotAuthorizedFilterException) {
@@ -811,7 +811,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String deleteWrittenTest() throws FenixFilterException, FenixServiceException {
 	final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
 	try {
-	    ServiceUtils.executeService( "DeleteWrittenEvaluation", args);
+	    ServiceUtils.executeService("DeleteWrittenEvaluation", args);
 	} catch (Exception e) {
 	    String errorMessage = e.getMessage();
 	    if (e instanceof NotAuthorizedFilterException) {
@@ -912,7 +912,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    final Boolean distributeOnlyEnroledStudents = Boolean.valueOf(this.getDistributeEnroledStudentsOption());
 	    final Object[] args = { getExecutionCourseID(), getEvaluationID(), getRoomIDs(), Boolean.FALSE,
 		    distributeOnlyEnroledStudents };
-	    ServiceUtils.executeService( "WrittenEvaluationRoomDistribution", args);
+	    ServiceUtils.executeService("WrittenEvaluationRoomDistribution", args);
 	    return "enterShowStudentsEnroled";
 	} catch (Exception e) {
 	    setErrorMessage(e.getMessage());
@@ -1009,7 +1009,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	try {
 	    final Object[] args = { this.getExecutionCourseID(), this.getEvaluationID(), this.getPublishMarksMessage(),
 		    this.getSendSMS(), announcementTitle };
-	    ServiceUtils.executeService( "PublishMarks", args);
+	    ServiceUtils.executeService("PublishMarks", args);
 	} catch (Exception e) {
 	    this.setErrorMessage(e.getMessage());
 	    return "";
@@ -1131,7 +1131,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	Object[] args = { getExecutionCourseID(), getEvaluationID(), attendsIDs,
 		DateFormatUtil.parse("dd/MM/yyyy", evaluationDate), getUserView() };
 	try {
-	    ServiceUtils.executeService( "SubmitMarks", args);
+	    ServiceUtils.executeService("SubmitMarks", args);
 	} catch (NotAuthorizedFilterException notAuthorizedFilterException) {
 	    setErrorMessage("error.notAuthorized.sumbitMarks");
 	    return "enterSubmitMarksList";
@@ -1198,7 +1198,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public String editEvaluationRooms() throws FenixFilterException, FenixServiceException {
 
-	ServiceUtils.executeService( "TeacherEditWrittenTestRooms", new Object[] { getExecutionCourse(),
+	ServiceUtils.executeService("TeacherEditWrittenTestRooms", new Object[] { getExecutionCourse(),
 		AccessControl.getPerson().getTeacher(), (WrittenTest) getEvaluation(), getRooms(getRoomsToAssociate()) });
 	setRoomsToAssociate(null);
 
@@ -1224,43 +1224,44 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public void setCanManageRoomsMap(Map<Integer, Boolean> canManageRoomsMap) {
 	this.canManageRoomsMap = canManageRoomsMap;
     }
-    
+
     public void exportStudentsEnroledToExcel() throws FenixFilterException, FenixServiceException {
 	exportToExcel();
-    } 
+    }
 
     private String getFileName(Date date) throws FenixFilterException, FenixServiceException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minutes = calendar.get(Calendar.MINUTE);
-        return (day + "_" + month + "_" + year + "-" + hour + ":" + minutes);
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(date);
+	int day = calendar.get(Calendar.DAY_OF_MONTH);
+	int month = calendar.get(Calendar.MONTH) + 1;
+	int year = calendar.get(Calendar.YEAR);
+	int hour = calendar.get(Calendar.HOUR_OF_DAY);
+	int minutes = calendar.get(Calendar.MINUTE);
+	return (day + "_" + month + "_" + year + "-" + hour + ":" + minutes);
     }
-    
+
     public void exportToExcel() throws FenixFilterException, FenixServiceException {
-	String filename = getResourceBundle("resources/ApplicationResources").getString("title.enrolments") + "-" + getFileName(Calendar.getInstance().getTime());
+	String filename = getResourceBundle("resources/ApplicationResources").getString("title.enrolments") + "-"
+		+ getFileName(Calendar.getInstance().getTime());
 	try {
-	    exportToXls(filename.replace(" ","_"));
+	    exportToXls(filename.replace(" ", "_"));
 	} catch (IOException e) {
 	    throw new FenixServiceException();
 	}
     }
 
     private void exportToXls(String filename) throws IOException, FenixFilterException, FenixServiceException {
-        this.getResponse().setContentType("application/vnd.ms-excel");
-        this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
-        ServletOutputStream outputStream = this.getResponse().getOutputStream();
-        
-        String spreadSheetName = getResourceBundle("resources/ApplicationResources").getString("title.enrolments");
-        List<Object> headers = getStudentsEnroledListHeaders();
-        Spreadsheet spreadsheet = new Spreadsheet(spreadSheetName, headers);
+	this.getResponse().setContentType("application/vnd.ms-excel");
+	this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	ServletOutputStream outputStream = this.getResponse().getOutputStream();
 
-        reportInfo(spreadsheet);
+	String spreadSheetName = getResourceBundle("resources/ApplicationResources").getString("title.enrolments");
+	List<Object> headers = getStudentsEnroledListHeaders();
+	Spreadsheet spreadsheet = new Spreadsheet(spreadSheetName, headers);
 
-        spreadsheet.exportToXLSSheet(outputStream);
+	reportInfo(spreadsheet);
+
+	spreadsheet.exportToXLSSheet(outputStream);
 	outputStream.flush();
 	this.getResponse().flushBuffer();
 	FacesContext.getCurrentInstance().responseComplete();
@@ -1281,14 +1282,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     private void fillStudentsEnroled(Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
-	
+
 	for (WrittenEvaluationEnrolment enrolment : getWrittenEvaluationEnrolments()) {
-            final Row newRow = spreadsheet.addRow();
-            newRow.setCell(enrolment.getStudent().getNumber().toString());
-            newRow.setCell(enrolment.getStudent().getPerson().getName());
-            newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getIdentification() : "-");
-            newRow.setCell(enrolment.getStudent().getDegree().getName());
+	    final Row newRow = spreadsheet.addRow();
+	    newRow.setCell(enrolment.getStudent().getNumber().toString());
+	    newRow.setCell(enrolment.getStudent().getPerson().getName());
+	    newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getIdentification() : "-");
+	    newRow.setCell(enrolment.getStudent().getDegree().getName());
 	}
     }
-    
+
 }

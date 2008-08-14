@@ -13,15 +13,15 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 25/Set/2003, 17:01:42
- *  
+ *         Created at 25/Set/2003, 17:01:42
+ * 
  */
 public class SeminaryCoordinatorFilter extends AuthorizationByRoleFilter {
-    //  the singleton of this class
+    // the singleton of this class
     public final static SeminaryCoordinatorFilter instance = new SeminaryCoordinatorFilter();
 
     public static Filtro getInstance() {
-        return instance;
+	return instance;
     }
 
     /*
@@ -30,6 +30,6 @@ public class SeminaryCoordinatorFilter extends AuthorizationByRoleFilter {
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.SEMINARIES_COORDINATOR;
+	return RoleType.SEMINARIES_COORDINATOR;
     }
 }

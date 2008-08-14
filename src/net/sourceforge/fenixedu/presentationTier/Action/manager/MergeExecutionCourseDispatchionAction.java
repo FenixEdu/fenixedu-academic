@@ -39,110 +39,100 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
-    public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws
-            FenixServiceException, FenixFilterException {
+    public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        DynaActionForm degreesForm = (DynaActionForm) form;
-        Integer sourceDegreeId = (Integer) degreesForm.get("sourceDegreeId");
-        Integer destinationDegreeId = (Integer) degreesForm.get("destinationDegreeId");
-        Integer executionPeriodId = (Integer) degreesForm.get("executionPeriodId");
+	DynaActionForm degreesForm = (DynaActionForm) form;
+	Integer sourceDegreeId = (Integer) degreesForm.get("sourceDegreeId");
+	Integer destinationDegreeId = (Integer) degreesForm.get("destinationDegreeId");
+	Integer executionPeriodId = (Integer) degreesForm.get("executionPeriodId");
 
-        getSourceAndDestinationExecutionCourses(request, sourceDegreeId, destinationDegreeId,
-                executionPeriodId);
+	getSourceAndDestinationExecutionCourses(request, sourceDegreeId, destinationDegreeId, executionPeriodId);
 
-        getSourceAndDestinationDegrees(request, sourceDegreeId, destinationDegreeId);
+	getSourceAndDestinationDegrees(request, sourceDegreeId, destinationDegreeId);
 
-        getExecutionPeriod(request, executionPeriodId);
+	getExecutionPeriod(request, executionPeriodId);
 
-        return mapping.findForward("chooseExecutionCourses");
+	return mapping.findForward("chooseExecutionCourses");
     }
 
-    protected void getExecutionPeriod(HttpServletRequest request, Integer executionPeriodId)
-            throws FenixServiceException, FenixFilterException {
-        IUserView userView = UserView.getUser();
+    protected void getExecutionPeriod(HttpServletRequest request, Integer executionPeriodId) throws FenixServiceException,
+	    FenixFilterException {
+	IUserView userView = UserView.getUser();
 
-        Object[] args = { executionPeriodId };
+	Object[] args = { executionPeriodId };
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-                "ReadExecutionPeriodByOID", args);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID",
+		args);
 
-        request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
+	request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
     }
 
-    protected void getSourceAndDestinationDegrees(HttpServletRequest request, Integer sourceDegreeId,
-            Integer destinationDegreeId) throws FenixServiceException, FenixFilterException {
-        IUserView userView = UserView.getUser();
+    protected void getSourceAndDestinationDegrees(HttpServletRequest request, Integer sourceDegreeId, Integer destinationDegreeId)
+	    throws FenixServiceException, FenixFilterException {
+	IUserView userView = UserView.getUser();
 
-        Object[] args1 = { sourceDegreeId };
-        Object[] args2 = { destinationDegreeId };
+	Object[] args1 = { sourceDegreeId };
+	Object[] args2 = { destinationDegreeId };
 
-        InfoDegree sourceInfoDegree = (InfoDegree) ServiceUtils.executeService(
-                "ReadDegreeByOID", args1);
-        InfoDegree destinationInfoDegree = (InfoDegree) ServiceUtils.executeService(
-                "ReadDegreeByOID", args2);
+	InfoDegree sourceInfoDegree = (InfoDegree) ServiceUtils.executeService("ReadDegreeByOID", args1);
+	InfoDegree destinationInfoDegree = (InfoDegree) ServiceUtils.executeService("ReadDegreeByOID", args2);
 
-        request.setAttribute("sourceInfoDegree", sourceInfoDegree);
-        request.setAttribute("destinationInfoDegree", destinationInfoDegree);
+	request.setAttribute("sourceInfoDegree", sourceInfoDegree);
+	request.setAttribute("destinationInfoDegree", destinationInfoDegree);
     }
 
-    protected void getSourceAndDestinationExecutionCourses(HttpServletRequest request,
-            Integer sourceDegreeId, Integer destinationDegreeId, Integer executionPeriodId)
-            throws FenixServiceException, FenixFilterException {
-        IUserView userView = UserView.getUser();
+    protected void getSourceAndDestinationExecutionCourses(HttpServletRequest request, Integer sourceDegreeId,
+	    Integer destinationDegreeId, Integer executionPeriodId) throws FenixServiceException, FenixFilterException {
+	IUserView userView = UserView.getUser();
 
-        Object[] args1 = { destinationDegreeId, executionPeriodId };
-        Object[] args2 = { sourceDegreeId, executionPeriodId };
-        List destinationExecutionCourses = (List) ServiceUtils.executeService(
-                "ReadExecutionCoursesByDegreeAndExecutionPeriodId", args1);
-        List sourceExecutionCourses = (List) ServiceUtils.executeService(
-                "ReadExecutionCoursesByDegreeAndExecutionPeriodId", args2);
+	Object[] args1 = { destinationDegreeId, executionPeriodId };
+	Object[] args2 = { sourceDegreeId, executionPeriodId };
+	List destinationExecutionCourses = (List) ServiceUtils.executeService("ReadExecutionCoursesByDegreeAndExecutionPeriodId",
+		args1);
+	List sourceExecutionCourses = (List) ServiceUtils.executeService("ReadExecutionCoursesByDegreeAndExecutionPeriodId",
+		args2);
 
-        Collator collator = Collator.getInstance();
-        Collections.sort(destinationExecutionCourses, new BeanComparator("nome", collator));
-        Collections.sort(sourceExecutionCourses, new BeanComparator("nome", collator));
+	Collator collator = Collator.getInstance();
+	Collections.sort(destinationExecutionCourses, new BeanComparator("nome", collator));
+	Collections.sort(sourceExecutionCourses, new BeanComparator("nome", collator));
 
-        request.setAttribute("sourceExecutionCourses", sourceExecutionCourses);
-        request.setAttribute("destinationExecutionCourses", destinationExecutionCourses);
+	request.setAttribute("sourceExecutionCourses", sourceExecutionCourses);
+	request.setAttribute("destinationExecutionCourses", destinationExecutionCourses);
     }
 
     public ActionForward prepareChooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws 
-            FenixServiceException, FenixFilterException {
-        IUserView userView = getUserView(request);
-        
-        SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID); 
-        degrees.addAll(RootDomainObject.getInstance().getDegrees()); 
-        
-        List executionPeriods = (List) ServiceUtils.executeService("ReadAllExecutionPeriods",
-                new Object[0]);
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	IUserView userView = getUserView(request);
 
-        ComparatorChain comparator = new ComparatorChain();
-        comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-        comparator.addComparator(new BeanComparator("name"), true);
-        Collections.sort(executionPeriods, comparator);
+	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	degrees.addAll(RootDomainObject.getInstance().getDegrees());
 
-        request.setAttribute("sourceDegrees", degrees);
-        request.setAttribute("destinationDegrees", degrees);
-        request.setAttribute("executionPeriods", executionPeriods);
+	List executionPeriods = (List) ServiceUtils.executeService("ReadAllExecutionPeriods", new Object[0]);
 
-        return mapping.findForward("chooseDegreesAndExecutionPeriod");
+	ComparatorChain comparator = new ComparatorChain();
+	comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+	comparator.addComparator(new BeanComparator("name"), true);
+	Collections.sort(executionPeriods, comparator);
+
+	request.setAttribute("sourceDegrees", degrees);
+	request.setAttribute("destinationDegrees", degrees);
+	request.setAttribute("executionPeriods", executionPeriods);
+
+	return mapping.findForward("chooseDegreesAndExecutionPeriod");
     }
 
-    public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws 
-            FenixServiceException, FenixFilterException {
+    public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        IUserView userView = getUserView(request);
-        DynaActionForm mergeExecutionCoursesForm = (DynaActionForm) form;
-        Integer sourceExecutionCourseId = (Integer) mergeExecutionCoursesForm
-                .get("sourceExecutionCourseId");
-        Integer destinationExecutionCourseId = (Integer) mergeExecutionCoursesForm
-                .get("destinationExecutionCourseId");
-        Object[] args = { destinationExecutionCourseId, sourceExecutionCourseId };
+	IUserView userView = getUserView(request);
+	DynaActionForm mergeExecutionCoursesForm = (DynaActionForm) form;
+	Integer sourceExecutionCourseId = (Integer) mergeExecutionCoursesForm.get("sourceExecutionCourseId");
+	Integer destinationExecutionCourseId = (Integer) mergeExecutionCoursesForm.get("destinationExecutionCourseId");
+	Object[] args = { destinationExecutionCourseId, sourceExecutionCourseId };
 
-        ServiceUtils.executeService("MergeExecutionCourses", args);
+	ServiceUtils.executeService("MergeExecutionCourses", args);
 
-        return mapping.findForward("sucess");
+	return mapping.findForward("sucess");
     }
 }

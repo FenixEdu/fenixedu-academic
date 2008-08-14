@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteGuideVersionInManager extends Service {
 
     public void run(Integer guideID) throws InvalidChangeServiceException {
-        Guide guide = rootDomainObject.readGuideByOID(guideID);
+	Guide guide = rootDomainObject.readGuideByOID(guideID);
 
-        if (!guide.canBeDeleted()) {
-            throw new InvalidChangeServiceException();
-        }
+	if (!guide.canBeDeleted()) {
+	    throw new InvalidChangeServiceException();
+	}
 
-        guide.delete();
+	guide.delete();
     }
 
 }

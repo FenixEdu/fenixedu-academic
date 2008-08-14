@@ -10,12 +10,12 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PossibleParentSpacesToMoveSpaceDownProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {	
-	MoveSpaceBean bean = (MoveSpaceBean) source;			
+    public Object provide(Object source, Object currentValue) {
+	MoveSpaceBean bean = (MoveSpaceBean) source;
 	Space space = bean.getSpace();
-	if(space != null) {
-	    return space.getPossibleParentSpacesToMoveSpaceDown();	    
-	}	
+	if (space != null) {
+	    return space.getPossibleParentSpacesToMoveSpaceDown();
+	}
 	return new ArrayList<Space>();
     }
 

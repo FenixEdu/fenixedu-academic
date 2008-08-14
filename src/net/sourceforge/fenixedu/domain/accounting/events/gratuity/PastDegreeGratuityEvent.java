@@ -40,7 +40,7 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.pastDegreeGratuityAmount.cannot.be.null.and.must.be.greather.than.zero");
 	}
-	
+
     }
 
     @Override
@@ -48,7 +48,7 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
 	throw new DomainException(
 		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.cannot.modify.pastDegreeGratuityAmount");
     }
-    
+
     @Override
     public boolean isExemptionAppliable() {
 	return false;

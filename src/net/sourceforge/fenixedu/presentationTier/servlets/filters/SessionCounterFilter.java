@@ -16,19 +16,19 @@ public class SessionCounterFilter implements HttpSessionListener {
     private static int activeSessions = 0;
 
     public void sessionCreated(HttpSessionEvent se) {
-        activeSessions++;
+	activeSessions++;
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {
-        naturalDecrement(activeSessions);
+	naturalDecrement(activeSessions);
     }
 
     public static int getActiveSessions() {
-        return activeSessions;
+	return activeSessions;
     }
 
     private void naturalDecrement(int var) {
-        if (var > 0)
-            var--;
+	if (var > 0)
+	    var--;
     }
 }

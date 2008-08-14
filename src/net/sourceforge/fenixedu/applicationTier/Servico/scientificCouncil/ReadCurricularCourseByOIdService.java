@@ -15,21 +15,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author João Mota
  * 
- * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
+ *         23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 
  */
 public class ReadCurricularCourseByOIdService extends Service {
 
-	public SiteView run(Integer curricularCourseId) throws FenixServiceException{
-		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+    public SiteView run(Integer curricularCourseId) throws FenixServiceException {
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
-		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-				.newInfoFromDomain(curricularCourse);
+	InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
-		SiteView siteView = new SiteView(infoCurricularCourse);
+	SiteView siteView = new SiteView(infoCurricularCourse);
 
-		return siteView;
+	return siteView;
 
-	}
+    }
 
 }

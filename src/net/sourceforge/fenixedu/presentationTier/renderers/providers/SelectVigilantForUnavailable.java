@@ -18,20 +18,20 @@ public class SelectVigilantForUnavailable implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        UnavailablePeriodBean bean = (UnavailablePeriodBean) source;
-        VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
+	UnavailablePeriodBean bean = (UnavailablePeriodBean) source;
+	VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
 
-        List<Vigilant> vigilants = new ArrayList<Vigilant>();
-        if (vigilantGroup != null) {
-            vigilants.addAll(vigilantGroup.getVigilants());
-            Collections.sort(vigilants, new BeanComparator("person.name"));
-        }
-        return vigilants;
+	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+	if (vigilantGroup != null) {
+	    vigilants.addAll(vigilantGroup.getVigilants());
+	    Collections.sort(vigilants, new BeanComparator("person.name"));
+	}
+	return vigilants;
 
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

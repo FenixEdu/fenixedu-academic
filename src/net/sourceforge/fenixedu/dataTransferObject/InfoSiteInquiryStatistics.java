@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 
  * @author Susana Fernandes
- *  
+ * 
  */
 public class InfoSiteInquiryStatistics extends DataTranferObject implements ISiteComponent {
 
@@ -21,19 +21,19 @@ public class InfoSiteInquiryStatistics extends DataTranferObject implements ISit
     }
 
     public List getInfoInquiryStatistics() {
-        return infoInquiryStatistics;
+	return infoInquiryStatistics;
     }
 
     public void setInfoInquiryStatistics(List list) {
-        infoInquiryStatistics = list;
+	infoInquiryStatistics = list;
     }
 
     public InfoExecutionCourse getExecutionCourse() {
-        return executionCourse;
+	return executionCourse;
     }
 
     public void setExecutionCourse(InfoExecutionCourse course) {
-        executionCourse = course;
+	executionCourse = course;
     }
 
 }

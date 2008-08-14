@@ -8,7 +8,7 @@ public class DefaultPathProcessor extends AbstractPathProcessor {
 
     protected String getTemplatedIdString(final String path) {
 	final int indexOfSlash = path.indexOf('/');
-	return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;	
+	return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
     }
 
     protected Integer getTemplatedId(final String path) {
@@ -20,7 +20,7 @@ public class DefaultPathProcessor extends AbstractPathProcessor {
 	final Integer id = getTemplatedId(path);
 	return id == null ? null : (Container) RootDomainObject.getInstance().readContentByOID(id);
     }
-    
+
     public Content processPath(String path) {
 	return getTemplatedContent(path);
     }

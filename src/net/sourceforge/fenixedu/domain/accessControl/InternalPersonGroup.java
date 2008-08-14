@@ -19,16 +19,17 @@ public class InternalPersonGroup extends RoleGroup {
     private static final long serialVersionUID = 1L;
 
     public InternalPersonGroup() {
-        super(Role.getRoleByRoleType(RoleType.PERSON));
+	super(Role.getRoleByRoleType(RoleType.PERSON));
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[0];
+	return new Argument[0];
     }
-    
+
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("SITE_RESOURCES", "label.net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup");
+	return RenderUtils.getResourceString("SITE_RESOURCES",
+		"label.net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup");
     }
 }

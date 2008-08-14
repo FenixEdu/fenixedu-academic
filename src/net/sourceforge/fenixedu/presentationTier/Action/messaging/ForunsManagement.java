@@ -34,8 +34,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created
- *         on May 5, 2006, 10:42:00 AM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
+ *         May 5, 2006, 10:42:00 AM
  * 
  * @author pcma
  */
@@ -50,9 +50,8 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 	return mapping.findForward("viewForum");
     }
 
-    public ActionForward prepareCreateThreadAndMessage(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward prepareCreateThreadAndMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	request.setAttribute("forum", getRequestedForum(request));
 	request.setAttribute("person", getLoggedPerson(request));
@@ -61,16 +60,14 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward createThreadAndMessage(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createThreadAndMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	CreateConversationThreadAndMessageBean createConversationThreadAndMessageBean = (CreateConversationThreadAndMessageBean) RenderUtils
 		.getViewState("createThreadAndMessage").getMetaObject().getObject();
 
 	try {
-	    executeService("CreateConversationThreadAndMessage",
-		    new Object[] { createConversationThreadAndMessageBean });
+	    executeService("CreateConversationThreadAndMessage", new Object[] { createConversationThreadAndMessageBean });
 	} catch (DomainException e) {
 	    ActionMessages actionMessages = new ActionMessages();
 	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(e.getKey()));
@@ -83,18 +80,15 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 	return this.viewForum(mapping, form, request, response);
     }
 
-    private ActionForward viewThreadOnPage(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response, Integer pageNumber) throws FenixServiceException,
-	    FenixFilterException {
-	
+    private ActionForward viewThreadOnPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response, Integer pageNumber) throws FenixServiceException, FenixFilterException {
+
 	ConversationThread thread = this.getRequestedThread(request);
 	request.setAttribute("thread", thread);
-	
+
 	request.setAttribute("pageNumber", pageNumber);
-	request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, thread
-		.getChildrenCount()));
-	request.setAttribute("messages", getContentToDisplay(thread.getChildren(), pageNumber,
-		DEFAULT_PAGE_SIZE));
+	request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, thread.getChildrenCount()));
+	request.setAttribute("messages", getContentToDisplay(thread.getChildren(), pageNumber, DEFAULT_PAGE_SIZE));
 
 	Person loggedPerson = getLoggedPerson(request);
 	request.setAttribute("person", loggedPerson);
@@ -106,19 +100,17 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 	request.setAttribute("showReplyBox", this.getShowReplyBox(request));
 
 	return mapping.findForward("viewThread");
-	
+
     }
-	    
-    public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+
+    public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	return viewThreadOnPage(mapping, actionForm, request, response, getPageNumber(request));
     }
 
-    public ActionForward prepareCreateMessage(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward prepareCreateMessage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	request.setAttribute("quotationText", getQuotationText(request));
 	return viewThreadOnPage(mapping, actionForm, request, response, computeNumberOfPages(DEFAULT_PAGE_SIZE,
@@ -126,12 +118,11 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward createMessage(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward createMessage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	CreateConversationMessageBean createConversationMessageBean = (CreateConversationMessageBean) RenderUtils
-		.getViewState("createMessage").getMetaObject().getObject();
+	CreateConversationMessageBean createConversationMessageBean = (CreateConversationMessageBean) RenderUtils.getViewState(
+		"createMessage").getMetaObject().getObject();
 
 	try {
 	    executeService("CreateConversationMessage", new Object[] { createConversationMessageBean });
@@ -148,24 +139,20 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 		getRequestedThread(request).getConversationMessagesCount()));
     }
 
-    public ActionForward emailSubscribe(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward emailSubscribe(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	executeService("AddForumEmailSubscriber", new Object[] { getRequestedForum(request),
-		getLoggedPerson(request) });
+	executeService("AddForumEmailSubscriber", new Object[] { getRequestedForum(request), getLoggedPerson(request) });
 
 	prepareViewForum(request);
 
 	return mapping.findForward("viewForum");
     }
 
-    public ActionForward emailUnsubscribe(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward emailUnsubscribe(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	executeService("RemoveForumEmailSubscriber", new Object[] { getRequestedForum(request),
-		getLoggedPerson(request) });
+	executeService("RemoveForumEmailSubscriber", new Object[] { getRequestedForum(request), getLoggedPerson(request) });
 
 	prepareViewForum(request);
 
@@ -187,13 +174,11 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     protected ConversationThread getRequestedThread(HttpServletRequest request) {
-	return (ConversationThread) rootDomainObject.readContentByOID(Integer.valueOf(request
-		.getParameter("threadId")));
+	return (ConversationThread) rootDomainObject.readContentByOID(Integer.valueOf(request.getParameter("threadId")));
     }
 
     protected Forum getRequestedForum(HttpServletRequest request) {
-	return (Forum) rootDomainObject.readContentByOID(Integer
-		.valueOf(request.getParameter("forumId")));
+	return (Forum) rootDomainObject.readContentByOID(Integer.valueOf(request.getParameter("forumId")));
     }
 
     private List<Content> getContentToDisplay(List<Node> nodes, Integer pageNumber, Integer pageSize) {
@@ -218,21 +203,18 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 	String quotationText = null;
 	if (quotedMessageId != null) {
 	    MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
-	    ConversationMessage message = (ConversationMessage) rootDomainObject
-		    .readContentByOID(quotedMessageId);
+	    ConversationMessage message = (ConversationMessage) rootDomainObject.readContentByOID(quotedMessageId);
 
-	    String author = message.getCreator().getName() + " ("
-		    + message.getCreator().getIstUsername() + ")";
+	    String author = message.getCreator().getName() + " (" + message.getCreator().getIstUsername() + ")";
 
-	    quotationText = resources.getMessage(this.getLocale(request),
-		    "messaging.viewThread.quotationText", author, message.getBody().getContent());
+	    quotationText = resources.getMessage(this.getLocale(request), "messaging.viewThread.quotationText", author, message
+		    .getBody().getContent());
 
 	}
 	return new MultiLanguageString(quotationText);
     }
 
-    private void prepareViewForum(HttpServletRequest request) throws FenixFilterException,
-	    FenixServiceException {
+    private void prepareViewForum(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 
 	Forum forum = this.getRequestedForum(request);
 	request.setAttribute("forum", forum);
@@ -240,14 +222,11 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 	Integer pageNumber = getPageNumber(request);
 	request.setAttribute("pageNumber", pageNumber);
 
-	request.setAttribute("conversationThreads", getContentToDisplay(forum.getChildren(), pageNumber,
-		DEFAULT_PAGE_SIZE));
+	request.setAttribute("conversationThreads", getContentToDisplay(forum.getChildren(), pageNumber, DEFAULT_PAGE_SIZE));
 
-	request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, forum
-		.getChildrenCount()));
+	request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, forum.getChildrenCount()));
 	Person loggedPerson = getLoggedPerson(request);
-	request.setAttribute("receivingMessagesByEmail", forum
-		.isPersonReceivingMessagesByEmail(loggedPerson));
+	request.setAttribute("receivingMessagesByEmail", forum.isPersonReceivingMessagesByEmail(loggedPerson));
 
 	request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(loggedPerson));
     }

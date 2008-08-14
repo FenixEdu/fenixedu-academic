@@ -24,7 +24,7 @@ public class DegreeCurricularPlansForExecutionYear implements DataProvider {
 	final ExecutionYear executionYear = source instanceof SearchStudentsByCurricularCourseParametersBean ? ((SearchStudentsByCurricularCourseParametersBean) source)
 		.getExecutionYear()
 		: ((ExecutionDegreeListBean) source).getExecutionYear();
-		
+
 	if (executionYear != null) {
 	    final Person person = AccessControl.getPerson();
 

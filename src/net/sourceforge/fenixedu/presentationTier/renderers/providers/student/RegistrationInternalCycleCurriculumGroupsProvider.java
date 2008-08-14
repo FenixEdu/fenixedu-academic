@@ -18,9 +18,10 @@ public class RegistrationInternalCycleCurriculumGroupsProvider implements DataPr
     public Object provide(Object source, Object currentValue) {
 	final IRegistrationBean iRegistrationBean = (IRegistrationBean) source;
 
-	final Collection<CycleCurriculumGroup> result = new TreeSet<CycleCurriculumGroup>(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+	final Collection<CycleCurriculumGroup> result = new TreeSet<CycleCurriculumGroup>(
+		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
 	result.addAll(iRegistrationBean.getRegistration().getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
-	
+
 	return result;
     }
 

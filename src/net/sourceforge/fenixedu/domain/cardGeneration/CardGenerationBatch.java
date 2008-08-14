@@ -30,7 +30,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	public Object execute() {
 	    return new CardGenerationBatch(null, executionYear, false);
 	}
-	
+
     }
 
     public static class CardGenerationBatchDeleter implements FactoryExecutor {
@@ -50,16 +50,16 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     }
 
     public CardGenerationBatch(String description, final ExecutionYear executionYear, boolean createEmptyBatch) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setExecutionYear(executionYear);
-        setDescription(description);
-        final DateTime dateTime = new DateTime();
-        setCreated(dateTime);
-        setUpdated(dateTime);
-        if (!createEmptyBatch) {
-            setPeopleForEntryCreation(getAllPeopleForEntryCreation());
-        }
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setExecutionYear(executionYear);
+	setDescription(description);
+	final DateTime dateTime = new DateTime();
+	setCreated(dateTime);
+	setUpdated(dateTime);
+	if (!createEmptyBatch) {
+	    setPeopleForEntryCreation(getAllPeopleForEntryCreation());
+	}
     }
 
     public void delete() {
@@ -88,7 +88,8 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 		for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 		    final DegreeType degreeType = studentCurricularPlan.getDegreeType();
 		    if (degreeType.compareTo(maxDegreeType) >= 0) {
-			//System.out.println("Using: " + degreeType + " same as " + maxDegreeType);
+			// System.out.println("Using: " + degreeType +
+			// " same as " + maxDegreeType);
 			createCardGenerationEntry(person, studentCurricularPlan);
 		    } else {
 			System.out.println("Not using: " + degreeType + " because of " + maxDegreeType);
@@ -111,8 +112,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	    }
 	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
 		if (studentCurricularPlan.isActive()) {
-		    if (degreeType == DegreeType.BOLONHA_DEGREE
-			    || degreeType == DegreeType.BOLONHA_MASTER_DEGREE
+		    if (degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_MASTER_DEGREE
 			    || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
 			    || degreeType == DegreeType.BOLONHA_PHD_PROGRAM) {
 			studentCurricularPlans.add(studentCurricularPlan);
@@ -137,7 +137,9 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     protected void createCardGenerationEntry(final Person person, final StudentCurricularPlan studentCurricularPlan) {
 	if (studentCurricularPlan.getDegreeType() == DegreeType.MASTER_DEGREE) {
-	    System.out.println("Master degree student curricular plan: " + studentCurricularPlan.getDegreeCurricularPlan().getName() + " - " + studentCurricularPlan.getDegreeType() + " " + person.getUsername());
+	    System.out.println("Master degree student curricular plan: "
+		    + studentCurricularPlan.getDegreeCurricularPlan().getName() + " - " + studentCurricularPlan.getDegreeType()
+		    + " " + person.getUsername());
 	}
 	final CardGenerationEntry cardGenerationEntry = new CardGenerationEntry();
 	cardGenerationEntry.setCreated(getCreated());
@@ -151,9 +153,11 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 		final CardGenerationBatch cardGenerationBatch = otherCardGenerationEntry.getCardGenerationBatch();
 		if (cardGenerationBatch.getExecutionYear() == executionYear) {
 		    if (cardGenerationBatch == this) {
-			new CardGenerationProblem(this, "message.person.has.multiple.entries.in.same.batch", person.getUsername(), person);
+			new CardGenerationProblem(this, "message.person.has.multiple.entries.in.same.batch",
+				person.getUsername(), person);
 		    } else {
-			new CardGenerationProblem(this, "message.person.has.multiple.entries.in.same.execution.year", person.getUsername(), person);
+			new CardGenerationProblem(this, "message.person.has.multiple.entries.in.same.execution.year", person
+				.getUsername(), person);
 		    }
 		}
 	    }

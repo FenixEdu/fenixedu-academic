@@ -25,8 +25,8 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ManageGrantTypeAction extends FenixDispatchAction {
 
-    public ActionForward prepareManageGrantTypeForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantTypeForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Object[] args = {};
 	IUserView userView = UserView.getUser();

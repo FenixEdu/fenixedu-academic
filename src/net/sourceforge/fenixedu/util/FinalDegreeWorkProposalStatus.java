@@ -19,11 +19,9 @@ public class FinalDegreeWorkProposalStatus extends FenixUtil {
 
     public static final int PUBLISHED = 2;
 
-    public static final FinalDegreeWorkProposalStatus APPROVED_STATUS = new FinalDegreeWorkProposalStatus(
-            APPROVED);
+    public static final FinalDegreeWorkProposalStatus APPROVED_STATUS = new FinalDegreeWorkProposalStatus(APPROVED);
 
-    public static final FinalDegreeWorkProposalStatus PUBLISHED_STATUS = new FinalDegreeWorkProposalStatus(
-            PUBLISHED);
+    public static final FinalDegreeWorkProposalStatus PUBLISHED_STATUS = new FinalDegreeWorkProposalStatus(PUBLISHED);
 
     public static final String APPROVED_STRING = "Aprovado";
 
@@ -35,51 +33,51 @@ public class FinalDegreeWorkProposalStatus extends FenixUtil {
     }
 
     public FinalDegreeWorkProposalStatus(int status) {
-        this.status = new Integer(status);
+	this.status = new Integer(status);
     }
 
     public FinalDegreeWorkProposalStatus(Integer status) {
-        this.status = status;
+	this.status = status;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof FinalDegreeWorkProposalStatus) {
-            FinalDegreeWorkProposalStatus ds = (FinalDegreeWorkProposalStatus) obj;
-            resultado = this.getStatus().equals(ds.getStatus());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof FinalDegreeWorkProposalStatus) {
+	    FinalDegreeWorkProposalStatus ds = (FinalDegreeWorkProposalStatus) obj;
+	    resultado = this.getStatus().equals(ds.getStatus());
+	}
+	return resultado;
     }
 
     /**
      * @return
      */
     public Integer getStatus() {
-        return status;
+	return status;
     }
 
     /**
      * @param integer
      */
     public void setStatus(Integer status) {
-        this.status = status;
+	this.status = status;
     }
 
     public String getKey() {
-        if (status.intValue() == APPROVED) {
-            return APPROVED_STRING;
-        }
-        if (status.intValue() == PUBLISHED) {
-            return PUBLISHED_STRING;
-        }
-        return null;
+	if (status.intValue() == APPROVED) {
+	    return APPROVED_STRING;
+	}
+	if (status.intValue() == PUBLISHED) {
+	    return PUBLISHED_STRING;
+	}
+	return null;
     }
 
     public static List getLabelValueList() {
-        List labelValueList = new ArrayList();
-        labelValueList.add(new LabelValueBean(APPROVED_STRING, "" + APPROVED));
-        labelValueList.add(new LabelValueBean(PUBLISHED_STRING, "" + PUBLISHED));
-        return labelValueList;
+	List labelValueList = new ArrayList();
+	labelValueList.add(new LabelValueBean(APPROVED_STRING, "" + APPROVED));
+	labelValueList.add(new LabelValueBean(PUBLISHED_STRING, "" + PUBLISHED));
+	return labelValueList;
     }
 
 }

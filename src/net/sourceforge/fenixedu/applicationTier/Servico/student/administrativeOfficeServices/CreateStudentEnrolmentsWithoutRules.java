@@ -12,26 +12,29 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class CreateStudentEnrolmentsWithoutRules extends Service {
-    
+
     public void run(StudentEnrolmentBean enrolmentBean) throws FenixServiceException {
 	Set<CurriculumModule> initialCurriculumModules = enrolmentBean.getInitialCurriculumModules();
-	for (DegreeModuleToEnrol degreeModuleToEnrol: enrolmentBean.getDegreeModulesToEnrol()) {
-	    if(initialCurriculumModules.contains(degreeModuleToEnrol.getCurriculumGroup()) && !enrolmentBean.getCurriculumModules().contains(degreeModuleToEnrol.getCurriculumGroup())) {
+	for (DegreeModuleToEnrol degreeModuleToEnrol : enrolmentBean.getDegreeModulesToEnrol()) {
+	    if (initialCurriculumModules.contains(degreeModuleToEnrol.getCurriculumGroup())
+		    && !enrolmentBean.getCurriculumModules().contains(degreeModuleToEnrol.getCurriculumGroup())) {
 		throw new EnrolmentRuleServiceException("error.student.enrolments.invalid.choice");
 	    }
 	}
-	
+
 	for (CurriculumModule curriculumModule : initialCurriculumModules) {
-	    if(!enrolmentBean.getCurriculumModules().contains(curriculumModule)) {
+	    if (!enrolmentBean.getCurriculumModules().contains(curriculumModule)) {
 		try {
 		    curriculumModule.delete();
 		} catch (DomainException e) {
-		    throw new EnrolmentRuleServiceException("error.cannot.delete.curriculumModule", new String[] {curriculumModule.getDegreeModule().getName()});
+		    throw new EnrolmentRuleServiceException("error.cannot.delete.curriculumModule",
+			    new String[] { curriculumModule.getDegreeModule().getName() });
 		}
 	    }
 	}
-	
-	enrolmentBean.getStudentCurricularPlan().createModules(enrolmentBean.getDegreeModulesToEnrol(), enrolmentBean.getExecutionPeriod(), EnrollmentCondition.VALIDATED);	
+
+	enrolmentBean.getStudentCurricularPlan().createModules(enrolmentBean.getDegreeModulesToEnrol(),
+		enrolmentBean.getExecutionPeriod(), EnrollmentCondition.VALIDATED);
     }
 
 }

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 public class DeleteInvitation extends Service {
 
     public void run(Invitation invitation) {
-	if(invitation != null) {
+	if (invitation != null) {
 	    invitation.delete();
 	}
     }

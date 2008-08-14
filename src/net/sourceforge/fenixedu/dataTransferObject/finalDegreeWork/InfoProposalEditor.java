@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class InfoProposalEditor extends InfoObject {
 
@@ -68,208 +68,208 @@ public class InfoProposalEditor extends InfoObject {
 
     /* Construtores */
     public InfoProposalEditor() {
-        super();
+	super();
     }
 
     public String toString() {
-        String result = "[Proposal";
-        result += ", idInternal=" + getIdInternal();
-        result += ", title=" + getTitle();
-        result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
-        result += "]";
-        return result;
+	String result = "[Proposal";
+	result += ", idInternal=" + getIdInternal();
+	result += ", title=" + getTitle();
+	result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
+	result += "]";
+	return result;
     }
 
     public String getCompanyName() {
-        return companyName;
+	return companyName;
     }
 
     public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+	this.companyName = companyName;
     }
 
     public InfoPerson getCoorientator() {
-        return coorientator;
+	return coorientator;
     }
 
     public void setCoorientator(InfoPerson coorientator) {
-        this.coorientator = coorientator;
+	this.coorientator = coorientator;
     }
 
     public Integer getCoorientatorsCreditsPercentage() {
-        return coorientatorsCreditsPercentage;
+	return coorientatorsCreditsPercentage;
     }
 
     public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage) {
-        this.coorientatorsCreditsPercentage = coorientatorsCreditsPercentage;
+	this.coorientatorsCreditsPercentage = coorientatorsCreditsPercentage;
     }
 
     public DegreeType getDegreeType() {
-        return degreeType;
+	return degreeType;
     }
 
     public void setDegreeType(DegreeType degreeType) {
-        this.degreeType = degreeType;
+	this.degreeType = degreeType;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     public String getObjectives() {
-        return objectives;
+	return objectives;
     }
 
     public void setObjectives(String objectives) {
-        this.objectives = objectives;
+	this.objectives = objectives;
     }
 
     public String getObservations() {
-        return observations;
+	return observations;
     }
 
     public void setObservations(String observations) {
-        this.observations = observations;
+	this.observations = observations;
     }
 
     public InfoPerson getOrientator() {
-        return orientator;
+	return orientator;
     }
 
     public void setOrientator(InfoPerson orientator) {
-        this.orientator = orientator;
+	this.orientator = orientator;
     }
 
     public Integer getOrientatorsCreditsPercentage() {
-        return orientatorsCreditsPercentage;
+	return orientatorsCreditsPercentage;
     }
 
     public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage) {
-        this.orientatorsCreditsPercentage = orientatorsCreditsPercentage;
+	this.orientatorsCreditsPercentage = orientatorsCreditsPercentage;
     }
 
     public String getRequirements() {
-        return requirements;
+	return requirements;
     }
 
     public void setRequirements(String requirements) {
-        this.requirements = requirements;
+	this.requirements = requirements;
     }
 
     public String getTitle() {
-        return title;
+	return title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+	this.title = title;
     }
 
     public String getUrl() {
-        return url;
+	return url;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+	this.url = url;
     }
 
     public InfoExecutionDegree getExecutionDegree() {
-        return executionDegree;
+	return executionDegree;
     }
 
     public void setExecutionDegree(InfoExecutionDegree executionDegree) {
-        this.executionDegree = executionDegree;
+	this.executionDegree = executionDegree;
     }
 
     public String getFraming() {
-        return framing;
+	return framing;
     }
 
     public void setFraming(String framing) {
-        this.framing = framing;
+	this.framing = framing;
     }
 
     public String getDeliverable() {
-        return deliverable;
+	return deliverable;
     }
 
     public void setDeliverable(String deliverable) {
-        this.deliverable = deliverable;
+	this.deliverable = deliverable;
     }
 
     public String getLocation() {
-        return location;
+	return location;
     }
 
     public void setLocation(String location) {
-        this.location = location;
+	this.location = location;
     }
 
     public Integer getMaximumNumberOfGroupElements() {
-        return maximumNumberOfGroupElements;
+	return maximumNumberOfGroupElements;
     }
 
     public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements) {
-        this.maximumNumberOfGroupElements = maximumNumberOfGroupElements;
+	this.maximumNumberOfGroupElements = maximumNumberOfGroupElements;
     }
 
     public Integer getMinimumNumberOfGroupElements() {
-        return minimumNumberOfGroupElements;
+	return minimumNumberOfGroupElements;
     }
 
     public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements) {
-        this.minimumNumberOfGroupElements = minimumNumberOfGroupElements;
+	this.minimumNumberOfGroupElements = minimumNumberOfGroupElements;
     }
 
     public String getCompanionMail() {
-        return companionMail;
+	return companionMail;
     }
 
     public void setCompanionMail(String companionMail) {
-        this.companionMail = companionMail;
+	this.companionMail = companionMail;
     }
 
     public String getCompanionName() {
-        return companionName;
+	return companionName;
     }
 
     public void setCompanionName(String companionName) {
-        this.companionName = companionName;
+	this.companionName = companionName;
     }
 
     public Integer getCompanionPhone() {
-        return companionPhone;
+	return companionPhone;
     }
 
     public void setCompanionPhone(Integer companionPhone) {
-        this.companionPhone = companionPhone;
+	this.companionPhone = companionPhone;
     }
 
     public String getCompanyAdress() {
-        return companyAdress;
+	return companyAdress;
     }
 
     public void setCompanyAdress(String companyAdress) {
-        this.companyAdress = companyAdress;
+	this.companyAdress = companyAdress;
     }
 
     public List getBranches() {
-        return branches;
+	return branches;
     }
 
     public void setBranches(List branches) {
-        this.branches = branches;
+	this.branches = branches;
     }
 
     public FinalDegreeWorkProposalStatus getStatus() {
-        return status;
+	return status;
     }
 
     public void setStatus(FinalDegreeWorkProposalStatus status) {
-        this.status = status;
+	this.status = status;
     }
 
 }

@@ -9,21 +9,22 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class EquivalencePlanRequestEvent extends EquivalencePlanRequestEvent_Base {
-    
+
     protected EquivalencePlanRequestEvent() {
-        super();
+	super();
     }
-    
-    public EquivalencePlanRequestEvent(final AdministrativeOffice administrativeOffice, final Person person, final EquivalencePlanRequest academicServiceRequest) {
+
+    public EquivalencePlanRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+	    final EquivalencePlanRequest academicServiceRequest) {
 	this();
 	super.init(administrativeOffice, EventType.EQUIVALENCE_PLAN_REQUEST, person, academicServiceRequest);
     }
-    
+
     @Override
     public EquivalencePlanRequest getAcademicServiceRequest() {
-        return (EquivalencePlanRequest) super.getAcademicServiceRequest();
+	return (EquivalencePlanRequest) super.getAcademicServiceRequest();
     }
-    
+
     private Registration getRegistration() {
 	return getAcademicServiceRequest().getRegistration();
     }
@@ -31,7 +32,7 @@ public class EquivalencePlanRequestEvent extends EquivalencePlanRequestEvent_Bas
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	
+
 	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
 	labelFormatter.appendLabel(" (");
 	labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
@@ -41,8 +42,8 @@ public class EquivalencePlanRequestEvent extends EquivalencePlanRequestEvent_Bas
 	if (getAcademicServiceRequest().hasExecutionYear()) {
 	    labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
 	}
-	
+
 	return labelFormatter;
     }
-    
+
 }

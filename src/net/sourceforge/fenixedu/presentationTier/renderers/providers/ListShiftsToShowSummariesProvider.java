@@ -14,10 +14,10 @@ public class ListShiftsToShowSummariesProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	ShowSummariesBean bean = (ShowSummariesBean) source;
-	ExecutionCourse executionCourse = bean.getExecutionCourse();	
+	ExecutionCourse executionCourse = bean.getExecutionCourse();
 	Set<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
-	if (executionCourse != null) {	    
-	   shifts.addAll(executionCourse.getAssociatedShifts());	   
+	if (executionCourse != null) {
+	    shifts.addAll(executionCourse.getAssociatedShifts());
 	}
 	return shifts;
     }

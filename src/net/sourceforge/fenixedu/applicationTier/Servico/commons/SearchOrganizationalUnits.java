@@ -9,17 +9,17 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 public class SearchOrganizationalUnits extends SearchParties {
-	@Override
-	protected Collection search(String value, int size) {
-	    Collection<UnitName> unitNames = UnitName.find(value, size);
-	    List<Unit> resultUnits = new ArrayList<Unit> ();
-	    for(UnitName name : unitNames) {
-		Unit unit = name.getUnit();
-		if(unit.isDepartmentUnit() || unit.isScientificAreaUnit()) {
-		    resultUnits.add(unit);
-		}
+    @Override
+    protected Collection search(String value, int size) {
+	Collection<UnitName> unitNames = UnitName.find(value, size);
+	List<Unit> resultUnits = new ArrayList<Unit>();
+	for (UnitName name : unitNames) {
+	    Unit unit = name.getUnit();
+	    if (unit.isDepartmentUnit() || unit.isScientificAreaUnit()) {
+		resultUnits.add(unit);
 	    }
-	    return resultUnits;
 	}
+	return resultUnits;
+    }
 
 }

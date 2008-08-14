@@ -44,12 +44,10 @@ public class ShortQuestionRenderer extends OutputRenderer {
 	public HtmlComponent createComponent(Object object, Class type) {
 	    NewQuestionBank questionBank = (NewQuestionBank) object;
 	    Properties properties = new Properties();
-	    properties.setProperty("linkFormat",
-		    "/tests/questionBank.do?method=manageQuestionBank&view=tree&oid="
-			    + questionBank.getIdInternal());
-	    properties.setProperty("text", RenderUtils.getResourceString("TESTS_RESOURCES",
-		    "title.managePermissionUnits")
-		    + " " + questionBank.getOwner().getName());
+	    properties.setProperty("linkFormat", "/tests/questionBank.do?method=manageQuestionBank&view=tree&oid="
+		    + questionBank.getIdInternal());
+	    properties.setProperty("text", RenderUtils.getResourceString("TESTS_RESOURCES", "title.managePermissionUnits") + " "
+		    + questionBank.getOwner().getName());
 	    properties.setProperty("useParent", "true");
 	    properties.setProperty("contextRelative", "true");
 	    properties.setProperty("moduleRelative", "true");
@@ -89,10 +87,8 @@ public class ShortQuestionRenderer extends OutputRenderer {
 	public HtmlComponent createComponent(Object object, Class type) {
 	    NewAllGroup allGroup = (NewAllGroup) object;
 	    Properties properties = new Properties();
-	    properties.setProperty("linkFormat", "/tests/questionBank.do?method=editTestElement&oid="
-		    + allGroup.getIdInternal());
-	    properties.setProperty("text", RenderUtils.getResourceString("TESTS_RESOURCES",
-		    "label.allGroup"));
+	    properties.setProperty("linkFormat", "/tests/questionBank.do?method=editTestElement&oid=" + allGroup.getIdInternal());
+	    properties.setProperty("text", RenderUtils.getResourceString("TESTS_RESOURCES", "label.allGroup"));
 	    properties.setProperty("useParent", "true");
 	    properties.setProperty("contextRelative", "true");
 	    properties.setProperty("moduleRelative", "true");
@@ -114,8 +110,7 @@ public class ShortQuestionRenderer extends OutputRenderer {
 	    properties.setProperty("emptyMessageKey", "tests.presentationMaterials.empty");
 	    properties.setProperty("emptyMessageClasses", "emptyMessage");
 	    properties.setProperty("emptyMessageBundle", "TESTS_RESOURCES");
-	    return renderValue(atomicQuestion.getOrderedPresentationMaterials(), List.class, null,
-		    "flowLayout", properties);
+	    return renderValue(atomicQuestion.getOrderedPresentationMaterials(), List.class, null, "flowLayout", properties);
 	}
 
     }

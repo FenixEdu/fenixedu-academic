@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.util;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 public class EnrolmentGroupPolicyType extends FenixUtil {
 
@@ -20,65 +20,65 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
     }
 
     public EnrolmentGroupPolicyType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public EnrolmentGroupPolicyType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public java.lang.Integer getType() {
-        return type;
+	return type;
     }
 
     public void setType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
-    
+
     public String getTypeFullName() {
 
-        int value = this.type.intValue();
-        String stringValue = null;
+	int value = this.type.intValue();
+	String stringValue = null;
 
-        switch (value) {
-        case ATOMIC:
-            stringValue = "ATOMICA";
-            break;
-        case INDIVIDUAL:
-            stringValue = "INDIVIDUAL";
-            break;
-        default:
-            break;
-        }
+	switch (value) {
+	case ATOMIC:
+	    stringValue = "ATOMICA";
+	    break;
+	case INDIVIDUAL:
+	    stringValue = "INDIVIDUAL";
+	    break;
+	default:
+	    break;
+	}
 
-        return stringValue;
+	return stringValue;
     }
-    
+
     public boolean equals(Object o) {
-        if (o instanceof EnrolmentGroupPolicyType) {
-            EnrolmentGroupPolicyType aux = (EnrolmentGroupPolicyType) o;
-            return this.type.equals(aux.getType());
-        }
-        return false;
+	if (o instanceof EnrolmentGroupPolicyType) {
+	    EnrolmentGroupPolicyType aux = (EnrolmentGroupPolicyType) o;
+	    return this.type.equals(aux.getType());
+	}
+	return false;
 
     }
 
     public String toString() {
 
-        int value = this.type.intValue();
-        String stringValue = null;
+	int value = this.type.intValue();
+	String stringValue = null;
 
-        switch (value) {
-        case ATOMIC:
-            stringValue = "ATOMIC";
-            break;
-        case INDIVIDUAL:
-            stringValue = "INDIVIDUAL";
-            break;
-        default:
-            break;
-        }
+	switch (value) {
+	case ATOMIC:
+	    stringValue = "ATOMIC";
+	    break;
+	case INDIVIDUAL:
+	    stringValue = "INDIVIDUAL";
+	    break;
+	default:
+	    break;
+	}
 
-        return "[" + this.getClass().getName() + ": " + stringValue + "]";
+	return "[" + this.getClass().getName() + ": " + stringValue + "]";
     }
 }

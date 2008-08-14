@@ -9,32 +9,32 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class PreCandidacySituation extends PreCandidacySituation_Base {
 
     public PreCandidacySituation(Candidacy candidacy) {
-        this(candidacy, AccessControl.getPerson());
+	this(candidacy, AccessControl.getPerson());
     }
 
     public PreCandidacySituation(Candidacy candidacy, Person person) {
-        super();
-        init(candidacy, person);
+	super();
+	init(candidacy, person);
     }
 
     @Override
     public CandidacySituationType getCandidacySituationType() {
-        return CandidacySituationType.PRE_CANDIDACY;
+	return CandidacySituationType.PRE_CANDIDACY;
     }
 
     @Override
     public boolean getCanGeneratePass() {
-        return false;
+	return false;
     }
-    
+
     public Collection<Operation> getOperationsForPerson(Person person) {
-        // TODO Auto-generated method stub
-        return null;
+	// TODO Auto-generated method stub
+	return null;
     }
 
     @Override
     public boolean canExecuteOperationAutomatically() {
-        // TODO Auto-generated method stub
-        return false;
+	// TODO Auto-generated method stub
+	return false;
     }
 }

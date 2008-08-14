@@ -210,7 +210,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    executeService("DeleteNonAffiliatedTeacher", rootDomainObject.readNonAffiliatedTeacherByOID(getIntegerFromRequest(
-	    	request, "nonAffiliatedTeacherID")));
+		    request, "nonAffiliatedTeacherID")));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	}

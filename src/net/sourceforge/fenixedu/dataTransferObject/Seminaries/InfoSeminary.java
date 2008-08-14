@@ -13,7 +13,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 
-public class InfoSeminary extends InfoObject{
+public class InfoSeminary extends InfoObject {
     private String name;
 
     private String description;
@@ -36,178 +36,174 @@ public class InfoSeminary extends InfoObject{
      * @return
      */
     public String getDescription() {
-        return description;
+	return description;
     }
-
-
 
     /**
      * @return
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
      * @param string
      */
     public void setDescription(String string) {
-        description = string;
+	description = string;
     }
-
 
     /**
      * @param string
      */
     public void setName(String string) {
-        name = string;
+	name = string;
     }
 
     /**
      * @return
      */
     public Integer getAllowedCandidaciesPerStudent() {
-        return allowedCandidaciesPerStudent;
+	return allowedCandidaciesPerStudent;
     }
 
     /**
      * @param integer
      */
     public void setAllowedCandidaciesPerStudent(Integer integer) {
-        allowedCandidaciesPerStudent = integer;
+	allowedCandidaciesPerStudent = integer;
     }
 
     /**
      * @return
      */
     public Calendar getEnrollmentBeginDate() {
-        return enrollmentBeginDate;
+	return enrollmentBeginDate;
     }
 
     /**
      * @return
      */
     public Calendar getEnrollmentBeginTime() {
-        return enrollmentBeginTime;
+	return enrollmentBeginTime;
     }
 
     /**
      * @return
      */
     public Calendar getEnrollmentEndDate() {
-        return enrollmentEndDate;
+	return enrollmentEndDate;
     }
 
     /**
      * @return
      */
     public Calendar getEnrollmentEndTime() {
-        return enrollmentEndTime;
+	return enrollmentEndTime;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentBeginDate(Calendar calendar) {
-        enrollmentBeginDate = calendar;
+	enrollmentBeginDate = calendar;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentBeginTime(Calendar calendar) {
-        enrollmentBeginTime = calendar;
+	enrollmentBeginTime = calendar;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentEndDate(Calendar calendar) {
-        enrollmentEndDate = calendar;
+	enrollmentEndDate = calendar;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentEndTime(Calendar calendar) {
-        enrollmentEndTime = calendar;
+	enrollmentEndTime = calendar;
     }
 
     public String printDeadline() {
-        StringBuilder result = new StringBuilder();
-        result.append(this.getEnrollmentEndDate().get(Calendar.DAY_OF_MONTH));
-        result.append("-").append(this.getEnrollmentEndDate().get(Calendar.MONTH + 1));
-        result.append("-").append(this.getEnrollmentEndDate().get(Calendar.YEAR));
-        result.append(", ");
-        int minute = this.getEnrollmentEndTime().get(Calendar.MINUTE);
-        int hour = this.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY);
-        if (hour < 10)
-            result.append("0"); /*
-                                 * lets stuff an with an extra 0 for readability
-                                 * improvement
-                                 */
-        result.append(hour).append(":");
-        if (minute < 10)
-            result.append("0"); /*
-                                 * lets stuff an with an extra 0 for readability
-                                 * improvement
-                                 */
-        result.append(minute);
+	StringBuilder result = new StringBuilder();
+	result.append(this.getEnrollmentEndDate().get(Calendar.DAY_OF_MONTH));
+	result.append("-").append(this.getEnrollmentEndDate().get(Calendar.MONTH + 1));
+	result.append("-").append(this.getEnrollmentEndDate().get(Calendar.YEAR));
+	result.append(", ");
+	int minute = this.getEnrollmentEndTime().get(Calendar.MINUTE);
+	int hour = this.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY);
+	if (hour < 10)
+	    result.append("0"); /*
+				 * lets stuff an with an extra 0 for readability
+				 * improvement
+				 */
+	result.append(hour).append(":");
+	if (minute < 10)
+	    result.append("0"); /*
+				 * lets stuff an with an extra 0 for readability
+				 * improvement
+				 */
+	result.append(minute);
 
-        return result.toString();
+	return result.toString();
     }
 
     /**
      * @return
      */
     public Boolean getHasCaseStudy() {
-        return hasCaseStudy;
+	return hasCaseStudy;
     }
 
     /**
      * @return
      */
     public Boolean getHasThemes() {
-        return hasThemes;
+	return hasThemes;
     }
 
     /**
      * @param boolean1
      */
     public void setHasCaseStudy(Boolean boolean1) {
-        hasCaseStudy = boolean1;
+	hasCaseStudy = boolean1;
     }
 
     /**
      * @param boolean1
      */
     public void setHasThemes(Boolean boolean1) {
-        hasThemes = boolean1;
+	hasThemes = boolean1;
     }
 
     public void copyFromDomain(Seminary seminary) {
-        super.copyFromDomain(seminary);
-        if (seminary != null) {
-            setAllowedCandidaciesPerStudent(seminary.getAllowedCandidaciesPerStudent());
-            setDescription(seminary.getDescription());
-            setEnrollmentBeginDate(seminary.getEnrollmentBeginDate());
-            setEnrollmentBeginTime(seminary.getEnrollmentBeginTime());
-            setEnrollmentEndDate(seminary.getEnrollmentEndDate());
-            setEnrollmentEndTime(seminary.getEnrollmentEndTime());
-            setHasCaseStudy(seminary.getHasCaseStudy());
-            setHasThemes(seminary.getHasTheme());
-            setName(seminary.getName());
-        }
+	super.copyFromDomain(seminary);
+	if (seminary != null) {
+	    setAllowedCandidaciesPerStudent(seminary.getAllowedCandidaciesPerStudent());
+	    setDescription(seminary.getDescription());
+	    setEnrollmentBeginDate(seminary.getEnrollmentBeginDate());
+	    setEnrollmentBeginTime(seminary.getEnrollmentBeginTime());
+	    setEnrollmentEndDate(seminary.getEnrollmentEndDate());
+	    setEnrollmentEndTime(seminary.getEnrollmentEndTime());
+	    setHasCaseStudy(seminary.getHasCaseStudy());
+	    setHasThemes(seminary.getHasTheme());
+	    setName(seminary.getName());
+	}
     }
 
     public static InfoSeminary newInfoFromDomain(Seminary seminary) {
-        InfoSeminary infoSeminary = null;
-        if (seminary != null) {
-            infoSeminary = new InfoSeminary();
-            infoSeminary.copyFromDomain(seminary);
-        }
-        return infoSeminary;
+	InfoSeminary infoSeminary = null;
+	if (seminary != null) {
+	    infoSeminary = new InfoSeminary();
+	    infoSeminary.copyFromDomain(seminary);
+	}
+	return infoSeminary;
     }
-
 
 }

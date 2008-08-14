@@ -41,12 +41,12 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public static final Comparator<Vigilancy> COMPARATOR_BY_VIGILANT_SORT_CRITERIA = new Comparator<Vigilancy>() {
 
-		public int compare(Vigilancy o1, Vigilancy o2) {
-			return Vigilant.SORT_CRITERIA_COMPARATOR.compare(o1.getVigilant(), o2.getVigilant());
-		}
-    	
+	public int compare(Vigilancy o1, Vigilancy o2) {
+	    return Vigilant.SORT_CRITERIA_COMPARATOR.compare(o1.getVigilant(), o2.getVigilant());
+	}
+
     };
-    
+
     public Vigilancy() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -67,9 +67,9 @@ public abstract class Vigilancy extends Vigilancy_Base {
 	if (!canBeChangedByUser()) {
 	    throw new DomainException("vigilancy.error.notAuthorized");
 	} else {
-		if (bool == null || !bool) {
-			setStatus(null);
-		}
+	    if (bool == null || !bool) {
+		setStatus(null);
+	    }
 	    super.setActive(bool);
 	}
     }
@@ -196,8 +196,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     protected boolean isSelfAccessing() {
 	Person person = AccessControl.getPerson();
-	return this.getVigilant().equals(
-		person.getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear()));
+	return this.getVigilant().equals(person.getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear()));
     }
 
     protected boolean canBeChangedByUser() {
@@ -207,13 +206,11 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     protected boolean isTeacherForCourse(Person person) {
 	Teacher teacher = person.getTeacher();
-	return (teacher != null && teacher.teachesAny(this.getWrittenEvaluation()
-		.getAssociatedExecutionCourses()));
+	return (teacher != null && teacher.teachesAny(this.getWrittenEvaluation().getAssociatedExecutionCourses()));
     }
 
     protected boolean isExamCoordinatorForGroup(Person person) {
-	ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(ExecutionYear
-		.readCurrentExecutionYear());
+	ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	return (coordinator != null && coordinator.managesGivenVigilantGroup(getAssociatedVigilantGroup()));
     }
 
@@ -231,15 +228,18 @@ public abstract class Vigilancy extends Vigilancy_Base {
     }
 
     /**
-	 * A vigilancy initialy starts as active and {@value AttendingStatus#NOT_ATTENDED}. 
-	 * However when a vigilant is diconvoked the status becomes undefined.
-	 * 
-	 * @return <code>true</code> if the status is undefined and should not be considered
-	 */
+     * A vigilancy initialy starts as active and
+     * {@value AttendingStatus#NOT_ATTENDED}. However when a vigilant is
+     * diconvoked the status becomes undefined.
+     * 
+     * @return <code>true</code> if the status is undefined and should not be
+     *         considered
+     */
     public boolean isStatusUndefined() {
-    	return getStatus() == null;
+	return getStatus() == null;
     }
-    
+
     public abstract int getPoints();
+
     public abstract int getEstimatedPoints();
 }

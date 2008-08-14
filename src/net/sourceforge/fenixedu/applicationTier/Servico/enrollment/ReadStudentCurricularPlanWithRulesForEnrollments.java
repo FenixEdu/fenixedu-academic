@@ -11,36 +11,37 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentCurricularPlanWithRulesForEnrollments extends ReadStudentCurricularPlanForEnrollments {
 
-	@Override
-	public StudentCurricularPlan run(Integer executionDegreeId, Registration registration) throws FenixServiceException {
+    @Override
+    public StudentCurricularPlan run(Integer executionDegreeId, Registration registration) throws FenixServiceException {
 
-		final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-		final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(registration);
+	final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
+	final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(registration);
 
-		if (studentCurricularPlan.hasSpecialSeasonFor(actualExecutionPeriod)) {
-			return studentCurricularPlan;
+	if (studentCurricularPlan.hasSpecialSeasonFor(actualExecutionPeriod)) {
+	    return studentCurricularPlan;
 
-		} else {
-			
-			final EnrolmentPeriodInCurricularCourses enrolmentPeriod = getEnrolmentPeriod(studentCurricularPlan);
-			if (enrolmentPeriod.getExecutionPeriod() == actualExecutionPeriod) {
-				return studentCurricularPlan;
-			}
-			throw new OutOfCurricularCourseEnrolmentPeriod(enrolmentPeriod.getStartDate(), enrolmentPeriod.getEndDate());
-		}
+	} else {
+
+	    final EnrolmentPeriodInCurricularCourses enrolmentPeriod = getEnrolmentPeriod(studentCurricularPlan);
+	    if (enrolmentPeriod.getExecutionPeriod() == actualExecutionPeriod) {
+		return studentCurricularPlan;
+	    }
+	    throw new OutOfCurricularCourseEnrolmentPeriod(enrolmentPeriod.getStartDate(), enrolmentPeriod.getEndDate());
 	}
-	
-	private EnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
-			final StudentCurricularPlan studentActiveCurricularPlan)
-			throws OutOfCurricularCourseEnrolmentPeriod {
+    }
 
-		final EnrolmentPeriodInCurricularCourses enrolmentPeriod = studentActiveCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriod();
-		if (enrolmentPeriod == null) {
-			final EnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = studentActiveCurricularPlan.getDegreeCurricularPlan().getNextEnrolmentPeriod();
-			final Date startDate = (nextEnrolmentPeriod != null) ? nextEnrolmentPeriod.getStartDate() : null;
-			final Date endDate = (nextEnrolmentPeriod != null) ? nextEnrolmentPeriod.getEndDate() : null;
-			throw new OutOfCurricularCourseEnrolmentPeriod(startDate, endDate);
-		}
-		return enrolmentPeriod;
+    private EnrolmentPeriodInCurricularCourses getEnrolmentPeriod(final StudentCurricularPlan studentActiveCurricularPlan)
+	    throws OutOfCurricularCourseEnrolmentPeriod {
+
+	final EnrolmentPeriodInCurricularCourses enrolmentPeriod = studentActiveCurricularPlan.getDegreeCurricularPlan()
+		.getActualEnrolmentPeriod();
+	if (enrolmentPeriod == null) {
+	    final EnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = studentActiveCurricularPlan.getDegreeCurricularPlan()
+		    .getNextEnrolmentPeriod();
+	    final Date startDate = (nextEnrolmentPeriod != null) ? nextEnrolmentPeriod.getStartDate() : null;
+	    final Date endDate = (nextEnrolmentPeriod != null) ? nextEnrolmentPeriod.getEndDate() : null;
+	    throw new OutOfCurricularCourseEnrolmentPeriod(startDate, endDate);
 	}
+	return enrolmentPeriod;
+    }
 }

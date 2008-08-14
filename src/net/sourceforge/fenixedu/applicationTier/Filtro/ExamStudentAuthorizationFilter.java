@@ -22,55 +22,54 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public ExamStudentAuthorizationFilter() {
-        super();
+	super();
     }
 
     protected RoleType getRoleType() {
-        return RoleType.STUDENT;
+	return RoleType.STUDENT;
     }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
-        try {
-            if ((id == null) || (id.getRoleTypes() == null)
-                    || !id.hasRoleType(getRoleType())
-                    || !attendsEvaluationExecutionCourse(id, arguments)) {
-                throw new NotAuthorizedFilterException();
-            }
-        } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
-        }
+	IUserView id = getRemoteUser(request);
+	Object[] arguments = getServiceCallArguments(request);
+	try {
+	    if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+		    || !attendsEvaluationExecutionCourse(id, arguments)) {
+		throw new NotAuthorizedFilterException();
+	    }
+	} catch (RuntimeException e) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 
     private boolean attendsEvaluationExecutionCourse(IUserView id, Object[] args) {
-        if (args == null) {
-            return false;
-        }
-        try {
-            Integer evaluationID;
-            if (args[1] instanceof Integer) {
-                evaluationID = (Integer) args[1];
-            } else if (args[1] instanceof InfoExam) {
-                evaluationID = ((InfoExam) args[1]).getIdInternal();
-            } else if (args[1] instanceof InfoWrittenTest) {
-                evaluationID = (Integer) args[1];
-            } else {
-                return false;
-            }
-            final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationID);
+	if (args == null) {
+	    return false;
+	}
+	try {
+	    Integer evaluationID;
+	    if (args[1] instanceof Integer) {
+		evaluationID = (Integer) args[1];
+	    } else if (args[1] instanceof InfoExam) {
+		evaluationID = ((InfoExam) args[1]).getIdInternal();
+	    } else if (args[1] instanceof InfoWrittenTest) {
+		evaluationID = (Integer) args[1];
+	    } else {
+		return false;
+	    }
+	    final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationID);
 
-            final String studentUsername = (String) args[0];
-            for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
-                for (final Attends attend : executionCourse.getAttends()) {
-                    if (attend.getRegistration().getPerson().hasUsername(studentUsername)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        } catch (Exception ex) {
-            return false;
-        }
+	    final String studentUsername = (String) args[0];
+	    for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
+		for (final Attends attend : executionCourse.getAttends()) {
+		    if (attend.getRegistration().getPerson().hasUsername(studentUsername)) {
+			return true;
+		    }
+		}
+	    }
+	    return false;
+	} catch (Exception ex) {
+	    return false;
+	}
     }
 }

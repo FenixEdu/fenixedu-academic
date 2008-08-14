@@ -13,20 +13,20 @@ import pt.utl.ist.berserk.ServiceResponse;
 /**
  * @author João Mota
  */
-public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAuthorizationFilter{
+public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAuthorizationFilter {
 
     @Override
     protected ExecutionYear getSpecificExecutionYear(ServiceRequest request, ServiceResponse response) {
-        Object argument = request.getServiceParameters().getParameter(0);
-        
-        ExecutionCourse executionCourse;
-        if (argument instanceof InfoExecutionCourse) {
-            executionCourse = rootDomainObject.readExecutionCourseByOID(((InfoExecutionCourse) argument).getIdInternal());
-        } else {
-            executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argument);
-        }
-        
-        return (executionCourse == null) ? null : executionCourse.getExecutionYear();
+	Object argument = request.getServiceParameters().getParameter(0);
+
+	ExecutionCourse executionCourse;
+	if (argument instanceof InfoExecutionCourse) {
+	    executionCourse = rootDomainObject.readExecutionCourseByOID(((InfoExecutionCourse) argument).getIdInternal());
+	} else {
+	    executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argument);
+	}
+
+	return (executionCourse == null) ? null : executionCourse.getExecutionYear();
     }
 
 }

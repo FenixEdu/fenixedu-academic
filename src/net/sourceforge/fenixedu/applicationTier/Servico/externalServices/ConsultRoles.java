@@ -30,12 +30,12 @@ public class ConsultRoles extends Service {
     }
 
     public static boolean isAllowed(final String host, final String ip, final String password) {
-	return ConsultRoles.password != null && ConsultRoles.password.equals(password) &&
-		(allowedHosts.contains(host) || allowedHosts.contains(ip));
+	return ConsultRoles.password != null && ConsultRoles.password.equals(password)
+		&& (allowedHosts.contains(host) || allowedHosts.contains(ip));
     }
 
     public Set<Role> run(final String host, final String ip, final String password, final String userUId)
-    		throws FenixServiceException {
+	    throws FenixServiceException {
 	if (isAllowed(host, ip, password)) {
 	    final Login login = Login.readLoginByUsername(userUId);
 	    final User user = login.getUser();

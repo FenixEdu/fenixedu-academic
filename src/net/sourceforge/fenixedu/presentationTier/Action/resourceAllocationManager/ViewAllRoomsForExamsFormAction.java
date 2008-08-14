@@ -24,28 +24,27 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        super.execute(mapping, form, request, response);
+	super.execute(mapping, form, request, response);
 
-            IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) this.servlet
-                    .getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) this.servlet.getServletContext().getAttribute(
+		SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-            Object[] args = { infoExecutionPeriod };
-            List infoRoomExamsMaps;
-            try {
-                infoRoomExamsMaps = (List) ServiceManagerServiceFactory.executeService(
-                        "ReadAllRoomsExamsMap", args);
-            } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException(e);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-            request.setAttribute(SessionConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
+	Object[] args = { infoExecutionPeriod };
+	List infoRoomExamsMaps;
+	try {
+	    infoRoomExamsMaps = (List) ServiceManagerServiceFactory.executeService("ReadAllRoomsExamsMap", args);
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException(e);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
+	request.setAttribute(SessionConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
 
-            return mapping.findForward("Sucess");
+	return mapping.findForward("Sucess");
     }
 }

@@ -22,7 +22,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class FinalDegreeWorkProposalHeader extends InfoObject {
 
@@ -32,8 +32,8 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal) {
 	proposalDomainReference = new DomainReference<Proposal>(proposal);
-	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(proposal.getScheduleing()
-		.getExecutionDegrees().get(0));
+	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(proposal.getScheduleing().getExecutionDegrees()
+		.get(0));
     }
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal, final ExecutionDegree executionDegree) {
@@ -45,8 +45,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 	return proposal == null ? null : new FinalDegreeWorkProposalHeader(proposal);
     }
 
-    public static FinalDegreeWorkProposalHeader newInfoFromDomain(final Proposal proposal,
-	    final ExecutionDegree executionDegree) {
+    public static FinalDegreeWorkProposalHeader newInfoFromDomain(final Proposal proposal, final ExecutionDegree executionDegree) {
 	return proposal == null ? null : new FinalDegreeWorkProposalHeader(proposal, executionDegree);
     }
 
@@ -55,8 +54,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     }
 
     private ExecutionDegree getExecutionDegree() {
-	return executionDegreeDomainReference == null ? null : executionDegreeDomainReference
-		.getObject();
+	return executionDegreeDomainReference == null ? null : executionDegreeDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
@@ -174,6 +172,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 
 	return result;
     }
+
     public Integer getExecutionDegreeOID() {
 	return getExecutionDegree().getIdInternal();
     }

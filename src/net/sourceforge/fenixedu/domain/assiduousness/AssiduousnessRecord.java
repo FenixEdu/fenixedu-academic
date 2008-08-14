@@ -33,7 +33,7 @@ public class AssiduousnessRecord extends AssiduousnessRecord_Base {
     public boolean isLeave() {
 	return false;
     }
-    
+
     public boolean isMissingClocking() {
 	return false;
     }

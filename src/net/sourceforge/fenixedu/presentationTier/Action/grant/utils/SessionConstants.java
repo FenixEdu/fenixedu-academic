@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.grant.utils;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public abstract class SessionConstants {
 

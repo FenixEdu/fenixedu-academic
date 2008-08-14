@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadInsuranceValueByExecutionYearID extends Service {
 
-	public InfoInsuranceValue run(Integer executionYearID) throws FenixServiceException{
-		ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
-		InsuranceValue insuranceValue = executionYear.getInsuranceValue();
-		if (insuranceValue != null) {
-			return InfoInsuranceValue.newInfoFromDomain(insuranceValue);
-		}
-
-		return null;
+    public InfoInsuranceValue run(Integer executionYearID) throws FenixServiceException {
+	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+	InsuranceValue insuranceValue = executionYear.getInsuranceValue();
+	if (insuranceValue != null) {
+	    return InfoInsuranceValue.newInfoFromDomain(insuranceValue);
 	}
+
+	return null;
+    }
 
 }

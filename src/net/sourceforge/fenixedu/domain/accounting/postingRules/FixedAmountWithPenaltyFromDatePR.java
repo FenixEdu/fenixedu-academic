@@ -17,20 +17,19 @@ public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFrom
 	super();
     }
 
-    public FixedAmountWithPenaltyFromDatePR(EntryType entryType, EventType eventType,
-	    DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
-	    Money fixedAmount, Money fixedAmountPenalty, YearMonthDay whenToApplyFixedAmountPenalty) {
-	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount,
-		fixedAmountPenalty, whenToApplyFixedAmountPenalty);
+    public FixedAmountWithPenaltyFromDatePR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount, Money fixedAmountPenalty,
+	    YearMonthDay whenToApplyFixedAmountPenalty) {
+	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount, fixedAmountPenalty,
+		whenToApplyFixedAmountPenalty);
 
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount,
-	    Money fixedAmountPenalty, YearMonthDay whenToApplyFixedAmountPenalty) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount, Money fixedAmountPenalty,
+	    YearMonthDay whenToApplyFixedAmountPenalty) {
 
-	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount,
-		fixedAmountPenalty);
+	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount, fixedAmountPenalty);
 
 	checkParameters(whenToApplyFixedAmountPenalty);
 
@@ -62,9 +61,8 @@ public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFrom
 
 	deactivate();
 
-	return new FixedAmountWithPenaltyFromDatePR(getEntryType(), getEventType(), new DateTime()
-		.minus(1000), null, getServiceAgreementTemplate(), fixedAmount, penaltyAmount,
-		whenToApplyFixedAmountPenalty);
+	return new FixedAmountWithPenaltyFromDatePR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
+		getServiceAgreementTemplate(), fixedAmount, penaltyAmount, whenToApplyFixedAmountPenalty);
 
     }
 

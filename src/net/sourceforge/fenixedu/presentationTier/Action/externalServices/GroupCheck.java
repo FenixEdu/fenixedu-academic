@@ -31,32 +31,31 @@ public class GroupCheck extends ExternalInterfaceDispatchAction {
      * 
      */
     public ActionForward check(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final String query = request.getParameter("query");
+	    HttpServletResponse response) throws Exception {
+	final String query = request.getParameter("query");
 
-        String responseMessage = "";
-        String responseCode;
+	String responseMessage = "";
+	String responseCode;
 
-        if (!HostAccessControl.isAllowed(this, request)) {
-            responseCode = NOT_AUTHORIZED_CODE;
-        } else {
-            try {
-                Boolean result = (Boolean) ServiceUtils.executeService("GroupCheckService",
-                        new Object[] { query });
+	if (!HostAccessControl.isAllowed(this, request)) {
+	    responseCode = NOT_AUTHORIZED_CODE;
+	} else {
+	    try {
+		Boolean result = (Boolean) ServiceUtils.executeService("GroupCheckService", new Object[] { query });
 
-                responseMessage = result.toString().toLowerCase();
-                responseCode = SUCCESS_CODE;
-            } catch (NonExistingServiceException e) {
-                responseCode = NON_EXISTING_GROUP_CODE;
-            } catch (Exception e) {
-                responseCode = UNEXPECTED_ERROR_CODE;
-            }
+		responseMessage = result.toString().toLowerCase();
+		responseCode = SUCCESS_CODE;
+	    } catch (NonExistingServiceException e) {
+		responseCode = NON_EXISTING_GROUP_CODE;
+	    } catch (Exception e) {
+		responseCode = UNEXPECTED_ERROR_CODE;
+	    }
 
-        }
+	}
 
-        writeResponse(response, responseCode, responseMessage);
+	writeResponse(response, responseCode, responseMessage);
 
-        return null;
+	return null;
     }
 
 }

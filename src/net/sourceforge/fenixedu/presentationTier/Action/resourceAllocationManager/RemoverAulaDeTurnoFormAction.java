@@ -24,40 +24,35 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & SaraRibeiro
- *  
+ * 
  */
-public class RemoverAulaDeTurnoFormAction extends
-        FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+public class RemoverAulaDeTurnoFormAction extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        super.execute(mapping, form, request, response);
+	super.execute(mapping, form, request, response);
 
-            DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) request
-                    .getAttribute("editarAulasDeTurnoForm");
+	DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) request.getAttribute("editarAulasDeTurnoForm");
 
-            IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-            Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
-            Object args[] = { shiftOID };
-            InfoShift infoTurno = (InfoShift) ServiceManagerServiceFactory.executeService(
-                    "ReadShiftByOID", args);
+	Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+	Object args[] = { shiftOID };
+	InfoShift infoTurno = (InfoShift) ServiceManagerServiceFactory.executeService("ReadShiftByOID", args);
 
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
-                    .getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
-            Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
+	Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
 
-            Object argsLerAulasDeTurno[] = { new ShiftKey(infoTurno.getNome(), infoExecutionCourse) };
-            List infoAulas = (ArrayList) ServiceManagerServiceFactory.executeService(
-                    "LerAulasDeTurno", argsLerAulasDeTurno);
+	Object argsLerAulasDeTurno[] = { new ShiftKey(infoTurno.getNome(), infoExecutionCourse) };
+	List infoAulas = (ArrayList) ServiceManagerServiceFactory.executeService("LerAulasDeTurno", argsLerAulasDeTurno);
 
-            InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());
+	InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());
 
-            Object argsRemoverAula[] = { infoLesson, infoTurno };
+	Object argsRemoverAula[] = { infoLesson, infoTurno };
 
-            ServiceManagerServiceFactory.executeService( "RemoverAula", argsRemoverAula);
+	ServiceManagerServiceFactory.executeService("RemoverAula", argsRemoverAula);
 
-            return mapping.findForward("Sucesso");
+	return mapping.findForward("Sucesso");
     }
 }

@@ -8,19 +8,18 @@ import org.joda.time.DateTime;
 
 public class UpdateVigilantGroup extends Service {
 
-    public void run(VigilantGroup vigilantGroup, String name, String convokeStrategy, String contactEmail, String emailPrefix, String rulesLink,
-            DateTime beginFirst, DateTime endFirst, DateTime beginSecond, DateTime endSecond)
-            {
+    public void run(VigilantGroup vigilantGroup, String name, String convokeStrategy, String contactEmail, String emailPrefix,
+	    String rulesLink, DateTime beginFirst, DateTime endFirst, DateTime beginSecond, DateTime endSecond) {
 
-        vigilantGroup.setName(name);
-        vigilantGroup.setConvokeStrategy(convokeStrategy);
-        vigilantGroup.setContactEmail(contactEmail);
-        vigilantGroup.setEmailSubjectPrefix(emailPrefix);
-        vigilantGroup.setRulesLink(rulesLink);
-        vigilantGroup.setBeginOfFirstPeriodForUnavailablePeriods(beginFirst);
-        vigilantGroup.setEndOfFirstPeriodForUnavailablePeriods(endFirst);
-        vigilantGroup.setBeginOfSecondPeriodForUnavailablePeriods(beginSecond);
-        vigilantGroup.setEndOfSecondPeriodForUnavailablePeriods(endSecond);
+	vigilantGroup.setName(name);
+	vigilantGroup.setConvokeStrategy(convokeStrategy);
+	vigilantGroup.setContactEmail(contactEmail);
+	vigilantGroup.setEmailSubjectPrefix(emailPrefix);
+	vigilantGroup.setRulesLink(rulesLink);
+	vigilantGroup.setBeginOfFirstPeriodForUnavailablePeriods(beginFirst);
+	vigilantGroup.setEndOfFirstPeriodForUnavailablePeriods(endFirst);
+	vigilantGroup.setBeginOfSecondPeriodForUnavailablePeriods(beginSecond);
+	vigilantGroup.setEndOfSecondPeriodForUnavailablePeriods(endSecond);
 
     }
 

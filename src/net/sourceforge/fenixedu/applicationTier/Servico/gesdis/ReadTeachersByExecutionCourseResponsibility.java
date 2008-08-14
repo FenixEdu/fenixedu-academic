@@ -13,17 +13,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTeachersByExecutionCourseResponsibility extends Service {
 
     public List run(InfoExecutionCourse infoExecutionCourse) {
-        return run(infoExecutionCourse.getIdInternal());
+	return run(infoExecutionCourse.getIdInternal());
     }
 
     public List run(Integer executionCourseID) {
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-        final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
-        for (final Professorship professorship : executionCourse.responsibleFors()) {
-            result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
-        }
-        return result;
+	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+	for (final Professorship professorship : executionCourse.responsibleFors()) {
+	    result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
+	}
+	return result;
     }
 
 }

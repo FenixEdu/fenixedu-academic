@@ -16,27 +16,27 @@ public class InvalidChangeActionException extends FenixActionException {
     public static String key = "error.exception.invalid.guideSituationChange";
 
     public InvalidChangeActionException(Throwable cause) {
-        super(key, cause);
+	super(key, cause);
     }
 
     public InvalidChangeActionException(Object value, Throwable cause) {
-        super(key, value, cause);
+	super(key, value, cause);
     }
 
     public InvalidChangeActionException(String key, Throwable cause) {
-        super(key, cause);
+	super(key, cause);
     }
 
     public InvalidChangeActionException(Object[] values, Throwable cause) {
-        super(key, values, cause);
+	super(key, values, cause);
     }
 
     public static String getKey() {
-        return key;
+	return key;
     }
 
     public static void setKey(String key) {
-        InvalidChangeActionException.key = key;
+	InvalidChangeActionException.key = key;
     }
 
 }

@@ -88,10 +88,10 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     public boolean hasAcceptedDegree() {
 	return getAcceptedDegree() != null;
     }
-    
+
     @Override
     public ExecutionYear getCandidacyExecutionInterval() {
-        return (ExecutionYear) super.getCandidacyExecutionInterval();
+	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {

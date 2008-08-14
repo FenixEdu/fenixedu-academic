@@ -22,24 +22,26 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ReadCoordinatedDegreesAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession(false);
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	HttpSession session = request.getSession(false);
 
-        if (session != null) {
-			IUserView userView = UserView.getUser();
+	if (session != null) {
+	    IUserView userView = UserView.getUser();
 
-			try {
-                Object args[] = { userView };
-                List<InfoDegreeCurricularPlan> degrees = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory.executeService( "ReadCoordinatedDegrees", args);
-                session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			
-			return mapping.findForward("ChooseDegree");
-		} else {
-            throw new FenixActionException();    
-        }
+	    try {
+		Object args[] = { userView };
+		List<InfoDegreeCurricularPlan> degrees = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory
+			.executeService("ReadCoordinatedDegrees", args);
+		session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
+	    } catch (FenixServiceException e) {
+		throw new FenixActionException(e);
+	    }
+
+	    return mapping.findForward("ChooseDegree");
+	} else {
+	    throw new FenixActionException();
 	}
+    }
 
 }

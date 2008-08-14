@@ -19,28 +19,28 @@ public class SiteManagementActionMapping extends ActionMapping {
      * @return
      */
     public String getComponentClassName() {
-        return componentClassName;
+	return componentClassName;
     }
 
     /**
      * @return
      */
     public String getInputForwardName() {
-        return inputForwardName;
+	return inputForwardName;
     }
 
     /**
      * @param _string
      */
     public void setComponentClassName(String _string) {
-        componentClassName = _string;
+	componentClassName = _string;
     }
 
     /**
      * @param _string
      */
     public void setInputForwardName(String _string) {
-        inputForwardName = _string;
+	inputForwardName = _string;
     }
 
     /*
@@ -49,10 +49,10 @@ public class SiteManagementActionMapping extends ActionMapping {
      * @see org.apache.struts.action.ActionMapping#getInputForward()
      */
     public ActionForward getInputForward() {
-        ActionForward forward = new ActionForward();
-        forward.setContextRelative(false);
-        forward.setPath(getInput());
-        return forward;
+	ActionForward forward = new ActionForward();
+	forward.setContextRelative(false);
+	forward.setPath(getInput());
+	return forward;
     }
 
     /*
@@ -61,7 +61,7 @@ public class SiteManagementActionMapping extends ActionMapping {
      * @see org.apache.struts.config.ActionConfig#getInput()
      */
     public String getInput() {
-        return this.getPath() + ".do?method=validationError&page=0";
+	return this.getPath() + ".do?method=validationError&page=0";
     }
 
 }

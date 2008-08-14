@@ -20,42 +20,42 @@ public class InfoCandidateRegistration extends InfoObject {
      * @return
      */
     public List<InfoEnrolment> getEnrolments() {
-        return enrolments;
+	return enrolments;
     }
 
     /**
      * @param enrolments
      */
     public void setEnrolments(List<InfoEnrolment> enrolments) {
-        this.enrolments = enrolments;
+	this.enrolments = enrolments;
     }
 
     /**
      * @return
      */
     public InfoMasterDegreeCandidate getInfoMasterDegreeCandidate() {
-        return infoMasterDegreeCandidate;
+	return infoMasterDegreeCandidate;
     }
 
     /**
      * @param infoMasterDegreeCandidate
      */
     public void setInfoMasterDegreeCandidate(InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
-        this.infoMasterDegreeCandidate = infoMasterDegreeCandidate;
+	this.infoMasterDegreeCandidate = infoMasterDegreeCandidate;
     }
 
     /**
      * @return
      */
     public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
-        return infoStudentCurricularPlan;
+	return infoStudentCurricularPlan;
     }
 
     /**
      * @param infoStudentCurricularPlan
      */
     public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan) {
-        this.infoStudentCurricularPlan = infoStudentCurricularPlan;
+	this.infoStudentCurricularPlan = infoStudentCurricularPlan;
     }
 
     public InfoCandidateRegistration() {

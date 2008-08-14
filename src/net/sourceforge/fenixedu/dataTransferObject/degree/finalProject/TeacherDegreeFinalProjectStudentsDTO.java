@@ -24,21 +24,21 @@ public class TeacherDegreeFinalProjectStudentsDTO extends DataTranferObject {
      * @return Returns the infoExecutionYear.
      */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return this.infoExecutionPeriod;
+	return this.infoExecutionPeriod;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return this.infoTeacher;
+	return this.infoTeacher;
     }
 
     /**
      * @return Returns the infoTeacherDegreeFinalProjectStudentList.
      */
     public List getInfoTeacherDegreeFinalProjectStudentList() {
-        return this.infoTeacherDegreeFinalProjectStudentList;
+	return this.infoTeacherDegreeFinalProjectStudentList;
     }
 
     /**
@@ -46,7 +46,7 @@ public class TeacherDegreeFinalProjectStudentsDTO extends DataTranferObject {
      *            The infoExecutionYear to set.
      */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+	this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
@@ -54,7 +54,7 @@ public class TeacherDegreeFinalProjectStudentsDTO extends DataTranferObject {
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
     /**
@@ -62,7 +62,7 @@ public class TeacherDegreeFinalProjectStudentsDTO extends DataTranferObject {
      *            The infoTeacherDegreeFinalProjectStudentList to set.
      */
     public void setInfoTeacherDegreeFinalProjectStudentList(List infoTeacherDegreeFinalProjectStudentList) {
-        this.infoTeacherDegreeFinalProjectStudentList = infoTeacherDegreeFinalProjectStudentList;
+	this.infoTeacherDegreeFinalProjectStudentList = infoTeacherDegreeFinalProjectStudentList;
     }
 
 }

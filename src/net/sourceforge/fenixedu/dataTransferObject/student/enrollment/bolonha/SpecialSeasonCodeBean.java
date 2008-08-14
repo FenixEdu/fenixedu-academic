@@ -7,23 +7,24 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
-public class SpecialSeasonCodeBean implements Serializable{
-    
+public class SpecialSeasonCodeBean implements Serializable {
+
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
     private DomainReference<ExecutionSemester> executionSemester;
     private DomainReference<SpecialSeasonCode> specialSeasonCode;
-    
+
     public SpecialSeasonCodeBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 	setStudentCurricularPlan(studentCurricularPlan);
 	setExecutionPeriod(executionSemester);
     }
-    
+
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(studentCurricularPlan) : null;
+	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
+		studentCurricularPlan) : null;
     }
 
     public ExecutionSemester getExecutionPeriod() {
@@ -41,8 +42,5 @@ public class SpecialSeasonCodeBean implements Serializable{
     public void setSpecialSeasonCode(SpecialSeasonCode specialSeasonCode) {
 	this.specialSeasonCode = (specialSeasonCode != null) ? new DomainReference<SpecialSeasonCode>(specialSeasonCode) : null;
     }
-
-
-
 
 }

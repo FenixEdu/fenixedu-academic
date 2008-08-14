@@ -34,7 +34,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 4, 2006,3:26:38 PM
  * 
  */
@@ -151,7 +151,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 	if (form.getBoardType().equals("INSTITUTIONAL") || announcementPresentationBean.isEmpty()) {
 	    getInstitutionalAnnouncements(request, announcementPresentationBean);
 	    form.setBoardType("INSTITUTIONAL"); // because bean could be empty,
-						// must set this value
+	    // must set this value
 	}
 
 	return announcementPresentationBean;

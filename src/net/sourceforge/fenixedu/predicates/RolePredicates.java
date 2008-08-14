@@ -12,19 +12,19 @@ public class RolePredicates {
 	    return hasRole(RoleType.MANAGER);
 	};
     };
-    
+
     public static final AccessControlPredicate<DomainObject> ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE = new AccessControlPredicate<DomainObject>() {
 	public boolean evaluate(DomainObject domainObject) {
 	    return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 	};
     };
-    
+
     public static final AccessControlPredicate<DomainObject> MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE = new AccessControlPredicate<DomainObject>() {
 	public boolean evaluate(DomainObject domainObject) {
 	    return MANAGER_PREDICATE.evaluate(domainObject) || ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE.evaluate(domainObject);
 	};
     };
-    
+
     public static final AccessControlPredicate<DomainObject> SCIENTIFIC_COUNCIL_PREDICATE = new AccessControlPredicate<DomainObject>() {
 	public boolean evaluate(DomainObject domainObject) {
 	    return hasRole(RoleType.SCIENTIFIC_COUNCIL);
@@ -36,8 +36,7 @@ public class RolePredicates {
 	    return hasRole(RoleType.TEACHER);
 	};
     };
-    
-    
+
     private static boolean hasRole(final RoleType roleType) {
 	return AccessControl.getPerson().hasRole(roleType);
     }

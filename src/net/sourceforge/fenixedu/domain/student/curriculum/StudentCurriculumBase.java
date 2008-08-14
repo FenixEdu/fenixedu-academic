@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 abstract public class StudentCurriculumBase implements Serializable, ICurriculum {
 
     final private DomainReference<Registration> registrationDomainReference;
-    
+
     final private DomainReference<ExecutionYear> executionYearDomainReference;
 
     static final protected int SCALE = 2;
@@ -21,20 +21,20 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
     static final protected RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
 
     public StudentCurriculumBase(final Registration registration, final ExecutionYear executionYear) {
-        super();
-        if (registration == null) {
-            throw new NullPointerException("error.registration.cannot.be.null");
-        }
-        this.registrationDomainReference = new DomainReference<Registration>(registration);
-        this.executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
+	super();
+	if (registration == null) {
+	    throw new NullPointerException("error.registration.cannot.be.null");
+	}
+	this.registrationDomainReference = new DomainReference<Registration>(registration);
+	this.executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
     }
 
     final public Registration getRegistration() {
-        return registrationDomainReference.getObject();
+	return registrationDomainReference.getObject();
     }
 
     final public ExecutionYear getExecutionYear() {
-        return executionYearDomainReference.getObject();
+	return executionYearDomainReference.getObject();
     }
 
     final public StudentCurricularPlan getStudentCurricularPlan() {
@@ -46,13 +46,13 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
     }
 
     abstract public Collection<ICurriculumEntry> getCurriculumEntries();
-    
+
     abstract protected EnrolmentSet getApprovedEnrolments();
 
     public boolean hasAnyExternalApprovedEnrolment() {
 	return false;
     }
-    
+
     final public BigDecimal getSumEctsCredits() {
 	BigDecimal ectsCredits = BigDecimal.ZERO;
 	for (final ICurriculumEntry entry : getCurriculumEntries()) {
@@ -63,20 +63,21 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 
     final public Integer getCurricularYear() {
 	final int degreeCurricularYears = getTotalCurricularYears();
-	final BigDecimal ectsCreditsCurricularYear = getSumEctsCredits().add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60), SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
+	final BigDecimal ectsCreditsCurricularYear = getSumEctsCredits().add(BigDecimal.valueOf(24)).divide(
+		BigDecimal.valueOf(60), SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
 	return Math.min(ectsCreditsCurricularYear.intValue(), degreeCurricularYears);
     }
 
     public Integer getTotalCurricularYears() {
 	return getStudentCurricularPlan().getDegreeType().getYears();
     }
-    
+
     private AverageType averageType = AverageType.WEIGHTED;
 
     public void setAverageType(AverageType averageType) {
 	this.averageType = averageType;
     }
-	
+
     final private class AverageCalculator {
 	private BigDecimal sumPiCi = BigDecimal.ZERO;
 	private BigDecimal sumPi = BigDecimal.ZERO;
@@ -103,7 +104,8 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 	}
 
 	public BigDecimal result() {
-	    return sumPi.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : sumPiCi.divide(sumPi, SCALE * SCALE + 1, ROUNDING_MODE);
+	    return sumPi.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : sumPiCi.divide(sumPi, SCALE * SCALE + 1,
+		    ROUNDING_MODE);
 	}
 
     }
@@ -113,7 +115,7 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 	averageCalculator.add(getCurriculumEntries());
 	return averageCalculator.result().setScale(SCALE, ROUNDING_MODE);
     }
-    
+
     public Integer getRoundedAverage() {
 	return getAverage().setScale(0, RoundingMode.HALF_UP).intValue();
     }
@@ -123,7 +125,7 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 	averageCalculator.add(getCurriculumEntries());
 	return averageCalculator.sumPiCi;
     }
-    
+
     final public BigDecimal getSumPi() {
 	final AverageCalculator averageCalculator = new AverageCalculator();
 	averageCalculator.add(getCurriculumEntries());

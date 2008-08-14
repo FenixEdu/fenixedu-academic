@@ -23,13 +23,11 @@ public class GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends
     }
 
     @Override
-    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan,
-	    ExecutionYear executionYear) {
+    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 	return getExecutionYear() == executionYear
-		&& !studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear
-			.getFirstExecutionPeriod())
-		&& studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear
-			.getFirstExecutionPeriod().getNextExecutionPeriod());
+		&& !studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod())
+		&& studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod()
+			.getNextExecutionPeriod());
     }
 
 }

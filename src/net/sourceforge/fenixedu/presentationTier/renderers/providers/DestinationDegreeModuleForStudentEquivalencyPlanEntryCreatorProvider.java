@@ -14,14 +14,15 @@ public class DestinationDegreeModuleForStudentEquivalencyPlanEntryCreatorProvide
 
     public Object provide(Object source, Object currentValue) {
 	final StudentEquivalencyPlanEntryCreator studentEquivalencyPlanEntryCreator = (StudentEquivalencyPlanEntryCreator) source;
-	final DegreeCurricularPlanEquivalencePlan equivalencePlan = (DegreeCurricularPlanEquivalencePlan) studentEquivalencyPlanEntryCreator.getDegreeCurricularPlanEquivalencePlan();
+	final DegreeCurricularPlanEquivalencePlan equivalencePlan = (DegreeCurricularPlanEquivalencePlan) studentEquivalencyPlanEntryCreator
+		.getDegreeCurricularPlanEquivalencePlan();
 	final DegreeCurricularPlan degreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
 	final Set<DegreeModule> degreeModules = degreeCurricularPlan.getAllDegreeModules();
 	return degreeModules;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

@@ -28,88 +28,84 @@ public class InfoStudentTestQuestionMark extends InfoObject {
     }
 
     public Double getMaximumMark() {
-        if (maximumMark == null) {
-            maximumMark = new Double(0);
-        }
-        return maximumMark;
+	if (maximumMark == null) {
+	    maximumMark = new Double(0);
+	}
+	return maximumMark;
     }
 
     public void setMaximumMark(Double maximumMark) {
-        this.maximumMark = maximumMark;
+	this.maximumMark = maximumMark;
     }
 
     public Integer getStudentIdInternal() {
-        return studentIdInternal;
+	return studentIdInternal;
     }
 
     public void setStudentIdInternal(Integer studentIdInternal) {
-        this.studentIdInternal = studentIdInternal;
+	this.studentIdInternal = studentIdInternal;
     }
 
     public String getStudentName() {
-        return studentName;
+	return studentName;
     }
 
     public void setStudentName(String studentName) {
-        this.studentName = studentName;
+	this.studentName = studentName;
     }
 
     public Integer getStudentNumber() {
-        return studentNumber;
+	return studentNumber;
     }
 
     public void setStudentNumber(Integer studentNumber) {
-        this.studentNumber = studentNumber;
+	this.studentNumber = studentNumber;
     }
 
     public List<Double> getTestQuestionMarks() {
-        if (testQuestionMarks == null) {
-            testQuestionMarks = new ArrayList<Double>();
-        }
-        return testQuestionMarks;
+	if (testQuestionMarks == null) {
+	    testQuestionMarks = new ArrayList<Double>();
+	}
+	return testQuestionMarks;
     }
 
     public void setTestQuestionMarks(List<Double> testQuestionMarks) {
-        this.testQuestionMarks = testQuestionMarks;
+	this.testQuestionMarks = testQuestionMarks;
     }
 
     public void copyFromDomain(StudentTestQuestion studentTestQuestion) {
-        super.copyFromDomain(studentTestQuestion);
-        if (studentTestQuestion != null) {
-            if (studentTestQuestion.getStudent() != null) {
-                setStudentIdInternal(studentTestQuestion.getStudent().getIdInternal());
-                setStudentNumber(studentTestQuestion.getStudent().getNumber());
-                if (studentTestQuestion.getStudent().getPerson() != null)
-                    setStudentName(studentTestQuestion.getStudent().getPerson().getName());
-            }
-            addTestQuestionMark(studentTestQuestion.getTestQuestionMark());
-            setMaximumMark(studentTestQuestion.getTestQuestionValue());
-        }
+	super.copyFromDomain(studentTestQuestion);
+	if (studentTestQuestion != null) {
+	    if (studentTestQuestion.getStudent() != null) {
+		setStudentIdInternal(studentTestQuestion.getStudent().getIdInternal());
+		setStudentNumber(studentTestQuestion.getStudent().getNumber());
+		if (studentTestQuestion.getStudent().getPerson() != null)
+		    setStudentName(studentTestQuestion.getStudent().getPerson().getName());
+	    }
+	    addTestQuestionMark(studentTestQuestion.getTestQuestionMark());
+	    setMaximumMark(studentTestQuestion.getTestQuestionValue());
+	}
     }
 
     public static InfoStudentTestQuestionMark newInfoFromDomain(StudentTestQuestion studentTestQuestion) {
-        InfoStudentTestQuestionMark infoStudentTestQuestionMark = null;
-        if (studentTestQuestion != null) {
-            infoStudentTestQuestionMark = new InfoStudentTestQuestionMark();
-            infoStudentTestQuestionMark.copyFromDomain(studentTestQuestion);
-        }
-        return infoStudentTestQuestionMark;
+	InfoStudentTestQuestionMark infoStudentTestQuestionMark = null;
+	if (studentTestQuestion != null) {
+	    infoStudentTestQuestionMark = new InfoStudentTestQuestionMark();
+	    infoStudentTestQuestionMark.copyFromDomain(studentTestQuestion);
+	}
+	return infoStudentTestQuestionMark;
     }
 
     public void addToMaximumMark(Double testQuestionValue) {
-        setMaximumMark(new Double(getMaximumMark().doubleValue() + testQuestionValue.doubleValue()));
+	setMaximumMark(new Double(getMaximumMark().doubleValue() + testQuestionValue.doubleValue()));
     }
 
     public void addTestQuestionMark(Double testQuestionMark) {
-        getTestQuestionMarks().add(testQuestionMark);
+	getTestQuestionMarks().add(testQuestionMark);
     }
 
     public void addTestQuestionMark(int i, Double testQuestionMark) {
-        getTestQuestionMarks()
-                .set(
-                        i,
-                        new Double(getTestQuestionMarks().get(i).doubleValue()
-                                + testQuestionMark.doubleValue()));
+	getTestQuestionMarks().set(i, new Double(getTestQuestionMarks().get(i).doubleValue() + testQuestionMark.doubleValue()));
 
     }
 

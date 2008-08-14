@@ -32,19 +32,15 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	final Candidacy candidacy = getCandidacy(request);
-	if (candidacy instanceof DFACandidacy
-		&& candidacy.getActiveCandidacySituation().canChangePersonalData()) {
+	if (candidacy instanceof DFACandidacy && candidacy.getActiveCandidacySituation().canChangePersonalData()) {
 
 	    request.setAttribute("candidacy", candidacy);
 
-	    PrecedentDegreeInformation precedentDegreeInformation = ((DFACandidacy) candidacy)
-		    .getPrecedentDegreeInformation();
-	    request.setAttribute("precedentDegreeInformation", new PrecedentDegreeInformationBean(
-		    precedentDegreeInformation));
+	    PrecedentDegreeInformation precedentDegreeInformation = ((DFACandidacy) candidacy).getPrecedentDegreeInformation();
+	    request.setAttribute("precedentDegreeInformation", new PrecedentDegreeInformationBean(precedentDegreeInformation));
 
 	    return mapping.findForward("change");
 	}
@@ -52,13 +48,13 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("cannotChange");
     }
 
-    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 
 	IUserView userView = UserView.getUser();
 
-	PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils
-		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
+	PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils.getViewState(
+		"precedentDegreeInformation").getMetaObject().getObject();
 
 	Object[] argsInstitution = { precedentDegreeInformation };
 	ServiceUtils.executeService("EditPrecedentDegreeInformation", argsInstitution);
@@ -72,8 +68,7 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
 	    // Didn't move to next state
 	}
 
-	request.setAttribute("candidacy", precedentDegreeInformation.getPrecedentDegreeInformation()
-		.getStudentCandidacy());
+	request.setAttribute("candidacy", precedentDegreeInformation.getPrecedentDegreeInformation().getStudentCandidacy());
 
 	return mapping.findForward("changeSuccess");
     }

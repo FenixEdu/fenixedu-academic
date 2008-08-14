@@ -6,13 +6,13 @@ import org.joda.time.DateTime;
 
 public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
 
-    public AcademicTrimesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title,
-	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
+    public AcademicTrimesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, MultiLanguageString description,
+	    DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
 	super();
 	super.initEntry(parentEntry, title, description, begin, end, rootEntry);
-    } 
-   
+    }
+
     private AcademicTrimesterCE(AcademicCalendarEntry parentEntry, AcademicTrimesterCE academicTrimesterCE) {
 	super();
 	super.initVirtualEntry(parentEntry, academicTrimesterCE);
@@ -29,23 +29,23 @@ public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
     }
 
     @Override
-    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
+    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
 	return false;
     }
 
     @Override
-    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) { 
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
 	return true;
     }
 
     @Override
     protected boolean isPossibleToChangeTimeInterval() {
-        return true;
+	return true;
     }
 
     @Override
     protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
-	return new AcademicTrimesterCE(parentEntry, this);	
+	return new AcademicTrimesterCE(parentEntry, this);
     }
 
     @Override

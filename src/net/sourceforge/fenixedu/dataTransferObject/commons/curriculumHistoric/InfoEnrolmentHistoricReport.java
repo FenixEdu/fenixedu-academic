@@ -15,11 +15,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class InfoEnrolmentHistoricReport implements Serializable {
 
     final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-    
+
     private DomainReference<Enrolment> enrolment;
 
     public Enrolment getEnrolment() {
-	return this.enrolment == null ?  null : this.enrolment.getObject();
+	return this.enrolment == null ? null : this.enrolment.getObject();
     }
 
     private void setEnrolment(final Enrolment enrolment) {
@@ -30,11 +30,11 @@ public class InfoEnrolmentHistoricReport implements Serializable {
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return getEnrolment().getStudentCurricularPlan();
     }
-    
+
     public InfoEnrolmentHistoricReport(final Enrolment enrolment) {
 	setEnrolment(enrolment);
     }
-    
+
     public String getLatestNormalEnrolmentEvaluationInformation() {
 	return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.NORMAL);
     }
@@ -48,11 +48,12 @@ public class InfoEnrolmentHistoricReport implements Serializable {
     }
 
     private String getLatestEnrolmentEvaluationInformation(final EnrolmentEvaluationType enrolmentEvaluationType) {
-	final EnrolmentEvaluation latestEnrolmentEvaluation = getEnrolment().getLatestEnrolmentEvaluationBy(enrolmentEvaluationType);
+	final EnrolmentEvaluation latestEnrolmentEvaluation = getEnrolment().getLatestEnrolmentEvaluationBy(
+		enrolmentEvaluationType);
 	if (latestEnrolmentEvaluation == null) {
 	    return "--";
 	}
-	
+
 	final Grade grade = latestEnrolmentEvaluation.getGrade();
 	if (!latestEnrolmentEvaluation.isFinal()) {
 	    return bundle.getString("msg.enrolled");
@@ -70,7 +71,7 @@ public class InfoEnrolmentHistoricReport implements Serializable {
     public String getLatestEnrolmentEvaluationInformation() {
 	if (getEnrolment().isApproved()) {
 	    final Grade grade = getEnrolment().getGrade();
-	    
+
 	    if (grade.getGradeScale() == GradeScale.TYPEAP) {
 		return bundle.getString("msg.approved");
 	    } else {

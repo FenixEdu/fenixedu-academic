@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation;
 
 public class MergeEventEditions extends Service {
-    
+
     public void run(MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean) {
 	EventEdition eventEdition = new EventEdition(mergeEventEditionPageContainerBean.getEvent());
 	eventEdition.setEdition(mergeEventEditionPageContainerBean.getEdition());
@@ -16,16 +16,16 @@ public class MergeEventEditions extends Service {
 	eventEdition.setEndDate(mergeEventEditionPageContainerBean.getEndDate());
 	eventEdition.setUrl(mergeEventEditionPageContainerBean.getUrl());
 	eventEdition.setOrganization(mergeEventEditionPageContainerBean.getOrganization());
-	
+
 	for (DomainObject domainObject : mergeEventEditionPageContainerBean.getSelectedObjects()) {
 	    EventEdition edition = (EventEdition) domainObject;
-	    eventEdition.getEventConferenceArticlesAssociations().addAll(edition.getEventConferenceArticlesAssociations());	    
+	    eventEdition.getEventConferenceArticlesAssociations().addAll(edition.getEventConferenceArticlesAssociations());
 	    eventEdition.getAssociatedProjects().addAll(edition.getAssociatedProjects());
-	    
+
 	    for (EventEditionParticipation eventEditionParticipation : edition.getParticipationsSet()) {
 		eventEdition.addUniqueParticipation(eventEditionParticipation);
 	    }
-	    
+
 	    edition.delete();
 	}
     }

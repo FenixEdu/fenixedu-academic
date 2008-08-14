@@ -19,23 +19,23 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 3/Set/2003, 14:22:08
+ *         Created at 3/Set/2003, 14:22:08
  * 
  */
 public class GetAllCasesStudy extends Service {
 
-	public List run() throws BDException{
-		List infoCases = new LinkedList();
+    public List run() throws BDException {
+	List infoCases = new LinkedList();
 
-		List cases = CaseStudy.getAllCaseStudies();
+	List cases = CaseStudy.getAllCaseStudies();
 
-		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-			CaseStudy caseStudy = (CaseStudy) iterator.next();
+	for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+	    CaseStudy caseStudy = (CaseStudy) iterator.next();
 
-			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
-		}
-
-		return infoCases;
+	    infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
 	}
+
+	return infoCases;
+    }
 
 }

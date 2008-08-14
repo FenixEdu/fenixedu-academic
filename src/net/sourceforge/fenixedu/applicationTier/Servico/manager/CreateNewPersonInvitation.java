@@ -8,5 +8,5 @@ public class CreateNewPersonInvitation extends Service {
 
     public void run(InvitedPersonBean bean) {
 	new Invitation(bean.getInvitedPerson(), bean.getUnit(), bean.getResponsible(), bean.getBegin(), bean.getEnd());
-    }    
+    }
 }

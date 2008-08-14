@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class CandidacyDTO extends DataTranferObject {
 
@@ -37,7 +37,7 @@ public class CandidacyDTO extends DataTranferObject {
      * @return Returns the email.
      */
     public String getEmail() {
-        return email;
+	return email;
     }
 
     /**
@@ -45,14 +45,14 @@ public class CandidacyDTO extends DataTranferObject {
      *            The email to set.
      */
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     /**
      * @return Returns the name.
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
@@ -60,14 +60,14 @@ public class CandidacyDTO extends DataTranferObject {
      *            The name to set.
      */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     /**
      * @return Returns the number.
      */
     public Integer getNumber() {
-        return number;
+	return number;
     }
 
     /**
@@ -75,14 +75,14 @@ public class CandidacyDTO extends DataTranferObject {
      *            The number to set.
      */
     public void setNumber(Integer number) {
-        this.number = number;
+	this.number = number;
     }
 
     /**
      * @return Returns the objectCode.
      */
     public Integer getCandidacyId() {
-        return candidacyId;
+	return candidacyId;
     }
 
     /**
@@ -90,14 +90,14 @@ public class CandidacyDTO extends DataTranferObject {
      *            The objectCode to set.
      */
     public void setCandidacyId(Integer objectCode) {
-        this.candidacyId = objectCode;
+	this.candidacyId = objectCode;
     }
 
     /**
      * @return Returns the infoClassification.
      */
     public InfoClassification getInfoClassification() {
-        return infoClassification;
+	return infoClassification;
     }
 
     /**
@@ -105,14 +105,14 @@ public class CandidacyDTO extends DataTranferObject {
      *            The infoClassification to set.
      */
     public void setInfoClassification(InfoClassification infoClassification) {
-        this.infoClassification = infoClassification;
+	this.infoClassification = infoClassification;
     }
 
     /**
      * @return Returns the username.
      */
     public String getUsername() {
-        return username;
+	return username;
     }
 
     /**
@@ -120,14 +120,14 @@ public class CandidacyDTO extends DataTranferObject {
      *            The username to set.
      */
     public void setUsername(String username) {
-        this.username = username;
+	this.username = username;
     }
 
     /**
      * @return Returns the approved.
      */
     public Boolean getApproved() {
-        return approved;
+	return approved;
     }
 
     /**
@@ -135,6 +135,6 @@ public class CandidacyDTO extends DataTranferObject {
      *            The approved to set.
      */
     public void setApproved(Boolean approved) {
-        this.approved = approved;
+	this.approved = approved;
     }
 }

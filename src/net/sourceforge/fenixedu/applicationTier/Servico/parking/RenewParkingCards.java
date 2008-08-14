@@ -14,6 +14,6 @@ public class RenewParkingCards extends Service {
 
 	for (ParkingParty parkingParty : parkingParties) {
 	    parkingParty.renewParkingCard(newEndDate, newParkingGroup);
-	}	
+	}
     }
 }

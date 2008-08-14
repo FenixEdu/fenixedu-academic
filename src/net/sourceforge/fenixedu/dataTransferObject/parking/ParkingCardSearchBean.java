@@ -78,9 +78,8 @@ public class ParkingCardSearchBean implements Serializable {
     }
 
     private boolean satisfiesSearch(ParkingParty parkingParty) {
-	return satisfiesGroup(parkingParty) && satisfiesEndDate(parkingParty)
-		&& satisfiesUserState(parkingParty) && satisfiesPeriodCriteria(parkingParty)
-		&& satisfiesCardState(parkingParty);
+	return satisfiesGroup(parkingParty) && satisfiesEndDate(parkingParty) && satisfiesUserState(parkingParty)
+		&& satisfiesPeriodCriteria(parkingParty) && satisfiesCardState(parkingParty);
     }
 
     private boolean satisfiesCardState(ParkingParty parkingParty) {
@@ -91,15 +90,13 @@ public class ParkingCardSearchBean implements Serializable {
 	    if (parkingParty.getCardEndDate() == null) {
 		return Boolean.TRUE;
 	    } else {
-		return new Interval(parkingParty.getCardStartDate(), parkingParty.getCardEndDate())
-			.contains(new DateTime());
+		return new Interval(parkingParty.getCardStartDate(), parkingParty.getCardEndDate()).contains(new DateTime());
 	    }
 	default:
 	    if (parkingParty.getCardEndDate() == null) {
 		return Boolean.FALSE;
 	    } else {
-		return !new Interval(parkingParty.getCardStartDate(), parkingParty.getCardEndDate())
-			.contains(new DateTime());
+		return !new Interval(parkingParty.getCardStartDate(), parkingParty.getCardEndDate()).contains(new DateTime());
 	    }
 	}
     }
@@ -113,20 +110,15 @@ public class ParkingCardSearchBean implements Serializable {
 	    } else {
 		YearMonthDay today = new YearMonthDay();
 		if (!today.isAfter(parkingParty.getCardEndDate().toYearMonthDay())
-			&& (getParkingCardSearchPeriod().equals(
-				ParkingCardSearchPeriod.ENDS_BEFORE_ONE_MONTH) || getParkingCardSearchPeriod()
+			&& (getParkingCardSearchPeriod().equals(ParkingCardSearchPeriod.ENDS_BEFORE_ONE_MONTH) || getParkingCardSearchPeriod()
 				.equals(ParkingCardSearchPeriod.ENDS_BEFORE_TWO_MONTHS))) {
-		    int daysBetween = Days.daysBetween(today,
-			    parkingParty.getCardEndDate().toYearMonthDay()).getDays();
+		    int daysBetween = Days.daysBetween(today, parkingParty.getCardEndDate().toYearMonthDay()).getDays();
 		    return daysBetween <= ParkingCardSearchPeriod.getDays(getParkingCardSearchPeriod());
 		} else if (!today.isBefore(parkingParty.getCardEndDate().toYearMonthDay())
-			&& (getParkingCardSearchPeriod().equals(
-				ParkingCardSearchPeriod.ENDED_UNTIL_ONE_MONTH_AGO)
-				|| getParkingCardSearchPeriod().equals(
-					ParkingCardSearchPeriod.ENDED_UNTIL_SIX_MONTHS_AGO) || getParkingCardSearchPeriod()
+			&& (getParkingCardSearchPeriod().equals(ParkingCardSearchPeriod.ENDED_UNTIL_ONE_MONTH_AGO)
+				|| getParkingCardSearchPeriod().equals(ParkingCardSearchPeriod.ENDED_UNTIL_SIX_MONTHS_AGO) || getParkingCardSearchPeriod()
 				.equals(ParkingCardSearchPeriod.ENDED_UNTIL_ONE_YEAR_AGO))) {
-		    int daysBetween = Days.daysBetween(today,
-			    parkingParty.getCardEndDate().toYearMonthDay()).getDays();
+		    int daysBetween = Days.daysBetween(today, parkingParty.getCardEndDate().toYearMonthDay()).getDays();
 		    return daysBetween <= ParkingCardSearchPeriod.getDays(getParkingCardSearchPeriod());
 		}
 	    }
@@ -166,8 +158,7 @@ public class ParkingCardSearchBean implements Serializable {
     }
 
     public void setParkingGroup(ParkingGroup parkingGroup) {
-	this.parkingGroup = parkingGroup != null ? new DomainReference<ParkingGroup>(parkingGroup)
-		: null;
+	this.parkingGroup = parkingGroup != null ? new DomainReference<ParkingGroup>(parkingGroup) : null;
     }
 
     public ParkingGroup getNewParkingGroup() {
@@ -175,8 +166,7 @@ public class ParkingCardSearchBean implements Serializable {
     }
 
     public void setNewParkingGroup(ParkingGroup newParkingGroup) {
-	this.newParkingGroup = newParkingGroup != null ? new DomainReference<ParkingGroup>(
-		newParkingGroup) : null;
+	this.newParkingGroup = newParkingGroup != null ? new DomainReference<ParkingGroup>(newParkingGroup) : null;
     }
 
     public YearMonthDay getActualEndDate() {

@@ -47,7 +47,7 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
     public boolean isExemptionAppliable() {
 	return false;
     }
-    
+
     @Override
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
 	return Collections.emptySet();

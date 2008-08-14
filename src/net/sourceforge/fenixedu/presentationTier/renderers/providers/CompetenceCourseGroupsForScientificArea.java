@@ -17,20 +17,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class CompetenceCourseGroupsForScientificArea implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
-        Unit unit = bean.getSelectedUnit();
-        List<Unit> competenceCourseGroups;
-        if (unit == null) {
-            competenceCourseGroups = new ArrayList<Unit>();
-        } else {
-            competenceCourseGroups = new ArrayList<Unit>(((ScientificAreaUnit)unit).getCompetenceCourseGroupUnits());
-        }
-        Collections.sort(competenceCourseGroups, new BeanComparator("name"));
-        return competenceCourseGroups;
+	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
+	Unit unit = bean.getSelectedUnit();
+	List<Unit> competenceCourseGroups;
+	if (unit == null) {
+	    competenceCourseGroups = new ArrayList<Unit>();
+	} else {
+	    competenceCourseGroups = new ArrayList<Unit>(((ScientificAreaUnit) unit).getCompetenceCourseGroupUnits());
+	}
+	Collections.sort(competenceCourseGroups, new BeanComparator("name"));
+	return competenceCourseGroups;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

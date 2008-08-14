@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs;
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class SibsOutgoingPaymentFileConstants {
 
@@ -37,7 +37,7 @@ public class SibsOutgoingPaymentFileConstants {
     // White Spaces in LINE
     public static final int WHITE_SPACES_IN_LINE = 2;
 
-    //  White Spaces in Footer
+    // White Spaces in Footer
     public static final int WHITE_SPACES_IN_FOOTER = 41;
 
     // Omission sequence number

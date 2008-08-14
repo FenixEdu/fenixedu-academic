@@ -16,9 +16,8 @@ public class CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption extends S
 	    final CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean penaltyExemptionBean) {
 
 	new AdministrativeOfficeFeeAndInsurancePenaltyExemption(penaltyExemptionBean.getJustificationType(),
-		(AdministrativeOfficeFeeAndInsuranceEvent) penaltyExemptionBean.getEvent(), employee,
-		penaltyExemptionBean.getReason(), penaltyExemptionBean
-			.getDispatchDate());
+		(AdministrativeOfficeFeeAndInsuranceEvent) penaltyExemptionBean.getEvent(), employee, penaltyExemptionBean
+			.getReason(), penaltyExemptionBean.getDispatchDate());
 
     }
 

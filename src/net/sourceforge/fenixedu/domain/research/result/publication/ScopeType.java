@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-
 public enum ScopeType {
 
     NATIONAL, INTERNATIONAL;

@@ -11,23 +11,23 @@ public class ExistingServiceException extends FenixServiceException {
     }
 
     public ExistingServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     public ExistingServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public ExistingServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[ExistingServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[ExistingServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

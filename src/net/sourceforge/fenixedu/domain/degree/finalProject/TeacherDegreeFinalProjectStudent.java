@@ -6,31 +6,29 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectStudent_Base implements
-        ICreditsEventOriginator {
-    
+public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectStudent_Base implements ICreditsEventOriginator {
+
     public TeacherDegreeFinalProjectStudent() {
-    	setRootDomainObject(RootDomainObject.getInstance());
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public TeacherDegreeFinalProjectStudent(ExecutionSemester executionSemester, Teacher teacher,
-            Registration registration) {
-    	this();
-        setExecutionPeriod(executionSemester);
-        setTeacher(teacher);
-        setStudent(registration);
+    public TeacherDegreeFinalProjectStudent(ExecutionSemester executionSemester, Teacher teacher, Registration registration) {
+	this();
+	setExecutionPeriod(executionSemester);
+	setTeacher(teacher);
+	setStudent(registration);
     }
 
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
-        return this.getExecutionPeriod().equals(executionSemester);
+	return this.getExecutionPeriod().equals(executionSemester);
     }
-    
+
     public void delete() {
-        setExecutionPeriod(null);
-        setTeacher(null);
-        setStudent(null);
-        
-        removeRootDomainObject();
-        super.deleteDomainObject();
+	setExecutionPeriod(null);
+	setTeacher(null);
+	setStudent(null);
+
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 }

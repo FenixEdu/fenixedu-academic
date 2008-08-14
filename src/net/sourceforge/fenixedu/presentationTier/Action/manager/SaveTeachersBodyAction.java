@@ -32,45 +32,42 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class SaveTeachersBodyAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException,
-            FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixServiceException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-        DynaActionForm actionForm = (DynaActionForm) form;
+	IUserView userView = UserView.getUser();
+	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+	DynaActionForm actionForm = (DynaActionForm) form;
 
-        Integer[] responsibleTeachersIds = (Integer[]) actionForm.get("responsibleTeachersIds");
-        Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
-        Integer[] nonAffiliatedTeachersIds = (Integer[]) actionForm.get("nonAffiliatedTeachersIds");
-        
-        List respTeachersIds = Arrays.asList(responsibleTeachersIds);
-        List profTeachersIds = Arrays.asList(professorShipTeachersIds);
-        List nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
-       
-        // TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
-        Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
-        Boolean result;
-        
-        try {
-            result = (Boolean) ServiceUtils.executeService("SaveTeachersBody", args);
+	Integer[] responsibleTeachersIds = (Integer[]) actionForm.get("responsibleTeachersIds");
+	Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
+	Integer[] nonAffiliatedTeachersIds = (Integer[]) actionForm.get("nonAffiliatedTeachersIds");
 
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(e.getMessage(), mapping
-                    .findForward("readCurricularCourse"));
-        }
-        
-        Object args1[] = { nonAffilTeachersIds, executionCourseId };
-        try {
-            ServiceUtils.executeService("UpdateNonAffiliatedTeachersProfessorship", args1);
+	List respTeachersIds = Arrays.asList(responsibleTeachersIds);
+	List profTeachersIds = Arrays.asList(professorShipTeachersIds);
+	List nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
 
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(e.getMessage(), mapping
-                    .findForward("readCurricularCourse"));
-        }
-        if (!result.booleanValue())
-            throw new InvalidArgumentsActionException("message.non.existing.teachers");
+	// TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
+	Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
+	Boolean result;
 
-        return mapping.findForward("readCurricularCourse");
+	try {
+	    result = (Boolean) ServiceUtils.executeService("SaveTeachersBody", args);
+
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));
+	}
+
+	Object args1[] = { nonAffilTeachersIds, executionCourseId };
+	try {
+	    ServiceUtils.executeService("UpdateNonAffiliatedTeachersProfessorship", args1);
+
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));
+	}
+	if (!result.booleanValue())
+	    throw new InvalidArgumentsActionException("message.non.existing.teachers");
+
+	return mapping.findForward("readCurricularCourse");
     }
 }

@@ -115,10 +115,10 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     public String getCandidacyNotes() {
 	return getCandidacy().getNotes();
     }
-    
+
     @Override
     public ExecutionYear getCandidacyExecutionInterval() {
-        return (ExecutionYear) super.getCandidacyExecutionInterval();
+	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {

@@ -6,32 +6,28 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class CompetenceCourseInformationChangeRequest extends
-	CompetenceCourseInformationChangeRequest_Base {
+public class CompetenceCourseInformationChangeRequest extends CompetenceCourseInformationChangeRequest_Base {
 
     public CompetenceCourseInformationChangeRequest() {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public CompetenceCourseInformationChangeRequest(String name, String nameEn, String justification, RegimeType regime,
-	    String objectives, String objectivesEn, String program, String programEn,
-	    String evaluationMethod, String evaluationMethodEn, CompetenceCourse course,
-	    CompetenceCourseLevel level, ExecutionSemester period, Person requester,
-	    Double theoreticalHours, Double problemsHours, Double laboratorialHours,
-	    Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours,
-	    Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits,
-	    Double secondTheoreticalHours, Double secondProblemsHours, Double secondLaboratorialHours,
+	    String objectives, String objectivesEn, String program, String programEn, String evaluationMethod,
+	    String evaluationMethodEn, CompetenceCourse course, CompetenceCourseLevel level, ExecutionSemester period,
+	    Person requester, Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
+	    Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
+	    Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours, Double secondLaboratorialHours,
 	    Double secondSeminaryHours, Double secondFieldWorkHours, Double secondTrainingPeriodHours,
-	    Double secondTutorialOrientationHours, Double secondAutonomousWorkHours,
-	    Double secondEctsCredits, BibliographicReferences references) {
+	    Double secondTutorialOrientationHours, Double secondAutonomousWorkHours, Double secondEctsCredits,
+	    BibliographicReferences references) {
 	this();
 
-	if (name == null || nameEn == null || justification == null || regime == null || objectives == null || objectivesEn == null
-		|| program == null || programEn == null || evaluationMethod == null
-		|| evaluationMethodEn == null || course == null || period == null || requester == null
-		|| level == null || theoreticalHours == null || problemsHours == null
-		|| laboratorialHours == null || seminaryHours == null || fieldWorkHours == null
-		|| trainingPeriodHours == null || tutorialOrientationHours == null
+	if (name == null || nameEn == null || justification == null || regime == null || objectives == null
+		|| objectivesEn == null || program == null || programEn == null || evaluationMethod == null
+		|| evaluationMethodEn == null || course == null || period == null || requester == null || level == null
+		|| theoreticalHours == null || problemsHours == null || laboratorialHours == null || seminaryHours == null
+		|| fieldWorkHours == null || trainingPeriodHours == null || tutorialOrientationHours == null
 		|| autonomousWorkHours == null || ectsCredits == null) {
 
 	    throw new DomainException("error.fields.are.required");

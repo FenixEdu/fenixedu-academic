@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionCourse extends Service {
 
-    public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException{
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
+    public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException {
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
 
-        if (executionCourse == null) {
-            throw new NonExistingServiceException();
-        }
+	if (executionCourse == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        return InfoExecutionCourse.newInfoFromDomain(executionCourse);
+	return InfoExecutionCourse.newInfoFromDomain(executionCourse);
     }
 
 }

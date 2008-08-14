@@ -14,7 +14,7 @@ public class InvalidTimeIntervalServiceException extends FenixServiceException {
      *  
      */
     public InvalidTimeIntervalServiceException() {
-        super();
+	super();
 
     }
 
@@ -22,7 +22,7 @@ public class InvalidTimeIntervalServiceException extends FenixServiceException {
      * @param s
      */
     public InvalidTimeIntervalServiceException(String s) {
-        super(s);
+	super(s);
 
     }
 
@@ -30,7 +30,7 @@ public class InvalidTimeIntervalServiceException extends FenixServiceException {
      * @param cause
      */
     public InvalidTimeIntervalServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
 
     }
 
@@ -39,7 +39,7 @@ public class InvalidTimeIntervalServiceException extends FenixServiceException {
      * @param cause
      */
     public InvalidTimeIntervalServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
 
     }
 

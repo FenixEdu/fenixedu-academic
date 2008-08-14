@@ -13,39 +13,37 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SaveTeachersBody extends Service {
 
     public Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
-            final Integer executionCourseId) throws FenixServiceException{
+	    final Integer executionCourseId) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
-        final List<Integer> auxProfessorshipTeacherIDs = new ArrayList<Integer>(professorShipTeachersIds);
+	final List<Integer> auxProfessorshipTeacherIDs = new ArrayList<Integer>(professorShipTeachersIds);
 
-        final List<Professorship> professorships = executionCourse.getProfessorships();
-        for (int i = 0; i < professorships.size(); i++) {
-            final Professorship professorship = professorships.get(i);
-            final Teacher teacher = professorship.getTeacher();
-            final Integer teacherID = teacher.getIdInternal();
-            if (auxProfessorshipTeacherIDs.contains(teacherID)) {
-                if (responsibleTeachersIds.contains(teacherID) && !professorship.getResponsibleFor()) {
-                    professorship.setResponsibleFor(Boolean.TRUE);
-                } else if (!responsibleTeachersIds.contains(teacherID)
-                        && professorship.getResponsibleFor()) {
-                    professorship.setResponsibleFor(Boolean.FALSE);
-                }
-                auxProfessorshipTeacherIDs.remove(teacherID);
-            } else {
-                professorship.delete();
-                i--;
-            }
-        }
+	final List<Professorship> professorships = executionCourse.getProfessorships();
+	for (int i = 0; i < professorships.size(); i++) {
+	    final Professorship professorship = professorships.get(i);
+	    final Teacher teacher = professorship.getTeacher();
+	    final Integer teacherID = teacher.getIdInternal();
+	    if (auxProfessorshipTeacherIDs.contains(teacherID)) {
+		if (responsibleTeachersIds.contains(teacherID) && !professorship.getResponsibleFor()) {
+		    professorship.setResponsibleFor(Boolean.TRUE);
+		} else if (!responsibleTeachersIds.contains(teacherID) && professorship.getResponsibleFor()) {
+		    professorship.setResponsibleFor(Boolean.FALSE);
+		}
+		auxProfessorshipTeacherIDs.remove(teacherID);
+	    } else {
+		professorship.delete();
+		i--;
+	    }
+	}
 
-        for (final Integer teacherID : auxProfessorshipTeacherIDs) {
-            final Teacher teacher = rootDomainObject.readTeacherByOID(
-                    teacherID);
-            final Boolean isResponsible = Boolean.valueOf(responsibleTeachersIds.contains(teacherID));
-            Professorship.create(isResponsible, executionCourse, teacher, null);
-        }
+	for (final Integer teacherID : auxProfessorshipTeacherIDs) {
+	    final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	    final Boolean isResponsible = Boolean.valueOf(responsibleTeachersIds.contains(teacherID));
+	    Professorship.create(isResponsible, executionCourse, teacher, null);
+	}
 
-        return Boolean.TRUE;
+	return Boolean.TRUE;
     }
 
 }

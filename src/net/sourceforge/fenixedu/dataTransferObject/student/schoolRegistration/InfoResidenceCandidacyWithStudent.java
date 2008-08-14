@@ -16,8 +16,8 @@ public class InfoResidenceCandidacyWithStudent extends InfoResidenceCandidacy {
     public void copyFromDomain(ResidenceCandidacies residenceCandidacy) {
 	super.copyFromDomain(residenceCandidacy);
 	if (residenceCandidacy != null) {
-	    setInfoStudent(InfoStudent.newInfoFromDomain(residenceCandidacy
-		    .getStudentDataByExecutionYear().getStudent().getRegistrations().get(0)));
+	    setInfoStudent(InfoStudent.newInfoFromDomain(residenceCandidacy.getStudentDataByExecutionYear().getStudent()
+		    .getRegistrations().get(0)));
 	}
     }
 

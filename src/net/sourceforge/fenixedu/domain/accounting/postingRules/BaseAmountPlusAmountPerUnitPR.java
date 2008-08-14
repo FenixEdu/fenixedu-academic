@@ -70,15 +70,14 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
 
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(
-		event, when), event.getPayedAmount(), event.calculateAmountToPay(when), event
-		.getDescriptionForEntryType(getEntryType()), event.calculateAmountToPay(when)));
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
+		.getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
+		.calculateAmountToPay(when)));
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    Event event, Account fromAccount, Account toAccount,
-	    AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException(
 		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.invalid.number.of.entryDTOs");
@@ -87,8 +86,8 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
 	final EntryDTO entryDTO = entryDTOs.get(0);
 	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
-	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-		entryDTO.getEntryType(), entryDTO.getAmountToPay(), transactionDetail));
+	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
+		entryDTO.getAmountToPay(), transactionDetail));
     }
 
     private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {

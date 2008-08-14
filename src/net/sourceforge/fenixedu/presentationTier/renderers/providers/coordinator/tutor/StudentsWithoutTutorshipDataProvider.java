@@ -8,12 +8,12 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class StudentsWithoutTutorshipDataProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-    	StudentsByEntryYearBean bean = (StudentsByEntryYearBean) source;
-    	
-    	return bean.getStudentsList();
+	StudentsByEntryYearBean bean = (StudentsByEntryYearBean) source;
+
+	return bean.getStudentsList();
     }
 
     public Converter getConverter() {
-    	return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 }

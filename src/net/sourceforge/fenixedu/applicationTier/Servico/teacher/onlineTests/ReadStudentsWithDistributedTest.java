@@ -20,19 +20,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadStudentsWithDistributedTest extends Service {
 
-	public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException{
-		final List<InfoStudent> result = new ArrayList<InfoStudent>();
+    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+	final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
-		final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-		if (distributedTest == null)
-			throw new FenixServiceException();
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+	if (distributedTest == null)
+	    throw new FenixServiceException();
 
-        final Set<Registration> students = distributedTest.findStudents();
-		for (Registration registration : students) {
-            result.add(InfoStudent.newInfoFromDomain(registration));    
-        }
-		
-		return result;
+	final Set<Registration> students = distributedTest.findStudents();
+	for (Registration registration : students) {
+	    result.add(InfoStudent.newInfoFromDomain(registration));
 	}
-    
+
+	return result;
+    }
+
 }

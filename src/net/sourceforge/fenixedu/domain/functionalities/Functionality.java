@@ -112,8 +112,8 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * The functionality, as a content, can have multiple parents but can have
      * only one module. This method finds and returns that module.
      * 
-     * @return the module containing this functionality or <code>null</code>
-     *         if this is a top level functionality
+     * @return the module containing this functionality or <code>null</code> if
+     *         this is a top level functionality
      */
     public Module getModule() {
 	for (Node node : getParents()) {
@@ -141,9 +141,9 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * public path of other functionalities.
      * 
      * @exception MatchPathConflictException
-     *                    when the public path of this functionality conflicts
-     *                    with the public path of another functionality, that
-     *                    is, when there are two public paths that are equal
+     *                when the public path of this functionality conflicts with
+     *                the public path of another functionality, that is, when
+     *                there are two public paths that are equal
      */
     public static void checkMatchPath() {
 	Set<String> paths = new HashSet<String>();
@@ -222,7 +222,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * other siblings.
      * 
      * @param order
-     *                the new order of this functionality
+     *            the new order of this functionality
      */
     public void setOrder(int order) {
 	setOrderInModule(order);
@@ -234,7 +234,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * move(up|down|top|bottom|inner|outter) methods instead.
      * 
      * @exception IllegalOrderInModuleException
-     *                    if <tt> order < 0</tt>
+     *                if <tt> order < 0</tt>
      * 
      * @see #moveUp()
      * @see #moveDown()
@@ -287,8 +287,8 @@ public class Functionality extends Functionality_Base implements IFunctionality 
     }
 
     /**
-     * Convenience method for accessing the functionality
-     * {@link #getParameters parameters}.
+     * Convenience method for accessing the functionality {@link #getParameters
+     * parameters}.
      * 
      * @return a list with all the parameters
      */
@@ -308,7 +308,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * the parameters.
      * 
      * @param parametersList
-     *                the list of parameters that will be set
+     *            the list of parameters that will be set
      */
     public void setParameterList(List<String> parametersList) {
 	StringBuilder parameters = new StringBuilder();
@@ -402,7 +402,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * isn't moved.
      * 
      * @throws NullPointerException
-     *                 when {@link #getModule()} is <code>null</code>
+     *             when {@link #getModule()} is <code>null</code>
      */
     public void moveOutter() {
 	Module module = getModule();
@@ -419,7 +419,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * <code>null</code> this functionality becomes a top level functionality.
      * 
      * @param module
-     *                the destination module
+     *            the destination module
      */
     protected void moveToModule(Module module) {
 	setModule(module);
@@ -432,7 +432,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * above (acording to the functionality order) is choosen.
      * 
      * @throws NullPointerException
-     *                 when {@link #getModule()} is <code>null</code>
+     *             when {@link #getModule()} is <code>null</code>
      */
     public void moveInner() {
 	Collection<Node> nodes;
@@ -474,15 +474,15 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * A functionality is available when:
      * <ul>
      * <li>it is {@link #isEnabled() enabled};</li>
-     * <li>all the parameters defined for the functionality are available in
-     * the context;</li>
+     * <li>all the parameters defined for the functionality are available in the
+     * context;</li>
      * <li>all the parent modules are available;</li>
-     * <li>the defined availability policy allows the given person to access
-     * the functionality;</li>
+     * <li>the defined availability policy allows the given person to access the
+     * functionality;</li>
      * </ul>
      * 
      * @param context
-     *                the current functionality context
+     *            the current functionality context
      * 
      * @return <code>true</code> if the functionality is available for the
      *         person hold in the context
@@ -504,10 +504,10 @@ public class Functionality extends Functionality_Base implements IFunctionality 
     }
 
     /**
-     * Checks if all the parameters required by the
-     * {@link #getFunctionality() functionality} are present in the given
-     * context. A parameter is present in the context if the current request
-     * contains a <code>null</code> for that parameter.
+     * Checks if all the parameters required by the {@link #getFunctionality()
+     * functionality} are present in the given context. A parameter is present
+     * in the context if the current request contains a <code>null</code> for
+     * that parameter.
      * 
      * <p>
      * If the functionality {@link Functionality#isParameterized()} is not
@@ -515,10 +515,10 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * parameters.
      * 
      * @param context
-     *                the context used to check for parameter existance
-     * @return <code>true</code> if the functionality is not parameterized or
-     *         if the current request, available from the given context,
-     *         contains all the required parameters
+     *            the context used to check for parameter existance
+     * @return <code>true</code> if the functionality is not parameterized or if
+     *         the current request, available from the given context, contains
+     *         all the required parameters
      */
     protected boolean hasRequiredParameters(FunctionalityContext context) {
 	if (isParameterized()) {
@@ -544,7 +544,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	for (FunctionalityCall functionalityCall : getFunctionalityCallsSet()) {
 	    functionalityCall.delete();
 	}
-	
+
 	super.disconnect();
     }
 
@@ -563,7 +563,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * with their order in the module and thei module hierarchy.
      * 
      * @param nodes
-     *                the functionalities to srot
+     *            the functionalities to srot
      * @return a list with all the functionalities sorted
      * 
      * @todo consider hierarchy
@@ -587,9 +587,8 @@ public class Functionality extends Functionality_Base implements IFunctionality 
     }
 
     /**
-     * This function behaves like the
-     * {@link #getTopLevelFunctionalities() previous one} but sorts the set of
-     * functionalities.
+     * This function behaves like the {@link #getTopLevelFunctionalities()
+     * previous one} but sorts the set of functionalities.
      * 
      * @return an ordered list with all the top-level functionalities
      */
@@ -601,7 +600,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * Obtains the functionality with the given <tt>uuid</tt>.
      * 
      * @param uuid
-     *                the <tt>uuid</tt> of the desired functionality
+     *            the <tt>uuid</tt> of the desired functionality
      * @return the functionality with the given <tt>uuid</tt> if it exists or
      *         <code>null</code> in all the other cases
      */

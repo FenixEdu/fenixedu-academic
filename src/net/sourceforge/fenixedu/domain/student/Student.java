@@ -562,7 +562,7 @@ public class Student extends Student_Base {
 	}
 	return aprovedEnrolments;
     }
-    
+
     public List<Enrolment> getApprovedEnrolments(final AdministrativeOffice administrativeOffice) {
 	final List<Enrolment> aprovedEnrolments = new ArrayList<Enrolment>();
 	for (final Registration registration : getRegistrationsFor(administrativeOffice)) {
@@ -706,7 +706,7 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-    
+
     public boolean isWeeklySpentHoursSubmittedForCurrentPeriod() {
 	return isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester.readActualExecutionSemester());
     }
@@ -731,7 +731,7 @@ public class Student extends Student_Base {
 	    }
 	}
 	return null;
-    }    
+    }
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
@@ -849,11 +849,11 @@ public class Student extends Student_Base {
     public boolean hasRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getRegistrationFor(degreeCurricularPlan) != null;
     }
-    
+
     public boolean hasActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getActiveRegistrationFor(degreeCurricularPlan) != null;
     }
-    
+
     public boolean hasActiveRegistrations() {
 	return getActiveRegistrations().size() > 0;
     }
@@ -866,7 +866,7 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
-    
+
     public boolean hasRegistrationFor(final Degree degree) {
 	return getRegistrationFor(degree) != null;
     }
@@ -1140,17 +1140,17 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-    
+
     public Map<CurricularCourse, InquiriesRegistry> getOrCreateInquiriesRegistriesForPeriod(ExecutionSemester executionSemester) {
 	final Map<CurricularCourse, InquiriesRegistry> coursesToAnswer = new HashMap<CurricularCourse, InquiriesRegistry>();
 
 	for (Registration registration : getRegistrations()) {
-	    
-	    //TODO: Chack degree types and response period!
-	    if(!registration.isAvailableDegreeTypeForInquiries()){
+
+	    // TODO: Chack degree types and response period!
+	    if (!registration.isAvailableDegreeTypeForInquiries()) {
 		continue;
 	    }
-	    
+
 	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
 
@@ -1179,7 +1179,7 @@ public class Student extends Student_Base {
 	}
 	return coursesToAnswer;
     }
-    
+
     public boolean learnsAt(final Campus campus) {
 	for (final Registration registration : getActiveRegistrations()) {
 	    if (registration.getCampus() == campus) {
@@ -1187,8 +1187,8 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
-    }    
-    
+    }
+
     public List<Tutorship> getTutorships() {
 	List<Tutorship> tutorships = new ArrayList<Tutorship>();
 	for (Registration registration : getActiveRegistrations()) {
@@ -1198,7 +1198,7 @@ public class Student extends Student_Base {
 	}
 	return tutorships;
     }
-    
+
     public List<Tutorship> getActiveTutorships() {
 	List<Tutorship> tutorships = new ArrayList<Tutorship>();
 	for (Tutorship tutorship : getTutorships()) {
@@ -1217,7 +1217,7 @@ public class Student extends Student_Base {
 		firstYear = registration.getStartExecutionYear();
 		continue;
 	    }
-	    
+
 	    if (registration.getStartExecutionYear().isBefore(firstYear)) {
 		firstYear = registration.getStartExecutionYear();
 	    }

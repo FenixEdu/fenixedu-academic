@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class InfoSiteClasses extends DataTranferObject implements ISiteComponent {
 
@@ -26,14 +26,14 @@ public class InfoSiteClasses extends DataTranferObject implements ISiteComponent
      * @return
      */
     public List getClasses() {
-        return classes;
+	return classes;
     }
 
     /**
      * @param list
      */
     public void setClasses(List list) {
-        classes = list;
+	classes = list;
     }
 
 }

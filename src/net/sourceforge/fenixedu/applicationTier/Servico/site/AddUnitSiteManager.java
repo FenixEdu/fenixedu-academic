@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.UnitSite;
  */
 public class AddUnitSiteManager extends Service {
 
-    public void run (UnitSite site, Person person) {
-        site.addManagers(person);
+    public void run(UnitSite site, Person person) {
+	site.addManagers(person);
     }
-    
+
 }

@@ -11,10 +11,10 @@ import org.joda.time.DateTime;
 
 public class TeacherCreditsPeriodBean implements Serializable {
 
-    private DateTime beginForTeacher;    
+    private DateTime beginForTeacher;
     private DateTime endForTeacher;
 
-    private DateTime beginForDepartmentAdmOffice;    
+    private DateTime beginForDepartmentAdmOffice;
     private DateTime endForDepartmentAdmOffice;
 
     private DomainReference<ExecutionSemester> executionPeriodReference;
@@ -22,14 +22,14 @@ public class TeacherCreditsPeriodBean implements Serializable {
     private boolean teacher;
 
     public TeacherCreditsPeriodBean(ExecutionSemester executionSemester) {
-	setExecutionPeriod(executionSemester);	
-	refreshDates();	
+	setExecutionPeriod(executionSemester);
+	refreshDates();
     }
 
     public TeacherCreditsPeriodBean(ExecutionSemester executionSemester, boolean teacher) {
 	setExecutionPeriod(executionSemester);
 	setTeacher(teacher);
-	refreshDates();	
+	refreshDates();
     }
 
     public ExecutionSemester getExecutionPeriod() {
@@ -76,7 +76,8 @@ public class TeacherCreditsPeriodBean implements Serializable {
 
 	ExecutionSemester executionSemester = getExecutionPeriod();
 
-	TeacherCreditsFillingForDepartmentAdmOfficeCE departmentAdmOffice = executionSemester.getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
+	TeacherCreditsFillingForDepartmentAdmOfficeCE departmentAdmOffice = executionSemester
+		.getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
 	setBeginForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getBegin() : null);
 	setEndForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getEnd() : null);
 
@@ -91,5 +92,5 @@ public class TeacherCreditsPeriodBean implements Serializable {
 
     public void setTeacher(boolean teacher) {
 	this.teacher = teacher;
-    }  
+    }
 }

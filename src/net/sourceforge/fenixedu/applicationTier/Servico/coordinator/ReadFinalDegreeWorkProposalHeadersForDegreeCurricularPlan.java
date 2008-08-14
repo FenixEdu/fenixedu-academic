@@ -15,10 +15,10 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan extends S
 	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
-	
+
 	if (executionDegree.hasScheduling()) {
 	    final List<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().getProposals();
-	    
+
 	    for (final Proposal proposal : finalDegreeWorkProposals) {
 		result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));
 	    }
@@ -26,5 +26,5 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan extends S
 
 	return result;
     }
-    
+
 }

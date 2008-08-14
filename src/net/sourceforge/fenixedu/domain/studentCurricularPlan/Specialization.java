@@ -22,7 +22,7 @@ public enum Specialization {
     STUDENT_CURRICULAR_PLAN_SPECIALIZATION;
 
     public String getName() {
-        return name();
+	return name();
     }
 
 }

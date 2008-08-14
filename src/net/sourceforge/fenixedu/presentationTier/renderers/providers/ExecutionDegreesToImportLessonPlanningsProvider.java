@@ -14,18 +14,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExecutionDegreesToImportLessonPlanningsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        ImportContentBean bean = (ImportContentBean) source;
-        ExecutionSemester executionSemester = bean.getExecutionPeriod();               
-        if(executionSemester != null) {            
-            List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
-            executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegrees());
-            Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-            return executionDegrees;
-        }
-        return new ArrayList<ExecutionDegree>();   
+	ImportContentBean bean = (ImportContentBean) source;
+	ExecutionSemester executionSemester = bean.getExecutionPeriod();
+	if (executionSemester != null) {
+	    List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
+	    executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegrees());
+	    Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+	    return executionDegrees;
+	}
+	return new ArrayList<ExecutionDegree>();
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();  
+	return new DomainObjectKeyConverter();
     }
 }

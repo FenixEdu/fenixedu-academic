@@ -26,10 +26,10 @@ public class LoginPageFilter implements Filter {
     }
 
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException,
-            ServletException {
-        final HttpServletRequest request = (HttpServletRequest) req;
-        final HttpServletResponse response = (HttpServletResponse) res;
-        RequestUtils.sendLoginRedirect(request, response);
+	    ServletException {
+	final HttpServletRequest request = (HttpServletRequest) req;
+	final HttpServletResponse response = (HttpServletResponse) res;
+	RequestUtils.sendLoginRedirect(request, response);
     }
 
 }

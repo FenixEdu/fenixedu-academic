@@ -43,7 +43,7 @@ public abstract class Site extends Site_Base {
     public boolean isChildAccepted(Content child) {
 	return child instanceof Section || child instanceof FunctionalityCall || Forum.class.isAssignableFrom(child.getClass());
     }
-    
+
     public Section createSection(MultiLanguageString sectionName, Container parentContainer, Integer sectionOrder) {
 	return new Section(parentContainer, sectionName, sectionOrder);
     }
@@ -129,7 +129,7 @@ public abstract class Site extends Site_Base {
     public boolean isTemplateAvailable() {
 	return getTemplate() != null;
     }
-    
+
     public List<Content> getOrderedTemplateSections() {
 	List<Content> sections = new ArrayList<Content>();
 
@@ -326,17 +326,17 @@ public abstract class Site extends Site_Base {
 	final MetaDomainObjectPortal template = getTemplate();
 	Content initialContent = null;
 	if (template != null) {
-	    
+
 	    initialContent = getTemplate().getInitialContent();
 	    if (initialContent != null) {
 		return initialContent;
 	    }
-	    
+
 	    Collection<Element> children = getOrderedChildren(Element.class);
 	    if (!children.isEmpty()) {
 		return children.iterator().next();
 	    }
-	
+
 	    for (Container container : getOrderedChildren(Container.class)) {
 		initialContent = container.getInitialContent();
 		if (initialContent != null) {
@@ -357,15 +357,23 @@ public abstract class Site extends Site_Base {
 
     @Override
     protected boolean checkDisconnected() {
-        if (hasRootDomainObject()) return false;
-        if (hasAnyInitialContainer()) return false;
-        if (hasAvailabilityPolicy()) return false;
-        if (hasPortal()) return false;
-        if (hasAnyParents()) return false;
-        if (hasCreator()) return false;
-        if (hasAnyChildren()) return false;
-        if (hasPortalRootDomainObject()) return false;
-        return true;
+	if (hasRootDomainObject())
+	    return false;
+	if (hasAnyInitialContainer())
+	    return false;
+	if (hasAvailabilityPolicy())
+	    return false;
+	if (hasPortal())
+	    return false;
+	if (hasAnyParents())
+	    return false;
+	if (hasCreator())
+	    return false;
+	if (hasAnyChildren())
+	    return false;
+	if (hasPortalRootDomainObject())
+	    return false;
+	return true;
     }
 
 }

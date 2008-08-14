@@ -19,20 +19,19 @@ import org.apache.struts.action.DynaActionForm;
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
-    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject
-		.readStudentCurricularPlanByOID(scpID);
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
 
-	new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request,
-		new ActionErrors(), studentCurricularPlan);
+	new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
+		studentCurricularPlan);
 
 	MasterDegreeThesisDataVersion thesisDataVersion = studentCurricularPlan.getMasterDegreeThesis()
 		.getActiveMasterDegreeThesisDataVersion();
@@ -41,46 +40,43 @@ public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction 
 	    request.setAttribute(SessionConstants.GUIDERS_LIST, thesisDataVersion.getGuiders());
 
 	if (!thesisDataVersion.getAssistentGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, thesisDataVersion
-		    .getAssistentGuiders());
+	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, thesisDataVersion.getAssistentGuiders());
 
 	if (!thesisDataVersion.getExternalAssistentGuiders().isEmpty())
 	    request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, thesisDataVersion
 		    .getExternalAssistentGuiders());
 
 	if (!thesisDataVersion.getExternalGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, thesisDataVersion
-		    .getExternalGuiders());
+	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, thesisDataVersion.getExternalGuiders());
 
 	DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
 	changeMasterDegreeThesisForm.set("dissertationTitle", thesisDataVersion.getDissertationTitle());
 
-        return mapping.findForward("start");
+	return mapping.findForward("start");
 
     }
 
     public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-        ActionErrors actionErrors = new ActionErrors();
+	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+	ActionErrors actionErrors = new ActionErrors();
 
-        try {
-            operations.getTeachersByNumbers(form, request, "guidersNumbers",
-                    SessionConstants.GUIDERS_LIST, actionErrors);
-            operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-                    SessionConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-            operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-                    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-            operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs",
-                    SessionConstants.EXTERNAL_GUIDERS_LIST, actionErrors);
+	try {
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+		    actionErrors);
+	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    actionErrors);
 
-        } catch (Exception e1) {
-            throw new FenixActionException(e1);
-        }
+	} catch (Exception e1) {
+	    throw new FenixActionException(e1);
+	}
 
-        return mapping.findForward("start");
+	return mapping.findForward("start");
 
     }
 

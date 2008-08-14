@@ -26,8 +26,8 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ManageGrantContractAction extends FenixDispatchAction {
 
-    public ActionForward prepareManageGrantContractForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantContractForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer idInternal = null;
 	if (request.getParameter("idInternal") != null) {
@@ -36,20 +36,18 @@ public class ManageGrantContractAction extends FenixDispatchAction {
 	    idInternal = (Integer) request.getAttribute("idInternal");
 	}
 
-	//Run the service
+	// Run the service
 	Object[] args = { idInternal };
 	IUserView userView = UserView.getUser();
-	List infoGrantContractList = (List) ServiceUtils.executeService(
-		"ReadAllContractsByGrantOwner", args);
+	List infoGrantContractList = (List) ServiceUtils.executeService("ReadAllContractsByGrantOwner", args);
 
 	if (infoGrantContractList != null && !infoGrantContractList.isEmpty())
 	    request.setAttribute("infoGrantContractList", infoGrantContractList);
 
-	//Needed for return to manage contracts
+	// Needed for return to manage contracts
 	request.setAttribute("idInternal", idInternal);
 
-	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(
-		"ReadGrantOwner", args);
+	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService("ReadGrantOwner", args);
 	request.setAttribute("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber());
 	request.setAttribute("grantOwnerName", infoGrantOwner.getPersonInfo().getNome());
 

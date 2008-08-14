@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CreatePersistentGroup extends Service {
 
-	public void run(Unit unit, String name, List<Person> people, PersistentGroupMembersType type) {
+    public void run(Unit unit, String name, List<Person> people, PersistentGroupMembersType type) {
 
-		PersistentGroupMembers members = new PersistentGroupMembers(name,type);
-		members.setUnit(unit);
-		for(Person person : people) {
-			members.addPersons(person);
-		}
+	PersistentGroupMembers members = new PersistentGroupMembers(name, type);
+	members.setUnit(unit);
+	for (Person person : people) {
+	    members.addPersons(person);
 	}
+    }
 }

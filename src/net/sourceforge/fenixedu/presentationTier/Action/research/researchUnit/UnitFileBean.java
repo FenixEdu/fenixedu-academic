@@ -14,105 +14,105 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class UnitFileBean implements Serializable {
 
-	private DomainReference<UnitFile> file;
+    private DomainReference<UnitFile> file;
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	private List<IGroup> groups;
+    private List<IGroup> groups;
 
-	private String tags;
+    private String tags;
 
-	protected UnitFileBean() {
-		this.file = new DomainReference<UnitFile>(null);
-		groups = new ArrayList<IGroup>();
+    protected UnitFileBean() {
+	this.file = new DomainReference<UnitFile>(null);
+	groups = new ArrayList<IGroup>();
+    }
+
+    public UnitFileBean(UnitFile file) {
+	this.file = new DomainReference<UnitFile>(file);
+	this.name = file.getDisplayName();
+	this.description = file.getDescription();
+	setupGroups(file.getPermittedGroup());
+	setupTags(file.getUnitFileTags());
+    }
+
+    private void setupTags(List<UnitFileTag> unitFileTags) {
+	String tags = "";
+	int i = unitFileTags.size();
+	for (UnitFileTag tag : unitFileTags) {
+	    tags += tag.getName();
+	    if (--i > 0) {
+		tags += " ";
+	    }
 	}
-	
-	public UnitFileBean(UnitFile file) {
-		this.file = new DomainReference<UnitFile>(file);
-		this.name = file.getDisplayName();
-		this.description = file.getDescription();
-		setupGroups(file.getPermittedGroup());
-		setupTags(file.getUnitFileTags());
-	}
+	setTags(tags);
+    }
 
-	private void setupTags(List<UnitFileTag> unitFileTags) {
-		String tags = "";
-		int i = unitFileTags.size();
-		for (UnitFileTag tag : unitFileTags) {
-			tags += tag.getName();
-			if (--i > 0) {
-				tags += " ";
-			}
-		}
-		setTags(tags);
-	}
-
-	private void setupGroups(Group permittedGroup) {
-		if (permittedGroup instanceof GroupUnion) {
-			groups = flatten((GroupUnion) permittedGroup);
-		} else {
-			groups = new ArrayList<IGroup>();
-			groups.add(permittedGroup);
-		}
-
+    private void setupGroups(Group permittedGroup) {
+	if (permittedGroup instanceof GroupUnion) {
+	    groups = flatten((GroupUnion) permittedGroup);
+	} else {
+	    groups = new ArrayList<IGroup>();
+	    groups.add(permittedGroup);
 	}
 
-	private List<IGroup> flatten(GroupUnion group) {
-		List<IGroup> groups = new ArrayList<IGroup>();
-		for (IGroup children : group.getChildren()) {
-			if (children instanceof GroupUnion) {
-				groups.addAll(flatten((GroupUnion) children));
-			} else {
-				groups.add(children);
-			}
-		}
-		return groups;
-	}
+    }
 
-	public UnitFile getFile() {
-		return file.getObject();
+    private List<IGroup> flatten(GroupUnion group) {
+	List<IGroup> groups = new ArrayList<IGroup>();
+	for (IGroup children : group.getChildren()) {
+	    if (children instanceof GroupUnion) {
+		groups.addAll(flatten((GroupUnion) children));
+	    } else {
+		groups.add(children);
+	    }
 	}
+	return groups;
+    }
 
-	public List<IGroup> getGroups() {
-		return groups;
-	}
+    public UnitFile getFile() {
+	return file.getObject();
+    }
 
-	public void setGroups(List<IGroup> groups) {
-		this.groups = groups;
-	}
+    public List<IGroup> getGroups() {
+	return groups;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setGroups(List<IGroup> groups) {
+	this.groups = groups;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+	return description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setDescription(String description) {
+	this.description = description;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public Group getGroup() {
-		return new GroupUnion(getGroups());
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public Unit getUnit() {
-		return getFile().getUnit();
-	}
+    public Group getGroup() {
+	return new GroupUnion(getGroups());
+    }
 
-	public String getTags() {
-		return tags;
-	}
+    public Unit getUnit() {
+	return getFile().getUnit();
+    }
 
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
+    public String getTags() {
+	return tags;
+    }
+
+    public void setTags(String tags) {
+	this.tags = tags;
+    }
 
 }

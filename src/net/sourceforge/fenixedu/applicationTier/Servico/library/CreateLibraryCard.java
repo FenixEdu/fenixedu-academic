@@ -7,6 +7,6 @@ import net.sourceforge.fenixedu.domain.library.LibraryCard;
 public class CreateLibraryCard extends Service {
 
     public LibraryCard run(LibraryCardDTO libraryCardDTO) {
-        return new LibraryCard(libraryCardDTO);
+	return new LibraryCard(libraryCardDTO);
     }
 }

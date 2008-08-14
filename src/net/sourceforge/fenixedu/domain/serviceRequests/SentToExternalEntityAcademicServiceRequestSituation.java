@@ -18,13 +18,15 @@ public class SentToExternalEntityAcademicServiceRequestSituation extends SentToE
 	super.init(academicServiceRequest, academicServiceRequestBean);
 	super.setSentDate(academicServiceRequestBean.getFinalSituationDate());
     }
-    
+
     @Override
-    protected void checkParameters(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
-        super.checkParameters(academicServiceRequest, academicServiceRequestBean);
-        if (!academicServiceRequestBean.hasJustification()) {
-            throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.justification.cannot.be.null.for.when.send");
-        }
+    protected void checkParameters(final AcademicServiceRequest academicServiceRequest,
+	    final AcademicServiceRequestBean academicServiceRequestBean) {
+	super.checkParameters(academicServiceRequest, academicServiceRequestBean);
+	if (!academicServiceRequestBean.hasJustification()) {
+	    throw new DomainException(
+		    "error.serviceRequests.AcademicServiceRequestSituation.justification.cannot.be.null.for.when.send");
+	}
     }
 
     @Override
@@ -32,12 +34,14 @@ public class SentToExternalEntityAcademicServiceRequestSituation extends SentToE
 	throw new DomainException("error.serviceRequests.SentToUnitAcademicServiceRequestSituation.cannot.modify.situation.date");
     }
 
-    private void checkOwnParameters(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
+    private void checkOwnParameters(final AcademicServiceRequest academicServiceRequest,
+	    final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (!academicServiceRequestBean.isToSendToExternalEntity()) {
 	    throw new DomainException("error.serviceRequests.SentToUnitAcademicServiceRequestSituation.invalid.situation.type");
 	}
-	
-	if (academicServiceRequestBean.getFinalSituationDate().isBefore(academicServiceRequest.getActiveSituation().getSituationDate())) {
+
+	if (academicServiceRequestBean.getFinalSituationDate().isBefore(
+		academicServiceRequest.getActiveSituation().getSituationDate())) {
 	    throw new DomainException("error.serviceRequests.SentToUnitAcademicServiceRequestSituation.invalid.situation.date");
 	}
     }

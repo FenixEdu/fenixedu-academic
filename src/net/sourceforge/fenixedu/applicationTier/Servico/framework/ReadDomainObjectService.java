@@ -17,19 +17,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public abstract class ReadDomainObjectService extends Service {
 
-	public InfoObject run(Integer objectId) throws FenixServiceException{
-		DomainObject domainObject = readDomainObject(objectId);
-		InfoObject infoObject = null;
+    public InfoObject run(Integer objectId) throws FenixServiceException {
+	DomainObject domainObject = readDomainObject(objectId);
+	InfoObject infoObject = null;
 
-		if (domainObject != null) {
-			infoObject = newInfoFromDomain(domainObject);
-		}
-
-		return infoObject;
+	if (domainObject != null) {
+	    infoObject = newInfoFromDomain(domainObject);
 	}
 
-	protected abstract DomainObject readDomainObject(final Integer idInternal);
+	return infoObject;
+    }
 
-	protected abstract InfoObject newInfoFromDomain(DomainObject domainObject);
+    protected abstract DomainObject readDomainObject(final Integer idInternal);
+
+    protected abstract InfoObject newInfoFromDomain(DomainObject domainObject);
 
 }

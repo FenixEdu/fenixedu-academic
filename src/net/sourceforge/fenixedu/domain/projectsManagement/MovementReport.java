@@ -29,66 +29,66 @@ public class MovementReport implements Serializable, IMovementReport {
     private List movements;
 
     public String getParentDate() {
-        return parentDate;
+	return parentDate;
     }
 
     public void setParentDate(String parentDate) {
-        this.parentDate = parentDate;
+	this.parentDate = parentDate;
     }
 
     public String getParentDescription() {
-        return parentDescription;
+	return parentDescription;
     }
 
     public void setParentDescription(String parentDescription) {
-        this.parentDescription = parentDescription;
+	this.parentDescription = parentDescription;
     }
 
     public String getParentMovementId() {
-        return parentMovementId;
+	return parentMovementId;
     }
 
     public void setParentMovementId(String parentMovementId) {
-        this.parentMovementId = parentMovementId;
+	this.parentMovementId = parentMovementId;
     }
 
     public Integer getParentProjectCode() {
-        return parentProjectCode;
+	return parentProjectCode;
     }
 
     public void setParentProjectCode(Integer parentProjectCode) {
-        this.parentProjectCode = parentProjectCode;
+	this.parentProjectCode = parentProjectCode;
     }
 
     public Integer getParentRubricId() {
-        return parentRubricId;
+	return parentRubricId;
     }
 
     public void setParentRubricId(Integer parentRubricId) {
-        this.parentRubricId = parentRubricId;
+	this.parentRubricId = parentRubricId;
     }
 
     public String getParentType() {
-        return parentType;
+	return parentType;
     }
 
     public void setParentType(String parentType) {
-        this.parentType = parentType;
+	this.parentType = parentType;
     }
 
     public Double getParentValue() {
-        return parentValue;
+	return parentValue;
     }
 
     public void setParentValue(Double parentValue) {
-        this.parentValue = parentValue;
+	this.parentValue = parentValue;
     }
 
     public List getMovements() {
-        return movements;
+	return movements;
     }
 
     public void setMovements(List movements) {
-        this.movements = movements;
+	this.movements = movements;
     }
 }

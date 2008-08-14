@@ -59,263 +59,262 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     private String username = "";
 
-    private String contactEmail ="";
-    
-    private String emailPrefix ="";
-    
-    private String rulesLink ="";
-    
+    private String contactEmail = "";
+
+    private String emailPrefix = "";
+
+    private String rulesLink = "";
+
     public String getContactEmail() {
-		return contactEmail;
-	}
+	return contactEmail;
+    }
 
-	public void setContactEmail(String contactEmail) {
-		this.contactEmail = contactEmail;
-	}
+    public void setContactEmail(String contactEmail) {
+	this.contactEmail = contactEmail;
+    }
 
-	public String getRulesLink() {
-		return rulesLink;
-	}
+    public String getRulesLink() {
+	return rulesLink;
+    }
 
-	public void setRulesLink(String rulesLink) {
-		this.rulesLink = rulesLink;
-	}
+    public void setRulesLink(String rulesLink) {
+	this.rulesLink = rulesLink;
+    }
 
-	public boolean isShowCoordinators() {
-        return showCoordinators;
+    public boolean isShowCoordinators() {
+	return showCoordinators;
     }
 
     public void setShowCoordinators(boolean showCoordinators) {
-        this.showCoordinators = showCoordinators;
+	this.showCoordinators = showCoordinators;
     }
 
     public boolean isShowCourseColumn() {
-        return showCourseColumn;
+	return showCourseColumn;
     }
 
     public void setShowCourseColumn(boolean showCompetenceCourseColumn) {
-        this.showCourseColumn = showCompetenceCourseColumn;
+	this.showCourseColumn = showCompetenceCourseColumn;
     }
 
     public boolean isShowVigilantColumn() {
-        return showVigilantColumn;
+	return showVigilantColumn;
     }
 
     public void setShowVigilantColumn(boolean showVigilantColumn) {
-        this.showVigilantColumn = showVigilantColumn;
+	this.showVigilantColumn = showVigilantColumn;
     }
 
     public VigilantGroupBean() {
-        setPerson(null);
-        setUnit(null);
-        setSelectedVigilantGroup(null);
-        setBeginFirstUnavailablePeriod(null);
-        setEndFirstUnavailablePeriod(null);
-        setBeginSecondUnavailablePeriod(null);
-        setEndSecondUnavailablePeriod(null);
-        setExecutionYear(null);
-        setExamCoordinator(null);
-        setSelectedDepartment(null);
-        setSelectedUnit(null);
-        setSelectedVigilant(null);
+	setPerson(null);
+	setUnit(null);
+	setSelectedVigilantGroup(null);
+	setBeginFirstUnavailablePeriod(null);
+	setEndFirstUnavailablePeriod(null);
+	setBeginSecondUnavailablePeriod(null);
+	setEndSecondUnavailablePeriod(null);
+	setExecutionYear(null);
+	setExamCoordinator(null);
+	setSelectedDepartment(null);
+	setSelectedUnit(null);
+	setSelectedVigilant(null);
     }
 
     public DateTime getBeginFirstUnavailablePeriod() {
-        return beginFirstUnavailablePeriod;
+	return beginFirstUnavailablePeriod;
     }
 
     public void setBeginFirstUnavailablePeriod(DateTime beginFirstUnavailablePeriod) {
-        this.beginFirstUnavailablePeriod = beginFirstUnavailablePeriod;
+	this.beginFirstUnavailablePeriod = beginFirstUnavailablePeriod;
     }
 
     public DateTime getBeginSecondUnavailablePeriod() {
-        return beginSecondUnavailablePeriod;
+	return beginSecondUnavailablePeriod;
     }
 
     public void setBeginSecondUnavailablePeriod(DateTime beginSecondUnavailablePeriod) {
-        this.beginSecondUnavailablePeriod = beginSecondUnavailablePeriod;
+	this.beginSecondUnavailablePeriod = beginSecondUnavailablePeriod;
     }
 
     public DateTime getEndFirstUnavailablePeriod() {
-        return endFirstUnavailablePeriod;
+	return endFirstUnavailablePeriod;
     }
 
     public void setEndFirstUnavailablePeriod(DateTime endFirstUnavailablePeriod) {
-        this.endFirstUnavailablePeriod = endFirstUnavailablePeriod;
+	this.endFirstUnavailablePeriod = endFirstUnavailablePeriod;
     }
 
     public DateTime getEndSecondUnavailablePeriod() {
-        return endSecondUnavailablePeriod;
+	return endSecondUnavailablePeriod;
     }
 
     public void setEndSecondUnavailablePeriod(DateTime endSecondUnavailablePeriod) {
-        this.endSecondUnavailablePeriod = endSecondUnavailablePeriod;
+	this.endSecondUnavailablePeriod = endSecondUnavailablePeriod;
     }
 
     public String getConvokeStrategy() {
-        return ConvokeStrategy;
+	return ConvokeStrategy;
     }
 
     public void setConvokeStrategy(String convokeStrategy) {
-        ConvokeStrategy = convokeStrategy;
+	ConvokeStrategy = convokeStrategy;
     }
 
     public Vigilant getSelectedVigilant() {
-        return this.selectedVigilant.getObject();
+	return this.selectedVigilant.getObject();
     }
 
     public void setSelectedVigilant(Vigilant vigilant) {
-        this.selectedVigilant = new DomainReference<Vigilant>(vigilant);
+	this.selectedVigilant = new DomainReference<Vigilant>(vigilant);
     }
 
     public Person getPerson() {
-        return (this.person == null) ? null : this.person.getObject();
+	return (this.person == null) ? null : this.person.getObject();
     }
 
     public void setPerson(Person person) {
-        this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = (person != null) ? new DomainReference<Person>(person) : null;
     }
 
     public void setExamCoordinator(ExamCoordinator examCoordinator) {
-        this.examCoordinator = (examCoordinator != null) ? new DomainReference<ExamCoordinator>(
-                examCoordinator) : null;
+	this.examCoordinator = (examCoordinator != null) ? new DomainReference<ExamCoordinator>(examCoordinator) : null;
     }
 
     public ExamCoordinator getExamCoordinator() {
-        return (this.examCoordinator == null) ? null : this.examCoordinator.getObject();
+	return (this.examCoordinator == null) ? null : this.examCoordinator.getObject();
     }
 
     public Unit getUnit() {
-        return (this.unit != null) ? this.unit.getObject() : null;
+	return (this.unit != null) ? this.unit.getObject() : null;
     }
 
     public void setUnit(Unit unit) {
-        this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
+	this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
     }
 
     public List getEmployees() {
-        List employees = new ArrayList<Employee>();
-        for (DomainReference<Employee> employee : this.employees) {
-            if (employee != null)
-                employees.add(employee.getObject());
-        }
-        return employees;
+	List employees = new ArrayList<Employee>();
+	for (DomainReference<Employee> employee : this.employees) {
+	    if (employee != null)
+		employees.add(employee.getObject());
+	}
+	return employees;
     }
 
     public void setEmployees(List<Employee> employeesList) {
-        this.employees = new ArrayList<DomainReference<Employee>>();
-        for (Employee employee : employeesList) {
-            if (employee != null) {
-                this.employees.add(new DomainReference(employee));
-            }
-        }
+	this.employees = new ArrayList<DomainReference<Employee>>();
+	for (Employee employee : employeesList) {
+	    if (employee != null) {
+		this.employees.add(new DomainReference(employee));
+	    }
+	}
     }
 
     public List getExamCoordinators() {
-        List coordinators = new ArrayList<ExamCoordinator>();
-        for (DomainReference<ExamCoordinator> coordinator : this.examCoordinators) {
-            if (coordinator != null)
-                coordinators.add(coordinator.getObject());
-        }
-        return coordinators;
+	List coordinators = new ArrayList<ExamCoordinator>();
+	for (DomainReference<ExamCoordinator> coordinator : this.examCoordinators) {
+	    if (coordinator != null)
+		coordinators.add(coordinator.getObject());
+	}
+	return coordinators;
     }
 
     public void setExamCoordinators(List<ExamCoordinator> coordinatorsList) {
-        this.examCoordinators = new ArrayList<DomainReference<ExamCoordinator>>();
-        for (ExamCoordinator coordinator : coordinatorsList) {
-            if (coordinator != null) {
-                this.examCoordinators.add(new DomainReference(coordinator));
-            }
-        }
+	this.examCoordinators = new ArrayList<DomainReference<ExamCoordinator>>();
+	for (ExamCoordinator coordinator : coordinatorsList) {
+	    if (coordinator != null) {
+		this.examCoordinators.add(new DomainReference(coordinator));
+	    }
+	}
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public List getVigilants() {
-        List vigilants = new ArrayList<Vigilant>();
-        for (DomainReference<Vigilant> vigilant : this.vigilants) {
-            if (vigilant != null)
-                vigilants.add(vigilant.getObject());
-        }
-        return vigilants;
+	List vigilants = new ArrayList<Vigilant>();
+	for (DomainReference<Vigilant> vigilant : this.vigilants) {
+	    if (vigilant != null)
+		vigilants.add(vigilant.getObject());
+	}
+	return vigilants;
     }
 
     public void setVigilants(List<Vigilant> vigilants) {
-        this.vigilants = new ArrayList<DomainReference<Vigilant>>();
-        for (Vigilant vigilant : vigilants) {
-            if (vigilant != null) {
-                this.vigilants.add(new DomainReference(vigilant));
-            }
-        }
+	this.vigilants = new ArrayList<DomainReference<Vigilant>>();
+	for (Vigilant vigilant : vigilants) {
+	    if (vigilant != null) {
+		this.vigilants.add(new DomainReference(vigilant));
+	    }
+	}
     }
 
     public List<Vigilant> getVigilantsWithIncompatiblePerson() {
-        List<Vigilant> vigilants = this.getVigilants();
-        List<Vigilant> vigilantsWithIncompatiblePerson = new ArrayList<Vigilant>();
+	List<Vigilant> vigilants = this.getVigilants();
+	List<Vigilant> vigilantsWithIncompatiblePerson = new ArrayList<Vigilant>();
 
-        for (Vigilant vigilant : vigilants) {
-            if (vigilant.hasIncompatiblePerson()) {
-                vigilantsWithIncompatiblePerson.add(vigilant);
-            }
-        }
+	for (Vigilant vigilant : vigilants) {
+	    if (vigilant.hasIncompatiblePerson()) {
+		vigilantsWithIncompatiblePerson.add(vigilant);
+	    }
+	}
 
-        return vigilantsWithIncompatiblePerson;
+	return vigilantsWithIncompatiblePerson;
     }
 
     public void resetEmployees() {
-        this.employees = new ArrayList<DomainReference<Employee>>();
+	this.employees = new ArrayList<DomainReference<Employee>>();
     }
 
     public Unit getSelectedUnit() {
-        return selectedUnit.getObject();
+	return selectedUnit.getObject();
     }
 
     public void setSelectedUnit(Unit unit) {
-        this.selectedUnit = new DomainReference<Unit>(unit);
+	this.selectedUnit = new DomainReference<Unit>(unit);
     }
 
     public Department getSelectedDepartment() {
-        return selectedDepartment.getObject();
+	return selectedDepartment.getObject();
     }
 
     public void setSelectedDepartment(Department department) {
-        this.selectedDepartment = new DomainReference<Department>(department);
+	this.selectedDepartment = new DomainReference<Department>(department);
     }
 
     public String getUsername() {
-        return username;
+	return username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+	this.username = username;
     }
-    
+
     public List<Vigilant> getVigilantsForGroupsInBean() {
-    	List<VigilantGroup> groups = this.getVigilantGroups();
-    	Set<Vigilant> vigilants = new HashSet<Vigilant>();
-    	for(VigilantGroup group : groups) {
-    		vigilants.addAll(group.getVigilants());
-    	}
-    	ComparatorChain chain = new ComparatorChain();
-    	chain.addComparator(Vigilant.POINTS_COMPARATOR);
-    	chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
-    	chain.addComparator(Vigilant.USERNAME_COMPARATOR);
-    	List<Vigilant> vigilantsList = new ArrayList<Vigilant>(vigilants);
-    	Collections.sort(vigilantsList,chain);
-    	return vigilantsList;
+	List<VigilantGroup> groups = this.getVigilantGroups();
+	Set<Vigilant> vigilants = new HashSet<Vigilant>();
+	for (VigilantGroup group : groups) {
+	    vigilants.addAll(group.getVigilants());
+	}
+	ComparatorChain chain = new ComparatorChain();
+	chain.addComparator(Vigilant.POINTS_COMPARATOR);
+	chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
+	chain.addComparator(Vigilant.USERNAME_COMPARATOR);
+	List<Vigilant> vigilantsList = new ArrayList<Vigilant>(vigilants);
+	Collections.sort(vigilantsList, chain);
+	return vigilantsList;
     }
 
     public String getEmailPrefix() {
-        return emailPrefix;
+	return emailPrefix;
     }
 
     public void setEmailPrefix(String emailPrefix) {
-        this.emailPrefix = emailPrefix;
+	this.emailPrefix = emailPrefix;
     }
 }

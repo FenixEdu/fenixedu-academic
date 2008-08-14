@@ -10,18 +10,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public abstract class FenixExecutionDegreeAndCurricularYearContextLookupDispatchAction extends
-        FenixContextLookupDispatchAction {
+public abstract class FenixExecutionDegreeAndCurricularYearContextLookupDispatchAction extends FenixContextLookupDispatchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+	ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
-        ContextUtils.setExecutionDegreeContext(request);
-        ContextUtils.setCurricularYearContext(request);
+	ContextUtils.setExecutionDegreeContext(request);
+	ContextUtils.setCurricularYearContext(request);
 
-        return actionForward;
+	return actionForward;
     }
 
 }

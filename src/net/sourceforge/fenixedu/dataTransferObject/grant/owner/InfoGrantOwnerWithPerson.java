@@ -10,18 +10,18 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 public class InfoGrantOwnerWithPerson extends InfoGrantOwner {
 
     public void copyFromDomain(GrantOwner grantOwner) {
-        super.copyFromDomain(grantOwner);
-        if (grantOwner != null) {
-            setPersonInfo(InfoPerson.newInfoFromDomain(grantOwner.getPerson()));
-        }
+	super.copyFromDomain(grantOwner);
+	if (grantOwner != null) {
+	    setPersonInfo(InfoPerson.newInfoFromDomain(grantOwner.getPerson()));
+	}
     }
 
     public static InfoGrantOwner newInfoFromDomain(GrantOwner grantOwner) {
-        InfoGrantOwnerWithPerson infoGrantOwner = null;
-        if (grantOwner != null) {
-            infoGrantOwner = new InfoGrantOwnerWithPerson();
-            infoGrantOwner.copyFromDomain(grantOwner);
-        }
-        return infoGrantOwner;
+	InfoGrantOwnerWithPerson infoGrantOwner = null;
+	if (grantOwner != null) {
+	    infoGrantOwner = new InfoGrantOwnerWithPerson();
+	    infoGrantOwner.copyFromDomain(grantOwner);
+	}
+	return infoGrantOwner;
     }
 }

@@ -15,9 +15,9 @@ public enum SibsPaymentType {
     MASTER_DEGREE_GRATUTITY_SECOND_PHASE,
 
     INSURANCE;
-    
-    public String getName(){
-        return name();
+
+    public String getName() {
+	return name();
     }
 
 }

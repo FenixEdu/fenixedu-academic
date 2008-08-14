@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class InvalidPasswordServiceException extends FenixServiceException {
-	
-	private IUserView userView;
+
+    private IUserView userView;
 
     /**
      *  
      */
     public InvalidPasswordServiceException() {
-        super();
+	super();
 
     }
 
@@ -26,7 +26,7 @@ public class InvalidPasswordServiceException extends FenixServiceException {
      * @param s
      */
     public InvalidPasswordServiceException(String s) {
-        super(s);
+	super(s);
 
     }
 
@@ -34,7 +34,7 @@ public class InvalidPasswordServiceException extends FenixServiceException {
      * @param cause
      */
     public InvalidPasswordServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
 
     }
 
@@ -43,21 +43,21 @@ public class InvalidPasswordServiceException extends FenixServiceException {
      * @param cause
      */
     public InvalidPasswordServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
 
     }
-    
+
     public InvalidPasswordServiceException(String s, IUserView userView) {
-        super(s);
-        setUserView(userView);
+	super(s);
+	setUserView(userView);
     }
-    
+
     private void setUserView(IUserView userView) {
-    	this.userView = userView;
+	this.userView = userView;
     }
-    
+
     public IUserView getUserView() {
-    	return this.userView;
+	return this.userView;
     }
 
 }

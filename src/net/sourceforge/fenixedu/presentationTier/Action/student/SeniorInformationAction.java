@@ -26,14 +26,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class SeniorInformationAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RenderUtils.invalidateViewState();
-	
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	RenderUtils.invalidateViewState();
+
 	Registration registration = null;
-	
+
 	final Integer registrationOID = getIntegerFromRequest(request, "registrationOID");
 	final Student loggedStudent = getUserView(request).getPerson().getStudent();
-	
+
 	if (registrationOID != null) {
 	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
 	} else if (loggedStudent != null) {
@@ -53,11 +54,11 @@ public class SeniorInformationAction extends FenixDispatchAction {
 	    return mapping.findForward("show-form");
 	}
     }
-    
-    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
 
-	final IViewState viewState = RenderUtils.getViewState("editSeniorExpectedInfoID");	
+    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
+	final IViewState viewState = RenderUtils.getViewState("editSeniorExpectedInfoID");
 	request.setAttribute("senior", (Senior) viewState.getMetaObject().getObject());
 
 	return mapping.findForward("show-result");

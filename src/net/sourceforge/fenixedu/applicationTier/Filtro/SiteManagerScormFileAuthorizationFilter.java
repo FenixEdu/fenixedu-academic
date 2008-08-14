@@ -5,13 +5,12 @@ import net.sourceforge.fenixedu.domain.Site;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
-public class SiteManagerScormFileAuthorizationFilter extends
-        SiteManagerAuthorizationFilter {
+public class SiteManagerScormFileAuthorizationFilter extends SiteManagerAuthorizationFilter {
 
     @Override
     protected Site getSite(ServiceRequest request, ServiceResponse response) {
-        CreateScormFileItemForItemArgs args = (CreateScormFileItemForItemArgs) request.getServiceParameters().getParameter(0);
-        return args.getSite();
+	CreateScormFileItemForItemArgs args = (CreateScormFileItemForItemArgs) request.getServiceParameters().getParameter(0);
+	return args.getSite();
     }
-    
+
 }

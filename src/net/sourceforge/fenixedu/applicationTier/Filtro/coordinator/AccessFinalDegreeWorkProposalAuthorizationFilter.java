@@ -19,32 +19,32 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
     protected RoleType getRoleType() {
-        return RoleType.COORDINATOR;
+	return RoleType.COORDINATOR;
     }
 
     protected boolean verifyCondition(IUserView id, Integer objectId) {
-        if (objectId == null) {
-            return false;
-        }
+	if (objectId == null) {
+	    return false;
+	}
 
-        final Proposal proposal = rootDomainObject.readProposalByOID(objectId);
-        if (proposal == null) {
-            return false;
-        }
+	final Proposal proposal = rootDomainObject.readProposalByOID(objectId);
+	if (proposal == null) {
+	    return false;
+	}
 
-        final Person person = id.getPerson();
-        if (person == proposal.getOrientator() || person == proposal.getCoorientator()) {
-            return true;
-        }
+	final Person person = id.getPerson();
+	if (person == proposal.getOrientator() || person == proposal.getCoorientator()) {
+	    return true;
+	}
 
-        for (final ExecutionDegree executionDegree : proposal.getScheduleing().getExecutionDegreesSet()) { 
-            for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                if (coordinator != null && person == coordinator.getPerson()) {
-                    return true;
-                }
-            }
-        }
+	for (final ExecutionDegree executionDegree : proposal.getScheduleing().getExecutionDegreesSet()) {
+	    for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+		if (coordinator != null && person == coordinator.getPerson()) {
+		    return true;
+		}
+	    }
+	}
 
-        return false;
+	return false;
     }
 }

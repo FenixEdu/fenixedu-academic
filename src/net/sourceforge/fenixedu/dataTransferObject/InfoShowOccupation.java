@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 /**
  * @author Ana e Ricardo
  * 
- * 19/7/2004
+ *         19/7/2004
  */
 
 public abstract class InfoShowOccupation extends InfoObject implements ISiteComponent {

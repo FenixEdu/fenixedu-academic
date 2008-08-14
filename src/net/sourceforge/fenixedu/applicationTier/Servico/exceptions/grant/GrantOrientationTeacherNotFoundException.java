@@ -19,22 +19,22 @@ public class GrantOrientationTeacherNotFoundException extends FenixServiceExcept
     }
 
     public GrantOrientationTeacherNotFoundException(String message) {
-        super(message);
+	super(message);
     }
 
     public GrantOrientationTeacherNotFoundException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public GrantOrientationTeacherNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[GrantOrientationTeacherNotFoundException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[GrantOrientationTeacherNotFoundException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

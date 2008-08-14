@@ -13,8 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditCourseGroup extends Service {
 
     public void run(final Integer courseGroupID, final Integer contextID, final String name, final String nameEn,
-	    final Integer beginExecutionPeriodID, final Integer endExecutionPeriodID) throws
-	    FenixServiceException {
+	    final Integer beginExecutionPeriodID, final Integer endExecutionPeriodID) throws FenixServiceException {
 
 	final CourseGroup courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
 	if (courseGroup == null) {

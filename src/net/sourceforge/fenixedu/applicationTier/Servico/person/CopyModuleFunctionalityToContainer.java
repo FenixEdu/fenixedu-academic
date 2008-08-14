@@ -33,8 +33,7 @@ public class CopyModuleFunctionalityToContainer extends Service {
 	if (availabilityPolicy instanceof GroupAvailability) {
 	    new GroupAvailability(content, ((GroupAvailability) availabilityPolicy).getTargetGroup());
 	} else if (availabilityPolicy instanceof ExpressionGroupAvailability) {
-	    new ExpressionGroupAvailability(content, ((ExpressionGroupAvailability) availabilityPolicy)
-		    .getExpression());
+	    new ExpressionGroupAvailability(content, ((ExpressionGroupAvailability) availabilityPolicy).getExpression());
 	}
     }
 }

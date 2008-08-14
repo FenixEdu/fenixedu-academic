@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
- * Changes the presentation order of all the bibliographic references passed to match 
- * the order they have in the given list.
+ * Changes the presentation order of all the bibliographic references passed to
+ * match the order they have in the given list.
  * 
  * @author cfgi
  */
 public class OrderBibliographicReferences extends Service {
 
     public void run(ExecutionCourse executionCourse, List<BibliographicReference> references) {
-        executionCourse.setBibliographicReferencesOrder(references);
+	executionCourse.setBibliographicReferencesOrder(references);
     }
 }

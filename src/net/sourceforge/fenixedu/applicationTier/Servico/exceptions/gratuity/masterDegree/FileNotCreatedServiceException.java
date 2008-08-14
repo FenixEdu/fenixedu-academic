@@ -16,21 +16,21 @@ public class FileNotCreatedServiceException extends FenixServiceException {
      *  
      */
     public FileNotCreatedServiceException() {
-        super();
+	super();
     }
 
     /**
      * @param errorType
      */
     public FileNotCreatedServiceException(String message) {
-        super(message);
+	super(message);
     }
 
     /**
      * @param cause
      */
     public FileNotCreatedServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     /**
@@ -38,14 +38,14 @@ public class FileNotCreatedServiceException extends FenixServiceException {
      * @param cause
      */
     public FileNotCreatedServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[FileNotCreatedServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[FileNotCreatedServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

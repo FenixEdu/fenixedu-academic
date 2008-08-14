@@ -9,13 +9,12 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.ExamsMapSlo
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public interface ExamsMapSlotContentRenderer {
     public StringBuilder renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap);
 
-    public StringBuilder renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2,
-            String typeUser);
+    public StringBuilder renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2, String typeUser);
 
     public StringBuilder renderDayContents(ExamsMapSlot slot, String user);
 }

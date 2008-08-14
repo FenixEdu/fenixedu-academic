@@ -189,9 +189,9 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
     /**
      * 
      * @param oldInquiriesTeachersRes
-     *                It creates a list of list. Each sublist has similar old
-     *                inquiries wich have the same executionPeriod, course and
-     *                curricular year
+     *            It creates a list of list. Each sublist has similar old
+     *            inquiries wich have the same executionPeriod, course and
+     *            curricular year
      * @return
      */
     private List joinSimilarOldInquiriesByExecutionPeriodAndCurricularYearAndGepCourseName(List oldInquiriesTeachersRes) {
@@ -242,9 +242,9 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
     /**
      * 
      * @param oldInquiriesTeachersRes
-     *                It creates a list of list. Each sublist has similar old
-     *                inquiries wich have the same executionPeriod, course and
-     *                curricular year
+     *            It creates a list of list. Each sublist has similar old
+     *            inquiries wich have the same executionPeriod, course and
+     *            curricular year
      * @return
      */
     private List joinSimilarOldInquiriesByTeacher(List oldInquiriesTeachersRes) {

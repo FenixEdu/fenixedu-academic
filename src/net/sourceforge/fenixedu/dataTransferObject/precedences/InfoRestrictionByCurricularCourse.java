@@ -15,33 +15,31 @@ public class InfoRestrictionByCurricularCourse extends InfoRestriction {
     }
 
     public InfoCurricularCourse getPrecedentInfoCurricularCourse() {
-        return precedentInfoCurricularCourse;
+	return precedentInfoCurricularCourse;
     }
 
     public void setPrecedentInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.precedentInfoCurricularCourse = infoCurricularCourse;
+	this.precedentInfoCurricularCourse = infoCurricularCourse;
     }
 
     public void copyFromDomain(RestrictionByCurricularCourse restriction) {
-        super.copyFromDomain(restriction);
-        this.setPrecedentInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(restriction
-                .getPrecedentCurricularCourse()));
+	super.copyFromDomain(restriction);
+	this.setPrecedentInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(restriction.getPrecedentCurricularCourse()));
     }
 
-    public static InfoRestrictionByCurricularCourse newInfoFromDomain(
-            RestrictionByCurricularCourse restriction) {
+    public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
 
-        InfoRestrictionByCurricularCourse infoRestriction = null;
+	InfoRestrictionByCurricularCourse infoRestriction = null;
 
-        if (restriction != null) {
-            infoRestriction = new InfoRestrictionByCurricularCourse();
-            infoRestriction.copyFromDomain(restriction);
-        }
+	if (restriction != null) {
+	    infoRestriction = new InfoRestrictionByCurricularCourse();
+	    infoRestriction.copyFromDomain(restriction);
+	}
 
-        return infoRestriction;
+	return infoRestriction;
     }
 
     public String getArg() {
-        return precedentInfoCurricularCourse.getName();
+	return precedentInfoCurricularCourse.getName();
     }
 }

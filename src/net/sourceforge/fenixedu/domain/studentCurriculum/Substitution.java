@@ -19,16 +19,14 @@ public class Substitution extends Substitution_Base {
 	super();
     }
 
-    public Substitution(final StudentCurricularPlan studentCurricularPlan,
-	    final Collection<SelectedCurricularCourse> dismissals,
+    public Substitution(final StudentCurricularPlan studentCurricularPlan, final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
 	this();
 	init(studentCurricularPlan, dismissals, enrolments, executionSemester);
     }
-    
-    public Substitution(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, 
-	    Double credits, ExecutionSemester executionSemester) {
+
+    public Substitution(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
+	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
 	this();
 	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
     }
@@ -45,12 +43,11 @@ public class Substitution extends Substitution_Base {
 	if (enrolments == null || enrolments.isEmpty()) {
 	    throw new DomainException("error.substitution.wrong.arguments");
 	}
-        super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+	super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
     }
 
     @Override
-    protected void init(final StudentCurricularPlan studentCurricularPlan,
-	    final Collection<SelectedCurricularCourse> dismissals,
+    protected void init(final StudentCurricularPlan studentCurricularPlan, final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
 
 	if (enrolments == null || enrolments.isEmpty()) {
@@ -66,9 +63,9 @@ public class Substitution extends Substitution_Base {
 
     @Override
     public boolean isEquivalence() {
-        return false;
+	return false;
     }
-    
+
     @Override
     public Grade getGrade() {
 	return getEnrolmentsAverageGrade();
@@ -77,13 +74,13 @@ public class Substitution extends Substitution_Base {
     private Grade getEnrolmentsAverageGrade() {
 	return null;
     }
-    
+
     @Override
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkGrade() {
-        return true;
+	return true;
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public Collection<ICurriculumEntry> getAverageEntries() {

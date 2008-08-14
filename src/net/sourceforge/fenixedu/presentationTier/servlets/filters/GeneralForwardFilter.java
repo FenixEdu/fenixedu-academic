@@ -32,99 +32,86 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 public class GeneralForwardFilter implements Filter {
 
     private List<PathProcessor> processors = new ArrayList<PathProcessor>();
-    //private String notFoundURI;
-   
+
+    // private String notFoundURI;
+
     public void init(FilterConfig config) throws ServletException {
-        
-        //this.notFoundURI = config.getInitParameter("notFoundURI");
-        
-        String siteListURI = config.getInitParameter("siteListURI");
-        String executionCouseSiteURI = config.getInitParameter("executionCourseSiteURI");
-        String scheduleListURI = config.getInitParameter("scheduleListURI");
-        String classScheduleURI = config.getInitParameter("classScheduleURI");
-        String examListURI = config.getInitParameter("examListURI");
-        String degreeURI = config.getInitParameter("degreeURI");
-        String degreeSiteURI = config.getInitParameter("degreeSiteURI");
-        
-        DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI, degreeSiteURI);
-        ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
-        DegreeCurricularPlanProcessor degreeCurricularPlan = new DegreeCurricularPlanProcessor();
-        ExecutionCourseProcessor executionCourse = new ExecutionCourseProcessor(executionCouseSiteURI);
-        YearProcessor year = new YearProcessor(executionCouseSiteURI);
-        SemesterProcessor semester = new SemesterProcessor(executionCouseSiteURI);
-        ScheduleProcessor schedule = new ScheduleProcessor(scheduleListURI);
-        SchoolClassProcessor schoolClass = new SchoolClassProcessor(classScheduleURI);
-        ExamProcessor exams = new ExamProcessor(examListURI);
-        
-        ContentProcessor contentProcessor = new ContentProcessor();
-        
-        ExecutionCourseProcessor executionCourseProcessor = 
-            executionCourse
-                .add(year
-                    .add(semester
-                        .add(contentProcessor))
-                    .add(contentProcessor))
-                .add(semester
-                    .add(contentProcessor))
-                .add(contentProcessor);
-        
-        processors.add(
-            degreeProcessor
-                .add(executionCourses
-                    .add(executionCourseProcessor)
-                    .add(degreeCurricularPlan
-                        .add(executionCourseProcessor)))
-                .add(schedule
-                    .add(schoolClass))
-                .add(exams)
-                .add(contentProcessor)
-        );
-        
+
+	// this.notFoundURI = config.getInitParameter("notFoundURI");
+
+	String siteListURI = config.getInitParameter("siteListURI");
+	String executionCouseSiteURI = config.getInitParameter("executionCourseSiteURI");
+	String scheduleListURI = config.getInitParameter("scheduleListURI");
+	String classScheduleURI = config.getInitParameter("classScheduleURI");
+	String examListURI = config.getInitParameter("examListURI");
+	String degreeURI = config.getInitParameter("degreeURI");
+	String degreeSiteURI = config.getInitParameter("degreeSiteURI");
+
+	DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI, degreeSiteURI);
+	ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
+	DegreeCurricularPlanProcessor degreeCurricularPlan = new DegreeCurricularPlanProcessor();
+	ExecutionCourseProcessor executionCourse = new ExecutionCourseProcessor(executionCouseSiteURI);
+	YearProcessor year = new YearProcessor(executionCouseSiteURI);
+	SemesterProcessor semester = new SemesterProcessor(executionCouseSiteURI);
+	ScheduleProcessor schedule = new ScheduleProcessor(scheduleListURI);
+	SchoolClassProcessor schoolClass = new SchoolClassProcessor(classScheduleURI);
+	ExamProcessor exams = new ExamProcessor(examListURI);
+
+	ContentProcessor contentProcessor = new ContentProcessor();
+
+	ExecutionCourseProcessor executionCourseProcessor = executionCourse.add(
+		year.add(semester.add(contentProcessor)).add(contentProcessor)).add(semester.add(contentProcessor)).add(
+		contentProcessor);
+
+	processors.add(degreeProcessor.add(
+		executionCourses.add(executionCourseProcessor).add(degreeCurricularPlan.add(executionCourseProcessor))).add(
+		schedule.add(schoolClass)).add(exams).add(contentProcessor));
+
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        String uri = httpRequest.getRequestURI();
-        
-        String contextPath = httpRequest.getContextPath();
-        if (uri.startsWith(contextPath)) {
-            uri = uri.substring(contextPath.length() + 1);
-        }
-        
-        ProcessingContext context = new ProcessingContext(contextPath, httpRequest, httpResponse);
-        boolean processed = false;
-        
-        for (PathProcessor processor : this.processors) {
-            if (processor.process(context, new PathElementsProvider(uri))) {
-                processed = true;
-                break;
-            }
-        }
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+	    ServletException {
 
-        if (processed) {
-            return;
-        }
-        
-        if (!context.isChildAccepted()) {
-            final InvalidContentPathException invalidContentPathException = (InvalidContentPathException) request.getAttribute(ContextFilter.INVALID_CONTENT_PATH_EXCEPTION);
-            if (invalidContentPathException == null) {        	
-        	chain.doFilter(request, response);
-            } else {
-        	CheckAvailabilityFilter.showUnavailablePage(invalidContentPathException.getContent(), httpRequest, httpResponse);
-        	return;
-            }
-        }
-        else {
-            //httpResponse.sendRedirect(contextPath + this.notFoundURI);
-            httpResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
+	HttpServletRequest httpRequest = (HttpServletRequest) request;
+	HttpServletResponse httpResponse = (HttpServletResponse) response;
+	String uri = httpRequest.getRequestURI();
+
+	String contextPath = httpRequest.getContextPath();
+	if (uri.startsWith(contextPath)) {
+	    uri = uri.substring(contextPath.length() + 1);
+	}
+
+	ProcessingContext context = new ProcessingContext(contextPath, httpRequest, httpResponse);
+	boolean processed = false;
+
+	for (PathProcessor processor : this.processors) {
+	    if (processor.process(context, new PathElementsProvider(uri))) {
+		processed = true;
+		break;
+	    }
+	}
+
+	if (processed) {
+	    return;
+	}
+
+	if (!context.isChildAccepted()) {
+	    final InvalidContentPathException invalidContentPathException = (InvalidContentPathException) request
+		    .getAttribute(ContextFilter.INVALID_CONTENT_PATH_EXCEPTION);
+	    if (invalidContentPathException == null) {
+		chain.doFilter(request, response);
+	    } else {
+		CheckAvailabilityFilter.showUnavailablePage(invalidContentPathException.getContent(), httpRequest, httpResponse);
+		return;
+	    }
+	} else {
+	    // httpResponse.sendRedirect(contextPath + this.notFoundURI);
+	    httpResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
+	}
     }
 
     public void destroy() {
-        // do nothing
+	// do nothing
     }
 
 }

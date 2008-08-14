@@ -17,24 +17,26 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExecutionYearsForTutorEntryYearProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-    	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean)source;
-    	
-    	List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
-    	List<Tutorship> tutors = bean.getPerson().getTeacher().getActiveTutorships();
-    	
-    	for(Tutorship tutor : tutors) {
-    		ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(tutor.getStudentCurricularPlan().getRegistration().getStartDate());
-    		if(!executionYears.contains(executionYear) && bean.getDegree().equals(tutor.getStudentCurricularPlan().getRegistration().getDegree())) {
-    			executionYears.add(executionYear);
-    		}   			
-    	}
-    	Collections.sort(executionYears, new ReverseComparator());
-    	
-        return executionYears; 
+	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
+
+	List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
+	List<Tutorship> tutors = bean.getPerson().getTeacher().getActiveTutorships();
+
+	for (Tutorship tutor : tutors) {
+	    ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(tutor.getStudentCurricularPlan().getRegistration()
+		    .getStartDate());
+	    if (!executionYears.contains(executionYear)
+		    && bean.getDegree().equals(tutor.getStudentCurricularPlan().getRegistration().getDegree())) {
+		executionYears.add(executionYear);
+	    }
+	}
+	Collections.sort(executionYears, new ReverseComparator());
+
+	return executionYears;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

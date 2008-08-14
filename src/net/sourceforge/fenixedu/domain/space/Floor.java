@@ -19,14 +19,14 @@ public class Floor extends Floor_Base {
 
     public final static Comparator<Floor> FLOOR_COMPARATOR_BY_LEVEL = new ComparatorChain();
     static {
-	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new ReverseComparator(new BeanComparator("spaceInformation.level")));
+	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new ReverseComparator(new BeanComparator(
+		"spaceInformation.level")));
 	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end,
-	    String blueprintNumber) {
-	
-	super();	
+    public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
+
+	super();
 	setSuroundingSpace(suroundingSpace);
 	new FloorInformation(this, level, begin, end, blueprintNumber);
     }
@@ -36,15 +36,15 @@ public class Floor extends Floor_Base {
     public void delete() {
 	super.delete();
     }
-    
+
     @Override
     public void setSuroundingSpace(Space suroundingSpace) {
-        if(suroundingSpace == null || suroundingSpace.isCampus() || suroundingSpace.isRoomSubdivision()) {
-            throw new DomainException("error.Space.invalid.suroundingSpace");
-        }
+	if (suroundingSpace == null || suroundingSpace.isCampus() || suroundingSpace.isRoomSubdivision()) {
+	    throw new DomainException("error.Space.invalid.suroundingSpace");
+	}
 	super.setSuroundingSpace(suroundingSpace);
     }
-    
+
     @Override
     public FloorInformation getSpaceInformation() {
 	return (FloorInformation) super.getSpaceInformation();
@@ -53,13 +53,13 @@ public class Floor extends Floor_Base {
     @Override
     public FloorInformation getSpaceInformation(final YearMonthDay when) {
 	return (FloorInformation) super.getSpaceInformation(when);
-    }   
+    }
 
     @Override
     public boolean isFloor() {
 	return true;
     }
-    
+
     @Override
     public Integer getExamCapacity() {
 	// Necessary for Renderers
@@ -129,8 +129,7 @@ public class Floor extends Floor_Base {
 	}
 
 	public Floor execute() {
-	    return new Floor(getSurroundingSpace(), getLevel(), getBegin(), getEnd(),
-		    getBlueprintNumber());
+	    return new Floor(getSurroundingSpace(), getLevel(), getBegin(), getEnd(), getBlueprintNumber());
 	}
     }
 
@@ -149,9 +148,8 @@ public class Floor extends Floor_Base {
 	}
 
 	public FloorInformation execute() {
-	    return new FloorInformation(getSpace(), getLevel(), getBegin(), getEnd(),
-		    getBlueprintNumber());
+	    return new FloorInformation(getSpace(), getLevel(), getBegin(), getEnd(), getBlueprintNumber());
 	}
 
-    }   
+    }
 }

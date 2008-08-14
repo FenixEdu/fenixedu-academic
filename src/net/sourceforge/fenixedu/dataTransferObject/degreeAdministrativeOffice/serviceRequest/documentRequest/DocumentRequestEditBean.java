@@ -25,56 +25,54 @@ public class DocumentRequestEditBean implements Serializable {
     }
 
     public DocumentRequestEditBean(DocumentRequest documentRequest, Employee employee) {
-        setDocumentRequest(documentRequest);
-        setEmployee(employee);
-        setAcademicServiceRequestSituationType(documentRequest.getAcademicServiceRequestSituationType());
-        setJustification(documentRequest.getActiveSituation().getJustification());
-        
-        if (documentRequest.isCertificate()) {
-            setNumberOfPages(((CertificateRequest)documentRequest).getNumberOfPages());
-        }
+	setDocumentRequest(documentRequest);
+	setEmployee(employee);
+	setAcademicServiceRequestSituationType(documentRequest.getAcademicServiceRequestSituationType());
+	setJustification(documentRequest.getActiveSituation().getJustification());
+
+	if (documentRequest.isCertificate()) {
+	    setNumberOfPages(((CertificateRequest) documentRequest).getNumberOfPages());
+	}
     }
 
     public DocumentRequest getDocumentRequest() {
-        return (this.documentRequest != null) ? this.documentRequest.getObject() : null;
+	return (this.documentRequest != null) ? this.documentRequest.getObject() : null;
     }
 
     public void setDocumentRequest(DocumentRequest documentRequest) {
-        this.documentRequest = (documentRequest != null) ? new DomainReference<DocumentRequest>(
-                documentRequest) : null;
+	this.documentRequest = (documentRequest != null) ? new DomainReference<DocumentRequest>(documentRequest) : null;
     }
 
     public Employee getEmployee() {
-        return (this.employee != null) ? this.employee.getObject() : null;
+	return (this.employee != null) ? this.employee.getObject() : null;
     }
 
     public void setEmployee(Employee employee) {
-        this.employee = (employee != null) ? new DomainReference<Employee>(employee) : null;
+	this.employee = (employee != null) ? new DomainReference<Employee>(employee) : null;
     }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
-        return academicServiceRequestSituationType;
+	return academicServiceRequestSituationType;
     }
 
-    public void setAcademicServiceRequestSituationType(
-            AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-        this.academicServiceRequestSituationType = academicServiceRequestSituationType;
+    public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+	this.academicServiceRequestSituationType = academicServiceRequestSituationType;
     }
 
     public Integer getNumberOfPages() {
-        return numberOfPages;
+	return numberOfPages;
     }
 
     public void setNumberOfPages(Integer numberOfPages) {
-        this.numberOfPages = numberOfPages;
+	this.numberOfPages = numberOfPages;
     }
 
     public String getJustification() {
-        return justification;
+	return justification;
     }
 
     public void setJustification(String justification) {
-        this.justification = justification;
+	this.justification = justification;
     }
 
 }

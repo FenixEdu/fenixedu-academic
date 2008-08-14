@@ -28,7 +28,7 @@ public class EventGenerator {
 			&& !studentCurricularPlan.getPerson().hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
 				executionYear)) {
 		    new InsuranceEvent(studentCurricularPlan.getPerson(), executionYear);
-		}		
+		}
 	    }
 	    break;
 
@@ -39,7 +39,8 @@ public class EventGenerator {
 	// new PhDRegistrationEvent(administrativeOffice, person,
 	// studentCurricularPlan
 	// .getRegistration());
-	// if(!person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear))
+	//if(!person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor
+	// (executionYear))
 	// {
 	// new InsuranceEvent(person, executionYear);
 	// }

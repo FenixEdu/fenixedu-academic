@@ -8,9 +8,9 @@ public class ExecutionCoursePropertyValue extends GeneralClassPropertyValue {
     public static final String SECOND_PHASE_VALUE_STR = "SECOND";
 
     public static final ExecutionCoursePropertyValue SECOND_PHASE_VALUE = new ExecutionCoursePropertyValue(
-            ExecutionCoursePropertyValue.SECOND_PHASE_VALUE_STR);
+	    ExecutionCoursePropertyValue.SECOND_PHASE_VALUE_STR);
 
     public ExecutionCoursePropertyValue(String value) {
-        super(value);
+	super(value);
     }
 }

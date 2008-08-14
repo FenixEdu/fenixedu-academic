@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 
 /**
  * @author Ricardo Rodrigues
- *  
+ * 
  */
 public class InfoRegistrationDeclaration extends InfoObject {
 
@@ -32,19 +32,18 @@ public class InfoRegistrationDeclaration extends InfoObject {
      * @param infoExecutionYear
      * @param infoPerson
      */
-    public InfoRegistrationDeclaration(String degreeName,
-            InfoExecutionYear infoExecutionYear, InfoPerson infoPerson) {
-        
-        setDegreeName(degreeName);
-        setInfoExecutionYear(infoExecutionYear);
-        setInfoPerson(infoPerson);
+    public InfoRegistrationDeclaration(String degreeName, InfoExecutionYear infoExecutionYear, InfoPerson infoPerson) {
+
+	setDegreeName(degreeName);
+	setInfoExecutionYear(infoExecutionYear);
+	setInfoPerson(infoPerson);
     }
 
     /**
      * @return Returns the infoExecutionYear.
      */
     public InfoExecutionYear getInfoExecutionYear() {
-        return infoExecutionYear;
+	return infoExecutionYear;
     }
 
     /**
@@ -52,14 +51,14 @@ public class InfoRegistrationDeclaration extends InfoObject {
      *            The infoExecutionYear to set.
      */
     public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-        this.infoExecutionYear = infoExecutionYear;
+	this.infoExecutionYear = infoExecutionYear;
     }
 
     /**
      * @return Returns the infoPerson.
      */
     public InfoPerson getInfoPerson() {
-        return infoPerson;
+	return infoPerson;
     }
 
     /**
@@ -67,14 +66,14 @@ public class InfoRegistrationDeclaration extends InfoObject {
      *            The infoPerson to set.
      */
     public void setInfoPerson(InfoPerson infoPerson) {
-        this.infoPerson = infoPerson;
+	this.infoPerson = infoPerson;
     }
 
     /**
      * @return Returns the infoStudentCurricularPlan.
      */
     public String getDegreeName() {
-        return degreeName;
+	return degreeName;
     }
 
     /**
@@ -82,6 +81,6 @@ public class InfoRegistrationDeclaration extends InfoObject {
      *            The infoStudentCurricularPlan to set.
      */
     public void setDegreeName(String degreeName) {
-        this.degreeName = degreeName;
+	this.degreeName = degreeName;
     }
 }

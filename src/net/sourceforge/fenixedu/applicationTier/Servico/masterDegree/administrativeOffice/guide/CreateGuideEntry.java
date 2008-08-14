@@ -14,22 +14,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateGuideEntry extends Service {
 
-    public void run(Integer guideID, GraduationType graduationType, DocumentType documentType,
-            String description, Double price, Integer quantity) {
+    public void run(Integer guideID, GraduationType graduationType, DocumentType documentType, String description, Double price,
+	    Integer quantity) {
 
-        Guide guide = rootDomainObject.readGuideByOID(guideID);
+	Guide guide = rootDomainObject.readGuideByOID(guideID);
 
-        GuideEntry guideEntry = new GuideEntry();
+	GuideEntry guideEntry = new GuideEntry();
 
-        guideEntry.setDescription(description);
-        guideEntry.setDocumentType(documentType);
-        guideEntry.setGraduationType(graduationType);
-        guideEntry.setGuide(guide);
-        guideEntry.setPrice(price);
-        guideEntry.setQuantity(quantity);
-        
-        // update guide's total value
-        guide.updateTotalValue();
+	guideEntry.setDescription(description);
+	guideEntry.setDocumentType(documentType);
+	guideEntry.setGraduationType(graduationType);
+	guideEntry.setGuide(guide);
+	guideEntry.setPrice(price);
+	guideEntry.setQuantity(quantity);
+
+	// update guide's total value
+	guide.updateTotalValue();
     }
 
 }

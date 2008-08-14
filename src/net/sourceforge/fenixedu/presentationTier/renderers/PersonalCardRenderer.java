@@ -22,12 +22,12 @@ public class PersonalCardRenderer extends OutputRenderer {
     private String noPhotoAvailableImage;
 
     private String formatImageURL;
-    
+
     private String imageDescription;
 
     private String imageName;
 
-    private String imageHeight; 
+    private String imageHeight;
 
     private String imageWidth;
 
@@ -40,37 +40,37 @@ public class PersonalCardRenderer extends OutputRenderer {
     private boolean contextRelative;
 
     private String subLayout;
-    
+
     private String subSchema;
-    
-    private Map<String,String> properties = new HashMap<String,String>();
-    
-    private Map<String,String> getPropertiesMap() {
+
+    private Map<String, String> properties = new HashMap<String, String>();
+
+    private Map<String, String> getPropertiesMap() {
 	return properties;
     }
-    
+
     public void setSubProperty(String property, String value) {
 	properties.put(property, value);
     }
-    
+
     public String getSubProperty(String property) {
 	return properties.get(property);
     }
-    
+
     public String getSubLayout() {
-        return subLayout;
+	return subLayout;
     }
 
     public void setSubLayout(String subLayout) {
-        this.subLayout = subLayout;
+	this.subLayout = subLayout;
     }
 
     public String getSubSchema() {
-        return subSchema;
+	return subSchema;
     }
 
     public void setSubSchema(String subSchema) {
-        this.subSchema = subSchema;
+	this.subSchema = subSchema;
     }
 
     public String getClasses() {
@@ -157,44 +157,43 @@ public class PersonalCardRenderer extends OutputRenderer {
 	    Person person = (Person) object;
 	    HtmlBlockContainer container = new HtmlBlockContainer();
 	    container.setClasses(getClasses());
-	    HtmlTable table = createPersonalCard(person,type);
+	    HtmlTable table = createPersonalCard(person, type);
 	    container.addChild(table);
 	    return container;
 	}
 
-	private HtmlTable createPersonalCard(Person person,Class type) {
+	private HtmlTable createPersonalCard(Person person, Class type) {
 	    HtmlTable table = new HtmlTable();
 	    HtmlTableRow row = table.createRow();
 	    HtmlTableCell imageCell = row.createCell();
 	    imageCell.setClasses(getPhotoCellClasses());
 	    imageCell.setBody(createImageContainer(person));
 	    HtmlTableCell dataCell = row.createCell();
-	    dataCell.setBody(createInformationList(person,type));
+	    dataCell.setBody(createInformationList(person, type));
 	    dataCell.setClasses(getInfoCellClasses());
 	    return table;
 	}
 
 	private HtmlComponent createInformationList(Person person, Class type) {
 	    Schema schema = RenderKit.getInstance().findSchema(getSubSchema());
-            return renderValue(person, type, schema, getSubLayout(), getProperties());
+	    return renderValue(person, type, schema, getSubLayout(), getProperties());
 	}
 
-	 private Properties getProperties() {
-		Properties properties = new Properties();
-		Map<String,String> map = getPropertiesMap(); 
-		for(String property : map.keySet()) {
-		    properties.put(property, map.get(property));
-		}
-		return properties;
+	private Properties getProperties() {
+	    Properties properties = new Properties();
+	    Map<String, String> map = getPropertiesMap();
+	    for (String property : map.keySet()) {
+		properties.put(property, map.get(property));
 	    }
+	    return properties;
+	}
 
 	private HtmlComponent createImageContainer(Person person) {
 	    HtmlBlockContainer imageBlock = new HtmlBlockContainer();
-	    String imageSource = person.isPhotoPubliclyAvailable() ? RenderUtils.getFormattedProperties(getFormatImageURL(), person)
-		    : getNoPhotoAvailableImage();
+	    String imageSource = person.isPhotoPubliclyAvailable() ? RenderUtils.getFormattedProperties(getFormatImageURL(),
+		    person) : getNoPhotoAvailableImage();
 	    HtmlImage image = new HtmlImage();
-	    image.setSource((isContextRelative() ? RenderUtils.getContextRelativePath("") : "")
-		    + imageSource);
+	    image.setSource((isContextRelative() ? RenderUtils.getContextRelativePath("") : "") + imageSource);
 	    image.setWidth(getImageWidth());
 	    image.setHeight(getImageHeight());
 	    image.setName(getImageName());
@@ -206,10 +205,10 @@ public class PersonalCardRenderer extends OutputRenderer {
     }
 
     public String getFormatImageURL() {
-        return formatImageURL;
+	return formatImageURL;
     }
 
     public void setFormatImageURL(String formatImageURL) {
-        this.formatImageURL = formatImageURL;
+	this.formatImageURL = formatImageURL;
     }
 }

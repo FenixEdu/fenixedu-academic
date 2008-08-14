@@ -10,10 +10,10 @@ public class BigDecimalConverter implements FieldConversion {
 	return source instanceof BigDecimal ? source.toString() : source;
     }
 
-    public Object sqlToJava(Object source) {	
-	if(source == null || source.equals("")){
+    public Object sqlToJava(Object source) {
+	if (source == null || source.equals("")) {
 	    return null;
-	}	
+	}
 	return source instanceof String ? new BigDecimal((String) source) : source;
     }
 

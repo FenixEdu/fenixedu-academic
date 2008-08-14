@@ -11,7 +11,7 @@ public class ExcepcaoAutenticacao extends FenixServiceException {
      * Constructor for ExcepcaoAutenticacao.
      */
     public ExcepcaoAutenticacao() {
-        super();
+	super();
     }
 
     /**
@@ -20,7 +20,7 @@ public class ExcepcaoAutenticacao extends FenixServiceException {
      * @param message
      */
     public ExcepcaoAutenticacao(String message) {
-        super(message);
+	super(message);
     }
 
     /**
@@ -30,7 +30,7 @@ public class ExcepcaoAutenticacao extends FenixServiceException {
      * @param cause
      */
     public ExcepcaoAutenticacao(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     /**
@@ -39,7 +39,7 @@ public class ExcepcaoAutenticacao extends FenixServiceException {
      * @param cause
      */
     public ExcepcaoAutenticacao(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
 }

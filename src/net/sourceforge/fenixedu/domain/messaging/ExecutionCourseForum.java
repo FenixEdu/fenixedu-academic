@@ -11,49 +11,49 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class ExecutionCourseForum extends ExecutionCourseForum_Base {
 
     public ExecutionCourseForum() {
-        super();
+	super();
     }
 
     public ExecutionCourseForum(MultiLanguageString name, MultiLanguageString description) {
-        this();
-        init(name, description);
+	this();
+	init(name, description);
     }
 
     @Override
     public void setName(MultiLanguageString name) {
-        if (this.getForumExecutionCourse() != null) {
-            getForumExecutionCourse().checkIfCanAddForum(name);
-        }
+	if (this.getForumExecutionCourse() != null) {
+	    getForumExecutionCourse().checkIfCanAddForum(name);
+	}
 
-        super.setName(name);
+	super.setName(name);
     }
 
     @Override
     public Group getReadersGroup() {
-        return getExecutionCourseMembersGroup();
+	return getExecutionCourseMembersGroup();
     }
 
     @Override
     public Group getWritersGroup() {
-        return getExecutionCourseMembersGroup();
+	return getExecutionCourseMembersGroup();
     }
 
     @Override
     public Group getAdminGroup() {
-        return new ExecutionCourseTeachersGroup(getForumExecutionCourse());
+	return new ExecutionCourseTeachersGroup(getForumExecutionCourse());
     }
 
     private Group getExecutionCourseMembersGroup() {
-        return new GroupUnion(new ExecutionCourseTeachersGroup(getForumExecutionCourse()),
-                new ExecutionCourseStudentsGroup(getForumExecutionCourse()));
+	return new GroupUnion(new ExecutionCourseTeachersGroup(getForumExecutionCourse()), new ExecutionCourseStudentsGroup(
+		getForumExecutionCourse()));
     }
-    
+
     @Deprecated
     public ExecutionCourse getExecutionCourse() {
 	return getForumExecutionCourse();
     }
-    
+
     public ExecutionCourse getForumExecutionCourse() {
-	return getParents().isEmpty() ? null : ((ExecutionCourseSite) getParents().get(0).getParent()).getSiteExecutionCourse(); 
+	return getParents().isEmpty() ? null : ((ExecutionCourseSite) getParents().get(0).getParent()).getSiteExecutionCourse();
     }
 }

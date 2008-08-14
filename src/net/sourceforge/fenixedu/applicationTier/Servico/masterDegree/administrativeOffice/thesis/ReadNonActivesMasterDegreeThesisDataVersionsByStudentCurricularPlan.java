@@ -19,19 +19,18 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan extends Service {
 
     public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) {
-        
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                .readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
 
-        List masterDegreeThesisDataVersions = studentCurricularPlan
-                .readNotActiveMasterDegreeThesisDataVersions();
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan
+		.getIdInternal());
 
-        List infoMasterDegreeThesisDataVersions = new ArrayList(masterDegreeThesisDataVersions.size());
-        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : (List<MasterDegreeThesisDataVersion>) masterDegreeThesisDataVersions) {
-            infoMasterDegreeThesisDataVersions.add(InfoMasterDegreeThesisDataVersionWithGuidersAndResp
-                    .newInfoFromDomain(masterDegreeThesisDataVersion));
-        }
+	List masterDegreeThesisDataVersions = studentCurricularPlan.readNotActiveMasterDegreeThesisDataVersions();
 
-        return infoMasterDegreeThesisDataVersions;
+	List infoMasterDegreeThesisDataVersions = new ArrayList(masterDegreeThesisDataVersions.size());
+	for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : (List<MasterDegreeThesisDataVersion>) masterDegreeThesisDataVersions) {
+	    infoMasterDegreeThesisDataVersions.add(InfoMasterDegreeThesisDataVersionWithGuidersAndResp
+		    .newInfoFromDomain(masterDegreeThesisDataVersion));
+	}
+
+	return infoMasterDegreeThesisDataVersions;
     }
 }

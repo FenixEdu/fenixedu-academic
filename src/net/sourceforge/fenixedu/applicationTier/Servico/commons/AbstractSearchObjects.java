@@ -18,53 +18,52 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public abstract class AbstractSearchObjects extends Service implements AutoCompleteSearchService {
 
-    protected Collection process(Collection objects, String value, int limit,
-            Map<String, String> arguments) {
-        List result;
+    protected Collection process(Collection objects, String value, int limit, Map<String, String> arguments) {
+	List result;
 
-        String slotName = arguments.get("slot");
+	String slotName = arguments.get("slot");
 
-        if (value == null) {
-            result = (List) objects;
-        } else {
-        	result = new ArrayList<DomainObject>();
-            String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
+	if (value == null) {
+	    result = (List) objects;
+	} else {
+	    result = new ArrayList<DomainObject>();
+	    String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
 
-            outter: for (Object object : objects) {
-                try {
-                    String objectValue = (String) PropertyUtils.getProperty(object, slotName);
+	    outter: for (Object object : objects) {
+		try {
+		    String objectValue = (String) PropertyUtils.getProperty(object, slotName);
 
-                    if (objectValue == null) {
-                        continue;
-                    }
+		    if (objectValue == null) {
+			continue;
+		    }
 
-                    String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
+		    String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
 
-                    for (int i = 0; i < values.length; i++) {
-                        String part = values[i];
+		    for (int i = 0; i < values.length; i++) {
+			String part = values[i];
 
-                        if (!normalizedValue.contains(part)) {
-                            continue outter;
-                        }
-                    }
+			if (!normalizedValue.contains(part)) {
+			    continue outter;
+			}
+		    }
 
-                    result.add(object);
+		    result.add(object);
 
-                    if (result.size() >= limit) {
-                        break;
-                    }
+		    if (result.size() >= limit) {
+			break;
+		    }
 
-                } catch (IllegalAccessException e) {
-                    throw new DomainException("searchObject.type.notFound", e);
-                } catch (InvocationTargetException e) {
-                    throw new DomainException("searchObject.failed.read", e);
-                } catch (NoSuchMethodException e) {
-                    throw new DomainException("searchObject.failed.read", e);
-                }
-            }
-        }
+		} catch (IllegalAccessException e) {
+		    throw new DomainException("searchObject.type.notFound", e);
+		} catch (InvocationTargetException e) {
+		    throw new DomainException("searchObject.failed.read", e);
+		} catch (NoSuchMethodException e) {
+		    throw new DomainException("searchObject.failed.read", e);
+		}
+	    }
+	}
 
-        Collections.sort(result, new BeanComparator(slotName));
-        return result;
+	Collections.sort(result, new BeanComparator(slotName));
+	return result;
     }
 }

@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.messaging.Forum;
 public class AddForumEmailSubscriber extends Service {
 
     public AddForumEmailSubscriber() {
-        super();
+	super();
     }
 
     public void run(Forum forum, Person person) {
-       
-        forum.addEmailSubscriber(person);
+
+	forum.addEmailSubscriber(person);
     }
 
 }

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class RemoveIncompatiblePerson extends Service {
 
     public void run(Vigilant vigilant) {
-        vigilant.removeIncompatiblePerson();
+	vigilant.removeIncompatiblePerson();
     }
 
 }

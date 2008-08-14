@@ -33,18 +33,17 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareListCandidacies(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareListCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	DFACandidacyBean candidacyBean = new DFACandidacyBean();
 	request.setAttribute("candidacyBean", candidacyBean);
 	return mapping.findForward("listCandidacies");
     }
 
-    public ActionForward chooseDegreePostBack(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseDegreePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	DFACandidacyBean candidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject()
-		.getObject();
+	DFACandidacyBean candidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject().getObject();
 	candidacyBean.setDegreeCurricularPlan(null);
 	candidacyBean.setExecutionYear(null);
 	RenderUtils.invalidateViewState();
@@ -53,32 +52,29 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	return mapping.getInputForward();
     }
 
-    public ActionForward chooseDegreeCurricularPlanPostBack(ActionMapping mapping,
-	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseDegreeCurricularPlanPostBack(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	DFACandidacyBean candidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject()
-		.getObject();
+	DFACandidacyBean candidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject().getObject();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("candidacyBean", candidacyBean);
 
 	return mapping.getInputForward();
     }
 
-    public ActionForward chooseExecutionDegreeInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseExecutionDegreeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", RenderUtils.getViewState().getMetaObject().getObject());
 	return mapping.getInputForward();
     }
 
-    public ActionForward listCandidacies(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) RenderUtils.getViewState()
-		.getMetaObject().getObject();
+    public ActionForward listCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject().getObject();
 
 	List<SelectDFACandidacyBean> candidacies = new ArrayList<SelectDFACandidacyBean>();
 	for (DFACandidacy candidacy : dfaCandidacyBean.getExecutionDegree().getDfaCandidacies()) {
-	    CandidacySituationType candidacySituationType = candidacy.getActiveCandidacySituation()
-		    .getCandidacySituationType();
+	    CandidacySituationType candidacySituationType = candidacy.getActiveCandidacySituation().getCandidacySituationType();
 	    if (candidacySituationType.equals(CandidacySituationType.STAND_BY_CONFIRMED_DATA)
 		    || candidacySituationType.equals(CandidacySituationType.SUBSTITUTE)
 		    || candidacySituationType.equals(CandidacySituationType.ADMITTED)
@@ -93,10 +89,10 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("listCandidacies");
     }
 
-    public ActionForward selectCandidacies(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	List<SelectDFACandidacyBean> candidaciesListForSelection = (List<SelectDFACandidacyBean>) RenderUtils
-		.getViewState().getMetaObject().getObject();
+    public ActionForward selectCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	List<SelectDFACandidacyBean> candidaciesListForSelection = (List<SelectDFACandidacyBean>) RenderUtils.getViewState()
+		.getMetaObject().getObject();
 
 	List<SelectDFACandidacyBean> admittedCandidacies = new ArrayList<SelectDFACandidacyBean>();
 	List<SelectDFACandidacyBean> notAdmittedCandidacies = new ArrayList<SelectDFACandidacyBean>();
@@ -120,10 +116,8 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	    }
 	}
 
-	if (admittedCandidacies.isEmpty() && substituteCandidacies.isEmpty()
-		&& notAdmittedCandidacies.isEmpty()) {
-	    return setError(request, mapping, "no.candidacy.situations.selected",
-		    "confirmCandidaciesForSelection", null);
+	if (admittedCandidacies.isEmpty() && substituteCandidacies.isEmpty() && notAdmittedCandidacies.isEmpty()) {
+	    return setError(request, mapping, "no.candidacy.situations.selected", "confirmCandidaciesForSelection", null);
 	}
 
 	Collections.sort(substituteCandidacies, new BeanComparator("candidacy.number"));
@@ -135,9 +129,8 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("confirmCandidaciesForSelection");
     }
 
-    public ActionForward confirmCandidacies(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward confirmCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	List<SelectDFACandidacyBean> admittedCandidacies = retrieveCandidaciesBeans("admittedCandidacies");
 	List<SelectDFACandidacyBean> substituteCandidacies = retrieveCandidaciesBeans("substituteCandidacies");
@@ -162,9 +155,8 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("showCandidaciesForSelectionSuccess");
     }
 
-    public ActionForward printAcceptanceDispatch(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward printAcceptanceDispatch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	List<SelectDFACandidacyBean> admittedCandidacies = retrieveCandidaciesBeans("admittedCandidacies");
 	List<SelectDFACandidacyBean> substituteCandidacies = retrieveCandidaciesBeans("substituteCandidacies");
@@ -174,12 +166,11 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	    Collections.sort(substituteCandidacies, new BeanComparator("order"));
 	}
 
-	ExecutionDegree executionDegree = retrieveExecutionDegree(admittedCandidacies,
-		substituteCandidacies, notAdmittedCandidacies);
- 
+	ExecutionDegree executionDegree = retrieveExecutionDegree(admittedCandidacies, substituteCandidacies,
+		notAdmittedCandidacies);
+
 	ExecutionYear executionYear = executionDegree.getExecutionYear();
-	request.setAttribute("degreeName", executionDegree.getDegreeCurricularPlan().getDegree()
-		.getNameFor(executionYear));
+	request.setAttribute("degreeName", executionDegree.getDegreeCurricularPlan().getDegree().getNameFor(executionYear));
 	request.setAttribute("currentExecutionYear", executionYear.getYear());
 	request.setAttribute("admittedCandidacies", admittedCandidacies);
 	request.setAttribute("substituteCandidacies", substituteCandidacies);
@@ -190,13 +181,11 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 
     private List<SelectDFACandidacyBean> retrieveCandidaciesBeans(String candidaciesSituation) {
 	return (RenderUtils.getViewState(candidaciesSituation) != null) ? (List<SelectDFACandidacyBean>) RenderUtils
-		.getViewState(candidaciesSituation).getMetaObject().getObject()
-		: null;
+		.getViewState(candidaciesSituation).getMetaObject().getObject() : null;
     }
 
     private ExecutionDegree retrieveExecutionDegree(List<SelectDFACandidacyBean> admittedCandidacies,
-	    List<SelectDFACandidacyBean> substituteCandidacies,
-	    List<SelectDFACandidacyBean> notAdmittedCandidacies) {
+	    List<SelectDFACandidacyBean> substituteCandidacies, List<SelectDFACandidacyBean> notAdmittedCandidacies) {
 	ExecutionDegree executionDegree = null;
 	if (admittedCandidacies != null && !admittedCandidacies.isEmpty()) {
 	    executionDegree = admittedCandidacies.get(0).getCandidacy().getExecutionDegree();

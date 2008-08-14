@@ -19,7 +19,7 @@ public class ResidenceCandidacies extends ResidenceCandidacies_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setCreationDateDateTime(new DateTime());
     }
-    
+
     public ResidenceCandidacies(String observations) {
 	this();
 	setObservations(observations);

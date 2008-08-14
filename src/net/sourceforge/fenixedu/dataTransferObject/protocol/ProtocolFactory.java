@@ -393,8 +393,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setPartnerResponsible(PersonName responsible) {
-	this.partnerResponsible = (responsible != null) ? new DomainReference<PersonName>(responsible)
-		: null;
+	this.partnerResponsible = (responsible != null) ? new DomainReference<PersonName>(responsible) : null;
     }
 
     public Teacher getResponsible() {
@@ -410,8 +409,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setResponsibleFunction(Function responsibleFunction) {
-	this.responsibleFunction = (responsibleFunction != null) ? new DomainReference<Function>(
-		responsibleFunction) : null;
+	this.responsibleFunction = (responsibleFunction != null) ? new DomainReference<Function>(responsibleFunction) : null;
     }
 
     public UnitName getUnitObject() {
@@ -526,8 +524,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 	if (getFileBeans() == null) {
 	    setFileBeans(new ArrayList<ProtocolFileBean>());
 	}
-	getFileBeans().add(
-		new ProtocolFileBean(getInputStream(), getFileName(), getFilePermissionType()));
+	getFileBeans().add(new ProtocolFileBean(getInputStream(), getFileName(), getFilePermissionType()));
     }
 
     public void removeFile(String fileName) {
@@ -561,8 +558,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setResponsibleToAdd(Person responsibleToAdd) {
-	this.responsibleToAdd = responsibleToAdd != null ? new DomainReference<Person>(responsibleToAdd)
-		: null;
+	this.responsibleToAdd = responsibleToAdd != null ? new DomainReference<Person>(responsibleToAdd) : null;
     }
 
     public Person getResponsibleToRemove() {
@@ -570,8 +566,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setResponsibleToRemove(Person responsibleToRemove) {
-	this.responsibleToRemove = responsibleToRemove != null ? new DomainReference<Person>(
-		responsibleToRemove) : null;
+	this.responsibleToRemove = responsibleToRemove != null ? new DomainReference<Person>(responsibleToRemove) : null;
     }
 
     public Function getResponsibleFunctionToRemove() {
@@ -580,8 +575,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void setResponsibleFunctionToRemove(Function responsibleFunctionToRemove) {
 	this.responsibleFunctionToRemove = responsibleFunctionToRemove != null ? new DomainReference<Function>(
-		responsibleFunctionToRemove)
-		: null;
+		responsibleFunctionToRemove) : null;
     }
 
     public Unit getUnitToAdd() {
@@ -605,8 +599,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setFileToDelete(ProtocolFile fileToDelete) {
-	this.fileToDelete = fileToDelete != null ? new DomainReference<ProtocolFile>(fileToDelete)
-		: null;
+	this.fileToDelete = fileToDelete != null ? new DomainReference<ProtocolFile>(fileToDelete) : null;
     }
 
     public String getFileName() {

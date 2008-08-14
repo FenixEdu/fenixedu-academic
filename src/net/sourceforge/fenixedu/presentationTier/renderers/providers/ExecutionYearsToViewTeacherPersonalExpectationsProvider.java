@@ -8,21 +8,21 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class ExecutionYearsToViewTeacherPersonalExpectationsProvider implements DataProvider{
-        
-    public Object provide(Object source, Object currentValue) {	
-	List<ExecutionYear> result = new ArrayList<ExecutionYear>();	
+public class ExecutionYearsToViewTeacherPersonalExpectationsProvider implements DataProvider {
+
+    public Object provide(Object source, Object currentValue) {
+	List<ExecutionYear> result = new ArrayList<ExecutionYear>();
 	ExecutionYear year = ExecutionYear.readExecutionYearByName("2005/2006");
 	result.add(year);
-	
+
 	ExecutionYear nextExecutionYear = year.getNextExecutionYear();
-	while(nextExecutionYear != null) {	    
+	while (nextExecutionYear != null) {
 	    result.add(nextExecutionYear);
 	    nextExecutionYear = nextExecutionYear.getNextExecutionYear();
 	}
 	return result;
     }
-    
+
     public Converter getConverter() {
 	return new DomainObjectKeyConverter();
     }

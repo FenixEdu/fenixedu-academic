@@ -158,8 +158,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     protected InfoExecutionPeriod getCurrentExecutionPeriod() {
 	try {
 	    final Object args[] = {};
-	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService( "ReadCurrentExecutionPeriod",
-		    args);
+	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionPeriod", args);
 	} catch (FenixFilterException e) {
 	} catch (FenixServiceException e) {
 	}

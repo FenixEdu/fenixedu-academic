@@ -9,10 +9,10 @@ public class DeleteUnavailablePeriodByOID extends Service {
 
     public void run(Integer idInternal) {
 
-        UnavailablePeriod unavailablePeriod = (UnavailablePeriod) RootDomainObject
-                .readDomainObjectByOID(UnavailablePeriod.class, idInternal);
+	UnavailablePeriod unavailablePeriod = (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class,
+		idInternal);
 
-        unavailablePeriod.delete();
+	unavailablePeriod.delete();
 
     }
 

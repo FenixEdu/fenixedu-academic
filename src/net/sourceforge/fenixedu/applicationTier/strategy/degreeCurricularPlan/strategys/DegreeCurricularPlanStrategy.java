@@ -48,8 +48,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 	StringTokenizer st = new StringTokenizer(mark, ".");
 
 	if (st.countTokens() > 0 && st.countTokens() < 3) {
-	    result = MarkType.getMarksEvaluation(degreeCurricularPlan.getMarkType()).contains(
-		    st.nextToken());
+	    result = MarkType.getMarksEvaluation(degreeCurricularPlan.getMarkType()).contains(st.nextToken());
 	    if (result && st.hasMoreTokens()) {
 		try {
 		    Double markDouble = new Double(mark);
@@ -65,16 +64,14 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
     }
 
-    public Double calculateStudentRegularAverage(StudentCurricularPlan studentCurricularPlan)
-	    {
+    public Double calculateStudentRegularAverage(StudentCurricularPlan studentCurricularPlan) {
 	float marks = 0;
 	int numberOfCourses = 0;
 
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 
 	    if (enrolment.isEnrolmentStateApproved()
-		    && !enrolment.getCurricularCourse().getType().equals(
-			    CurricularCourseType.P_TYPE_COURSE)) {
+		    && !enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
 		if (!enrolment.isExtraCurricular()) {
 		    final Grade grade = enrolment.getGrade();
 		    if (grade.isNumeric()) {
@@ -94,16 +91,14 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 	return NumberUtils.formatNumber(new Double(marks / numberOfCourses), 1);
     }
 
-    public Double calculateStudentWeightedAverage(StudentCurricularPlan studentCurricularPlan)
-	    {
+    public Double calculateStudentWeightedAverage(StudentCurricularPlan studentCurricularPlan) {
 	float marks = 0;
 	float numberOfWeigths = 0;
 
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 
 	    if (enrolment.isEnrolmentStateApproved()
-		    && !enrolment.getCurricularCourse().getType().equals(
-			    CurricularCourseType.P_TYPE_COURSE)) {
+		    && !enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
 		if (!enrolment.isExtraCurricular()) {
 		    final Grade grade = enrolment.getGrade();
 		    if (grade.isNumeric()) {
@@ -128,15 +123,16 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 	return NumberUtils.formatNumber(new Double(marks / numberOfWeigths), 1);
     }
 
-    public void calculateStudentAverage(StudentCurricularPlan studentCurricularPlan,
-	    InfoFinalResult infoFinalResult) {
+    public void calculateStudentAverage(StudentCurricularPlan studentCurricularPlan, InfoFinalResult infoFinalResult) {
 
 	// Degrees that use the Mixed Average (Average between Simple and
 	// Weighted average)
 	// if
-	// ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/04"))
+	//((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/04")
+	// )
 	// ||
-	// (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))){
+	//(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))
+	// ){
 	// Double simpleAverage =
 	// this.calculateStudentRegularAverage(studentCurricularPlan);
 	// Double weightedAverage =
@@ -145,7 +141,8 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 	// infoFinalResult.setAverageSimple(String.valueOf(simpleAverage));
 	// infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage));
 	//			
-	// infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(new
+	//infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber
+	// (new
 	// Double((simpleAverage.floatValue()+weightedAverage.floatValue())/2),
 	// 0)));
 	// return;
@@ -161,17 +158,13 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))) {
 	    Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 	    Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
-	    infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 1)
-		    .doubleValue()));
-	    infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage,
-		    1).doubleValue()));
+	    infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 1).doubleValue()));
+	    infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage, 1).doubleValue()));
 
 	    if (simpleAverage.floatValue() > weightedAverage.floatValue()) {
-		infoFinalResult.setFinalAverage(String.valueOf(NumberUtils
-			.formatNumber(simpleAverage, 0).intValue()));
+		infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0).intValue()));
 	    } else {
-		infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(weightedAverage,
-			0).intValue()));
+		infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(weightedAverage, 0).intValue()));
 	    }
 	    return;
 	}
@@ -196,10 +189,8 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE05/07"))) {
 
 	    Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
-	    infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage,
-		    1).doubleValue()));
-	    infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(weightedAverage, 0)
-		    .intValue()));
+	    infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage, 1).doubleValue()));
+	    infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(weightedAverage, 0).intValue()));
 	    return;
 	}
 
@@ -207,11 +198,9 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 	Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 
-	infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 1)
-		.doubleValue()));
+	infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 1).doubleValue()));
 
-	infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0)
-		.intValue()));
+	infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0).intValue()));
 
     }
 

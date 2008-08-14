@@ -83,13 +83,13 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 	    throw new DomainException("error.existing.marks");
 	}
     }
-    
+
     @Override
     public void delete() {
 	checkRulesToDelete();
-        super.delete();
+	super.delete();
     }
-    
+
     @Override
     public boolean isFinal() {
 	return true;

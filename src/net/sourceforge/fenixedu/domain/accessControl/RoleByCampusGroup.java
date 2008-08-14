@@ -16,7 +16,7 @@ public abstract class RoleByCampusGroup extends Group {
 
     private RoleType roleType;
     private DomainReference<Campus> campus;
-    
+
     public RoleByCampusGroup(RoleType type, Campus campus) {
 	this.roleType = type;
 	this.campus = new DomainReference<Campus>(campus);
@@ -25,7 +25,7 @@ public abstract class RoleByCampusGroup extends Group {
     public Campus getCampus() {
 	return campus.getObject();
     }
-    
+
     @Override
     public Set<Person> getElements() {
 	Set<Person> people = new HashSet<Person>();
@@ -39,19 +39,20 @@ public abstract class RoleByCampusGroup extends Group {
     }
 
     protected abstract boolean isPersonInCampus(Person person, Campus campus);
-    
+
     protected boolean isPersonAccepted(Person person) {
 	return true;
     }
-    
+
     @Override
     protected Argument[] getExpressionArguments() {
 	return null;
     }
-    
+
     @Override
     public String getName() {
-	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(), new Object[] {getCampus().getName()} );
+	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
+		new Object[] { getCampus().getName() });
 	return name != null ? name : super.getName();
     }
 

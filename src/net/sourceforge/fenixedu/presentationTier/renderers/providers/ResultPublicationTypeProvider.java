@@ -11,32 +11,32 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ResultPublicationTypeProvider implements DataProvider {
-	
-	public Object provide(Object source, Object currentValue) {
-        List<ResultPublicationType> types = new ArrayList<ResultPublicationType>();
 
-        for (ResultPublicationType type : ResultPublicationType.values()) {
-            types.add(type);
-        }
-        Collections.sort(types, new Comparator<ResultPublicationType>() {
+    public Object provide(Object source, Object currentValue) {
+	List<ResultPublicationType> types = new ArrayList<ResultPublicationType>();
 
-			public int compare(ResultPublicationType o1, ResultPublicationType o2) {
-				return RenderUtils.getEnumString(o1).compareTo(RenderUtils.getEnumString(o2));
-			}
-        });
-        
-        return types;
+	for (ResultPublicationType type : ResultPublicationType.values()) {
+	    types.add(type);
+	}
+	Collections.sort(types, new Comparator<ResultPublicationType>() {
+
+	    public int compare(ResultPublicationType o1, ResultPublicationType o2) {
+		return RenderUtils.getEnumString(o1).compareTo(RenderUtils.getEnumString(o2));
+	    }
+	});
+
+	return types;
     }
 
     public Converter getConverter() {
-        return new Converter() {
+	return new Converter() {
 
-            @Override
-            public Object convert(Class type, Object value) {
-                return ResultPublicationType.valueOf((String) value);
+	    @Override
+	    public Object convert(Class type, Object value) {
+		return ResultPublicationType.valueOf((String) value);
 
-            }
+	    }
 
-        };
+	};
     }
 }

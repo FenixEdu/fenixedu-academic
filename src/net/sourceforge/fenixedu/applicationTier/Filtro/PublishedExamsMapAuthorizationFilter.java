@@ -22,51 +22,54 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class PublishedExamsMapAuthorizationFilter extends Filtro {
 
-	    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	        IUserView userView = getRemoteUser(request);
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+	IUserView userView = getRemoteUser(request);
 
-	        if (response.getReturnObject() instanceof ExecutionCourseSiteView) {
+	if (response.getReturnObject() instanceof ExecutionCourseSiteView) {
 
-        		ExecutionCourseSiteView executionCourseSiteView = (ExecutionCourseSiteView) response.getReturnObject();
-        		if (executionCourseSiteView.getComponent() instanceof InfoSiteEvaluation) {
+	    ExecutionCourseSiteView executionCourseSiteView = (ExecutionCourseSiteView) response.getReturnObject();
+	    if (executionCourseSiteView.getComponent() instanceof InfoSiteEvaluation) {
 
-        			InfoSiteEvaluation infoSiteEvaluation  = (InfoSiteEvaluation) executionCourseSiteView.getComponent();
-        			filterUnpublishedInformation(infoSiteEvaluation);
+		InfoSiteEvaluation infoSiteEvaluation = (InfoSiteEvaluation) executionCourseSiteView.getComponent();
+		filterUnpublishedInformation(infoSiteEvaluation);
 
-        		}
-
-        	} else if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType())))
-	                || (userView == null) || (userView.getRoleTypes() == null)) {
-
-	        	if (response.getReturnObject() instanceof InfoExamsMap) {
-
-	        		InfoExamsMap infoExamsMap = (InfoExamsMap) response.getReturnObject();
-	        		filterUnpublishedInformation(infoExamsMap);
-
-	        	}
-	        }
 	    }
 
-		private void filterUnpublishedInformation(InfoSiteEvaluation infoSiteEvaluation) {
-		    // This code is usefull for when the exams are to be filtered from the public execution course page.
-			CollectionUtils.filter(infoSiteEvaluation.getInfoEvaluations(), new Predicate() {
-				public boolean evaluate(Object arg0) {
-					return !(arg0 instanceof InfoExam);
-				}});
-		}
+	} else if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType())))
+		|| (userView == null) || (userView.getRoleTypes() == null)) {
 
-		private void filterUnpublishedInformation(InfoExamsMap infoExamsMap) {
-			if (infoExamsMap != null && infoExamsMap.getInfoExecutionDegree() != null && infoExamsMap.getInfoExecutionDegree().getTemporaryExamMap() != null
-				&& infoExamsMap.getInfoExecutionDegree().getTemporaryExamMap().booleanValue()) {
-				for (Iterator iterator = infoExamsMap.getExecutionCourses().iterator(); iterator.hasNext();) {
-					InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iterator.next();
-					infoExecutionCourse.getAssociatedInfoExams().clear();
-				}
-			}
-		}
+	    if (response.getReturnObject() instanceof InfoExamsMap) {
 
-		protected RoleType getRoleType() {
-	        return RoleType.RESOURCE_ALLOCATION_MANAGER;
+		InfoExamsMap infoExamsMap = (InfoExamsMap) response.getReturnObject();
+		filterUnpublishedInformation(infoExamsMap);
+
 	    }
+	}
+    }
+
+    private void filterUnpublishedInformation(InfoSiteEvaluation infoSiteEvaluation) {
+	// This code is usefull for when the exams are to be filtered from the
+	// public execution course page.
+	CollectionUtils.filter(infoSiteEvaluation.getInfoEvaluations(), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		return !(arg0 instanceof InfoExam);
+	    }
+	});
+    }
+
+    private void filterUnpublishedInformation(InfoExamsMap infoExamsMap) {
+	if (infoExamsMap != null && infoExamsMap.getInfoExecutionDegree() != null
+		&& infoExamsMap.getInfoExecutionDegree().getTemporaryExamMap() != null
+		&& infoExamsMap.getInfoExecutionDegree().getTemporaryExamMap().booleanValue()) {
+	    for (Iterator iterator = infoExamsMap.getExecutionCourses().iterator(); iterator.hasNext();) {
+		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iterator.next();
+		infoExecutionCourse.getAssociatedInfoExams().clear();
+	    }
+	}
+    }
+
+    protected RoleType getRoleType() {
+	return RoleType.RESOURCE_ALLOCATION_MANAGER;
+    }
 
 }

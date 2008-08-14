@@ -28,13 +28,13 @@ import org.joda.time.YearMonthDay;
 public class PublicScientificAreaSiteDA extends UnitSiteVisualizationDA {
 
     @Override
-    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return presentation(mapping, form, request, response);
     }
 
-    public ActionForward viewTeachers(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewTeachers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
 
 	YearMonthDay today = new YearMonthDay();
@@ -42,7 +42,7 @@ public class PublicScientificAreaSiteDA extends UnitSiteVisualizationDA {
 
 	SortedSet<Category> categories = new TreeSet<Category>();
 	Map<String, SortedSet<Person>> teachers = new Hashtable<String, SortedSet<Person>>();
-	
+
 	for (Teacher teacher : scientificArea.getDepartmentUnit().getDepartment().getAllTeachers(today, tomorrow)) {
 	    if (teacher.getCurrentSectionOrScientificArea() == scientificArea) {
 		categories.add(teacher.getCategory());
@@ -56,36 +56,36 @@ public class PublicScientificAreaSiteDA extends UnitSiteVisualizationDA {
 	return mapping.findForward("view-teachers");
     }
 
-    public ActionForward viewEmployees(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewEmployees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
-	
+
 	List<Person> employees = new ArrayList<Person>();
 	for (Employee employee : scientificArea.getAllCurrentNonTeacherEmployees()) {
 	    employees.add(employee.getPerson());
 	}
-	
+
 	Collections.sort(employees, Party.COMPARATOR_BY_NAME_AND_ID);
 	request.setAttribute("employees", employees);
 	return mapping.findForward("view-employees");
-	    
+
     }
 
-    public ActionForward viewCourses(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	
+    public ActionForward viewCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
 	ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
-	
+
 	request.setAttribute("courseGroupUnits", scientificArea.getCompetenceCourseGroupUnits());
-	
+
 	return mapping.findForward("view-courses");
     }
-    
+
     private void addListTeacher(Map<String, SortedSet<Person>> teachersMap, String key, Teacher teacher) {
 	SortedSet<Person> teachers = teachersMap.get(key);
 
 	if (teachers == null) {
-	    teachers = new TreeSet<Person>(new BeanComparator("teacher",Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER));
+	    teachers = new TreeSet<Person>(new BeanComparator("teacher", Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER));
 	    teachersMap.put(key, teachers);
 	}
 

@@ -28,35 +28,35 @@ public class InfoSiteStudentsTestMarks extends DataTranferObject implements ISit
     }
 
     public InfoExecutionCourse getExecutionCourse() {
-        return executionCourse;
+	return executionCourse;
     }
 
     public InfoDistributedTest getInfoDistributedTest() {
-        return infoDistributedTest;
+	return infoDistributedTest;
     }
 
     public List getInfoStudentTestQuestionList() {
-        return infoStudentTestQuestionList;
+	return infoStudentTestQuestionList;
     }
 
     public Double getMaximumMark() {
-        return maximumMark;
+	return maximumMark;
     }
 
     public void setMaximumMark(Double maximumMark) {
-        this.maximumMark = maximumMark;
+	this.maximumMark = maximumMark;
     }
 
     public void setExecutionCourse(InfoExecutionCourse course) {
-        executionCourse = course;
+	executionCourse = course;
     }
 
     public void setInfoDistributedTest(InfoDistributedTest test) {
-        infoDistributedTest = test;
+	infoDistributedTest = test;
     }
 
     public void setInfoStudentTestQuestionList(List list) {
-        infoStudentTestQuestionList = list;
+	infoStudentTestQuestionList = list;
     }
 
 }

@@ -21,21 +21,20 @@ import net.sourceforge.fenixedu.util.ProposalState;
  */
 public class ExecutionCourseWaitingAnswer extends Service {
 
-    public boolean run(Integer executionCourseID) throws FenixServiceException{
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-        if (executionCourse == null)
-            throw new InvalidArgumentsServiceException();
+    public boolean run(Integer executionCourseID) throws FenixServiceException {
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	if (executionCourse == null)
+	    throw new InvalidArgumentsServiceException();
 
-        List<Grouping> groupings = executionCourse.getGroupings();
-        for (final Grouping grouping : groupings) {
-            final List<ExportGrouping> groupingExecutionCourses = grouping
-                    .getExportGroupings();
-            for (final ExportGrouping groupingExecutionCourse : groupingExecutionCourses) {
-                if (groupingExecutionCourse.getProposalState().getState().intValue() == ProposalState.EM_ESPERA) {
-                    return true;
-                }
-            }
-        }
-        return false;
+	List<Grouping> groupings = executionCourse.getGroupings();
+	for (final Grouping grouping : groupings) {
+	    final List<ExportGrouping> groupingExecutionCourses = grouping.getExportGroupings();
+	    for (final ExportGrouping groupingExecutionCourse : groupingExecutionCourses) {
+		if (groupingExecutionCourse.getProposalState().getState().intValue() == ProposalState.EM_ESPERA) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 }

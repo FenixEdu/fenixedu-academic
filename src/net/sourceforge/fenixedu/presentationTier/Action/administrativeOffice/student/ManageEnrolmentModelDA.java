@@ -24,19 +24,17 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class ManageEnrolmentModelDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
 
 	if (RenderUtils.getViewState() != null) {
 	    executeFactoryMethod(request);
-	    enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) RenderUtils.getViewState()
-		    .getMetaObject().getObject();
+	    enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) RenderUtils.getViewState().getMetaObject().getObject();
 	} else {
-	    Registration registration = rootDomainObject
-		    .readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
+	    Registration registration = rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request,
+		    "registrationID"));
 	    enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
 	}
 

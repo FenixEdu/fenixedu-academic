@@ -11,21 +11,21 @@ public class BaseRenderer extends Renderer {
 
     protected void encodeRecursive(FacesContext context, UIComponent component) throws IOException {
 
-        if (component.isRendered() == false) {
-            return;
-        }
+	if (component.isRendered() == false) {
+	    return;
+	}
 
-        component.encodeBegin(context);
-        if (component.getRendersChildren()) {
-            component.encodeChildren(context);
-        } else {
-            Iterator kids = component.getChildren().iterator();
-            while (kids.hasNext()) {
-                UIComponent kid = (UIComponent) kids.next();
-                encodeRecursive(context, kid);
-            }
-        }
-        component.encodeEnd(context);
+	component.encodeBegin(context);
+	if (component.getRendersChildren()) {
+	    component.encodeChildren(context);
+	} else {
+	    Iterator kids = component.getChildren().iterator();
+	    while (kids.hasNext()) {
+		UIComponent kid = (UIComponent) kids.next();
+		encodeRecursive(context, kid);
+	    }
+	}
+	component.encodeEnd(context);
 
     }
 

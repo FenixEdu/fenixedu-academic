@@ -17,21 +17,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExecutionYearsForTutorMonitoringProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-    	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean)source;
-    	
-    	List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
-    	
-    	for(ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
-    		if(year.isAfterOrEquals(bean.getStudentsEntryYear()))
-    			executionYears.add(year);
-    	}
-    	Collections.sort(executionYears, new ReverseComparator());
-    	
-        return executionYears; 
+	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
+
+	List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
+
+	for (ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
+	    if (year.isAfterOrEquals(bean.getStudentsEntryYear()))
+		executionYears.add(year);
+	}
+	Collections.sort(executionYears, new ReverseComparator());
+
+	return executionYears;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

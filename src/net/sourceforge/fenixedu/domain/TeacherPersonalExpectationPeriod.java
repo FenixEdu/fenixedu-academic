@@ -5,26 +5,27 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.YearMonthDay;
 
 public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectationPeriod_Base {
-    
+
     public TeacherPersonalExpectationPeriod() {
-        super();        
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public void init(Department department, ExecutionYear executionYear, YearMonthDay startDate, YearMonthDay endDate) {
-        if(department != null && executionYear != null && department.getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, getClass()) != null) {
+	if (department != null && executionYear != null
+		&& department.getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, getClass()) != null) {
 	    throw new DomainException("error.TeacherPersonalExpectationPeriod.already.exists");
-	}        
+	}
 	setDepartment(department);
 	setExecutionYear(executionYear);
-	setTimeInterval(startDate, endDate);        	
+	setTimeInterval(startDate, endDate);
     }
-    
+
     public void edit(YearMonthDay startDate, YearMonthDay endDate) {
 	setTimeInterval(startDate, endDate);
     }
-    
-    public void setTimeInterval(YearMonthDay start, YearMonthDay end) {	 
+
+    public void setTimeInterval(YearMonthDay start, YearMonthDay end) {
 	if (start == null) {
 	    throw new DomainException("error.TeacherPersonalExpectationPeriod.empty.startDateYearMonthDay");
 	}
@@ -37,23 +38,23 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
 	super.setStartDateYearMonthDay(start);
 	super.setEndDateYearMonthDay(end);
     }
-    
-    public Boolean isPeriodOpen() {	
+
+    public Boolean isPeriodOpen() {
 	YearMonthDay now = new YearMonthDay();
-        return !getStartDateYearMonthDay().isAfter(now) && !getEndDateYearMonthDay().isBefore(now) ? Boolean.TRUE : Boolean.FALSE;    
+	return !getStartDateYearMonthDay().isAfter(now) && !getEndDateYearMonthDay().isBefore(now) ? Boolean.TRUE : Boolean.FALSE;
     }
-    
+
     @Override
     public void setStartDateYearMonthDay(YearMonthDay startDateYearMonthDay) {
-	if(startDateYearMonthDay == null) {
+	if (startDateYearMonthDay == null) {
 	    throw new DomainException("error.TeacherPersonalExpectationPeriod.empty.startDateYearMonthDay");
 	}
 	setTimeInterval(startDateYearMonthDay, getEndDateYearMonthDay());
-    }   
-    
+    }
+
     @Override
     public void setEndDateYearMonthDay(YearMonthDay endDateYearMonthDay) {
-	if(endDateYearMonthDay == null) {
+	if (endDateYearMonthDay == null) {
 	    throw new DomainException("error.TeacherPersonalExpectationPeriod.empty.endDate");
 	}
 	setTimeInterval(getStartDateYearMonthDay(), endDateYearMonthDay);
@@ -61,7 +62,7 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
 
     @Override
     public void setExecutionYear(ExecutionYear executionYear) {
-	if(executionYear == null) {
+	if (executionYear == null) {
 	    throw new DomainException("error.TeacherPersonalExpectationPeriod.empty.executionYear");
 	}
 	super.setExecutionYear(executionYear);
@@ -69,9 +70,9 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
 
     @Override
     public void setDepartment(Department department) {
-	if(department == null) {
+	if (department == null) {
 	    throw new DomainException("error.TeacherPersonalExpectationPeriod.empty.department");
 	}
 	super.setDepartment(department);
-    }     
+    }
 }

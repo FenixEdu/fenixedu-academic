@@ -32,50 +32,50 @@ public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject imple
     }
 
     public List getCorrectAnswersPercentage() {
-        return correctAnswersPercentage;
+	return correctAnswersPercentage;
     }
 
     public DistributedTest getDistributedTest() {
-        return distributedTest;
+	return distributedTest;
     }
 
     public List getNotAnsweredPercentage() {
-        return notAnsweredPercentage;
+	return notAnsweredPercentage;
     }
 
     public List getWrongAnswersPercentage() {
-        return wrongAnswersPercentage;
+	return wrongAnswersPercentage;
     }
 
     public void setCorrectAnswersPercentage(List list) {
-        correctAnswersPercentage = list;
+	correctAnswersPercentage = list;
     }
 
     public void setDistributedTest(DistributedTest distributedTest) {
-        this.distributedTest = distributedTest;
+	this.distributedTest = distributedTest;
     }
 
     public void setNotAnsweredPercentage(List list) {
-        notAnsweredPercentage = list;
+	notAnsweredPercentage = list;
     }
 
     public void setWrongAnswersPercentage(List list) {
-        wrongAnswersPercentage = list;
+	wrongAnswersPercentage = list;
     }
 
     public List getPartiallyCorrectAnswersPercentage() {
-        return partiallyCorrectAnswersPercentage;
+	return partiallyCorrectAnswersPercentage;
     }
 
     public void setPartiallyCorrectAnswersPercentage(List partiallyCorrectAnswersPercentage) {
-        this.partiallyCorrectAnswersPercentage = partiallyCorrectAnswersPercentage;
+	this.partiallyCorrectAnswersPercentage = partiallyCorrectAnswersPercentage;
     }
 
     public List getAnsweredPercentage() {
-        return answeredPercentage;
+	return answeredPercentage;
     }
 
     public void setAnsweredPercentage(List answeredPercentage) {
-        this.answeredPercentage = answeredPercentage;
+	this.answeredPercentage = answeredPercentage;
     }
 }

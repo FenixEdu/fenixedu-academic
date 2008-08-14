@@ -63,16 +63,15 @@ public class DegreeProcessor extends PathProcessor {
 	    ownContext.setDegree(degree);
 
 	    /*
-	     * This is an ugly hack so this process still works 
-	     * until the semester ends where we can easily notify
-	     * everyone that the link format has changed.
+	     * This is an ugly hack so this process still works until the
+	     * semester ends where we can easily notify everyone that the link
+	     * format has changed.
 	     * 
-	     * 04-02-2007
-	     * pcma
+	     * 04-02-2007 pcma
 	     */
 	    DegreeSite portalInstance = degree.getSite();
-	    MetaDomainObjectPortal portal = (MetaDomainObjectPortal) MetaDomainObject.getMeta(
-		    portalInstance.getClass()).getAssociatedPortal();
+	    MetaDomainObjectPortal portal = (MetaDomainObjectPortal) MetaDomainObject.getMeta(portalInstance.getClass())
+		    .getAssociatedPortal();
 
 	    List<Content> contents = new ArrayList<Content>();
 	    contents.add(portal);
@@ -87,13 +86,12 @@ public class DegreeProcessor extends PathProcessor {
     }
 
     @Override
-    protected boolean forward(ProcessingContext context, PathElementsProvider provider)
-	    throws IOException, ServletException {
+    protected boolean forward(ProcessingContext context, PathElementsProvider provider) throws IOException, ServletException {
 	if (!provider.hasNext()) {
 	    DegreeContext ownContext = (DegreeContext) context;
-            String url = ownContext.getDegree().getSite().getReversePath();
+	    String url = ownContext.getDegree().getSite().getReversePath();
 	    context.getResponse().sendRedirect(ownContext.getRequest().getContextPath() + url);
-	    return true;	    
+	    return true;
 	} else {
 	    return false;
 	}

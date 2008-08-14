@@ -24,14 +24,14 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 	    final Date startDate, final Date endDate) {
 	init(degreeCurricularPlan, executionSemester, new DateTime(startDate), new DateTime(endDate));
     }
-    
+
     protected void init(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester,
 	    final DateTime startDate, final DateTime endDate) {
 
 	if (!endDate.isAfter(startDate)) {
 	    throw new DomainException("EnrolmentPeriod.end.date.must.be.after.start.date");
 	}
-	
+
 	setDegreeCurricularPlan(degreeCurricularPlan);
 	setExecutionPeriod(executionSemester);
 	setStartDateDateTime(startDate);

@@ -17,15 +17,15 @@ public class DegreesProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-    	final List<Degree> degrees = new ArrayList<Degree>(RootDomainObject.getInstance().getDegrees());
-    	
-    	Collections.sort(degrees, new ComparableComparator());
-    	
-        return degrees; 
+	final List<Degree> degrees = new ArrayList<Degree>(RootDomainObject.getInstance().getDegrees());
+
+	Collections.sort(degrees, new ComparableComparator());
+
+	return degrees;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

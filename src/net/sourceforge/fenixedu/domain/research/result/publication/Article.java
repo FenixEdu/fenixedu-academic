@@ -30,8 +30,8 @@ public class Article extends Article_Base {
 	super();
     }
 
-    public Article(Person participator, String title, MultiLanguageString keywords, JournalIssue issue,
-	    Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
+    public Article(Person participator, String title, MultiLanguageString keywords, JournalIssue issue, Integer firstPage,
+	    Integer lastPage, MultiLanguageString note, String language, String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, issue);
@@ -40,15 +40,15 @@ public class Article extends Article_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, JournalIssue issue, Integer firstPage,
-	    Integer lastPage, MultiLanguageString note, String language, String url) {
+    public void setEditAll(String title, MultiLanguageString keywords, JournalIssue issue, Integer firstPage, Integer lastPage,
+	    MultiLanguageString note, String language, String url) {
 	checkRequiredParameters(title, issue);
 	fillAllAttributes(title, keywords, issue, firstPage, lastPage, note, language, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, JournalIssue issue,
-	    Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
+    private void fillAllAttributes(String title, MultiLanguageString keywords, JournalIssue issue, Integer firstPage,
+	    Integer lastPage, MultiLanguageString note, String language, String url) {
 	super.setTitle(title);
 	setJournalIssue(issue);
 	super.setFirstPage(firstPage);
@@ -75,8 +75,7 @@ public class Article extends Article_Base {
 	    resume = resume + "No. " + getNumber() + ", ";
 	if ((getVolume() != null) && (getVolume().length() > 0))
 	    resume = resume + "Vol. " + getVolume() + ", ";
-	if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null)
-		&& (getLastPage() > 0))
+	if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null) && (getLastPage() > 0))
 	    resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
@@ -172,7 +171,7 @@ public class Article extends Article_Base {
     public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.Article.call", "setPublisher");
     }
-    
+
     @Override
     public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.Article.call", "setOrganization");
@@ -216,22 +215,21 @@ public class Article extends Article_Base {
 
     @Override
     public void delete() {
-	if(hasArticleAssociation()) {
+	if (hasArticleAssociation()) {
 	    getArticleAssociation().delete();
 	}
 	super.delete();
     }
-    
+
     public ScopeType getScope() {
 	return getScientificJournal().getLocationType();
     }
-    
+
     public String getVolume() {
 	return this.getJournalIssue().getVolume();
     }
-    
+
     public String getNumber() {
 	return this.getJournalIssue().getNumber();
     }
 }
- 

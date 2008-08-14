@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoTeachingCareer extends InfoCareer {
     private InfoCategory infoCategory;
@@ -21,14 +21,14 @@ public class InfoTeachingCareer extends InfoCareer {
      *  
      */
     public InfoTeachingCareer() {
-        setCareerType(CareerType.TEACHING);
+	setCareerType(CareerType.TEACHING);
     }
 
     /**
      * @return Returns the courseOrPosition.
      */
     public String getCourseOrPosition() {
-        return courseOrPosition;
+	return courseOrPosition;
     }
 
     /**
@@ -36,14 +36,14 @@ public class InfoTeachingCareer extends InfoCareer {
      *            The courseOrPosition to set.
      */
     public void setCourseOrPosition(String courseOrPosition) {
-        this.courseOrPosition = courseOrPosition;
+	this.courseOrPosition = courseOrPosition;
     }
 
     /**
      * @return Returns the infoCategory.
      */
     public InfoCategory getInfoCategory() {
-        return infoCategory;
+	return infoCategory;
     }
 
     /**
@@ -51,27 +51,29 @@ public class InfoTeachingCareer extends InfoCareer {
      *            The infoCategory to set.
      */
     public void setInfoCategory(InfoCategory infoCategory) {
-        this.infoCategory = infoCategory;
+	this.infoCategory = infoCategory;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain(Dominio.teacher.Career)
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain
+     * (Dominio.teacher.Career)
      */
     public void copyFromDomain(TeachingCareer teachingCareer) {
-        super.copyFromDomain(teachingCareer);
-        if (teachingCareer != null) {
-            setCourseOrPosition(teachingCareer.getCourseOrPosition());
-        }
+	super.copyFromDomain(teachingCareer);
+	if (teachingCareer != null) {
+	    setCourseOrPosition(teachingCareer.getCourseOrPosition());
+	}
     }
 
     public static InfoTeachingCareer newInfoFromDomain(TeachingCareer teachingCareer) {
-        InfoTeachingCareer infoTeachingCareer = null;
-        if (teachingCareer != null) {
-            infoTeachingCareer = new InfoTeachingCareer();
-            infoTeachingCareer.copyFromDomain(teachingCareer);
-        }
-        return infoTeachingCareer;
+	InfoTeachingCareer infoTeachingCareer = null;
+	if (teachingCareer != null) {
+	    infoTeachingCareer = new InfoTeachingCareer();
+	    infoTeachingCareer.copyFromDomain(teachingCareer);
+	}
+	return infoTeachingCareer;
     }
 }

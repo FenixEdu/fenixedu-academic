@@ -10,54 +10,54 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class OutcomeByNoCorrectorPredicate extends AtomicPredicate implements Predicate {
-	private DomainReference<NewAtomicQuestion> atomicQuestion;
+    private DomainReference<NewAtomicQuestion> atomicQuestion;
 
-	public OutcomeByNoCorrectorPredicate(NewAtomicQuestion atomicQuestion) {
-		super();
+    public OutcomeByNoCorrectorPredicate(NewAtomicQuestion atomicQuestion) {
+	super();
 
-		this.setAtomicQuestion(atomicQuestion);
+	this.setAtomicQuestion(atomicQuestion);
+    }
+
+    public OutcomeByNoCorrectorPredicate(PredicateBean predicateBean) {
+	this(predicateBean.getAtomicQuestion());
+    }
+
+    public boolean evaluate(NewQuestion question, Person person) {
+	if (this.getAtomicQuestion().getAnswer(person) == null) {
+	    return false;
 	}
 
-	public OutcomeByNoCorrectorPredicate(PredicateBean predicateBean) {
-		this(predicateBean.getAtomicQuestion());
+	for (NewCorrector corrector : this.getAtomicQuestion().getCorrectors()) {
+	    if (corrector.getPredicate().evaluate(this.getAtomicQuestion(), person)) {
+		return false;
+	    }
 	}
 
-	public boolean evaluate(NewQuestion question, Person person) {
-		if (this.getAtomicQuestion().getAnswer(person) == null) {
-			return false;
-		}
+	return true;
+    }
 
-		for (NewCorrector corrector : this.getAtomicQuestion().getCorrectors()) {
-			if (corrector.getPredicate().evaluate(this.getAtomicQuestion(), person)) {
-				return false;
-			}
-		}
+    public NewAtomicQuestion getAtomicQuestion() {
+	return atomicQuestion.getObject();
+    }
 
-		return true;
+    private void setAtomicQuestion(NewAtomicQuestion atomicQuestion) {
+	this.atomicQuestion = new DomainReference<NewAtomicQuestion>(atomicQuestion);
+    }
+
+    public boolean uses(Object object) {
+	NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) object;
+
+	return atomicQuestion.equals(this.getAtomicQuestion());
+    }
+
+    public Predicate transform(HashMap<Object, Object> transformMap) {
+	OutcomeByNoCorrectorPredicate predicate = new OutcomeByNoCorrectorPredicate(getAtomicQuestion());
+
+	if (transformMap.get(this.getAtomicQuestion()) != null) {
+	    predicate.setAtomicQuestion((NewAtomicQuestion) transformMap.get(this.getAtomicQuestion()));
 	}
 
-	public NewAtomicQuestion getAtomicQuestion() {
-		return atomicQuestion.getObject();
-	}
-
-	private void setAtomicQuestion(NewAtomicQuestion atomicQuestion) {
-		this.atomicQuestion = new DomainReference<NewAtomicQuestion>(atomicQuestion);
-	}
-
-	public boolean uses(Object object) {
-		NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) object;
-
-		return atomicQuestion.equals(this.getAtomicQuestion());
-	}
-
-	public Predicate transform(HashMap<Object, Object> transformMap) {
-		OutcomeByNoCorrectorPredicate predicate = new OutcomeByNoCorrectorPredicate(getAtomicQuestion());
-
-		if (transformMap.get(this.getAtomicQuestion()) != null) {
-			predicate.setAtomicQuestion((NewAtomicQuestion) transformMap.get(this.getAtomicQuestion()));
-		}
-
-		return predicate;
-	}
+	return predicate;
+    }
 
 }

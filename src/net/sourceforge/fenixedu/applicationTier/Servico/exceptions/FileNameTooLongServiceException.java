@@ -10,19 +10,19 @@ public class FileNameTooLongServiceException extends FenixServiceException {
     }
 
     public FileNameTooLongServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public FileNameTooLongServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[FileNameTooLongServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[FileNameTooLongServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

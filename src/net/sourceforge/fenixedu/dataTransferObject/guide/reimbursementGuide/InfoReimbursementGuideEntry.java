@@ -36,7 +36,7 @@ public class InfoReimbursementGuideEntry extends InfoObject {
      * @return Returns the infoGuideEntry.
      */
     public InfoGuideEntry getInfoGuideEntry() {
-        return infoGuideEntry;
+	return infoGuideEntry;
     }
 
     /**
@@ -44,14 +44,14 @@ public class InfoReimbursementGuideEntry extends InfoObject {
      *            The infoGuideEntry to set.
      */
     public void setInfoGuideEntry(InfoGuideEntry infoGuideEntry) {
-        this.infoGuideEntry = infoGuideEntry;
+	this.infoGuideEntry = infoGuideEntry;
     }
 
     /**
      * @return Returns the infoReimbursementGuide.
      */
     public InfoReimbursementGuide getInfoReimbursementGuide() {
-        return infoReimbursementGuide;
+	return infoReimbursementGuide;
     }
 
     /**
@@ -59,14 +59,14 @@ public class InfoReimbursementGuideEntry extends InfoObject {
      *            The infoReimbursementGuide to set.
      */
     public void setInfoReimbursementGuide(InfoReimbursementGuide infoReimbursementGuide) {
-        this.infoReimbursementGuide = infoReimbursementGuide;
+	this.infoReimbursementGuide = infoReimbursementGuide;
     }
 
     /**
      * @return Returns the justification.
      */
     public String getJustification() {
-        return justification;
+	return justification;
     }
 
     /**
@@ -74,14 +74,14 @@ public class InfoReimbursementGuideEntry extends InfoObject {
      *            The justification to set.
      */
     public void setJustification(String justification) {
-        this.justification = justification;
+	this.justification = justification;
     }
 
     /**
      * @return Returns the value.
      */
     public Double getValue() {
-        return value;
+	return value;
     }
 
     /**
@@ -89,28 +89,27 @@ public class InfoReimbursementGuideEntry extends InfoObject {
      *            The value to set.
      */
     public void setValue(Double value) {
-        this.value = value;
+	this.value = value;
     }
 
     public void copyFromDomain(ReimbursementGuideEntry reimbursementGuideEntry) {
-        super.copyFromDomain(reimbursementGuideEntry);
-        if (reimbursementGuideEntry != null) {
-            setInfoGuideEntry(InfoGuideEntry.newInfoFromDomain(reimbursementGuideEntry.getGuideEntry()));
-            // setInfoReimbursementGuide(null); to avoid circularity
-            setJustification(reimbursementGuideEntry.getJustification());
-            setValue(reimbursementGuideEntry.getValue());
-        }
+	super.copyFromDomain(reimbursementGuideEntry);
+	if (reimbursementGuideEntry != null) {
+	    setInfoGuideEntry(InfoGuideEntry.newInfoFromDomain(reimbursementGuideEntry.getGuideEntry()));
+	    // setInfoReimbursementGuide(null); to avoid circularity
+	    setJustification(reimbursementGuideEntry.getJustification());
+	    setValue(reimbursementGuideEntry.getValue());
+	}
     }
 
-    public static InfoReimbursementGuideEntry newInfoFromDomain(
-            ReimbursementGuideEntry reimbursementGuideEntry) {
-        InfoReimbursementGuideEntry infoReimbursementGuideEntry = null;
-        if (reimbursementGuideEntry != null) {
-            infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
-            infoReimbursementGuideEntry.copyFromDomain(reimbursementGuideEntry);
-        }
+    public static InfoReimbursementGuideEntry newInfoFromDomain(ReimbursementGuideEntry reimbursementGuideEntry) {
+	InfoReimbursementGuideEntry infoReimbursementGuideEntry = null;
+	if (reimbursementGuideEntry != null) {
+	    infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
+	    infoReimbursementGuideEntry.copyFromDomain(reimbursementGuideEntry);
+	}
 
-        return infoReimbursementGuideEntry;
+	return infoReimbursementGuideEntry;
     }
 
 }

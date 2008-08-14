@@ -19,66 +19,67 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ListOtherTeachersPersonalExpectationsDA extends ListTeachersPersonalExpectationsDA {
-    
-    public ActionForward listTeachersPersonalExpectationsForSelectedExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+
+    public ActionForward listTeachersPersonalExpectationsForSelectedExecutionYear(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	IViewState viewState = RenderUtils.getViewState("executionYear");
-	ExecutionYear executionYear = (ExecutionYear) viewState.getMetaObject().getObject();		
+	ExecutionYear executionYear = (ExecutionYear) viewState.getMetaObject().getObject();
 	return readAndSetList(mapping, request, executionYear);
     }
-     
-    public ActionForward listTeachersPersonalExpectationsByExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	
-	ExecutionYear executionYear = getExecutionYearFromParameter(request);			
-	return readAndSetList(mapping, request, executionYear); 
+
+    public ActionForward listTeachersPersonalExpectationsByExecutionYear(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	ExecutionYear executionYear = getExecutionYearFromParameter(request);
+	return readAndSetList(mapping, request, executionYear);
     }
-    
+
     public ActionForward listTeachersPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();	
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	return readAndSetList(mapping, request, executionYear);
     }
-    
+
     public ActionForward seeTeacherPersonalExpectation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
+
 	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
 	ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
 	Teacher teacher = teacherPersonalExpectation.getTeacher();
 
-	Department loggedTeacherDepartment = getDepartment(request);		
-	Department teacherWorkingDepartment = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
-	
-	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = 
-	    loggedTeacherDepartment.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
-		
-	if(visualizationPeriod != null && visualizationPeriod.isPeriodOpen() 
-		&& teacherWorkingDepartment != null && teacherWorkingDepartment.equals(loggedTeacherDepartment)) {
-	    
+	Department loggedTeacherDepartment = getDepartment(request);
+	Department teacherWorkingDepartment = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
+		executionYear.getEndDateYearMonthDay());
+
+	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = loggedTeacherDepartment
+		.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
+
+	if (visualizationPeriod != null && visualizationPeriod.isPeriodOpen() && teacherWorkingDepartment != null
+		&& teacherWorkingDepartment.equals(loggedTeacherDepartment)) {
+
 	    request.setAttribute("noEdit", true);
-	    request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);	    
-	}	
-	
+	    request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+	}
+
 	return mapping.findForward("seeTeacherPersonalExpectationsByYear");
-    }    
-    
+    }
+
     private Department getDepartment(HttpServletRequest request) {
 	return getLoggedPerson(request).getTeacher().getCurrentWorkingDepartment();
     }
-    
+
     protected ActionForward readAndSetList(ActionMapping mapping, HttpServletRequest request, ExecutionYear executionYear) {
 	Department department = getDepartment(request);
 	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = null;
-	if(department != null) {
+	if (department != null) {
 	    visualizationPeriod = department.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
 	}
-	
-	if(visualizationPeriod == null || !visualizationPeriod.isPeriodOpen()) {
-            request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));            
-            return mapping.findForward("listTeacherPersonalExpectations");            
+
+	if (visualizationPeriod == null || !visualizationPeriod.isPeriodOpen()) {
+	    request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));
+	    return mapping.findForward("listTeacherPersonalExpectations");
 	} else {
 	    return super.readAndSetList(mapping, request, executionYear);
 	}

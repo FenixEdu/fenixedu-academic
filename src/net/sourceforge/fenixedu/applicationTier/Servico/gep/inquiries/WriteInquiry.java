@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class WriteInquiry extends Service {
 
-    public void run(final InfoInquiry inquiry, final InfoStudent infoStudent) throws FenixServiceException{
+    public void run(final InfoInquiry inquiry, final InfoStudent infoStudent) throws FenixServiceException {
 	if (inquiry == null) {
 	    throw new FenixServiceException("nullInquiry");
 	}
@@ -80,8 +80,7 @@ public class WriteInquiry extends Service {
 		registration.getArithmeticMeanClassification());
     }
 
-    private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final InquiriesCourse inquiriesCourse)
-	    {
+    private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final InquiriesCourse inquiriesCourse) {
 	for (ShiftType shiftType : iit.getClassTypes()) {
 
 	    InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes = iit
@@ -98,14 +97,12 @@ public class WriteInquiry extends Service {
 	}
     }
 
-    private void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse)
-	    {
+    private void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse) {
 	AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(iir.getRoom().getIdInternal());
 	inquiriesCourse.createInquiriesRoom(room, iir);
     }
 
-    private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent)
-	    {
+    private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) {
 	Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
 	return new InquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), registration);
     }

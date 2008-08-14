@@ -18,31 +18,27 @@ import net.sourceforge.fenixedu.util.SituationName;
  */
 public class ReadCandidatesForSelection extends Service {
 
-	public List run(Integer executionDegreeID, List<SituationName> situationNames)
-			throws FenixServiceException{
+    public List run(Integer executionDegreeID, List<SituationName> situationNames) throws FenixServiceException {
 
-		// Read the candidates
+	// Read the candidates
 
-		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-        
-        List<CandidateSituation> resultTemp = executionDegree.getCandidateSituationsInSituation(situationNames);
-        
-		if (resultTemp.isEmpty()) {
-			throw new NonExistingServiceException();
-		}
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
 
-		Iterator candidateIterator = resultTemp.iterator();
-		List result = new ArrayList();
-		while (candidateIterator.hasNext()) {
-			CandidateSituation candidateSituation = (CandidateSituation) candidateIterator
-					.next();
-			result.add(InfoMasterDegreeCandidateWithInfoPerson
-					.newInfoFromDomain(candidateSituation
-							.getMasterDegreeCandidate()));
-		}
+	List<CandidateSituation> resultTemp = executionDegree.getCandidateSituationsInSituation(situationNames);
 
-		return result;
-
+	if (resultTemp.isEmpty()) {
+	    throw new NonExistingServiceException();
 	}
+
+	Iterator candidateIterator = resultTemp.iterator();
+	List result = new ArrayList();
+	while (candidateIterator.hasNext()) {
+	    CandidateSituation candidateSituation = (CandidateSituation) candidateIterator.next();
+	    result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(candidateSituation.getMasterDegreeCandidate()));
+	}
+
+	return result;
+
+    }
 
 }

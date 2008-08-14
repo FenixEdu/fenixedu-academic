@@ -92,8 +92,8 @@ public class Item extends Item_Base {
      * will be the last in the section
      * 
      * @param item
-     *                the item that should appear after this item or
-     *                <code>null</code> if this item should be last
+     *            the item that should appear after this item or
+     *            <code>null</code> if this item should be last
      */
     public void setNextItem(Item item) {
 	if (item != null) {

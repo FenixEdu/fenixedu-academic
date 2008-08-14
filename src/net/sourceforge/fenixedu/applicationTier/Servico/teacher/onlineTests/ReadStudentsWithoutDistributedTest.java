@@ -22,16 +22,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadStudentsWithoutDistributedTest extends Service {
 
-    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException{
-        final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-        final List<Attends> attendList =executionCourse.getAttends();
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-        final Set<Registration> students = distributedTest.findStudents();
-        for (Attends attend : attendList) {
-            if (!students.contains(attend.getRegistration()))
-                infoStudentList.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
-        }
-        return infoStudentList;
+    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+	final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	final List<Attends> attendList = executionCourse.getAttends();
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+	final Set<Registration> students = distributedTest.findStudents();
+	for (Attends attend : attendList) {
+	    if (!students.contains(attend.getRegistration()))
+		infoStudentList.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
+	}
+	return infoStudentList;
     }
 }

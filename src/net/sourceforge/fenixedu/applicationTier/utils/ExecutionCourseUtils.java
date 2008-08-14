@@ -11,13 +11,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 public class ExecutionCourseUtils {
 
-    public static List<BibliographicReference> copyBibliographicReference(
-	    final ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+    public static List<BibliographicReference> copyBibliographicReference(final ExecutionCourse executionCourseFrom,
+	    ExecutionCourse executionCourseTo) {
 	return executionCourseTo.copyBibliographicReferencesFrom(executionCourseFrom);
     }
 
-    public static void copyEvaluationMethod(final ExecutionCourse executionCourseFrom,
-	    ExecutionCourse executionCourseTo) {
+    public static void copyEvaluationMethod(final ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
 	executionCourseTo.copyEvaluationMethodFrom(executionCourseFrom);
     }
 

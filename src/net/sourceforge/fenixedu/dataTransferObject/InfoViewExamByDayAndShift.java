@@ -25,65 +25,65 @@ public class InfoViewExamByDayAndShift extends InfoObject {
     }
 
     public InfoViewExamByDayAndShift(InfoExam infoExam, List infoExecutionCourses, List infoDegrees,
-            Integer numberStudentesAttendingCourse, Integer availableRoomOccupation) {
-        this.setInfoExam(infoExam);
-        this.setInfoExecutionCourses(infoExecutionCourses);
-        this.setInfoDegrees(infoDegrees);
-        this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
-        this.setAvailableRoomOccupation(availableRoomOccupation);
+	    Integer numberStudentesAttendingCourse, Integer availableRoomOccupation) {
+	this.setInfoExam(infoExam);
+	this.setInfoExecutionCourses(infoExecutionCourses);
+	this.setInfoDegrees(infoDegrees);
+	this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
+	this.setAvailableRoomOccupation(availableRoomOccupation);
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof InfoViewExamByDayAndShift) {
-            InfoViewExamByDayAndShift examObj = (InfoViewExamByDayAndShift) obj;
-            return this.getInfoExam().getSeason().equals(examObj.getInfoExam().getSeason());
-        }
+	if (obj instanceof InfoViewExamByDayAndShift) {
+	    InfoViewExamByDayAndShift examObj = (InfoViewExamByDayAndShift) obj;
+	    return this.getInfoExam().getSeason().equals(examObj.getInfoExam().getSeason());
+	}
 
-        return false;
+	return false;
     }
 
     public String toString() {
-        return "[INFOVIEWEXAMBYDAYANDSHIFT:" + " exam= '" + this.getInfoExam() + "'" + "]";
+	return "[INFOVIEWEXAMBYDAYANDSHIFT:" + " exam= '" + this.getInfoExam() + "'" + "]";
     }
 
     public InfoExam getInfoExam() {
-        return infoExam;
+	return infoExam;
     }
 
     public void setInfoExam(InfoExam exam) {
-        infoExam = exam;
+	infoExam = exam;
     }
 
     public List getInfoDegrees() {
-        return infoDegrees;
+	return infoDegrees;
     }
 
-     public void setInfoDegrees(List list) {
-        infoDegrees = list;
+    public void setInfoDegrees(List list) {
+	infoDegrees = list;
     }
 
     public Integer getNumberStudentesAttendingCourse() {
-        return numberStudentesAttendingCourse;
+	return numberStudentesAttendingCourse;
     }
 
     public void setNumberStudentesAttendingCourse(Integer integer) {
-        numberStudentesAttendingCourse = integer;
+	numberStudentesAttendingCourse = integer;
     }
 
     public List getInfoExecutionCourses() {
-        return infoExecutionCourses;
+	return infoExecutionCourses;
     }
 
     public void setInfoExecutionCourses(List list) {
-        infoExecutionCourses = list;
+	infoExecutionCourses = list;
     }
 
     public Integer getAvailableRoomOccupation() {
-        return availableRoomOccupation;
+	return availableRoomOccupation;
     }
 
     public void setAvailableRoomOccupation(Integer availableRoomOccupation) {
-        this.availableRoomOccupation = availableRoomOccupation;
+	this.availableRoomOccupation = availableRoomOccupation;
     }
 
 }

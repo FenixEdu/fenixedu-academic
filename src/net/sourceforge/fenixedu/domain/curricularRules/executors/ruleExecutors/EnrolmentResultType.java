@@ -6,7 +6,7 @@ public enum EnrolmentResultType {
     TEMPORARY(0, EnrollmentCondition.TEMPORARY),
 
     VALIDATED(1, EnrollmentCondition.VALIDATED),
-    
+
     IMPOSSIBLE(2, EnrollmentCondition.IMPOSSIBLE),
 
     NULL(3, EnrollmentCondition.INVISIBLE);
@@ -16,8 +16,8 @@ public enum EnrolmentResultType {
 
 	    { TEMPORARY, VALIDATED, IMPOSSIBLE, VALIDATED },
 
-	    { IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE }, 
-	    
+	    { IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE },
+
 	    { TEMPORARY, VALIDATED, IMPOSSIBLE, NULL }
 
     };
@@ -26,7 +26,7 @@ public enum EnrolmentResultType {
 	    { TEMPORARY, VALIDATED, TEMPORARY, TEMPORARY },
 
 	    { VALIDATED, VALIDATED, VALIDATED, VALIDATED },
-	    
+
 	    { TEMPORARY, VALIDATED, IMPOSSIBLE, IMPOSSIBLE, },
 
 	    { TEMPORARY, VALIDATED, IMPOSSIBLE, NULL }

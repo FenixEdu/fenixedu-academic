@@ -21,29 +21,29 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 25/Ago/2003, 18:18:02
+ *         Created at 25/Ago/2003, 18:18:02
  * 
  */
 public class GetCaseStudiesByEquivalencyID extends Service {
 
-	public List run(Integer equivalencyID) throws BDException{
-		List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
+    public List run(Integer equivalencyID) throws BDException {
+	List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
 
-		CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
-		List<CaseStudy> cases = new LinkedList<CaseStudy>();
-		List themes = equivalency.getThemes();
+	CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
+	List<CaseStudy> cases = new LinkedList<CaseStudy>();
+	List themes = equivalency.getThemes();
 
-		for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
-			Theme theme = (Theme) iterator.next();
-			cases.addAll(theme.getCaseStudies());
-		}
-
-		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-			CaseStudy caseStudy = (CaseStudy) iterator.next();
-			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
-		}
-
-		return infoCases;
+	for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
+	    Theme theme = (Theme) iterator.next();
+	    cases.addAll(theme.getCaseStudies());
 	}
+
+	for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+	    CaseStudy caseStudy = (CaseStudy) iterator.next();
+	    infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+	}
+
+	return infoCases;
+    }
 
 }

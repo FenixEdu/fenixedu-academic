@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class InfoSiteShifts extends DataTranferObject implements ISiteComponent {
 
@@ -19,64 +19,63 @@ public class InfoSiteShifts extends DataTranferObject implements ISiteComponent 
     private String infoExecutionYearName;
 
     private List shifts;
-    
+
     private InfoShift oldShift;
 
     /**
      * @return
      */
     public List getShifts() {
-        return shifts;
+	return shifts;
     }
 
     /**
      * @param list
      */
     public void setShifts(List list) {
-        shifts = list;
+	shifts = list;
     }
-    
+
     /**
      * @return InfoShift
      */
     public InfoShift getOldShift() {
-        return oldShift;
+	return oldShift;
     }
 
     /**
      * @param InfoShift
      */
     public void setOldShift(InfoShift oldShift) {
-    	this.oldShift = oldShift;
+	this.oldShift = oldShift;
     }
-
 
     /**
      * @return
      */
     public String getInfoExecutionPeriodName() {
-        return infoExecutionPeriodName;
+	return infoExecutionPeriodName;
     }
 
     /**
      * @return
      */
     public String getInfoExecutionYearName() {
-        return infoExecutionYearName;
+	return infoExecutionYearName;
     }
 
     /**
      * @param string
      */
     public void setInfoExecutionPeriodName(String string) {
-        infoExecutionPeriodName = string;
+	infoExecutionPeriodName = string;
     }
 
     /**
      * @param string
      */
     public void setInfoExecutionYearName(String string) {
-        infoExecutionYearName = string;
+	infoExecutionYearName = string;
     }
 
 }

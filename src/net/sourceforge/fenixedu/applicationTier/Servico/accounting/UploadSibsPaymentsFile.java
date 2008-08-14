@@ -16,21 +16,18 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class UploadSibsPaymentsFile extends Service {
 
-    public void run(final Person person, final PaymentsFileBean paymentsFileBean)
-	    throws FenixServiceException {
+    public void run(final Person person, final PaymentsFileBean paymentsFileBean) throws FenixServiceException {
 
-	final SibsIncommingPaymentFile sibsIncomingPaymentFile = SibsIncommingPaymentFile.parse(
-		FileUtils.getFilenameOnly(paymentsFileBean.getFilename()), paymentsFileBean.getFile());
-	for (final SibsIncommingPaymentFileDetailLine detailLine : sibsIncomingPaymentFile
-		.getDetailLines()) {
-	    getPaymentCode(detailLine).process(person, detailLine.getAmount(),
-		    detailLine.getWhenOccuredTransaction(), detailLine.getSibsTransactionId(), StringUtils.EMPTY);
+	final SibsIncommingPaymentFile sibsIncomingPaymentFile = SibsIncommingPaymentFile.parse(FileUtils
+		.getFilenameOnly(paymentsFileBean.getFilename()), paymentsFileBean.getFile());
+	for (final SibsIncommingPaymentFileDetailLine detailLine : sibsIncomingPaymentFile.getDetailLines()) {
+	    getPaymentCode(detailLine).process(person, detailLine.getAmount(), detailLine.getWhenOccuredTransaction(),
+		    detailLine.getSibsTransactionId(), StringUtils.EMPTY);
 	}
     }
 
     private PaymentCode getPaymentCode(final SibsIncommingPaymentFileDetailLine detailLine) {
-	final Student student = Student.readStudentByNumber(PaymentCodeGenerator
-		.getStudentNumberFrom(detailLine.getCode()));
+	final Student student = Student.readStudentByNumber(PaymentCodeGenerator.getStudentNumberFrom(detailLine.getCode()));
 	return student.getPaymentCodeBy(detailLine.getCode());
     }
 

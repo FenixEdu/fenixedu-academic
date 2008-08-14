@@ -25,59 +25,57 @@ import org.apache.struts.action.ActionMapping;
 /**
  * 
  * @author Fernanda Quitério 03/07/2003
- *  
+ * 
  */
 public class ChooseMasterDegreeDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareChooseMasterDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareChooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        String executionYear = getFromRequest("executionYear", request);
+	String executionYear = getFromRequest("executionYear", request);
 
-        request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-        request.setAttribute("executionYear", executionYear);
+	request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
+	request.setAttribute("executionYear", executionYear);
 
-        // Get the Degree List
-        Object args[] = { executionYear };
-        IUserView userView = getUserView(request);
-        List degreeList = null;
-        try {
+	// Get the Degree List
+	Object args[] = { executionYear };
+	IUserView userView = getUserView(request);
+	List degreeList = null;
+	try {
 
-            degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(
-                    "ReadMasterDegrees", args);
-            //ver aqui o que devolvs o servico
-        } catch (NonExistingServiceException e) {
+	    degreeList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadMasterDegrees", args);
+	    // ver aqui o que devolvs o servico
+	} catch (NonExistingServiceException e) {
 
-            ActionErrors errors = new ActionErrors();
-            errors.add("nonExisting", new ActionError("message.masterDegree.notfound.degrees",
-                    executionYear));
-            saveErrors(request, errors);
-            return mapping.getInputForward();
+	    ActionErrors errors = new ActionErrors();
+	    errors.add("nonExisting", new ActionError("message.masterDegree.notfound.degrees", executionYear));
+	    saveErrors(request, errors);
+	    return mapping.getInputForward();
 
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e);
-        }
-        Collections.sort(degreeList, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException(e);
+	}
+	Collections.sort(degreeList, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
 
-        request.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
+	request.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 
-        return mapping.findForward("PrepareSuccess");
+	return mapping.findForward("PrepareSuccess");
     }
 
-    public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-        request.setAttribute("executionYear", getFromRequest("executionYear", request));
-        request.setAttribute("degree", getFromRequest("degree", request));
-        return mapping.findForward("ChooseSuccess");
+	request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
+	request.setAttribute("executionYear", getFromRequest("executionYear", request));
+	request.setAttribute("degree", getFromRequest("degree", request));
+	return mapping.findForward("ChooseSuccess");
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
+	String parameterString = request.getParameter(parameter);
+	if (parameterString == null) {
+	    parameterString = (String) request.getAttribute(parameter);
+	}
+	return parameterString;
     }
 }

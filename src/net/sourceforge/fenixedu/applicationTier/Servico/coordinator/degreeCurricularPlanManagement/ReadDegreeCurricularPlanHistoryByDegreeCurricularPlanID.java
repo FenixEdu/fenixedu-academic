@@ -16,28 +16,26 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends Service {
-    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException{
+    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
-                        degreeCurricularPlanID);
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        if (degreeCurricularPlan != null) {
-            List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses(); 
+	if (degreeCurricularPlan != null) {
+	    List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-            if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
-                infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan,
-                        allCurricularCourses);
-            }
-        }
+	    if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
+		infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan, allCurricularCourses);
+	    }
+	}
 
-        return infoDegreeCurricularPlan;
+	return infoDegreeCurricularPlan;
     }
 
-    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(
-            DegreeCurricularPlan degreeCurricularPlan, List allCurricularCourses) {
-        return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan,
+	    List allCurricularCourses) {
+	return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
     }
 
 }

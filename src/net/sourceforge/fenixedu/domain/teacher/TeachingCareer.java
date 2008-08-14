@@ -16,44 +16,44 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class TeachingCareer extends TeachingCareer_Base {
 
     public TeachingCareer() {
-        super();
+	super();
     }
 
     public TeachingCareer(Teacher teacher, Category category, InfoTeachingCareer infoTeachingCareer) {
-        if (teacher == null || category == null)
-            throw new DomainException("Neither teacher nor category should be null!");
+	if (teacher == null || category == null)
+	    throw new DomainException("Neither teacher nor category should be null!");
 
-        setTeacher(teacher);
-        setCategory(category);
-        setBasicProperties(infoTeachingCareer);
+	setTeacher(teacher);
+	setCategory(category);
+	setBasicProperties(infoTeachingCareer);
     }
 
     public void delete() {
-        removeCategory();
-        super.delete();
+	removeCategory();
+	super.delete();
     }
 
     public void edit(InfoTeachingCareer infoTeachingCareer, Category category) {
-        if (category == null)
-            throw new DomainException("The category should not be null!");
+	if (category == null)
+	    throw new DomainException("The category should not be null!");
 
-        setBasicProperties(infoTeachingCareer);
-        this.setCategory(category);
+	setBasicProperties(infoTeachingCareer);
+	this.setCategory(category);
     }
 
     private void setBasicProperties(InfoTeachingCareer infoTeachingCareer) {
-        this.setBeginYear(infoTeachingCareer.getBeginYear());
-        this.setEndYear(infoTeachingCareer.getEndYear());
-        this.setCourseOrPosition(infoTeachingCareer.getCourseOrPosition());
+	this.setBeginYear(infoTeachingCareer.getBeginYear());
+	this.setEndYear(infoTeachingCareer.getEndYear());
+	this.setCourseOrPosition(infoTeachingCareer.getCourseOrPosition());
 
     }
 
     @Override
     public void setCourseOrPosition(String courseOrPosition) {
-        if (courseOrPosition != null && courseOrPosition.length() > 100) {
-            throw new DomainException("error.courseOrPosition.max.length.exceeded");
-        }
-        super.setCourseOrPosition(courseOrPosition);
+	if (courseOrPosition != null && courseOrPosition.length() > 100) {
+	    throw new DomainException("error.courseOrPosition.max.length.exceeded");
+	}
+	super.setCourseOrPosition(courseOrPosition);
     }
 
 }

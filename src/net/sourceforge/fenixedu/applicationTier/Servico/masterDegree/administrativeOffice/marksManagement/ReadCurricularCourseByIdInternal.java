@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCurricularCourseByIdInternal extends Service {
 
-	public InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException{
-		InfoCurricularCourse infoCurricularCourse = null;
-		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+    public InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException {
+	InfoCurricularCourse infoCurricularCourse = null;
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
-		infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-		return infoCurricularCourse;
-	}
+	infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+	return infoCurricularCourse;
+    }
 }

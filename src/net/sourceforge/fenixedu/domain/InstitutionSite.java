@@ -8,40 +8,36 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class InstitutionSite extends InstitutionSite_Base {
-    
+
     protected InstitutionSite() {
-        super();
+	super();
     }
 
     protected InstitutionSite(Unit unit) {
-        super();
-        
-        setUnit(unit);
+	super();
+
+	setUnit(unit);
     }
-    
+
     @Override
     public IGroup getOwner() {
-        return new GroupUnion(
-                new FixedSetGroup(getManagers()),
-                new RoleTypeGroup(RoleType.MANAGER)
-        );
+	return new GroupUnion(new FixedSetGroup(getManagers()), new RoleTypeGroup(RoleType.MANAGER));
     }
 
     /**
-     * Initializes the site for the institution unit. If the site
-     * was already initialized nothing is done.
+     * Initializes the site for the institution unit. If the site was already
+     * initialized nothing is done.
      * 
      * @return the site associated with the institution unit
      */
     public static UnitSite initialize() {
-        Unit unit = RootDomainObject.getInstance().getInstitutionUnit();
-        
-        if (unit.hasSite()) {
-            return unit.getSite();
-        }
-        else {
-            return new InstitutionSite(unit);
-        }
+	Unit unit = RootDomainObject.getInstance().getInstitutionUnit();
+
+	if (unit.hasSite()) {
+	    return unit.getSite();
+	} else {
+	    return new InstitutionSite(unit);
+	}
     }
-    
+
 }

@@ -15,45 +15,39 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class EditResearchActivityDA extends FenixDispatchAction {
-    
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
-	
-	if(pageContainerBean == null) {
+
+	if (pageContainerBean == null) {
 	    pageContainerBean = new PageContainerBean();
 	}
-	
+
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, pageContainerBean);
     }
- 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("pageContainerBean", pageContainerBean);
 	return mapping.findForward("show-research-activity-edit");
     }
-    
-    public ActionForward goToPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PageContainerBean pageContainerBean = 
-	    (PageContainerBean) getRenderedObject("page");
+
+    public ActionForward goToPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("page");
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, pageContainerBean);
     }
-    
-    public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("back");
 	pageContainerBean.setSelected(null);
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, pageContainerBean);
     }
 
-    public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
 	request.setAttribute("pageContainerBean", pageContainerBean);
 	return mapping.findForward("show-research-activity-edit");
@@ -65,6 +59,6 @@ public abstract class EditResearchActivityDA extends FenixDispatchAction {
 	request.setAttribute("pageContainerBean", pageContainerBean);
 	return mapping.findForward("show-research-activity-list");
     }
-    
+
     protected abstract List getObjects();
 }

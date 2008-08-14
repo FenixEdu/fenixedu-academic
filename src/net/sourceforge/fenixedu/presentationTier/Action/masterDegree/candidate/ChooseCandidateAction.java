@@ -21,12 +21,12 @@ import org.apache.struts.action.ActionMapping;
 
 public class ChooseCandidateAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        Integer choosenCandidateID = Integer.valueOf(request.getParameter("candidateID"));
-        request.setAttribute("candidateID", choosenCandidateID);
-        return mapping.findForward("Success");
+	Integer choosenCandidateID = Integer.valueOf(request.getParameter("candidateID"));
+	request.setAttribute("candidateID", choosenCandidateID);
+	return mapping.findForward("Success");
 
     }
 

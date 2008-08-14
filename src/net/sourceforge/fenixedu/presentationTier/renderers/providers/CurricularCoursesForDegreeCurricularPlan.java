@@ -15,29 +15,30 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
-        final List<DegreeModule> result = new ArrayList<DegreeModule>();
-        if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getDegreeCurricularPlan() != null
-        	&& markSheetManagementBean.getExecutionPeriod() != null) {
-            
-            if (markSheetManagementBean.getDegree().hasDegreeCurricularPlans(markSheetManagementBean.getDegreeCurricularPlan())) {
-                if (markSheetManagementBean.getDegree().isBolonhaDegree()) {
-                    result.addAll(markSheetManagementBean.getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class, null));
-                } else {
-                    result.addAll(markSheetManagementBean.getDegreeCurricularPlan().getCurricularCourses());
-                }                
-            } else {
-                markSheetManagementBean.setDegreeCurricularPlan(null);
-                markSheetManagementBean.setCurricularCourse(null);
-            }
-        }
+	final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
+	final List<DegreeModule> result = new ArrayList<DegreeModule>();
+	if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getDegreeCurricularPlan() != null
+		&& markSheetManagementBean.getExecutionPeriod() != null) {
 
-        Collections.sort(result, DegreeModule.COMPARATOR_BY_NAME);
-        return result;
+	    if (markSheetManagementBean.getDegree().hasDegreeCurricularPlans(markSheetManagementBean.getDegreeCurricularPlan())) {
+		if (markSheetManagementBean.getDegree().isBolonhaDegree()) {
+		    result.addAll(markSheetManagementBean.getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class,
+			    null));
+		} else {
+		    result.addAll(markSheetManagementBean.getDegreeCurricularPlan().getCurricularCourses());
+		}
+	    } else {
+		markSheetManagementBean.setDegreeCurricularPlan(null);
+		markSheetManagementBean.setCurricularCourse(null);
+	    }
+	}
+
+	Collections.sort(result, DegreeModule.COMPARATOR_BY_NAME);
+	return result;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

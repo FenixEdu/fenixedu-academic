@@ -16,24 +16,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends Service {
 
-    public InfoGratuitySituation run(Integer executionDegreeID, Integer studentID)
-            throws FenixServiceException{
+    public InfoGratuitySituation run(Integer executionDegreeID, Integer studentID) throws FenixServiceException {
 
-        InfoGratuitySituation infoGratuitySituation = null;
+	InfoGratuitySituation infoGratuitySituation = null;
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+	Registration registration = rootDomainObject.readRegistrationByOID(studentID);
 
-        if ((executionDegree == null) || (registration == null)) {
-            return null;
-        }
+	if ((executionDegree == null) || (registration == null)) {
+	    return null;
+	}
 
-        GratuitySituation gratuitySituation = registration
-                .readGratuitySituationByExecutionDegree(executionDegree);
+	GratuitySituation gratuitySituation = registration.readGratuitySituationByExecutionDegree(executionDegree);
 
-        infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
+	infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
 
-        return infoGratuitySituation;
+	return infoGratuitySituation;
     }
 
 }

@@ -9,9 +9,10 @@ import org.apache.struts.action.ActionMapping;
 
 public class ListThesesDA extends LibraryThesisDA {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setAttribute("theses", getUnconfirmedTheses());
-		return mapping.findForward("list");
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("theses", getUnconfirmedTheses());
+	return mapping.findForward("list");
+    }
 
 }

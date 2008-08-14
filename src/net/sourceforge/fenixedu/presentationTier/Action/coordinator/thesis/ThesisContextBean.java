@@ -8,35 +8,35 @@ import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
-public class ThesisContextBean implements Serializable{
+public class ThesisContextBean implements Serializable {
 
     /**
-     * Serial version id. 
+     * Serial version id.
      */
     private static final long serialVersionUID = 1L;
-    
+
     private DomainReference<ExecutionYear> selected;
     private DomainListReference<ExecutionYear> executionYears;
-    
-    public ThesisContextBean (SortedSet<ExecutionYear> executionYears, ExecutionYear selected) {
-        setExecutionYearPossibilities(executionYears);
-        setExecutionYear(selected);
+
+    public ThesisContextBean(SortedSet<ExecutionYear> executionYears, ExecutionYear selected) {
+	setExecutionYearPossibilities(executionYears);
+	setExecutionYear(selected);
     }
 
     public List<ExecutionYear> getExecutionYearPossibilities() {
-        return this.executionYears;
+	return this.executionYears;
     }
-    
+
     public void setExecutionYearPossibilities(SortedSet<ExecutionYear> executionYears) {
-        this.executionYears = new DomainListReference<ExecutionYear>(executionYears);
+	this.executionYears = new DomainListReference<ExecutionYear>(executionYears);
     }
 
     public ExecutionYear getExecutionYear() {
-        return this.selected.getObject();
+	return this.selected.getObject();
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-        this.selected = new DomainReference<ExecutionYear>(executionYear);
+	this.selected = new DomainReference<ExecutionYear>(executionYear);
     }
 
 }

@@ -8,11 +8,10 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 public class AssiduousnessManagementGroup extends Filtro {
 
-    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-            Exception {
+    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
-        if (!ManagementGroups.isAssiduousnessManagerMember(getRemoteUser(request).getPerson())) {
-            throw new NotAuthorizedFilterException();
-        }
+	if (!ManagementGroups.isAssiduousnessManagerMember(getRemoteUser(request).getPerson())) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 }

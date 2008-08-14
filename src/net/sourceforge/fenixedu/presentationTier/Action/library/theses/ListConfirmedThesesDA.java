@@ -13,28 +13,29 @@ import org.apache.struts.action.ActionMapping;
 
 public class ListConfirmedThesesDA extends LibraryThesisDA {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setAttribute("theses", getOnlyConfirmedTheses());
-		return mapping.findForward("list");
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("theses", getOnlyConfirmedTheses());
+	return mapping.findForward("list");
+    }
+
+    public ActionForward update(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	List<Thesis> theses = getTheses(request);
+
+	if (request.getParameter("export") != null) {
+	    if (theses.isEmpty()) {
+		addActionMessage("warning", request, "warning.libray.theses.export.selectOne");
+	    } else {
+		return forward(mapping, request, "export", "thesesIDs");
+	    }
 	}
 
-	public ActionForward update(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<Thesis> theses = getTheses(request);
-
-		if (request.getParameter("export") != null) {
-			if (theses.isEmpty()) {
-				addActionMessage("warning", request, "warning.libray.theses.export.selectOne");
-			}
-			else {
-				return forward(mapping, request, "export", "thesesIDs");
-			}
-		}
-		
-		if (request.getParameter("unconfirm") != null) {
-			executeService("ChangeThesesLibraryConfirmation", theses, false);
-			request.setAttribute("unconfirmed", true);
-		}
-		
-		return prepare(mapping, actionForm, request, response);
+	if (request.getParameter("unconfirm") != null) {
+	    executeService("ChangeThesesLibraryConfirmation", theses, false);
+	    request.setAttribute("unconfirmed", true);
 	}
+
+	return prepare(mapping, actionForm, request, response);
+    }
 }

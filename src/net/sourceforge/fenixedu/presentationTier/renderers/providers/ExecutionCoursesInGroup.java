@@ -10,14 +10,14 @@ public class ExecutionCoursesInGroup implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
-        VigilantGroup group = bean.getSelectedVigilantGroup();
-        return group.getExecutionCourses();
+	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
+	VigilantGroup group = bean.getSelectedVigilantGroup();
+	return group.getExecutionCourses();
 
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 
 }

@@ -35,60 +35,57 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
-        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+	IUserView userView = UserView.getUser();
+	Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-        Object args1[] = { curricularCourseId };
+	Object args1[] = { curricularCourseId };
 
-        List executionCoursesList = null;
-        try {
-            executionCoursesList = (List) ServiceUtils.executeService(
-                    "ReadExecutionCoursesByCurricularCourse", args1);
+	List executionCoursesList = null;
+	try {
+	    executionCoursesList = (List) ServiceUtils.executeService("ReadExecutionCoursesByCurricularCourse", args1);
 
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(e.getMessage(), "");
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException(e.getMessage(), "");
+	} catch (FenixServiceException fenixServiceException) {
+	    throw new FenixActionException(fenixServiceException.getMessage());
+	}
 
-        //        exclude executionPeriods of containing execution courses to assure
-        //        that there is only one execution course per execution period
-        List unavailableExecutionPeriodsIds = new ArrayList();
-        Iterator iter = executionCoursesList.iterator();
-        while (iter.hasNext()) {
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iter.next();
+	// exclude executionPeriods of containing execution courses to assure
+	// that there is only one execution course per execution period
+	List unavailableExecutionPeriodsIds = new ArrayList();
+	Iterator iter = executionCoursesList.iterator();
+	while (iter.hasNext()) {
+	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iter.next();
 
-            unavailableExecutionPeriodsIds.add(infoExecutionCourse.getInfoExecutionPeriod()
-                    .getIdInternal());
-        }
+	    unavailableExecutionPeriodsIds.add(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+	}
 
-        Object args2[] = { unavailableExecutionPeriodsIds };
-        try {
-            List infoExecutionPeriods = (List) ServiceUtils.executeService(
-                    "ReadAvailableExecutionPeriods", args2);
+	Object args2[] = { unavailableExecutionPeriodsIds };
+	try {
+	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadAvailableExecutionPeriods", args2);
 
-            if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
-                //Collections.sort(infoExecutionPeriods, new
-                // ExecutionPeriodComparator());
-                ComparatorChain comparator = new ComparatorChain();
-                comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-                comparator.addComparator(new BeanComparator("name"), true);
-                Collections.sort(infoExecutionPeriods, comparator);
+		// Collections.sort(infoExecutionPeriods, new
+		// ExecutionPeriodComparator());
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+		comparator.addComparator(new BeanComparator("name"), true);
+		Collections.sort(infoExecutionPeriods, comparator);
 
-                if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-                    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-                }
+		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+		    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
+		}
 
-            }
-        } catch (FenixServiceException ex) {
-            throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
-        }
+	    }
+	} catch (FenixServiceException ex) {
+	    throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
+	}
 
-        request.setAttribute("name", "associate");
-        return mapping.findForward("viewExecutionPeriods");
+	request.setAttribute("name", "associate");
+	return mapping.findForward("viewExecutionPeriods");
     }
 }

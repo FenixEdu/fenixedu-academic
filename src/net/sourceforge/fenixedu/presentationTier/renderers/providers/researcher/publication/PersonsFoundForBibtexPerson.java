@@ -8,12 +8,12 @@ public class PersonsFoundForBibtexPerson implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        final BibtexParticipatorBean bibtexParticipatorBean = (BibtexParticipatorBean) source;
-        return bibtexParticipatorBean.getPersonsFound();
+	final BibtexParticipatorBean bibtexParticipatorBean = (BibtexParticipatorBean) source;
+	return bibtexParticipatorBean.getPersonsFound();
     }
 
     public Converter getConverter() {
-        return null;
+	return null;
     }
 
 }

@@ -27,69 +27,69 @@ public class RenderFIB extends Render {
     private Integer fibtype;
 
     public RenderFIB() {
-        super();
+	super();
     }
 
     public Integer getColumns() {
-        return columns;
+	return columns;
     }
 
     public void setColumns(Integer columns) {
-        this.columns = columns;
+	this.columns = columns;
     }
 
     public Integer getMaxchars() {
-        return maxchars;
+	return maxchars;
     }
 
     public void setMaxchars(Integer maxchars) {
-        this.maxchars = maxchars;
+	this.maxchars = maxchars;
     }
 
     public Integer getRows() {
-        return rows;
+	return rows;
     }
 
     public void setRows(Integer rows) {
-        this.rows = rows;
+	this.rows = rows;
     }
 
     public Integer getFibtype() {
-        return fibtype;
+	return fibtype;
     }
 
     public void setFibtype(String fibtype) {
-        this.fibtype = getFibTypeCode(fibtype);
+	this.fibtype = getFibTypeCode(fibtype);
     }
 
     private Integer getFibTypeCode(String fibType) {
-        if (fibType.equals(INTEGER))
-            return new Integer(INTEGER_CODE);
-        else if (fibType.equals(DECIMAL))
-            return new Integer(DECIMAL_CODE);
-        else
-            return new Integer(STRING_CODE);
+	if (fibType.equals(INTEGER))
+	    return new Integer(INTEGER_CODE);
+	else if (fibType.equals(DECIMAL))
+	    return new Integer(DECIMAL_CODE);
+	else
+	    return new Integer(STRING_CODE);
     }
 
     private String getFibTypeString() {
-        if (fibtype.intValue() == INTEGER_CODE)
-            return INTEGER;
-        else if (fibtype.intValue() == DECIMAL_CODE)
-            return DECIMAL;
-        else
-            return STRING;
+	if (fibtype.intValue() == INTEGER_CODE)
+	    return INTEGER;
+	else if (fibtype.intValue() == DECIMAL_CODE)
+	    return DECIMAL;
+	else
+	    return STRING;
     }
 
     public String toXML(String inside) {
-        String result = "<render_fib";
-        if (fibtype != null)
-            result = result.concat(" fibtype=\"" + getFibTypeString() + "\"");
-        if (rows != null)
-            result = result.concat(" rows=\"" + rows + "\"");
-        if (columns != null)
-            result = result.concat(" columns=\"" + columns + "\"");
-        if (maxchars != null)
-            result = result.concat(" maxchars=\"" + maxchars + "\"");
-        return result.concat(">" + inside + "</render_fib>\n");
+	String result = "<render_fib";
+	if (fibtype != null)
+	    result = result.concat(" fibtype=\"" + getFibTypeString() + "\"");
+	if (rows != null)
+	    result = result.concat(" rows=\"" + rows + "\"");
+	if (columns != null)
+	    result = result.concat(" columns=\"" + columns + "\"");
+	if (maxchars != null)
+	    result = result.concat(" maxchars=\"" + maxchars + "\"");
+	return result.concat(">" + inside + "</render_fib>\n");
     }
 }

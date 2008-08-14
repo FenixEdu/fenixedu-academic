@@ -10,15 +10,15 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 public class ContentInjectionRewriter extends RequestRewriter {
 
     public static final String HAS_CONTEXT_PREFIX_STRING = "HAS_CONTEXT";
-    
+
     public static final String BLOCK_HAS_CONTEXT_STRING = "BLOCK_HAS_CONTEXT ";
-    
+
     public static final String BLOCK_END_HAS_CONTEXT_STRING = "END_BLOCK_HAS_CONTEXT";
-    
+
     public static final String HAS_CONTEXT_PREFIX = "<!-- " + HAS_CONTEXT_PREFIX_STRING + " -->";
-    
+
     public static final String BLOCK_HAS_CONTEXT_PREFIX = "<!-- " + BLOCK_HAS_CONTEXT_STRING + " -->";
-    
+
     public static final String END_BLOCK_HAS_CONTEXT_PREFIX = "<!-- " + BLOCK_END_HAS_CONTEXT_STRING + " -->";
 
     public static final String CONTEXT_ATTRIBUTE_NAME = FilterFunctionalityContext.CONTEXT_ATTRIBUTE_NAME + "_PATH";
@@ -57,7 +57,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 	    final int indexOfImgOpen = source.indexOf(IMG_IDENTIFIER, iOffset);
 	    final int indexOfAreaOpen = source.indexOf(AREA_IDENTIFIER, iOffset);
 	    final int indexOfBlockHasContextopen = source.indexOf(BLOCK_HAS_CONTEXT_PREFIX, iOffset);
-	    
+
 	    if (firstIsMinValue(indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfAopen)) {
 		    final int indexOfAclose = source.indexOf(">", indexOfAopen);
@@ -71,10 +71,10 @@ public class ContentInjectionRewriter extends RequestRewriter {
 				int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
 				int indexOfHttp = source.indexOf("http:", indexOfHrefBodyStart);
 				int indexOfHttps = source.indexOf("https:", indexOfHrefBodyStart);
-				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) &&
-					(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd) &&
-					(indexOfHttp < 0 || indexOfHttp > indexOfHrefBodyEnd) &&
-					(indexOfHttps < 0 || indexOfHttps > indexOfHrefBodyEnd)) {
+				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd)
+					&& (indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)
+					&& (indexOfHttp < 0 || indexOfHttp > indexOfHrefBodyEnd)
+					&& (indexOfHttps < 0 || indexOfHttps > indexOfHrefBodyEnd)) {
 				    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
 				    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
 					    && indexOfCardinal < indexOfHrefBodyEnd;
@@ -186,9 +186,10 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		}
 		iOffset = continueToNextToken(response, source, iOffset, indexOfAreaOpen);
 		continue;
-	    } else if(firstIsMinValue(indexOfBlockHasContextopen, indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen)) {
-		final int indexOfEndBlockHasContextOpen = source.indexOf(END_BLOCK_HAS_CONTEXT_PREFIX, indexOfBlockHasContextopen);
-		if(indexOfEndBlockHasContextOpen == -1) {
+	    } else if (firstIsMinValue(indexOfBlockHasContextopen, indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen)) {
+		final int indexOfEndBlockHasContextOpen = source
+			.indexOf(END_BLOCK_HAS_CONTEXT_PREFIX, indexOfBlockHasContextopen);
+		if (indexOfEndBlockHasContextOpen == -1) {
 		    iOffset = indexOfBlockHasContextopen + BLOCK_HAS_CONTEXT_PREFIX.length();
 		} else {
 		    response.append(source, iOffset, indexOfEndBlockHasContextOpen);

@@ -14,38 +14,38 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
 
     public void run(Integer executionDegreeOID, Integer minimumNumberOfCompletedCourses,
-    		Integer maximumCurricularYearToCountCompletedCourses,
-    		Integer minimumCompletedCurricularYear,
-    		Integer minimumNumberOfStudents, Integer maximumNumberOfStudents,
-    		Integer maximumNumberOfProposalCandidaciesPerGroup, Boolean attributionByTeachers,
-    		Boolean allowSimultaneousCoorientationAndCompanion, Integer minimumCompletedCreditsSecondCycle)
-    		{
+	    Integer maximumCurricularYearToCountCompletedCourses, Integer minimumCompletedCurricularYear,
+	    Integer minimumNumberOfStudents, Integer maximumNumberOfStudents, Integer maximumNumberOfProposalCandidaciesPerGroup,
+	    Boolean attributionByTeachers, Boolean allowSimultaneousCoorientationAndCompanion,
+	    Integer minimumCompletedCreditsSecondCycle) {
 
-        if (executionDegreeOID != null) {
+	if (executionDegreeOID != null) {
 
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
-            if (executionDegree != null) {
-                Scheduleing scheduleing = executionDegree.getScheduling();
+	    if (executionDegree != null) {
+		Scheduleing scheduleing = executionDegree.getScheduling();
 
-                if (scheduleing == null) {
-                    scheduleing = new Scheduleing();
-                    scheduleing.setCurrentProposalNumber(new Integer(1));
-                }
+		if (scheduleing == null) {
+		    scheduleing = new Scheduleing();
+		    scheduleing.setCurrentProposalNumber(new Integer(1));
+		}
 
-                scheduleing.addExecutionDegrees(executionDegree);
-                scheduleing.setMinimumNumberOfCompletedCourses(minimumNumberOfCompletedCourses);
-                scheduleing.setMaximumCurricularYearToCountCompletedCourses(maximumCurricularYearToCountCompletedCourses);
-                scheduleing.setMinimumCompletedCurricularYear(minimumCompletedCurricularYear);
-                scheduleing.setMinimumNumberOfStudents(minimumNumberOfStudents);
-                scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);
-                scheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
-                scheduleing.setAttributionByTeachers(Boolean.valueOf(attributionByTeachers != null && attributionByTeachers.booleanValue()));
-                scheduleing.setAllowSimultaneousCoorientationAndCompanion(allowSimultaneousCoorientationAndCompanion != null && allowSimultaneousCoorientationAndCompanion.booleanValue());
-                scheduleing.setMinimumCompletedCreditsSecondCycle(minimumCompletedCreditsSecondCycle);
-            }
+		scheduleing.addExecutionDegrees(executionDegree);
+		scheduleing.setMinimumNumberOfCompletedCourses(minimumNumberOfCompletedCourses);
+		scheduleing.setMaximumCurricularYearToCountCompletedCourses(maximumCurricularYearToCountCompletedCourses);
+		scheduleing.setMinimumCompletedCurricularYear(minimumCompletedCurricularYear);
+		scheduleing.setMinimumNumberOfStudents(minimumNumberOfStudents);
+		scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);
+		scheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
+		scheduleing.setAttributionByTeachers(Boolean.valueOf(attributionByTeachers != null
+			&& attributionByTeachers.booleanValue()));
+		scheduleing.setAllowSimultaneousCoorientationAndCompanion(allowSimultaneousCoorientationAndCompanion != null
+			&& allowSimultaneousCoorientationAndCompanion.booleanValue());
+		scheduleing.setMinimumCompletedCreditsSecondCycle(minimumCompletedCreditsSecondCycle);
+	    }
 
-        }
+	}
 
     }
 

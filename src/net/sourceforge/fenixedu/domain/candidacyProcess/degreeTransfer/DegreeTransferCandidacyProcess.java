@@ -191,7 +191,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 	    return process;
 	}
     }
-    
+
     static private class PrintCandidaciesFromInstitutionDegrees extends Activity<DegreeTransferCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {

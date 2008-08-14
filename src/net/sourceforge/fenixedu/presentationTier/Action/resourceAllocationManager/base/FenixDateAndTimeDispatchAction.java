@@ -12,14 +12,14 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class FenixDateAndTimeDispatchAction extends FenixContextDispatchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        RequestContextUtil.setExamDateAndTimeContext(request);
+	RequestContextUtil.setExamDateAndTimeContext(request);
 
-        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+	ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
-        return actionForward;
+	return actionForward;
     }
 
 }

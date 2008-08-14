@@ -20,28 +20,25 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 public class IMS_STRQuestionCorrectionStrategy extends QuestionCorrectionStrategy {
 
     public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion) {
-        if ((studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR)
-                || (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID && (studentTestQuestion
-                        .getSubQuestionByItem().getQuestionType().getCardinalityType().getType()
-                        .intValue() == CardinalityType.SINGLE))) {
-            List questionCorrectionList = studentTestQuestion.getSubQuestionByItem()
-                    .getResponseProcessingInstructions();
-            Iterator questionCorrectionIt = questionCorrectionList.iterator();
-            for (int i = 0; questionCorrectionIt.hasNext(); i++) {
-                ResponseProcessing responseProcessing = (ResponseProcessing) questionCorrectionIt.next();
-                if (isCorrectSTR(responseProcessing.getResponseConditions(), new String(
-                        ((ResponseSTR) studentTestQuestion.getResponse()).getResponse()))) {
-                    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
-                    ResponseSTR r = (ResponseSTR) studentTestQuestion.getResponse();
-                    r.setResponseProcessingIndex(new Integer(i));
-                    studentTestQuestion.setResponse(r);
-                    studentTestQuestion.getSubQuestionByItem().setNextItemId(
-                            responseProcessing.getNextItem());
-                    return studentTestQuestion;
-                }
-            }
-        }
-        studentTestQuestion.setTestQuestionMark(new Double(0));
-        return studentTestQuestion;
+	if ((studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR)
+		|| (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID && (studentTestQuestion
+			.getSubQuestionByItem().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE))) {
+	    List questionCorrectionList = studentTestQuestion.getSubQuestionByItem().getResponseProcessingInstructions();
+	    Iterator questionCorrectionIt = questionCorrectionList.iterator();
+	    for (int i = 0; questionCorrectionIt.hasNext(); i++) {
+		ResponseProcessing responseProcessing = (ResponseProcessing) questionCorrectionIt.next();
+		if (isCorrectSTR(responseProcessing.getResponseConditions(), new String(((ResponseSTR) studentTestQuestion
+			.getResponse()).getResponse()))) {
+		    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
+		    ResponseSTR r = (ResponseSTR) studentTestQuestion.getResponse();
+		    r.setResponseProcessingIndex(new Integer(i));
+		    studentTestQuestion.setResponse(r);
+		    studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
+		    return studentTestQuestion;
+		}
+	    }
+	}
+	studentTestQuestion.setTestQuestionMark(new Double(0));
+	return studentTestQuestion;
     }
 }

@@ -13,121 +13,119 @@ import org.joda.time.YearMonthDay;
 
 public class ResearchContractBean implements Serializable {
 
-	private Boolean externalPerson;
-	
-	private DomainReference<PersonName> personName;
+    private Boolean externalPerson;
 
-	private String personNameString;
-	
-	private YearMonthDay begin;
+    private DomainReference<PersonName> personName;
 
-	private YearMonthDay end;
+    private String personNameString;
 
-	private DomainReference<ResearchUnit> unit;
+    private YearMonthDay begin;
 
-	private String email;
-	
-	private IDDocumentType documentType;
-	
-	private String documentIDNumber;
-	
-	private ResearchContractType contractType;
-	
+    private YearMonthDay end;
 
+    private DomainReference<ResearchUnit> unit;
 
-	public String getDocumentIDNumber() {
-		return documentIDNumber;
-	}
+    private String email;
 
-	public void setDocumentIDNumber(String documentIDNumber) {
-		this.documentIDNumber = documentIDNumber;
-	}
+    private IDDocumentType documentType;
 
-	public IDDocumentType getDocumentType() {
-		return documentType;
-	}
+    private String documentIDNumber;
 
-	public void setDocumentType(IDDocumentType documentType) {
-		this.documentType = documentType;
-	}
+    private ResearchContractType contractType;
 
-	public String getEmail() {
-		return email;
-	}
+    public String getDocumentIDNumber() {
+	return documentIDNumber;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setDocumentIDNumber(String documentIDNumber) {
+	this.documentIDNumber = documentIDNumber;
+    }
 
-	public ResearchContractBean() {
-		setPersonName(null);
-		setUnit(null);
-		setExternalPerson(Boolean.FALSE);
-		setPersonNameString(null);
-	}
+    public IDDocumentType getDocumentType() {
+	return documentType;
+    }
 
-	public YearMonthDay getBegin() {
-		return begin;
-	}
+    public void setDocumentType(IDDocumentType documentType) {
+	this.documentType = documentType;
+    }
 
-	public void setBegin(YearMonthDay begin) {
-		this.begin = begin;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public YearMonthDay getEnd() {
-		return end;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public void setEnd(YearMonthDay end) {
-		this.end = end;
-	}
+    public ResearchContractBean() {
+	setPersonName(null);
+	setUnit(null);
+	setExternalPerson(Boolean.FALSE);
+	setPersonNameString(null);
+    }
 
-	public Person getPerson() {
-		PersonName personName = getPersonName();
-		return personName != null ? personName.getPerson() : null;	
-	}
+    public YearMonthDay getBegin() {
+	return begin;
+    }
 
-	public PersonName getPersonName() {
-		return personName.getObject();
-	}
-	
-	public void setPersonName(PersonName personName) {
-		this.personName = new DomainReference<PersonName>(personName);
-	}
+    public void setBegin(YearMonthDay begin) {
+	this.begin = begin;
+    }
 
-	public ResearchUnit getUnit() {
-		return unit.getObject();
-	}
+    public YearMonthDay getEnd() {
+	return end;
+    }
 
-	public void setUnit(ResearchUnit unit) {
-		this.unit = new DomainReference<ResearchUnit>(unit);
-	}
+    public void setEnd(YearMonthDay end) {
+	this.end = end;
+    }
 
-	public String getPersonNameString() {
-		return personNameString;
-	}
+    public Person getPerson() {
+	PersonName personName = getPersonName();
+	return personName != null ? personName.getPerson() : null;
+    }
 
-	public void setPersonNameString(String personName) {
-		this.personNameString = personName;
-	}
+    public PersonName getPersonName() {
+	return personName.getObject();
+    }
 
-	public Boolean getExternalPerson() {
-		return externalPerson;
-	}
+    public void setPersonName(PersonName personName) {
+	this.personName = new DomainReference<PersonName>(personName);
+    }
 
-	public void setExternalPerson(Boolean externalPerson) {
-		this.externalPerson = externalPerson;
-	}
+    public ResearchUnit getUnit() {
+	return unit.getObject();
+    }
 
-	public boolean getShowMessage() {
-		return getExternalPerson() && getPerson()==null && getPersonNameString()!=null && getPersonNameString().length()>0; 
-	}
+    public void setUnit(ResearchUnit unit) {
+	this.unit = new DomainReference<ResearchUnit>(unit);
+    }
 
-	public ResearchContractType getContractType() {
-	    return contractType;
-	}
-	
-	public void setContractType(ResearchContractType contractType) {
-	    this.contractType = contractType;
-	}
+    public String getPersonNameString() {
+	return personNameString;
+    }
+
+    public void setPersonNameString(String personName) {
+	this.personNameString = personName;
+    }
+
+    public Boolean getExternalPerson() {
+	return externalPerson;
+    }
+
+    public void setExternalPerson(Boolean externalPerson) {
+	this.externalPerson = externalPerson;
+    }
+
+    public boolean getShowMessage() {
+	return getExternalPerson() && getPerson() == null && getPersonNameString() != null && getPersonNameString().length() > 0;
+    }
+
+    public ResearchContractType getContractType() {
+	return contractType;
+    }
+
+    public void setContractType(ResearchContractType contractType) {
+	this.contractType = contractType;
+    }
 }

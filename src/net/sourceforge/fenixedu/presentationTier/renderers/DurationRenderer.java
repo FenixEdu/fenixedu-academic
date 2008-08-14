@@ -20,12 +20,12 @@ public class DurationRenderer extends DateRenderer {
     private Duration duration;
 
     public DurationRenderer() {
-        super();
-        this.showFormat = false;
+	super();
+	this.showFormat = false;
     }
 
     public boolean isShowFormat() {
-        return showFormat;
+	return showFormat;
     }
 
     /**
@@ -33,47 +33,47 @@ public class DurationRenderer extends DateRenderer {
      * @property
      */
     public void setShowFormat(boolean showFormat) {
-        this.showFormat = showFormat;
+	this.showFormat = showFormat;
     }
 
     @Override
     public String getFormat() {
-        if (isFormatSet()) {
-            return super.getFormat();
-        }
-        String format = "HH:mm:ss";
-        return format.trim();
+	if (isFormatSet()) {
+	    return super.getFormat();
+	}
+	String format = "HH:mm:ss";
+	return format.trim();
     }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        duration = (Duration) object;
-        DateTime dateTime = TimeOfDay.MIDNIGHT.toDateTimeToday().plus(duration.toPeriod());
-        final Date date = dateTime != null ? convertDateTimeToCalendar(dateTime).getTime() : null;
+	duration = (Duration) object;
+	DateTime dateTime = TimeOfDay.MIDNIGHT.toDateTimeToday().plus(duration.toPeriod());
+	final Date date = dateTime != null ? convertDateTimeToCalendar(dateTime).getTime() : null;
 
-        final Layout superLayout = super.getLayout(date, type);
+	final Layout superLayout = super.getLayout(date, type);
 
-        return new Layout() {
+	return new Layout() {
 
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                HtmlText text = (HtmlText) superLayout.createComponent(date, type);
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		HtmlText text = (HtmlText) superLayout.createComponent(date, type);
 
-                String formatText = isShowFormat() ? " (" + getFormat() + ")" : "";
-                text.setText(text.getText() + formatText);
+		String formatText = isShowFormat() ? " (" + getFormat() + ")" : "";
+		text.setText(text.getText() + formatText);
 
-                return text;
-            }
+		return text;
+	    }
 
-        };
+	};
     }
 
     private Calendar convertDateTimeToCalendar(DateTime dt) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-        calendar.set(Calendar.HOUR_OF_DAY, dt.get(DateTimeFieldType.hourOfDay()));
-        calendar.set(Calendar.MINUTE, dt.get(DateTimeFieldType.minuteOfHour()));
-        calendar.set(Calendar.SECOND, dt.get(DateTimeFieldType.secondOfMinute()));
-        return calendar;
+	Calendar calendar = Calendar.getInstance();
+	calendar.clear();
+	calendar.set(Calendar.HOUR_OF_DAY, dt.get(DateTimeFieldType.hourOfDay()));
+	calendar.set(Calendar.MINUTE, dt.get(DateTimeFieldType.minuteOfHour()));
+	calendar.set(Calendar.SECOND, dt.get(DateTimeFieldType.secondOfMinute()));
+	return calendar;
     }
 }

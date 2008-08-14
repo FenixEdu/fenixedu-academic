@@ -7,36 +7,36 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 public class UnitNameBean implements Serializable {
 
-	boolean external;
-	String rawName;
-	DomainReference<UnitName> unitName;
-	
-	public UnitNameBean() {
-		external = false;
-		setUnitName(null);
-	}
+    boolean external;
+    String rawName;
+    DomainReference<UnitName> unitName;
 
-	public boolean isExternal() {
-		return external;
-	}
+    public UnitNameBean() {
+	external = false;
+	setUnitName(null);
+    }
 
-	public void setExternal(boolean external) {
-		this.external = external;
-	}
+    public boolean isExternal() {
+	return external;
+    }
 
-	public String getRawName() {
-		return rawName;
-	}
+    public void setExternal(boolean external) {
+	this.external = external;
+    }
 
-	public void setRawName(String rawName) {
-		this.rawName = rawName;
-	}
-	
-	public UnitName getUnitName() {
-		return unitName.getObject();
-	}
-	
-	public void setUnitName(UnitName name) {
-		this.unitName = new DomainReference<UnitName>(name);
-	}
+    public String getRawName() {
+	return rawName;
+    }
+
+    public void setRawName(String rawName) {
+	this.rawName = rawName;
+    }
+
+    public UnitName getUnitName() {
+	return unitName.getObject();
+    }
+
+    public void setUnitName(UnitName name) {
+	this.unitName = new DomainReference<UnitName>(name);
+    }
 }

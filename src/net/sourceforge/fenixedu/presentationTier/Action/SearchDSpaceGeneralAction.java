@@ -31,9 +31,8 @@ import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
 
 public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 
-    protected ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response, String forwardTo)
-	    throws FenixFilterException, FenixServiceException {
+    protected ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
 
 	SearchDSpaceBean bean = createNewBean();
 	bean.addSearchElement();
@@ -41,9 +40,8 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 	return mapping.findForward(forwardTo);
     }
 
-    protected ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response, String forwardTo)
-	    throws FenixFilterException, FenixServiceException {
+    protected ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
 
 	SearchDSpaceBean bean = getBean(request);
 	String addIndex = request.getParameter("addIndex");
@@ -58,9 +56,8 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 	return mapping.findForward(forwardTo);
     }
 
-    protected ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response, String forwardTo)
-	    throws FenixFilterException, FenixServiceException {
+    protected ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
 
 	SearchDSpaceBean bean = getBean(request);
 	String removeIndex = request.getParameter("removeIndex");
@@ -84,9 +81,8 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 	return bean;
     }
 
-    protected ActionForward moveIndex(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response, String forwardTo)
-	    throws FenixFilterException, FenixServiceException {
+    protected ActionForward moveIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
 
 	SearchDSpaceBean bean = reconstructBeanFromRequest(request);
 
@@ -98,9 +94,8 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 
     }
 
-    protected ActionForward searchContent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response, String forwardTo)
-	    throws FenixFilterException, FenixServiceException {
+    protected ActionForward searchContent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
 	IViewState viewState = RenderUtils.getViewState("search");
 	if (viewState == null) {
 	    return prepareSearch(mapping, form, request, response, forwardTo);
@@ -113,13 +108,12 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 	return mapping.findForward(forwardTo);
     }
 
-    protected FileSearchResult getSearchResults(HttpServletRequest request, SearchDSpaceBean bean,
-	    VirtualPath restrictTo) {
+    protected FileSearchResult getSearchResults(HttpServletRequest request, SearchDSpaceBean bean, VirtualPath restrictTo) {
 	String index = request.getParameter("pageNumber");
 	Integer start = (index == null) ? 1 : Integer.valueOf(index);
 	Integer searchOffset = (start - 1) * bean.getPageSize();
-	FileSearchResult searchResults = FileManagerFactory.getFactoryInstance().getFileManager()
-		.searchFiles(bean.getSearchCriteria(searchOffset), restrictTo);
+	FileSearchResult searchResults = FileManagerFactory.getFactoryInstance().getFileManager().searchFiles(
+		bean.getSearchCriteria(searchOffset), restrictTo);
 	request.setAttribute("pageNumber", start);
 	bean.setPage(start);
 	bean.setTotalItems(searchResults.getTotalElements());
@@ -157,8 +151,8 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 	String values[] = request.getParameterValues("criteria");
 	for (int i = 0; i < values.length; i++) {
 	    String fields[] = values[i].split(":");
-	    bean.addSearchElement(new SearchElement(SearchField.valueOf(fields[1]),
-		    ((fields.length == 2) ? "" : fields[2]), ConjunctionType.valueOf(fields[0])));
+	    bean.addSearchElement(new SearchElement(SearchField.valueOf(fields[1]), ((fields.length == 2) ? "" : fields[2]),
+		    ConjunctionType.valueOf(fields[0])));
 	}
 
 	return bean;

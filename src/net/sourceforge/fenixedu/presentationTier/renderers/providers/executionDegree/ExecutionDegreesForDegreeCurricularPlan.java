@@ -16,20 +16,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExecutionDegreesForDegreeCurricularPlan implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new ReverseComparator(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR));
-        
-        ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) source;
-        DegreeCurricularPlan degreeCurricularPlan = executionDegreeBean.getDegreeCurricularPlan();
-        
-        if (degreeCurricularPlan != null) {
-            result.addAll(degreeCurricularPlan.getExecutionDegrees());
-        }
-        
-        return result;
+	Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new ReverseComparator(
+		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR));
+
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) source;
+	DegreeCurricularPlan degreeCurricularPlan = executionDegreeBean.getDegreeCurricularPlan();
+
+	if (degreeCurricularPlan != null) {
+	    result.addAll(degreeCurricularPlan.getExecutionDegrees());
+	}
+
+	return result;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

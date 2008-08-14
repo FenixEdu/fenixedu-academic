@@ -10,19 +10,19 @@ public class NoChangeMadeServiceException extends FenixServiceException {
     }
 
     public NoChangeMadeServiceException(Throwable cause) {
-        super(cause);
+	super(cause);
     }
 
     public NoChangeMadeServiceException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     public String toString() {
-        String result = "[NoChangeMadeServiceException\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[NoChangeMadeServiceException\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 
 }

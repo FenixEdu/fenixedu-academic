@@ -14,19 +14,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class LerAulasDeTurma extends Service {
 
     public List<InfoLesson> run(InfoClass infoClass) {
-        SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID( infoClass.getIdInternal());
-        
-        final List<Shift> shiftList = schoolClass.getAssociatedShifts();
+	SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
 
-        List<InfoLesson> infoLessonList = new ArrayList<InfoLesson>();
-        for (Shift shift : shiftList) {
-            for (Lesson lesson : shift.getAssociatedLessonsSet()) {
-                final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                infoLessonList.add(infoLesson);
-            }
-        }
+	final List<Shift> shiftList = schoolClass.getAssociatedShifts();
 
-        return infoLessonList;
+	List<InfoLesson> infoLessonList = new ArrayList<InfoLesson>();
+	for (Shift shift : shiftList) {
+	    for (Lesson lesson : shift.getAssociatedLessonsSet()) {
+		final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+		infoLessonList.add(infoLesson);
+	    }
+	}
+
+	return infoLessonList;
     }
 
 }

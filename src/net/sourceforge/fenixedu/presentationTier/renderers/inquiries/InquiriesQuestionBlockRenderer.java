@@ -141,7 +141,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
 		    final HtmlTableCell cell = questionRow.createCell();
-		    // cell.setColspan(block.getHeader().getScaleHeadersCount());
+		    //cell.setColspan(block.getHeader().getScaleHeadersCount());
 		    cell.setBody(formComponent);
 		    if (scaleHeadersCount > 1) {
 			questionRow.createCell().setColspan(scaleHeadersCount - 1);

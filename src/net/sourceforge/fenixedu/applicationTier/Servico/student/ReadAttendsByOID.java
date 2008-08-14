@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
 public class ReadAttendsByOID extends Service {
-	
-	public InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) {
-		Attends attends = rootDomainObject.readAttendsByOID(idInternal);				
-		return InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends);
 
-	}
+    public InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) {
+	Attends attends = rootDomainObject.readAttendsByOID(idInternal);
+	return InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends);
+
+    }
 
 }

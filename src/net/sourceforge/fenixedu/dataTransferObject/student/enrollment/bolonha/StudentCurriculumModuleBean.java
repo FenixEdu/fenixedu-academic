@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public abstract class StudentCurriculumModuleBean implements Serializable {
 
     private DomainReference<CurriculumModule> curriculumModule;
-    
+
     public StudentCurriculumModuleBean(final CurriculumModule curriculumModule) {
 	super();
 	setCurriculumModule(curriculumModule);
@@ -19,8 +19,7 @@ public abstract class StudentCurriculumModuleBean implements Serializable {
     }
 
     private void setCurriculumModule(CurriculumModule curriculumModule) {
-	this.curriculumModule = (curriculumModule != null) ? new DomainReference<CurriculumModule>(
-		curriculumModule) : null;
+	this.curriculumModule = (curriculumModule != null) ? new DomainReference<CurriculumModule>(curriculumModule) : null;
     }
 
 }

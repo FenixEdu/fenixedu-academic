@@ -16,9 +16,8 @@ public class EnrolBolonhaStudent extends Service {
 
     public RuleResult run(final Person person, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester, final List<IDegreeModuleToEvaluate> degreeModulesToEnrol,
-	    final List<CurriculumModule> curriculumModulesToRemove,
-	    final CurricularRuleLevel curricularRuleLevel) {
-	return studentCurricularPlan.enrol(person, executionSemester, new HashSet<IDegreeModuleToEvaluate>(
-		degreeModulesToEnrol), curriculumModulesToRemove, curricularRuleLevel);
+	    final List<CurriculumModule> curriculumModulesToRemove, final CurricularRuleLevel curricularRuleLevel) {
+	return studentCurricularPlan.enrol(person, executionSemester, new HashSet<IDegreeModuleToEvaluate>(degreeModulesToEnrol),
+		curriculumModulesToRemove, curricularRuleLevel);
     }
 }

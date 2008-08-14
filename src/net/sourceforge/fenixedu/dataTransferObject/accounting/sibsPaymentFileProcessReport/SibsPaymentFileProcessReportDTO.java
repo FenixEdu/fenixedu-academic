@@ -58,7 +58,7 @@ public class SibsPaymentFileProcessReportDTO {
 	this.phdGratuityTotalAmout = Money.ZERO;
 	this.transactionsTotalAmount = Money.ZERO;
 	this.totalCost = Money.ZERO;
-	this.residenceAmount  = Money.ZERO;
+	this.residenceAmount = Money.ZERO;
     }
 
     public void addAdministrativeOfficeTaxAmount(final Money amount) {
@@ -201,7 +201,7 @@ public class SibsPaymentFileProcessReportDTO {
     }
 
     public Money getResidenceAmount() {
-        return residenceAmount;
+	return residenceAmount;
     }
 
     public void addResidenceAmount(Money money) {

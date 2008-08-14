@@ -78,7 +78,8 @@ public class UniversityUnit extends UniversityUnit_Base {
     protected static void checkIfAlreadyExistsOneUniversityWithSameAcronymAndName(AcademicalInstitutionUnit universityUnit) {
 	for (Unit parentUnit : universityUnit.getParentUnits()) {
 	    for (Unit unit : parentUnit.getAllSubUnits()) {
-		if (!unit.equals(universityUnit) && unit.isUniversityUnit()
+		if (!unit.equals(universityUnit)
+			&& unit.isUniversityUnit()
 			&& ((universityUnit.getAcronym() != null && universityUnit.getAcronym().equalsIgnoreCase(
 				unit.getAcronym())) || universityUnit.getName().equalsIgnoreCase(unit.getName()))) {
 		    throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");

@@ -15,30 +15,30 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  * 
  */
 public class ExternalActivity extends ExternalActivity_Base {
-	
-	public ExternalActivity() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
-	
-	public ExternalActivity(Teacher teacher, InfoExternalActivity infoExternalActivity) {
-		this();
-		if(teacher == null)
-			throw new DomainException("The teacher should not be null!");
 
-		setTeacher(teacher);
-		this.setActivity(infoExternalActivity.getActivity());
-	}
+    public ExternalActivity() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		removeTeacher();
-		removeRootDomainObject();
-        super.deleteDomainObject();
-	}
+    public ExternalActivity(Teacher teacher, InfoExternalActivity infoExternalActivity) {
+	this();
+	if (teacher == null)
+	    throw new DomainException("The teacher should not be null!");
 
-	public void edit(InfoExternalActivity infoExternalActivity) {
-		
-		this.setActivity(infoExternalActivity.getActivity());
+	setTeacher(teacher);
+	this.setActivity(infoExternalActivity.getActivity());
+    }
 
-	}
+    public void delete() {
+	removeTeacher();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+
+    public void edit(InfoExternalActivity infoExternalActivity) {
+
+	this.setActivity(infoExternalActivity.getActivity());
+
+    }
 }

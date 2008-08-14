@@ -14,14 +14,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCurricularCourseByID extends Service {
 
-    public InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException{
-        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(
-                curricularCourseID);
+    public InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException {
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
-        if (curricularCourse == null) {
-            throw new NonExistingServiceException();
-        }
+	if (curricularCourse == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+	return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
     }
 }

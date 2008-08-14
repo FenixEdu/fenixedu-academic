@@ -368,8 +368,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	Integer assiduousnessExemptionId = new Integer(request.getParameter("idInternal"));
 	AssiduousnessExemption assiduousnessExemption = rootDomainObject
 		.readAssiduousnessExemptionByOID(assiduousnessExemptionId);
-	ServiceUtils.executeService("DeleteAssiduousnessExemption",
-		new Object[] { assiduousnessExemption });
+	ServiceUtils.executeService("DeleteAssiduousnessExemption", new Object[] { assiduousnessExemption });
 
 	return showAssiduousnessExemptions(mapping, form, request, response);
     }

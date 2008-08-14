@@ -45,7 +45,7 @@ public class Attachment extends Attachment_Base {
     public Site getSite() {
 	Section section = null;
 	Item item = getParent(Item.class);
-	
+
 	if (item != null) {
 	    section = item.getSection();
 	} else {

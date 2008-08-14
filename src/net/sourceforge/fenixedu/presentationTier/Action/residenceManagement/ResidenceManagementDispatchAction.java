@@ -94,14 +94,14 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	return editResidencePriceTableProperty(mapping, actionForm, request, response, "editRoomValues");
     }
 
-    private ActionForward editResidencePriceTableProperty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, String forwardName) throws Exception {
+    private ActionForward editResidencePriceTableProperty(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response, String forwardName) throws Exception {
 
 	ResidenceManagementUnit unit = getManagementUnit(request);
 	ResidenceMonth month = getResidenceMonth(request);
 	request.setAttribute("residenceMonth", month);
 	request.setAttribute("priceTable", unit.getResidencePriceTable());
-	
+
 	return mapping.findForward(forwardName);
     }
 

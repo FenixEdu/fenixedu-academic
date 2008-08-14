@@ -6,6 +6,6 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 public class MergeRooms extends Service {
 
     public void run(AllocatableSpace fromRoom, AllocatableSpace destinationRoom) {
-	AllocatableSpace.mergeAllocatableSpaces(fromRoom, destinationRoom);		
-    }    
+	AllocatableSpace.mergeAllocatableSpaces(fromRoom, destinationRoom);
+    }
 }

@@ -10,10 +10,11 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import org.joda.time.YearMonthDay;
 
 public class ScientificJournalParticipation extends ScientificJournalParticipation_Base {
-    
-    public  ScientificJournalParticipation(Party party,ResearchActivityParticipationRole role, ScientificJournal journal, MultiLanguageString roleMessage, YearMonthDay begin, YearMonthDay end) {
+
+    public ScientificJournalParticipation(Party party, ResearchActivityParticipationRole role, ScientificJournal journal,
+	    MultiLanguageString roleMessage, YearMonthDay begin, YearMonthDay end) {
 	super();
-	if(alreadyHasParticipation(party, role, journal)) {
+	if (alreadyHasParticipation(party, role, journal)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setParty(party);
@@ -23,23 +24,23 @@ public class ScientificJournalParticipation extends ScientificJournalParticipati
 	super.setBeginDate(begin);
 	super.setEndDate(end);
     }
-    
+
     private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, ScientificJournal journal) {
-	for(ScientificJournalParticipation participation : party.getScientificJournalParticipations()) {
-	    if(participation.match(party,role,journal)) {
+	for (ScientificJournalParticipation participation : party.getScientificJournalParticipations()) {
+	    if (participation.match(party, role, journal)) {
 		return true;
 	    }
 	}
-	return false;	
+	return false;
     }
-    
+
     public boolean match(Party party, ResearchActivityParticipationRole role, ScientificJournal journal) {
-	return this.getParty().equals(party) && this.getRole().equals(role) && this.getScientificJournal() .equals(journal);
+	return this.getParty().equals(party) && this.getRole().equals(role) && this.getScientificJournal().equals(journal);
     }
 
     @Override
     public void setScientificJournal(ScientificJournal journal) {
-	if(alreadyHasParticipation(getParty(), getRole(), journal)) {
+	if (alreadyHasParticipation(getParty(), getRole(), journal)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setScientificJournal(journal);
@@ -47,7 +48,7 @@ public class ScientificJournalParticipation extends ScientificJournalParticipati
 
     @Override
     public void setParty(Party party) {
-	if(alreadyHasParticipation(party, getRole(), getScientificJournal())) {
+	if (alreadyHasParticipation(party, getRole(), getScientificJournal())) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setParty(party);
@@ -55,7 +56,7 @@ public class ScientificJournalParticipation extends ScientificJournalParticipati
 
     @Override
     public void setRole(ResearchActivityParticipationRole role) {
-	if(alreadyHasParticipation(getParty(), role, getScientificJournal())) {
+	if (alreadyHasParticipation(getParty(), role, getScientificJournal())) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}
 	super.setRole(role);
@@ -75,7 +76,7 @@ public class ScientificJournalParticipation extends ScientificJournalParticipati
     public boolean isLastParticipation() {
 	return this.getScientificJournal().getParticipationsFor(this.getParty()).size() == 1;
     }
- 
+
     @Override
     public void delete() {
 	removeScientificJournal();

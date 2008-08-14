@@ -24,95 +24,93 @@ public class ContactsForm extends Form {
     private boolean isPhotoAvailable;
 
     public ContactsForm() {
-        super();
+	super();
     }
 
     public static ContactsForm createFromPerson(Person person) {
-        final boolean availableEmail = person.isDefaultEmailVisible();
-        final boolean availableWebSite = person.isDefaultWebAddressVisible();
-        final boolean availablePhoto = person.getAvailablePhoto() == null ? false : person
-                .getAvailablePhoto();
-        return new ContactsForm(person.getEmail(), person.getWebAddress(), availableEmail,
-                availableWebSite, availablePhoto, person.getMobile(), person.getPhone());
+	final boolean availableEmail = person.isDefaultEmailVisible();
+	final boolean availableWebSite = person.isDefaultWebAddressVisible();
+	final boolean availablePhoto = person.getAvailablePhoto() == null ? false : person.getAvailablePhoto();
+	return new ContactsForm(person.getEmail(), person.getWebAddress(), availableEmail, availableWebSite, availablePhoto,
+		person.getMobile(), person.getPhone());
     }
 
-    private ContactsForm(String email, String homepage, boolean isEmailAvailable,
-            boolean isHomepageAvailable, boolean isPhotoAvailable, String mobileNumber,
-            String phoneNumber) {
-        this();
-        this.email = email;
-        this.webAddress = homepage;
-        this.isEmailAvailable = isEmailAvailable;
-        this.isHomepageAvailable = isHomepageAvailable;
-        this.isPhotoAvailable = isPhotoAvailable;
-        this.mobileNumber = mobileNumber;
-        this.phoneNumber = phoneNumber;
+    private ContactsForm(String email, String homepage, boolean isEmailAvailable, boolean isHomepageAvailable,
+	    boolean isPhotoAvailable, String mobileNumber, String phoneNumber) {
+	this();
+	this.email = email;
+	this.webAddress = homepage;
+	this.isEmailAvailable = isEmailAvailable;
+	this.isHomepageAvailable = isHomepageAvailable;
+	this.isPhotoAvailable = isPhotoAvailable;
+	this.mobileNumber = mobileNumber;
+	this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
-        return email;
+	return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     public String getWebAddress() {
-        return webAddress;
+	return webAddress;
     }
 
     public void setWebAddress(String homepage) {
-        this.webAddress = homepage;
+	this.webAddress = homepage;
     }
 
     public boolean isEmailAvailable() {
-        return isEmailAvailable;
+	return isEmailAvailable;
     }
 
     public void setEmailAvailable(boolean isEmailAvailable) {
-        this.isEmailAvailable = isEmailAvailable;
+	this.isEmailAvailable = isEmailAvailable;
     }
 
     public boolean isHomepageAvailable() {
-        return isHomepageAvailable;
+	return isHomepageAvailable;
     }
 
     public void setHomepageAvailable(boolean isHomepageAvailable) {
-        this.isHomepageAvailable = isHomepageAvailable;
+	this.isHomepageAvailable = isHomepageAvailable;
     }
 
     public boolean isPhotoAvailable() {
-        return isPhotoAvailable;
+	return isPhotoAvailable;
     }
 
     public void setPhotoAvailable(boolean isPhotoAvailable) {
-        this.isPhotoAvailable = isPhotoAvailable;
+	this.isPhotoAvailable = isPhotoAvailable;
     }
 
     public String getMobileNumber() {
-        return mobileNumber;
+	return mobileNumber;
     }
 
     public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+	this.mobileNumber = mobileNumber;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+	return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+	this.phoneNumber = phoneNumber;
     }
 
     @Override
     public List<LabelFormatter> validate() {
-        return new ArrayList<LabelFormatter>();
+	return new ArrayList<LabelFormatter>();
     }
 
     @Override
     public String getFormName() {
-        return "label.candidacy.workflow.contactsForm";
+	return "label.candidacy.workflow.contactsForm";
     }
 
 }

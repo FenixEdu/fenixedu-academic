@@ -18,38 +18,40 @@ import org.apache.struts.action.ActionMapping;
 
 public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
-	@Override
-	protected Unit getUnit(HttpServletRequest request) {
-		Unit unit = super.getUnit(request);
-		
-		if (unit != null) {
-			return unit;
-		}
-		
-		Integer unitId = getIdInternal(request, "unitID");
-		return (Unit) RootDomainObject.getInstance().readPartyByOID(unitId);
+    @Override
+    protected Unit getUnit(HttpServletRequest request) {
+	Unit unit = super.getUnit(request);
+
+	if (unit != null) {
+	    return unit;
 	}
-	
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-    	request.setAttribute("units", Collections.singleton(RootDomainObject.getInstance().getInstitutionUnit()));
-    	return mapping.findForward("showUnits");
+
+	Integer unitId = getIdInternal(request, "unitID");
+	return (Unit) RootDomainObject.getInstance().readPartyByOID(unitId);
     }
 
-    public ActionForward createSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-    	Unit unit = getUnit(request);
-
-		try {
-			executeService("CreateUnitSite", unit);
-		} catch (DomainException e) {
-			addActionMessage("error", request, e.getKey(), e.getArgs());
-		}
-		
-		return prepare(mapping, actionForm, request, response);
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("units", Collections.singleton(RootDomainObject.getInstance().getInstitutionUnit()));
+	return mapping.findForward("showUnits");
     }
 
-	@Override
-	protected String getAuthorNameForFile(HttpServletRequest request) {
-		return null;
+    public ActionForward createSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	Unit unit = getUnit(request);
+
+	try {
+	    executeService("CreateUnitSite", unit);
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	}
+
+	return prepare(mapping, actionForm, request, response);
+    }
+
+    @Override
+    protected String getAuthorNameForFile(HttpServletRequest request) {
+	return null;
+    }
 
 }

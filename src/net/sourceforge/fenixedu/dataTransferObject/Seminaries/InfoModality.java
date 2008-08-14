@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.Seminaries.Modality;
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
- * Created at 1/Ago/2003, 21:14:43
- *  
+ *         Created at 1/Ago/2003, 21:14:43
+ * 
  */
 public class InfoModality extends InfoObject {
 
@@ -25,46 +25,46 @@ public class InfoModality extends InfoObject {
      * @return
      */
     public String getDescription() {
-        return description;
+	return description;
     }
 
     /**
      * @return
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
      * @param string
      */
     public void setDescription(String string) {
-        description = string;
+	description = string;
     }
 
     /**
      * @param string
      */
     public void setName(String string) {
-        name = string;
+	name = string;
     }
 
     public void copyFromDomain(Modality modality) {
-        super.copyFromDomain(modality);
-        if (modality != null) {
-            setDescription(modality.getDescription());
-            setName(modality.getName());
-        }
+	super.copyFromDomain(modality);
+	if (modality != null) {
+	    setDescription(modality.getDescription());
+	    setName(modality.getName());
+	}
     }
 
     public static InfoModality newInfoFromDomain(Modality modality) {
-        InfoModality infoModality = null;
+	InfoModality infoModality = null;
 
-        if (modality != null) {
-            infoModality = new InfoModality();
-            infoModality.copyFromDomain(modality);
-        }
-        return infoModality;
+	if (modality != null) {
+	    infoModality = new InfoModality();
+	    infoModality.copyFromDomain(modality);
+	}
+	return infoModality;
     }
 
 }

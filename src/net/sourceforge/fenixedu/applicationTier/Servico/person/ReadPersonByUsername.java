@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.domain.Person;
 public class ReadPersonByUsername extends Service {
 
     public InfoPerson run(String username) throws ExcepcaoInexistente {
-        final Person person = Person.readPersonByUsername(username);
-        if (person == null) {
-            throw new ExcepcaoInexistente("error.readPersonByUsername.noPerson");
-        }
-        return InfoPerson.newInfoFromDomain(person);
+	final Person person = Person.readPersonByUsername(username);
+	if (person == null) {
+	    throw new ExcepcaoInexistente("error.readPersonByUsername.noPerson");
+	}
+	return InfoPerson.newInfoFromDomain(person);
     }
 }

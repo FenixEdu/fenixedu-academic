@@ -123,13 +123,12 @@ public class UnitSiteRenderer extends OutputRenderer {
 	    unitPresentation.addChild(getUnitComponent(unit, isPublic));
 	    if (isParenteShown()) {
 
-		Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(),
-			new Predicate() {
-			    public boolean evaluate(Object arg0) {
-				return !((Unit) arg0).isAggregateUnit();
-			    }
+		Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(), new Predicate() {
+		    public boolean evaluate(Object arg0) {
+			return !((Unit) arg0).isAggregateUnit();
+		    }
 
-			});
+		});
 
 		if (!parentUnits.isEmpty()) {
 		    unitPresentation.addChild(new HtmlText(getSeparator(), false));
@@ -150,8 +149,8 @@ public class UnitSiteRenderer extends OutputRenderer {
 	private HtmlComponent getUnitComponent(Unit unit, final boolean isPublic) {
 	    HtmlComponent component;
 	    if (unitHasSite(unit)) {
-		final String preapendedComment = isPublic ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX :
-		    	ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		final String preapendedComment = isPublic ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+			: ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
 		HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
 
 		link.setUrl(resolveUnitURL(unit));
@@ -167,17 +166,17 @@ public class UnitSiteRenderer extends OutputRenderer {
 	    }
 	    return component;
 	}
-	
+
 	private boolean unitHasSite(Unit unit) {
 	    return (unit.isDegreeUnit()) ? unit.getDegree().hasSite() : unit.hasSite();
 	}
 
 	private String resolveUnitURL(Unit unit) {
 	    Site site = unit.getSite();
-	    if(site == null) {
+	    if (site == null) {
 		return "";
 	    }
-	    
+
 	    return site.getReversePath();
 	}
     }

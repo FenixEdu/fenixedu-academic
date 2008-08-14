@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class SelectCandidaciesDTO extends DataTranferObject {
 
@@ -22,7 +22,7 @@ public class SelectCandidaciesDTO extends DataTranferObject {
      * @return Returns the candidacies.
      */
     public List getCandidacies() {
-        return candidacies;
+	return candidacies;
     }
 
     /**
@@ -30,14 +30,14 @@ public class SelectCandidaciesDTO extends DataTranferObject {
      *            The candidacies to set.
      */
     public void setCandidacies(List candidacies) {
-        this.candidacies = candidacies;
+	this.candidacies = candidacies;
     }
 
     /**
      * @return Returns the seminaries.
      */
     public List getSeminaries() {
-        return seminaries;
+	return seminaries;
     }
 
     /**
@@ -45,7 +45,7 @@ public class SelectCandidaciesDTO extends DataTranferObject {
      *            The seminaries to set.
      */
     public void setSeminaries(List seminaries) {
-        this.seminaries = seminaries;
+	this.seminaries = seminaries;
     }
 
     /**

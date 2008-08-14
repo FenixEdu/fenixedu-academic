@@ -38,8 +38,8 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixServiceException, FenixFilterException {
 	try {
 	    super.execute(mapping, form, request, response);
 	} catch (Exception e2) {
@@ -51,7 +51,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 	String selectedExecutionPeriodOIDString = (String) indexForm.get("selectedExecutionPeriodOID");
 	Integer selectedExecutionPeriodOID = (selectedExecutionPeriodOIDString != null && selectedExecutionPeriodOIDString
 		.length() > 0) ? new Integer(selectedExecutionPeriodOIDString) : null;
-		
+
 	request.removeAttribute(SessionConstants.INFO_SECTION);
 	IUserView userView = UserView.getUser();
 	setListOfExecutionPeriods(request, userView);
@@ -63,8 +63,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 	    String roomOidString = request.getParameter(SessionConstants.ROOM_OID);
 	    if (roomOidString != null) {
 		Integer roomOid = new Integer(Integer.parseInt(roomOidString));
-		infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID",
-			new Object[] { roomOid });
+		infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", new Object[] { roomOid });
 
 	    } else {
 		indexWeek = null;
@@ -143,17 +142,16 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
     private InfoExecutionPeriod getExecutionPeriod(IUserView userView, Integer selectedExecutionPeriodOID)
 	    throws FenixFilterException, FenixServiceException {
 	if (selectedExecutionPeriodOID == null) {
-	    return (InfoExecutionPeriod) ServiceUtils.executeService(
-		    "ReadCurrentExecutionPeriod", new Object[] {});
+	    return (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod", new Object[] {});
 	}
 	Object[] args = { selectedExecutionPeriodOID };
 	return (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID", args);
 
     }
 
-    protected void setListOfExecutionPeriods(HttpServletRequest request, IUserView userView)
-	    throws FenixServiceException, FenixFilterException {
-	
+    protected void setListOfExecutionPeriods(HttpServletRequest request, IUserView userView) throws FenixServiceException,
+	    FenixFilterException {
+
 	Object argsReadExecutionPeriods[] = {};
 	List<InfoExecutionPeriod> executionPeriods;
 	executionPeriods = (ArrayList<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
@@ -168,8 +166,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 	for (int i = 0; i < executionPeriods.size(); i++) {
 	    InfoExecutionPeriod infoExecutionPeriod2 = (InfoExecutionPeriod) executionPeriods.get(i);
 	    executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod2.getName() + " - "
-		    + infoExecutionPeriod2.getInfoExecutionYear().getYear(), ""
-		    + infoExecutionPeriod2.getIdInternal()));
+		    + infoExecutionPeriod2.getInfoExecutionYear().getYear(), "" + infoExecutionPeriod2.getIdInternal()));
 	}
 
 	request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);

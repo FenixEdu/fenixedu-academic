@@ -24,29 +24,26 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class CreateScormPackage extends CreateFileContent {
 
-	public void run(Site site, Item item, File file, String originalFilename, String displayName,
-			Group permittedGroup, Person person, EducationalResourceType type) throws DomainException,
-			FenixServiceException, IOException {
+    public void run(Site site, Item item, File file, String originalFilename, String displayName, Group permittedGroup,
+	    Person person, EducationalResourceType type) throws DomainException, FenixServiceException, IOException {
 
-		super.run(site, item, file, originalFilename, displayName, permittedGroup, person, type);
+	super.run(site, item, file, originalFilename, displayName, permittedGroup, person, type);
+    }
+
+    @Override
+    protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
+	    Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
+	final IScormFileManager fileManager = FileManagerFactory.getFactoryInstance().getScormFileManager();
+	InputStream is = null;
+	try {
+	    is = new FileInputStream(file);
+	    return fileManager.saveScormFile(filePath, originalFilename, permission, metaData, is, FileSetType.PACKAGE_SCORM_1_2);
+	} catch (FileNotFoundException e) {
+	    throw new FenixServiceException(e.getMessage());
+	} finally {
+	    is.close();
 	}
 
-	@Override
-	protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
-			Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
-		final IScormFileManager fileManager = FileManagerFactory.getFactoryInstance()
-				.getScormFileManager();
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-			return fileManager.saveScormFile(filePath, originalFilename, permission, metaData, is,
-					FileSetType.PACKAGE_SCORM_1_2);
-		} catch (FileNotFoundException e) {
-			throw new FenixServiceException(e.getMessage());
-		} finally {
-			is.close();
-		}
-
-	}
+    }
 
 }

@@ -90,307 +90,307 @@ public class OpeningProjectFileReport implements Serializable, IOpeningProjectFi
     private List<IRubric> projectInvestigationTeam;
 
     public String getAcademicUnit() {
-        return academicUnit;
+	return academicUnit;
     }
 
     public void setAcademicUnit(String academicUnit) {
-        this.academicUnit = academicUnit;
+	this.academicUnit = academicUnit;
     }
 
     public String getAcademicUnitDescription() {
-        return academicUnitDescription;
+	return academicUnitDescription;
     }
 
     public void setAcademicUnitDescription(String academicUnitDescription) {
-        this.academicUnitDescription = academicUnitDescription;
+	this.academicUnitDescription = academicUnitDescription;
     }
 
     public Double getAcademicUnitOverhead() {
-        return academicUnitOverhead;
+	return academicUnitOverhead;
     }
 
     public void setAcademicUnitOverhead(Double academicUnitOverhead) {
-        this.academicUnitOverhead = academicUnitOverhead;
+	this.academicUnitOverhead = academicUnitOverhead;
     }
 
     public String getAcronym() {
-        return acronym;
+	return acronym;
     }
 
     public void setAcronym(String acronym) {
-        this.acronym = acronym;
+	this.acronym = acronym;
     }
 
     public String getBid() {
-        return bid;
+	return bid;
     }
 
     public void setBid(String bid) {
-        this.bid = bid;
+	this.bid = bid;
     }
 
     public String getBudgetaryMemberControl() {
-        return budgetaryMemberControl;
+	return budgetaryMemberControl;
     }
 
     public void setBudgetaryMemberControl(String budgetaryMemberControl) {
-        this.budgetaryMemberControl = budgetaryMemberControl;
+	this.budgetaryMemberControl = budgetaryMemberControl;
     }
 
     public String getContractNumber() {
-        return contractNumber;
+	return contractNumber;
     }
 
     public void setContractNumber(String contractNumber) {
-        this.contractNumber = contractNumber;
+	this.contractNumber = contractNumber;
     }
 
     public String getCoordination() {
-        return coordination;
+	return coordination;
     }
 
     public void setCoordination(String coordination) {
-        this.coordination = coordination;
+	this.coordination = coordination;
     }
 
     public Integer getCoordinatorCode() {
-        return coordinatorCode;
+	return coordinatorCode;
     }
 
     public void setCoordinatorCode(Integer coordinatorCode) {
-        this.coordinatorCode = coordinatorCode;
+	this.coordinatorCode = coordinatorCode;
     }
 
     public String getCoordinatorContact() {
-        return coordinatorContact;
+	return coordinatorContact;
     }
 
     public void setCoordinatorContact(String coordinatorContact) {
-        this.coordinatorContact = coordinatorContact;
+	this.coordinatorContact = coordinatorContact;
     }
 
     public String getCoordinatorName() {
-        return coordinatorName;
+	return coordinatorName;
     }
 
     public void setCoordinatorName(String coordinatorName) {
-        this.coordinatorName = coordinatorName;
+	this.coordinatorName = coordinatorName;
     }
 
     public Double getCoordinatorOverhead() {
-        return coordinatorOverhead;
+	return coordinatorOverhead;
     }
 
     public void setCoordinatorOverhead(Double coordinatorOverhead) {
-        this.coordinatorOverhead = coordinatorOverhead;
+	this.coordinatorOverhead = coordinatorOverhead;
     }
 
     public String getCost() {
-        return cost;
+	return cost;
     }
 
     public void setCost(String cost) {
-        this.cost = cost;
+	this.cost = cost;
     }
 
     public String getCurrency() {
-        return currency;
+	return currency;
     }
 
     public void setCurrency(String currency) {
-        this.currency = currency;
+	this.currency = currency;
     }
 
     public Integer getDuration() {
-        return duration;
+	return duration;
     }
 
     public void setDuration(Integer duration) {
-        this.duration = duration;
+	this.duration = duration;
     }
 
     public Integer getExplorationUnit() {
-        return explorationUnit;
+	return explorationUnit;
     }
 
     public void setExplorationUnit(Integer explorationUnit) {
-        this.explorationUnit = explorationUnit;
+	this.explorationUnit = explorationUnit;
     }
 
     public Double getExplorationUnitOverhead() {
-        return explorationUnitOverhead;
+	return explorationUnitOverhead;
     }
 
     public void setExplorationUnitOverhead(Double explorationUnitOverhead) {
-        this.explorationUnitOverhead = explorationUnitOverhead;
+	this.explorationUnitOverhead = explorationUnitOverhead;
     }
 
     public String getGeneralDirection() {
-        return generalDirection;
+	return generalDirection;
     }
 
     public void setGeneralDirection(String generalDirection) {
-        this.generalDirection = generalDirection;
+	this.generalDirection = generalDirection;
     }
 
     public String getIlegivelTaxControl() {
-        return ilegivelTaxControl;
+	return ilegivelTaxControl;
     }
 
     public void setIlegivelTaxControl(String ilegivelTaxControl) {
-        this.ilegivelTaxControl = ilegivelTaxControl;
+	this.ilegivelTaxControl = ilegivelTaxControl;
     }
 
     public String getInitialDate() {
-        return initialDate;
+	return initialDate;
     }
 
     public void setInitialDate(String initialDate) {
-        this.initialDate = initialDate;
+	this.initialDate = initialDate;
     }
 
     public Double getManagementUnitOverhead() {
-        return managementUnitOverhead;
+	return managementUnitOverhead;
     }
 
     public void setManagementUnitOverhead(Double managementUnitOverhead) {
-        this.managementUnitOverhead = managementUnitOverhead;
+	this.managementUnitOverhead = managementUnitOverhead;
     }
 
     public String getOperationalUnit() {
-        return operationalUnit;
+	return operationalUnit;
     }
 
     public void setOperationalUnit(String operationalUnit) {
-        this.operationalUnit = operationalUnit;
+	this.operationalUnit = operationalUnit;
     }
 
     public String getOperationalUnitDescription() {
-        return operationalUnitDescription;
+	return operationalUnitDescription;
     }
 
     public void setOperationalUnitDescription(String operationalUnitDescription) {
-        this.operationalUnitDescription = operationalUnitDescription;
+	this.operationalUnitDescription = operationalUnitDescription;
     }
 
     public Double getOperationalUnitOverhead() {
-        return operationalUnitOverhead;
+	return operationalUnitOverhead;
     }
 
     public void setOperationalUnitOverhead(Double operationalUnitOverhead) {
-        this.operationalUnitOverhead = operationalUnitOverhead;
+	this.operationalUnitOverhead = operationalUnitOverhead;
     }
 
     public String getOverheadsDate() {
-        return overheadsDate;
+	return overheadsDate;
     }
 
     public void setOverheadsDate(String overheadsDate) {
-        this.overheadsDate = overheadsDate;
+	this.overheadsDate = overheadsDate;
     }
 
     public String getParentProjectCode() {
-        return parentProjectCode;
+	return parentProjectCode;
     }
 
     public void setParentProjectCode(String parentProjectCode) {
-        this.parentProjectCode = parentProjectCode;
+	this.parentProjectCode = parentProjectCode;
     }
 
     public String getProgram() {
-        return program;
+	return program;
     }
 
     public void setProgram(String program) {
-        this.program = program;
+	this.program = program;
     }
 
     public String getProgramDescription() {
-        return programDescription;
+	return programDescription;
     }
 
     public void setProgramDescription(String programDescription) {
-        this.programDescription = programDescription;
+	this.programDescription = programDescription;
     }
 
     public Integer getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public List<IRubric> getProjectFinancialEntities() {
-        return projectFinancialEntities;
+	return projectFinancialEntities;
     }
 
     public void setProjectFinancialEntities(List<IRubric> projectFinancialEntities) {
-        this.projectFinancialEntities = projectFinancialEntities;
+	this.projectFinancialEntities = projectFinancialEntities;
     }
 
     public List<IRubric> getProjectInvestigationTeam() {
-        return projectInvestigationTeam;
+	return projectInvestigationTeam;
     }
 
     public void setProjectInvestigationTeam(List<IRubric> projectInvestigationTeam) {
-        this.projectInvestigationTeam = projectInvestigationTeam;
+	this.projectInvestigationTeam = projectInvestigationTeam;
     }
 
     public List<IProjectMemberBudget> getProjectMembersBudget() {
-        return projectMembersBudget;
+	return projectMembersBudget;
     }
 
     public void setProjectMembersBudget(List<IProjectMemberBudget> projectMembersBudget) {
-        this.projectMembersBudget = projectMembersBudget;
+	this.projectMembersBudget = projectMembersBudget;
     }
 
     public String getProjectOrigin() {
-        return projectOrigin;
+	return projectOrigin;
     }
 
     public void setProjectOrigin(String projectOrigin) {
-        this.projectOrigin = projectOrigin;
+	this.projectOrigin = projectOrigin;
     }
 
     public List<IRubric> getProjectRubricBudget() {
-        return projectRubricBudget;
+	return projectRubricBudget;
     }
 
     public void setProjectRubricBudget(List<IRubric> projectRubricBudget) {
-        this.projectRubricBudget = projectRubricBudget;
+	this.projectRubricBudget = projectRubricBudget;
     }
 
     public String getProjectType() {
-        return projectType;
+	return projectType;
     }
 
     public void setProjectType(String projectType) {
-        this.projectType = projectType;
+	this.projectType = projectType;
     }
 
     public String getSummary() {
-        return summary;
+	return summary;
     }
 
     public void setSummary(String summary) {
-        this.summary = summary;
+	this.summary = summary;
     }
 
     public String getTaxControl() {
-        return taxControl;
+	return taxControl;
     }
 
     public void setTaxControl(String taxControl) {
-        this.taxControl = taxControl;
+	this.taxControl = taxControl;
     }
 
     public String getTitle() {
-        return title;
+	return title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+	this.title = title;
     }
 
 }

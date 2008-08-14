@@ -28,9 +28,9 @@ public class FileItemGroupProvider implements DataProvider {
 		UnitAnnouncementBoard board = fileContent.getAttachment().getParent(UnitAnnouncementBoard.class);
 		if (board != null) {
 		    site = board.getUnit().getSite();
-		}
-		else {
-		    ExecutionCourseAnnouncementBoard executionBoard = fileContent.getAttachment().getParent(ExecutionCourseAnnouncementBoard.class);
+		} else {
+		    ExecutionCourseAnnouncementBoard executionBoard = fileContent.getAttachment().getParent(
+			    ExecutionCourseAnnouncementBoard.class);
 		    if (executionBoard != null) {
 			site = executionBoard.getExecutionCourse().getSite();
 		    }

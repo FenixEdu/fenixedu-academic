@@ -14,28 +14,27 @@ public class AvailabilityBean implements Serializable {
     private DomainReference<Module> module;
 
     public AvailabilityBean(Module module) {
-        super();
+	super();
 
-        this.module = new DomainReference<Module>(module);
+	this.module = new DomainReference<Module>(module);
     }
 
     private ExpressionGroupAvailability getGroupAvailability() {
-        return (ExpressionGroupAvailability) getModule().getAvailabilityPolicy();
+	return (ExpressionGroupAvailability) getModule().getAvailabilityPolicy();
     }
 
     public Container getModule() {
-        return this.module.getObject();
+	return this.module.getObject();
     }
-    
+
     public String getExpression() {
-        ExpressionGroupAvailability groupAvailability = getGroupAvailability();
-        
-        if (groupAvailability == null) {
-            return null;
-        }
-        else {
-            return groupAvailability.getExpression();
-        }
+	ExpressionGroupAvailability groupAvailability = getGroupAvailability();
+
+	if (groupAvailability == null) {
+	    return null;
+	} else {
+	    return groupAvailability.getExpression();
+	}
     }
 
 }

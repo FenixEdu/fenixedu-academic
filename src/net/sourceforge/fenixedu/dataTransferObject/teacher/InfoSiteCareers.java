@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.CareerType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class InfoSiteCareers extends DataTranferObject implements ISiteComponent {
 
@@ -31,7 +31,7 @@ public class InfoSiteCareers extends DataTranferObject implements ISiteComponent
      * @return Returns the careerType.
      */
     public CareerType getCareerType() {
-        return careerType;
+	return careerType;
     }
 
     /**
@@ -39,14 +39,14 @@ public class InfoSiteCareers extends DataTranferObject implements ISiteComponent
      *            The careerType to set.
      */
     public void setCareerType(CareerType careerType) {
-        this.careerType = careerType;
+	this.careerType = careerType;
     }
 
     /**
      * @return Returns the infoCareers.
      */
     public List getInfoCareers() {
-        return infoCareers;
+	return infoCareers;
     }
 
     /**
@@ -54,14 +54,14 @@ public class InfoSiteCareers extends DataTranferObject implements ISiteComponent
      *            The infoCareers to set.
      */
     public void setInfoCareers(List infoCareers) {
-        this.infoCareers = infoCareers;
+	this.infoCareers = infoCareers;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -69,7 +69,7 @@ public class InfoSiteCareers extends DataTranferObject implements ISiteComponent
      *            The infoTeacher to set.
      */
     public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
+	this.infoTeacher = infoTeacher;
     }
 
 }

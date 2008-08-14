@@ -47,7 +47,7 @@ import org.joda.time.YearMonthDay;
 /**
  * @author dcs-rjao
  * 
- * 24/Mar/2003
+ *         24/Mar/2003
  */
 
 public class Enrolment extends Enrolment_Base implements IEnrolment {
@@ -1365,8 +1365,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      * ExamDateCertificateRequests)
      * 
      * @param optionalEnrolment
-     * @param curriculumGroup:
-     *                new CurriculumGroup for Enrolment
+     * @param curriculumGroup
+     *            : new CurriculumGroup for Enrolment
      * @return Enrolment
      */
     static Enrolment createBasedOn(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {

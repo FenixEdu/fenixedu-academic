@@ -14,7 +14,7 @@ public class UnitSiteManagerAuthorizationFilter extends Filtro {
 	IUserView userView = getRemoteUser(request);
 	Person person = userView.getPerson();
 
-	UnitSite site= (UnitSite) request.getServiceParameters().getParameter(0);
+	UnitSite site = (UnitSite) request.getServiceParameters().getParameter(0);
 
 	if (!site.hasManagers(person)) {
 	    throw new NotAuthorizedFilterException("error.person.not.manager.of.site");

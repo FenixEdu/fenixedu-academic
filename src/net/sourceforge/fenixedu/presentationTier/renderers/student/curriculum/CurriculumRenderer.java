@@ -27,8 +27,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CurriculumRenderer extends InputRenderer {
 
-    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language
-	    .getLocale());
+    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 
     private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
 	    .getLocale());
@@ -51,9 +50,9 @@ public class CurriculumRenderer extends InputRenderer {
 	    + "scplancolenrolmentevaluationtype, scplancolyear, scplancolsemester, scplancolexamdate, scplancolgraderesponsible";
 
     private String selectionName;
-    
+
     private boolean visibleCurricularYearEntries = true;
-    
+
     public boolean isVisibleCurricularYearEntries() {
 	return visibleCurricularYearEntries;
     }
@@ -226,10 +225,10 @@ public class CurriculumRenderer extends InputRenderer {
 		generateCurricularYearRows(curricularYearTable);
 		generateCurricularYearSums(curricularYearTable);
 	    }
-	    
+
 	    return container;
 	}
-	
+
 	private HtmlText createHtmlTextItalic(final String message) {
 	    final HtmlText htmlText = new HtmlText(message);
 	    htmlText.setClasses("italic");
@@ -239,15 +238,18 @@ public class CurriculumRenderer extends InputRenderer {
 
 	private void generateAverageRows(final HtmlTable mainTable) {
 
-	    final Set<ICurriculumEntry> sortedIAverageEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
+	    final Set<ICurriculumEntry> sortedIAverageEntries = new TreeSet<ICurriculumEntry>(
+		    ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	    sortedIAverageEntries.addAll(this.curriculum.getEnrolmentRelatedEntries());
 	    if (!sortedIAverageEntries.isEmpty()) {
 		generateGroupRowWithText(mainTable, "Inscrições", true, 0);
 		generateRows(mainTable, sortedIAverageEntries, 0);
 	    }
 
-	    final Set<ICurriculumEntry> sortedEquivalenceEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
-	    final Set<ICurriculumEntry> sortedSubstitutionsEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
+	    final Set<ICurriculumEntry> sortedEquivalenceEntries = new TreeSet<ICurriculumEntry>(
+		    ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
+	    final Set<ICurriculumEntry> sortedSubstitutionsEntries = new TreeSet<ICurriculumEntry>(
+		    ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	    for (final ICurriculumEntry entry : this.curriculum.getDismissalRelatedEntries()) {
 		if (entry instanceof Dismissal) {
 		    sortedEquivalenceEntries.add(entry);
@@ -316,7 +318,7 @@ public class CurriculumRenderer extends InputRenderer {
 	    generateCodeAndNameCell(enrolmentRow, entry, level, allowSelection);
 	    if (entry instanceof ExternalEnrolment) {
 		generateExternalEnrolmentLabelCell(enrolmentRow, (ExternalEnrolment) entry, level);
-	    } 
+	    }
 	    generateGradeCell(enrolmentRow, entry);
 	    generateWeightCell(enrolmentRow, entry);
 	    generateWeightTimesGradeCell(enrolmentRow, entry);
@@ -324,8 +326,8 @@ public class CurriculumRenderer extends InputRenderer {
 	    generateSemesterCell(enrolmentRow, entry);
 	}
 
-	private void generateCodeAndNameCell(final HtmlTableRow enrolmentRow, final ICurriculumEntry entry,
-		final int level, boolean allowSelection) {
+	private void generateCodeAndNameCell(final HtmlTableRow enrolmentRow, final ICurriculumEntry entry, final int level,
+		boolean allowSelection) {
 
 	    final HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
 	    inlineContainer.addChild(new HtmlText(getPresentationNameFor(entry)));
@@ -338,7 +340,7 @@ public class CurriculumRenderer extends InputRenderer {
 
 	private String getPresentationNameFor(final ICurriculumEntry entry) {
 	    final String code = !StringUtils.isEmpty(entry.getCode()) ? entry.getCode() + " - " : "";
-		    
+
 	    if (entry instanceof OptionalEnrolment) {
 		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) entry;
 		return code + optionalEnrolment.getCurricularCourse().getName();
@@ -346,7 +348,7 @@ public class CurriculumRenderer extends InputRenderer {
 		return code + entry.getName().getContent();
 	    }
 	}
-	
+
 	private void generateExternalEnrolmentLabelCell(final HtmlTableRow externalEnrolmentRow,
 		final ExternalEnrolment externalEnrolment, final int level) {
 	    generateCellWithText(externalEnrolmentRow, externalEnrolment.getDescription(), getLabelCellClass(), 1);
@@ -355,14 +357,16 @@ public class CurriculumRenderer extends InputRenderer {
 	private void generateGradeCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
 	    final Grade grade = entry.getGrade();
 	    generateCellWithText(enrolmentRow, grade.isEmpty() ? "-" : grade.getValue(), getGradeCellClass());
-	}	
-	
+	}
+
 	private void generateWeightCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
-	    generateCellWithText(enrolmentRow, entry.getGrade().isNumeric() ? entry.getWeigthForCurriculum().toString() : "-", getWeightCellClass());
+	    generateCellWithText(enrolmentRow, entry.getGrade().isNumeric() ? entry.getWeigthForCurriculum().toString() : "-",
+		    getWeightCellClass());
 	}
 
 	private void generateWeightTimesGradeCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
-	    generateCellWithText(enrolmentRow, entry.getGrade().isNumeric() ? entry.getWeigthTimesGrade().toString() : "-", getWeightCellClass());
+	    generateCellWithText(enrolmentRow, entry.getGrade().isNumeric() ? entry.getWeigthTimesGrade().toString() : "-",
+		    getWeightCellClass());
 	}
 
 	private void generateEctsCreditsCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
@@ -370,16 +374,18 @@ public class CurriculumRenderer extends InputRenderer {
 	}
 
 	private void generateExecutionYearCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
-	    generateCellWithText(enrolmentRow, entry.getExecutionYear() == null ? "-" : entry.getExecutionYear().getYear(), getEnrolmentExecutionYearCellClass());
+	    generateCellWithText(enrolmentRow, entry.getExecutionYear() == null ? "-" : entry.getExecutionYear().getYear(),
+		    getEnrolmentExecutionYearCellClass());
 	}
 
 	private void generateSemesterCell(final HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
-	    final String semester = entry.getExecutionPeriod() == null ? "-" : entry.getExecutionPeriod().getSemester().toString() + " "
-		    + applicationResources.getString("label.semester.short");
+	    final String semester = entry.getExecutionPeriod() == null ? "-" : entry.getExecutionPeriod().getSemester()
+		    .toString()
+		    + " " + applicationResources.getString("label.semester.short");
 
 	    generateCellWithText(enrolmentRow, semester, getEnrolmentSemesterCellClass());
 	}
-	
+
 	private void generateCellWithText(final HtmlTableRow row, final String text, final String cssClass) {
 	    generateCellWithText(row, text, cssClass, 1);
 	}
@@ -399,7 +405,8 @@ public class CurriculumRenderer extends InputRenderer {
 	    generateCellWithSpan(row, text, title, cssClass, 1);
 	}
 
-	private void generateCellWithSpan(final HtmlTableRow row, final String text, final String title,final String cssClass, final Integer colSpan) {
+	private void generateCellWithSpan(final HtmlTableRow row, final String text, final String title, final String cssClass,
+		final Integer colSpan) {
 	    final HtmlTableCell cell = row.createCell();
 	    cell.setClasses(cssClass);
 	    cell.setColspan(colSpan);
@@ -434,15 +441,17 @@ public class CurriculumRenderer extends InputRenderer {
 	}
 
 	private void generateCurricularYearRows(final HtmlTable table) {
-	    final Set<ICurriculumEntry> sortedEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
+	    final Set<ICurriculumEntry> sortedEntries = new TreeSet<ICurriculumEntry>(
+		    ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	    sortedEntries.addAll(this.curriculum.getCurricularYearEntries());
 	    if (!sortedEntries.isEmpty()) {
 		generateCurricularYearHeaderRowWithText(table, "", true, 0);
 		generateCurricularYearRows(table, sortedEntries, 0);
 	    }
 	}
-	
-	private void generateCurricularYearHeaderRowWithText(final HtmlTable table, final String text, boolean addHeaders, final int level) {
+
+	private void generateCurricularYearHeaderRowWithText(final HtmlTable table, final String text, boolean addHeaders,
+		final int level) {
 	    final HtmlTableRow groupRow = table.createRow();
 	    groupRow.setClasses(getHeaderRowClass());
 
@@ -474,7 +483,8 @@ public class CurriculumRenderer extends InputRenderer {
 	    }
 	}
 
-	private void generateCurricularYearRow(HtmlTable mainTable, final ICurriculumEntry entry, int level, boolean allowSelection) {
+	private void generateCurricularYearRow(HtmlTable mainTable, final ICurriculumEntry entry, int level,
+		boolean allowSelection) {
 	    final HtmlTableRow enrolmentRow = mainTable.createRow();
 	    enrolmentRow.setClasses(getEnrolmentRowClass());
 

@@ -25,65 +25,63 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ExecutionCoursesForUnit implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
+	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
 
-        Unit unit = bean.getSelectedUnit();
-        Department department = bean.getSelectedDepartment();
-        CompetenceCourseGroupUnit competenceCourseGroup = bean.getSelectedCompetenceCourseGroupUnit();
+	Unit unit = bean.getSelectedUnit();
+	Department department = bean.getSelectedDepartment();
+	CompetenceCourseGroupUnit competenceCourseGroup = bean.getSelectedCompetenceCourseGroupUnit();
 
+	Set<ExecutionCourse> courses = new HashSet<ExecutionCourse>();
+	if (unit == null) {
+	    // Add pre-bolonha competenceCourses
+	    courses.addAll(getExecutionCoursesFromCompetenceCourses(department.getCompetenceCourses()));
+	    unit = department.getDepartmentUnit();
+	}
 
-        Set<ExecutionCourse> courses = new HashSet<ExecutionCourse>();
-        if (unit == null) {
-            // Add pre-bolonha competenceCourses
-            courses.addAll(getExecutionCoursesFromCompetenceCourses(department.getCompetenceCourses()));
-            unit = department.getDepartmentUnit();
-        }
+	// Add bolonha competenceCourses
+	courses.addAll((competenceCourseGroup == null) ? getBolonhaCourses(unit)
+		: getBolonhaCoursesForGivenGroup(competenceCourseGroup));
 
-        // Add bolonha competenceCourses
-        courses.addAll((competenceCourseGroup == null) ? getBolonhaCourses(unit)
-                : getBolonhaCoursesForGivenGroup(competenceCourseGroup));
-
-        List<ExecutionCourse> coursesToProvide = new ArrayList<ExecutionCourse>(courses);
-        Collections.sort(coursesToProvide, new BeanComparator("nome"));
-        return coursesToProvide;
+	List<ExecutionCourse> coursesToProvide = new ArrayList<ExecutionCourse>(courses);
+	Collections.sort(coursesToProvide, new BeanComparator("nome"));
+	return coursesToProvide;
     }
 
     private List<ExecutionCourse> getBolonhaCoursesForGivenGroup(CompetenceCourseGroupUnit competenceCourseGroup) {
-        return getExecutionCoursesFromCompetenceCourses(competenceCourseGroup.getCompetenceCourses());
+	return getExecutionCoursesFromCompetenceCourses(competenceCourseGroup.getCompetenceCourses());
     }
 
     private List<ExecutionCourse> getBolonhaCourses(Unit unit) {
 
-        List<CompetenceCourseGroupUnit> courseGroups = new ArrayList<CompetenceCourseGroupUnit>();
-        List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-        if (unit.isDepartmentUnit()) {
-            List<ScientificAreaUnit> scientificAreaUnits = ((DepartmentUnit)unit).getScientificAreaUnits();
-            for (ScientificAreaUnit areaUnit : scientificAreaUnits) {
-                courseGroups.addAll(areaUnit.getCompetenceCourseGroupUnits());
-            }
-        } else {
-            courseGroups.addAll(((ScientificAreaUnit)unit).getCompetenceCourseGroupUnits());
-        }
+	List<CompetenceCourseGroupUnit> courseGroups = new ArrayList<CompetenceCourseGroupUnit>();
+	List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+	if (unit.isDepartmentUnit()) {
+	    List<ScientificAreaUnit> scientificAreaUnits = ((DepartmentUnit) unit).getScientificAreaUnits();
+	    for (ScientificAreaUnit areaUnit : scientificAreaUnits) {
+		courseGroups.addAll(areaUnit.getCompetenceCourseGroupUnits());
+	    }
+	} else {
+	    courseGroups.addAll(((ScientificAreaUnit) unit).getCompetenceCourseGroupUnits());
+	}
 
-        for (CompetenceCourseGroupUnit courseGroup : courseGroups) {
-            executionCourses.addAll(getBolonhaCoursesForGivenGroup(courseGroup));
-        }
+	for (CompetenceCourseGroupUnit courseGroup : courseGroups) {
+	    executionCourses.addAll(getBolonhaCoursesForGivenGroup(courseGroup));
+	}
 
-        return executionCourses;
+	return executionCourses;
     }
 
-    private List<ExecutionCourse> getExecutionCoursesFromCompetenceCourses(
-            List<CompetenceCourse> competenceCourses) {
-        List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
-        ExecutionSemester period = ExecutionSemester.readActualExecutionSemester();
-        for (CompetenceCourse course : competenceCourses) {
-            courses.addAll(course.getExecutionCoursesByExecutionPeriod(period));
-        }
-        return courses;
+    private List<ExecutionCourse> getExecutionCoursesFromCompetenceCourses(List<CompetenceCourse> competenceCourses) {
+	List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
+	ExecutionSemester period = ExecutionSemester.readActualExecutionSemester();
+	for (CompetenceCourse course : competenceCourses) {
+	    courses.addAll(course.getExecutionCoursesByExecutionPeriod(period));
+	}
+	return courses;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyArrayConverter();
+	return new DomainObjectKeyArrayConverter();
     }
 
 }

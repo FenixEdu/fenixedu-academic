@@ -16,30 +16,30 @@ public abstract class InfoObject extends DataTranferObject {
     }
 
     public InfoObject(Integer idInternal) {
-        setIdInternal(idInternal);
+	setIdInternal(idInternal);
     }
 
     /**
      * @return
      */
     public Integer getIdInternal() {
-        return idInternal;
+	return idInternal;
     }
 
     /**
      * @param integer
      */
     public void setIdInternal(Integer integer) {
-        idInternal = integer;
+	idInternal = integer;
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof InfoObject) {
-            InfoObject infoObject = (InfoObject) obj;
-            return this.getIdInternal().equals(infoObject.getIdInternal());
-        }
+	if (obj instanceof InfoObject) {
+	    InfoObject infoObject = (InfoObject) obj;
+	    return this.getIdInternal().equals(infoObject.getIdInternal());
+	}
 
-        return false;
+	return false;
     }
 
     /*
@@ -48,23 +48,23 @@ public abstract class InfoObject extends DataTranferObject {
      * @see java.lang.Object#hashCode()
      */
     public int hashCode() {
-        if (this.idInternal != null) {
-            return this.idInternal.intValue();
-        }
+	if (this.idInternal != null) {
+	    return this.idInternal.intValue();
+	}
 
-        return 0;
+	return 0;
     }
 
     public void copyFromDomain(DomainObject domainObject) {
-        if (domainObject != null) {
-            setIdInternal(domainObject.getIdInternal());
-        }
+	if (domainObject != null) {
+	    setIdInternal(domainObject.getIdInternal());
+	}
     }
 
     public void copyToDomain(InfoObject infoObject, DomainObject domainObject) {
- 		if (domainObject != null) {
-            domainObject.setIdInternal(infoObject.getIdInternal());
-        }
+	if (domainObject != null) {
+	    domainObject.setIdInternal(infoObject.getIdInternal());
+	}
     }
 
 }

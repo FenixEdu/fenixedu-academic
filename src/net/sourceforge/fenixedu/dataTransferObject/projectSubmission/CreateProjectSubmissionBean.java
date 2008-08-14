@@ -23,57 +23,56 @@ public class CreateProjectSubmissionBean implements Serializable {
     private transient InputStream inputStream;
 
     private String filename;
-    
+
     public StudentGroup getStudentGroup() {
-        return (this.studentGroupReference != null) ? this.studentGroupReference.getObject() : null;
+	return (this.studentGroupReference != null) ? this.studentGroupReference.getObject() : null;
 
     }
 
     public void setStudentGroup(StudentGroup studentGroup) {
-        this.studentGroupReference = (studentGroup != null) ? new DomainReference<StudentGroup>(
-                studentGroup) : null;
+	this.studentGroupReference = (studentGroup != null) ? new DomainReference<StudentGroup>(studentGroup) : null;
     }
 
     public Attends getAttends() {
-        return (this.attendsReference != null) ? this.attendsReference.getObject() : null;
+	return (this.attendsReference != null) ? this.attendsReference.getObject() : null;
 
     }
 
     public void setAttends(Attends attends) {
-        this.attendsReference = (attends != null) ? new DomainReference<Attends>(attends) : null;
+	this.attendsReference = (attends != null) ? new DomainReference<Attends>(attends) : null;
 
     }
 
     public Project getProject() {
-        return (this.projectReference != null) ? this.projectReference.getObject() : null;
+	return (this.projectReference != null) ? this.projectReference.getObject() : null;
     }
 
     public void setProject(Project project) {
-        this.projectReference = (project != null) ? new DomainReference<Project>(project) : null;
+	this.projectReference = (project != null) ? new DomainReference<Project>(project) : null;
     }
 
     public Person getPerson() {
-        return (this.personReference != null) ? this.personReference.getObject() : null;
+	return (this.personReference != null) ? this.personReference.getObject() : null;
     }
 
     public void setPerson(Person person) {
-        this.personReference = (person != null) ? new DomainReference<Person>(person) : null;
+	this.personReference = (person != null) ? new DomainReference<Person>(person) : null;
     }
 
     public InputStream getInputStream() {
-        return inputStream;
+	return inputStream;
     }
 
     public void setInputStream(InputStream fileInputStream) {
-        this.inputStream = fileInputStream;
+	this.inputStream = fileInputStream;
     }
 
     public String getFilename() {
-        return filename;
+	return filename;
     }
 
     public void setFilename(String filename) {
-        this.filename = StringNormalizer.normalize(filename);
+	this.filename = StringNormalizer.normalize(filename);
     }
 
 }

@@ -7,15 +7,10 @@ import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.VariableInfo;
 
-public class CollectionTagExtraInfo extends TagExtraInfo{
+public class CollectionTagExtraInfo extends TagExtraInfo {
 
     public VariableInfo[] getVariableInfo(TagData arg0) {
-        return new VariableInfo[] {
-                new VariableInfo("id",
-                                 "java.util.Collection",
-                                 true,
-                                 VariableInfo.AT_END)           
-              };
+	return new VariableInfo[] { new VariableInfo("id", "java.util.Collection", true, VariableInfo.AT_END) };
 
     }
 

@@ -12,13 +12,11 @@ public class CreateInstallmentPenaltyExemption extends Service {
 	super();
     }
 
-    public void run(final Employee employee,
-	    final CreateInstallmentPenaltyExemptionBean penaltyExemptionBean) {
+    public void run(final Employee employee, final CreateInstallmentPenaltyExemptionBean penaltyExemptionBean) {
 	for (final Installment installment : penaltyExemptionBean.getInstallments()) {
-	    new InstallmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
-		    penaltyExemptionBean.getGratuityEventWithPaymentPlan(), employee, installment,
-		    penaltyExemptionBean.getReason(), penaltyExemptionBean
-			    .getDispatchDate());
+	    new InstallmentPenaltyExemption(penaltyExemptionBean.getJustificationType(), penaltyExemptionBean
+		    .getGratuityEventWithPaymentPlan(), employee, installment, penaltyExemptionBean.getReason(),
+		    penaltyExemptionBean.getDispatchDate());
 	}
     }
 

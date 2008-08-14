@@ -28,80 +28,76 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class SearchPublicationsAction extends SearchDSpaceGeneralAction {
 
-	public ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-			FenixServiceException {
-		return super.addNewSearchCriteria(mapping, form, request, response, "SearchPublication");
-	}
-	
-	public ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-			FenixServiceException {
-		return super.removeSearchCriteria(mapping, form, request, response, "SearchPublication");
-	}
-	
-	public ActionForward prepareSearchPublication(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-			FenixServiceException {
+    public ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	return super.addNewSearchCriteria(mapping, form, request, response, "SearchPublication");
+    }
 
-		return super.prepareSearch(mapping, form, request, response, "SearchPublication");
-	}
+    public ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	return super.removeSearchCriteria(mapping, form, request, response, "SearchPublication");
+    }
 
-	public ActionForward moveIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward prepareSearchPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		return super.moveIndex(mapping, form, request, response, "SearchPublication");
+	return super.prepareSearch(mapping, form, request, response, "SearchPublication");
+    }
+
+    public ActionForward moveIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	return super.moveIndex(mapping, form, request, response, "SearchPublication");
+
+    }
+
+    public ActionForward searchPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	return super.searchContent(mapping, form, request, response, "SearchPublication");
+    }
+
+    @Override
+    protected VirtualPath getSearchPath(HttpServletRequest request) {
+
+	final VirtualPath searchPath = new VirtualPath();
+
+	searchPath.addNode(new VirtualPathNode("Research", "Research"));
+	searchPath.addNode(new VirtualPathNode("Results", "Results"));
+
+	SearchDSpacePublicationBean bean = (SearchDSpacePublicationBean) getBean(request);
+
+	return (bean.getSearchNode() == null) ? searchPath : searchPath.addNode(bean.getSearchNode());
+    }
+
+    @Override
+    protected SearchDSpaceBean createNewBean() {
+	return new SearchDSpacePublicationBean();
+    }
+
+    @Override
+    protected void putResearchResultsInBean(SearchDSpaceBean bean, List<FileDescriptor> searchResults) {
+	Set<ResearchResult> researchResults = new HashSet<ResearchResult>();
+	for (FileDescriptor descriptor : searchResults) {
+	    File file = File.readByExternalStorageIdentification(descriptor.getUniqueId());
+	    if (file != null) {
+		ResearchResultDocumentFile documentFile = (ResearchResultDocumentFile) file;
+		researchResults.add(documentFile.getResult());
+	    }
 
 	}
+	bean.setResults(new ArrayList<DomainObject>(researchResults));
+    }
 
-	public ActionForward searchPublication(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-			FenixServiceException {
-		
-		return super.searchContent(mapping, form, request, response, "SearchPublication");
-	}
+    @Override
+    protected SearchDSpaceBean reconstructBeanFromRequest(HttpServletRequest request) {
+	SearchDSpacePublicationBean bean = (SearchDSpacePublicationBean) super.reconstructBeanFromRequest(request);
+	String searchPublications = request.getParameter("searchPublications");
+	String searchPatents = request.getParameter("searchPatents");
 
-	@Override
-	protected VirtualPath getSearchPath(HttpServletRequest request) {
-		
-		final VirtualPath searchPath = new VirtualPath();
-
-		searchPath.addNode(new VirtualPathNode("Research", "Research"));
-		searchPath.addNode(new VirtualPathNode("Results", "Results"));
-		
-		SearchDSpacePublicationBean bean = (SearchDSpacePublicationBean) getBean(request);
-		
-		return (bean.getSearchNode()==null) ? searchPath : searchPath.addNode(bean.getSearchNode());
-	}
-
-	@Override
-	protected SearchDSpaceBean createNewBean() {
-		return new SearchDSpacePublicationBean();
-	}
-	
-	@Override
-	protected void putResearchResultsInBean(SearchDSpaceBean bean, List<FileDescriptor> searchResults) {
-		Set<ResearchResult> researchResults = new HashSet<ResearchResult>();
-		for (FileDescriptor descriptor : searchResults) {
-			File file = File.readByExternalStorageIdentification(descriptor.getUniqueId());
-			if(file!=null) {
-				ResearchResultDocumentFile documentFile = (ResearchResultDocumentFile) file;
-				researchResults.add(documentFile.getResult());
-			}
-			
-		}
-		bean.setResults(new ArrayList<DomainObject>(researchResults));
-	}
-	
-	@Override
-	protected SearchDSpaceBean reconstructBeanFromRequest(HttpServletRequest request) {
-		SearchDSpacePublicationBean bean = (SearchDSpacePublicationBean) super.reconstructBeanFromRequest(request);
-		String searchPublications = request.getParameter("searchPublications");
-		String searchPatents = request.getParameter("searchPatents");
-		
-		bean.setSearchPublications(Boolean.valueOf(searchPublications));
-		bean.setSearchPatents(Boolean.valueOf(searchPatents));
-		return bean;
-	}
+	bean.setSearchPublications(Boolean.valueOf(searchPublications));
+	bean.setSearchPatents(Boolean.valueOf(searchPatents));
+	return bean;
+    }
 
 }

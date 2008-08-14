@@ -58,8 +58,8 @@ public class UnitsTree extends TagSupport {
 	return buffer.toString();
     }
 
-    private void getSubUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer,
-	    YearMonthDay currentDate, String paramName, String path) {
+    private void getSubUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, YearMonthDay currentDate,
+	    String paramName, String path) {
 
 	buffer.append("<li>");
 
@@ -69,15 +69,15 @@ public class UnitsTree extends TagSupport {
 	    putImage(parentUnit, parentUnitParent, buffer, request);
 	}
 
-	buffer.append("<a href=\"").append(request.getContextPath()).append(path).append("&").append(
-		paramName).append("=").append(parentUnit.getIdInternal()).append("\">").append(
-		parentUnit.getNameWithAcronym()).append("</a>").append("</li>");
+	buffer.append("<a href=\"").append(request.getContextPath()).append(path).append("&").append(paramName).append("=")
+		.append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getNameWithAcronym()).append("</a>").append(
+			"</li>");
 
 	if (!subUnits.isEmpty()) {
-	    buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(
-		    parentUnit.getIdInternal()).append(
-		    (parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
-		    .append("style='display:" + (getExpanded() != null && Boolean.valueOf(getExpanded()) ? "block" : "none")).append("'>\r\n");
+	    buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal()).append(
+		    (parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ").append(
+		    "style='display:" + (getExpanded() != null && Boolean.valueOf(getExpanded()) ? "block" : "none")).append(
+		    "'>\r\n");
 
 	    Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 	}
@@ -92,13 +92,13 @@ public class UnitsTree extends TagSupport {
     }
 
     private List<Unit> getUnitSubUnits(Unit parentUnit, YearMonthDay currentDate) {
-	
+
 	List<AccountabilityTypeEnum> accountabilityEnums = new ArrayList<AccountabilityTypeEnum>();
-	
+
 	accountabilityEnums.add(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
 	accountabilityEnums.add(AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
 	accountabilityEnums.add(AccountabilityTypeEnum.GEOGRAPHIC);
-	
+
 	if (!StringUtils.isEmpty(this.getState()) && this.getState().equalsIgnoreCase("true")) {
 	    return new ArrayList(parentUnit.getActiveSubUnits(currentDate, accountabilityEnums));
 	} else if (!StringUtils.isEmpty(this.getState()) && this.getState().equalsIgnoreCase("false")) {
@@ -110,15 +110,13 @@ public class UnitsTree extends TagSupport {
 
     private void putImage(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, HttpServletRequest request) {
 	buffer.append("<img ").append("src='").append(request.getContextPath()).append(
-		(getExpanded() != null && Boolean.valueOf(getExpanded()) ? "/images/toggle_minus10.gif" : "/images/toggle_plus10.gif")).append("' id=\"").append(
-		parentUnit.getIdInternal()).append(
-		(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
-		.append("indexed='true' onClick=\"").append("check(document.getElementById('").append(
-			"aa").append(parentUnit.getIdInternal()).append(
-			(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append(
-			"'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-			(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append(
-			"'));return false;").append("\"> ");
+		(getExpanded() != null && Boolean.valueOf(getExpanded()) ? "/images/toggle_minus10.gif"
+			: "/images/toggle_plus10.gif")).append("' id=\"").append(parentUnit.getIdInternal()).append(
+		(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ").append(
+		"indexed='true' onClick=\"").append("check(document.getElementById('").append("aa").append(
+		parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append(
+		"'),document.getElementById('").append(parentUnit.getIdInternal()).append(
+		(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("'));return false;").append("\"> ");
     }
 
     public String getId() {

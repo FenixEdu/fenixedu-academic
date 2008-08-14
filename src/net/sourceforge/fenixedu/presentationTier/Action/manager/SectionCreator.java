@@ -86,7 +86,7 @@ public class SectionCreator implements Serializable {
     }
 
     public void createSection() {
-	Section section = new Section( (getSuperiorSection()==null) ? getSite() : getSuperiorSection(), getName());
+	Section section = new Section((getSuperiorSection() == null) ? getSite() : getSuperiorSection(), getName());
 	section.setNextSection(getNextSection());
 	section.setPermittedGroup(getPermittedGroup());
 	section.setVisible(getVisible());

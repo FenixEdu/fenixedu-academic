@@ -320,7 +320,7 @@ public class SearchPerson extends Service {
 		    && verifyNameEquality(searchParameters.getNameWords(), person)
 		    && verifyParameter(person.getEmail(), searchParameters.getEmail())
 		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
-		    && verifyStudentNumber(searchParameters.getStudentNumber(), person) 
+		    && verifyStudentNumber(searchParameters.getStudentNumber(), person)
 		    && verifyShowOnlySearchableResearchers(searchParameters.showOnlySearchableResearchers, person);
 	}
 

@@ -9,27 +9,26 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularC
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
 public class CreateTSDCurricularCourseGroup extends Service {
-	public TSDCurricularCourseGroup run(
-			Integer tsdId,
-			Integer[] tsdCurricularCourseToGroupArray) {
-		
-		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
-		List<TSDCurricularCourse> tsdCurricularCourseList = new ArrayList<TSDCurricularCourse>();
-		TSDCurricularCourseGroup tsdCurricularCourseGroup = null;
-		
-		for (Integer tsdCurricularCourseId : tsdCurricularCourseToGroupArray) {
-			TSDCurricularCourse tsdCurricularCourse = (TSDCurricularCourse) rootDomainObject.readTSDCourseByOID(tsdCurricularCourseId);
-			
-			if(tsdCurricularCourse != null) {
-				tsdCurricularCourseList.add(tsdCurricularCourse);
-			}
-		}
-		
-		if(!tsdCurricularCourseList.isEmpty()){
-			tsdCurricularCourseGroup = new TSDCurricularCourseGroup(tsd, tsdCurricularCourseList);
-			tsdCurricularCourseGroup.setIsActive(true);
-		}
-		
-		return tsdCurricularCourseGroup;
+    public TSDCurricularCourseGroup run(Integer tsdId, Integer[] tsdCurricularCourseToGroupArray) {
+
+	TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+	List<TSDCurricularCourse> tsdCurricularCourseList = new ArrayList<TSDCurricularCourse>();
+	TSDCurricularCourseGroup tsdCurricularCourseGroup = null;
+
+	for (Integer tsdCurricularCourseId : tsdCurricularCourseToGroupArray) {
+	    TSDCurricularCourse tsdCurricularCourse = (TSDCurricularCourse) rootDomainObject
+		    .readTSDCourseByOID(tsdCurricularCourseId);
+
+	    if (tsdCurricularCourse != null) {
+		tsdCurricularCourseList.add(tsdCurricularCourse);
+	    }
 	}
+
+	if (!tsdCurricularCourseList.isEmpty()) {
+	    tsdCurricularCourseGroup = new TSDCurricularCourseGroup(tsd, tsdCurricularCourseList);
+	    tsdCurricularCourseGroup.setIsActive(true);
+	}
+
+	return tsdCurricularCourseGroup;
+    }
 }

@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 13, 2006,5:03:44 PM
  * 
  */
 public class ExecutionCourseResponsiblesGroup extends Group {
-    
+
     private static final long serialVersionUID = -1670838873686375271L;
 
     @Override
@@ -65,7 +65,7 @@ public class ExecutionCourseResponsiblesGroup extends Group {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return null;
+	return null;
     }
 
 }

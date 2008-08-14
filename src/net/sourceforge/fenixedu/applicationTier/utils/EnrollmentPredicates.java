@@ -5,16 +5,17 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import org.apache.commons.collections.Predicate;
 
 public class EnrollmentPredicates {
-    
-    /* devolve um Predicate que aceita IEnrollments que tenham o estado como APROVED (sic) */
+
+    /*
+     * devolve um Predicate que aceita IEnrollments que tenham o estado como
+     * APROVED (sic)
+     */
     public static Predicate getApprovedPredicate() {
 	return new Predicate() {
 	    public boolean evaluate(Object object) {
 		if (object instanceof Enrolment) {
 		    Enrolment en = (Enrolment) object;
-		    if (en.isEnrolmentStateApproved()
-			    || en.isEnroled()
-			    || en.isTemporarilyEnroled())
+		    if (en.isEnrolmentStateApproved() || en.isEnroled() || en.isTemporarilyEnroled())
 			return true;
 		}
 
@@ -23,14 +24,16 @@ public class EnrollmentPredicates {
 	};
     }
 
-    /* devolve um Predicate que aceita IEnrollments que tenham o estado como ENROLLED */
+    /*
+     * devolve um Predicate que aceita IEnrollments que tenham o estado como
+     * ENROLLED
+     */
     public static Predicate getEnrolledPredicate() {
 	return new Predicate() {
 	    public boolean evaluate(Object object) {
 		if (object instanceof Enrolment) {
 		    Enrolment en = (Enrolment) object;
-		    if (en.isEnroled()
-			    || en.isTemporarilyEnroled())
+		    if (en.isEnroled() || en.isTemporarilyEnroled())
 			return true;
 		}
 

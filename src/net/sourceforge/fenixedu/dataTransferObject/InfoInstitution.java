@@ -9,24 +9,23 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class InfoInstitution extends InfoObject {
     private String name;
 
     public InfoInstitution() {
     }
-	
-	
+
     public InfoInstitution(String name) {
-        setName(name);
+	setName(name);
     }
-	
+
     /**
      * @return Returns the name.
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
@@ -34,7 +33,7 @@ public class InfoInstitution extends InfoObject {
      *            The name to set.
      */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     /**
@@ -42,19 +41,19 @@ public class InfoInstitution extends InfoObject {
      * @return
      */
     public static InfoInstitution newInfoFromDomain(Unit institution) {
-        InfoInstitution infoInstitution = null;
-        if (institution != null) {
-            infoInstitution = new InfoInstitution();
-            infoInstitution.copyFromDomain(institution);
-        }
+	InfoInstitution infoInstitution = null;
+	if (institution != null) {
+	    infoInstitution = new InfoInstitution();
+	    infoInstitution.copyFromDomain(institution);
+	}
 
-        return infoInstitution;
+	return infoInstitution;
     }
 
     public void copyFromDomain(Unit institution) {
-        super.copyFromDomain(institution);
-        if (institution != null) {
-            setName(institution.getName());
-        }
+	super.copyFromDomain(institution);
+	if (institution != null) {
+	    setName(institution.getName());
+	}
     }
 }

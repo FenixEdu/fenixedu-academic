@@ -33,11 +33,11 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 	    return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
 	}
     };
-    
+
     private final DomainReference<CurricularCourse> curricularCourseDomainReference;
 
-    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en); 
-    
+    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+
     private List<InfoCurricularCourseScope> infoScopes;
 
     private List infoAssociatedExecutionCourses;
@@ -51,8 +51,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public CurricularCourse getCurricularCourse() {
-	return curricularCourseDomainReference == null ? null : curricularCourseDomainReference
-		.getObject();
+	return curricularCourseDomainReference == null ? null : curricularCourseDomainReference.getObject();
     }
 
     public Boolean getBasic() {
@@ -64,8 +63,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public boolean equals(Object obj) {
-	return obj instanceof InfoCurricularCourse
-		&& getCurricularCourse() == ((InfoCurricularCourse) obj).getCurricularCourse();
+	return obj instanceof InfoCurricularCourse && getCurricularCourse() == ((InfoCurricularCourse) obj).getCurricularCourse();
     }
 
     public String toString() {
@@ -99,22 +97,23 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     public Double getFieldWorkHours() {
 	return getCurricularCourse().getFieldWorkHours();
     }
+
     public Double getProblemsHours() {
 	return getCurricularCourse().getProblemsHours();
     }
-    
+
     public Double getSeminaryHours() {
 	return getCurricularCourse().getSeminaryHours();
     }
-    
+
     public Double getTrainingPeriodHours() {
 	return getCurricularCourse().getTrainingPeriodHours();
     }
-    
+
     public Double getTutorialOrientationHours() {
 	return getCurricularCourse().getTutorialOrientationHours();
     }
-    
+
     public Double getTotalLabHours() {
 	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.LABORATORIAL, null);
 	return totalHours != null ? totalHours.doubleValue() : 0d;
@@ -139,22 +138,22 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.FIELD_WORK, null);
 	return totalHours != null ? totalHours.doubleValue() : 0d;
     }
-    
+
     public Double getTotalProblemsHours() {
 	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.PROBLEMS, null);
-	return totalHours != null ? totalHours.doubleValue() : 0d;    
+	return totalHours != null ? totalHours.doubleValue() : 0d;
     }
-    
+
     public Double getTotalSeminaryHours() {
 	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.SEMINARY, null);
 	return totalHours != null ? totalHours.doubleValue() : 0d;
     }
-    
+
     public Double getTotalTrainingPeriodHours() {
 	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TRAINING_PERIOD, null);
 	return totalHours != null ? totalHours.doubleValue() : 0d;
     }
-    
+
     public Double getTotalTutorialOrientationHours() {
 	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TUTORIAL_ORIENTATION, null);
 	return totalHours != null ? totalHours.doubleValue() : 0d;
@@ -192,11 +191,9 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 	InfoCurricularCourseScope infoCurricularCourseScope = null;
 	Iterator iterator = this.getInfoScopes().iterator();
 	while (iterator.hasNext()) {
-	    InfoCurricularCourseScope infoCurricularCourseScope2 = (InfoCurricularCourseScope) iterator
-		    .next();
+	    InfoCurricularCourseScope infoCurricularCourseScope2 = (InfoCurricularCourseScope) iterator.next();
 	    if (infoCurricularCourseScope2.getInfoBranch().equals(infoBranch)
-		    && infoCurricularCourseScope2.getInfoCurricularSemester().getSemester().equals(
-			    semester)) {
+		    && infoCurricularCourseScope2.getInfoCurricularSemester().getSemester().equals(semester)) {
 		infoCurricularCourseScope = infoCurricularCourseScope2;
 		break;
 	    }
@@ -228,11 +225,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 	Iterator iter = scopes.iterator();
 	while (iter.hasNext()) {
 	    InfoCurricularCourseScope infoScope = (InfoCurricularCourseScope) iter.next();
-	    if (minScope == 0
-		    || minScope > infoScope.getInfoCurricularSemester().getInfoCurricularYear()
-			    .getYear().intValue()) {
-		minScope = infoScope.getInfoCurricularSemester().getInfoCurricularYear().getYear()
-			.intValue();
+	    if (minScope == 0 || minScope > infoScope.getInfoCurricularSemester().getInfoCurricularYear().getYear().intValue()) {
+		minScope = infoScope.getInfoCurricularSemester().getInfoCurricularYear().getYear().intValue();
 	    }
 	}
 
@@ -297,8 +291,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public String getName() {
-	return showEnVersion && getCurricularCourse().getNameEn() != null
-		&& getCurricularCourse().getNameEn().length() > 0 ? getCurricularCourse().getNameEn()
+	return showEnVersion && getCurricularCourse().getNameEn() != null && getCurricularCourse().getNameEn().length() > 0 ? getCurricularCourse()
+		.getNameEn()
 		: getCurricularCourse().getName();
     }
 

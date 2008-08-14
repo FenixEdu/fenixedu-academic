@@ -23,60 +23,59 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 public class SearchObjectsByMultiLanguageString extends Service implements AutoCompleteSearchService {
 
     public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-    	List<DomainObject> result = new ArrayList<DomainObject>();
-        
-        String slotName  = arguments.get("slot");
-        Collection<DomainObject> objects = RootDomainObject.readAllDomainObjects(type);
-        
-        if (value == null) {
-            result.addAll(objects);
-        }
-        else {
-            String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
-            
-            for (DomainObject object : objects) {
-                try {
-                    MultiLanguageString objectMLS = (MultiLanguageString) PropertyUtils.getProperty(object, slotName);
-                    
-                    if (objectMLS == null || objectMLS.getAllContents().size() == 0) {
-                        continue;
-                    }
+	List<DomainObject> result = new ArrayList<DomainObject>();
 
-                    for (Language language : objectMLS.getAllLanguages()) {
-                        String objectValue = objectMLS.getContent(language);
+	String slotName = arguments.get("slot");
+	Collection<DomainObject> objects = RootDomainObject.readAllDomainObjects(type);
 
-                        String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
-                        
-                        boolean matches = true;
-                        for (int i = 0; i < values.length; i++) {
-                            String part = values[i];
-                            
-                            if (! normalizedValue.contains(part)) {
-                                matches = false;
-                            }
-                        }
-                        
-                        if (matches) {
-                            result.add(object);
-                            break;
-                        }
-                    }
-                    
-                    if (result.size() >= limit) {
-                        break;
-                    }
-                    
-                } catch (IllegalAccessException e) {
-                    throw new DomainException("searchObject.type.notFound", e);
-                } catch (InvocationTargetException e) {
-                    throw new DomainException("searchObject.failed.read", e);
-                } catch (NoSuchMethodException e) {
-                    throw new DomainException("searchObject.failed.read", e);
-                }
-            }
-        }
-        
-        Collections.sort(result, new BeanComparator(slotName + ".content"));
-        return result;
+	if (value == null) {
+	    result.addAll(objects);
+	} else {
+	    String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
+
+	    for (DomainObject object : objects) {
+		try {
+		    MultiLanguageString objectMLS = (MultiLanguageString) PropertyUtils.getProperty(object, slotName);
+
+		    if (objectMLS == null || objectMLS.getAllContents().size() == 0) {
+			continue;
+		    }
+
+		    for (Language language : objectMLS.getAllLanguages()) {
+			String objectValue = objectMLS.getContent(language);
+
+			String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
+
+			boolean matches = true;
+			for (int i = 0; i < values.length; i++) {
+			    String part = values[i];
+
+			    if (!normalizedValue.contains(part)) {
+				matches = false;
+			    }
+			}
+
+			if (matches) {
+			    result.add(object);
+			    break;
+			}
+		    }
+
+		    if (result.size() >= limit) {
+			break;
+		    }
+
+		} catch (IllegalAccessException e) {
+		    throw new DomainException("searchObject.type.notFound", e);
+		} catch (InvocationTargetException e) {
+		    throw new DomainException("searchObject.failed.read", e);
+		} catch (NoSuchMethodException e) {
+		    throw new DomainException("searchObject.failed.read", e);
+		}
+	    }
+	}
+
+	Collections.sort(result, new BeanComparator(slotName + ".content"));
+	return result;
     }
 }

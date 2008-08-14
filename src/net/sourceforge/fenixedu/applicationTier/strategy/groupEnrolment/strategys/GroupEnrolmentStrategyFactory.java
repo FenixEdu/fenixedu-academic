@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 
 public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFactory {
@@ -20,32 +20,32 @@ public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFac
     }
 
     public static synchronized GroupEnrolmentStrategyFactory getInstance() {
-        if (instance == null) {
-            instance = new GroupEnrolmentStrategyFactory();
-        }
-        return instance;
+	if (instance == null) {
+	    instance = new GroupEnrolmentStrategyFactory();
+	}
+	return instance;
     }
 
     public static synchronized void resetInstance() {
-        if (instance != null) {
-            instance = null;
-        }
+	if (instance != null) {
+	    instance = null;
+	}
     }
 
     public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping) {
 
-        IGroupEnrolmentStrategy strategyInstance = null;
-        EnrolmentGroupPolicyType policy = grouping.getEnrolmentPolicy();
+	IGroupEnrolmentStrategy strategyInstance = null;
+	EnrolmentGroupPolicyType policy = grouping.getEnrolmentPolicy();
 
-        if (policy == null)
-            throw new IllegalArgumentException("Must initialize Group Properties!");
+	if (policy == null)
+	    throw new IllegalArgumentException("Must initialize Group Properties!");
 
-        if (policy.equals(new EnrolmentGroupPolicyType(1))) {
-            strategyInstance = new AtomicGroupEnrolmentStrategy();
-        } else if (policy.equals(new EnrolmentGroupPolicyType(2))) {
-            strategyInstance = new IndividualGroupEnrolmentStrategy();
-        }
-        return strategyInstance;
+	if (policy.equals(new EnrolmentGroupPolicyType(1))) {
+	    strategyInstance = new AtomicGroupEnrolmentStrategy();
+	} else if (policy.equals(new EnrolmentGroupPolicyType(2))) {
+	    strategyInstance = new IndividualGroupEnrolmentStrategy();
+	}
+	return strategyInstance;
     }
 
 }

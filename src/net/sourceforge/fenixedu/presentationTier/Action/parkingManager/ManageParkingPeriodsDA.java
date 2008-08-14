@@ -29,8 +29,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
-    public ActionForward prepareCardsSearch(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareCardsSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	ParkingCardSearchBean parkingCardSearchBean = null;
 	if (getRenderedObject("parkingCardSearchBean") != null) {
@@ -42,8 +42,8 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	return mapping.findForward("cardsSearch");
     }
 
-    public ActionForward searchCards(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward searchCards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	if (request.getParameter("prepareRenewal") != null) {
 	    return prepareCardsRenewal(mapping, actionForm, request, response);
@@ -63,13 +63,11 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	ParkingCardSearchBean parkingCardSearchBean = new ParkingCardSearchBean();
 	String parkingCardUserState = request.getParameter("parkingCardUserState");
 	if (!StringUtils.isEmpty(parkingCardUserState)) {
-	    parkingCardSearchBean.setParkingCardUserState(ParkingCardUserState
-		    .valueOf(parkingCardUserState));
+	    parkingCardSearchBean.setParkingCardUserState(ParkingCardUserState.valueOf(parkingCardUserState));
 	}
 	String parkingGroupID = request.getParameter("parkingGroupID");
 	if (!StringUtils.isEmpty(parkingGroupID)) {
-	    parkingCardSearchBean.setParkingGroup(rootDomainObject.readParkingGroupByOID(Integer
-		    .valueOf(parkingGroupID)));
+	    parkingCardSearchBean.setParkingGroup(rootDomainObject.readParkingGroupByOID(Integer.valueOf(parkingGroupID)));
 	}
 	String actualEndDate = request.getParameter("actualEndDate");
 	if (!StringUtils.isEmpty(actualEndDate)) {
@@ -78,14 +76,13 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	}
 	String parkingCardSearchPeriod = request.getParameter("parkingCardSearchPeriod");
 	if (!StringUtils.isEmpty(parkingCardSearchPeriod)) {
-	    parkingCardSearchBean.setParkingCardSearchPeriod(ParkingCardSearchPeriod
-		    .valueOf(parkingCardSearchPeriod));
+	    parkingCardSearchBean.setParkingCardSearchPeriod(ParkingCardSearchPeriod.valueOf(parkingCardSearchPeriod));
 	}
 	return parkingCardSearchBean;
     }
 
-    public ActionForward prepareCardsRenewal(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareCardsRenewal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	String[] selectedParkingCards = ((DynaActionForm) actionForm).getStrings("selectedParkingCards");
 	ParkingCardSearchBean parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
 	RenderUtils.invalidateViewState();
@@ -104,25 +101,22 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	return mapping.findForward("cardsRenewal");
     }
 
-    public ActionForward renewParkingCards(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward renewParkingCards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	ParkingCardSearchBean parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
 	if (request.getParameter("cancel") != null) {
 	    return searchCards(mapping, actionForm, request, response);
 	}
 	if (request.getParameter("remove") != null) {
-	    String[] parkingCardsToRemove = ((DynaActionForm) actionForm)
-		    .getStrings("parkingCardsToRemove");
+	    String[] parkingCardsToRemove = ((DynaActionForm) actionForm).getStrings("parkingCardsToRemove");
 	    for (int iter = 0; iter < parkingCardsToRemove.length; iter++) {
-		parkingCardSearchBean.removeSelectedParkingParty(Integer
-			.valueOf(parkingCardsToRemove[iter]));
+		parkingCardSearchBean.removeSelectedParkingParty(Integer.valueOf(parkingCardsToRemove[iter]));
 	    }
 	    request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
 	    return mapping.findForward("cardsRenewal");
 	}
-	ServiceUtils.executeService("RenewParkingCards",
-		new Object[] { parkingCardSearchBean.getSelectedParkingParties(),
-			parkingCardSearchBean.getRenewalEndDate(), parkingCardSearchBean.getNewParkingGroup() });
+	ServiceUtils.executeService("RenewParkingCards", new Object[] { parkingCardSearchBean.getSelectedParkingParties(),
+		parkingCardSearchBean.getRenewalEndDate(), parkingCardSearchBean.getNewParkingGroup() });
 	parkingCardSearchBean.getSelectedParkingParties().clear();
 	parkingCardSearchBean.setRenewalEndDate(null);
 	parkingCardSearchBean.setNewParkingGroup(null);
@@ -130,8 +124,8 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	return searchCards(mapping, actionForm, request, response);
     }
 
-    public ActionForward showParkingDetails(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showParkingDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	ParkingCardSearchBean parkingCardSearchBean = getSearchParameters(request);
 	Integer parkingPartyID = Integer.valueOf(request.getParameter("parkingPartyID"));
 	request.setAttribute("parkingParty", rootDomainObject.readParkingPartyByOID(parkingPartyID));
@@ -139,28 +133,27 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	return mapping.findForward("showParkingDetails");
     }
 
-    public ActionForward prepareManageRequestsPeriods(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	List<ParkingRequestPeriod> parkingRequestPeriods = new ArrayList<ParkingRequestPeriod>(
-		rootDomainObject.getParkingRequestPeriods());
+    public ActionForward prepareManageRequestsPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	List<ParkingRequestPeriod> parkingRequestPeriods = new ArrayList<ParkingRequestPeriod>(rootDomainObject
+		.getParkingRequestPeriods());
 	Collections.sort(parkingRequestPeriods, new BeanComparator("beginDate"));
 	request.setAttribute("parkingRequestPeriods", parkingRequestPeriods);
 	return mapping.findForward("manageRequestsPeriods");
     }
 
-    public ActionForward editRequestPeriod(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editRequestPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Integer parkingRequestPeriodToEditCode = new Integer(request.getParameter("idInternal"));
 	request.setAttribute("parkingRequestPeriodToEdit", rootDomainObject
 		.readParkingRequestPeriodByOID(parkingRequestPeriodToEditCode));
 	return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }
 
-    public ActionForward deleteRequestPeriod(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteRequestPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Integer parkingRequestPeriodToDeleteCode = new Integer(request.getParameter("idInternal"));
-	ServiceUtils.executeService("DeleteParkingRequestPeriod",
-		new Object[] { parkingRequestPeriodToDeleteCode });
+	ServiceUtils.executeService("DeleteParkingRequestPeriod", new Object[] { parkingRequestPeriodToDeleteCode });
 	return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }
 

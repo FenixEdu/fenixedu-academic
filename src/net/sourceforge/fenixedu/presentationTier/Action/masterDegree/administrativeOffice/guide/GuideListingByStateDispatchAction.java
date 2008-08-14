@@ -27,52 +27,51 @@ import org.apache.struts.action.DynaActionForm;
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- *  
+ * 
  */
 public class GuideListingByStateDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareChooseState(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareChooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        DynaActionForm chooseGuide = (DynaActionForm) form;
+	DynaActionForm chooseGuide = (DynaActionForm) form;
 
-        chooseGuide.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+	chooseGuide.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-        return mapping.findForward("PrepareSuccess");
+	return mapping.findForward("PrepareSuccess");
     }
 
     public ActionForward chooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        DynaActionForm chooseGuide = (DynaActionForm) form;
+	DynaActionForm chooseGuide = (DynaActionForm) form;
 
-        Integer year = new Integer((String) chooseGuide.get("year"));
-        String state = (String) chooseGuide.get("state");
+	Integer year = new Integer((String) chooseGuide.get("year"));
+	String state = (String) chooseGuide.get("state");
 
-        GuideState situationOfGuide = null;
-        if ((state != null) && (state.length() > 0)) {
-            situationOfGuide = GuideState.valueOf(state);
-        }
+	GuideState situationOfGuide = null;
+	if ((state != null) && (state.length() > 0)) {
+	    situationOfGuide = GuideState.valueOf(state);
+	}
 
-        List guideList = null;
-        try {
-            Object args[] = { year, situationOfGuide };
-            guideList = (List) ServiceManagerServiceFactory.executeService(
-                    "ListGuidesByState", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	List guideList = null;
+	try {
+	    Object args[] = { year, situationOfGuide };
+	    guideList = (List) ServiceManagerServiceFactory.executeService("ListGuidesByState", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("year", year);
+	request.setAttribute("year", year);
 
-        if (!guideList.isEmpty()) {
-            List result = prepareList(guideList);
-            request.setAttribute("listOfGuides", result);
-        }
+	if (!guideList.isEmpty()) {
+	    List result = prepareList(guideList);
+	    request.setAttribute("listOfGuides", result);
+	}
 
-        return mapping.findForward("ShowList");
+	return mapping.findForward("ShowList");
     }
 
     /**
@@ -81,68 +80,64 @@ public class GuideListingByStateDispatchAction extends FenixDispatchAction {
      */
     private List prepareList(List guideList) {
 
-        List nonPayedGuides = new ArrayList();
-        List payedGuides = new ArrayList();
-        List annulledGuides = new ArrayList();
+	List nonPayedGuides = new ArrayList();
+	List payedGuides = new ArrayList();
+	List annulledGuides = new ArrayList();
 
-        Double nonPayedGuidesTotal = new Double(0);
-        Double payedGuidesTotal = new Double(0);
-        Double annulledGuidesTotal = new Double(0);
+	Double nonPayedGuidesTotal = new Double(0);
+	Double payedGuidesTotal = new Double(0);
+	Double annulledGuidesTotal = new Double(0);
 
-        Iterator iterator = guideList.iterator();
-        while (iterator.hasNext()) {
-            InfoGuide infoGuide = (InfoGuide) iterator.next();
+	Iterator iterator = guideList.iterator();
+	while (iterator.hasNext()) {
+	    InfoGuide infoGuide = (InfoGuide) iterator.next();
 
-            if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED)) {
-                annulledGuides.add(infoGuide);
-                annulledGuidesTotal = NumberUtils.formatNumber(new Double(annulledGuidesTotal
-                        .floatValue()
-                        + infoGuide.getTotal().floatValue()), 2);
-            } else if (infoGuide.getInfoGuideSituation().getSituation().equals(
-                    GuideState.PAYED)) {
-                payedGuides.add(infoGuide);
-                payedGuidesTotal = NumberUtils.formatNumber(new Double(payedGuidesTotal.floatValue()
-                        + infoGuide.getTotal().floatValue()), 2);
-            } else if (infoGuide.getInfoGuideSituation().getSituation().equals(
-                    GuideState.NON_PAYED)) {
-                nonPayedGuides.add(infoGuide);
-                nonPayedGuidesTotal = NumberUtils.formatNumber(new Double(nonPayedGuidesTotal
-                        .floatValue()
-                        + infoGuide.getTotal().floatValue()), 2);
-            }
-        }
+	    if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED)) {
+		annulledGuides.add(infoGuide);
+		annulledGuidesTotal = NumberUtils.formatNumber(new Double(annulledGuidesTotal.floatValue()
+			+ infoGuide.getTotal().floatValue()), 2);
+	    } else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
+		payedGuides.add(infoGuide);
+		payedGuidesTotal = NumberUtils.formatNumber(new Double(payedGuidesTotal.floatValue()
+			+ infoGuide.getTotal().floatValue()), 2);
+	    } else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.NON_PAYED)) {
+		nonPayedGuides.add(infoGuide);
+		nonPayedGuidesTotal = NumberUtils.formatNumber(new Double(nonPayedGuidesTotal.floatValue()
+			+ infoGuide.getTotal().floatValue()), 2);
+	    }
+	}
 
-        // Create the presantation object
+	// Create the presantation object
 
-        List result = new ArrayList();
-        if (!annulledGuides.isEmpty()) {
-            InfoGuideList infoGuideList = new InfoGuideList();
-            infoGuideList.setGuides(annulledGuides);
-            infoGuideList.setSituation(GuideState.ANNULLED.name());
-            infoGuideList.setTotal(annulledGuidesTotal);
-            result.add(infoGuideList);
-        }
+	List result = new ArrayList();
+	if (!annulledGuides.isEmpty()) {
+	    InfoGuideList infoGuideList = new InfoGuideList();
+	    infoGuideList.setGuides(annulledGuides);
+	    infoGuideList.setSituation(GuideState.ANNULLED.name());
+	    infoGuideList.setTotal(annulledGuidesTotal);
+	    result.add(infoGuideList);
+	}
 
-        if (!payedGuides.isEmpty()) {
-            InfoGuideList infoGuideList = new InfoGuideList();
-            infoGuideList.setGuides(payedGuides);
-            infoGuideList.setSituation(GuideState.PAYED.name());
-            infoGuideList.setTotal(payedGuidesTotal);
-            result.add(infoGuideList);
-        }
+	if (!payedGuides.isEmpty()) {
+	    InfoGuideList infoGuideList = new InfoGuideList();
+	    infoGuideList.setGuides(payedGuides);
+	    infoGuideList.setSituation(GuideState.PAYED.name());
+	    infoGuideList.setTotal(payedGuidesTotal);
+	    result.add(infoGuideList);
+	}
 
-        if (!nonPayedGuides.isEmpty()) {
-            InfoGuideList infoGuideList = new InfoGuideList();
-            infoGuideList.setGuides(nonPayedGuides);
-            infoGuideList.setSituation(GuideState.NON_PAYED.name());
-            infoGuideList.setTotal(nonPayedGuidesTotal);
-            result.add(infoGuideList);
-        }
+	if (!nonPayedGuides.isEmpty()) {
+	    InfoGuideList infoGuideList = new InfoGuideList();
+	    infoGuideList.setGuides(nonPayedGuides);
+	    infoGuideList.setSituation(GuideState.NON_PAYED.name());
+	    infoGuideList.setTotal(nonPayedGuidesTotal);
+	    result.add(infoGuideList);
+	}
 
-        if (result.isEmpty()) {
-            return null;
-        }
-        return result;
+	if (result.isEmpty()) {
+	    return null;
+	}
+	return result;
 
     }
 

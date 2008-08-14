@@ -13,12 +13,12 @@ public abstract class AlumniEntityManagementDA extends FenixDispatchAction {
     }
 
     protected Alumni getAlumni(HttpServletRequest request) throws Exception {
-        Student alumniStudent = getLoggedPerson(request).getStudent();
-        if (alumniStudent.hasAlumni()) {
-            return alumniStudent.getAlumni();
-        } else {
-            return (Alumni) executeService("RegisterAlumniData", alumniStudent);
-        }
+	Student alumniStudent = getLoggedPerson(request).getStudent();
+	if (alumniStudent.hasAlumni()) {
+	    return alumniStudent.getAlumni();
+	} else {
+	    return (Alumni) executeService("RegisterAlumniData", alumniStudent);
+	}
     }
 
 }

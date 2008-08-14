@@ -12,31 +12,29 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 public abstract class AbstractExternalUnitResultBean implements Serializable {
-    
+
     transient protected static final List<AccountabilityTypeEnum> ACCOUNTABILITY_TYPES = Arrays
-	    .asList(new AccountabilityTypeEnum[] { 
-		    AccountabilityTypeEnum.GEOGRAPHIC,
-		    AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
-		    AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
-    
+	    .asList(new AccountabilityTypeEnum[] { AccountabilityTypeEnum.GEOGRAPHIC,
+		    AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
+
     private PartyTypeEnum parentUnitType;
     private String fullName;
 
     public AbstractExternalUnitResultBean() {
     }
-    
+
     public PartyTypeEnum getParentUnitType() {
-        return parentUnitType;
+	return parentUnitType;
     }
 
     public void setParentUnitType(PartyTypeEnum parentUnitType) {
-        this.parentUnitType = parentUnitType;
+	this.parentUnitType = parentUnitType;
     }
-    
+
     private boolean hasParentUnitType() {
 	return getParentUnitType() != null;
     }
-    
+
     protected List<Unit> searchFullPath() {
 	final List<Unit> units = UnitUtils.getUnitFullPath(getUnit(), ACCOUNTABILITY_TYPES);
 	if (hasParentUnitType()) {
@@ -44,7 +42,7 @@ public abstract class AbstractExternalUnitResultBean implements Serializable {
 	}
 	return units;
     }
-    
+
     private void removeAllUnitsUntilParentUnitType(final List<Unit> units) {
 	final Iterator<Unit> iterUnits = units.iterator();
 	while (iterUnits.hasNext()) {
@@ -56,13 +54,13 @@ public abstract class AbstractExternalUnitResultBean implements Serializable {
 	    }
 	}
     }
-    
+
     public String getNumberOfUniversities() {
-        return "-";
+	return "-";
     }
-    
+
     public String getNumberOfSchools() {
-        return "-";
+	return "-";
     }
 
     public String getNumberOfDepartments() {
@@ -72,7 +70,7 @@ public abstract class AbstractExternalUnitResultBean implements Serializable {
     public String getNumberOfExternalCurricularCourses() {
 	return "-";
     }
-    
+
     public String getFullName() {
 	if (this.fullName == null) {
 	    final StringBuilder unitFullPathName = UnitUtils.getUnitFullPathName(getUnit(), ACCOUNTABILITY_TYPES);
@@ -80,13 +78,16 @@ public abstract class AbstractExternalUnitResultBean implements Serializable {
 	}
 	return this.fullName;
     }
-    
+
     protected void setFullName(final String fullName) {
 	this.fullName = fullName;
     }
- 
+
     abstract public Unit getUnit();
+
     abstract public Enum getType();
+
     abstract public List<LinkObject> getFullPath();
+
     abstract public String getName();
 }

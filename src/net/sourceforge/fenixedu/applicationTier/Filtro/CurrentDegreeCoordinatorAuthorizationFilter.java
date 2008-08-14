@@ -18,7 +18,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -31,51 +31,52 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
     protected RoleType getRoleType() {
-        return RoleType.COORDINATOR;
+	return RoleType.COORDINATOR;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
+     * @see
+     * ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist
+     * .berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
-        try {
-            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !isCoordinatorOfCurrentExecutionDegree(id, argumentos)) {
-                throw new NotAuthorizedException();
-            }
-        } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
-        }
+	IUserView id = getRemoteUser(request);
+	Object[] argumentos = getServiceCallArguments(request);
+	try {
+	    if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+		    || !isCoordinatorOfCurrentExecutionDegree(id, argumentos)) {
+		throw new NotAuthorizedException();
+	    }
+	} catch (RuntimeException e) {
+	    throw new NotAuthorizedFilterException();
+	}
     }
 
     private boolean isCoordinatorOfCurrentExecutionDegree(IUserView id, Object[] argumentos) {
-        boolean result = false;
-        if (argumentos == null) {
-            return result;
-        }
-        if (argumentos[0] == null) {
-            return result;
-        }
-        try {
-            final Person person = id.getPerson();
-            
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
-            ExecutionYear executionYear = executionDegree.getExecutionYear();
+	boolean result = false;
+	if (argumentos == null) {
+	    return result;
+	}
+	if (argumentos[0] == null) {
+	    return result;
+	}
+	try {
+	    final Person person = id.getPerson();
 
-            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
+	    ExecutionYear executionYear = executionDegree.getExecutionYear();
 
-            result = (coordinator != null) && executionYear.isCurrent();
+	    Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
-        } catch (Exception e) {
-            return false;
-        }
+	    result = (coordinator != null) && executionYear.isCurrent();
 
-        return result;
+	} catch (Exception e) {
+	    return false;
+	}
+
+	return result;
     }
 
 }

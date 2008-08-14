@@ -12,19 +12,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllCountries extends Service {
 
-    public Object run() throws ExcepcaoInexistente, FenixServiceException{
-        List<InfoCountry> result = new ArrayList<InfoCountry>();
-        
-        List<Country> countries = rootDomainObject.getCountrys();
-        if (countries.isEmpty()) {
-            throw new ExcepcaoInexistente("Non existing Countries !!");
-        }
+    public Object run() throws ExcepcaoInexistente, FenixServiceException {
+	List<InfoCountry> result = new ArrayList<InfoCountry>();
 
-        for (Country country : countries) {
-            result.add(InfoCountry.newInfoFromDomain(country));
-        }
-        
-        return result;
+	List<Country> countries = rootDomainObject.getCountrys();
+	if (countries.isEmpty()) {
+	    throw new ExcepcaoInexistente("Non existing Countries !!");
+	}
+
+	for (Country country : countries) {
+	    result.add(InfoCountry.newInfoFromDomain(country));
+	}
+
+	return result;
     }
-    
+
 }

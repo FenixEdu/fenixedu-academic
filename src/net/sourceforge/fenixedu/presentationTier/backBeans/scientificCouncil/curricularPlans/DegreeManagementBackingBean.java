@@ -340,7 +340,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	DegreeInfo degreeInfo = getDegree().getDegreeInfoFor(executionYear);
 	if (degreeInfo == null) {
 	    degreeInfo = getDegree().getMostRecentDegreeInfo();
-	    //setSelectedExecutionYearId(degreeInfo.getExecutionYear().getIdInternal());
+	    // setSelectedExecutionYearId(degreeInfo.getExecutionYear().
+	    // getIdInternal());
 	}
 	return degreeInfo;
     }

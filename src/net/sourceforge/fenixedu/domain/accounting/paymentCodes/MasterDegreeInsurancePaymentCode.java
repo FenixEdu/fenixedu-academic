@@ -22,15 +22,15 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
 	super();
     }
 
-    private MasterDegreeInsurancePaymentCode(final PaymentCodeType paymentCodeType,
-	    final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
-	    final Money maxAmount, final Student student, final ExecutionYear executionYear) {
+    private MasterDegreeInsurancePaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+	    final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
+	    final ExecutionYear executionYear) {
 	this();
 	init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student, executionYear);
     }
 
-    private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate,
-	    Money minAmount, Money maxAmount, Student student, ExecutionYear executionYear) {
+    private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
+	    Money maxAmount, Student student, ExecutionYear executionYear) {
 	super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student);
 
 	checkParameters(executionYear);
@@ -44,32 +44,27 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
 	}
     }
 
-    public static MasterDegreeInsurancePaymentCode create(final YearMonthDay startDate,
-	    final YearMonthDay endDate, final Money minAmount, final Money maxAmount,
-	    final Student student, final ExecutionYear executionYear) {
+    public static MasterDegreeInsurancePaymentCode create(final YearMonthDay startDate, final YearMonthDay endDate,
+	    final Money minAmount, final Money maxAmount, final Student student, final ExecutionYear executionYear) {
 
-	if (PaymentCodeGenerator.canGenerateNewCode(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE,
-		student)) {
-	    return new MasterDegreeInsurancePaymentCode(
-		    PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE, startDate, endDate, minAmount,
-		    maxAmount, student, executionYear);
+	if (PaymentCodeGenerator.canGenerateNewCode(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE, student)) {
+	    return new MasterDegreeInsurancePaymentCode(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE, startDate, endDate,
+		    minAmount, maxAmount, student, executionYear);
 	}
 
-	throw new DomainException(
-		"error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.could.not.generate.new.code");
+	throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.could.not.generate.new.code");
     }
 
     @Override
     public void setExecutionYear(ExecutionYear executionYear) {
-	throw new DomainException(
-		"error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.cannot.modify.executionYear");
+	throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.cannot.modify.executionYear");
     }
 
     @Override
-    protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered,
-	    String sibsTransactionId, String comments) {
-	new InsuranceTransaction(amount.getAmount(), whenRegistered, PaymentType.SIBS,
-		responsiblePerson, getPersonAccount(), getExecutionYear(), getRegistration());
+    protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId,
+	    String comments) {
+	new InsuranceTransaction(amount.getAmount(), whenRegistered, PaymentType.SIBS, responsiblePerson, getPersonAccount(),
+		getExecutionYear(), getRegistration());
     }
 
     private PersonAccount getPersonAccount() {

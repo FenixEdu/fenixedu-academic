@@ -1,24 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.student;
 
-
-
 import net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-
-
 public class YearDelegateManagementProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-    	final StudentVoteBean studentVoteBean = (StudentVoteBean) source;
-    	return studentVoteBean.getSelectedStudentVote("notCandidate");
+	final StudentVoteBean studentVoteBean = (StudentVoteBean) source;
+	return studentVoteBean.getSelectedStudentVote("notCandidate");
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
-    
-   
+
 }

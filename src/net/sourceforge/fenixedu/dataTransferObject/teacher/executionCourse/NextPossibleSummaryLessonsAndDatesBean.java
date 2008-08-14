@@ -18,8 +18,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
-    
-    public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");        
+
+    public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");
     public static final Comparator<NextPossibleSummaryLessonsAndDatesBean> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("date"), true);
@@ -28,7 +28,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     }
 
     private ShiftType lessonType;
-    
+
     private DomainReference<Lesson> lessonReference;
 
     private DomainReference<Shift> shiftReference;
@@ -40,12 +40,12 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     private boolean extraLesson;
 
     private HourMinuteSecond time;
-    
+
     private DomainReference<AllocatableSpace> roomReference;
-    
+
     public NextPossibleSummaryLessonsAndDatesBean() {
     }
-    
+
     public NextPossibleSummaryLessonsAndDatesBean(Lesson lesson, YearMonthDay date) {
 	setLesson(lesson);
 	setShift(lesson.getShift());
@@ -62,52 +62,51 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	setRoom(room);
     }
 
-    public String getLessonInstancePrettyPrint() {	
-	
-	if(isExtraLesson()) {	    	   
+    public String getLessonInstancePrettyPrint() {
+
+	if (isExtraLesson()) {
 	    StringBuilder builder = new StringBuilder();
 	    builder.append(getDate().toDateTimeAtMidnight().toString("E")).append(" (");
 	    builder.append(getTime().toString("HH:mm")).append(")");
 	    AllocatableSpace room = getRoom();
-	    if(room != null) {
+	    if (room != null) {
 		builder.append(" ").append(room.getIdentification());
 	    }
 	    return builder.toString();
 	}
-	
+
 	Lesson lesson = getLesson();
 	LessonInstance lessonInstance = lesson.getLessonInstanceFor(getDate());
-	return lessonInstance != null ? lessonInstance.prettyPrint() : lesson.prettyPrint();	
-    }	
+	return lessonInstance != null ? lessonInstance.prettyPrint() : lesson.prettyPrint();
+    }
 
     public String getShiftTypesPrettyPrint() {
 	return isExtraLesson() ? enumerationResourcesBundle.getString("EXTRA_SUMMARY") : getShift().getShiftTypesPrettyPrint();
     }
-    
+
     public boolean getWrittenSummary() {
 	return isExtraLesson() ? true : getLesson().getSummaryByDate(getDate()) != null;
     }
 
-    public String getMonthString() {	
+    public String getMonthString() {
 	return getDate().toDateTimeAtMidnight().toString("MMMM");
     }
 
     public boolean getWithoutSummary() {
-	
-	if(isExtraLesson()) {
+
+	if (isExtraLesson()) {
 	    return false;
-	}	
-	
+	}
+
 	Lesson lesson = getLesson();
-	if (lesson.isDateValidToInsertSummary(getDate())
-		&& lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), getDate())
+	if (lesson.isDateValidToInsertSummary(getDate()) && lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), getDate())
 		&& !getWrittenSummary()) {
 	    return true;
 	}
-	
+
 	return false;
     }
-    
+
     public boolean getIsPossibleDeleteLessonInstance() {
 	return isExtraLesson() ? false : getLesson().getSummaryByDate(getDate()) == null;
     }
@@ -143,14 +142,14 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     public void setTime(HourMinuteSecond time) {
 	this.time = time;
     }
-    
+
     public boolean isExtraLesson() {
 	return extraLesson;
     }
 
     public void setExtraLesson(boolean extraLesson) {
 	this.extraLesson = extraLesson;
-    }   
+    }
 
     public Integer getStudentsNumber() {
 	return studentsNumber;
@@ -175,7 +174,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     public void setLesson(Lesson lesson) {
 	this.lessonReference = (lesson != null) ? new DomainReference<Lesson>(lesson) : null;
     }
-    
+
     public AllocatableSpace getRoom() {
 	return (this.roomReference != null) ? this.roomReference.getObject() : null;
     }
@@ -193,10 +192,10 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     }
 
     public ShiftType getLessonType() {
-        return lessonType;
+	return lessonType;
     }
 
     public void setLessonType(ShiftType lessonType) {
-        this.lessonType = lessonType;
+	this.lessonType = lessonType;
     }
 }

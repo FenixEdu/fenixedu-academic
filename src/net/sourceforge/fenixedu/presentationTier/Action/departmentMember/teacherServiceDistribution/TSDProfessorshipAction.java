@@ -116,8 +116,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
 	TSDProfessorship selectedTSDProfessorship = getSelectedTSDProfessorship(userView, dynaForm);
 
-	ServiceUtils
-		.executeService( "DeleteTSDProfessorship", new Object[] { selectedTSDProfessorship.getIdInternal() });
+	ServiceUtils.executeService("DeleteTSDProfessorship", new Object[] { selectedTSDProfessorship.getIdInternal() });
 
 	return loadTSDProfessorships(mapping, form, request, response);
     }

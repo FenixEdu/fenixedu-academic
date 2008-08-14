@@ -9,7 +9,7 @@ public class AllEmployeesByCampus extends RoleByCampusGroup {
     public AllEmployeesByCampus(Campus campus) {
 	super(RoleType.EMPLOYEE, campus);
     }
-    
+
     @Override
     protected boolean isPersonInCampus(Person person, Campus campus) {
 	return person.getEmployee().worksAt(campus);

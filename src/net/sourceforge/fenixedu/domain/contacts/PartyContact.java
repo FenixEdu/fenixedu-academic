@@ -149,11 +149,11 @@ public abstract class PartyContact extends PartyContact_Base {
     public boolean isWorkType() {
 	return getType() == PartyContactType.WORK;
     }
-    
+
     public boolean isPersonalType() {
 	return getType() == PartyContactType.PERSONAL;
     }
-    
+
     public boolean isWebAddress() {
 	return false;
     }
@@ -225,9 +225,10 @@ public abstract class PartyContact extends PartyContact_Base {
 	    final String number) {
 	return new Phone(party, type, defaultContact, number);
     }
-    
+
     @Deprecated
-    static public EmailAddress createEmailAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String value) {
+    static public EmailAddress createEmailAddress(final Party party, final PartyContactType type, final boolean defaultContact,
+	    final String value) {
 	return new EmailAddress(party, type, defaultContact, value);
     }
 

@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
 
-    public EnrolmentsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 
+    public EnrolmentsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title,
 	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
 	super();
@@ -29,18 +29,18 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
     }
 
     @Override
-    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
+    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
 	return true;
     }
 
     @Override
-    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
 	return false;
     }
 
     @Override
-    protected boolean isPossibleToChangeTimeInterval() {        
-        return false;
+    protected boolean isPossibleToChangeTimeInterval() {
+	return false;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
     }
 
     @Override
-    protected boolean associatedWithDomainEntities() {	
+    protected boolean associatedWithDomainEntities() {
 	return false;
     }
 }

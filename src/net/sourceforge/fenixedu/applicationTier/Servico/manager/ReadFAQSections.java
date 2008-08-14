@@ -14,13 +14,13 @@ import org.apache.commons.collections.Transformer;
 public class ReadFAQSections extends Service {
 
     public Collection run() {
-        List<FAQSection> faqSections = rootDomainObject.getFAQSections();
-        return CollectionUtils.collect(faqSections, new Transformer() {
-            public Object transform(Object arg0) {
-                FAQSection faqSection = (FAQSection) arg0;
-                return InfoFAQSection.newInfoFromDomain(faqSection);
-            }
-        });
+	List<FAQSection> faqSections = rootDomainObject.getFAQSections();
+	return CollectionUtils.collect(faqSections, new Transformer() {
+	    public Object transform(Object arg0) {
+		FAQSection faqSection = (FAQSection) arg0;
+		return InfoFAQSection.newInfoFromDomain(faqSection);
+	    }
+	});
     }
 
 }

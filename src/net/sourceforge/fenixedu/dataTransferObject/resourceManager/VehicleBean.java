@@ -8,66 +8,65 @@ import org.joda.time.YearMonthDay;
 public class VehicleBean implements Serializable {
 
     private String numberPlate;
-    
+
     private String make;
-    
+
     private String model;
-    
+
     private YearMonthDay acquisition;
-    
+
     private YearMonthDay cease;
-    
-    private BigDecimal allocationCostMultiplier; 
-    
-    
+
+    private BigDecimal allocationCostMultiplier;
+
     public VehicleBean() {
     }
-    
+
     public String getNumberPlate() {
-        return numberPlate;
+	return numberPlate;
     }
 
     public void setNumberPlate(String numberPlate) {
-        this.numberPlate = numberPlate;
+	this.numberPlate = numberPlate;
     }
 
     public String getMake() {
-        return make;
+	return make;
     }
 
     public void setMake(String make) {
-        this.make = make;
+	this.make = make;
     }
 
     public String getModel() {
-        return model;
+	return model;
     }
 
     public void setModel(String model) {
-        this.model = model;
+	this.model = model;
     }
 
     public YearMonthDay getAcquisition() {
-        return acquisition;
+	return acquisition;
     }
 
     public void setAcquisition(YearMonthDay acquisition) {
-        this.acquisition = acquisition;
+	this.acquisition = acquisition;
     }
 
     public YearMonthDay getCease() {
-        return cease;
+	return cease;
     }
 
     public void setCease(YearMonthDay cease) {
-        this.cease = cease;
+	this.cease = cease;
     }
-    
+
     public BigDecimal getAllocationCostMultiplier() {
-        return allocationCostMultiplier;
+	return allocationCostMultiplier;
     }
 
     public void setAllocationCostMultiplier(BigDecimal allocationCostMultiplier) {
-        this.allocationCostMultiplier = allocationCostMultiplier;
+	this.allocationCostMultiplier = allocationCostMultiplier;
     }
 }

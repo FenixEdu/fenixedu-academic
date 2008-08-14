@@ -16,45 +16,42 @@ public class InfoCandidateEnrolment extends InfoObject {
     public InfoCandidateEnrolment() {
     }
 
-    public InfoCandidateEnrolment(InfoMasterDegreeCandidate infoMasterDegreeCandidate,
-            InfoCurricularCourse infoCurricularCourse) {
-        setInfoMasterDegreeCandidate(infoMasterDegreeCandidate);
-        setInfoCurricularCourse(infoCurricularCourse);
+    public InfoCandidateEnrolment(InfoMasterDegreeCandidate infoMasterDegreeCandidate, InfoCurricularCourse infoCurricularCourse) {
+	setInfoMasterDegreeCandidate(infoMasterDegreeCandidate);
+	setInfoCurricularCourse(infoCurricularCourse);
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoCandidateEnrolment) {
-            InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) obj;
-            result = getInfoMasterDegreeCandidate().equals(
-                    infoCandidateEnrolment.getInfoMasterDegreeCandidate())
-                    && getInfoCurricularCourse()
-                            .equals(infoCandidateEnrolment.getInfoCurricularCourse());
-        }
-        return result;
+	boolean result = false;
+	if (obj instanceof InfoCandidateEnrolment) {
+	    InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) obj;
+	    result = getInfoMasterDegreeCandidate().equals(infoCandidateEnrolment.getInfoMasterDegreeCandidate())
+		    && getInfoCurricularCourse().equals(infoCandidateEnrolment.getInfoCurricularCourse());
+	}
+	return result;
     }
 
     public String toString() {
-        String result = "[CANDIDATE_ENROLMENT";
-        result += ", codInt=" + getIdInternal();
-        result += ", infoMasterDegreeCandidate=" + infoMasterDegreeCandidate;
-        result += ", infoCurricularCourse=" + infoCurricularCourse;
-        result += "]";
-        return result;
+	String result = "[CANDIDATE_ENROLMENT";
+	result += ", codInt=" + getIdInternal();
+	result += ", infoMasterDegreeCandidate=" + infoMasterDegreeCandidate;
+	result += ", infoCurricularCourse=" + infoCurricularCourse;
+	result += "]";
+	return result;
     }
 
     /**
      * @return @deprecated
      */
     public InfoCurricularCourseScope getInfoCurricularCourseScope() {
-        return infoCurricularCourseScope;
+	return infoCurricularCourseScope;
     }
 
     /**
      * @return
      */
     public InfoMasterDegreeCandidate getInfoMasterDegreeCandidate() {
-        return infoMasterDegreeCandidate;
+	return infoMasterDegreeCandidate;
     }
 
     /**
@@ -62,41 +59,41 @@ public class InfoCandidateEnrolment extends InfoObject {
      * @deprecated
      */
     public void setInfoCurricularCourseScope(InfoCurricularCourseScope courseScope) {
-        infoCurricularCourseScope = courseScope;
+	infoCurricularCourseScope = courseScope;
     }
 
     /**
      * @param candidate
      */
     public void setInfoMasterDegreeCandidate(InfoMasterDegreeCandidate candidate) {
-        infoMasterDegreeCandidate = candidate;
+	infoMasterDegreeCandidate = candidate;
     }
 
     /**
      * @return
      */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+	return infoCurricularCourse;
     }
 
     /**
      * @param infoCurricularCourse
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+	this.infoCurricularCourse = infoCurricularCourse;
     }
 
     public void copyFromDomain(CandidateEnrolment candidateEnrolment) {
-        super.copyFromDomain(candidateEnrolment);
+	super.copyFromDomain(candidateEnrolment);
     }
 
     public static InfoCandidateEnrolment newInfoFromDomain(CandidateEnrolment candidateEnrolment) {
-        InfoCandidateEnrolment infoCandidateEnrolment = null;
-        if (candidateEnrolment != null) {
-            infoCandidateEnrolment = new InfoCandidateEnrolment();
-            infoCandidateEnrolment.copyFromDomain(candidateEnrolment);
-        }
-        return infoCandidateEnrolment;
+	InfoCandidateEnrolment infoCandidateEnrolment = null;
+	if (candidateEnrolment != null) {
+	    infoCandidateEnrolment = new InfoCandidateEnrolment();
+	    infoCandidateEnrolment.copyFromDomain(candidateEnrolment);
+	}
+	return infoCandidateEnrolment;
     }
 
 }

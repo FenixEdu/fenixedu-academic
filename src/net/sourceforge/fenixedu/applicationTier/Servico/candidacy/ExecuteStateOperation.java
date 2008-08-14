@@ -8,6 +8,6 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 public class ExecuteStateOperation extends Service {
 
     public void run(final Operation operation, final Person person) throws FenixServiceException {
-        operation.execute(person);
+	operation.execute(person);
     }
 }

@@ -13,40 +13,38 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DepartmentSite extends DepartmentSite_Base {
-    
+
     public DepartmentSite(DepartmentUnit unit) {
-    	super();
-    	
-        if (unit.hasSite()) {
-            throw new DomainException("site.department.unit.already.has.site");
-        }
-        
-        setUnit(unit);
-    }
-	
-	public DepartmentSite(Department department) {
-        this(department.getDepartmentUnit());
+	super();
+
+	if (unit.hasSite()) {
+	    throw new DomainException("site.department.unit.already.has.site");
 	}
-    
-    public Department getDepartment() {
-        return getUnit().getDepartment();
+
+	setUnit(unit);
     }
-    
+
+    public DepartmentSite(Department department) {
+	this(department.getDepartmentUnit());
+    }
+
+    public Department getDepartment() {
+	return getUnit().getDepartment();
+    }
+
     @Override
     public IGroup getOwner() {
-        return new GroupUnion(
-                new RoleGroup(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)),
-                new FixedSetGroup(getManagers())
-        );
+	return new GroupUnion(new RoleGroup(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)),
+		new FixedSetGroup(getManagers()));
     }
 
     @Override
     public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
-        
-        groups.add(new DepartmentEmployeesGroup(getDepartment()));
-        
-        return groups;
+	List<IGroup> groups = super.getContextualPermissionGroups();
+
+	groups.add(new DepartmentEmployeesGroup(getDepartment()));
+
+	return groups;
     }
 
     /**
@@ -56,12 +54,12 @@ public class DepartmentSite extends DepartmentSite_Base {
      */
     @Override
     public MultiLanguageString getUnitNameWithAcronym() {
-    	return getDepartment().getNameI18n();
+	return getDepartment().getNameI18n();
     }
- 
+
     @Override
     public MultiLanguageString getName() {
-	return MultiLanguageString.i18n().add("pt",getUnit().getAcronym()).finish();
+	return MultiLanguageString.i18n().add("pt", getUnit().getAcronym()).finish();
     }
 
     @Override

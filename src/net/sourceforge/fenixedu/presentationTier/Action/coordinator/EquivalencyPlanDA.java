@@ -25,8 +25,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public class EquivalencyPlanDA extends FenixDispatchAction {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	if (degreeCurricularPlan == null) {
 	    final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
@@ -40,25 +40,26 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	return super.execute(mapping, actionForm, request, response);
     }
 
-    public ActionForward showPlan(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("showPlan");
     }
 
-    public ActionForward showTable(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("viewTable", Boolean.TRUE);
 	final DegreeModule degreeModule = getDegreeModule(request);
 	if (degreeModule != null) {
 	    final EquivalencePlan equivalencePlan = getEquivalencePlan(request);
-	    final Set<EquivalencePlanEntry> equivalencePlanEntries = degreeModule.getNewDegreeModuleEquivalencePlanEntries(equivalencePlan);
+	    final Set<EquivalencePlanEntry> equivalencePlanEntries = degreeModule
+		    .getNewDegreeModuleEquivalencePlanEntries(equivalencePlan);
 	    request.setAttribute("equivalencePlanEntries", equivalencePlanEntries);
 	}
 	return mapping.findForward("showPlan");
     }
 
-    public ActionForward prepareAddEquivalency(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareAddEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	EquivalencePlanEntryCreator equivalencePlanEntryCreator = (EquivalencePlanEntryCreator) getRenderedObject();
 	final EquivalencePlan equivalencePlan;
 	if (equivalencePlanEntryCreator == null) {
@@ -78,8 +79,8 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	return mapping.findForward("addEquivalency");
     }
 
-    public ActionForward deleteEquivalency(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
 	final Object[] args = { equivalencePlanEntry };
 	executeService(request, "DeleteEquivalencePlanEntry", args);
@@ -89,27 +90,28 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
     private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
 	final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
 	final Integer equivalencePlanEntryID = getInteger(equivalencePlanEntryIDString);
-	return equivalencePlanEntryID == null ? null : (EquivalencePlanEntry) RootDomainObject.getInstance().readEquivalencePlanEntryByOID(equivalencePlanEntryID);
+	return equivalencePlanEntryID == null ? null : (EquivalencePlanEntry) RootDomainObject.getInstance()
+		.readEquivalencePlanEntryByOID(equivalencePlanEntryID);
     }
 
     private DegreeModule getDegreeModule(HttpServletRequest request) {
 	final String degreeModuleIDString = request.getParameter("degreeModuleID");
 	final Integer degreeModuleID = getInteger(degreeModuleIDString);
-	return degreeModuleID == null ? null : (DegreeModule) RootDomainObject.getInstance().readDegreeModuleByOID(degreeModuleID);
+	return degreeModuleID == null ? null : (DegreeModule) RootDomainObject.getInstance()
+		.readDegreeModuleByOID(degreeModuleID);
     }
 
     private EquivalencePlan getEquivalencePlan(HttpServletRequest request) {
 	final String equivalencePlanIDString = request.getParameter("equivalencePlanID");
 	final Integer equivalencePlanID = getInteger(equivalencePlanIDString);
-	return equivalencePlanID == null ? null : RootDomainObject.getInstance()
-		.readEquivalencePlanByOID(equivalencePlanID);
+	return equivalencePlanID == null ? null : RootDomainObject.getInstance().readEquivalencePlanByOID(equivalencePlanID);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
 	final String degreeCurricularPlanIDString = request.getParameter("degreeCurricularPlanID");
 	final Integer degreeCurricularPlanID = getInteger(degreeCurricularPlanIDString);
-	return degreeCurricularPlanID == null ? null : RootDomainObject.getInstance()
-		.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	return degreeCurricularPlanID == null ? null : RootDomainObject.getInstance().readDegreeCurricularPlanByOID(
+		degreeCurricularPlanID);
     }
 
     private Integer getInteger(final String string) {

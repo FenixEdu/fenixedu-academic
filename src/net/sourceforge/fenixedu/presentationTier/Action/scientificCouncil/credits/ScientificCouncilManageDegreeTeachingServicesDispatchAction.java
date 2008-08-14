@@ -14,28 +14,25 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-public class ScientificCouncilManageDegreeTeachingServicesDispatchAction extends
-        ManageDegreeTeachingServicesDispatchAction {
+public class ScientificCouncilManageDegreeTeachingServicesDispatchAction extends ManageDegreeTeachingServicesDispatchAction {
 
-    public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+    public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-        DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer professorshipID = (Integer) dynaForm.get("professorshipID");
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+	DynaActionForm dynaForm = (DynaActionForm) form;
+	Integer professorshipID = (Integer) dynaForm.get("professorshipID");
+	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
 
-        if (professorship == null) {
-            return mapping.findForward("teacher-not-found");
-        }
+	if (professorship == null) {
+	    return mapping.findForward("teacher-not-found");
+	}
 
-        teachingServiceDetailsProcess(professorship, request, dynaForm);
-        return mapping.findForward("show-teaching-service-percentages");
+	teachingServiceDetailsProcess(professorship, request, dynaForm);
+	return mapping.findForward("show-teaching-service-percentages");
     }
-    
-    public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {        
-        return updateTeachingServices(mapping, form, request, RoleType.SCIENTIFIC_COUNCIL);
+
+    public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	return updateTeachingServices(mapping, form, request, RoleType.SCIENTIFIC_COUNCIL);
     }
 }

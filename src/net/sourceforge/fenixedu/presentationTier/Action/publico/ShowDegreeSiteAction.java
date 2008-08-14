@@ -46,8 +46,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
     public static int ANNOUNCEMENTS_NUMBER = 3;
 
-    public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	prepareInfo(request);
 
 	return mapping.findForward("showDescription");
@@ -81,8 +81,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
 	    if (board != null) {
 		List<Announcement> announcements = board.getActiveAnnouncements();
-		announcements = announcements.subList(0, Math.min(announcements.size(),
-			ANNOUNCEMENTS_NUMBER));
+		announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
 		request.setAttribute("announcements", announcements);
 	    }
 	}
@@ -95,17 +94,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	getInfoToShow(request, degree, executionYearToShow);
     }
 
-    private ExecutionYear getExecutionYearToShow(HttpServletRequest request, Degree degree)
-	    throws FenixActionException {
+    private ExecutionYear getExecutionYearToShow(HttpServletRequest request, Degree degree) throws FenixActionException {
 	Integer executionDegreeId = getFromRequest("executionDegreeID", request);
 	if (executionDegreeId != null) {
 	    // coordinator call
 	    request.setAttribute("executionDegreeID", executionDegreeId);
 
-	    ExecutionDegree executionDegree = rootDomainObject
-		    .readExecutionDegreeByOID(executionDegreeId);
-	    if (executionDegree == null
-		    || !executionDegree.getDegreeCurricularPlan().getDegree().equals(degree)) {
+	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	    if (executionDegree == null || !executionDegree.getDegreeCurricularPlan().getDegree().equals(degree)) {
 		throw new FenixActionException();
 	    }
 
@@ -118,8 +114,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 		return currentExecutionYear;
 	    } else {
 		final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
-		final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted
-			.size() - 1);
+		final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
 
 		if (whenDegreeIsExecuted.contains(currentExecutionYear)) {
 		    return currentExecutionYear;
@@ -134,8 +129,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	}
     }
 
-    private void getInfoToShow(HttpServletRequest request, Degree degree,
-	    ExecutionYear executionYearToShow) throws FenixActionException {
+    private void getInfoToShow(HttpServletRequest request, Degree degree, ExecutionYear executionYearToShow)
+	    throws FenixActionException {
 	// degree info
 	DegreeInfo degreeInfoToShow = executionYearToShow.getDegreeInfo(degree);
 	if (degreeInfoToShow == null) {
@@ -153,8 +148,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	request.setAttribute("campus", campus);
 
 	// responsible coordinators
-	Collection<Teacher> responsibleCoordinatorsTeachers = degree
-		.getResponsibleCoordinatorsTeachers(executionYearToShow);
+	Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYearToShow);
 	if (responsibleCoordinatorsTeachers.isEmpty()) {
 	    responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
 	}
@@ -162,22 +156,22 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
     }
 
-    public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	prepareInfo(request);
 
 	return mapping.findForward("showAccessRequirements");
     }
 
-    public ActionForward showProfessionalStatus(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showProfessionalStatus(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	prepareInfo(request);
 
 	return mapping.findForward("showProfessionalStatus");
     }
 
-    public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Degree degree = getDegree(request);
 
 	Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
@@ -196,8 +190,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	request.setAttribute("index", index);
 
 	final ActionErrors errors = new ActionErrors();
-	InfoDegreeCurricularPlan infoDegreeCurricularPlan = getInfoDegreeCurricularPlan(
-		executionDegreeId, degree.getIdInternal(), degreeCurricularPlanId, mapping, request, errors);
+	InfoDegreeCurricularPlan infoDegreeCurricularPlan = getInfoDegreeCurricularPlan(executionDegreeId,
+		degree.getIdInternal(), degreeCurricularPlanId, mapping, request, errors);
 	if (infoDegreeCurricularPlan == null) {
 	    errors.add("impossibleDegreeSite", new ActionError("error.impossibleCurricularPlan"));
 	    saveErrors(request, errors);
@@ -208,8 +202,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	return mapping.findForward("showCurricularPlans");
     }
 
-    public ActionForward viewDegreeEvaluation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewDegreeEvaluation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Degree degree = getDegree(request);
 
 	IUserView userView = getUserView(request);
@@ -224,13 +218,12 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	request.setAttribute("inEnglish", inEnglish);
 
 	Object argsDegree[] = { degree.getIdInternal() };
-	List<InfoOldInquiriesSummary> allSummariesDegree = (List<InfoOldInquiriesSummary>) ServiceUtils
-		.executeService( "ReadOldIquiriesSummaryByDegreeID", argsDegree);
+	List<InfoOldInquiriesSummary> allSummariesDegree = (List<InfoOldInquiriesSummary>) ServiceUtils.executeService(
+		"ReadOldIquiriesSummaryByDegreeID", argsDegree);
 
-	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
-		.executeService( "ReadExecutionPeriods", null);
-	List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(
-		infoExecutionPeriods);
+	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
+		"ReadExecutionPeriods", null);
+	List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(infoExecutionPeriods);
 	for (InfoExecutionPeriod iep : infoExecutionPeriods) {
 	    boolean found = false;
 
@@ -256,8 +249,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	request.setAttribute("executionPeriodList", executionPeriodList);
 
 	final ActionErrors errors = new ActionErrors();
-	InfoDegreeCurricularPlan infoDegreeCurricularPlan = getInfoDegreeCurricularPlan(
-		executionDegreeId, degree.getIdInternal(), degreeCurricularPlanId, mapping, request, errors);
+	InfoDegreeCurricularPlan infoDegreeCurricularPlan = getInfoDegreeCurricularPlan(executionDegreeId,
+		degree.getIdInternal(), degreeCurricularPlanId, mapping, request, errors);
 	if (infoDegreeCurricularPlan == null) {
 	    errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
 	}
@@ -277,8 +270,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	    List<InfoOldInquiriesSummary> oldInquiriesSummaries = new ArrayList<InfoOldInquiriesSummary>();
 	    for (InfoOldInquiriesSummary iois : allSummariesDegree) {
 		if (iois.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
-		    if ((iois.getNumberEnrollments() > 0) && (iois.getNumberApproved() >= 0)
-			    && (iois.getNumberEvaluated() > 0))
+		    if ((iois.getNumberEnrollments() > 0) && (iois.getNumberApproved() >= 0) && (iois.getNumberEvaluated() > 0))
 			oldInquiriesSummaries.add(iois);
 		}
 	    }
@@ -292,31 +284,27 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
 		for (InfoOldInquiriesSummary iois : oldInquiriesSummaries) {
 		    if ((iois.getNumberAnswers() != null) && (iois.getNumberAnswers() > 0)
-			    && (iois.getNumberEnrollments() != null)
-			    && (iois.getNumberEnrollments() > 0)) {
-			iois.setRepresentationQuota(Double.valueOf((iois.getNumberAnswers() / iois
-				.getNumberEnrollments()) * 100));
+			    && (iois.getNumberEnrollments() != null) && (iois.getNumberEnrollments() > 0)) {
+			iois
+				.setRepresentationQuota(Double
+					.valueOf((iois.getNumberAnswers() / iois.getNumberEnrollments()) * 100));
 		    }
 
-		    if ((iois.getAverage2_8() != null) && (iois.getAverage2_8() >= 0)
-			    && (iois.getRepresentationQuota() > 10)) {
+		    if ((iois.getAverage2_8() != null) && (iois.getAverage2_8() >= 0) && (iois.getRepresentationQuota() > 10)) {
 			numeratorCourses += iois.getAverage2_8();
 			denominatorCourses++;
 		    }
-		    if ((iois.getAverage3_11() != null) && (iois.getAverage3_11() >= 0)
-			    && (iois.getRepresentationQuota() > 10)) {
+		    if ((iois.getAverage3_11() != null) && (iois.getAverage3_11() >= 0) && (iois.getRepresentationQuota() > 10)) {
 			numeratorTeachers += iois.getAverage3_11();
 			denominatorTeachers++;
 		    }
 		}
 
 		if (denominatorCourses > 0) {
-		    request.setAttribute("averageAppreciationCourses", Double.valueOf(numeratorCourses
-			    / denominatorCourses));
+		    request.setAttribute("averageAppreciationCourses", Double.valueOf(numeratorCourses / denominatorCourses));
 		}
 		if (denominatorTeachers > 0) {
-		    request.setAttribute("averageAppreciationTeachers", Double.valueOf(numeratorTeachers
-			    / denominatorTeachers));
+		    request.setAttribute("averageAppreciationTeachers", Double.valueOf(numeratorTeachers / denominatorTeachers));
 		}
 	    } else {
 		request.setAttribute("emptyOldInquiriesSummaries", Boolean.TRUE);
@@ -326,25 +314,23 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	return mapping.findForward("viewDegreeEvaluation");
     }
 
-    private InfoDegreeCurricularPlan getInfoDegreeCurricularPlan(Integer executionDegreeId,
-	    Integer degreeId, Integer degreeCurricularPlanId, ActionMapping mapping,
-	    HttpServletRequest request, ActionErrors errors) {
+    private InfoDegreeCurricularPlan getInfoDegreeCurricularPlan(Integer executionDegreeId, Integer degreeId,
+	    Integer degreeCurricularPlanId, ActionMapping mapping, HttpServletRequest request, ActionErrors errors) {
 
 	if (executionDegreeId != null) {
 	    // if came in the request a executionDegreeId that it is
-                // necessary find the corresponding degree curricular plan
+	    // necessary find the corresponding degree curricular plan
 	    return getByExecutionDegreeId(executionDegreeId, request);
 	}
 
 	return getByDegreeIdOrDegreeCurricularPlanId(degreeId, degreeCurricularPlanId, request);
     }
 
-    private InfoDegreeCurricularPlan getByExecutionDegreeId(Integer executionDegreeId,
-	    HttpServletRequest request) {
+    private InfoDegreeCurricularPlan getByExecutionDegreeId(Integer executionDegreeId, HttpServletRequest request) {
 	try {
 	    final Object[] args = { executionDegreeId };
-	    final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory
-		    .executeService( "ReadExecutionDegreeByOID", args);
+	    final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+		    "ReadExecutionDegreeByOID", args);
 	    if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null) {
 		return null;
 	    }
@@ -357,13 +343,13 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	}
     }
 
-    private InfoDegreeCurricularPlan getByDegreeIdOrDegreeCurricularPlanId(Integer degreeId,
-	    Integer degreeCurricularPlanId, HttpServletRequest request) {
+    private InfoDegreeCurricularPlan getByDegreeIdOrDegreeCurricularPlanId(Integer degreeId, Integer degreeCurricularPlanId,
+	    HttpServletRequest request) {
 	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlanList;
 	try {
 	    final Object[] args = { degreeId };
-	    infoDegreeCurricularPlanList = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory
-		    .executeService( "ReadPublicDegreeCurricularPlansByDegree", args);
+	    infoDegreeCurricularPlanList = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory.executeService(
+		    "ReadPublicDegreeCurricularPlansByDegree", args);
 	    if (infoDegreeCurricularPlanList.isEmpty()) {
 		return null;
 	    }
@@ -380,7 +366,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	}
 
 	// if came in the request a degreeCurricularPlanId that it is necessary
-        // find information about this degree curricular plan
+	// find information about this degree curricular plan
 	if (degreeCurricularPlanId != null) {
 	    for (InfoDegreeCurricularPlan infoDegreeCurricularPlanElem : infoDegreeCurricularPlanList) {
 		if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId)) {
@@ -398,8 +384,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
     }
 
     public static Degree getDegree(HttpServletRequest request) {
-	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext
-		.getCurrentContext(request);
+	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
 	final DegreeSite site = (DegreeSite) context.getSelectedContainer();
 	Degree degree = null;
 	if (site != null) {

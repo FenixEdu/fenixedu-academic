@@ -15,9 +15,8 @@ public class CreateOptionalEnrolment extends Service {
     public void run(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
 	    CurriculumGroup curriculumGroup, Context context, CurricularCourse curricularCourse,
 	    EnrollmentCondition enrollmentCondition) throws FenixServiceException {
-	studentCurricularPlan.createOptionalEnrolment(curriculumGroup, executionSemester,
-		(OptionalCurricularCourse) context.getChildDegreeModule(),
-		curricularCourse, enrollmentCondition);
+	studentCurricularPlan.createOptionalEnrolment(curriculumGroup, executionSemester, (OptionalCurricularCourse) context
+		.getChildDegreeModule(), curricularCourse, enrollmentCondition);
     }
 
 }

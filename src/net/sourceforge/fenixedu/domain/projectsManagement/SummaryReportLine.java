@@ -39,106 +39,106 @@ public class SummaryReportLine implements Serializable, ISummaryReportLine {
     private Double budgetBalance;
 
     public String getAcronym() {
-        return acronym;
+	return acronym;
     }
 
     public void setAcronym(String acronym) {
-        this.acronym = acronym;
+	this.acronym = acronym;
     }
 
     public Double getAdiantamentosPorJustificar() {
-        return adiantamentosPorJustificar;
+	return adiantamentosPorJustificar;
     }
 
     public void setAdiantamentosPorJustificar(Double adiantamentosPorJustificar) {
-        this.adiantamentosPorJustificar = adiantamentosPorJustificar;
+	this.adiantamentosPorJustificar = adiantamentosPorJustificar;
     }
 
     public Double getBudget() {
-        return budget;
+	return budget;
     }
 
     public void setBudget(Double budget) {
-        this.budget = budget;
+	this.budget = budget;
     }
 
     public Double getBudgetBalance() {
-        return budgetBalance;
+	return budgetBalance;
     }
 
     public void setBudgetBalance(Double budgetBalance) {
-        this.budgetBalance = budgetBalance;
+	this.budgetBalance = budgetBalance;
     }
 
     public Double getCabimentoPorExecutar() {
-        return cabimentoPorExecutar;
+	return cabimentoPorExecutar;
     }
 
     public void setCabimentoPorExecutar(Double cabimentoPorExecutar) {
-        this.cabimentoPorExecutar = cabimentoPorExecutar;
+	this.cabimentoPorExecutar = cabimentoPorExecutar;
     }
 
     public Integer getCoordinatorCode() {
-        return coordinatorCode;
+	return coordinatorCode;
     }
 
     public void setCoordinatorCode(Integer coordinatorCode) {
-        this.coordinatorCode = coordinatorCode;
+	this.coordinatorCode = coordinatorCode;
     }
 
     public Double getExpense() {
-        return expense;
+	return expense;
     }
 
     public void setExpense(Double expense) {
-        this.expense = expense;
+	this.expense = expense;
     }
 
     public Integer getExplorationUnit() {
-        return explorationUnit;
+	return explorationUnit;
     }
 
     public void setExplorationUnit(Integer explorationUnit) {
-        this.explorationUnit = explorationUnit;
+	this.explorationUnit = explorationUnit;
     }
 
     public Double getMaxFinance() {
-        return maxFinance;
+	return maxFinance;
     }
 
     public void setMaxFinance(Double maxFinance) {
-        this.maxFinance = maxFinance;
+	this.maxFinance = maxFinance;
     }
 
     public Integer getProjectCode() {
-        return projectCode;
+	return projectCode;
     }
 
     public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
+	this.projectCode = projectCode;
     }
 
     public Double getRevenue() {
-        return revenue;
+	return revenue;
     }
 
     public void setRevenue(Double revenue) {
-        this.revenue = revenue;
+	this.revenue = revenue;
     }
 
     public Double getTreasuryBalance() {
-        return treasuryBalance;
+	return treasuryBalance;
     }
 
     public void setTreasuryBalance(Double treasuryBalance) {
-        this.treasuryBalance = treasuryBalance;
+	this.treasuryBalance = treasuryBalance;
     }
 
     public String getType() {
-        return type;
+	return type;
     }
 
     public void setType(String type) {
-        this.type = type;
+	this.type = type;
     }
 }

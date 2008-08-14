@@ -31,236 +31,237 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-
-
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
 public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
-    
-    public ActionForward prepare(ActionMapping actionMapping,
-            ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
-        InfoTeacher it = (InfoTeacher)session.getAttribute(SessionConstants.INFO_TEACHER);
-        
-        request.setAttribute("infoTeacher", it);
+    public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        List executionPeriodList = (List)ServiceUtils.executeService("ReadExecutionPeriods", null);
-        
-        Object[] args = { it.getTeacherNumber() };
-        List teachersRes = (List)ServiceUtils.executeService("ReadOldInquiriesTeachersResByTeacherNumber", args);
-        
-        Iterator periodIter = executionPeriodList.iterator();
-        while(periodIter.hasNext()) {
-            InfoExecutionPeriod iep = (InfoExecutionPeriod)periodIter.next();
-            boolean found = false;
-            Iterator teachersResIter = teachersRes.listIterator();
+	HttpSession session = request.getSession();
+	InfoTeacher it = (InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);
 
-            while(teachersResIter.hasNext()) {
-                InfoOldInquiriesTeachersRes ioits = (InfoOldInquiriesTeachersRes)teachersResIter.next();
-                if(iep.equals(ioits.getExecutionPeriod())) {
-                    found = true;
-                    break;
-                }
-            }
-            
-            if(!found) {
-                periodIter.remove();
-            }
-        }
-        
-        
-        Collections.sort(executionPeriodList, new BeanComparator("beginDate", new ReverseComparator(new ComparableComparator())));
+	request.setAttribute("infoTeacher", it);
 
-        request.setAttribute("executionPeriodList", executionPeriodList);
+	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
-        DynaActionForm inquiriesForm = (DynaActionForm) actionForm;
-        Integer executionPeriodId = (Integer) inquiriesForm.get("executionPeriodId");
-        
-        if(executionPeriodId != null) {
-            
-            if(executionPeriodId.intValue() > 0) {
-                
-                Iterator teachersResIter = teachersRes.listIterator();
+	Object[] args = { it.getTeacherNumber() };
+	List teachersRes = (List) ServiceUtils.executeService("ReadOldInquiriesTeachersResByTeacherNumber", args);
 
-                while(teachersResIter.hasNext()) {
-                    InfoOldInquiriesTeachersRes ioits = (InfoOldInquiriesTeachersRes)teachersResIter.next();
-                    if(!ioits.getKeyExecutionPeriod().equals(executionPeriodId)) {
-                        teachersResIter.remove();
-                    }
-                }
-                
-//                if(teachersRes.size() == 1) {
-//        	        request.setAttribute("oldInquiryTeachersResList", teachersRes);
-//        	        return actionMapping.findForward("showOldInquiriesTeacherRes");
-//                }
-                                                
-                request.setAttribute("oldInquiriesTeachersResListOfLists", joinSimilarOldInquiries(teachersRes));
-            
-            } else if(executionPeriodId.intValue() < 0) {
-                                
-//                if(teachersRes.size() == 1) {
-//        	        request.setAttribute("oldInquiryTeachersResList", teachersRes);
-//        	        return actionMapping.findForward("showOldInquiriesTeacherRes");
-//                }
-                request.setAttribute("oldInquiriesTeachersResListOfLists", joinSimilarOldInquiries(teachersRes));
-            }
-        }
+	Iterator periodIter = executionPeriodList.iterator();
+	while (periodIter.hasNext()) {
+	    InfoExecutionPeriod iep = (InfoExecutionPeriod) periodIter.next();
+	    boolean found = false;
+	    Iterator teachersResIter = teachersRes.listIterator();
 
+	    while (teachersResIter.hasNext()) {
+		InfoOldInquiriesTeachersRes ioits = (InfoOldInquiriesTeachersRes) teachersResIter.next();
+		if (iep.equals(ioits.getExecutionPeriod())) {
+		    found = true;
+		    break;
+		}
+	    }
 
-        return actionMapping.findForward("chooseExecutionPeriodAndCourse");
+	    if (!found) {
+		periodIter.remove();
+	    }
+	}
+
+	Collections.sort(executionPeriodList, new BeanComparator("beginDate", new ReverseComparator(new ComparableComparator())));
+
+	request.setAttribute("executionPeriodList", executionPeriodList);
+
+	DynaActionForm inquiriesForm = (DynaActionForm) actionForm;
+	Integer executionPeriodId = (Integer) inquiriesForm.get("executionPeriodId");
+
+	if (executionPeriodId != null) {
+
+	    if (executionPeriodId.intValue() > 0) {
+
+		Iterator teachersResIter = teachersRes.listIterator();
+
+		while (teachersResIter.hasNext()) {
+		    InfoOldInquiriesTeachersRes ioits = (InfoOldInquiriesTeachersRes) teachersResIter.next();
+		    if (!ioits.getKeyExecutionPeriod().equals(executionPeriodId)) {
+			teachersResIter.remove();
+		    }
+		}
+
+		// if(teachersRes.size() == 1) {
+		// request.setAttribute("oldInquiryTeachersResList",
+		// teachersRes);
+		// return
+		// actionMapping.findForward("showOldInquiriesTeacherRes");
+		// }
+
+		request.setAttribute("oldInquiriesTeachersResListOfLists", joinSimilarOldInquiries(teachersRes));
+
+	    } else if (executionPeriodId.intValue() < 0) {
+
+		// if(teachersRes.size() == 1) {
+		// request.setAttribute("oldInquiryTeachersResList",
+		// teachersRes);
+		// return
+		// actionMapping.findForward("showOldInquiriesTeacherRes");
+		// }
+		request.setAttribute("oldInquiriesTeachersResListOfLists", joinSimilarOldInquiries(teachersRes));
+	    }
+	}
+
+	return actionMapping.findForward("chooseExecutionPeriodAndCourse");
     }
-    
-    public ActionForward viewResults(ActionMapping actionMapping,
-            ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        IUserView userView = getUserView(request);
-        Integer oldInquiryTeacherId = getIntegerFromRequest("oldInquiryTeacherId", request);
-        Integer executionPeriodId = getIntegerFromRequest("executionPeriodId", request);
-        Integer degreeId = getIntegerFromRequest("degreeId", request);
-        Integer curricularYear = getIntegerFromRequest("curricularYear", request);
-        String courseCode = getStringFromRequest("courseCode", request);
-        
-        request.setAttribute("infoTeacher", request.getSession().getAttribute("info_teacher"));
-        
-        if((executionPeriodId != null) && (degreeId != null) && (courseCode != null)) {
-            Object args[] = { executionPeriodId, degreeId, courseCode };
-            InfoOldInquiriesCoursesRes ioicr = (InfoOldInquiriesCoursesRes) ServiceUtils.executeService(
-                    "ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode", args);
-            
-            request.setAttribute("oldInquiriesCoursesRes", ioicr);
-        }
 
-        if(oldInquiryTeacherId != null) {
-        
-	        Object args[] = { oldInquiryTeacherId };
-	        InfoOldInquiriesTeachersRes ioitr = (InfoOldInquiriesTeachersRes) ServiceUtils.executeService(
-	                "ReadOldInquiryTeachersResById", args);
-	        
-	        List ioitrList = new ArrayList();
-	        ioitrList.add(ioitr);
-	        
-	        request.setAttribute("oldInquiryTeachersResList", ioitrList);
+    public ActionForward viewResults(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        } else if((executionPeriodId != null) && (degreeId != null) && (curricularYear != null) && (courseCode != null)) {
+	IUserView userView = getUserView(request);
+	Integer oldInquiryTeacherId = getIntegerFromRequest("oldInquiryTeacherId", request);
+	Integer executionPeriodId = getIntegerFromRequest("executionPeriodId", request);
+	Integer degreeId = getIntegerFromRequest("degreeId", request);
+	Integer curricularYear = getIntegerFromRequest("curricularYear", request);
+	String courseCode = getStringFromRequest("courseCode", request);
 
-            InfoTeacher it = (InfoTeacher)request.getSession().getAttribute(SessionConstants.INFO_TEACHER);
-            Object args[] = { executionPeriodId, degreeId, curricularYear, courseCode, it.getTeacherNumber() };
-            
-            List oldInquiryTeachersResList = (List) ServiceUtils.executeService(
-                    "ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber",
-                    args);
-            
-	        request.setAttribute("oldInquiryTeachersResList", oldInquiryTeachersResList);
-        }
-        
-        //Get the execution course information
-//        Object argsIep[] = { executionPeriodId };
-//        InfoExecutionPeriod iep = (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID", argsIep);
-//
-//        Object argsIec[] = { executionPeriodId, courseCode };
-//        InfoExecutionCourse iec = (InfoExecutionCourse) ServiceUtils.executeService("teacher.ReadExecutionCourseByCodeAndExecutionPeriodId", argsIec);
-        
-        return actionMapping.findForward("showOldInquiriesTeacherRes");
+	request.setAttribute("infoTeacher", request.getSession().getAttribute("info_teacher"));
+
+	if ((executionPeriodId != null) && (degreeId != null) && (courseCode != null)) {
+	    Object args[] = { executionPeriodId, degreeId, courseCode };
+	    InfoOldInquiriesCoursesRes ioicr = (InfoOldInquiriesCoursesRes) ServiceUtils.executeService(
+		    "ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode", args);
+
+	    request.setAttribute("oldInquiriesCoursesRes", ioicr);
+	}
+
+	if (oldInquiryTeacherId != null) {
+
+	    Object args[] = { oldInquiryTeacherId };
+	    InfoOldInquiriesTeachersRes ioitr = (InfoOldInquiriesTeachersRes) ServiceUtils.executeService(
+		    "ReadOldInquiryTeachersResById", args);
+
+	    List ioitrList = new ArrayList();
+	    ioitrList.add(ioitr);
+
+	    request.setAttribute("oldInquiryTeachersResList", ioitrList);
+
+	} else if ((executionPeriodId != null) && (degreeId != null) && (curricularYear != null) && (courseCode != null)) {
+
+	    InfoTeacher it = (InfoTeacher) request.getSession().getAttribute(SessionConstants.INFO_TEACHER);
+	    Object args[] = { executionPeriodId, degreeId, curricularYear, courseCode, it.getTeacherNumber() };
+
+	    List oldInquiryTeachersResList = (List) ServiceUtils
+		    .executeService(
+			    "ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber",
+			    args);
+
+	    request.setAttribute("oldInquiryTeachersResList", oldInquiryTeachersResList);
+	}
+
+	// Get the execution course information
+	// Object argsIep[] = { executionPeriodId };
+	// InfoExecutionPeriod iep = (InfoExecutionPeriod)
+	// ServiceUtils.executeService("ReadExecutionPeriodByOID", argsIep);
+	//
+	// Object argsIec[] = { executionPeriodId, courseCode };
+	// InfoExecutionCourse iec = (InfoExecutionCourse)
+	// ServiceUtils.executeService
+	// ("teacher.ReadExecutionCourseByCodeAndExecutionPeriodId", argsIec);
+
+	return actionMapping.findForward("showOldInquiriesTeacherRes");
     }
-    
+
     private Integer getIntegerFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null) {
-            try {
-                parameterCode = new Integer(parameterCodeString);
-            } catch (Exception exception) {
-                return null;
-            }
-        }
-        return parameterCode;
+	Integer parameterCode = null;
+	String parameterCodeString = request.getParameter(parameter);
+	if (parameterCodeString == null) {
+	    parameterCodeString = (String) request.getAttribute(parameter);
+	}
+	if (parameterCodeString != null) {
+	    try {
+		parameterCode = new Integer(parameterCodeString);
+	    } catch (Exception exception) {
+		return null;
+	    }
+	}
+	return parameterCode;
     }
-    
+
     private String getStringFromRequest(String parameter, HttpServletRequest request) {
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        return parameterCodeString;
+	String parameterCodeString = request.getParameter(parameter);
+	if (parameterCodeString == null) {
+	    parameterCodeString = (String) request.getAttribute(parameter);
+	}
+	return parameterCodeString;
     }
-    
+
     /**
-     *
+     * 
      * @param oldInquiriesTeachersRes
-     * It creates a list of list. Each sublist has similar old inquiries wich have the same
-     * executionPeriod, degree and curricular year
+     *            It creates a list of list. Each sublist has similar old
+     *            inquiries wich have the same executionPeriod, degree and
+     *            curricular year
      * @return
      */
     private List joinSimilarOldInquiries(List oldInquiriesTeachersRes) {
-        List result = new ArrayList();
-        if(oldInquiriesTeachersRes.size() > 0) {
-	
-	        final ComparatorChain comparatorChain = new ComparatorChain();
-	        comparatorChain.addComparator(new BeanComparator("executionPeriod.beginDate", new ReverseComparator(new ComparableComparator())));
-	        comparatorChain.addComparator(new BeanComparator("degree.nome"));
-	        comparatorChain.addComparator(new BeanComparator("curricularYear"));
-	        comparatorChain.addComparator(new BeanComparator("gepCourseName"));
-	        comparatorChain.addComparator(new BeanComparator("classType"));
-	        
-	        Collections.sort(oldInquiriesTeachersRes, comparatorChain);
-	        
-	        Iterator iter = oldInquiriesTeachersRes.iterator();
-	        List previousList = new ArrayList();
-	        InfoOldInquiriesTeachersRes previousRes = (InfoOldInquiriesTeachersRes) iter.next();
-	        previousList.add(previousRes);
-	        
-	        while(iter.hasNext()) {
-	            InfoOldInquiriesTeachersRes current = (InfoOldInquiriesTeachersRes) iter.next();
-	            if((current.getExecutionPeriod().equals(previousRes.getExecutionPeriod())) &&
-	                    current.getDegree().getIdInternal().equals(previousRes.getDegree().getIdInternal()) &&
-	                    current.getCurricularYear().equals(previousRes.getCurricularYear()) &&
-	                    current.getCourseCode().equals(previousRes.getCourseCode())) {
-	                
-	                previousList.add(current);
+	List result = new ArrayList();
+	if (oldInquiriesTeachersRes.size() > 0) {
 
-	            } else {
-	                result.add(previousList);
-	                previousRes = current;
-	                previousList = new ArrayList();
-	                previousList.add(current);
-	            }
-	        }
-	        
-	        
-	        result.add(previousList);
-	        
-        
-        }
-        return result;
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(new BeanComparator("executionPeriod.beginDate", new ReverseComparator(
+		    new ComparableComparator())));
+	    comparatorChain.addComparator(new BeanComparator("degree.nome"));
+	    comparatorChain.addComparator(new BeanComparator("curricularYear"));
+	    comparatorChain.addComparator(new BeanComparator("gepCourseName"));
+	    comparatorChain.addComparator(new BeanComparator("classType"));
+
+	    Collections.sort(oldInquiriesTeachersRes, comparatorChain);
+
+	    Iterator iter = oldInquiriesTeachersRes.iterator();
+	    List previousList = new ArrayList();
+	    InfoOldInquiriesTeachersRes previousRes = (InfoOldInquiriesTeachersRes) iter.next();
+	    previousList.add(previousRes);
+
+	    while (iter.hasNext()) {
+		InfoOldInquiriesTeachersRes current = (InfoOldInquiriesTeachersRes) iter.next();
+		if ((current.getExecutionPeriod().equals(previousRes.getExecutionPeriod()))
+			&& current.getDegree().getIdInternal().equals(previousRes.getDegree().getIdInternal())
+			&& current.getCurricularYear().equals(previousRes.getCurricularYear())
+			&& current.getCourseCode().equals(previousRes.getCourseCode())) {
+
+		    previousList.add(current);
+
+		} else {
+		    result.add(previousList);
+		    previousRes = current;
+		    previousList = new ArrayList();
+		    previousList.add(current);
+		}
+	    }
+
+	    result.add(previousList);
+
+	}
+	return result;
 
     }
 
-
-//    private Boolean getFromRequestBoolean(String parameter,
-//            HttpServletRequest request) {
-//        Boolean parameterBoolean = null;
-//
-//        String parameterCodeString = request.getParameter(parameter);
-//        if (parameterCodeString == null) {
-//            parameterCodeString = (String) request.getAttribute(parameter);
-//        }
-//        if (parameterCodeString != null) {
-//            try {
-//                parameterBoolean = new Boolean(parameterCodeString);
-//            } catch (Exception exception) {
-//                return null;
-//            }
-//        }
-//
-//        return parameterBoolean;
-//    }
+    // private Boolean getFromRequestBoolean(String parameter,
+    // HttpServletRequest request) {
+    // Boolean parameterBoolean = null;
+    //
+    // String parameterCodeString = request.getParameter(parameter);
+    // if (parameterCodeString == null) {
+    // parameterCodeString = (String) request.getAttribute(parameter);
+    // }
+    // if (parameterCodeString != null) {
+    // try {
+    // parameterBoolean = new Boolean(parameterCodeString);
+    // } catch (Exception exception) {
+    // return null;
+    // }
+    // }
+    //
+    // return parameterBoolean;
+    // }
 
 }

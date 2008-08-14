@@ -41,20 +41,19 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ViewCurriculumDispatchAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
 	String personId = request.getParameter("personOID");
 
-	final Person person = ((personId != null && personId.length() > 0) ? (Person) RootDomainObject
-		.readDomainObjectByOID(Person.class, Integer.valueOf(personId)) : getLoggedPerson(request));
+	final Person person = ((personId != null && personId.length() > 0) ? (Person) RootDomainObject.readDomainObjectByOID(
+		Person.class, Integer.valueOf(personId)) : getLoggedPerson(request));
 
 	request.setAttribute("person", person);
 
 	ExecutionYearIntervalBean bean = retrieveExecutionYearBeanFromRequest(request);
 
-	putInformationOnRequestForGivenExecutionYear(bean.getFirstExecutionYear(), bean
-		.getFinalExecutionYear(), person, request);
+	putInformationOnRequestForGivenExecutionYear(bean.getFirstExecutionYear(), bean.getFinalExecutionYear(), person, request);
 
 	final List<ResearchInterest> researchInterests = person.getResearchInterests();
 	request.setAttribute("researchInterests", researchInterests);
@@ -64,8 +63,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
     private ExecutionYearIntervalBean retrieveExecutionYearBeanFromRequest(HttpServletRequest request) {
 	IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
-	ExecutionYearIntervalBean bean = (viewState != null) ? (ExecutionYearIntervalBean) viewState
-		.getMetaObject().getObject() : new ExecutionYearIntervalBean();
+	ExecutionYearIntervalBean bean = (viewState != null) ? (ExecutionYearIntervalBean) viewState.getMetaObject().getObject()
+		: new ExecutionYearIntervalBean();
 	request.setAttribute("executionYearIntervalBean", bean);
 	return bean;
     }
@@ -92,7 +91,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	Set<ResearchResultPublication> bookParts = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> resultPublications = new HashSet<ResearchResultPublication>();
 	Set<Prize> prizes = new HashSet<Prize>();
-	
+
 	if (firstExecutionYear == null) {
 	    firstExecutionYear = ExecutionYear.readFirstExecutionYear();
 	}
@@ -107,8 +106,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	while (iteratorYear != stoppageYear) {
 
 	    if (teacher != null) {
-		final_works.addAll(teacher.getAdvisesByAdviseTypeAndExecutionYear(
-			AdviseType.FINAL_WORK_DEGREE, iteratorYear));
+		final_works.addAll(teacher.getAdvisesByAdviseTypeAndExecutionYear(AdviseType.FINAL_WORK_DEGREE, iteratorYear));
 
 		guidances.addAll(teacher.getGuidedMasterDegreeThesisByExecutionYear(iteratorYear));
 		lectures.addAll(teacher.getLecturedExecutionCoursesByExecutionYear(iteratorYear));
@@ -119,12 +117,9 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	    resultPublications.addAll(person.getResearchResultPublicationsByExecutionYear(iteratorYear));
 	    books.addAll(person.getBooks(iteratorYear));
 	    nationalArticles.addAll(person.getArticles(ScopeType.NATIONAL, iteratorYear));
-	    internationalArticles.addAll(person.getArticles(ScopeType.INTERNATIONAL,
-		    iteratorYear));
-	    nationalInproceedings.addAll(person.getInproceedings(ScopeType.NATIONAL,
-		    iteratorYear));
-	    internationalInproceedings.addAll(person.getInproceedings(
-		    ScopeType.INTERNATIONAL, iteratorYear));
+	    internationalArticles.addAll(person.getArticles(ScopeType.INTERNATIONAL, iteratorYear));
+	    nationalInproceedings.addAll(person.getInproceedings(ScopeType.NATIONAL, iteratorYear));
+	    internationalInproceedings.addAll(person.getInproceedings(ScopeType.INTERNATIONAL, iteratorYear));
 	    proceedings.addAll(person.getProceedings(iteratorYear));
 	    thesis.addAll(person.getTheses(iteratorYear));
 	    manuals.addAll(person.getManuals(iteratorYear));
@@ -133,8 +128,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	    unstructured.addAll(person.getUnstructureds(iteratorYear));
 	    bookParts.addAll(person.getInbooks(iteratorYear));
 	    prizes.addAll(person.getPrizes(iteratorYear));
-	    
-		
+
 	    iteratorYear = iteratorYear.getNextExecutionYear();
 	}
 
@@ -143,7 +137,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("functions", functionsList);
 	List<Advise> final_worksList = new ArrayList<Advise>(final_works);
 	Collections.sort(final_worksList, new BeanComparator("student.number"));
-	
+
 	request.setAttribute("final_works", final_worksList);
 	request.setAttribute("guidances", guidances);
 	request.setAttribute("lectures", lectures);
@@ -153,8 +147,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("national-articles", ResearchResultPublication.sort(nationalArticles));
 	request.setAttribute("international-articles", ResearchResultPublication.sort(internationalArticles));
 	request.setAttribute("national-inproceedings", ResearchResultPublication.sort(nationalInproceedings));
-	request.setAttribute("international-inproceedings", ResearchResultPublication
-		.sort(internationalInproceedings));
+	request.setAttribute("international-inproceedings", ResearchResultPublication.sort(internationalInproceedings));
 	request.setAttribute("proceedings", ResearchResultPublication.sort(proceedings));
 	request.setAttribute("theses", ResearchResultPublication.sort(thesis));
 	request.setAttribute("manuals", ResearchResultPublication.sort(manuals));
@@ -162,23 +155,24 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("otherPublications", ResearchResultPublication.sort(otherPublication));
 	request.setAttribute("unstructureds", unstructured);
 	request.setAttribute("inbooks", ResearchResultPublication.sort(bookParts));
-	request.setAttribute("national-events", new ArrayList<ResearchEvent>(person
-		.getAssociatedEvents(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-events", new ArrayList<ResearchEvent>(person
-		.getAssociatedEvents(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person
-		.getAssociatedEventEditions(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("national-eventEditions", new ArrayList<EventEdition>(person
-		.getAssociatedEventEditions(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("national-journals", new ArrayList<ScientificJournal>(person
-		.getAssociatedScientificJournals(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-journals", new ArrayList<ScientificJournal>(person
-		.getAssociatedScientificJournals(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations(firstExecutionYear,finaltExecutionYear)));
-	request.setAttribute("national-issues", new ArrayList<JournalIssue>(person
-		.getAssociatedJournalIssues(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person
-		.getAssociatedJournalIssues(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("national-events", new ArrayList<ResearchEvent>(person.getAssociatedEvents(ScopeType.NATIONAL,
+		firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("international-events", new ArrayList<ResearchEvent>(person.getAssociatedEvents(
+		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person.getAssociatedEventEditions(
+		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("national-eventEditions", new ArrayList<EventEdition>(person.getAssociatedEventEditions(
+		ScopeType.NATIONAL, firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("national-journals", new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(
+		ScopeType.NATIONAL, firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("international-journals", new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(
+		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations(firstExecutionYear,
+		finaltExecutionYear)));
+	request.setAttribute("national-issues", new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.NATIONAL,
+		firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(
+		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
 	request.setAttribute("participations", person.getParticipations());
 	request.setAttribute("prizes", prizes);
     }

@@ -14,12 +14,12 @@ import org.joda.time.DateTime;
 
 public class GetAllSeminaries extends Service {
 
-    public List run(Boolean inEnrollmentPeriod) throws BDException{
+    public List run(Boolean inEnrollmentPeriod) throws BDException {
 	List<InfoSeminary> result = new LinkedList<InfoSeminary>();
 
 	List<Seminary> seminaries = rootDomainObject.getSeminarys();
 	for (Seminary seminary : seminaries) {
-	    
+
 	    if (!inEnrollmentPeriod) {
 		result.add(InfoSeminaryWithEquivalencies.newInfoFromDomain(seminary));
 	    } else {

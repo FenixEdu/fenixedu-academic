@@ -10,14 +10,14 @@ public class GeneralClassPropertyName extends FenixUtil {
     protected String name;
 
     public GeneralClassPropertyName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     /**
      * @return Returns the name.
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
@@ -25,6 +25,6 @@ public class GeneralClassPropertyName extends FenixUtil {
      *            The name to set.
      */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 }

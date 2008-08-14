@@ -22,76 +22,76 @@ public class ItemCreator implements Serializable {
     private DomainReference<Item> nextItem;
 
     private Group permittedGroup;
-    
-    public ItemCreator(Section section) {
-        super();
 
-        this.section = new DomainReference<Section>(section);
-        this.nextItem = new DomainReference<Item>(null);
-        this.visible = true;
-        this.showName = true;
-        this.permittedGroup = new EveryoneGroup();
+    public ItemCreator(Section section) {
+	super();
+
+	this.section = new DomainReference<Section>(section);
+	this.nextItem = new DomainReference<Item>(null);
+	this.visible = true;
+	this.showName = true;
+	this.permittedGroup = new EveryoneGroup();
     }
 
     public MultiLanguageString getInformation() {
-        return this.information;
+	return this.information;
     }
 
     public void setInformation(MultiLanguageString information) {
-        this.information = information;
+	this.information = information;
     }
 
     public MultiLanguageString getName() {
-        return this.name;
+	return this.name;
     }
 
     public void setName(MultiLanguageString name) {
-        this.name = name;
+	this.name = name;
     }
 
     public boolean isVisible() {
-        return this.visible;
+	return this.visible;
     }
 
     public void setVisible(boolean visible) {
-        this.visible = visible;
+	this.visible = visible;
     }
 
-	public boolean isShowName() {
-		return showName;
-	}
+    public boolean isShowName() {
+	return showName;
+    }
 
-	public void setShowName(boolean showName) {
-		this.showName = showName;
-	}
+    public void setShowName(boolean showName) {
+	this.showName = showName;
+    }
 
-	public Item getNextItem() {
-        return this.nextItem.getObject();
+    public Item getNextItem() {
+	return this.nextItem.getObject();
     }
 
     public void setNextItem(Item nextItem) {
-        this.nextItem = new DomainReference<Item>(nextItem);
+	this.nextItem = new DomainReference<Item>(nextItem);
     }
 
     public Section getSection() {
-        return this.section.getObject();
+	return this.section.getObject();
     }
 
     public Group getPermittedGroup() {
-        return this.permittedGroup;
+	return this.permittedGroup;
     }
 
     public void setPermittedGroup(Group permittedGroup) {
-        this.permittedGroup = permittedGroup;
+	this.permittedGroup = permittedGroup;
     }
 
     public void createItem() {
-        Item item = new Item(getSection(), getName());
+	Item item = new Item(getSection(), getName());
 
-        item.setBody(getInformation());
-        item.setNextItem(getNextItem());
-        item.setPermittedGroup(getPermittedGroup());
-        item.setVisible(isVisible());
-        item.setShowName(isShowName());
+	item.setBody(getInformation());
+	item.setNextItem(getNextItem());
+	item.setPermittedGroup(getPermittedGroup());
+	item.setVisible(isVisible());
+	item.setShowName(isShowName());
     }
 }

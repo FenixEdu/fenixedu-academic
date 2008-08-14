@@ -59,14 +59,14 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	removeAssociations();
 	super.delete();
     }
-       
+
     public List<Person> getAuthors() {
-    	ArrayList<Person> authors = new ArrayList<Person>();
-    	for (ResultParticipation participation : this.getOrderedResultParticipations()) {
-    		if (participation.getRole().equals(ResultParticipationRole.Author))
-    			authors.add(participation.getPerson());
-    	}
-    	return authors;
+	ArrayList<Person> authors = new ArrayList<Person>();
+	for (ResultParticipation participation : this.getOrderedResultParticipations()) {
+	    if (participation.getRole().equals(ResultParticipationRole.Author))
+		authors.add(participation.getPerson());
+	}
+	return authors;
     }
 
     public List<Person> getEditors() {
@@ -118,9 +118,9 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
     }
 
     /**
-         * this methods are used instead of the provided by the javabib library
-         * because in the javabib a BibtexPerson is printed using first lastName
-         */
+     * this methods are used instead of the provided by the javabib library
+     * because in the javabib a BibtexPerson is printed using first lastName
+     */
     protected String bibtexPersonToString(BibtexPerson bp) {
 	String all = "";
 	if (bp.isOthers()) {
@@ -212,8 +212,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	    ResultParticipationRole role = participation.getRole();
 
 	    if (!publication.acceptsParticipationRole(role)) {
-		role = (publication instanceof Proceedings) ? ResultParticipationRole.Editor
-			: ResultParticipationRole.Author;
+		role = (publication instanceof Proceedings) ? ResultParticipationRole.Editor : ResultParticipationRole.Author;
 	    }
 	    if (!publication.hasPersonParticipationWithRole(participation.getPerson(), role)) {
 		publication.addParticipation(participation.getPerson(), role);

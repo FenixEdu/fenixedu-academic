@@ -20,28 +20,27 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGratuitySituationListByStudentCurricularPlan extends Service {
 
-    public List run(Integer studentCurricularPlanID) throws FenixServiceException{
-        List infoGratuitySituations = new ArrayList();
-        List gratuitySituations = null;
-        GratuitySituation gratuitySituation = null;
+    public List run(Integer studentCurricularPlanID) throws FenixServiceException {
+	List infoGratuitySituations = new ArrayList();
+	List gratuitySituations = null;
+	GratuitySituation gratuitySituation = null;
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                .readStudentCurricularPlanByOID(studentCurricularPlanID);
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
-        gratuitySituations = studentCurricularPlan.getGratuitySituations();
+	gratuitySituations = studentCurricularPlan.getGratuitySituations();
 
-        InfoGratuitySituation infoGratuitySituation = null;
-        for (Iterator iter = gratuitySituations.iterator(); iter.hasNext();) {
-            gratuitySituation = (GratuitySituation) iter.next();
+	InfoGratuitySituation infoGratuitySituation = null;
+	for (Iterator iter = gratuitySituations.iterator(); iter.hasNext();) {
+	    gratuitySituation = (GratuitySituation) iter.next();
 
-            if (gratuitySituation != null) {
-                infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-                        .newInfoFromDomain(gratuitySituation);
+	    if (gratuitySituation != null) {
+		infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+			.newInfoFromDomain(gratuitySituation);
 
-                infoGratuitySituations.add(infoGratuitySituation);
-            }
-        }
+		infoGratuitySituations.add(infoGratuitySituation);
+	    }
+	}
 
-        return infoGratuitySituations;
+	return infoGratuitySituations;
     }
 }

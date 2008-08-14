@@ -1,6 +1,6 @@
 /**
-* Nov 22, 2005
-*/
+ * Nov 22, 2005
+ */
 package net.sourceforge.fenixedu.dataTransferObject.teacher.professorship;
 
 import java.util.Date;
@@ -10,61 +10,58 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
  * @author Ricardo Rodrigues
- *
+ * 
  */
 
 public class SupportLessonDTO extends InfoObject {
-    
-    private Integer professorshipID; 
-    
+
+    private Integer professorshipID;
+
     private DiaSemana weekDay;
 
-    private Date startTime;   
+    private Date startTime;
 
-    private Date endTime;   
+    private Date endTime;
 
     private String place;
 
-    
     public String getPlace() {
-        return place;
+	return place;
     }
 
     public void setPlace(String place) {
-        this.place = place;
+	this.place = place;
     }
 
     public Integer getProfessorshipID() {
-        return professorshipID;
+	return professorshipID;
     }
 
     public void setProfessorshipID(Integer professorshipID) {
-        this.professorshipID = professorshipID;
+	this.professorshipID = professorshipID;
     }
 
     public Date getEndTime() {
-        return endTime;
+	return endTime;
     }
 
     public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+	this.endTime = endTime;
     }
 
     public Date getStartTime() {
-        return startTime;
+	return startTime;
     }
 
     public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+	this.startTime = startTime;
     }
 
     public DiaSemana getWeekDay() {
-        return weekDay;
+	return weekDay;
     }
 
     public void setWeekDay(DiaSemana weekDay) {
-        this.weekDay = weekDay;
-    }    
+	this.weekDay = weekDay;
+    }
 }
-
-

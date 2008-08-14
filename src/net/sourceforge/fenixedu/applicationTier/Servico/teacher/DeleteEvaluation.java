@@ -12,15 +12,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteEvaluation extends Service {
 
     /**
-     * @param Integer executionCourseID used in filtering
-     *        (ExecutionCourseLecturingTeacherAuthorizationFilter)
+     * @param Integer
+     *            executionCourseID used in filtering
+     *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
      */
     public void run(Integer executionCourseID, Integer evaluationID) throws FenixServiceException {
-        final Evaluation evaluation = (Evaluation) rootDomainObject.readEvaluationByOID(evaluationID);
-        if (evaluation == null) {
-            throw new FenixServiceException("error.noEvaluation");
-        }
-        evaluation.delete();
+	final Evaluation evaluation = (Evaluation) rootDomainObject.readEvaluationByOID(evaluationID);
+	if (evaluation == null) {
+	    throw new FenixServiceException("error.noEvaluation");
+	}
+	evaluation.delete();
     }
-    
+
 }

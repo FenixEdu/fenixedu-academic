@@ -15,20 +15,19 @@ public class FindTeachersService extends SearchService {
 
     @Override
     protected InfoObject newInfoFromDomain(DomainObject object) {
-        return InfoTeacher.newInfoFromDomain((Teacher) object);
+	return InfoTeacher.newInfoFromDomain((Teacher) object);
     }
 
     @Override
     protected List doSearch(HashMap searchParameters) {
 
-        Teacher teacher = Teacher.readByNumber(
-                Integer.valueOf((String) searchParameters.get("teacherNumber")));
+	Teacher teacher = Teacher.readByNumber(Integer.valueOf((String) searchParameters.get("teacherNumber")));
 
-        List<Teacher> returnList = new ArrayList<Teacher>();
-        if (teacher != null) {
-            returnList.add(teacher);
-        }
-        return returnList;
+	List<Teacher> returnList = new ArrayList<Teacher>();
+	if (teacher != null) {
+	    returnList.add(teacher);
+	}
+	return returnList;
     }
 
 }

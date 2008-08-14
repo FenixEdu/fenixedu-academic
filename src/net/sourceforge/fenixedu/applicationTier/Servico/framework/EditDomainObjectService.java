@@ -21,50 +21,49 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public abstract class EditDomainObjectService extends Service {
 
     /**
-         * Checks if the objectToEdit can be created or update
-         * 
-         * @param objectToEdit
-         * @param existingDomainObject
-         * @return
-         */
+     * Checks if the objectToEdit can be created or update
+     * 
+     * @param objectToEdit
+     * @param existingDomainObject
+     * @return
+     */
     private boolean canCreate(InfoObject objectToEdit, DomainObject existingDomainObject) {
 	/*
-         * Not new and exist on database and object ids are equal OR is a new
-         * object and doesn't exist on database OR is not new and doesn't exist
-         * on database (unique changed)
-         */
+	 * Not new and exist on database and object ids are equal OR is a new
+	 * object and doesn't exist on database OR is not new and doesn't exist
+	 * on database (unique changed)
+	 */
 
 	return (!isNew(objectToEdit)
-		&& ((existingDomainObject != null) && (objectToEdit.getIdInternal()
-			.equals(existingDomainObject.getIdInternal()))) || ((existingDomainObject == null)));
+		&& ((existingDomainObject != null) && (objectToEdit.getIdInternal().equals(existingDomainObject.getIdInternal()))) || ((existingDomainObject == null)));
     }
 
     /**
-         * By default this method does nothing
-         * 
-         * @param newDomainObject
-         * @param infoObject
-         * @param persistentSupport
-         */
+     * By default this method does nothing
+     * 
+     * @param newDomainObject
+     * @param infoObject
+     * @param persistentSupport
+     */
     protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject) throws Exception {
     }
 
     /**
-         * By default this method does nothing
-         * 
-         * @param objectLocked
-         * @param infoObject
-         * @param persistentSupport
-         */
+     * By default this method does nothing
+     * 
+     * @param objectLocked
+     * @param infoObject
+     * @param persistentSupport
+     */
     protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject) throws Exception {
     }
 
     /**
-         * Checks if the internalId of the object is null or 0
-         * 
-         * @param domainObject
-         * @return
-         */
+     * Checks if the internalId of the object is null or 0
+     * 
+     * @param domainObject
+     * @return
+     */
     protected boolean isNew(InfoObject domainObject)
 
     {
@@ -73,25 +72,25 @@ public abstract class EditDomainObjectService extends Service {
     }
 
     /**
-         * This method invokes a persistent method to read an DomainObject from
-         * database
-         * 
-         * @param domainObject
-         * @return By default returns null. When there is no unique in
-         *         domainObject the object that we want to create never exists.
-         */
+     * This method invokes a persistent method to read an DomainObject from
+     * database
+     * 
+     * @param domainObject
+     * @return By default returns null. When there is no unique in domainObject
+     *         the object that we want to create never exists.
+     */
     protected DomainObject readObjectByUnique(InfoObject infoObject) throws Exception {
 	return null;
     }
 
     /**
-         * Executes the service
-         * 
-         * @param objectId
-         * @param infoObject
-         * @return
-         * @throws Exception
-         */
+     * Executes the service
+     * 
+     * @param objectId
+     * @param infoObject
+     * @return
+     * @throws Exception
+     */
     public void run(Integer objectId, InfoObject infoObject) throws Exception {
 	DomainObject objectFromDatabase = getObjectFromDatabase(infoObject);
 	if (!canCreate(infoObject, objectFromDatabase)) {
@@ -106,8 +105,8 @@ public abstract class EditDomainObjectService extends Service {
 	doAfterLock(domainObject, infoObject);
     }
 
-    private DomainObject getObjectToLock(InfoObject infoObject, DomainObject objectFromDatabase)
-	    throws InstantiationException, IllegalAccessException {
+    private DomainObject getObjectToLock(InfoObject infoObject, DomainObject objectFromDatabase) throws InstantiationException,
+	    IllegalAccessException {
 	DomainObject domainObject = null;
 
 	if (isNew(infoObject)) {
@@ -122,8 +121,8 @@ public abstract class EditDomainObjectService extends Service {
 
     protected abstract DomainObject readDomainObject(final Integer idInternal);
 
-    protected abstract void copyInformationFromInfoToDomain(InfoObject infoObject,
-	    DomainObject domainObject) throws FenixServiceException;
+    protected abstract void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
+	    throws FenixServiceException;
 
     private DomainObject getObjectFromDatabase(InfoObject infoObject) throws Exception {
 	DomainObject objectFromDatabase = readObjectByUnique(infoObject);

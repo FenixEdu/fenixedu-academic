@@ -46,8 +46,7 @@ public class CreditsAuthorizationFilter extends Filtro {
 	}
 
 	if (!authorizedRequester) {
-	    throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
-		    + "ACCESS NOT GRANTED!");
+	    throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador() + "ACCESS NOT GRANTED!");
 	}
 
     }

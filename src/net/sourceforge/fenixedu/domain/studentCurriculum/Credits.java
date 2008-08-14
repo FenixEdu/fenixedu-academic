@@ -26,9 +26,8 @@ public class Credits extends Credits_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Credits(StudentCurricularPlan studentCurricularPlan,
-	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments,
-	    ExecutionSemester executionSemester) {
+    public Credits(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
+	    Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
 	this();
 	init(studentCurricularPlan, dismissals, enrolments, executionSemester);
     }
@@ -38,9 +37,9 @@ public class Credits extends Credits_Base {
 	this();
 	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
     }
-    
-    public Credits(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, Collection<IEnrolment> enrolments,
-	    Double credits, ExecutionSemester executionSemester) {
+
+    public Credits(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+	    Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
 	this();
 	init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
     }
@@ -67,9 +66,10 @@ public class Credits extends Credits_Base {
 
 	Dismissal.createNewDismissal(this, studentCurricularPlan, courseGroup, noEnrolCurricularCourses);
     }
-    
-    protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, Collection<IEnrolment> enrolments,
-	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
+
+    protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+	    Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits,
+	    ExecutionSemester executionSemester) {
 	if (studentCurricularPlan == null || curriculumGroup == null || credits == null) {
 	    throw new DomainException("error.credits.wrong.arguments");
 	}
@@ -83,17 +83,18 @@ public class Credits extends Credits_Base {
 	Dismissal.createNewDismissal(this, studentCurricularPlan, curriculumGroup, noEnrolCurricularCourses);
     }
 
-
-    private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan,
-	    final CourseGroup courseGroup, final Double credits, final ExecutionSemester executionSemester) {
-	if (courseGroup.isBolonhaDegree() && !allowsEctsCredits(studentCurricularPlan, courseGroup, executionSemester, credits.doubleValue())) {
+    private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
+	    final Double credits, final ExecutionSemester executionSemester) {
+	if (courseGroup.isBolonhaDegree()
+		&& !allowsEctsCredits(studentCurricularPlan, courseGroup, executionSemester, credits.doubleValue())) {
 	    throw new DomainException("error.credits.invalid.credits", credits.toString());
 	}
     }
 
     private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
 	    final ExecutionSemester executionSemester, final double ectsCredits) {
-	final double ectsCreditsForCourseGroup = studentCurricularPlan.getCreditsConcludedForCourseGroup(courseGroup).doubleValue();
+	final double ectsCreditsForCourseGroup = studentCurricularPlan.getCreditsConcludedForCourseGroup(courseGroup)
+		.doubleValue();
 	if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionSemester).doubleValue()) {
 	    return false;
 	}
@@ -110,9 +111,8 @@ public class Credits extends Credits_Base {
 	return false;
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan,
-	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments,
-	    ExecutionSemester executionSemester) {
+    protected void init(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
+	    Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
 	if (studentCurricularPlan == null || dismissals == null || dismissals.isEmpty()) {
 	    throw new DomainException("error.credits.wrong.arguments");
 	}
@@ -146,20 +146,20 @@ public class Credits extends Credits_Base {
 	final Set<IEnrolment> result = new HashSet<IEnrolment>();
 	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
 	    IEnrolment enrolment = enrolmentWrapper.getIEnrolment();
-	    if(enrolment != null) {
+	    if (enrolment != null) {
 		result.add(enrolmentWrapper.getIEnrolment());
 	    }
 	}
 	return result;
     }
-    
+
     final public boolean hasIEnrolments(final IEnrolment iEnrolment) {
 	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
 	    if (enrolmentWrapper.getIEnrolment() == iEnrolment) {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
 

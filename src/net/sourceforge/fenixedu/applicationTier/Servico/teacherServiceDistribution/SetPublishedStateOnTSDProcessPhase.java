@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 
 public class SetPublishedStateOnTSDProcessPhase extends Service {
-	public void run(Integer tsdProcessPhaseId, Boolean publishedState) {
-		TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
-		tsdProcessPhase.setIsPublished(publishedState);
-	}
+    public void run(Integer tsdProcessPhaseId, Boolean publishedState) {
+	TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
+	tsdProcessPhase.setIsPublished(publishedState);
+    }
 }

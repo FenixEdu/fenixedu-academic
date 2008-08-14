@@ -16,18 +16,15 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
 	super();
     }
 
-    public InstallmentWithMonthlyPenalty(final PaymentPlan paymentPlan, final Money amount,
-	    final YearMonthDay startDate, final YearMonthDay endDate,
-	    final BigDecimal penaltyPercentage, final YearMonthDay whenStartToApplyPenalty,
+    public InstallmentWithMonthlyPenalty(final PaymentPlan paymentPlan, final Money amount, final YearMonthDay startDate,
+	    final YearMonthDay endDate, final BigDecimal penaltyPercentage, final YearMonthDay whenStartToApplyPenalty,
 	    final Integer maxMonthsToApplyPenalty) {
 	this();
-	init(paymentPlan, amount, startDate, endDate, penaltyPercentage, whenStartToApplyPenalty,
-		maxMonthsToApplyPenalty);
+	init(paymentPlan, amount, startDate, endDate, penaltyPercentage, whenStartToApplyPenalty, maxMonthsToApplyPenalty);
     }
 
-    protected void init(PaymentPlan paymentPlan, Money amount, YearMonthDay startDate,
-	    YearMonthDay endDate, BigDecimal penaltyPercentage, YearMonthDay whenStartToApplyPenalty,
-	    Integer maxMonthsToApplyPenalty) {
+    protected void init(PaymentPlan paymentPlan, Money amount, YearMonthDay startDate, YearMonthDay endDate,
+	    BigDecimal penaltyPercentage, YearMonthDay whenStartToApplyPenalty, Integer maxMonthsToApplyPenalty) {
 
 	super.init(paymentPlan, amount, startDate, endDate, penaltyPercentage);
 	checkParameters(whenStartToApplyPenalty, maxMonthsToApplyPenalty);
@@ -72,15 +69,14 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     }
 
     private int getNumberOfMonthsToChargePenalty(DateTime when) {
-	final int numberOfMonths = (new Period(getWhenStartToApplyPenalty().withDayOfMonth(1)
-		.toDateMidnight(), when.toDateMidnight()).getMonths() + 1);
-	return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths
-		: getMaxMonthsToApplyPenalty();
+	final int numberOfMonths = (new Period(getWhenStartToApplyPenalty().withDayOfMonth(1).toDateMidnight(), when
+		.toDateMidnight()).getMonths() + 1);
+	return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
     }
-    
+
     @Override
     public boolean isWithMonthlyPenalty() {
-        return true;
+	return true;
     }
 
 }

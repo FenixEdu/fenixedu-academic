@@ -21,12 +21,12 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public abstract class ServiceUtils {
 
-    public static Object executeService(String serviceName, Object... serviceArgs)
-            throws FenixServiceException, FenixFilterException {
+    public static Object executeService(String serviceName, Object... serviceArgs) throws FenixServiceException,
+	    FenixFilterException {
 	final IUserView userView = UserView.getUser();
-        if (serviceArgs == null)
-            serviceArgs = new Object[0];
-        return ServiceManagerServiceFactory.executeService( serviceName, serviceArgs);
+	if (serviceArgs == null)
+	    serviceArgs = new Object[0];
+	return ServiceManagerServiceFactory.executeService(serviceName, serviceArgs);
     }
 
 }

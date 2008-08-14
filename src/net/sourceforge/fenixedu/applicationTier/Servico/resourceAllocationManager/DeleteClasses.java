@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteClasses extends Service {
 
     public Boolean run(List<Integer> classOIDs) {
-        for (Integer classId : classOIDs) {
-            final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(classId);
-            schoolClass.delete();
-        }
+	for (Integer classId : classOIDs) {
+	    final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(classId);
+	    schoolClass.delete();
+	}
 
-        return Boolean.TRUE;
+	return Boolean.TRUE;
     }
 
 }

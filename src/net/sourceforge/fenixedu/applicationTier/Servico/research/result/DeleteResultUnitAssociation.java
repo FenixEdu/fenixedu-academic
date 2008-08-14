@@ -9,7 +9,7 @@ public class DeleteResultUnitAssociation extends Service {
 
     public void run(Integer oid) {
 	final ResultUnitAssociation association = ResultUnitAssociation.readByOid(oid);
-	final ResearchResult result =association.getResult(); 
+	final ResearchResult result = association.getResult();
 	result.removeUnitAssociation(association);
 	ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
     }

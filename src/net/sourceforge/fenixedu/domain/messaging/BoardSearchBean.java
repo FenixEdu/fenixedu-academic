@@ -24,23 +24,23 @@ public class BoardSearchBean implements Serializable, HasExecutionSemester {
     private DomainReference<ExecutionDegree> executionDegree;
 
     public BoardSearchBean() {
-        super();
+	super();
     }
 
     public Boolean getSearchExecutionCourseBoards() {
-        return searchExecutionCourseBoards;
+	return searchExecutionCourseBoards;
     }
 
     public void setSearchExecutionCourseBoards(Boolean searchExecutionCourseBoards) {
-        this.searchExecutionCourseBoards = searchExecutionCourseBoards;
+	this.searchExecutionCourseBoards = searchExecutionCourseBoards;
     }
 
     public ExecutionDegree getExecutionDegree() {
-        return executionDegree == null ? null : executionDegree.getObject();
+	return executionDegree == null ? null : executionDegree.getObject();
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-        this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
     }
 
     public ExecutionSemester getExecutionPeriod() {
@@ -48,19 +48,19 @@ public class BoardSearchBean implements Serializable, HasExecutionSemester {
 	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	    setExecutionPeriod(executionSemester);
 	}
-        return executionSemester.getObject();
+	return executionSemester.getObject();
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester == null ? null : new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester == null ? null : new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public void setUnit(Unit unit) {
-        this.unit = new DomainReference<Unit>(unit);
+	this.unit = new DomainReference<Unit>(unit);
     }
 
     public Unit getUnit() {
-        return this.unit == null ? null : this.unit.getObject();
+	return this.unit == null ? null : this.unit.getObject();
     }
 
     public Set getSearchResult() {
@@ -87,7 +87,8 @@ public class BoardSearchBean implements Serializable, HasExecutionSemester {
 	return boards;
     }
 
-    private boolean isExecutionCourseForExecutionDegree(final ExecutionCourse executionCourse, final ExecutionDegree executionDegree) {
+    private boolean isExecutionCourseForExecutionDegree(final ExecutionCourse executionCourse,
+	    final ExecutionDegree executionDegree) {
 	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
 	    for (final ExecutionDegree otherExecutionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {

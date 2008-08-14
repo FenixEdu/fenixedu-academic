@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteGlossaryEntry extends Service {
 
     public void run(Integer entryId) {
-        rootDomainObject.readGlossaryEntryByOID(entryId).delete();
+	rootDomainObject.readGlossaryEntryByOID(entryId).delete();
     }
 
 }

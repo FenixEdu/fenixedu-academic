@@ -16,8 +16,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class ForunsManagementDA extends FenixDispatchAction {
-    
-    public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Person person = AccessControl.getPerson();
 	Collection<Forum> foruns = person.getForuns(ExecutionSemester.readActualExecutionSemester());
 	request.setAttribute("foruns", foruns);

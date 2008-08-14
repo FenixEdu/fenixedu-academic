@@ -23,75 +23,73 @@ import org.apache.struts.action.DynaActionForm;
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *  
+ * 
  */
 
 public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        return mapping.findForward("PrepareSuccess");
+	return mapping.findForward("PrepareSuccess");
     }
 
     public ActionForward findPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        DynaActionForm newPasswordForm = (DynaActionForm) form;
+	DynaActionForm newPasswordForm = (DynaActionForm) form;
 
-        String username = (String) newPasswordForm.get("username");
+	String username = (String) newPasswordForm.get("username");
 
-        InfoPerson infoPerson = null;
-        try {
-            Object args[] = { username };
-            infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
-                    "ReadPersonByUsername", args);
-        } catch (ExcepcaoInexistente e) {
-            throw new NonExistingActionException("A Person", e);
-        }
+	InfoPerson infoPerson = null;
+	try {
+	    Object args[] = { username };
+	    infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", args);
+	} catch (ExcepcaoInexistente e) {
+	    throw new NonExistingActionException("A Person", e);
+	}
 
-        request.setAttribute("infoPerson", infoPerson);
+	request.setAttribute("infoPerson", infoPerson);
 
-        return mapping.findForward("Confirm");
+	return mapping.findForward("Confirm");
     }
 
-    public ActionForward generatePassword(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+	IUserView userView = getUserView(request);
 
-        Integer personID = new Integer(request.getParameter("personID"));
+	Integer personID = new Integer(request.getParameter("personID"));
 
-        String password = null;
+	String password = null;
 
-        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
-        if (person != null) {
-        	ServiceUtils.executeService("SetUserUID", new Object[] { person } );
-        }
+	final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
+	if (person != null) {
+	    ServiceUtils.executeService("SetUserUID", new Object[] { person });
+	}
 
-        // Change the Password
-        try {
-            Object args[] = { personID };
-            password = (String) ServiceManagerServiceFactory.executeService( "GenerateNewPassword", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	// Change the Password
+	try {
+	    Object args[] = { personID };
+	    password = (String) ServiceManagerServiceFactory.executeService("GenerateNewPassword", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        request.setAttribute("password", password);
+	request.setAttribute("password", password);
 
-        InfoPerson infoPerson = null;
-        try {
-            Object args[] = { request.getParameter("username") };
-            infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
-                    "ReadPersonByUsername", args);
-        } catch (ExcepcaoInexistente e) {
-            throw new NonExistingActionException("A Person", e);
-        }
+	InfoPerson infoPerson = null;
+	try {
+	    Object args[] = { request.getParameter("username") };
+	    infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", args);
+	} catch (ExcepcaoInexistente e) {
+	    throw new NonExistingActionException("A Person", e);
+	}
 
-        request.setAttribute("infoPerson", infoPerson);
+	request.setAttribute("infoPerson", infoPerson);
 
-        return mapping.findForward("Success");
+	return mapping.findForward("Success");
     }
 }

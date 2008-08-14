@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.gratuity;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 13/Nov/2003
- *  
+ * 
  */
 public enum ReimbursementGuideState {
 
@@ -19,7 +19,7 @@ public enum ReimbursementGuideState {
     ANNULLED;
 
     public String getName() {
-        return name();
+	return name();
     }
 
 }

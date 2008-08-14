@@ -25,51 +25,46 @@ import org.apache.commons.collections.Transformer;
  * @author jpvl
  */
 public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
-    
+
     private final class Professorships2DetailProfessorship implements Transformer {
-        private Professorships2DetailProfessorship() {
-            super();
-        }
+	private Professorships2DetailProfessorship() {
+	    super();
+	}
 
-        public Object transform(Object input) {
-            Professorship professorship = (Professorship) input;
-            InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
+	public Object transform(Object input) {
+	    Professorship professorship = (Professorship) input;
+	    InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
 
-            final DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
+	    final DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
-            ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship,
-                    executionCourse);
-           
-            detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
+	    ExecutionCourse executionCourse = professorship.getExecutionCourse();
+	    List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship, executionCourse);
 
-            detailedProfessorship.setInfoProfessorship(infoProfessorShip);
-            detailedProfessorship
-                    .setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
+	    detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
 
-            return detailedProfessorship;
-        }
+	    detailedProfessorship.setInfoProfessorship(infoProfessorShip);
+	    detailedProfessorship.setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
 
-        private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship,
-                ExecutionCourse executionCourse) {
+	    return detailedProfessorship;
+	}
 
-            List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
-                    .getAssociatedCurricularCourses(), new Transformer() {
+	private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship, ExecutionCourse executionCourse) {
 
-                public Object transform(Object input) {
-                    CurricularCourse curricularCourse = (CurricularCourse) input;
-                    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-                            .newInfoFromDomain(curricularCourse);
-                    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree()
-                            .getTipoCurso();
-                    if (degreeType.equals(DegreeType.DEGREE)) {
-                        detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
-                    }
-                    return infoCurricularCourse;
-                }
-            });
-            return infoCurricularCourses;
-        }
+	    List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(),
+		    new Transformer() {
+
+			public Object transform(Object input) {
+			    CurricularCourse curricularCourse = (CurricularCourse) input;
+			    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+			    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
+			    if (degreeType.equals(DegreeType.DEGREE)) {
+				detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
+			    }
+			    return infoCurricularCourse;
+			}
+		    });
+	    return infoCurricularCourses;
+	}
     }
 
     public class NotFoundTeacher extends FenixServiceException {
@@ -78,17 +73,16 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
 
     protected List getDetailedProfessorships(List professorships, final List responsibleFors) {
 
-        List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
-                new Professorships2DetailProfessorship());
+	List detailedProfessorshipList = (List) CollectionUtils.collect(professorships, new Professorships2DetailProfessorship());
 
-        return detailedProfessorshipList;
+	return detailedProfessorshipList;
     }
 
-    protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher{
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-        if (teacher == null) {
-            throw new NotFoundTeacher();
-        }
-        return teacher;
+    protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher {
+	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+	if (teacher == null) {
+	    throw new NotFoundTeacher();
+	}
+	return teacher;
     }
 }

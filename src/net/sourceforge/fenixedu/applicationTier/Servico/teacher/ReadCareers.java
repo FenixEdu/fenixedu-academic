@@ -21,45 +21,44 @@ import org.apache.commons.beanutils.BeanComparator;
 public class ReadCareers extends Service {
 
     public SiteView run(CareerType careerType, String user) {
-        final Teacher teacher = Teacher.readTeacherByUsername(user);
-        
-        final InfoSiteCareers bodyComponent = new InfoSiteCareers();
-        bodyComponent.setInfoCareers(getInfoCareers(teacher, careerType));
-        bodyComponent.setCareerType(careerType);
+	final Teacher teacher = Teacher.readTeacherByUsername(user);
 
-        final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
-        bodyComponent.setInfoTeacher(infoTeacher);
+	final InfoSiteCareers bodyComponent = new InfoSiteCareers();
+	bodyComponent.setInfoCareers(getInfoCareers(teacher, careerType));
+	bodyComponent.setCareerType(careerType);
 
-        SiteView siteView = new SiteView(bodyComponent);
-        return siteView;
+	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
+	bodyComponent.setInfoTeacher(infoTeacher);
+
+	SiteView siteView = new SiteView(bodyComponent);
+	return siteView;
     }
 
-    private List getInfoCareers(Teacher teacher, CareerType careerType)
-            {
+    private List getInfoCareers(Teacher teacher, CareerType careerType) {
 
-        final List<InfoCareer> oldestCareers = new ArrayList();
-        final List<InfoCareer> newestCareers = new ArrayList();
+	final List<InfoCareer> oldestCareers = new ArrayList();
+	final List<InfoCareer> newestCareers = new ArrayList();
 
-        final List<Career> careers = teacher.getAssociatedCareers();
-        for (final Career career : careers) {
-            boolean addCareer = false;
-            if (careerType == null
-                    || (careerType.equals(CareerType.PROFESSIONAL) && career.getClass().getName()
-                            .equals(ProfessionalCareer.class.getName()))) {
-                addCareer = true;
-            } else if (careerType.equals(CareerType.TEACHING)
-                    && career.getClass().getName().equals(TeachingCareer.class.getName())) {
-                addCareer = true;
-            }
-            if (addCareer && career.getBeginYear() == null) {
-                oldestCareers.add(InfoCareer.newInfoFromDomain(career));
-            } else if (addCareer) {
-                newestCareers.add(InfoCareer.newInfoFromDomain(career));
-            }
-        }
-        Collections.sort(newestCareers, new BeanComparator("beginYear"));
-        oldestCareers.addAll(newestCareers);
-        
-        return oldestCareers;
+	final List<Career> careers = teacher.getAssociatedCareers();
+	for (final Career career : careers) {
+	    boolean addCareer = false;
+	    if (careerType == null
+		    || (careerType.equals(CareerType.PROFESSIONAL) && career.getClass().getName().equals(
+			    ProfessionalCareer.class.getName()))) {
+		addCareer = true;
+	    } else if (careerType.equals(CareerType.TEACHING)
+		    && career.getClass().getName().equals(TeachingCareer.class.getName())) {
+		addCareer = true;
+	    }
+	    if (addCareer && career.getBeginYear() == null) {
+		oldestCareers.add(InfoCareer.newInfoFromDomain(career));
+	    } else if (addCareer) {
+		newestCareers.add(InfoCareer.newInfoFromDomain(career));
+	    }
+	}
+	Collections.sort(newestCareers, new BeanComparator("beginYear"));
+	oldestCareers.addAll(newestCareers);
+
+	return oldestCareers;
     }
 }

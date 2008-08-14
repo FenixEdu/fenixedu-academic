@@ -21,28 +21,28 @@ public class InfoTestScope extends InfoObject {
     }
 
     public InfoObject getInfoObject() {
-        return infoObject;
+	return infoObject;
     }
 
     public void setInfoObject(InfoObject object) {
-        infoObject = object;
+	infoObject = object;
     }
 
     public void copyFromDomain(TestScope testScope) {
-        super.copyFromDomain(testScope);
-        if (testScope != null) {
-            if (testScope.getClassName().equals(ExecutionCourse.class.getName()))
-                setInfoObject(InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) testScope.getDomainObject()));
-        }
+	super.copyFromDomain(testScope);
+	if (testScope != null) {
+	    if (testScope.getClassName().equals(ExecutionCourse.class.getName()))
+		setInfoObject(InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) testScope.getDomainObject()));
+	}
     }
 
     public static InfoTestScope newInfoFromDomain(TestScope testScope) {
-        InfoTestScope infoTestScope = null;
-        if (testScope != null) {
-            infoTestScope = new InfoTestScope();
-            infoTestScope.copyFromDomain(testScope);
-        }
-        return infoTestScope;
+	InfoTestScope infoTestScope = null;
+	if (testScope != null) {
+	    infoTestScope = new InfoTestScope();
+	    infoTestScope.copyFromDomain(testScope);
+	}
+	return infoTestScope;
     }
 
 }
