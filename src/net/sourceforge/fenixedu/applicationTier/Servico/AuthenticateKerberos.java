@@ -99,7 +99,7 @@ public class AuthenticateKerberos extends Authenticate {
 			throw new PasswordExpiredServiceException(ke.getMessage());
 		    }
 		    if (ke.getReturnCode().equals(KerberosException.WRONG_PASSWORD)) {
-			throw new ExcepcaoAutenticacao("bad.authentication");
+			throw new ExcepcaoAutenticacao("bad.authentication", ke);
 		    } else {
 			return super.run(username, password, requestURL, remoteHost);
 		    }
