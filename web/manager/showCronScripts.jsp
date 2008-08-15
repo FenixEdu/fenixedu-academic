@@ -25,10 +25,16 @@
 			<fr:layout>
 			    <fr:property name="classes" value="style1"/>
     	 		<fr:property name="columnClasses" value="listClasses"/>
+
 				<fr:property name="link(view)" value="/cron.do?method=showScript&amp;page=0"/>
 				<fr:property name="param(view)" value="idInternal/cronScriptStateID"/>
 				<fr:property name="key(view)" value="link.view"/>
 				<fr:property name="bundle(view)" value="MANAGER_RESOURCES"/>
+
+				<fr:property name="link(runNow)" value="/cron.do?method=runNow&amp;page=0"/>
+				<fr:property name="param(runNow)" value="idInternal/cronScriptStateID"/>
+				<fr:property name="key(runNow)" value="link.runNow"/>
+				<fr:property name="bundle(runNow)" value="MANAGER_RESOURCES"/>
 			</fr:layout>
 		</fr:view>
 	</logic:present>

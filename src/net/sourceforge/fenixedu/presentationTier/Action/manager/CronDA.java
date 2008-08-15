@@ -8,9 +8,12 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.system.CronRegistry;
 import net.sourceforge.fenixedu.domain.system.CronScriptInvocation;
 import net.sourceforge.fenixedu.domain.system.CronScriptState;
+import net.sourceforge.fenixedu.domain.system.CronScriptState.RunNowExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -41,6 +44,16 @@ public class CronDA extends FenixDispatchAction {
 	request.setAttribute("inActiveCronScriptStates", inActiveCronScriptStates);
 
 	return mapping.findForward("showCronScripts");
+    }
+
+    public ActionForward runNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final String cronScriptStateIDString = request.getParameter("cronScriptStateID");
+	final CronScriptState cronScriptState = rootDomainObject.readCronScriptStateByOID(Integer.valueOf(cronScriptStateIDString));
+
+	executeFactoryMethod(new RunNowExecutor(cronScriptState));
+
+	return showScripts(mapping, form, request, response);
     }
 
     public ActionForward showScript(ActionMapping mapping, ActionForm form, HttpServletRequest request,

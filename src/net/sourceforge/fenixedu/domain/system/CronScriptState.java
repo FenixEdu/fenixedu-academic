@@ -13,6 +13,7 @@ import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -30,6 +31,22 @@ public class CronScriptState extends CronScriptState_Base {
 
     private transient Class cronScriptClass = null;
 
+    public static class RunNowExecutor implements FactoryExecutor {
+
+	private final CronScriptState cronScriptState;
+
+	public RunNowExecutor(final CronScriptState cronScriptState) {
+	    this.cronScriptState = cronScriptState;
+	}
+
+	@Override
+	public Object execute() {
+	    cronScriptState.setRunNow(Boolean.TRUE);
+	    return null;
+	}
+	
+    }
+
     public CronScriptState(final Class cronScriptClass, final Period invocationPeriod, final WhenToSendEmail whenToSendEmail,
 	    final String emails) {
 	super();
@@ -41,6 +58,7 @@ public class CronScriptState extends CronScriptState_Base {
 	setActive(Boolean.TRUE);
 	setIsCurrentlyRunning(Boolean.FALSE);
 	setInvocationPeriod(invocationPeriod);
+	setRunNow(Boolean.FALSE);
     }
 
     public void serializeContext(final Serializable context) {
@@ -89,7 +107,10 @@ public class CronScriptState extends CronScriptState_Base {
 	if (getActive().booleanValue()) {
 	    final Period invocationPeriod = getInvocationPeriod();
 	    final CronScriptInvocation lastCronScriptInvocation = getLastCronScriptInvocation();
-	    return lastCronScriptInvocation == null || lastCronScriptInvocation.hasReachedNextInvocationTime(invocationPeriod);
+	    final Boolean runNow = getRunNow();
+	    return lastCronScriptInvocation == null 
+	    		|| (runNow != null && runNow.booleanValue()) 
+	    		|| lastCronScriptInvocation.hasReachedNextInvocationTime(invocationPeriod);
 	}
 	return false;
     }

@@ -4031,6 +4031,7 @@ class DomainObject {
 		Boolean isCurrentlyRunning;
 		DateTime registrationDate;
 		WhenToSendEmail whenToSendEmail;
+		Boolean runNow;
 	}
 
 	class teacher.Advise extends DomainObject {
