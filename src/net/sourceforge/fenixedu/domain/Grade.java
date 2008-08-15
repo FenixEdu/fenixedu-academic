@@ -37,7 +37,9 @@ public class Grade implements Serializable, Comparable<Grade> {
     }
 
     public int compareTo(final Grade otherGrade) {
-	if (isApproved() && otherGrade.isApproved()) {
+	final boolean isApproved = isApproved();
+	final boolean isApprovedOther = otherGrade.isApproved();
+	if (isApproved && isApprovedOther) {
 	    if (getValue().equals(GradeScale.AP)) {
 		return 1;
 	    } else if (otherGrade.getValue().equals(GradeScale.AP)) {
@@ -47,9 +49,9 @@ public class Grade implements Serializable, Comparable<Grade> {
 	    } else {
 		throw new DomainException("Grade.unsupported.comparassion.of.grades.of.different.scales");
 	    }
-	} else if (isApproved() || otherGrade.getValue().equals(GradeScale.NA) || otherGrade.getValue().equals(GradeScale.RE)) {
+	} else if (isApproved || otherGrade.getValue().equals(GradeScale.NA) || otherGrade.getValue().equals(GradeScale.RE)) {
 	    return 1;
-	} else if (otherGrade.isApproved() || getValue().equals(GradeScale.NA) || getValue().equals(GradeScale.RE)) {
+	} else if (isApprovedOther || getValue().equals(GradeScale.NA) || getValue().equals(GradeScale.RE)) {
 	    return -1;
 	} else {
 	    return getValue().compareTo(otherGrade.getValue());

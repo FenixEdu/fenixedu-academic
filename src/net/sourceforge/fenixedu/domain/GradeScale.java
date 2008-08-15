@@ -6,9 +6,10 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum GradeScale {
 
@@ -21,12 +22,8 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final int intValue = Integer.valueOf(value);
-		if ((intValue >= 10) && (intValue <= 20)) {
-		    return true;
-		} else {
-		    return false;
-		}
+		final int intValue = Integer.parseInt(value);
+		return intValue >= 10 && intValue <= 20;
 	    } catch (NumberFormatException e) {
 		return false;
 	    }
@@ -40,12 +37,8 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final Double doubleValue = Double.valueOf(value);
-		if ((doubleValue >= 0) && (doubleValue <= 20)) {
-		    return true;
-		} else {
-		    return false;
-		}
+		final double doubleValue = Double.parseDouble(value);
+		return doubleValue >= 0 && doubleValue <= 20;
 	    } catch (NumberFormatException e) {
 		return false;
 	    }
@@ -58,7 +51,7 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final int intValue = Integer.valueOf(grade.getValue());
+		final int intValue = Integer.parseInt(grade.getValue());
 		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
 			.getLocale());
 
@@ -92,7 +85,7 @@ public enum GradeScale {
 	    }
 
 	    try {
-		return Integer.valueOf(value) < 10;
+		return Integer.parseInt(value) < 10;
 	    } catch (NumberFormatException e) {
 		return false;
 	    }
@@ -106,7 +99,7 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final int intValue = Integer.valueOf(value);
+		final int intValue = Integer.parseInt(value);
 		return 10 <= intValue && intValue <= 20;
 	    } catch (NumberFormatException e) {
 		return false;
@@ -120,12 +113,8 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final Double doubleValue = Double.valueOf(value);
-		if ((doubleValue >= 0) && (doubleValue <= 20)) {
-		    return true;
-		} else {
-		    return false;
-		}
+		final double doubleValue = Double.parseDouble(value);
+		return doubleValue >= 0 && doubleValue <= 20;
 	    } catch (NumberFormatException e) {
 		return false;
 	    }
@@ -142,12 +131,8 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final int intValue = Integer.valueOf(value);
-		if ((intValue >= 3) && (intValue <= 5)) {
-		    return true;
-		} else {
-		    return false;
-		}
+		final int intValue = Integer.parseInt(value);
+		return intValue >= 3 && intValue <= 5;
 	    } catch (NumberFormatException e) {
 		return false;
 	    }
@@ -161,12 +146,8 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final Double doubleValue = Double.valueOf(value);
-		if ((doubleValue >= 0) && (doubleValue <= 20)) {
-		    return true;
-		} else {
-		    return false;
-		}
+		final double doubleValue = Double.parseDouble(value);
+		return doubleValue >= 0 && doubleValue <= 20;
 	    } catch (NumberFormatException e) {
 		return false;
 	    }
@@ -179,7 +160,7 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final int intValue = Integer.valueOf(grade.getValue());
+		final int intValue = Integer.parseInt(grade.getValue());
 		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
 			.getLocale());
 
@@ -214,7 +195,7 @@ public enum GradeScale {
 	    }
 
 	    try {
-		return Integer.valueOf(value) < 3;
+		return Integer.parseInt(value) < 3;
 	    } catch (NumberFormatException e) {
 		return false;
 	    }
@@ -223,7 +204,7 @@ public enum GradeScale {
 	@Override
 	protected boolean isApproved(final Grade grade) {
 	    try {
-		final int intValue = Integer.valueOf(grade.getValue());
+		final int intValue = Integer.parseInt(grade.getValue());
 		return 3 <= intValue && intValue <= 5;
 	    } catch (NumberFormatException e) {
 		return false;
@@ -237,12 +218,8 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final Double doubleValue = Double.valueOf(value);
-		if ((doubleValue >= 0) && (doubleValue <= 5)) {
-		    return true;
-		} else {
-		    return false;
-		}
+		final double doubleValue = Double.parseInt(value);
+		return doubleValue >= 0 && doubleValue <= 5;
 	    } catch (NumberFormatException e) {
 		return false;
 	    }
