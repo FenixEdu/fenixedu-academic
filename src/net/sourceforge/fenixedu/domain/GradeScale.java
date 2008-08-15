@@ -218,7 +218,7 @@ public enum GradeScale {
 	    }
 
 	    try {
-		final double doubleValue = Double.parseInt(value);
+		final double doubleValue = Double.parseDouble(value);
 		return doubleValue >= 0 && doubleValue <= 5;
 	    } catch (NumberFormatException e) {
 		return false;
