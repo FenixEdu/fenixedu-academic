@@ -44,4 +44,4 @@ execute "Altering Inquiries Tables" alterInquiriesTables.sql
 execute "Adding RAIDES columns" addRaidesColumns.sql
 execute "Setting default country" SetDefaultCountry.sql
 
-
+execute "Add missing columns and indexed" updates.sql
