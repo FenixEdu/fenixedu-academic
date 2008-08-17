@@ -1,0 +1,47 @@
+#!/bin/bash
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+DB=$1
+USER=$2
+DB_HOST=$3
+INSTITUTION=$4
+
+echo Using host=$DB_HOST
+echo Using database: $DB
+echo Using user $USER:
+echo Institution: $INSTITUTION
+
+function execute() {
+	if [ -z $3 ] 
+		then  
+			echo ---------------------------------------- $1 
+			mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
+			echo 
+		else 
+			if [ "$INSTITUTION" == "$3" ]
+			then 
+				echo ---------------------------------------- $1 specific for $3
+				mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
+				echo 
+			fi
+	fi
+}
+
+function executeWithTempFile() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 > tmp.sql
+	mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < tmp.sql	
+	rm tmp.sql
+	echo
+}
+
+execute "Altering Inquiries Tables" alterInquiriesTables.sql
+execute "Adding RAIDES columns" addRaidesColumns.sql
+execute "Setting default country" SetDefaultCountry.sql
+
+execute "Add missing columns and indexed" updates.sql
