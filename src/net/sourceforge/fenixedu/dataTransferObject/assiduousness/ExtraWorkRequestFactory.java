@@ -103,20 +103,20 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	if (isPerformPayment()) {
 	    actionMessage = checkUnitMoney();
 	    if (actionMessage == null) {
+		getUnitExtraWorkAmountOrNew().sumSpent(getNotConfirmedAmount());
 		for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
 		    if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null) {
 			employeeExtraWorkRequestFactory.getExtraWorkRequest().setApproved(true);
 		    }
 		}
-		getUnitExtraWorkAmountOrNew().sumSpent(getMonthAmount());
 	    }
 	} else {
+	    getUnitExtraWorkAmountOrNew().subtractSpent(getConfirmedAmount());
 	    for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
 		if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null) {
 		    employeeExtraWorkRequestFactory.getExtraWorkRequest().setApproved(false);
 		}
 	    }
-	    getUnitExtraWorkAmountOrNew().subtractSpent(getMonthAmount());
 	}
 	return actionMessage;
     }
@@ -218,35 +218,25 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	yearMonth.addMonth();
 	double balance = getUnit().getUnitExtraWorkAmountByYear(yearMonth.getYear()) == null ? 0 : getUnit()
 		.getUnitExtraWorkAmountByYear(yearMonth.getYear()).getBalance();
-	if (isPaymentConfirmed()) {
-	    return balance;
-	} else {
-	    return balance - getMonthAmount();
-	}
+	return balance - getNotConfirmedAmount();
     }
 
     public Double getInitialUnitBalance() {
 	YearMonth yearMonth = new YearMonth(getPartialPayingDate());
 	yearMonth.addMonth();
-
-	double balance = getUnit().getUnitExtraWorkAmountByYear(yearMonth.getYear()) == null ? 0 : getUnit()
-		.getUnitExtraWorkAmountByYear(yearMonth.getYear()).getBalance();
-	if (isPaymentConfirmed()) {
-	    return balance + getMonthAmount();
-	    // getFinalUnitBalance() + getMonthAmount();
-	} else {
-	    return balance;
-	}
+	UnitExtraWorkAmount unitExtraWorkAmount = getUnit().getUnitExtraWorkAmountByYear(yearMonth.getYear());
+	double balance = unitExtraWorkAmount == null ? 0 : unitExtraWorkAmount.getBalance();
+	return balance + getConfirmedAmount();
     }
 
     public boolean isPaymentConfirmed() {
 	for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
 	    if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null
-		    && employeeExtraWorkRequestFactory.getExtraWorkRequest().getApproved()) {
-		return true;
+		    && (!employeeExtraWorkRequestFactory.getExtraWorkRequest().getApproved())) {
+		return false;
 	    }
 	}
-	return false;
+	return true;
     }
 
     public Double getMonthAmount() {
@@ -254,6 +244,28 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequests(getYear(), getMonth(),
 		getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth())) {
 	    monthAmount += extraWorkRequest.getAmount();
+	}
+	return monthAmount;
+    }
+
+    public Double getConfirmedAmount() {
+	Double monthAmount = 0.0;
+	for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequests(getYear(), getMonth(),
+		getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth())) {
+	    if (extraWorkRequest.getApproved()) {
+		monthAmount += extraWorkRequest.getAmount();
+	    }
+	}
+	return monthAmount;
+    }
+
+    public Double getNotConfirmedAmount() {
+	Double monthAmount = 0.0;
+	for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequests(getYear(), getMonth(),
+		getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth())) {
+	    if (!extraWorkRequest.getApproved()) {
+		monthAmount += extraWorkRequest.getAmount();
+	    }
 	}
 	return monthAmount;
     }
