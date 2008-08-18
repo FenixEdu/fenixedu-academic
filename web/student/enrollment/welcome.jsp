@@ -66,11 +66,16 @@ Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académ
 </p>
 
 <p class="mtop05">
-<strong>6.</strong> Relembramos que durante o período de inscrições pode acrescentar/alterar/corrigir a sua inscrição novamente no sistema.
+<strong>6. Estudantes em regime de tempo parcial</strong><br/>
+Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo somatório de ECTS ultrapasse 50% do número máximo de ECTS a que é permitida a inscrição a um aluno do IST em regime de tempo integral.
 </p>
 
 <p class="mtop05">
-<strong>7.</strong> Para apoio ao processo de inscrições deste semestre foi criado um endereço específico para onde deverá encaminhar as suas dúvidas ou dificuldades que não se vejam respondidas pelas instruções acima:     
+<strong>7.</strong> Relembramos que durante o período de inscrições pode acrescentar/alterar/corrigir a sua inscrição novamente no sistema.
+</p>
+
+<p class="mtop05">
+<strong>8.</strong> Para apoio ao processo de inscrições deste semestre foi criado um endereço específico para onde deverá encaminhar as suas dúvidas ou dificuldades que não se vejam respondidas pelas instruções acima:     
 </p>
 <p class="indent1">   
 <html:link href="mailto:inscricoes@ist.utl.pt">inscricoes@ist.utl.pt</html:link>
