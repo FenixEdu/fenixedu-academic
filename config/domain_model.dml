@@ -206,6 +206,7 @@ enum 	  net.sourceforge.fenixedu.domain.SchoolLevelType															 as School
 enum 	  net.sourceforge.fenixedu.domain.ProfessionType															 as ProfessionType;
 enum 	  net.sourceforge.fenixedu.domain.GrantOwnerType															 as GrantOwnerType;
 enum 	  net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType										 as ProfessionalSituationConditionType;
+enum	  net.sourceforge.fenixedu.domain.student.RegistrationRegimeType											 as RegistrationRegimeType;
 
 /*
 *
@@ -3806,6 +3807,11 @@ class DomainObject {
 
 	class student.RegistrationNumber extends DomainObject {
 		Integer number;
+	}
+	
+	class student.RegistrationRegime extends DomainObject {
+		DateTime whenCreated;
+		RegistrationRegimeType regimeType;
 	}
 
 	class student.ResidenceCandidacies extends DomainObject {
@@ -8627,6 +8633,13 @@ relation RegistrationDataByExecutionYearExecutionYear {
 	ExecutionYear playsRole executionYear;
 }
 
+relation RegistrationRegimeExecutionYear {
+	student.RegistrationRegime playsRole registrationRegimes {
+		multiplicity *;
+	}
+	ExecutionYear playsRole executionYear;
+}
+
 relation RegistrationDataByExecutionYearRegistration {
 	student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
 		multiplicity *;
@@ -8634,8 +8647,22 @@ relation RegistrationDataByExecutionYearRegistration {
 	student.Registration playsRole registration;
 }
 
+relation RegistrationRegimeRegistration {
+	student.RegistrationRegime playsRole registrationRegimes {
+		multiplicity *;
+	}
+	student.Registration playsRole registration;
+}
+
 relation RegistrationDataByExecutionYearRootDomainObject {
 	student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
+		multiplicity *;
+	}
+	RootDomainObject playsRole rootDomainObject;
+}
+
+relation RegistrationRegimeRootDomainObject {
+	student.RegistrationRegime playsRole registrationRegimes {
 		multiplicity *;
 	}
 	RootDomainObject playsRole rootDomainObject;

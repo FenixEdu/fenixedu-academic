@@ -238,7 +238,9 @@
 			<forward name="viewRegistrationDetails" path="/student.do?method=visualizeRegistration"/>
 			<forward name="viewAttends" path="viewAttends"/>
 			<forward name="addAttends" path="addAttends"/>
-		</action>	
+			<forward name="showRegimes" path="showRegimes"/>
+			<forward name="createRegime" path="createRegime"/>
+		</action>
 
 		<action path="/viewCurriculum"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"

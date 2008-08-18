@@ -1603,3 +1603,26 @@
 		<property name="destination" value="postBack"/>
 	</slot>
 </schema>
+
+<schema name="RegistrationRegime.view"
+		type="net.sourceforge.fenixedu.domain.student.RegistrationRegime" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" key="label.executionYear" layout="format">
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="regimeType" key="registration.regime" />
+</schema>
+
+<schema name="RegistrationRegime.create"
+		type="net.sourceforge.fenixedu.domain.student.RegistrationRegime" bundle="ACADEMIC_OFFICE_RESOURCES"
+		constructor="registration,executionYear,regimeType">
+	<slot name="registration" hidden="true"/>
+	<slot name="executionYear" key="label.executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format" value="${year}" />
+		<property name="sortBy" value="year=desc" />
+	</slot>
+	<slot name="regimeType" key="registration.regime" label="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="FULL_TIME" />
+	</slot>
+</schema>

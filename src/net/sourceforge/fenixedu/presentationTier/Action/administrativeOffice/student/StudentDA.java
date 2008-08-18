@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -25,10 +27,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -338,4 +343,36 @@ public class StudentDA extends FenixDispatchAction {
 	return viewAttends(mapping, actionForm, request, response);
     }
 
+    public ActionForward showRegimes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Registration registration = getRegistration(request);
+	final List<RegistrationRegime> regimes = new ArrayList<RegistrationRegime>(registration.getRegistrationRegimes());
+
+	Collections.sort(regimes, new ReverseComparator(RegistrationRegime.COMPARATOR_BY_EXECUTION_YEAR));
+	request.setAttribute("registrationRegimes", regimes);
+
+	return mapping.findForward("showRegimes");
+    }
+
+    public ActionForward prepareCreateRegime(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	getRegistration(request);
+	return mapping.findForward("createRegime");
+    }
+
+    public ActionForward deleteRegime(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    final RegistrationRegime regime = getRegistrationRegime(request);
+	    ServiceUtils.executeService("DeleteRegistrationRegime", regime);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
+	return showRegimes(mapping, actionForm, request, response);
+    }
+
+    private RegistrationRegime getRegistrationRegime(HttpServletRequest request) {
+	return rootDomainObject.readRegistrationRegimeByOID(getIntegerFromRequest(request, "registrationRegimeId"));
+    }
 }

@@ -264,6 +264,8 @@ public class Registration extends Registration_Base {
 	    ;
 	for (; hasAnyAcademicServiceRequests(); getAcademicServiceRequests().get(0).delete())
 	    ;
+	for (; hasAnyRegistrationRegimes(); getRegistrationRegimes().get(0).delete())
+	    ;
 
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();
@@ -3172,6 +3174,29 @@ public class Registration extends Registration_Base {
     public boolean hasStartedBetween(final ExecutionYear firstExecutionYear, final ExecutionYear finalExecutionYear) {
 	return getStartExecutionYear().isAfterOrEquals(firstExecutionYear)
 		&& getStartExecutionYear().isBeforeOrEquals((finalExecutionYear));
+    }
+
+    public boolean hasRegistrationRegime(final ExecutionYear executionYear, final RegistrationRegimeType type) {
+	for (final RegistrationRegime regime : getRegistrationRegimesSet()) {
+	    if (regime.isFor(executionYear) && regime.hasRegime(type)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public RegistrationRegimeType getRegimeType(final ExecutionYear executionYear) {
+	for (final RegistrationRegime regime : getRegistrationRegimesSet()) {
+	    if (regime.isFor(executionYear)) {
+		return regime.getRegimeType();
+	    }
+	}
+	// if not specified, use the default regime
+	return RegistrationRegimeType.defaultType();
+    }
+
+    public boolean isPartTimeRegime(final ExecutionYear executionYear) {
+	return getRegimeType(executionYear) == RegistrationRegimeType.PART_TIME;
     }
 
 }

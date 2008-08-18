@@ -12411,4 +12411,12 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
+   	<service>
+		<name>DeleteRegistrationRegime</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.registration.DeleteRegistrationRegime</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
 </serviceDefinitions>
