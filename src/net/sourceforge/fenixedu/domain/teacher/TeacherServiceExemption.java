@@ -40,6 +40,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL)
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
+		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_AND_SUBSIDY)
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
 		|| getSituationType().equals(ProfessionalSituationType.SPECIAL_LICENCE_FOR_CHILD_ASSISTENCE);
     }
@@ -61,7 +62,8 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		return true;
 	    }
 
-	    if (getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)) {
+	    if (getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
+		    || getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_AND_SUBSIDY)) {
 		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionSemester);
 		Category pax_category = Category.readCategoryByCodeAndNameInPT("PAX", "Professor Auxiliar");
 		return (teacherCategory != null && pax_category != null && !teacherCategory.equals(pax_category) && !teacherCategory
