@@ -6,15 +6,17 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
 
-    static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
-
-    static final public double ACCUMULATED_FACTOR = 0.75;
+    static final private double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
+    static final private double ACCUMULATED_FACTOR = 0.75;
 
     public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin,
 	    final ExecutionSemester end) {
@@ -62,13 +64,17 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 	return result;
     }
 
-    public static Double getAccumulatedEctsCredits(final CurricularCourse curricularCourse,
-	    final ExecutionSemester executionSemester) {
-	return curricularCourse.getEctsCredits(executionSemester.getSemester(), executionSemester) * ACCUMULATED_FACTOR;
-    }
-
     public VerifyRuleExecutor createVerifyRuleExecutor() {
 	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
+    static public Double getAccumulatedEcts(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+	return curricularCourse.getEctsCredits(executionSemester.getSemester(), executionSemester) * ACCUMULATED_FACTOR;
+    }
+
+    static public double getMaximumNumberOfCredits(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear) {
+	final Registration registration = studentCurricularPlan.getRegistration();
+	return registration.isPartTimeRegime(executionYear) ? MAXIMUM_NUMBER_OF_CREDITS / 2d : MAXIMUM_NUMBER_OF_CREDITS;
+    }
 }

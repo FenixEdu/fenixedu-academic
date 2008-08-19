@@ -1318,7 +1318,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final CurricularCourse curricularCourse) {
 	if (curricularCourse.isBolonhaDegree()) {
 	    return isAccumulated(executionSemester, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod
-		    .getAccumulatedEctsCredits(curricularCourse, executionSemester) : curricularCourse.getEctsCredits(
+		    .getAccumulatedEcts(curricularCourse, executionSemester) : curricularCourse.getEctsCredits(
 		    executionSemester.getSemester(), executionSemester);
 	} else {
 	    return getAccumulatedEctsCreditsForOldCurricularCourses(curricularCourse, executionSemester);

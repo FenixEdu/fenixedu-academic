@@ -20,11 +20,20 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 	    accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionSemester);
 	}
 
-	if (accumulated > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS) {
-	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		    "curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String
-			    .valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS), String
-			    .valueOf(accumulated));
+	final double maxEcts = MaximumNumberOfCreditsForEnrolmentPeriod.getMaximumNumberOfCredits(enrolmentContext
+		.getStudentCurricularPlan(), executionSemester.getExecutionYear());
+
+	if (accumulated > maxEcts) {
+	    if (sourceDegreeModuleToEvaluate.isEnroled()) {
+		return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+			"curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor",
+			String.valueOf(maxEcts), String.valueOf(accumulated));
+
+	    } else {
+		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+			"curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor",
+			String.valueOf(maxEcts), String.valueOf(accumulated));
+	    }
 	}
 
 	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
