@@ -9534,7 +9534,7 @@
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization" />
+            <chain name="AcademicAdministrativeOfficeAuthorization" />
         </filterChains>
     </service>
     <service>
