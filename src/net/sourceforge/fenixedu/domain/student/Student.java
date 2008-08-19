@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationR
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -562,7 +563,7 @@ public class Student extends Student_Base {
 	}
 	return aprovedEnrolments;
     }
-
+    
     public List<Enrolment> getApprovedEnrolments(final AdministrativeOffice administrativeOffice) {
 	final List<Enrolment> aprovedEnrolments = new ArrayList<Enrolment>();
 	for (final Registration registration : getRegistrationsFor(administrativeOffice)) {
@@ -706,7 +707,7 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-
+    
     public boolean isWeeklySpentHoursSubmittedForCurrentPeriod() {
 	return isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester.readActualExecutionSemester());
     }
@@ -731,7 +732,7 @@ public class Student extends Student_Base {
 	    }
 	}
 	return null;
-    }
+    }    
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
@@ -849,11 +850,11 @@ public class Student extends Student_Base {
     public boolean hasRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getRegistrationFor(degreeCurricularPlan) != null;
     }
-
+    
     public boolean hasActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getActiveRegistrationFor(degreeCurricularPlan) != null;
     }
-
+    
     public boolean hasActiveRegistrations() {
 	return getActiveRegistrations().size() > 0;
     }
@@ -866,7 +867,7 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
-
+    
     public boolean hasRegistrationFor(final Degree degree) {
 	return getRegistrationFor(degree) != null;
     }
@@ -1140,9 +1141,9 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-
-    public Map<CurricularCourse, InquiriesRegistry> getOrCreateInquiriesRegistriesForPeriod(ExecutionSemester executionSemester) {
-	final Map<CurricularCourse, InquiriesRegistry> coursesToAnswer = new HashMap<CurricularCourse, InquiriesRegistry>();
+    
+    public Collection<InquiriesRegistry> getOrCreateInquiriesRegistriesForPeriod(ExecutionSemester executionSemester) {
+	final Map<ExecutionCourse, InquiriesRegistry> coursesToAnswer = new HashMap<ExecutionCourse, InquiriesRegistry>();
 
 	for (Registration registration : getRegistrations()) {
 
@@ -1153,33 +1154,56 @@ public class Student extends Student_Base {
 
 	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
-
-		final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-
 		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
-		    if (inquiriesRegistry.getState() != InquiriesRegistryState.NOT_ANSWERED
-			    && inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-			coursesToAnswer.put(inquiriesRegistry.getExecutionCourse().getCurricularCourseFor(degreeCurricularPlan),
-				inquiriesRegistry);
+		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+			coursesToAnswer.put(inquiriesRegistry.getExecutionCourse(), inquiriesRegistry);
 		    }
 		}
 
 		for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
 		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-		    final CurricularCourse curricularCourse = executionCourse.getCurricularCourseFor(degreeCurricularPlan);
-
-		    if (!coursesToAnswer.containsKey(curricularCourse)) {
-			final InquiriesRegistry inquiriesRegistry = new InquiriesRegistry(executionCourse, executionSemester,
-				registration);
-			coursesToAnswer.put(curricularCourse, inquiriesRegistry);
+		    if (!coursesToAnswer.containsKey(executionCourse)) {
+			coursesToAnswer.put(executionCourse, new InquiriesRegistry(executionCourse, enrolment
+				.getCurricularCourse(), executionSemester, registration));
 		    }
 		}
 	    }
-
 	}
-	return coursesToAnswer;
+	return coursesToAnswer.values();
     }
+    
+    public boolean hasInquiriesToRespond() {
+	final ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod().getExecutionPeriod();
 
+	for (Registration registration : getRegistrations()) {
+	    if (!registration.isAvailableDegreeTypeForInquiries()) {
+		continue;
+	    }
+
+	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	    if (studentCurricularPlan != null) {
+		final Set<CurricularCourse> inquiriesCurricularCourses = new HashSet<CurricularCourse>();
+		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistriesSet()) {
+		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+			if (inquiriesRegistry.getState() == InquiriesRegistryState.ANSWER_LATER) {
+			    return true;
+			} else {
+			    inquiriesCurricularCourses.add(inquiriesRegistry.getCurricularCourse());
+			}
+		    }
+		}
+
+		for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+		    if (!inquiriesCurricularCourses.contains(enrolment.getCurricularCourse())) {
+			return true;
+		    }
+		}
+	    }
+	}
+
+	return false;
+    }    
+    
     public boolean learnsAt(final Campus campus) {
 	for (final Registration registration : getActiveRegistrations()) {
 	    if (registration.getCampus() == campus) {
@@ -1187,8 +1211,8 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
-    }
-
+    }    
+    
     public List<Tutorship> getTutorships() {
 	List<Tutorship> tutorships = new ArrayList<Tutorship>();
 	for (Registration registration : getActiveRegistrations()) {
@@ -1198,7 +1222,7 @@ public class Student extends Student_Base {
 	}
 	return tutorships;
     }
-
+    
     public List<Tutorship> getActiveTutorships() {
 	List<Tutorship> tutorships = new ArrayList<Tutorship>();
 	for (Tutorship tutorship : getTutorships()) {
@@ -1217,7 +1241,7 @@ public class Student extends Student_Base {
 		firstYear = registration.getStartExecutionYear();
 		continue;
 	    }
-
+	    
 	    if (registration.getStartExecutionYear().isBefore(firstYear)) {
 		firstYear = registration.getStartExecutionYear();
 	    }

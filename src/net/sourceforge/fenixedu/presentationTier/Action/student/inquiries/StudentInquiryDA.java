@@ -4,9 +4,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,23 +14,23 @@ import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -57,15 +56,19 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	ExecutionSemester executionSemester = lastPeriod.getExecutionPeriod();
 
 	final Student student = AccessControl.getPerson().getStudent();
-	final Map<CurricularCourse, InquiriesRegistry> coursesToAnswer = (Map<CurricularCourse, InquiriesRegistry>) executeService(
+	final Collection<InquiriesRegistry> coursesToAnswer = (Collection<InquiriesRegistry>) executeService(
 		"RetrieveOrCreateStudentInquiriesRegistries", student, executionSemester);
 
+	boolean isAnyInquiryToAnswer = false;
 	final List<CurricularCourseInquiriesRegistryDTO> courses = new ArrayList<CurricularCourseInquiriesRegistryDTO>();
-	for (final Entry<CurricularCourse, InquiriesRegistry> entry : coursesToAnswer.entrySet()) {
-	    courses.add(new CurricularCourseInquiriesRegistryDTO(entry.getKey(), entry.getValue()));
+	for (final InquiriesRegistry registry : coursesToAnswer) {
+	    courses.add(new CurricularCourseInquiriesRegistryDTO(registry));
+	    if(registry.getState() == InquiriesRegistryState.ANSWER_LATER){
+		isAnyInquiryToAnswer = true;
+	    }
 	}
 
-	if (courses.isEmpty()) {
+	if (courses.isEmpty() || !isAnyInquiryToAnswer) {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 

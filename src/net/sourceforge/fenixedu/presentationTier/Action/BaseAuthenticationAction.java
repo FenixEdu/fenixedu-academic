@@ -16,12 +16,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.HostAccessControl;
@@ -59,12 +55,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    UserView.setUser(userView);
 
-	    // if (isStudentAndHasInquiriesToRespond(userView)) {
-	    // return
-	    // handleSessionCreationAndForwardToInquiriesResponseQuestion(
-	    // request, userView, session);
-	    // } else
-	    if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
+	    if (isStudentAndHasInquiriesToRespond(userView)) {
+		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
+	    } else if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
 		return handleSessionRestoreAndGetForward(request, userView, session);
 	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);
@@ -76,22 +69,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean isStudentAndHasInquiriesToRespond(final IUserView userView) {
 	if (userView.hasRoleType(RoleType.STUDENT)) {
-	    final Person person = userView.getPerson();
-	    final Student student = person.getStudent();
-	    if (student != null) {
-		// if (student.doesNotWantToRespondToInquiries()) {
-		// return false;
-		// }
-		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-		if (executionSemester != null && executionSemester.getInquiryResponsePeriod() != null
-			&& executionSemester.getInquiryResponsePeriod().insidePeriod()) {
-		    for (final Registration reistration : student.getRegistrationsSet()) {
-			if (reistration.isAvailableDegreeTypeForInquiries() && reistration.hasInquiriesToRespond()) {
-			    return true;
-			}
-		    }
-		}
-	    }
+	    return userView.getPerson().getStudent().hasInquiriesToRespond();
 	}
 	return false;
     }

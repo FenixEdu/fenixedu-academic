@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import java.util.Collection;
 import java.util.Map;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
@@ -34,6 +36,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
     public InquiriesCourse() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setResponseDateTime(new DateTime());
     }
 
     /**

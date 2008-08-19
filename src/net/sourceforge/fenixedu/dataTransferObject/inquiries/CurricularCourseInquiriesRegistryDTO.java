@@ -16,26 +16,19 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
  */
 public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
-    private DomainReference<CurricularCourse> curricularCourse;
-
     private DomainReference<InquiriesRegistry> inquiriesRegistry;
 
     private Integer weeklyHoursSpentPercentage;
 
     private Double studyDaysSpentInExamsSeason;
 
-    public CurricularCourseInquiriesRegistryDTO(final CurricularCourse curricularCourse, final InquiriesRegistry inquiriesRegistry) {
+    public CurricularCourseInquiriesRegistryDTO(final InquiriesRegistry inquiriesRegistry) {
 	super();
-	setCurricularCourse(curricularCourse);
 	setInquiriesRegistry(inquiriesRegistry);
     }
 
     public CurricularCourse getCurricularCourse() {
-	return curricularCourse.getObject();
-    }
-
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = new DomainReference<CurricularCourse>(curricularCourse);
+	return getInquiriesRegistry().getCurricularCourse();
     }
 
     public InquiriesRegistry getInquiriesRegistry() {

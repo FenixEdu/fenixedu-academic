@@ -2090,7 +2090,6 @@ class DomainObject {
 			ProfessionType spouseProfessionType;
 			ProfessionalSituationConditionType spouseProfessionalCondition;
 		}
-		
 
 			class candidacy.DFACandidacy extends candidacy.StudentCandidacy {
 			}
@@ -2109,7 +2108,8 @@ class DomainObject {
 
 			class candidacy.SDCandidacy extends candidacy.StudentCandidacy {
 			}
-	
+
+
 	class candidacy.degree.ShiftDistribution extends DomainObject {
 	}
 
@@ -2596,6 +2596,7 @@ class DomainObject {
     	Double studyDaysSpentInExamsSeason;
     	Integer weeklyHoursSpentInClassesSeason;	
     	Long answerDuration;
+    	DateTime responseDateTime;    	
 	
 		Character approvationRatioClassification;
 		Character arithmeticMeanClassification;
@@ -3013,7 +3014,7 @@ class DomainObject {
 			String nameOfMother;
 			String nickname;
 			String parishOfBirth;
-			String profession;						
+			String profession;			
 		}
 
 		class organizationalStructure.Unit extends organizationalStructure.Party {
@@ -7377,6 +7378,13 @@ relation InquiriesRegistryStudent {
 		multiplicity *;
 	}
 	student.Registration playsRole student;
+}
+
+relation InquiriesRegistryCurricularCourse {
+	inquiries.InquiriesRegistry playsRole associatedInquiriesRegistries {
+		multiplicity *;
+	}
+	CurricularCourse playsRole curricularCourse;
 }
 
 relation InquiriesRoomDomainRoom {
@@ -13234,7 +13242,6 @@ relation ResidencePriceTableResidenceManagementUnit {
   }
   residence.ResidencePriceTable playsRole residencePriceTable;
 }
-
 
 relation StudentCandidacyCountryOfResidence {	
 	candidacy.StudentCandidacy playsRole associatedResidentPersonsCandidacies {

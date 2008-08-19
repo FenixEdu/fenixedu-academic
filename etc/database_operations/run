@@ -41,3 +41,5 @@ function executeWithTempFile() {
 }
 
 execute "Create table for RegistrationRegime" createRegistrationRegimeTable.sql
+execute "Alter Inquiry Registry" alterInquiryRegistryTable.sql
+

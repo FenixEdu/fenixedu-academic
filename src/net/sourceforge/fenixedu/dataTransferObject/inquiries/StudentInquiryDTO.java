@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -229,7 +228,8 @@ public class StudentInquiryDTO implements Serializable {
 		"header.studentInquiries.firstPageThirdBlock.agree", "header.studentInquiries.eight",
 		"header.studentInquiries.firstPageThirdBlock.totallyAgree");
 	this.firstPageThirdBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageThirdBlock.previousKnowledgeEnoughToCUAttendance", 1, 9, false));
+		"label.studentInquiries.firstPageThirdBlock.previousKnowledgeEnoughToCUAttendance", 1, 9, false)
+		.setToolTip("tooltip.studentInquiries.firstPageThirdBlock.previousKnowledgeEnoughToCUAttendance"));
 
 	this.firstPageFourthBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.firstPageFourthBlock.passive",
@@ -268,10 +268,10 @@ public class StudentInquiryDTO implements Serializable {
 		"label.studentInquiries.secondPageFirstBlock.wellStructuredOfCU", 1, 9, false)
 		.setToolTip("tooltip.studentInquiries.secondPageFirstBlock.wellStructuredOfCU"));
 	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageFirstBlock.goodGuidanceMaterial", 1, 9, false));
-	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.secondPageFirstBlock.recomendendBibliographyImportance", 1, 9, false)
 		.setToolTip("tooltip.studentInquiries.secondPageFirstBlock.recomendendBibliographyImportance"));
+	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.secondPageFirstBlock.goodGuidanceMaterial", 1, 9, false));
 
 	this.secondPageSecondBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", "header.studentInquiries.two",
@@ -280,7 +280,8 @@ public class StudentInquiryDTO implements Serializable {
 		"header.studentInquiries.secondPageFirstBlock.agree", "header.studentInquiries.eight",
 		"header.studentInquiries.secondPageFirstBlock.totallyAgree");
 	this.secondPageSecondBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageSecondBlock.fairEvaluationMethods", 1, 9, false));
+		"label.studentInquiries.secondPageSecondBlock.fairEvaluationMethods", 1, 9, false)
+		.setToolTip("tooltip.studentInquiries.secondPageSecondBlock.fairEvaluationMethods"));
 
 	this.secondPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.secondPageThirdBlock.veryBad", "header.studentInquiries.two",

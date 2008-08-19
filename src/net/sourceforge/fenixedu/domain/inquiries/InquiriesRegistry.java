@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -34,6 +35,15 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 	this.setExecutionPeriod(executionSemester);
 	this.setStudent(registration);
 
+    }
+    
+    public InquiriesRegistry(ExecutionCourse executionCourse, CurricularCourse curricularCourse,
+	    ExecutionSemester executionSemester, Registration registration) {
+	this(executionCourse, executionSemester, registration);
+	if (curricularCourse == null) {
+	    throw new NullArgumentException("CurricularCourse should not be null!");
+	}	
+	this.setCurricularCourse(curricularCourse);
     }
 
     private void checkParameters(ExecutionCourse executionCourse, ExecutionSemester executionSemester, Registration registration) {
