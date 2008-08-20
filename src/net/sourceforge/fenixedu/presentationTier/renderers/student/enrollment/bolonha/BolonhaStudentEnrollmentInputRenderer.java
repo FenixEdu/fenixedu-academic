@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
@@ -52,27 +51,22 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
 	    .getLocale());
-
     private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-
     private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
 	    .getLocale());
 
     private Integer initialWidth = 70;
-
     private Integer widthDecreasePerLevel = 3;
 
     private String tablesClasses = "showinfo3 mvert0";
-
     private String groupRowClasses = "bgcolor2";
-
     private String enrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
-
     private String temporaryEnrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
-
     private String impossibleEnrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
-
     private String curricularCoursesToEnrolClasses = "smalltxt, smalltxt aright, smalltxt aright, aright";
+
+    private boolean encodeGroupRules = false;
+    private boolean encodeCurricularRules = true;
 
     public Integer getInitialWidth() {
 	return initialWidth;
@@ -218,6 +212,22 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	super();
     }
 
+    public boolean isEncodeCurricularRules() {
+	return encodeCurricularRules;
+    }
+
+    public void setEncodeCurricularRules(boolean encodeCurricularRules) {
+	this.encodeCurricularRules = encodeCurricularRules;
+    }
+
+    public boolean isEncodeGroupRules() {
+	return encodeGroupRules;
+    }
+
+    public void setEncodeGroupRules(boolean encodeGroupRules) {
+	this.encodeGroupRules = encodeGroupRules;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
 	return new BolonhaStudentEnrolmentLayout();
@@ -267,14 +277,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
 	    addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionSemester);
 
-	    // TODO: Uncomment when isConcluded is implemented using credits
-	    // if (!hasManagerOrAcademicOfficeRole() &&
-	    // !studentCurriculumGroupBean.isRoot()
-	    // &&
-	    // studentCurriculumGroupBean.getCurriculumModule().isConcluded())
-	    // {
-	    // return;
-	    // }
+	    if (isEncodeGroupRules()) {
+		encodeCurricularRules(groupTable, studentCurriculumGroupBean.getCurriculumModule());
+	    }
 
 	    final HtmlTable coursesTable = createCoursesTable(blockContainer, depth);
 	    generateEnrolments(studentCurriculumGroupBean, coursesTable);
@@ -284,6 +289,18 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    if (studentCurriculumGroupBean.isRoot()) {
 		generateCycleCourseGroupsToEnrol(blockContainer, studentCurricularPlan, depth);
+	    }
+	}
+
+	private void encodeCurricularRules(final HtmlTable groupTable, final CurriculumGroup curriculumGroup) {
+	    if (curriculumGroup.isNoCourseGroupCurriculumGroup()) {
+		return;
+	    }
+
+	    final List<CurricularRule> curricularRules = getVisibleRules(curriculumGroup.getDegreeModule(), curriculumGroup
+		    .getCurriculumGroup(), bolonhaStudentEnrollmentBean.getExecutionPeriod());
+	    if (!curricularRules.isEmpty()) {
+		encodeCurricularRules(groupTable, curricularRules);
 	    }
 	}
 
@@ -345,37 +362,37 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    final StringBuilder result = new StringBuilder(curriculumGroup.getName().getContent());
 
-	    final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
-		    CurricularRuleType.CREDITS_LIMIT, executionSemester);
-
-	    if (creditsLimit != null) {
+	    if (isEncodeGroupRules()) {
 		result.append(" <span title=\"");
-		result.append(applicationResources.getString("label.curriculum.credits.legend.minCredits"));
-		result.append(" \">m(");
-		result.append(creditsLimit.getMinimumCredits());
-		result.append(")</span>,");
-	    }
-
-	    result.append(" <span title=\"");
-	    result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
-	    result.append(" \"> c(");
-	    result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
-	    result.append(")</span>");
-
-	    if (creditsLimit != null) {
-		result.append(", <span title=\"");
-		result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
-		result.append(" \">M(");
-		result.append(creditsLimit.getMaximumCredits());
+		result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
+		result.append(" \"> c(");
+		result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
 		result.append(")</span>");
+	    } else {
+		final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
+			CurricularRuleType.CREDITS_LIMIT, executionSemester);
+
+		if (creditsLimit != null) {
+		    result.append(" <span title=\"");
+		    result.append(applicationResources.getString("label.curriculum.credits.legend.minCredits"));
+		    result.append(" \">m(");
+		    result.append(creditsLimit.getMinimumCredits());
+		    result.append(")</span>,");
+		}
+		result.append(" <span title=\"");
+		result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
+		result.append(" \"> c(");
+		result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
+		result.append(")</span>");
+
+		if (creditsLimit != null) {
+		    result.append(", <span title=\"");
+		    result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
+		    result.append(" \">M(");
+		    result.append(creditsLimit.getMaximumCredits());
+		    result.append(")</span>");
+		}
 	    }
-
-	    // if (curriculumGroup.isConcluded()) {
-	    // result.append(" -
-	    // ").append(studentResources.getString("label.curriculum.group.
-	    // concluded"));
-	    // }
-
 	    return result.toString();
 	}
 
@@ -461,57 +478,43 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		    linkTableCell.setBody(actionLink);
 		}
 
-		encodeCurricularRules(groupTable, degreeModuleToEvaluate);
+		if (isEncodeCurricularRules()) {
+		    encodeCurricularRules(groupTable, degreeModuleToEvaluate);
+		}
 	    }
 	}
 
 	private void encodeCurricularRules(final HtmlTable groupTable, final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
-
 	    final List<CurricularRule> curricularRules = getVisibleRules(degreeModuleToEvaluate.getDegreeModule(),
 		    degreeModuleToEvaluate.getCurriculumGroup(), degreeModuleToEvaluate.getExecutionPeriod());
 	    if (!curricularRules.isEmpty()) {
-		final HtmlTableRow htmlTableRow = groupTable.createRow();
-
-		final HtmlTable rulesTable = new HtmlTable();
-		final HtmlTableCell cellRules = htmlTableRow.createCell();
-
-		cellRules.setClasses(getCurricularCourseToEnrolNameClasses());
-		cellRules.setBody(rulesTable);
-		cellRules.setColspan(5);
-
-		rulesTable.setClasses("smalltxt noborder");
-		rulesTable.setStyle("width: 100%;");
-
-		for (final CurricularRule curricularRule : curricularRules) {
-		    final HtmlTableCell cellName = rulesTable.createRow().createCell();
-		    cellName.setStyle("color: #888");
-		    cellName.setBody(new HtmlText(CurricularRuleLabelFormatter.getLabel(curricularRule, Language.getLocale())));
-		}
-
-		// final HtmlTableRow htmlTableRow = groupTable.createRow();
-		// final HtmlTableCell cellRules = htmlTableRow.createCell();
-		//cellRules.setClasses(getCurricularCourseToEnrolNameClasses());
-		// cellRules.setColspan(5);
-		//		
-		// final StringBuilder names = new StringBuilder();
-		// int count = curricularRules.size();
-		// for (final CurricularRule curricularRule : curricularRules) {
-		// names.append("<span style=\"color: #888\">");
-		// names.append(CurricularRuleLabelFormatter.getLabel(
-		// curricularRule, Language.getLocale()));
-		// names.append("</span>");
-		// if (count > 1) {
-		// names.append("; ");
-		// }
-		// count--;
-		// }
-		// cellRules.setBody(new HtmlText(names.toString(), false));
+		encodeCurricularRules(groupTable, curricularRules);
 	    }
 	}
 
-	private List<CurricularRule> getVisibleRules(final DegreeModule degreeModule, final CurriculumModule curriculumModule,
+	private void encodeCurricularRules(final HtmlTable groupTable, final List<CurricularRule> curricularRules) {
+	    final HtmlTableRow htmlTableRow = groupTable.createRow();
+
+	    final HtmlTable rulesTable = new HtmlTable();
+	    final HtmlTableCell cellRules = htmlTableRow.createCell();
+
+	    cellRules.setClasses(getCurricularCourseToEnrolNameClasses());
+	    cellRules.setBody(rulesTable);
+	    cellRules.setColspan(5);
+
+	    rulesTable.setClasses("smalltxt noborder");
+	    rulesTable.setStyle("width: 100%;");
+
+	    for (final CurricularRule curricularRule : curricularRules) {
+		final HtmlTableCell cellName = rulesTable.createRow().createCell();
+		cellName.setStyle("color: #888");
+		cellName.setBody(new HtmlText(CurricularRuleLabelFormatter.getLabel(curricularRule, Language.getLocale())));
+	    }
+	}
+
+	private List<CurricularRule> getVisibleRules(final DegreeModule degreeModule, final CurriculumGroup curriculumGroup,
 		final ExecutionSemester executionSemester) {
-	    final CourseGroup parent = curriculumModule.isRoot() ? null : curriculumModule.getCurriculumGroup().getDegreeModule();
+	    final CourseGroup parent = curriculumGroup == null ? null : curriculumGroup.getDegreeModule();
 	    return degreeModule.getVisibleCurricularRules(parent, executionSemester);
 	}
 
@@ -636,6 +639,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    }
 
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
+
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    htmlTableRow.setClasses(getGroupRowClasses());
 	    htmlTableRow.createCell().setBody(new HtmlText(degreeModuleToEnrol.getContext().getChildDegreeModule().getName()));
@@ -650,6 +654,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    degreeModulesToEvaluateController.addCheckBox(checkBox);
 	    cell.setBody(checkBox);
 
+	    if (isEncodeGroupRules()) {
+		encodeCurricularRules(groupTable, degreeModuleToEnrol);
+	    }
 	}
 
 	private void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,
@@ -690,11 +697,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private static class OptionalCurricularCourseLinkController extends HtmlActionLinkController {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2760270166511466030L;
-
 	private IDegreeModuleToEvaluate degreeModuleToEnrol;
 
 	public OptionalCurricularCourseLinkController(final IDegreeModuleToEvaluate degreeModuleToEnrol) {
@@ -715,11 +718,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
     }
 
     private static class CycleSelectionLinkController extends HtmlActionLinkController {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5469571160954095720L;
 
+	private static final long serialVersionUID = -5469571160954095720L;
 	private CycleType cycleTypeToEnrol;
 
 	public CycleSelectionLinkController(final CycleType cycleTypeToEnrol) {
