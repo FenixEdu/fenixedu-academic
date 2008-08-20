@@ -4015,6 +4015,9 @@ class DomainObject {
 		
 		class support.SupportException extends support.SupportRequest {
 		}
+		
+		class support.SupportDemand extends support.SupportRequest {
+		}
 
 	class system.CronRegistry extends DomainObject {
 		DateTime buildVersion;

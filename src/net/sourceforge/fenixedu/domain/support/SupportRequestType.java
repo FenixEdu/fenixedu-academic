@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.support;
 
 public enum SupportRequestType {
 
-    SUGESTION, REQUEST, DOUBT, ERROR, EXCEPTION;
+    SUGESTION, DEMAND, DOUBT, ERROR, EXCEPTION;
 
     public String getName() {
 	return name();

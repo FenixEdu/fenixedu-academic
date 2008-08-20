@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
+import net.sourceforge.fenixedu.domain.support.SupportDemand;
 import net.sourceforge.fenixedu.domain.support.SupportDoubt;
 import net.sourceforge.fenixedu.domain.support.SupportError;
 import net.sourceforge.fenixedu.domain.support.SupportException;
@@ -26,6 +27,8 @@ public class SupportRequestFactory {
 	    return new SupportException(context, priority, person, email, subject, message, errorLog);
 	case SUGESTION:
 	    return new SupportSugestion(context, priority, person, email, subject, message);
+	case DEMAND:
+	    return new SupportDemand(context, priority, person, email, subject, message);
 	default:
 	    throw new DomainException("error.domain.support.SupportRequest.invalid.type");
 	}
