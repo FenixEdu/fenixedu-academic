@@ -244,7 +244,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
     public List<CurricularRule> getVisibleCurricularRules(final CourseGroup parent, final ExecutionSemester executionSemester) {
 	final List<CurricularRule> result = new ArrayList<CurricularRule>();
 	for (final CurricularRule curricularRule : getCurricularRules(executionSemester)) {
-	    if (!curricularRule.hasContextCourseGroup(parent) || curricularRule.hasContextCourseGroup(parent)) {
+	    if (!curricularRule.hasContextCourseGroup() || curricularRule.hasContextCourseGroup(parent)) {
 		result.add(curricularRule);
 	    }
 	}
