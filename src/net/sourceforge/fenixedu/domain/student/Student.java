@@ -1173,6 +1173,10 @@ public class Student extends Student_Base {
     }
     
     public boolean hasInquiriesToRespond() {
+	if (!InquiryResponsePeriod.hasOpenPeriod()) {
+	    return false;
+	}
+	
 	final ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod().getExecutionPeriod();
 
 	for (Registration registration : getRegistrations()) {
