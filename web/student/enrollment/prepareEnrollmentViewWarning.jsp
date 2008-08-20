@@ -21,7 +21,7 @@
 
 	<div class="infoop2" style="text-align: left">
 	<ul>
-		<li><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
+		<li><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=showWelcome" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
 		<li><bean:message key="message.warning.student.enrolmentClasses.labs" /></li>
 		<li>
 			<bean:message key="message.warning.student.enrolmentClasses.notEnroll" />
