@@ -46,8 +46,8 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
     }
 
     public static InquiryResponsePeriod readOpenPeriod() {
-	List<InquiryResponsePeriod> inquiryResponsePeriods = RootDomainObject.getInstance().getInquiryResponsePeriods();
-	for (InquiryResponsePeriod inquiryResponsePeriod : inquiryResponsePeriods) {
+	final List<InquiryResponsePeriod> inquiryResponsePeriods = RootDomainObject.getInstance().getInquiryResponsePeriods();
+	for (final InquiryResponsePeriod inquiryResponsePeriod : inquiryResponsePeriods) {
 	    if (inquiryResponsePeriod.getBegin().isBeforeNow() && inquiryResponsePeriod.getEnd().isAfterNow()) {
 		return inquiryResponsePeriod;
 	    }
@@ -55,4 +55,7 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 	return null;
     }
 
+    static public boolean hasOpenPeriod() {
+	return readOpenPeriod() != null;
+    }
 }
