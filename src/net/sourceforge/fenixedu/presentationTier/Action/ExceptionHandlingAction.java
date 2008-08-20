@@ -101,13 +101,13 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	return actionForward;
     }
 
-    private void sessionRemover(HttpServletRequest request) {
+    protected void sessionRemover(HttpServletRequest request) {
 	HttpSession session = request.getSession(false);
 	session.removeAttribute(Globals.ERROR_KEY);
 	session.removeAttribute(SessionConstants.REQUEST_CONTEXT);
     }
 
-    public final ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	SupportRequestBean requestBean = new SupportRequestBean();
@@ -123,13 +123,13 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("exceptionInfo", request.getParameter("exceptionInfo"));
-	request.setAttribute("requestBean", getObjectFromViewState("requestBean"));
+	request.setAttribute("requestBean", getRenderedObject("requestBean"));
+	
 	return mapping.findForward("supportHelpInquiry");
     }
 
     public final ActionForward processSupportRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
 	return prepareSendEmail(mapping, form, request, response, (SupportRequestBean) getObjectFromViewState("requestBean"));
     }
 
@@ -146,7 +146,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	return sendSupportEmail(mapping, form, request, response, requestBean);
     }
 
-    protected final ActionForward sendSupportEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    protected ActionForward sendSupportEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, SupportRequestBean requestBean) throws Exception {
 
 	StringBuilder builder = new StringBuilder();
@@ -165,13 +165,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	// System.out.println(mailBody);
 
 	try {
-	    EMail email = new EMail(!request.getServerName().equals("localhost") ? "mail.adm" : "mail.rnl.ist.utl.pt",
-		    EmailValidator.getInstance().isValid(requestBean.getResponseEmail()) ? requestBean.getResponseEmail()
-			    : "erro@dot.ist.utl.pt");
-
-	    final ResourceBundle gBundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
-	    email.send(gBundle.getString("suporte.mail"), mailSubject, mailBody);
-
+	    sendMail(request, requestBean, mailSubject, mailBody);
 	} catch (Throwable t) {
 	    t.printStackTrace();
 	    throw new Error(t);
@@ -186,7 +180,15 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	return actionForward;
     }
 
-    private String generateEmailSubject(HttpServletRequest request, SupportRequestBean requestBean, Person loggedPerson,
+    protected void sendMail(HttpServletRequest request, SupportRequestBean requestBean, String mailSubject, String mailBody) {
+	final EMail email = new EMail(!request.getServerName().equals("localhost") ? "mail.adm" : "mail.rnl.ist.utl.pt",
+		EmailValidator.getInstance().isValid(requestBean.getResponseEmail()) ? requestBean.getResponseEmail()
+			: "erro@dot.ist.utl.pt");
+	final ResourceBundle gBundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
+	email.send(gBundle.getString("suporte.mail"), mailSubject, mailBody);
+    }
+
+    protected String generateEmailSubject(HttpServletRequest request, SupportRequestBean requestBean, Person loggedPerson,
 	    StringBuilder builder) {
 
 	builder.append(request.getServerName().equals("localhost") ? "Localhost " : "");
@@ -198,7 +200,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	return builder.toString();
     }
 
-    private String generateEmailBody(HttpServletRequest request, SupportRequestBean requestBean, Person loggedPerson,
+    protected String generateEmailBody(HttpServletRequest request, SupportRequestBean requestBean, Person loggedPerson,
 	    StringBuilder builder) {
 
 	appendNewLine(builder);

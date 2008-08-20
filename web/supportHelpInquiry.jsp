@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@page import="org.joda.time.YearMonthDay"%>
 <%@page import="pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter"%>
 <%@page import="pt.ist.fenixWebFramework.security.UserView"%>
 <%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
@@ -12,21 +11,22 @@
 <html:html xhtml="true">
 
 <head>
-<title>
-	<bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message key="label.support.page" bundle="GLOBAL_RESOURCES"/>
+	<title>
+		<bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message key="label.support.page" bundle="GLOBAL_RESOURCES"/>
 	</title>
    	<link href="<%= request.getContextPath() %>/CSS/logdotist_new.css" rel="stylesheet" type="text/css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+	<style>
+		form {
+			padding: 0 20px;
+		}
+		span.required { color: #b55; }
+	</style>
+
 </head>
 
 <body>
-
-<style>
-form {
-padding: 0 20px;
-}
-</style>
-
 
 <table id="wrapper">
 <tr>
@@ -71,8 +71,9 @@ padding: 0 20px;
 						<fr:property name="columnClasses" value=",,tderror1"/>
 						<fr:property name="rowClasses" value="inputtext,select,select,inputtext inputw400,textarea textareaw400 textareah100,inobullet,,,"/>
 						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
-					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation"/>
+					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
 				</fr:edit>
 			</logic:notPresent>
 
@@ -91,8 +92,9 @@ padding: 0 20px;
 						<fr:property name="columnClasses" value=",,tderror1"/>
 						<fr:property name="rowClasses" value="inputtext,inputtext inputw400,textarea textareaw400 textareah100,,,,"/>
 						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
-					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation"/>
+					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
 				</fr:edit>
 			</logic:present>
 	
@@ -101,6 +103,7 @@ padding: 0 20px;
 					<bean:message key="label.submit.support.form" bundle="APPLICATION_RESOURCES" />
 				</html:submit>
 			</p>
+			<em><bean:message key="renderers.validator.required.mark.explanation" bundle="RENDERER_RESOURCES" /></em>
 		</fr:form>
 
 	</div> <!-- form -->
@@ -115,8 +118,6 @@ padding: 0 20px;
 </td>
 </tr>
 </table>
-
-
 
 </body>
 </html:html>

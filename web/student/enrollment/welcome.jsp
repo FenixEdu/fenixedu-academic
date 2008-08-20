@@ -75,10 +75,11 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo 
 </p>
 
 <p class="mtop05">
-<strong>8.</strong> Para apoio ao processo de inscrições deste semestre foi criado um endereço específico para onde deverá encaminhar as suas dúvidas ou dificuldades que não se vejam respondidas pelas instruções acima:     
-</p>
-<p class="indent1">   
-<html:link href="mailto:inscricoes@ist.utl.pt">inscricoes@ist.utl.pt</html:link>
+<bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
+<strong>8.</strong> Para apoio ao processo de inscrições: 
+<html:link action="<%= "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" target="_blank">
+	<bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/>
+</html:link>
 </p>
 
 </div>
