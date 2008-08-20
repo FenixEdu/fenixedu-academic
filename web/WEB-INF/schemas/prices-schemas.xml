@@ -443,21 +443,21 @@
 
 <schema name="DegreeCandidacyForGraduatedPersonPR.view-student"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
-	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	bundle="APPLICATION_RESOURCES">
 	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
 	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
 </schema>
 
 <schema name="DegreeChangeIndividualCandidacyPR.view-student"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR"
-	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	bundle="APPLICATION_RESOURCES">
 	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
 	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
 </schema>
 
 <schema name="DegreeTransferIndividualCandidacyPR.view-student"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
-	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	bundle="APPLICATION_RESOURCES">
 	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
 	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
 </schema>
