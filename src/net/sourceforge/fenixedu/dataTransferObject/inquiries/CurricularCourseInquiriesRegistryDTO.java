@@ -4,6 +4,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -54,7 +56,8 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     }
 
     public double getWeeklyContactLoad() {
-	return getCurricularCourse().getCompetenceCourse().getContactLoad() / 14;
+	BigDecimal result = new BigDecimal(getCurricularCourse().getCompetenceCourse().getContactLoad());
+	return result.divide(new BigDecimal(14), 1, RoundingMode.UP).doubleValue();
     }
 
     public void setStudyDaysSpentInExamsSeason(Double studyDaysSpentInExamsSeason) {
