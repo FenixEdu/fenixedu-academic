@@ -64,7 +64,7 @@
 			<arg value="${src_gen}"/>
 <!--			<arg value="-gf"/>-->
 			<arg value="-generator"/>
-			<arg value="dml.FenixCodeGeneratorReadFromRs"/>
+			<arg value="dml.FenixCodeGeneratorReadFromRsIntReader"/>
 			<arg value="${dml.definition.file.completed}"/>
 			<classpath refid="class.path.lib.ref"/>
 		</java>
