@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -68,13 +67,14 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 	Integer weeklyHoursSpentInClassesSeason = getInquiriesRegistry().getInquiriesStudentExecutionPeriod()
 		.getWeeklyHoursSpentInClassesSeason();
 
-	DecimalFormat format = new DecimalFormat("#0.0");
+	// DecimalFormat format = new DecimalFormat("#0.0");
 
 	// ((%*NHTA + NHC)*14+ NDE*8) / 28
 	final double result = (((getWeeklyHoursSpentPercentage() / 100d) * weeklyHoursSpentInClassesSeason * 14)
 		+ getCurricularCourse().getCompetenceCourse().getContactLoad() + getStudyDaysSpentInExamsSeason() * 8) / 28;
 
-	return Double.valueOf(format.format(result));
+	// return Double.valueOf(format.format(result));
+	return new BigDecimal(result).setScale(1, BigDecimal.ROUND_UP).doubleValue();
     }
 
 }
