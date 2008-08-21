@@ -18,7 +18,7 @@
 				</strong>
 				<logic:present role="STUDENT">
 					<bean:message key="message.inquiries.available.students"/>
-					<html:link href="<%= request.getContextPath() + "/student/fillInquiries.do?method=prepareCourses"%>">
+					<html:link href="<%= request.getContextPath() + "/student/studentInquiry.do?method=showCoursesToAnswer"%>">
 						<bean:message key="message.inquiries.available.at.here"/>	
 					</html:link>
 					.

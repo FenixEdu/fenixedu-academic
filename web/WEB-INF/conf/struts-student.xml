@@ -820,6 +820,7 @@
 		</action>
   
   		<!-- =================== Fill Inquiries ============== -->
+  		<!--
 		<action path="/fillInquiries"
 			type="net.sourceforge.fenixedu.presentationTier.Action.student.inquiries.FillInquiryAction"
 			name = "fillInquiriesForm"
@@ -833,7 +834,7 @@
 			<forward name="inquirySubmitionResult" path="inquiry-submition-result"/>
 			<forward name="unavailableInquiry" path="unavailable-inquiry"/>
 		</action>
-  		
+  		-->
 
   		<action path="/weeklyWorkLoad"
   			type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadDA"
@@ -988,7 +989,9 @@
         </action>
         
         <!-- End : Bolonha Transition Management -->
-        
+		
+		
+  		
 	</action-mappings>     
 
     
