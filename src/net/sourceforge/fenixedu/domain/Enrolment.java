@@ -144,16 +144,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    @Deprecated
-    final public EnrollmentCondition getCondition() {
-	return getEnrolmentCondition();
-    }
-
-    @Deprecated
-    final public void setCondition(EnrollmentCondition enrollmentCondition) {
-	setEnrolmentCondition(enrollmentCondition);
-    }
-
     final public boolean isFinal() {
 	return getEnrolmentCondition() == EnrollmentCondition.FINAL;
     }
@@ -1413,5 +1403,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public boolean hasEnrolment(ExecutionYear executionYear) {
 	return isValid(executionYear);
+    }
+    
+    @Override
+    public boolean isEnroledInSpecialSeason(final ExecutionSemester executionSemester) {
+        return isValid(executionSemester) && hasSpecialSeason();
     }
 }
