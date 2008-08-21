@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.bolo
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -37,7 +38,8 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
 	} else {
-	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriod() == null) {
+	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionSemester)) {
 		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan().getNextEnrolmentPeriod());
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
