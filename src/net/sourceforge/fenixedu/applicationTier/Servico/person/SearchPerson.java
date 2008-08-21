@@ -318,7 +318,7 @@ public class SearchPerson extends Service {
 		    && verifyIdDocumentType(searchParameters.getIdDocumentType(), person)
 		    && verifyUsernameEquality(searchParameters.getUsername(), person)
 		    && verifyNameEquality(searchParameters.getNameWords(), person)
-		    && verifyParameter(person.getEmail(), searchParameters.getEmail())
+		    && verifyParameter(person.getInstitutionalOrDefaultEmailAddressValue(), searchParameters.getEmail())
 		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
 		    && verifyStudentNumber(searchParameters.getStudentNumber(), person)
 		    && verifyShowOnlySearchableResearchers(searchParameters.showOnlySearchableResearchers, person);
