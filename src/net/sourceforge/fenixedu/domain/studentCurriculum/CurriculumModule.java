@@ -300,6 +300,9 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     abstract public boolean hasEnrolment(ExecutionYear executionYear);
 
     abstract public boolean hasEnrolment(ExecutionSemester executionSemester);
+    
+    abstract public boolean isEnroledInSpecialSeason(final ExecutionSemester executionSemester);
+
 
     /**
      * This enum represent possible conclusion values when checking registration

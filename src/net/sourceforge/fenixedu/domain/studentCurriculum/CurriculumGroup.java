@@ -901,4 +901,13 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return false;
     }
 
+    public boolean isEnroledInSpecialSeason(ExecutionSemester executionSemester) {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isEnroledInSpecialSeason(executionSemester)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

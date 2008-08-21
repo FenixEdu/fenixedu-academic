@@ -243,4 +243,8 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	return false;
     }
 
+    @Override
+    public boolean isEnroledInSpecialSeason(ExecutionSemester executionSemester) {
+        return false;
+    }
 }
