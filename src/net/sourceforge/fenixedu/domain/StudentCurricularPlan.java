@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -1261,26 +1260,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    final public List<Enrolment> getAllStudentEnrollmentsInExecutionPeriod(final ExecutionSemester executionSemester) {
-	calculateStudentAcumulatedEnrollments(executionSemester);
-	return initAcumulatedEnrollments((List) CollectionUtils.select(getEnrolmentsSet(), new Predicate() {
-	    final public boolean evaluate(Object arg0) {
-
-		return ((Enrolment) arg0).getExecutionPeriod().equals(executionSemester);
-	    }
-	}));
-    }
-
-    final public List getStudentTemporarilyEnrolledEnrollments() {
-
-	return initAcumulatedEnrollments((List) CollectionUtils.select(getEnrolmentsSet(), new Predicate() {
-	    final public boolean evaluate(Object obj) {
-		Enrolment enrollment = (Enrolment) obj;
-		return (enrollment.isEnroled() && enrollment.isTemporary());
-	    }
-	}));
-    }
-
     final public boolean hasEnrolledStateInPreviousExecutionPerdiod(CurricularCourse curricularCourse,
 	    List<Enrolment> enrollmentsWithEnrolledStateInPreviousExecutionPeriod) {
 	for (Enrolment enrolment : enrollmentsWithEnrolledStateInPreviousExecutionPeriod) {
@@ -1431,34 +1410,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		this.acumulatedEnrollments.put(executionSemester, map);
 	    }
 	}
-    }
-
-    final public List initAcumulatedEnrollments(List elements) {
-	if (this.acumulatedEnrollments != null) {
-	    List result = new ArrayList();
-	    int size = elements.size();
-
-	    for (int i = 0; i < size; i++) {
-		try {
-		    Enrolment enrollment = (Enrolment) elements.get(i);
-		    enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment.getCurricularCourse()));
-		    result.add(enrollment);
-		} catch (ClassCastException e) {
-		    // FIXME shouldn't this be done in a clearer way?...
-
-		    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements.get(i);
-		    curricularCourse2Enroll.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll
-			    .getCurricularCourse()));
-		    result.add(curricularCourse2Enroll);
-		    // FIXME is this correct? adding a
-		    // CurricularCourse2Enroll
-		    // to a list of Enrolments?
-		}
-	    }
-
-	    return result;
-	}
-	return elements;
     }
 
     private Set getCurricularCoursesInCurricularCourseEquivalences(final CurricularCourse curricularCourse) {
@@ -1792,12 +1743,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isEnroledInSpecialSeason(final ExecutionSemester executionSemester) {
-	for (final Enrolment enrolment : getAllStudentEnrollmentsInExecutionPeriod(executionSemester)) {
-	    if (enrolment.hasSpecialSeason()) {
-		return true;
-	    }
-	}
-	return false;
+	return hasRoot() ? getRoot().isEnroledInSpecialSeason(executionSemester) : false;
     }
 
     public boolean isEnroledInSpecialSeason(final ExecutionYear executionYear) {
