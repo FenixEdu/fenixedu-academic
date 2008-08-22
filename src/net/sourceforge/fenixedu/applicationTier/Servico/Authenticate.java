@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -303,12 +302,11 @@ public class Authenticate extends Service implements Serializable {
     }
 
     protected Collection<Role> getInfoRoles(Person person, final Set allowedRoles) {
-	String username = person.getUsername();
-	List<Role> personRoles = person.getPersonRoles();
+	final String username = person.getUsername();
+	final Set<Role> personRoles = person.getPersonRolesSet();
 
 	final Map<RoleType, Role> infoRoles = new HashMap<RoleType, Role>(personRoles.size());
-	for (final Iterator iterator = personRoles.iterator(); iterator.hasNext();) {
-	    final Role role = (Role) iterator.next();
+	for (final Role role : personRoles) {
 	    final RoleType roleType = role.getRoleType();
 	    if (allowedRoles.contains(roleType)) {
 		infoRoles.put(roleType, role);
