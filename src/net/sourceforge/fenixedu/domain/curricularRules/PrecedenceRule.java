@@ -10,11 +10,11 @@ public abstract class PrecedenceRule extends PrecedenceRule_Base {
     }
 
     @Override
-    public boolean appliesToContext(Context context) {
-	return (super.appliesToContext(context) && this.appliesToPeriod(context));
+    public boolean appliesToContext(final Context context) {
+	return (super.appliesToContext(context) && appliesToPeriod(context));
     }
 
-    private boolean appliesToPeriod(Context context) {
+    protected boolean appliesToPeriod(final Context context) {
 	return (hasNoCurricularPeriodOrder() || (this.getAcademicPeriod().equals(
 		context.getCurricularPeriod().getAcademicPeriod()) && this.getCurricularPeriodOrder().equals(
 		context.getCurricularPeriod().getChildOrder())));
