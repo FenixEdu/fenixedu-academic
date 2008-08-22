@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -86,6 +87,11 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
 	    labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
 	}
 	return labelList;
+    }
+    
+    @Override
+    protected boolean appliesToPeriod(final Context context) {
+	return getDegreeModuleToApplyRule().isCourseGroup() || super.appliesToPeriod(context);
     }
 
     public boolean hasMinimumCredits() {
