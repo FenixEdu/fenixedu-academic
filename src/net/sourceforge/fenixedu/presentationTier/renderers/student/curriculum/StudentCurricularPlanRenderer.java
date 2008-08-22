@@ -38,6 +38,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlForm;
 import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
@@ -46,6 +47,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.contexts.InputContext;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -364,8 +366,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
-	    getInputContext().getForm().getSubmitButton().setVisible(false);
-	    getInputContext().getForm().getCancelButton().setVisible(false);
+	    final InputContext inputContext = getInputContext();
+	    final HtmlForm htmlForm = inputContext.getForm();
+	    htmlForm.getSubmitButton().setVisible(false);
+	    htmlForm.getCancelButton().setVisible(false);
 
 	    this.studentCurricularPlan = (StudentCurricularPlan) object;
 
