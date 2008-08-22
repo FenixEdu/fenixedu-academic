@@ -296,12 +296,28 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    if (curriculumGroup.isNoCourseGroupCurriculumGroup()) {
 		return;
 	    }
-
-	    final List<CurricularRule> curricularRules = getVisibleRules(curriculumGroup.getDegreeModule(), curriculumGroup
-		    .getCurriculumGroup(), bolonhaStudentEnrollmentBean.getExecutionPeriod());
+	    final Context context = getDegreeModuleContext(curriculumGroup, bolonhaStudentEnrollmentBean.getExecutionPeriod());
+	    final List<CurricularRule> curricularRules = curriculumGroup.getDegreeModule().getCurricularRules(context,
+		    bolonhaStudentEnrollmentBean.getExecutionPeriod());
 	    if (!curricularRules.isEmpty()) {
 		encodeCurricularRules(groupTable, curricularRules);
 	    }
+	}
+
+	private Context getDegreeModuleContext(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
+	    final DegreeModule degreeModule = curriculumGroup.getDegreeModule();
+
+	    if (curriculumGroup.isRoot()) {
+		return null;
+	    }
+
+	    final CurriculumGroup parentCurriculumGroup = curriculumGroup.getCurriculumGroup();
+	    for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(executionSemester)) {
+		if (context.getChildDegreeModule() == degreeModule) {
+		    return context;
+		}
+	    }
+	    return null;
 	}
 
 	private HtmlTable createGroupTable(final HtmlBlockContainer blockContainer, final int depth) {
@@ -485,8 +501,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private void encodeCurricularRules(final HtmlTable groupTable, final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
-	    final List<CurricularRule> curricularRules = getVisibleRules(degreeModuleToEvaluate.getDegreeModule(),
-		    degreeModuleToEvaluate.getCurriculumGroup(), degreeModuleToEvaluate.getExecutionPeriod());
+	    final DegreeModule degreeModule = degreeModuleToEvaluate.getDegreeModule();
+	    final List<CurricularRule> curricularRules = degreeModule.getCurricularRules(degreeModuleToEvaluate.getContext(),
+		    degreeModuleToEvaluate.getExecutionPeriod());
 	    if (!curricularRules.isEmpty()) {
 		encodeCurricularRules(groupTable, curricularRules);
 	    }
@@ -510,12 +527,6 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		cellName.setStyle("color: #888");
 		cellName.setBody(new HtmlText(CurricularRuleLabelFormatter.getLabel(curricularRule, Language.getLocale())));
 	    }
-	}
-
-	private List<CurricularRule> getVisibleRules(final DegreeModule degreeModule, final CurriculumGroup curriculumGroup,
-		final ExecutionSemester executionSemester) {
-	    final CourseGroup parent = curriculumGroup == null ? null : curriculumGroup.getDegreeModule();
-	    return degreeModule.getVisibleCurricularRules(parent, executionSemester);
 	}
 
 	private void generateEnrolments(final StudentCurriculumGroupBean studentCurriculumGroupBean, final HtmlTable groupTable) {
