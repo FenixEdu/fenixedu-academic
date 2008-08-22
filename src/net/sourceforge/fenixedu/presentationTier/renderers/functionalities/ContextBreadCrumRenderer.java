@@ -60,7 +60,7 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
 		HtmlComponent component = new HtmlText(targetContent.getName().getContent());
 		List<Content> contents = context.getPathBetween(context.getSelectedTopLevelContainer(), targetContent);
 
-		StringBuffer buffer = new StringBuffer(context.getRequest().getContextPath());
+		StringBuilder buffer = new StringBuilder(context.getRequest().getContextPath());
 		for (Content content : contents) {
 		    buffer.append("/");
 		    buffer.append(content.getNormalizedName().getContent());

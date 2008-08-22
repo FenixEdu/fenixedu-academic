@@ -90,7 +90,7 @@ public class EMailAddress {
     }
 
     public InternetAddress getInternetAddress() throws UnsupportedEncodingException, AddressException {
-	InternetAddress address = new InternetAddress(new StringBuffer(this.user).append("@").append(this.domain).toString());
+	InternetAddress address = new InternetAddress(new StringBuilder(this.user).append("@").append(this.domain).toString());
 	if (this.personalName != null && !this.personalName.equals("")) {
 	    address.setPersonal(this.personalName);
 	}
@@ -99,7 +99,7 @@ public class EMailAddress {
     }
 
     public String getAddress() {
-	StringBuffer result = new StringBuffer();
+	StringBuilder result = new StringBuilder();
 	if (this.user != null) {
 	    result.append(this.user);
 	}

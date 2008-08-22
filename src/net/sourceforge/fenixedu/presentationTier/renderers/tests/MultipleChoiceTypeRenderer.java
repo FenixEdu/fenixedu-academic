@@ -31,7 +31,7 @@ public class MultipleChoiceTypeRenderer extends AnswerTypeRenderer {
      * @Override public Object convert(Class type, Object value) {
      * List<NewChoice> choices = (List<NewChoice>) super.convert(type, value);
      * 
-     * StringBuffer stringBuffer = new StringBuffer();
+     * StringBuilder stringBuffer = new StringBuilder();
      * 
      * for (NewChoice choice : choices) {
      * stringBuffer.append(choice.getIdInternal()); stringBuffer.append(" "); }

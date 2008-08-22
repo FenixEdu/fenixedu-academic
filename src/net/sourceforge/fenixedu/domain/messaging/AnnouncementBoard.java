@@ -14,16 +14,16 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
@@ -402,7 +402,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public String getKeywords() {
-	StringBuffer keywords = new StringBuffer("");
+	StringBuilder keywords = new StringBuilder();
 	for (Announcement announcement : getAnnouncements()) {
 	    MultiLanguageString announcementKeyword = announcement.getKeywords();
 	    if (announcementKeyword != null) {

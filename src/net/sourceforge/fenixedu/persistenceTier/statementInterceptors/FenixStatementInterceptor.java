@@ -16,7 +16,6 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import pt.ist.fenixframework.pstm.MetadataManager;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
@@ -28,6 +27,7 @@ import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 
+import pt.ist.fenixframework.pstm.MetadataManager;
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
 import com.mysql.jdbc.Connection;
@@ -344,7 +344,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	private String extractNameFromKey(String key) {
 	    String name = key.replace("KEY_", "");
 	    name = name.toLowerCase();
-	    StringBuffer buffer = new StringBuffer("");
+	    StringBuilder buffer = new StringBuilder();
 	    for (String part : name.split("_")) {
 		if (buffer.length() == 0) {
 		    buffer.append(part);
@@ -361,7 +361,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	}
 
 	public String getTableNamesForClasses(String separator) {
-	    StringBuffer tableNames = new StringBuffer("");
+	    StringBuilder tableNames = new StringBuilder();
 	    int i = 1;
 	    for (Class clazz : loggingClasses) {
 		tableNames.append(getTableNameForClass(clazz));
@@ -384,7 +384,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
 	public String getInterestingColumnsForClass(Class clazz, String separator) {
 	    Set<String> interestingKeys = getInterestingColumnsForClass(clazz);
-	    StringBuffer buffer = new StringBuffer("");
+	    StringBuilder buffer = new StringBuilder();
 	    for (String interestingKey : interestingKeys) {
 		if (buffer.length() > 0) {
 		    buffer.append(separator);

@@ -2,17 +2,17 @@ package net.sourceforge.fenixedu.presentationTier.Action.library.theses;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 import net.sourceforge.fenixedu.dataTransferObject.thesis.ThesisSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
 public class ThesisLibraryDA extends FenixDispatchAction {
 
     protected String buildSearchArgs(ThesisSearchBean search) {
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	if (search.getText() != null && !search.getText().isEmpty())
 	    appendSearchArg(buffer, "text=" + search.getText());
 	if (search.getState() != null)
@@ -22,7 +22,7 @@ public class ThesisLibraryDA extends FenixDispatchAction {
 	return buffer.toString();
     }
 
-    private void appendSearchArg(StringBuffer buffer, String arg) {
+    private void appendSearchArg(StringBuilder buffer, String arg) {
 	if (buffer.length() == 0)
 	    buffer.append('&');
 	else if (buffer.charAt(buffer.length() - 1) != '&') {

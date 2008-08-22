@@ -22,7 +22,7 @@
 
 <logic:equal name="executionCourse" property="site.dynamicMailDistribution" value="true">
 	<%
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append(ExecutionCourseAliasExpandingAction.emailAddressPrefix);
 		buffer.append(request.getParameter("executionCourseID")).append("@");
 		buffer.append(TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration());

@@ -233,10 +233,10 @@ public abstract class MailSenderAction extends FenixDispatchAction {
     }
 
     private void processReport(HttpServletRequest request, MessageResources resources, SendMailReport result) {
-	StringBuffer sent = new StringBuffer();
-	StringBuffer invalidAddress = new StringBuffer();
-	StringBuffer transportError = new StringBuffer();
-	StringBuffer invalidName = new StringBuffer();
+	StringBuilder sent = new StringBuilder();
+	StringBuilder invalidAddress = new StringBuilder();
+	StringBuilder transportError = new StringBuilder();
+	StringBuilder invalidName = new StringBuilder();
 
 	int invalidAddressCount = 0;
 	int invalidPersonalNameCount = 0;

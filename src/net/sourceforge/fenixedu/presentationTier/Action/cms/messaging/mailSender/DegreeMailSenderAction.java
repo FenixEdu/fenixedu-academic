@@ -47,7 +47,7 @@ public class DegreeMailSenderAction extends SimpleMailSenderAction {
 
     @Override
     protected String getFromName(HttpServletRequest request) {
-	StringBuffer buffer = new StringBuffer(fromName);
+	StringBuilder buffer = new StringBuilder(fromName);
 	buffer.append(" ");
 	buffer.append(getDegree(request).getName());
 	return buffer.toString();

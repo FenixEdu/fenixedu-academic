@@ -37,7 +37,7 @@ public class AnnouncementRSS extends RSSAction {
     protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
 	MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
 	String titlePrefix = resources.getMessage(this.getLocale(request), "messaging.announcements.channelTitlePrefix");
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	if (board != null) {
 	    buffer.append(titlePrefix).append(" ").append(board.getName());
 	}
@@ -104,7 +104,7 @@ public class AnnouncementRSS extends RSSAction {
 	String module = ModuleUtils.getInstance().getModuleName(request, getServlet().getServletContext());
 	String actionPath = "/announcementsRSS.do";
 
-	StringBuffer file = new StringBuffer();
+	StringBuilder file = new StringBuilder();
 	file.append(context).append(module).append(actionPath);
 	try {
 	    URL url = new URL(scheme, serverName, serverPort, file.toString());
@@ -165,7 +165,7 @@ public class AnnouncementRSS extends RSSAction {
 
     @Override
     protected String getFeedLink(HttpServletRequest request) throws FenixActionException {
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	AnnouncementBoard board = this.getSelectedBoard(request);
 	buffer.append(this.getAnnouncementBoardFeedServicePrefix(request)).append("?");
 	if (board != null) {

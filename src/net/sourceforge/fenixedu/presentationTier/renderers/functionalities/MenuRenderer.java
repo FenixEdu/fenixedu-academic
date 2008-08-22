@@ -254,7 +254,7 @@ public class MenuRenderer extends OutputRenderer {
 
     public static String findPathFor(final String contextPath, final Content targetContent,
 	    final FilterFunctionalityContext context, final Collection<String> subPath) {
-	final StringBuffer buffer = new StringBuffer(contextPath);
+	final StringBuilder buffer = new StringBuilder(contextPath);
 	buffer.append(context.getSelectedContainerPath());
 	for (final String name : subPath) {
 	    buffer.append('/');

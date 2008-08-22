@@ -197,7 +197,7 @@ public class StringFormatter {
 
 	uglyDuckling = removeDuplicateSpaces(uglyDuckling.trim());
 	String[] lowerCaseName = uglyDuckling.toLowerCase().split(" ");
-	StringBuffer capitalizedName = new StringBuffer();
+	StringBuilder capitalizedName = new StringBuilder();
 
 	for (int i = 0; i < lowerCaseName.length; i++) {
 
@@ -238,7 +238,7 @@ public class StringFormatter {
 	uglyDuckling = removeDuplicateSpaces(uglyDuckling.trim());
 	final Map<String, String> personNameDictionary = personNameDictionaries.get(language);
 	final String[] lowerCaseName = uglyDuckling.toLowerCase().split(" ");
-	final StringBuffer capitalizedName = new StringBuffer();
+	final StringBuilder capitalizedName = new StringBuilder();
 
 	for (int i = 0; i < lowerCaseName.length; i++) {
 
@@ -263,7 +263,7 @@ public class StringFormatter {
      * @return the capitalized string.
      */
     private static String capitalizeWordWithSpecChars(String uglyWord) {
-	StringBuffer prettyWord = new StringBuffer();
+	StringBuilder prettyWord = new StringBuilder();
 
 	int startPos = 0;
 
@@ -291,7 +291,7 @@ public class StringFormatter {
      * @return the capitalized word
      */
     public static String capitalizeWord(String uglyWord) {
-	StringBuffer prettyWord = new StringBuffer();
+	StringBuilder prettyWord = new StringBuilder();
 
 	if (allCapSet.contains(uglyWord)) {
 	    prettyWord.append(uglyWord.toUpperCase());

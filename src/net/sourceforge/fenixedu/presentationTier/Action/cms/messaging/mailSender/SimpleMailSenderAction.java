@@ -112,7 +112,7 @@ public class SimpleMailSenderAction extends FenixDispatchAction {
 
 		if (report.getPersonReport(status) != null) {
 		    for (Person person : report.getPersonReport(status)) {
-			StringBuffer buffer = new StringBuffer("");
+			StringBuilder buffer = new StringBuilder("");
 			buffer.append(person.getName());
 			buffer.append(" (");
 			buffer.append(person.getEmail());

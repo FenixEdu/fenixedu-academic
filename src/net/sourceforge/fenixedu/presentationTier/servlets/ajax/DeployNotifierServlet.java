@@ -31,7 +31,7 @@ public class DeployNotifierServlet extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	response.setContentType("text/html");
 	if (getDeployNotifier().getNotifyUsers()) {
-	    StringBuffer notifyString = new StringBuffer("");
+	    StringBuilder notifyString = new StringBuilder();
 	    String responseString = null;
 	    Integer estimateMinutesForDeploy = getDeployNotifier().getEstimateMinutesForDeploy();
 	    notifyString.append("<div class=\"deploywarning\">");

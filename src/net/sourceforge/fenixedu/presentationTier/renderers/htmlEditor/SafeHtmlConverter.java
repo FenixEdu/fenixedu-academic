@@ -213,7 +213,7 @@ public class SafeHtmlConverter extends TidyConverter {
     }
 
     private String filterAllowedClasses(String value) {
-	StringBuffer classes = new StringBuffer("");
+	StringBuilder classes = new StringBuilder();
 	for (String cssClass : value.split(" ")) {
 	    if (cssClass.startsWith("pub-")) {
 		classes.append(cssClass);

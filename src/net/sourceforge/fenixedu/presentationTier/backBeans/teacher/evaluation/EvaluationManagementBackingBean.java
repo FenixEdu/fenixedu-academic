@@ -701,7 +701,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	final BufferedReader reader = new BufferedReader(input);
 
 	char[] buffer = new char[4096];
-	StringBuffer fileContents = new StringBuffer();
+	StringBuilder fileContents = new StringBuilder();
 	int i = 0;
 	while ((i = reader.read(buffer)) != -1) {
 	    fileContents.append(buffer, 0, i);

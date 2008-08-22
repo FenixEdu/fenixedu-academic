@@ -79,13 +79,13 @@ public class PartialInputRenderer extends DateInputRenderer {
 
     @Override
     public String getFormat() {
-	StringBuffer format = new StringBuffer();
 	// "HH:mm:ss dd/MM/yyyy";
 
 	if (isFormatSet()) {
 	    return super.getFormat();
 	}
 
+	StringBuilder format = new StringBuilder();
 	if (isDay()) {
 	    format.append("dd");
 	}

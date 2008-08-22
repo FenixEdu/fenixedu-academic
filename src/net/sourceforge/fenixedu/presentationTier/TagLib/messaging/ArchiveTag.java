@@ -109,7 +109,7 @@ public class ArchiveTag extends TagSupport {
 
     private String renderArchive(Object value) {
 	AnnouncementArchive archive = (AnnouncementArchive) value;
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 
 	for (YearAnnouncementArchiveEntry year : archive.getEntries().values()) {
 	    buffer.append("<p><span>").append(year.getYear()).append("</span> ");
@@ -121,7 +121,7 @@ public class ArchiveTag extends TagSupport {
     }
 
     private String renderYear(YearAnnouncementArchiveEntry year) {
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 
 	boolean first = true;
 	for (int i = year.getFirstPostMonth(); i <= 12; i++) {

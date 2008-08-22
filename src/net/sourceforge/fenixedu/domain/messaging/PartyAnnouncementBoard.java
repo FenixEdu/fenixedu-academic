@@ -13,7 +13,7 @@ public abstract class PartyAnnouncementBoard extends PartyAnnouncementBoard_Base
 
     @Override
     public String getQualifiedName() {
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	buffer.append(this.getName()).append(" - ").append(this.getParty().getName());
 	return buffer.toString();
     }

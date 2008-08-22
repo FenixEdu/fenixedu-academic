@@ -237,7 +237,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 	int numberOfCurricularCourse = executionCourse.getAssociatedCurricularCourses().size();
 
 	List<String> siglas = new ArrayList<String>();
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 
 	for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
 	    String sigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();

@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.util.teacherServiceDistribution.report.TeacherSe
 import net.sourceforge.fenixedu.util.teacherServiceDistribution.report.TeacherServiceDistributionSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -302,7 +301,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 	    TSDCourse tsdCourse = entry.getTSDCourse();
 	    spreadsheet.addCell(tsdCourse.getName());
 	    spreadsheet.addCell(tsdCourse.getAcronym());
-	    StringBuffer buffer = new StringBuffer("");
+	    StringBuilder buffer = new StringBuilder("");
 	    for (Degree degree : tsdCourse.getDegrees()) {
 		if (buffer.length() > 0) {
 		    buffer.append(", ");

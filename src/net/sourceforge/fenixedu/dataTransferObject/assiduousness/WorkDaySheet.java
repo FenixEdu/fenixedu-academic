@@ -150,7 +150,7 @@ public class WorkDaySheet implements Serializable {
 
     public String getBalanceTimeFormatted() {
 	Period balancePeriod = getBalanceTime();
-	StringBuffer result = new StringBuffer();
+	StringBuilder result = new StringBuilder();
 	result.append(balancePeriod.getHours());
 	result.append(":");
 	if (balancePeriod.getMinutes() > -10 && balancePeriod.getMinutes() < 10) {
@@ -159,7 +159,7 @@ public class WorkDaySheet implements Serializable {
 	if (balancePeriod.getMinutes() < 0) {
 	    result.append((-balancePeriod.getMinutes()));
 	    if (!result.toString().startsWith("-")) {
-		result = new StringBuffer("-").append(result);
+		result = new StringBuilder("-").append(result);
 	    }
 	} else {
 	    result.append(balancePeriod.getMinutes());
@@ -169,7 +169,7 @@ public class WorkDaySheet implements Serializable {
 
     public String getUnjustifiedTimeFormatted() {
 	Period unjustifiedPeriod = getUnjustifiedTime().toPeriod();
-	StringBuffer result = new StringBuffer();
+	StringBuilder result = new StringBuilder();
 	result.append(unjustifiedPeriod.getHours());
 	result.append(":");
 	if (unjustifiedPeriod.getMinutes() > -10 && unjustifiedPeriod.getMinutes() < 10) {

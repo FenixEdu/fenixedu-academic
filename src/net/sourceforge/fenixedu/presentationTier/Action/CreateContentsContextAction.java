@@ -66,7 +66,7 @@ public class CreateContentsContextAction extends FenixAction {
 	    paths.add(contentForPath.getNormalizedName().getContent());
 	}
 
-	StringBuffer buffer = new StringBuffer("");
+	StringBuilder buffer = new StringBuilder();
 	for (String pathPart : paths) {
 	    buffer.append("/");
 	    buffer.append(pathPart);

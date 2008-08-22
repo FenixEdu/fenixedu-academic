@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -78,7 +77,7 @@ public class StudentInfoByUsername extends FenixAction {
 		result = "-1";
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    StringBuffer buffer = new StringBuffer();
+	    StringBuilder buffer = new StringBuilder();
 	    buffer.append("<error><cause>");
 	    buffer.append(e.getMessage());
 	    buffer.append("</cause></error>");
@@ -119,7 +118,7 @@ public class StudentInfoByUsername extends FenixAction {
     }
 
     private String getStyleFilename(State state) {
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	buffer.append("/xslt/external/studentInfoByUsername/").append(state.xslt).append(".xslt");
 	return buffer.toString();
     }

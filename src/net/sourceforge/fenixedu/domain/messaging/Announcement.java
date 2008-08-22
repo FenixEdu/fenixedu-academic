@@ -6,9 +6,10 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Announcement extends Announcement_Base {
 
@@ -108,7 +109,7 @@ public class Announcement extends Announcement_Base {
 
     public String getBodyDigest() {
 	final int numberOfWords = 30;
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	if (this.getBody() != null && this.getBody().getContent() != null) {
 	    String[] words = this.getBody().getContent().split(" ");
 	    for (int i = 0; i < words.length && i <= numberOfWords; i++) {

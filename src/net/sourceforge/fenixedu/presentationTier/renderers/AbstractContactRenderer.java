@@ -133,7 +133,7 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
 	    span.addChild(link);
 	}
 	if (showType || (showDefault && contact.isDefault())) {
-	    StringBuffer suffix = new StringBuffer();
+	    StringBuilder suffix = new StringBuilder();
 	    suffix.append(" (");
 	    if (showType)
 		suffix.append(RenderUtils.getEnumString(contact.getType()));

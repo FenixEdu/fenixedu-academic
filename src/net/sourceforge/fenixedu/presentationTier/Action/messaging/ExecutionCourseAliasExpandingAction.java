@@ -45,7 +45,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
 
 		switch (report.getStatus()) {
 		case OK: {
-		    StringBuffer buffer = new StringBuffer();
+		    StringBuilder buffer = new StringBuilder();
 		    buffer.append("200 ");
 		    boolean firstAddress = true;
 		    for (String currentAddress : report.getExpandedAddresses()) {

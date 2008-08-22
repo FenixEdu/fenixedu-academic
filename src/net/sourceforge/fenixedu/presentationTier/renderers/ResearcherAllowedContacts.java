@@ -22,7 +22,7 @@ public class ResearcherAllowedContacts extends OutputRenderer {
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
 		Researcher researcher = (Researcher) object;
-		StringBuffer buffer = new StringBuffer("");
+		StringBuilder buffer = new StringBuilder();
 
 		addContentToBuffer(buffer, researcher.getAllowsContactByStudents(), getTextFromBundle(getKeyForStudents(),
 			getBundle()));
@@ -37,7 +37,7 @@ public class ResearcherAllowedContacts extends OutputRenderer {
 		return container;
 	    }
 
-	    private void addContentToBuffer(StringBuffer buffer, Boolean shouldBeAdded, String text) {
+	    private void addContentToBuffer(StringBuilder buffer, Boolean shouldBeAdded, String text) {
 		if (shouldBeAdded) {
 		    if (buffer.length() > 0) {
 			buffer.append(", ");

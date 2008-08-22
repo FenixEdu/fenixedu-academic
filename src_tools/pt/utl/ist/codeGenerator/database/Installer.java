@@ -400,8 +400,8 @@ public class Installer extends Task implements TaskContainer {
 	    private BufferedReader errorReader = null;
 	    private BufferedReader inReader = null;
 	    private int exitValue = 0;
-	    private StringBuffer errorDesc = new StringBuffer("");
-	    private StringBuffer output = new StringBuffer("");
+	    private StringBuilder errorDesc = new StringBuilder();
+	    private StringBuilder output = new StringBuilder();
 
 	    public ProcessRunner(ProcessBuilder pBuild) throws IOException, InterruptedException {
 		pBuild.redirectErrorStream(false);
@@ -578,7 +578,7 @@ public class Installer extends Task implements TaskContainer {
     }
 
     private String DDLReadFromFile(File f) throws IOException {
-	StringBuffer ddl = new StringBuffer();
+	StringBuilder ddl = new StringBuilder();
 	BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f));
 
 	int byteCount = 0;

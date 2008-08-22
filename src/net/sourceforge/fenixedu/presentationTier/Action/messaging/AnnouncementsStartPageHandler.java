@@ -183,7 +183,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     @Override
     protected String getExtraRequestParameters(HttpServletRequest request) {
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	String announcementBoardAccessType = request.getParameter("announcementBoardAccessType");
 	String announcementBoardAccessLevel = request.getParameter("announcementBoardAccessLevel");
 

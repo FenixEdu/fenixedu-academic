@@ -10,7 +10,7 @@ public class RoleTypeHelper {
     }
 
     public static String enumRoleTypeNamesToCSV() {
-	StringBuffer retval = new StringBuffer();
+	StringBuilder retval = new StringBuilder();
 	for (RoleType r : RoleType.values()) {
 	    if (retval.length() > 0)
 		retval.append(",");
@@ -20,7 +20,7 @@ public class RoleTypeHelper {
     }
 
     public static String enumRoleTypeNamesToArrayFormat() {
-	StringBuffer retval = new StringBuffer("{\"");
+	StringBuilder retval = new StringBuilder("{\"");
 	for (RoleType r : RoleType.values()) {
 	    if (retval.length() > 0)
 		retval.append("\",\"");
@@ -31,7 +31,7 @@ public class RoleTypeHelper {
     }
 
     public static String enumRoleTypeLabelsToArrayFormat() {
-	StringBuffer retval = new StringBuffer("{\"");
+	StringBuilder retval = new StringBuilder("{\"");
 	for (RoleType r : RoleType.values()) {
 	    if (retval.length() > 0)
 		retval.append("\",\"");

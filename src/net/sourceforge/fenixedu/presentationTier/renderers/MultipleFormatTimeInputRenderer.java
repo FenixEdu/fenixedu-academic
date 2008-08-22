@@ -48,11 +48,11 @@ public class MultipleFormatTimeInputRenderer extends DateInputRenderer {
 
     @Override
     public String getFormat() {
-	StringBuffer format = new StringBuffer();
 	// "HH:mm";
 	if (isFormatSet()) {
 	    return super.getFormat();
 	}
+	StringBuilder format = new StringBuilder();
 	if (isHour()) {
 	    format.append((format.length() > 0 ? " " : "") + "HH");
 	}

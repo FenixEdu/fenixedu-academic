@@ -190,7 +190,7 @@ public class AnnouncementRenderer extends OutputRenderer {
 	}
 
 	private HtmlComponent getDate() {
-	    StringBuffer buffer = new StringBuffer("");
+	    StringBuilder buffer = new StringBuilder();
 	    if (isCurrentAnnouncentAnEvent()) {
 		buffer.append(RenderUtils.getFormattedProperties(getDateFormat(), announcement.getReferedSubjectBegin()));
 		if (announcement.getReferedSubjectEnd() != null) {
@@ -220,7 +220,7 @@ public class AnnouncementRenderer extends OutputRenderer {
 
 	private HtmlComponent getAuthor() {
 	    Person person = announcement.getCreator();
-	    StringBuffer buffer = new StringBuffer("");
+	    StringBuilder buffer = new StringBuilder();
 	    buffer.append(RenderUtils.getResourceString(getBundle(), getAuthorLabel()));
 	    buffer.append(": ");
 	    buffer.append(person.getName());

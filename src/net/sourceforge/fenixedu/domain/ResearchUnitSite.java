@@ -9,9 +9,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchUnitSite extends ResearchUnitSite_Base {
 
@@ -51,7 +52,7 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 	Unit unit = this.getUnit();
 	List<Unit> units = unit.getParentUnitsPath(false);
 	units.add(unit);
-	StringBuffer buffer = new StringBuffer("");
+	StringBuilder buffer = new StringBuilder();
 
 	for (Unit unitInPath : units) {
 	    if (unitInPath.getType() != PartyTypeEnum.AGGREGATE_UNIT) {

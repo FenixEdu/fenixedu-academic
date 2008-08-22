@@ -1,17 +1,12 @@
 package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 
 public abstract class AbstractUnitAcronymPathProcessor extends AbstractPathProcessor {
 
@@ -56,24 +51,25 @@ public abstract class AbstractUnitAcronymPathProcessor extends AbstractPathProce
 	return false;
     }
 
-    private Unit findCorrectUnit(List<Unit> units) {
+    private Unit findCorrectUnit(final List<Unit> units) {
 	final Class[] types = getAcceptableTypes();
-	Collection unitsOfGivenType = CollectionUtils.select(units, new Predicate() {
-	    public boolean evaluate(Object unit) {
-		for (Class clazz : types) {
-		    if (clazz.equals(unit.getClass())) {
-			return true;
+	Unit unitOfGivinType = null;
+	for (final Unit unit : units) {
+	    for (final Class clazz : types) {
+		if (clazz.equals(unit.getClass())) {
+		    if (unitOfGivinType == null) {
+			unitOfGivinType = unit;
+		    } else {
+			return null;
 		    }
 		}
-		return false;
 	    }
-	});
-	return unitsOfGivenType.size() == 1 ? (Unit) unitsOfGivenType.iterator().next() : null;
+	}
+	return unitOfGivinType;
     }
 
     @Override
     public Content processPath(String path) {
-
 	String[] possibleUnits = path.split("/");
 	List<Unit> unitsList = findUnitsInPath(possibleUnits);
 	return unitsList.isEmpty() ? null : unitsList.get(unitsList.size() - 1).getSite();
@@ -82,12 +78,11 @@ public abstract class AbstractUnitAcronymPathProcessor extends AbstractPathProce
 
     @Override
     public String getTrailingPath(String path) {
-	String[] possibleUnits = path.split("/");
-	List<Unit> unitsList = findUnitsInPath(possibleUnits);
-	StringBuffer buffer = new StringBuffer("");
-	Iterator<Unit> unitIterator = unitsList.iterator();
-	while (unitIterator.hasNext()) {
-	    buffer.append(unitIterator.next().getAcronym());
+	final String[] possibleUnits = path.split("/");
+	final List<Unit> unitsList = findUnitsInPath(possibleUnits);
+	final StringBuilder buffer = new StringBuilder();
+	for (final Unit unit : unitsList) {
+	    buffer.append(unit.getAcronym());
 	    buffer.append("/");
 	}
 

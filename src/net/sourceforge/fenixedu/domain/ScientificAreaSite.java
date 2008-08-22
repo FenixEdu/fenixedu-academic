@@ -10,9 +10,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ScientificAreaSite extends ScientificAreaSite_Base {
 
@@ -46,7 +47,7 @@ public class ScientificAreaSite extends ScientificAreaSite_Base {
 	Unit unit = this.getUnit();
 	List<Unit> units = unit.getParentUnitsPath(false);
 	units.add(unit);
-	StringBuffer buffer = new StringBuffer("");
+	StringBuilder buffer = new StringBuilder();
 
 	for (Unit unitInPath : units) {
 	    if (unitInPath.getType() != PartyTypeEnum.AGGREGATE_UNIT) {

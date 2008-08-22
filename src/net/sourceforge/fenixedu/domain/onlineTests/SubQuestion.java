@@ -123,7 +123,7 @@ public class SubQuestion {
     }
 
     public String getShuffleString() {
-	StringBuffer result = new StringBuffer();
+	StringBuilder result = new StringBuilder();
 	result.append("[");
 	for (int i = 0; i < getShuffle().length; i++) {
 	    result.append(getShuffle()[i]);

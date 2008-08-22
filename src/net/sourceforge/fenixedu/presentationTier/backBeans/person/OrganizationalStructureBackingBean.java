@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -260,7 +259,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String getTitle() throws FenixFilterException, FenixServiceException {
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	buffer.append("<p><em>");
 	buffer.append(this.getUnit().getParentUnitsPresentationName());
 	buffer.append("</em></p>");
@@ -270,7 +269,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getFunctions() throws FenixFilterException, FenixServiceException {
 
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
 	Unit chooseUnit = this.getUnit();
 	ExecutionYear iExecutionYear = getExecutionYear(getChoosenExecutionYearID());
@@ -309,7 +308,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return buffer.toString();
     }
 
-    private void getSubUnitsFunctions(Unit subUnit, YearMonthDay currentDate, ExecutionYear iExecutionYear, StringBuffer buffer) {
+    private void getSubUnitsFunctions(Unit subUnit, YearMonthDay currentDate, ExecutionYear iExecutionYear, StringBuilder buffer) {
 
 	buffer.append("<ul class='mtop1 nobullet'><li>");
 	// buffer.append("<image
@@ -341,7 +340,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private String getHomePageUrl(Person person) {
-	StringBuffer buffer = new StringBuffer();
+	StringBuilder buffer = new StringBuilder();
 	String appContext = PropertiesManager.getProperty("app.context");
 
 	if (person.getHomepage() != null && person.getHomepage().getActivated()) {
@@ -352,7 +351,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return buffer.toString();
     }
 
-    private void printPersonHomePage(Person person, StringBuffer buffer) {
+    private void printPersonHomePage(Person person, StringBuilder buffer) {
 	String homePageUrl = getHomePageUrl(person);
 	if (!StringUtils.isEmpty(homePageUrl)) {
 	    buffer.append("<a href='").append(homePageUrl).append("' target='_blank'>").append(person.getNickname()).append(
@@ -364,7 +363,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
     }
 
-    private void printUnitWorkingEmployees(Unit subUnit, ExecutionYear iExecutionYear, StringBuffer buffer) {
+    private void printUnitWorkingEmployees(Unit subUnit, ExecutionYear iExecutionYear, StringBuilder buffer) {
 
 	buffer.append("<ul class='unit3'>");
 	List<Contract> contractsByContractType = subUnit.getWorkingContracts();
@@ -402,7 +401,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	buffer.append("</ul>");
     }
 
-    private void getSubUnitsWithoutAggregatedUnitsToFunctionList(StringBuffer buffer, ExecutionYear iExecutionYear,
+    private void getSubUnitsWithoutAggregatedUnitsToFunctionList(StringBuilder buffer, ExecutionYear iExecutionYear,
 	    YearMonthDay currentDate, Unit subUnit) {
 	List<Unit> validInstitutionSubUnits = null;
 	if (subUnit.isAggregateUnit()) {
@@ -417,14 +416,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
     }
 
-    private void getPersonFunctionsList(Unit unit, Function function, StringBuffer buffer, ExecutionYear iExecutionYear) {
+    private void getPersonFunctionsList(Unit unit, Function function, StringBuilder buffer, ExecutionYear iExecutionYear) {
 	addPersonFunctions(function, buffer, iExecutionYear);
 	if (function.getParentInherentFunction() != null) {
 	    addPersonFunctions(function.getParentInherentFunction(), buffer, iExecutionYear);
 	}
     }
 
-    private void addPersonFunctions(Function function, StringBuffer buffer, ExecutionYear iExecutionYear) {
+    private void addPersonFunctions(Function function, StringBuilder buffer, ExecutionYear iExecutionYear) {
 	Collection<PersonFunction> validPersonFunction = getValidPersonFunction(iExecutionYear, function);
 	if (!validPersonFunction.isEmpty()) {
 	    buffer.append("<ul class='unit1'>");
