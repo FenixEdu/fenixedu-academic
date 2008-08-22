@@ -125,6 +125,11 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     public boolean hasContextCourseGroup(final CourseGroup parent) {
 	return getContextCourseGroup() == parent;
     }
+    
+    @Override
+    public boolean hasCurricularRuleType(final CurricularRuleType ruleType) {
+        return getCurricularRuleType() == ruleType;
+    }
 
     public boolean isValid(ExecutionSemester executionSemester) {
 	return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd()

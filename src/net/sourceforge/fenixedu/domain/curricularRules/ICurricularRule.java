@@ -42,6 +42,8 @@ public interface ICurricularRule {
     public boolean appliesToCourseGroup(final CourseGroup courseGroup);
 
     public boolean hasContextCourseGroup();
+    
+    public boolean hasCurricularRuleType(final CurricularRuleType ruleType);
 
     public boolean isCompositeRule();
 

@@ -54,6 +54,11 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
     public boolean hasContextCourseGroup() {
 	return getContextCourseGroup() != null;
     }
+    
+    @Override
+    public boolean hasCurricularRuleType(CurricularRuleType ruleType) {
+        return getCurricularRuleType() == ruleType;
+    }
 
     public boolean isCompositeRule() {
 	return getCurricularRuleType() == null;
