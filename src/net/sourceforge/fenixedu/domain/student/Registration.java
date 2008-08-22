@@ -809,7 +809,9 @@ public class Registration extends Registration_Base {
     }
 
     final public Collection<Enrolment> getEnrolments(final ExecutionSemester executionSemester) {
-	return getStudentCurricularPlan(executionSemester.getExecutionYear()).getEnrolmentsByExecutionPeriod(executionSemester);
+	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionSemester.getExecutionYear());
+	return studentCurricularPlan != null ? studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester)
+		: Collections.EMPTY_LIST;
     }
 
     final public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
