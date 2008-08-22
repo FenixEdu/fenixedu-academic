@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.MarkType;
 
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 
@@ -52,35 +51,31 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
 
+    private static final Collator collator = Collator.getInstance();
+
     static final private Comparator<Degree> COMPARATOR_BY_NAME = new Comparator<Degree>() {
 	public int compare(final Degree o1, final Degree o2) {
-	    return Collator.getInstance().compare(o1.getName(), o2.getName());
+	    return collator.compare(o1.getName(), o2.getName());
 	}
     };
 
     static final public Comparator<Degree> COMPARATOR_BY_NAME_AND_ID = new Comparator<Degree>() {
 	public int compare(final Degree o1, final Degree o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(Degree.COMPARATOR_BY_NAME);
-	    comparatorChain.addComparator(Degree.COMPARATOR_BY_ID);
-
-	    return comparatorChain.compare(o1, o2);
+	    final int nameResult = COMPARATOR_BY_NAME.compare(o1, o2);
+	    return nameResult == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : nameResult;
 	}
     };
 
     static final private Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE = new Comparator<Degree>() {
 	public int compare(final Degree o1, final Degree o2) {
-	    return Collator.getInstance().compare(o1.getDegreeType().getLocalizedName(), o2.getDegreeType().getLocalizedName());
+	    return collator.compare(o1.getDegreeType().getLocalizedName(), o2.getDegreeType().getLocalizedName());
 	}
     };
 
     static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID = new Comparator<Degree>() {
 	public int compare(final Degree o1, final Degree o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(Degree.COMPARATOR_BY_DEGREE_TYPE);
-	    comparatorChain.addComparator(Degree.COMPARATOR_BY_NAME_AND_ID);
-
-	    return comparatorChain.compare(o1, o2);
+	    final int typeResult = COMPARATOR_BY_DEGREE_TYPE.compare(o1, o2);
+	    return typeResult == 0 ? COMPARATOR_BY_NAME_AND_ID.compare(o1, o2) : typeResult;
 	}
     };
 
@@ -758,21 +753,19 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public DegreeInfo getMostRecentDegreeInfo(ExecutionYear executionYear) {
-	DegreeInfo result = executionYear.getDegreeInfo(this);
-
-	if (result != null) {
-	    return result;
-	}
-
-	for (; executionYear != null; executionYear = executionYear.getPreviousExecutionYear()) {
-	    result = executionYear.getDegreeInfo(this);
-
-	    if (result != null) {
-		return result;
+	DegreeInfo result = null;
+	for (final DegreeInfo degreeInfo : getDegreeInfosSet()) {
+	    final ExecutionYear executionYear2 = degreeInfo.getExecutionYear();
+	    if (executionYear == executionYear2) {
+		return degreeInfo;
+	    }
+	    if (executionYear2.isBefore(executionYear)) {
+		if (result == null || executionYear2.isAfter(result.getExecutionYear())) {
+		    result = degreeInfo;
+		}
 	    }
 	}
-
-	return null;
+	return result;
     }
 
     public DegreeInfo createCurrentDegreeInfo(ExecutionYear executionYear) {
