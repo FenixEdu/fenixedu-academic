@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestRewriteFilter.RequestRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter.RequestRewriter;
 
 public class ContentInjectionRewriter extends RequestRewriter {
 

@@ -50,6 +50,9 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 		dbUsername = getProperty("db.user");
 		dbPassword = getProperty("db.pass");
 		appName = getProperty("app.name");
+		appContext = getProperty("app.context");
+		filterRequestWithDigest = getBooleanProperty("filter.request.with.digest");
+		tamperingRedirect = getProperty("login.page");
 		errorIfChangingDeletedObject = getBooleanProperty("error.if.changing.deleted.object");
 		defaultLanguage = getProperty("language");
 		defaultLocation = getProperty("location");
