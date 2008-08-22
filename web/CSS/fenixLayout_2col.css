@@ -1,0 +1,8 @@
+@import url("layout.css") screen;
+@import url("general.css") screen;
+@import url("color.css") screen;
+@import url("calendar.css") screen;
+@import url("inquiries_style.css") screen;
+@import url("dotist_calendars.css") screen, print;
+@import url("print.css") print;
+@import url("dotist_timetables.css");
