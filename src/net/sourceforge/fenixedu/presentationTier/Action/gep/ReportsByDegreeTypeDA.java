@@ -615,7 +615,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(curricularCourse.getName());
 	setDegreeColumns(row, degree);
 	row.setCell(enrolment.getGradeValue());
-	row.setCell(enrolment.getEctsCredits());
+	row.setCell(enrolment.getEctsCredits().toString().replace('.', ','));
 	row.setCell(enrolment.getEnrollmentState().getDescription());
 	row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
 	row.setCell(registration.getRegistrationAgreement().getName());
