@@ -1189,7 +1189,8 @@ public class Student extends Student_Base {
 		final Set<CurricularCourse> inquiriesCurricularCourses = new HashSet<CurricularCourse>();
 		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistriesSet()) {
 		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-			if (inquiriesRegistry.getState() == InquiriesRegistryState.ANSWER_LATER) {
+			if (inquiriesRegistry.getState() == InquiriesRegistryState.ANSWER_LATER
+				&& inquiriesRegistry.getExecutionCourse().getAvailableForInquiries()) {
 			    return true;
 			} else {
 			    inquiriesCurricularCourses.add(inquiriesRegistry.getCurricularCourse());
