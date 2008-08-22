@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.library.theses;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisLibraryOperation;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.springframework.beans.propertyeditors.URLEditor;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -30,7 +32,7 @@ public class ValidateThesisDA extends ThesisLibraryDA {
 	String state = null;
 	String year = null;
 	if (request.getParameter("text") != null) {
-	    text = (String) request.getParameter("text");
+	    text = (String) URLEncoder.encode(request.getParameter("text"));
 	}
 	if (request.getParameter("state") != null) {
 	    state = (String) request.getParameter("state");
