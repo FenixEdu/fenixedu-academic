@@ -27,6 +27,9 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 	    final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
 
 	super();
+
+	// TODO: check if already has this rule in toApplyRule
+
 	init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.ANY_CURRICULAR_COURSE);
 
 	checkYears(minimumYear, maximumYear);

@@ -380,7 +380,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    if (isEncodeGroupRules()) {
 		result.append(" <span title=\"");
-		result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
+		result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
 		result.append(" \"> c(");
 		result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
 		result.append(")</span>");
@@ -396,14 +396,14 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		    result.append(")</span>,");
 		}
 		result.append(" <span title=\"");
-		result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
+		result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
 		result.append(" \"> c(");
 		result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
 		result.append(")</span>");
 
 		if (creditsLimit != null) {
 		    result.append(", <span title=\"");
-		    result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
+		    result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
 		    result.append(" \">M(");
 		    result.append(creditsLimit.getMaximumCredits());
 		    result.append(")</span>");
