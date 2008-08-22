@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisLibraryOperation;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.springframework.beans.propertyeditors.URLEditor;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
