@@ -118,3 +118,14 @@ a.button {
 .oldbrowser {
 	display: none;
 }
+
+
+.pub-mark {
+background: #faf5ca;
+color: #000;
+}
+h3 {
+font-size: 1.2em;
+padding: 0 0 0 20px;
+margin: 1em 0;
+}

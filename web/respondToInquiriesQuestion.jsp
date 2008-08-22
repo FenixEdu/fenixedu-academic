@@ -60,15 +60,6 @@
 				</table>
 			</div>
 
-			<br />
-			<div>
-				<center>
-					<p>
-						<bean:message key="message.footer.help" bundle="GLOBAL_RESOURCES" />:
-						<bean:message key="institution.email.support" bundle="GLOBAL_RESOURCES" />
-					</p>
-				</center>
-			</div>
 		</div>
 	</body>
 </html:html>
