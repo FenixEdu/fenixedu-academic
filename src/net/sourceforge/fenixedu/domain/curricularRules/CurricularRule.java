@@ -86,11 +86,11 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     public boolean appliesToContext(final Context context) {
-	return context == null || this.appliesToCourseGroup(context.getParentCourseGroup());
+	return context == null || appliesToCourseGroup(context.getParentCourseGroup());
     }
 
     public boolean appliesToCourseGroup(final CourseGroup courseGroup) {
-	return (this.getContextCourseGroup() == null || this.getContextCourseGroup() == courseGroup);
+	return (!hasContextCourseGroup() || getContextCourseGroup() == courseGroup);
     }
 
     public boolean isCompositeRule() {
@@ -98,7 +98,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     protected boolean belongsToCompositeRule() {
-	return (getParentCompositeRule() != null);
+	return hasParentCompositeRule();
     }
 
     @Override
@@ -120,6 +120,10 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     @Override
     public CourseGroup getContextCourseGroup() {
 	return belongsToCompositeRule() ? getParentCompositeRule().getContextCourseGroup() : super.getContextCourseGroup();
+    }
+
+    public boolean hasContextCourseGroup(final CourseGroup parent) {
+	return getContextCourseGroup() == parent;
     }
 
     public boolean isValid(ExecutionSemester executionSemester) {
@@ -181,7 +185,4 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	}
     }
 
-    public boolean hasContextCourseGroup(final CourseGroup parent) {
-	return getContextCourseGroup() == parent;
-    }
 }
