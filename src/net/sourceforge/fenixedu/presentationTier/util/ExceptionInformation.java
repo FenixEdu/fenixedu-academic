@@ -102,7 +102,7 @@ public class ExceptionInformation {
 	IUserView userView = UserView.getUser();
 	if (userView != null) {
 	    exceptionInfo.append(userView.getUtilizador()).append("\n");
-	    requestBean = SupportRequestBean.GenerateExceptionBean(userView.getPerson());
+	    requestBean = SupportRequestBean.generateExceptionBean(userView.getPerson());
 	    if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
 		requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
 			.getSelectedTopLevelContainer());

@@ -22,11 +22,11 @@ public class SupportRequestBean implements Serializable {
     public SupportRequestBean() {
     }
 
-    public static SupportRequestBean GenerateExceptionBean(Person person) {
-	SupportRequestBean bean = new SupportRequestBean();
+    public static SupportRequestBean generateExceptionBean(final Person person) {
+	final SupportRequestBean bean = new SupportRequestBean();
 	bean.setRequestType(SupportRequestType.EXCEPTION);
 	bean.setRequestPriority(SupportRequestPriority.EXCEPTION);
-	bean.setResponseEmail(person.getInstitutionalOrDefaultEmailAddressValue());
+	bean.setResponseEmail(person != null ? person.getInstitutionalOrDefaultEmailAddressValue() : "");
 	return bean;
     }
 

@@ -30,7 +30,7 @@ public class UncaughtExceptionFilter implements Filter {
 
 	    if (request.getAttribute("requestBean") == null) {
 
-		SupportRequestBean requestBean = SupportRequestBean.GenerateExceptionBean(AccessControl.getPerson());
+		SupportRequestBean requestBean = SupportRequestBean.generateExceptionBean(AccessControl.getPerson());
 
 		if (AbstractFunctionalityContext.getCurrentContext((HttpServletRequest) request) != null) {
 		    requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext((HttpServletRequest) request)
