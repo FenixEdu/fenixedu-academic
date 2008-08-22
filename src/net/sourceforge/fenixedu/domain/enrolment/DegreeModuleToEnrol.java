@@ -115,7 +115,7 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     }
 
     public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester) {
-	return getDegreeModule().getCurricularRules(executionSemester);
+	return getDegreeModule().getCurricularRules(getContext(), executionSemester);
     }
 
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionSemester executionSemester) {

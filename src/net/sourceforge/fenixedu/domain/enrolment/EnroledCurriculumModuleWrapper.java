@@ -77,6 +77,10 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 	return getCurriculumModule().getDegreeModule();
     }
 
+    public boolean hasDegreeModule() {
+	return getDegreeModule() != null;
+    }
+
     public boolean isLeaf() {
 	if (!getCurriculumModule().isLeaf()) {
 	    return false;
@@ -126,7 +130,7 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
     }
 
     public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
-	return getDegreeModule() != null ? getDegreeModule().getCurricularRules(executionSemester) : Collections.EMPTY_LIST;
+	return hasDegreeModule() ? getDegreeModule().getCurricularRules(getContext(), executionSemester) : Collections.EMPTY_LIST;
     }
 
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {

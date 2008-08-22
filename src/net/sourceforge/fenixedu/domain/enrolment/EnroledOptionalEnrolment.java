@@ -42,9 +42,8 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
     @Override
     public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
 	final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) getCurriculumModule();
-
 	return optionalEnrolment.isApproved() ? Collections.EMPTY_LIST : getOptionalCurricularCourse().getCurricularRules(
-		executionSemester);
+		getContext(), executionSemester);
     }
 
     public Context getContext() {
