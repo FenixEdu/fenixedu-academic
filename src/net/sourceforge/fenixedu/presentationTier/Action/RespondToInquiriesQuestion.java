@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 
@@ -15,7 +15,10 @@ public class RespondToInquiriesQuestion extends FenixDispatchAction {
 
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("executionPeriod", ExecutionSemester.readActualExecutionSemester());
+
+	final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod();
+	request.setAttribute("executionPeriod", lastPeriod == null ? null : lastPeriod.getExecutionPeriod());
+
 	return mapping.findForward("respondToInquiriesQuestion");
     }
 
