@@ -549,6 +549,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 				leaveBeanList.add(new LeaveBean(leave));
 			    } else {
 				leaveBeanList.add(leaveBean);
+				leaveBean=null;
 			    }
 			}
 		    } else {
@@ -556,6 +557,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 			    leaveBeanList.add(new LeaveBean(leave));
 			} else {
 			    leaveBeanList.add(leaveBean);
+			    leaveBean=null;
 			}
 		    }
 		    leaves.remove(leave);
