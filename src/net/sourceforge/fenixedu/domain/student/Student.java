@@ -712,6 +712,11 @@ public class Student extends Student_Base {
 	return isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester.readActualExecutionSemester());
     }
 
+    public boolean isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() {
+	final InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod();
+	return openPeriod == null ? false : isWeeklySpentHoursSubmittedForPeriod(openPeriod.getExecutionPeriod());
+    }
+    
     public boolean isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester executionSemester) {
 	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : getInquiriesStudentExecutionPeriodsSet()) {
 	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod() == executionSemester) {
@@ -724,6 +729,11 @@ public class Student extends Student_Base {
     public InquiriesStudentExecutionPeriod getCurrentInquiriesStudentExecutionPeriod() {
 	return getInquiriesStudentExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
     }
+    
+    public InquiriesStudentExecutionPeriod getOpenInquiriesStudentExecutionPeriod() {
+	final InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod();
+	return openPeriod == null ? null : getInquiriesStudentExecutionPeriod(openPeriod.getExecutionPeriod());
+    }    
 
     public InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod(ExecutionSemester executionSemester) {
 	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : getInquiriesStudentExecutionPeriodsSet()) {
@@ -1165,6 +1175,35 @@ public class Student extends Student_Base {
 		    if (!coursesToAnswer.containsKey(executionCourse)) {
 			coursesToAnswer.put(executionCourse, new InquiriesRegistry(executionCourse, enrolment
 				.getCurricularCourse(), executionSemester, registration));
+		    }
+		}
+	    }
+	}
+	return coursesToAnswer.values();
+    }
+    
+    public Collection<String> getInquiriesCoursesNamesToRespond(ExecutionSemester executionSemester) {
+	final Map<ExecutionCourse, String> coursesToAnswer = new HashMap<ExecutionCourse, String>();
+
+	for (Registration registration : getRegistrations()) {
+
+	    if (!registration.isAvailableDegreeTypeForInquiries()) {
+		continue;
+	    }
+
+	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	    if (studentCurricularPlan != null) {
+		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
+		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+			coursesToAnswer.put(inquiriesRegistry.getExecutionCourse(), inquiriesRegistry.getCurricularCourse()
+				.getName());
+		    }
+		}
+
+		for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+		    if (!coursesToAnswer.containsKey(executionCourse)) {
+			coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
 		    }
 		}
 	    }
