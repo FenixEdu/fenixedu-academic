@@ -348,6 +348,20 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return attendsList;
     }
 
+    public List<Enrolment> getEnrolmentsWithAttendsByDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
+	final List<Enrolment> enrolmentsList = new ArrayList<Enrolment>();
+	for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
+	    for (final Attends attends : executionCourse.getAttendsSet()) {
+		if (attends.hasEnrolment()
+			&& attends.getEnrolment().getDegreeCurricularPlanOfStudent().equals(degreeCurricularPlan)) {
+		    enrolmentsList.add(attends.getEnrolment());
+		}
+	    }
+	}
+	return enrolmentsList;
+    }    
+    
+
     public void checkValidCreditsPeriod(RoleType roleType) {
 	if (roleType != RoleType.SCIENTIFIC_COUNCIL) {
 
