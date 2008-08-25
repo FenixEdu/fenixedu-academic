@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction;
 
-import org.apache.commons.validator.EmailValidator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -18,7 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/exceptionHandlingAction", module = "student")
@@ -45,42 +43,14 @@ public class StudentEnrolmentSupportHelpDA extends ExceptionHandlingAction {
     }
 
     @Override
-    protected ActionForward sendSupportEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, SupportRequestBean requestBean) throws Exception {
-
-	final StringBuilder builder = new StringBuilder();
-	builder.setLength(0);
-
-	final String mailSubject = generateEmailSubject(request, requestBean, getLoggedPerson(request), builder);
-	final String mailBody = generateEmailBody(request, requestBean, getLoggedPerson(request), builder);
-
-	try {
-	    executeService("CreateSupportRequest", getLoggedPerson(request), requestBean);
-	} catch (DomainException e) {
-	    // a mail must be always sent, no need to give error feedback
-	}
-
-	try {
-	    sendMail(request, requestBean, mailSubject, mailBody);
-	} catch (Throwable t) {
-	    t.printStackTrace();
-	    throw new Error(t);
-	}
-
-	sessionRemover(request);
+    protected ActionForward getActionForward(ActionMapping mapping) {
 	return mapping.findForward("showErrorPage");
     }
 
     @Override
-    protected void sendMail(HttpServletRequest request, SupportRequestBean requestBean, String mailSubject, String mailBody) {
-	final EMail email = new EMail(!request.getServerName().equals("localhost") ? "mail.adm" : "mail.rnl.ist.utl.pt",
-		isEmailValid(requestBean) ? requestBean.getResponseEmail() : "erro@dot.ist.utl.pt");
+    protected String getSendToEmailAddress(HttpServletRequest request, SupportRequestBean requestBean) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
-	email.send(bundle.getString("support.enrolments.mail"), mailSubject, mailBody);
-    }
-
-    private boolean isEmailValid(final SupportRequestBean requestBean) {
-	return EmailValidator.getInstance().isValid(requestBean.getResponseEmail());
+	return bundle.getString("support.enrolments.mail");
     }
 
 }

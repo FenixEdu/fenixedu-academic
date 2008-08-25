@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
@@ -124,7 +125,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
 	request.setAttribute("exceptionInfo", request.getParameter("exceptionInfo"));
 	request.setAttribute("requestBean", getRenderedObject("requestBean"));
-	
+
 	return mapping.findForward("supportHelpInquiry");
     }
 
@@ -150,7 +151,6 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    HttpServletResponse response, SupportRequestBean requestBean) throws Exception {
 
 	StringBuilder builder = new StringBuilder();
-
 	String mailSubject = generateEmailSubject(request, requestBean, getLoggedPerson(request), builder);
 	builder.setLength(0);
 	String mailBody = generateEmailBody(request, requestBean, getLoggedPerson(request), builder);
@@ -172,7 +172,10 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	}
 
 	sessionRemover(request);
+	return getActionForward(mapping);
+    }
 
+    protected ActionForward getActionForward(ActionMapping mapping) {
 	final ActionForward actionForward = new ActionForward();
 	actionForward.setContextRelative(false);
 	actionForward.setRedirect(true);
@@ -182,10 +185,28 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
     protected void sendMail(HttpServletRequest request, SupportRequestBean requestBean, String mailSubject, String mailBody) {
 	final EMail email = new EMail(!request.getServerName().equals("localhost") ? "mail.adm" : "mail.rnl.ist.utl.pt",
-		EmailValidator.getInstance().isValid(requestBean.getResponseEmail()) ? requestBean.getResponseEmail()
-			: "erro@dot.ist.utl.pt");
+		isEmailValid(requestBean) ? requestBean.getResponseEmail() : "erro@dot.ist.utl.pt");
+	
+	email.send(getSendToEmailAddress(request, requestBean), mailSubject, mailBody);
+    }
+
+    protected boolean isEmailValid(final SupportRequestBean requestBean) {
+	return EmailValidator.getInstance().isValid(requestBean.getResponseEmail());
+    }
+
+    protected String getSendToEmailAddress(HttpServletRequest request, SupportRequestBean requestBean) {
+
+	// FIXME urgent request: refactor
 	final ResourceBundle gBundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
-	email.send(gBundle.getString("suporte.mail"), mailSubject, mailBody);
+	Person person = getLoggedPerson(request);
+	if (person == null) {
+	    return gBundle.getString("suporte.mail");
+	} else if (person.hasRole(RoleType.TEACHER)) {
+	    return gBundle.getString("suporte.mail.teachers");
+	} else if (person.hasRole(RoleType.STUDENT)) {
+	    return gBundle.getString("suporte.mail.students");
+	}
+	return gBundle.getString("suporte.mail");
     }
 
     protected String generateEmailSubject(HttpServletRequest request, SupportRequestBean requestBean, Person loggedPerson,
