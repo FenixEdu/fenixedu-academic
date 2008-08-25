@@ -11,6 +11,15 @@
 		final String contextPath = request.getContextPath();
 	%>
 	<link rel="shortcut icon" href="<%= contextPath %>/images/favicon.ico" type="image/ico"/>
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/layout.css"  media="screen"  />
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/general.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/color.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/calendar.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/dotist_timetables.css" />
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/dotist_calendars.css" media="screen, print" />
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/inquiries_style.css" media="screen" />
+
 	<link rel="stylesheet" href="<%= contextPath %>/CSS/fenixLayout_2col.css"/>
 
 	<%-- 
