@@ -20,8 +20,6 @@
     <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/dotist_calendars.css" media="screen, print" />
     <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/inquiries_style.css" media="screen" />
 
-	<link rel="stylesheet" href="<%= contextPath %>/CSS/fenixLayout_2col.css"/>
-
 	<%-- 
 	     Instead of importing javascript inline in html, import it with java script. This will reduce server
 	     side overhead processing, and will reduce data transmitted through the network for clients that
