@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
@@ -124,8 +126,6 @@ public class UICurricularCourse extends UIDegreeModule {
 	writer.endElement("td");
     }
 
-    private static final String CODE_NAME_SEPARATOR = " - ";
-
     private void encodeNonBolonhaLinkHref() throws IOException {
 
 	final StringBuilder href = new StringBuilder();
@@ -183,7 +183,9 @@ public class UICurricularCourse extends UIDegreeModule {
 	    writer.writeAttribute("style", "color: #888", null);
 	    writer.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym")).append("-");
 	    writer.endElement("span");
-	    writer.append(this.curricularCourse.getContactLoad(curricularPeriod, executionYear).toString()).append(" ");
+	    final BigDecimal contactLoad = new BigDecimal(this.curricularCourse.getContactLoad(curricularPeriod, executionYear))
+		    .setScale(2, RoundingMode.HALF_EVEN);
+	    writer.append(contactLoad.toPlainString()).append(" ");
 
 	    writer.startElement("span", this);
 	    writer.writeAttribute("style", "color: #888", null);
@@ -253,9 +255,10 @@ public class UICurricularCourse extends UIDegreeModule {
 	    writer.writeAttribute("style", "color: #888", null);
 	    writer.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym")).append("-");
 	    writer.endElement("span");
-	    writer.append(
-		    this.curricularCourse.getCompetenceCourse().getContactLoad(
-			    previousContext.getCurricularPeriod().getChildOrder() + 1, executionYear).toString()).append(" ");
+	    final BigDecimal contactLoad = new BigDecimal(this.curricularCourse.getCompetenceCourse().getContactLoad(
+		    previousContext.getCurricularPeriod().getChildOrder() + 1, executionYear))
+		    .setScale(2, RoundingMode.HALF_EVEN);
+	    writer.append(contactLoad.toString()).append(" ");
 
 	    writer.startElement("span", this);
 	    writer.writeAttribute("style", "color: #888", null);
