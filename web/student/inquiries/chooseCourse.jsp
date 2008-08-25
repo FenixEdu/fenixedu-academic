@@ -64,12 +64,12 @@
 		<html:hidden property="method" value="submitWeeklySpentHours"/>
 
 		<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: 
-		<fr:create id="weeklySpentHours" schema="inquiriesStudentExecutionPeriod.submitWeeklySpentHours" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" >
+		<fr:edit id="weeklySpentHours" name="weeklySpentHours" schema="inquiriesStudentExecutionPeriod.submitWeeklySpentHours" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" >
 			<fr:layout name="flow">
 				<fr:property name="labelExcluded" value="true"/>
 				<fr:property name="validatorClasses" value="error0"/>
-			</fr:layout>			
-		</fr:create>
+			</fr:layout>
+		</fr:edit>			
 		 <bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
 
 		<fr:edit id="hoursAndDaysByCourse" name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit" >
