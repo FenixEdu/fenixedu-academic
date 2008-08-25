@@ -1055,6 +1055,10 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Double getEctsCredits(final ExecutionSemester executionSemester) {
 	return getEctsCredits((CurricularPeriod) null, executionSemester);
     }
+    
+    public Double getEctsCredits(final ExecutionYear executionYear) {
+	return getEctsCredits((CurricularPeriod) null, executionYear);
+    }
 
     public Double getEctsCredits(final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
 	return getEctsCredits(curricularPeriod, executionYear == null ? null : executionYear.getLastExecutionPeriod());
