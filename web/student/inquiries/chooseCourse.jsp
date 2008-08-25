@@ -22,9 +22,9 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<c:if test="${student.weeklySpentHoursSubmittedForCurrentPeriod}">
+<c:if test="${student.weeklySpentHoursSubmittedForOpenInquiriesResponsePeriod}">
 
-	<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: <b><c:out value="${student.currentInquiriesStudentExecutionPeriod.weeklyHoursSpentInClassesSeason}" /></b> <bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
+	<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: <b><c:out value="${student.openInquiriesStudentExecutionPeriod.weeklyHoursSpentInClassesSeason}" /></b> <bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
 
 	<fr:view name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays" >
 		<fr:layout name="tabular" >
@@ -59,7 +59,7 @@
 
 </c:if>
 
-<c:if test="${!student.weeklySpentHoursSubmittedForCurrentPeriod}">
+<c:if test="${!student.weeklySpentHoursSubmittedForOpenInquiriesResponsePeriod}">
 	<fr:form action="/studentInquiry.do">
 		<html:hidden property="method" value="submitWeeklySpentHours"/>
 
