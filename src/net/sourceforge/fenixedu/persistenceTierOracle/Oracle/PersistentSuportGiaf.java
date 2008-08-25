@@ -10,19 +10,9 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentOpeningProjectFileReport;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProject;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProjectUser;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentRubric;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSummaryReport;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 
-public class PersistentSuportOracle implements IPersistentSuportOracle {
-
-    private static PersistentSuportOracle instance = null;
+public class PersistentSuportGiaf {
+    private static PersistentSuportGiaf instance = null;
 
     private static String databaseUrl = null;
 
@@ -45,15 +35,14 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     private static ConnectionProperties connectionProperties;
 
-    public PersistentSuportOracle(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
+    public PersistentSuportGiaf(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
 	super();
 	connectionProperties = new ConnectionProperties(userNamePropertyName, userPassPropertyName, urlPropertyName);
     }
 
-    public static synchronized PersistentSuportOracle getProjectDBInstance() {
+    public static synchronized PersistentSuportGiaf getInstance() {
 	if (instance == null) {
-	    instance = new PersistentSuportOracle("db.projectManagement.user", "db.projectManagement.pass",
-		    "db.projectManagement.alias");
+	    instance = new PersistentSuportGiaf("db.giaf.user", "db.giaf.pass", "db.giaf.alias");
 	}
 	return instance;
     }
@@ -99,7 +88,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 	    connection.setAutoCommit(false);
 	    connectionsMap.put(Thread.currentThread(), connection);
 	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia(e);
+	    throw new ExcepcaoPersistencia("", e);
 	}
     }
 
@@ -137,6 +126,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 	try {
 	    sql = thisConnection.prepareStatement(statement);
 	} catch (java.sql.SQLException e) {
+	    throw new ExcepcaoPersistencia(e);
 	}
 	return sql;
     }
@@ -144,7 +134,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
     public synchronized CallableStatement prepareCall(String statement) throws ExcepcaoPersistencia {
 	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
 	if (thisConnection == null) {
-
 	    try {
 		openConnection();
 		thisConnection = DriverManager.getConnection(databaseUrl);
@@ -163,63 +152,4 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 	return sql;
     }
 
-    public IPersistentProject getIPersistentProject() {
-	return new PersistentProject();
-    }
-
-    public IPersistentProjectUser getIPersistentProjectUser() {
-	return new PersistentProjectUser();
-    }
-
-    public IPersistentRubric getIPersistentRubric() {
-	return new PersistentRubric();
-    }
-
-    public IPersistentExpensesReport getIPersistentExpensesReport() {
-	return new PersistentExpensesReport();
-    }
-
-    public IPersistentReport getIPersistentRevenueReport() {
-	return new PersistentRevenueReport();
-    }
-
-    public IPersistentSummaryReport getIPersistentSummaryReport() {
-	return new PersistentSummaryReport();
-    }
-
-    public IPersistentExpensesResume getIPersistentExpensesResume() {
-	return new PersistentExpensesResume();
-    }
-
-    public IPersistentReport getIPersistentMovementReport() {
-	return new PersistentMovementReport();
-    }
-
-    public IPersistentExpensesReport getIPersistentCompleteExpensesReport() {
-	return new PersistentCompleteExpensesReport();
-    }
-
-    public IPersistentOpeningProjectFileReport getIPersistentOpeningProjectFileReport() {
-	return new PersistentOpeningProjectFileReport();
-    }
-
-    public IPersistentReport getIPersistentProjectMemberBudget() {
-	return new PersistentProjectMemberBudget();
-    }
-
-    public IPersistentReport getIPersistentProjectBudgetaryBalanceReport() {
-	return new PersistentProjectBudgetaryBalanceReport();
-    }
-
-    public IPersistentReport getIPersistentGeneratedOverheadsReport() {
-	return new PersistentGeneratedOverheadsReport();
-    }
-
-    public IPersistentReport getIPersistentTransferedOverheadsReport() {
-	return new PersistentTransferedOverheadsReport();
-    }
-
-    public IPersistentReport getIPersistentOverheadsSummaryReport() {
-	return new PersistentOverheadsSummaryReport();
-    }
 }

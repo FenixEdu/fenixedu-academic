@@ -26,7 +26,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class GiafInterface {
 
     public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
-	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
+	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
 	try {
 	    CallableStatement callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
 	    callableStatement.registerOutParameter(1, Types.DOUBLE);
@@ -50,7 +50,7 @@ public class GiafInterface {
     public BigDecimal getEmployeeSalary(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
 	BigDecimal salary = new BigDecimal(0.0);
 	DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MM-yyyy");
-	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
+	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
 	try {
 	    StringBuilder stringBuilder = new StringBuilder();
 	    stringBuilder
@@ -77,7 +77,7 @@ public class GiafInterface {
     }
 
     public void updateExtraWorkRequest(ExtraWorkRequest extraWorkRequest) throws ExcepcaoPersistencia {
-	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
+	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
 	try {
 	    PreparedStatement stmt = persistentSuportOracle.prepareStatement("SELECT ano, mes FROM sltinfdivs");
 	    ResultSet rs = stmt.executeQuery();
@@ -150,7 +150,7 @@ public class GiafInterface {
     }
 
     public double getTotalMonthAmount(Partial closedYearMonth) throws ExcepcaoPersistencia {
-	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
+	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
 	try {
 	    PreparedStatement stmt = persistentSuportOracle.prepareStatement("SELECT ano, mes FROM sltinfdivs");
 	    ResultSet rs = stmt.executeQuery();
@@ -204,7 +204,7 @@ public class GiafInterface {
     }
 
     public void exportToGIAF(String file) throws SQLException, ExcepcaoPersistencia {
-	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
+	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
 	persistentSuportOracle.startTransaction();
 	String[] lineTokens = file.split("\n");
 	for (int line = 0; line < lineTokens.length; line++) {
