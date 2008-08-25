@@ -5,20 +5,15 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithAttendsAndInquiriesRegistries;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -26,58 +21,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod extends Service {
 
-    public List<InfoStudentWithAttendsAndInquiriesRegistries> run(final Integer degreeCurricularPlanId,
-	    final Integer executionPeriodId, final Boolean onlyAttendsWithTeachers) throws FenixServiceException {
+    public Set<Student> run(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester)
+	    throws FenixServiceException {
 
-	if (degreeCurricularPlanId == null) {
+	if (degreeCurricularPlan == null) {
 	    throw new FenixServiceException("nullDegreeCurricularPlanId");
 	}
-	if (executionPeriodId == null) {
+	if (executionSemester == null) {
 	    throw new FenixServiceException("nullExecutionPeriodId");
 	}
-	if (onlyAttendsWithTeachers == null) {
-	    throw new FenixServiceException("nullOnlyAttendsWithTeachers");
+
+	Set<Student> result = new HashSet<Student>();
+	for (final Enrolment enrolment : executionSemester.getEnrolmentsWithAttendsByDegreeCurricularPlan(degreeCurricularPlan)) {
+	    result.add(enrolment.getRegistration().getStudent());
 	}
+	return result;
 
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-
-	List<Attends> attendsList = executionSemester.getAttendsByDegreeCurricularPlan(degreeCurricularPlan);
-
-	// FIXME: It only concerns enrolled courses
-	List<InfoStudentWithAttendsAndInquiriesRegistries> res = new ArrayList<InfoStudentWithAttendsAndInquiriesRegistries>();
-	InfoStudentWithAttendsAndInquiriesRegistries currentStudent = null;
-	for (Attends attends : attendsList) {
-
-	    if ((!onlyAttendsWithTeachers)
-		    || ((!attends.getExecutionCourse().getProfessorships().isEmpty()) || (!attends.getExecutionCourse()
-			    .getNonAffiliatedTeachers().isEmpty()))) {
-
-		InfoFrequenta infoAttends = InfoFrequenta.newInfoFromDomain(attends);
-		if (!infoAttends.getAluno().equals(currentStudent)) {
-		    currentStudent = new InfoStudentWithAttendsAndInquiriesRegistries(attends.getRegistration());
-		    currentStudent.setAttends(new ArrayList<InfoFrequenta>());
-		    copyStudentInquiriesRegistries(currentStudent, attends.getRegistration());
-		    res.add(currentStudent);
-		}
-		currentStudent.getAttends().add(infoAttends);
-
-	    }
-
-	}
-
-	return res;
-    }
-
-    private void copyStudentInquiriesRegistries(InfoStudentWithAttendsAndInquiriesRegistries currentStudent, Registration aluno) {
-
-	List<InquiriesRegistry> inquiriesRegistries = aluno.getAssociatedInquiriesRegistries();
-	List<InfoInquiriesRegistry> infoRegistries = new ArrayList<InfoInquiriesRegistry>(inquiriesRegistries.size());
-
-	for (InquiriesRegistry reg : inquiriesRegistries) {
-	    infoRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(reg));
-	}
-	currentStudent.setInquiriesRegistries(infoRegistries);
     }
 
 }

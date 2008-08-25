@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,14 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithAttendsAndInquiriesRegistries;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailReminderReport;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
@@ -73,30 +74,33 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	final String fromName = form.getString("fromAddress");
 	final String fromAddress = form.getString("fromAddress");
 
-	// Obtaining the current execution period
-	// FIXME: THIS SHOULD BE PARAMETRIZABLE
-	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) executeService("ReadCurrentExecutionPeriod");
+	InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod();
+	if (openPeriod == null) {
+	    return null;
+	}
+	ExecutionSemester executionSemester = openPeriod.getExecutionPeriod();
+
 	List<InfoInquiriesEmailReminderReport> reportList = new ArrayList<InfoInquiriesEmailReminderReport>(
 		degreeCurricularPlanIds.length);
 
 	for (int i = 0; i < degreeCurricularPlanIds.length; i++) {
 
-	    Object[] argsDegreeCPId = { degreeCurricularPlanIds[i] };
-	    InfoExecutionDegree infoExecutionDegreeStudent = (InfoExecutionDegree) ServiceUtils.executeService(
-		    "ReadActiveExecutionDegreebyDegreeCurricularPlanID", argsDegreeCPId);
+	    final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
+		    .readDegreeCurricularPlanByOID(degreeCurricularPlanIds[i]);
 
-	    Object[] argsDegreeCurriculapPlanIdAndExecutionPeriod = { degreeCurricularPlanIds[i],
-		    currentExecutionPeriod.getIdInternal(), Boolean.TRUE };
-	    List<InfoStudentWithAttendsAndInquiriesRegistries> studentsList = (List<InfoStudentWithAttendsAndInquiriesRegistries>) ServiceUtils
-		    .executeService("student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod",
-			    argsDegreeCurriculapPlanIdAndExecutionPeriod);
+	    Set<Student> studentsList = (Set<Student>) executeService(
+		    "student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod", degreeCurricularPlan,
+		    executionSemester);
 
 	    InfoInquiriesEmailReminderReport report = new InfoInquiriesEmailReminderReport();
-	    report.setExecutionDegree(infoExecutionDegreeStudent);
+
+	    final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester
+		    .getExecutionYear());
+	    report.setExecutionDegree(InfoExecutionDegree.newInfoFromDomain(executionDegree));
 	    report.setNumberDegreeStudents(studentsList.size());
 
-	    for (InfoStudentWithAttendsAndInquiriesRegistries student : studentsList) {
-		sendEmailReminder(request, student, currentExecutionPeriod, report, form, fromName, fromAddress);
+	    for (Student student : studentsList) {
+		sendEmailReminder(request, student, executionSemester, report, form, fromName, fromAddress);
 	    }
 
 	    reportList.add(report);
@@ -107,57 +111,43 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	return mapping.findForward("showReport");
     }
 
-    private boolean sendEmailReminder(HttpServletRequest request, InfoStudentWithAttendsAndInquiriesRegistries student,
-	    InfoExecutionPeriod currentExecutionPeriod, InfoInquiriesEmailReminderReport report, DynaActionForm form,
-	    String fromName, String fromAddress) throws FenixFilterException, FenixServiceException {
+    private boolean sendEmailReminder(HttpServletRequest request, Student student, ExecutionSemester executionSemester,
+	    InfoInquiriesEmailReminderReport report, DynaActionForm form, String fromName, String fromAddress)
+	    throws FenixFilterException, FenixServiceException {
 
-	String emailAddress = student.getInfoPerson().getEmail();
-
-	int numberUnansweredInquiries = 0;
-
-	String unevaluatedCoursesNames = "";
-	for (InfoFrequenta studentAttends : student.getAttends()) {
-	    InfoExecutionCourse attendingCourse = studentAttends.getDisciplinaExecucao();
-	    boolean evaluated = false;
-	    if (!attendingCourse.getAvailableForInquiries().booleanValue()) {
-		evaluated = true;
-	    } else {
-		for (InfoInquiriesRegistry studentRegistries : student.getInquiriesRegistries()) {
-		    if ((attendingCourse.equals(studentRegistries.getExecutionCourse()))
-			    && (currentExecutionPeriod.equals(studentRegistries.getExecutionPeriod()))) {
-
-			evaluated = true;
-			break;
-		    }
-		}
-	    }
-	    if (!evaluated) {
-		unevaluatedCoursesNames += "\t* " + attendingCourse.getNome() + "\n";
-		numberUnansweredInquiries++;
-	    }
-	}
-
-	report.addNumberInquiries(student.getAttends().size());
-	report.addUnansweredInquiries(numberUnansweredInquiries);
-
+	String emailAddress = student.getPerson().getDefaultEmailAddress().getValue();
 	if (!EmailSender.emailAddressFormatIsValid(emailAddress)) {
 	    return false;
 	}
-	report.addStudentsWithEmail(1);
 
-	if (numberUnansweredInquiries == 0)
+	final Collection<String> inquiriesCoursesNamesToRespond = student.getInquiriesCoursesNamesToRespond(executionSemester);
+	if (inquiriesCoursesNamesToRespond.isEmpty()) {
 	    return false;
+	}
 
-	String bodyIntro = (String) form.get("bodyTextIntro");
-	String bodyEnd = (String) form.get("bodyTextEnd");
-	String body = bodyIntro + "\n" + unevaluatedCoursesNames + "\n" + bodyEnd;
+	StringBuilder body = new StringBuilder();
+	body.append(form.get("bodyTextIntro"));
+	body.append("\n");
+
+	for (String courseName : inquiriesCoursesNamesToRespond) {
+	    body.append("\t*");
+	    body.append(courseName);
+	    body.append("\n");
+	}
+
+	body.append("\n");
+	body.append(form.get("bodyTextEnd"));
+
+	report.addNumberInquiries(inquiriesCoursesNamesToRespond.size());
+	report.addUnansweredInquiries(inquiriesCoursesNamesToRespond.size());
+	report.addStudentsWithEmail(1);
 
 	String subject = (String) form.get("bodyTextSubject");
 
 	final Collection<String> bccs = new ArrayList<String>(1);
 	bccs.add(emailAddress);
 
-	final Object[] args = { null, null, bccs, fromName, fromAddress, subject, body };
+	final Object[] args = { null, null, bccs, fromName, fromAddress, subject, body.toString() };
 	executeService(request, "commons.SendMail", args);
 
 	return false;

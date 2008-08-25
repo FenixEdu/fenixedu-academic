@@ -35,9 +35,9 @@
 				<th class="listClasses-header">
 					<bean:message key="table.header.number.students.with.email" bundle="INQUIRIES_RESOURCES"/>
 				</th>
-				<th class="listClasses-header">
-					<bean:message key="table.header.number.sent.emails" bundle="INQUIRIES_RESOURCES"/>
-				</th>
+<!--				<th class="listClasses-header">-->
+<!--					<bean:message key="table.header.number.sent.emails" bundle="INQUIRIES_RESOURCES"/>-->
+<!--				</th>-->
 				<th class="listClasses-header">
 					<bean:message key="table.header.number.unanswered.inquiries" bundle="INQUIRIES_RESOURCES"/>
 				</th>
@@ -63,15 +63,15 @@
 					<td class="listClasses">
 						<bean:write name="report" property="numberStudentsWithEmail"/>
 					</td>
-					<td class="listClasses">
-						<bean:write name="report" property="numberSentEmails"/>
-					</td>
+<!--					<td class="listClasses">-->
+<!--						<bean:write name="report" property="numberSentEmails"/>-->
+<!--					</td>-->
 					<td class="listClasses">
 						<bean:write name="report" property="numberUnansweredInquiries"/>
 						<%
-						Double percent = new Double((report.getNumberUnansweredInquiries().intValue()/report.getTotalNumberInquiries().doubleValue())*100);
+						//Double percent = new Double((report.getNumberUnansweredInquiries().intValue()/report.getTotalNumberInquiries().doubleValue())*100);
 
-						out.print("(" + InquiriesUtil.formatAnswer(NumberUtils.formatNumber(percent, 2)) + "%)");
+						//out.print("(" + InquiriesUtil.formatAnswer(NumberUtils.formatNumber(percent, 2)) + "%)");
 						%>
 					</td>
 				</tr>
@@ -93,14 +93,14 @@
 			<th class="listClasses-header">
 				<% out.print(totalNumberStudentsWithEmail); %>
 			</th>
-			<th class="listClasses-header">
-				<% out.print(totalNumberSentEmails); %>
-			</th>
+<!--			<th class="listClasses-header">-->
+<!--				<% out.print(totalNumberSentEmails); %>-->
+<!--			</th>-->
 			<th class="listClasses-header">
 				<% 
-				Double globalPercent = new Double((totalNumberUnansweredInquiries/globalTotalNumberInquiries)*100);
+				//Double globalPercent = new Double((totalNumberUnansweredInquiries/globalTotalNumberInquiries)*100);
 				
-				out.print(totalNumberUnansweredInquiries + " (" + InquiriesUtil.formatAnswer(NumberUtils.formatNumber(globalPercent, 2)) + "%)");
+				out.print(totalNumberUnansweredInquiries /*+ " (" + InquiriesUtil.formatAnswer(NumberUtils.formatNumber(globalPercent, 2)) + "%)"*/);
 				%>
 			</th>
 		</table>
