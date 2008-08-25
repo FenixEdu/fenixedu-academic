@@ -72,7 +72,7 @@ public class EnrolInAffinityCycle extends Service {
 			.getParentDegreeCurricularPlan(), candidacy, RegistrationAgreement.NORMAL, cycleCourseGroupToEnrol
 			.getCycleType());
 
-		newRegistration.setSourceRegistration(newRegistration);
+		newRegistration.setSourceRegistration(studentCurricularPlan.getRegistration());
 		newRegistration.getActiveState().setResponsiblePerson(null);
 		newRegistration.setIngression(Ingression.DA1C);
 
