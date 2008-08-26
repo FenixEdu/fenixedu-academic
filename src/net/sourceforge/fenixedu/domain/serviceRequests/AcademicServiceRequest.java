@@ -22,13 +22,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
@@ -238,6 +238,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public void conclude(final Employee employee) {
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee));
+    }
+
+    final public void conclude(final YearMonthDay situationDate, final String justification) {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, getEmployee(), situationDate,
+		justification));
     }
 
     final public void delivered() {

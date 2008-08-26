@@ -251,6 +251,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	((DynaActionForm) actionForm).set("sendEmailToStudent", Boolean.TRUE);
 
 	if (academicServiceRequest.isDocumentRequest()) {
+	    request.setAttribute("serviceRequestBean", new AcademicServiceRequestBean());
 	    return mapping.findForward("prepareConcludeDocumentRequest");
 	} else {
 	    return mapping.findForward("prepareConcludeServiceRequest");
@@ -264,7 +265,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final DynaActionForm form = (DynaActionForm) actionForm;
 
 	try {
-	    executeService("ConcludeAcademicServiceRequest", new Object[] { academicServiceRequest, getSendEmailToStudent(form) });
+	    executeService("ConcludeAcademicServiceRequest", new Object[] { academicServiceRequest, getSendEmailToStudent(form),
+		    getSituationDate(), getJustification() });
 	    addActionMessage(request, "academic.service.request.concluded.with.success");
 
 	    if (academicServiceRequest.isDocumentRequest()
@@ -283,6 +285,16 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
     private Boolean getSendEmailToStudent(final DynaActionForm form) {
 	return (Boolean) form.get("sendEmailToStudent");
+    }
+
+    private YearMonthDay getSituationDate() {
+	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
+	return requestBean == null ? null : requestBean.getSituationDate();
+    }
+
+    private String getJustification() {
+	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
+	return requestBean == null ? null : requestBean.getJustification();
     }
 
     public ActionForward deliveredAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,

@@ -7,11 +7,18 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 
+import org.joda.time.YearMonthDay;
+
 public class ConcludeAcademicServiceRequest extends Service {
 
-    public void run(final AcademicServiceRequest academicServiceRequest, final Boolean sendEmailToStudent) {
+    public void run(final AcademicServiceRequest academicServiceRequest, final Boolean sendEmailToStudent,
+	    final YearMonthDay situationDate, final String justification) {
 	if (!academicServiceRequest.isConcluded()) {
-	    academicServiceRequest.conclude();
+	    if (situationDate == null) {
+		academicServiceRequest.conclude();
+	    } else {
+		academicServiceRequest.conclude(situationDate, justification);
+	    }
 
 	    if (sendEmailToStudent != null && sendEmailToStudent.booleanValue()) {
 		sendEmail(academicServiceRequest);
