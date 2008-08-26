@@ -56,7 +56,9 @@
 	<fr:destination name="postBack" path="/manageResearchUnitSite.do?method=managePeoplePostBack"/>
 	</fr:edit>
 	<html:submit><bean:message key="label.submit" bundle="DEFAULT"/></html:submit>
+	<%-- Descomentar quando existir solução para os convites externos
 	<logic:equal name="bean" property="showMessage" value="true">
 		<html:submit property="createPerson"><bean:message key="label.create" bundle="DEFAULT"/></html:submit>
-	</logic:equal>
+	</logic:equal> 
+	--%>
 </fr:form>
