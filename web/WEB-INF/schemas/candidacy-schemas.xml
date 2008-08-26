@@ -649,8 +649,8 @@
 
 <schema name="ContactsForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ContactsForm" bundle="CANDIDATE_RESOURCES">
     <slot name="phoneNumber">
-    	<property name="size" value="9"/>
-		<property name="maxLength" value="9"/>
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
@@ -658,8 +658,8 @@
         </validator>
     </slot>
     <slot name="mobileNumber">
-    	<property name="size" value="9"/>
-		<property name="maxLength" value="9"/>
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>

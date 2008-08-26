@@ -157,8 +157,8 @@
 
 <schema name="NewInvitedPersonContactsInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
 	<slot name="phone">
-    	<property name="size" value="9"/>
-		<property name="maxLength" value="9"/>
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
@@ -166,8 +166,8 @@
         </validator>
     </slot>
     <slot name="mobile">
-    	<property name="size" value="9"/>
-		<property name="maxLength" value="9"/>
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
@@ -274,8 +274,8 @@
 
 <schema name="PersonContactsInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
 	<slot name="phone">
-    	<property name="size" value="9"/>
-		<property name="maxLength" value="9"/>
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
@@ -283,8 +283,8 @@
         </validator>        
     </slot>        
     <slot name="mobile">
-    	<property name="size" value="9"/>
-		<property name="maxLength" value="9"/>
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
