@@ -20,22 +20,9 @@
     <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/dotist_calendars.css" media="screen, print" />
     <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/inquiries_style.css" media="screen" />
 
-	<%-- 
-	     Instead of importing javascript inline in html, import it with java script. This will reduce server
-	     side overhead processing, and will reduce data transmitted through the network for clients that
-	     don't hava javascript enabled.
-	 --%>
-	<script type="text/javascript">
-		function IncludeJavaScript(jsFile) {
-			document.write('<script type="text/javascript" src="<%= contextPath %>/'+ jsFile + '"></scr' + 'ipt>'); 
-		}
-
-		IncludeJavaScript('/CSS/scripts/hideButtons.js');
-		IncludeJavaScript('/CSS/scripts/check.js');
-		IncludeJavaScript('/CSS/scripts/checkall.js');
-    </script>
-
-
+    <script type="text/javascript" src="<%= contextPath %>/CSS/scripts/hideButtons.js"></script>
+    <script type="text/javascript" src="<%= contextPath %>/CSS/scripts/check.js"></script>
+    <script type="text/javascript" src="<%= contextPath %>/CSS/scripts/checkall.js"></script>
 
 	<tiles:insert attribute="head" ignore="true"/>
 	<tiles:insert attribute="rss" ignore="true" />
