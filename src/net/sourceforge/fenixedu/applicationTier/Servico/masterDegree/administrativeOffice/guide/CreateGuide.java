@@ -48,7 +48,7 @@ public class CreateGuide extends Service {
 	    infoGuideEntry.setInfoGuide(infoGuide);
 	    infoGuideEntry.setDocumentType(DocumentType.OTHERS);
 	    infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
-	    infoGuideEntry.setQuantity(new Integer(1));
+	    infoGuideEntry.setQuantity(Integer.valueOf(1));
 	    List entries = infoGuide.getInfoGuideEntries();
 	    entries.add(infoGuideEntry);
 	    infoGuide.setInfoGuideEntries(entries);

@@ -105,7 +105,7 @@ public class ImportFunctionalities extends Service {
 		Integer order = null;
 		String orderValue = functionalityElement.getAttributeValue("order");
 		if (orderValue != null) {
-		    order = new Integer(orderValue);
+		    order = Integer.valueOf(orderValue);
 		}
 
 		String type = functionalityElement.getAttributeValue("type");

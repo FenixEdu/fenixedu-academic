@@ -221,25 +221,25 @@ public class InfoGrantContractRegime extends InfoObject {
     }
 
     public Integer getActiveStateValue() {
-	return new Integer(activeState);
+	return Integer.valueOf(activeState);
     }
 
     public Integer getInactiveStateValue() {
-	return new Integer(inactiveState);
+	return Integer.valueOf(inactiveState);
     }
 
     /**
      * @return Returns the activeState.
      */
     public static Integer getActiveState() {
-	return new Integer(activeState);
+	return Integer.valueOf(activeState);
     }
 
     /**
      * @return Returns the inactiveState.
      */
     public static Integer getInactiveState() {
-	return new Integer(inactiveState);
+	return Integer.valueOf(inactiveState);
     }
 
     /**

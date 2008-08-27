@@ -86,7 +86,7 @@ public class InfoSpanListGrantOwner extends InfoObject {
 												   // NUMBER_OF_ELEMENTS_IN_SPAN
 
 	}
-	return new Integer(-1);
+	return Integer.valueOf(-1);
     }
 
     public boolean hasBeforeSpan() {
@@ -97,7 +97,7 @@ public class InfoSpanListGrantOwner extends InfoObject {
     }
 
     public Integer getBeforeSpan() {
-	return new Integer(this.spanNumber.intValue() - 1);
+	return Integer.valueOf(this.spanNumber.intValue() - 1);
     }
 
     public boolean hasAfterSpan() {
@@ -108,6 +108,6 @@ public class InfoSpanListGrantOwner extends InfoObject {
     }
 
     public Integer getAfterSpan() {
-	return new Integer(this.spanNumber.intValue() + 1);
+	return Integer.valueOf(this.spanNumber.intValue() + 1);
     }
 }

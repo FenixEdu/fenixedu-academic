@@ -48,7 +48,7 @@ public class MetadataComparator implements Comparator {
 	    return metadata1.getMainSubject().compareToIgnoreCase(metadata2.getMainSubject()) * ascendent;
 
 	} else if (column.equals("numberOfMembers")) {
-	    return new Integer(metadata1.getVisibleQuestions().size()).compareTo(new Integer(metadata2.getVisibleQuestions()
+	    return Integer.valueOf(metadata1.getVisibleQuestions().size()).compareTo(Integer.valueOf(metadata2.getVisibleQuestions()
 		    .size()))
 		    * ascendent;
 	} else if (column.equals("difficulty")) {

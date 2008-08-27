@@ -168,7 +168,7 @@ public class InfoDistributedTest extends InfoObject {
 	String result = new String();
 	if (getBeginDate().get(Calendar.DAY_OF_MONTH) < 10)
 	    result += "0";
-	return result.concat(new Integer(getBeginDate().get(Calendar.DAY_OF_MONTH)).toString());
+	return result.concat(Integer.toString(getBeginDate().get(Calendar.DAY_OF_MONTH)));
 
     }
 
@@ -176,7 +176,7 @@ public class InfoDistributedTest extends InfoObject {
 	String result = new String();
 	if (getBeginDate().get(Calendar.MONTH) + 1 < 10)
 	    result += "0";
-	return result.concat(new Integer(getBeginDate().get(Calendar.MONTH) + 1).toString());
+	return result.concat(Integer.toString(getBeginDate().get(Calendar.MONTH) + 1));
     }
 
     public String getBeginYearFormatted() {
@@ -187,28 +187,28 @@ public class InfoDistributedTest extends InfoObject {
 	String result = new String();
 	if (getBeginHour().get(Calendar.HOUR_OF_DAY) < 10)
 	    result += "0";
-	return result.concat(new Integer(getBeginHour().get(Calendar.HOUR_OF_DAY)).toString());
+	return result.concat(Integer.toString(getBeginHour().get(Calendar.HOUR_OF_DAY)));
     }
 
     public String getBeginMinuteFormatted() {
 	String result = new String();
 	if (getBeginHour().get(Calendar.MINUTE) < 10)
 	    result += "0";
-	return result.concat(new Integer(getBeginHour().get(Calendar.MINUTE)).toString());
+	return result.concat(Integer.toString(getBeginHour().get(Calendar.MINUTE)));
     }
 
     public String getEndDayFormatted() {
 	String result = new String();
 	if (getEndDate().get(Calendar.DAY_OF_MONTH) < 10)
 	    result += "0";
-	return result.concat(new Integer(getEndDate().get(Calendar.DAY_OF_MONTH)).toString());
+	return result.concat(Integer.toString(getEndDate().get(Calendar.DAY_OF_MONTH)));
     }
 
     public String getEndMonthFormatted() {
 	String result = new String();
 	if (getEndDate().get(Calendar.MONTH) + 1 < 10)
 	    result += "0";
-	return result.concat(new Integer(getEndDate().get(Calendar.MONTH) + 1).toString());
+	return result.concat(Integer.toString(getEndDate().get(Calendar.MONTH) + 1));
     }
 
     public String getEndYearFormatted() {
@@ -219,7 +219,7 @@ public class InfoDistributedTest extends InfoObject {
 	String result = new String();
 	if (getEndHour().get(Calendar.HOUR_OF_DAY) < 10)
 	    result += "0";
-	return result.concat(new Integer(getEndHour().get(Calendar.HOUR_OF_DAY)).toString());
+	return result.concat(Integer.toString(getEndHour().get(Calendar.HOUR_OF_DAY)));
 
     }
 
@@ -227,7 +227,7 @@ public class InfoDistributedTest extends InfoObject {
 	String result = new String();
 	if (getEndHour().get(Calendar.MINUTE) < 10)
 	    result += "0";
-	return result.concat(new Integer(getEndHour().get(Calendar.MINUTE)).toString());
+	return result.concat(Integer.toString(getEndHour().get(Calendar.MINUTE)));
     }
 
     public boolean equals(Object obj) {

@@ -152,25 +152,25 @@ public class BonusInstallment implements Serializable {
 		    .getEmployeeMonthlyBonusInstallmentsOrdered()) {
 		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(employeeMonthlyBonusInstallment
 			.getPartialYearMonth()));
-		Integer maximumWorkingDays = 0;
-		Integer workedDays = 0;
-		Integer absences = 0;
+		int maximumWorkingDays = 0;
+		int workedDays = 0;
+		int absences = 0;
 		if (closedMonth != null) {
 		    Assiduousness assiduousness = employeeMonthlyBonusInstallment.getEmployeeBonusInstallment().getEmployee()
 			    .getAssiduousness();
 		    for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth
 			    .getAssiduousnessClosedMonths(assiduousness)) {
 			if (assiduousnessClosedMonth != null) {
-			    maximumWorkingDays += new Integer(assiduousnessClosedMonth.getMaximumWorkingDays());
-			    workedDays += new Integer(assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount());
-			    absences += new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
-				    - (assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount()));
+			    maximumWorkingDays += assiduousnessClosedMonth.getMaximumWorkingDays().intValue();
+			    workedDays += assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount().intValue();
+			    absences += (assiduousnessClosedMonth.getMaximumWorkingDays().intValue()
+				    - assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount().intValue());
 			}
 		    }
 		}
-		spreadsheet.addCell(maximumWorkingDays);
-		spreadsheet.addCell(workedDays);
-		spreadsheet.addCell(absences);
+		spreadsheet.addCell(Integer.valueOf(maximumWorkingDays));
+		spreadsheet.addCell(Integer.valueOf(workedDays));
+		spreadsheet.addCell(Integer.valueOf(absences));
 		spreadsheet.addCell(enumBundle.getString(employeeBonusInstallment.getBonusType().name()));
 		spreadsheet.addCell(employeeMonthlyBonusInstallment.getValue());
 	    }

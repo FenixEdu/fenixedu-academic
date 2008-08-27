@@ -19,20 +19,20 @@ public class InfoShiftGroupStatistics extends InfoObject {
     }
 
     public Integer getTotalCapacity() {
-	Integer totalCapacity = new Integer(0);
+	Integer totalCapacity = Integer.valueOf(0);
 
 	Iterator iterator = this.shiftsInGroup.iterator();
 	while (iterator.hasNext()) {
 	    InfoShift infoShift = (InfoShift) iterator.next();
-	    totalCapacity = new Integer(totalCapacity.intValue() + infoShift.getLotacao().intValue());
+	    totalCapacity = Integer.valueOf(totalCapacity.intValue() + infoShift.getLotacao().intValue());
 	}
 
 	return totalCapacity;
     }
 
     public Double getTotalPercentage() {
-	Integer totalCapacity = new Integer(0);
-	Integer students = new Integer(0);
+	Integer totalCapacity = Integer.valueOf(0);
+	Integer students = Integer.valueOf(0);
 
 	for (InfoShift infoShift : this.shiftsInGroup) {
 	    students += infoShift.getOcupation();
@@ -51,12 +51,12 @@ public class InfoShiftGroupStatistics extends InfoObject {
     }
 
     public Integer getTotalNumberOfStudents() {
-	Integer totalNumberOfStudents = new Integer(0);
+	Integer totalNumberOfStudents = Integer.valueOf(0);
 
 	Iterator iterator = this.shiftsInGroup.iterator();
 	while (iterator.hasNext()) {
 	    InfoShift infoShift = (InfoShift) iterator.next();
-	    totalNumberOfStudents = new Integer(totalNumberOfStudents.intValue() + infoShift.getOcupation().intValue());
+	    totalNumberOfStudents = Integer.valueOf(totalNumberOfStudents.intValue() + infoShift.getOcupation().intValue());
 	}
 
 	return totalNumberOfStudents;

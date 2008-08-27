@@ -118,7 +118,7 @@ public class ReadFilteredExamsMapList extends Service {
 				}
 			    }
 
-			    infoExam.setEnrolledStudents(new Integer(numberOfStudentsForExam));
+			    infoExam.setEnrolledStudents(Integer.valueOf(numberOfStudentsForExam));
 
 			    List associatedCurricularCourseScope = new ArrayList();
 			    associatedCurricularCourseScope = infoExam.getAssociatedCurricularCourseScope();

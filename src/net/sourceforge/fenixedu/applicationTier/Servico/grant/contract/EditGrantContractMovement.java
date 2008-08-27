@@ -46,7 +46,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     }
 
     public void run(InfoGrantContractMovement infoGrantContractMovement) throws Exception {
-	super.run(new Integer(0), infoGrantContractMovement);
+	super.run(Integer.valueOf(0), infoGrantContractMovement);
     }
 
     @Override

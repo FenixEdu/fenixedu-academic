@@ -262,7 +262,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	// Integer degreeId = getFromRequest("degreeID", request);
 	request.setAttribute("degreeID", "");
 
-	Integer index = new Integer((String) escolherContextoForm.get("index"));
+	Integer index = Integer.valueOf((String) escolherContextoForm.get("index"));
 
 	request.setAttribute("curYear", anoCurricular);
 	request.setAttribute("semester", semestre);

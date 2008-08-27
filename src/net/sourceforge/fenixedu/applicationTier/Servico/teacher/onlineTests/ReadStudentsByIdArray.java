@@ -63,7 +63,7 @@ public class ReadStudentsByIdArray extends Service {
 	List<InfoStudent> studentList = new ArrayList<InfoStudent>();
 	for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
 	    if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
-		Integer number = new Integer(lvb.getValue());
+		Integer number = Integer.parseInt(lvb.getValue());
 		studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(number, number).get(0)));
 	    }
 	}

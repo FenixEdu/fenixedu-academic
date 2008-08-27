@@ -265,7 +265,7 @@ public class LibraryCardDTO implements Serializable {
 	    if (day < 10) {
 		return "0" + day;
 	    }
-	    return new Integer(day).toString();
+	    return Integer.toString(day);
 	}
 	return "";
     }
@@ -276,7 +276,7 @@ public class LibraryCardDTO implements Serializable {
 	    if (month < 10) {
 		return "0" + month;
 	    }
-	    return new Integer(month).toString();
+	    return Integer.toString(month);
 	}
 	return "";
     }

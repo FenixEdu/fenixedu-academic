@@ -66,7 +66,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
 	    infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
 	} else {
 	    infoCurriculum = new InfoCurriculumWithInfoCurricularCourse();
-	    infoCurriculum.setIdInternal(new Integer(0));
+	    infoCurriculum.setIdInternal(Integer.valueOf(0));
 	    infoCurriculum.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
 	}
 

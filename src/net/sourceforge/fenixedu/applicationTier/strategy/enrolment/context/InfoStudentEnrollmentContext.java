@@ -114,7 +114,7 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
 	if (creditsInSecundaryArea != null) {
 	    return creditsInSecundaryArea;
 	}
-	return new Integer(0);
+	return Integer.valueOf(0);
     }
 
     /**
@@ -132,7 +132,7 @@ public class InfoStudentEnrollmentContext extends InfoObject implements Serializ
 	if (creditsInSpecializationArea != null) {
 	    return creditsInSpecializationArea;
 	}
-	return new Integer(0);
+	return Integer.valueOf(0);
     }
 
     /**

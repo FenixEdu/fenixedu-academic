@@ -31,7 +31,7 @@ public abstract class FileUtil {
 	    int i = 0;
 	    while (line != null) {
 		line = bufferedReader.readLine();
-		outputBuffer += processLine(new Integer(++i), line);
+		outputBuffer += processLine(Integer.valueOf(++i), line);
 	    }
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();

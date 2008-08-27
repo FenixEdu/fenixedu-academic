@@ -111,7 +111,7 @@ public class CreateGuideFromTransactions extends Service {
 	    }
 
 	    guideEntry.setPrice(transaction.getValue());
-	    guideEntry.setQuantity(new Integer(1));
+	    guideEntry.setQuantity(Integer.valueOf(1));
 	    guideTotal += transaction.getValue().doubleValue();
 
 	    guideEntry.setGraduationType(GraduationType.MASTER_DEGREE);

@@ -31,7 +31,7 @@ public class IMS_STRQuestionCorrectionStrategy extends QuestionCorrectionStrateg
 			.getResponse()).getResponse()))) {
 		    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
 		    ResponseSTR r = (ResponseSTR) studentTestQuestion.getResponse();
-		    r.setResponseProcessingIndex(new Integer(i));
+		    r.setResponseProcessingIndex(Integer.valueOf(i));
 		    studentTestQuestion.setResponse(r);
 		    studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
 		    return studentTestQuestion;

@@ -78,9 +78,9 @@ public class EditGuideInformation extends Service {
 		guideEntriesToRemove.add(infoGuideEntry);
 		change = true;
 	    } else {
-		if (!infoGuideEntry.getQuantity().equals(new Integer(quantityList[quantityListIndex])))
+		if (!infoGuideEntry.getQuantity().equals(Integer.valueOf(quantityList[quantityListIndex])))
 		    change = true;
-		infoGuideEntry.setQuantity(new Integer(quantityList[quantityListIndex]));
+		infoGuideEntry.setQuantity(Integer.valueOf(quantityList[quantityListIndex]));
 		newInfoGuideEntries.add(infoGuideEntry);
 	    }
 	    quantityListIndex++;
@@ -89,7 +89,7 @@ public class EditGuideInformation extends Service {
 	// Check if a Others Guide Entry will be Added
 	GuideEntry othersGuideEntry = null;
 	if ((othersPrice != null) && (othersQuantity != null) && (!othersPrice.equals(new Double(0)))
-		&& (!othersQuantity.equals(new Integer(0)))) {
+		&& (!othersQuantity.equals(Integer.valueOf(0)))) {
 	    change = true;
 	    othersGuideEntry = new GuideEntry();
 	    othersGuideEntry.setDescription(othersRemarks);

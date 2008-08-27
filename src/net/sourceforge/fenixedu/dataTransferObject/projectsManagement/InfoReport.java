@@ -33,7 +33,7 @@ public class InfoReport extends DataTranferObject {
     }
 
     public Integer getLinesSize() {
-	return new Integer(lines.size());
+	return Integer.valueOf(lines.size());
     }
 
     public void getReportToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {

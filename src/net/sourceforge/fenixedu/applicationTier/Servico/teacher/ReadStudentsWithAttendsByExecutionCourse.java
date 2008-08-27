@@ -262,8 +262,8 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	Map enrollmentDistributionMap = new HashMap();
 	for (int i = 0; i < enrollmentDistribution.length; i++) {
 	    if (enrollmentDistribution[i] != 0) {
-		Integer key = new Integer(i);
-		Integer value = new Integer(enrollmentDistribution[i]);
+		Integer key = Integer.valueOf(i);
+		Integer value = Integer.valueOf(enrollmentDistribution[i]);
 		enrollmentDistributionKeys.add(key);
 		enrollmentDistributionMap.put(key, value);
 	    }

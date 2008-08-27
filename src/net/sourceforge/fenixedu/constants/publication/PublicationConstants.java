@@ -14,9 +14,9 @@ package net.sourceforge.fenixedu.constants.publication;
  */
 public final class PublicationConstants {
 
-    public static final Integer DIDATIC = new Integer(1);
+    public static final Integer DIDATIC = Integer.valueOf(1);
 
-    public static final Integer CIENTIFIC = new Integer(0);
+    public static final Integer CIENTIFIC = Integer.valueOf(0);
 
     public static final String DIDATIC_STRING = "Didatic";
 

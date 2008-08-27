@@ -142,8 +142,8 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	    Integer oldValue = getOldValue(spreadsheet, yearMonth.getNumberOfMonth() * 2).intValue();
 	    Double oldDouble = getOldValue(spreadsheet, yearMonth.getNumberOfMonth() * 2 + 1);
 
-	    spreadsheet.addCell(new Integer(extraWorkRequest.getTotalHours() + oldValue), yearMonth.getNumberOfMonth() * 2);
-	    spreadsheet.addCell(new Double(decimalFormat.format(extraWorkRequest.getAmount() + oldDouble)), spreadsheet
+	    spreadsheet.addCell(Integer.valueOf(extraWorkRequest.getTotalHours() + oldValue), yearMonth.getNumberOfMonth() * 2);
+	    spreadsheet.addCell(Double.valueOf(decimalFormat.format(extraWorkRequest.getAmount() + oldDouble)), spreadsheet
 		    .getExcelStyle().getDoubleStyle(), yearMonth.getNumberOfMonth() * 2 + 1);
 	}
     }

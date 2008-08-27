@@ -139,11 +139,11 @@ public class InfoGrantSubsidy extends InfoObject {
     }
 
     public static Integer getActiveStateValue() {
-	return new Integer(activeState);
+	return Integer.valueOf(activeState);
     }
 
     public static Integer getInactiveStateValue() {
-	return new Integer(inactiveState);
+	return Integer.valueOf(inactiveState);
     }
 
     /**

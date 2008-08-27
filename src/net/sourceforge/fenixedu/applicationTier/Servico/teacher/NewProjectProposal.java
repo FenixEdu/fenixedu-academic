@@ -77,7 +77,7 @@ public class NewProjectProposal extends Service {
 	boolean acceptProposal = false;
 
 	ExportGrouping groupPropertiesExecutionCourse = new ExportGrouping(groupProperties, goalExecutionCourse);
-	groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(3)));
+	groupPropertiesExecutionCourse.setProposalState(new ProposalState(Integer.valueOf(3)));
 	groupPropertiesExecutionCourse.setSenderPerson(senderPerson);
 	groupPropertiesExecutionCourse.setSenderExecutionCourse(startExecutionCourse);
 	groupProperties.addExportGroupings(groupPropertiesExecutionCourse);
@@ -121,7 +121,7 @@ public class NewProjectProposal extends Service {
 	// Create Advisory
 	if (acceptProposal == true) {
 	    result = Boolean.TRUE;
-	    groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(2)));
+	    groupPropertiesExecutionCourse.setProposalState(new ProposalState(Integer.valueOf(2)));
 	    List groupingStudentNumbers = new ArrayList();
 
 	    Iterator iterAttends = groupPropertiesExecutionCourse.getGrouping().getAttends().iterator();

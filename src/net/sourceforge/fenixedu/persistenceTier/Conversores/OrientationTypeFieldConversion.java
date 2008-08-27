@@ -26,7 +26,7 @@ public class OrientationTypeFieldConversion implements FieldConversion {
     public Object javaToSql(Object obj) throws ConversionException {
 	if (obj instanceof OrientationType) {
 	    OrientationType orientationType = (OrientationType) obj;
-	    return new Integer(orientationType.getValue());
+	    return Integer.valueOf(orientationType.getValue());
 	}
 	return obj;
     }

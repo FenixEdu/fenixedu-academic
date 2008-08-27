@@ -199,7 +199,7 @@ public class ListGrantContractByCriteria extends Service {
 		}
 
 		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
-		    if (!grantContractRegime.getState().equals(new Integer(1))) {
+		    if (!grantContractRegime.getState().equals(Integer.valueOf(1))) {
 			continue;
 		    }
 		    if (grantContractRegime.getGrantContract().getEndContractMotive() != null
@@ -209,7 +209,7 @@ public class ListGrantContractByCriteria extends Service {
 		}
 
 		if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
-		    if (grantContractRegime.getState().equals(new Integer(1))
+		    if (grantContractRegime.getState().equals(Integer.valueOf(1))
 			    && (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
 				    .getGrantContract().getEndContractMotive().equals(""))) {
 			continue;
@@ -254,7 +254,7 @@ public class ListGrantContractByCriteria extends Service {
 
     public Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts, Date dateBeginContract,
 	    Date dateEndContract, Integer grantTypeId, Date validToTheDate) throws FenixServiceException, FenixFilterException {
-	Integer result = new Integer(0);
+	Integer result = Integer.valueOf(0);
 
 	List<GrantContractRegime> grantContractRegimes = new ArrayList<GrantContractRegime>();
 	grantContractRegimes.addAll(rootDomainObject.getGrantContractRegimes());
@@ -328,7 +328,7 @@ public class ListGrantContractByCriteria extends Service {
 		}
 
 		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
-		    if (!grantContractRegime.getState().equals(new Integer(1))) {
+		    if (!grantContractRegime.getState().equals(Integer.valueOf(1))) {
 			continue;
 		    }
 		    if (grantContractRegime.getGrantContract().getEndContractMotive() != null
@@ -338,7 +338,7 @@ public class ListGrantContractByCriteria extends Service {
 		}
 
 		if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
-		    if (grantContractRegime.getState().equals(new Integer(1))
+		    if (grantContractRegime.getState().equals(Integer.valueOf(1))
 			    && (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
 				    .getGrantContract().getEndContractMotive().equals(""))) {
 			continue;

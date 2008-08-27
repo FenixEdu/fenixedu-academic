@@ -29,7 +29,7 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
 	IUserView id = getRemoteUser(request);
 	Object[] arguments = getServiceCallArguments(request);
 	try {
-	    boolean isNew = ((arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0)));
+	    boolean isNew = ((arguments[0] == null) || ((Integer) arguments[0]).equals(Integer.valueOf(0)));
 
 	    // Verify if needed fields are null
 	    if ((id == null) || (id.getRoleTypes() == null)) {

@@ -26,7 +26,7 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base {
 
 	if (this.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.BOTH_SEMESTERS)) {
 	    isValid = true;
-	} else if (executionSemester.getSemester().equals(new Integer(this.getPeriodToApplyRestriction().getValue()))) {
+	} else if (executionSemester.getSemester().equals(Integer.valueOf(this.getPeriodToApplyRestriction().getValue()))) {
 	    isValid = true;
 	}
 

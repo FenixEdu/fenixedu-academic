@@ -165,7 +165,7 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 	int optionsNotEmpty = 0;
 	int empty = 0;
 	for (int i = 0; i < response.length; i++) {
-	    if (response[i].equals((new Integer(emptyResponse)).toString()))
+	    if (response[i].equals((Integer.toString(emptyResponse))))
 		empty++;
 	    else
 		optionsNotEmpty++;
@@ -181,7 +181,7 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 
 	for (int i = 0; itResponseProcessing.hasNext(); i++) {
 	    if (((ResponseProcessing) itResponseProcessing.next()).isFenixCorrectResponse()) {
-		return new Integer(i);
+		return Integer.valueOf(i);
 	    }
 	}
 	return null;

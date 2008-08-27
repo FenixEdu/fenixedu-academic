@@ -39,9 +39,9 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 	    if (foundGroup != null) {
 		InfoExternalGroupPropertiesInfo infoGroupProperties = new InfoExternalGroupPropertiesInfo();
 		infoGroupProperties.setGroup(foundGroup);
-		infoGroupProperties.setMaxCapacity(new Integer(group.getMaximumCapacity().intValue()));
-		infoGroupProperties.setMinCapacity(new Integer(group.getMinimumCapacity().intValue()));
-		infoGroupProperties.setRecomendedCapacity(new Integer(group.getIdealCapacity().intValue()));
+		infoGroupProperties.setMaxCapacity(Integer.valueOf(group.getMaximumCapacity().intValue()));
+		infoGroupProperties.setMinCapacity(Integer.valueOf(group.getMinimumCapacity().intValue()));
+		infoGroupProperties.setRecomendedCapacity(Integer.valueOf(group.getIdealCapacity().intValue()));
 		infoGroupProperties.setName(new String(group.getName()));
 		result.add(infoGroupProperties);
 	    }
@@ -141,7 +141,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
      */
     private InfoExternalGroupInfo buildInfoExternalGroupInfo(StudentGroup studentGroup) {
 	InfoExternalGroupInfo infoExternalGroupInfo = new InfoExternalGroupInfo();
-	infoExternalGroupInfo.setNumber(new Integer(studentGroup.getGroupNumber().intValue()));
+	infoExternalGroupInfo.setNumber(Integer.valueOf(studentGroup.getGroupNumber().intValue()));
 	infoExternalGroupInfo.setShift(InfoExternalShiftInfo.newFromShift(studentGroup.getShift()));
 	infoExternalGroupInfo.setExecutionCourses(this.buildExecutionCoursesCollection(studentGroup.getGrouping()
 		.getExecutionCourses()));

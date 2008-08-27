@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 
@@ -63,9 +62,9 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 	final Calendar result = Calendar.getInstance();
 
 	String[] aux = startDate.split("/");
-	result.set(Calendar.DAY_OF_MONTH, (new Integer(aux[0])).intValue());
-	result.set(Calendar.MONTH, (new Integer(aux[1])).intValue() - 1);
-	result.set(Calendar.YEAR, (new Integer(aux[2])).intValue());
+	result.set(Calendar.DAY_OF_MONTH, Integer.parseInt(aux[0]));
+	result.set(Calendar.MONTH, Integer.parseInt(aux[1]) - 1);
+	result.set(Calendar.YEAR, Integer.parseInt(aux[2]));
 
 	return result;
     }

@@ -125,7 +125,7 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 
 	    this.executionCourseDegreeList.add(executionCourseDegreeName);
 
-	    this.executionCourseTotalHoursLecturedByTeachers = new Integer(0);
+	    this.executionCourseTotalHoursLecturedByTeachers = Integer.valueOf(0);
 
 	    this.executionCourseLaboratorialHours = executionCourseLaboratorialHours;
 	    ;

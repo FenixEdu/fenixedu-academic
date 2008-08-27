@@ -28,7 +28,7 @@ public class IMS_NUMQuestionCorrectionStrategy extends QuestionCorrectionStrateg
 			.getResponse()).getResponse()))) {
 		    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
 		    ResponseNUM r = (ResponseNUM) studentTestQuestion.getResponse();
-		    r.setResponseProcessingIndex(new Integer(i));
+		    r.setResponseProcessingIndex(Integer.valueOf(i));
 		    studentTestQuestion.setResponse(r);
 		    studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
 		    return studentTestQuestion;

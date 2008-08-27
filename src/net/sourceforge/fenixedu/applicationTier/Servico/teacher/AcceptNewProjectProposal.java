@@ -104,7 +104,7 @@ public class AcceptNewProjectProposal extends Service {
 	    }
 	}
 
-	groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(2)));
+	groupPropertiesExecutionCourse.setProposalState(new ProposalState(Integer.valueOf(2)));
 	groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
 
 	return Boolean.TRUE;

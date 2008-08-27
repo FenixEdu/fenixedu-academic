@@ -139,7 +139,7 @@ public class ExportEmployeesAnualInfo extends Service {
 		total += days.intValue();
 	    }
 	}
-	return total == 0 ? null : new Integer(total);
+	return total == 0 ? null : Integer.valueOf(total);
     }
 
     private Integer getJustificationDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate, String... justifications) {
@@ -150,7 +150,7 @@ public class ExportEmployeesAnualInfo extends Service {
 		total += days.intValue();
 	    }
 	}
-	return total == 0 ? null : new Integer(total);
+	return total == 0 ? null : Integer.valueOf(total);
     }
 
     private Integer getJustificationWorkingDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
@@ -162,7 +162,7 @@ public class ExportEmployeesAnualInfo extends Service {
 		total += days.intValue();
 	    }
 	}
-	return total == 0 ? null : new Integer(total);
+	return total == 0 ? null : Integer.valueOf(total);
     }
 
     private void setArticle52(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,

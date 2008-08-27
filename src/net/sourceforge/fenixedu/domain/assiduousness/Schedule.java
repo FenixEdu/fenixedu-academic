@@ -252,17 +252,17 @@ public class Schedule extends Schedule_Base {
 	WorkSchedule firtWorkSchedule = iterator.next();
 	int previousWorkWeek = firtWorkSchedule.getPeriodicity().getWorkWeekNumber().intValue();
 	if (previousWorkWeek != correctWorkWeek) {
-	    firtWorkSchedule.setPeriodicity(getPeriodicity(new Integer(correctWorkWeek)));
+	    firtWorkSchedule.setPeriodicity(getPeriodicity(Integer.valueOf(correctWorkWeek)));
 	}
 	while (iterator.hasNext()) {
 	    WorkSchedule workSchedule = iterator.next();
 	    int currentWorkWeek = workSchedule.getPeriodicity().getWorkWeekNumber().intValue();
 	    if (currentWorkWeek == previousWorkWeek) {
-		workSchedule.setPeriodicity(getPeriodicity(new Integer(correctWorkWeek)));
+		workSchedule.setPeriodicity(getPeriodicity(Integer.valueOf(correctWorkWeek)));
 	    } else {
 		correctWorkWeek++;
 		previousWorkWeek = currentWorkWeek;
-		workSchedule.setPeriodicity(getPeriodicity(new Integer(correctWorkWeek)));
+		workSchedule.setPeriodicity(getPeriodicity(Integer.valueOf(correctWorkWeek)));
 	    }
 	}
     }

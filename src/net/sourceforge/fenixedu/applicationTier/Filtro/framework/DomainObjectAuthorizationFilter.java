@@ -41,7 +41,7 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
 	     * NotAuthorizedFilterException
 	     */
 
-	    boolean isNew = ((idInternal == null) || idInternal.equals(new Integer(0)));
+	    boolean isNew = ((idInternal == null) || idInternal.equals(Integer.valueOf(0)));
 
 	    if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
 		    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, idInternal)))) {

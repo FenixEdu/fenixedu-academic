@@ -74,7 +74,7 @@ public class ReadStudentGroupInformation extends Service {
 
 	    int vagas = grouping.getMaximumCapacity().intValue() - groupAttendsList.size();
 
-	    infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
+	    infoSiteStudentGroup.setNrOfElements(Integer.valueOf(vagas));
 	} else
 	    infoSiteStudentGroup.setNrOfElements("Sem limite");
 

@@ -26,7 +26,7 @@ public class ProviderRegimeTypeFieldConversion implements FieldConversion {
     public Object javaToSql(Object obj) throws ConversionException {
 	if (obj instanceof ProviderRegimeType) {
 	    ProviderRegimeType providerRegimeType = (ProviderRegimeType) obj;
-	    return new Integer(providerRegimeType.getValue());
+	    return Integer.valueOf(providerRegimeType.getValue());
 	}
 	return obj;
     }

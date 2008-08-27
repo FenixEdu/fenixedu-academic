@@ -29,7 +29,7 @@ public class SystemInfo implements Serializable {
     public SystemInfo() {
 	super();
 	Runtime rt = Runtime.getRuntime();
-	this.availableProcessors = new Integer(rt.availableProcessors());
+	this.availableProcessors = Integer.valueOf(rt.availableProcessors());
 	this.freeMemory = new Long(rt.freeMemory());
 	this.maxMemory = new Long(rt.maxMemory());
 	this.totalMemory = new Long(rt.totalMemory());

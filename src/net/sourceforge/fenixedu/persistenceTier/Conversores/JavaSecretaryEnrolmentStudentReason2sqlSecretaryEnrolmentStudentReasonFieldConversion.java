@@ -18,7 +18,7 @@ public class JavaSecretaryEnrolmentStudentReason2sqlSecretaryEnrolmentStudentRea
     public Object javaToSql(Object source) throws ConversionException {
 	if (source instanceof SecretaryEnrolmentStudentReason) {
 	    SecretaryEnrolmentStudentReason s = (SecretaryEnrolmentStudentReason) source;
-	    return new Integer(s.getValue());
+	    return Integer.valueOf(s.getValue());
 	}
 
 	return source;

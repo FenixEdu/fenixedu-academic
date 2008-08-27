@@ -68,7 +68,7 @@ public abstract class EditDomainObjectService extends Service {
 
     {
 	Integer objectId = domainObject.getIdInternal();
-	return ((objectId == null) || objectId.equals(new Integer(0)));
+	return ((objectId == null) || objectId.equals(Integer.valueOf(0)));
     }
 
     /**

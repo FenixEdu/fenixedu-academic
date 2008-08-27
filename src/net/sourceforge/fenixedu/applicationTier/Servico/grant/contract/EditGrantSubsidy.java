@@ -63,7 +63,7 @@ public class EditGrantSubsidy extends EditDomainObjectService {
     }
 
     public void run(InfoGrantSubsidy infoGrantSubsidy) throws Exception {
-	super.run(new Integer(0), infoGrantSubsidy);
+	super.run(Integer.valueOf(0), infoGrantSubsidy);
     }
 
     @Override

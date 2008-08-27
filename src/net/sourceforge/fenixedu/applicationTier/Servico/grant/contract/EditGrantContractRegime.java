@@ -61,7 +61,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     }
 
     public void run(InfoGrantContractRegime infoGrantContractRegime) throws Exception {
-	super.run(new Integer(0), infoGrantContractRegime);
+	super.run(Integer.valueOf(0), infoGrantContractRegime);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 	    // inactive
 
 	    List<GrantContractRegime> activeContractRegime = grantContractRegime.getGrantContract()
-		    .readGrantContractRegimeByGrantContractAndState(new Integer(1));
+		    .readGrantContractRegimeByGrantContractAndState(Integer.valueOf(1));
 	    if (activeContractRegime != null && !activeContractRegime.isEmpty()) {
 		// Desactivate the contracts
 		for (GrantContractRegime grantContractRegimeTemp : activeContractRegime) {

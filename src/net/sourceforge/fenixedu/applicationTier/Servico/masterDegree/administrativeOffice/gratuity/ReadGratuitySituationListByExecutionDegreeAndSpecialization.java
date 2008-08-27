@@ -158,9 +158,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 	    // and
 	    // remaining value
 	    result = new HashMap();
-	    result.put(new Integer(0), infoGratuitySituationList);
-	    result.put(new Integer(1), new Double(totalPayedValue));
-	    result.put(new Integer(2), new Double(totalRemaingValue));
+	    result.put(Integer.valueOf(0), infoGratuitySituationList);
+	    result.put(Integer.valueOf(1), new Double(totalPayedValue));
+	    result.put(Integer.valueOf(2), new Double(totalRemaingValue));
 	} catch (pt.ist.fenixframework.pstm.IllegalWriteException e) {
 	    throw e;
 	} catch (Exception e) {

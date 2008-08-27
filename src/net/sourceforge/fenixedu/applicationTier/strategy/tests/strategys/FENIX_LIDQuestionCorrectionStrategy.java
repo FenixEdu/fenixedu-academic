@@ -27,7 +27,7 @@ public class FENIX_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrat
 		// 1
 		Integer fenixCorrectResponseIndex = getFenixCorrectResponseIndex(studentTestQuestion.getSubQuestionByItem()
 			.getResponseProcessingInstructions());
-		Integer empty = new Integer(getEmptyOptionIndex(studentTestQuestion.getSubQuestionByItem().getOptions()));
+		Integer empty = Integer.valueOf(getEmptyOptionIndex(studentTestQuestion.getSubQuestionByItem().getOptions()));
 		List<ResponseCondition> correctResponseList = getFenixCorrectResponse4LID(studentTestQuestion
 			.getSubQuestionByItem().getResponseProcessingInstructions(), fenixCorrectResponseIndex);
 		int emptyNumber = 0;
@@ -115,7 +115,7 @@ public class FENIX_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrat
 	int result = correctResponseList.size();
 	for (int i = 0; i < correctResponseList.size(); i++) {
 	    ResponseCondition rc = (ResponseCondition) correctResponseList.get(i);
-	    if (rc.getResponse().equals(new Integer(emptyIndex).toString()))
+	    if (rc.getResponse().equals(Integer.toString(emptyIndex)))
 		return result - 1;
 	}
 	return result;

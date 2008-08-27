@@ -109,15 +109,15 @@ public class NumberOperator extends OperatorArgument {
 	try {
 	    switch (type) {
 	    case _short:
-		return new Short(value);
+		return Short.valueOf(value);
 	    case _int:
-		return new Integer(value);
+		return Integer.valueOf(value);
 	    case _long:
-		return new Byte(value);
+		return Byte.valueOf(value);
 	    case _float:
-		return new Float(value);
+		return Float.valueOf(value);
 	    case _double:
-		return new Double(value);
+		return Double.valueOf(value);
 	    default:
 		throw new RuntimeException();
 	    }

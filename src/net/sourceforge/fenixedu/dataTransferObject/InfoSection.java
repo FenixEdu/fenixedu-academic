@@ -24,7 +24,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
 
     protected InfoSection infoSuperiorSection;
 
-    protected Integer sectionDepth = new Integer(0);
+    protected Integer sectionDepth = Integer.valueOf(0);
 
     /**
      * Construtor
@@ -186,7 +186,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
 	    depth++;
 	    section = section.getSuperiorInfoSection();
 	}
-	return new Integer(depth);
+	return Integer.valueOf(depth);
     }
 
     /**

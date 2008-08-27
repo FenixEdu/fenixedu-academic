@@ -82,7 +82,7 @@ public class PrepareCreateGuide extends Service {
 	    infoGuide.setTotal(price.getPrice());
 
 	    infoGuide.setCreationDate(calendar.getTime());
-	    infoGuide.setVersion(new Integer(1));
+	    infoGuide.setVersion(Integer.valueOf(1));
 	    infoGuide.setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(executionDegree));
 
 	    InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
@@ -91,7 +91,7 @@ public class PrepareCreateGuide extends Service {
 	    infoGuideEntry.setGraduationType(price.getGraduationType());
 	    infoGuideEntry.setInfoGuide(infoGuide);
 	    infoGuideEntry.setPrice(price.getPrice());
-	    infoGuideEntry.setQuantity(new Integer(1));
+	    infoGuideEntry.setQuantity(Integer.valueOf(1));
 
 	    List<InfoGuideEntry> infoGuideEntries = new ArrayList<InfoGuideEntry>();
 	    infoGuideEntries.add(infoGuideEntry);
@@ -132,7 +132,7 @@ public class PrepareCreateGuide extends Service {
 	    infoGuide.setYear(year);
 
 	    infoGuide.setCreationDate(calendar.getTime());
-	    infoGuide.setVersion(new Integer(1));
+	    infoGuide.setVersion(Integer.valueOf(1));
 
 	    infoGuide.setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(executionDegree));
 

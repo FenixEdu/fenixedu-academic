@@ -49,14 +49,14 @@ public class InsertTestQuestion extends Service {
 	    List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
 	    Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
 	    if (testQuestionList != null) {
-		if (questionOrder == null || questionOrder.equals(new Integer(-1))) {
-		    questionOrder = new Integer(testQuestionList.size() + 1);
+		if (questionOrder == null || questionOrder.equals(Integer.valueOf(-1))) {
+		    questionOrder = Integer.valueOf(testQuestionList.size() + 1);
 		} else
-		    questionOrder = new Integer(questionOrder.intValue() + 1);
+		    questionOrder = Integer.valueOf(questionOrder.intValue() + 1);
 		for (TestQuestion iterTestQuestion : testQuestionList) {
 		    Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
 		    if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
-			iterTestQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() + 1));
+			iterTestQuestion.setTestQuestionOrder(Integer.valueOf(iterQuestionOrder.intValue() + 1));
 		    }
 		}
 	    }

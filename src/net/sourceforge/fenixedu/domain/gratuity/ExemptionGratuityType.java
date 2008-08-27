@@ -28,10 +28,10 @@ public enum ExemptionGratuityType {
     public static List percentageOfExemption() {
 	List percentage = new ArrayList();
 
-	percentage.add(new Integer("25"));
-	percentage.add(new Integer("50"));
-	percentage.add(new Integer("75"));
-	percentage.add(new Integer("100"));
+	percentage.add(Integer.valueOf(25));
+	percentage.add(Integer.valueOf(50));
+	percentage.add(Integer.valueOf(75));
+	percentage.add(Integer.valueOf(100));
 
 	return percentage;
     }

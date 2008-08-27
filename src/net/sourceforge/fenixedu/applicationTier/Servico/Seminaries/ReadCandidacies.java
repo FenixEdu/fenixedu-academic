@@ -174,7 +174,7 @@ public class ReadCandidacies extends Service {
 	    String value = new DecimalFormat("#0.0").format(acc / auxInt);
 	    infoClassification.setAritmeticClassification(value);
 	}
-	infoClassification.setCompletedCourses(new Integer(auxInt).toString());
+	infoClassification.setCompletedCourses(Integer.valueOf(auxInt).toString());
 	return infoClassification;
     }
 

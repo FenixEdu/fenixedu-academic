@@ -26,7 +26,7 @@ public class OldPublicationTypeFieldConversion implements FieldConversion {
     public Object javaToSql(Object obj) throws ConversionException {
 	if (obj instanceof OldPublicationType) {
 	    OldPublicationType oldPublicationType = (OldPublicationType) obj;
-	    return new Integer(oldPublicationType.getValue());
+	    return Integer.valueOf(oldPublicationType.getValue());
 	}
 	return obj;
     }

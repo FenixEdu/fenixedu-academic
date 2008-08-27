@@ -52,7 +52,7 @@ public class Test extends Test_Base {
 	for (final TestQuestion testQuestion : testQuestions) {
 	    Integer iterQuestionOrder = testQuestion.getTestQuestionOrder();
 	    if (testQuestionToInsertOrder.compareTo(iterQuestionOrder) <= 0) {
-		testQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() + 1));
+		testQuestion.setTestQuestionOrder(Integer.valueOf(iterQuestionOrder.intValue() + 1));
 	    }
 	}
     }
@@ -65,7 +65,7 @@ public class Test extends Test_Base {
 	    if (!testQuestionToDelete.equals(testQuestion)) {
 		Integer iterQuestionOrder = testQuestion.getTestQuestionOrder();
 		if (testQuestionToDelete.getTestQuestionOrder().compareTo(iterQuestionOrder) < 0) {
-		    testQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() - 1));
+		    testQuestion.setTestQuestionOrder(Integer.valueOf(iterQuestionOrder.intValue() - 1));
 		}
 	    } else {
 		aux.add(testQuestion);

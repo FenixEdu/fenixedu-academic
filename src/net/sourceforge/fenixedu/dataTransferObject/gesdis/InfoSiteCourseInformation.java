@@ -232,7 +232,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 	    }
 	}
 
-	return new Integer(numberOfFieldsFilled);
+	return Integer.valueOf(numberOfFieldsFilled);
     }
 
     public Date getLastModificationDate() {

@@ -51,7 +51,7 @@ public class ReadAllContractsByGrantOwner extends Service {
 	    if (infoGrantContract.getEndContractMotiveSet()) {
 		infoGrantContract.setActive(Boolean.FALSE);
 	    } else {
-		List grantContractRegimeActual = grantContract.readGrantContractRegimeByGrantContractAndState(new Integer(1));
+		List grantContractRegimeActual = grantContract.readGrantContractRegimeByGrantContractAndState(Integer.valueOf(1));
 		if (grantContractRegimeActual.isEmpty()) {
 		    throw new FenixServiceException("Grant Contract has no Grant Contract Regime (actual) Associated");
 		}

@@ -21,7 +21,7 @@ public class JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion imple
     public Object javaToSql(Object obj) throws ConversionException {
 	if (obj instanceof EnrolmentAction) {
 	    EnrolmentAction enrollmentAction = (EnrolmentAction) obj;
-	    return new Integer(enrollmentAction.getValue());
+	    return Integer.valueOf(enrollmentAction.getValue());
 	}
 	return obj;
     }

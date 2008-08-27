@@ -12,7 +12,7 @@ public class JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConver
     public Object javaToSql(Object source) {
 	if (source instanceof PeriodToApplyRestriction) {
 	    PeriodToApplyRestriction s = (PeriodToApplyRestriction) source;
-	    return new Integer(s.getValue());
+	    return Integer.valueOf(s.getValue());
 	}
 	return source;
 

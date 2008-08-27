@@ -28,7 +28,7 @@ public class InfoSiteOldPublications extends DataTranferObject implements ISiteC
     }
 
     public Integer getNumberOldPublications() {
-	return new Integer(infoOldPublications.size());
+	return Integer.valueOf(infoOldPublications.size());
     }
 
     /**

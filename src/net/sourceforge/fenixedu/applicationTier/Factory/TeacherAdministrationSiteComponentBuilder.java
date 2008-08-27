@@ -861,7 +861,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	if (grouping.getGroupMaximumNumber() != null) {
 	    int vagas = grouping.getGroupMaximumNumber().intValue() - allStudentGroups.size();
-	    infoSiteShift.setNrOfGroups(new Integer(vagas));
+	    infoSiteShift.setNrOfGroups(Integer.valueOf(vagas));
 	} else
 	    infoSiteShift.setNrOfGroups("Sem limite");
 	InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();

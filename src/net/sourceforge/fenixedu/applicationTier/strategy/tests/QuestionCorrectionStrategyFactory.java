@@ -40,14 +40,14 @@ public class QuestionCorrectionStrategyFactory implements IQuestionCorrectionStr
 
     public IQuestionCorrectionStrategy getQuestionCorrectionStrategy(StudentTestQuestion studentTestQuestion) {
 	IQuestionCorrectionStrategy questionCorrectionStrategy = null;
-	if (studentTestQuestion.getCorrectionFormula().getFormula().equals(new Integer(CorrectionFormula.IMS))) {
+	if (studentTestQuestion.getCorrectionFormula().getFormula().equals(Integer.valueOf(CorrectionFormula.IMS))) {
 	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID)
 		questionCorrectionStrategy = new IMS_LIDQuestionCorrectionStrategy();
 	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR)
 		questionCorrectionStrategy = new IMS_STRQuestionCorrectionStrategy();
 	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM)
 		questionCorrectionStrategy = new IMS_NUMQuestionCorrectionStrategy();
-	} else if (studentTestQuestion.getCorrectionFormula().getFormula().equals(new Integer(CorrectionFormula.FENIX))) {
+	} else if (studentTestQuestion.getCorrectionFormula().getFormula().equals(Integer.valueOf(CorrectionFormula.FENIX))) {
 	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID)
 		questionCorrectionStrategy = new FENIX_LIDQuestionCorrectionStrategy();
 	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR)

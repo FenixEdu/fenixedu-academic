@@ -85,8 +85,8 @@ public class InfoStatResultGrantOwner extends InfoObject {
     }
 
     public Integer getPercentageGrantOwnerResult() {
-	if (numberOfGrantOwnerByCriteria.equals(new Integer(0))) {
-	    return new Integer(0);
+	if (numberOfGrantOwnerByCriteria.equals(Integer.valueOf(0))) {
+	    return Integer.valueOf(0);
 	}
 	double totalGrantOwner = totalNumberOfGrantOwners.intValue();
 	double resultGrantOwner = numberOfGrantOwnerByCriteria.intValue();
@@ -94,8 +94,8 @@ public class InfoStatResultGrantOwner extends InfoObject {
     }
 
     public Integer getPercentageGrantContractResult() {
-	if (numberOfGrantContractsByCriteria.equals(new Integer(0))) {
-	    return new Integer(0);
+	if (numberOfGrantContractsByCriteria.equals(Integer.valueOf(0))) {
+	    return Integer.valueOf(0);
 	}
 	double totalGrantContract = totalNumberOfGrantContracts.intValue();
 	double resultGrantContract = numberOfGrantContractsByCriteria.intValue();

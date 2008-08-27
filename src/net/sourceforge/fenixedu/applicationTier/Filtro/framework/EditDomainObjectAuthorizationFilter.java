@@ -31,7 +31,7 @@ public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationB
 	    Object[] arguments = request.getServiceParameters().parametersArray();
 	    IUserView id = (IUserView) request.getRequester();
 	    Integer idInternal = ((InfoObject) arguments[1]).getIdInternal();
-	    boolean isNew = (idInternal == null) || idInternal.equals(new Integer(0));
+	    boolean isNew = (idInternal == null) || idInternal.equals(Integer.valueOf(0));
 
 	    if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
 		    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, (InfoObject) arguments[1])))) {

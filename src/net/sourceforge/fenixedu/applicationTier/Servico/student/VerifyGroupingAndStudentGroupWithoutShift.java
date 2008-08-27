@@ -52,22 +52,22 @@ public class VerifyGroupingAndStudentGroupWithoutShift extends Service {
 	}
 
 	if (studentGroup.getShift() != null && groupProperties.getShiftType() != null) {
-	    return new Integer(1);
+	    return Integer.valueOf(1);
 	}
 
 	if (studentGroup.getShift() != null && groupProperties.getShiftType() == null) {
-	    return new Integer(2);
+	    return Integer.valueOf(2);
 	}
 
 	if (studentGroup.getShift() == null && groupProperties.getShiftType() != null) {
-	    return new Integer(3);
+	    return Integer.valueOf(3);
 	}
 
 	if (studentGroup.getShift() == null && groupProperties.getShiftType() == null) {
-	    return new Integer(4);
+	    return Integer.valueOf(4);
 	}
 
-	return new Integer(5);
+	return Integer.valueOf(5);
 
     }
 }

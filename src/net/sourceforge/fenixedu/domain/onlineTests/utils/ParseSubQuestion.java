@@ -317,11 +317,11 @@ public class ParseSubQuestion extends DefaultHandler {
 		    RenderFIB renderFIB = new RenderFIB();
 		    renderFIB.setFibtype(atts.getValue("fibtype"));
 		    if (atts.getIndex("rows") != -1)
-			renderFIB.setRows(new Integer(atts.getValue("rows")));
+			renderFIB.setRows(Integer.valueOf(atts.getValue("rows")));
 		    if (atts.getIndex("columns") != -1)
-			renderFIB.setColumns(new Integer(atts.getValue("columns")));
+			renderFIB.setColumns(Integer.valueOf(atts.getValue("columns")));
 		    if (atts.getIndex("maxchars") != -1)
-			renderFIB.setMaxchars(new Integer(atts.getValue("maxchars")));
+			renderFIB.setMaxchars(Integer.valueOf(atts.getValue("maxchars")));
 		    subQuestion.getQuestionType().setRender(renderFIB);
 		} else if (tag.equals("render_choice")) {
 		    RenderChoise renderChoise = new RenderChoise();
@@ -383,7 +383,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	    questionOption.setOptionContent(optionsAuxList);
 	    optionList.add(questionOption);
 	}
-	subQuestion.setOptionNumber(new Integer(optionNumber));
+	subQuestion.setOptionNumber(Integer.valueOf(optionNumber));
 	subQuestion.setOptions(optionList);
 
 	return subQuestion;
@@ -596,10 +596,10 @@ public class ParseSubQuestion extends DefaultHandler {
 		optionNumber++;
 		if (atts.getValue(atts.getIndex("rshuffle")).equals("Yes")) {
 		    v.add("");
-		    vRandom.add(new Integer(v.size()).toString());
+		    vRandom.add(Integer.toString(v.size()));
 		    continue;
 		}
-		v.add(new Integer(v.size() + 1).toString());
+		v.add(Integer.valueOf(v.size() + 1).toString());
 	    }
 	}
 
@@ -628,7 +628,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	// String[] aux = shuffle.substring(1, shuffle.length() - 1).split(",
 	// ");
 	for (int i = 0; i < shuffle.length; i++)
-	    newList.add(i, oldList.get(new Integer(shuffle[i].trim()).intValue() - 1));
+	    newList.add(i, oldList.get(Integer.valueOf(shuffle[i].trim()).intValue() - 1));
 
 	return newList;
     }
@@ -645,7 +645,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	    for (ResponseCondition oldResponseCondition : oldResponseProcessing.getResponseConditions()) {
 		ResponseCondition newResponseCondition = oldResponseCondition;
 		newResponseCondition
-			.setResponse(new Integer(getPosition(shuffle, oldResponseCondition.getResponse())).toString());
+			.setResponse(Integer.valueOf(getPosition(shuffle, oldResponseCondition.getResponse())).toString());
 		newResponseConditionList.add(newResponseCondition);
 	    }
 	    ResponseProcessing newReponseProcessing = oldResponseProcessing;
@@ -677,7 +677,7 @@ public class ParseSubQuestion extends DefaultHandler {
 		for (QuestionOption option : optionList) {
 		    if (option.getOptionId().equals(response)) {
 			newResponseCondition = new ResponseCondition(ResponseCondition.getConditionString(responseCondition
-				.getCondition()), new Integer(index).toString(), responseCondition.getResponseLabelId());
+				.getCondition()), Integer.valueOf(index).toString(), responseCondition.getResponseLabelId());
 		    } else {
 			index++;
 		    }
