@@ -31,7 +31,7 @@ public class ReadStudentsByCurricularCourse extends Service {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
 	final List<InfoStudent> infoStudentList;
-	if (executionCourse == null) {
+	if (executionCourse != null) {
 	    infoStudentList = getAllAttendingStudents(executionCourse.getSite());
 	} else {
 	    curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(courseCode);
@@ -52,7 +52,7 @@ public class ReadStudentsByCurricularCourse extends Service {
 
     private List<InfoStudent> getAllAttendingStudents(final ExecutionCourseSite site) {
 	final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-	for (final Attends attends : site.getExecutionCourse().getAttends()) {
+	for (final Attends attends : site.getSiteExecutionCourse().getAttends()) {
 	    infoStudentList.add(InfoStudent.newInfoFromDomain(attends.getRegistration()));
 	}
 	return infoStudentList;

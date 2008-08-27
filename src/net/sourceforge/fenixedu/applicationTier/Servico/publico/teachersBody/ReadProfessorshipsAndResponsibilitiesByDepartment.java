@@ -58,15 +58,14 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
 	    }
 
 	    List<Professorship> teacherResponsibleFors = null;
-	    List<Professorship> teacherResponsibleForsAux = null;
 	    if (executionYear == null) {
 		teacherResponsibleFors = teacher.responsibleFors();
 	    } else {
-		teacherResponsibleForsAux = teacher.responsibleFors();
-		for (Professorship professorship : teacherResponsibleForsAux) {
-		    if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(executionYear))
-			;
-		    teacherResponsibleFors.add(professorship);
+		teacherResponsibleFors = new ArrayList<Professorship>();
+		for (final Professorship professorship : teacher.responsibleFors()) {
+		    if (professorship.getExecutionCourse().isLecturedIn(executionYear)) {
+			teacherResponsibleFors.add(professorship);
+		    }
 		}
 	    }
 	    if (teacherResponsibleFors != null) {

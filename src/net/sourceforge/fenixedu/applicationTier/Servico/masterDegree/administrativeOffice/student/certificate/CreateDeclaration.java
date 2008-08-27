@@ -38,7 +38,7 @@ public class CreateDeclaration extends Service {
 	for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
 	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
-	    if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
+	    if (studentCurricularPlan != null && studentCurricularPlan.getIdInternal() != null) {
 		infoStudentCurricularPlanList.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
 	    }
 
@@ -66,7 +66,7 @@ public class CreateDeclaration extends Service {
 	for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
 	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
-	    if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
+	    if (studentCurricularPlan != null && studentCurricularPlan.getIdInternal() != null) {
 		infoStudentCurricularPlanList.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
 	    }
 
@@ -106,7 +106,7 @@ public class CreateDeclaration extends Service {
 	for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
 	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
-	    if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
+	    if (studentCurricularPlan != null && studentCurricularPlan.getIdInternal() != null) {
 		infoStudentCurricularPlanList.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
 	    }
 
