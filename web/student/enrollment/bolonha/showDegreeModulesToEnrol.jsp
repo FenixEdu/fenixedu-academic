@@ -1,10 +1,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="org.apache.struts.action.ActionMessages" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
+<html:xhtml />
 
 <logic:present role="STUDENT">
 
@@ -45,6 +45,12 @@
 		</li>
 		<li>
 			<html:link action="/viewCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.idInternal" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewStudentCurricularPlan"/></html:link>
+		</li>
+		<li>
+			<bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
+			<html:link action="<%= "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" target="_blank">
+				<bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/>
+			</html:link>
 		</li>
 	</ul>
 
