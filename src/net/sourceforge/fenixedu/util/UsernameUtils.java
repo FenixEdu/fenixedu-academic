@@ -112,9 +112,14 @@ public class UsernameUtils extends FenixUtil {
 			    }
 
 			}
-		    } else if (person.hasStudent() && person.getStudent().getNumber() < 10000) {
-			// phd
-			istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
+		    } else {
+			if (person.hasStudent() && person.getStudent().getNumber().intValue() < 10000) {
+			    // phd
+			    istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
+			} else if (person.hasStudent() && person.getStudent().getNumber().intValue() >= 10000) {
+			    // alumni without registration
+			    istUsername = ist + sumNumber(person.getStudent().getNumber(), 100000);
+			}
 		    }
 		}
 	    } else if (person.hasAnyInvitation() || person.hasExternalResearchContract()) {

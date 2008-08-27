@@ -1547,21 +1547,9 @@
           <forward name="Manage" path="df.page.manage-roles"/>
       </action>
 
-	<action	name="newPasswordForm"
-				attribute="newPasswordForm"
-				type="net.sourceforge.fenixedu.presentationTier.Action.commons.password.GenerateNewPasswordDispatchAction"
-				path="/generateNewPassword"
-				input="/generateNewPassword.do?method=prepare&amp;page=0"
-				parameter="method"
-				scope="request"
-				validate="true">
-			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-						key="resources.Action.exceptions.NonExistingActionException"
-						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-			<forward name="PrepareSuccess" path="df.page.choosePerson"/>
-			<forward name="Confirm" path="df.page.confirmPasswordChange"/>
-			<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
-		</action>
+	<action	path="/generateNewPassword" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
+		forward="show-generate-password-link"/>
+
 		
 		
 		<!-- ================== TEACHERS MANAGEMENT ======================-->

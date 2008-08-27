@@ -4,6 +4,10 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 
+	<definition name="show-change-password-link" extends="definition.person.masterPage">
+		 <put name="body" value="/person/showChangePassLink.jsp"/>
+	</definition>
+
 	<definition name="visualize.personal.information" extends="definition.person.masterPage">
 		 <put name="body" value="/person/visualizePersonalInfo.jsp"/>
 	</definition>

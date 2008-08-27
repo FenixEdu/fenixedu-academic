@@ -130,7 +130,7 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
-      <action path="/changePasswordForward" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" forward="/changePassword.jsp"/>
+      <action path="/changePasswordForward" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" forward="show-change-password-link"/>
 <!--      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
 -->
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
