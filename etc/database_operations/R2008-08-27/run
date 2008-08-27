@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding new country" InsertCountry.sql IST
