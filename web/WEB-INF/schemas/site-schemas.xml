@@ -40,10 +40,6 @@
     <slot name="functionality.publicPath" key="label.publicPath" bundle="SITE_RESOURCES"/>
 </schema>
 
-<schema name="site.item.name" type="net.sourceforge.fenixedu.domain.Item">
-    <slot name="name"/>
-</schema>
-
 <schema name="websiteManagement.site.choose" type="net.sourceforge.fenixedu.domain.UnitSite">
     <slot name="unit.nameWithAcronym" layout="link" key="label.site.name">
 		<property name="useParent" value="true"/>
