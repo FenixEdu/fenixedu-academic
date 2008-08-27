@@ -90,6 +90,7 @@
 		<delete dir="${build.home}/images/logs"/>
 		<delete dir="${deploy.home}"/>
 		<delete dir="${src_gen}"/>
+		<delete file=".actionAnnotationLog"/>
 	</target>
 
 	<target name="check-dml-file" description="Checks if the dml file is still up to date">
@@ -312,10 +313,12 @@
 
 	<target name="base-compile" description="Compile application" depends="compile-domain,i18nDefault, write-all-properties, generate">
 		<javac destdir="${build.home.webinf.classes}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true" >
+			<compilerarg line="-processor pt.ist.fenixWebFramework.struts.annotations.ActionAnnotationProcessor"/>
 			<classpath refid="class.path.lib.ref"/>
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 		</javac>
+		<copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true"/>
 		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" 
 			dir="${build.home.webinf.classes}"
 			fork="true">
