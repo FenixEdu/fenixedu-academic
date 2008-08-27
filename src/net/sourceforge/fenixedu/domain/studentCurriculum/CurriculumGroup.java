@@ -460,6 +460,18 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    public Set<CurriculumGroup> getCurriculumGroupsToEnrolmentProcess() {
+	final Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (!curriculumModule.isLeaf() && !curriculumModule.isNoCourseGroupCurriculumGroup()) {
+		result.add((CurriculumGroup) curriculumModule);
+	    }
+	}
+
+	return result;
+    }
+
     final public Set<CurriculumGroup> getAllCurriculumGroups() {
 	Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {

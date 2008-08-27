@@ -58,13 +58,12 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
 	setEnrolledCurriculumGroups(buildCurriculumGroupsEnroled(curriculumGroup, executionSemester, curricularYears));
 	setEnrolledCurriculumCourses(buildCurricularCoursesEnroled(curriculumGroup, executionSemester));
-
     }
 
     protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
 	    ExecutionSemester executionSemester, int[] curricularYears) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
-	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroups()) {
+	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
 	    result.add(new StudentCurriculumGroupBean(curriculumGroup, executionSemester, curricularYears));
 	}
 

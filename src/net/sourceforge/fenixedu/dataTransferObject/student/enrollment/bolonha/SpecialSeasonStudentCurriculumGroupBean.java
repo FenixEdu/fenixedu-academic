@@ -51,9 +51,10 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     @Override
     protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
 	    ExecutionSemester executionSemester) {
-	Collection<Enrolment> specialSeasonEnrolments = group.getSpecialSeasonEnrolments(executionSemester.getExecutionYear());
 
-	Predicate<Enrolment> alreadyHasSpecialSeasonEnrolment = new InlinePredicate<Enrolment, Collection<Enrolment>>(
+	final Collection<Enrolment> specialSeasonEnrolments = group.getSpecialSeasonEnrolments(executionSemester
+		.getExecutionYear());
+	final Predicate<Enrolment> alreadyHasSpecialSeasonEnrolment = new InlinePredicate<Enrolment, Collection<Enrolment>>(
 		specialSeasonEnrolments) {
 
 	    @Override
@@ -65,7 +66,6 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 		}
 		return false;
 	    }
-
 	};
 
 	Map<CurricularCourse, Enrolment> enrolmentsMap = new HashMap<CurricularCourse, Enrolment>();
@@ -86,7 +86,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	    }
 	}
 
-	List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
+	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	for (Enrolment enrolment : enrolmentsMap.values()) {
 	    result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
 	}
@@ -98,7 +98,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
 	    ExecutionSemester executionSemester, int[] curricularYears) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
-	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroups()) {
+	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
 	    result.add(new SpecialSeasonStudentCurriculumGroupBean(curriculumGroup, executionSemester));
 	}
 
@@ -109,9 +109,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
 	Collections.sort(result, new BeanComparator("executionPeriod"));
-
 	return result;
-
     }
 
     @Override

@@ -60,7 +60,7 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
     protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
 	    ExecutionSemester executionSemester, int[] curricularYears) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
-	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroups()) {
+	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
 	    result.add(new ImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
 	}
 
@@ -71,9 +71,7 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
     public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
 	Collections.sort(result, new BeanComparator("executionPeriod"));
-
 	return result;
-
     }
 
     @Override
