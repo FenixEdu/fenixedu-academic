@@ -1,8 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<html:xhtml/>
 
 <logic:present role="STUDENT">
 	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES"/></em>
@@ -58,17 +58,6 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
-	
-	<br/>
-	<logic:empty name="registrationsToEnrol">
-		<logic:empty name="registrationsToChooseSecondCycle">
-		<p>
-    		<em class="warning0">
-		    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.secondCycleInternalCandidacyIngression.note"/>
-	    	</em>	    	
-    	</p>
-    	</logic:empty>
-	</logic:empty>	
     
 </logic:present>
 
