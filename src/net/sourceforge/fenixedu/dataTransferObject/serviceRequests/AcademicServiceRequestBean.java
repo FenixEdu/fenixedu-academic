@@ -72,6 +72,10 @@ public class AcademicServiceRequestBean implements Serializable {
 	return this.academicServiceRequestSituationType != null;
     }
 
+    public DateTime getFinalSituationDate() {
+	return getSituationDate().toDateTimeAtMidnight().plusDays(1).minusMinutes(1);
+    }
+
     public YearMonthDay getSituationDate() {
 	return situationDate;
     }
@@ -142,10 +146,6 @@ public class AcademicServiceRequestBean implements Serializable {
 
     public boolean isToCancelOrReject() {
 	return isToCancel() || isToReject();
-    }
-
-    public DateTime getFinalSituationDate() {
-	return getSituationDate().toDateTimeAtCurrentTime();
     }
 
     private AdministrativeOffice getAdministrativeOffice() {

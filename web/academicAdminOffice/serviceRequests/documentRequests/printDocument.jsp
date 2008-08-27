@@ -83,7 +83,6 @@
 		</fr:edit>
 	</logic:equal>
 	
-	<%-- 
 	<logic:equal name="documentRequest" property="diploma" value="true">
 		<fr:edit id="serviceRequestBean" name="serviceRequestBean" schema="AcademicServiceRequestBean.external.entity.edit">
 			<fr:layout>
@@ -92,7 +91,6 @@
 			</fr:layout>
 		</fr:edit>
 	</logic:equal>
-	--%>
 	
 	<%-- 
 	<strong><bean:message key="label.serviceRequests.sendEmailToStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong><html:radio name="academicServiceRequestsManagementForm" property="sendEmailToStudent" value="true"><bean:message key="label.yes" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio><html:radio name="academicServiceRequestsManagementForm" property="sendEmailToStudent" value="false"><bean:message key="label.no" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio>
