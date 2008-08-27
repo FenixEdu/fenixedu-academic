@@ -1328,7 +1328,7 @@ public class Thesis extends Thesis_Base {
 	    Language realLanguage = Language.valueOf(language);
 	    String value = thesisAbstract.getContent(realLanguage);
 
-	    if (value == null && value.length() == 0) {
+	    if (value == null || value.length() == 0) {
 		return null;
 	    } else {
 		return value;
@@ -1397,7 +1397,7 @@ public class Thesis extends Thesis_Base {
 	    Language realLanguage = Language.valueOf(language);
 	    String value = thesisAbstract.getContent(realLanguage);
 
-	    if (value == null && value.length() == 0) {
+	    if (value == null || value.length() == 0) {
 		return null;
 	    } else {
 		return value;

@@ -86,7 +86,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	try {
 	    executeService("CancelResidenceEvent", new Object[] { residenceEvent, AccessControl.getPerson().getEmployee() });
 	} catch (DomainException e) {
-	    addErrorMessage(request, e.getMessage(), e.getMessage(), null);
+	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	}
 
 	return viewPersonResidenceEvents(mapping, actionForm, request, response);
@@ -100,7 +100,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	try {
 	    executeService("PayResidenceEvent", new Object[] { getLoggedPerson(request).getUser(), residenceEvent });
 	} catch (DomainException e) {
-	    addErrorMessage(request, e.getMessage(), e.getMessage(), null);
+	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	}
 
 	return viewPersonResidenceEvents(mapping, actionForm, request, response);

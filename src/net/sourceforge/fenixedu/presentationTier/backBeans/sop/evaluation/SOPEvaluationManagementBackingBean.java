@@ -1432,7 +1432,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
 	if (selectedCurricularYearID == null) {
 	    Integer[] curricularYears = getCurricularYearIDs();
-	    if (curricularYears != null || curricularYears.length != 0) {
+	    if (curricularYears != null && curricularYears.length != 0) {
 		selectedCurricularYearID = curricularYears[0];
 		setSelectedCurricularYearID(selectedCurricularYearID);
 	    }

@@ -41,7 +41,7 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
 
 	IUserView userView = UserView.getUser();
 
-	InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadCurrentExecutionYear", null);
+	InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadCurrentExecutionYear");
 
 	Object[] argsDCPs = { executionYear.getIdInternal() };
 	List degreeCurricularPlans = (List) ServiceUtils.executeService("ReadActiveDegreeCurricularPlansByExecutionYear",
