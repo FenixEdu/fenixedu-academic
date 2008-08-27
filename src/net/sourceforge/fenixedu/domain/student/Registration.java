@@ -3076,7 +3076,7 @@ public class Registration extends Registration_Base {
 
     public boolean isEnrolmentByStudentAllowed() {
 	return isActive() && getRegistrationAgreement().isEnrolmentByStudentAllowed()
-		&& getDegreeTypesToEnrolByStudent().contains(getDegreeType()) && !isSecondCycleInternalCandidacyIngression();
+		&& getDegreeTypesToEnrolByStudent().contains(getDegreeType());
     }
 
     private List<DegreeType> getDegreeTypesToEnrolByStudent() {
