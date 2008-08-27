@@ -40,4 +40,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Change Photograph Table" photographTable.sql
