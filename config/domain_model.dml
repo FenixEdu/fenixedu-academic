@@ -196,7 +196,8 @@ enum      net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricul
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState 									 as CandidacyProcessState;
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState 								 as IndividualCandidacyState;
 enum	  net.sourceforge.fenixedu.domain.candidacy.Ingression														 as Ingression;
-enum	  net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState								 			 as InquiriesRegistryState; 
+enum	  net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState								 			 as InquiriesRegistryState;
+enum	  net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification						 			 as InquiryNotAnsweredJustification;
 enum	  net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType			 as CandidacyExemptionJustificationType;
 enum	  net.sourceforge.fenixedu.domain.support.SupportRequestType												 as SupportRequestType;
 enum	  net.sourceforge.fenixedu.domain.support.SupportRequestPriority											 as SupportRequestPriority;
@@ -650,7 +651,7 @@ class DomainObject {
     relation PreviousPhotograph {
        Photograph playsRole previous;
        Photograph playsRole next;
-    }
+	}
 
 	class File extends DomainObject {
 		String checksum;
@@ -2606,10 +2607,13 @@ class DomainObject {
 
 	class inquiries.InquiriesCourse extends DomainObject {
     	Integer weeklyHoursSpentPercentage;
-    	Double studyDaysSpentInExamsSeason;	
+    	Double studyDaysSpentInExamsSeason;
     	Integer weeklyHoursSpentInClassesSeason;	
     	Long answerDuration;
     	DateTime responseDateTime;    	
+		InquiryNotAnsweredJustification notAnsweredJustification;
+		String notAnsweredOtherJustification;
+	
 	
 		Character approvationRatioClassification;
 		Character arithmeticMeanClassification;
@@ -3822,7 +3826,7 @@ class DomainObject {
 	class student.RegistrationNumber extends DomainObject {
 		Integer number;
 	}
-
+	
 	class student.RegistrationRegime extends DomainObject {
 		DateTime whenCreated;
 		RegistrationRegimeType regimeType;
@@ -4028,7 +4032,7 @@ class DomainObject {
 		
 		class support.SupportException extends support.SupportRequest {
 		}
-
+		
 		class support.SupportDemand extends support.SupportRequest {
 		}
 
@@ -9761,8 +9765,8 @@ relation RootDomainObjectPhotographs {
 relation RootDomainObjectPendingPhotographs {
     RootDomainObject playsRole pendingHolder;
     Photograph playsRole pendingPhotographs {
-        multiplicity *;
-    }
+		multiplicity *;
+	}
 }
 
 relation RootDomainObjectForumSubscription {
@@ -13265,7 +13269,6 @@ relation ResidencePriceTableResidenceManagementUnit {
   }
   residence.ResidencePriceTable playsRole residencePriceTable;
 }
-
 
 relation StudentCandidacyCountryOfResidence {	
 	candidacy.StudentCandidacy playsRole associatedResidentPersonsCandidacies {

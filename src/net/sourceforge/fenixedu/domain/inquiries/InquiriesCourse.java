@@ -139,6 +139,22 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 
 	return inquiriesCourse;
     }
+    
+    public static InquiriesCourse makeNewNotAnswered(final InquiriesRegistry inquiriesRegistry,
+	    final InquiryNotAnsweredJustification justification, final String otherJustification) {
+	final InquiriesCourse inquiriesCourse = new InquiriesCourse(inquiriesRegistry);
+	final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = inquiriesRegistry.getStudent().getStudent()
+		.getInquiriesStudentExecutionPeriod(inquiriesRegistry.getExecutionPeriod());
+	inquiriesCourse.setWeeklyHoursSpentInClassesSeason(inquiriesStudentExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
+	inquiriesRegistry.setState(InquiriesRegistryState.NOT_ANSWERED);
+	
+	inquiriesCourse.setNotAnsweredJustification(justification);
+	if (justification == InquiryNotAnsweredJustification.OTHER) {
+	    inquiriesCourse.setNotAnsweredOtherJustification(otherJustification);
+	}
+	
+	return inquiriesCourse;
+    }
 
     private static void setAnswers(StudentInquiryDTO inquiryDTO, InquiriesCourse inquiriesCourse) {
 	Map<String, InquiriesQuestion> answersMap = inquiryDTO.buildAnswersMap(false);

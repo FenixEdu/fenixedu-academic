@@ -122,6 +122,14 @@
 		</form-bean>     
 
 	  <!-- =================== Fill Inquiries ============== -->
+	  
+		<form-bean name="inquiryNotAnsweredForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+    	    <form-property name="method" type="java.lang.String"/>
+    	    <form-property name="inquiriesRegistryID" type="java.lang.Integer" />
+			<form-property name="notAnsweredJustification" type="java.lang.String"/>
+			<form-property name="notAnsweredOtherJustification" type="java.lang.String"/>
+		</form-bean>   	  
+	  
       <form-bean name="fillInquiriesForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">

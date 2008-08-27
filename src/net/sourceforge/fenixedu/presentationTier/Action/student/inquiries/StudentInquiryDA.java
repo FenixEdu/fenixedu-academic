@@ -17,15 +17,17 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -36,13 +38,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(path = "/studentInquiry", module = "student")
+@Mapping(path = "/studentInquiry", module = "student", formBean = "inquiryNotAnsweredForm")
 @Forwards( { @Forward(name = "chooseCourse", path = "/student/inquiries/chooseCourse.jsp"),
 	@Forward(name = "inquiriesClosed", path = "/student/inquiries/inquiriesClosed.jsp"),
 	@Forward(name = "showInquiry1stPage", path = "/student/inquiries/inquiry1stPage.jsp"),
 	@Forward(name = "showInquiry2ndPage", path = "/student/inquiries/inquiry2ndPage.jsp"),
 	@Forward(name = "chooseTeacher", path = "/student/inquiries/chooseTeacher.jsp"),
 	@Forward(name = "showTeacherInquiry1stPage", path = "/student/inquiries/teacherInquiry1stPage.jsp"),
+	@Forward(name = "showDontRespond", path = "/student/inquiries/dontRespond.jsp"),
 	@Forward(name = "previewAndConfirm", path = "/student/inquiries/previewAndConfirm.jsp") })
 public class StudentInquiryDA extends FenixDispatchAction {
 
@@ -63,7 +66,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	final List<CurricularCourseInquiriesRegistryDTO> courses = new ArrayList<CurricularCourseInquiriesRegistryDTO>();
 	for (final InquiriesRegistry registry : coursesToAnswer) {
 	    courses.add(new CurricularCourseInquiriesRegistryDTO(registry));
-	    if(registry.getState() == InquiriesRegistryState.ANSWER_LATER){
+	    if (registry.isToAnswerLater()) {
 		isAnyInquiryToAnswer = true;
 	    }
 	}
@@ -96,6 +99,43 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    addActionMessage(request, e.getKey());
 	}
 
+	return showCoursesToAnswer(actionMapping, actionForm, request, response);
+    }
+
+    public ActionForward showJustifyNotAnswered(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	DynaActionForm form = (DynaActionForm) actionForm;
+	final Integer inquiriesRegistryID = getIntegerFromRequest(request, "inquiriesRegistryID");
+	form.set("inquiriesRegistryID", inquiriesRegistryID);
+	request.setAttribute("inquiriesRegistry", rootDomainObject.readInquiriesRegistryByOID(inquiriesRegistryID));
+
+	return actionMapping.findForward("showDontRespond");
+    }
+
+    public ActionForward justifyNotAnswered(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	DynaActionForm form = (DynaActionForm) actionForm;
+	InquiriesRegistry inquiriesRegistry = rootDomainObject.readInquiriesRegistryByOID((Integer) form
+		.get("inquiriesRegistryID"));
+	String notAnsweredJustification = (String) form.get("notAnsweredJustification");
+	if (StringUtils.isEmpty(notAnsweredJustification)) {
+	    addActionMessage(request, "error.inquiries.notAnsweredFillAtLeastOneField");
+	    request.setAttribute("inquiriesRegistryID", inquiriesRegistry.getIdInternal());
+	    request.setAttribute("inquiriesRegistry", inquiriesRegistry);
+	    return actionMapping.findForward("showDontRespond");
+	}
+
+	if (inquiriesRegistry.getStudent().getPerson() != AccessControl.getPerson()) {
+	    // FIXME: ERROR MESSAGE
+	    return null;
+	}
+
+	InquiryNotAnsweredJustification justification = InquiryNotAnsweredJustification.valueOf(notAnsweredJustification);
+	String notAnsweredOtherJustification = (String) form.get("notAnsweredOtherJustification");
+
+	executeService("WriteStudentInquiryNotAnswer", inquiriesRegistry, justification, notAnsweredOtherJustification);
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
     }
 

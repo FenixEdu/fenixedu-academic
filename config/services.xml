@@ -6223,7 +6223,7 @@
 			<chain name="OperatorAuthorization" />
 		</filterChains>
 	</service>
-    <service>
+	<service>
         <name>UploadOwnPhoto</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto</implementationClass>
         <description />
@@ -12300,6 +12300,15 @@
 	<service>
 		<name>WriteStudentInquiry</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiry</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="StudentAuthorization" />
+		</filterChains>		
+	</service>	
+
+	<service>
+		<name>WriteStudentInquiryNotAnswer</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiryNotAnswer</implementationClass>
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="StudentAuthorization" />

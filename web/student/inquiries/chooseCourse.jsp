@@ -31,13 +31,21 @@
 			<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
 			<fr:property name="columnClasses" value="nowrap aleft,,,,,,acenter nowrap"/>
 			<fr:property name="suffixes" value=",,h,%,dias,,"/>
+			<fr:property name="linkGroupSeparator" value=" | "/>
 			
 			<fr:property name="linkFormat(answerNow)" value="/studentInquiry.do?method=showInquiries1stPage&amp;inquiriesRegistryID=${inquiriesRegistry.idInternal}" />
 			<fr:property name="key(answerNow)" value="link.inquiries.answerNow"/>
 			<fr:property name="bundle(answerNow)" value="INQUIRIES_RESOURCES"/>
 			<fr:property name="contextRelative(answerNow)" value="true"/>      
-			<fr:property name="order(answerNow)" value="1"/>
+			<fr:property name="order(answerNow)" value="2"/>
 			<fr:property name="visibleIf(answerNow)" value="inquiriesRegistry.toAnswerLater"/>
+
+			<fr:property name="linkFormat(dontRespond)" value="/studentInquiry.do?method=showJustifyNotAnswered&amp;inquiriesRegistryID=${inquiriesRegistry.idInternal}" />
+			<fr:property name="key(dontRespond)" value="link.inquiries.dontRespond"/>
+			<fr:property name="bundle(dontRespond)" value="INQUIRIES_RESOURCES"/>
+			<fr:property name="contextRelative(dontRespond)" value="true"/>      
+			<fr:property name="order(dontRespond)" value="1"/>
+			<fr:property name="visibleIf(dontRespond)" value="inquiriesRegistry.toAnswerLater"/>
 			
 			<fr:property name="visibleIf(notAnswered)" value="inquiriesRegistry.notAnswered"/>
 			<fr:property name="customLink(notAnswered)" >
