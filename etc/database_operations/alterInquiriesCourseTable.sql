@@ -1,0 +1,2 @@
+alter table INQUIRIES_COURSE add column NOT_ANSWERED_JUSTIFICATION varchar(50);
+alter table INQUIRIES_COURSE add column NOT_ANSWERED_OTHER_JUSTIFICATION varchar(255);
