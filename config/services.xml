@@ -6223,6 +6223,24 @@
 			<chain name="OperatorAuthorization" />
 		</filterChains>
 	</service>
+    <service>
+        <name>UploadOwnPhoto</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="PersonAuthorization" />
+        </filterChains>
+    </service>
+    <service>
+        <name>AcknowledgePhotographRejection</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.AcknowledgePhotographRejection</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="PersonAuthorization" />
+        </filterChains>
+    </service>
 	<service>
 		<name>GenerateOutgoingSibsPaymentFileByExecutionYearID</name>
 		<implementationClass>

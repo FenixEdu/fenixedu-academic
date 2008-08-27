@@ -107,6 +107,11 @@
 					scope="request">
 				<forward name="chooseFile" path="/photo/submitPhoto.jsp"/>
 			</action>
+
+        	<action path="/pendingPhotos" parameter="method" validate="true"
+        		type="net.sourceforge.fenixedu.presentationTier.Action.operator.PendingPhotosAction" scope="request">
+        		<forward name="list" path="operator.photos.pending" />
+	       </action>
 		    
 		   <action 	path="/generatePasswordsForCandidacies"
 					input="/generatePasswordForCandidacies.do?method=chooseExecutionDegree&amp;page=0"

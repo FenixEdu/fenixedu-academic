@@ -1007,8 +1007,8 @@ public class Person extends Person_Base {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
-	if (hasPersonalPhoto()) {
-	    getPersonalPhoto().delete();
+	if (getPersonalPhotoEvenIfRejected() != null) {
+	    getPersonalPhotoEvenIfRejected().delete();
 	}
 	if (hasParkingParty()) {
 	    getParkingParty().delete();
@@ -2655,6 +2655,42 @@ public class Person extends Person_Base {
 	    }
 	}
 	return false;
+    }
+
+    @Override
+    public Photograph getPersonalPhoto() {
+	Photograph photo = super.getPersonalPhoto();
+	if (photo == null)
+	    return null;
+	do {
+	    if (photo.getState() == PhotoState.APPROVED)
+		return photo;
+	    photo = photo.getPrevious();
+	} while (photo != null);
+	return null;
+    }
+
+    public Photograph getPersonalPhotoEvenIfPending() {
+	Photograph photo = super.getPersonalPhoto();
+	if (photo == null)
+	    return null;
+	do {
+	    if (photo.getState() != PhotoState.REJECTED)
+		return photo;
+	    photo = photo.getPrevious();
+	} while (photo != null);
+	return null;
+    }
+
+    public Photograph getPersonalPhotoEvenIfRejected() {
+	return super.getPersonalPhoto();
+    }
+
+    @Override
+    public void setPersonalPhoto(Photograph photo) {
+	if (super.hasPersonalPhoto())
+	    photo.setPrevious(super.getPersonalPhoto());
+	super.setPersonalPhoto(photo);
     }
 
     public boolean isPhotoPubliclyAvailable() {

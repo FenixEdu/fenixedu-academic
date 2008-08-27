@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -161,7 +161,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	Party party = rootDomainObject.readPartyByOID(personID);
 	if (party.isPerson()) {
 	    Person person = (Person) party;
-	    FileEntry personalPhoto = person.getPersonalPhoto();
+	    Photograph personalPhoto = person.getPersonalPhoto();
 	    if (personalPhoto != null) {
 		try {
 		    response.setContentType(personalPhoto.getContentType().getMimeType());

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.util;
 
 /**
@@ -24,6 +21,10 @@ public enum ContentType {
 	    return "*/*";
 	}
 
+    }
+
+    public String getFileExtention() {
+	return name().toLowerCase();
     }
 
     public static ContentType getContentType(String httpContentType) {

@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -287,7 +287,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	final Homepage homepage = getHomepage(request);
 	if (homepage != null && homepage.getShowPhoto() != null && homepage.getShowPhoto().booleanValue()) {
 	    final Person person = homepage.getPerson();
-	    final FileEntry personalPhoto = person.getPersonalPhoto();
+	    final Photograph personalPhoto = person.getPersonalPhoto();
 
 	    if (personalPhoto != null) {
 		response.setContentType(personalPhoto.getContentType().getMimeType());

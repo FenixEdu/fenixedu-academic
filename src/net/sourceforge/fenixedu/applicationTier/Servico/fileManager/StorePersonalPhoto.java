@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PhotoType;
+import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
@@ -13,30 +15,25 @@ import net.sourceforge.fenixedu.util.ContentType;
  * 
  */
 public class StorePersonalPhoto extends Service {
-
-    public void run(byte[] contents, ContentType contentType, String personUsername) throws ExcepcaoInexistente {
+    public void run(byte[] contents, byte[] compressed, ContentType contentType, String personUsername)
+	    throws ExcepcaoInexistente {
 	Person person = Person.readPersonByUsername(personUsername);
 
 	if (person == null) {
 	    throw new ExcepcaoInexistente("Unknown Person !!");
 	}
 
-	storePersonalPhoto(contents, contentType, person);
+	storePersonalPhoto(contents, compressed, contentType, person);
     }
 
-    public void run(byte[] contents, ContentType contentType, Integer personID) {
+    public void run(byte[] contents, byte[] compressed, ContentType contentType, Integer personID) throws ExcepcaoPersistencia {
 	Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
-	storePersonalPhoto(contents, contentType, person);
+	storePersonalPhoto(contents, compressed, contentType, person);
     }
 
-    private void storePersonalPhoto(byte[] contents, ContentType contentType, Person person) {
-
-	if (person.getPersonalPhoto() != null) {
-	    person.getPersonalPhoto().delete();
-	}
-
-	new FileEntry(contentType, new ByteArray(contents), person);
-
+    private void storePersonalPhoto(byte[] contents, byte[] compressed, ContentType contentType, Person person) {
+	person.setPersonalPhoto(new Photograph(contentType, new ByteArray(contents), new ByteArray(compressed),
+		PhotoType.INSTITUTIONAL));
     }
 }

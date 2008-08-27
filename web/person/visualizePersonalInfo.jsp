@@ -8,27 +8,87 @@
 <html:xhtml/>
 
 <logic:present role="PERSON">
+<bean:define id="person" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person"/>
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.person.title.personalConsult"/></h2>
 
-<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="float: right; border: 1px solid #aaa; padding: 3px;"/>
-
 <p>
-	<span class="error0"><!-- Error messages go here --><html:errors /></span>
+    <span class="error0"><!-- Error messages go here --><html:errors /></span>
 </p>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
 
-<!-- Contactos -->
+<!-- Photo -->
+	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop" width="25"><span class="emphasis-box">1</span></td>
+			<td class="infoop"><strong><bean:message key="label.person.title.photo" /></strong></td>
+		</tr>
+	</table>
+
+	<table class="mvert1 tdtop">
+		<tbody>
+			<tr>
+				<td><html:img align="middle"
+					src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>"
+					altKey="personPhoto" bundle="IMAGE_RESOURCES"
+					styleClass="float: right; border: 1px solid #aaa; padding: 3px;" /></td>
+				<td><div style="padding: 0pt 2em;">
+                    <div class="infoop2">
+                        <p class="mvert0"><bean:message key="label.person.photo.info" /></p>
+                    </div>
+    				<p class="mtop1 mbottom0">
+    				    <html:link page="/uploadPhoto.do?method=prepare">
+    					   <bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />
+        				</html:link>
+                    </p>
+                    <p class="mvert05">
+                    <logic:notEmpty name="person" property="personalPhotoEvenIfRejected">
+    					<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="PENDING">
+                            <p><em><bean:message key="label.person.photo.pending.info" bundle="APPLICATION_RESOURCES" /></em></p>
+					    </logic:equal>
+    					<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="REJECTED">
+                            <logic:equal name="person" property="personalPhotoEvenIfRejected.rejectedAcknowledged" value="false">
+  								<p><em><bean:message key="label.person.photo.rejected.info" bundle="APPLICATION_RESOURCES" /></em>
+                                <html:link action="/uploadPhoto.do?method=acknowledgeRejection">
+                                    <bean:message key="link.hide.message" bundle="APPLICATION_RESOURCES" />
+                                </html:link>
+                                </p>
+                            </logic:equal>
+					    </logic:equal>
+    				</logic:notEmpty>
+                    </p>
+				</div></td>
+			</tr>
+		</tbody>
+	</table>
+
+    <logic:notEmpty name="person" property="personalPhoto">
+    <logic:equal name="person" property="personalPhoto.state" value="APPROVED">
+	<fr:form action="/visualizePersonalInfo.do">
+		<table class="tstyle2 thlight thleft">
+			<tr>
+				<td><bean:message key="label.person.availablePhoto" /></td>
+				<td><fr:edit layout="option-select-postback" name="person" slot="availablePhoto" /></td>
+				<td class="switchNone"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
+					styleClass="mvert05">
+					<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES" />
+				</html:submit></td>
+			</tr>
+		</table>
+	</fr:form>
+    </logic:equal>
+    </logic:notEmpty>
+
+	<!-- Contactos -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td class="infoop" width="25"><span class="emphasis-box">1</span></td>
+		<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.contactAndAuthorization" /></strong></td>
 	</tr>
 </table>
 
-<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person"/>
 <logic:messagesPresent message="true" property="contacts">
 	<ul class="nobullet list6">
 		<html:messages id="messages" property="contacts" message="true">
@@ -54,7 +114,7 @@
         <td>-</td>
         <td class="acenter">
             <logic:equal name="person" property="availablePhoto" value="true">
-                <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                <img src="<%=request.getContextPath()%>/images/accept.gif"/>
             </logic:equal>
         </td>
         <td></td>
@@ -80,30 +140,30 @@
 			</td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToPublic" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToStudents" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareCreatePhone">
@@ -153,30 +213,30 @@
 			</td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToPublic" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToStudents" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareCreateMobilePhone">
@@ -226,30 +286,30 @@
 			</td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToPublic" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToStudents" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
     			<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
@@ -300,30 +360,30 @@
 			</td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToPublic" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToStudents" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                 <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
                 <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareCreateWebAddress">
@@ -358,27 +418,10 @@
 </table>
 </fr:form>
 
-<fr:form action="/visualizePersonalInfo.do">
-<table class="tstyle2 thlight thleft">
-    <tr>
-        <td><bean:message key="label.person.availablePhoto" /></td>
-        <td>
-        <fr:edit layout="option-select-postback" name="person" slot="availablePhoto">
-        </fr:edit>
-        </td>
-        <td class="switchNone">
-            <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
-        <bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
-    </html:submit>
-    </td>
-    </tr>
-</table>
-</fr:form>
-
 <!-- Dados Pessoais -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
+		<td class="infoop" width="25"><span class="emphasis-box">3</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.personal.info" /></strong></td>
 	</tr>
 </table>
@@ -386,7 +429,7 @@
 	<p class="mtop15">
 		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 	</p>
-	<fr:edit id="nickname" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
+	<fr:edit id="nickname" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
 			<fr:property name="columnClasses" value=",,tdclear "/>
@@ -397,7 +440,7 @@
 	</html:submit>
 </fr:form>
 
-<fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+<fr:view name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
 	</fr:layout>	
@@ -407,11 +450,11 @@
 <!-- Informação de Utilizador -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td class="infoop" width="25"><span class="emphasis-box">3</span></td>
+		<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.login.info" /></strong></td>
 	</tr>
 </table>
-<fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
+<fr:view name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	
@@ -421,11 +464,11 @@
 <!-- Filiação -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
+		<td class="infoop" width="25"><span class="emphasis-box">5</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
 	</tr>
 </table>
-<fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="net.sourceforge.fenixedu.domain.Person.family">
+<fr:view name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" schema="net.sourceforge.fenixedu.domain.Person.family">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	
@@ -435,11 +478,11 @@
 <!-- Residência -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td class="infoop" width="25"><span class="emphasis-box">5</span></td>
+		<td class="infoop" width="25"><span class="emphasis-box">6</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.addressInfo" /></strong></td>
 	</tr>
 </table>
-<logic:iterate id="address" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.physicalAddresses">
+<logic:iterate id="address" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person.physicalAddresses">
 	<fr:view name="address" schema="contacts.PhysicalAddress.view-for-student">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>

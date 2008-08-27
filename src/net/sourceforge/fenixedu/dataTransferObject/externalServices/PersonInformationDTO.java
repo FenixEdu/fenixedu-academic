@@ -12,9 +12,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
@@ -148,7 +148,7 @@ public class PersonInformationDTO {
 	}
     }
 
-    private byte[] getJpegPhoto(final FileEntry personalPhoto) {
+    private byte[] getJpegPhoto(final Photograph personalPhoto) {
 	if (personalPhoto.getContentType() != net.sourceforge.fenixedu.util.ContentType.JPG) {
 	    try {
 		final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(personalPhoto.getContents()));

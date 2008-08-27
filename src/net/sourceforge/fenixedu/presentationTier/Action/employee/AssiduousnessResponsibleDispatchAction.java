@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitEmployees;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkScheduleDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
@@ -366,7 +366,7 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	Party party = rootDomainObject.readPartyByOID(personID);
 	if (party.isPerson()) {
 	    Person person = (Person) party;
-	    FileEntry personalPhoto = person.getPersonalPhoto();
+	    Photograph personalPhoto = person.getPersonalPhoto();
 	    if (personalPhoto != null) {
 		try {
 		    response.setContentType(personalPhoto.getContentType().getMimeType());

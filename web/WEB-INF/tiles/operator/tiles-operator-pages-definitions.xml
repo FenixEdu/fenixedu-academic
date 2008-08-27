@@ -5,6 +5,10 @@
 	<definition name="definition.operator.password" extends="definition.operator.two-column">
 		<put name="body" value="/operator/password/generateNewStudentsPassword_bd.jsp" />
 	</definition>
+    <!-- ===================== Photo ====================== -->
+    <definition name="operator.photos.pending" extends="definition.operator.two-column">
+        <put name="body" value="/operator/photo/listPending.jsp" />
+    </definition>
 
 	
 	<!-- ===================== Candidacy ====================== -->

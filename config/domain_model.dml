@@ -70,6 +70,8 @@ enum      net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType  
 enum      net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType                                    as ScheduleClockingType;
 enum      net.sourceforge.fenixedu.domain.branch.BranchType                                                          as BranchType;
 enum      net.sourceforge.fenixedu.domain.contacts.PartyContactType                                                  as PartyContactType;
+enum      net.sourceforge.fenixedu.domain.PhotoType                                                                  as PhotoType;
+enum      net.sourceforge.fenixedu.domain.PhotoState                                                                 as PhotoState;
 enum      net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType                                      as CurricularPeriodType;
 enum      net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType                                         as CurricularRuleType;
 enum      net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                                            as CurricularCourseType;
@@ -634,6 +636,22 @@ class DomainObject {
 		String name;
 	}
 
+    class Photograph extends DomainObject {
+        ByteArray content;
+        ByteArray rawContent;
+        ContentType contentType;
+        PhotoType photoType;
+        PhotoState state;
+        DateTime submission;
+        DateTime stateChange;
+        Boolean rejectedAcknowledged;
+    }
+    
+    relation PreviousPhotograph {
+       Photograph playsRole previous;
+       Photograph playsRole next;
+    }
+
 	class File extends DomainObject {
 		String checksum;
 		String checksumAlgorithm;
@@ -644,11 +662,6 @@ class DomainObject {
 		Group permittedGroup;
 		Integer size;
 		DateTime uploadTime;
-	}
-
-	class FileEntry extends DomainObject {
-		ByteArray content;
-		ContentType contentType;
 	}
 
 		class FileContent extends File {
@@ -2593,7 +2606,7 @@ class DomainObject {
 
 	class inquiries.InquiriesCourse extends DomainObject {
     	Integer weeklyHoursSpentPercentage;
-    	Double studyDaysSpentInExamsSeason;
+    	Double studyDaysSpentInExamsSeason;	
     	Integer weeklyHoursSpentInClassesSeason;	
     	Long answerDuration;
     	DateTime responseDateTime;    	
@@ -3809,7 +3822,7 @@ class DomainObject {
 	class student.RegistrationNumber extends DomainObject {
 		Integer number;
 	}
-	
+
 	class student.RegistrationRegime extends DomainObject {
 		DateTime whenCreated;
 		RegistrationRegimeType regimeType;
@@ -4015,7 +4028,7 @@ class DomainObject {
 		
 		class support.SupportException extends support.SupportRequest {
 		}
-		
+
 		class support.SupportDemand extends support.SupportRequest {
 		}
 
@@ -6952,8 +6965,8 @@ relation ExtraWorkRequestUnit {
 	}
 }
 
-relation FileEntryPerson {
-	FileEntry playsRole personalPhoto;
+relation PersonPhoto {
+	Photograph playsRole personalPhoto;
 	Person playsRole person;
 }
 
@@ -9738,11 +9751,18 @@ relation RootDomainObjectFile {
 	}
 }
 
-relation RootDomainObjectFileEntry {
+relation RootDomainObjectPhotographs {
 	RootDomainObject playsRole rootDomainObject;
-	FileEntry playsRole fileEntrys {
+	Photograph playsRole photographs {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectPendingPhotographs {
+    RootDomainObject playsRole pendingHolder;
+    Photograph playsRole pendingPhotographs {
+        multiplicity *;
+    }
 }
 
 relation RootDomainObjectForumSubscription {
@@ -13245,6 +13265,7 @@ relation ResidencePriceTableResidenceManagementUnit {
   }
   residence.ResidencePriceTable playsRole residencePriceTable;
 }
+
 
 relation StudentCandidacyCountryOfResidence {	
 	candidacy.StudentCandidacy playsRole associatedResidentPersonsCandidacies {

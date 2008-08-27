@@ -12,6 +12,10 @@
 		 <put name="body" value="/person/visualizePersonalInfo.jsp"/>
 	</definition>
 	
+    <definition name="person.upload.photo" extends="definition.person.masterPage">
+         <put name="body" value="/person/uploadPhoto.jsp"/>
+    </definition>
+	
 	<definition name="partyContacts.createPartyContact" extends="definition.person.masterPage">
 		 <put name="body" value="/person/contacts/createPartyContact.jsp"/>
 	</definition>

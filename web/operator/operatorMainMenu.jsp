@@ -22,6 +22,12 @@
 			<bean:message key="link.operator.candidacy.passwords" />
 		</html:link>
 	</li>
+    <li>
+        <html:link page="/pendingPhotos.do?method=prepare">
+            <bean:message key="link.operator.photo.pending" bundle="MANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+	<%--
 	<li class="navheader">Alumni</li>
 		<li>
 			<html:link page="/alumni.do?method=prepareIdentityRequestsList">

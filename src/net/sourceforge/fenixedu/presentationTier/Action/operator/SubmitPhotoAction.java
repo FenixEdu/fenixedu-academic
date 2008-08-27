@@ -78,7 +78,7 @@ public class SubmitPhotoAction extends FenixDispatchAction {
 
 	try {
 
-	    Object[] args = { outputStream.toByteArray(), contentType, username };
+	    Object[] args = { formFile.getFileData(), outputStream.toByteArray(), contentType, username };
 	    ServiceUtils.executeService("StorePersonalPhoto", args);
 
 	} catch (ExcepcaoInexistente e) {

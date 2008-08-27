@@ -95,3 +95,41 @@
 	<slot name="nameOfFather" />
 	<slot name="nameOfMother" />
 </schema>
+
+<schema name="operator.photo.pending.list" type="net.sourceforge.fenixedu.domain.Photograph"
+	bundle="MANAGER_RESOURCES">
+	<slot name="person" key="label.operator.photo.person.details" schema="operator.photo.photo.details">
+		<property name="classes" value="tstyle2 tdleft thright width100" />
+		<property name="columnClasses" value="width1pc nowrap,,tdclear" />
+	</slot>
+	<!--
+		Ugly, i need 2 prints of the same field with different views of it, so i used the name of an
+		unused slot and then ignored it
+	-->
+	<slot name="submission" key="label.operator.photo.submission" read-only="true" />
+	<slot name="photoType" key="label.operator.photo.current" layout="view-as-image" read-only="true">
+		<property name="classes" value="column3" />
+		<property name="useParent" value="true" />
+		<property name="moduleRelative" value="false" />
+		<property name="contextRelative" value="true" />
+		<property name="imageFormat"
+			value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.idInternal}" />
+	</slot>
+	<slot name="idInternal" key="label.operator.photo.pending" layout="view-as-image" read-only="true">
+		<property name="classes" value="column3" />
+		<property name="useParent" value="true" />
+		<property name="moduleRelative" value="false" />
+		<property name="contextRelative" value="true" />
+		<property name="imageFormat"
+			value="/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=${idInternal}" />
+	</slot>
+	<slot name="state" key="label.operator.photo.state" layout="radio" />
+</schema>
+
+<schema name="operator.photo.photo.details" type="net.sourceforge.fenixedu.domain.Person"
+	bundle="MANAGER_RESOURCES">
+	<slot name="user.userUId" key="label.operator.photo.person.istUsername" read-only="true" />
+	<slot name="name" read-only="true" />
+	<slot name="dateOfBirthYearMonthDay" read-only="true" />
+	<slot name="gender" read-only="true" />
+</schema>

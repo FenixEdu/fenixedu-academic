@@ -199,3 +199,11 @@
 	<slot name="nameWithAcronym" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name"/>
 	<slot name="costCenterCode" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Unit.costCenterCode"/>
 </schema>
+<schema name="party.photo.upload" type="net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fileInputStream" key="label.person.photo.selectfile"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="fileNameSlot" value="filename" />
+		<property name="fileContentTypeSlot" value="contentType" />
+	</slot>
+</schema>
