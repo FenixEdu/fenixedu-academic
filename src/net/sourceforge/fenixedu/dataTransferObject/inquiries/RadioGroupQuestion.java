@@ -67,7 +67,11 @@ public class RadioGroupQuestion extends InquiriesQuestion {
     }
 
     public Integer getValueAsInteger() {
-	return getValue() != null && NumberUtils.isNumber(getValue()) ? Integer.valueOf(getValue()) : null;
+	try {
+	    return getValue() != null ? Integer.valueOf(getValue()) : null;
+	} catch (final NumberFormatException ex) {
+	    return null;
+	}
     }
 
 }

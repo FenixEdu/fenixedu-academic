@@ -17,19 +17,19 @@ public class ContentInjectionRewriter extends RequestRewriter {
 
     public static final String HAS_CONTEXT_PREFIX = "<!-- " + HAS_CONTEXT_PREFIX_STRING + " -->";
 
-    public static final String BLOCK_HAS_CONTEXT_PREFIX = "<!-- " + BLOCK_HAS_CONTEXT_STRING + " -->";
+    public static final char[] BLOCK_HAS_CONTEXT_PREFIX = ("<!-- " + BLOCK_HAS_CONTEXT_STRING + " -->").toCharArray();
 
-    public static final String END_BLOCK_HAS_CONTEXT_PREFIX = "<!-- " + BLOCK_END_HAS_CONTEXT_STRING + " -->";
+    public static final char[] END_BLOCK_HAS_CONTEXT_PREFIX = ("<!-- " + BLOCK_END_HAS_CONTEXT_STRING + " -->").toCharArray();
 
     public static final String CONTEXT_ATTRIBUTE_NAME = FilterFunctionalityContext.CONTEXT_ATTRIBUTE_NAME + "_PATH";
 
-    private static final String LINK_IDENTIFIER = "<a";
+    private static final char[] LINK_IDENTIFIER = "<a".toCharArray();
 
-    private static final String FORM_IDENTIFIER = "<form";
+    private static final char[] FORM_IDENTIFIER = "<form".toCharArray();
 
-    private static final String IMG_IDENTIFIER = "<img";
+    private static final char[] IMG_IDENTIFIER = "<img".toCharArray();
 
-    private static final String AREA_IDENTIFIER = "<area";
+    private static final char[] AREA_IDENTIFIER = "<area".toCharArray();
 
     private static final int LENGTH_OF_HAS_CONTENT_PREFIX = HAS_CONTEXT_PREFIX.length();
 
@@ -40,6 +40,14 @@ public class ContentInjectionRewriter extends RequestRewriter {
 	final FunctionalityContext functionalityContext = AbstractFunctionalityContext.getCurrentContext(httpServletRequest);
 	contextPath = functionalityContext == null ? null : functionalityContext.getCurrentContextPath();
     }
+
+    private static final char[] CLOSE = ">".toCharArray();
+    private static final char[] PREFIX_JAVASCRIPT = "javascript:".toCharArray();
+    private static final char[] PREFIX_MAILTO = "mailto:".toCharArray();
+    private static final char[] PREFIX_HTTP = "http:".toCharArray();
+    private static final char[] PREFIX_HTTPS = "https:".toCharArray();
+    private static final char[] CARDINAL = "#".toCharArray();
+    private static final char[] QUESTION_MARK = "?".toCharArray();
 
     @Override
     public StringBuilder rewrite(final StringBuilder source) {
@@ -52,30 +60,30 @@ public class ContentInjectionRewriter extends RequestRewriter {
 	int iOffset = 0;
 
 	while (true) {
-	    final int indexOfAopen = source.indexOf(LINK_IDENTIFIER, iOffset);
-	    final int indexOfFormOpen = source.indexOf(FORM_IDENTIFIER, iOffset);
-	    final int indexOfImgOpen = source.indexOf(IMG_IDENTIFIER, iOffset);
-	    final int indexOfAreaOpen = source.indexOf(AREA_IDENTIFIER, iOffset);
-	    final int indexOfBlockHasContextopen = source.indexOf(BLOCK_HAS_CONTEXT_PREFIX, iOffset);
+	    final int indexOfAopen = indexOf(source, LINK_IDENTIFIER, iOffset);
+	    final int indexOfFormOpen = indexOf(source, FORM_IDENTIFIER, iOffset);
+	    final int indexOfImgOpen = indexOf(source, IMG_IDENTIFIER, iOffset);
+	    final int indexOfAreaOpen = indexOf(source, AREA_IDENTIFIER, iOffset);
+	    final int indexOfBlockHasContextopen = indexOf(source, BLOCK_HAS_CONTEXT_PREFIX, iOffset);
 
 	    if (firstIsMinValue(indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfAopen)) {
-		    final int indexOfAclose = source.indexOf(">", indexOfAopen);
+		    final int indexOfAclose = indexOf(source, CLOSE, indexOfAopen);
 		    if (indexOfAclose >= 0) {
 			final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAopen, indexOfAclose);
 			if (indexOfHrefBodyStart >= 0) {
 			    final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
 			    final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
 			    if (indexOfHrefBodyEnd >= 0) {
-				int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
-				int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
-				int indexOfHttp = source.indexOf("http:", indexOfHrefBodyStart);
-				int indexOfHttps = source.indexOf("https:", indexOfHrefBodyStart);
+				int indexOfJavaScript = indexOf(source, PREFIX_JAVASCRIPT, indexOfHrefBodyStart);
+				int indexOfMailto = indexOf(source, PREFIX_MAILTO, indexOfHrefBodyStart);
+				int indexOfHttp = indexOf(source, PREFIX_HTTP, indexOfHrefBodyStart);
+				int indexOfHttps = indexOf(source, PREFIX_HTTPS, indexOfHrefBodyStart);
 				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd)
 					&& (indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)
 					&& (indexOfHttp < 0 || indexOfHttp > indexOfHrefBodyEnd)
 					&& (indexOfHttps < 0 || indexOfHttps > indexOfHrefBodyEnd)) {
-				    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
+				    final int indexOfCardinal = indexOf(source, CARDINAL, indexOfHrefBodyStart);
 				    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
 					    && indexOfCardinal < indexOfHrefBodyEnd;
 				    if (hasCardinal) {
@@ -84,7 +92,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 					response.append(source, iOffset, indexOfHrefBodyEnd);
 				    }
 
-				    final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
+				    final int indexOfQmark = indexOf(source, QUESTION_MARK, indexOfHrefBodyStart);
 				    if (indexOfQmark == -1 || indexOfQmark > indexOfHrefBodyEnd) {
 					response.append('?');
 				    } else {
@@ -107,7 +115,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		continue;
 	    } else if (firstIsMinValue(indexOfFormOpen, indexOfAopen, indexOfImgOpen, indexOfAreaOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfFormOpen)) {
-		    final int indexOfFormClose = source.indexOf(">", indexOfFormOpen);
+		    final int indexOfFormClose = indexOf(source, CLOSE, indexOfFormOpen);
 		    if (indexOfFormClose >= 0) {
 			final int indexOfFormActionBodyStart = findFormActionBodyStart(source, indexOfFormOpen, indexOfFormClose);
 			if (indexOfFormActionBodyStart >= 0) {
@@ -124,7 +132,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		continue;
 	    } else if (firstIsMinValue(indexOfImgOpen, indexOfAopen, indexOfFormOpen, indexOfAreaOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfImgOpen)) {
-		    final int indexOfImgClose = source.indexOf(">", indexOfImgOpen);
+		    final int indexOfImgClose = indexOf(source, CLOSE, indexOfImgOpen);
 		    if (indexOfImgClose >= 0) {
 			final int indexOfSrcBodyStart = findSrcBodyStart(source, indexOfImgOpen, indexOfImgClose);
 			if (indexOfSrcBodyStart >= 0) {
@@ -132,7 +140,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 			    if (indexOfSrcBodyEnd >= 0) {
 				response.append(source, iOffset, indexOfSrcBodyEnd);
 
-				final int indexOfQmark = source.indexOf("?", indexOfSrcBodyStart);
+				final int indexOfQmark = indexOf(source, QUESTION_MARK, indexOfSrcBodyStart);
 				if (indexOfQmark == -1 || indexOfQmark > indexOfSrcBodyEnd) {
 				    response.append('?');
 				} else {
@@ -150,14 +158,14 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		continue;
 	    } else if (firstIsMinValue(indexOfAreaOpen, indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfAreaOpen)) {
-		    final int indexOfAreaClose = source.indexOf(">", indexOfAreaOpen);
+		    final int indexOfAreaClose = indexOf(source, CLOSE, indexOfAreaOpen);
 		    if (indexOfAreaClose >= 0) {
 			final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAreaOpen, indexOfAreaClose);
 			if (indexOfHrefBodyStart >= 0) {
 			    final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
 			    final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
 			    if (indexOfHrefBodyEnd >= 0) {
-				final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
+				final int indexOfCardinal = indexOf(source, CARDINAL, indexOfHrefBodyStart);
 				boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
 					&& indexOfCardinal < indexOfHrefBodyEnd;
 				if (hasCardinal) {
@@ -166,7 +174,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 				    response.append(source, iOffset, indexOfHrefBodyEnd);
 				}
 
-				final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
+				final int indexOfQmark = indexOf(source, QUESTION_MARK, indexOfHrefBodyStart);
 				if (indexOfQmark == -1 || indexOfQmark > indexOfHrefBodyEnd) {
 				    response.append('?');
 				} else {
@@ -187,10 +195,9 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		iOffset = continueToNextToken(response, source, iOffset, indexOfAreaOpen);
 		continue;
 	    } else if (firstIsMinValue(indexOfBlockHasContextopen, indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen)) {
-		final int indexOfEndBlockHasContextOpen = source
-			.indexOf(END_BLOCK_HAS_CONTEXT_PREFIX, indexOfBlockHasContextopen);
+		final int indexOfEndBlockHasContextOpen = indexOf(source, END_BLOCK_HAS_CONTEXT_PREFIX, indexOfBlockHasContextopen);
 		if (indexOfEndBlockHasContextOpen == -1) {
-		    iOffset = indexOfBlockHasContextopen + BLOCK_HAS_CONTEXT_PREFIX.length();
+		    iOffset = indexOfBlockHasContextopen + BLOCK_HAS_CONTEXT_PREFIX.length;
 		} else {
 		    response.append(source, iOffset, indexOfEndBlockHasContextOpen);
 		    iOffset = indexOfEndBlockHasContextOpen;
@@ -232,10 +239,11 @@ public class ContentInjectionRewriter extends RequestRewriter {
     }
 
     protected boolean match(final StringBuilder source, final int iStart, int iEnd, final String string) {
-	if (iEnd - iStart != string.length()) {
+	final int length = string.length();
+	if (iEnd - iStart != length) {
 	    return false;
 	}
-	for (int i = 0; i < string.length(); i++) {
+	for (int i = 0; i < length; i++) {
 	    if (source.charAt(iStart + i) != string.charAt(i)) {
 		return false;
 	    }

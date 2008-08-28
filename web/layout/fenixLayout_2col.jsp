@@ -3,26 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@page import="net.sourceforge.fenixedu.presentationTier.tiles.LayoutLinkInjector"%>
 <html:html xhtml="true">
 <head>
 	<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<%
-		final String contextPath = request.getContextPath();
-	%>
-	<link rel="shortcut icon" href="<%= contextPath %>/images/favicon.ico" type="image/ico"/>
-    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/layout.css"  media="screen"  />
-    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/general.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/color.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/print.css" media="print" />
-    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/calendar.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/dotist_timetables.css" />
-    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/dotist_calendars.css" media="screen, print" />
-    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/inquiries_style.css" media="screen" />
 
-    <script type="text/javascript" src="<%= contextPath %>/CSS/scripts/hideButtons.js"></script>
-    <script type="text/javascript" src="<%= contextPath %>/CSS/scripts/check.js"></script>
-    <script type="text/javascript" src="<%= contextPath %>/CSS/scripts/checkall.js"></script>
+	<% final String contextPath = request.getContextPath(); out.write(LayoutLinkInjector.getFenixLayout2colMapLinks(contextPath)); %>
 
 	<tiles:insert attribute="head" ignore="true"/>
 	<tiles:insert attribute="rss" ignore="true" />
