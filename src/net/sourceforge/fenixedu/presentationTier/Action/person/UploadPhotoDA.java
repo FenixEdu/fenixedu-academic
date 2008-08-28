@@ -97,4 +97,10 @@ public class UploadPhotoDA extends FenixDispatchAction {
 	executeService(request, "AcknowledgePhotographRejection", new Object[0]);
 	return mapping.findForward("visualizePersonalInformation");
     }
+
+    public ActionForward cancelSubmission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	executeService(request, "CancelPhotographSubmission", new Object[0]);
+	return mapping.findForward("visualizePersonalInformation");
+    }
 }

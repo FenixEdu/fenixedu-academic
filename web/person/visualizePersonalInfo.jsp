@@ -46,7 +46,11 @@
                     <p class="mvert05">
                     <logic:notEmpty name="person" property="personalPhotoEvenIfRejected">
     					<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="PENDING">
-                            <p><em><bean:message key="label.person.photo.pending.info" bundle="APPLICATION_RESOURCES" /></em></p>
+                            <p><em><bean:message key="label.person.photo.pending.info" bundle="APPLICATION_RESOURCES" /></em>
+                            <html:link action="/uploadPhoto.do?method=cancelSubmission">
+                                <bean:message key="link.person.photo.cancel.submission" bundle="APPLICATION_RESOURCES" />
+                            </html:link>
+                            </p>
 					    </logic:equal>
     					<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="REJECTED">
                             <logic:equal name="person" property="personalPhotoEvenIfRejected.rejectedAcknowledged" value="false">
