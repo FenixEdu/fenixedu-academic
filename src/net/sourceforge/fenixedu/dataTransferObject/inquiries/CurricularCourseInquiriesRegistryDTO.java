@@ -9,6 +9,7 @@ import java.math.RoundingMode;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 
 /**
@@ -55,7 +56,7 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     }
 
     public double getWeeklyContactLoad() {
-	BigDecimal result = new BigDecimal(getCurricularCourse().getCompetenceCourse().getContactLoad());
+	BigDecimal result = new BigDecimal(getCurricularCourse().getCompetenceCourse().getContactLoad(getExecutionSemester()));
 	return result.divide(new BigDecimal(14), 1, RoundingMode.UP).doubleValue();
     }
 
@@ -69,9 +70,18 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
 	// ((%*NHTA + NHC)*14+ NDE*8) / 28
 	final double result = (((getWeeklyHoursSpentPercentage() / 100d) * weeklyHoursSpentInClassesSeason * 14)
-		+ getCurricularCourse().getCompetenceCourse().getContactLoad() + getStudyDaysSpentInExamsSeason() * 8) / 28;
+		+ getCurricularCourse().getCompetenceCourse().getContactLoad(getExecutionSemester()) + getStudyDaysSpentInExamsSeason() * 8) / 28;
 
 	return new BigDecimal(result).setScale(1, BigDecimal.ROUND_UP).doubleValue();
+    }
+
+    public double getCourseEctsCredits() {
+	return getCurricularCourse().getCompetenceCourse().getEctsCredits(getExecutionSemester().getSemester(),
+		getExecutionSemester());
+    }
+
+    private ExecutionSemester getExecutionSemester() {
+	return getInquiriesRegistry().getExecutionPeriod();
     }
 
 }

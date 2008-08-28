@@ -50,7 +50,7 @@
 <schema name="curricularCourseInquiriesRegistryDTO.submitHoursAndDays"
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO" bundle="INQUIRIES_RESOURCES">
 	<slot name="curricularCourse.name" key="label.curricularCourse.name" read-only="true"/>
-	<slot name="curricularCourse.competenceCourse.ectsCredits" key="label.competenceCourse.ectsCredits" read-only="true"/>
+	<slot name="courseEctsCredits" key="label.competenceCourse.ectsCredits" read-only="true"/>
 	<slot name="weeklyContactLoad" key="label.contactLoad.b" read-only="true">
 		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
 	</slot>	
