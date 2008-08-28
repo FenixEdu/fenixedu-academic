@@ -115,6 +115,9 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	    InfoInquiriesEmailReminderReport report, DynaActionForm form, String fromName, String fromAddress)
 	    throws FenixFilterException, FenixServiceException {
 
+	if (student == null || student.getPerson() != null || student.getPerson().getDefaultEmailAddress() == null) {
+	    return false;
+	}
 	String emailAddress = student.getPerson().getDefaultEmailAddress().getValue();
 	if (!EmailSender.emailAddressFormatIsValid(emailAddress)) {
 	    return false;
