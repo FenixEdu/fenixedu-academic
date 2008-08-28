@@ -26,7 +26,7 @@
 		<fr:view name="enrolments" schema="OptionalCurricularCoursesLocation.enrolment.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
-				<fr:property name="columnClasses" value="acenter width12em,,tdclear tderror1"/>
+				<fr:property name="columnClasses" value="acenter width12em,, tderror1"/>
 				
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="enrolmentsToChange" />

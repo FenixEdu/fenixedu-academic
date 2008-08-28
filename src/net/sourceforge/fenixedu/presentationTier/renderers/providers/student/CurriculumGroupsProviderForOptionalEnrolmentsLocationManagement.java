@@ -15,7 +15,7 @@ public class CurriculumGroupsProviderForOptionalEnrolmentsLocationManagement imp
 	final OptionalEnrolmentLocationBean bean = (OptionalEnrolmentLocationBean) source;
 	final StudentCurricularPlan studentCurricularPlan = bean.getEnrolment().getStudentCurricularPlan();
 	final Collection<? extends CurriculumGroup> curricularCoursePossibleGroups = studentCurricularPlan
-		.getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(bean.getEnrolment().getCurricularCourse());
+		.getCurricularCoursePossibleGroups(bean.getEnrolment().getCurricularCourse());
 	curricularCoursePossibleGroups.remove(bean.getEnrolment().getCurriculumGroup());
 	return curricularCoursePossibleGroups;
     }

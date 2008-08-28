@@ -27,26 +27,31 @@
 		<fr:edit id="optionalCurricularCoursesLocationBean" name="optionalCurricularCoursesLocationBean" visible="false" />
 		
 		<logic:notEmpty name="optionalCurricularCoursesLocationBean" property="enrolmentBeans">
-		<strong><bean:message key="label.optionalCurricularCourse.enrolments" bundle="APPLICATION_RESOURCES" />:</strong>
-		<fr:edit id="optionalCurricularCoursesLocationBean-enrolmentBeans" name="optionalCurricularCoursesLocationBean" property="enrolmentBeans"
-				 schema="OptionalCurricularCoursesLocationBean.edit.enrolmentBeans">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
-				<fr:property name="columnClasses" value="acenter,,"/>
-			</fr:layout>
-			<fr:destination name="invalid" path="/optionalCurricularCoursesLocation.do?method=chooseNewDestinationInvalid" />
-		</fr:edit>
+
+			<strong><bean:message key="label.optionalCurricularCourse.enrolments" bundle="APPLICATION_RESOURCES" />:</strong>
+			<fr:edit id="optionalCurricularCoursesLocationBean-enrolmentBeans" name="optionalCurricularCoursesLocationBean" property="enrolmentBeans"
+					 schema="OptionalCurricularCoursesLocationBean.edit.enrolmentBeans">
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle4 thlight mtop05"/>
+					<fr:property name="columnClasses" value="acenter,,"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/optionalCurricularCoursesLocation.do?method=chooseNewDestinationInvalid" />
+			</fr:edit>
+
 		</logic:notEmpty>
+
 		<logic:notEmpty name="optionalCurricularCoursesLocationBean" property="optionalEnrolmentBeans">
-		<strong><bean:message key="label.optionalCurricularCourse.optionalEnrolments" bundle="APPLICATION_RESOURCES" />:</strong>
-		<fr:edit id="optionalCurricularCoursesLocationBean-optionalEnrolmentBeans" name="optionalCurricularCoursesLocationBean" property="optionalEnrolmentBeans"
-				 schema="OptionalCurricularCoursesLocationBean.edit.optionalEnrolmentBeans">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
-				<fr:property name="columnClasses" value="acenter,,"/>
-			</fr:layout>
-			<fr:destination name="invalid" path="/optionalCurricularCoursesLocation.do?method=chooseNewDestinationInvalid" />
-		</fr:edit>
+
+			<strong><bean:message key="label.optionalCurricularCourse.optionalEnrolments" bundle="APPLICATION_RESOURCES" />:</strong>
+			<fr:edit id="optionalCurricularCoursesLocationBean-optionalEnrolmentBeans" name="optionalCurricularCoursesLocationBean" property="optionalEnrolmentBeans"
+					 schema="OptionalCurricularCoursesLocationBean.edit.optionalEnrolmentBeans">
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle4 thlight mtop05"/>
+					<fr:property name="columnClasses" value="acenter,,"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/optionalCurricularCoursesLocation.do?method=chooseNewDestinationInvalid" />
+			</fr:edit>
+
 		</logic:notEmpty>
 		
 		<p>
