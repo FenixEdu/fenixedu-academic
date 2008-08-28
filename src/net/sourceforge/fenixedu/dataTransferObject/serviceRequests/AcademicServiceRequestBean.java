@@ -72,8 +72,18 @@ public class AcademicServiceRequestBean implements Serializable {
 	return this.academicServiceRequestSituationType != null;
     }
 
+    DateTime finalSituationDate;
+
     public DateTime getFinalSituationDate() {
-	return getSituationDate().toDateTimeAtMidnight().plusDays(1).minusMinutes(1);
+	if (finalSituationDate == null) {
+	    return getSituationDate().toDateTimeAtCurrentTime();
+	}
+
+	return finalSituationDate;
+    }
+
+    public void setFinalSituationDate(final DateTime finalSituationDate) {
+	this.finalSituationDate = finalSituationDate;
     }
 
     public YearMonthDay getSituationDate() {

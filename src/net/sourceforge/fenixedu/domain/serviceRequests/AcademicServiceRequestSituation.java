@@ -45,31 +45,37 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	super.setSituationDate(academicServiceRequestBean.getFinalSituationDate());
     }
 
-    protected void checkParameters(final AcademicServiceRequest academicServiceRequest,
-	    final AcademicServiceRequestBean academicServiceRequestBean) {
+    protected void checkParameters(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean bean) {
 	if (academicServiceRequest == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequest.cannot.be.null");
 	}
 
-	if (!academicServiceRequestBean.hasAcademicServiceRequestSituationType()) {
+	if (!bean.hasAcademicServiceRequestSituationType()) {
 	    throw new DomainException(
 		    "error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType.cannot.be.null");
 	}
 
 	final AcademicServiceRequestSituation activeSituation = academicServiceRequest.getActiveSituation();
-	if (activeSituation != null
-		&& academicServiceRequestBean.getFinalSituationDate().toLocalDate().isBefore(
-			activeSituation.getSituationDate().toLocalDate())) {
-	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.before");
+	if (activeSituation != null) {
+	    final DateTime activeSituationDate = activeSituation.getSituationDate();
+	    final DateTime finalSituationDate = bean.getFinalSituationDate();
+	    if (finalSituationDate.toLocalDate().isBefore(activeSituationDate.toLocalDate())) {
+		throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.before");
+	    }
+
+	    if (finalSituationDate.toLocalDate().isEqual(activeSituationDate.toLocalDate())
+		    && finalSituationDate.isBefore(activeSituationDate)) {
+		bean.setFinalSituationDate(activeSituationDate.plusMinutes(1));
+	    }
 	}
 
-	if (academicServiceRequestBean.getFinalSituationDate().isAfterNow()) {
+	if (bean.getFinalSituationDate().isAfterNow()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.after");
 	}
 
-	if (academicServiceRequestBean.isToCancelOrReject()) {
-	    if (!academicServiceRequestBean.hasJustification()) {
+	if (bean.isToCancelOrReject()) {
+	    if (!bean.hasJustification()) {
 		throw new DomainException(
 			"error.serviceRequests.AcademicServiceRequestSituation.justification.cannot.be.null.for.cancelled.and.rejected.situations");
 	    }
