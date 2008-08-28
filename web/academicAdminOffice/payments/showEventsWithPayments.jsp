@@ -18,15 +18,22 @@
 	</fr:layout>
 </fr:view>
 
+<bean:define id="personId" name="person" property="idInternal" />
+
 <logic:notEmpty name="person" property="eventsWithPayments">
 	<fr:view name="person" property="eventsWithPayments" schema="AccountingEvent.view-with-extra-payed-amount">
-		<fr:layout name="tabular">
+		<fr:layout name="tabular-sortable">
 			<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
 			<fr:property name="columnClasses" value=",acenter,aright,aright" />
-			<fr:property name="sortBy" value="whenOccured=asc"/>
+			
 			<fr:property name="linkFormat(detail)" value="/payments.do?method=showPaymentsForEvent&eventId=${idInternal}&personId=${person.idInternal}"/>
 			<fr:property name="key(detail)" value="label.details"/>
 			<fr:property name="bundle(detail)" value="APPLICATION_RESOURCES"/>
+
+			<fr:property name="sortParameter" value="sortBy"/>
+	        <fr:property name="sortUrl" value="<%= "/payments.do?method=showEventsWithPayments&personId=" + personId %>" />
+    	    <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "whenOccured=asc" : request.getParameter("sortBy") %>"/>
+			<fr:property name="sortableSlots" value="lastPaymentDate, payedAmount, reimbursableAmount" />
 		</fr:layout>
 	</fr:view>	
 </logic:notEmpty>
@@ -35,7 +42,6 @@
 	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events.noEvents" />.</em>
 </logic:empty>
 	
-<bean:define id="personId" name="person" property="idInternal" />
 <fr:form action='<%= "/payments.do?personId=" + personId %>'>
 	
 	<input type="hidden" name="method" value=""/>
