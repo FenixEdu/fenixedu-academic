@@ -246,14 +246,6 @@
       </field>
     </form>
     
-  <form name="newPasswordForm">
-	   	<field property="username" depends="required" page="1">
-	    	<arg0 key="label.username" resource="true"/>
-	    </field>
-   </form>
-   	   
-   	   
-   	   
     <form name="advisoryForm">
       <field property="sender" depends="required" page="1" >
         <arg0 key="message.manager.advisory.sender" resource="true"/>
