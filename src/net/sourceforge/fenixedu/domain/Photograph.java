@@ -57,6 +57,7 @@ public class Photograph extends Photograph_Base {
     public void setPrevious(Photograph previous) {
 	if (previous.getState() == PhotoState.PENDING) {
 	    previous.setState(PhotoState.REJECTED);
+	    previous.setRejectedAcknowledged(Boolean.TRUE);
 	}
 	super.setPrevious(previous);
     }
