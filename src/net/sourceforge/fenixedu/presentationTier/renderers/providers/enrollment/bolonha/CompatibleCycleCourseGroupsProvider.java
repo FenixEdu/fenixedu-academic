@@ -9,9 +9,7 @@ public class CompatibleCycleCourseGroupsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	final CycleEnrolmentBean cycleEnrolmentBean = (CycleEnrolmentBean) source;
-
 	return cycleEnrolmentBean.getCycleDestinationAffinities();
-
     }
 
     public Converter getConverter() {
