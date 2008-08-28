@@ -850,6 +850,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return null;
     }
 
+    public boolean hasEnrolmentPeriodInCurricularCourses(final ExecutionSemester executionSemester) {
+	return getEnrolmentPeriodInCurricularCoursesBy(executionSemester) != null;
+    }
+
     /**
      * Used to create a CurricularCourse to non box structure
      */
@@ -1744,5 +1748,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 
 	return result;
+    }
+
+    public List<CycleCourseGroup> getDestinationAffinities(final CycleType sourceCycleType) {
+	if (hasRoot()) {
+	    final CycleCourseGroup cycleCourseGroup = getRoot().getCycleCourseGroup(sourceCycleType);
+	    if (cycleCourseGroup != null) {
+		return cycleCourseGroup.getDestinationAffinities();
+	    }
+	}
+	return Collections.emptyList();
     }
 }
