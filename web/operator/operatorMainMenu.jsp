@@ -16,18 +16,17 @@
 	<li>
 		<html:link page="/submitPhoto.do?method=preparePhotoUpload&page=0"><bean:message key="link.operator.submitPhoto" /></html:link>
 	</li>
-	<%--
-	<li>
-		<html:link page="/generatePasswordsForCandidacies.do?method=prepareChooseExecutionDegree">
-			<bean:message key="link.operator.candidacy.passwords" />
-		</html:link>
-	</li>
     <li>
         <html:link page="/pendingPhotos.do?method=prepare">
             <bean:message key="link.operator.photo.pending" bundle="MANAGER_RESOURCES"/>
         </html:link>
     </li>
 	<%--
+	<li>
+		<html:link page="/generatePasswordsForCandidacies.do?method=prepareChooseExecutionDegree">
+			<bean:message key="link.operator.candidacy.passwords" />
+		</html:link>
+	</li>
 	<li class="navheader">Alumni</li>
 		<li>
 			<html:link page="/alumni.do?method=prepareIdentityRequestsList">
