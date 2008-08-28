@@ -77,7 +77,7 @@ public class PhotographUploadBean implements Serializable {
     public int getRawSize() {
 	return rawContents.length;
     }
-    
+
     public String getFilename() {
 	return filename;
     }
@@ -135,7 +135,7 @@ public class PhotographUploadBean implements Serializable {
 	image = op.filter(image, null);
 
 	// set compression
-	ImageWriter writer = (ImageWriter) ImageIO.getImageWritersByMIMEType(contentType).next();
+	ImageWriter writer = ImageIO.getImageWritersByMIMEType(ContentType.getContentType(contentType).getMimeType()).next();
 	ImageWriteParam param = writer.getDefaultWriteParam();
 	if (contentType.equals(ContentType.JPG)) {
 	    param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);

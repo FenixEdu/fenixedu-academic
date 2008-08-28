@@ -46,7 +46,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
 	    return prepare(mapping, actionForm, request, response);
 	}
 
-	if (!photo.getContentType().equals("image/jpeg") && !photo.getContentType().equals("image/png")) {
+	if (ContentType.getContentType(photo.getContentType()) == null) {
 	    actionMessages.add("fileUnsupported", new ActionMessage("errors.unsupportedFile"));
 	    saveMessages(request, actionMessages);
 	    return prepare(mapping, actionForm, request, response);
