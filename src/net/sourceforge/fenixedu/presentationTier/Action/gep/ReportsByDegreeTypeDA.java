@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
@@ -336,6 +338,14 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("carga estágio");
 	spreadsheet.setHeader("carga orientação tutorial");
 	spreadsheet.setHeader("carga trabalho autónomo");
+	spreadsheet.setHeader("código interno da disciplina execução");
+	spreadsheet.setHeader("carga teórica disciplina execução");
+	spreadsheet.setHeader("carga problemas disciplina execução");
+	spreadsheet.setHeader("carga laboratorial disciplina execução");
+	spreadsheet.setHeader("carga serminários disciplina execução");
+	spreadsheet.setHeader("carga trabalho de campo disciplina execução");
+	spreadsheet.setHeader("carga estágio disciplina execução");
+	spreadsheet.setHeader("carga orientação tutorial disciplina execução");
 
 	for (final Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeType() == degreeType) {
@@ -371,6 +381,9 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 					executionSemester = executionYear.getFirstExecutionPeriod();
 					duration = "Anual";
 				    }
+
+				    final List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester);
+
 				    if (competenceCourse != null) {
 					row.setCell(competenceCourse.getObjectives(executionSemester).replace('\t', ' ').replace(
 						'\n', ' ').replace('\r', ' '));
@@ -415,12 +428,42 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 					row.setCell(" ");
 					row.setCell(" ");
 				    }
+
+				    if (executionCourses.isEmpty()) {
+					row.setCell(" ");
+					row.setCell(" ");
+					row.setCell(" ");
+					row.setCell(" ");
+					row.setCell(" ");
+					row.setCell(" ");
+					row.setCell(" ");
+					row.setCell(" ");
+					row.setCell(" ");
+				    } else {
+					final ExecutionCourse executionCourse = executionCourses.iterator().next();
+					row.setCell(executionCourse.getIdInternal());
+					setCourseLoad(row, executionCourse.getCourseLoadByShiftType(ShiftType.TEORICA));
+					setCourseLoad(row, executionCourse.getCourseLoadByShiftType(ShiftType.PROBLEMS));
+					setCourseLoad(row, executionCourse.getCourseLoadByShiftType(ShiftType.LABORATORIAL));
+					setCourseLoad(row, executionCourse.getCourseLoadByShiftType(ShiftType.SEMINARY));
+					setCourseLoad(row, executionCourse.getCourseLoadByShiftType(ShiftType.FIELD_WORK));
+					setCourseLoad(row, executionCourse.getCourseLoadByShiftType(ShiftType.TRAINING_PERIOD));
+					setCourseLoad(row, executionCourse.getCourseLoadByShiftType(ShiftType.TUTORIAL_ORIENTATION));
+				    }
 				}
 			    }
 			}
 		    }
 		}
 	    }
+	}
+    }
+
+    private void setCourseLoad(final Row row, final CourseLoad courseLoad) {
+	if (courseLoad == null) {
+	    row.setCell("0.0");
+	} else {
+	    row.setCell(courseLoad.getWeeklyHours().toString());
 	}
     }
 
