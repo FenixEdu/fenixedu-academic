@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -81,8 +84,23 @@ public class CycleEnrolmentBean implements Serializable {
     }
 
     public List<CycleCourseGroup> getCycleDestinationAffinities() {
-	return getStudentCurricularPlan().getDegreeCurricularPlan().getRoot().getCycleCourseGroup(getSourceCycleAffinity())
-		.getDestinationAffinities();
+	final List<CycleCourseGroup> affinities = getDegreeCurricularPlan().getDestinationAffinities(getSourceCycleAffinity());
+	if (affinities.isEmpty()) {
+	    return Collections.emptyList();
+	}
+
+	final List<CycleCourseGroup> result = new ArrayList<CycleCourseGroup>();
+	for (final CycleCourseGroup cycleCourseGroup : affinities) {
+	    final DegreeCurricularPlan degreeCurricularPlan = cycleCourseGroup.getParentDegreeCurricularPlan();
+	    if (degreeCurricularPlan.hasEnrolmentPeriodInCurricularCourses(getExecutionPeriod())) {
+		result.add(cycleCourseGroup);
+	    }
+	}
+	return result;
+    }
+
+    private DegreeCurricularPlan getDegreeCurricularPlan() {
+	return getStudentCurricularPlan().getDegreeCurricularPlan();
     }
 
     public CycleCurriculumGroup getSourceCycle() {
