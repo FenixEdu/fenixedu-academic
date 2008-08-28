@@ -21,6 +21,8 @@
 
 <h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.notAnswer" bundle="INQUIRIES_RESOURCES"/></span></h3>
 
+<p class="success0"><bean:message key="label.inquiries.notAnswer.irreversibleAction" bundle="INQUIRIES_RESOURCES"/>:</p>
+
 <p><bean:message key="label.inquiries.notAnswer.reasons" bundle="INQUIRIES_RESOURCES"/>:</p>
 
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">

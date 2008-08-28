@@ -25,7 +25,6 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
     public InquiriesRegistry() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setState(InquiriesRegistryState.ANSWER_LATER);
     }
 
     public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionSemester executionSemester, Registration registration) {
@@ -34,7 +33,8 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 	this.setExecutionCourse(executionCourse);
 	this.setExecutionPeriod(executionSemester);
 	this.setStudent(registration);
-
+	this.setState(executionCourse.getAvailableForInquiries() ? InquiriesRegistryState.ANSWER_LATER
+		: InquiriesRegistryState.UNAVAILABLE);
     }
     
     public InquiriesRegistry(ExecutionCourse executionCourse, CurricularCourse curricularCourse,

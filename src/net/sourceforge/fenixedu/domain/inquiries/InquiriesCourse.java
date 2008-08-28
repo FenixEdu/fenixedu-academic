@@ -149,9 +149,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	inquiriesRegistry.setState(InquiriesRegistryState.NOT_ANSWERED);
 	
 	inquiriesCourse.setNotAnsweredJustification(justification);
-	if (justification == InquiryNotAnsweredJustification.OTHER) {
-	    inquiriesCourse.setNotAnsweredOtherJustification(otherJustification);
-	}
+	inquiriesCourse.setNotAnsweredOtherJustification(otherJustification);
 	
 	return inquiriesCourse;
     }

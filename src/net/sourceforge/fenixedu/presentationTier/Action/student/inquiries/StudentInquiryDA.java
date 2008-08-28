@@ -122,11 +122,9 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	String notAnsweredJustification = (String) form.get("notAnsweredJustification");
 	if (StringUtils.isEmpty(notAnsweredJustification)) {
 	    addActionMessage(request, "error.inquiries.notAnsweredFillAtLeastOneField");
-	    request.setAttribute("inquiriesRegistryID", inquiriesRegistry.getIdInternal());
-	    request.setAttribute("inquiriesRegistry", inquiriesRegistry);
-	    return actionMapping.findForward("showDontRespond");
+	    return handleDontRespondError(actionMapping, request, inquiriesRegistry);
 	}
-
+	
 	if (inquiriesRegistry.getStudent().getPerson() != AccessControl.getPerson()) {
 	    // FIXME: ERROR MESSAGE
 	    return null;
@@ -134,9 +132,21 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
 	InquiryNotAnsweredJustification justification = InquiryNotAnsweredJustification.valueOf(notAnsweredJustification);
 	String notAnsweredOtherJustification = (String) form.get("notAnsweredOtherJustification");
+	
+	if(justification == InquiryNotAnsweredJustification.OTHER && StringUtils.isEmpty(notAnsweredOtherJustification)){
+	    addActionMessage(request, "error.inquiries.fillOtherJustification");
+	    return handleDontRespondError(actionMapping, request, inquiriesRegistry);
+	}
 
 	executeService("WriteStudentInquiryNotAnswer", inquiriesRegistry, justification, notAnsweredOtherJustification);
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
+    }
+
+    private ActionForward handleDontRespondError(ActionMapping actionMapping, HttpServletRequest request,
+	    InquiriesRegistry inquiriesRegistry) {
+	request.setAttribute("inquiriesRegistryID", inquiriesRegistry.getIdInternal());
+	request.setAttribute("inquiriesRegistry", inquiriesRegistry);
+	return actionMapping.findForward("showDontRespond");
     }
 
     public ActionForward showInquiries1stPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

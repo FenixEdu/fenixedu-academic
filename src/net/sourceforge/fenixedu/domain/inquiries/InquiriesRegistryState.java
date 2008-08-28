@@ -9,6 +9,6 @@ package net.sourceforge.fenixedu.domain.inquiries;
  */
 public enum InquiriesRegistryState {
 
-    ANSWERED, NOT_ANSWERED, ANSWER_LATER;
+    ANSWERED, NOT_ANSWERED, ANSWER_LATER, UNAVAILABLE;
 
 }
