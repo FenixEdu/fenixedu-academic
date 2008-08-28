@@ -1172,7 +1172,7 @@ public class Student extends Student_Base {
 
 		for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
 		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-		    if (!coursesToAnswer.containsKey(executionCourse)) {
+		    if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
 			coursesToAnswer.put(executionCourse, new InquiriesRegistry(executionCourse, enrolment
 				.getCurricularCourse(), executionSemester, registration));
 		    }
@@ -1208,7 +1208,7 @@ public class Student extends Student_Base {
 
 		for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
 		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-		    if (!coursesAnswered.contains(executionCourse)) {
+		    if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
 			coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
 		    }
 		}
@@ -1244,7 +1244,8 @@ public class Student extends Student_Base {
 		}
 
 		for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-		    if (!inquiriesCurricularCourses.contains(enrolment.getCurricularCourse())) {
+		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+		    if (executionCourse != null && !inquiriesCurricularCourses.contains(enrolment.getCurricularCourse())) {
 			return true;
 		    }
 		}
