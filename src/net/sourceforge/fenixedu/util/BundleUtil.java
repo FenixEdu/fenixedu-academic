@@ -11,7 +11,7 @@ public class BundleUtil {
     public static final String APPLICATION_RESOURCES = "resources.ApplicationResources";
 
     public static String getString(final String bundle, final Locale locale, final String key, final String... args) {
-	return MessageFormat.format(ResourceBundle.getBundle(bundle, locale).getString(key), args);
+	return MessageFormat.format(ResourceBundle.getBundle(bundle, locale).getString(key), (Object[]) args);
     }
 
     public static String getString(final String key, final String... args) {
