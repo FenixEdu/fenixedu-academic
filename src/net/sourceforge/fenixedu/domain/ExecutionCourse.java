@@ -1845,8 +1845,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionSemester executionSemester) {
-	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
-	    if (executionCourse.getExecutionPeriod() == executionSemester && sigla.equalsIgnoreCase(executionCourse.getSigla())) {
+	for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+	    if (sigla.equalsIgnoreCase(executionCourse.getSigla())) {
 		return executionCourse;
 	    }
 	}
@@ -1855,9 +1855,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static ExecutionCourse readLastByExecutionYearAndSigla(final String sigla, ExecutionYear executionYear) {
 	SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);
-	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
-	    if (executionCourse.getExecutionYear() == executionYear && sigla.equalsIgnoreCase(executionCourse.getSigla())) {
-		result.add(executionCourse);
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+	    for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+		if (sigla.equalsIgnoreCase(executionCourse.getSigla())) {
+		    result.add(executionCourse);
+		}
 	    }
 	}
 	return result.isEmpty() ? null : result.last();
