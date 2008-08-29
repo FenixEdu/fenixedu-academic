@@ -89,8 +89,13 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	super.setExecutionYear(executionYear);
     }
 
+    // Temp hack for maximum performance during enrollment period. 
+    private Integer semester = null;
     public Integer getSemester() {
-	return getAcademicInterval().getAcademicSemesterOfAcademicYear();
+	if (semester == null) {
+	    semester = getAcademicInterval().getAcademicSemesterOfAcademicYear();
+	}
+	return semester;
     }
 
     public ExecutionSemester getNextExecutionPeriod() {
