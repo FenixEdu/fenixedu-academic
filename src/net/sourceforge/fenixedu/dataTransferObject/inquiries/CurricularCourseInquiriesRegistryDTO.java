@@ -65,6 +65,11 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     }
 
     public Double getCalculatedECTSCredits() {
+	
+	if (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null) {
+	    return 0d;
+	}
+	
 	Integer weeklyHoursSpentInClassesSeason = getInquiriesRegistry().getInquiriesStudentExecutionPeriod()
 		.getWeeklyHoursSpentInClassesSeason();
 

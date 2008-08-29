@@ -75,6 +75,28 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
     public boolean isNotAvailableToInquiries() {
 	return !getExecutionCourse().getAvailableForInquiries();
     }
+    
+    public boolean isOpenToAnswer() {
+	
+	if (isAnswered() || isNotAnswered()) {
+	    return false;
+	}
+
+	if (isCreatedAfterWeeklySpentHoursSubmission()) {
+	    return false;
+	}
+
+	if (getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() && isNotAvailableToInquiries()) {
+	    return false;
+	}
+	
+	return true;
+    }
+
+    public boolean isCreatedAfterWeeklySpentHoursSubmission() {
+	return getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod()
+		&& (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null);
+    }
 
     public ExecutionDegree getExecutionDegree() {
 

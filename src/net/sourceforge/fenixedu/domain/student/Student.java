@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
@@ -1171,15 +1170,26 @@ public class Student extends Student_Base {
 		}
 
 		for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-		    if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
-			coursesToAnswer.put(executionCourse, new InquiriesRegistry(executionCourse, enrolment
-				.getCurricularCourse(), executionSemester, registration));
+		    createNewInquiriesRegistryIfDoesntExist(executionSemester, coursesToAnswer, registration, enrolment);
+		}
+
+		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		    if (enrolment.getCurricularCourse().isAnual()) {
+			createNewInquiriesRegistryIfDoesntExist(executionSemester, coursesToAnswer, registration, enrolment);
 		    }
 		}
 	    }
 	}
 	return coursesToAnswer.values();
+    }
+
+    private void createNewInquiriesRegistryIfDoesntExist(ExecutionSemester executionSemester,
+	    final Map<ExecutionCourse, InquiriesRegistry> coursesToAnswer, Registration registration, final Enrolment enrolment) {
+	final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
+	    coursesToAnswer.put(executionCourse, new InquiriesRegistry(executionCourse, enrolment.getCurricularCourse(),
+		    executionSemester, registration));
+	}
     }
 
     public Collection<String> getInquiriesCoursesNamesToRespond(ExecutionSemester executionSemester) {
@@ -1196,8 +1206,7 @@ public class Student extends Student_Base {
 	    if (studentCurricularPlan != null) {
 		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
 		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-			if (inquiriesRegistry.getState() == InquiriesRegistryState.ANSWER_LATER
-				&& inquiriesRegistry.getExecutionCourse().getAvailableForInquiries()) {
+			if (inquiriesRegistry.isOpenToAnswer() || inquiriesRegistry.isToAnswerLater()) {
 			    coursesToAnswer.put(inquiriesRegistry.getExecutionCourse(), inquiriesRegistry.getCurricularCourse()
 				    .getName());
 			} else {
@@ -1210,6 +1219,15 @@ public class Student extends Student_Base {
 		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 		    if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
 			coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
+		    }
+		}
+
+		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		    if (enrolment.getCurricularCourse().isAnual()) {
+			final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+			if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
+			    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
+			}
 		    }
 		}
 	    }
@@ -1234,8 +1252,7 @@ public class Student extends Student_Base {
 		final Set<CurricularCourse> inquiriesCurricularCourses = new HashSet<CurricularCourse>();
 		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistriesSet()) {
 		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-			if (inquiriesRegistry.getState() == InquiriesRegistryState.ANSWER_LATER
-				&& inquiriesRegistry.getExecutionCourse().getAvailableForInquiries()) {
+			if (inquiriesRegistry.isOpenToAnswer()) {
 			    return true;
 			} else {
 			    inquiriesCurricularCourses.add(inquiriesRegistry.getCurricularCourse());
@@ -1249,6 +1266,16 @@ public class Student extends Student_Base {
 			return true;
 		    }
 		}
+
+		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		    if (enrolment.getCurricularCourse().isAnual()) {
+			final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+			if (executionCourse != null && !inquiriesCurricularCourses.contains(enrolment.getCurricularCourse())) {
+			    return true;
+			}
+		    }
+		}
+
 	    }
 	}
 
