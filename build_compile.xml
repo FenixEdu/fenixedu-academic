@@ -318,7 +318,7 @@
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 		</javac>
-		<copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true"/>
+		<copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true" failonerror="false"/>
 		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" 
 			dir="${build.home.webinf.classes}"
 			fork="true">
