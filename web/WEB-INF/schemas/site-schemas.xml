@@ -303,34 +303,12 @@
 		<property name="key" value="true"/>
 	</slot>
 </schema>
-<!-- 
-<schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionCreator.UnitSite.functionality"
-        type="net.sourceforge.fenixedu.domain.FunctionalitySection"
-        bundle="DEFAULT">
-    <slot name="functionality" layout="unitSite-functionalities-tree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="eachLayout" value="values-dash"/>
-        <property name="schemaFor(Module)" value="unitSite.institution.section.functionalities"/>
-        <property name="schemaFor(Functionality)" value="unitSite.institution.section.functionalities"/>
-    </slot>
-    <setter signature="createSection()"/>
-</schema>
- -->
+
 <schema name="unitSite.institution.section.functionalities" 
         type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
         bundle="FUNCTIONALITY_RESOURCES">
     <slot name="name"/>
 </schema>
-<!-- 
-<schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionEditor.unitSite.functionality"
-        type="net.sourceforge.fenixedu.domain.FunctionalitySection"
-        bundle="DEFAULT">
-    <slot name="functionality" layout="unitSite-functionalities-tree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="eachLayout" value="values-dash"/>
-        <property name="schemaFor(Module)" value="functionalities.module.tree"/>
-        <property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
-    </slot>
-</schema>
- -->
  
 <schema name="site.functions.tree.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="SITE_RESOURCES">
 	<slot name="nameI18n"/>
