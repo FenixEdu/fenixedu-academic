@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add missing indexes." updates.sql
