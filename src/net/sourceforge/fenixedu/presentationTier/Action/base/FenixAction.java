@@ -89,5 +89,12 @@ public abstract class FenixAction extends Action {
 	    throws FenixFilterException, FenixServiceException {
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
+    
+    
+    protected  void addErrorMessage(HttpServletRequest request, String property, String key, String ... args) {
+	final ActionMessages messages = getErrors(request);
+	messages.add(property, new ActionMessage(key, args));
+	saveErrors(request, messages);
+    }
 
 }
