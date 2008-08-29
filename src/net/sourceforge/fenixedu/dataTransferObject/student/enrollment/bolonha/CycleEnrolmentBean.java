@@ -11,7 +11,9 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CycleEnrolmentBean implements Serializable {
 
@@ -85,8 +87,13 @@ public class CycleEnrolmentBean implements Serializable {
 
     public List<CycleCourseGroup> getCycleDestinationAffinities() {
 	final List<CycleCourseGroup> affinities = getDegreeCurricularPlan().getDestinationAffinities(getSourceCycleAffinity());
+	
 	if (affinities.isEmpty()) {
 	    return Collections.emptyList();
+	}
+	
+	if (!isStudent()) {
+	    return affinities;
 	}
 
 	final List<CycleCourseGroup> result = new ArrayList<CycleCourseGroup>();
@@ -97,6 +104,10 @@ public class CycleEnrolmentBean implements Serializable {
 	    }
 	}
 	return result;
+    }
+
+    private boolean isStudent() {
+	return AccessControl.getUserView().hasRoleType(RoleType.STUDENT);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {
