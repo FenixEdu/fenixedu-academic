@@ -27,7 +27,7 @@ public abstract class AcademicEvent extends AcademicEvent_Base {
 
     @Override
     public void delete() {
-	removeAdministrativeOffice();
+	super.setAdministrativeOffice(null);
 	super.delete();
     }
 
