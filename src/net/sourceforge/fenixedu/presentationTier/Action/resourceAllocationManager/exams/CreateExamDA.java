@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -27,8 +26,6 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -36,8 +33,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ana e Ricardo
@@ -109,10 +104,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	examDate.set(Calendar.MONTH, month.intValue() - 1);
 	examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
 	if (examDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.sunday", new ActionError("error.sunday"));
-
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error.sunday", "error.sunday");
 	    return prepare(mapping, form, request, response);
 	}
 
@@ -132,10 +124,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	examEndTime.set(Calendar.MINUTE, endMinute.intValue());
 	examEndTime.set(Calendar.SECOND, 0);
 	if (examStartTime.after(examEndTime)) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.timeSwitched", new ActionError("error.timeSwitched"));
-
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error.timeSwitched", "error.timeSwitched");
 	    return prepare(mapping, form, request, response);
 	}
 
@@ -152,9 +141,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	try {
 	    ServiceUtils.executeService("CreateWrittenEvaluation", argsCreateExam);
 	} catch (FenixServiceException ex) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("errors", new ActionError(ex.getMessage()));
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "errors", ex.getMessage());
 	    return prepare(mapping, form, request, response);
 	}
 
@@ -337,10 +324,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	examEndTime.set(Calendar.SECOND, 0);
 
 	if (examStartTime.after(examEndTime)) {
-	    ActionError actionError = new ActionError("error.timeSwitched");
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.timeSwitched", actionError);
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error.timeSwitched", "error.timeSwitched");
 	    return prepare(mapping, form, request, response);
 	}
 
@@ -354,10 +338,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
 
 	if (examDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-	    ActionError actionError = new ActionError("error.sunday");
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.sunday", actionError);
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error.sunday", "error.sunday");
 	    return prepare(mapping, form, request, response);
 	}
 	// //////////////////
@@ -525,10 +506,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	examDate.set(Calendar.MONTH, month.intValue() - 1);
 	examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
 	if (examDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-	    ActionError actionError = new ActionError("error.sunday");
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.sunday", actionError);
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error.sunday", "error.sunday");
 	    return prepare(mapping, form, request, response);
 	}
 
@@ -548,10 +526,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	examEndTime.set(Calendar.MINUTE, endMinute.intValue());
 	examEndTime.set(Calendar.SECOND, 0);
 	if (examStartTime.after(examEndTime)) {
-	    ActionError actionError = new ActionError("error.timeSwitched");
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.timeSwitched", actionError);
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error.timeSwitched", "error.timeSwitched");
 	    return prepare(mapping, form, request, response);
 	}
 
@@ -564,10 +539,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	try {
 	    ServiceUtils.executeService("EditWrittenEvaluation", argsEditExam);
 	} catch (FenixServiceException ex) {
-	    ActionError actionError = new ActionError(ex.getMessage());
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("errors", actionError);
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "errors", ex.getMessage());
 	    return prepare(mapping, form, request, response);
 	}
 
@@ -610,7 +582,6 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	DynaActionForm examForm = (DynaActionForm) form;
 	ContextUtils.setCurricularYearsContext(request);
-	IUserView userView = UserView.getUser();
 
 	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
 	if (infoExamId == null) {
@@ -667,10 +638,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	examEndTime.set(Calendar.SECOND, 0);
 
 	if (examStartTime.after(examEndTime)) {
-	    ActionError actionError = new ActionError("error.timeSwitched");
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.timeSwitched", actionError);
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error.timeSwitched", "error.timeSwitched");
 	    return prepare(mapping, form, request, response);
 	}
 
@@ -686,10 +654,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
 	DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 	if (dayOfWeekInt == Calendar.SUNDAY) {
-	    ActionError actionError = new ActionError("error.sunday");
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.sunday", actionError);
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error.sunday", "error.sunday");
 	    return prepare(mapping, form, request, response);
 	}
 

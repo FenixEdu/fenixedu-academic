@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -21,15 +20,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -43,7 +38,6 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	IUserView userView = UserView.getUser();
 	DynaActionForm editExternalPersonForm = (DynaActionForm) form;
 
 	Integer externalPersonId;
@@ -53,7 +47,6 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 	    externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
 	}
 
-	ActionErrors actionErrors = new ActionErrors();
 	InfoExternalPerson infoExternalPerson = null;
 
 	Object args[] = { externalPersonId };
@@ -77,10 +70,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 	List institutions = getInstitutions(request);
 
 	if ((institutions == null) || (institutions.isEmpty())) {
-	    actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions", new ActionError(
-		    "label.masterDegree.administrativeOffice.nonExistingInstitutions"));
-
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "label.masterDegree.administrativeOffice.nonExistingInstitutions", "label.masterDegree.administrativeOffice.nonExistingInstitutions");
 	    return mapping.findForward("error");
 	}
 
@@ -89,7 +79,6 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
     }
 
     private List getInstitutions(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
 	List institutions = null;
 
 	Object args[] = {};
@@ -118,8 +107,6 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	IUserView userView = UserView.getUser();
-
 	DynaActionForm editExternalPersonForm = (DynaActionForm) form;
 
 	Integer externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
@@ -142,9 +129,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 	    getInstitutions(request);
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
 	} catch (DomainException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error", new ActionError(e.getMessage()));
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "error", e.getMessage());
 	    return mapping.findForward("error");
 	}
 

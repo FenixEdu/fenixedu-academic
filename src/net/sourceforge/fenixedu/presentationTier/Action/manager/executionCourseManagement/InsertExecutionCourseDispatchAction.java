@@ -44,11 +44,10 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepareInsertExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
 
 	List infoExecutionPeriods = null;
 	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
+	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
 	} catch (FenixServiceException ex) {
 	    throw new FenixActionException();
 	}
@@ -98,7 +97,6 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward insertExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
 
 	InfoExecutionCourseEditor infoExecutionCourse = fillInfoExecutionCourse(form, request);
 

@@ -30,8 +30,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -92,7 +90,6 @@ public class GenerateFilesAction extends FenixDispatchAction {
     public ActionForward generateGratuityFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	IUserView userView = getUserView(request);
-	ActionErrors errors = new ActionErrors();
 
 	String fileType = request.getParameter("file");
 	request.setAttribute("file", fileType);
@@ -131,21 +128,20 @@ public class GenerateFilesAction extends FenixDispatchAction {
 	    generatedFile = (byte[]) ServiceManagerServiceFactory.executeService(serviceName, args);
 
 	} catch (InsufficientSibsPaymentPhaseCodesServiceException exception) {
-	    errors.add("noList", new ActionError("error.generateFiles.invalidBind", exception.getMessage()));
-	    saveErrors(request, errors);
+	    addErrorMessage(request, "noList", "error.generateFiles.invalidBind", exception.getMessage());
 	    return mapping.getInputForward();
+	    
 	} catch (InsuranceNotDefinedServiceException exception) {
-	    errors.add("noList", new ActionError(exception.getMessage()));
-	    saveErrors(request, errors);
+	    addErrorMessage(request, "noList", exception.getMessage());
 	    return mapping.getInputForward();
+	    
 	} catch (FileNotCreatedServiceException exception) {
-	    errors.add("noList", new ActionError(exception.getMessage()));
-	    saveErrors(request, errors);
+	    addErrorMessage(request, "noList", exception.getMessage());
 	    return mapping.getInputForward();
+	    
 	} catch (FenixServiceException exception) {
 	    exception.printStackTrace();
-	    errors.add("noList", new ActionError("error.generateFiles.emptyList"));
-	    saveErrors(request, errors);
+	    addErrorMessage(request, "noList", "error.generateFiles.emptyList");
 	    return mapping.getInputForward();
 	}
 

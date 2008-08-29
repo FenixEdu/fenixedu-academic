@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -23,8 +22,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 /**
  * @author lmac1
  * @author Fernanda Quitério 17/Dez/2003
@@ -34,10 +31,8 @@ public class ReadExecutionPeriodsAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
-
 	try {
-	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
+	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
 
 	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 

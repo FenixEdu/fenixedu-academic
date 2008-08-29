@@ -21,8 +21,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -76,12 +74,9 @@ public class ShowCandidacyOptions extends FenixAction {
 	    List candidacies = (List) ServiceManagerServiceFactory.executeService(
 		    "Seminaries.GetCandidaciesByStudentIDAndSeminaryID", argsReadCandidacies);
 	    if (candidacies.size() >= seminary.getAllowedCandidaciesPerStudent().intValue()) {
-		ActionErrors actionErrors = new ActionErrors();
+		addErrorMessage(request, "error.seminaries.candidaciesLimitReached", "error.seminaries.candidaciesLimitReached",
+			String.valueOf(seminary.getAllowedCandidaciesPerStudent()));
 
-		ActionError actionError = new ActionError("error.seminaries.candidaciesLimitReached", seminary
-			.getAllowedCandidaciesPerStudent());
-		actionErrors.add("error.seminaries.candidaciesLimitReached", actionError);
-		saveErrors(request, actionErrors);
 		destiny = mapping.findForward("candidaciesLimitReached");
 	    } else {
 		destiny = mapping.findForward("showCandidacyOptions");

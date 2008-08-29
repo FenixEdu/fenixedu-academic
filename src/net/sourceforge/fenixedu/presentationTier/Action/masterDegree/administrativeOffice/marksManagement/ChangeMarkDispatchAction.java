@@ -332,7 +332,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 		    infoTeacher.getTeacherNumber(), userView };
 	    ServiceManagerServiceFactory.executeService("AlterStudentEnrolmentEvaluation", args);
 	} catch (DomainException e) {
-	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
+	    addErrorMessage(request, e.getKey(), e.getKey(), (Object[]) e.getArgs());
 	    return chooseStudentMarks(mapping, form, request, response);
 
 	} catch (NonExistingServiceException e) {

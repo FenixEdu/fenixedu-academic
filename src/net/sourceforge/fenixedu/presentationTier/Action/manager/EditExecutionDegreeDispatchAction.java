@@ -27,8 +27,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -221,10 +219,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	    endPeriodLessonsFirstSemester.set(Calendar.MONTH, month.intValue() - 1);
 	    endPeriodLessonsFirstSemester.set(Calendar.DAY_OF_MONTH, day.intValue());
 	    if (startPeriodLessonsFirstSemester.after(endPeriodLessonsFirstSemester)) {
-		ActionError actionError = new ActionError("error.dateSwitched.lessons.one");
-		ActionErrors actionErrors = new ActionErrors();
-		actionErrors.add("error.dateSwitched.lessons.one", actionError);
-		saveErrors(request, actionErrors);
+		addErrorMessage(request, "error.dateSwitched.lessons.one", "error.dateSwitched.lessons.one");
 		return prepareEdit(mapping, form, request, response);
 	    }
 
@@ -234,10 +229,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	    if (i > 0) {
 		periodLessonFirstSemester[i - 1].setNextPeriod(periodLessonFirstSemester[i]);
 		if (periodLessonFirstSemester[i - 1].getEndDate().after(startPeriodLessonsFirstSemester)) {
-		    ActionError actionError = new ActionError("error.dateSwitched.periods");
-		    ActionErrors actionErrors = new ActionErrors();
-		    actionErrors.add("error.dateSwitched.periods", actionError);
-		    saveErrors(request, actionErrors);
+		    addErrorMessage(request, "error.dateSwitched.periods", "error.dateSwitched.periods");
 		    return prepareEdit(mapping, form, request, response);
 		}
 	    }
@@ -270,10 +262,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	    endPeriodLessonsSecondSemester.set(Calendar.MONTH, month.intValue() - 1);
 	    endPeriodLessonsSecondSemester.set(Calendar.DAY_OF_MONTH, day.intValue());
 	    if (startPeriodLessonsSecondSemester.after(endPeriodLessonsSecondSemester)) {
-		ActionError actionError = new ActionError("error.dateSwitched.lessons.two");
-		ActionErrors actionErrors = new ActionErrors();
-		actionErrors.add("error.dateSwitched.lessons.two", actionError);
-		saveErrors(request, actionErrors);
+		addErrorMessage(request, "error.dateSwitched.lessons.two", "error.dateSwitched.lessons.two");
 		return prepareEdit(mapping, form, request, response);
 	    }
 
@@ -283,10 +272,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	    if (i > 0) {
 		periodLessonSecondSemester[i - 1].setNextPeriod(periodLessonSecondSemester[i]);
 		if (periodLessonSecondSemester[i - 1].getEndDate().after(startPeriodLessonsSecondSemester)) {
-		    ActionError actionError = new ActionError("error.dateSwitched.periods");
-		    ActionErrors actionErrors = new ActionErrors();
-		    actionErrors.add("error.dateSwitched.periods", actionError);
-		    saveErrors(request, actionErrors);
+		    addErrorMessage(request, "error.dateSwitched.periods", "error.dateSwitched.periods");
 		    return prepareEdit(mapping, form, request, response);
 		}
 	    }
@@ -319,10 +305,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	    endPeriodExamsFirstSemester.set(Calendar.MONTH, month.intValue() - 1);
 	    endPeriodExamsFirstSemester.set(Calendar.DAY_OF_MONTH, day.intValue());
 	    if (startPeriodExamsFirstSemester.after(endPeriodExamsFirstSemester)) {
-		ActionError actionError = new ActionError("error.dateSwitched.exams.one");
-		ActionErrors actionErrors = new ActionErrors();
-		actionErrors.add("error.dateSwitched.exams.one", actionError);
-		saveErrors(request, actionErrors);
+		addErrorMessage(request, "error.dateSwitched.exams.one", "error.dateSwitched.exams.one");
 		return prepareEdit(mapping, form, request, response);
 	    }
 
@@ -332,10 +315,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	    if (i > 0) {
 		periodExamsFirstSemester[i - 1].setNextPeriod(periodExamsFirstSemester[i]);
 		if (periodExamsFirstSemester[i - 1].getEndDate().after(startPeriodExamsFirstSemester)) {
-		    ActionError actionError = new ActionError("error.dateSwitched.periods");
-		    ActionErrors actionErrors = new ActionErrors();
-		    actionErrors.add("error.dateSwitched.periods", actionError);
-		    saveErrors(request, actionErrors);
+		    addErrorMessage(request, "error.dateSwitched.periods", "error.dateSwitched.periods");
 		    return prepareEdit(mapping, form, request, response);
 		}
 	    }
@@ -368,10 +348,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	    endPeriodExamsSecondSemester.set(Calendar.MONTH, month.intValue() - 1);
 	    endPeriodExamsSecondSemester.set(Calendar.DAY_OF_MONTH, day.intValue());
 	    if (startPeriodExamsSecondSemester.after(endPeriodExamsSecondSemester)) {
-		ActionError actionError = new ActionError("error.dateSwitched.exams.two");
-		ActionErrors actionErrors = new ActionErrors();
-		actionErrors.add("error.dateSwitched.exams.two", actionError);
-		saveErrors(request, actionErrors);
+		addErrorMessage(request, "error.dateSwitched.exams.two", "error.dateSwitched.exams.two");
 		return prepareEdit(mapping, form, request, response);
 	    }
 
@@ -381,10 +358,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	    if (i > 0) {
 		periodExamsSecondSemester[i - 1].setNextPeriod(periodExamsSecondSemester[i]);
 		if (periodExamsSecondSemester[i - 1].getEndDate().after(startPeriodExamsSecondSemester)) {
-		    ActionError actionError = new ActionError("error.dateSwitched.periods");
-		    ActionErrors actionErrors = new ActionErrors();
-		    actionErrors.add("error.dateSwitched.periods", actionError);
-		    saveErrors(request, actionErrors);
+		    addErrorMessage(request, "error.dateSwitched.periods", "error.dateSwitched.periods");
 		    return prepareEdit(mapping, form, request, response);
 		}
 	    }

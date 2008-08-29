@@ -10,7 +10,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -35,7 +34,6 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -193,8 +191,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = getInfoDegreeCurricularPlan(executionDegreeId,
 		degree.getIdInternal(), degreeCurricularPlanId, mapping, request, errors);
 	if (infoDegreeCurricularPlan == null) {
-	    errors.add("impossibleDegreeSite", new ActionError("error.impossibleCurricularPlan"));
-	    saveErrors(request, errors);
+	    addErrorMessage(request, "impossibleDegreeSite", "error.impossibleCurricularPlan");
 	} else {
 	    request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 	}
@@ -205,8 +202,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
     public ActionForward viewDegreeEvaluation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Degree degree = getDegree(request);
-
-	IUserView userView = getUserView(request);
 
 	Integer executionDegreeId = getFromRequest("executionDegreeID", request);
 	request.setAttribute("executionDegreeId", executionDegreeId);
@@ -221,8 +216,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	List<InfoOldInquiriesSummary> allSummariesDegree = (List<InfoOldInquiriesSummary>) ServiceUtils.executeService(
 		"ReadOldIquiriesSummaryByDegreeID", argsDegree);
 
-	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
-		"ReadExecutionPeriods", null);
+	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
+		.executeService("ReadExecutionPeriods");
 	List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(infoExecutionPeriods);
 	for (InfoExecutionPeriod iep : infoExecutionPeriods) {
 	    boolean found = false;
@@ -252,10 +247,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = getInfoDegreeCurricularPlan(executionDegreeId,
 		degree.getIdInternal(), degreeCurricularPlanId, mapping, request, errors);
 	if (infoDegreeCurricularPlan == null) {
-	    errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-	}
-	if (!errors.isEmpty()) {
-	    saveErrors(request, errors);
+	    addErrorMessage(request, "impossibleDegreeSite", "error.impossibleDegreeSite");
 	    return new ActionForward(mapping.getInput());
 	}
 	request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);

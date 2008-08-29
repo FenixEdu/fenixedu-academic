@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -24,23 +23,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 /**
  * @author Luis Crus & Sara Ribeiro
  */
 public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
-    /**
-     * Prepare information to show existing execution periods and working areas.
-     */
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	IUserView userView = UserView.getUser();
-
 	try {
-	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
+	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
 
 	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
@@ -58,16 +50,12 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 	return mapping.findForward("Manage");
     }
 
-    /**
-     * Prepare information to show existing execution periods and working areas.
-     */
     public ActionForward alterExecutionPeriodState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	final String year = request.getParameter("year");
 	final Integer semester = new Integer(request.getParameter("semester"));
 	final String periodStateToSet = request.getParameter("periodState");
-	final IUserView userView = UserView.getUser();
 	final PeriodState periodState = new PeriodState(periodStateToSet);
 
 	final Object[] args = { year, semester, periodState };

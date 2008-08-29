@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -38,7 +36,6 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
     public ActionForward prepareDissociateECShowProfShipsAndRespFor(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = getUserView(request);
 
 	DynaActionForm teacherNumberForm = (DynaActionForm) form;
 
@@ -52,17 +49,15 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noTeacher")) {
-		errors.add("chosenTeacher", new ActionError("error.manager.teachersManagement.noTeacher", teacherNumber));
+		addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noTeacher", teacherNumber);
 	    } else if (e.getMessage().equals(("noPSnorRF"))) {
-		errors.add("noPSNorRF", new ActionError("error.manager.teachersManagement.noPSNorRF", teacherNumber));
+		addErrorMessage(request, "noPSNorRF", "error.manager.teachersManagement.noPSNorRF", teacherNumber);
 	    } else {
 		throw new NonExistingActionException("");
 	    }
-	    saveErrors(request, errors);
 	} catch (FenixServiceException e) {
 	    if (e.getMessage().equals("nullTeacherNumber")) {
-		errors.add("nullCode", new ActionError("error.manager.teachersManagement.noTeacherNumber"));
-		saveErrors(request, errors);
+		addErrorMessage(request, "nullCode", "error.manager.teachersManagement.noTeacherNumber");
 	    } else {
 		throw new FenixActionException(e);
 	    }
@@ -79,8 +74,6 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
     public ActionForward dissociateProfShipsAndRespFor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-	IUserView userView = getUserView(request);
 
 	DynaActionForm teacherForm = (DynaActionForm) form;
 	Integer teacherNumber = Integer.valueOf((String) teacherForm.get("teacherNumber"));
@@ -100,21 +93,17 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noTeacher")) {
-		errors.add("chosenTeacher", new ActionError("error.manager.teachersManagement.noTeacher", teacherNumber));
-		saveErrors(request, errors);
+		addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noTeacher", teacherNumber);
 	    } else {
 		throw new NonExistingActionException("");
 	    }
 	} catch (FenixServiceException e) {
 	    if (e.getMessage().equals("nullTeacherNumber")) {
-		errors.add("nullCode", new ActionError("error.manager.teachersManagement.noTeacherNumber"));
-		saveErrors(request, errors);
+		addErrorMessage(request, "nullCode", "error.manager.teachersManagement.noTeacherNumber");
 	    } else if (e.getMessage().equals("nullPSNorRF")) {
-		errors.add("nullPSNorRF", new ActionError("error.manager.teachersManagement.nullPSNorRF", teacherNumber));
-		saveErrors(request, errors);
+		addErrorMessage(request, "nullPSNorRF", "error.manager.teachersManagement.nullPSNorRF", teacherNumber);
 	    } else if (e.getMessage().equals("notPSNorRFTeacher")) {
-		errors.add("notPSNorRFTeacher", new ActionError("error.manager.teachersManagement.notPSNorRFTeacher"));
-		saveErrors(request, errors);
+		addErrorMessage(request, "notPSNorRFTeacher", "error.manager.teachersManagement.notPSNorRFTeacher");
 	    } else {
 		throw new FenixActionException(e);
 	    }
@@ -125,12 +114,10 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	}
 
 	if (professorshipsNotRemoved != null && professorshipsNotRemoved.size() > 0) {
-	    errors = createErrors(professorshipsNotRemoved, "supportLessons", "PSWithSL",
+	    errors = createErrors(request, professorshipsNotRemoved, "supportLessons", "PSWithSL",
 		    "error.manager.teachersManagement.PSWithSL", errors);
-	    errors = createErrors(professorshipsNotRemoved, "shifts", "PSWithS", "error.manager.teachersManagement.PSWithS",
+	    errors = createErrors(request, professorshipsNotRemoved, "shifts", "PSWithS", "error.manager.teachersManagement.PSWithS",
 		    errors);
-	    saveErrors(request, errors);
-
 	    return prepareDissociateECShowProfShipsAndRespFor(mapping, form, request, response);
 	}
 	// must only set this to null when we're certain of not returning to the
@@ -140,14 +127,15 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	return prepareDissociateEC(mapping, form, request, response);
     }
 
-    private ActionErrors createErrors(HashMap hash, String hashKey, String errorKey, String message, ActionErrors errors) {
+    private ActionErrors createErrors(HttpServletRequest request, HashMap hash, String hashKey, String errorKey, String message,
+	    ActionErrors errors) {
 	List professorships = (List) hash.get(hashKey);
 
 	if (professorships != null) {
 	    Iterator iterProfessorships = professorships.iterator();
 	    while (iterProfessorships.hasNext()) {
 		InfoProfessorship infoProfessorship = (InfoProfessorship) iterProfessorships.next();
-		errors.add(errorKey, new ActionError(message, infoProfessorship.getInfoExecutionCourse().getNome()));
+		addErrorMessage(request, errorKey, message, infoProfessorship.getInfoExecutionCourse().getNome());
 	    }
 	}
 	return errors;
