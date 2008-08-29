@@ -1190,7 +1190,7 @@ public class Registration extends Registration_Base {
     final public static Registration readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType) {
 	Registration nonActiveRegistration = null;
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    if (registration.getNumber().equals(number) && registration.getDegreeType().equals(degreeType)) {
+	    if (registration.getNumber().intValue() == number.intValue() && registration.getDegreeType().equals(degreeType)) {
 		if (registration.isActive()) {
 		    return registration;
 		}
@@ -1203,7 +1203,7 @@ public class Registration extends Registration_Base {
     final public static Registration readByNumberAndDegreeCurricularPlan(Integer number, DegreeCurricularPlan degreeCurricularPlan) {
 	Registration nonActiveRegistration = null;
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    if (registration.getNumber().equals(number) && registration.getDegreeCurricularPlans().contains(degreeCurricularPlan)) {
+	    if (registration.getNumber().intValue() == number.intValue() && registration.getDegreeCurricularPlans().contains(degreeCurricularPlan)) {
 		if (registration.isActive()) {
 		    return registration;
 		}
@@ -1215,7 +1215,7 @@ public class Registration extends Registration_Base {
 
     final public static Registration readRegisteredRegistrationByNumberAndDegreeType(Integer number, DegreeType degreeType) {
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    if (registration.getNumber().equals(number) && registration.getDegreeType().equals(degreeType)
+	    if (registration.getNumber().intValue() == number.intValue() && registration.getDegreeType().equals(degreeType)
 		    && registration.isInRegisteredState()) {
 		return registration;
 	    }
@@ -1226,9 +1226,12 @@ public class Registration extends Registration_Base {
     @Deprecated
     final public static Registration readRegistrationByNumberAndDegreeTypes(Integer number, DegreeType... degreeTypes) {
 	final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
-	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    if (registration.getNumber().equals(number) && degreeTypesList.contains(registration.getDegreeType())) {
-		return registration;
+	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+	    if (registrationNumber.getNumber().intValue() == number.intValue()) {
+		final Registration registration = registrationNumber.getRegistration();
+		if (degreeTypesList.contains(registration.getDegreeType())) {
+		    return registration;
+		}
 	    }
 	}
 	return null;
@@ -1238,9 +1241,12 @@ public class Registration extends Registration_Base {
 	    DegreeType... degreeTypes) {
 	List<Registration> result = new ArrayList<Registration>();
 	final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
-	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    if (registration.getNumber().equals(number) && degreeTypesList.contains(registration.getDegreeType())) {
-		result.add(registration);
+	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+	    if (registrationNumber.getNumber().intValue() == number.intValue()) {
+		final Registration registration = registrationNumber.getRegistration();
+		if (degreeTypesList.contains(registration.getDegreeType())) {
+		    result.add(registration);
+		}
 	    }
 	}
 	return result;
@@ -1249,7 +1255,7 @@ public class Registration extends Registration_Base {
     final public static List<Registration> readByNumber(Integer number) {
 	final List<Registration> registrations = new ArrayList<Registration>();
 	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
-	    if (registrationNumber.getNumber().equals(number)) {
+	    if (registrationNumber.getNumber().intValue() == number.intValue()) {
 		registrations.add(registrationNumber.getRegistration());
 	    }
 	}
@@ -1259,7 +1265,7 @@ public class Registration extends Registration_Base {
     final public static List<Registration> readByNumberAndDegreeType(Integer number, DegreeType degreeType) {
 	final List<Registration> registrations = new ArrayList<Registration>();
 	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
-	    if (registrationNumber.getNumber().equals(number)
+	    if (registrationNumber.getNumber().intValue() == number.intValue()
 		    && registrationNumber.getRegistration().getDegreeType() == degreeType) {
 		registrations.add(registrationNumber.getRegistration());
 	    }
@@ -1271,7 +1277,7 @@ public class Registration extends Registration_Base {
 	    boolean normalAgreement) {
 	final List<Registration> registrations = new ArrayList<Registration>();
 	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
-	    if (registrationNumber.getNumber().equals(number)
+	    if (registrationNumber.getNumber().intValue() == number.intValue()
 		    && registrationNumber.getRegistration().getDegreeType() == degreeType
 		    && registrationNumber.getRegistration().getRegistrationAgreement().isNormal() == normalAgreement) {
 		registrations.add(registrationNumber.getRegistration());
@@ -1280,20 +1286,18 @@ public class Registration extends Registration_Base {
 	return registrations;
     }
 
-    final public static List<Registration> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(String studentName,
-	    String docIdNumber, IDDocumentType idType, Integer studentNumber) {
-
-	final List<Registration> registrations = new ArrayList<Registration>();
+    final public static void readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
+	    final Collection<Registration> result, String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
 
 	if (studentNumber != null && studentNumber > 0) {
-	    registrations.addAll(Registration.readRegistrationsByNumberAndDegreeTypes(studentNumber, DegreeType.MASTER_DEGREE,
+	    result.addAll(Registration.readRegistrationsByNumberAndDegreeTypes(studentNumber, DegreeType.MASTER_DEGREE,
 		    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
 	}
 
 	if (!StringUtils.isEmpty(studentName)) {
 	    for (Person person : Person.readPersonsByName(studentName)) {
 		if (person.hasStudent()) {
-		    registrations.addAll(person.getStudent().getRegistrationsByDegreeTypes(DegreeType.MASTER_DEGREE,
+		    result.addAll(person.getStudent().getRegistrationsByDegreeTypes(DegreeType.MASTER_DEGREE,
 			    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
 		}
 	    }
@@ -1302,13 +1306,12 @@ public class Registration extends Registration_Base {
 	if (!StringUtils.isEmpty(docIdNumber)) {
 	    for (Person person : Person.readByDocumentIdNumber(docIdNumber)) {
 		if (person.hasStudent()) {
-		    registrations.addAll(person.getStudent().getRegistrationsByDegreeTypes(DegreeType.MASTER_DEGREE,
+		    result.addAll(person.getStudent().getRegistrationsByDegreeTypes(DegreeType.MASTER_DEGREE,
 			    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
 		}
 	    }
 	}
 
-	return registrations;
     }
 
     final public static List<Registration> readAllStudentsBetweenNumbers(Integer fromNumber, Integer toNumber) {
