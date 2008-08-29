@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonValidChang
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -105,23 +103,23 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	Integer paymentDateMonth = null;
 	Integer paymentDateDay = null;
 
-	ActionErrors actionErrors = new ActionErrors();
+	final Calendar calendar = Calendar.getInstance();
+	boolean addedErrorMessage = false;
 
-	Calendar calendar = Calendar.getInstance();
 	if (situationOfGuide.equals(GuideState.PAYED)) {
 	    if ((day == null) || (day.length() == 0) || (month == null) || (month.length() == 0) || (year == null)
 		    || (year.length() == 0)) {
+		addErrorMessage(request, "UnNecessary1", "error.required.paymentDate");
+		addedErrorMessage = true;
 
-		ActionError actionError = new ActionError("error.required.paymentDate");
-		actionErrors.add("UnNecessary1", actionError);
 	    } else {
 		paymentDateYear = new Integer(request.getParameter("paymentDateYear"));
 		paymentDateMonth = new Integer(request.getParameter("paymentDateMonth"));
 		paymentDateDay = new Integer(request.getParameter("paymentDateDay"));
 
 		if (!Data.validDate(paymentDateDay, paymentDateMonth, paymentDateYear)) {
-		    ActionError actionError = new ActionError("error.required.paymentDate");
-		    actionErrors.add("UnNecessary1", actionError);
+		    addErrorMessage(request, "UnNecessary1", "error.required.paymentDate");
+		    addedErrorMessage = true;
 		} else {
 		    calendar.set(paymentDateYear.intValue(), paymentDateMonth.intValue(), paymentDateDay.intValue());
 		}
@@ -129,11 +127,10 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	}
 
 	if ((situationOfGuide.equals(GuideState.PAYED)) && (paymentType.equals(""))) {
-	    ActionError actionError = new ActionError("error.required.paymentType");
-	    actionErrors.add("UnNecessary2", actionError);
+	    addErrorMessage(request, "UnNecessary2", "error.required.paymentType");
+	    addedErrorMessage = true;
 	}
-	if (actionErrors.size() != 0) {
-	    saveErrors(request, actionErrors);
+	if (addedErrorMessage) {
 	    return mapping.getInputForward();
 	}
 
@@ -145,9 +142,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	} catch (NonValidChangeServiceException e) {
 	    throw new NonValidChangeActionException(e);
 	} catch (ExistingServiceException e) {
-	    ActionError actionError = new ActionError(e.getMessage());
-	    actionErrors.add("existing", actionError);
-	    saveErrors(request, actionErrors);
+	    addErrorMessage(request, "existing", e.getMessage());
 	    return mapping.getInputForward();
 	}
 
