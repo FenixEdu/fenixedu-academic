@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
@@ -45,7 +44,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
 	request.setAttribute("infoTeacher", it);
 
-	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
+	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods");
 
 	Object[] args = { it.getTeacherNumber() };
 	List teachersRes = (List) ServiceUtils.executeService("ReadOldInquiriesTeachersResByTeacherNumber", args);
@@ -116,7 +115,6 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
     public ActionForward viewResults(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IUserView userView = getUserView(request);
 	Integer oldInquiryTeacherId = getIntegerFromRequest("oldInquiryTeacherId", request);
 	Integer executionPeriodId = getIntegerFromRequest("executionPeriodId", request);
 	Integer degreeId = getIntegerFromRequest("degreeId", request);

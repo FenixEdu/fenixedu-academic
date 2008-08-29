@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 import org.apache.struts.config.ExceptionConfig;
 
 public class FenixDomainExceptionHandler extends FenixExceptionHandler {
@@ -24,8 +24,7 @@ public class FenixDomainExceptionHandler extends FenixExceptionHandler {
 
 	    DomainException domainException = (DomainException) ex;
 	    String property = domainException.getKey();
-	    ActionError error = new ActionError(domainException.getKey(), domainException.getArgs());
-
+	    ActionMessage error = new ActionMessage(domainException.getKey(), domainException.getArgs());
 	    super.storeException(request, property, error, forward, exceptionConfig.getScope());
 	}
 	return forward;

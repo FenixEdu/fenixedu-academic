@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -31,8 +30,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -56,7 +53,6 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     private Object executeService(String serviceName, HttpServletRequest request, Object[] arguments)
 	    throws FenixServiceException, FenixFilterException {
-	IUserView userView = UserView.getUser();
 	return ServiceUtils.executeService(serviceName, arguments);
     }
 
@@ -91,10 +87,9 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     private void prepareFirstStep(DynaValidatorForm teacherExecutionCourseForm, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
-	IUserView userView = UserView.getUser();
 	prepareConstants(teacherExecutionCourseForm, request);
 
-	List executionPeriodsNotClosed = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
+	List executionPeriodsNotClosed = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
 
 	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, teacherExecutionCourseForm);
 
