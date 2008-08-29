@@ -77,7 +77,7 @@ public abstract class Exemption extends Exemption_Base {
 
 	super.deleteDomainObject();
     }
-
+    
     @Override
     public void removeEmployee() {
 	super.setEmployee(null);
