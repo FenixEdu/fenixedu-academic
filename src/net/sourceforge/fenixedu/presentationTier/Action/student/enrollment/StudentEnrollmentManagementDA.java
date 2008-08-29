@@ -42,6 +42,11 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    request.setAttribute("student", student);
 	    return mapping.findForward("choosePersonalDataAuthorizationChoice");
 	}
+	
+	if(student.hasInquiriesToRespond()){
+	    addActionMessage(request, "message.student.cannotEnroll.inquiriesNotAnswered");
+	    return mapping.findForward("enrollmentCannotProceed");
+	}
 
 	final List<Registration> registrationsToEnrol = getRegistrationsToEnrolByStudent(request);
 	if (registrationsToEnrol.size() == 1) {
