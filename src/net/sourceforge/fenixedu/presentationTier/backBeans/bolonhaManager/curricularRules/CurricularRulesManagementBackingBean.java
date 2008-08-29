@@ -672,10 +672,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
 
     private void getDegreeModules(final Class<? extends DegreeModule> clazz, final List<SelectItem> result) {
-	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(getExecutionYearID());
-
 	final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz,
-		executionYear);
+		null);
 	for (final List<DegreeModule> degreeModules : degreeModulesSet) {
 	    final DegreeModule lastDegreeModule = (degreeModules.size() > 0) ? degreeModules.get(degreeModules.size() - 1) : null;
 	    if (lastDegreeModule != getDegreeModule()) {
