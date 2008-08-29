@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -105,13 +105,18 @@ public class SeeStudentAndCurricularPlansDispatchAction extends FenixDispatchAct
 	return parameterString;
     }
 
-    private void sort(List listOfInfoStudents) {
+    private static final Comparator<InfoStudent> infoStudentComparator = new Comparator<InfoStudent>() {
 
-	ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("number"));
-	comparatorChain.addComparator(new BeanComparator("infoPerson.nome"));
+	@Override
+	public int compare(InfoStudent o1, InfoStudent o2) {
+	    final int n = o1.getNumber().compareTo(o2.getNumber());
+	    return n == 0 ? o1.getInfoPerson().getNome().compareTo(o2.getInfoPerson().getNome()): n;
+	}
+	
+    };
+    private void sort(List listOfInfoStudents) {
 	if (listOfInfoStudents != null) {
-	    Collections.sort(listOfInfoStudents, comparatorChain);
+	    Collections.sort(listOfInfoStudents, infoStudentComparator);
 	}
     }
 
