@@ -28,8 +28,6 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -37,12 +35,19 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
-    public static final Comparator<WrittenEvaluation> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("dayDateYearMonthDay"));
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginningDateHourMinuteSecond"));
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<WrittenEvaluation> COMPARATOR_BY_BEGIN_DATE = new Comparator<WrittenEvaluation>() {
+
+	@Override
+	public int compare(WrittenEvaluation o1, WrittenEvaluation o2) {
+	    final int c1 = o1.getDayDateYearMonthDay().compareTo(o2.getDayDateYearMonthDay());
+	    if (c1 != 0) {
+		return c1;
+	    }
+	    final int c2 = o1.getBeginningDateHourMinuteSecond().compareTo(o2.getBeginningDateHourMinuteSecond());
+	    return c2 == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2;
+	}
+
+    };
 
     public static List<WrittenEvaluation> readWrittenEvaluations() {
 	List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();

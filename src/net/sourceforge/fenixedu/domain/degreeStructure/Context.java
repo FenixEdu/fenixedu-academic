@@ -15,20 +15,21 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 import dml.runtime.RelationAdapter;
 
 public class Context extends Context_Base implements Comparable<Context> {
 
-    public static final Comparator<Context> COMPARATOR_BY_DEGREE_MODULE_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_DEGREE_MODULE_NAME).addComparator(new BeanComparator("childDegreeModule.name", Collator
-		.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_DEGREE_MODULE_NAME).addComparator(new BeanComparator("childDegreeModule.idInternal"));
-    }
+    public static final Comparator<Context> COMPARATOR_BY_DEGREE_MODULE_NAME = new Comparator<Context>() {
+
+	@Override
+	public int compare(Context o1, Context o2) {
+	    final DegreeModule d1 = o1.getChildDegreeModule();
+	    final DegreeModule d2 = o2.getChildDegreeModule();
+	    final int c = Collator.getInstance().compare(d1.getName(), d2.getName());
+	    return c == 0 ? COMPARATOR_BY_ID.compare(d1, d2) : c;
+	}
+
+    };
 
     public static Comparator<Context> COMPARATOR_BY_CURRICULAR_YEAR = new Comparator<Context>() {
 	public int compare(Context leftContext, Context rightContext) {

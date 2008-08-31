@@ -19,12 +19,11 @@ import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author Ivo Brandão
@@ -33,18 +32,13 @@ public class Section extends Section_Base {
 
     public static final Comparator<Section> COMPARATOR_BY_ORDER = new Comparator<Section>() {
 
-	private ComparatorChain chain = null;
-
-	public int compare(Section one, Section other) {
-	    if (this.chain == null) {
-		chain = new ComparatorChain();
-
-		chain.addComparator(new BeanComparator("sectionOrder"));
-		chain.addComparator(new BeanComparator("name"));
-		chain.addComparator(DomainObject.COMPARATOR_BY_ID);
+	public int compare(Section o1, Section o2) {
+	    final int co = o1.getSectionOrder().compareTo(o2.getSectionOrder());
+	    if (co != 0) {
+		return co;
 	    }
-
-	    return chain.compare(one, other);
+	    final int cn = o1.getName().compareTo(o2.getName());
+	    return cn == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : cn;
 	}
 
     };

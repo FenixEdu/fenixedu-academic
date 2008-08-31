@@ -12,9 +12,6 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 /**
  * @author Fernanda Quit�rio 17/10/2003
  * @author jpvl
@@ -22,13 +19,15 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class SupportLesson extends SupportLesson_Base implements ICreditsEventOriginator {
 
-    public static final Comparator SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY = new ComparatorChain();
-    static {
-	((ComparatorChain) SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY)
-		.addComparator(new BeanComparator("weekDay.diaSemana"));
-	((ComparatorChain) SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY).addComparator(new BeanComparator(
-		"startTimeHourMinuteSecond"));
-    }
+    public static final Comparator<SupportLesson> SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY = new Comparator<SupportLesson>() {
+
+	@Override
+	public int compare(SupportLesson o1, SupportLesson o2) {
+	    final int c = o1.getWeekDay().getDiaSemana().compareTo(o2.getWeekDay().getDiaSemana());
+	    return c == 0 ? o1.getStartTimeHourMinuteSecond().compareTo(o2.getStartTimeHourMinuteSecond()) : c;
+	}
+
+    };
 
     public SupportLesson(SupportLessonDTO supportLessonDTO, Professorship professorship, RoleType roleType) {
 	super();

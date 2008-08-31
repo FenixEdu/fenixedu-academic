@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.ByteArray;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
@@ -24,10 +23,23 @@ import pt.utl.ist.fenix.tools.util.CollectionUtils;
 
 public class CronScriptState extends CronScriptState_Base {
 
-    public static final Comparator<CronScriptState> COMPARATOR_BY_ABSOLUTE_EXECUTION_ORDER = new BeanComparator(
-	    "absoluteExecutionOrder");
-    public static final Comparator<CronScriptState> COMPARATOR_BY_CRON_SCRIPT_CLASSNAME = new BeanComparator(
-	    "cronScriptClassname");
+    public static final Comparator<CronScriptState> COMPARATOR_BY_ABSOLUTE_EXECUTION_ORDER = new Comparator<CronScriptState>() {
+
+	@Override
+	public int compare(CronScriptState o1, CronScriptState o2) {
+	    return o1.getAbsoluteExecutionOrder().compareTo(o2.getAbsoluteExecutionOrder());
+	}
+	
+    };
+
+    public static final Comparator<CronScriptState> COMPARATOR_BY_CRON_SCRIPT_CLASSNAME = new Comparator<CronScriptState>() {
+
+	@Override
+	public int compare(CronScriptState o1, CronScriptState o2) {
+	    return o1.getCronScriptClassname().compareTo(o2.getCronScriptClassname());
+	}
+
+    };
 
     private transient Class cronScriptClass = null;
 

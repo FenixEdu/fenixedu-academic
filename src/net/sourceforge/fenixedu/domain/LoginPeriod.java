@@ -4,17 +4,19 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class LoginPeriod extends LoginPeriod_Base {
 
-    public static final Comparator<LoginPeriod> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"), true);
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<LoginPeriod> COMPARATOR_BY_BEGIN_DATE = new Comparator<LoginPeriod>() {
+
+	@Override
+	public int compare(LoginPeriod o1, LoginPeriod o2) {
+	    final int c = o1.getBeginDate().compareTo(o2.getBeginDate());
+	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+	
+    };
 
     public LoginPeriod(YearMonthDay begin, YearMonthDay end, Login login) {
 	super();

@@ -4,30 +4,34 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import java.text.Collator;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public abstract class Contract extends Contract_Base {
 
-    public static final Comparator<Contract> CONTRACT_COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
-    public static final Comparator<Contract> CONTRACT_COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) CONTRACT_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"));
-	((ComparatorChain) CONTRACT_COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
+    public static final Comparator<Contract> CONTRACT_COMPARATOR_BY_BEGIN_DATE = new Comparator<Contract>() {
 
-	((ComparatorChain) CONTRACT_COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name", Collator
-		.getInstance()));
-	((ComparatorChain) CONTRACT_COMPARATOR_BY_PERSON_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+	@Override
+	public int compare(Contract o1, Contract o2) {
+	    final int c = o1.getBeginDate().compareTo(o2.getBeginDate());
+	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+	
+    };
+    public static final Comparator<Contract> CONTRACT_COMPARATOR_BY_PERSON_NAME = new Comparator<Contract>() {
+
+	@Override
+	public int compare(Contract o1, Contract o2) {
+	    final int c = o1.getPerson().getName().compareTo(o2.getPerson().getName());
+	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+	
+    };
 
     protected Contract() {
 	super();

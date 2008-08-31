@@ -30,6 +30,15 @@ import org.joda.time.YearMonthDay;
 
 public class Vigilant extends Vigilant_Base {
 
+    public static final Comparator<Vigilant> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<Vigilant>() {
+
+	@Override
+	public int compare(Vigilant o1, Vigilant o2) {
+	    return o1.getExecutionYear().compareTo(o2.getExecutionYear());
+	}
+	
+    };
+
     public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("points");
 
     public static final Comparator<Vigilant> ESTIMATED_POINTS_COMPARATOR = new BeanComparator("estimatedPoints");

@@ -11,19 +11,21 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
 
 public class LessonInstance extends LessonInstance_Base {
 
-    public static final Comparator<LessonInstance> COMPARATOR_BY_BEGIN_DATE_TIME = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE_TIME).addComparator(new BeanComparator("beginDateTime"));
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE_TIME).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<LessonInstance> COMPARATOR_BY_BEGIN_DATE_TIME = new Comparator<LessonInstance>() {
+
+	@Override
+	public int compare(LessonInstance o1, LessonInstance o2) {
+	    final int c = o1.getBeginDateTime().compareTo(o2.getBeginDateTime());
+	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+	
+    };
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public LessonInstance(Summary summary, Lesson lesson) {

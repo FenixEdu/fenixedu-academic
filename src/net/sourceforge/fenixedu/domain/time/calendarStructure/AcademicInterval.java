@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeFieldType;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
@@ -19,11 +17,15 @@ import org.joda.time.base.AbstractInterval;
 
 public class AcademicInterval extends AbstractInterval implements Serializable {
 
-    public static final Comparator<AcademicInterval> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginYearMonthDayWithoutChronology"));
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("endYearMonthDayWithoutChronology"), true);
-    }
+    public static final Comparator<AcademicInterval> COMPARATOR_BY_BEGIN_DATE = new Comparator<AcademicInterval>() {
+
+	@Override
+	public int compare(AcademicInterval o1, AcademicInterval o2) {
+	    final int c = o1.getBeginYearMonthDayWithoutChronology().compareTo(o2.getBeginYearMonthDayWithoutChronology());
+	    return c == 0 ? o2.getEndDateTimeWithoutChronology().compareTo(o1.getEndDateTimeWithoutChronology()) : c;
+	}
+
+    };
 
     private Integer academicCalendarIdInternal;
     private Integer entryIdInternal;

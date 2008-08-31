@@ -103,10 +103,8 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
@@ -584,8 +582,7 @@ public class Person extends Person_Base {
 
     public Vigilant getLatestVigilant() {
 	List<Vigilant> vigilants = new ArrayList<Vigilant>(this.getVigilants());
-	Collections.sort(vigilants, new ReverseComparator(new BeanComparator("vigilant.executionYear")));
-	return vigilants.get(0);
+	return Collections.max(vigilants, Vigilant.COMPARATOR_BY_EXECUTION_YEAR);
     }
 
     public ExamCoordinator getExamCoordinatorForGivenExecutionYear(ExecutionYear executionYear) {
@@ -2275,7 +2272,7 @@ public class Person extends Person_Base {
     }
 
     public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(DegreeCurricularPlan degreeCurricularPlan) {
-	Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
+	Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
 	for (Coordinator coordinator : getCoordinators()) {
 	    if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
 		result.add(coordinator.getExecutionDegree());

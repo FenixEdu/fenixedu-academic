@@ -8,12 +8,18 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 
 public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 
-    public final static Comparator<InquiryResponsePeriod> PERIOD_COMPARATOR = new BeanComparator("executionPeriod");
+    public final static Comparator<InquiryResponsePeriod> PERIOD_COMPARATOR = new Comparator<InquiryResponsePeriod>() {
+
+	@Override
+	public int compare(InquiryResponsePeriod o1, InquiryResponsePeriod o2) {
+	    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+	}
+
+    };
 
     public InquiryResponsePeriod() {
 	super();

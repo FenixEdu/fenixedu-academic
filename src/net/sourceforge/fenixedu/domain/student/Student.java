@@ -59,12 +59,18 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class Student extends Student_Base {
 
-    public final static Comparator<Student> NUMBER_COMPARATOR = new BeanComparator("number");
+    public final static Comparator<Student> NUMBER_COMPARATOR = new Comparator<Student>() {
+
+	@Override
+	public int compare(Student o1, Student o2) {
+	    return o1.getNumber().compareTo(o2.getNumber());
+	}
+
+    };
 
     public Student(Person person, Integer number) {
 	super();
@@ -173,8 +179,7 @@ public class Student extends Student_Base {
 
     public Registration getLastActiveRegistration() {
 	List<Registration> activeRegistrations = getActiveRegistrations();
-	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations, new BeanComparator(
-		"startDate"));
+	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
     }
 
     public boolean hasActiveRegistrationForDegreeType(final DegreeType degreeType, final ExecutionYear executionYear) {

@@ -25,8 +25,6 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.Interval;
 import org.joda.time.Minutes;
@@ -37,12 +35,22 @@ public class Lesson extends Lesson_Base {
     public static int NUMBER_OF_MINUTES_IN_HOUR = 60;
     public static int NUMBER_OF_DAYS_IN_WEEK = 7;
 
-    public static final Comparator<Lesson> LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME = new ComparatorChain();
-    static {
-	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("diaSemana.diaSemana"));
-	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("beginHourMinuteSecond"));
-	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<Lesson> LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME = new Comparator<Lesson>() {
+
+	@Override
+	public int compare(Lesson o1, Lesson o2) {
+	    final int cd = o1.getDiaSemana().getDiaSemana().compareTo(o2.getDiaSemana().getDiaSemana());
+	    if (cd != 0) {
+		return cd;
+	    }
+	    final int cb = o1.getBeginHourMinuteSecond().compareTo(o2.getBeginHourMinuteSecond());
+	    if (cb != 0) {
+		return cb;
+	    }
+	    return DomainObject.COMPARATOR_BY_ID.compare(o1, o2);
+	}
+	
+    };
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,

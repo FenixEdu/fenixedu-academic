@@ -97,7 +97,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -312,8 +311,8 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getFirstStudentCurricularPlan() {
-	return hasAnyStudentCurricularPlans() ? (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(),
-		new BeanComparator("startDateYearMonthDay")) : null;
+	return hasAnyStudentCurricularPlans() ? (StudentCurricularPlan) Collections.min(
+		getStudentCurricularPlans(), StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE) : null;
     }
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {

@@ -15,7 +15,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.EquivalencePlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -30,26 +29,20 @@ import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class DegreeModule extends DegreeModule_Base {
 
-    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = new ComparatorByName();
+    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = new Comparator<DegreeModule>() {
 
-    static private class ComparatorByName implements Comparator<DegreeModule> {
-	public int compare(DegreeModule d1, DegreeModule d2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(new BeanComparator("name", Collator.getInstance()));
-	    comparatorChain.addComparator(DomainObject.COMPARATOR_BY_ID);
-
-	    return comparatorChain.compare(d1, d2);
+	@Override
+	public int compare(DegreeModule o1, DegreeModule o2) {
+	    final int c = Collator.getInstance().compare(o1.getName(), o2.getName());
+	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-    }
+	
+    };
 
     public static class ComparatorByMinEcts implements Comparator<DegreeModule> {
 

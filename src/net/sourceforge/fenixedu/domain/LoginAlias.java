@@ -10,33 +10,32 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 public class LoginAlias extends LoginAlias_Base {
 
-    public final static Comparator<LoginAlias> COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("type"));
-	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new Comparator<LoginAlias>() {
-	    public int compare(LoginAlias loginAlias1, LoginAlias loginAlias2) {
-		if (loginAlias1.getRoleType() != null && loginAlias2.getRoleType() != null) {
-		    List<RoleType> rolesImportance = RoleType.getRolesImportance();
-		    Integer indexOfRoleType1 = Integer.valueOf(rolesImportance.indexOf(loginAlias1.getRoleType()));
-		    Integer indexOfRoleType2 = Integer.valueOf(rolesImportance.indexOf(loginAlias2.getRoleType()));
-		    return indexOfRoleType1.compareTo(indexOfRoleType2);
-		} else if (loginAlias1.getRoleType() != null && loginAlias2.getRoleType() == null) {
-		    return 1;
-		} else if (loginAlias1.getRoleType() == null && loginAlias2.getRoleType() != null) {
-		    return -1;
-		}
-		return 0;
+    public final static Comparator<LoginAlias> COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS = new Comparator<LoginAlias>() {
+
+	@Override
+	public int compare(LoginAlias o1, LoginAlias o2) {
+	    final int ct = o1.getType().compareTo(o2.getType());
+	    if (ct != 0) {
+		return ct;
 	    }
-	});
-	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("alias", Collator
-		.getInstance()));
-    }
+	    if (o1.getRoleType() != null && o2.getRoleType() != null) {
+		List<RoleType> rolesImportance = RoleType.getRolesImportance();
+		Integer indexOfRoleType1 = Integer.valueOf(rolesImportance.indexOf(o1.getRoleType()));
+		Integer indexOfRoleType2 = Integer.valueOf(rolesImportance.indexOf(o2.getRoleType()));
+		return indexOfRoleType1.compareTo(indexOfRoleType2);
+	    } else if (o1.getRoleType() != null && o2.getRoleType() == null) {
+		return 1;
+	    } else if (o1.getRoleType() == null && o2.getRoleType() != null) {
+		return -1;
+	    }
+	    return Collator.getInstance().compare(o1.getAlias(), o2.getAlias());
+	}
+
+    };
 
     public static void createNewCustomLoginAlias(Login login, String alias) {
 	new LoginAlias(login, alias, LoginAliasType.CUSTOM_ALIAS);

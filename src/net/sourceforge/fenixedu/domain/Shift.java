@@ -17,26 +17,40 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 public class Shift extends Shift_Base {
 
     public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");
 
-    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator.getInstance());
-    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
+    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new Comparator<Shift>() {
+
+	@Override
+	public int compare(Shift o1, Shift o2) {
+	    return Collator.getInstance().compare(o1.getNome(), o2.getNome());
+	}
+	
+    };
+
+    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new Comparator<Shift>() {
+
+	@Override
+	public int compare(Shift o1, Shift o2) {
+	    final int ce = o1.getExecutionCourse().getNome().compareTo(o2.getExecutionCourse().getNome());
+	    if (ce != 0) {
+		return ce;
+	    }
+	    final int cs = o1.getShiftTypesIntegerComparator().compareTo(o2.getShiftTypesIntegerComparator());
+	    if (cs != 0) {
+		return cs;
+	    }
+	    final int cl = o1.getLessonsStringComparator().compareTo(o2.getLessonsStringComparator());
+	    return cl == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : cl;
+	}
+
+    };
 
     static {
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS)
-		.addComparator(new BeanComparator("executionCourse.nome"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator(
-		"shiftTypesIntegerComparator"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator(
-		"lessonsStringComparator"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(DomainObject.COMPARATOR_BY_ID);
-
 	Registration.ShiftStudent.addListener(new ShiftStudentListener());
     }
 

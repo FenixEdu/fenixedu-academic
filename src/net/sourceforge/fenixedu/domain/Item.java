@@ -13,9 +13,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 /**
  * An Item represents a piece of text a user can add to a section of a site. It
  * contains a title and a body text: the item's information.
@@ -26,18 +23,16 @@ public class Item extends Item_Base {
 
     public static final Comparator<Item> COMPARATOR_BY_ORDER = new Comparator<Item>() {
 
-	private ComparatorChain chain = null;
-
-	public int compare(Item one, Item other) {
-	    if (this.chain == null) {
-		chain = new ComparatorChain();
-
-		chain.addComparator(new BeanComparator("itemOrder"));
-		chain.addComparator(new BeanComparator("name"));
-		chain.addComparator(DomainObject.COMPARATOR_BY_ID);
+	public int compare(Item o1, Item o2) {
+	    final int co = o1.getItemOrder().compareTo(o2.getItemOrder());
+	    if (co != 0) {
+		return co;
 	    }
-
-	    return chain.compare(one, other);
+	    final int cn = o1.getName().compareTo(o2.getName());
+	    if (cn != 0) {
+		return cn;
+	    }
+	    return DomainObject.COMPARATOR_BY_ID.compare(o1, o2);
 	}
     };
 

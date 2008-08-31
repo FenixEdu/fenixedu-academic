@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 public class Homepage extends Homepage_Base {
 
     public static final long MB = 1024 * 1024;
@@ -20,7 +18,14 @@ public class Homepage extends Homepage_Base {
     public static final long REGULAR_QUOTA = 10 * MB;
     public static final long TEACHER_QUOTA = 50 * MB;
 
-    public static final Comparator HOMEPAGE_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
+    public static final Comparator<Homepage> HOMEPAGE_COMPARATOR_BY_NAME = new Comparator<Homepage>() {
+
+	@Override
+	public int compare(Homepage o1, Homepage o2) {
+	    return Collator.getInstance().compare(o1.getName(), o2.getName());
+	}
+
+    };
 
     public Homepage() {
 	super();

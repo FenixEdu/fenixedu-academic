@@ -7,11 +7,16 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 public class LessonPlanning extends LessonPlanning_Base {
 
-    public static final Comparator<LessonPlanning> COMPARATOR_BY_ORDER = new BeanComparator("orderOfPlanning");
+    public static final Comparator<LessonPlanning> COMPARATOR_BY_ORDER = new Comparator<LessonPlanning>() {
+
+	@Override
+	public int compare(LessonPlanning o1, LessonPlanning o2) {
+	    return o1.getOrderOfPlanning().compareTo(o2.getOrderOfPlanning());
+	}
+
+    };
 
     public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
 	    ExecutionCourse executionCourse) {

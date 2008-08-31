@@ -72,11 +72,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.State;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -96,23 +94,32 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	
     };
 
-    static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).addComparator(new BeanComparator(
-		"degreeCurricularPlan.degree.tipoCurso"));
-	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).addComparator(new BeanComparator(
-		"degreeCurricularPlan.degree.name"));
-    }
+    static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME = new Comparator<StudentCurricularPlan>() {
 
-    static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME)
-		.addComparator(new BeanComparator("degreeCurricularPlan.degree.name"));
-	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME)
-		.addComparator(new BeanComparator("student.number"));
-	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME)
-		.addComparator(new BeanComparator("student.person.name"));
-    }
+	@Override
+	public int compare(StudentCurricularPlan o1, StudentCurricularPlan o2) {
+	    final Degree degree1 = o1.getDegree();
+	    final Degree degree2 = o2.getDegree();
+	    final int ct = degree1.getDegreeType().compareTo(degree2.getDegreeType());
+	    return ct == 0 ? degree1.getName().compareTo(degree2.getName()) : ct;
+	}
+
+    };
+
+    static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME = new Comparator<StudentCurricularPlan>() {
+
+	@Override
+	public int compare(StudentCurricularPlan o1, StudentCurricularPlan o2) {
+	    final int cd = o1.getDegree().getName().compareTo(o2.getDegree().getName());
+	    if (cd != 0) {
+		return cd;
+	    }
+	    final int cn = o1.getStudent().getNumber().compareTo(o2.getStudent().getNumber());
+	    return cn == 0 ? o1.getPerson().getName().compareTo(o2.getPerson().getName());
+	    
+	}
+	
+    };
 
     public static final Comparator<StudentCurricularPlan> COMPARATOR_BY_DEGREE_TYPE = new Comparator<StudentCurricularPlan>() {
 	public int compare(final StudentCurricularPlan studentCurricularPlan1, final StudentCurricularPlan studentCurricularPlan2) {
@@ -122,8 +129,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     };
 
-    static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE = new BeanComparator(
-	    "startDateYearMonthDay");
+    static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE = new Comparator<StudentCurricularPlan>() {
+	@Override
+	public int compare(final StudentCurricularPlan o1, final StudentCurricularPlan o2) {
+	    return o1.getStartDateYearMonthDay().compareTo(o2.getStartDateYearMonthDay());
+	}
+    };
 
     static final public Comparator<StudentCurricularPlan> DATE_COMPARATOR = new Comparator<StudentCurricularPlan>() {
 	public int compare(StudentCurricularPlan leftState, StudentCurricularPlan rightState) {

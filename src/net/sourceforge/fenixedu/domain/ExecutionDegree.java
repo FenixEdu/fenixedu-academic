@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
@@ -262,9 +261,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public boolean isFirstYear() {
 	final List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
-	final ExecutionDegree firstExecutionDegree = (ExecutionDegree) Collections.min(executionDegrees, new BeanComparator(
-		"executionYear.year"));
-	return firstExecutionDegree.equals(this);
+	return this == Collections.min(executionDegrees, EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
     }
 
     public Set<Shift> findAvailableShifts(final CurricularYear curricularYear, final ExecutionSemester executionSemester) {
