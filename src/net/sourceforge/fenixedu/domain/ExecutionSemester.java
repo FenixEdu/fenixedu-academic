@@ -51,12 +51,17 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	    new Locale("pt"));
     private transient OccupationPeriod lessonsPeriod;
 
-    public static final Comparator<ExecutionSemester> EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new ComparatorChain();
-    static {
-	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(new BeanComparator(
-		"academicInterval.startDateTimeWithoutChronology"));
-	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<ExecutionSemester> EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new Comparator<ExecutionSemester>() {
+
+	@Override
+	public int compare(final ExecutionSemester o1, final ExecutionSemester o2) {
+	    final AcademicInterval ai1 = o1.getAcademicInterval();
+	    final AcademicInterval ai2 = o2.getAcademicInterval();
+	    final int c = ai1.getStartDateTimeWithoutChronology().compareTo(ai2.getStartDateTimeWithoutChronology());
+	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+	
+    };
 
     private ExecutionSemester() {
 	super();

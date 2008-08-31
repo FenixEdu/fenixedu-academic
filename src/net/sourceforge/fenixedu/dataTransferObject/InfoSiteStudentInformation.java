@@ -4,11 +4,23 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Comparator;
+
 /**
  * @author asnr and scpo
  * 
  */
 public class InfoSiteStudentInformation extends DataTranferObject implements ISiteComponent {
+
+    public static final Comparator<InfoSiteStudentInformation> COMPARATOR_BY_NUMBER = new Comparator<InfoSiteStudentInformation>() {
+
+	@Override
+	public int compare(InfoSiteStudentInformation o1, InfoSiteStudentInformation o2) {
+	    return o1.getNumber().compareTo(o2.getNumber());
+	}
+	
+    };
+
     private String name;
     private Integer number;
     private String email;

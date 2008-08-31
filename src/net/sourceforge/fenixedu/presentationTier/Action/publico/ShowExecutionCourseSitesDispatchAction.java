@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +19,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -65,8 +63,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
 	final Object[] args = { degree };
 	List<ExecutionCourseView> result = new ArrayList((Collection<ExecutionCourseView>) ServiceManagerServiceFactory
 		.executeService("ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args));
-	BeanComparator beanComparator = new BeanComparator("executionCourseName", Collator.getInstance());
-	Collections.sort(result, beanComparator);
+	Collections.sort(result, ExecutionCourseView.COMPARATOR_BY_NAME);
 
 	return result;
     }

@@ -30,8 +30,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-
-import org.apache.commons.beanutils.BeanComparator;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author asnr and scpo
@@ -190,7 +189,7 @@ public class GroupSiteComponentBuilder {
 	    }
 	}
 
-	Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator("infoSiteStudentInformation.number"));
+	Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
 
 	return infoSiteStudentsAndGroupsList;
     }
@@ -238,7 +237,7 @@ public class GroupSiteComponentBuilder {
 	    }
 	}
 
-	Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator("infoSiteStudentInformation.number"));
+	Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
 
 	return infoSiteStudentsAndGroupsList;
     }
@@ -286,7 +285,7 @@ public class GroupSiteComponentBuilder {
 	    }
 	}
 
-	Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator("infoSiteStudentInformation.number"));
+	Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
 
 	return infoSiteStudentsAndGroupsList;
     }
@@ -399,7 +398,7 @@ public class GroupSiteComponentBuilder {
 
 	}
 
-	Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
+	Collections.sort(studentGroupAttendInformationList, InfoSiteStudentInformation.COMPARATOR_BY_NUMBER);
 
 	return studentGroupAttendInformationList;
     }

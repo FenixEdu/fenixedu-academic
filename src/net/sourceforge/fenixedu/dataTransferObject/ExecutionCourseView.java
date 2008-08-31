@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
@@ -15,6 +17,16 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  * 
  */
 public class ExecutionCourseView {
+
+    public static final Comparator<ExecutionCourseView> COMPARATOR_BY_NAME = new Comparator<ExecutionCourseView>() {
+
+	@Override
+	public int compare(ExecutionCourseView o1, ExecutionCourseView o2) {
+	    return o1.getExecutionCourseName().compareTo(o2.getExecutionCourseName());
+	}
+	
+    };
+    //new BeanComparator("executionCourseName", Collator.getInstance());
 
     private final DomainReference<ExecutionCourse> executionCourseDomainReference;
 
