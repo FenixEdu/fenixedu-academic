@@ -115,8 +115,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return cd;
 	    }
 	    final int cn = o1.getStudent().getNumber().compareTo(o2.getStudent().getNumber());
-	    return cn == 0 ? o1.getPerson().getName().compareTo(o2.getPerson().getName());
-	    
+	    return cn == 0 ? o1.getPerson().getName().compareTo(o2.getPerson().getName()) : cn;
 	}
 	
     };
