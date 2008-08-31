@@ -87,6 +87,15 @@ import org.joda.time.YearMonthDay;
 
 public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
+    public static final Comparator<StudentCurricularPlan> COMPARATOR_BY_STUDENT_NUMBER = new Comparator<StudentCurricularPlan>() {
+
+	@Override
+	public int compare(StudentCurricularPlan o1, StudentCurricularPlan o2) {
+	    return o1.getStudent().getNumber().compareTo(o2.getStudent().getNumber());
+	}
+	
+    };
+
     static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).addComparator(new BeanComparator(

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -54,7 +53,7 @@ public class ReadMonthResume extends Service {
 	    }
 	}
 
-	Collections.sort(assiduousnessMonthlyResumeList, new BeanComparator("employee.employeeNumber"));
+	Collections.sort(assiduousnessMonthlyResumeList, AssiduousnessMonthlyResume.COMPARATOR_BY_EMPLOYEE_NUMBER);
 	return assiduousnessMonthlyResumeList;
     }
 

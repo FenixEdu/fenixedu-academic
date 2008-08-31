@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 /**
  * @author dcs-rjao
  * 
@@ -13,7 +11,14 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class CurricularYear extends CurricularYear_Base implements Comparable<CurricularYear> {
 
-    public static Comparator<CurricularYear> CURRICULAR_YEAR_COMPARATORY_BY_YEAR = new BeanComparator("year");
+    public static Comparator<CurricularYear> CURRICULAR_YEAR_COMPARATORY_BY_YEAR = new Comparator<CurricularYear>() {
+
+	@Override
+	public int compare(CurricularYear o1, CurricularYear o2) {
+	    return o1.getYear().compareTo(o2.getYear());
+	}
+	
+    };
 
     public CurricularYear() {
 	super();

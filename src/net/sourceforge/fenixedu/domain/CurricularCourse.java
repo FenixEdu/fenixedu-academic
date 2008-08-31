@@ -40,10 +40,8 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -58,13 +56,18 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     static final public Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new Comparator<CurricularCourse>() {
 	public int compare(CurricularCourse o1, CurricularCourse o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain
-		    .addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator.getInstance()));
-	    comparatorChain.addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator.getInstance()));
-	    comparatorChain.addComparator(CurricularCourse.COMPARATOR_BY_NAME);
-
-	    return comparatorChain.compare(o1, o2);
+	    final Degree degree1 = o1.getDegree();
+	    final Degree degree2 = o2.getDegree();
+	    final Collator collator = Collator.getInstance();
+	    final int degreeTypeComp = collator.compare(degree1.getDegreeType().getName(), degree2.getDegreeType().getName());
+	    if (degreeTypeComp != 0) {
+		return degreeTypeComp;
+	    }
+	    final int degreeNameComp = collator.compare(degree1.getNome(), degree2.getNome());
+	    if (degreeNameComp == 0) {
+		return degreeNameComp;
+	    }
+	    return CurricularCourse.COMPARATOR_BY_NAME.compare(o1, o2);
 	}
     };
 

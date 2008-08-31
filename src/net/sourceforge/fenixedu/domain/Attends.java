@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -66,8 +65,14 @@ public class Attends extends Attends_Base {
 	}
     };
 
-    public static final Comparator<Attends> ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME = new BeanComparator(
-	    "disciplinaExecucao.nome", Collator.getInstance());
+    public static final Comparator<Attends> ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME = new Comparator<Attends>() {
+
+	@Override
+	public int compare(Attends o1, Attends o2) {
+	    return Collator.getInstance().compare(o1.getDisciplinaExecucao().getNome(), o2.getDisciplinaExecucao().getNome());
+	}
+	
+    };
 
     public Attends() {
 	super();

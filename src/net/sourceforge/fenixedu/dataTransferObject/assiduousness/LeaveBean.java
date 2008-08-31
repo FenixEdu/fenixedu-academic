@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
@@ -9,6 +10,15 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class LeaveBean implements Serializable {
+
+    public static final Comparator<LeaveBean> COMPARATOR_BY_DATE = new Comparator<LeaveBean>() {
+
+	@Override
+	public int compare(LeaveBean o1, LeaveBean o2) {
+	    return o1.getDate().compareTo(o2.getDate());
+	}
+	
+    };
 
     private DomainReference<Leave> leave;
 

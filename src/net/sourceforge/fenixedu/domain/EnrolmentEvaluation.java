@@ -12,20 +12,37 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
-    public static final Comparator<EnrolmentEvaluation> SORT_BY_STUDENT_NUMBER = new BeanComparator(
-	    "enrolment.studentCurricularPlan.student.number");
+    public static final Comparator<EnrolmentEvaluation> COMPARATORY_BY_WHEN = new Comparator<EnrolmentEvaluation>() {
+
+	@Override
+	public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
+	    return o1.getWhenDateTime().compareTo(o2.getWhenDateTime());
+	}
+	
+    };
+
+    public static final Comparator<EnrolmentEvaluation> SORT_BY_STUDENT_NUMBER = new Comparator<EnrolmentEvaluation>() {
+
+	@Override
+	public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
+	    final Student s1 = o1.getRegistration().getStudent();
+	    final Student s2 = o2.getRegistration().getStudent();
+	    return s1.getNumber().compareTo(s2.getNumber());
+	}
+
+    };
 
     public static final Comparator<EnrolmentEvaluation> SORT_SAME_TYPE_GRADE = new Comparator<EnrolmentEvaluation>() {
 	public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {

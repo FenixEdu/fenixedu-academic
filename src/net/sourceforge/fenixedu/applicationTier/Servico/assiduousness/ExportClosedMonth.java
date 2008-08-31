@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.util.WeekDay;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -152,7 +151,7 @@ public class ExportClosedMonth extends Service {
 	List<AssiduousnessExtraWork> assiduousnessExtraWorkList = new ArrayList<AssiduousnessExtraWork>(assiduousnessClosedMonth
 		.getAssiduousnessExtraWorks());
 
-	Collections.sort(assiduousnessExtraWorkList, new BeanComparator("workScheduleType.acronym"));
+	Collections.sort(assiduousnessExtraWorkList, AssiduousnessExtraWork.COMPARATOR_BY_WORK_SCHEDULE_TYPE_ACRONYM);
 	StringBuilder totalExtra25Result = new StringBuilder();
 	StringBuilder totalExtra125Result = new StringBuilder();
 	StringBuilder totalExtra150Result = new StringBuilder();

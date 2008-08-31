@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
@@ -898,7 +897,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		evaluations.add(evaluation);
 	    }
 	}
-	Collections.sort(evaluations, new BeanComparator("when"));
+	Collections.sort(evaluations, EnrolmentEvaluation.COMPARATORY_BY_WHEN);
 	return evaluations;
     }
 

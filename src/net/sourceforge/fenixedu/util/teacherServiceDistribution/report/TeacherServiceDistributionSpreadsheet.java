@@ -10,9 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TS
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDProfessorshipDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -23,6 +21,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.hssf.util.Region;
 
 import pt.utl.ist.fenix.tools.util.Pair;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class TeacherServiceDistributionSpreadsheet {
     private List<TSDCourseDTOEntry> tsdCourseDTOEntryList;
@@ -41,11 +40,11 @@ public class TeacherServiceDistributionSpreadsheet {
 	this.spreadsheetName = _spreadsheetName;
 
 	if (!tsdCourseDTOEntryList.isEmpty()) {
-	    Collections.sort(tsdCourseDTOEntryList, new BeanComparator("TSDCourse.name"));
+	    Collections.sort(tsdCourseDTOEntryList, TSDCourseDTOEntry.COMPARATOR_BY_NAME);
 	}
 
 	if (!tsdTeacherDTOEntryList.isEmpty()) {
-	    Collections.sort(tsdTeacherDTOEntryList, new BeanComparator("name"));
+	    Collections.sort(tsdTeacherDTOEntryList, TSDTeacherDTOEntry.COMPARATOR_BY_NAME);
 	}
     }
 

@@ -9,25 +9,32 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class GanttDiagram {
 
-    public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_BEGIN = new ComparatorChain();
-    public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_END = new ComparatorChain();
+    public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_BEGIN = new Comparator<Interval>() {
 
-    static {
-	((ComparatorChain) INTERVAL_COMPARATOR_BY_BEGIN).addComparator(new BeanComparator("start"));
-	((ComparatorChain) INTERVAL_COMPARATOR_BY_END).addComparator(new BeanComparator("end"));
-    }
+	@Override
+	public int compare(Interval o1, Interval o2) {
+	    return o1.getStart().compareTo(o2.getStart());
+	}
+	
+    };
+    public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_END = new Comparator<Interval>() {
+
+	@Override
+	public int compare(Interval o1, Interval o2) {
+	    return o1.getEnd().compareTo(o2.getEnd());
+	}
+	
+    };
 
     private Locale locale;
 

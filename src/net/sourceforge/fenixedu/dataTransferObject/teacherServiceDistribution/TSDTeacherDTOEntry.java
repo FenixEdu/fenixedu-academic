@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
@@ -17,6 +18,16 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import org.apache.commons.collections.Predicate;
 
 public class TSDTeacherDTOEntry extends DataTranferObject {
+
+    public static final Comparator<TSDTeacherDTOEntry> COMPARATOR_BY_NAME = new Comparator<TSDTeacherDTOEntry>() {
+
+	@Override
+	public int compare(TSDTeacherDTOEntry o1, TSDTeacherDTOEntry o2) {
+	    return o1.getName().compareTo(o2.getName());
+	}
+	
+    };
+
     private List<TSDTeacher> tsdTeacherList;
     private List<ExecutionSemester> executionPeriodList = null;
 

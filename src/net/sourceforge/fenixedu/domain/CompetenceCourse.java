@@ -29,19 +29,24 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
 
-    public static final Comparator<CompetenceCourse> COMPETENCE_COURSE_COMPARATOR_BY_NAME = new BeanComparator("name", Collator
-	    .getInstance());
+    public static final Comparator<CompetenceCourse> COMPETENCE_COURSE_COMPARATOR_BY_NAME = new Comparator<CompetenceCourse>() {
+
+	@Override
+	public int compare(CompetenceCourse o1, CompetenceCourse o2) {
+	    return Collator.getInstance().compare(o1.getName(), o2.getName());
+	}
+	
+    };
 
     protected CompetenceCourse() {
 	super();

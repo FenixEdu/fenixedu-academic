@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -11,6 +12,18 @@ import java.util.List;
  * 
  */
 public class InfoSiteStudentsAndShiftByStudentGroup extends DataTranferObject implements ISiteComponent {
+
+    public static final Comparator<InfoSiteStudentsAndShiftByStudentGroup> COMPARATOR_BY_NUMBER
+    		= new Comparator<InfoSiteStudentsAndShiftByStudentGroup>() {
+
+		    @Override
+		    public int compare(InfoSiteStudentsAndShiftByStudentGroup o1, InfoSiteStudentsAndShiftByStudentGroup o2) {
+			final InfoStudentGroup g1 = o1.getInfoStudentGroup();
+			final InfoStudentGroup g2 = o2.getInfoStudentGroup();
+			return g1.getGroupNumber().compareTo(g2.getGroupNumber());
+		    }
+	
+    };
 
     private List infoSiteStudentInformationList;
     private InfoStudentGroup infoStudentGroup;

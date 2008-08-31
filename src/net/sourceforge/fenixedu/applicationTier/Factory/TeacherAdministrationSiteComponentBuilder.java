@@ -81,9 +81,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * @author Fernanda Quit�rio
@@ -373,11 +371,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	    }
 	}
 
-	ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("day.time"));
-	comparatorChain.addComparator(new BeanComparator("beginning.time"));
-
-	Collections.sort(infoEvaluations, comparatorChain);
+	Collections.sort(infoEvaluations, InfoEvaluation.COMPARATOR_BY_START);
 	// merge lists
 	infoEvaluations.addAll(infoOnlineTests);
 	infoEvaluations.addAll(infoFinalEvaluations);
@@ -820,7 +814,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		    .getRegistration().getPerson().getEmail(), attend.getRegistration().getPerson().getUsername(), attend
 		    .getRegistration().getNumber()));
 	}
-	Collections.sort(infoSiteStudentInformations, new BeanComparator("number"));
+	Collections.sort(infoSiteStudentInformations, InfoSiteStudentInformation.COMPARATOR_BY_NUMBER);
 	component.setInfoSiteStudentInformationList(infoSiteStudentInformations);
 	component.setInfoStudentGroup(InfoStudentGroupWithAttendsAndGroupingAndShift.newInfoFromDomain(studentGroup));
 
@@ -878,7 +872,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		infoSiteStudentGroup.setInfoStudentGroup(infoStudentGroup);
 		infoSiteStudentGroupsList.add(infoSiteStudentGroup);
 	    }
-	    Collections.sort(infoSiteStudentGroupsList, new BeanComparator("infoStudentGroup.groupNumber"));
+	    Collections.sort(infoSiteStudentGroupsList, InfoSiteStudentGroup.COMPARATOR_BY_NUMBER);
 	}
 	infoSiteGroupsByShift.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
 
@@ -945,12 +939,12 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	    }
 
-	    Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
+	    Collections.sort(studentGroupAttendInformationList, InfoSiteStudentInformation.COMPARATOR_BY_NUMBER);
 
 	    infoSiteStudentsAndShiftByStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
 	    infoSiteStudentsAndShiftByStudentGroupList.add(infoSiteStudentsAndShiftByStudentGroup);
 
-	    Collections.sort(infoSiteStudentsAndShiftByStudentGroupList, new BeanComparator("infoStudentGroup.groupNumber"));
+	    Collections.sort(infoSiteStudentsAndShiftByStudentGroupList, InfoSiteStudentsAndShiftByStudentGroup.COMPARATOR_BY_NUMBER);
 
 	}
 

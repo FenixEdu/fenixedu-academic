@@ -49,10 +49,8 @@ import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.SituationName;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -62,11 +60,15 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
-    public static final Comparator<DegreeCurricularPlan> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("presentationName"));
-	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(COMPARATOR_BY_ID);
-    }
+    public static final Comparator<DegreeCurricularPlan> COMPARATOR_BY_PRESENTATION_NAME = new Comparator<DegreeCurricularPlan>() {
+
+	@Override
+	public int compare(DegreeCurricularPlan o1, DegreeCurricularPlan o2) {
+	    final int c = o1.getPresentationName().compareTo(o2.getPresentationName());
+	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+
+    };
 
     /**
      * This might look a strange comparator, but the idea is to show a list of
@@ -607,7 +609,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	}
 	if (!result.isEmpty()) {
-	    Collections.sort(result, new BeanComparator("startDate"));
+	    Collections.sort(result, EnrolmentPeriodInCurricularCourses.COMPARATOR_BY_START);
 	    return result.get(0);
 	}
 	return null;
@@ -623,7 +625,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	}
 	if (!result.isEmpty()) {
-	    Collections.sort(result, new BeanComparator("startDate"));
+	    Collections.sort(result, EnrolmentPeriodInCurricularCoursesSpecialSeason.COMPARATOR_BY_START);
 	    return result.get(0);
 	}
 	return null;
@@ -1601,7 +1603,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		studentsWithoutTutor.add(scp);
 	    }
 	}
-	Collections.sort(studentsWithoutTutor, new BeanComparator("student.number"));
+	Collections.sort(studentsWithoutTutor, StudentCurricularPlan.COMPARATOR_BY_STUDENT_NUMBER);
 	Collections.reverse(studentsWithoutTutor);
 	return studentsWithoutTutor;
     }

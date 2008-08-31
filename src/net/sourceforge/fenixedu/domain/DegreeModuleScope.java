@@ -8,45 +8,61 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 public abstract class DegreeModuleScope {
 
-    static final protected Comparator<DegreeModuleScope> COMPARATOR_BY_ID = new Comparator<DegreeModuleScope>() {
+    private static final String KEY_SEPARATOR = ":";
+    public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME = new Comparator<DegreeModuleScope>() {
+
+	@Override
 	public int compare(DegreeModuleScope o1, DegreeModuleScope o2) {
+	    final int cy = o1.getCurricularYear().compareTo(o2.getCurricularYear());
+	    if (cy != 0) {
+		return cy;
+	    }
+	    final int cs = o1.getCurricularSemester().compareTo(o2.getCurricularSemester());
+	    if (cs != 0) {
+		return cs;
+	    }
+	    final int cn = Collator.getInstance().compare(o1.getCurricularCourse().getName(), o2.getCurricularCourse().getName());
+	    if (cn != 0) {
+		return cn;
+	    }
 	    return o1.getIdInternal().compareTo(o2.getIdInternal());
 	}
+	
     };
 
-    private static final String KEY_SEPARATOR = ":";
-    public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME = new ComparatorChain();
-    public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH = new ComparatorChain();
-    public static final Comparator<DegreeModuleScope> COMPARATOR_BY_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME)
-		.addComparator(new BeanComparator("curricularYear"));
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME)
-		.addComparator(new BeanComparator("curricularSemester"));
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME)
-		.addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME)
-		.addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
+    public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH = new Comparator<DegreeModuleScope>() {
 
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
-		.addComparator(new BeanComparator("curricularYear"));
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
-		.addComparator(new BeanComparator("curricularSemester"));
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
-		.addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
-		.addComparator(new BeanComparator("branch", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
-		.addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
+	@Override
+	public int compare(DegreeModuleScope o1, DegreeModuleScope o2) {
+	    final int cy = o1.getCurricularYear().compareTo(o2.getCurricularYear());
+	    if (cy != 0) {
+		return cy;
+	    }
+	    final int cs = o1.getCurricularSemester().compareTo(o2.getCurricularSemester());
+	    if (cs != 0) {
+		return cs;
+	    }
+	    final int cn = Collator.getInstance().compare(o1.getCurricularCourse().getName(), o2.getCurricularCourse().getName());
+	    if (cn != 0) {
+		return cn;
+	    }
+	    final int cb = Collator.getInstance().compare(o1.getBranch(), o2.getBranch());
+	    return o1.getIdInternal().compareTo(o2.getIdInternal());
+	}
+	
+    };
 
-	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<DegreeModuleScope> COMPARATOR_BY_NAME = new Comparator<DegreeModuleScope>() {
+
+	@Override
+	public int compare(DegreeModuleScope o1, DegreeModuleScope o2) {
+	    final int c = o1.getCurricularCourse().getName().compareTo(o2.getCurricularCourse().getName());
+	    return c == 0 ? o1.getIdInternal().compareTo(o2.getIdInternal()) : c;
+	}
+	
+    };
 
     public abstract String getClassName();
 

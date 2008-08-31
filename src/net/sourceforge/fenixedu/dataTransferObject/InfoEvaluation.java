@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
+import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoOnlineTest;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -17,6 +18,15 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  *         25/6/2003
  */
 public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent {
+
+    public static final Comparator<InfoEvaluation> COMPARATOR_BY_START = new Comparator<InfoEvaluation>() {
+
+	@Override
+	public int compare(InfoEvaluation o1, InfoEvaluation o2) {
+	    return o1.getInicio().compareTo(o2.getInicio());
+	}
+	
+    };
 
     private String publishmentMessage;
     private EvaluationType evaluationType;

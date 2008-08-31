@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
@@ -241,7 +240,7 @@ public class ExportClosedExtraWorkMonth extends Service {
     private String getAssiduousnessMonthBalance(AssiduousnessClosedMonth assiduousnessClosedMonth, List<LeaveBean> leavesBeans) {
 	StringBuilder result = new StringBuilder();
 	if (leavesBeans != null && !leavesBeans.isEmpty()) {
-	    Collections.sort(leavesBeans, new BeanComparator("date"));
+	    Collections.sort(leavesBeans, LeaveBean.COMPARATOR_BY_DATE);
 	    for (LeaveBean leaveBean : leavesBeans) {
 		if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(

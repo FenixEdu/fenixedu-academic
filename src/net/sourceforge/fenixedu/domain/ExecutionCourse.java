@@ -51,8 +51,6 @@ import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -70,26 +68,43 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
 
-    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR = new BeanComparator(
-	    "executionPeriod");
+    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR = new Comparator<ExecutionCourse>() {
 
-    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new ComparatorChain();
+	@Override
+	public int compare(ExecutionCourse o1, ExecutionCourse o2) {
+	    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+	}
+	
+    };
 
-    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new ComparatorChain();
+    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new Comparator<ExecutionCourse>() {
+
+	@Override
+	public int compare(ExecutionCourse o1, ExecutionCourse o2) {
+	    final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
+	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+	
+    };
+
+    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new Comparator<ExecutionCourse>() {
+
+	@Override
+	public int compare(ExecutionCourse o1, ExecutionCourse o2) {
+	    final int cep = o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+	    if (cep != 0) {
+		return cep;
+	    }
+	    final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
+	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;	    
+	}
+	
+    };
 
     public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
 
     static {
 	CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
-
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME)
-		.addComparator(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome",
-		Collator.getInstance()));
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
-
-	((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("nome", Collator.getInstance()));
-	((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(DomainObject.COMPARATOR_BY_ID);
 
 	BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER = new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>(
 		"associatedBibliographicReferences", "referenceOrder");
@@ -608,10 +623,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return orderedEvaluations;
     }
 
-    private static final Comparator<Attends> ATTENDS_COMPARATOR = new BeanComparator("aluno.number");
-
     public Set<Attends> getOrderedAttends() {
-	final Set<Attends> orderedAttends = new TreeSet<Attends>(ATTENDS_COMPARATOR);
+	final Set<Attends> orderedAttends = new TreeSet<Attends>(Attends.COMPARATOR_BY_STUDENT_NUMBER);
 	orderedAttends.addAll(getAttends());
 	return orderedAttends;
     }
