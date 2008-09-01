@@ -31,6 +31,11 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	final Person person = getRemoteUser(request).getPerson();
+	
+	if (person.getStudent().hasInquiriesToRespond()) {
+	    throw new InquiriesNotAnswered();
+	}	
+	
 	final SortedSet<StudentCurricularPlan> activeStudentCurricularPlans = person
 		.getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName();
 
@@ -95,6 +100,9 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
     }
 
     public class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends NotAuthorizedFilterException {
+    }
+    
+    public class InquiriesNotAnswered extends NotAuthorizedFilterException {
     }
 
     public class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends NotAuthorizedFilterException {
