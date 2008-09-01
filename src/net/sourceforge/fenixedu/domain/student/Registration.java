@@ -311,8 +311,8 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getFirstStudentCurricularPlan() {
-	return hasAnyStudentCurricularPlans() ? (StudentCurricularPlan) Collections.min(
-		getStudentCurricularPlans(), StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE) : null;
+	return hasAnyStudentCurricularPlans() ? (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(),
+		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE) : null;
     }
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {
@@ -1202,7 +1202,8 @@ public class Registration extends Registration_Base {
     final public static Registration readByNumberAndDegreeCurricularPlan(Integer number, DegreeCurricularPlan degreeCurricularPlan) {
 	Registration nonActiveRegistration = null;
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    if (registration.getNumber().intValue() == number.intValue() && registration.getDegreeCurricularPlans().contains(degreeCurricularPlan)) {
+	    if (registration.getNumber().intValue() == number.intValue()
+		    && registration.getDegreeCurricularPlans().contains(degreeCurricularPlan)) {
 		if (registration.isActive()) {
 		    return registration;
 		}
@@ -1286,7 +1287,8 @@ public class Registration extends Registration_Base {
     }
 
     final public static void readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
-	    final Collection<Registration> result, String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
+	    final Collection<Registration> result, String studentName, String docIdNumber, IDDocumentType idType,
+	    Integer studentNumber) {
 
 	if (studentNumber != null && studentNumber > 0) {
 	    result.addAll(Registration.readRegistrationsByNumberAndDegreeTypes(studentNumber, DegreeType.MASTER_DEGREE,
@@ -3078,7 +3080,12 @@ public class Registration extends Registration_Base {
 
     public boolean isEnrolmentByStudentAllowed() {
 	return isActive() && getRegistrationAgreement().isEnrolmentByStudentAllowed()
-		&& getDegreeTypesToEnrolByStudent().contains(getDegreeType());
+		&& getDegreeTypesToEnrolByStudent().contains(getDegreeType()) && !isEnroledInSpecialSeason();
+    }
+
+    private boolean isEnroledInSpecialSeason() {
+	return getLastStudentCurricularPlan().isEnroledInSpecialSeason(
+		ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear());
     }
 
     private List<DegreeType> getDegreeTypesToEnrolByStudent() {
