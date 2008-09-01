@@ -1111,13 +1111,13 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<Student> getAllActiveDelegates() {
 	List<Student> result = new ArrayList<Student>();
 	for (FunctionType functionType : FunctionType.getAllDelegateFunctionTypes()) {
-	    result.addAll(getAllActiveDelegatesByFunctionType(functionType));
+	    result.addAll(getAllActiveDelegatesByFunctionType(functionType, null));
 	}
 	return result;
     }
 
     public List<Student> getAllActiveYearDelegates() {
-	return getAllActiveDelegatesByFunctionType(FunctionType.DELEGATE_OF_YEAR);
+	return getAllActiveDelegatesByFunctionType(FunctionType.DELEGATE_OF_YEAR, null);
     }
 
     public Student getActiveYearDelegateByCurricularYear(CurricularYear curricularYear) {
@@ -1125,17 +1125,19 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return (delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
     }
 
-    public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType) {
+    public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType, ExecutionYear executionYear) {
 	List<Student> result = new ArrayList<Student>();
-	final List<PersonFunction> delegateFunctions = getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType);
+	final List<PersonFunction> delegateFunctions = getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType,
+		executionYear);
 	for (PersonFunction delegateFunction : delegateFunctions) {
 	    result.add(delegateFunction.getPerson().getStudent());
 	}
 	return result;
     }
 
-    public boolean hasActiveDelegateFunctionForStudent(Student student, FunctionType delegateFunctionType) {
-	List<Student> delegates = getAllActiveDelegatesByFunctionType(delegateFunctionType);
+    public boolean hasActiveDelegateFunctionForStudent(Student student, ExecutionYear executionYear,
+	    FunctionType delegateFunctionType) {
+	List<Student> delegates = getAllActiveDelegatesByFunctionType(delegateFunctionType, executionYear);
 	for (Student delegate : delegates) {
 	    if (delegate.equals(student)) {
 		return true;
@@ -1154,26 +1156,15 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return false;
     }
 
-    public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, FunctionType functionType) {
-	for (PersonFunction personFunction : getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType)) {
+    public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, ExecutionYear executionYear,
+	    FunctionType functionType) {
+	for (PersonFunction personFunction : getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType,
+		executionYear)) {
 	    if (personFunction.getPerson().getStudent().equals(student)) {
 		return personFunction;
 	    }
 	}
 	return null;
-    }
-
-    public PersonFunction getMostSignificantDelegateFunctionForStudent(Student student) {
-	if (hasActiveDelegateFunctionForStudent(student, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
-	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student,
-		    FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
-	} else if (hasActiveDelegateFunctionForStudent(student, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
-	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, FunctionType.DELEGATE_OF_MASTER_DEGREE);
-	} else if (hasActiveDelegateFunctionForStudent(student, FunctionType.DELEGATE_OF_DEGREE)) {
-	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, FunctionType.DELEGATE_OF_DEGREE);
-	} else {
-	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, FunctionType.DELEGATE_OF_YEAR);
-	}
     }
 
     /*
@@ -1365,5 +1356,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    }
 	}
 	return false;
+    }
+
+    public PersonFunction getMostSignificantDelegateFunctionForStudent(Student student, ExecutionYear executionYear) {
+	if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
+	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+		    FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
+	} else if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
+	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+		    FunctionType.DELEGATE_OF_MASTER_DEGREE);
+	} else if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_DEGREE)) {
+	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+		    FunctionType.DELEGATE_OF_DEGREE);
+	} else {
+	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
+	}
     }
 }

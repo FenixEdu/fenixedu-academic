@@ -364,7 +364,7 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
     private DelegateBean getDelegateBean(Degree degree, FunctionType functionType) {
 	DelegateBean delegateBean = getInitializedBean(degree);
 	delegateBean.setDelegateType(functionType);
-	List<Student> delegates = degree.getAllActiveDelegatesByFunctionType(functionType);
+	List<Student> delegates = degree.getAllActiveDelegatesByFunctionType(functionType, delegateBean.getExecutionYear());
 	if (!delegates.isEmpty()) {
 	    delegateBean.setDelegate(delegates.get(0));
 	}
@@ -376,12 +376,12 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
 	    final CurricularYear curricularYear = CurricularYear.readByYear(i);
 	    final Student student = degree.getActiveYearDelegateByCurricularYear(curricularYear); // can
-												  // be
-												  // null
-												  // if
-												  // doesn
-												  // 't
-												  // exist
+	    // be
+	    // null
+	    // if
+	    // doesn
+	    // 't
+	    // exist
 	    final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	    final DelegateElection election = degree
 		    .getYearDelegateElectionWithLastCandidacyPeriod(executionYear, curricularYear);

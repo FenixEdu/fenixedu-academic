@@ -219,7 +219,7 @@
 <schema name="delegates.showCurricularCourses.curricularCourseInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean">
 	<slot name="curricularCourse.name" key="label.curricularCourse" layout="link" >
 		<property name="useParent" value="true" />
-		<property name="linkFormat" value="/viewStudents.do?method=showStudentsByCurricularCourse&amp;curricularCourseID=${curricularCourse.idInternal}&amp;curricularYear=${curricularYear}&amp;executionPeriodOID=${executionPeriod.idInternal}"/>
+		<property name="linkFormat" value="/viewStudents.do?method=showStudentsByCurricularCourse&amp;curricularCourseID=${curricularCourse.idInternal}&amp;curricularYear=${curricularYear}&amp;executionPeriodOID=${executionPeriod.idInternal}&amp;year=${executionPeriod.executionYear.year}"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true"/>
 	</slot>
@@ -243,4 +243,13 @@
 	<slot name="curricularYear" key="label.curricularYear" />
 	<slot name="curricularSemester" key="label.semester" />
 	<slot name="enrolledStudentsNumber" key="label.studentsNumber" />
+</schema>
+
+<schema name="choose.execution.year" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
+	<slot name="domainObject" key="label.executionYear" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/> 
+		<property name="format" value="${year}"/>
+		<property name="nullOptionHidden" value="true" />
+		<property name="destination" value="postBackChooseExecutionYear"/>
+	</slot>
 </schema>

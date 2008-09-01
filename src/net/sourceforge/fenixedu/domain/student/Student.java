@@ -994,7 +994,7 @@ public class Student extends Student_Base {
      */
     public List<Student> getStudentsResponsibleForGivenFunctionType(FunctionType delegateFunctionType, ExecutionYear executionYear) {
 	final Degree degree = getLastActiveRegistration().getDegree();
-	if (degree.hasActiveDelegateFunctionForStudent(this, delegateFunctionType)) {
+	if (degree.hasActiveDelegateFunctionForStudent(this, executionYear, delegateFunctionType)) {
 	    switch (delegateFunctionType) {
 	    case DELEGATE_OF_GGAE:
 		return degree.getAllStudents();
@@ -1026,7 +1026,7 @@ public class Student extends Student_Base {
 
     private List<Student> getStudentsForYearDelegate(Degree degree, ExecutionYear executionYear) {
 	final PersonFunction yearDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(this,
-		FunctionType.DELEGATE_OF_YEAR);
+		executionYear, FunctionType.DELEGATE_OF_YEAR);
 	int curricularYear = yearDelegateFunction.getCurricularYear().getYear();
 	return degree.getStudentsFromGivenCurricularYear(curricularYear, executionYear);
     }
@@ -1035,13 +1035,15 @@ public class Student extends Student_Base {
      * If student has delegate role, get the curricular courses he is
      * responsible for
      */
-    public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType) {
+    public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
+	    ExecutionYear executionYear) {
 	final Degree degree = getLastActiveRegistration().getDegree();
 	final PersonFunction delegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(this,
-		delegateFunctionType);
+		executionYear, delegateFunctionType);
 	if (delegateFunction != null) {
-	    final ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate());
-	    if (degree.hasActiveDelegateFunctionForStudent(this, delegateFunctionType)) {
+	    executionYear = executionYear != null ? executionYear : ExecutionYear.getExecutionYearByDate(delegateFunction
+		    .getBeginDate());
+	    if (degree.hasActiveDelegateFunctionForStudent(this, executionYear, delegateFunctionType)) {
 		switch (delegateFunctionType) {
 		case DELEGATE_OF_GGAE:
 		    return degree.getAllCurricularCourses(executionYear);
@@ -1073,7 +1075,7 @@ public class Student extends Student_Base {
 
     private Set<CurricularCourse> getCurricularCoursesForYearDelegate(Degree degree, ExecutionYear executionYear) {
 	final PersonFunction yearDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(this,
-		FunctionType.DELEGATE_OF_YEAR);
+		executionYear, FunctionType.DELEGATE_OF_YEAR);
 	int curricularYear = yearDelegateFunction.getCurricularYear().getYear();
 	return degree.getCurricularCoursesFromGivenCurricularYear(curricularYear, executionYear);
     }

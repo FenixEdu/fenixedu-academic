@@ -10,12 +10,13 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Function extends Function_Base {
 
@@ -172,7 +173,7 @@ public class Function extends Function_Base {
 	YearMonthDay currentDate = new YearMonthDay();
 	for (Accountability accountability : getAccountabilities()) {
 	    if (accountability.isPersonFunction() && accountability.isActive(currentDate)
-		    && accountability.getBeginDate().isAfter(executionYear.getBeginDateYearMonthDay())) {
+		    && executionYear.containsDate(accountability.getBeginDate().toDateTimeAtMidnight())) {
 		personFunctions.add((PersonFunction) accountability);
 	    }
 	}

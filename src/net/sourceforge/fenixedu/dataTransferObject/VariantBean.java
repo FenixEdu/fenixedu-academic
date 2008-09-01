@@ -3,12 +3,14 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class VariantBean implements Serializable {
 
     public static enum Type {
-	INTEGER, STRING, DATE, MULTI_LANGUAGE_STRING
+	INTEGER, STRING, DATE, MULTI_LANGUAGE_STRING, DOMAIN_REFERENCE
     };
 
     /**
@@ -65,5 +67,14 @@ public class VariantBean implements Serializable {
     public void setMLString(MultiLanguageString value) {
 	this.value = value;
 	setType(Type.MULTI_LANGUAGE_STRING);
+    }
+
+    public DomainObject getDomainObject() {
+	return Type.DOMAIN_REFERENCE.equals(type) ? ((DomainReference<DomainObject>) (this.value)).getObject() : null;
+    }
+
+    public void setDomainObject(DomainObject domainObject) {
+	this.value = new DomainReference<DomainObject>(domainObject);
+	setType(Type.DOMAIN_REFERENCE);
     }
 }

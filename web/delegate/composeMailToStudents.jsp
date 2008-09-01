@@ -7,10 +7,12 @@
 
 <h2><bean:message key="label.sendMailToStudents" bundle="DELEGATES_RESOURCES" /></h2>
 
-<logic:present name="currentExecutionYear">
-	<p class="mtop1 mbottom1"><b><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" />:</b>
-		<bean:write name="currentExecutionYear" property="year" /></p>
-</logic:present>
+<bean:define id="year" name="currentExecutionYear" property="domainObject.year"/>
+<fr:form action="/sendEmailToDelegateStudents.do?method=chooseExecutionYear">
+	<fr:edit schema="choose.execution.year" name="currentExecutionYear" id="chooseExecutionYear" layout="tabular">
+		<fr:destination name="postBackChooseExecutionYear" path="/sendEmailToDelegateStudents.do?method=chooseExecutionYear"/>
+	</fr:edit>
+</fr:form>
 
 <logic:messagesPresent property="error" message="true">
 	<html:messages id="message" property="error" message="true" bundle="MESSAGING_RESOURCES">
@@ -47,10 +49,10 @@
 	<bean:message key="label.sendMailToStudents.chooseReceivers.help" bundle="DELEGATES_RESOURCES" /></p>
 <p class="mtop05 mbottom05">
 	<b><bean:message key="label.delegates.sendMailTo" bundle="DELEGATES_RESOURCES" /></b>
-	<html:link page="/sendEmailToDelegateStudents.do?method=prepare">
+	<html:link page='<%= "/sendEmailToDelegateStudents.do?method=prepare&amp;year=" + year%>'>
 		<bean:message key="link.sendToDelegateStudents" bundle="DELEGATES_RESOURCES"/>
 	</html:link>,
-	<html:link page="/sendEmailToDelegateStudents.do?method=prepareSendToStudentsFromSelectedCurricularCourses">
+	<html:link page='<%= "/sendEmailToDelegateStudents.do?method=prepareSendToStudentsFromSelectedCurricularCourses&amp;year=" + year %>'>
 		<bean:message key="link.sendToStudentsFromCurricularCourses" bundle="DELEGATES_RESOURCES"/>
 	</html:link>
 </p>

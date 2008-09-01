@@ -291,7 +291,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
     private DelegateSearchBean getDelegateSearchBean(DelegateSearchBean bean, FunctionType functionType) {
 	List<Student> delegates = new ArrayList<Student>();
 	if (bean.getExecutionYear().equals(ExecutionYear.readCurrentExecutionYear())) {
-	    delegates.addAll(bean.getDegree().getAllActiveDelegatesByFunctionType(functionType));
+	    delegates.addAll(bean.getDegree().getAllActiveDelegatesByFunctionType(functionType, null));
 	} else {
 	    delegates.addAll(bean.getDegree()
 		    .getAllDelegatesByExecutionYearAndFunctionType(bean.getExecutionYear(), functionType));

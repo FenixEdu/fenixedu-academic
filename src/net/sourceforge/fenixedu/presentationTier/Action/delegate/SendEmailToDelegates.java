@@ -37,7 +37,7 @@ public class SendEmailToDelegates extends SimpleMailSenderAction {
 	if (person.hasStudent()) {
 	    final Student delegate = person.getStudent();
 	    final Degree degree = delegate.getLastActiveRegistration().getDegree();
-	    delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(delegate);
+	    delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(delegate, null);
 
 	    /* All other delegates from delegate degree */
 	    groups.add(new DelegatesGroup(degree));

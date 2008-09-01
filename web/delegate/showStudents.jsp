@@ -8,10 +8,13 @@
 
 <h2><bean:message key="label.showStudents" bundle="DELEGATES_RESOURCES" /></h2>
 
-<logic:present name="currentExecutionYear">
-	<p class="mtop1 mbottom1"><b><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" />:</b>
-		<bean:write name="currentExecutionYear" property="year" /></p>
-</logic:present>
+
+<bean:define id="year" name="currentExecutionYear" property="domainObject.year"/>
+<fr:form action="/viewStudents.do?method=chooseExecutionYear">
+	<fr:edit schema="choose.execution.year" name="currentExecutionYear" id="chooseExecutionYear" layout="tabular">
+		<fr:destination name="postBackChooseExecutionYear" path="/viewStudents.do?method=chooseExecutionYear"/>
+	</fr:edit>
+</fr:form>
 
 <logic:present name="studentsList" >
 	<p class="mtop2 mbottom05">
@@ -19,7 +22,7 @@
 	
 	<p class="mtop1 mbottom05">
 		<b><bean:message key="label.delegates.studentsList.show" bundle="DELEGATES_RESOURCES" /></b>
-		<html:link page="/viewStudents.do?method=prepareShowStudentsByCurricularCourse">
+		<html:link page='<%= "/viewStudents.do?method=prepareShowStudentsByCurricularCourse&amp;year=" + year%>'>
 			<bean:message key="link.showStudentsByCurricularCourse" bundle="DELEGATES_RESOURCES"/>
 		</html:link>,
 		<span class="highlight1"><bean:message key="link.showStudents" bundle="DELEGATES_RESOURCES"/></span>
@@ -49,7 +52,7 @@
 		<b><bean:message key="label.delegates.studentsList.show" bundle="DELEGATES_RESOURCES" /></b>
 			<span class="highlight1"><bean:message key="link.showStudentsByCurricularCourse" bundle="DELEGATES_RESOURCES"/></span>
 		,
-		<html:link page="/viewStudents.do?method=showStudents">
+		<html:link page='<%= "/viewStudents.do?method=showStudents&amp;year=" + year %>'>
 			<bean:message key="link.showStudents" bundle="DELEGATES_RESOURCES"/>
 		</html:link>
 	</p>

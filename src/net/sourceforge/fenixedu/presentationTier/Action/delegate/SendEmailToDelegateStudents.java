@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -39,6 +40,10 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 
     @Override
     protected List<IGroup> getPossibleReceivers(HttpServletRequest request) {
+	return getPossibleReceivers(request, null);
+    }
+
+    protected List<IGroup> getPossibleReceivers(HttpServletRequest request, ExecutionYear executionYear) {
 	List<IGroup> groups = super.getPossibleReceivers(request);
 
 	final Person person = getLoggedPerson(request);
@@ -47,14 +52,15 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 	if (person.hasStudent()) {
 	    final Student student = person.getStudent();
 	    final Degree degree = student.getLastActiveRegistration().getDegree();
-	    delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(student);
+	    delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(student, executionYear);
 	} else {
 	    delegateFunction = person.getActiveGGAEDelegatePersonFunction();
 	}
 
 	if (delegateFunction != null) {
 	    if (request.getAttribute("curricularCoursesList") != null) {
-		final ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate());
+		executionYear = executionYear == null ? ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate())
+			: executionYear;
 
 		List<CurricularCourse> curricularCourses = (List<CurricularCourse>) request.getAttribute("curricularCoursesList");
 		for (CurricularCourse curricularCourse : curricularCourses) {
@@ -79,6 +85,10 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 
     @Override
     protected MailBean createMailBean(HttpServletRequest request) {
+	return createMailBean(request, null);
+    }
+
+    protected MailBean createMailBean(HttpServletRequest request, ExecutionYear executionYear) {
 	MailBean bean = new MailBean();
 
 	Person person = getLoggedPerson(request);
@@ -86,10 +96,10 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 	bean.setFromAddress(person.getEmail());
 
 	if (request.getAttribute("curricularCoursesList") != null) {
-	    bean.setReceiversOptions(getPossibleReceivers(request));
+	    bean.setReceiversOptions(getPossibleReceivers(request, executionYear));
 	    bean.setReceiversGroupList(bean.getReceiversOptions());
 	} else {
-	    bean.setReceiversOptions(getPossibleReceivers(request));
+	    bean.setReceiversOptions(getPossibleReceivers(request, executionYear));
 	}
 
 	return bean;
@@ -99,39 +109,61 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	RenderUtils.invalidateViewState();
+	String year = request.getParameter("year");
+	ExecutionYear executionYear = year == null ? ExecutionYear.readCurrentExecutionYear() : ExecutionYear
+		.readExecutionYearByName(year);
+	return prepare(mapping, actionForm, request, response, executionYear);
+    }
 
-	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
-
-	MailBean bean = createMailBean(request);
+    private ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response, ExecutionYear executionYear) throws Exception {
+	MailBean bean = createMailBean(request, executionYear);
 	request.setAttribute("mailBean", bean);
-
+	VariantBean variantBean = new VariantBean();
+	variantBean.setDomainObject(executionYear);
+	request.setAttribute("currentExecutionYear", variantBean);
 	return mapping.findForward("compose-mail");
     }
 
-    public ActionForward prepareSendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    private ActionForward prepareSendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response, ExecutionYear executionYear) throws Exception {
 	final Person person = getLoggedPerson(request);
-
 	PersonFunction delegateFunction = null;
 	if (person.hasStudent()) {
 	    final Student student = person.getStudent();
 	    final Degree degree = student.getLastActiveRegistration().getDegree();
-	    delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(student);
+	    delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(student, executionYear);
 	} else {
 	    delegateFunction = person.getActiveGGAEDelegatePersonFunction();
 	}
 
 	if (delegateFunction != null) {
-	    request.setAttribute("curricularCoursesList", getCurricularCourses(person));
+	    request.setAttribute("curricularCoursesList", getCurricularCourses(person, executionYear));
 	} else {
 	    addActionMessage(request, "error.delegates.sendMail.notExistentDelegateFunction");
 	}
 
+	VariantBean variantBean = new VariantBean();
+	variantBean.setDomainObject(executionYear);
+	request.setAttribute("currentExecutionYear", variantBean);
+
 	return mapping.findForward("choose-receivers");
+    }
+
+    public ActionForward prepareSendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	String year = request.getParameter("year");
+	ExecutionYear executionYear = year != null ? ExecutionYear.readExecutionYearByName(year) : ExecutionYear
+		.readCurrentExecutionYear();
+	return prepareSendToStudentsFromSelectedCurricularCourses(mapping, actionForm, request, response, executionYear);
     }
 
     public ActionForward sendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	String year = request.getParameter("year");
+	ExecutionYear executionYear = year != null ? ExecutionYear.readExecutionYearByName(year) : ExecutionYear
+		.readCurrentExecutionYear();
 
 	final List<String> selectedCurricularCourses = Arrays.asList(request.getParameterValues("selectedCurricularCourses"));
 	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
@@ -143,7 +175,7 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 
 	if (!curricularCourses.isEmpty()) {
 	    request.setAttribute("curricularCoursesList", curricularCourses);
-	    return prepare(mapping, actionForm, request, response);
+	    return prepare(mapping, actionForm, request, response, executionYear);
 
 	} else {
 	    addActionMessage(request, "error.delegates.sendMail.curricularCoursesNotSelected");
@@ -172,11 +204,11 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
      * AUXILIARY METHODS
      */
 
-    private PersonFunction getPersonFunction(Person person) {
+    private PersonFunction getPersonFunction(Person person, ExecutionYear executionYear) {
 	if (person.hasStudent()) {
 	    final Student student = person.getStudent();
 	    final Degree degree = student.getLastActiveRegistration().getDegree();
-	    return degree.getMostSignificantDelegateFunctionForStudent(student);
+	    return degree.getMostSignificantDelegateFunctionForStudent(student, executionYear);
 	} else {
 	    return person.getActiveGGAEDelegatePersonFunction();
 	}
@@ -192,28 +224,27 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 	return curricularCourses;
     }
 
-    private List<DelegateCurricularCourseBean> getCurricularCourses(final Person person) {
+    private List<DelegateCurricularCourseBean> getCurricularCourses(final Person person, ExecutionYear executionYear) {
 	List<DelegateCurricularCourseBean> result = new ArrayList<DelegateCurricularCourseBean>();
-
-	final PersonFunction delegateFunction = getPersonFunction(person);
+	executionYear = executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear;
+	final PersonFunction delegateFunction = getPersonFunction(person, executionYear);
 	if (delegateFunction != null) {
 	    if (person.hasStudent()) {
 		Set<CurricularCourse> curricularCourses = person.getStudent().getCurricularCoursesResponsibleForByFunctionType(
-			delegateFunction.getFunction().getFunctionType());
-		return getCurricularCoursesBeans(delegateFunction, curricularCourses);
+			delegateFunction.getFunction().getFunctionType(), executionYear);
+		return getCurricularCoursesBeans(delegateFunction, curricularCourses, executionYear);
 	    } else if (person.hasAnyCoordinators()) {
 		Set<CurricularCourse> curricularCourses = getDegreesCurricularCoursesFromCoordinatorRoles(person
-			.getCoordinators(), ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate()));
-		return getCurricularCoursesBeans(delegateFunction, curricularCourses);
+			.getCoordinators(), executionYear);
+		return getCurricularCoursesBeans(delegateFunction, curricularCourses, executionYear);
 	    }
 	}
 	return result;
     }
 
     private List<DelegateCurricularCourseBean> getCurricularCoursesBeans(PersonFunction delegateFunction,
-	    Set<CurricularCourse> curricularCourses) {
+	    Set<CurricularCourse> curricularCourses, ExecutionYear executionYear) {
 	final FunctionType delegateFunctionType = delegateFunction.getFunction().getFunctionType();
-	final ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate());
 
 	List<DelegateCurricularCourseBean> result = new ArrayList<DelegateCurricularCourseBean>();
 
@@ -259,4 +290,20 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 	}
 	return result;
     }
+
+    public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	VariantBean variantBean = (VariantBean) getRenderedObject("chooseExecutionYear");
+	RenderUtils.invalidateViewState();
+	return prepare(mapping, actionForm, request, response, (ExecutionYear) variantBean.getDomainObject());
+    }
+
+    public ActionForward chooseExecutionYearCurricularCourseList(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	VariantBean variantBean = (VariantBean) getRenderedObject("chooseExecutionYear");
+	RenderUtils.invalidateViewState();
+	return prepareSendToStudentsFromSelectedCurricularCourses(mapping, actionForm, request, response,
+		(ExecutionYear) variantBean.getDomainObject());
+    }
+
 }

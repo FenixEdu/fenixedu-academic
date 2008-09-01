@@ -11,10 +11,11 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeUnit extends DegreeUnit_Base {
 
@@ -119,13 +120,14 @@ public class DegreeUnit extends DegreeUnit_Base {
     public List<PersonFunction> getAllActiveDelegatePersonFunctions() {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 	for (FunctionType functionType : FunctionType.getAllDelegateFunctionTypes()) {
-	    result.addAll(getAllActiveDelegatePersonFunctionsByFunctionType(functionType));
+	    result.addAll(getAllActiveDelegatePersonFunctionsByFunctionType(functionType, null));
 	}
 	return result;
     }
 
-    public List<PersonFunction> getAllActiveDelegatePersonFunctionsByFunctionType(FunctionType functionType) {
-	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+    public List<PersonFunction> getAllActiveDelegatePersonFunctionsByFunctionType(FunctionType functionType,
+	    ExecutionYear executionYear) {
+	executionYear = executionYear != null ? executionYear : ExecutionYear.readCurrentExecutionYear();
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 	final Function function = getActiveDelegateFunctionByType(functionType);
 	if (function != null) {
@@ -135,7 +137,8 @@ public class DegreeUnit extends DegreeUnit_Base {
     }
 
     public PersonFunction getActiveYearDelegatePersonFunctionByCurricularYear(CurricularYear curricularYear) {
-	final List<PersonFunction> delegateFunctions = getAllActiveDelegatePersonFunctionsByFunctionType(FunctionType.DELEGATE_OF_YEAR);
+	final List<PersonFunction> delegateFunctions = getAllActiveDelegatePersonFunctionsByFunctionType(
+		FunctionType.DELEGATE_OF_YEAR, null);
 	for (PersonFunction delegateFunction : delegateFunctions) {
 	    if (delegateFunction.hasCurricularYear() && delegateFunction.getCurricularYear().equals(curricularYear)) {
 		return delegateFunction;
@@ -257,13 +260,13 @@ public class DegreeUnit extends DegreeUnit_Base {
 	    List<PersonFunction> delegateFunctions = function.getActivePersonFunctions();
 	    for (PersonFunction personFunction : delegateFunctions) {
 		personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1)); // if
-													       // consistent
-													       // ,
-													       // there
-													       // can
-													       // be
-													       // only
-													       // one
+		// consistent
+		// ,
+		// there
+		// can
+		// be
+		// only
+		// one
 	    }
 	}
 
@@ -279,7 +282,7 @@ public class DegreeUnit extends DegreeUnit_Base {
 
     // TODO: controlo de acesso?
     public void removeActiveDelegatePersonFunctionFromStudentByFunctionType(Student student, FunctionType functionType) {
-	List<PersonFunction> delegatesFunctions = getAllActiveDelegatePersonFunctionsByFunctionType(functionType);
+	List<PersonFunction> delegatesFunctions = getAllActiveDelegatePersonFunctionsByFunctionType(functionType, null);
 	if (!delegatesFunctions.isEmpty()) {
 	    for (PersonFunction function : delegatesFunctions) {
 		Student delegateStudent = function.getPerson().getStudent();
