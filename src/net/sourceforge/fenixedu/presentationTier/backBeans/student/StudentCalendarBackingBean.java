@@ -47,7 +47,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
 	@Override
 	public int compare(ExecutionCourse o1, ExecutionCourse o2) {
-	    return o1.getNome().compareTo(o2.getNome())
+	    return o1.getNome().compareTo(o2.getNome());
 	}
 
     };
