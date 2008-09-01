@@ -71,7 +71,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    }
 	}
 
-	if (courses.isEmpty() || !isAnyInquiryToAnswer) {
+	if (courses.isEmpty() || (!isAnyInquiryToAnswer && student.isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod())) {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 
@@ -133,9 +133,14 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	InquiryNotAnsweredJustification justification = InquiryNotAnsweredJustification.valueOf(notAnsweredJustification);
 	String notAnsweredOtherJustification = (String) form.get("notAnsweredOtherJustification");
 	
-	if(justification == InquiryNotAnsweredJustification.OTHER && StringUtils.isEmpty(notAnsweredOtherJustification)){
-	    addActionMessage(request, "error.inquiries.fillOtherJustification");
-	    return handleDontRespondError(actionMapping, request, inquiriesRegistry);
+	if(justification == InquiryNotAnsweredJustification.OTHER ){
+	    if(StringUtils.isEmpty(notAnsweredOtherJustification)){
+		addActionMessage(request, "error.inquiries.fillOtherJustification");
+		return handleDontRespondError(actionMapping, request, inquiriesRegistry);
+	    } else if(notAnsweredOtherJustification.length() > 200){
+		addActionMessage(request, "error.inquiries.fillOtherJustificationLengthOversized");
+		return handleDontRespondError(actionMapping, request, inquiriesRegistry);
+	    }
 	}
 
 	executeService("WriteStudentInquiryNotAnswer", inquiriesRegistry, justification, notAnsweredOtherJustification);
