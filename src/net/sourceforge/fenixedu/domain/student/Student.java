@@ -1177,22 +1177,19 @@ public class Student extends Student_Base {
 		continue;
 	    }
 
-	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-	    if (studentCurricularPlan != null) {
-		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
-		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-			coursesToAnswer.put(inquiriesRegistry.getExecutionCourse(), inquiriesRegistry);
-		    }
+	    for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
+		if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+		    coursesToAnswer.put(inquiriesRegistry.getExecutionCourse(), inquiriesRegistry);
 		}
+	    }
 
-		for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+		createNewInquiriesRegistryIfDoesntExist(executionSemester, coursesToAnswer, registration, enrolment);
+	    }
+
+	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		if (enrolment.getCurricularCourse().isAnual()) {
 		    createNewInquiriesRegistryIfDoesntExist(executionSemester, coursesToAnswer, registration, enrolment);
-		}
-
-		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		    if (enrolment.getCurricularCourse().isAnual()) {
-			createNewInquiriesRegistryIfDoesntExist(executionSemester, coursesToAnswer, registration, enrolment);
-		    }
 		}
 	    }
 	}
@@ -1218,32 +1215,29 @@ public class Student extends Student_Base {
 		continue;
 	    }
 
-	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-	    if (studentCurricularPlan != null) {
-		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
-		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-			if (inquiriesRegistry.isOpenToAnswer() || inquiriesRegistry.isToAnswerLater()) {
-			    coursesToAnswer.put(inquiriesRegistry.getExecutionCourse(), inquiriesRegistry.getCurricularCourse()
-				    .getName());
-			} else {
-			    coursesAnswered.add(inquiriesRegistry.getExecutionCourse());
-			}
+	    for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
+		if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+		    if (inquiriesRegistry.isOpenToAnswer() || inquiriesRegistry.isToAnswerLater()) {
+			coursesToAnswer.put(inquiriesRegistry.getExecutionCourse(), inquiriesRegistry.getCurricularCourse()
+				.getName());
+		    } else {
+			coursesAnswered.add(inquiriesRegistry.getExecutionCourse());
 		    }
 		}
+	    }
 
-		for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+		final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+		if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
+		    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
+		}
+	    }
+
+	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		if (enrolment.getCurricularCourse().isAnual()) {
 		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 		    if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
 			coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
-		    }
-		}
-
-		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		    if (enrolment.getCurricularCourse().isAnual()) {
-			final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-			if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
-			    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
-			}
 		    }
 		}
 	    }
@@ -1263,36 +1257,33 @@ public class Student extends Student_Base {
 		continue;
 	    }
 
-	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-	    if (studentCurricularPlan != null) {
-		final Set<CurricularCourse> inquiriesCurricularCourses = new HashSet<CurricularCourse>();
-		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistriesSet()) {
-		    if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-			if (inquiriesRegistry.isOpenToAnswer()) {
-			    return true;
-			} else {
-			    inquiriesCurricularCourses.add(inquiriesRegistry.getCurricularCourse());
-			}
+	    final Set<CurricularCourse> inquiriesCurricularCourses = new HashSet<CurricularCourse>();
+	    for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistriesSet()) {
+		if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+		    if (inquiriesRegistry.isOpenToAnswer()) {
+			return true;
+		    } else {
+			inquiriesCurricularCourses.add(inquiriesRegistry.getCurricularCourse());
 		    }
 		}
+	    }
 
-		for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+	    for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+		final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+		if (executionCourse != null && !inquiriesCurricularCourses.contains(enrolment.getCurricularCourse())) {
+		    return true;
+		}
+	    }
+
+	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		if (enrolment.getCurricularCourse().isAnual()) {
 		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 		    if (executionCourse != null && !inquiriesCurricularCourses.contains(enrolment.getCurricularCourse())) {
 			return true;
 		    }
 		}
-
-		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		    if (enrolment.getCurricularCourse().isAnual()) {
-			final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-			if (executionCourse != null && !inquiriesCurricularCourses.contains(enrolment.getCurricularCourse())) {
-			    return true;
-			}
-		    }
-		}
-
 	    }
+
 	}
 
 	return false;
