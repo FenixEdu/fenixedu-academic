@@ -18,10 +18,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,7 +33,7 @@ import org.apache.struts.action.DynaActionForm;
  * @author Jo�o Mota
  * 
  */
-public class ViewClassTimeTableActionNew extends FenixContextAction {
+public class ViewClassTimeTableActionNew extends FenixAction {
 
     /**
      * Constructor for ViewClassTimeTableAction.
@@ -40,6 +41,8 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
+	ContextUtils.setExecutionPeriodContext(request);
+
 	try {
 	    super.execute(mapping, form, request, response);
 	} catch (Exception e) {

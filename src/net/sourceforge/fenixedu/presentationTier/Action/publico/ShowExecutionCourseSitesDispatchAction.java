@@ -17,20 +17,29 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatchAction {
+public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ContextUtils.setExecutionPeriodContext(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
 
     public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final Degree degree = ShowDegreeSiteAction.getDegree(request);
 
 	// degreeID
-	final Integer degreeOID = getFromRequest("degreeID", request);
+	final Integer degreeOID = FenixContextDispatchAction.getFromRequest("degreeID", request);
 	getDegreeAndSetInfoDegree(request, degreeOID);
 	final List<ExecutionCourseView> executionCourseViews = getExecutionCourseViews(request, degree);
 	final InfoExecutionPeriod infoExecutionPeriod = getPreviousExecutionPeriod(request);

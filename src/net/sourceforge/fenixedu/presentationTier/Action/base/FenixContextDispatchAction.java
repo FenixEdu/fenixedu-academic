@@ -34,7 +34,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 	return actionForward;
     }
 
-    protected static Integer getFromRequest(String parameter, HttpServletRequest request) {
+    public static Integer getFromRequest(String parameter, HttpServletRequest request) {
 	if (request.getParameter(parameter) != null) {
 	    try {
 		return Integer.valueOf(request.getParameter(parameter));
@@ -55,7 +55,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    protected Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
+    public static Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
 	return (request.getParameter(parameter) != null) ? Boolean.valueOf(request.getParameter(parameter)) : (Boolean) request
 		.getAttribute(parameter);
     }

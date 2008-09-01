@@ -27,9 +27,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -40,7 +42,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-public class ShowDegreeSiteAction extends FenixContextDispatchAction {
+public class ShowDegreeSiteAction extends FenixDispatchAction {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ContextUtils.setExecutionPeriodContext(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
 
     public static int ANNOUNCEMENTS_NUMBER = 3;
 
@@ -53,7 +62,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
     private void prepareInfo(HttpServletRequest request) throws FenixActionException {
 	// inEnglish
-	Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+	Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
 	if (inEnglish == null) {
 	    inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
 	}
@@ -93,7 +102,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
     }
 
     private ExecutionYear getExecutionYearToShow(HttpServletRequest request, Degree degree) throws FenixActionException {
-	Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+	Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
 	if (executionDegreeId != null) {
 	    // coordinator call
 	    request.setAttribute("executionDegreeID", executionDegreeId);
@@ -172,19 +181,19 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	Degree degree = getDegree(request);
 
-	Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+	Integer degreeCurricularPlanId = FenixContextDispatchAction.getFromRequest("degreeCurricularPlanID", request);
 	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-	Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+	Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
 	if (inEnglish == null) {
 	    inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
 	}
 	request.setAttribute("inEnglish", inEnglish);
 
-	Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+	Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
 	request.setAttribute("executionDegreeID", executionDegreeId);
 
-	Integer index = getFromRequest("index", request);
+	Integer index = FenixContextDispatchAction.getFromRequest("index", request);
 	request.setAttribute("index", index);
 
 	final ActionErrors errors = new ActionErrors();
@@ -203,13 +212,13 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	Degree degree = getDegree(request);
 
-	Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+	Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
 	request.setAttribute("executionDegreeId", executionDegreeId);
 
-	Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+	Integer degreeCurricularPlanId = FenixContextDispatchAction.getFromRequest("degreeCurricularPlanID", request);
 	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-	Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+	Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
 	request.setAttribute("inEnglish", inEnglish);
 
 	Object argsDegree[] = { degree.getIdInternal() };
@@ -382,7 +391,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	if (site != null) {
 	    degree = site.getDegree();
 	} else {
-	    Integer degreeId = getFromRequest("degreeID", request);
+	    Integer degreeId = FenixContextDispatchAction.getFromRequest("degreeID", request);
 	    degree = rootDomainObject.readDegreeByOID(degreeId);
 	}
 	if (degree != null) {
