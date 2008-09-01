@@ -443,7 +443,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected List<AcademicServiceRequestSituationType> getConcludedSituationAcceptedSituationsTypes() {
-	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.DELIVERED));
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		AcademicServiceRequestSituationType.DELIVERED));
     }
 
     /** This method is overwritten in the subclasses */
@@ -543,7 +544,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public boolean getLoggedPersonCanCancel() {
 	return isCancelledSituationAccepted()
 		&& (!isPayable() || !hasEvent() || !isPayed())
-		&& (createdByStudent() || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee()
+		&& ((createdByStudent() && !isConcluded()) || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee()
 			.getAdministrativeOffice()));
     }
 
