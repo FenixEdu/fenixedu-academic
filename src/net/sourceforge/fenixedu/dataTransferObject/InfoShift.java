@@ -19,24 +19,28 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.NumberUtils;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class InfoShift extends InfoObject {
 
-    public static final Comparator<InfoShift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
-    static {
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator(
-		"shift.executionCourse.nome"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator(
-		"shiftTypesIntegerComparator"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator(
-		"lessonsStringComparator"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("shift.idInternal"));
-    }
+    public static final Comparator<InfoShift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new Comparator<InfoShift>() {
+
+	@Override
+	public int compare(InfoShift o1, InfoShift o2) {
+	    final int c1 = o1.getShift().getExecutionCourse().getNome().compareTo(o2.getShift().getExecutionCourse().getNome());
+	    if (c1 != 0) {
+		return c1;
+	    }
+	    final int c2 = o1.getShiftTypesIntegerComparator().compareTo(o2.getShiftTypesIntegerComparator());
+	    if (c2 != 0) {
+		return c2;
+	    }
+	    final int c3 = o1.getLessonsStringComparator().compareTo(o2.getLessonsStringComparator());
+	    return c3 == 0 ? o1.getShift().getIdInternal().compareTo(o2.getShift().getIdInternal()) : c3;
+	}
+	
+    };
 
     private final DomainReference<Shift> shift;
 

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -435,10 +436,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
 		.executeService("ReadNotClosedExecutionPeriods");
 
-	ComparatorChain chainComparator = new ComparatorChain();
-	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-	chainComparator.addComparator(new BeanComparator("semester"), true);
-	Collections.sort(infoExecutionPeriods, chainComparator);
+	Collections.sort(infoExecutionPeriods, InfoExecutionPeriod.COMPARATOR_BY_YEAR_AND_SEMESTER);
 
 	List<SelectItem> executionPeriodItems = new ArrayList<SelectItem>(infoExecutionPeriods.size());
 	executionPeriodItems.add(new SelectItem(0, this.chooseMessage));
@@ -848,12 +846,21 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	return result;
     }
 
+    private static final Comparator<SelectItem> COMPARATOR_BY_LABEL = new Comparator<SelectItem>() {
+
+	@Override
+	public int compare(SelectItem o1, SelectItem o2) {
+	    return o1.getLabel().compareTo(o2.getLabel());
+	}
+
+    };
+
     public List<SelectItem> getExecutionCoursesLabels() throws FenixFilterException, FenixServiceException {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 	for (final ExecutionCourse executionCourse : getExecutionCourses()) {
 	    result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
 	}
-	Collections.sort(result, new BeanComparator("label"));
+	Collections.sort(result, COMPARATOR_BY_LABEL);
 	result.add(0, new SelectItem(0, this.chooseMessage));
 	return result;
     }

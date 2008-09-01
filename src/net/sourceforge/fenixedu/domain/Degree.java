@@ -53,7 +53,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     private static final Collator collator = Collator.getInstance();
 
-    static final private Comparator<Degree> COMPARATOR_BY_NAME = new Comparator<Degree>() {
+    static final public Comparator<Degree> COMPARATOR_BY_NAME = new Comparator<Degree>() {
 	public int compare(final Degree o1, final Degree o2) {
 	    return collator.compare(o1.getName(), o2.getName());
 	}

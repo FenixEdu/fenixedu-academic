@@ -63,6 +63,15 @@ import org.joda.time.YearMonthDay;
 
 public class Student extends Student_Base {
 
+    public final static Comparator<Student> NAME_COMPARATOR = new Comparator<Student>() {
+
+	@Override
+	public int compare(Student o1, Student o2) {
+	    return o1.getPerson().getName().compareTo(o2.getPerson().getName());
+	}
+
+    };
+
     public final static Comparator<Student> NUMBER_COMPARATOR = new Comparator<Student>() {
 
 	@Override

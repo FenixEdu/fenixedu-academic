@@ -14,9 +14,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
@@ -108,7 +105,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     @Override
     public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
-	Collections.sort(result, new BeanComparator("executionPeriod"));
+	Collections.sort(result, IDegreeModuleToEvaluate.COMPARATOR_BY_EXECUTION_PERIOD);
 	return result;
     }
 

@@ -16,9 +16,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -43,7 +40,7 @@ public class ExecutionCoursesForUnit implements DataProvider {
 		: getBolonhaCoursesForGivenGroup(competenceCourseGroup));
 
 	List<ExecutionCourse> coursesToProvide = new ArrayList<ExecutionCourse>(courses);
-	Collections.sort(coursesToProvide, new BeanComparator("nome"));
+	Collections.sort(coursesToProvide, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	return coursesToProvide;
     }
 

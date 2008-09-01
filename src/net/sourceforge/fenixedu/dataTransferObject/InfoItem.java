@@ -11,9 +11,6 @@ import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.fileupload.FileItem;
-
 /**
  * @author Ivo Brandão
  */
@@ -158,7 +155,7 @@ public class InfoItem extends InfoObject implements Comparable {
 		infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
 	    }
 
-	    Collections.sort(infoFileItems, new BeanComparator("displayName"));
+	    Collections.sort(infoFileItems, InfoFileContent.COMPARATOR_BY_DISPLAY_NAME);
 	    setInfoFileItems(infoFileItems);
 	}
     }

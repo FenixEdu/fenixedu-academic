@@ -9,9 +9,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -25,7 +22,7 @@ public class PreBolonhaMasterDegrees implements DataProvider {
 		result.add(degree);
 	    }
 	}
-	Collections.sort(result, new BeanComparator("name"));
+	Collections.sort(result, Degree.COMPARATOR_BY_NAME);
 	return result;
     }
 

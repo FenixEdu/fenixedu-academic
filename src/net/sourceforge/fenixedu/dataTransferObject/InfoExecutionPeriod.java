@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -11,6 +12,18 @@ import net.sourceforge.fenixedu.util.PeriodState;
  * @author Nuno & Joana
  */
 public class InfoExecutionPeriod extends InfoObject implements Comparable {
+
+    public static final Comparator<InfoExecutionPeriod> COMPARATOR_BY_YEAR_AND_SEMESTER = new Comparator<InfoExecutionPeriod>() {
+
+	@Override
+	public int compare(InfoExecutionPeriod o1, InfoExecutionPeriod o2) {
+	    final int c = o2.getInfoExecutionYear().getYear().compareTo(o1.getInfoExecutionYear().getYear());
+	    return c == 0 ? o2.getSemester().compareTo(o1.getSemester()) : c;
+	}
+
+    };
+
+
 
     private DomainReference<ExecutionSemester> executionPeriodDomainReference;
 

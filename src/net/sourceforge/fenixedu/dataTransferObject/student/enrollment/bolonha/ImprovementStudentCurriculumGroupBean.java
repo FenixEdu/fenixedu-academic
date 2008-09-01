@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -10,8 +11,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
 
@@ -70,7 +69,7 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
     @Override
     public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
-	Collections.sort(result, new BeanComparator("executionPeriod"));
+	Collections.sort(result, IDegreeModuleToEvaluate.COMPARATOR_BY_EXECUTION_PERIOD);
 	return result;
     }
 

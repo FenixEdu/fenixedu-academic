@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,7 +37,6 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.MessageResources;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -228,13 +228,22 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	return rooms;
     }
 
+    private static final Comparator<SelectItem> SELECT_ITEM_LABEL_COMPARATOR = new Comparator<SelectItem>() {
+
+	@Override
+	public int compare(SelectItem o1, SelectItem o2) {
+	    return o1.getLabel().compareTo(o2.getLabel());
+	}
+
+    };
+
     public Collection<SelectItem> getBuildingSelectItems() throws FenixFilterException, FenixServiceException {
 	final List<Building> buildings = (List<Building>) getBuildings();
 	final List<SelectItem> buildingSelectItems = new ArrayList<SelectItem>();
 	for (final Building building : buildings) {
 	    buildingSelectItems.add(new SelectItem(building.getIdInternal().toString(), building.getName()));
 	}
-	Collections.sort(buildingSelectItems, new BeanComparator("label"));
+	Collections.sort(buildingSelectItems, SELECT_ITEM_LABEL_COMPARATOR);
 	return buildingSelectItems;
     }
 

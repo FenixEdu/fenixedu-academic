@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDis
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -138,7 +137,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private void sortExecutionDegreesByDegreeName(List<ExecutionDegree> result) {
-	Collections.sort(result, new BeanComparator("degree.name"));
+	Collections.sort(result, ExecutionDegree.COMPARATOR_BY_DEGREE_NAME);
     }
 
     private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping, HttpServletRequest request,

@@ -35,8 +35,6 @@ import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLin
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.util.MessageResources;
 
 public class StudentCalendarBackingBean extends FenixBackingBean {
@@ -45,13 +43,14 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/StudentResources");
 
-    private static final ComparatorChain executionSemesterComparator = new ComparatorChain();
-    static {
-	executionSemesterComparator.addComparator(new BeanComparator("executionYear.year"), true);
-	executionSemesterComparator.addComparator(new BeanComparator("semester"), true);
-    }
+    private static final Comparator<ExecutionCourse> executionCourseComparator = new Comparator<ExecutionCourse>(){
 
-    private static final Comparator<ExecutionCourse> executionCourseComparator = new BeanComparator("nome");
+	@Override
+	public int compare(ExecutionCourse o1, ExecutionCourse o2) {
+	    return o1.getNome().compareTo(o2.getNome())
+	}
+
+    };
 
     private Collection<ExecutionSemester> executionSemesters;
 
@@ -73,7 +72,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	if (executionSemesters == null) {
 	    final Registration registration = getStudent();
 
-	    executionSemesters = new TreeSet<ExecutionSemester>(executionSemesterComparator);
+	    executionSemesters = new TreeSet<ExecutionSemester>(ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 	    for (final Attends attends : registration.getAssociatedAttends()) {
 		executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
 	    }

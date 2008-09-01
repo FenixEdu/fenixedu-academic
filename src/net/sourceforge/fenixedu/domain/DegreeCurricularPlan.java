@@ -60,6 +60,15 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
+    public static final Comparator<DegreeCurricularPlan> COMPARATOR_BY_NAME = new Comparator<DegreeCurricularPlan>() {
+
+	@Override
+	public int compare(DegreeCurricularPlan o1, DegreeCurricularPlan o2) {
+	    return o1.getName().compareTo(o2.getName());
+	}
+
+    };
+
     public static final Comparator<DegreeCurricularPlan> COMPARATOR_BY_PRESENTATION_NAME = new Comparator<DegreeCurricularPlan>() {
 
 	@Override

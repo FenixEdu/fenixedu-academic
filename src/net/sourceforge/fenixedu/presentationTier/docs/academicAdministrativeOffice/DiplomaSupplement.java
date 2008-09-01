@@ -33,8 +33,6 @@ import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.NameUtils;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormat;
@@ -240,15 +238,17 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	return result;
     }
 
+    static final public Comparator<DiplomaSupplementEntry> COMPARATOR = new Comparator<DiplomaSupplementEntry>() {
+
+	@Override
+	public int compare(DiplomaSupplementEntry o1, DiplomaSupplementEntry o2) {
+	    final int c = o1.getExecutionYear().compareTo(o2.getExecutionYear());
+	    return c == 0 ? Collator.getInstance().compare(o1, o2) : c;
+	}
+
+    };
+
     public class DiplomaSupplementEntry implements Comparable<DiplomaSupplementEntry> {
-	final public Comparator<DiplomaSupplementEntry> COMPARATOR = new Comparator<DiplomaSupplementEntry>() {
-	    public int compare(DiplomaSupplementEntry o1, DiplomaSupplementEntry o2) {
-		final ComparatorChain chain = new ComparatorChain();
-		chain.addComparator(new BeanComparator("executionYear"));
-		chain.addComparator(new BeanComparator("name", Collator.getInstance()));
-		return chain.compare(o1, o2);
-	    }
-	};
 
 	private ICurriculumEntry entry;
 

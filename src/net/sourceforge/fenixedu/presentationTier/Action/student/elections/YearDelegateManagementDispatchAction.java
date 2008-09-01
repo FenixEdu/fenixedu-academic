@@ -51,7 +51,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	    }
 
 	    final List<Student> candidates = new ArrayList<Student>(yearDelegateElection.getCandidates());
-	    Collections.sort(candidates, new BeanComparator("person.name"));
+	    Collections.sort(candidates, Student.NAME_COMPARATOR);
 	    request.setAttribute("candidates", candidates);
 	}
 

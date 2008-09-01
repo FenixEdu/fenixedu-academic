@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -10,19 +10,27 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLesson> {
 
-    private final static ComparatorChain INFO_LESSON_COMPARATOR_CHAIN = new ComparatorChain();
-    static {
-	INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("diaSemana.diaSemana"));
-	INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("inicio"));
-	INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("fim"));
-	INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("infoSala.nome"));
-    }
+    private final static Comparator<InfoLesson> INFO_LESSON_COMPARATOR_CHAIN = new Comparator<InfoLesson>() {
+
+	@Override
+	public int compare(InfoLesson o1, InfoLesson o2) {
+	    final int c1 = o1.getDiaSemana().getDiaSemana().compareTo(o2.getDiaSemana().getDiaSemana());
+	    if (c1 != 0) {
+		return c1;
+	    }
+	    final int c2 = o1.getInicio().compareTo(o2.getInicio());
+	    if (c2 != 0) {
+		return c2;
+	    }
+	    final int c3 = o1.getFim().compareTo(o2.getFim());
+	    return c3 != 0 ? o1.getInfoSala().getNome().compareTo(o2.getInfoShift().getNome()) : c3;
+	}
+	
+    };
 
     private DomainReference<Lesson> lesson;
     private InfoRoom infoSala;

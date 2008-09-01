@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalLookupDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -188,7 +187,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	    schoolClassesToEnrol.addAll(registration.getSchoolClassesToEnrol());
 	}
 
-	Collections.sort(schoolClassesToEnrol, new BeanComparator("nome"));
+	Collections.sort(schoolClassesToEnrol, SchoolClass.COMPARATOR_BY_NAME);
 	return schoolClassesToEnrol;
     }
 

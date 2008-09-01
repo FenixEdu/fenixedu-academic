@@ -7,18 +7,17 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 public class ExecutionCourseWrittenEvaluationAgregationBean {
 
-    public static final Comparator<ExecutionCourseWrittenEvaluationAgregationBean> COMPARATOR_BY_EXECUTION_COURSE_CODE_AND_CURRICULAR_YEAR = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_EXECUTION_COURSE_CODE_AND_CURRICULAR_YEAR).addComparator(new BeanComparator(
-		"executionCourse.sigla"));
-	((ComparatorChain) COMPARATOR_BY_EXECUTION_COURSE_CODE_AND_CURRICULAR_YEAR).addComparator(new BeanComparator(
-		"curricularYear"));
-    }
+    public static final Comparator<ExecutionCourseWrittenEvaluationAgregationBean> COMPARATOR_BY_EXECUTION_COURSE_CODE_AND_CURRICULAR_YEAR = new Comparator<ExecutionCourseWrittenEvaluationAgregationBean>() {
+
+	@Override
+	public int compare(ExecutionCourseWrittenEvaluationAgregationBean o1, ExecutionCourseWrittenEvaluationAgregationBean o2) {
+	    final int c = o1.getExecutionCourse().getSigla().compareTo(o2.getExecutionCourse().getSigla());
+	    return c == 0 ? o1.getCurricularYear().compareTo(o2.getCurricularYear()) : c;
+	}
+
+    };
 
     private ExecutionCourse executionCourse;
     private Integer curricularYear;

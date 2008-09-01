@@ -7,9 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -33,7 +30,7 @@ public class DegreeCurricularPlansForDegree implements DataProvider {
 	    }
 	}
 
-	Collections.sort(result, new BeanComparator("name"));
+	Collections.sort(result, DegreeCurricularPlan.COMPARATOR_BY_NAME);
 	return result;
     }
 

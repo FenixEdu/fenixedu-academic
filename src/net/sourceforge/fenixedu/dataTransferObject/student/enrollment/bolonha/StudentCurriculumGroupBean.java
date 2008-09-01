@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
     private static class ComparatorByCurriculumGroupOrder implements Comparator<StudentCurriculumGroupBean> {
@@ -141,7 +139,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
     public List<IDegreeModuleToEvaluate> getCourseGroupsToEnrolSortedByContext() {
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(courseGroupsToEnrol);
-	Collections.sort(result, new BeanComparator("context"));
+	Collections.sort(result, IDegreeModuleToEvaluate.COMPARATOR_BY_CONTEXT);
 
 	return result;
     }
@@ -152,7 +150,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
     public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(curricularCoursesToEnrol);
-	Collections.sort(result, new BeanComparator("context"));
+	Collections.sort(result, IDegreeModuleToEvaluate.COMPARATOR_BY_CONTEXT);
 
 	return result;
     }

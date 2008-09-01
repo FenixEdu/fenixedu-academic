@@ -26,7 +26,6 @@ public class ExecutionCourseView {
 	}
 	
     };
-    //new BeanComparator("executionCourseName", Collator.getInstance());
 
     private final DomainReference<ExecutionCourse> executionCourseDomainReference;
 

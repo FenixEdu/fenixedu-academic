@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.FileContent;
+import java.util.Comparator;
 
-import org.apache.commons.fileupload.FileItem;
+import net.sourceforge.fenixedu.domain.FileContent;
 
 /**
  * 
@@ -10,6 +10,15 @@ import org.apache.commons.fileupload.FileItem;
  * 
  */
 public class InfoFileContent extends InfoObject {
+
+    public static final Comparator<InfoFileContent> COMPARATOR_BY_DISPLAY_NAME = new Comparator<InfoFileContent>() {
+
+	@Override
+	public int compare(InfoFileContent o1, InfoFileContent o2) {
+	    return o1.getDisplayName().compareTo(o2.getDisplayName());
+	}
+	
+    };
 
     private String name;
 

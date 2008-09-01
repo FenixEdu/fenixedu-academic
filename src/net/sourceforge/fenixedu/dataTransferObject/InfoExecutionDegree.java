@@ -6,25 +6,28 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 
 public class InfoExecutionDegree extends InfoObject {
 
-    public static final Comparator<InfoExecutionDegree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_DEGREE_TYPE_AND_NAME).addComparator(new BeanComparator(
-		"executionDegree.degreeCurricularPlan.degree.tipoCurso"));
-	((ComparatorChain) COMPARATOR_BY_DEGREE_TYPE_AND_NAME).addComparator(new BeanComparator(
-		"executionDegree.degreeCurricularPlan.degree.nome"));
-    }
+    public static final Comparator<InfoExecutionDegree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME = new Comparator<InfoExecutionDegree>() {
+
+	@Override
+	public int compare(InfoExecutionDegree o1, InfoExecutionDegree o2) {
+	    final Degree degree1 = o1.getExecutionDegree().getDegree();
+	    final Degree degree2 = o2.getExecutionDegree().getDegree();
+	    final int c = degree1.getTipoCurso().compareTo(degree2.getTipoCurso());
+	    return c == 0 ? degree1.getNome().compareTo(degree2.getName()) : c;
+	}
+
+    };
 
     private final DomainReference<ExecutionDegree> executionDegreeDomainReference;
 

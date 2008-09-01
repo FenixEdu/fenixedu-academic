@@ -7,9 +7,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.StudentCurricularPlanFactoryExecutor.StudentCurricularPlanCreator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -23,7 +20,7 @@ public class DegreeCurricularPlansForCreateStudentCurricularPlan implements Data
     public Object provide(Object source, Object currentValue) {
 
 	final StudentCurricularPlanCreator creator = (StudentCurricularPlanCreator) source;
-	final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(new BeanComparator("name"));
+	final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_NAME);
 	if (creator.getDegree() != null) {
 	    Set<DegreeCurricularPlan> degreeCurricularPlans = creator.getRegistration().getDegreeCurricularPlans();
 	    for (DegreeCurricularPlan degreeCurricularPlan : creator.getDegree().getDegreeCurricularPlansSet()) {

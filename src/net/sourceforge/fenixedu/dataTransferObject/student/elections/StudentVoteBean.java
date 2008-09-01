@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 public class StudentVoteBean implements Serializable {
 
     private DomainReference<Student> student;
@@ -69,7 +67,7 @@ public class StudentVoteBean implements Serializable {
 		otherStudentsBeanList.add(studentList);
 	    }
 
-	    Collections.sort(otherStudentsBeanList, new BeanComparator("person.name"));
+	    Collections.sort(otherStudentsBeanList, Student.NAME_COMPARATOR);
 	    return otherStudentsBeanList;
 	}
 	return new ArrayList<Student>();

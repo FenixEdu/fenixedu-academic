@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,15 @@ import org.apache.commons.lang.StringUtils;
  * @author Luis Cruz & Sara Ribeiro
  */
 public class SchoolClass extends SchoolClass_Base {
+
+    public static final Comparator<SchoolClass> COMPARATOR_BY_NAME = new Comparator<SchoolClass>() {
+
+	@Override
+	public int compare(SchoolClass o1, SchoolClass o2) {
+	    return o1.getNome().compareTo(o2.getNome());
+	}
+	
+    };
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
     public SchoolClass(final ExecutionDegree executionDegree, final ExecutionSemester executionSemester, final String name,

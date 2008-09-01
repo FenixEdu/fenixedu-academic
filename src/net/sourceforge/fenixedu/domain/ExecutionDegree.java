@@ -43,6 +43,15 @@ import org.joda.time.YearMonthDay;
 
 public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<ExecutionDegree> {
 
+    public static final Comparator<ExecutionDegree> COMPARATOR_BY_DEGREE_NAME = new Comparator<ExecutionDegree>(){
+
+	@Override
+	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+	    return o1.getDegree().getName().compareTo(o2.getDegree().getName());
+	}
+
+    };
+
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new Comparator<ExecutionDegree>() {
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 	    return o1.getExecutionYear().compareTo(o2.getExecutionYear());

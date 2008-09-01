@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.publico;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +19,18 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class DepartmentManagementBackingBean extends FenixBackingBean {
+
+    public static final Comparator<DepartmentUnit> COMPARATOR_BY_REAL_NAME = new Comparator<DepartmentUnit>() {
+
+	@Override
+	public int compare(DepartmentUnit o1, DepartmentUnit o2) {
+	    return o1.getDepartment().getRealName().compareTo(o2.getDepartment().getRealName());
+	}
+
+    };
 
     private Collection<Category> sortedDepartmentCategories = new TreeSet<Category>();
 
@@ -30,7 +39,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
     public List<DepartmentUnit> getDepartmentUnits() {
 	final List<DepartmentUnit> result = new ArrayList<DepartmentUnit>(UnitUtils.readAllDepartmentUnits());
 	removeUnitsWithoutDepartment(result);
-	Collections.sort(result, new BeanComparator("department.realName"));
+	Collections.sort(result, COMPARATOR_BY_REAL_NAME);
 	return result;
     }
 
