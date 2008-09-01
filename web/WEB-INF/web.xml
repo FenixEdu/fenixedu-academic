@@ -178,11 +178,7 @@
 	</filter-mapping>
 	<filter-mapping>
  		 <filter-name>ProfilingFilter</filter-name>
- 		 <url-pattern>*.jsp</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
- 		 <filter-name>ProfilingFilter</filter-name>
- 		 <url-pattern>*.do</url-pattern>
+ 		 <url-pattern>/*</url-pattern>
 	</filter-mapping>
    	<filter-mapping>
 	    <filter-name>CASFilter</filter-name>
