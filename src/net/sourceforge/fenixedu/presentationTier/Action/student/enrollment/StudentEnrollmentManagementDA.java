@@ -249,7 +249,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	final Registration registration = getRegistration(request);
-	if (!registrationBelongsToRegistrationsToEnrol(request, registration)) {
+	if (!registrationBelongsToRegistrationsToEnrol(request, registration)
+		&& !getRegistrationsToChooseSecondCycle(registration.getStudent()).contains(registration)) {
 	    return mapping.findForward("notAuthorized");
 	}
 
