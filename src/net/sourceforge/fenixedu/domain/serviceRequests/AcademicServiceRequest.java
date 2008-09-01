@@ -443,8 +443,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected List<AcademicServiceRequestSituationType> getConcludedSituationAcceptedSituationsTypes() {
-	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
-		AcademicServiceRequestSituationType.DELIVERED));
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.DELIVERED));
     }
 
     /** This method is overwritten in the subclasses */
