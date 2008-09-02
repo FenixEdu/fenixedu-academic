@@ -586,7 +586,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
-	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
 	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) && enrolmentPeriod.isValid()) {
 		return (EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
 	    }
@@ -594,12 +594,24 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return null;
     }
 
+    public boolean hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(final ExecutionSemester executionSemester) {
+	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriods()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) {
+		final EnrolmentPeriodInCurricularCoursesSpecialSeason enrolmentPeriodInCurricularCourses = ((EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod);
+		if (enrolmentPeriodInCurricularCourses.isFor(executionSemester) && enrolmentPeriodInCurricularCourses.isValid()) {
+		    return true;
+		}
+	    }
+	}
+
+	return false;
+    }
+
     public boolean hasOpenEnrolmentPeriodInCurricularCoursesFor(final ExecutionSemester executionSemester) {
 	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriods()) {
 	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
 		final EnrolmentPeriodInCurricularCourses enrolmentPeriodInCurricularCourses = ((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
-		if (enrolmentPeriodInCurricularCourses.getExecutionPeriod() == executionSemester
-			&& enrolmentPeriodInCurricularCourses.isValid()) {
+		if (enrolmentPeriodInCurricularCourses.isFor(executionSemester) && enrolmentPeriodInCurricularCourses.isValid()) {
 		    return true;
 		}
 	    }

@@ -3080,12 +3080,7 @@ public class Registration extends Registration_Base {
 
     public boolean isEnrolmentByStudentAllowed() {
 	return isActive() && getRegistrationAgreement().isEnrolmentByStudentAllowed()
-		&& getDegreeTypesToEnrolByStudent().contains(getDegreeType()) && !isEnroledInSpecialSeason();
-    }
-
-    private boolean isEnroledInSpecialSeason() {
-	return getLastStudentCurricularPlan().isEnroledInSpecialSeason(
-		ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear());
+		&& getDegreeTypesToEnrolByStudent().contains(getDegreeType());
     }
 
     private List<DegreeType> getDegreeTypesToEnrolByStudent() {

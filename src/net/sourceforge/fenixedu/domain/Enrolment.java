@@ -1403,9 +1403,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public boolean hasEnrolment(ExecutionYear executionYear) {
 	return isValid(executionYear);
     }
-    
+
     @Override
     public boolean isEnroledInSpecialSeason(final ExecutionSemester executionSemester) {
-        return isValid(executionSemester) && hasSpecialSeason();
+	return isValid(executionSemester) && hasSpecialSeason();
+    }
+
+    @Override
+    public boolean isEnroledInSpecialSeason(ExecutionYear executionYear) {
+	return isValid(executionYear) && hasSpecialSeason();
     }
 }

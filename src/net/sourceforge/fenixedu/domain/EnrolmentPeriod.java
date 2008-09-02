@@ -49,6 +49,10 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     public boolean containsDate(DateTime date) {
 	return !(getStartDateDateTime().isAfter(date) || getEndDateDateTime().isBefore(date));
     }
+    
+    public boolean isFor(final ExecutionSemester executionSemester) {
+	return getExecutionPeriod() == executionSemester;
+    }
 
     public void delete() {
 	removeDegreeCurricularPlan();

@@ -91,7 +91,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	public int compare(StudentCurricularPlan o1, StudentCurricularPlan o2) {
 	    return o1.getStudent().getNumber().compareTo(o2.getStudent().getNumber());
 	}
-	
+
     };
 
     static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME = new Comparator<StudentCurricularPlan>() {
@@ -117,7 +117,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final int cn = o1.getStudent().getNumber().compareTo(o2.getStudent().getNumber());
 	    return cn == 0 ? o1.getPerson().getName().compareTo(o2.getPerson().getName()) : cn;
 	}
-	
+
     };
 
     public static final Comparator<StudentCurricularPlan> COMPARATOR_BY_DEGREE_TYPE = new Comparator<StudentCurricularPlan>() {
@@ -1316,8 +1316,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final CurricularCourse curricularCourse) {
 	if (curricularCourse.isBolonhaDegree()) {
 	    return isAccumulated(executionSemester, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod
-		    .getAccumulatedEcts(curricularCourse, executionSemester) : curricularCourse.getEctsCredits(
-		    executionSemester.getSemester(), executionSemester);
+		    .getAccumulatedEcts(curricularCourse, executionSemester) : curricularCourse.getEctsCredits(executionSemester
+		    .getSemester(), executionSemester);
 	} else {
 	    return getAccumulatedEctsCreditsForOldCurricularCourses(curricularCourse, executionSemester);
 	}
@@ -1766,16 +1766,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isEnroledInSpecialSeason(final ExecutionYear executionYear) {
-	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(executionYear.getExecutionPeriods());
-	Collections.sort(executionSemesters, new ReverseComparator(
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
-
-	for (final ExecutionSemester executionSemester : executionSemesters) {
-	    if (isEnroledInSpecialSeason(executionSemester)) {
-		return true;
-	    }
-	}
-	return false;
+	return hasRoot() ? getRoot().isEnroledInSpecialSeason(executionYear) : false;
     }
 
     final public Collection<Enrolment> getSpecialSeasonToEnrol(ExecutionYear executionYear) {
@@ -1821,46 +1812,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    public boolean hasSpecialSeasonForActualExecutionPeriod() {
-	return hasSpecialSeasonFor(ExecutionSemester.readActualExecutionSemester());
-    }
-
-    public boolean hasSpecialSeasonFor(ExecutionSemester executionSemester) {
-	if (executionSemester.hasPreviousExecutionPeriod()
-		&& isEnroledInSpecialSeason(executionSemester.getPreviousExecutionPeriod().getExecutionYear())) {
-	    return hasAnyEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester, new DateTime());
-	}
-	return false;
-    }
-
-    private boolean hasAnyEnrolmentPeriodInCurricularCoursesSpecialSeason(final ExecutionSemester executionSemester,
-	    final DateTime date) {
-	final EnrolmentPeriodInCurricularCoursesSpecialSeason periodInCurricularCoursesSpecialSeason = getDegreeCurricularPlan()
-		.getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(executionSemester);
-	return (periodInCurricularCoursesSpecialSeason != null && periodInCurricularCoursesSpecialSeason.containsDate(date));
-    }
-
-    public boolean hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(final ExecutionSemester executionSemester) {
-	return hasSpecialSeasonFor(executionSemester)
-		|| hasTransitedRegistrationAndOpenEnrolmentPeriodInSpecialSeason(executionSemester);
-    }
-
-    private boolean hasTransitedRegistrationAndOpenEnrolmentPeriodInSpecialSeason(final ExecutionSemester executionSemester) {
-	final DateTime now = new DateTime();
-	for (final Registration registration : getRegistration().getStudent().getTransitedRegistrations()) {
-	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-
-	    if (!studentCurricularPlan.equals(this)
-		    && studentCurricularPlan.getDegreeCurricularPlan().hasTargetEquivalencePlanFor(getDegreeCurricularPlan())) {
-		if (executionSemester.hasPreviousExecutionPeriod()
-			&& studentCurricularPlan.isEnroledInSpecialSeason(executionSemester.getPreviousExecutionPeriod()
-				.getExecutionYear())
-			&& hasAnyEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester, now)) {
-		    return true;
-		}
-	    }
-	}
-	return false;
+    /**
+     * Has special season in given semester if is enroled in special season in
+     * previous semester
+     * 
+     */
+    public boolean hasSpecialSeasonFor(final ExecutionSemester executionSemester) {
+	final ExecutionSemester previous = executionSemester.getPreviousExecutionPeriod();
+	return previous != null && isEnroledInSpecialSeason(previous.getExecutionYear());
     }
 
     // Improvements

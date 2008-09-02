@@ -42,8 +42,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    request.setAttribute("student", student);
 	    return mapping.findForward("choosePersonalDataAuthorizationChoice");
 	}
-	
-	if(student.hasInquiriesToRespond()){
+
+	if (student.hasInquiriesToRespond()) {
 	    addActionMessage(request, "message.student.cannotEnroll.inquiriesNotAnswered");
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
@@ -188,7 +188,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     private boolean canContinueToEnrolment(final HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 
-	if (isFromSpecialSeason(studentCurricularPlan, executionSemester)) {
+	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
 	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
 			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
@@ -207,11 +207,6 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	}
 
 	return true;
-    }
-
-    private boolean isFromSpecialSeason(final StudentCurricularPlan activeStudentCurricularPlan,
-	    final ExecutionSemester executionSemester) {
-	return activeStudentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionSemester);
     }
 
     private void addOutOfPeriodMessage(HttpServletRequest request, final EnrolmentPeriod nextEnrollmentPeriod) {

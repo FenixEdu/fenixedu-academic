@@ -31,7 +31,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 
-	if (isFromSpecialSeason(studentCurricularPlan, executionSemester)) {
+	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
 	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
 			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
@@ -61,11 +61,6 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 	} else {
 	    addActionMessage(request, "message.out.curricular.course.enrolment.period.default");
 	}
-    }
-
-    private boolean isFromSpecialSeason(final StudentCurricularPlan activeStudentCurricularPlan,
-	    final ExecutionSemester executionSemester) {
-	return activeStudentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionSemester);
     }
 
     public ActionForward showEnrollmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,

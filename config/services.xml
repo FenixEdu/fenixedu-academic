@@ -5308,17 +5308,6 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadStudentCurricularPlanWithRulesForEnrollments</name>
-        <description>Returns information about student enrollments in curricular courses testing 
-            enrollment period</description>
-        <implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ReadStudentCurricularPlanWithRulesForEnrollments</implementationClass>
-        <isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentAuthorization" />
-        </filterChains>
-    </service>
-    <service>
         <name>WriteStudentAreas</name>
         <description>Modifies areas belonging to student curricular plan</description>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.WriteStudentAreas</implementationClass>
