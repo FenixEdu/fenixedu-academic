@@ -58,7 +58,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	    final int c = ai1.getStartDateTimeWithoutChronology().compareTo(ai2.getStartDateTimeWithoutChronology());
 	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-	
+
     };
 
     private ExecutionSemester() {
@@ -92,8 +92,9 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	super.setExecutionYear(executionYear);
     }
 
-    // Temp hack for maximum performance during enrollment period. 
+    // Temp hack for maximum performance during enrollment period.
     private Integer semester = null;
+
     public Integer getSemester() {
 	if (semester == null) {
 	    semester = getAcademicInterval().getAcademicSemesterOfAcademicYear();
@@ -259,6 +260,10 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return getBeginDateYearMonthDay().isBefore(end) && getEndDateYearMonthDay().isAfter(begin);
     }
 
+    public boolean isFirstOfYear() {
+	return getExecutionYear().getFirstExecutionPeriod() == this;
+    }
+
     public ExecutionCourse getExecutionCourseByInitials(final String courseInitials) {
 	for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
 	    if (executionCourse.getSigla().equalsIgnoreCase(courseInitials)) {
@@ -367,8 +372,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	    }
 	}
 	return enrolmentsList;
-    }    
-    
+    }
 
     public void checkValidCreditsPeriod(RoleType roleType) {
 	if (roleType != RoleType.SCIENTIFIC_COUNCIL) {
