@@ -36,8 +36,8 @@ public class PastAdministrativeOfficeFeeAndInsurancePR extends PastAdministrativ
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 	final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
-	return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, Money.ZERO, totalAmountToPay,
-		event.getDescriptionForEntryType(getEntryType()), totalAmountToPay));
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, event.getPayedAmount(), event
+		.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event.calculateAmountToPay(when)));
     }
 
     @Override
