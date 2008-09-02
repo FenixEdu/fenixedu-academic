@@ -17,6 +17,7 @@
 	</tr>
 	
 <logic:iterate id="candidacy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.candidacies">
+	<logic:notEmpty name="candidacy" property="candidacySituations">
 	<bean:define id="idInternal" name="candidacy" property="idInternal" />
 	<tr>
 		<td class="acenter">
@@ -46,5 +47,6 @@
 			</logic:equal>
 		</td>
 	</tr>
+	</logic:notEmpty>
 </logic:iterate>
 </table>
