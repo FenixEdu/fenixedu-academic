@@ -2366,6 +2366,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getCycle(cycleType) != null;
     }
 
+    public CycleCourseGroup getCycleCourseGroup(final CycleType cycleType) {
+	return isBoxStructure() ? getDegreeCurricularPlan().getCycleCourseGroup(cycleType) : null;
+    }
+
     public Collection<CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
 	return getRoot().getCurricularCoursePossibleGroups(curricularCourse);
     }
@@ -2472,15 +2476,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     }
 
-    public boolean hasAnyRegistrationWithFirstCycleAffinity() {
+    public boolean hasAnyActiveRegistrationWithFirstCycleAffinity() {
 	final CycleCurriculumGroup firstCycle = getFirstCycle();
 	if (firstCycle == null) {
 	    return false;
 	}
 	final Student student = getRegistration().getStudent();
-	for (final CycleCourseGroup affinity : getDegreeCurricularPlan().getRoot().getCycleCourseGroup(firstCycle.getCycleType())
-		.getDestinationAffinities()) {
-	    if (student.hasRegistrationFor(affinity.getParentDegreeCurricularPlan())) {
+	for (final CycleCourseGroup affinity : getCycleCourseGroup(firstCycle.getCycleType()).getDestinationAffinities()) {
+	    if (student.hasActiveRegistrationFor(affinity.getParentDegreeCurricularPlan())) {
 		return true;
 	    }
 	}

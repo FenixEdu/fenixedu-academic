@@ -75,7 +75,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
 		final CycleCurriculumGroup firstCycle = studentCurricularPlan.getFirstCycle();
 		if (firstCycle != null && firstCycle.isConcluded()
-			&& !studentCurricularPlan.hasAnyRegistrationWithFirstCycleAffinity()) {
+			&& !studentCurricularPlan.hasAnyActiveRegistrationWithFirstCycleAffinity()) {
 		    result.add(registration);
 		}
 	    }
@@ -188,7 +188,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     private boolean canContinueToEnrolment(final HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 
-	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+	if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
 	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
 			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());

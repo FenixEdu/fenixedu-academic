@@ -113,7 +113,7 @@ public class EnrolInAffinityCycle extends Service {
 
     private void checkConditionsToEnrol(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) throws FenixServiceException {
-	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+	if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
 	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		throw new FenixServiceException("error.out.of.enrolment.period");
 	    }

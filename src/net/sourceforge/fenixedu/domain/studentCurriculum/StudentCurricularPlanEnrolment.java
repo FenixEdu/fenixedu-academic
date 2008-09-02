@@ -95,7 +95,7 @@ abstract public class StudentCurricularPlanEnrolment {
 		throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
 	    }
 
-	    if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+	    if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
 		if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester)) {
 		    throw new DomainException(
 			    "error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");

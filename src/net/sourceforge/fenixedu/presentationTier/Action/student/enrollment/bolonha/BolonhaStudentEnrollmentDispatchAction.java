@@ -31,16 +31,17 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 
-	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
-	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
-		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
-			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
+	if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+	    
+	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester)) {
+		addOutOfPeriodMessage(request, degreeCurricularPlan.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
 	} else {
 	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionSemester)) {
-		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan().getNextEnrolmentPeriod());
+		addOutOfPeriodMessage(request, degreeCurricularPlan.getNextEnrolmentPeriod());
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
 	}
