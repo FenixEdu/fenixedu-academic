@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Generated Documents" generatedDocuments.sql

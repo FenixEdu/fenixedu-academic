@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
@@ -217,6 +218,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
+	    executeService(request, "StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
+		    new ByteArrayInputStream(data), receipt });
 	    executeService("RegisterReceiptPrint", new Object[] { receipt, getUserView(request).getPerson().getEmployee() });
 
 	    response.setContentLength(data.length);

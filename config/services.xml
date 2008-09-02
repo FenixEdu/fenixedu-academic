@@ -12444,4 +12444,13 @@
             <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
         </filterChains>
     </service>
+    <service>
+        <name>StoreGeneratedDocument</name>
+        <implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.documents.StoreGeneratedDocument
+        </implementationClass>
+        <description>Stores all sorts of fenix generated documents in dspace</description>
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
 </serviceDefinitions>

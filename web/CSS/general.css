@@ -239,7 +239,7 @@ table.thleft th { text-align: left; }
 table.thright th { text-align: right; }
 table.thcenter th { text-align: center; }
 .thdnone tr th { display: none !important; }
-.tdleft td { text-align: left; }
+.tdleft td { text-align: left !important; }
 .tdright td { text-align: right; } /* take table from all, to work with tr ? */
 .tdcenter td { text-align: center; }
 
@@ -602,6 +602,7 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .wauto { width: auto; }
 .width100 { width: 100%; }
 .width50pc { width: 50%; }
+.width1pc { width: 1%; }
 .width05em { width: 0.5em; }
 .width1em { width: 1em; }
 .width1p5em { width: 1.5em; }

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,7 +56,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws JRException, IOException {
+	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
 	final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
@@ -66,6 +67,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	final AdministrativeOfficeDocument[] array = {};
 	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+
+	executeService(request, "StoreGeneratedDocument", new Object[] {
+		documents.iterator().next().getReportFileName() + ".pdf", new ByteArrayInputStream(data), documentRequest });
 	response.setContentLength(data.length);
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()

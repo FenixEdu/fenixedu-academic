@@ -693,3 +693,39 @@
 	<slot name="who" key="label.who" />	
 </schema>
 
+<schema name="documents.search" type="net.sourceforge.fenixedu.dataTransferObject.documents.DocumentSearchBean"
+	bundle="MANAGER_RESOURCES">
+	<slot name="addressee.username" key="documents.addressee.username" />
+	<slot name="addressee.name" key="documents.addressee.name">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="operator.username" key="documents.operator.username"/>
+	<slot name="operator.name" key="documents.operator.name">
+        <property name="size" value="50" />
+    </slot>
+	<slot name="type" key="documents.type" />
+	<slot name="uploadTime" key="documents.uploadtime" />
+</schema>
+
+<schema name="documents.list" type="net.sourceforge.fenixedu.domain.documents.GeneratedDocument"
+	bundle="MANAGER_RESOURCES">
+	<slot name="addressee" key="documents.addressee" schema="documents.person.list" layout="tabular">
+		<property name="classes" value="tstyle2 tdleft thright width100" />
+		<property name="columnClasses" value="width1pc nowrap,,tdclear" />
+	</slot>
+	<slot name="operator" key="documents.operator" schema="documents.person.list" layout="tabular">
+		<property name="classes" value="tstyle2 tdleft thright width100" />
+		<property name="columnClasses" value="width1pc nowrap,,tdclear" />
+	</slot>
+	<slot name="type" key="documents.type" />
+	<slot name="uploadTime" key="documents.uploadtime" />
+	<slot name="displayName" layout="link" key="documents.link">
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="${downloadUrl}" />
+	</slot>
+</schema>
+
+<schema name="documents.person.list" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+	<slot name="username" />
+	<slot name="name" />
+</schema>

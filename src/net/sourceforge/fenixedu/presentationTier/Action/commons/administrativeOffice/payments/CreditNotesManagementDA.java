@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -134,7 +135,7 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
     }
 
     public ActionForward printCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws JRException, IOException {
+	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
 
 	final CreditNote creditNote = getCreditNoteFromViewState();
 
@@ -147,6 +148,8 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
+	    executeService(request, "StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
+		    new ByteArrayInputStream(data), creditNote });
 	    response.setContentLength(data.length);
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", original.getReportFileName()));
