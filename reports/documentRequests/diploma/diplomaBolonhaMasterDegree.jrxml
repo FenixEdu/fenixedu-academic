@@ -60,7 +60,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="295"
+						y="285"
 						width="468"
 						height="15"
 						key="staticText-10"/>
@@ -77,7 +77,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="309"
+						y="299"
 						width="468"
 						height="27"
 						key="textField-19"/>
@@ -94,7 +94,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="354"
+						y="343"
 						width="468"
 						height="17"
 						key="textField-22"/>
@@ -111,7 +111,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="378"
+						y="366"
 						width="468"
 						height="16"
 						key="textField-23"/>
@@ -128,7 +128,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="281"
+						y="271"
 						width="468"
 						height="15"
 						key="textField-25"/>
@@ -145,7 +145,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="340"
+						y="330"
 						width="468"
 						height="14"
 						key="staticText-11"/>
@@ -162,7 +162,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="366"
+						y="354"
 						width="468"
 						height="14"
 						key="staticText-12"/>
@@ -179,7 +179,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="391"
+						y="379"
 						width="468"
 						height="15"
 						key="staticText-13"/>
@@ -196,7 +196,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="404"
+						y="392"
 						width="468"
 						height="15"
 						key="textField-26"/>
@@ -213,7 +213,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="470"
+						y="451"
 						width="468"
 						height="16"
 						key="staticText-14"/>
@@ -230,7 +230,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="561"
+						y="543"
 						width="468"
 						height="16"
 						key="textField-27"
@@ -248,7 +248,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="122"
-						y="486"
+						y="468"
 						width="341"
 						height="57"
 						key="textField-28"/>
@@ -265,7 +265,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="447"
+						y="427"
 						width="468"
 						height="20"
 						key="textField-29"/>
@@ -282,7 +282,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="546"
+						y="528"
 						width="468"
 						height="15"
 						key="staticText-15"
@@ -300,7 +300,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="591"
+						y="570"
 						width="468"
 						height="32"
 						key="textField-30"
@@ -318,7 +318,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="623"
+						y="633"
 						width="468"
 						height="27"
 						key="staticText-17"
@@ -355,7 +355,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="422"
+						y="406"
 						width="468"
 						height="20"
 						key="textField-33"/>
@@ -372,7 +372,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<staticText>
 					<reportElement
 						x="59"
-						y="576"
+						y="558"
 						width="468"
 						height="15"
 						key="staticText-19"
@@ -447,6 +447,42 @@ lhe manda passar a presente carta de curso.]]></text>
 					</textElement>
 				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
 				</staticText>
+				<staticText>
+					<reportElement
+						x="59"
+						y="602"
+						width="468"
+						height="12"
+						key="staticText-24"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[por]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="615"
+						width="468"
+						height="16"
+						key="textField-34"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Maioria"]]></textFieldExpression>
+				</textField>
 			</band>
 		</detail>
 		<columnFooter>
