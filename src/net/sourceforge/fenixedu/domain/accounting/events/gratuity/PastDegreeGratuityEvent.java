@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
@@ -43,10 +44,13 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
 
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setPastDegreeGratuityAmount(Money pastDegreeGratuityAmount) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.cannot.modify.pastDegreeGratuityAmount");
+	super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
+	// throw new DomainException(
+	// "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.cannot.modify.pastDegreeGratuityAmount"
+	// );
     }
 
     @Override

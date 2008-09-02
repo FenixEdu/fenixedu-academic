@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministrativeOfficeFeeAndInsuranceEvent_Base {
@@ -37,10 +38,13 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
 	}
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setPastAdministrativeOfficeFeeAndInsuranceAmount(Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.cannot.modify.pastAdministrativeOfficeFeeAndInsuranceAmount");
+	super.setPastAdministrativeOfficeFeeAndInsuranceAmount(pastAdministrativeOfficeFeeAndInsuranceAmount);
+	// throw new DomainException(
+	// "error.net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.cannot.modify.pastAdministrativeOfficeFeeAndInsuranceAmount"
+	// );
     }
 
     @Override
