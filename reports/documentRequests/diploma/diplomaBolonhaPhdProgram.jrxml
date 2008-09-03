@@ -415,7 +415,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center" lineSpacing="Single">
-						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
 				<text><![CDATA[Apresentou o seu pedido de admissão às provas de doutoramento no]]></text>
 				</staticText>
@@ -433,7 +433,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center" lineSpacing="Single">
-						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["pela " + $P{universityName} + ", pelo que, em conformidade com as disposições legais em vigor,"
 + "\nlhe manda passar a presente Carta Doutoral."]]></textFieldExpression>
