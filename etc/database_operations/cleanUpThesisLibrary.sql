@@ -1,0 +1,2 @@
+alter table RESEARCH_RESULT drop column LIBRARY_EXPORTED;
+alter table RESEARCH_RESULT drop column LIBRARY_CONFIRMATION;

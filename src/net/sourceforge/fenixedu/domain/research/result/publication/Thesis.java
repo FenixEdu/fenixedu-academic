@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
 import bibtex.dom.BibtexPersonList;
@@ -209,6 +209,7 @@ public class Thesis extends Thesis_Base {
 	throw new DomainException("error.researcher.Thesis.call", "setCountry");
     }
 
+    @Override
     public String getSchema() {
 	return usedSchema;
     }
@@ -238,16 +239,6 @@ public class Thesis extends Thesis_Base {
 	}
 
 	return null;
-    }
-
-    public boolean isLibraryDetailsConfirmed() {
-	Boolean confirmation = getLibraryConfirmation();
-	return confirmation != null && confirmation;
-    }
-
-    public boolean isLibraryDetailsExported() {
-	Boolean exported = getLibraryExported();
-	return exported != null && exported;
     }
 
     /**

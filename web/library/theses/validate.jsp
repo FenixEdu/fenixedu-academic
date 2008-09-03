@@ -14,11 +14,11 @@
 	name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>"
 	property="person" />
 
-<h2><bean:message key="title.library.thesis.verify" /></h2>
+<h2><bean:message key="thesis.validation.title.details" /></h2>
 
 <p>
     <html:link page="<%="/theses/search.do?method=update" +  request.getAttribute("searchArgs")  %>">
-		« <bean:message key="link.back" />
+		<bean:message key="link.back" bundle="COMMON_RESOURCES" />
     </html:link>
 </p>
 
@@ -44,24 +44,24 @@
 			<html:hidden property="method" value="" />
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 				onclick="this.form.method.value='prepareValidate';">
-				<bean:message key="link.thesis.validate" />
+				<bean:message key="thesis.validation.button.validate" />
 			</html:submit>
 			<logic:equal name="thesisState" value="PENDING_ARCHIVE">
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 					onclick="this.form.method.value='prepareEditPending';">
-					<bean:message key="link.thesis.pending.edit" />
+					<bean:message key="thesis.validation.button.editPendingComment" />
 				</html:submit>
 			</logic:equal>
 			<logic:equal name="thesisState" value="NOT_DEALT">
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 					onclick="this.form.method.value='preparePending';">
-					<bean:message key="link.thesis.pending" />
+					<bean:message key="thesis.validation.button.pending" />
 				</html:submit>
 			</logic:equal>
             <logic:equal name="thesisState" value="ARCHIVE_CANCELED">
                 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
                     onclick="this.form.method.value='preparePending';">
-                    <bean:message key="link.thesis.pending" />
+                    <bean:message key="thesis.validation.button.pending" />
                 </html:submit>
             </logic:equal>
 		</html:form></div>
@@ -76,7 +76,7 @@
 				<fr:hidden slot="performerId" name="person" property="idInternal" />
 			</fr:create>
 			<html:submit>
-				<bean:message key="link.thesis.cancel" />
+				<bean:message key="thesis.validation.button.cancel" />
 			</html:submit>
 		</fr:form></div>
 	</logic:equal>
@@ -128,17 +128,17 @@
 
 <logic:notPresent name="history">
 	<p><html:link page="<%="/theses/validate.do?method=history&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
-        <bean:message key="link.thesis.history" />
+        <bean:message key="thesis.validation.link.showHistory" />
 	</html:link></p>
 </logic:notPresent>
 
 <logic:present name="history">
     <p><html:link page="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
-        <bean:message key="link.thesis.history.hide" />
+        <bean:message key="thesis.validation.link.hideHistory" />
     </html:link></p>
 
 	<logic:empty name="history">
-		<p><em><bean:message key="message.library.theses.history.empty" /></em></p>
+		<p><em><bean:message key="thesis.validation.message.feedback.emptyHistory" /></em></p>
 	</logic:empty>
 	<logic:notEmpty name="history">
 		<fr:view name="history" schema="library.thesis.state">
@@ -150,7 +150,7 @@
 	</logic:notEmpty>
 </logic:present>
 
-<h3 class="mtop2 mbottom05"><bean:message key="label.thesis.author" /></h3>
+<h3 class="mtop2 mbottom05"><bean:message key="label.thesis.Thesis.author" bundle="DOMAIN_RESOURCES" /></h3>
 <fr:view name="thesis" schema="library.thesis.author">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thright mtop05 thtop tdtop" />
@@ -158,7 +158,7 @@
 	</fr:layout>
 </fr:view>
 
-<h3 class="mtop15 mbottom05"><bean:message key="label.thesis" /></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="label.thesis.Thesis" bundle="DOMAIN_RESOURCES" /></h3>
 <fr:view name="thesis" schema="library.thesis.details">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thright mtop05 thtop tdtop" />

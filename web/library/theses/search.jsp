@@ -7,7 +7,7 @@
 
 <html:xhtml />
 
-<h2><bean:message key="title.library.theses.search" /></h2>
+<h2><bean:message key="thesis.validation.title.list" /></h2>
 
 <fr:form action="/theses/search.do?method=search">
 	<fr:edit id="search" name="searchFilter" schema="library.thesis.search">
@@ -17,18 +17,18 @@
 		</fr:layout>
 	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-		<bean:message key="link.thesis.search" />
+		<bean:message key="button.search" bundle="COMMON_RESOURCES" />
 	</html:submit>
 </fr:form>
 
 <logic:present name="theses">
 	<logic:empty name="theses">
-		<p><em><bean:message key="message.library.theses.list.empty" /></em></p>
+		<p><em><bean:message key="thesis.validation.message.feedback.search.empty" /></em></p>
 	</logic:empty>
 
 	<logic:notEmpty name="theses">
 		<p class="mbottom05">
-			<bean:message key="message.library.theses.found"
+			<bean:message key="thesis.validation.message.feedback.search.found"
 				arg0="<%=request.getAttribute("thesesFound").toString()%>" />
         </p>
 
@@ -49,7 +49,8 @@
 
 				<fr:property name="link(verify)" value="<%="/theses/validate.do?method=view" + request.getAttribute("searchArgs") %>" />
 				<fr:property name="param(verify)" value="idInternal/thesisID" />
-				<fr:property name="key(verify)" value="link.thesis.verify" />
+				<fr:property name="key(verify)" value="link.verify" />
+                <fr:property name="bundle(verify)" value="COMMON_RESOURCES"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
