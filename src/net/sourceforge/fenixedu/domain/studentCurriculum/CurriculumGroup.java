@@ -826,8 +826,11 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return true;
 	}
 
-	if (curriculumLine.isEnrolment() && ((Enrolment) curriculumLine).isOptional()) {
-	    return getDegreeModule().hasDegreeModuleOnChilds(((OptionalEnrolment) curriculumLine).getOptionalCurricularCourse());
+	if (curriculumLine.isEnrolment()) {
+	    if (curriculumLine instanceof OptionalEnrolment) {
+		return getDegreeModule().hasDegreeModuleOnChilds(
+			((OptionalEnrolment) curriculumLine).getOptionalCurricularCourse());
+	    }
 	}
 
 	return getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
