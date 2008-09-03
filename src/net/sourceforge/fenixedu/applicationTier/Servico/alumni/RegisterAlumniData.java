@@ -212,8 +212,9 @@ public class RegisterAlumniData extends Service {
 
     private String buildEmailBody(final Alumni alumni) {
 	String message = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
-		.getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken());
-	System.out.println(message);
+		.getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
+		ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
+	//System.out.println(message);
 	return message;
     }
 

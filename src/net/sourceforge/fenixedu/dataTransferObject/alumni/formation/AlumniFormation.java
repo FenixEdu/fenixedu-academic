@@ -261,18 +261,21 @@ public class AlumniFormation implements Serializable {
     }
 
     public AcademicalInstitutionUnit getInstitution() {
-	if (isNationalInstitution()) {
-	    if (getChildInstitution() != null) {
-		return getChildInstitution();
-	    } else if (getParentInstitution() != null) {
-		if (!getParentInstitution().hasAnyChilds()) {
-		    return getParentInstitution();
+	if (getInstitutionType() != null) {
+	    if (isNationalInstitution()) {
+		if (getChildInstitution() != null) {
+		    return getChildInstitution();
+		} else if (getParentInstitution() != null) {
+		    if (!getParentInstitution().hasAnyChilds()) {
+			return getParentInstitution();
+		    }
 		}
+		return null;
+	    } else {
+		return getChildInstitution();
 	    }
-	    return null;
-	} else {
-	    return getChildInstitution();
 	}
+	return null;
     }
 
     public AcademicalInstitutionUnit getParentInstitution() {

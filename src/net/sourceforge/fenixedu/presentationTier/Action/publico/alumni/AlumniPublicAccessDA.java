@@ -121,12 +121,13 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	    final Alumni alumni = (Alumni) executeService("RegisterAlumniData", alumniBean.getStudentNumber(), alumniBean
 		    .getDocumentIdNumber(), alumniBean.getEmail());
 
-	    // TODO remove
+	    //TODO: remove
 	    String url = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
-		    .getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken());
+		    .getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
+		    ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
 	    request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
-	    // TODO remove
-
+	    //TODO: remove
+	    
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("showForm", "true");
@@ -143,6 +144,12 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	String alumniId = RESOURCES.getString("alumni.public.registration.first.argument");
 	String urlToken = RESOURCES.getString("alumni.public.registration.second.argument");
 	final Alumni alumni = rootDomainObject.readAlumniByOID(getIntegerFromRequest(request, alumniId));
+
+	if (StringUtils.isEmpty(alumniId) || StringUtils.isEmpty(urlToken) || alumni == null) {
+	    request.setAttribute("alumniPublicAccessTitle", "registration.error.old.request.link.title");
+	    request.setAttribute("alumniPublicAccessMessage", "error.alumni.wrong.arguments");
+	    return mapping.findForward("alumniPublicAccessMessage");
+	}
 
 	if (alumni.isRegistered()) {
 	    request.setAttribute("alumniPublicAccessTitle", "registration.error.old.request.link.title");
