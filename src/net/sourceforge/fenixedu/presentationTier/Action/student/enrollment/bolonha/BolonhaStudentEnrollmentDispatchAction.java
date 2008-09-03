@@ -33,15 +33,16 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 
 	if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
 	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-	    
+
 	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester)) {
-		addOutOfPeriodMessage(request, degreeCurricularPlan.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
+		addOutOfPeriodMessage(request, "message.out.curricular.course.enrolment.period.specialSeason",
+			degreeCurricularPlan.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
 	} else {
 	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionSemester)) {
-		addOutOfPeriodMessage(request, degreeCurricularPlan.getNextEnrolmentPeriod());
+		addOutOfPeriodMessage(request, "message.out.curricular.course.enrolment.period.normal", degreeCurricularPlan.getNextEnrolmentPeriod());
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
 	}
@@ -54,9 +55,10 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionSemester);
     }
 
-    private void addOutOfPeriodMessage(HttpServletRequest request, final EnrolmentPeriod nextEnrollmentPeriod) {
+    private void addOutOfPeriodMessage(final HttpServletRequest request, final String message,
+	    final EnrolmentPeriod nextEnrollmentPeriod) {
 	if (nextEnrollmentPeriod != null) {
-	    addActionMessage(request, "message.out.curricular.course.enrolment.period", nextEnrollmentPeriod
+	    addActionMessage(request, message, nextEnrollmentPeriod
 		    .getStartDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), nextEnrollmentPeriod
 		    .getEndDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
 	} else {
