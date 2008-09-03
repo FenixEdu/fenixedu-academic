@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -34,8 +35,8 @@ public class DegreeInfo extends DegreeInfo_Base {
 	if (hasSameName(name)) {
 	    return;
 	}
-
-	if (!canEdit()) {
+	
+	if (hasName() && !canEdit()) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.DegreeInfo.can.only.change.name.for.future.execution.years");
 	}
