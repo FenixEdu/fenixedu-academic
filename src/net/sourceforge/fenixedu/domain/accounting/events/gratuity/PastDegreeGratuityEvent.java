@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
+import java.util.Collections;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -56,6 +60,11 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
     @Override
     public boolean isExemptionAppliable() {
 	return false;
+    }
+
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+	return Collections.singleton(EntryType.GRATUITY_FEE);
     }
 
 }

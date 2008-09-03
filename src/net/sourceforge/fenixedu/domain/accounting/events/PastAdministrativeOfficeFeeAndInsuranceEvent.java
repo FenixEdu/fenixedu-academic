@@ -54,6 +54,6 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
 
     @Override
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
-	return Collections.emptySet();
+	return Collections.singleton(EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
     }
 }
