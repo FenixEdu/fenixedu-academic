@@ -13,7 +13,7 @@
 		<li><html:link page="/viewCurriculum.do?method=checkValidation">
 			<bean:message key="link.student.curriculum" bundle="ALUMNI_RESOURCES" />
 		</html:link></li>
-<%--
+<%-- --%>
 		<li><html:link page="/searchAlumni.do?method=showAlumniList">
 			<bean:message key="link.search.alumni" bundle="ALUMNI_RESOURCES" />
 		</html:link></li>
@@ -56,6 +56,6 @@
 			<bean:message key="link.academic.services.prices"
 				bundle="ALUMNI_RESOURCES" />
 		</html:link></li>
---%>
+<%-- --%>
 	</ul>
 </logic:present>
