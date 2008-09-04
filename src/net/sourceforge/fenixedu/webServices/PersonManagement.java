@@ -30,7 +30,23 @@ public class PersonManagement implements IPersonManagement {
 
     public PersonInformationDTO getPersonInformation(String username, String password, String unserUID, MessageContext context)
 	    throws NotAuthorizedException {
+	checkPermissions(username, password, context);
+	User foundUser = User.readUserByUserUId(unserUID);
+	return foundUser == null ? null : new PersonInformationDTO(foundUser.getPerson());
+    }
 
+    public Boolean setPersonInformation(String username, String password, String idNumber, String emissionDate,
+	    String emissionLocale, String expirationDate, String fiscalNumber, String name, String fatherName, String motherName,
+	    String birthDate, String gender, String address, String postalCode, String postalArea, String parish,
+	    String locality, String municipality, String district, String country, MessageContext context)
+	    throws NotAuthorizedException {
+
+	checkPermissions(username, password, context);
+
+	return true;
+    }
+
+    private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
 	// check user/pass
 	if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
 	    throw new NotAuthorizedException();
@@ -40,10 +56,6 @@ public class PersonManagement implements IPersonManagement {
 	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
 	    throw new NotAuthorizedException();
 	}
-
-	User foundUser = User.readUserByUserUId(unserUID);
-	return foundUser == null ? null : new PersonInformationDTO(foundUser.getPerson());
-
     }
 
 }
