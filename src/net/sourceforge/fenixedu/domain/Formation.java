@@ -70,12 +70,9 @@ public class Formation extends Formation_Base {
     }
 
     public void delete() {
-	removePerson();
-	removeCountry();
 	removeEducationArea();
 	removeInstitution();
-	removeRootDomainObject();
-	deleteDomainObject();
+	super.delete();
     }
 
 }

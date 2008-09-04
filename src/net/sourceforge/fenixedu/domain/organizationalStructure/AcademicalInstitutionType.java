@@ -27,4 +27,8 @@ public enum AcademicalInstitutionType {
 	return Arrays.asList(PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL);
     }
 
+    static public List<AcademicalInstitutionType> getHigherEducationTypes() {
+	return Arrays.asList(NATIONAL_PUBLIC_INSTITUTION, NATIONAL_PRIVATE_INSTITUTION, FOREIGN_INSTITUTION, OTHER_INSTITUTION);
+    }
+
 }

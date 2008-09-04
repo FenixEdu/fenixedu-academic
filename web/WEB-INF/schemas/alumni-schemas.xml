@@ -204,6 +204,7 @@
 		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />
 		</slot>
 	</schema>
 
@@ -211,6 +212,7 @@
 		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />			
 		</slot>
 		<slot name="parentInstitution" key="label.formation.institution.parent" layout="menu-select-postback" >
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
@@ -225,6 +227,7 @@
 		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />			
 		</slot>
 		<slot name="parentInstitution" key="label.formation.institution.parent" layout="menu-select-postback" bundle="ALUMNI_RESOURCES">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
@@ -245,6 +248,7 @@
 		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />
 		</slot>
 		<slot name="countryUnit" key="label.formation.country" layout="menu-select">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryUnitProvider" />
@@ -270,6 +274,7 @@
 		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />			
 		</slot>
 		<slot name="childInstitution" key="label.formation.institution.child" layout="autoComplete" bundle="ALUMNI_RESOURCES">
 			<property name="size" value="50"/>
@@ -324,6 +329,7 @@
 		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />			
 		</slot>
 	</schema>
 
@@ -331,6 +337,7 @@
 		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />			
 		</slot>
 		<slot name="parentInstitution" key="label.formation.institution.parent.public" layout="menu-select-postback" >
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
@@ -345,6 +352,7 @@
 		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />			
 		</slot>
 		<slot name="parentInstitution" key="label.formation.institution.parent.public" layout="menu-select-postback" bundle="ALUMNI_RESOURCES">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
@@ -365,6 +373,7 @@
 		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />			
 		</slot>
 		<slot name="countryUnit" key="label.formation.country.public" layout="menu-select">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryUnitProvider" />
@@ -390,6 +399,7 @@
 		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 			<property name="destination" value="updateInstitutionTypePostback" />
+			<property name="excludedValues" value="PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL" />			
 		</slot>
 		<slot name="childInstitution" key="label.formation.institution.child.public" layout="autoComplete" bundle="ALUMNI_RESOURCES">
 			<property name="size" value="50"/>

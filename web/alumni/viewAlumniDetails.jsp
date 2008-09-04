@@ -34,20 +34,24 @@
 		<bean:size id="size" name="emailAddresses" />
 		<logic:notEmpty name="emailAddresses">
 			<logic:iterate id="email" name="emailAddresses">
-				<tr>
-					<th>
-						<bean:message key="label.partyContacts.EmailAddress" /> (<bean:message
-						name="email" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):
-					</th>
-					<td>
-						<bean:write name="email" property="value" />
-						<logic:equal name="email" property="defaultContact" value="true">
-							<logic:notEqual name="size" value="1">
-								(<bean:message key="label.partyContacts.defaultContact" />)
-							</logic:notEqual>
-						</logic:equal>
-					</td>
-				</tr>
+				<bean:define id="isAvailable" name="email" property="visibleToStudents" />
+				<logic:equal name="isAvailable" value="true">
+					<tr>
+						<th>
+							<bean:message key="label.partyContacts.EmailAddress" />
+							(<bean:message name="email" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):
+						</th>
+						<td>
+							<bean:write name="email" property="value" />
+							<logic:equal name="email" property="defaultContact" value="true">
+								<logic:notEqual name="size" value="1">
+									(<bean:message key="label.partyContacts.defaultContact" />)
+								</logic:notEqual>
+							</logic:equal>
+						</td>
+					</tr>
+				</logic:equal>
+
 			</logic:iterate>
 		</logic:notEmpty>
 
