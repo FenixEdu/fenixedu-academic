@@ -79,8 +79,6 @@ public class LibraryCardSearch implements Serializable {
 	}
 
 	private boolean satisfiesNumber(Person person) {
-	    // return getNumber() == null ||
-	    // getNumber().equals(person.getMostSignificantNumber());
 	    if (getNumber() == null) {
 		return true;
 	    }

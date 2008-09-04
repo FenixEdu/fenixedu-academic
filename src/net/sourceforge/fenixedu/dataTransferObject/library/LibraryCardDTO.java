@@ -1,22 +1,35 @@
 package net.sourceforge.fenixedu.dataTransferObject.library;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class LibraryCardDTO implements Serializable {
 
@@ -46,6 +59,10 @@ public class LibraryCardDTO implements Serializable {
 
     private YearMonthDay validUntil;
 
+    private static String separator = " / ";
+    
+    private static String nullValue = "-";
+
     public LibraryCardDTO(Person person, PartyClassification partyClassification) {
 	this(person, partyClassification, getPersonUnit(person, partyClassification));
     }
@@ -66,8 +83,23 @@ public class LibraryCardDTO implements Serializable {
 	setUnitName(unitName);
 	setChosenUnitName(unitName);
 	setNumber(getMostSignificantNumber());
-	setPhone(person.getPhone());
-	setMobile(person.getMobile());
+	setPhone(person.getDefaultPhone() != null ? person.getDefaultPhone().getNumber() : null);
+	setMobile(person.getDefaultMobilePhone() != null ? person.getDefaultMobilePhone().getNumber() : null);
+    }
+
+    public LibraryCardDTO(LibraryCard libraryCard) {
+	setLibraryCard(libraryCard);
+	setPin(libraryCard.getPin());
+	setPerson(libraryCard.getPerson());
+	setPartyClassification(libraryCard.getPartyClassification());
+	setUserName(libraryCard.getUserName());
+	setUnitName(libraryCard.getUnitName());
+	setChosenUnitName(libraryCard.getUnitName());
+	setNumber(libraryCard.getPerson().getMostSignificantNumber());
+	setValidUntil(libraryCard.getValidUntil());
+	setPhone(libraryCard.getPerson().getDefaultPhone() != null ? libraryCard.getPerson().getDefaultPhone().getNumber() : null);
+	setMobile(libraryCard.getPerson().getDefaultMobilePhone() != null ? libraryCard.getPerson().getDefaultMobilePhone()
+		.getNumber() : null);
     }
 
     private Integer getMostSignificantNumber() {
@@ -87,20 +119,6 @@ public class LibraryCardDTO implements Serializable {
 	    return getPerson().getGrantOwner().getNumber();
 	}
 	return 0;
-    }
-
-    public LibraryCardDTO(LibraryCard libraryCard) {
-	setLibraryCard(libraryCard);
-	setPin(libraryCard.getPin());
-	setPerson(libraryCard.getPerson());
-	setPartyClassification(libraryCard.getPartyClassification());
-	setUserName(libraryCard.getUserName());
-	setUnitName(libraryCard.getUnitName());
-	setChosenUnitName(libraryCard.getUnitName());
-	setNumber(libraryCard.getPerson().getMostSignificantNumber());
-	setValidUntil(libraryCard.getValidUntil());
-	setPhone(libraryCard.getPerson().getPhone());
-	setMobile(libraryCard.getPerson().getMobile());
     }
 
     private static Unit getPersonUnit(Person person, PartyClassification partyClassification) {
@@ -331,5 +349,81 @@ public class LibraryCardDTO implements Serializable {
 		this.chosenUnitName = unitName;
 	    }
 	}
+    }
+
+    public String getLastContractOrEnrolmentDates() {
+	StringBuilder dates = new StringBuilder();
+	if (partyClassification.equals(PartyClassification.TEACHER)) {
+	    if (getPerson().getTeacher() != null) {
+		TeacherProfessionalSituation teacherProfessionalSituation = getPerson().getTeacher()
+			.getLastLegalRegimenWithoutSpecialSituations();
+		dates.append(teacherProfessionalSituation.getBeginDateYearMonthDay()).append(separator);
+		if (teacherProfessionalSituation.getEndDateYearMonthDay() != null) {
+		    dates.append(teacherProfessionalSituation.getEndDateYearMonthDay());
+		} else {
+		    dates.append(nullValue);
+		}
+	    }
+	} else if (partyClassification.equals(PartyClassification.EMPLOYEE)) {
+	    if (getPerson().getEmployee() != null && getPerson().getEmployee().getAssiduousness() != null) {
+		AssiduousnessStatusHistory assiduousnessStatusHistory = getPerson().getEmployee().getAssiduousness()
+			.getCurrentOrLastAssiduousnessStatusHistory();
+		if (assiduousnessStatusHistory != null) {
+		    dates.append(assiduousnessStatusHistory.getBeginDate()).append(separator);
+		    if (assiduousnessStatusHistory.getEndDate() != null) {
+			dates.append(assiduousnessStatusHistory.getEndDate());
+		    } else {
+			dates.append(nullValue);
+		    }
+		}
+	    }
+	} else if (partyClassification.equals(PartyClassification.GRANT_OWNER)) {
+	    GrantOwner grantOwner = getPerson().getGrantOwner();
+	    if (grantOwner != null) {
+		List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
+
+		for (GrantContract contract : grantOwner.getGrantContracts()) {
+		    contractRegimeList.addAll(contract.getContractRegimes());
+		}
+		Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
+		GrantContractRegime currentOrLastContractRegime = null;
+		LocalDate today = new LocalDate();
+		for (GrantContractRegime contractRegime : contractRegimeList) {
+		    if (currentOrLastContractRegime == null) {
+			currentOrLastContractRegime = contractRegime;
+		    } else if (contractRegime.getDateBeginContractYearMonthDay().isAfter(
+			    currentOrLastContractRegime.getDateBeginContractYearMonthDay())
+			    && contractRegime.getDateBeginContractYearMonthDay().isBefore(today)) {
+			currentOrLastContractRegime = contractRegime;
+		    }
+		}
+		if (currentOrLastContractRegime != null) {
+		    dates.append(currentOrLastContractRegime.getDateBeginContractYearMonthDay()).append(separator).append(
+			    currentOrLastContractRegime.getDateEndContractYearMonthDay());
+		}
+	    }
+	} else if (partyClassification.equals(PartyClassification.MASTER_DEGREE)
+		|| partyClassification.equals(PartyClassification.DEGREE)
+		|| partyClassification.equals(PartyClassification.BOLONHA_SPECIALIZATION_DEGREE)
+		|| partyClassification.equals(PartyClassification.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+		|| partyClassification.equals(PartyClassification.BOLONHA_MASTER_DEGREE)
+		|| partyClassification.equals(PartyClassification.BOLONHA_INTEGRATED_MASTER_DEGREE)
+		|| partyClassification.equals(PartyClassification.BOLONHA_PHD_PROGRAM)
+		|| partyClassification.equals(PartyClassification.BOLONHA_DEGREE)) {
+	    Student student = getPerson().getStudent();
+	    if (student != null) {
+		Registration registration = student.getLastRegistrationForDegreeType(DegreeType.valueOf(partyClassification
+			.name()));
+		if (registration != null) {
+		    ExecutionYear executionYear = registration.getLastEnrolmentExecutionYear();
+		    if (executionYear != null) {
+			dates.append(executionYear.getBeginDateYearMonthDay()).append(separator).append(
+				executionYear.getEndDateYearMonthDay());
+		    }
+		}
+	    }
+	}
+
+	return dates.toString();
     }
 }
