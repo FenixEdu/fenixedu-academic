@@ -427,6 +427,9 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
     public ActionForward checkLists(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
+	String publicAccessURL = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url.content.path"), 
+		ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
+	request.setAttribute("publicAccessUrl", publicAccessURL);
 	return mapping.findForward("alumniMailingLists");
     }
 

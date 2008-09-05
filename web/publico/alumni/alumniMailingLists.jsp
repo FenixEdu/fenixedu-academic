@@ -5,13 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<!-- alumniRegistrationResult.jsp -->
+<!-- alumniMailingLists.jsp -->
 
 <h1>Alumni</h1>
 
 <h2>Mailing Lists</h2>
 
-<p><a href="<%= request.getContextPath() + "/conteudos-publicos/registo-alumni"%>">« Registo Público</a></p>
+<p><a href="<%= request.getAttribute("publicAccessUrl").toString() %>">« Registo Público</a></p>
 
 <div class="alumnilogo">
 	
@@ -79,7 +79,7 @@
                 <a href="mailto:alumni-biologica@mlists.ist.utl.pt">Engenharia Biológica</a>
             </td>
             <td>
-                M. Rosário Ribeiro
+                Helena Pinheiro
             </td>
             <td>
                 GEP
