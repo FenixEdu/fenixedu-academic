@@ -30,7 +30,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
 	    return o1.getWhenDateTime().compareTo(o2.getWhenDateTime());
 	}
-	
+
     };
 
     public static final Comparator<EnrolmentEvaluation> SORT_BY_STUDENT_NUMBER = new Comparator<EnrolmentEvaluation>() {
@@ -300,10 +300,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
 	if (examDate != null) {
 	    if (!grade.isNotEvaluated()) {
-		final RegistrationState stateInExamDate = getRegistration().getStateInDate(
-			YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight());
-		if (stateInExamDate == null
-			|| !(stateInExamDate.isActive() || stateInExamDate.getStateType() == RegistrationStateType.TRANSITED)) {
+		final RegistrationState state = getRegistration().getLastRegistrationState(
+			getExecutionPeriod().getExecutionYear());
+		if (state == null || !(state.isActive() || state.getStateType() == RegistrationStateType.TRANSITED)) {
 		    final Enrolment enrolment = getEnrolment();
 		    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
 		    final Registration registration = studentCurricularPlan.getRegistration();
