@@ -142,7 +142,8 @@
     <slot name="unitName" key="label.card.unitName"/>    
     <slot name="phone" key="label.card.phone"/>
     <slot name="mobile" key="label.card.mobile"/>
-    <slot name="pinToShow" key="label.card.pin"/>    
+    <slot name="pinToShow" key="label.card.pin"/>
+    <slot name="lastContractOrEnrolmentDates" key="label.lastContractDates"/>
 </schema>
 
 <schema name="library.card.generate" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
