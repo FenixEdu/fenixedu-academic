@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Generated Documents" generatedDocuments.sql
+execute "Clean up old library thesis slots" cleanUpThesisLibrary.sql
