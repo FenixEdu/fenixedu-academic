@@ -405,33 +405,32 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public ExecutionDegree getMostRecentExecutionDegree() {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	ExecutionDegree result = getExecutionDegreeByYear(currentExecutionYear);
+	if (!hasAnyExecutionDegrees()) {
+	    return null;
+	}
 
+	final ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+	ExecutionDegree result = getExecutionDegreeByYear(currentYear);
 	if (result != null) {
 	    return result;
 	}
 
-	final List<ExecutionDegree> sortedExecutionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
-	Collections.sort(sortedExecutionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+	final List<ExecutionDegree> sorted = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+	Collections.sort(sorted, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
 
-	if (!sortedExecutionDegrees.isEmpty()) {
-	    final ExecutionDegree firstExecutionDegree = sortedExecutionDegrees.iterator().next();
-	    if (sortedExecutionDegrees.size() == 1) {
-		return firstExecutionDegree;
-	    }
+	final ExecutionDegree first = sorted.iterator().next();
+	if (sorted.size() == 1) {
+	    return first;
+	}
 
-	    if (firstExecutionDegree.getExecutionYear().isAfter(currentExecutionYear)) {
-		return firstExecutionDegree;
-	    } else {
-
-		final ListIterator<ExecutionDegree> iterator = sortedExecutionDegrees
-			.listIterator(sortedExecutionDegrees.size() - 1);
-		while (iterator.hasPrevious()) {
-		    final ExecutionDegree executionDegree = iterator.previous();
-		    if (executionDegree.getExecutionYear().isBeforeOrEquals(currentExecutionYear)) {
-			return executionDegree;
-		    }
+	if (first.getExecutionYear().isAfter(currentYear)) {
+	    return first;
+	} else {
+	    final ListIterator<ExecutionDegree> iter = sorted.listIterator(sorted.size());
+	    while (iter.hasPrevious()) {
+		final ExecutionDegree executionDegree = iter.previous();
+		if (executionDegree.getExecutionYear().isBeforeOrEquals(currentYear)) {
+		    return executionDegree;
 		}
 	    }
 	}
