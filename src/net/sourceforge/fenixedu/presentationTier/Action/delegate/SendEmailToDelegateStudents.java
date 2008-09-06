@@ -197,7 +197,8 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 	    HttpServletResponse response) throws Exception {
 	MailBean bean = createMailBean(request);
 	request.setAttribute("mailBean", bean);
-	return mapping.findForward("compose-mail");
+	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
+	return prepare(mapping, actionForm, request, response);
     }
 
     /*
