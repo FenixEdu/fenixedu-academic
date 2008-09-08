@@ -7,6 +7,7 @@ create table DISTRICT_SUBDIVISION (
   primary key (ID_INTERNAL),
   index (KEY_DISTRICT),
   index (KEY_ROOT_DOMAIN_OBJECT),
-  unique (KEY_DISTRICT,CODE)
+  unique (KEY_DISTRICT,CODE),
+  unique (KEY_DISTRICT,NAME)
 ) type=InnoDB ;
 
