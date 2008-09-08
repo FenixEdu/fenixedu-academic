@@ -383,7 +383,7 @@ dspace.downloadUriFormat=bitstream/{0}/{1}
 dspace.username=ist12628
 dspace.password=pass
 
-dspace.document.store=true
+dspace.generated.document.store=true
 
 #----------------------------------------------------------------
 # Sibs Configuration
