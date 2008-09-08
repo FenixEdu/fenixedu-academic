@@ -66,7 +66,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     protected void init(final Person person, final ExecutionDegree executionDegree, final Person creator, Double entryGrade,
-	    String contigent, Ingression ingression, EntryPhase entryPhase) {
+	    String contigent, Ingression ingression, EntryPhase entryPhase, Integer placingOption) {
 	checkParameters(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase);
 	super.setExecutionDegree(executionDegree);
 	super.setPerson(person);
@@ -75,6 +75,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	super.setContigent(contigent);
 	super.setIngression(ingression);
 	super.setEntryPhase(entryPhase);
+	super.setPlacingOption(placingOption);
     }
 
     public DateTime getCandidacyDate() {

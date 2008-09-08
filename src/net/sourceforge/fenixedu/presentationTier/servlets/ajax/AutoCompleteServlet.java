@@ -40,7 +40,7 @@ public class AutoCompleteServlet extends HttpServlet {
 
 	String service = request.getParameter("serviceName");
 	Class type = getConcreteType(request.getParameter("class"));
-	String value = new String(request.getParameter("value").getBytes(), JAVASCRIPT_LIBRARY_ENCODING);
+	String value = request.getParameter("value");
 
 	Map<String, String> serviceArgsMap = getServiceArgsMap(request.getParameter("serviceArgs"));
 	int maxCount = getNumber(request.getParameter("maxCount"), DEFAULT_MAX_COUNT);

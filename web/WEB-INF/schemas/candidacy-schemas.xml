@@ -783,13 +783,22 @@
     <slot name="documentIdEmissionDate" read-only="true"/>
     <slot name="documentIdExpirationDate" read-only="true"/>
     <slot name="socialSecurityNumber" read-only="true"/>
-    <slot name="profession" read-only="true"/>
+    <slot name="profession">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
     <slot name="maritalStatus" read-only="true"/>
+    <slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="FiliationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.FiliationForm" bundle="CANDIDATE_RESOURCES" extends="FiliationForm">
-    <slot name="dateOfBirth" read-only="true"/>
-   	<slot name="nationality" read-only="true" />	
+   	<slot name="countryOfBirth" layout="format" read-only="true">
+   		<property name="format" value="${name}" />
+   	</slot>
+   	<slot name="nationality" layout="format" read-only="true">
+   		<property name="format" value="${name}" />
+   	</slot>
+   	<slot name="dateOfBirth" read-only="true"/>	
     <slot name="parishOfBirth"  read-only="true" />
     <slot name="districtSubdivisionOfBirth" read-only="true" />
     <slot name="districtOfBirth" read-only="true" />
@@ -797,7 +806,15 @@
     <slot name="motherName" read-only="true" />
 </schema>
 
-<schema name="ResidenceInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm" bundle="CANDIDATE_RESOURCES" extends="ResidenceInformationForm">
+
+<schema name="HouseholdInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.HouseholdInformationForm" bundle="CANDIDATE_RESOURCES" extends="HouseholdInformationForm">
+
+</schema>
+
+<schema name="ResidenceInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm" bundle="CANDIDATE_RESOURCES">
+    <slot name="countryOfResidence" layout="format" read-only="true">
+    	<property name="format" value="${name}" />
+    </slot>
     <slot name="address" read-only="true" />
     <slot name="areaCode" read-only="true" />
     <slot name="areaOfAreaCode" read-only="true" />
