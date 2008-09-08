@@ -3676,6 +3676,7 @@ class DomainObject {
 					class serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 						Boolean average;
 						Boolean detailed;
+						Boolean technicalEngineer;
 						Boolean internshipAbolished;
 						Boolean internshipApproved;
 						Boolean studyPlan;

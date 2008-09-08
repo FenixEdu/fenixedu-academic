@@ -29,20 +29,22 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     public DegreeFinalizationCertificateRequest(final Registration registration, DateTime requestDate,
 	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
 	    final Boolean urgentRequest, final Boolean average, final Boolean detailed, MobilityProgram mobilityProgram,
-	    final CycleType requestedCyle, final Boolean freeProcessed, final Boolean internshipAbolished,
-	    final Boolean internshipApproved, final Boolean studyPlan, final YearMonthDay exceptionalConclusionDate) {
+	    final CycleType requestedCyle, final Boolean freeProcessed, final Boolean technicalEngineer,
+	    final Boolean internshipAbolished, final Boolean internshipApproved, final Boolean studyPlan,
+	    final YearMonthDay exceptionalConclusionDate) {
 	this();
 
 	this.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, average,
-		detailed, mobilityProgram, requestedCyle, freeProcessed, internshipAbolished, internshipApproved, studyPlan,
-		exceptionalConclusionDate);
+		detailed, mobilityProgram, requestedCyle, freeProcessed, technicalEngineer, internshipAbolished,
+		internshipApproved, studyPlan, exceptionalConclusionDate);
     }
 
     final protected void init(final Registration registration, DateTime requestDate,
 	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
 	    final Boolean urgentRequest, final Boolean average, final Boolean detailed, final MobilityProgram mobilityProgram,
-	    final CycleType requestedCycle, final Boolean freeProcessed, final Boolean internshipAbolished,
-	    final Boolean internshipApproved, final Boolean studyPlan, final YearMonthDay exceptionalConclusionDate) {
+	    final CycleType requestedCycle, final Boolean freeProcessed, final Boolean technicalEngineer,
+	    final Boolean internshipAbolished, final Boolean internshipApproved, final Boolean studyPlan,
+	    final YearMonthDay exceptionalConclusionDate) {
 
 	super.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
 		freeProcessed);
@@ -52,6 +54,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super.setAverage(average);
 	super.setDetailed(detailed);
 	super.setMobilityProgram(mobilityProgram);
+	super.setTechnicalEngineer(technicalEngineer);
 	super.setInternshipAbolished(internshipAbolished);
 	super.setInternshipApproved(internshipApproved);
 	super.setStudyPlan(studyPlan);
@@ -226,7 +229,11 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     final public boolean hasExceptionalConclusionDate() {
-	return getInternshipAbolished() || getInternshipApproved() || getStudyPlan();
+	return getExceptionalConclusionDate() != null;
+    }
+
+    final public boolean hasExceptionalConclusionInfo() {
+	return getTechnicalEngineer() || getInternshipAbolished() || getInternshipApproved() || getStudyPlan();
     }
 
     final public boolean mustHideConclusionDate() {

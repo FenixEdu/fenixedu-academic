@@ -48,12 +48,15 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     }
 
     private String getExceptionalConclusionInfo(final DegreeFinalizationCertificateRequest request) {
-	if (!request.hasExceptionalConclusionDate()) {
+	if (!request.hasExceptionalConclusionInfo()) {
 	    return StringUtils.EMPTY;
 	}
 
-	final String date = request.getExceptionalConclusionDate().toString(DATE_FORMAT, Language.getLocale());
-	if (request.getInternshipAbolished()) {
+	final String date = request.hasExceptionalConclusionDate() ? request.getExceptionalConclusionDate().toString(DATE_FORMAT,
+		Language.getLocale()) : null;
+	if (request.getTechnicalEngineer()) {
+	    return " ao abrigo do Decreto 830/74 de 31 de Dezembro";
+	} else if (request.getInternshipAbolished()) {
 	    return " em " + date + ", data em que a Comissão Directiva decidiu abolir o sistema de estágios";
 	} else if (request.getInternshipApproved()) {
 	    return " em " + date + ", data em que foi aprovado o estágio regulamentar";

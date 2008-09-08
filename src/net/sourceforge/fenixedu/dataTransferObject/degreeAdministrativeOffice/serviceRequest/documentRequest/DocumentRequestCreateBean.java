@@ -40,6 +40,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     private Boolean detailed = Boolean.FALSE;
 
+    private Boolean technicalEngineer = Boolean.FALSE;
+
     private Boolean internshipAbolished = Boolean.FALSE;
 
     private Boolean internshipApproved = Boolean.FALSE;
@@ -143,6 +145,14 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public void setDetailed(Boolean detailed) {
 	this.detailed = detailed;
+    }
+
+    public Boolean getTechnicalEngineer() {
+	return technicalEngineer;
+    }
+
+    public void setTechnicalEngineer(Boolean technicalEngineer) {
+	this.technicalEngineer = technicalEngineer;
     }
 
     public Boolean getInternshipAbolished() {

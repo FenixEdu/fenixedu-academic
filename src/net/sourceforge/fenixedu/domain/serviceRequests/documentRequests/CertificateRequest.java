@@ -54,8 +54,8 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	    return new DegreeFinalizationCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
 		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getAverage(), bean
 		    .getDetailed(), bean.getMobilityProgram(), bean.getRequestedCycle(), bean.getFreeProcessed(), bean
-		    .getInternshipAbolished(), bean.getInternshipApproved(), bean.getStudyPlan(), bean
-		    .getExceptionalConclusionDate());
+		    .getTechnicalEngineer(), bean.getInternshipAbolished(), bean.getInternshipApproved(), bean.getStudyPlan(),
+		    bean.getExceptionalConclusionDate());
 
 	case EXAM_DATE_CERTIFICATE:
 	    return new ExamDateCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
