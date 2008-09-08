@@ -13,7 +13,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
-import org.joda.time.TimeOfDay;
+import org.joda.time.LocalTime;
 
 public class Timeline {
 
@@ -40,8 +40,8 @@ public class Timeline {
 
     public Timeline(LocalDate day, DateTime firstClocking, DateTime lastClocking) {
 	timePoints = new ArrayList<TimePoint>();
-	timePoints.add(new TimePoint(new TimeOfDay(firstClocking.toTimeOfDay()), AttributeType.NULL, AttributeType.NULL));
-	timePoints.add(new TimePoint(lastClocking.toTimeOfDay(), day.equals(lastClocking.toLocalDate()) ? false : true,
+	timePoints.add(new TimePoint(firstClocking.toLocalTime(), AttributeType.NULL, AttributeType.NULL));
+	timePoints.add(new TimePoint(lastClocking.toLocalTime(), day.equals(lastClocking.toLocalDate()) ? false : true,
 		AttributeType.NULL));
     }
 
@@ -827,7 +827,7 @@ public class Timeline {
     }
 
     private TimePoint constructTimePoint(AssiduousnessRecord clockIn, LocalDate day, AttributeType attribute) {
-	final TimeOfDay timeIn = new TimeOfDay(clockIn.getDate().getHourOfDay(), clockIn.getDate().getMinuteOfHour(), 0);
+	final LocalTime timeIn = new LocalTime(clockIn.getDate().getHourOfDay(), clockIn.getDate().getMinuteOfHour(), 0);
 	return new TimePoint(timeIn, clockIn.getDate().toLocalDate().isAfter(day), attribute);
     }
 
@@ -867,7 +867,7 @@ public class Timeline {
 	return result;
     }
 
-    public TimePoint[] findIntervalByAttribute(AttributeType attribute, TimeOfDay time) {
+    public TimePoint[] findIntervalByAttribute(AttributeType attribute, LocalTime time) {
 	TimePoint[] result = null;
 	for (TimePoint point : getTimePoints()) {
 	    if (isPointStartingAttributeInterval(point, attribute) && point.getTime().isEqual(time)) {
@@ -881,12 +881,12 @@ public class Timeline {
     }
 
     public boolean hasWorkingPointBeforeLeave(Leave leave) {
-	TimePoint[] result = findIntervalByAttribute(AttributeType.JUSTIFICATION, leave.getDate().toTimeOfDay());
+	TimePoint[] result = findIntervalByAttribute(AttributeType.JUSTIFICATION, leave.getDate().toLocalTime());
 	return (result != null && getPreviousWorkedPoint(result[0]) != null);
     }
 
     public boolean hasWorkingPointAfterLeave(Leave leave) {
-	TimePoint[] result = findIntervalByAttribute(AttributeType.JUSTIFICATION, leave.getDate().toTimeOfDay());
+	TimePoint[] result = findIntervalByAttribute(AttributeType.JUSTIFICATION, leave.getDate().toLocalTime());
 	return (result != null && getNextWorkedPoint(result[1]) != null);
     }
 }

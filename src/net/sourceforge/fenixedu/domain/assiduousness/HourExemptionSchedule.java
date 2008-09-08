@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.LocalDate;
-import org.joda.time.TimeOfDay;
+import org.joda.time.LocalTime;
 
 /**
  * @author velouria@velouria.org
@@ -25,7 +25,7 @@ import org.joda.time.TimeOfDay;
 public class HourExemptionSchedule extends HourExemptionSchedule_Base {
 
     public HourExemptionSchedule(String acronym, ScheduleClockingType scheduleClockingType, LocalDate beginValidDate,
-	    LocalDate endValidDate, TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
+	    LocalDate endValidDate, LocalTime dayTime, Duration dayTimeDuration, LocalTime clockingTime,
 	    Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod, Meal meal,
 	    DateTime lastModifiedDate, Employee modifiedBy) {
 	super();

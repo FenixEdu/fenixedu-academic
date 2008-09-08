@@ -32,21 +32,21 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.Partial;
-import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 public class Assiduousness extends Assiduousness_Base {
 
-    public static final TimeOfDay defaultStartWorkDay = new TimeOfDay(7, 30, 0, 0);
+    public static final LocalTime defaultStartWorkDay = new LocalTime(7, 30, 0, 0);
 
-    public static final TimeOfDay defaultEndWorkDay = new TimeOfDay(23, 59, 59, 99);
+    public static final LocalTime defaultEndWorkDay = new LocalTime(23, 59, 59, 99);
 
-    public static final TimeOfDay defaultStartWeeklyRestDay = new TimeOfDay(7, 0, 0, 0);
+    public static final LocalTime defaultStartWeeklyRestDay = new LocalTime(7, 0, 0, 0);
 
-    public static final TimeOfDay defaultStartNightWorkDay = new TimeOfDay(20, 0, 0, 0);
+    public static final LocalTime defaultStartNightWorkDay = new LocalTime(20, 0, 0, 0);
 
-    public static final TimeOfDay defaultEndNightWorkDay = new TimeOfDay(7, 0, 0, 0);
+    public static final LocalTime defaultEndNightWorkDay = new LocalTime(7, 0, 0, 0);
 
     public static final Duration normalWorkDayDuration = new Duration(25200000); // 7
     // hours
@@ -280,7 +280,7 @@ public class Assiduousness extends Assiduousness_Base {
 			    workDaySheet.getDate());
 		}
 		Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints().iterator().next(),
-			new TimePoint(defaultStartWeeklyRestDay, AttributeType.NULL), new TimePoint(lastClocking.toTimeOfDay(),
+			new TimePoint(defaultStartWeeklyRestDay, AttributeType.NULL), new TimePoint(lastClocking.toLocalTime(),
 				lastClocking.toLocalDate().equals(workDaySheet.getDate()) ? false : true, AttributeType.NULL),
 			null, null);
 		Duration weeklyRestDuration = worked;
@@ -315,27 +315,51 @@ public class Assiduousness extends Assiduousness_Base {
 
     public List<Leave> getLeaves(LocalDate day) {
 	List<Leave> leaves = new ArrayList<Leave>();
-	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
-		Leave leave = (Leave) assiduousnessRecord;
-		if (leave.occuredInDate(day)) {
-		    leaves.add(leave);
+	final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex = getAssiduousnessRecordMonthIndex(day);
+	if (assiduousnessRecordMonthIndex != null) {
+	    for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordMonthIndex.getAssiduousnessRecordsSet()) {
+		if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
+		    Leave leave = (Leave) assiduousnessRecord;
+		    if (leave.occuredInDate(day)) {
+			leaves.add(leave);
+		    }
 		}
 	    }
 	}
 	return leaves;
     }
 
-    public List<AssiduousnessRecord> getClockingsAndMissingClockings(DateTime beginDate, DateTime endDate) {
-	Interval interval = new Interval(beginDate, endDate);
-	List<AssiduousnessRecord> clockingsList = new ArrayList<AssiduousnessRecord>();
-	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-	    if ((assiduousnessRecord.isClocking() || assiduousnessRecord.isMissingClocking())
-		    && (!assiduousnessRecord.isAnulated()) && interval.contains(assiduousnessRecord.getDate())) {
-		clockingsList.add(assiduousnessRecord);
+    public AssiduousnessRecordMonthIndex getAssiduousnessRecordMonthIndex(LocalDate localDate) {
+	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet()) {
+	    if (assiduousnessRecordMonthIndex.contains(localDate)) {
+		return assiduousnessRecordMonthIndex;
 	    }
 	}
-	return clockingsList;
+	return null;	
+    }
+
+    public List<AssiduousnessRecord> getAssiduousnessRecordBetweenDates(DateTime beginDate, DateTime endDate) {
+	final List<AssiduousnessRecord> assiduousnessRecords = new ArrayList<AssiduousnessRecord>();
+	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet()) {
+	    if (assiduousnessRecordMonthIndex.intersects(beginDate, endDate)) {
+		assiduousnessRecords.addAll(assiduousnessRecordMonthIndex.getAssiduousnessRecordsSet());
+	    }
+	}
+	return assiduousnessRecords;
+    }
+
+    public List<AssiduousnessRecord> getClockingsAndMissingClockings(DateTime beginDate, DateTime endDate) {
+	final Interval interval = new Interval(beginDate, endDate);
+	final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecordBetweenDates(beginDate, endDate);
+	for (final Iterator<AssiduousnessRecord> iterator = assiduousnessRecords.iterator(); iterator.hasNext(); ) {
+	    final AssiduousnessRecord assiduousnessRecord = iterator.next();
+	    if ((!assiduousnessRecord.isClocking() && !assiduousnessRecord.isMissingClocking())
+		    || assiduousnessRecord.isAnulated()
+		    || !interval.contains(assiduousnessRecord.getDate())) {
+		iterator.remove();
+	    }
+	}
+	return assiduousnessRecords;
     }
 
     public List<Clocking> getClockings(LocalDate beginDate, LocalDate endDate) {
@@ -370,15 +394,17 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public List<Leave> getLeaves(LocalDate beginDate, LocalDate endDate) {
-	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), defaultEndWorkDay.toDateTime(endDate
-		.toDateTimeAtStartOfDay()));
-	List<Leave> leavesList = new ArrayList<Leave>();
-	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+	final DateTime beginDateTime = beginDate.toDateTimeAtStartOfDay();
+	final DateTime endDateTime = endDate.toDateTime(defaultEndWorkDay);
+	Interval interval = new Interval(beginDateTime, endDateTime);
+	final List<Leave> leavesList = new ArrayList<Leave>();
+	final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecordBetweenDates(beginDateTime, endDateTime);
+	for (final AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
-		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord).getEndDate()
-			.plusSeconds(1));
+		final Leave leave = (Leave) assiduousnessRecord;
+		Interval leaveInterval = new Interval(leave.getDate(), leave.getEndDate().plusSeconds(1));
 		if (leaveInterval.overlaps(interval)) {
-		    leavesList.add((Leave) assiduousnessRecord);
+		    leavesList.add(leave);
 		}
 	    }
 	}
@@ -739,5 +765,25 @@ public class Assiduousness extends Assiduousness_Base {
     public BigDecimal getEmployeeHourValue(LocalDate date) throws ExcepcaoPersistencia {
 	GiafInterface giafInterface = new GiafInterface();
 	return giafInterface.getEmployeeHourValue(getEmployee(), date);
+    }
+
+    public void updateAssiduousnessRecordMonthIndex(final AssiduousnessRecord assiduousnessRecord) {
+	final DateTime dateTime = assiduousnessRecord.getDate();
+	AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex = getAssiduousnessRecordMonthIndex(dateTime);
+	if (assiduousnessRecordMonthIndex == null) {
+	    assiduousnessRecordMonthIndex = new AssiduousnessRecordMonthIndex(assiduousnessRecord);
+	} else {
+	    assiduousnessRecord.setAssiduousnessRecordMonthIndex(assiduousnessRecordMonthIndex);
+	}
+    }
+
+    private AssiduousnessRecordMonthIndex getAssiduousnessRecordMonthIndex(DateTime dateTime) {
+	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet()) {
+	    final Partial partial = assiduousnessRecordMonthIndex.getYearMonth();
+	    if (partial.get(DateTimeFieldType.monthOfYear()) == dateTime.getMonthOfYear() && partial.get(DateTimeFieldType.year()) == dateTime.getYear()) {
+		return assiduousnessRecordMonthIndex;
+	    }
+	}
+	return null;
     }
 }

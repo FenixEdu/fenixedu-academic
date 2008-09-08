@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 
 import org.joda.time.Duration;
-import org.joda.time.TimeOfDay;
+import org.joda.time.LocalTime;
 
 /**
  * @author velouria
@@ -20,7 +20,7 @@ import org.joda.time.TimeOfDay;
  */
 public class Meal extends Meal_Base {
 
-    public Meal(TimeOfDay mealBeginTime, TimeOfDay mealEndTime, Duration mandatoryMealDiscount, Duration minimumMealBreakInterval) {
+    public Meal(LocalTime mealBeginTime, LocalTime mealEndTime, Duration mandatoryMealDiscount, Duration minimumMealBreakInterval) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBeginMealBreak(mealBeginTime);
@@ -66,7 +66,7 @@ public class Meal extends Meal_Base {
 
     // Returns the lunch end if the employee had lunch in the beginning of its
     // meal break
-    public TimeOfDay getLunchEnd() {
+    public LocalTime getLunchEnd() {
 	return getBeginMealBreak().plus(getMandatoryMealDiscount().toPeriod());
     }
 
@@ -74,8 +74,8 @@ public class Meal extends Meal_Base {
 	return TimeInterval.countDurationFromClockings(clockingIn, clockingOut, this.getMealBreak());
     }
 
-    public TimeOfDay getEndOfMealBreakMinusMealDiscount() {
-	return getMealBreak().getEndTime().toDateTimeToday().minus(getMandatoryMealDiscount()).toTimeOfDay();
+    public LocalTime getEndOfMealBreakMinusMealDiscount() {
+	return getMealBreak().getEndTime().toDateTimeToday().minus(getMandatoryMealDiscount()).toLocalTime();
     }
 
     public TimeInterval getEndOfMealBreakMinusDiscountInterval() {
@@ -93,7 +93,7 @@ public class Meal extends Meal_Base {
 	return !hasAnyWorkScheduleTypes();
     }
 
-    public boolean equivalent(TimeOfDay beginMeal, TimeOfDay endMeal, Duration minium, Duration maxium) {
+    public boolean equivalent(LocalTime beginMeal, LocalTime endMeal, Duration minium, Duration maxium) {
 	if ((getBeginMealBreak().equals(beginMeal) && getEndMealBreak().equals(endMeal))
 		&& ((getMinimumMealBreakInterval() == null && minium == null) || (getMinimumMealBreakInterval() != null
 			&& minium != null && getMinimumMealBreakInterval().equals(minium)))

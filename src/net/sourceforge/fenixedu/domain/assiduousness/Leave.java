@@ -31,10 +31,10 @@ public class Leave extends Leave_Base {
 	    WorkWeek aplicableWeekDays, String notes, DateTime lastModificationDate, Employee modifiedBy, Integer oracleSequence) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setDate(date);
 	setJustificationMotive(justificationMotive);
 	setAplicableWeekDays(aplicableWeekDays);
 	setAssiduousness(assiduousness);
+	setDate(date);
 	setNotes(notes);
 	setDuration(dateDuration);
 	setLastModifiedDate(lastModificationDate);
@@ -46,10 +46,10 @@ public class Leave extends Leave_Base {
 	    WorkWeek aplicableWeekDays, String notes, DateTime lastModificationDate, Employee modifiedBy) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setDate(date);
 	setJustificationMotive(justificationMotive);
 	setAplicableWeekDays(aplicableWeekDays);
 	setAssiduousness(assiduousness);
+	setDate(date);
 	setNotes(notes);
 	setDuration(dateDuration);
 	setLastModifiedDate(lastModificationDate);
@@ -119,8 +119,8 @@ public class Leave extends Leave_Base {
     public List<TimePoint> toTimePoints(AttributeType attribute) {
 	List<TimePoint> timePointList = new ArrayList<TimePoint>();
 	EnumSet<AttributeType> attributesToAdd = EnumSet.of(attribute, AttributeType.JUSTIFICATION);
-	timePointList.add(new TimePoint(getDate().toTimeOfDay(), new Attributes(attributesToAdd)));
-	timePointList.add(new TimePoint((getDate().plus(getDuration())).toTimeOfDay(), new Attributes(attributesToAdd)));
+	timePointList.add(new TimePoint(getDate().toLocalTime(), new Attributes(attributesToAdd)));
+	timePointList.add(new TimePoint((getDate().plus(getDuration())).toLocalTime(), new Attributes(attributesToAdd)));
 	return timePointList;
     }
 

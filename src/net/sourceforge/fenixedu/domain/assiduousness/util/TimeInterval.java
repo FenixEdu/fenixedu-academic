@@ -7,38 +7,28 @@ import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
-import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 public class TimeInterval implements Serializable {
 
     // TODO mudar para immutable
-    private TimeOfDay startTime;
+    private LocalTime startTime;
 
-    private TimeOfDay endTime;
+    private LocalTime endTime;
 
     private Boolean nextDay; // some schedules may end in the next day
 
-    public TimeInterval(TimeOfDay startTime, TimeOfDay endTime, Boolean nextDay) {
+    public TimeInterval(LocalTime startTime, LocalTime endTime, Boolean nextDay) {
 	setStartTime(startTime);
 	setEndTime(endTime);
 	setNextDay(nextDay);
     }
 
-    // public TimeInterval(TimeOfDay startTime, TimeOfDay endTime) {
-    // if (startTime.isAfter(endTime)) {
-    // setNextDay(true);
-    // } else {
-    // setNextDay(false);
-    // }
-    // setStartTime(startTime);
-    // setEndTime(endTime);
-    // }
-
-    public TimeInterval(TimeOfDay startTime, Duration duration) {
+    public TimeInterval(LocalTime startTime, Duration duration) {
 	setStartTime(startTime);
 	setEndTime(startTime.plus(duration.toPeriod()));
-	DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+	DateTime now = LocalTime.MIDNIGHT.toDateTimeToday();
 	Duration maxDuration = new Duration(startTime.toDateTime(now).getMillis(), now.plusDays(1).getMillis());
 	if (duration.compareTo(maxDuration) > 0) {
 	    setNextDay(true);
@@ -51,11 +41,11 @@ public class TimeInterval implements Serializable {
 	nextDay = newNextDay;
     }
 
-    private void setStartTime(TimeOfDay newStartTime) {
+    private void setStartTime(LocalTime newStartTime) {
 	startTime = newStartTime;
     }
 
-    private void setEndTime(TimeOfDay newEndTime) {
+    private void setEndTime(LocalTime newEndTime) {
 	endTime = newEndTime;
     }
 
@@ -67,11 +57,11 @@ public class TimeInterval implements Serializable {
 	nextDay = newNextDay;
     }
 
-    public TimeOfDay getEndTime() {
+    public LocalTime getEndTime() {
 	return endTime;
     }
 
-    public TimeOfDay getStartTime() {
+    public LocalTime getStartTime() {
 	return startTime;
     }
 
@@ -89,7 +79,7 @@ public class TimeInterval implements Serializable {
 	return getDuration().getMillis();
     }
 
-    public boolean contains(TimeOfDay timeOfDay, boolean nextDay) {
+    public boolean contains(LocalTime timeOfDay, boolean nextDay) {
 	if (nextDay == false) {
 	    if ((getStartTime().isBefore(timeOfDay) || getStartTime().isEqual(timeOfDay))
 		    && (getEndTime().isAfter(timeOfDay) || getEndTime().isEqual(timeOfDay))) {
@@ -114,7 +104,7 @@ public class TimeInterval implements Serializable {
     // no
     // dia seguinte e timeofday
     // e' no dia seguinte entao nat�rlich devolve true
-    public boolean timeIntervalIsBefore(TimeOfDay timeOfDay, boolean nextDay) {
+    public boolean timeIntervalIsBefore(LocalTime timeOfDay, boolean nextDay) {
 	if (nextDay && (this.getNextDay() == false)) {
 	    return true;
 	} else {
@@ -123,7 +113,7 @@ public class TimeInterval implements Serializable {
     }
 
     //
-    public boolean timeIntervalIsAfter(TimeOfDay timeOfDay, boolean nextDay) {
+    public boolean timeIntervalIsAfter(LocalTime timeOfDay, boolean nextDay) {
 	if (nextDay && (this.getNextDay() == false)) {
 	    return false;
 	} else {
@@ -134,7 +124,7 @@ public class TimeInterval implements Serializable {
     // Returns true if the TimeInterval contains the date.
     public Boolean contains(DateTime date) {
 	// convertion to compare
-	TimeOfDay dateTimeOfDay = this.dateTimeToTimeOfDay(date);
+	LocalTime dateTimeOfDay = date.toLocalTime();
 
 	// Next day e inicio e' depois do fim (pq fim e' no dia seguinte)
 	if (this.getNextDay()) {
@@ -142,9 +132,9 @@ public class TimeInterval implements Serializable {
 	    // meia-noite
 	    // ou data e' depois ou igual 'a meia-noite e fim e' depois da
 	    // data
-	    if ((this.startIsBeforeOrEqual(dateTimeOfDay) && (dateTimeOfDay.isBefore(TimeOfDay.MIDNIGHT) || (dateTimeOfDay
-		    .isEqual(TimeOfDay.MIDNIGHT))))
-		    || ((dateTimeOfDay.isAfter(TimeOfDay.MIDNIGHT) || (dateTimeOfDay.isEqual(TimeOfDay.MIDNIGHT))) && this
+	    if ((this.startIsBeforeOrEqual(dateTimeOfDay) && (dateTimeOfDay.isBefore(LocalTime.MIDNIGHT) || (dateTimeOfDay
+		    .isEqual(LocalTime.MIDNIGHT))))
+		    || ((dateTimeOfDay.isAfter(LocalTime.MIDNIGHT) || (dateTimeOfDay.isEqual(LocalTime.MIDNIGHT))) && this
 			    .endIsAfterOrEqual(dateTimeOfDay))) {
 		return true;
 	    }
@@ -157,7 +147,7 @@ public class TimeInterval implements Serializable {
 	return false;
     }
 
-    public Boolean endIsAfterOrEqual(TimeOfDay timeOfDay) {
+    public Boolean endIsAfterOrEqual(LocalTime timeOfDay) {
 	if (this.getEndTime().isAfter(timeOfDay) || this.getEndTime().isEqual(timeOfDay)) {
 	    return true;
 	} else {
@@ -165,7 +155,7 @@ public class TimeInterval implements Serializable {
 	}
     }
 
-    public Boolean endIsBeforeOrEqual(TimeOfDay timeOfDay) {
+    public Boolean endIsBeforeOrEqual(LocalTime timeOfDay) {
 	if (this.getEndTime().isBefore(timeOfDay) || this.getEndTime().isEqual(timeOfDay)) {
 	    return true;
 	} else {
@@ -173,7 +163,7 @@ public class TimeInterval implements Serializable {
 	}
     }
 
-    public Boolean startIsAfterOrEqual(TimeOfDay timeOfDay) {
+    public Boolean startIsAfterOrEqual(LocalTime timeOfDay) {
 	if (this.getStartTime().isAfter(timeOfDay) || this.getStartTime().isEqual(timeOfDay)) {
 	    return true;
 	} else {
@@ -181,7 +171,7 @@ public class TimeInterval implements Serializable {
 	}
     }
 
-    public Boolean startIsBeforeOrEqual(TimeOfDay timeOfDay) {
+    public Boolean startIsBeforeOrEqual(LocalTime timeOfDay) {
 	if (this.getStartTime().isBefore(timeOfDay) || this.getStartTime().isEqual(timeOfDay)) {
 	    return true;
 	} else {
@@ -189,41 +179,22 @@ public class TimeInterval implements Serializable {
 	}
     }
 
-    //    
-
-    public TimeOfDay dateTimeToTimeOfDay(DateTime date) {
-	return date.toTimeOfDay();
-	// return new TimeOfDay(date.getHourOfDay(), date.getMinuteOfDay(),
-	// date.getSecondOfDay());
-    }
-
     // Return true if
     public Boolean startIsBefore(DateTime date) {
-	TimeOfDay timeOfDay = new TimeOfDay(date.getHourOfDay(), date.getMinuteOfDay(), date.getSecondOfDay());
-	if (this.getStartTime().isBefore(timeOfDay)) {
-	    return true;
-	} else {
-	    return false;
-	}
+	return this.getStartTime().isBefore(date.toLocalTime());
     }
 
     public Boolean startIsAfter(DateTime date) {
-	TimeOfDay timeOfDay = new TimeOfDay(date.getHourOfDay(), date.getMinuteOfDay(), date.getSecondOfDay());
-	if (this.getStartTime().isAfter(timeOfDay)) {
-	    return true;
-	} else {
-	    return false;
-	}
+	return this.getStartTime().isAfter(date.toLocalTime());
     }
 
     // Converts a TimeInterval to Interval
     // completes the YearMonthDay with the date from variable date.
     public Interval toInterval(DateTime date) {
-	YearMonthDay datePartial = new YearMonthDay(date);
-	return toInterval(datePartial);
+	return toInterval(date.toLocalDate());
     }
 
-    public Interval toInterval(YearMonthDay datePartial) {
+    public Interval toInterval(LocalDate datePartial) {
 	if (getNextDay()) {
 	    datePartial.plusDays(1); // adds a day if the interval ends the
 	    // next day
@@ -248,7 +219,7 @@ public class TimeInterval implements Serializable {
     }
 
     // Converts one of the limits of the interval to a TimePoint
-    public TimePoint intervalLimitToTimePoint(TimeOfDay intervalLimit, AttributeType attribute) {
+    public TimePoint intervalLimitToTimePoint(LocalTime intervalLimit, AttributeType attribute) {
 	return new TimePoint(intervalLimit, attribute);
     }
 
@@ -269,7 +240,7 @@ public class TimeInterval implements Serializable {
 		.equals(timeInterval.getNextDay())));
     }
 
-    public boolean isTimeIntervalBeforeTime(TimeOfDay timeOfDay, boolean nextDay) {
+    public boolean isTimeIntervalBeforeTime(LocalTime timeOfDay, boolean nextDay) {
 	if ((nextDay && getNextDay()) || (nextDay == false && getNextDay() == false)) {
 	    return (getEndTime().isBefore(timeOfDay) || getEndTime().isEqual(timeOfDay));
 	} else if (nextDay && getNextDay() == false) {

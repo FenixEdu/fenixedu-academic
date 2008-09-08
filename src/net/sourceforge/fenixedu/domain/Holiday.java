@@ -109,7 +109,7 @@ public class Holiday extends Holiday_Base {
 	for (Holiday holiday : RootDomainObject.getInstance().getHolidays()) {
 	    if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getSpaceInformation()
 		    .getLocality()))
-		    && holiday.getDate().isMatch(date.toDateMidnight())) {
+		    && holiday.getDate().isMatch(date)) {
 		return true;
 	    }
 	}

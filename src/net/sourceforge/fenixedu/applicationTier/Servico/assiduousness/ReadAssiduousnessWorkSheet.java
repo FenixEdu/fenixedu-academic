@@ -195,10 +195,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
     }
 
     private DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
-	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay.toLocalTime());
+	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay);
 	WorkSchedule endWorkSchedule = workScheduleMap.get(endDate);
 	if (endWorkSchedule != null) {
-	    end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime()).plus(
+	    end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime()).plus(
 		    endWorkSchedule.getWorkScheduleType().getWorkTimeDuration());
 	    if (endWorkSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
 		end = end.plusDays(2);
@@ -208,10 +208,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
     }
 
     private DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
-	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay.toLocalTime());
+	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {
-	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime());
+	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime());
 	}
 	return init;
     }

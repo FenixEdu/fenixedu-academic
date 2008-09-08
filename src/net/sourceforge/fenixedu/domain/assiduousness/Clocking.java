@@ -15,8 +15,8 @@ public class Clocking extends Clocking_Base {
     public Clocking(Assiduousness assiduousness, ClockUnit clockUnit, DateTime date, Integer oracleSequence) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setDate(date);
 	setAssiduousness(assiduousness);
+	setDate(date);
 	setClockUnit(clockUnit);
 	setOracleSequence(oracleSequence);
     }

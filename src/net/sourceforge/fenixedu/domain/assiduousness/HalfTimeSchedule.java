@@ -11,7 +11,6 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.joda.time.TimeOfDay;
 
 /**
  * @author velouria@velouria.org
@@ -20,12 +19,12 @@ import org.joda.time.TimeOfDay;
 public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 
     public static final Duration normalHalfTimeWorkDayDuration = new Duration(14400000); // 4
-											 // h
+    // h
 
     public static final LocalTime splitWorkDayHour = new LocalTime(12, 0, 0);
 
     public HalfTimeSchedule(String acronym, ScheduleClockingType scheduleClockingType, LocalDate beginValidDate,
-	    LocalDate endValidDate, TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
+	    LocalDate endValidDate, LocalTime dayTime, Duration dayTimeDuration, LocalTime clockingTime,
 	    Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod, DateTime lastModifiedDate,
 	    Employee modifiedBy) {
 	super();

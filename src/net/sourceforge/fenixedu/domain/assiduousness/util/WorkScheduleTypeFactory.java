@@ -29,9 +29,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.Partial;
-import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
 import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -46,49 +45,49 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 
     private String acronym;
 
-    private TimeOfDay beginDayTime;
+    private LocalTime beginDayTime;
 
-    private TimeOfDay endDayTime;
+    private LocalTime endDayTime;
 
     private Boolean endDayNextDay;
 
-    private TimeOfDay beginClockingTime;
+    private LocalTime beginClockingTime;
 
-    private TimeOfDay endClockingTime;
+    private LocalTime endClockingTime;
 
     private Boolean endClockingNextDay;
 
-    private TimeOfDay beginNormalWorkFirstPeriod;
+    private LocalTime beginNormalWorkFirstPeriod;
 
-    private TimeOfDay endNormalWorkFirstPeriod;
+    private LocalTime endNormalWorkFirstPeriod;
 
     private Boolean endNormalWorkFirstPeriodNextDay;
 
-    private TimeOfDay beginNormalWorkSecondPeriod;
+    private LocalTime beginNormalWorkSecondPeriod;
 
-    private TimeOfDay endNormalWorkSecondPeriod;
+    private LocalTime endNormalWorkSecondPeriod;
 
     private Boolean endNormalWorkSecondPeriodNextDay;
 
-    private TimeOfDay beginFixedWorkFirstPeriod;
+    private LocalTime beginFixedWorkFirstPeriod;
 
-    private TimeOfDay endFixedWorkFirstPeriod;
+    private LocalTime endFixedWorkFirstPeriod;
 
     private Boolean endFixedWorkFirstPeriodNextDay;
 
-    private TimeOfDay beginFixedWorkSecondPeriod;
+    private LocalTime beginFixedWorkSecondPeriod;
 
-    private TimeOfDay endFixedWorkSecondPeriod;
+    private LocalTime endFixedWorkSecondPeriod;
 
     private Boolean endFixedWorkSecondPeriodNextDay;
 
-    private TimeOfDay mealBeginTime;
+    private LocalTime mealBeginTime;
 
-    private TimeOfDay mealEndTime;
+    private LocalTime mealEndTime;
 
-    private TimeOfDay mandatoryMealDiscount;
+    private LocalTime mandatoryMealDiscount;
 
-    private TimeOfDay minimumMealBreakInterval;
+    private LocalTime minimumMealBreakInterval;
 
     private ScheduleClockingType scheduleClockingType;
 
@@ -97,11 +96,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
     public WorkScheduleTypeFactory() {
 	setBeginValidDate(new LocalDate(1970, 01, 02));
 	setEndValidDate(new LocalDate(2036, 01, 01));
-	setBeginDayTime(new TimeOfDay(03, 00, 00));
-	setEndDayTime(TimeOfDay.MIDNIGHT);
+	setBeginDayTime(new LocalTime(03, 00, 00));
+	setEndDayTime(LocalTime.MIDNIGHT);
 	setEndDayNextDay(true);
-	setBeginClockingTime(new TimeOfDay(07, 30, 00));
-	setEndClockingTime(new TimeOfDay(23, 59, 00));
+	setBeginClockingTime(new LocalTime(07, 30, 00));
+	setEndClockingTime(new LocalTime(23, 59, 00));
     }
 
     public Integer getOldIdInternal() {
@@ -128,51 +127,51 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.acronym = acronym;
     }
 
-    public TimeOfDay getBeginClockingTime() {
+    public LocalTime getBeginClockingTime() {
 	return beginClockingTime;
     }
 
-    public void setBeginClockingTime(TimeOfDay beginClockingTime) {
+    public void setBeginClockingTime(LocalTime beginClockingTime) {
 	this.beginClockingTime = beginClockingTime;
     }
 
-    public TimeOfDay getBeginDayTime() {
+    public LocalTime getBeginDayTime() {
 	return beginDayTime;
     }
 
-    public void setBeginDayTime(TimeOfDay beginDayTime) {
+    public void setBeginDayTime(LocalTime beginDayTime) {
 	this.beginDayTime = beginDayTime;
     }
 
-    public TimeOfDay getBeginFixedWorkFirstPeriod() {
+    public LocalTime getBeginFixedWorkFirstPeriod() {
 	return beginFixedWorkFirstPeriod;
     }
 
-    public void setBeginFixedWorkFirstPeriod(TimeOfDay beginFixedWorkFirstPeriod) {
+    public void setBeginFixedWorkFirstPeriod(LocalTime beginFixedWorkFirstPeriod) {
 	this.beginFixedWorkFirstPeriod = beginFixedWorkFirstPeriod;
     }
 
-    public TimeOfDay getBeginFixedWorkSecondPeriod() {
+    public LocalTime getBeginFixedWorkSecondPeriod() {
 	return beginFixedWorkSecondPeriod;
     }
 
-    public void setBeginFixedWorkSecondPeriod(TimeOfDay beginFixedWorkSecondPeriod) {
+    public void setBeginFixedWorkSecondPeriod(LocalTime beginFixedWorkSecondPeriod) {
 	this.beginFixedWorkSecondPeriod = beginFixedWorkSecondPeriod;
     }
 
-    public TimeOfDay getBeginNormalWorkFirstPeriod() {
+    public LocalTime getBeginNormalWorkFirstPeriod() {
 	return beginNormalWorkFirstPeriod;
     }
 
-    public void setBeginNormalWorkFirstPeriod(TimeOfDay beginNormalWorkFirstPeriod) {
+    public void setBeginNormalWorkFirstPeriod(LocalTime beginNormalWorkFirstPeriod) {
 	this.beginNormalWorkFirstPeriod = beginNormalWorkFirstPeriod;
     }
 
-    public TimeOfDay getBeginNormalWorkSecondPeriod() {
+    public LocalTime getBeginNormalWorkSecondPeriod() {
 	return beginNormalWorkSecondPeriod;
     }
 
-    public void setBeginNormalWorkSecondPeriod(TimeOfDay beginNormalWorkSecondPeriod) {
+    public void setBeginNormalWorkSecondPeriod(LocalTime beginNormalWorkSecondPeriod) {
 	this.beginNormalWorkSecondPeriod = beginNormalWorkSecondPeriod;
     }
 
@@ -195,11 +194,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.endClockingNextDay = endClockingNextDay;
     }
 
-    public TimeOfDay getEndClockingTime() {
+    public LocalTime getEndClockingTime() {
 	return endClockingTime;
     }
 
-    public void setEndClockingTime(TimeOfDay endClockingTime) {
+    public void setEndClockingTime(LocalTime endClockingTime) {
 	this.endClockingTime = endClockingTime;
     }
 
@@ -211,19 +210,19 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.endDayNextDay = endDayNextDay;
     }
 
-    public TimeOfDay getEndDayTime() {
+    public LocalTime getEndDayTime() {
 	return endDayTime;
     }
 
-    public void setEndDayTime(TimeOfDay endDayTime) {
+    public void setEndDayTime(LocalTime endDayTime) {
 	this.endDayTime = endDayTime;
     }
 
-    public TimeOfDay getEndFixedWorkFirstPeriod() {
+    public LocalTime getEndFixedWorkFirstPeriod() {
 	return endFixedWorkFirstPeriod;
     }
 
-    public void setEndFixedWorkFirstPeriod(TimeOfDay endFixedWorkFirstPeriod) {
+    public void setEndFixedWorkFirstPeriod(LocalTime endFixedWorkFirstPeriod) {
 	this.endFixedWorkFirstPeriod = endFixedWorkFirstPeriod;
     }
 
@@ -235,11 +234,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.endFixedWorkFirstPeriodNextDay = endFixedWorkFirstPeriodNextDay;
     }
 
-    public TimeOfDay getEndFixedWorkSecondPeriod() {
+    public LocalTime getEndFixedWorkSecondPeriod() {
 	return endFixedWorkSecondPeriod;
     }
 
-    public void setEndFixedWorkSecondPeriod(TimeOfDay endFixedWorkSecondPeriod) {
+    public void setEndFixedWorkSecondPeriod(LocalTime endFixedWorkSecondPeriod) {
 	this.endFixedWorkSecondPeriod = endFixedWorkSecondPeriod;
     }
 
@@ -251,11 +250,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.endFixedWorkSecondPeriodNextDay = endFixedWorkSecondPeriodNextDay;
     }
 
-    public TimeOfDay getEndNormalWorkFirstPeriod() {
+    public LocalTime getEndNormalWorkFirstPeriod() {
 	return endNormalWorkFirstPeriod;
     }
 
-    public void setEndNormalWorkFirstPeriod(TimeOfDay endNormalWorkFirstPeriod) {
+    public void setEndNormalWorkFirstPeriod(LocalTime endNormalWorkFirstPeriod) {
 	this.endNormalWorkFirstPeriod = endNormalWorkFirstPeriod;
     }
 
@@ -267,11 +266,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.endNormalWorkFirstPeriodNextDay = endNormalWorkFirstPeriodNextDay;
     }
 
-    public TimeOfDay getEndNormalWorkSecondPeriod() {
+    public LocalTime getEndNormalWorkSecondPeriod() {
 	return endNormalWorkSecondPeriod;
     }
 
-    public void setEndNormalWorkSecondPeriod(TimeOfDay endNormalWorkSecondPeriod) {
+    public void setEndNormalWorkSecondPeriod(LocalTime endNormalWorkSecondPeriod) {
 	this.endNormalWorkSecondPeriod = endNormalWorkSecondPeriod;
     }
 
@@ -291,35 +290,35 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.endValidDate = endValidDate;
     }
 
-    public TimeOfDay getMandatoryMealDiscount() {
+    public LocalTime getMandatoryMealDiscount() {
 	return mandatoryMealDiscount;
     }
 
-    public void setMandatoryMealDiscount(TimeOfDay mandatoryMealDiscount) {
+    public void setMandatoryMealDiscount(LocalTime mandatoryMealDiscount) {
 	this.mandatoryMealDiscount = mandatoryMealDiscount;
     }
 
-    public TimeOfDay getMealBeginTime() {
+    public LocalTime getMealBeginTime() {
 	return mealBeginTime;
     }
 
-    public void setMealBeginTime(TimeOfDay mealBeginTime) {
+    public void setMealBeginTime(LocalTime mealBeginTime) {
 	this.mealBeginTime = mealBeginTime;
     }
 
-    public TimeOfDay getMealEndTime() {
+    public LocalTime getMealEndTime() {
 	return mealEndTime;
     }
 
-    public void setMealEndTime(TimeOfDay mealEndTime) {
+    public void setMealEndTime(LocalTime mealEndTime) {
 	this.mealEndTime = mealEndTime;
     }
 
-    public TimeOfDay getMinimumMealBreakInterval() {
+    public LocalTime getMinimumMealBreakInterval() {
 	return minimumMealBreakInterval;
     }
 
-    public void setMinimumMealBreakInterval(TimeOfDay minimumMealBreakInterval) {
+    public void setMinimumMealBreakInterval(LocalTime minimumMealBreakInterval) {
 	this.minimumMealBreakInterval = minimumMealBreakInterval;
     }
 
@@ -333,11 +332,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	}
     }
 
-    protected Duration getDuration(TimeOfDay begin, TimeOfDay end, boolean nextDay) {
+    protected Duration getDuration(LocalTime begin, LocalTime end, boolean nextDay) {
 	if (begin == null || end == null) {
 	    return null;
 	}
-	YearMonthDay now = new YearMonthDay();
+	LocalDate now = new LocalDate();
 	DateTime endDateTime = now.toDateTime(end);
 	if (nextDay) {
 	    endDateTime = endDateTime.plusDays(1);
@@ -345,11 +344,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	return new Duration(now.toDateTime(begin), endDateTime);
     }
 
-    protected Duration getDuration(TimeOfDay time) {
+    protected Duration getDuration(LocalTime time) {
 	if (time == null) {
 	    return null;
 	}
-	return new Duration(new YearMonthDay().toDateTimeAtMidnight().getMillis(), time.toDateTimeToday().getMillis());
+	return new Duration(new LocalDate().toDateTimeAtStartOfDay().getMillis(), time.toDateTimeToday().getMillis());
     }
 
     protected WorkScheduleType getOrCreateWorkScheduleType() {
@@ -415,7 +414,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	return workScheduleType;
     }
 
-    protected Meal getOrCreateMeal(TimeOfDay beginTime, TimeOfDay endTime, TimeOfDay minimumInterval, TimeOfDay mandatoryDiscount) {
+    protected Meal getOrCreateMeal(LocalTime beginTime, LocalTime endTime, LocalTime minimumInterval, LocalTime mandatoryDiscount) {
 	if (beginTime == null || endTime == null) {
 	    return null;
 	}
@@ -424,7 +423,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	return getOrCreateMeal(getMealBeginTime(), getMealEndTime(), minimumMealBreakInterval, mandatoryMealDiscount);
     }
 
-    protected Meal getOrCreateMeal(TimeOfDay beginTime, TimeOfDay endTime, Duration minimumMealBreakInterval,
+    protected Meal getOrCreateMeal(LocalTime beginTime, LocalTime endTime, Duration minimumMealBreakInterval,
 	    Duration mandatoryMealDiscount) {
 	if (beginTime == null || endTime == null) {
 	    return null;
@@ -434,7 +433,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		minimumMealBreakInterval);
     }
 
-    protected Meal getEquivalentMeal(TimeOfDay beginTime, TimeOfDay endTime, Duration minimumMealBreakInterval,
+    protected Meal getEquivalentMeal(LocalTime beginTime, LocalTime endTime, Duration minimumMealBreakInterval,
 	    Duration mandatoryMealDiscount) {
 	for (Meal meal : RootDomainObject.getInstance().getMeals()) {
 	    if (meal.getBeginMealBreak().equals(beginTime) && meal.getEndMealBreak().equals(endTime)) {
@@ -452,8 +451,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	return null;
     }
 
-    protected WorkPeriod getOrCreateWorkPeriod(TimeOfDay beginWorkFirstPeriod, TimeOfDay endWorkFirstPeriod,
-	    Boolean endWorkFirstPeriodNextDay, TimeOfDay beginWorkSecondPeriod, TimeOfDay endWorkSecondPeriod,
+    protected WorkPeriod getOrCreateWorkPeriod(LocalTime beginWorkFirstPeriod, LocalTime endWorkFirstPeriod,
+	    Boolean endWorkFirstPeriodNextDay, LocalTime beginWorkSecondPeriod, LocalTime endWorkSecondPeriod,
 	    Boolean endWorkSecondPeriodNextDay) {
 	if (beginWorkFirstPeriod == null || endWorkFirstPeriod == null) {
 	    return null;
@@ -464,7 +463,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	return getOrCreateWorkPeriod(beginWorkFirstPeriod, firstPeriodDuration, beginWorkSecondPeriod, secondPeriodDuration);
     }
 
-    protected WorkPeriod getOrCreateWorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod,
+    protected WorkPeriod getOrCreateWorkPeriod(LocalTime firstPeriod, Duration firstPeriodDuration, LocalTime secondPeriod,
 	    Duration secondPeriodDuration) {
 	if (firstPeriod == null || firstPeriodDuration == null) {
 	    return null;
@@ -474,7 +473,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		secondPeriodDuration);
     }
 
-    protected WorkPeriod getEquivalentWorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod,
+    protected WorkPeriod getEquivalentWorkPeriod(LocalTime firstPeriod, Duration firstPeriodDuration, LocalTime secondPeriod,
 	    Duration secondPeriodDuration) {
 	for (WorkPeriod workPeriod : RootDomainObject.getInstance().getWorkPeriods()) {
 	    if (workPeriod.getFirstPeriod().equals(firstPeriod)
@@ -525,7 +524,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		if (getOrCreateWorkScheduleType() == null) {
 		    Chronology chronology = GregorianChronology.getInstanceUTC();
 		    DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
-		    TimeOfDay time = new TimeOfDay(ContinuousSchedule.normalContinuousWorkDayDuration.getMillis(), chronology);
+		    LocalTime time = new LocalTime(ContinuousSchedule.normalContinuousWorkDayDuration.getMillis(), chronology);
 		    return new ActionMessage("error.invalidContinuousDuration", fmt.print(time));
 		}
 		return null;
@@ -577,10 +576,10 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		if (getWorkScheduleType().hasMeal()) {
 		    setMealBeginTime(getWorkScheduleType().getMeal().getBeginMealBreak());
 		    setMealEndTime(getWorkScheduleType().getMeal().getEndMealBreak());
-		    setMandatoryMealDiscount(new TimeOfDay(
+		    setMandatoryMealDiscount(new LocalTime(
 			    getWorkScheduleType().getMeal().getMandatoryMealDiscount().getMillis(), GregorianChronology
 				    .getInstanceUTC()));
-		    setMinimumMealBreakInterval(new TimeOfDay(getWorkScheduleType().getMeal().getMinimumMealBreakInterval()
+		    setMinimumMealBreakInterval(new LocalTime(getWorkScheduleType().getMeal().getMinimumMealBreakInterval()
 			    .getMillis(), GregorianChronology.getInstanceUTC()));
 		}
 
@@ -676,7 +675,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			    if (newWorkScheluleType == null) {
 				Chronology chronology = GregorianChronology.getInstanceUTC();
 				DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
-				TimeOfDay time = new TimeOfDay(ContinuousSchedule.normalContinuousWorkDayDuration.getMillis(),
+				LocalTime time = new LocalTime(ContinuousSchedule.normalContinuousWorkDayDuration.getMillis(),
 					chronology);
 				return new ActionMessage("error.invalidContinuousDuration", fmt.print(time));
 			    }
@@ -813,8 +812,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			    getDuration(getMinimumMealBreakInterval()), getDuration(getMandatoryMealDiscount())));
 	}
 
-	private WorkPeriod editWorkPeriod(WorkPeriod workPeriod, TimeOfDay firstPeriod, Duration firstPeriodDuration,
-		TimeOfDay secondPeriod, Duration secondPeriodDuration) {
+	private WorkPeriod editWorkPeriod(WorkPeriod workPeriod, LocalTime firstPeriod, Duration firstPeriodDuration,
+		LocalTime secondPeriod, Duration secondPeriodDuration) {
 	    if (workPeriod != null && !isWorkPeriodUsed(workPeriod)) {
 		WorkPeriod equivalentWorkPeriod = getEquivalentWorkPeriod(firstPeriod, firstPeriodDuration, secondPeriod,
 			secondPeriodDuration);
@@ -843,7 +842,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	    return true;
 	}
 
-	private Meal editMeal(Meal meal, TimeOfDay beginMeal, TimeOfDay endMeal, Duration minimumMealBreakInterval,
+	private Meal editMeal(Meal meal, LocalTime beginMeal, LocalTime endMeal, Duration minimumMealBreakInterval,
 		Duration mandatoryMealDiscount) {
 	    if (beginMeal != null) {
 		if (minimumMealBreakInterval == null) {

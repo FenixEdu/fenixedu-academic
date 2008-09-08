@@ -2,11 +2,13 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
 
 public class AssiduousnessRecord extends AssiduousnessRecord_Base {
 
@@ -40,6 +42,12 @@ public class AssiduousnessRecord extends AssiduousnessRecord_Base {
 
     public boolean isAnulated() {
 	return (getAnulation() != null && getAnulation().getState() == AnulationState.VALID);
+    }
+
+    @Override
+    public void setDate(final DateTime dateTime) {
+	super.setDate(dateTime);
+	getAssiduousness().updateAssiduousnessRecordMonthIndex(this);
     }
 
 }

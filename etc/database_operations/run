@@ -41,6 +41,7 @@ function executeWithTempFile() {
 }
 
 execute "Alter AcademicServiceRequest table" AlterTableAcademicServiceRequest.sql IST
+execute "Add table to index assiduousness records." updates.sql
 execute "Adding new country" InsertCountry.sql IST
 execute "Adding foreign district" InsertForeignDistrict.sql
 execute "Adding unique restriction to code on district" AlterTableDistrict.sql

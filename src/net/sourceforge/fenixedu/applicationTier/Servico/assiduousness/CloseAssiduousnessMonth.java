@@ -141,8 +141,8 @@ public class CloseAssiduousnessMonth extends Service {
 				.getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE))
 				&& leave.getJustificationMotive().getActualWorkTime()) {
 			    Interval nightInterval = new Interval(workDaySheet.getDate().toDateTime(
-				    Assiduousness.defaultStartNightWorkDay.toLocalTime()), workDaySheet.getDate().toDateTime(
-				    Assiduousness.defaultEndNightWorkDay.toLocalTime()).plusDays(1));
+				    Assiduousness.defaultStartNightWorkDay), workDaySheet.getDate().toDateTime(
+				    Assiduousness.defaultEndNightWorkDay).plusDays(1));
 			    setNightExtraWorkMap(workDaySheet, extra25Map, workSchedule.getWorkScheduleType()
 				    .getNormalWorkPeriod().getNormalNigthWorkPeriod(nightInterval));
 			}
@@ -440,8 +440,8 @@ public class CloseAssiduousnessMonth extends Service {
 
 	    Duration extraWorkDuration = roundToHalfHour(new Duration(workDaySheet.getTimeline()
 		    .calculateWorkPeriodDurationBetweenDates(
-			    workDaySheet.getDate().toDateTime(Assiduousness.defaultStartNightWorkDay.toLocalTime()),
-			    workDaySheet.getDate().toDateTime(Assiduousness.defaultEndNightWorkDay.toLocalTime()).plusDays(1))));
+			    workDaySheet.getDate().toDateTime(Assiduousness.defaultStartNightWorkDay),
+			    workDaySheet.getDate().toDateTime(Assiduousness.defaultEndNightWorkDay).plusDays(1))));
 	    if (!extraWorkDuration.equals(Duration.ZERO)) {
 		setNightExtraWorkMap(workDaySheet, extra25Map, extraWorkDuration);
 	    }
@@ -478,10 +478,10 @@ public class CloseAssiduousnessMonth extends Service {
     }
 
     private DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
-	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay.toLocalTime());
+	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay);
 	WorkSchedule endWorkSchedule = workScheduleMap.get(endDate);
 	if (endWorkSchedule != null) {
-	    end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime()).plus(
+	    end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime()).plus(
 		    endWorkSchedule.getWorkScheduleType().getWorkTimeDuration());
 	    if (endWorkSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
 		end = end.plusDays(2);
@@ -491,10 +491,10 @@ public class CloseAssiduousnessMonth extends Service {
     }
 
     private DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
-	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay.toLocalTime());
+	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {
-	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime());
+	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime());
 	}
 	return init;
     }

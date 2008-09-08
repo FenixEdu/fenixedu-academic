@@ -186,6 +186,7 @@ valueType org.joda.time.Period                                                  
 valueType org.joda.time.TimeOfDay                                                                                    as TimeOfDay;
 valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
 valueType org.joda.time.LocalDate                                                                                 	 as LocalDate;
+valueType org.joda.time.LocalTime                                                                                 	 as LocalTime;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.PartialList                                           	 as PartialList;
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod                                      as AcademicPeriod;
 enum      net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType                       as BonusType;
@@ -1856,6 +1857,10 @@ class DomainObject {
 			class assiduousness.MissingClocking extends assiduousness.Justification {
 			}
 
+	class assiduousness.AssiduousnessRecordMonthIndex extends DomainObject {
+		Partial yearMonth;
+	}
+
 	class assiduousness.AssiduousnessStatus extends DomainObject {
 		String description;
 		DateTime lastModifiedDate;
@@ -1983,8 +1988,8 @@ class DomainObject {
 	}
 
 	class assiduousness.Meal extends DomainObject {
-		TimeOfDay beginMealBreak;
-		TimeOfDay endMealBreak;
+		LocalTime beginMealBreak;
+		LocalTime endMealBreak;
 		Duration mandatoryMealDiscount;
 		Duration minimumMealBreakInterval;
 	}
@@ -2011,9 +2016,9 @@ class DomainObject {
 	}
 
 	class assiduousness.WorkPeriod extends DomainObject {
-		TimeOfDay firstPeriod;
+		LocalTime firstPeriod;
 		Duration firstPeriodDuration;
-		TimeOfDay secondPeriod;
+		LocalTime secondPeriod;
 		Duration secondPeriodDuration;
 	}
 
@@ -2024,12 +2029,12 @@ class DomainObject {
 	class assiduousness.WorkScheduleType extends DomainObject {
 		String acronym;
 		LocalDate beginValidDate;
-		TimeOfDay clockingTime;
+		LocalTime clockingTime;
 		Duration clockingTimeDuration;
 		LocalDate endValidDate;
 		DateTime lastModifiedDate;
 		ScheduleClockingType scheduleClockingType;
-		TimeOfDay workTime;
+		LocalTime workTime;
 		Duration workTimeDuration;
 	}
 
@@ -13346,4 +13351,23 @@ relation StudentCandidacyCountryOfResidence {
 	Country playsRole countryOfResidence;
 }
 
+relation RootDomainObjectAssiduousnessRecordMonthIndex {
+	RootDomainObject playsRole rootDomainObject;
+	assiduousness.AssiduousnessRecordMonthIndex playsRole assiduousnessRecordMonthIndexs {
+		multiplicity *;
+	}
+}
 
+relation AssiduousnessAssiduousnessRecordMonthIndex {
+	assiduousness.Assiduousness playsRole assiduousness;
+	assiduousness.AssiduousnessRecordMonthIndex playsRole assiduousnessRecordMonthIndexs {
+		multiplicity *;
+	}
+}
+
+relation AssiduousnessRecordAssiduousnessRecordMonthIndex {
+	assiduousness.AssiduousnessRecordMonthIndex playsRole assiduousnessRecordMonthIndex;
+	assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
+		multiplicity *;
+	}
+}

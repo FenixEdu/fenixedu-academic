@@ -204,7 +204,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
 			DateTime beginDateTime = getBeginDate().toDateTime(
-				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod().toLocalTime());
+				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
 			Duration halfWorkScheduleDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 				.getFirstPeriodDuration();
 			if (getWorkPeriodType().equals(WorkPeriodType.SECOND_PERIOD)) {
@@ -212,7 +212,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				return new ActionMessage("errors.workScheduleWithoutSecondPeriod");
 			    }
 			    beginDateTime = getBeginDate().toDateTime(
-				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod().toLocalTime());
+				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod());
 			    halfWorkScheduleDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 				    .getSecondPeriodDuration();
 
@@ -428,7 +428,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
 			DateTime beginDateTime = getBeginDate().toDateTime(
-				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod().toLocalTime());
+				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
 			Duration halfWorkScheduleDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 				.getFirstPeriodDuration();
 			if (getWorkPeriodType().equals(WorkPeriodType.SECOND_PERIOD)) {
@@ -436,7 +436,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				return new ActionMessage("errors.workScheduleWithoutSecondPeriod");
 			    }
 			    beginDateTime = getBeginDate().toDateTime(
-				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod().toLocalTime());
+				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod());
 			    halfWorkScheduleDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 				    .getSecondPeriodDuration();
 
@@ -751,7 +751,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 
 			dateTime = getBeginDate().toDateTime(
-				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod().toLocalTime());
+				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
 			if ((workSchedule.getWorkScheduleType() instanceof HalfTimeSchedule)) {
 
 			    if (((getWorkPeriodType().equals(WorkPeriodType.FIRST_PERIOD) && ((HalfTimeSchedule) workSchedule
@@ -769,7 +769,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			} else {
 			    duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriodDuration();
 			    dateTime = getBeginDate().toDateTime(
-				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod().toLocalTime());
+				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
 			    if ((workSchedule.getWorkScheduleType() instanceof ContinuousSchedule)) {
 				duration = new Duration(workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 					.getWorkPeriodDuration().getMillis() / 2);
@@ -784,7 +784,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				    continue;
 				}
 				dateTime = getBeginDate().toDateTime(
-					workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod().toLocalTime());
+					workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod());
 				duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriodDuration();
 			    }
 			}
@@ -931,16 +931,16 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    return "errors.employeeHasNoScheduleOrInactive";
 	}
 
-	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay.toLocalTime());
+	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {
-	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime());
+	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime());
 	}
 
-	DateTime end = getBeginDate().toDateTime(Assiduousness.defaultEndWorkDay.toLocalTime());
+	DateTime end = getBeginDate().toDateTime(Assiduousness.defaultEndWorkDay);
 	WorkSchedule endWorkSchedule = workScheduleMap.get(getBeginDate());
 	if (endWorkSchedule != null) {
-	    end = getBeginDate().toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime()).plus(
+	    end = getBeginDate().toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime()).plus(
 		    endWorkSchedule.getWorkScheduleType().getWorkTimeDuration());
 	    if (endWorkSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
 		end = end.plusDays(2);

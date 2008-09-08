@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
-import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 public class WorkScheduleType extends WorkScheduleType_Base {
 
@@ -110,13 +110,14 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 	return Duration.ZERO;
     }
 
-    private Duration calculateNotWorkedMealDuration(Timeline timeline, TimeOfDay beginLunch, TimeOfDay endLunch,
+    private Duration calculateNotWorkedMealDuration(Timeline timeline, LocalTime beginLunch, LocalTime endLunch,
 	    TimePoint firstClocking, TimePoint lastWorkTimePoint) {
+	LocalDate today = new LocalDate();
 	Duration totalDuration = Duration.ZERO;
-	Interval scheduleMealBreak = getMeal().getMealBreak().toInterval(new YearMonthDay().toDateTimeAtMidnight());
+	Interval scheduleMealBreak = getMeal().getMealBreak().toInterval(today.toDateTimeAtStartOfDay());
 	TimePoint previousVerifiedTimePoint = null;
 	for (TimePoint timePoint : timeline.getTimePoints()) {
-	    DateTime timePointDateTime = timePoint.getDateTime(new YearMonthDay());
+	    DateTime timePointDateTime = timePoint.getDateTime(today);
 	    boolean isClosingAndNotOpeningWorkedPeriod = timeline.isClosingAndNotOpeningWorkedPeriod(timePoint);
 	    if (scheduleMealBreak.contains(timePointDateTime)
 		    && !timePoint.getTime().isEqual(beginLunch)
@@ -130,8 +131,8 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 			TimePoint nextWorkedTimePoint = timeline.getNextWorkedPoint(timePoint);
 			DateTime endDateTime = scheduleMealBreak.getEnd();
 			if (nextWorkedTimePoint != null
-				&& nextWorkedTimePoint.getDateTime(endDateTime.toYearMonthDay()).isBefore(endDateTime)) {
-			    endDateTime = nextWorkedTimePoint.getDateTime(endDateTime.toYearMonthDay());
+				&& nextWorkedTimePoint.getDateTime(endDateTime.toLocalDate()).isBefore(endDateTime)) {
+			    endDateTime = nextWorkedTimePoint.getDateTime(endDateTime.toLocalDate());
 			}
 			totalDuration = totalDuration.plus(new Duration(timePointDateTime, endDateTime));
 			previousVerifiedTimePoint = timePoint;
@@ -140,8 +141,8 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 			if (previousVerifiedTimePoint == null || !previousWorkedTimePoint.isAtSameTime(previousVerifiedTimePoint)) {
 			    DateTime beginDateTime = scheduleMealBreak.getStart();
 			    if (previousWorkedTimePoint != null
-				    && previousWorkedTimePoint.getDateTime(beginDateTime.toYearMonthDay()).isAfter(beginDateTime)) {
-				beginDateTime = previousWorkedTimePoint.getDateTime(beginDateTime.toYearMonthDay());
+				    && previousWorkedTimePoint.getDateTime(beginDateTime.toLocalDate()).isAfter(beginDateTime)) {
+				beginDateTime = previousWorkedTimePoint.getDateTime(beginDateTime.toLocalDate());
 			    }
 			    totalDuration = totalDuration.plus(new Duration(beginDateTime, timePointDateTime));
 
@@ -181,36 +182,37 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 	return !hasAnyWorkSchedules();
     }
 
-    public TimeOfDay getWorkEndTime() {
+    public LocalTime getWorkEndTime() {
 	return getWorkTime().plus(getWorkTimeDuration().toPeriod());
     }
 
-    public TimeOfDay getClockingEndTime() {
+    public LocalTime getClockingEndTime() {
 	return getClockingTime().plus(getClockingTimeDuration().toPeriod());
     }
 
     public boolean isWorkTimeNextDay() {
-	DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+	DateTime now = LocalTime.MIDNIGHT.toDateTimeToday();
 	Duration maxDuration = new Duration(getWorkTime().toDateTime(now).getMillis(), now.plusDays(1).getMillis());
 	return (getWorkTimeDuration().compareTo(maxDuration) >= 0);
     }
 
     public boolean isClokingTimeNextDay() {
-	DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+	DateTime now = LocalTime.MIDNIGHT.toDateTimeToday();
 	Duration maxDuration = new Duration(getClockingTime().toDateTime(now).getMillis(), now.plusDays(1).getMillis());
 	return (getClockingTimeDuration().compareTo(maxDuration) >= 0);
     }
 
-    public static Interval getDefaultWorkTime(YearMonthDay workDay) {
-	return new Interval(workDay.toDateTime(new TimeOfDay(3, 0, 0, 0)), workDay.toDateTime(new TimeOfDay(6, 0, 0, 0))
-		.plusDays(1));
+    private static final LocalTime beginDefaultTimeOfDay = new LocalTime(3, 0, 0, 0);
+    private static final LocalTime endDefaultTimeOfDay = new LocalTime(6, 0, 0, 0);
+    public static Interval getDefaultWorkTime(LocalDate localDate) {
+	return new Interval(localDate.toDateTime(beginDefaultTimeOfDay), localDate.toDateTime(endDefaultTimeOfDay).plusDays(1));
     }
 
     public boolean isValidWorkScheduleType() {
 	if (getEndValidDate() == null) {
-	    return !new YearMonthDay().isBefore(getBeginValidDate());
+	    return !new LocalDate().isBefore(getBeginValidDate());
 	}
-	return new Interval(getBeginValidDate().toDateMidnight(), getEndValidDate().toDateMidnight()).contains(new YearMonthDay()
+	return new Interval(getBeginValidDate().toDateMidnight(), getEndValidDate().toDateMidnight()).contains(new LocalDate()
 		.toDateMidnight());
     }
 
@@ -223,11 +225,11 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 	return null;
     }
 
-    public boolean equals(YearMonthDay beginValid, YearMonthDay endValid, TimeOfDay workTime, Duration workTimeDuration,
-	    TimeOfDay clockingTime, Duration clockingTimeDuration, ScheduleClockingType scheduleClockingType,
-	    TimeOfDay firstNormalPeriod, Duration firstNormalPeriodDuration, TimeOfDay secondNormalPeriod,
-	    Duration secondNormalPeriodDuration, TimeOfDay firstFixedPeriod, Duration firstFixedPeriodDuration,
-	    TimeOfDay secondFixedPeriod, Duration secondFixedPeriodDuration, TimeOfDay beginMeal, TimeOfDay endMeal,
+    public boolean equals(LocalDate beginValid, LocalDate endValid, LocalTime workTime, Duration workTimeDuration,
+	    LocalTime clockingTime, Duration clockingTimeDuration, ScheduleClockingType scheduleClockingType,
+	    LocalTime firstNormalPeriod, Duration firstNormalPeriodDuration, LocalTime secondNormalPeriod,
+	    Duration secondNormalPeriodDuration, LocalTime firstFixedPeriod, Duration firstFixedPeriodDuration,
+	    LocalTime secondFixedPeriod, Duration secondFixedPeriodDuration, LocalTime beginMeal, LocalTime endMeal,
 	    Duration minium, Duration maxium) {
 
 	if (getBeginValidDate().equals(beginValid)
@@ -242,11 +244,11 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 	return false;
     }
 
-    public boolean equivalent(TimeOfDay workTime, Duration workTimeDuration, TimeOfDay clockingTime,
-	    Duration clockingTimeDuration, ScheduleClockingType scheduleClockingType, TimeOfDay firstNormalPeriod,
-	    Duration firstNormalPeriodDuration, TimeOfDay secondNormalPeriod, Duration secondNormalPeriodDuration,
-	    TimeOfDay firstFixedPeriod, Duration firstFixedPeriodDuration, TimeOfDay secondFixedPeriod,
-	    Duration secondFixedPeriodDuration, TimeOfDay beginMeal, TimeOfDay endMeal, Duration minimum, Duration maximum) {
+    public boolean equivalent(LocalTime workTime, Duration workTimeDuration, LocalTime clockingTime,
+	    Duration clockingTimeDuration, ScheduleClockingType scheduleClockingType, LocalTime firstNormalPeriod,
+	    Duration firstNormalPeriodDuration, LocalTime secondNormalPeriod, Duration secondNormalPeriodDuration,
+	    LocalTime firstFixedPeriod, Duration firstFixedPeriodDuration, LocalTime secondFixedPeriod,
+	    Duration secondFixedPeriodDuration, LocalTime beginMeal, LocalTime endMeal, Duration minimum, Duration maximum) {
 	if ((getWorkTime().equals(workTime) && getWorkTimeDuration().equals(workTimeDuration)
 		&& getClockingTime().equals(clockingTime) && getClockingTimeDuration().equals(clockingTimeDuration))
 		&& (getScheduleClockingType().equals(scheduleClockingType))
@@ -261,7 +263,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     public boolean equivalent(WorkScheduleType workScheduleType) {
-	TimeOfDay firstFixedPeriod = null, secondFixedPeriod = null, beginMeal = null, endMeal = null;
+	LocalTime firstFixedPeriod = null, secondFixedPeriod = null, beginMeal = null, endMeal = null;
 	Duration firstFixedPeriodDuration = null, secondFixedPeriodDuration = null, minium = null, maxium = null;
 
 	if (workScheduleType.hasFixedWorkPeriod()) {
@@ -288,7 +290,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     public boolean getIsEditable() {
-	YearMonthDay now = new YearMonthDay();
+	LocalDate now = new LocalDate();
 	if ((getBeginValidDate() != null && getBeginValidDate().isBefore(now))
 		&& (getEndValidDate() != null && getEndValidDate().isBefore(now))) {
 	    return false;
@@ -297,7 +299,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     public boolean isNocturnal() {
-	TimeOfDay endTime = getNormalWorkPeriod().getEndSecondPeriod() != null ? getNormalWorkPeriod().getEndSecondPeriod()
+	LocalTime endTime = getNormalWorkPeriod().getEndSecondPeriod() != null ? getNormalWorkPeriod().getEndSecondPeriod()
 		: getNormalWorkPeriod().getEndFirstPeriod();
 	return endTime.isAfter(Assiduousness.defaultStartNightWorkDay) || endTime.isBefore(Assiduousness.defaultEndNightWorkDay);
     }

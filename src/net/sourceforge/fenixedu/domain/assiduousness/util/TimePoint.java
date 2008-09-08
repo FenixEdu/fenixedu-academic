@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.assiduousness.util;
 
 import org.joda.time.DateTime;
-import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 public class TimePoint {
 
-    private TimeOfDay time;
+    private LocalTime time;
 
     private Attributes pointAttributes;
 
@@ -14,24 +14,24 @@ public class TimePoint {
 
     private boolean nextDay;
 
-    public TimePoint(TimeOfDay timePoint, Attributes pointAttributes) {
-	TimeOfDay timeIn = new TimeOfDay(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
+    public TimePoint(LocalTime timePoint, Attributes pointAttributes) {
+	LocalTime timeIn = new LocalTime(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
 	setTime(timeIn);
 	setPointAttributes(pointAttributes);
 	setIntervalAttributes(new Attributes());
 	setNextDay(false);
     }
 
-    public TimePoint(TimeOfDay timePoint, AttributeType attribute) {
-	TimeOfDay timeIn = new TimeOfDay(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
+    public TimePoint(LocalTime timePoint, AttributeType attribute) {
+	LocalTime timeIn = new LocalTime(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
 	setTime(timeIn);
 	setPointAttributes(new Attributes(attribute));
 	setIntervalAttributes(new Attributes());
 	setNextDay(false);
     }
 
-    public TimePoint(TimeOfDay timePoint, boolean nextDay, AttributeType attribute) {
-	TimeOfDay timeIn = new TimeOfDay(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
+    public TimePoint(LocalTime timePoint, boolean nextDay, AttributeType attribute) {
+	LocalTime timeIn = new LocalTime(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
 	setTime(timeIn);
 	if (attribute != null) {
 	    setPointAttributes(new Attributes(attribute));
@@ -42,8 +42,8 @@ public class TimePoint {
 	setNextDay(nextDay);
     }
 
-    public TimePoint(TimeOfDay timePoint, AttributeType attribute, AttributeType attributeToInterval) {
-	TimeOfDay timeIn = new TimeOfDay(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
+    public TimePoint(LocalTime timePoint, AttributeType attribute, AttributeType attributeToInterval) {
+	LocalTime timeIn = new LocalTime(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
 	setTime(timeIn);
 	pointAttributes = new Attributes(attribute);
 	intervalAttributes = new Attributes();
@@ -61,11 +61,11 @@ public class TimePoint {
 	this.nextDay = nextDay;
     }
 
-    public TimeOfDay getTime() {
+    public LocalTime getTime() {
 	return time;
     }
 
-    public void setTime(TimeOfDay newTimePoint) {
+    public void setTime(LocalTime newTimePoint) {
 	time = newTimePoint;
     }
 
@@ -141,7 +141,7 @@ public class TimePoint {
 	return null;
     }
 
-    public DateTime getDateTime(YearMonthDay day) {
+    public DateTime getDateTime(LocalDate day) {
 	DateTime pointDateTime = day.toDateTime(getTime());
 	if (isNextDay()) {
 	    pointDateTime = pointDateTime.plusDays(1);

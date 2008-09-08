@@ -19,8 +19,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.Period;
-import org.joda.time.TimeOfDay;
 
 public class WorkSchedule extends WorkSchedule_Base {
 
@@ -43,8 +43,8 @@ public class WorkSchedule extends WorkSchedule_Base {
 	WorkScheduleType wsType = getWorkScheduleType();
 	TimePoint firstWorkTimePoint = workDaySheet.getTimeline().getFirstWorkTimePoint();
 	TimePoint lastWorkTimePoint = workDaySheet.getTimeline().getLastWorkTimePoint();
-	TimeOfDay firstClockingDate = firstWorkTimePoint.getTime();
-	TimeOfDay lastClockingDate = lastWorkTimePoint.getTime();
+	LocalTime firstClockingDate = firstWorkTimePoint.getTime();
+	LocalTime lastClockingDate = lastWorkTimePoint.getTime();
 	if (wsType.definedMeal()) {
 	    mealInterval = workDaySheet.getTimeline().calculateMealBreakInterval(wsType.getMeal().getMealBreak());
 	    if (mealInterval != null) {
@@ -105,7 +105,7 @@ public class WorkSchedule extends WorkSchedule_Base {
 			// descontado desde a entrada
 			// ate' (inicio do intervalo de almoco + desconto
 			// obrigatorio de almoco)
-			TimeOfDay lunchEnd = wsType.getMeal().getLunchEnd();
+			LocalTime lunchEnd = wsType.getMeal().getLunchEnd();
 			TimeInterval lunchTime = new TimeInterval(wsType.getMeal().getBeginMealBreak(), lunchEnd, false);
 
 			Duration lunch = Duration.ZERO;
@@ -257,8 +257,8 @@ public class WorkSchedule extends WorkSchedule_Base {
 
     private boolean justificationInMealBreak(List<Leave> timeLeaves) {
 	for (Leave leave : timeLeaves) {
-	    Interval leaveInterval = new Interval(leave.getDate().toTimeOfDay().toDateTimeToday(), leave.getEndDate()
-		    .toTimeOfDay().toDateTimeToday());
+	    Interval leaveInterval = new Interval(leave.getDate().toLocalTime().toDateTimeToday(), leave.getEndDate()
+		    .toLocalTime().toDateTimeToday());
 	    Interval mealInterval = new Interval(getWorkScheduleType().getMeal().getBeginMealBreak().toDateTimeToday(),
 		    getWorkScheduleType().getMeal().getEndMealBreak().toDateTimeToday());
 	    if (leaveInterval.overlaps(mealInterval) || leaveInterval.abuts(mealInterval)) {
@@ -297,31 +297,35 @@ public class WorkSchedule extends WorkSchedule_Base {
     // if returns 0 it may belong to the clocking date or the day before
     // if returns -1 it may belong to the clocking date or the day before
     public static int overlapsSchedule(DateTime clocking, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
-	WorkSchedule thisDaySchedule = workScheduleMap.get(clocking.toLocalDate());
-	WorkSchedule dayBeforeSchedule = workScheduleMap.get(clocking.toLocalDate().minusDays(1));
+	final LocalDate clockingLocalDate = clocking.toLocalDate();
 
-	Interval thisDayWorkTimeInterval = WorkScheduleType.getDefaultWorkTime(clocking.toYearMonthDay());
+	WorkSchedule thisDaySchedule = workScheduleMap.get(clockingLocalDate);
+	WorkSchedule dayBeforeSchedule = workScheduleMap.get(clockingLocalDate.minusDays(1));
+
+	final Interval thisDayWorkTimeInterval;
 	if (thisDaySchedule != null) {
-	    DateTime beginThisDayWorkTime = clocking.toLocalDate().toDateTime(
-		    thisDaySchedule.getWorkScheduleType().getWorkTime().toLocalTime());
-	    DateTime endThisDayWorkTime = clocking.toLocalDate().toDateTime(
-		    thisDaySchedule.getWorkScheduleType().getWorkEndTime().toLocalTime());
+	    DateTime beginThisDayWorkTime = clockingLocalDate.toDateTime(thisDaySchedule.getWorkScheduleType().getWorkTime());
+	    DateTime endThisDayWorkTime = clockingLocalDate.toDateTime(thisDaySchedule.getWorkScheduleType().getWorkEndTime());
 	    if (thisDaySchedule.getWorkScheduleType().isWorkTimeNextDay()) {
 		endThisDayWorkTime = endThisDayWorkTime.plusDays(1);
 	    }
 	    thisDayWorkTimeInterval = new Interval(beginThisDayWorkTime, endThisDayWorkTime);
+	} else {
+	    thisDayWorkTimeInterval = WorkScheduleType.getDefaultWorkTime(clockingLocalDate);
 	}
-	Interval dayBeforeWorkTimeInterval = WorkScheduleType.getDefaultWorkTime(clocking.toYearMonthDay().minusDays(1));
+	final Interval dayBeforeWorkTimeInterval;
 	if (dayBeforeSchedule != null) {
-	    DateTime beginDayBeforeWorkTime = clocking.toLocalDate().toDateTime(
-		    dayBeforeSchedule.getWorkScheduleType().getWorkTime().toLocalTime()).minusDays(1);
-	    DateTime endDayBeforeWorkTime = clocking.toLocalDate().toDateTime(
-		    dayBeforeSchedule.getWorkScheduleType().getWorkEndTime().toLocalTime()).minusDays(1);
+	    DateTime beginDayBeforeWorkTime = clockingLocalDate.toDateTime(dayBeforeSchedule.getWorkScheduleType().getWorkTime())
+		    .minusDays(1);
+	    DateTime endDayBeforeWorkTime = clockingLocalDate
+		    .toDateTime(dayBeforeSchedule.getWorkScheduleType().getWorkEndTime()).minusDays(1);
 	    if (dayBeforeSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
 		endDayBeforeWorkTime = endDayBeforeWorkTime.plusDays(1);
 	    }
 
 	    dayBeforeWorkTimeInterval = new Interval(beginDayBeforeWorkTime, endDayBeforeWorkTime);
+	} else {
+	    dayBeforeWorkTimeInterval = WorkScheduleType.getDefaultWorkTime(clockingLocalDate.minusDays(1));
 	}
 	Interval overlapResult = thisDayWorkTimeInterval.overlap(dayBeforeWorkTimeInterval);
 	if (overlapResult == null) {

@@ -12,12 +12,12 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.ReadableDuration;
-import org.joda.time.TimeOfDay;
 
 public class WorkPeriod extends WorkPeriod_Base {
 
-    public WorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod, Duration secondPeriodDuration) {
+    public WorkPeriod(LocalTime firstPeriod, Duration firstPeriodDuration, LocalTime secondPeriod, Duration secondPeriodDuration) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setFirstPeriod(firstPeriod);
@@ -60,11 +60,11 @@ public class WorkPeriod extends WorkPeriod_Base {
 	}
     }
 
-    public TimeOfDay getEndFirstPeriod() {
+    public LocalTime getEndFirstPeriod() {
 	return getFirstPeriod().plus(getFirstPeriodDuration().toPeriod());
     }
 
-    public TimeOfDay getEndSecondPeriod() {
+    public LocalTime getEndSecondPeriod() {
 	if (getSecondPeriod() == null || getSecondPeriodDuration() == null) {
 	    return null;
 	}
@@ -72,13 +72,13 @@ public class WorkPeriod extends WorkPeriod_Base {
     }
 
     public boolean isFirstPeriodNextDay() {
-	DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+	DateTime now = LocalTime.MIDNIGHT.toDateTimeToday();
 	Duration maxDuration = new Duration(getFirstPeriod().toDateTime(now).getMillis(), now.plusDays(1).getMillis());
 	return (getFirstPeriodDuration().compareTo(maxDuration) >= 0);
     }
 
     public boolean isSecondPeriodNextDay() {
-	DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+	DateTime now = LocalTime.MIDNIGHT.toDateTimeToday();
 	Duration maxDuration = new Duration(getSecondPeriod().toDateTime(now).getMillis(), now.plusDays(1).getMillis());
 	return (getSecondPeriodDuration().compareTo(maxDuration) >= 0);
     }
@@ -102,7 +102,7 @@ public class WorkPeriod extends WorkPeriod_Base {
 	}
     }
 
-    public boolean equivalent(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod,
+    public boolean equivalent(LocalTime firstPeriod, Duration firstPeriodDuration, LocalTime secondPeriod,
 	    Duration secondPeriodDuration) {
 	if (((firstPeriod != null && firstPeriodDuration != null) && (getFirstPeriod().equals(firstPeriod) && getFirstPeriodDuration()
 		.equals(firstPeriodDuration)))
@@ -116,18 +116,17 @@ public class WorkPeriod extends WorkPeriod_Base {
 
     public Interval getNotWorkingPeriod(LocalDate day) {
 	if (isSecondWorkPeriodDefined()) {
-	    return new Interval(day.toDateTime(getEndFirstPeriod().toLocalTime()), day
-		    .toDateTime(getSecondPeriod().toLocalTime()));
+	    return new Interval(day.toDateTime(getEndFirstPeriod()), day.toDateTime(getSecondPeriod()));
 	}
 	return null;
     }
 
     public Duration getNormalNigthWorkPeriod(Interval nightInterval) {
-	Duration nightDuration = getOverlapsDuration(getFirstPeriodInterval().toInterval(
-		nightInterval.getStart().toYearMonthDay()), nightInterval);
+	Duration nightDuration = getOverlapsDuration(getFirstPeriodInterval().toInterval(nightInterval.getStart().toLocalDate()),
+		nightInterval);
 	if (getSecondPeriodInterval() != null) {
 	    nightDuration = nightDuration.plus(getOverlapsDuration(getSecondPeriodInterval().toInterval(
-		    nightInterval.getStart().toYearMonthDay()), nightInterval));
+		    nightInterval.getStart().toLocalDate()), nightInterval));
 	}
 	return nightDuration;
     }

@@ -33,6 +33,7 @@ import org.apache.struts.action.ActionMessages;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalTime;
 import org.joda.time.TimeOfDay;
 import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.format.DateTimeFormat;
@@ -426,7 +427,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	return mapping.findForward("edit-assiduousness-exemption");
     }
 
-    private Interval verifyTimeOfDayAndReturnInterval(TimeOfDay beginTime, TimeOfDay endTime, Boolean endNextDay) {
+    private Interval verifyTimeOfDayAndReturnInterval(LocalTime beginTime, LocalTime endTime, Boolean endNextDay) {
 	if (beginTime == null && endTime == null) {
 	    return new Interval(0, 0);
 	}
