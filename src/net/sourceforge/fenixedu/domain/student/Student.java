@@ -115,6 +115,15 @@ public class Student extends Student_Base {
 	return result;
     }
 
+    public boolean hasAnyRegistration(final DegreeType degreeType) {
+	for (Registration registration : getRegistrations()) {
+	    if (registration.getDegreeType().equals(degreeType)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public Registration readRegistrationByDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	for (final Registration registration : this.getRegistrations()) {
 	    StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(degreeCurricularPlan);
