@@ -458,6 +458,11 @@ class DomainObject {
 		String code;
 		String name;
 	}
+	
+	class DistrictSubdivision extends DomainObject {
+		String code;
+		String name;
+	}
 
 	class DomainObjectActionLog extends DomainObject {
 		String action;
@@ -9538,6 +9543,20 @@ relation RootDomainObjectDistributedTest {
 relation RootDomainObjectDistrict {
 	RootDomainObject playsRole rootDomainObject;
 	District playsRole districts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDistrictSubdivision {
+	RootDomainObject playsRole rootDomainObject;
+	DistrictSubdivision playsRole districtSubdivisions {
+		multiplicity *;
+	}
+}
+
+relation DistrictDistrictSubdivision {
+	District playsRole district;
+	DistrictSubdivision playsRole districtSubdivisions {
 		multiplicity *;
 	}
 }
