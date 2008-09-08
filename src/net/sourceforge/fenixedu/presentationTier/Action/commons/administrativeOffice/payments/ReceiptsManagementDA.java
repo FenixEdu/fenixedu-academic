@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.documents.StoreGeneratedDocument;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -218,8 +220,10 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
-	    executeService(request, "StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
-		    new ByteArrayInputStream(data), receipt });
+	    if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
+		executeService(request, "StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
+			new ByteArrayInputStream(data), receipt });
+	    }
 	    executeService("RegisterReceiptPrint", new Object[] { receipt, getUserView(request).getPerson().getEmployee() });
 
 	    response.setContentLength(data.length);

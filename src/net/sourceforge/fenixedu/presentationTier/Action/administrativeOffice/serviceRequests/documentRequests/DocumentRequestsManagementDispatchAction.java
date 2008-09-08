@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.documents.StoreGeneratedDocument;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionBean;
@@ -68,8 +70,10 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final AdministrativeOfficeDocument[] array = {};
 	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
 
-	executeService(request, "StoreGeneratedDocument", new Object[] {
-		documents.iterator().next().getReportFileName() + ".pdf", new ByteArrayInputStream(data), documentRequest });
+	if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
+	    executeService(request, "StoreGeneratedDocument", new Object[] {
+		    documents.iterator().next().getReportFileName() + ".pdf", new ByteArrayInputStream(data), documentRequest });
+	}
 	response.setContentLength(data.length);
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()

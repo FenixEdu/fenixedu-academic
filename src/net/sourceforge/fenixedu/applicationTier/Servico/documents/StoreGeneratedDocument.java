@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class StoreGeneratedDocument extends Service {
+    public static final String CONFIG_DSPACE_DOCUMENT_STORE = "dspace.document.store";
+
     public void run(String filename, InputStream stream, Object source) throws FenixServiceException {
 	if (source instanceof CreditNote) {
 	    CreditNote creditNote = (CreditNote) source;
