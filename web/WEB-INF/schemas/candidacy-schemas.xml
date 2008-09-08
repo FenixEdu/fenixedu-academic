@@ -652,7 +652,7 @@
     	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{9})?"/>
+            <property name="regexp" value="(\d{15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
@@ -661,7 +661,7 @@
     	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{9})?"/>
+            <property name="regexp" value="(\d{15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
