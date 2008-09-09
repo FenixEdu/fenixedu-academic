@@ -8,37 +8,35 @@ import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
 public class AssiduousnessRecordMonthIndex extends AssiduousnessRecordMonthIndex_Base {
-    
-    public AssiduousnessRecordMonthIndex(final AssiduousnessRecord assiduousnessRecord) {
+
+    public AssiduousnessRecordMonthIndex(final Assiduousness assiduousness, final Partial partial) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setAssiduousness(assiduousnessRecord.getAssiduousness());
-	addAssiduousnessRecords(assiduousnessRecord);
-	setYearMonth(new Partial(
-		new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() },
-		new int[] { assiduousnessRecord.getDate().getYear(), assiduousnessRecord.getDate().getMonthOfYear() }));
+	setAssiduousness(assiduousness);
+	setPartialYearMonth(partial);
     }
 
     public boolean intersects(DateTime beginDate, DateTime endDate) {
-	final Partial partial = getYearMonth();
+	final Partial partial = getPartialYearMonth();
 	final int year = partial.get(DateTimeFieldType.year());
 	final int month = partial.get(DateTimeFieldType.monthOfYear());
-	return beginDate.getYear() <= year && beginDate.getMonthOfYear() <= month
-		&& endDate.getYear() >= year && endDate.getMonthOfYear() >= month;
+	return beginDate.getYear() <= year && beginDate.getMonthOfYear() <= month && endDate.getYear() >= year
+		&& endDate.getMonthOfYear() >= month;
     }
 
     public boolean contains(LocalDate localDate) {
-	final Partial partial = getYearMonth();
+	final Partial partial = getPartialYearMonth();
 	final int year = partial.get(DateTimeFieldType.year());
 	final int month = partial.get(DateTimeFieldType.monthOfYear());
 	return localDate.getYear() == year && localDate.getMonthOfYear() == month;
     }
 
     public boolean contains(final Partial partialToMatch) {
-	final Partial partial = getYearMonth();
+	final Partial partial = getPartialYearMonth();
 	final int year = partial.get(DateTimeFieldType.year());
 	final int month = partial.get(DateTimeFieldType.monthOfYear());
-	return partialToMatch.get(DateTimeFieldType.year()) == year && partialToMatch.get(DateTimeFieldType.monthOfYear()) == month;
+	return partialToMatch.get(DateTimeFieldType.year()) == year
+		&& partialToMatch.get(DateTimeFieldType.monthOfYear()) == month;
     }
 
 }

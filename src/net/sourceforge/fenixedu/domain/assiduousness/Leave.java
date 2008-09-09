@@ -208,4 +208,10 @@ public class Leave extends Leave_Base {
 	return dateTime1.getYear() == dateTime2.getYear() && dateTime1.getMonthOfYear() == dateTime2.getMonthOfYear();
     }
 
+    @Override
+    public void setDuration(Duration duration) {
+	super.setDuration(duration);
+	getAssiduousness().updateAssiduousnessRecordMonthIndex(this);
+    }
+
 }

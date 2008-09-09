@@ -335,7 +335,7 @@ public class Assiduousness extends Assiduousness_Base {
 		return assiduousnessRecordMonthIndex;
 	    }
 	}
-	return null;	
+	return null;
     }
 
     public AssiduousnessRecordMonthIndex getAssiduousnessRecordMonthIndex(Partial partial) {
@@ -344,7 +344,7 @@ public class Assiduousness extends Assiduousness_Base {
 		return assiduousnessRecordMonthIndex;
 	    }
 	}
-	return null;	
+	return null;
     }
 
     public List<AssiduousnessRecord> getAssiduousnessRecordBetweenDates(DateTime beginDate, DateTime endDate) {
@@ -360,11 +360,10 @@ public class Assiduousness extends Assiduousness_Base {
     public List<AssiduousnessRecord> getClockingsAndMissingClockings(DateTime beginDate, DateTime endDate) {
 	final Interval interval = new Interval(beginDate, endDate);
 	final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecordBetweenDates(beginDate, endDate);
-	for (final Iterator<AssiduousnessRecord> iterator = assiduousnessRecords.iterator(); iterator.hasNext(); ) {
+	for (final Iterator<AssiduousnessRecord> iterator = assiduousnessRecords.iterator(); iterator.hasNext();) {
 	    final AssiduousnessRecord assiduousnessRecord = iterator.next();
 	    if ((!assiduousnessRecord.isClocking() && !assiduousnessRecord.isMissingClocking())
-		    || assiduousnessRecord.isAnulated()
-		    || !interval.contains(assiduousnessRecord.getDate())) {
+		    || assiduousnessRecord.isAnulated() || !interval.contains(assiduousnessRecord.getDate())) {
 		iterator.remove();
 	    }
 	}
@@ -781,17 +780,17 @@ public class Assiduousness extends Assiduousness_Base {
 	for (final Partial partial : assiduousnessRecord.getYearMonths()) {
 	    AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex = getAssiduousnessRecordMonthIndex(partial);
 	    if (assiduousnessRecordMonthIndex == null) {
-		assiduousnessRecordMonthIndex = new AssiduousnessRecordMonthIndex(assiduousnessRecord);
-	    } else {
-		assiduousnessRecord.addAssiduousnessRecordMonthIndex(assiduousnessRecordMonthIndex);
+		assiduousnessRecordMonthIndex = new AssiduousnessRecordMonthIndex(this, partial);
 	    }
+	    assiduousnessRecord.addAssiduousnessRecordMonthIndex(assiduousnessRecordMonthIndex);
 	}
     }
 
     private AssiduousnessRecordMonthIndex getAssiduousnessRecordMonthIndex(DateTime dateTime) {
 	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet()) {
-	    final Partial partial = assiduousnessRecordMonthIndex.getYearMonth();
-	    if (partial.get(DateTimeFieldType.monthOfYear()) == dateTime.getMonthOfYear() && partial.get(DateTimeFieldType.year()) == dateTime.getYear()) {
+	    final Partial partial = assiduousnessRecordMonthIndex.getPartialYearMonth();
+	    if (partial.get(DateTimeFieldType.monthOfYear()) == dateTime.getMonthOfYear()
+		    && partial.get(DateTimeFieldType.year()) == dateTime.getYear()) {
 		return assiduousnessRecordMonthIndex;
 	    }
 	}
