@@ -24,6 +24,7 @@ public class Country extends Country_Base {
     public Country() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setDefaultCountry(false);
     }
 
     public Country(final String name, final String nationality, final String code) {
