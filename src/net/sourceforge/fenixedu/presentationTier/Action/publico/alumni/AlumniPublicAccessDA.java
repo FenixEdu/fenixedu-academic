@@ -37,6 +37,8 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
     public ActionForward initFenixPublicAccess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	
+	request.getSession(true);
 
 	if (getFromRequest(request, "showForm") != null) {
 	    request.setAttribute("showForm", "true");
