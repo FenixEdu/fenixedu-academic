@@ -1858,7 +1858,7 @@ class DomainObject {
 			}
 
 	class assiduousness.AssiduousnessRecordMonthIndex extends DomainObject {
-		Partial yearMonth;
+		Partial partialYearMonth;
 	}
 
 	class assiduousness.AssiduousnessStatus extends DomainObject {
