@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -18,7 +17,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import edu.yale.its.tp.cas.client.CASReceipt;
 
 public class CASAuthenticationAction extends BaseAuthenticationAction {
