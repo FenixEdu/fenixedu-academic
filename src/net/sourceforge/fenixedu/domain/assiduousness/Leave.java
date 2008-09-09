@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -190,6 +191,21 @@ public class Leave extends Leave_Base {
 	    return getWorkDaysBetween(overlap);
 	}
 	return 0;
+    }
+
+    @Override
+    public Set<Partial> getYearMonths() {
+	final DateTime start = getDate();
+	final Set<Partial> result = super.getYearMonths();
+	for (DateTime dateTime = getEndDate(); !matchYearMonth(dateTime, start); dateTime = dateTime.minusMonths(1)) {
+	    final Partial partial = getPartial(dateTime);
+	    result.add(partial);
+	}
+	return result;
+    }
+
+    private boolean matchYearMonth(DateTime dateTime1, DateTime dateTime2) {
+	return dateTime1.getYear() == dateTime2.getYear() && dateTime1.getMonthOfYear() == dateTime2.getMonthOfYear();
     }
 
 }

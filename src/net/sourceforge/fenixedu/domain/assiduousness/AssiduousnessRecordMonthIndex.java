@@ -14,6 +14,9 @@ public class AssiduousnessRecordMonthIndex extends AssiduousnessRecordMonthIndex
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousness(assiduousnessRecord.getAssiduousness());
 	addAssiduousnessRecords(assiduousnessRecord);
+	setYearMonth(new Partial(
+		new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() },
+		new int[] { assiduousnessRecord.getDate().getYear(), assiduousnessRecord.getDate().getMonthOfYear() }));
     }
 
     public boolean intersects(DateTime beginDate, DateTime endDate) {
@@ -30,5 +33,12 @@ public class AssiduousnessRecordMonthIndex extends AssiduousnessRecordMonthIndex
 	final int month = partial.get(DateTimeFieldType.monthOfYear());
 	return localDate.getYear() == year && localDate.getMonthOfYear() == month;
     }
-    
+
+    public boolean contains(final Partial partialToMatch) {
+	final Partial partial = getYearMonth();
+	final int year = partial.get(DateTimeFieldType.year());
+	final int month = partial.get(DateTimeFieldType.monthOfYear());
+	return partialToMatch.get(DateTimeFieldType.year()) == year && partialToMatch.get(DateTimeFieldType.monthOfYear()) == month;
+    }
+
 }

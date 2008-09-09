@@ -338,6 +338,15 @@ public class Assiduousness extends Assiduousness_Base {
 	return null;	
     }
 
+    public AssiduousnessRecordMonthIndex getAssiduousnessRecordMonthIndex(Partial partial) {
+	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet()) {
+	    if (assiduousnessRecordMonthIndex.contains(partial)) {
+		return assiduousnessRecordMonthIndex;
+	    }
+	}
+	return null;	
+    }
+
     public List<AssiduousnessRecord> getAssiduousnessRecordBetweenDates(DateTime beginDate, DateTime endDate) {
 	final List<AssiduousnessRecord> assiduousnessRecords = new ArrayList<AssiduousnessRecord>();
 	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet()) {
@@ -768,12 +777,14 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public void updateAssiduousnessRecordMonthIndex(final AssiduousnessRecord assiduousnessRecord) {
-	final DateTime dateTime = assiduousnessRecord.getDate();
-	AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex = getAssiduousnessRecordMonthIndex(dateTime);
-	if (assiduousnessRecordMonthIndex == null) {
-	    assiduousnessRecordMonthIndex = new AssiduousnessRecordMonthIndex(assiduousnessRecord);
-	} else {
-	    assiduousnessRecord.setAssiduousnessRecordMonthIndex(assiduousnessRecordMonthIndex);
+	assiduousnessRecord.getAssiduousnessRecordMonthIndexSet().clear();
+	for (final Partial partial : assiduousnessRecord.getYearMonths()) {
+	    AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex = getAssiduousnessRecordMonthIndex(partial);
+	    if (assiduousnessRecordMonthIndex == null) {
+		assiduousnessRecordMonthIndex = new AssiduousnessRecordMonthIndex(assiduousnessRecord);
+	    } else {
+		assiduousnessRecord.addAssiduousnessRecordMonthIndex(assiduousnessRecordMonthIndex);
+	    }
 	}
     }
 

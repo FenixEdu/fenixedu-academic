@@ -13366,7 +13366,9 @@ relation AssiduousnessAssiduousnessRecordMonthIndex {
 }
 
 relation AssiduousnessRecordAssiduousnessRecordMonthIndex {
-	assiduousness.AssiduousnessRecordMonthIndex playsRole assiduousnessRecordMonthIndex;
+	assiduousness.AssiduousnessRecordMonthIndex playsRole assiduousnessRecordMonthIndex {
+		multiplicity *;
+	}
 	assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
 		multiplicity *;
 	}
