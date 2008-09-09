@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -462,5 +463,13 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public Set<AccountingTransaction> getDFAGratuityPayments() {
 	return getPaymentsFor(DfaGratuityEvent.class);
+    }
+
+    public List<StudentCandidacy> getStudentCandidacies() {
+	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
+	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+	    result.addAll(executionDegree.getStudentCandidacies());
+	}
+	return result;
     }
 }
