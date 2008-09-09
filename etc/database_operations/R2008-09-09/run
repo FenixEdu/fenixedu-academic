@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "fixCountryDataSetDefaultColumn.sql" fixCountryDataSetDefaultColumn.sql
+execute "Update Ass record stuff." updates.sql
