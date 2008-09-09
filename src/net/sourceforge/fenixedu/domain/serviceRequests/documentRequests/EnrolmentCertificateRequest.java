@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -42,7 +43,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-
 	} else if (!registration.hasAnyEnrolmentsIn(executionYear)) {
 	    throw new DomainException("EnrolmentCertificateRequest.no.enrolments.for.registration.in.given.executionYear");
 	}
@@ -68,13 +68,61 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	return EventType.ENROLMENT_CERTIFICATE_REQUEST;
     }
 
-    final public Collection<Enrolment> getEnrolmentsToDisplay() {
-	return getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear());
-    }
-
     @Override
     final public Integer getNumberOfUnits() {
-	return getEnrolmentsToDisplay().size();
+	return getEntriesToReport().size() + getExtraCurricularEntriesToReport().size() + getPropaedeuticEntriesToReport().size();
+    }
+
+    final public Collection<Enrolment> getEntriesToReport() {
+	return filterEntries();
+    }
+
+    private Collection<Enrolment> filterEntries() {
+	final Collection<Enrolment> result = new HashSet<Enrolment>();
+	if (extraCurricular == null) {
+	    extraCurricular = new HashSet<Enrolment>();
+	} else {
+	    extraCurricular.clear();
+	}
+	if (propaedeutic == null) {
+	    propaedeutic = new HashSet<Enrolment>();
+	} else {
+	    propaedeutic.clear();
+	}
+
+	for (final Enrolment entry : getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear())) {
+	    if (entry.isExtraCurricular() && !entry.hasAnyEnrolmentWrappers()) {
+		extraCurricular.add(entry);
+		continue;
+	    } else if (entry.isPropaedeutic()) {
+		propaedeutic.add(entry);
+		continue;
+	    }
+
+	    result.add(entry);
+	}
+
+	return result;
+    }
+
+    Collection<Enrolment> extraCurricular = null;
+
+    final public Collection<Enrolment> getExtraCurricularEntriesToReport() {
+	if (extraCurricular == null) {
+	    filterEntries();
+	}
+
+	return extraCurricular;
+    }
+
+    Collection<Enrolment> propaedeutic = null;
+
+    final public Collection<Enrolment> getPropaedeuticEntriesToReport() {
+	if (propaedeutic == null) {
+	    filterEntries();
+	}
+
+	return propaedeutic;
     }
 
     @Override

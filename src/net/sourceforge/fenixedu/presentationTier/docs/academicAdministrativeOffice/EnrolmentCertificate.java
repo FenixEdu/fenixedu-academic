@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -53,24 +52,27 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
     final private String getEnrolmentsInfo() {
 	final StringBuilder result = new StringBuilder();
+	final EnrolmentCertificateRequest request = (EnrolmentCertificateRequest) getDocumentRequest();
 
-	if (((EnrolmentCertificateRequest) getDocumentRequest()).getDetailed()) {
-	    final List<Enrolment> enrolments = new ArrayList<Enrolment>(((EnrolmentCertificateRequest) getDocumentRequest())
-		    .getEnrolmentsToDisplay());
-	    Collections.sort(enrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
+	if (request.getDetailed()) {
+	    final Collection<Enrolment> enrolments = new TreeSet<Enrolment>(
+		    Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
 
-	    final List<Enrolment> extraCurricularEnrolments = new ArrayList<Enrolment>();
-	    final List<Enrolment> propaedeuticEnrolments = new ArrayList<Enrolment>();
+	    enrolments.addAll(request.getEntriesToReport());
+	    reportEnrolments(result, enrolments);
+	    enrolments.clear();
 
-	    reportEnrolments(result, enrolments, extraCurricularEnrolments, propaedeuticEnrolments);
-
-	    if (!extraCurricularEnrolments.isEmpty()) {
-		reportRemainingEnrolments(result, extraCurricularEnrolments, "Extra-Curriculares");
+	    enrolments.addAll(request.getExtraCurricularEntriesToReport());
+	    if (!enrolments.isEmpty()) {
+		reportRemainingEnrolments(result, enrolments, "Extra-Curriculares");
 	    }
+	    enrolments.clear();
 
-	    if (!propaedeuticEnrolments.isEmpty()) {
-		reportRemainingEnrolments(result, propaedeuticEnrolments, "Propedeuticas");
+	    enrolments.addAll(request.getPropaedeuticEntriesToReport());
+	    if (!enrolments.isEmpty()) {
+		reportRemainingEnrolments(result, enrolments, "Propedeuticas");
 	    }
+	    enrolments.clear();
 
 	    result.append(generateEndLine());
 	}
@@ -78,24 +80,14 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	return result.toString();
     }
 
-    final private void reportEnrolments(final StringBuilder result, final List<Enrolment> enrolments,
-	    final List<Enrolment> extraCurricularEnrolments, final List<Enrolment> propaedeuticEnrolments) {
+    final private void reportEnrolments(final StringBuilder result, final Collection<Enrolment> enrolments) {
 	for (final Enrolment enrolment : enrolments) {
-	    if (enrolment.isExtraCurricular()) {
-		extraCurricularEnrolments.add(enrolment);
-		continue;
-	    }
-
-	    if (enrolment.isPropaedeutic()) {
-		propaedeuticEnrolments.add(enrolment);
-		continue;
-	    }
-
 	    reportEnrolment(result, enrolment);
 	}
     }
 
-    final private void reportRemainingEnrolments(final StringBuilder result, final List<Enrolment> enrolments, final String title) {
+    final private void reportRemainingEnrolments(final StringBuilder result, final Collection<Enrolment> enrolments,
+	    final String title) {
 	result.append(generateEndLine()).append("\n").append(title).append(":\n");
 
 	for (final Enrolment enrolment : enrolments) {
@@ -105,7 +97,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
     final private void reportEnrolment(final StringBuilder result, final Enrolment enrolment) {
 	result.append(
-		StringUtils.multipleLineRightPadWithSuffix(enrolment.getName().getContent().toUpperCase(), LINE_LENGTH, '-',
+		StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH, '-',
 			getCreditsInfo(enrolment))).append("\n");
     }
 
