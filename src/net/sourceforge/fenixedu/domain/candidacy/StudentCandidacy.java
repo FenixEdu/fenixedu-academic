@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -186,4 +185,11 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return getExecutionDegree().getDegreeCurricularPlan();
     }
 
+    public boolean hasEntryPhase() {
+	return getEntryPhase() != null;
+    }
+
+    public boolean hasApplyForResidence() {
+	return getApplyForResidence() != null;
+    }
 }
