@@ -25,24 +25,39 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class GiafInterface {
 
+    // public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day)
+    // throws ExcepcaoPersistencia {
+    // PersistentSuportGiaf persistentSuportOracle =
+    // PersistentSuportGiaf.getInstance();
+    // try {
+    // CallableStatement callableStatement =
+    // persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?);
+    // END;");
+    // callableStatement.registerOutParameter(1, Types.DOUBLE);
+    // DecimalFormat f = new DecimalFormat("000000");
+    // callableStatement.setString(2, f.format(employee.getEmployeeNumber()));
+    // callableStatement.setDate(3, new
+    // Date(day.toDateTimeAtStartOfDay().getMillis()));
+    // callableStatement.registerOutParameter(4, Types.DOUBLE);
+    // callableStatement.registerOutParameter(5, Types.VARCHAR);
+    // callableStatement.executeQuery();
+    // if (callableStatement.getString(5) == null) {
+    // return new BigDecimal(callableStatement.getDouble(4));
+    // }
+    // callableStatement.close();
+    // } catch (SQLException e) {
+    // e.printStackTrace();
+    // throw new ExcepcaoPersistencia();
+    // }
+    // return null;
+    // }
+
     public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
-	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
-	try {
-	    CallableStatement callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
-	    callableStatement.registerOutParameter(1, Types.DOUBLE);
-	    DecimalFormat f = new DecimalFormat("000000");
-	    callableStatement.setString(2, f.format(employee.getEmployeeNumber()));
-	    callableStatement.setDate(3, new Date(day.toDateTimeAtStartOfDay().getMillis()));
-	    callableStatement.registerOutParameter(4, Types.DOUBLE);
-	    callableStatement.registerOutParameter(5, Types.VARCHAR);
-	    callableStatement.executeQuery();
-	    if (callableStatement.getString(5) == null) {
-		return new BigDecimal(callableStatement.getDouble(4));
-	    }
-	    callableStatement.close();
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	    throw new ExcepcaoPersistencia();
+	BigDecimal salary = getEmployeeSalary(employee, day);
+	if (salary != null) {
+	    BigDecimal salaryInYear = salary.multiply(new BigDecimal(12));
+	    BigDecimal hoursInYear = new BigDecimal(52 * 35);
+	    return salaryInYear.divide(hoursInYear, 2, BigDecimal.ROUND_HALF_UP);
 	}
 	return null;
     }
@@ -56,7 +71,7 @@ public class GiafInterface {
 	    stringBuilder
 		    .append("select emp_venc from(select a.emp_num, a.emp_venc, a.emp_venc_dt, min(b.emp_venc_dt) as emp_venc_dt_fim ");
 	    stringBuilder
-		    .append("from sldempvenc a,sldempvenc b where b.emp_venc_dt > to_date(a.emp_venc_dt, 'DD-MM-YYYY') and a.emp_num = b.emp_num and nvl(a.tipo_alt,'@') != 'A' and nvl(b.tipo_alt,'@') != 'A' ");
+		    .append("from sldempvenc a,sldempvenc b where b.emp_venc_dt > a.emp_venc_dt and a.emp_num = b.emp_num and nvl(a.tipo_alt,'@') != 'A' and nvl(b.tipo_alt,'@') != 'A' ");
 	    stringBuilder
 		    .append("group by a.emp_num, a.emp_venc, a.emp_venc_dt union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt, sysdate FROM sldemp04 c )where to_date('");
 	    stringBuilder.append(fmt.print(day));
