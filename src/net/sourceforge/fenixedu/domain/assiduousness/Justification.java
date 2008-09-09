@@ -44,8 +44,8 @@ public class Justification extends Justification_Base {
 	return null;
     }
 
+    @Override
     public void delete() {
-	removeRootDomainObject();
 	if (getAnulation() != null) {
 	    Anulation a = getAnulation();
 	    removeAnulation();
@@ -54,7 +54,7 @@ public class Justification extends Justification_Base {
 	removeAssiduousness();
 	removeJustificationMotive();
 	removeModifiedBy();
-	deleteDomainObject();
+	super.delete();
     }
 
 }

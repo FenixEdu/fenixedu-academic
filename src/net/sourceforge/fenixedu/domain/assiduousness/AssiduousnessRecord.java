@@ -63,4 +63,9 @@ public class AssiduousnessRecord extends AssiduousnessRecord_Base {
 		dateTime.getYear(), dateTime.getMonthOfYear() });
     }
 
+    protected void delete() {
+	getAssiduousnessRecordMonthIndexSet().clear();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }
