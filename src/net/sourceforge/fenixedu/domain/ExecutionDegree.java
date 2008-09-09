@@ -43,7 +43,7 @@ import org.joda.time.YearMonthDay;
 
 public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<ExecutionDegree> {
 
-    public static final Comparator<ExecutionDegree> COMPARATOR_BY_DEGREE_NAME = new Comparator<ExecutionDegree>(){
+    public static final Comparator<ExecutionDegree> COMPARATOR_BY_DEGREE_NAME = new Comparator<ExecutionDegree>() {
 
 	@Override
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
@@ -772,14 +772,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
-    public List<ShiftDistributionEntry> getNotDistributedShiftsFromShiftDistributionBasedOn(Integer studentNumberPosition) {
-	final Integer studentNumber = getStudentNumberForShiftDistributionBasedOn(studentNumberPosition);
-	if (studentNumber == null) {
-	    throw new DomainException("error.candidacy.degree.ShiftDistribution.invalid.studentNumberPosition");
-	}
-	return getShiftsFor(studentNumber, false);
-    }
-
     public List<ShiftDistributionEntry> getNextFreeShiftDistributions() {
 
 	final ArrayList<ShiftDistributionEntry> entries = new ArrayList<ShiftDistributionEntry>(getShiftDistributionEntriesSet());
@@ -791,7 +783,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    }
 	}
 
-	System.out.println("Empty result!!!");
 	return Collections.EMPTY_LIST;
     }
 
@@ -840,23 +831,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    }
 	}
 	return result;
-    }
-
-    public void changeShiftFromShiftDistributionFor(int studentNumberPosition, Shift oldShift, Shift newShift) {
-	final Integer studentNumber = getStudentNumberForShiftDistributionBasedOn(studentNumberPosition);
-	if (studentNumber == null) {
-	    throw new DomainException("error.candidacy.degree.ShiftDistribution.invalid.studentNumberPosition");
-	}
-
-	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
-	    if (shiftDistributionEntry.alreadyDistributed()
-		    && shiftDistributionEntry.getAbstractStudentNumber().equals(studentNumber)
-		    && shiftDistributionEntry.getShift() == oldShift) {
-
-		shiftDistributionEntry.changeShift(newShift);
-		break;
-	    }
-	}
     }
 
     public List<DegreeCandidacy> getNotConcludedDegreeCandidacies() {
