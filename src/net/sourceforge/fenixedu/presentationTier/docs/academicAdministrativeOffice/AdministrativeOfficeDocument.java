@@ -245,7 +245,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return result.toString();
     }
 
-    private String getPresentationNameFor(final ICurriculumEntry entry) {
+    protected String getPresentationNameFor(final ICurriculumEntry entry) {
 	if (entry instanceof OptionalEnrolment) {
 	    final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) entry;
 	    return optionalEnrolment.getCurricularCourse().getName();
