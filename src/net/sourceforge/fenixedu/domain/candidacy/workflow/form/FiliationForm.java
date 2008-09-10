@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -41,11 +42,19 @@ public class FiliationForm extends Form {
     }
 
     public static FiliationForm createFromPerson(final Person person) {
-	final Country nationality = (person.hasRole(RoleType.EMPLOYEE)) ? person.getCountry() : Country.readDefault();
+	final Country nationality;
+	final Country countryOfBirth;
+	if (person.hasRole(RoleType.EMPLOYEE) || person.hasEmployee()) {
+	    nationality = person.getCountry();
+	    countryOfBirth = person.getCountryOfBirth();
+	} else {
+	    nationality = Country.readDefault();
+	    countryOfBirth = Country.readDefault();
+	}
 
 	return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(), person
 		.getDistrictSubdivisionOfBirth(), person.getNameOfFather(), person.getNameOfMother(), nationality, person
-		.getParishOfBirth(), Country.readDefault());
+		.getParishOfBirth(), countryOfBirth);
     }
 
     private FiliationForm(YearMonthDay dateOfBirth, String districtOfBirth, String districtSubdivisionOfBirth, String fatherName,
@@ -127,6 +136,15 @@ public class FiliationForm extends Form {
 
     @Override
     public List<LabelFormatter> validate() {
+	if (getCountryOfBirth().isDefaultCountry()) {
+	    if (StringUtils.isEmpty(getDistrictOfBirth()) || StringUtils.isEmpty(getDistrictSubdivisionOfBirth())
+		    || StringUtils.isEmpty(getParishOfBirth())) {
+		return Collections.singletonList(new LabelFormatter(
+			"error.candidacy.workflow.FiliationForm.zone.information.is.required.for.national.students",
+			"application"));
+	    }
+	}
+
 	return Collections.emptyList();
     }
 

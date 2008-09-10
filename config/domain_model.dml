@@ -2105,11 +2105,11 @@ class DomainObject {
 			String notesAboutResidenceAppliance;
 			StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
 			
-			String districtOfResidence;
-			String districtSubdivisionOfResidence;
+			//String districtOfResidence;
+			//String districtSubdivisionOfResidence;
 			Boolean dislocatedFromPermanentResidence;
-			String schoolTimeDistrictOfResidence;
-			String schoolTimeDistrictSubDivisionOfResidence;
+			//String schoolTimeDistrictOfResidence;
+			//String schoolTimeDistrictSubDivisionOfResidence;
 			Integer placingOption;
 			GrantOwnerType grantOwnerType;
 			Integer numberOfCandidaciesToHigherSchool;
@@ -13372,4 +13372,20 @@ relation AssiduousnessRecordAssiduousnessRecordMonthIndex {
 	assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
 		multiplicity *;
 	}
+}
+
+relation StudentCandidacyDistrictSubdivisionOfResidence {
+	candidacy.StudentCandidacy playsRole studentCandidacies {
+		multiplicity *;
+	}
+	
+	DistrictSubdivision playsRole districtSubdivisionOfResidence;
+}
+
+relation StudentCandidacySchoolTimeDistrictSubdivisionOfResidence {
+	candidacy.StudentCandidacy playsRole schoolTimeStudentCandidacies {
+		multiplicity *;
+	}
+	
+	DistrictSubdivision playsRole schoolTimeDistrictSubDivisionOfResidence;
 }

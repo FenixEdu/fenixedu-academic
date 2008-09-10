@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
@@ -12,6 +13,11 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public PrecedentDegreeInformation() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+    
+    public PrecedentDegreeInformation(final StudentCandidacy studentCandidacy){
+	this();
+	super.setStudentCandidacy(studentCandidacy);
     }
 
     public String getInstitutionName() {

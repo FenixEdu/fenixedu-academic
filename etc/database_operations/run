@@ -40,3 +40,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table Country" AlterTableCountry.sql
+execute "Alter table Candidacy" AlterTableCandidacy.sql
+

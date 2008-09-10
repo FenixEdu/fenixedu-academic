@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformation
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.PersonalInformationForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
@@ -24,8 +23,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-
-import org.apache.commons.lang.StringUtils;
 
 public class FillPersonalDataOperation extends CandidacyOperation {
 
@@ -73,7 +70,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	setInquiryAboutYieldingPersonalDataForm(new InquiryAboutYieldingPersonalDataForm());
 	addForm(getInquiryAboutYieldingPersonalDataForm());
 
-	setOriginInformationForm(new OriginInformationForm());
+	setOriginInformationForm(OriginInformationForm.createFrom(studentCandidacy));
 	addForm(getOriginInformationForm());
 
 	setResidenceApplianceInquiryForm(new ResidenceApplianceInquiryForm());
@@ -235,35 +232,32 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     protected void fillContacts() {
 	final Person person = getStudentCandidacy().getPerson();
 
-	PartyContact.createDefaultPersonalEmailAddress(person, getContactsForm().getEmail());
-	person.getDefaultEmailAddress().setVisibleToPublic(getContactsForm().isEmailAvailable());
+	person.setEmail(getContactsForm().getEmail());
+	if (person.hasDefaultEmailAddress()) {
+	    person.getDefaultEmailAddress().setVisibleToPublic(getContactsForm().isEmailAvailable());
+	}
 
-	if (!StringUtils.isEmpty(getContactsForm().getWebAddress())) {
-	    PartyContact.createDefaultPersonalWebAddress(person, getContactsForm().getWebAddress());
+	person.setPhone(getContactsForm().getPhoneNumber());
+
+	person.setWebAddress(getContactsForm().getWebAddress());
+	if (person.hasDefaultWebAddress()) {
 	    person.getDefaultWebAddress().setVisibleToPublic(getContactsForm().isHomepageAvailable());
 	}
 
-	if (!StringUtils.isEmpty(getContactsForm().getMobileNumber())) {
-	    PartyContact.createDefaultPersonalMobilePhone(person, getContactsForm().getMobileNumber());
-	}
+	person.setMobile(getContactsForm().getMobileNumber());
 
-	if (!StringUtils.isEmpty(getContactsForm().getPhoneNumber())) {
-	    PartyContact.createDefaultPersonalPhone(person, getContactsForm().getPhoneNumber());
-	}
+	person.setAvailablePhoto(getContactsForm().isPhotoAvailable());
 
     }
 
     protected void fillResidenceInformation() {
 
-	getStudentCandidacy().setDistrictOfResidence(getResidenceInformationForm().getDistrictOfResidence());
 	getStudentCandidacy()
 		.setDistrictSubdivisionOfResidence(getResidenceInformationForm().getDistrictSubdivisionOfResidence());
 	getStudentCandidacy().setDislocatedFromPermanentResidence(
 		getResidenceInformationForm().getDislocatedFromPermanentResidence());
 
 	if (getResidenceInformationForm().getDislocatedFromPermanentResidence()) {
-	    getStudentCandidacy().setSchoolTimeDistrictOfResidence(
-		    getResidenceInformationForm().getSchoolTimeDistrictOfResidence());
 	    getStudentCandidacy().setSchoolTimeDistrictSubDivisionOfResidence(
 		    getResidenceInformationForm().getSchoolTimeDistrictSubdivisionOfResidence());
 	}
@@ -271,50 +265,49 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	getStudentCandidacy().setCountryOfResidence(getResidenceInformationForm().getCountryOfResidence());
 
 	final Person person = getStudentCandidacy().getPerson();
-	if (getResidenceInformationForm().getDislocatedFromPermanentResidence()) {
-	    final PhysicalAddress physicalAddress = person.hasDefaultPhysicalAddress() ? person.getDefaultPhysicalAddress()
-		    : PhysicalAddress.createDefaultPersonalPhysicalAddress(person);
 
-	    final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm()
-		    .getSchoolTimeAddress(), getResidenceInformationForm().getSchoolTimeAreaCode(), getResidenceInformationForm()
-		    .getSchoolTimeAreaOfAreaCode(), getResidenceInformationForm().getSchoolTimeArea(),
-		    getResidenceInformationForm().getSchoolTimeParishOfResidence(), getResidenceInformationForm()
-			    .getSchoolTimeDistrictSubdivisionOfResidence(), getResidenceInformationForm()
-			    .getSchoolTimeDistrictOfResidence(), Country.readDefault());
+	setDefaultAddress(person);
+	setSchoolTimeAddress(person);
 
-	    physicalAddress.edit(physicalAddressData);
-	}
+    }
 
-	if (getResidenceInformationForm().getCountryOfResidence().isDefaultCountry()) {
+    private void setSchoolTimeAddress(final Person person) {
+	final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm()
+		.getSchoolTimeAddress(), getResidenceInformationForm().getSchoolTimeAreaCode(), getResidenceInformationForm()
+		.getSchoolTimeAreaOfAreaCode(), getResidenceInformationForm().getSchoolTimeArea(), getResidenceInformationForm()
+		.getSchoolTimeParishOfResidence(), getResidenceInformationForm().getSchoolTimeDistrictSubdivisionOfResidence()
+		.getName(), getResidenceInformationForm().getSchoolTimeDistrictSubdivisionOfResidence().getDistrict().getName(),
+		Country.readDefault());
 
-	    final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm().getAddress(),
-		    getResidenceInformationForm().getAreaCode(), getResidenceInformationForm().getAreaOfAreaCode(),
-		    getResidenceInformationForm().getArea(), getResidenceInformationForm().getParishOfResidence(),
-		    getResidenceInformationForm().getDistrictSubdivisionOfResidence(), getResidenceInformationForm()
-			    .getDistrictOfResidence(), getResidenceInformationForm().getCountryOfResidence());
+	new PhysicalAddress(person, PartyContactType.PERSONAL, false, physicalAddressData);
+    }
 
-	    if (!getResidenceInformationForm().getDislocatedFromPermanentResidence()) {
-		final PhysicalAddress residenceAddress = person.hasDefaultPhysicalAddress() ? person.getDefaultPhysicalAddress()
-			: PhysicalAddress.createDefaultPersonalPhysicalAddress(person);
-		residenceAddress.edit(physicalAddressData);
-	    } else {
-		new PhysicalAddress(person, PartyContactType.PERSONAL, false, physicalAddressData);
+    private void setDefaultAddress(final Person person) {
+	final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm().getAddress(),
+		getResidenceInformationForm().getAreaCode(), getResidenceInformationForm().getAreaOfAreaCode(),
+		getResidenceInformationForm().getArea(), getResidenceInformationForm().getParishOfResidence(),
+		getResidenceInformationForm().getDistrictSubdivisionOfResidence().getName(), getResidenceInformationForm()
+			.getDistrictSubdivisionOfResidence().getDistrict().getName(), getResidenceInformationForm()
+			.getCountryOfResidence());
 
-	    }
-	}
-
+	final PhysicalAddress residenceAddress = person.hasDefaultPhysicalAddress() ? person.getDefaultPhysicalAddress()
+		: PhysicalAddress.createDefaultPersonalPhysicalAddress(person);
+	residenceAddress.edit(physicalAddressData);
     }
 
     protected void fillFiliation() {
 	final Person person = getStudentCandidacy().getPerson();
-	person.setDistrictOfBirth(getFiliationForm().getDistrictOfBirth());
-	person.setDistrictSubdivisionOfBirth(getFiliationForm().getDistrictSubdivisionOfBirth());
 	person.setNameOfFather(getFiliationForm().getFatherName());
 	person.setNameOfMother(getFiliationForm().getMotherName());
-	person.setParishOfBirth(getFiliationForm().getParishOfBirth());
+
+	if (getFiliationForm().getCountryOfBirth().isDefaultCountry()) {
+	    person.setDistrictOfBirth(getFiliationForm().getDistrictOfBirth());
+	    person.setDistrictSubdivisionOfBirth(getFiliationForm().getDistrictSubdivisionOfBirth());
+	    person.setParishOfBirth(getFiliationForm().getParishOfBirth());
+	}
+
 	person.setDateOfBirthYearMonthDay(getFiliationForm().getDateOfBirth());
 	person.setCountry(getFiliationForm().getNationality());
-	person.setDistrictSubdivisionOfBirth(getFiliationForm().getDistrictSubdivisionOfBirth());
 	person.setCountryOfBirth(getFiliationForm().getCountryOfBirth());
     }
 

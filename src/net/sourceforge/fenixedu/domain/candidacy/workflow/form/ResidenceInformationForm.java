@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.District;
+import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -30,15 +32,15 @@ public class ResidenceInformationForm extends Form {
 
     private String parishOfResidence;
 
-    private String districtSubdivisionOfResidence;
+    private DomainReference<District> districtOfResidence;
 
-    private String districtOfResidence;
+    private DomainReference<DistrictSubdivision> districtSubdivisionOfResidence;
 
     private Boolean dislocatedFromPermanentResidence;
 
-    private String schoolTimeDistrictOfResidence;
+    private DomainReference<District> schoolTimeDistrictOfResidence;
 
-    private String schoolTimeDistrictSubdivisionOfResidence;
+    private DomainReference<DistrictSubdivision> schoolTimeDistrictSubdivisionOfResidence;
 
     private String schoolTimeAddress;
 
@@ -57,16 +59,16 @@ public class ResidenceInformationForm extends Form {
     }
 
     private ResidenceInformationForm(final String address, final String areaCode, final String areaOfAreaCode, final String area,
-	    final String parishOfResidence, final String districtSubdivisionOfResidence, final String districtOfResidence,
-	    final Country countryOfResidence) {
+	    final String parishOfResidence, final District districtOfResidence,
+	    final DistrictSubdivision districtSubdivisionOfResidence, final Country countryOfResidence) {
 
 	setAddress(address);
 	setAreaCode(areaCode);
 	setAreaOfAreaCode(areaOfAreaCode);
 	setArea(area);
 	setParishOfResidence(parishOfResidence);
-	setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
 	setDistrictOfResidence(districtOfResidence);
+	setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
 	setCountryOfResidence(countryOfResidence);
 	setDislocatedFromPermanentResidence(Boolean.FALSE);
     }
@@ -75,10 +77,21 @@ public class ResidenceInformationForm extends Form {
 	if (person.hasDefaultPhysicalAddress()) {
 	    final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
 	    final Country country = getCountryOfResidenceFromPhysicalAddress(physicalAddress);
+	    final District districtOfResidence = physicalAddress.getDistrictOfResidence() != null ? District
+		    .readByName(physicalAddress.getDistrictOfResidence()) : null;
+
+	    final DistrictSubdivision districtSubdivisionOfResidence;
+	    if (districtOfResidence != null) {
+		districtSubdivisionOfResidence = physicalAddress.getDistrictSubdivisionOfResidence() != null ? districtOfResidence
+			.getDistrictSubdivisionByName(physicalAddress.getDistrictSubdivisionOfResidence())
+			: null;
+	    } else {
+		districtSubdivisionOfResidence = null;
+	    }
 
 	    return new ResidenceInformationForm(physicalAddress.getAddress(), physicalAddress.getAreaCode(), physicalAddress
-		    .getAreaOfAreaCode(), physicalAddress.getArea(), physicalAddress.getParishOfResidence(), physicalAddress
-		    .getDistrictSubdivisionOfResidence(), physicalAddress.getDistrictOfResidence(), country);
+		    .getAreaOfAreaCode(), physicalAddress.getArea(), physicalAddress.getParishOfResidence(), districtOfResidence,
+		    districtSubdivisionOfResidence, country);
 	} else {
 	    final ResidenceInformationForm residenceInformationForm = new ResidenceInformationForm();
 	    residenceInformationForm.setCountryOfResidence(Country.readDefault());
@@ -122,20 +135,21 @@ public class ResidenceInformationForm extends Form {
 	this.areaOfAreaCode = areaOfAreaCode;
     }
 
-    public String getDistrictOfResidence() {
-	return districtOfResidence;
+    public District getDistrictOfResidence() {
+	return (this.districtOfResidence != null) ? this.districtOfResidence.getObject() : null;
     }
 
-    public void setDistrictOfResidence(String districtOfResidence) {
-	this.districtOfResidence = districtOfResidence;
+    public void setDistrictOfResidence(District district) {
+	this.districtOfResidence = (district != null) ? new DomainReference<District>(district) : null;
     }
 
-    public String getDistrictSubdivisionOfResidence() {
-	return districtSubdivisionOfResidence;
+    public DistrictSubdivision getDistrictSubdivisionOfResidence() {
+	return (this.districtSubdivisionOfResidence != null) ? this.districtSubdivisionOfResidence.getObject() : null;
     }
 
-    public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
-	this.districtSubdivisionOfResidence = districtSubdivisionOfResidence;
+    public void setDistrictSubdivisionOfResidence(DistrictSubdivision districtSubdivision) {
+	this.districtSubdivisionOfResidence = (districtSubdivision != null) ? new DomainReference<DistrictSubdivision>(
+		districtSubdivision) : null;
     }
 
     public String getParishOfResidence() {
@@ -162,20 +176,22 @@ public class ResidenceInformationForm extends Form {
 	this.dislocatedFromPermanentResidence = dislocatedFromPermanentResidence;
     }
 
-    public String getSchoolTimeDistrictOfResidence() {
-	return schoolTimeDistrictOfResidence;
+    public District getSchoolTimeDistrictOfResidence() {
+	return (this.schoolTimeDistrictOfResidence != null) ? this.schoolTimeDistrictOfResidence.getObject() : null;
     }
 
-    public void setSchoolTimeDistrictOfResidence(String schoolTimeDistrictOfResidence) {
-	this.schoolTimeDistrictOfResidence = schoolTimeDistrictOfResidence;
+    public void setSchoolTimeDistrictOfResidence(District district) {
+	this.schoolTimeDistrictOfResidence = (district != null) ? new DomainReference<District>(district) : null;
     }
 
-    public String getSchoolTimeDistrictSubdivisionOfResidence() {
-	return schoolTimeDistrictSubdivisionOfResidence;
+    public DistrictSubdivision getSchoolTimeDistrictSubdivisionOfResidence() {
+	return (this.schoolTimeDistrictSubdivisionOfResidence != null) ? this.schoolTimeDistrictSubdivisionOfResidence
+		.getObject() : null;
     }
 
-    public void setSchoolTimeDistrictSubdivisionOfResidence(String schoolTimeDistrictSubdivisionOfResidence) {
-	this.schoolTimeDistrictSubdivisionOfResidence = schoolTimeDistrictSubdivisionOfResidence;
+    public void setSchoolTimeDistrictSubdivisionOfResidence(DistrictSubdivision districtSubdivision) {
+	this.schoolTimeDistrictSubdivisionOfResidence = (districtSubdivision != null) ? new DomainReference<DistrictSubdivision>(
+		districtSubdivision) : null;
     }
 
     public String getSchoolTimeAddress() {
@@ -250,14 +266,14 @@ public class ResidenceInformationForm extends Form {
     }
 
     private boolean isResidenceInformationFilled() {
-	return !(StringUtils.isEmpty(this.districtOfResidence) || StringUtils.isEmpty(this.districtSubdivisionOfResidence)
+	return !(getDistrictOfResidence() == null || getDistrictSubdivisionOfResidence() == null
 		|| StringUtils.isEmpty(this.parishOfResidence) || StringUtils.isEmpty(this.address)
 		|| StringUtils.isEmpty(this.areaCode) || StringUtils.isEmpty(this.areaOfAreaCode) || StringUtils
 		.isEmpty(this.area));
     }
 
     private void checkAddressInformationForDislocatedStudents(final List<LabelFormatter> result) {
-	if (this.dislocatedFromPermanentResidence && !isSchoolTimeAddressFilled()) {
+	if (this.dislocatedFromPermanentResidence && !isSchoolTimeRequiredInformationAddressFilled()) {
 	    result.add(new LabelFormatter().appendLabel(
 		    "error.candidacy.workflow.ResidenceInformationForm.address.information.is.required.for.dislocated.students",
 		    "application"));
@@ -265,12 +281,13 @@ public class ResidenceInformationForm extends Form {
 	}
     }
 
-    private boolean isSchoolTimeAddressFilled() {
-	return !(StringUtils.isEmpty(this.schoolTimeDistrictOfResidence)
-		|| StringUtils.isEmpty(this.schoolTimeDistrictSubdivisionOfResidence)
-		|| StringUtils.isEmpty(this.schoolTimeAddress) || StringUtils.isEmpty(this.schoolTimeAreaCode)
-		|| StringUtils.isEmpty(this.schoolTimeAreaOfAreaCode) || StringUtils.isEmpty(this.schoolTimeParishOfResidence) || StringUtils
-		.isEmpty(this.schoolTimeArea));
+    private boolean isSchoolTimeRequiredInformationAddressFilled() {
+	return !(getSchoolTimeDistrictOfResidence() == null || getSchoolTimeDistrictSubdivisionOfResidence() == null);
+	// || StringUtils.isEmpty(this.schoolTimeAddress) ||
+	// StringUtils.isEmpty(this.schoolTimeAreaCode)
+	// || StringUtils.isEmpty(this.schoolTimeAreaOfAreaCode) ||
+	// StringUtils.isEmpty(this.schoolTimeParishOfResidence) || StringUtils
+	// .isEmpty(this.schoolTimeArea));
     }
 
     @Override

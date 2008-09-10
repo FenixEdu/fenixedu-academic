@@ -31,6 +31,7 @@ public class ContactsForm extends Form {
 	final boolean availableEmail = person.isDefaultEmailVisible();
 	final boolean availableWebSite = person.isDefaultWebAddressVisible();
 	final boolean availablePhoto = person.getAvailablePhoto() == null ? false : person.getAvailablePhoto();
+
 	return new ContactsForm(person.getEmail(), person.getWebAddress(), availableEmail, availableWebSite, availablePhoto,
 		person.getMobile(), person.getPhone());
     }

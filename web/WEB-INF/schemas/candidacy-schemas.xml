@@ -538,15 +538,14 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
     </slot>
-    <slot name="parishOfBirth"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-    	<property name="size" value="50"/>
-		<property name="maxLength" value="100"/>
+    <slot name="districtOfBirth" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistrictsProviderAsString" />
+    	<property name="destination" value="districtSelectionPostback" /> 
     </slot>
-    <slot name="districtSubdivisionOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-    	<property name="size" value="50"/>
-		<property name="maxLength" value="100"/>
+    <slot name="districtSubdivisionOfBirth" layout="menu-select">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DistrictSubdivisionForFiliationFormProvider" /> 
     </slot>
-    <slot name="districtOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="parishOfBirth">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
@@ -606,15 +605,18 @@
     </slot>
     <slot name="areaOfAreaCode" />
     <slot name="area"/>
+    <slot name="districtOfResidence" layout="menu-select-postback" >
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistrictsProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="destination" value="districtSelectionPostback" />
+		<property name="sortBy" value="name=asc" />
+    </slot>
+    <slot name="districtSubdivisionOfResidence" layout="menu-select">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DistrictSubdivisionForResidenceInformationFormProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+    </slot>
     <slot name="parishOfResidence">
-    	<property name="size" value="50"/>
-		<property name="maxLength" value="100"/>
-    </slot>
-    <slot name="districtOfResidence" >
-    	<property name="size" value="50"/>
-		<property name="maxLength" value="100"/>
-    </slot>
-    <slot name="districtSubdivisionOfResidence">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
@@ -632,15 +634,18 @@
     </slot>
     <slot name="schoolTimeAreaOfAreaCode" />
     <slot name="schoolTimeArea"/>
+    <slot name="schoolTimeDistrictOfResidence" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistrictsProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="destination" value="districtSelectionPostback" />
+		<property name="sortBy" value="name=asc" />
+    </slot>
+    <slot name="schoolTimeDistrictSubdivisionOfResidence" layout="menu-select">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolTimeDistrictSubdivisionForResidenceInformationFormProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+    </slot>
     <slot name="schoolTimeParishOfResidence">
-    	<property name="size" value="50"/>
-		<property name="maxLength" value="100"/>
-    </slot>
-    <slot name="schoolTimeDistrictOfResidence">
-    	<property name="size" value="50"/>
-		<property name="maxLength" value="100"/>
-    </slot>
-    <slot name="schoolTimeDistrictSubdivisionOfResidence">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
@@ -652,7 +657,7 @@
     	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{15})?"/>
+            <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
@@ -661,7 +666,7 @@
     	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{15})?"/>
+            <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
@@ -694,10 +699,10 @@
 	</slot>
 	<slot name="otherSchoolLevel" />
 	<slot name="conclusionGrade">
-    	<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
+    	<property name="size" value="5"/>
+		<property name="maxLength" value="5"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{2}"/>
+            <property name="regexp" value="\d{2}(.\d{1,2})?"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
@@ -792,16 +797,7 @@
 </schema>
 
 <schema name="FiliationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.FiliationForm" bundle="CANDIDATE_RESOURCES" extends="FiliationForm">
-   	<slot name="countryOfBirth" layout="format" read-only="true">
-   		<property name="format" value="${name}" />
-   	</slot>
-   	<slot name="nationality" layout="format" read-only="true">
-   		<property name="format" value="${name}" />
-   	</slot>
    	<slot name="dateOfBirth" read-only="true"/>	
-    <slot name="parishOfBirth"  read-only="true" />
-    <slot name="districtSubdivisionOfBirth" read-only="true" />
-    <slot name="districtOfBirth" read-only="true" />
     <slot name="fatherName" read-only="true" />
     <slot name="motherName" read-only="true" />
 </schema>
@@ -811,17 +807,8 @@
 
 </schema>
 
-<schema name="ResidenceInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm" bundle="CANDIDATE_RESOURCES">
-    <slot name="countryOfResidence" layout="format" read-only="true">
-    	<property name="format" value="${name}" />
-    </slot>
-    <slot name="address" read-only="true" />
-    <slot name="areaCode" read-only="true" />
-    <slot name="areaOfAreaCode" read-only="true" />
-    <slot name="area" read-only="true"/>
-    <slot name="parishOfResidence" read-only="true" />
-    <slot name="districtSubdivisionOfResidence" read-only="true" />
-    <slot name="districtOfResidence" read-only="true" />
+<schema name="ResidenceInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm" bundle="CANDIDATE_RESOURCES" extends="ResidenceInformationForm">
+
 </schema>
 
 

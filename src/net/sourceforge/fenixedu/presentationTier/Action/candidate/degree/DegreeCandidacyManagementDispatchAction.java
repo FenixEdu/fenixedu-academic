@@ -23,13 +23,13 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
 
@@ -162,7 +162,15 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		.getMetaObject().getObject());
 	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
+	if (isPostback(request)) {
+	    RenderUtils.invalidateViewState();
+	}
+
 	return mapping.findForward("fillData");
+    }
+
+    private boolean isPostback(HttpServletRequest request) {
+	return request.getParameter("postback") != null && Boolean.valueOf(request.getParameter("postback")).equals(Boolean.TRUE);
     }
 
     private StudentCandidacy getCandidacy(HttpServletRequest request) {

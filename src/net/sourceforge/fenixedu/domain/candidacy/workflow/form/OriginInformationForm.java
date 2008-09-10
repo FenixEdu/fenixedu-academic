@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -44,7 +45,7 @@ public class OriginInformationForm extends Form {
 
     private AcademicalInstitutionType highSchoolType;
 
-    public OriginInformationForm() {
+    private OriginInformationForm() {
 	super();
 	setCountryWhereFinishedPrecedentDegree(Country.readDefault());
     }
@@ -160,5 +161,19 @@ public class OriginInformationForm extends Form {
     @Override
     public String getFormName() {
 	return "label.candidacy.workflow.originInformationForm";
+    }
+
+    public static OriginInformationForm createFrom(final StudentCandidacy studentCandidacy) {
+
+	final OriginInformationForm result = new OriginInformationForm();
+	result.setHighSchoolType(studentCandidacy.getHighSchoolType());
+	if (studentCandidacy.hasPrecedentDegreeInformation()) {
+	    result.setConclusionGrade(studentCandidacy.getPrecedentDegreeInformation().getConclusionGrade());
+	    result.setDegreeDesignation(studentCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
+	    result.setInstitution(studentCandidacy.getPrecedentDegreeInformation().getInstitution());
+	}
+
+	return result;
+
     }
 }

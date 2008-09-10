@@ -1,8 +1,19 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+//TODO: Refactor remaining object to use district subdivision instead of strings
 public class DistrictSubdivision extends DistrictSubdivision_Base {
+
+    public static Comparator<DistrictSubdivision> COMPARATOR_BY_NAME = new Comparator<DistrictSubdivision>() {
+	public int compare(DistrictSubdivision leftDistrictSubdivision, DistrictSubdivision rightDistrictSubdivision) {
+	    int comparationResult = leftDistrictSubdivision.getName().compareTo(rightDistrictSubdivision.getName());
+	    return (comparationResult == 0) ? leftDistrictSubdivision.getIdInternal().compareTo(
+		    rightDistrictSubdivision.getIdInternal()) : comparationResult;
+	}
+    };
 
     protected DistrictSubdivision() {
 	super();
