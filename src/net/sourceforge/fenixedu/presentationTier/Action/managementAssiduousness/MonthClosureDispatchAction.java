@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -111,7 +112,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessLeaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateTimeAtStartOfDay()));
-	List<AssiduousnessRecord> assiduousnessRecordList = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
+	Set<AssiduousnessRecord> assiduousnessRecordList = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
 		interval.getStart(), interval.getEnd());
 	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordList) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {

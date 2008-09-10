@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -23,8 +25,8 @@ public class AssiduousnessRecordMonthIndex extends AssiduousnessRecordMonthIndex
 	final Partial partial = getPartialYearMonth();
 	final int year = partial.get(DateTimeFieldType.year());
 	final int month = partial.get(DateTimeFieldType.monthOfYear());
-	return beginDate.getYear() <= year && beginDate.getMonthOfYear() <= month && endDate.getYear() >= year
-		&& endDate.getMonthOfYear() >= month;
+	return (beginDate.getYear() < year || (beginDate.getYear() == year && beginDate.getMonthOfYear() <= month))
+		&& (endDate.getYear() > year || (endDate.getYear() == year && endDate.getMonthOfYear() >= month));
     }
 
     public boolean contains(LocalDate localDate) {
@@ -42,12 +44,14 @@ public class AssiduousnessRecordMonthIndex extends AssiduousnessRecordMonthIndex
 		&& partialToMatch.get(DateTimeFieldType.monthOfYear()) == month;
     }
 
-    public static List<AssiduousnessRecord> getAssiduousnessRecordBetweenDates(DateTime beginDate, DateTime endDate) {
-	final List<AssiduousnessRecord> assiduousnessRecords = new ArrayList<AssiduousnessRecord>();
-	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet(beginDate
-		.toLocalDate())) {
-	    if (assiduousnessRecordMonthIndex.intersects(beginDate, endDate)) {
-		assiduousnessRecords.addAll(assiduousnessRecordMonthIndex.getAssiduousnessRecordsSet());
+    public static Set<AssiduousnessRecord> getAssiduousnessRecordBetweenDates(DateTime beginDate, DateTime endDate) {
+	final Set<AssiduousnessRecord> assiduousnessRecords = new HashSet<AssiduousnessRecord>();
+	for (LocalDate dateTime = beginDate.toLocalDate(); !(dateTime.getYear() == endDate.getYear() && dateTime.getMonthOfYear() == endDate
+		.getMonthOfYear() + 1); dateTime = dateTime.plusMonths(1)) {
+	    for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet(dateTime)) {
+		if (assiduousnessRecordMonthIndex.intersects(beginDate, endDate)) {
+		    assiduousnessRecords.addAll(assiduousnessRecordMonthIndex.getAssiduousnessRecordsSet());
+		}
 	    }
 	}
 	return assiduousnessRecords;

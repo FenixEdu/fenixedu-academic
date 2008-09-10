@@ -372,8 +372,10 @@ public class Assiduousness extends Assiduousness_Base {
 
     public List<Clocking> getClockings(LocalDate beginDate, LocalDate endDate) {
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
+	final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecordBetweenDates(interval.getStart(), interval
+		.getEnd());
 	List<Clocking> clockingsList = new ArrayList<Clocking>();
-	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
 	    if (assiduousnessRecord.isClocking() && !assiduousnessRecord.isAnulated()
 		    && interval.contains(assiduousnessRecord.getDate())) {
 		clockingsList.add((Clocking) assiduousnessRecord);
@@ -384,8 +386,10 @@ public class Assiduousness extends Assiduousness_Base {
 
     public List<Clocking> getClockingsAndAnulatedClockings(LocalDate beginDate, LocalDate endDate) {
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
+	final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecordBetweenDates(interval.getStart(), interval
+		.getEnd());
 	List<Clocking> clockingsList = new ArrayList<Clocking>();
-	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
 	    if (assiduousnessRecord.isClocking() && interval.contains(assiduousnessRecord.getDate())) {
 		if (!assiduousnessRecord.isAnulated()) {
 		    clockingsList.add((Clocking) assiduousnessRecord);
@@ -432,8 +436,10 @@ public class Assiduousness extends Assiduousness_Base {
     public List<MissingClocking> getMissingClockings(LocalDate beginDate, LocalDate endDate) {
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), defaultEndWorkDay.toDateTime(endDate
 		.toDateTimeAtStartOfDay().plusDays(1)));
+	final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecordBetweenDates(interval.getStart(), interval
+		.getEnd());
 	List<MissingClocking> missingClockingsList = new ArrayList<MissingClocking>();
-	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
 	    if (assiduousnessRecord.isMissingClocking() && interval.contains(assiduousnessRecord.getDate())
 		    && (!assiduousnessRecord.isAnulated())) {
 		missingClockingsList.add((MissingClocking) assiduousnessRecord);
@@ -657,7 +663,9 @@ public class Assiduousness extends Assiduousness_Base {
 
     public boolean hasAnyRecordsBetweenDates(LocalDate begin, LocalDate end) {
 	Interval dateInterval = new Interval(begin.toDateTimeAtStartOfDay(), end.toDateTimeAtStartOfDay().plusDays(1));
-	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+	final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecordBetweenDates(dateInterval.getStart(),
+		dateInterval.getEnd());
+	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
 	    if (dateInterval.contains(assiduousnessRecord.getDate()) && (!assiduousnessRecord.isAnulated())) {
 		return true;
 	    }

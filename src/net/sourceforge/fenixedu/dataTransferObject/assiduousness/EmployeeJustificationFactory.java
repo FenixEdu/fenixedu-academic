@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Anulation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecordMonthIndex;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
@@ -653,11 +655,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
 	private String createJustification(DateTime dateTime, Duration duration, ResourceBundle bundle) {
 	    List<Assiduousness> assisuousnesssList = new ArrayList<Assiduousness>();
+	    DateTime end = dateTime.plus(duration);
 	    if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
 		    || getJustificationMotive().getJustificationType().equals(JustificationType.HALF_MULTIPLE_MONTH_BALANCE)
 		    || getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE)) {
 
-		for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance().getAssiduousnessRecords()) {
+		Set<AssiduousnessRecord> assiduousnessRecordList = AssiduousnessRecordMonthIndex
+			.getAssiduousnessRecordBetweenDates(dateTime, end);
+		for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordList) {
 		    if (assiduousnessRecord.isLeave()
 			    && !assiduousnessRecord.isAnulated()
 			    && ((Leave) assiduousnessRecord).getJustificationMotive().getJustificationType().equals(
@@ -668,12 +673,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		}
 	    }
 	    StringBuilder result = new StringBuilder();
-	    LocalDate end = dateTime.plus(duration).toLocalDate();
 	    List<Assiduousness> assiduousnessOrderedList = new ArrayList<Assiduousness>(RootDomainObject.getInstance()
 		    .getAssiduousnesss());
 	    Collections.sort(assiduousnessOrderedList, new BeanComparator("employee.employeeNumber"));
 	    for (Assiduousness assiduousness : assiduousnessOrderedList) {
-		if (satisfiedStatus(assiduousness, dateTime.toLocalDate(), end)) {
+		if (satisfiedStatus(assiduousness, dateTime.toLocalDate(), end.toLocalDate())) {
 		    if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (!isActive(assiduousness, getBeginDate(), duration)) {

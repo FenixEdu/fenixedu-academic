@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
@@ -13,6 +14,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecordMonthIndex;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
@@ -336,9 +338,11 @@ public class ExportClosedMonth extends Service {
 
     public HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(LocalDate beginDate, LocalDate endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessLeaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
-	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));
-	for (AssiduousnessRecord assiduousnessRecord : rootDomainObject.getAssiduousnessRecords()) {
+	Set<AssiduousnessRecord> assiduousnessRecordList = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
+		interval.getStart(), interval.getEnd());
+	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordList) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
 		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord).getEndDate()
 			.plusSeconds(1));

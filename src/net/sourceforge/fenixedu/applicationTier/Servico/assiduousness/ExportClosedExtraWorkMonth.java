@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.LeaveBean;
@@ -98,7 +99,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
 		DateTimeFieldType.dayOfMonth(), beginUnpaidLicenseDate.dayOfMonth().getMaximumValue());
 
-	List<AssiduousnessRecord> allAssiduousnessRecord = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
+	Set<AssiduousnessRecord> allAssiduousnessRecord = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
 		beginDate.toDateTimeAtStartOfDay(), endUnpaidLicenseDate.plusDays(1).toDateTimeAtStartOfDay());
 
 	StringBuilder result = new StringBuilder();
@@ -475,8 +476,8 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return line;
     }
 
-    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(List<AssiduousnessRecord> assiduousnessRecords,
-	    LocalDate beginDate, LocalDate endDate, Boolean unpaidLicenceLeaves) {
+    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(Set<AssiduousnessRecord> assiduousnessRecords, LocalDate beginDate,
+	    LocalDate endDate, Boolean unpaidLicenceLeaves) {
 	HashMap<Assiduousness, List<Leave>> assiduousnessLeaves = new HashMap<Assiduousness, List<Leave>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));

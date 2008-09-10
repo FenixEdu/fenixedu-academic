@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecordMonthIndex;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
@@ -145,7 +147,9 @@ public class AssiduousnessExportChoices implements Serializable {
 	if (!StringUtils.isEmpty(getJustificationMotiveAcronym())) {
 	    Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay
 		    .toDateTime(endDate.toDateTimeAtStartOfDay()));
-	    for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance().getAssiduousnessRecords()) {
+	    Set<AssiduousnessRecord> assiduousnessRecordList = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
+		    interval.getStart(), interval.getEnd());
+	    for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordList) {
 		if (assiduousnessRecord.isLeave()
 			&& !assiduousnessRecord.isAnulated()
 			&& ((Leave) assiduousnessRecord).getJustificationMotive().getAcronym().equals(
@@ -180,7 +184,9 @@ public class AssiduousnessExportChoices implements Serializable {
 	HashMap<Assiduousness, List<Justification>> justificationsMap = new HashMap<Assiduousness, List<Justification>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateTimeAtStartOfDay()));
-	for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance().getAssiduousnessRecords()) {
+	Set<AssiduousnessRecord> assiduousnessRecordList = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
+		interval.getStart(), interval.getEnd());
+	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordList) {
 	    if (assiduousnessRecord.isLeave()
 		    && !assiduousnessRecord.isAnulated()
 		    && (StringUtils.isEmpty(getJustificationMotiveAcronym()) || ((Leave) assiduousnessRecord)
