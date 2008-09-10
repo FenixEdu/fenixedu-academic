@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.util.EnrolmentAction;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
@@ -25,6 +26,7 @@ public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
 	checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester);
 	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
 		createdBy);
+	createEnrolmentLog(EnrolmentAction.ENROL);
     }
 
     private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final CurriculumGroup curriculumGroup,

@@ -34,6 +34,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
 		createdBy);
 	setOptionalCurricularCourse(optionalCurricularCourse);
+	createEnrolmentLog(EnrolmentAction.ENROL);
     }
 
     protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
