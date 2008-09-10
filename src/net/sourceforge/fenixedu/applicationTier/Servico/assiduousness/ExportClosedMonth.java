@@ -43,8 +43,6 @@ public class ExportClosedMonth extends Service {
     public String run(ClosedMonth closedMonth, LocalDate beginDate, LocalDate endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(beginDate, endDate);
 	StringBuilder result = new StringBuilder();
-	// for (Assiduousness assiduousness :
-	// rootDomainObject.getAssiduousnesss()) {
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
 		result.append(getMonthAssiduousnessBalance(assiduousnessClosedMonth, assiduousnessRecords
