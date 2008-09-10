@@ -63,7 +63,7 @@ public class EnrolInAffinityCycle extends Service {
 	    } else {
 
 		final Student student = studentCurricularPlan.getRegistration().getStudent();
-		if (student.hasRegistrationFor(cycleCourseGroupToEnrol.getParentDegreeCurricularPlan())) {
+		if (student.hasActiveRegistrationFor(cycleCourseGroupToEnrol.getParentDegreeCurricularPlan())) {
 		    throw new FenixServiceException("error");
 		}
 
