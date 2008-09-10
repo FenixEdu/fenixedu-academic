@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateMidnight;
-import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
 import org.joda.time.Duration;
@@ -90,8 +89,8 @@ public class ExportClosedExtraWorkMonth extends Service {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
 		beginDate.dayOfMonth().getMaximumValue());
-	List<AssiduousnessRecord> allAssiduousnessRecord = getAssiduousnessRecordBetweenDates(beginDate.toDateTimeAtStartOfDay(),
-		endDate.plusDays(1).toDateTimeAtStartOfDay());
+	List<AssiduousnessRecord> allAssiduousnessRecord = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
+		beginDate.toDateTimeAtStartOfDay(), endDate.plusDays(1).toDateTimeAtStartOfDay());
 
 	StringBuilder result = new StringBuilder();
 	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(allAssiduousnessRecord, beginDate, endDate, false);
@@ -472,26 +471,6 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    line.append("050").append(fieldSeparator).append("050\r\n");
 	}
 	return line;
-    }
-
-    public List<AssiduousnessRecord> getAssiduousnessRecordBetweenDates(DateTime beginDate, DateTime endDate) {
-	final List<AssiduousnessRecord> assiduousnessRecords = new ArrayList<AssiduousnessRecord>();
-	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet(beginDate)) {
-	    if (assiduousnessRecordMonthIndex.intersects(beginDate, endDate)) {
-		assiduousnessRecords.addAll(assiduousnessRecordMonthIndex.getAssiduousnessRecordsSet());
-	    }
-	}
-	return assiduousnessRecords;
-    }
-
-    private List<AssiduousnessRecordMonthIndex> getAssiduousnessRecordMonthIndexsSet(DateTime beginDate) {
-	List<AssiduousnessRecordMonthIndex> result = new ArrayList<AssiduousnessRecordMonthIndex>();
-	for (AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : rootDomainObject.getAssiduousnessRecordMonthIndexs()) {
-	    if (assiduousnessRecordMonthIndex.contains(beginDate.toLocalDate())) {
-		result.add(assiduousnessRecordMonthIndex);
-	    }
-	}
-	return result;
     }
 
     private HashMap<Assiduousness, List<LeaveBean>> getLeaves(List<AssiduousnessRecord> assiduousnessRecords,
