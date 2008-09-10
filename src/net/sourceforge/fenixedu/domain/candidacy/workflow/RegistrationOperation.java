@@ -55,17 +55,15 @@ public class RegistrationOperation extends CandidacyOperation {
     private void correctExecutionCourseIfNecessary(Registration registration, Shift shift) {
 
 	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-	final ExecutionCourse finalExecutionCourse = shift.getExecutionCourse();
+	final ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+	final ExecutionCourse executionCourse = shift.getExecutionCourse();
 
-	for (final CurricularCourse curricularCourse : finalExecutionCourse.getAssociatedCurricularCoursesSet()) {
-
-	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
-		    ExecutionSemester.readActualExecutionSemester());
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+	    final Enrolment enrolment = studentCurricularPlan.findEnrolmentFor(curricularCourse, semester);
 	    if (enrolment != null) {
-
-		final Attends attends = enrolment.getAttendsFor(ExecutionSemester.readActualExecutionSemester());
-		if (attends != null && !attends.isFor(finalExecutionCourse)) {
-		    attends.setDisciplinaExecucao(finalExecutionCourse);
+		final Attends attends = enrolment.getAttendsFor(semester);
+		if (attends != null && !attends.isFor(executionCourse)) {
+		    attends.setDisciplinaExecucao(executionCourse);
 		}
 		break;
 	    }
