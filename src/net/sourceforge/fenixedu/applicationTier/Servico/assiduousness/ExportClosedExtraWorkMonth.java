@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecordMonthIndex;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
 import org.joda.time.Duration;
@@ -88,8 +90,11 @@ public class ExportClosedExtraWorkMonth extends Service {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
 		beginDate.dayOfMonth().getMaximumValue());
+	List<AssiduousnessRecord> allAssiduousnessRecord = getAssiduousnessRecordBetweenDates(beginDate.toDateTimeAtStartOfDay(),
+		endDate.plusDays(1).toDateTimeAtStartOfDay());
+
 	StringBuilder result = new StringBuilder();
-	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(beginDate, endDate, false);
+	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(allAssiduousnessRecord, beginDate, endDate, false);
 	LocalDate beginUnpaidLicenseDate = new LocalDate().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
@@ -98,8 +103,8 @@ public class ExportClosedExtraWorkMonth extends Service {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
 		DateTimeFieldType.dayOfMonth(), beginUnpaidLicenseDate.dayOfMonth().getMaximumValue());
-	HashMap<Assiduousness, List<LeaveBean>> allUnpaidLicenseLeaves = getLeaves(beginUnpaidLicenseDate, endUnpaidLicenseDate,
-		true);
+	HashMap<Assiduousness, List<LeaveBean>> allUnpaidLicenseLeaves = getLeaves(allAssiduousnessRecord,
+		beginUnpaidLicenseDate, endUnpaidLicenseDate, true);
 	a66JustificationMotive = getA66JustificationMotive();
 	unjustifiedJustificationMotive = getUnjustifiedJustificationMotive();
 	maternityJustificationMotive = getMaternityJustificationMotive();
@@ -469,11 +474,32 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return line;
     }
 
-    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(LocalDate beginDate, LocalDate endDate, Boolean unpaidLicenceLeaves) {
+    public List<AssiduousnessRecord> getAssiduousnessRecordBetweenDates(DateTime beginDate, DateTime endDate) {
+	final List<AssiduousnessRecord> assiduousnessRecords = new ArrayList<AssiduousnessRecord>();
+	for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet(beginDate)) {
+	    if (assiduousnessRecordMonthIndex.intersects(beginDate, endDate)) {
+		assiduousnessRecords.addAll(assiduousnessRecordMonthIndex.getAssiduousnessRecordsSet());
+	    }
+	}
+	return assiduousnessRecords;
+    }
+
+    private List<AssiduousnessRecordMonthIndex> getAssiduousnessRecordMonthIndexsSet(DateTime beginDate) {
+	List<AssiduousnessRecordMonthIndex> result = new ArrayList<AssiduousnessRecordMonthIndex>();
+	for (AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : rootDomainObject.getAssiduousnessRecordMonthIndexs()) {
+	    if (assiduousnessRecordMonthIndex.contains(beginDate.toLocalDate())) {
+		result.add(assiduousnessRecordMonthIndex);
+	    }
+	}
+	return result;
+    }
+
+    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(List<AssiduousnessRecord> assiduousnessRecords,
+	    LocalDate beginDate, LocalDate endDate, Boolean unpaidLicenceLeaves) {
 	HashMap<Assiduousness, List<Leave>> assiduousnessLeaves = new HashMap<Assiduousness, List<Leave>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));
-	for (AssiduousnessRecord assiduousnessRecord : rootDomainObject.getAssiduousnessRecords()) {
+	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
 		Leave leave = ((Leave) assiduousnessRecord);
 		if ((!unpaidLicenceLeaves && (leave.getJustificationMotive().getJustificationGroup() == null || leave
@@ -548,7 +574,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 				leaveBeanList.add(new LeaveBean(leave));
 			    } else {
 				leaveBeanList.add(leaveBean);
-				leaveBean=null;
+				leaveBean = null;
 			    }
 			}
 		    } else {
@@ -556,7 +582,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 			    leaveBeanList.add(new LeaveBean(leave));
 			} else {
 			    leaveBeanList.add(leaveBean);
-			    leaveBean=null;
+			    leaveBean = null;
 			}
 		    }
 		    leaves.remove(leave);
