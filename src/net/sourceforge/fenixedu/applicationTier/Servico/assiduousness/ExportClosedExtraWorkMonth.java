@@ -89,11 +89,6 @@ public class ExportClosedExtraWorkMonth extends Service {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
 		beginDate.dayOfMonth().getMaximumValue());
-	List<AssiduousnessRecord> allAssiduousnessRecord = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
-		beginDate.toDateTimeAtStartOfDay(), endDate.plusDays(1).toDateTimeAtStartOfDay());
-
-	StringBuilder result = new StringBuilder();
-	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(allAssiduousnessRecord, beginDate, endDate, false);
 	LocalDate beginUnpaidLicenseDate = new LocalDate().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
@@ -102,6 +97,13 @@ public class ExportClosedExtraWorkMonth extends Service {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
 		DateTimeFieldType.dayOfMonth(), beginUnpaidLicenseDate.dayOfMonth().getMaximumValue());
+
+	List<AssiduousnessRecord> allAssiduousnessRecord = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
+		beginDate.toDateTimeAtStartOfDay(), endUnpaidLicenseDate.plusDays(1).toDateTimeAtStartOfDay());
+
+	StringBuilder result = new StringBuilder();
+	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(allAssiduousnessRecord, beginDate, endDate, false);
+
 	HashMap<Assiduousness, List<LeaveBean>> allUnpaidLicenseLeaves = getLeaves(allAssiduousnessRecord,
 		beginUnpaidLicenseDate, endUnpaidLicenseDate, true);
 	a66JustificationMotive = getA66JustificationMotive();
