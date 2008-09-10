@@ -784,10 +784,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void updateDefaultWebAddress(final String url) {
-	if (hasDefaultWebAddress())
+	if (hasDefaultWebAddress()) {
 	    getDefaultWebAddress().edit(url);
-	else
+	} else {
 	    createDefaultWebAddress(url);
+	}
     }
 
     @Deprecated
@@ -827,10 +828,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     protected void updateDefaultPhone(final String number) {
-	if (hasDefaultPhone())
+	if (hasDefaultPhone()) {
 	    getDefaultPhone().edit(number);
-	else
+	} else {
 	    createDefaultPhone(number);
+	}
     }
 
     @Deprecated
@@ -870,10 +872,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void updateDefaultMobilePhone(final String number) {
-	if (hasDefaultMobilePhone())
+	if (hasDefaultMobilePhone()) {
 	    getDefaultMobilePhone().edit(number);
-	else
+	} else {
 	    createDefaultMobilePhone(number);
+	}
     }
 
     @Deprecated
@@ -906,10 +909,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void updateDefaultEmailAddress(final String email) {
-	if (hasDefaultEmailAddress())
+	if (hasDefaultEmailAddress()) {
 	    getDefaultEmailAddress().edit(email);
-	else
+	} else {
 	    createDefaultEmailAddress(email);
+	}
     }
 
     public EmailAddress getDefaultEmailAddress() {
