@@ -5,12 +5,16 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Country extends Country_Base {
 
     static final public String PORTUGAL = "PORTUGAL";
+
     static final public String NATIONALITY_PORTUGUESE = "PORTUGUESA";
+
     static final public String DEFAULT_COUNTRY_NATIONALITY = NATIONALITY_PORTUGUESE;
 
     public static Comparator<Country> COMPARATOR_BY_NAME = new Comparator<Country>() {
@@ -91,6 +95,48 @@ public class Country extends Country_Base {
 
     public boolean isDefaultCountry() {
 	return getDefaultCountry();
+    }
+
+    static public Country readByTwoLetterCode(String code) {
+
+	if (StringUtils.isEmpty(code)) {
+	    return null;
+	}
+
+	// TODO: Hack to remove, when we no longer have 4(!!) Portugal countries
+	// with same code (pt)
+	Country defaultCountry = readDefault();
+	if (defaultCountry.getCode().equalsIgnoreCase(code)) {
+	    return defaultCountry;
+	}
+
+	for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+	    if (country.getCode().equalsIgnoreCase(code)) {
+		return country;
+	    }
+	}
+	return null;
+    }
+
+    static public Country readByThreeLetterCode(String code) {
+
+	if (StringUtils.isEmpty(code)) {
+	    return null;
+	}
+
+	// TODO: Hack to remove, when we no longer have 4(!!) Portugal countries
+	// with same code (pt)
+	Country defaultCountry = readDefault();
+	if (defaultCountry.getThreeLetterCode().equalsIgnoreCase(code)) {
+	    return defaultCountry;
+	}
+
+	for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+	    if (country.getThreeLetterCode() != null && country.getThreeLetterCode().equalsIgnoreCase(code)) {
+		return country;
+	    }
+	}
+	return null;
     }
 
 }
