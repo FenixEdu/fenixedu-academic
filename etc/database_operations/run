@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Alter Table Country" alterTableCountry.sql
