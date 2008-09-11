@@ -2895,6 +2895,9 @@ class DomainObject {
 		DateTime dateDateTime;
 		String who;
 	}
+	
+		class log.OptionalEnrolmentLog extends log.EnrolmentLog {
+		}
 
 	class material.PersonExtension extends DomainObject {
 		YearMonthDay begin;
@@ -5985,6 +5988,13 @@ relation CurricularCourseEnrolmentLog {
 		multiplicity *;
 	}
 	CurricularCourse playsRole curricularCourse;
+}
+
+relation OptionalCurricularCourseOptionalEnrolmentLog {
+	log.OptionalEnrolmentLog playsRole optionalEnrolmentLogs {
+		multiplicity *;
+	}
+	degreeStructure.OptionalCurricularCourse playsRole optionalCurricularCourse;
 }
 
 relation CurricularCourseExecutionCourse {

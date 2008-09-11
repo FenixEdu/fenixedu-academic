@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledOptionalEnrolment;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.log.OptionalEnrolmentLog;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
@@ -47,6 +48,12 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	    throw new DomainException("error.OptionalEnrolment.duplicate.enrolment", optionalCurricularCourse.getName());
 
 	}
+    }
+
+    @Override
+    protected void createEnrolmentLog(final EnrolmentAction action) {
+	new OptionalEnrolmentLog(action, getRegistration(), getCurricularCourse(), getOptionalCurricularCourse(),
+		getExecutionPeriod(), getCurrentUser());
     }
 
     @Override
@@ -93,9 +100,9 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    final public void delete() {
+    protected void deleteInformation() {
+	super.deleteInformation();
 	removeOptionalCurricularCourse();
-	super.delete();
     }
 
     @Override

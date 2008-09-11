@@ -686,7 +686,7 @@
 	<slot name="dateDateTime" key="label.date" >
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}:${secondOfMinute,02d}"/>
 	</slot>
-	<slot name="curricularCourse.name" key="label.course.name" />
+	<slot name="curricularCourseName" key="label.course.name" />
 	<slot name="action.name" key="label.action" layout="slot-as-label">
 		<property name="bundle" value="MANAGER_RESOURCES"/>
 	</slot>	

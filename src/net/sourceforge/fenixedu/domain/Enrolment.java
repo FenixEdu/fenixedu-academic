@@ -259,10 +259,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public void delete() {
-
 	checkRulesToDelete();
-
 	createEnrolmentLog(EnrolmentAction.UNENROL);
+	deleteInformation();
+	super.delete();
+    }
+
+    protected void deleteInformation() {
 	// TODO: falta ver se é dos antigos enrolments ou dos novos
 	final Registration registration = getRegistration();
 
@@ -321,12 +324,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	while (theses.hasNext()) {
 	    theses.next().delete();
 	}
-
-	super.delete();
-
     }
 
-    private void checkRulesToDelete() {
+    protected void checkRulesToDelete() {
 	if (hasAnyExtraExamRequests()) {
 	    throw new DomainException("error.Enrolment.has.ExtraExamRequests");
 	}
