@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
-import org.apache.commons.lang.StringUtils;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.joda.time.YearMonthDay;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -22,9 +22,9 @@ public class DegreeInfo extends DegreeInfo_Base {
 		    "error.net.sourceforge.fenixdu.domain.cannot.create.degreeInfo.already.exists.one.for.that.degree.and.executionYear");
 	}
 
-	setExecutionYear(executionYear);
-	setName(degree.getNameFor(executionYear));
-	setDegree(degree);
+	super.setExecutionYear(executionYear);
+	super.setName(degree.getNameFor(executionYear));
+	super.setDegree(degree);
 
 	new DegreeInfoCandidacy(this);
 	new DegreeInfoFuture(this);
@@ -59,7 +59,6 @@ public class DegreeInfo extends DegreeInfo_Base {
 	} else {
 	    return false;
 	}
-
     }
 
     protected DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
