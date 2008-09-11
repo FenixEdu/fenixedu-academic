@@ -34,6 +34,10 @@ public class RemoverTurno extends Service {
 	    return Boolean.FALSE;
 	}
 
+	// TODO: temporary ------------------------------------
+	shift.checkXpto();
+	// TODO: temporary ------------------------------------
+
 	shift.getAssociatedClasses().remove(schoolClass);
 
 	return Boolean.TRUE;

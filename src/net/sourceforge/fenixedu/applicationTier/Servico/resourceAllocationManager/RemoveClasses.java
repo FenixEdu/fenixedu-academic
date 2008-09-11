@@ -29,8 +29,11 @@ public class RemoveClasses extends Service {
 	for (int i = 0; i < classOIDs.size(); i++) {
 	    SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID((Integer) classOIDs.get(i));
 
-	    shift.getAssociatedClasses().remove(schoolClass);
+	    // TODO: temporary ------------------------------------
+	    shift.checkXpto(shift.getExecutionCourse());
+	    // TODO: temporary ------------------------------------
 
+	    shift.getAssociatedClasses().remove(schoolClass);
 	    schoolClass.getAssociatedShifts().remove(shift);
 	}
 

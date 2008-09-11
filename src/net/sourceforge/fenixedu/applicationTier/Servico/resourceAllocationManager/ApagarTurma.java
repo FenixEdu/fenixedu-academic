@@ -14,11 +14,21 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
  */
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 
 public class ApagarTurma extends Service {
 
     public Boolean run(InfoClass infoClass) {
-	rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal()).delete();
+	final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
+
+	// TODO: ----------------------------
+	for (final Shift shift : schoolClass.getAssociatedShiftsSet()) {
+	    shift.checkXpto();
+	}
+	// TODO: ----------------------------
+
+	schoolClass.delete();
 	return Boolean.TRUE;
     }
 
