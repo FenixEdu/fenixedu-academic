@@ -41,4 +41,3 @@ function executeWithTempFile() {
 }
 
 
-execute "Alter Table Country" alterTableCountry.sql
