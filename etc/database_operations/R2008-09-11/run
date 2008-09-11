@@ -40,3 +40,8 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table Country" AlterTableCountry.sql
+execute "Alter table Candidacy" AlterTableCandidacy.sql
+execute "Changing Degree codes" AlterDegreeCodes.sql IST
+execute "Add ojb concrete class column to EnrolmentLog table" alterTableEnrolmentLog.sql
+execute "Update EnrolmentLog ojb concrete class data" updateEnrolmentLogInformation.sql
