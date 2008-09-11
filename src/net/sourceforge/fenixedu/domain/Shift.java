@@ -13,9 +13,11 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.apache.commons.lang.StringUtils;
@@ -73,20 +75,26 @@ public class Shift extends Shift_Base {
 	    throw new DomainException("error.Shift.empty.courseLoads");
 	}
     }
-    
+
     public void checkXpto() {
 	checkXpto(getExecutionCourse());
     }
 
     public void checkXpto(final ExecutionCourse executionCourse) {
+
+	if (AccessControl.getUserView().hasRoleType(RoleType.MANAGER)
+		|| AccessControl.getUserView().hasRoleType(RoleType.DIRECTIVE_COUNCIL)) {
+	    return;
+	}
+
 	final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-	    
+
 	    if (!curricularCourse.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
 		    && !curricularCourse.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
 		continue;
 	    }
-	    
+
 	    if (curricularCourse.hasAnyActiveDegreModuleScope(executionSemester)
 		    && curricularCourse.hasAnyActiveDegreModuleScope(1, 1)) {
 		throw new DomainException("error.Shift.temporary.cannot.modify.information");
@@ -269,11 +277,11 @@ public class Shift extends Shift_Base {
     }
 
     public void associateSchoolClass(SchoolClass schoolClass) {
-	
+
 	// TODO: temporary ------------------------------------
 	checkXpto(getExecutionCourse());
 	// TODO: temporary ------------------------------------
-	
+
 	if (schoolClass == null) {
 	    throw new NullPointerException();
 	}
