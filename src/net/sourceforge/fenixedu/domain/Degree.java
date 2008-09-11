@@ -118,7 +118,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
 	DegreeInfo degreeInfo = getDegreeInfoFor(executionYear);
 	if (degreeInfo == null) {
-	    degreeInfo = createCurrentDegreeInfo(executionYear);
+	    degreeInfo = tryCreateUsingMostRecentInfo(executionYear);
 	}
 	degreeInfo.setName(MultiLanguageString.i18n().add("pt", name.trim()).add("en", nameEn.trim()).finish());
 
@@ -768,16 +768,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
-    public DegreeInfo createCurrentDegreeInfo(ExecutionYear executionYear) {
+    private DegreeInfo createCurrentDegreeInfo(ExecutionYear executionYear) {
 	// first let's check if the current degree info exists already
-	DegreeInfo shouldBeThisOne = executionYear.getDegreeInfo(this);
+	final DegreeInfo shouldBeThisOne = executionYear.getDegreeInfo(this);
 	if (shouldBeThisOne != null) {
 	    return shouldBeThisOne;
 	}
 
 	// ok, so let's create a new one based on the most recent one, if
 	// existing
-	DegreeInfo mostRecentDegreeInfo = this.getMostRecentDegreeInfo(executionYear);
+	return tryCreateUsingMostRecentInfo(executionYear);
+    }
+
+    private DegreeInfo tryCreateUsingMostRecentInfo(final ExecutionYear executionYear) {
+	final DegreeInfo mostRecentDegreeInfo = getMostRecentDegreeInfo(executionYear);
 	return (mostRecentDegreeInfo != null) ? new DegreeInfo(mostRecentDegreeInfo, executionYear) : new DegreeInfo(this,
 		executionYear);
     }

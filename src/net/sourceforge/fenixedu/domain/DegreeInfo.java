@@ -35,7 +35,7 @@ public class DegreeInfo extends DegreeInfo_Base {
 	if (hasSameName(name)) {
 	    return;
 	}
-	
+
 	if (hasName() && !canEdit()) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.DegreeInfo.can.only.change.name.for.future.execution.years");
@@ -52,7 +52,10 @@ public class DegreeInfo extends DegreeInfo_Base {
     }
 
     private boolean canEdit() {
-	if (getExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
+	final DegreeCurricularPlan lastActiveDegreeCurricularPlan = getDegree().getLastActiveDegreeCurricularPlan();
+	if (lastActiveDegreeCurricularPlan == null || !lastActiveDegreeCurricularPlan.hasAnyExecutionDegrees()) {
+	    return true;
+	} else if (getExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
 	    return true;
 	} else if (getExecutionYear().isCurrent()) {
 	    return new YearMonthDay().isBefore(getExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());

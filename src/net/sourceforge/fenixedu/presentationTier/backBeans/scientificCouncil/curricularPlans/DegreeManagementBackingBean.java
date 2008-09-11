@@ -347,7 +347,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public boolean isAbleToEditName() {
-	if (getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
+	final DegreeCurricularPlan lastActiveDegreeCurricularPlan = getDegree().getLastActiveDegreeCurricularPlan();
+	if (lastActiveDegreeCurricularPlan == null || !lastActiveDegreeCurricularPlan.hasAnyExecutionDegrees()) {
+	    return true;
+	} else if (getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
 	    return true;
 	} else if (getSelectedExecutionYear().isCurrent()) {
 	    return new YearMonthDay().isBefore(getSelectedExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
