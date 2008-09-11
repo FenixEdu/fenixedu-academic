@@ -252,6 +252,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     protected void fillResidenceInformation() {
 
+	getStudentCandidacy().setCountryOfResidence(getResidenceInformationForm().getCountryOfResidence());
 	getStudentCandidacy()
 		.setDistrictSubdivisionOfResidence(getResidenceInformationForm().getDistrictSubdivisionOfResidence());
 	getStudentCandidacy().setDislocatedFromPermanentResidence(
@@ -262,8 +263,6 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 		    getResidenceInformationForm().getSchoolTimeDistrictSubdivisionOfResidence());
 	}
 
-	getStudentCandidacy().setCountryOfResidence(getResidenceInformationForm().getCountryOfResidence());
-
 	final Person person = getStudentCandidacy().getPerson();
 
 	setDefaultAddress(person);
@@ -272,14 +271,17 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     private void setSchoolTimeAddress(final Person person) {
-	final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm()
-		.getSchoolTimeAddress(), getResidenceInformationForm().getSchoolTimeAreaCode(), getResidenceInformationForm()
-		.getSchoolTimeAreaOfAreaCode(), getResidenceInformationForm().getSchoolTimeArea(), getResidenceInformationForm()
-		.getSchoolTimeParishOfResidence(), getResidenceInformationForm().getSchoolTimeDistrictSubdivisionOfResidence()
-		.getName(), getResidenceInformationForm().getSchoolTimeDistrictSubdivisionOfResidence().getDistrict().getName(),
-		Country.readDefault());
+	if (getResidenceInformationForm().getDislocatedFromPermanentResidence()
+		&& getResidenceInformationForm().isSchoolTimeAddressComplete()) {
+	    final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm()
+		    .getSchoolTimeAddress(), getResidenceInformationForm().getSchoolTimeAreaCode(), getResidenceInformationForm()
+		    .getSchoolTimeAreaOfAreaCode(), getResidenceInformationForm().getSchoolTimeArea(),
+		    getResidenceInformationForm().getSchoolTimeParishOfResidence(), getResidenceInformationForm()
+			    .getSchoolTimeDistrictSubdivisionOfResidence().getName(), getResidenceInformationForm()
+			    .getSchoolTimeDistrictSubdivisionOfResidence().getDistrict().getName(), Country.readDefault());
 
-	new PhysicalAddress(person, PartyContactType.PERSONAL, false, physicalAddressData);
+	    new PhysicalAddress(person, PartyContactType.PERSONAL, false, physicalAddressData);
+	}
     }
 
     private void setDefaultAddress(final Person person) {

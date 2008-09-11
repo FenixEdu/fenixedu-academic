@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 
 import org.apache.commons.lang.StringUtils;
@@ -42,15 +41,8 @@ public class FiliationForm extends Form {
     }
 
     public static FiliationForm createFromPerson(final Person person) {
-	final Country nationality;
-	final Country countryOfBirth;
-	if (person.hasRole(RoleType.EMPLOYEE) || person.hasEmployee()) {
-	    nationality = person.getCountry();
-	    countryOfBirth = person.getCountryOfBirth();
-	} else {
-	    nationality = Country.readDefault();
-	    countryOfBirth = Country.readDefault();
-	}
+	final Country nationality = person.getCountry() != null ? person.getCountry() : Country.readDefault();
+	final Country countryOfBirth = person.hasCountryOfBirth() ? person.getCountryOfBirth() : Country.readDefault();
 
 	return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(), person
 		.getDistrictSubdivisionOfBirth(), person.getNameOfFather(), person.getNameOfMother(), nationality, person

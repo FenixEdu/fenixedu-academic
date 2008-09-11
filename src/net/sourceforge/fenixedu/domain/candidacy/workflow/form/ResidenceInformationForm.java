@@ -273,12 +273,65 @@ public class ResidenceInformationForm extends Form {
     }
 
     private void checkAddressInformationForDislocatedStudents(final List<LabelFormatter> result) {
-	if (this.dislocatedFromPermanentResidence && !isSchoolTimeRequiredInformationAddressFilled()) {
-	    result.add(new LabelFormatter().appendLabel(
-		    "error.candidacy.workflow.ResidenceInformationForm.address.information.is.required.for.dislocated.students",
-		    "application"));
+	if (isAnySchoolTimeAddressInformationFilled() && !this.dislocatedFromPermanentResidence) {
+	    result
+		    .add(new LabelFormatter()
+			    .appendLabel(
+				    "error.candidacy.workflow.ResidenceInformationForm.only.dislocated.students.should.fill.school.time.address.information",
+				    "application"));
+	}
+
+	if (this.dislocatedFromPermanentResidence) {
+
+	    if (!isSchoolTimeRequiredInformationAddressFilled()) {
+		result
+			.add(new LabelFormatter()
+				.appendLabel(
+					"error.candidacy.workflow.ResidenceInformationForm.address.information.is.required.for.dislocated.students",
+					"application"));
+	    } else {
+		if (isAnyFilled(this.schoolTimeAddress, this.schoolTimeAreaCode, this.schoolTimeAreaOfAreaCode,
+			this.schoolTimeArea, this.schoolTimeParishOfResidence)
+			&& isAnyEmpty(this.schoolTimeAddress, this.schoolTimeAreaCode, this.schoolTimeAreaOfAreaCode,
+				this.schoolTimeArea, this.schoolTimeParishOfResidence)) {
+
+		    result
+			    .add(new LabelFormatter()
+				    .appendLabel(
+					    "error.candidacy.workflow.ResidenceInformationForm.school.time.address.must.be.filled.completly.otherwise.fill.minimun.required",
+					    "application"));
+		}
+	    }
 
 	}
+    }
+
+    public boolean isAnySchoolTimeAddressInformationFilled() {
+	return getSchoolTimeDistrictOfResidence() != null
+		|| getSchoolTimeDistrictSubdivisionOfResidence() != null
+		|| isAnyFilled(this.schoolTimeAddress, this.schoolTimeAreaCode, this.schoolTimeAreaOfAreaCode,
+			this.schoolTimeParishOfResidence, this.schoolTimeArea);
+
+    }
+
+    private boolean isAnyFilled(final String... fields) {
+	for (final String each : fields) {
+	    if (!StringUtils.isEmpty(each)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean isAnyEmpty(final String... fields) {
+	for (final String each : fields) {
+	    if (StringUtils.isEmpty(each)) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     private boolean isSchoolTimeRequiredInformationAddressFilled() {
@@ -288,6 +341,12 @@ public class ResidenceInformationForm extends Form {
 	// || StringUtils.isEmpty(this.schoolTimeAreaOfAreaCode) ||
 	// StringUtils.isEmpty(this.schoolTimeParishOfResidence) || StringUtils
 	// .isEmpty(this.schoolTimeArea));
+    }
+
+    public boolean isSchoolTimeAddressComplete() {
+	return isSchoolTimeRequiredInformationAddressFilled()
+		&& !isAnyEmpty(this.schoolTimeAddress, this.schoolTimeAreaCode, this.schoolTimeAreaOfAreaCode,
+			this.schoolTimeParishOfResidence, this.schoolTimeArea);
     }
 
     @Override
