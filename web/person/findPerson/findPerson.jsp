@@ -66,7 +66,7 @@ function check(e,v){
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewPhoto" property="viewPhoto" name="findPersonForm"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>
 
-				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE,ALUMNI" />
 				<html:select bundle="HTMLALT_RESOURCES" property="roleType" onchange="this.form.submit()">
 					<html:option value=""><!-- w3c complient --></html:option>
 					<html:options collection="values" property="value" labelProperty="label"/>
