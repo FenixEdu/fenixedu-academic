@@ -322,6 +322,7 @@ class DomainObject {
 
 	class Country extends DomainObject {
 		String code;
+		String threeLetterCode;
 		String name;
 		String nationality;
 		Boolean defaultCountry;
@@ -2895,7 +2896,7 @@ class DomainObject {
 		DateTime dateDateTime;
 		String who;
 	}
-	
+
 		class log.OptionalEnrolmentLog extends log.EnrolmentLog {
 		}
 
@@ -13383,7 +13384,6 @@ relation AssiduousnessRecordAssiduousnessRecordMonthIndex {
 		multiplicity *;
 	}
 }
-
 relation StudentCandidacyDistrictSubdivisionOfResidence {
 	candidacy.StudentCandidacy playsRole studentCandidacies {
 		multiplicity *;
