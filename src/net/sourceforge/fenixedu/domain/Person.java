@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +16,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
+import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
@@ -98,6 +100,8 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.ByteArray;
+import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -109,6 +113,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -313,6 +318,62 @@ public class Person extends Person_Base {
 	return this;
     }
 
+    public void edit(PersonInformationFromUniqueCardDTO personDTO) throws ParseException {
+	final String dateFormat = "dd MM yyyy";
+
+	if (!StringUtils.isEmpty(personDTO.getName())) {
+	    setName(personDTO.getName());
+	}
+	if (!StringUtils.isEmpty(personDTO.getGender())) {
+	    setGender(personDTO.getGender().equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE);
+	}
+	if (!StringUtils.isEmpty(personDTO.getDocumentIdEmissionLocation())) {
+	    setEmissionLocationOfDocumentId(personDTO.getDocumentIdEmissionLocation());
+	}
+	if (!StringUtils.isEmpty(personDTO.getDocumentIdEmissionDate())) {
+	    setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat, personDTO
+		    .getDocumentIdEmissionDate())));
+	}
+	if (!StringUtils.isEmpty(personDTO.getDocumentIdExpirationDate())) {
+	    setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat, personDTO
+		    .getDocumentIdExpirationDate())));
+	}
+	if (!StringUtils.isEmpty(personDTO.getFiscalNumber())) {
+	    setSocialSecurityNumber(personDTO.getFiscalNumber());
+	}
+	if (!StringUtils.isEmpty(personDTO.getBirthDate())) {
+	    setDateOfBirthYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat, personDTO.getBirthDate())));
+	}
+	if (!StringUtils.isEmpty(personDTO.getNationality())) {
+	    setNationality(Country.readByThreeLetterCode(personDTO.getNationality()));
+	}
+	if (!StringUtils.isEmpty(personDTO.getMotherName())) {
+	    setNameOfMother(personDTO.getMotherName());
+	}
+	if (!StringUtils.isEmpty(personDTO.getFatherName())) {
+	    setNameOfFather(personDTO.getFatherName());
+	}
+
+	if (personDTO.getPhoto() != null) {
+	    setPersonalPhoto(new Photograph(ContentType.JPG, new ByteArray(personDTO.getPhoto()), PhotoType.INSTITUTIONAL));
+	}
+
+	final PhysicalAddressData physicalAddress = new PhysicalAddressData();
+	physicalAddress.setAddress(personDTO.getAddress());
+	physicalAddress.setAreaCode(personDTO.getPostalCode());
+	physicalAddress.setAreaOfAreaCode(personDTO.getPostalArea());
+	physicalAddress.setArea(personDTO.getLocality());
+	physicalAddress.setParishOfResidence(personDTO.getParish());
+	physicalAddress.setDistrictSubdivisionOfResidence(personDTO.getMunicipality());
+	physicalAddress.setDistrictOfResidence(personDTO.getDistrict());
+	physicalAddress.setCountryOfResidence(Country.readByTwoLetterCode(personDTO.getCountry()));
+
+	if (!physicalAddress.isEmpty()) {
+	    updateDefaultPhysicalAddress(physicalAddress);
+	}
+
+    }
+    
     public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
 	setName(name);
 	updateDefaultPhysicalAddress(new PhysicalAddressData().setAddress(address));
@@ -2911,4 +2972,5 @@ public class Person extends Person_Base {
 	}
 	return formations;
     }
+
 }

@@ -12435,4 +12435,11 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
+    <service>
+        <name>UpdatePersonInformationFromCitizenCard</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.UpdatePersonInformationFromCitizenCard</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>     
 </serviceDefinitions>

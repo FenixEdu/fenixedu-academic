@@ -1,11 +1,29 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.joda.time.DateTime;
 
 public class Photograph extends Photograph_Base {
+
+    private static final int COMPRESSED_PHOTO_WIDTH = 100;
+
+    private static final int COMPRESSED_PHOTO_HEIGHT = 100;
+
     public Photograph() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -19,6 +37,10 @@ public class Photograph extends Photograph_Base {
 	setRawContent(content);
 	setContent(compressed);
 	setPhotoType(photoType);
+    }
+
+    public Photograph(ContentType contentType, ByteArray content, PhotoType photoType) {
+	this(contentType, content, compressImage(content.getBytes(), contentType), photoType);
     }
 
     @Override
@@ -73,5 +95,42 @@ public class Photograph extends Photograph_Base {
 	    getPrevious().delete();
 	}
 	super.deleteDomainObject();
+    }
+
+    static private ByteArray compressImage(byte[] content, ContentType contentType) {
+	BufferedImage image;
+	try {
+	    image = ImageIO.read(new ByteArrayInputStream(content));
+	} catch (IOException e) {
+	    throw new DomainException("photograph.compress.errorReadingImage", e);
+	}
+	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+	// calculate resize factor
+	double resizeFactor = Math.min((double) COMPRESSED_PHOTO_WIDTH / image.getWidth(), (double) COMPRESSED_PHOTO_HEIGHT
+		/ image.getHeight());
+
+	// resize image
+	AffineTransform tx = new AffineTransform();
+	tx.scale(resizeFactor, resizeFactor);
+	AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+	image = op.filter(image, null);
+
+	// set compression
+	ImageWriter writer = ImageIO.getImageWritersByMIMEType(contentType.getMimeType()).next();
+	ImageWriteParam param = writer.getDefaultWriteParam();
+	if (contentType == ContentType.JPG) {
+	    param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+	    param.setCompressionQuality(1);
+	}
+
+	// write to stream
+	try {
+	    writer.setOutput(ImageIO.createImageOutputStream(outputStream));
+	    writer.write(null, new IIOImage(image, null, null), param);
+	} catch (IOException e) {
+	    throw new DomainException("photograph.compress.errorWritingImage", e);
+	}
+	return new ByteArray(outputStream.toByteArray());
     }
 }

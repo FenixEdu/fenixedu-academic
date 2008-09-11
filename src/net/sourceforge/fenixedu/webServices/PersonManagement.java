@@ -3,11 +3,18 @@
  */
 package net.sourceforge.fenixedu.webServices;
 
+import java.text.ParseException;
+
 import javax.servlet.ServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationDTO;
+import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
@@ -35,15 +42,24 @@ public class PersonManagement implements IPersonManagement {
 	return foundUser == null ? null : new PersonInformationDTO(foundUser.getPerson());
     }
 
-    public Boolean setPersonInformation(String username, String password, String idNumber, String emissionDate,
-	    String emissionLocale, String expirationDate, String fiscalNumber, String name, String fatherName, String motherName,
-	    String birthDate, String gender, String address, String postalCode, String postalArea, String parish,
-	    String locality, String municipality, String district, String country, MessageContext context)
-	    throws NotAuthorizedException {
+    public Boolean setPersonInformation(String username, String password, PersonInformationFromUniqueCardDTO personDTO,
+	    MessageContext context) throws NotAuthorizedException, ParseException {
 
 	checkPermissions(username, password, context);
 
-	return true;
+	personDTO.print();
+
+	try {
+	    ServiceUtils.executeService("UpdatePersonInformationFromCitizenCard", personDTO);
+	} catch (FenixFilterException e) {
+	    return Boolean.FALSE;
+	} catch (FenixServiceException e) {
+	    return Boolean.FALSE;
+	} catch (DomainException e) {
+	    return Boolean.FALSE;
+	}
+
+	return Boolean.TRUE;
     }
 
     private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
