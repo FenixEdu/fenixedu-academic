@@ -34,15 +34,22 @@
 					src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES"
 					styleClass="float: right; border: 1px solid #aaa; padding: 3px;" /></td>
-				<td><div style="padding: 0pt 2em;">
+				<td>
+                    <div style="padding: 0 2em;">
                     <div class="infoop2">
-                        <p class="mvert0"><bean:message key="label.person.photo.info" /></p>
+                        <bean:message key="label.person.photo.info" />
                     </div>
-    				<p class="mtop1 mbottom0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    		
+            		<p class="mtop1 mbottom0">
     				    <html:link page="/uploadPhoto.do?method=prepare">
     					   <bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />
         				</html:link>
                     </p>
+
                     <p class="mvert05">
                     <logic:notEmpty name="person" property="personalPhotoEvenIfRejected">
     					<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="PENDING">
@@ -63,10 +70,8 @@
 					    </logic:equal>
     				</logic:notEmpty>
                     </p>
-				</div></td>
-			</tr>
-		</tbody>
-	</table>
+				</div>
+
 
     <logic:notEmpty name="person" property="personalPhoto">
     <logic:equal name="person" property="personalPhoto.state" value="APPROVED">

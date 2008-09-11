@@ -22,6 +22,10 @@ import net.sourceforge.fenixedu.util.ContentType;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class PhotographUploadBean implements Serializable {
+    public class UnableToProcessTheImage extends Exception {
+	private static final long serialVersionUID = 1728978041377445492L;
+    }
+
     private static final long serialVersionUID = 1207257680390113173L;
 
     private static final int OUTPUT_PHOTO_WIDTH = 100;
@@ -40,38 +44,26 @@ public class PhotographUploadBean implements Serializable {
 
     private String contentType;
 
-    public InputStream getFileInputStream() {
-	try {
-	    if (rawContents != null)
-		return new ByteArrayInputStream(rawContents);
-	    if (temporaryFile != null)
-		return new FileInputStream(temporaryFile);
-	    else
-		return null;
-	} catch (FileNotFoundException e) {
+    public InputStream getFileInputStream() throws FileNotFoundException {
+	if (rawContents != null)
+	    return new ByteArrayInputStream(rawContents);
+	if (temporaryFile != null)
+	    return new FileInputStream(temporaryFile);
+	else
 	    return null;
-	}
     }
 
-    public void setFileInputStream(InputStream inputStream) {
-	try {
-	    this.rawContents = new ByteArray(inputStream).getBytes();
-	} catch (IOException e) {
-	    this.rawContents = null;
-	}
+    public void setFileInputStream(InputStream inputStream) throws IOException {
+	this.rawContents = new ByteArray(inputStream).getBytes();
     }
 
-    public InputStream getCompressedInputStream() {
-	try {
-	    if (compressedContents != null)
-		return new ByteArrayInputStream(compressedContents);
-	    if (tempCompressedFile != null)
-		return new FileInputStream(tempCompressedFile);
-	    else
-		return null;
-	} catch (FileNotFoundException e) {
+    public InputStream getCompressedInputStream() throws FileNotFoundException {
+	if (compressedContents != null)
+	    return new ByteArrayInputStream(compressedContents);
+	if (tempCompressedFile != null)
+	    return new FileInputStream(tempCompressedFile);
+	else
 	    return null;
-	}
     }
 
     public int getRawSize() {
@@ -86,15 +78,10 @@ public class PhotographUploadBean implements Serializable {
 	this.filename = filename;
     }
 
-    public void createTemporaryFiles() {
-	try {
-	    temporaryFile = rawContents != null ? FileUtils.copyToTemporaryFile(new ByteArrayInputStream(rawContents)) : null;
-	    tempCompressedFile = compressedContents != null ? FileUtils.copyToTemporaryFile(new ByteArrayInputStream(
-		    compressedContents)) : null;
-	} catch (IOException exception) {
-	    temporaryFile = null;
-	    tempCompressedFile = null;
-	}
+    public void createTemporaryFiles() throws IOException {
+	temporaryFile = rawContents != null ? FileUtils.copyToTemporaryFile(new ByteArrayInputStream(rawContents)) : null;
+	tempCompressedFile = compressedContents != null ? FileUtils.copyToTemporaryFile(new ByteArrayInputStream(
+		compressedContents)) : null;
     }
 
     public File getTemporaryFile() {
@@ -120,8 +107,11 @@ public class PhotographUploadBean implements Serializable {
 	this.contentType = contentType;
     }
 
-    public void processImage() throws IOException {
+    public void processImage() throws IOException, UnableToProcessTheImage {
 	BufferedImage image = ImageIO.read(new ByteArrayInputStream(rawContents));
+	if (image == null) {
+	    throw new UnableToProcessTheImage();
+	}
 	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
 	// calculate resize factor

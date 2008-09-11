@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -59,7 +60,14 @@ public class UploadPhotoDA extends FenixDispatchAction {
 	    return prepare(mapping, actionForm, request, response);
 	}
 
-	photo.processImage();
+	try {
+	    photo.processImage();
+	} catch (UnableToProcessTheImage e) {
+	    actionMessages.add("unableToProcessImage", new ActionMessage("errors.unableToProcessImage"));
+	    saveMessages(request, actionMessages);
+	    photo.deleteTemporaryFiles();
+	    return prepare(mapping, actionForm, request, response);
+	}
 	photo.createTemporaryFiles();
 
 	request.setAttribute("preview", true);
