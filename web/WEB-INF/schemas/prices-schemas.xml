@@ -93,8 +93,24 @@
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR"  
 		extends="PostingRule.view" bundle="APPLICATION_RESOURCES">
 	<slot name="dfaTotalAmount" />
-	<slot name="dfaAmountPerEctsCredit" />
 	<slot name="dfaPartialAcceptedPercentage" />
+</schema>
+
+<schema name="DFAGratuityByAmountPerEctsPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR"  
+		extends="DFAGratuityPR.view" bundle="APPLICATION_RESOURCES">
+	<slot name="class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="dfaAmountPerEctsCredit" />
+</schema>
+
+<schema name="DFAGratuityByNumberOfEnrolmentsPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR"  
+		extends="DFAGratuityPR.view" bundle="APPLICATION_RESOURCES">
+	<slot name="class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
 </schema>
 
 <schema name="DFAGratuityPREditor.edit" 
@@ -106,13 +122,31 @@
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
+	<slot name="dfaPartialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="DFAGratuityByAmountPerEctsPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR$DFAGratuityByAmountPerEctsPREditor"
+		extends="DFAGratuityPREditor.edit"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
 	<slot name="dfaAmountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="dfaPartialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-    	<property name="size" value="10"/>
-		<property name="maxLength" value="10"/>
+</schema>
+
+<schema name="DFAGratuityByNumberOfEnrolmentsPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR$DFAGratuityByNumberOfEnrolmentsPREditor"
+		extends="DFAGratuityPREditor.edit"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
 	</slot>
 </schema>
 
@@ -285,7 +319,7 @@
 </schema>
 
 <schema name="ProgramCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot  name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
 	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 	<setter signature="edit(baseAmount,amountFirstPage,amountPerPage)"/>
@@ -392,16 +426,39 @@
 		extends="BaseAmountPlusAmountPerPagePR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
-<schema name="CreateDFAGratuityPostingRuleBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" bundle="APPLICATION_RESOURCES">
-	<slot name="amountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-    	<property name="size" value="10"/>
-		<property name="maxLength" value="10"/>
+<schema name="CreateDFAGratuityPostingRuleBean.choose-type" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="rule" layout="menu-select" key="label.class.name">
+		<property name="defaultText" value="label.dropDown.all" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.postingRules.gratuity.DFAGratuityPRTypeProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="key" value="true" />
+		<property name="bundle" value="APPLICATION_RESOURCES"/>
 	</slot>
+</schema>
+
+<schema name="CreateDFAGratuityPostingRuleBean.edit-DFAGratuityByNumberOfEnrolmentsPR" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES">
 	<slot name="partialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
 	<slot name="totalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="rule.class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="CreateDFAGratuityPostingRuleBean.edit-DFAGratuityByAmountPerEctsPR" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES"
+		extends="CreateDFAGratuityPostingRuleBean.edit-DFAGratuityByNumberOfEnrolmentsPR">
+	<slot name="amountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>

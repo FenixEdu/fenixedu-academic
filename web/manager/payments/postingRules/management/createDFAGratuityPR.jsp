@@ -26,17 +26,35 @@
 		name="createDFAGratuityPostingRuleBean"
 		property="degreeCurricularPlan.idInternal" />
 
-	<fr:edit id="createDFAGratuityPostingRuleBean"
-		name="createDFAGratuityPostingRuleBean"
-		schema="CreateDFAGratuityPostingRuleBean.edit"
-		action="/postingRules.do?method=createDFAGratuityPR">
+	<logic:present name="createDFAGratuityPostingRuleBean">
+		<fr:edit id="createDFAGratuityPostingRuleBeanTypeChosen"
+			name="createDFAGratuityPostingRuleBean"
+			schema="CreateDFAGratuityPostingRuleBean.choose-type"
+			action="/postingRules.do?method=prepareCreateDFAGratuityPRTypeChosen">
+	
+			<fr:layout name="tabular">
+				<fr:property name="classes"
+					value="tstyle2 thmiddle thright thlight mtop05" />
+			</fr:layout>
+			<fr:destination name="cancel"
+				path="<%="/postingRules.do?method=showPostingRulesForDFADegreeCurricularPlan&degreeCurricularPlanId=" + degreeCurricularPlanId %>" />
+		</fr:edit>
+	</logic:present>
 
-		<fr:layout name="tabular">
-			<fr:property name="classes"
-				value="tstyle2 thmiddle thright thlight mtop05" />
-		</fr:layout>
-		<fr:destination name="cancel"
-			path="<%="/postingRules.do?method=showPostingRulesForDFADegreeCurricularPlan&degreeCurricularPlanId=" + degreeCurricularPlanId %>" />
-	</fr:edit>
+	<logic:present name="createDFAGratuityPostingRuleBeanTypeChosen">
+		<bean:define id="postingRuleClassName" name="createDFAGratuityPostingRuleBean" property="rule.class.simpleName" />
+		<fr:edit id="createDFAGratuityPostingRuleBean"
+			name="createDFAGratuityPostingRuleBeanTypeChosen"
+			schema="<%="CreateDFAGratuityPostingRuleBean.edit-" + postingRuleClassName%>"
+			action="/postingRules.do?method=createDFAGratuityPR">
+	
+			<fr:layout name="tabular">
+				<fr:property name="classes"
+					value="tstyle2 thmiddle thright thlight mtop05" />
+			</fr:layout>
+			<fr:destination name="cancel"
+				path="<%="/postingRules.do?method=showPostingRulesForDFADegreeCurricularPlan&degreeCurricularPlanId=" + degreeCurricularPlanId %>" />
+		</fr:edit>
+	</logic:present>
 
 </logic:present>

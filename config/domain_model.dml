@@ -1638,11 +1638,17 @@ class DomainObject {
 			}
 
 			class accounting.postingRules.gratuity.DFAGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
-				Money dfaAmountPerEctsCredit;
 				BigDecimal dfaPartialAcceptedPercentage;
 				Money dfaTotalAmount;
 			}
 
+				class accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR extends accounting.postingRules.gratuity.DFAGratuityPR {
+					Money dfaAmountPerEctsCredit;
+				}
+	
+				class accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR extends accounting.postingRules.gratuity.DFAGratuityPR {
+				}
+	
 			class accounting.postingRules.gratuity.GratuityWithPaymentPlanPR extends accounting.postingRules.GenericSingleEntryTypePR {
 			}
 
@@ -13380,6 +13386,7 @@ relation AssiduousnessRecordAssiduousnessRecordMonthIndex {
 		multiplicity *;
 	}
 }
+
 relation StudentCandidacyDistrictSubdivisionOfResidence {
 	candidacy.StudentCandidacy playsRole studentCandidacies {
 		multiplicity *;

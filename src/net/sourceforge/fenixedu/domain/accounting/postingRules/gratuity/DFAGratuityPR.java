@@ -21,16 +21,15 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
-public class DFAGratuityPR extends DFAGratuityPR_Base {
+abstract public class DFAGratuityPR extends DFAGratuityPR_Base {
 
-    public static class DFAGratuityPREditor implements FactoryExecutor, Serializable {
+    abstract protected static class DFAGratuityPREditor implements FactoryExecutor, Serializable {
 
 	/**
 	 * 
@@ -41,13 +40,11 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
 	private Money dfaTotalAmount;
 
-	private Money dfaAmountPerEctsCredit;
-
 	private BigDecimal dfaPartialAcceptedPercentage;
 
 	private DomainReference<DFAGratuityPR> dfaGratuityPR;
 
-	private DFAGratuityPREditor() {
+	protected DFAGratuityPREditor() {
 	}
 
 	public DateTime getBeginDate() {
@@ -66,14 +63,6 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	    this.dfaTotalAmount = dfaTotalAmount;
 	}
 
-	public Money getDfaAmountPerEctsCredit() {
-	    return dfaAmountPerEctsCredit;
-	}
-
-	public void setDfaAmountPerEctsCredit(Money dfaAmountPerEctsCredit) {
-	    this.dfaAmountPerEctsCredit = dfaAmountPerEctsCredit;
-	}
-
 	public BigDecimal getDfaPartialAcceptedPercentage() {
 	    return dfaPartialAcceptedPercentage;
 	}
@@ -86,25 +75,8 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	    return (this.dfaGratuityPR != null) ? this.dfaGratuityPR.getObject() : null;
 	}
 
-	public void setDfaGratuityPR(DFAGratuityPR dfaGratuityPR) {
+	public void setDfaGratuityPR(final DFAGratuityPR dfaGratuityPR) {
 	    this.dfaGratuityPR = (dfaGratuityPR != null) ? new DomainReference<DFAGratuityPR>(dfaGratuityPR) : null;
-	}
-
-	@Override
-	public Object execute() {
-	    return getDfaGratuityPR().edit(getBeginDate(), getDfaTotalAmount(), getDfaAmountPerEctsCredit(),
-		    getDfaPartialAcceptedPercentage());
-
-	}
-
-	public static DFAGratuityPREditor buildFrom(final DFAGratuityPR dfaGratuityPR) {
-	    final DFAGratuityPREditor result = new DFAGratuityPREditor();
-	    result.setDfaGratuityPR(dfaGratuityPR);
-	    result.setDfaAmountPerEctsCredit(dfaGratuityPR.getDfaAmountPerEctsCredit());
-	    result.setDfaPartialAcceptedPercentage(dfaGratuityPR.getDfaPartialAcceptedPercentage());
-	    result.setDfaTotalAmount(dfaGratuityPR.getDfaTotalAmount());
-
-	    return result;
 	}
 
     }
@@ -114,27 +86,24 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     public DFAGratuityPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
-	    Money dfaTotalAmount, BigDecimal partialAcceptedPercentage, Money dfaAmountPerEctsCredit) {
+	    Money dfaTotalAmount, BigDecimal partialAcceptedPercentage) {
 	super();
 	init(EntryType.GRATUITY_FEE, EventType.GRATUITY, startDate, endDate, serviceAgreementTemplate, dfaTotalAmount,
-		partialAcceptedPercentage, dfaAmountPerEctsCredit);
+		partialAcceptedPercentage);
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money dfaTotalAmount, BigDecimal dfaPartialAcceptedPercentage,
-	    Money dfaAmountPerEctsCredit) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money dfaTotalAmount, BigDecimal dfaPartialAcceptedPercentage) {
 
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
 
-	checkParameters(dfaTotalAmount, dfaPartialAcceptedPercentage, dfaAmountPerEctsCredit);
+	checkParameters(dfaTotalAmount, dfaPartialAcceptedPercentage);
 
 	super.setDfaTotalAmount(dfaTotalAmount);
 	super.setDfaPartialAcceptedPercentage(dfaPartialAcceptedPercentage);
-	super.setDfaAmountPerEctsCredit(dfaAmountPerEctsCredit);
-
     }
 
-    private void checkParameters(Money dfaTotalAmount, BigDecimal dfaPartialAcceptedPercentage, Money dfaAmountPerEctsCredit) {
+    private void checkParameters(Money dfaTotalAmount, BigDecimal dfaPartialAcceptedPercentage) {
 	if (dfaTotalAmount == null) {
 	    throw new DomainException("error.accounting.postingRules.gratuity.DFAGratuityPR.dfaTotalAmount.cannot.be.null");
 	}
@@ -143,12 +112,6 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	    throw new DomainException(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.dfaPartialAcceptedPercentage.cannot.be.null");
 	}
-
-	if (dfaAmountPerEctsCredit == null) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.gratuity.DFAGratuityPR.dfaAmountPerEctsCredit.cannot.be.null");
-	}
-
     }
 
     @Override
@@ -160,11 +123,6 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     public void setDfaPartialAcceptedPercentage(BigDecimal dfaPartialAcceptedPercentage) {
 	throw new DomainException(
 		"error.accounting.postingRules.gratuity.DFAGratuityPR.cannot.modify.dfaPartialAcceptedPercentage");
-    }
-
-    @Override
-    public void setDfaAmountPerEctsCredit(Money dfaAmountPerEctsCredit) {
-	throw new DomainException("error.accounting.postingRules.gratuity.DFAGratuityPR.cannot.modify.dfaAmountPerEctsCredit");
     }
 
     @Override
@@ -237,18 +195,10 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
-		.getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
-		.calculateAmountToPay(when)));
-    }
-
-    @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final Money result;
 	if (((GratuityEvent) event).isCustomEnrolmentModel()) {
-	    final double enrolmentsEctsForRegistration = ((GratuityEvent) event).getEnrolmentsEctsForRegistration();
-	    result = getDfaAmountPerEctsCredit().multiply(new BigDecimal(enrolmentsEctsForRegistration));
+	    result = calculateDFAGratuityTotalAmountToPay(event);
 	} else {
 	    result = getDfaTotalAmount();
 	}
@@ -258,24 +208,17 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	return result.multiply(BigDecimal.ONE.subtract(discountPercentage));
     }
 
+    abstract protected Money calculateDFAGratuityTotalAmountToPay(Event event);
+
     private BigDecimal getDiscountPercentage(final Event event, final Money amount) {
 	return ((DfaGratuityEvent) event).calculateDiscountPercentage(amount);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    public DFAGratuityPR edit(Money dfaTotalAmount, Money dfaAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
-	return edit(new DateTime(), dfaTotalAmount, dfaAmountPerEctsCredit, partialAcceptedPercentage);
-    }
-
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    public DFAGratuityPR edit(DateTime startDate, Money dfaTotalAmount, Money dfaAmountPerEctsCredit,
-	    BigDecimal partialAcceptedPercentage) {
-
-	deactivate(startDate);
-
-	return new DFAGratuityPR(startDate, null, getServiceAgreementTemplate(), dfaTotalAmount, partialAcceptedPercentage,
-		dfaAmountPerEctsCredit);
-
+    @Override
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
+		.getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
+		.calculateAmountToPay(when)));
     }
 
 }

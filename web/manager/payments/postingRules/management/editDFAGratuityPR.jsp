@@ -25,7 +25,8 @@
 			</fr:messages>
 		</ul>
 	</fr:hasMessages>
-	<fr:edit id="postingRuleEditor" name="postingRuleEditor" schema="DFAGratuityPREditor.edit" 
+	<bean:define id="postingRuleEditorClassName" name="postingRuleEditor" property="class.simpleName" />
+	<fr:edit id="postingRuleEditor" name="postingRuleEditor" schema="<%=postingRuleEditorClassName + ".edit"%>" 
 	action="<%= "/postingRules.do?method=editDFAGratuityPR&degreeCurricularPlanId=" + degreeCurricularPlanId %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes"

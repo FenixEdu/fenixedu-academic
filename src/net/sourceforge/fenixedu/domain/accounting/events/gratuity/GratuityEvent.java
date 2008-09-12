@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
 public abstract class GratuityEvent extends GratuityEvent_Base {
@@ -131,6 +131,14 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     public double getEnrolmentsEctsForRegistration() {
 	return getRegistration().getEnrolmentsEcts(getExecutionYear());
+    }
+
+    public int getNumberOfEnrolmentsForRegistration() {
+	return getRegistration().getEnrolments(getExecutionYear()).size();
+    }
+
+    public Double getEctsCreditsForRegistrationDegreeType() {
+	return getRegistration().getDegree().getDegreeType().getDefaultEctsCredits();
     }
 
     public boolean canRemoveExemption(final DateTime when) {

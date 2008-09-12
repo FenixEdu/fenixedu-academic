@@ -11,8 +11,11 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.Create
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR.DFAGratuityPREditor;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR.DFAGratuityByAmountPerEctsPREditor;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR.DFAGratuityByNumberOfEnrolmentsPREditor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -96,6 +99,15 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	return mapping.findForward("createDFAGratuityPR");
     }
 
+    public ActionForward prepareCreateDFAGratuityPRTypeChosen(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("createDFAGratuityPostingRuleBean",
+		(CreateDFAGratuityPostingRuleBean) getObjectFromViewState("createDFAGratuityPostingRuleBeanTypeChosen"));
+
+	return mapping.findForward("createDFAGratuityPR");
+    }
+
     public ActionForward prepareCreateDFAGratuityPRInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -157,7 +169,15 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
-	request.setAttribute("postingRuleEditor", DFAGratuityPREditor.buildFrom((DFAGratuityPR) getPostingRule(request)));
+
+	final PostingRule rule = getPostingRule(request);
+	if (rule instanceof DFAGratuityByAmountPerEctsPR) {
+	    request.setAttribute("postingRuleEditor", DFAGratuityByAmountPerEctsPREditor
+		    .buildFrom((DFAGratuityByAmountPerEctsPR) rule));
+	} else {
+	    request.setAttribute("postingRuleEditor", DFAGratuityByNumberOfEnrolmentsPREditor
+		    .buildFrom((DFAGratuityByNumberOfEnrolmentsPR) rule));
+	}
 
 	return mapping.findForward("editDFAGratuityPR");
     }
