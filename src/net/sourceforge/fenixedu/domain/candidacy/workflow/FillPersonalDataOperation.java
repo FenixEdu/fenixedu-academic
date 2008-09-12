@@ -302,11 +302,9 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	person.setNameOfFather(getFiliationForm().getFatherName());
 	person.setNameOfMother(getFiliationForm().getMotherName());
 
-	if (getFiliationForm().getCountryOfBirth().isDefaultCountry()) {
-	    person.setDistrictOfBirth(getFiliationForm().getDistrictOfBirth());
-	    person.setDistrictSubdivisionOfBirth(getFiliationForm().getDistrictSubdivisionOfBirth());
-	    person.setParishOfBirth(getFiliationForm().getParishOfBirth());
-	}
+	person.setDistrictOfBirth(getFiliationForm().getDistrictOfBirth());
+	person.setDistrictSubdivisionOfBirth(getFiliationForm().getDistrictSubdivisionOfBirth());
+	person.setParishOfBirth(getFiliationForm().getParishOfBirth());
 
 	person.setDateOfBirthYearMonthDay(getFiliationForm().getDateOfBirth());
 	person.setCountry(getFiliationForm().getNationality());
