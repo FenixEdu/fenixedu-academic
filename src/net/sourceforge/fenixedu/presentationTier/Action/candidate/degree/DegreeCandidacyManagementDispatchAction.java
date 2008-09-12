@@ -92,6 +92,16 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    request.setAttribute("currentForm", operation.moveToNextForm());
 	    return mapping.findForward("fillData");
 	} else {
+	    final StudentCandidacy candidacy = getCandidacy(request);
+	    if (candidacy.isConcluded()) {
+		request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
+		request.setAttribute("candidacyID", candidacy.getIdInternal());
+
+		addActionMessage(request, "warning.candidacy.process.is.already.concluded");
+
+		return showCandidacyDetails(mapping, actionForm, request, response);
+	    }
+
 	    return executeOperation(mapping, actionForm, request, response, operation);
 	}
 

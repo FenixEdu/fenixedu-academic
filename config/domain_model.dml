@@ -2106,11 +2106,7 @@ class DomainObject {
 			String notesAboutResidenceAppliance;
 			StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
 			
-			//String districtOfResidence;
-			//String districtSubdivisionOfResidence;
 			Boolean dislocatedFromPermanentResidence;
-			//String schoolTimeDistrictOfResidence;
-			//String schoolTimeDistrictSubDivisionOfResidence;
 			Integer placingOption;
 			GrantOwnerType grantOwnerType;
 			Integer numberOfCandidaciesToHigherSchool;

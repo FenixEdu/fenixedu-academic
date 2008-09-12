@@ -9,6 +9,14 @@
 <em><bean:message key="portal.candidate" /></em>
 <h2><bean:message  key="label.candidacy.candidacyDetails"/></h2>
 
+<logic:messagesPresent message="true">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true" bundle="CANDIDATE_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
+
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType.name" value="REGISTERED">
 	<fr:view name="candidacy" schema="DegreeCandidacy.view-with-person-details">
 		<fr:layout name="tabular">

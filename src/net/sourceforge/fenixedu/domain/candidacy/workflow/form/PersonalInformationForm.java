@@ -18,6 +18,11 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PersonalInformationForm extends Form {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     // Filiation
     private String name; // read only
 
