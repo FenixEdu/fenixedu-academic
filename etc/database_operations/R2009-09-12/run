@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table Candidacy" AlterTableCandidacy.sql
+execute "updatePostingRuleOJBConcClassValues.sql" updatePostingRuleOJBConcClassValues.sql
