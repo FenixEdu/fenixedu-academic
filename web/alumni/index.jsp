@@ -83,7 +83,7 @@ ul.material li.feedback { background: url(http://www.ist.utl.pt/img/alumni/icon_
 
 <h3>Links Úteis</h3>
 <ul>
-	<li><a target="_blank" href="http://aaa.ist.utl.pt">Associação dos Antigos Alunos do Instituto Superior Técnico (AAAIST)</a> <em>"Uma ponte entre o Técnico e os seus Antigos Alunos"</em></li>
+	<li><a target="_blank" href="http://aaa.ist.utl.pt" title="Uma ponte entre o Técnico e os seus Antigos Alunos">Associação dos Antigos Alunos do Instituto Superior Técnico (AAAIST)</a> <em></li>
 	<li><a target="_blank" href="http://www.ordemengenheiros.pt">Ordem dos Engenheiros</a></li>
 	<li><a target="_blank" href="http://www.academia-engenharia.org">Academia da Engenharia</a></li>
 	<li><a target="_blank" href="http://www.apengsaude.org">Associação Portuguesa de Engenharia da Saúde</a></li>

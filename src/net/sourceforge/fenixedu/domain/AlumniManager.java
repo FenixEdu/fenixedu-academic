@@ -75,7 +75,7 @@ public class AlumniManager {
 	    }
 	}
 
-	if (!student.getPerson().getDocumentIdNumber().equals(documentIdNumber)) {
+	if (!student.getPerson().getDocumentIdNumber().equals(documentIdNumber.trim())) {
 	    throw new DomainException("error.document.number.student.number.mismatch");
 	}
 

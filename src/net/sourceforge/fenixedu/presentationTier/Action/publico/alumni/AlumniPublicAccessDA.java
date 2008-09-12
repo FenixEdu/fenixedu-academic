@@ -121,7 +121,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
 	try {
 	    final Alumni alumni = (Alumni) executeService("RegisterAlumniData", alumniBean.getStudentNumber(), alumniBean
-		    .getDocumentIdNumber(), alumniBean.getEmail());
+		    .getDocumentIdNumber().trim(), alumniBean.getEmail());
 
 	    //TODO: remove
 	    String url = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
