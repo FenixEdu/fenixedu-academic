@@ -212,6 +212,7 @@ public class Person extends Person_Base {
     public Person() {
 	super();
 	setMaritalStatus(MaritalStatus.UNKNOWN);
+	createLoginIdentificationAndUserIfNecessary();
 	setIsPassInKerberos(Boolean.FALSE);
 	setAvailablePhoto(Boolean.FALSE);
     }
@@ -228,7 +229,7 @@ public class Person extends Person_Base {
 	    throw new DomainException("error.person.existentPerson");
 	}
 
-	createUserAndLoginEntity();
+	createLoginIdentificationAndUserIfNecessary();
 	setProperties(personToCreate);
 	setCountry(country);
 	setIsPassInKerberos(Boolean.FALSE);
@@ -242,7 +243,6 @@ public class Person extends Person_Base {
 	setGender(gender);
 	setMaritalStatus(MaritalStatus.SINGLE);
 	setIdentification(identificationDocumentNumber, identificationDocumentType);
-	createUserAndLoginEntity();
     }
 
     public Person(final PersonBean personBean) {
@@ -250,7 +250,7 @@ public class Person extends Person_Base {
 
 	setProperties(personBean);
 
-	createUserAndLoginEntity();
+	createLoginIdentificationAndUserIfNecessary();
 	setIsPassInKerberos(Boolean.FALSE);
 
 	createDefaultPhysicalAddress(personBean.getPhysicalAddressData());
@@ -258,10 +258,6 @@ public class Person extends Person_Base {
 	createDefaultMobilePhone(personBean.getMobile());
 	createDefaultWebAddress(personBean.getWebAddress());
 	createDefaultEmailAddress(personBean.getEmail());
-    }
-
-    private void createUserAndLoginEntity() {
-	new Login(new User(this));
     }
 
     private Person(final String name, final Gender gender, final PhysicalAddressData data, final String phone,
@@ -293,7 +289,6 @@ public class Person extends Person_Base {
 	setName(name);
 	setGender(gender);
 	setIdentification(documentIDNumber, documentType);
-	createUserAndLoginEntity();
     }
 
     public Person(PersonBean creator, boolean createExternalPerson) {
@@ -373,7 +368,7 @@ public class Person extends Person_Base {
 	}
 
     }
-    
+
     public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
 	setName(name);
 	updateDefaultPhysicalAddress(new PhysicalAddressData().setAddress(address));
