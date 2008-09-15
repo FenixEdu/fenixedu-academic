@@ -64,7 +64,6 @@
 	<!-- FORMATION -->
 
 	<!-- FROM STUDENT ROLE -->
-
 	<definition name="alumni.administrativeOfficeServices.documentRequests.administrativeOfficeServicesIndex" extends="alumni.masterPage">
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/administrativeOfficeServicesIntro.jsp" />
 	</definition>
@@ -79,11 +78,12 @@
 		
 	<definition name="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequestsToCreate" extends="alumni.masterPage">
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/viewDocumentRequestsToCreate.jsp" />
-	</definition>	<definition name="alumni.administrativeOfficeServices.documentRequests.chooseRegistration" extends="alumni.masterPage">
+	</definition>
+
+	<definition name="alumni.administrativeOfficeServices.documentRequests.chooseRegistration" extends="alumni.masterPage">
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/chooseRegistration.jsp" />
 	</definition>
 	
-		
 	<definition name="alumni.administrativeOfficeServices.documentRequests.createSuccess" extends="alumni.masterPage">
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/createSuccess.jsp" />
 	</definition>
@@ -104,23 +104,16 @@
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/cancelSuccess.jsp" />
 	</definition>
 
-
-	<definition name="alumni.administrativeOfficeServices.payments.showEvents"
-		extends="alumni.masterPage">
-		<put name="body"
-			value="/alumni/administrativeOfficeServices/payments/showEvents.jsp" />
+	<definition name="alumni.administrativeOfficeServices.payments.showEvents" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/payments/showEvents.jsp" />
 	</definition>
 
-	<definition name="alumni.administrativeOfficeServices.payments.showEventDetails"
-		extends="alumni.masterPage">
-		<put name="body"
-			value="/alumni/administrativeOfficeServices/payments/showEventDetails.jsp" />
+	<definition name="alumni.administrativeOfficeServices.payments.showEventDetails" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/payments/showEventDetails.jsp" />
 	</definition>
 
-	<definition name="alumni.administrativeOfficeServices.prices.viewPrices"
-		extends="alumni.masterPage">
-		<put name="body"
-			value="/alumni/administrativeOfficeServices/prices/viewPrices.jsp" />
+	<definition name="alumni.administrativeOfficeServices.prices.viewPrices" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/prices/viewPrices.jsp" />
 	</definition>
 	<!-- FROM STUDENT ROLE -->
 
