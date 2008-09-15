@@ -1,109 +1,109 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="." default="compile" name="Compilation Scripts">
 
-	<property environment="env"/>
-	<property name="encoding" value="ISO-8859-1"/>
+	<property environment="env" />
+	<property name="encoding" value="ISO-8859-1" />
 
-	<property file="build.properties"/>
+	<property file="build.properties" />
 
 	<!-- Source code directories -->
-	<property name="src" location="src"/>
-	<property name="src_gen" location="src_gen"/>	
-	<property name="config" location="config"/>
-	<property name="reports" location="reports"/>	
-	<property name="institution.config" location="${institution.project}/config"/>
-	<property name="institution.metadata.tiles" location="${institution.project}/metadata/tiles"/>
-	<property name="config.web" location="metadata"/>
-	
+	<property name="src" location="src" />
+	<property name="src_gen" location="src_gen" />
+	<property name="config" location="config" />
+	<property name="reports" location="reports" />
+	<property name="institution.config" location="${institution.project}/config" />
+	<property name="institution.metadata.tiles" location="${institution.project}/metadata/tiles" />
+	<property name="config.web" location="metadata" />
+
 	<!-- Directories for deploy -->
-	<property name="deploy.home" location="deploy"/>
+	<property name="deploy.home" location="deploy" />
 
 	<!-- Directories with libraries (JARs) -->
 	<property name="lib" location="lib" />
 
 	<!-- Directory with SQL instructions -->
-	<property name="etc" location="etc"/>
+	<property name="etc" location="etc" />
 
 	<!-- Directory with web-content -->
-	<property name="web-content" location="web"/>
-	<property name="institution.web-content" location="${institution.project}/jsp"/>
+	<property name="web-content" location="web" />
+	<property name="institution.web-content" location="${institution.project}/jsp" />
 
 	<!-- DML definition file -->
-	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
+	<property name="dml.definition.file" value="${config}/domain_model.dml" />
 
 	<!-- WebServices(xfire) Directories -->
 	<property name="xfire" location="${config}/xfire" />
-	<property name="xfire.stubsTempDir" value="${basedir}/stubsTempDir"/>
-	<property name="xfire.stubsTempDir.classes" value="${basedir}/stubsTempDir/classes"/>
-	
+	<property name="xfire.stubsTempDir" value="${basedir}/stubsTempDir" />
+	<property name="xfire.stubsTempDir.classes" value="${basedir}/stubsTempDir/classes" />
+
 	<!-- Compilation options -->
-	<property name="compile.debug"       value="on"/>
-	<property name="compile.deprecation" value="off"/>
-	<property name="compile.optimize"    value="on"/>
+	<property name="compile.debug" value="on" />
+	<property name="compile.deprecation" value="off" />
+	<property name="compile.optimize" value="on" />
 
 	<target name="set-properties-copy" if="institution.project"
 			description="Determine properties to use for build properties">
-		<property name="build.home" location="build"/>
+		<property name="build.home" location="build" />
 	</target>
 
 	<target name="set-properties-inplace" unless="institution.project"
 			description="Determine properties to use for build properties">
-		<property name="build.home" location="web"/>
+		<property name="build.home" location="web" />
 	</target>
 
 	<target name="set-properties" description="Determine properties to use for build properties"
 			depends="set-properties-copy, set-properties-inplace">
-		<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
-		<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
-		<property name="build.home.webinf.classes.meta.inf" value="${build.home.webinf.classes}/META-INF"/>
-		<property name="build.home.webinf.conf" value="${build.home.webinf}/conf"/>
-		<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
-		<property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code"/>
-		<property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes"/>
-		<property name="build.home.reports" value="${build.home.webinf.classes}/reports"/>
-		<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
+		<property name="build.home.webinf" value="${build.home}/WEB-INF" />
+		<property name="build.home.webinf.classes" value="${build.home.webinf}/classes" />
+		<property name="build.home.webinf.classes.meta.inf" value="${build.home.webinf.classes}/META-INF" />
+		<property name="build.home.webinf.conf" value="${build.home.webinf}/conf" />
+		<property name="build.home.webinf.libs" value="${build.home.webinf}/lib" />
+		<property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code" />
+		<property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes" />
+		<property name="build.home.reports" value="${build.home.webinf.classes}/reports" />
+		<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml" />
 		<property name="build.home.xfire" value="${build.home.webinf.classes.meta.inf}/xfire" />
 
 		<path id="class.path.lib.ref">
 			<fileset dir="${lib}">
-				<include name="*.jar"/>
+				<include name="*.jar" />
 			</fileset>
 			<fileset dir="${build.home.webinf.libs}">
-				<include name="*.jar"/>
+				<include name="*.jar" />
 			</fileset>
 		</path>
 	</target>
 
 	<target name="clean-all-copy" if="institution.project"
 			description="Removes any generated files">
-		<delete dir="${build.home}"/>
+		<delete dir="${build.home}" />
 	</target>
 
 	<target name="clean-all-inplace" unless="institution.project"
 			description="Removes any generated files">
-		<delete dir="${build.home.webinf.classes}"/>
+		<delete dir="${build.home.webinf.classes}" />
 	</target>
 
 	<target name="clean-all" depends="set-properties, clean-all-copy, clean-all-inplace"
 			description="Removes any generated files">
-		<delete dir="${build.home.xfire}"/>
-		<delete dir="${build.home}/images/logs"/>
-		<delete dir="${deploy.home}"/>
-		<delete dir="${src_gen}"/>
-		<delete file=".actionAnnotationLog"/>
+		<delete dir="${build.home.xfire}" />
+		<delete dir="${build.home}/images/logs" />
+		<delete dir="${deploy.home}" />
+		<delete dir="${src_gen}" />
+		<delete file=".actionAnnotationLog" />
 	</target>
 
 	<target name="check-dml-file" description="Checks if the dml file is still up to date">
-		<uptodate property="dml.skip-compile" targetfile="${build.home.webinf.classes}/domain_model.dml" srcfile="${config}/domain_model.dml"/>
+		<uptodate property="dml.skip-compile" targetfile="${build.home.webinf.classes}/domain_model.dml" srcfile="${config}/domain_model.dml" />
 	</target>
 
 	<target name="prepare-copy" if="institution.project"
 			description="Copy configuration files to compile dir">
-		<mkdir dir="${build.home}"/>
+		<mkdir dir="${build.home}" />
 		<copy encoding="${encoding}" todir="${build.home}">
-			<fileset dir="${web-content}" >
-				<include name="**/*.*"/>
-				<exclude name="WEB-INF//*.*"/>
+			<fileset dir="${web-content}">
+				<include name="**/*.*" />
+				<exclude name="WEB-INF//*.*" />
 			</fileset>
 		</copy>
 	</target>
@@ -117,27 +117,27 @@
 			description="Copy configuration files to compile dir">
 
 		<tstamp>
-		   <format property="build.version" pattern="yyyy/MM/dd HH:mm:ss"/>
+			<format property="build.version" pattern="yyyy/MM/dd HH:mm:ss" />
 		</tstamp>
 
-		<mkdir dir="${build.home.webinf.classes}"/>
-		<mkdir dir="${build.home.xfire}"/>
-		<mkdir dir="${build.home}/images/logs"/>
+		<mkdir dir="${build.home.webinf.classes}" />
+		<mkdir dir="${build.home.xfire}" />
+		<mkdir dir="${build.home}/images/logs" />
 
 		<echo file="${build.home.webinf.classes}/.build.version">${build.version}</echo>
 
-		<copy file="build.properties" tofile="${build.home.webinf.classes}/.build.properties"/>
+		<copy file="build.properties" tofile="${build.home.webinf.classes}/.build.properties" />
 
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes}">
-			<fileset dir="${config}"/>
-			<fileset file="build.properties"/>
+			<fileset dir="${config}" />
+			<fileset file="build.properties" />
 		</copy>
 
 		<copy encoding="${encoding}" todir="${build.home.xfire}">
-			<fileset dir="${xfire}"/>
+			<fileset dir="${xfire}" />
 		</copy>
 
-		<antcall target="prepare-institution"/>
+		<antcall target="prepare-institution" />
 
 		<!-- Replace tokens in configuration files with local config -->
 		<ant antfile="build_generateStrutsMapping.xml" target="generate-struts-mapping" inheritall="false" />
@@ -145,23 +145,23 @@
 
 	<target name="prepare-institution" if="institution.project">
 		<copy encoding="${encoding}" todir="${build.home}" overwrite="true">
-			<fileset dir="${institution.web-content}" >
-				<include name="**/*.*"/>
-				<exclude name="WEB-INF//*.*"/>
+			<fileset dir="${institution.web-content}">
+				<include name="**/*.*" />
+				<exclude name="WEB-INF//*.*" />
 			</fileset>
 		</copy>
 
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes}" overwrite="true">
-			<fileset dir="${institution.config}"/>
+			<fileset dir="${institution.config}" />
 		</copy>
 
 		<copy encoding="${encoding}" todir="${build.home.webinf}/tiles" overwrite="true">
-			<fileset dir="${institution.metadata.tiles}"/>
+			<fileset dir="${institution.metadata.tiles}" />
 		</copy>
-		
+
 	</target>
 
-    <!-- = = = = = = = = = = = = = = = = =
+	<!-- = = = = = = = = = = = = = = = = =
           macrodef: generateHostDependentProperties
           
           Generates a properties file with a definition (or key entry) for each host
@@ -178,89 +178,89 @@
           	hostnames - the name of the property that contains the list of hostnames
           				default = filter.hostnames
          = = = = = = = = = = = = = = = = = -->
-    <macrodef name="generateHostDependentProperties">
-        <attribute name="hostnames" default="filter.hostnames" />
-        <attribute name="prefix" default="" />
-        <attribute name="destfile" default="" />
-    	
-        <sequential>
-        		<delete file="@{destfile}.xml"/>
-    			<delete file="${build.home.webinf.classes}/@{destfile}"/>
-    			<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
-    			<concat destfile="@{destfile}.xml">
+	<macrodef name="generateHostDependentProperties">
+		<attribute name="hostnames" default="filter.hostnames" />
+		<attribute name="prefix" default="" />
+		<attribute name="destfile" default="" />
+
+		<sequential>
+			<delete file="@{destfile}.xml" />
+			<delete file="${build.home.webinf.classes}/@{destfile}" />
+			<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp" />
+			<concat destfile="@{destfile}.xml">
     				${@{hostnames}}
     				<filterchain>
-    					<tokenfilter>
-    						<ignoreblank/>
-    						<trim/>
-    						<stringtokenizer delims="," delimsaretokens="true" includeDelims="false"/>
-    						<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
-    					</tokenfilter>
-    					<tokenfilter>
-    						<replacestring from="," to=""/>
-    						<trim/>
-    						<ignoreblank/>
-    					</tokenfilter>
-    					<prefixlines prefix="@@@{prefix}."/>
-    					<prefixlines prefix="file='${build.home.webinf.classes}/@{destfile}'>"/>
-    					<prefixlines prefix="append='true' "/>
-    					<prefixlines prefix="${character.lessthan}echo "/>
-    					<tokenfilter>
-    						<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
+					<tokenfilter>
+						<ignoreblank />
+						<trim />
+						<stringtokenizer delims="," delimsaretokens="true" includeDelims="false" />
+						<replaceregex pattern="(.*)" replace="\1${line.seperator}" />
+					</tokenfilter>
+					<tokenfilter>
+						<replacestring from="," to="" />
+						<trim />
+						<ignoreblank />
+					</tokenfilter>
+					<prefixlines prefix="@@@{prefix}." />
+					<prefixlines prefix="file='${build.home.webinf.classes}/@{destfile}'>" />
+					<prefixlines prefix="append='true' " />
+					<prefixlines prefix="${character.lessthan}echo " />
+					<tokenfilter>
+						<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false" />
     						<replaceregex pattern="(.*)"
     							flags="s"
     							replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
-    					</tokenfilter>
-    					<tokenfilter>
-    						<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
+					</tokenfilter>
+					<tokenfilter>
+						<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false" />
     						<replaceregex pattern="@(.*)@"
     							flags="s"
     							replace="\1=${character.dollar}{\1}"/>
-    					</tokenfilter>
-    					<tokenfilter>
-    						<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false"/>
+					</tokenfilter>
+					<tokenfilter>
+						<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false" />
     						<replaceregex pattern="(.*)"
     							flags="s"
     							replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
-    					</tokenfilter>
-    					<escapeunicode/>
-    				</filterchain>
-    			</concat>
-    			<ant antfile="@{destfile}.xml"/>
-    			<delete file="@{destfile}.xml"/>
-        </sequential>
-    </macrodef>
+					</tokenfilter>
+					<escapeunicode />
+				</filterchain>
+			</concat>
+			<ant antfile="@{destfile}.xml" />
+			<delete file="@{destfile}.xml" />
+		</sequential>
+	</macrodef>
 
 	<target name="printers-configuration-file">
-		<generateHostDependentProperties prefix="markSheet.printers" hostnames="filter.printers" destfile="printers.properties"/>
+		<generateHostDependentProperties prefix="markSheet.printers" hostnames="filter.printers" destfile="printers.properties" />
 	</target>
 
 	<target name="write-index-redirect-hostnames-configuration-file">
-		<generateHostDependentProperties prefix="index.html.link" destfile=".indexRedirectHostnames.properties"/>
+		<generateHostDependentProperties prefix="index.html.link" destfile=".indexRedirectHostnames.properties" />
 	</target>
 
 	<target name="write-login-redirect-hostnames-configuration-file">
-		<generateHostDependentProperties prefix="login.html.link" destfile=".loginRedirectHostnames.properties"/>
+		<generateHostDependentProperties prefix="login.html.link" destfile=".loginRedirectHostnames.properties" />
 	</target>
 
 	<target name="write-filter-hostnames-configuration-file">
-		<generateHostDependentProperties prefix="filter.hostname" destfile=".authenticationServiceHostnamesFiltering.properties"/>
+		<generateHostDependentProperties prefix="filter.hostname" destfile=".authenticationServiceHostnamesFiltering.properties" />
 	</target>
-	
+
 	<target name="write-cas-serviceUrl-hostnames-configuration-file">
-		<generateHostDependentProperties prefix="cas.serviceUrl" destfile=".casServiceUrlHostnames.properties"/>
+		<generateHostDependentProperties prefix="cas.serviceUrl" destfile=".casServiceUrlHostnames.properties" />
 	</target>
 
 	<target name="write-path-access-control-configuration-file">
 		<copy encoding="${encoding}" file="build.properties" tofile="${build.home.webinf.classes}/.pathAccessControl.properties">
 			<filterchain>
 				<linecontainsregexp>
-					<regexp pattern="^host.control.(path|name)."/>
+					<regexp pattern="^host.control.(path|name)." />
 				</linecontainsregexp>
 			</filterchain>
 		</copy>
 	</target>
-	
+
 	<target name="write-all-properties" 
 		depends="write-filter-hostnames-configuration-file,write-index-redirect-hostnames-configuration-file,write-login-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-path-access-control-configuration-file,printers-configuration-file">
 	</target>
@@ -273,22 +273,22 @@
 			depends="check-dml-file, print-dml-message"
 			unless="dml.skip-compile"
 			description="Generate java code">
-		<ant antfile="build_codeGenerator.xml" target="generate-domain"/>
-		<ant antfile="build_codeGenerator.xml" target="update-RootDomainObject"/>
-		<ant antfile="build_codeGenerator.xml" target="generateDeprecatedDateGettersAndSetters"/>
+		<ant antfile="build_codeGenerator.xml" target="generate-domain" />
+		<ant antfile="build_codeGenerator.xml" target="update-RootDomainObject" />
+		<ant antfile="build_codeGenerator.xml" target="generateDeprecatedDateGettersAndSetters" />
 	</target>
 
-	<target name="generate-groups-language" 	description="Generate the parser for the groups language">
-		<ant antfile="build_codeGenerator.xml" target="generate-groups-language"/>
+	<target name="generate-groups-language" description="Generate the parser for the groups language">
+		<ant antfile="build_codeGenerator.xml" target="generate-groups-language" />
 	</target>
 
 	<target name="i18nDefault"
     		depends="prepare">
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes}/resources">
-			<fileset dir="${build.home.webinf.classes}/resources" >
-				<include name="*_pt.properties"/>
+			<fileset dir="${build.home.webinf.classes}/resources">
+				<include name="*_pt.properties" />
 			</fileset>
-			<globmapper from="*_pt.properties" to="*.properties"/>
+			<globmapper from="*_pt.properties" to="*.properties" />
 		</copy>
 	</target>
 
@@ -302,85 +302,97 @@
            encoding="${encoding}"
            nowarn="true"
   		   >
-			<classpath refid="class.path.lib.ref"/>
-			<src path="${src_gen}"/>
-			<src path="${src}"/>
-			<include name="net/sourceforge/fenixedu/tools/**"/>
-			<include name="net/sourceforge/fenixedu/domain/**"/>
-			<include name="relation/**"/>
+			<compilerarg line="-processor pt.ist.fenixWebFramework.services.ServiceAnnotationProcessor" />
+			<classpath refid="class.path.lib.ref" />
+			<src path="${src_gen}" />
+			<src path="${src}" />
+			<include name="net/sourceforge/fenixedu/tools/**" />
+			<include name="net/sourceforge/fenixedu/domain/**" />
+			<include name="relation/**" />
 		</javac>
 	</target>
 
 	<target name="base-compile" description="Compile application" depends="compile-domain,i18nDefault, write-all-properties, generate">
-		<javac destdir="${build.home.webinf.classes}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true" >
-			<compilerarg line="-processor pt.ist.fenixWebFramework.struts.annotations.ActionAnnotationProcessor"/>
-			<classpath refid="class.path.lib.ref"/>
-			<src path="${src_gen}"/>
-			<src path="${src}"/>
+		<javac destdir="${build.home.webinf.classes}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
+			<compilerarg line="-processor pt.ist.fenixWebFramework.services.ServiceAnnotationProcessor,pt.ist.fenixWebFramework.struts.annotations.ActionAnnotationProcessor" />
+			<classpath refid="class.path.lib.ref" />
+			<src path="${src_gen}" />
+			<src path="${src}" />
 		</javac>
-		<copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true" failonerror="false"/>
-		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" 
-			dir="${build.home.webinf.classes}"
-			fork="true">
-			<classpath refid="class.path.lib.ref"/>
+		<copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true" failonerror="false" />
+		<java classname="pt.ist.fenixWebFramework.services.ServiceAnnotationInjector" failonerror="true">
+			<classpath refid="class.path.lib.ref" />
 			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
+				<pathelement path="${build.home.webinf.classes}" />
 			</classpath>
-			<arg value="-d"/>
-			<arg value="${dml.definition.file.completed}"/>
+			<arg value="${build.home.webinf.classes}" />
+			<arg value="${build.home.webinf.libs}/jvstm.jar" />
+			<arg value="${build.home.webinf.libs}/fenix-framework.jar" />
+			<arg value="${build.home.webinf.libs}/fenix-web-framework.jar" />
+			<arg value="${build.home.webinf.libs}/joda-time-1.5.2.jar" />
+			<arg value="${build.home.webinf.libs}/struts.jar" />
+			<arg value="lib/servlet-api-2.3.jar" />
+		</java>
+		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" dir="${build.home.webinf.classes}" fork="true">
+			<classpath refid="class.path.lib.ref" />
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}" />
+			</classpath>
+			<arg value="-d" />
+			<arg value="${dml.definition.file.completed}" />
 		</java>
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes}">
-			<fileset dir="${src}" >
-				<include name="**/*.*"/>
-				<exclude name="**/*.java"/>
+			<fileset dir="${src}">
+				<include name="**/*.*" />
+				<exclude name="**/*.java" />
 			</fileset>
 		</copy>
 	</target>
 
-	<target name="generateStubs" depends="set-properties">		
-		<mkdir dir="${xfire.stubsTempDir}"/>		
-		<mkdir dir="${xfire.stubsTempDir.classes}"/>
-		<taskdef name="wsgen" classname="org.codehaus.xfire.gen.WsGenTask" classpathref="class.path.lib.ref"/>
-		<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="class.path.lib.ref"/>			
+	<target name="generateStubs" depends="set-properties">
+		<mkdir dir="${xfire.stubsTempDir}" />
+		<mkdir dir="${xfire.stubsTempDir.classes}" />
+		<taskdef name="wsgen" classname="org.codehaus.xfire.gen.WsGenTask" classpathref="class.path.lib.ref" />
+		<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="class.path.lib.ref" />
 		<for param="url" list="${webServices.external.urls}">
 			<sequential>
-				<wsgen outputDirectory="${xfire.stubsTempDir}" wsdl="@{url}" package="net.sourceforge.fenixedu.webServices.generatedStubs" overwrite="true"/>					
-			</sequential>			
-		</for>								
+				<wsgen outputDirectory="${xfire.stubsTempDir}" wsdl="@{url}" package="net.sourceforge.fenixedu.webServices.generatedStubs" overwrite="true" />
+			</sequential>
+		</for>
 		<javac srcdir="${xfire.stubsTempDir}" destdir="${xfire.stubsTempDir.classes}" 
 			   debug="${compile.debug}" 
 			   optimize="${compile.optimize}" 
 			   deprecation="${compile.deprecation}" 
 			   encoding="${encoding}" 
 			   nowarn="true">
-			<classpath refid="class.path.lib.ref"/>
-			<exclude name="${xfire.stubsTempDir}/*.xml"/>
+			<classpath refid="class.path.lib.ref" />
+			<exclude name="${xfire.stubsTempDir}/*.xml" />
 		</javac>
 		<delete file="${lib}/fenix-stubs.jar" />
 		<jar destfile="${lib}/fenix-stubs.jar">
 			<fileset dir="${xfire.stubsTempDir.classes}" />
 		</jar>
-		<delete dir="${xfire.stubsTempDir}"/>
+		<delete dir="${xfire.stubsTempDir}" />
 	</target>
 
-	<target name="compile-base" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile"/>
+	<target name="compile-base" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile" />
 
 	<target name="compile" description="Compile application" depends="compile-base">
 		<parallel threadsperprocessor="1" threadcount="2">
-			<antcall target="compile-reports"/>
+			<antcall target="compile-reports" />
 			<sequential>
-				<ant antfile="build_injectionCode.xml" target="inject-accessControl-code"/>
-				<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code"/>
+				<ant antfile="build_injectionCode.xml" target="inject-accessControl-code" />
+				<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code" />
 			</sequential>
 		</parallel>
 	</target>
 
 	<target name="compile-without-injectionCode" description="Compile application" depends="compile-base">
 		<parallel threadsperprocessor="1" threadcount="2">
-			<antcall target="compile-reports"/>
+			<antcall target="compile-reports" />
 			<sequential>
-				<ant antfile="build_injectionCode.xml" target="accessControl-void-inject"/>
-				<ant antfile="build_injectionCode.xml" target="domainObjectActionLog-void-inject"/>
+				<ant antfile="build_injectionCode.xml" target="accessControl-void-inject" />
+				<ant antfile="build_injectionCode.xml" target="domainObjectActionLog-void-inject" />
 			</sequential>
 		</parallel>
 	</target>
@@ -388,74 +400,74 @@
 	<target name="deploy-linux" depends="set-properties"
             description="Deploys standalone application to local web server">
 		<exec executable="rm" failonerror="false" os="Linux">
-			<arg line="-rf"/>
-			<arg line="${env.CATALINA_HOME}/webapps/${app.context}"/>
+			<arg line="-rf" />
+			<arg line="${env.CATALINA_HOME}/webapps/${app.context}" />
 		</exec>
 		<exec executable="ln" failonerror="false" os="Linux">
-			<arg line="-s"/>
-			<arg line="${build.home}"/>
-			<arg line="${env.CATALINA_HOME}/webapps/${app.context}"/>
+			<arg line="-s" />
+			<arg line="${build.home}" />
+			<arg line="${env.CATALINA_HOME}/webapps/${app.context}" />
 		</exec>
 	</target>
 
 	<target name="deploy-win" depends="set-properties"
             description="Deploys standalone application to local web server">
 		<ant antfile="build_tomcat.xml" target="install">
-			<property name="webapp" value="${build.home}"/>
+			<property name="webapp" value="${build.home}" />
 		</ant>
 	</target>
 
 	<target name="install-without-depends"
             description="Deploys standalone application to web server">
 		<exec executable="ant.bat" failonerror="false" failifexecutionfails="false" os="Windows XP, Windows 2000, Windows 98, Windows NT, Windows 95">
-			<arg line="-f"/>
-			<arg line="build_compile.xml"/>
-			<arg line="deploy-win"/>
+			<arg line="-f" />
+			<arg line="build_compile.xml" />
+			<arg line="deploy-win" />
 		</exec>
 		<exec executable="ant" failonerror="false" os="Linux">
-			<arg line="-f"/>
-			<arg line="build_compile.xml"/>
-			<arg line="deploy-linux"/>
+			<arg line="-f" />
+			<arg line="build_compile.xml" />
+			<arg line="deploy-linux" />
 		</exec>
 	</target>
 
 	<target name="install"
     		depends="compile"
             description="Deploys standalone application to web server">
-		<antcall target="install-without-depends" inheritall="true"/>
+		<antcall target="install-without-depends" inheritall="true" />
 	</target>
 
 	<target name="base-jar"
             description="Generates a java archive applications 'core' (services and domain).">
-		<mkdir dir="${deploy.home}"/>
+		<mkdir dir="${deploy.home}" />
 		<jar destfile="${deploy.home}/${app.name}.jar">
 			<fileset dir="${build.home.webinf.classes}">
-				<include name="net/sourceforge/fenixedu/_development/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/injectionCode/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/constants/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/commons/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/dataTransferObject/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/domain/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/fileSuport/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/middleware/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/integrationTier/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/applicationTier/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/persistenceTier/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/persistenceTierFiltroPessoa/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/persistenceTierJDBC/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/persistenceTierOracle/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/presentationTier/renderers/htmlEditor/*.class"/>
-				<include name="net/sourceforge/fenixedu/presentationTier/docs/*.class"/>
-				<include name="net/sourceforge/fenixedu/util/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/utilInsc/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/utilTests/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/tools/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/framework/**/*.class"/>
-				<include name="relations/*.class"/>
-				<include name="org/**/*.class"/>
-				<include name="reports/**/*.*"/>
-				<include name="reports.properties"/>
-				
+				<include name="net/sourceforge/fenixedu/_development/**/*.class" />
+				<include name="net/sourceforge/fenixedu/injectionCode/**/*.class" />
+				<include name="net/sourceforge/fenixedu/constants/**/*.class" />
+				<include name="net/sourceforge/fenixedu/commons/**/*.class" />
+				<include name="net/sourceforge/fenixedu/dataTransferObject/**/*.class" />
+				<include name="net/sourceforge/fenixedu/domain/**/*.class" />
+				<include name="net/sourceforge/fenixedu/fileSuport/**/*.class" />
+				<include name="net/sourceforge/fenixedu/middleware/**/*.class" />
+				<include name="net/sourceforge/fenixedu/integrationTier/**/*.class" />
+				<include name="net/sourceforge/fenixedu/applicationTier/**/*.class" />
+				<include name="net/sourceforge/fenixedu/persistenceTier/**/*.class" />
+				<include name="net/sourceforge/fenixedu/persistenceTierFiltroPessoa/**/*.class" />
+				<include name="net/sourceforge/fenixedu/persistenceTierJDBC/**/*.class" />
+				<include name="net/sourceforge/fenixedu/persistenceTierOracle/**/*.class" />
+				<include name="net/sourceforge/fenixedu/presentationTier/renderers/htmlEditor/*.class" />
+				<include name="net/sourceforge/fenixedu/presentationTier/docs/*.class" />
+				<include name="net/sourceforge/fenixedu/util/**/*.class" />
+				<include name="net/sourceforge/fenixedu/utilInsc/**/*.class" />
+				<include name="net/sourceforge/fenixedu/utilTests/**/*.class" />
+				<include name="net/sourceforge/fenixedu/tools/**/*.class" />
+				<include name="net/sourceforge/fenixedu/framework/**/*.class" />
+				<include name="relations/*.class" />
+				<include name="org/**/*.class" />
+				<include name="reports/**/*.*" />
+				<include name="reports.properties" />
+
 			</fileset>
 		</jar>
 	</target>
@@ -471,34 +483,34 @@
 	<target name="war"
 	    	depends="compile"
             description="Generates a web archive of the application.">
-		<mkdir dir="${deploy.home}"/>
+		<mkdir dir="${deploy.home}" />
 		<war destfile="${deploy.home}/${app.name}.war" webxml="${build.home.webinf}/web.xml">
 			<fileset dir="${build.home}">
-				<exclude name="WEB-INF/web.xml"/>
-				<exclude name="WEB-INF/classes/**"/>
-				<exclude name="WEB-INF/lib/*"/>
+				<exclude name="WEB-INF/web.xml" />
+				<exclude name="WEB-INF/classes/**" />
+				<exclude name="WEB-INF/lib/*" />
 			</fileset>
-			<lib dir="${build.home.webinf.libs}"/>
-			<classes dir="${build.home.webinf.classes}"/>
+			<lib dir="${build.home.webinf.libs}" />
+			<classes dir="${build.home.webinf.classes}" />
 		</war>
 	</target>
 
 	<target name="jsp-precompile" depends="compile">
-		
-		<mkdir dir="${build.home.jsp_gen_code}"/>
-		<mkdir dir="${build.home.jsp_gen_code.classes}"/>
-		
-		<taskdef classname="org.apache.jasper.JspC" name="jasper2" >
+
+		<mkdir dir="${build.home.jsp_gen_code}" />
+		<mkdir dir="${build.home.jsp_gen_code.classes}" />
+
+		<taskdef classname="org.apache.jasper.JspC" name="jasper2">
 			<classpath id="jspc.classpath">
-				<pathelement location="${jenv.JAVA_HOME}/../lib/tools.jar"/>
+				<pathelement location="${jenv.JAVA_HOME}/../lib/tools.jar" />
 				<fileset dir="${env.CATALINA_HOME}/bin">
-					<include name="*.jar"/>
+					<include name="*.jar" />
 				</fileset>
 				<fileset dir="${env.CATALINA_HOME}/server/lib">
-					<include name="*.jar"/>
+					<include name="*.jar" />
 				</fileset>
 				<fileset dir="${env.CATALINA_HOME}/common/lib">
-					<include name="*.jar"/>
+					<include name="*.jar" />
 				</fileset>
 			</classpath>
 		</taskdef>
@@ -517,22 +529,22 @@
                encoding="${encoding}"
 			   nowarn="true"
 	  		   >
-			<classpath refid="class.path.lib.ref"/>
+			<classpath refid="class.path.lib.ref" />
 			<classpath>
-				<pathelement path="${build.home.webinf.classes};"/>
-				<pathelement location="${env.CATALINA_HOME}/common/classes"/>
+				<pathelement path="${build.home.webinf.classes};" />
+				<pathelement location="${env.CATALINA_HOME}/common/classes" />
 				<fileset dir="${env.CATALINA_HOME}/common/lib">
-					<include name="*.jar"/>
+					<include name="*.jar" />
 				</fileset>
-				<pathelement location="${env.CATALINA_HOME}/shared/classes"/>
+				<pathelement location="${env.CATALINA_HOME}/shared/classes" />
 				<fileset dir="${env.CATALINA_HOME}/shared/lib">
-					<include name="*.jar"/>
+					<include name="*.jar" />
 				</fileset>
 				<fileset dir="${env.CATALINA_HOME}/bin">
-					<include name="*.jar"/>
+					<include name="*.jar" />
 				</fileset>
 			</classpath>
-			<src path="${build.home.jsp_gen_code}"/>
+			<src path="${build.home.jsp_gen_code}" />
 		</javac>
 
 	</target>
@@ -543,25 +555,25 @@
 				failonerror="true"
 				maxmemory="1024m"
 				>
-			<classpath refid="class.path.lib.ref"/>
+			<classpath refid="class.path.lib.ref" />
 			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
+				<pathelement path="${build.home.webinf.classes}" />
 			</classpath>
 		</java>
 	</target>
 
-	<target name="compile-reports" >
-		<mkdir dir="${build.home.reports}"/>
+	<target name="compile-reports">
+		<mkdir dir="${build.home.reports}" />
 		<taskdef name="jrc" 
 		      classname="net.sf.jasperreports.ant.JRAntCompileTask">
-			<classpath refid="class.path.lib.ref"/>
+			<classpath refid="class.path.lib.ref" />
 		</taskdef>
 		<jrc destdir="${build.home.reports}" srcdir="${reports}">
-			<classpath refid="class.path.lib.ref"/>
+			<classpath refid="class.path.lib.ref" />
 			<classpath>
-				<pathelement path="${build.home.webinf.classes};"/>
+				<pathelement path="${build.home.webinf.classes};" />
 			</classpath>
-			<include name="**/*.jrxml"/>
+			<include name="**/*.jrxml" />
 		</jrc>
 	</target>
 
@@ -571,8 +583,8 @@
 				failonerror="true"
 				maxmemory="1024m"
 				>
-			<arg value="${basedir}"/>
-			<classpath refid="class.path.lib.ref"/>
+			<arg value="${basedir}" />
+			<classpath refid="class.path.lib.ref" />
 		</java>
 	</target>
 
@@ -580,9 +592,9 @@
 		<java classname="net.sourceforge.fenixedu.Xtest" 
 			dir="${build.home.webinf.classes}"
 			fork="true">
-			<classpath refid="class.path.lib.ref"/>
+			<classpath refid="class.path.lib.ref" />
 			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
+				<pathelement path="${build.home.webinf.classes}" />
 			</classpath>
 		</java>
 	</target>
