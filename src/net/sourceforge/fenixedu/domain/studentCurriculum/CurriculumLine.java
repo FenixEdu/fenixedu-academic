@@ -17,9 +17,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class CurriculumLine extends CurriculumLine_Base {
 
@@ -251,5 +252,9 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     @Override
     public boolean isEnroledInSpecialSeason(ExecutionYear executionYear) {
 	return false;
+    }
+
+    public boolean hasCreatedBy() {
+	return getCreatedBy() != null && !getCreatedBy().isEmpty();
     }
 }
