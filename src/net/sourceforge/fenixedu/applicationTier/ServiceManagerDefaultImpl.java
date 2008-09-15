@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.IllegalWriteException;
 import pt.ist.fenixframework.pstm.ServiceInfo;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -85,70 +85,76 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
 
     public Object execute(IUserView id, String service, String method, Object[] args) throws FenixServiceException,
 	    FenixFilterException {
-	try {
-	    Calendar serviceStartTime = null;
-	    Calendar serviceEndTime = null;
+	Calendar serviceStartTime = null;
+	Calendar serviceEndTime = null;
 
+	try {
 	    IServiceManager manager = ServiceManager.getInstance();
 	    if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
 		serviceStartTime = Calendar.getInstance();
 	    }
-
-	    // Replace this line with the following block if conflicting
-	    // transactions should restart automatically
-	    // Object serviceResult = manager.execute(id, service, method,
-	    // args);
-
-	    final String username = id != null ? id.getUtilizador() : null;
-	    ServiceInfo.setCurrentServiceInfo(username, service, args);
-
-	    // try read-only transaction first, but only for non-public
-	    // sessions...
-	    Transaction.setDefaultReadOnly(!KNOWN_WRITE_SERVICES.containsKey(service));
-
 	    Object serviceResult = null;
-	    int tries = 0;
-	    try {
-		while (true) {
-		    tries++;
-		    try {
-			serviceResult = manager.execute(id, service, method, args);
-			break;
-		    } catch (jvstm.CommitException ce) {
-			// ce.printStackTrace();
-			if (LogLevel.INFO) {
-			    System.out.println("Restarting TX because of CommitException");
-			}
-			// repeat service
-			if (tries > 3) {
-			    System.out.println("Service " + service + " has been restarted " + tries
-				    + " times because of CommitException.");
-			}
-		    } catch (DomainObject.UnableToDetermineIdException ce) {
-			// ce.printStackTrace();
-			if (LogLevel.INFO) {
-			    System.out.println("Restarting TX because of UnableToDetermineIdException");
-			}
-			// repeat service
-			if (tries > 3) {
-			    System.out.println("Service " + service + " has been restarted " + tries
-				    + " times because of UnableToDetermineIdException.");
-			}
-		    } catch (IllegalWriteException iwe) {
-			KNOWN_WRITE_SERVICES.put(service, service);
-			Transaction.setDefaultReadOnly(false);
-			// repeat service
-			if (tries > 3) {
-			    System.out.println("Service " + service + " has been restarted " + tries
-				    + " times because of IllegalWriteException.");
+
+	    if (pt.ist.fenixWebFramework.services.ServiceManager.isInsideService()) {
+		serviceResult = manager.execute(id, service, method, args);
+	    } else {
+		pt.ist.fenixWebFramework.services.ServiceManager.enterBerserkService();
+		// Replace this line with the following block if conflicting
+		// transactions should restart automatically
+		// Object serviceResult = manager.execute(id, service, method,
+		// args);
+
+		final String username = id != null ? id.getUtilizador() : null;
+		ServiceInfo.setCurrentServiceInfo(username, service, args);
+
+		// try read-only transaction first, but only for non-public
+		// sessions...
+		Transaction.setDefaultReadOnly(!KNOWN_WRITE_SERVICES.containsKey(service));
+
+		int tries = 0;
+		try {
+		    while (true) {
+			tries++;
+			try {
+			    serviceResult = manager.execute(id, service, method, args);
+			    break;
+			} catch (jvstm.CommitException ce) {
+			    // ce.printStackTrace();
+			    if (LogLevel.INFO) {
+				System.out.println("Restarting TX because of CommitException");
+			    }
+			    // repeat service
+			    if (tries > 3) {
+				System.out.println("Service " + service + " has been restarted " + tries
+					+ " times because of CommitException.");
+			    }
+			} catch (AbstractDomainObject.UnableToDetermineIdException ce) {
+			    // ce.printStackTrace();
+			    if (LogLevel.INFO) {
+				System.out.println("Restarting TX because of UnableToDetermineIdException");
+			    }
+			    // repeat service
+			    if (tries > 3) {
+				System.out.println("Service " + service + " has been restarted " + tries
+					+ " times because of UnableToDetermineIdException.");
+			    }
+			} catch (IllegalWriteException iwe) {
+			    KNOWN_WRITE_SERVICES.put(service, service);
+			    Transaction.setDefaultReadOnly(false);
+			    // repeat service
+			    if (tries > 3) {
+				System.out.println("Service " + service + " has been restarted " + tries
+					+ " times because of IllegalWriteException.");
+			    }
 			}
 		    }
-		}
-	    } finally {
-		Transaction.setDefaultReadOnly(false);
-		if (LogLevel.INFO) {
-		    if (tries > 1) {
-			System.out.println("Service " + service + " took " + tries + " tries.");
+		} finally {
+		    pt.ist.fenixWebFramework.services.ServiceManager.exitBerserkService();
+		    Transaction.setDefaultReadOnly(false);
+		    if (LogLevel.INFO) {
+			if (tries > 1) {
+			    System.out.println("Service " + service + " took " + tries + " tries.");
+			}
 		    }
 		}
 	    }
@@ -162,8 +168,17 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
 	    if (userLoggingIsOn && id != null && serviceStartTime != null && serviceEndTime != null) {
 		registerUserExecutionOfService(id, service, method, args, serviceStartTime, serviceEndTime);
 	    }
-
 	    return serviceResult;
+	} catch (jvstm.CommitException e) {
+	    // we are inside another service, let him handle the repeat
+	    throw e;
+	} catch (AbstractDomainObject.UnableToDetermineIdException e) {
+	    // we are inside another service, let him handle the id retry
+	    throw e;
+	} catch (IllegalWriteException e) {
+	    // we are inside another service, let him handle the write
+	    // transaction conversion
+	    throw e;
 	} catch (ExcepcaoPersistencia e) {
 	    throw new FenixServiceException(e);
 	} catch (InvalidServiceException e) {
@@ -179,7 +194,7 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
 	} catch (IncompatibleFilterException e) {
 	    throw new FenixServiceException(e);
 	} catch (FilterChainFailedException e) {
-	    FilterChainFailedException filterChainFailedException = (FilterChainFailedException) e;
+	    FilterChainFailedException filterChainFailedException = e;
 	    Map failedPreFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.PRE);
 	    Map failedPostFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.POST);
 	    if (failedPreFilters != null && !failedPreFilters.isEmpty()) {

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
+import pt.ist.fenixWebFramework.services.ServiceManager;
 import pt.ist.fenixframework.pstm.Transaction;
-
 import pt.utl.ist.berserk.storage.ITransactionBroker;
 import pt.utl.ist.berserk.storage.exceptions.StorageException;
 
@@ -39,15 +39,18 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     }
 
     public void beginTransaction() {
-	this.iniciarTransaccao();
+	if (ServiceManager.isInsideBerserkService())
+	    this.iniciarTransaccao();
     }
 
     public void commitTransaction() {
-	this.confirmarTransaccao();
+	if (ServiceManager.isInsideBerserkService())
+	    this.confirmarTransaccao();
     }
 
     public void abortTransaction() throws StorageException {
-	this.cancelarTransaccao();
+	if (ServiceManager.isInsideBerserkService())
+	    this.cancelarTransaccao();
     }
 
     public void lockRead(java.util.List list) throws StorageException {

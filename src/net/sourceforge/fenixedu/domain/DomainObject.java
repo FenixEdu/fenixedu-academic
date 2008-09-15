@@ -8,7 +8,6 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -27,12 +26,6 @@ public abstract class DomainObject extends DomainObject_Base {
     private static final boolean ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED = PropertiesManager
 	    .getBooleanProperty("error.if.deleted.object.not.disconnected");
 
-    public class UnableToDetermineIdException extends DomainException {
-	public UnableToDetermineIdException(Throwable cause) {
-	    super("unable.to.determine.idException", cause);
-	}
-    }
-
     public DomainObject() {
 	super();
     }
@@ -41,11 +34,11 @@ public abstract class DomainObject extends DomainObject_Base {
     protected final void ensureIdInternal() {
 	try {
 	    super.ensureIdInternal();
-	} catch (Throwable t) {
+	} catch (UnableToDetermineIdException t) {
 	    if (LogLevel.WARN) {
 		System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
 	    }
-	    throw new UnableToDetermineIdException(t);
+	    throw t;
 	}
     }
 
