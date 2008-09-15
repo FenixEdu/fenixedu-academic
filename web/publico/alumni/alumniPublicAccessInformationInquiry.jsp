@@ -191,7 +191,6 @@
 		<label for="" class="">
 			<bean:message key="label.beginDate" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
 		</label>
-
 		<bean:define id="teste" name="publicAccessBean" property="jobBean" />
 		<fr:edit id="beginDate-validated" name="teste" schema="job.begin" >
 			<fr:layout name="tabular-break">
@@ -199,18 +198,6 @@
 				<fr:property name="displayLabel" value="false" />
 			</fr:layout>
 		</fr:edit>
-<%-- 	
-		<fr:edit id="beginDate-validated" name="publicAccessBean" slot="jobBean.beginDate" layout="picker">
-			<fr:destination name="updateBusinessAreaPostback" path="/alumni.do?method=professionalInformationPostback"/>
-			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
-			<fr:layout>
-				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-				<fr:property name="size" value="12"/>
-				<fr:property name="maxLength" value="10"/>
-				<fr:property name="style" value="display: inline;"/>
-			</fr:layout>
-		</fr:edit>
---%>
 		<span class="error0"><fr:message for="beginDate-validated" /></span>
 
 		<!-- POSITION -->

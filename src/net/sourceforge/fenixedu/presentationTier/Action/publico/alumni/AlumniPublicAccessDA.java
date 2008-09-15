@@ -217,6 +217,8 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
 	final AlumniPublicAccessBean alumniBean = (AlumniPublicAccessBean) getObjectFromViewState("publicAccessBean");
 	if (alumniBean.getJobBean().getChildBusinessArea() == null) {
+	    RenderUtils.invalidateViewState("parentBusinessArea-validated");
+	    alumniBean.getJobBean().setParentBusinessArea(null);
 	    request.setAttribute("childBusinessArea-validated", RESOURCES.getString("label.mandatory.field"));
 	    request.setAttribute("publicAccessBean", alumniBean);
 	    return mapping.findForward("alumniPublicAccessInformationInquiry");
