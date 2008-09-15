@@ -269,8 +269,8 @@ public class UICourseGroup extends UIDegreeModule {
 
 	encodeOrderOption(0, "top", false);
 	encodeOrderOption(this.previousContext.getParentCourseGroup().getChildContextsCount() - 1, "end", false);
-	encodeOrderOption(this.previousContext.getOrder() - 1, "up", false);
-	encodeOrderOption(this.previousContext.getOrder() + 1, "down", true);
+	encodeOrderOption(this.previousContext.getChildOrder() - 1, "up", false);
+	encodeOrderOption(this.previousContext.getChildOrder() + 1, "down", true);
 
 	writer.append(") ");
     }
@@ -292,7 +292,7 @@ public class UICourseGroup extends UIDegreeModule {
 		+ ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "") + "&toOrder=false";
 
 	encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
-	if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+	if (loggedPersonHasRoleManager()) {
 	    writer.append(" , ");
 	    encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
 	}
@@ -308,12 +308,16 @@ public class UICourseGroup extends UIDegreeModule {
 	writer.endElement("td");
     }
 
+    private Boolean loggedPersonHasRoleManager() {
+	return AccessControl.getPerson().hasRole(RoleType.MANAGER);
+    }
+
     private void encodeCourseGroupOptions() throws IOException {
 	writer.startElement("th", this);
 	writer.writeAttribute("class", "aright", null);
 	writer.writeAttribute("colspan", 3, null);
 	if (this.showRules) {
-	    if (!this.courseGroup.isRoot()) {
+	    if (!this.courseGroup.isRoot() || loggedPersonHasRoleManager()) {
 		encodeLink(module + "/curricularRules/createCurricularRule.faces", "&degreeModuleID="
 			+ this.courseGroup.getIdInternal(), false, "setCurricularRule");
 	    }
