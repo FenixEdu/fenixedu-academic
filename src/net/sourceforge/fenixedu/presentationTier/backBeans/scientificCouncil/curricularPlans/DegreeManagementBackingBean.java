@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -100,8 +99,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String getName() {
-	return (name == null && getDegree() != null) ? (name = getDegree().getDegreeInfoFor(getSelectedExecutionYear()).getName()
-		.getContent(Language.pt)) : name;
+	return (name == null && getDegree() != null) ? (name = getDegree().getNameFor(getSelectedExecutionYear()).getContent(
+		Language.pt)) : name;
     }
 
     public void setName(String name) {
@@ -109,8 +108,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String getNameEn() {
-	return (nameEn == null && getDegree() != null) ? (nameEn = getDegree().getDegreeInfoFor(getSelectedExecutionYear())
-		.getName().getContent(Language.en)) : nameEn;
+	return (nameEn == null && getDegree() != null) ? (nameEn = getDegree().getNameFor(getSelectedExecutionYear()).getContent(
+		Language.en)) : nameEn;
     }
 
     public void setNameEn(String nameEn) {
