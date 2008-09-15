@@ -151,4 +151,8 @@ public class StringUtils {
 	}
     }
 
+    public static boolean isEmpty(String content) {
+	return org.apache.commons.lang.StringUtils.isEmpty(content);
+    }
+
 }
