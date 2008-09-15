@@ -2336,6 +2336,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 	    }
 	    curriculumLine.setCurriculumGroup(curriculumGroup);
+	    if (!curriculumLine.hasCreatedBy()) {
+		curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : null);
+	    }
 	}
 
 	runRules &= isBolonhaDegree();
