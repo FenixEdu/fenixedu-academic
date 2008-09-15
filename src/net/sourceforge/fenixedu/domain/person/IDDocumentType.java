@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain.person;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -32,7 +33,11 @@ public enum IDDocumentType {
     }
 
     public String getLocalizedName() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(name());
+	return getLocalizedName(Language.getLocale());
+    }
+
+    public String getLocalizedName(final Locale locale) {
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(name());
     }
 
 }
