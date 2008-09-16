@@ -145,7 +145,11 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 	    saveErrors(request, actionErrors);
 	    return prepareAddCoordinator(mapping, form, request, response);
 	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("unknownTeacher", new ActionError(e.getMessage()));
+	    saveErrors(request, actionErrors);
+	    return prepareAddCoordinator(mapping, form, request, response);
+//	    throw new FenixActionException(e);
 	}
 	return mapping.findForward("sucess");
     }
