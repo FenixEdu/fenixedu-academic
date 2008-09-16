@@ -304,13 +304,15 @@ public enum DegreeType {
 
     public double getDefaultEctsCredits() {
 	if (getAcademicPeriod().equals(AcademicPeriod.YEAR)) {
-	    return 30;
+	    return 30d;
 	} else if (getAcademicPeriod().equals(AcademicPeriod.TWO_YEAR)) {
-	    return 120;
+	    return 120d;
+	} else if (getAcademicPeriod().equals(AcademicPeriod.THREE_YEAR)) {
+	    return 180d;
 	} else if (getAcademicPeriod().equals(AcademicPeriod.FIVE_YEAR)) {
-	    return 300;
+	    return 300d;
 	} else {
-	    return 0;
+	    return 0d;
 	}
     }
 
