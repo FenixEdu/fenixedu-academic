@@ -142,13 +142,13 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public Double getEctsCredits() {
-
-	if (getDegree() != null && !getDegree().getDegreeType().isBolonhaType()) {
-	    ectsCredits = getDegree().getEctsCredits();
-	} else if (getBolonhaDegreeType() != null && !getBolonhaDegreeType().equals(NO_SELECTION)) {
-	    ectsCredits = DegreeType.valueOf(getBolonhaDegreeType()).getDefaultEctsCredits();
+	if (ectsCredits == null) {
+	    if (getDegree() != null) {
+		ectsCredits = getDegree().getEctsCredits();
+	    } else if (getBolonhaDegreeType() != null && !getBolonhaDegreeType().equals(NO_SELECTION)) {
+		ectsCredits = DegreeType.valueOf(getBolonhaDegreeType()).getDefaultEctsCredits();
+	    }
 	}
-
 	return ectsCredits;
     }
 

@@ -61,7 +61,7 @@
 		<h:outputText value="<tr>" escape="false"/>
 		<h:outputText value="<th>#{scouncilBundle['ectsCredits']}:</th><td>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText alt="#{htmlAltBundle['inputText.ectsCredits']}" id="ectsCredits" value="#{DegreeManagement.ectsCredits}" disabled="true" maxlength="5" size="4"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.ectsCredits']}" id="ectsCredits" value="#{DegreeManagement.ectsCredits}" maxlength="5" size="4"/>
 			<h:message for="ectsCredits" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
