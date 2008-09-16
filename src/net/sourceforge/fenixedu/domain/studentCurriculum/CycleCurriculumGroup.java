@@ -264,4 +264,12 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	super.setConclusionDate(conclusionDate);
     }
 
+    public Double getCurrentDefaultEcts() {
+	return getDegreeModule().getCurrentDefaultEcts();
+    }
+
+    public Double getDefaultEcts(final ExecutionYear executionYear) {
+	return getDegreeModule().getDefaultEcts(executionYear);
+    }
+
 }

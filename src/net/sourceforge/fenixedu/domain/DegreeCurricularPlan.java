@@ -1781,4 +1781,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return Collections.emptyList();
     }
+    
+    public Double getEctsCredits() {
+	return getDegree().getEctsCredits();
+    }
 }

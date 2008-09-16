@@ -84,7 +84,7 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
      * current semester
      */
     protected double getMinimumEcts(final CycleType cycleType) {
-	return cycleType.getDefaultEcts();
+	return 180d;
     }
 
     abstract protected List<CycleType> getValidPrecedentCycleTypes();

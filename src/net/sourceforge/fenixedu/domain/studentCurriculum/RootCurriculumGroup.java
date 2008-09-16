@@ -297,9 +297,13 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return null;
     }
 
-    public CycleCourseGroup getCycleCourseGroupFor(final CurriculumModule curriculumModule) {
+    public CycleCourseGroup getCycleCourseGroup(final CurriculumModule curriculumModule) {
 	final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroupFor(curriculumModule);
 	return cycleCurriculumGroup != null ? cycleCurriculumGroup.getDegreeModule() : null;
+    }
+
+    public CycleCourseGroup getCycleCourseGroup(final CycleType cycleType) {
+	return getDegreeModule().getCycleCourseGroup(cycleType);
     }
 
     public List<CycleCurriculumGroup> getInternalCycleCurriculumGroups() {

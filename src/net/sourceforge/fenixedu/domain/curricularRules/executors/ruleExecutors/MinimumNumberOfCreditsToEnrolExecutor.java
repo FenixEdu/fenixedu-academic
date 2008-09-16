@@ -37,14 +37,14 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 	}
     }
 
-    private Double getTotalEctsCredits(final RootCurriculumGroup rootCurriculumGroup, ExecutionYear executionYear) {
+    private Double getTotalEctsCredits(final RootCurriculumGroup root, ExecutionYear executionYear) {
 	Double res = 0d;
-	for (CycleType cycleType : rootCurriculumGroup.getDegreeType().getOrderedCycleTypes()) {
-	    CycleCurriculumGroup cycleCurriculumGroup = rootCurriculumGroup.getCycleCurriculumGroup(cycleType);
+	for (CycleType cycleType : root.getDegreeType().getOrderedCycleTypes()) {
+	    CycleCurriculumGroup cycleCurriculumGroup = root.getCycleCurriculumGroup(cycleType);
 	    if (cycleCurriculumGroup == null) {
-		res += cycleType.getDefaultEcts();
+		res += root.getCycleCourseGroup(cycleType).getDefaultEcts(executionYear);
 	    } else {
-		res += rootCurriculumGroup.getCreditsConcluded(executionYear);
+		res += root.getCreditsConcluded(executionYear);
 		break;
 	    }
 	}

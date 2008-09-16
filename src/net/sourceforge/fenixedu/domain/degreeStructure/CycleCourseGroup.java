@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
@@ -80,4 +83,25 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 	return Collections.singletonList(this);
     }
 
+    public Double getCurrentDefaultEcts() {
+	return getDefaultEcts(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public Double getDefaultEcts(final ExecutionYear executionYear) {
+	final CreditsLimit creditsLimit = (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,
+		null, executionYear);
+	if (creditsLimit != null) {
+	    return creditsLimit.getMinimumCredits();
+	}
+
+	if (getDegree().hasEctsCredits()) {
+	    return getDegree().getEctsCredits();
+	}
+
+	if (getDegreeType().hasExactlyOneCycleType()) {
+	    return getDegreeType().getDefaultEctsCredits();
+	}
+
+	throw new DomainException("error.CycleCourseGroup.cannot.calculate.default.ects.credits");
+    }
 }

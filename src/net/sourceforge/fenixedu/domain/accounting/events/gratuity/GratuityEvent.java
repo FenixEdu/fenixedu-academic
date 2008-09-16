@@ -138,7 +138,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     public Double getEctsCreditsForRegistrationDegreeType() {
-	return getRegistration().getDegree().getDegreeType().getDefaultEctsCredits();
+	return getRegistration().getDegree().getEctsCredits();
     }
 
     public boolean canRemoveExemption(final DateTime when) {

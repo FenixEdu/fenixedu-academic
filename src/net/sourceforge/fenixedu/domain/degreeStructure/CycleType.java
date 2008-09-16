@@ -14,11 +14,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum CycleType {
 
-    FIRST_CYCLE(1, 180d),
+    FIRST_CYCLE(1),
 
-    SECOND_CYCLE(2, 120d, FIRST_CYCLE),
+    SECOND_CYCLE(2, FIRST_CYCLE),
 
-    THIRD_CYCLE(3, 300d);
+    THIRD_CYCLE(3);
 
     static final public Comparator<CycleType> COMPARATOR_BY_LESS_WEIGHT = new Comparator<CycleType>() {
 	public int compare(CycleType o1, CycleType o2) {
@@ -33,27 +33,19 @@ public enum CycleType {
     };
 
     private Integer weight;
-
-    private Double ectsCredits;
-
     private CycleType sourceCycleAffinity;
 
-    private CycleType(Integer weight, Double ectsCredits) {
-	this(weight, ectsCredits, null);
+    private CycleType(Integer weight) {
+	this(weight, null);
     }
 
-    private CycleType(Integer weight, Double ectsCredits, CycleType sourceCycleAffinity) {
+    private CycleType(final Integer weight, final CycleType sourceCycleAffinity) {
 	this.weight = weight;
-	this.ectsCredits = ectsCredits;
 	this.sourceCycleAffinity = sourceCycleAffinity;
     }
 
     public Integer getWeight() {
 	return weight;
-    }
-
-    public Double getDefaultEcts() {
-	return ectsCredits;
     }
 
     public String getQualifiedName() {

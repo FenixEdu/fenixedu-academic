@@ -776,8 +776,7 @@ public class CreateTestData {
 
 	private void createCompetenceCourse(final DegreeCurricularPlan degreeCurricularPlan,
 		final CurricularCourse curricularCourse) {
-	    final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
-	    final CompetenceCourseLevel competenceCourseLevel = getCompetenceCourseLevel(degreeType);
+	    final CompetenceCourseLevel competenceCourseLevel = getCompetenceCourseLevel(degreeCurricularPlan.getDegreeType());
 	    final CompetenceCourseGroupUnit competenceCourseGroupUnit = findCompetenceCourseGroupUnit(degreeCurricularPlan);
 	    final CompetenceCourse competenceCourse = new CompetenceCourse(curricularCourse.getName(),
 		    curricularCourse.getName(), Boolean.TRUE, RegimeType.SEMESTRIAL, competenceCourseLevel,
@@ -789,7 +788,7 @@ public class CreateTestData {
 	    competenceCourseInformation.setExecutionPeriod(executionPeriod);
 	    final CompetenceCourseLoad competenceCourseLoad = new CompetenceCourseLoad(Double.valueOf(2), Double.valueOf(0),
 		    Double.valueOf(0), Double.valueOf(0), Double.valueOf(0), Double.valueOf(0), Double.valueOf(0), Double
-			    .valueOf(0), Double.valueOf(degreeType.getDefaultEctsCredits()), Integer.valueOf(0),
+			    .valueOf(0), Double.valueOf(degreeCurricularPlan.getEctsCredits()), Integer.valueOf(0),
 		    AcademicPeriod.SEMESTER);
 	    competenceCourseInformation.addCompetenceCourseLoads(competenceCourseLoad);
 	    curricularCourse.setCompetenceCourse(competenceCourse);
@@ -1193,8 +1192,7 @@ public class CreateTestData {
 		degree = new Degree("Agricultura do Conhecimento", "Knowledge Agriculture", "CODE" + i, degreeType, gradeScale);
 		degreeCurricularPlan = degree.createPreBolonhaDegreeCurricularPlan("DegreeCurricularPlanName",
 			DegreeCurricularPlanState.ACTIVE, new Date(), null, degreeType.getYears(), Integer.valueOf(1), Double
-				.valueOf(degreeType.getDefaultEctsCredits()), MarkType.TYPE20_OBJ, Integer.valueOf(100), null,
-			gradeScale);
+				.valueOf(degree.getEctsCredits()), MarkType.TYPE20_OBJ, Integer.valueOf(100), null, gradeScale);
 		final Branch branch = new Branch("", "", "", degreeCurricularPlan);
 		branch.setBranchType(BranchType.COMNBR);
 		createPreBolonhaCurricularCourses(degreeCurricularPlan, i, executionYear, branch);

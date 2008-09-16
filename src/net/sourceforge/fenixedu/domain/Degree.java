@@ -85,7 +85,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     protected Degree() {
 	super();
-
 	setRootDomainObject(RootDomainObject.getInstance());
 	new DegreeSite(this);
     }
@@ -93,7 +92,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
 	this();
 	commonFieldsChange(name, nameEn, code, gradeScale, ExecutionYear.readCurrentExecutionYear());
-
 	if (degreeType == null) {
 	    throw new DomainException("degree.degree.type.not.null");
 	}
@@ -1333,6 +1331,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 
 	return false;
+    }
+
+    @Override
+    public Double getEctsCredits() {
+	final Double ectsCredits = super.getEctsCredits();
+	return (ectsCredits != null) ? ectsCredits : getDegreeType().getDefaultEctsCredits();
+    }
+
+    public boolean hasEctsCredits() {
+	return super.getEctsCredits() != null;
     }
 
     @Override
