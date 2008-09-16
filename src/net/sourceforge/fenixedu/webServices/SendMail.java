@@ -6,17 +6,19 @@ import java.util.List;
 
 import javax.servlet.ServletRequest;
 
-import org.codehaus.xfire.MessageContext;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.util.HostAccessControl;
+
+import org.codehaus.xfire.MessageContext;
+
 import pt.ist.fenixWebFramework.services.Service;
 
 public class SendMail implements ISendMail {
 
-    public void sendMail(String fromName, String fromEmail, String userId, String[] cc, String[] bcc, String topic,
+    public void sendMail(String fromName, String fromEmail, String userId, String[] ccUserIds, String[] bccUserIds, String topic,
 	    String message, MessageContext context) throws NotAuthorizedException {
 	if (!isAllowed(context)) {
 	    throw new NotAuthorizedException();
@@ -29,8 +31,8 @@ public class SendMail implements ISendMail {
 	}
 
 	List<String> singleName = Collections.singletonList(person.getInstitutionalOrDefaultEmailAddress().getValue());
-	List<String> ccList = getList(cc);
-	List<String> bccList = getList(bcc);
+	List<String> ccList = getList(ccUserIds);
+	List<String> bccList = getList(bccUserIds);
 
 	sendEmail(fromName, fromEmail, singleName, ccList, bccList, topic, message);
     }
@@ -40,10 +42,16 @@ public class SendMail implements ISendMail {
 		.getProperty("XFireServletController.httpServletRequest"));
     }
 
-    private List<String> getList(String[] cc) {
+    private List<String> getList(String[] userIds) {
 	List<String> list = new ArrayList<String>();
-	for (String ccAddress : cc) {
-	    list.add(ccAddress);
+	for (String id : userIds) {
+	    Person person = Person.readPersonByIstUsername(id);
+	    if (person != null) {
+		EmailAddress contact = person.getInstitutionalOrDefaultEmailAddress();
+		if (contact != null) {
+		    list.add(contact.getValue());
+		}
+	    }
 	}
 	return list;
     }
