@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update missing ects information in Degree" updateDegreeEcts.sql IST
