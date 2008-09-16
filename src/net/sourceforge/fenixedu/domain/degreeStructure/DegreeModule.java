@@ -514,7 +514,6 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public CreditsLimit getCreditsLimitRule(final ExecutionSemester executionSemester) {
 	final List<? extends ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
-
 	return result.isEmpty() ? null : (CreditsLimit) result.get(0);
     }
 
