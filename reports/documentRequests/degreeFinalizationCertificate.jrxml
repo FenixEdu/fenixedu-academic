@@ -474,7 +474,7 @@
 					<reportElement
 						x="80"
 						y="50"
-						width="121"
+						width="247"
 						height="10"
 						key="textField-14"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
