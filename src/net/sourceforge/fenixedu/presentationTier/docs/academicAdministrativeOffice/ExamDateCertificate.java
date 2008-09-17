@@ -108,16 +108,16 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
     protected void fillReport() {
 	super.fillReport();
 	addDataSourceElements(getExamDateEntries());
-	addParameter("name", getDocumentRequest().getRegistration().getPerson().getName());
+	addParameter("name", getRegistration().getPerson().getName());
 	addParameter("studentNumber", getStudentNumber());
     }
 
     private String getStudentNumber() {
-	final Registration registration = getDocumentRequest().getRegistration();
+	final Registration registration = getRegistration();
 	if (ExamDateCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
 	    final String agreementInformation = registration.getAgreementInformation();
 	    if (!StringUtils.isEmpty(agreementInformation)) {
-		return registration.getRegistrationAgreement().toString() + " " + agreementInformation;
+		return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
 	    }
 	}
 	return registration.getStudent().getNumber().toString();
@@ -144,7 +144,7 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
 	    final ExamDateEntry entry) {
 	final Exam specialSeasonExam = request.getExamFor(enrolment, Season.SPECIAL_SEASON_OBJ);
 	if (specialSeasonExam != null) {
-	    entry.setSpecialSeasonDate(specialSeasonExam.getDayDateYearMonthDay().toString("dd/MM/yyyy"));
+	    entry.setSpecialSeasonDate(specialSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
 	    entry.setSpecialSeasonHour(specialSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
 	}
     }
@@ -153,7 +153,7 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
 	    final ExamDateEntry entry) {
 	final Exam secondSeasonExam = request.getExamFor(enrolment, Season.SEASON2_OBJ);
 	if (secondSeasonExam != null) {
-	    entry.setSecondSeasonDate(secondSeasonExam.getDayDateYearMonthDay().toString("dd/MM/yyyy"));
+	    entry.setSecondSeasonDate(secondSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
 	    entry.setSecondSeasonHour(secondSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
 	}
     }
@@ -162,7 +162,7 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
 	    final ExamDateEntry entry) {
 	final Exam firstSeasonExam = request.getExamFor(enrolment, Season.SEASON1_OBJ);
 	if (firstSeasonExam != null) {
-	    entry.setFirstSeasonDate(firstSeasonExam.getDayDateYearMonthDay().toString("dd/MM/yyyy"));
+	    entry.setFirstSeasonDate(firstSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
 	    entry.setFirstSeasonHour(firstSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
 	}
     }
