@@ -36,9 +36,9 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
 	    addParameter("thesisSubtitle", neverNull(file.getSubTitle()));
 	    addParameter("thesisLanguage", getLanguage(file));
 	} else {
-	    addParameter("thesisTitle", "");
-	    addParameter("thesisSubtitle", "");
-	    addParameter("thesisLanguage", "");
+	    addParameter("thesisTitle", EMPTY_STR);
+	    addParameter("thesisSubtitle", EMPTY_STR);
+	    addParameter("thesisLanguage", EMPTY_STR);
 	}
 
 	String date = null;
@@ -56,7 +56,7 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
 	}
 
 	while (index < 6) {
-	    addParameter("keywordPt" + index++, "");
+	    addParameter("keywordPt" + index++, EMPTY_STR);
 	}
 
 	index = 0;
@@ -65,7 +65,7 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
 	}
 
 	while (index < 6) {
-	    addParameter("keywordEn" + index++, "");
+	    addParameter("keywordEn" + index++, EMPTY_STR);
 	}
 
 	addParameter("abstractPt", neverNull(thesis.getThesisAbstractPt()));
@@ -76,10 +76,10 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
 	Language language = file.getLanguage();
 
 	if (language == null) {
-	    return "";
+	    return EMPTY_STR;
 	}
 
-	return enumerationBundle.getString(language.name());
+	return getEnumerationBundle().getString(language.name());
     }
 
     private List<String> splitKeywords(String keywords) {
