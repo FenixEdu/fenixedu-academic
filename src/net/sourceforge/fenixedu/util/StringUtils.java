@@ -9,6 +9,8 @@ public class StringUtils {
 
     static final public String EMPTY = org.apache.commons.lang.StringUtils.EMPTY;
 
+    static final public String SINGLE_SPACE = " ";
+
     public static boolean verifyContainsWithEquality(String originalString, String stringToCompare) {
 	if (originalString == null || stringToCompare == null) {
 	    return false;
