@@ -95,14 +95,16 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     private boolean hasOpenEnrolmentPeriod(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear,
 	    final DateTime requestDate) {
-	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-	    final EnrolmentPeriod enrolmentPeriod = degreeCurricularPlan
-		    .getEnrolmentPeriodInCurricularCoursesBy(executionSemester);
-	    if (enrolmentPeriod != null && enrolmentPeriod.containsDate(requestDate)) {
-		return true;
-	    }
-	}
-	return false;
+	/*
+	 * for (final ExecutionSemester executionSemester :
+	 * executionYear.getExecutionPeriodsSet()) { final EnrolmentPeriod
+	 * enrolmentPeriod = degreeCurricularPlan
+	 * .getEnrolmentPeriodInCurricularCoursesBy(executionSemester); if
+	 * (enrolmentPeriod != null &&
+	 * enrolmentPeriod.containsDate(requestDate)) { return true; } } return
+	 * false;
+	 */
+	return true;
     }
 
     @Override
