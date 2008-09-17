@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
@@ -53,7 +54,11 @@ public enum CycleType {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+	return getDescription(Language.getLocale());
+    }
+
+    public String getDescription(final Locale locale) {
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
 
     static final public Collection<CycleType> getSortedValues() {
