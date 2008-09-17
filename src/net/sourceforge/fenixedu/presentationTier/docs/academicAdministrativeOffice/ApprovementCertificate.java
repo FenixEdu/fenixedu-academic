@@ -30,12 +30,10 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     final private String getApprovementsInfo() {
 	final StringBuilder result = new StringBuilder();
 
-	final ApprovementCertificateRequest approvementCertificateRequest = (ApprovementCertificateRequest) getDocumentRequest();
-	final Registration registration = approvementCertificateRequest.getRegistration();
-
 	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(
 		ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 
+	final Registration registration = getRegistration();
 	final Map<Unit, String> academicUnitIdentifiers = new HashMap<Unit, String>();
 	if (registration.isBolonha()) {
 	    reportCycles(result, entries, academicUnitIdentifiers, registration);
@@ -44,6 +42,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 		    .getCurriculumEntries()), academicUnitIdentifiers);
 	}
 
+	final ApprovementCertificateRequest approvementCertificateRequest = (ApprovementCertificateRequest) getDocumentRequest();
 	entries.clear();
 	entries.addAll(approvementCertificateRequest.getExtraCurricularEntriesToReport());
 	if (!entries.isEmpty()) {
@@ -63,7 +62,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	result.append(generateEndLine());
 
 	if (!academicUnitIdentifiers.isEmpty()) {
-	    result.append("\n").append(
+	    result.append(LINE_BREAK).append(
 		    getAcademicUnitInfo(academicUnitIdentifiers, ((ApprovementCertificateRequest) getDocumentRequest())
 			    .getMobilityProgram()));
 	}
@@ -82,7 +81,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
 	    if (executionYear != lastReportedExecutionYear) {
 		lastReportedExecutionYear = executionYear;
-		// result.append("\n");
+		// result.append(LINE_BREAK);
 	    }
 
 	    reportEntry(result, entry, academicUnitIdentifiers, executionYear);
@@ -101,10 +100,10 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 		if (lastReported == null) {
 		    lastReported = cycle;
 		} else {
-		    result.append(generateEndLine()).append("\n");
+		    result.append(generateEndLine()).append(LINE_BREAK);
 		}
 
-		result.append(cycle.getName().getContent()).append(":\n");
+		result.append(cycle.getName().getContent()).append(":").append(LINE_BREAK);
 
 		reportEntries(result, ApprovementCertificateRequest.filterEntries(entries, cycle.getCurriculum()
 			.getCurriculumEntries()), academicUnitIdentifiers);
@@ -116,7 +115,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
     final private void reportRemainingEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,
 	    final Map<Unit, String> academicUnitIdentifiers, final String title) {
-	result.append(generateEndLine()).append("\n").append(title).append(":\n");
+	result.append(generateEndLine()).append(LINE_BREAK).append(title).append(":").append(LINE_BREAK);
 
 	for (final ICurriculumEntry entry : entries) {
 	    reportEntry(result, entry, academicUnitIdentifiers, entry.getExecutionYear());
@@ -127,7 +126,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	    final Map<Unit, String> academicUnitIdentifiers, final ExecutionYear executionYear) {
 	result.append(
 		StringUtils.multipleLineRightPadWithSuffix(getCurriculumEntryName(academicUnitIdentifiers, entry), LINE_LENGTH,
-			'-', getCreditsAndGradeInfo(entry, executionYear))).append("\n");
+			END_CHAR, getCreditsAndGradeInfo(entry, executionYear))).append(LINE_BREAK);
     }
 
     final private String getCreditsAndGradeInfo(final ICurriculumEntry entry, final ExecutionYear executionYear) {
@@ -137,16 +136,17 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	    getCreditsInfo(result, entry);
 	}
 	result.append(entry.getGradeValue());
-	result.append(StringUtils.rightPad("(" + enumerationBundle.getString(entry.getGradeValue()) + ")", SUFFIX_LENGTH, ' '));
+	result.append(StringUtils.rightPad("(" + getEnumerationBundle().getString(entry.getGradeValue()) + ")", SUFFIX_LENGTH,
+		' '));
 
-	result.append(" ");
-	final String in = resourceBundle.getString("label.in");
+	result.append(SINGLE_SPACE);
+	final String in = getResourceBundle().getString("label.in");
 	if (executionYear == null) {
-	    result.append(StringUtils.rightPad("", in.length(), ' '));
-	    result.append(" ").append(StringUtils.rightPad("", 9, ' '));
+	    result.append(StringUtils.rightPad(EMPTY_STR, in.length(), ' '));
+	    result.append(SINGLE_SPACE).append(StringUtils.rightPad(EMPTY_STR, 9, ' '));
 	} else {
 	    result.append(in);
-	    result.append(" ").append(executionYear.getYear());
+	    result.append(SINGLE_SPACE).append(executionYear.getYear());
 	}
 
 	return result.toString();
