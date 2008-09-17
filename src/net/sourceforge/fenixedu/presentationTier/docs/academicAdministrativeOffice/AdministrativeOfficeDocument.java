@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -34,14 +35,15 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AdministrativeOfficeDocument extends FenixReport {
 
@@ -50,6 +52,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
     static final protected int SUFFIX_LENGTH = 12;
 
     static final protected String[] identifiers = { "*", "#", "+", "**", "***" };
+
+    static final protected String LINE_BREAK = "\n";
+
+    static final protected char END_CHAR = '-';
 
     protected DomainReference<DocumentRequest> documentRequestDomainReference;
 
@@ -107,16 +113,17 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	super();
     }
 
+    @SuppressWarnings("static-access")
+    protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
+	this(documentRequest, Language.getLocale());
+    }
+
     public AdministrativeOfficeDocument(final DocumentRequest documentRequest, final Locale locale) {
-	super(new ArrayList());
-	this.resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
+	super(locale);
+	setResourceBundle(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale));
 	this.documentRequestDomainReference = new DomainReference<DocumentRequest>(documentRequest);
 
 	fillReport();
-    }
-
-    protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
-	this(documentRequest, Language.getDefaultLanguage().getLocale());
     }
 
     protected DocumentRequest getDocumentRequest() {
@@ -132,59 +139,59 @@ public class AdministrativeOfficeDocument extends FenixReport {
     public String getReportFileName() {
 	final StringBuilder result = new StringBuilder();
 
-	result.append(getDocumentRequest().getRegistration().getPerson().getIstUsername());
+	result.append(getRegistration().getPerson().getIstUsername());
 	result.append("-");
-	result.append(new DateTime().toString(DateTimeFormat.forPattern("yyyyMMdd")));
+	result.append(new DateTime().toString(YYYYMMMDD, getLocale()));
 	result.append("-");
-	result.append(getDocumentRequest().getDescription().replace(":", "").replace(" ", ""));
+	result.append(getDocumentRequest().getDescription().replace(":", EMPTY_STR).replace(SINGLE_SPACE, EMPTY_STR));
 
 	return result.toString();
     }
 
+    protected Registration getRegistration() {
+	return getDocumentRequest().getRegistration();
+    }
+
     @Override
     protected void fillReport() {
+	addParameter("bundle", getResourceBundle());
 	addParameter("documentRequest", getDocumentRequest());
-	addParameter("registration", getDocumentRequest().getRegistration());
+	addParameter("registration", getRegistration());
 
 	if (showPriceFields()) {
-	    setPriceFields();
+	    addPriceFields();
 	}
 
-	setIntroFields(AccessControl.getPerson().getEmployee());
+	addIntroParameters(AccessControl.getPerson().getEmployee());
 	setPersonFields();
 
 	if (getDocumentRequest().hasExecutionYear()) {
-	    addParameter("situation", getDocumentRequest().getExecutionYear().containsDate(new DateTime()) ? "ESTÁ" : "ESTEVE");
+	    String situation = getDocumentRequest().getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was";
+	    addParameter("situation", getResourceBundle().getString(situation));
 	}
-	addParameter("degreeDescription", getDegreeDescription());
 
+	addParameter("degreeDescription", getDegreeDescription());
 	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
-	addParameter("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("day", new LocalDate().toString(DD_MM_YYYY, getLocale()));
     }
 
     protected boolean showPriceFields() {
 	return getDocumentRequest().isCertificate();
     }
 
-    final private void setPriceFields() {
+    final private void addPriceFields() {
 	final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
 	final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
 
 	final Money amountPerPage = certificateRequestPR.getAmountPerPage();
 	final Money baseAmountPlusAmountForUnits = certificateRequestPR.getBaseAmount().add(
-		certificateRequestPR.getAmountPerUnit().multiply(new BigDecimal(certificateRequest.getNumberOfUnits())));
+		certificateRequestPR.getAmountPerUnit().multiply(BigDecimal.valueOf(certificateRequest.getNumberOfUnits())));
 	final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
 
 	addParameter("amountPerPage", amountPerPage);
 	addParameter("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
 	addParameter("urgencyAmount", urgencyAmount);
-	addParameter("printPriceFields", printPriceFields(certificateRequest));
-    }
-
-    final private boolean printPriceFields(final CertificateRequest certificateRequest) {
-	return (certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING && !certificateRequest
-		.isFree())
-		|| certificateRequest.hasEvent();
+	addParameter("printPriceFields", printPriceParameters(certificateRequest));
     }
 
     final private PostingRule getPostingRule() {
@@ -193,7 +200,13 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
     }
 
-    final protected void setIntroFields(final Employee employee) {
+    final private boolean printPriceParameters(final CertificateRequest certificateRequest) {
+	return (certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING && !certificateRequest
+		.isFree())
+		|| certificateRequest.hasEvent();
+    }
+
+    final protected void addIntroParameters(final Employee employee) {
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 
@@ -201,28 +214,39 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
     }
 
+    @SuppressWarnings("static-access")
     protected void setPersonFields() {
-	final Person person = getDocumentRequest().getRegistration().getPerson();
-	final String name = person.getName().toUpperCase();
-	addParameter("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
+	final Person person = getRegistration().getPerson();
+	addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
 
-	final String documentIdNumber = person.getDocumentIdNumber();
-	addParameter("documentIdNumber", StringUtils.multipleLineRightPad("portador" + (person.isMale() ? "" : "a") + " do "
-		+ person.getIdDocumentType().getLocalizedName() + " Nº " + documentIdNumber, LINE_LENGTH, '-'));
+	StringBuilder builder = new StringBuilder();
+	builder.append(getResourceBundle().getString("label.bearer." + (person.isMale() ? "male" : "female")));
+	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("label.of.male"));
+	builder.append(SINGLE_SPACE).append(person.getIdDocumentType().getLocalizedName(getLocale()));
+	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("label.number.short"));
+	builder.append(SINGLE_SPACE).append(person.getDocumentIdNumber());
+	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
-	final String birthLocale = person.getParishOfBirth().toUpperCase() + ", "
-		+ person.getDistrictSubdivisionOfBirth().toUpperCase();
-	addParameter("birthLocale", StringUtils.multipleLineRightPad("natural de " + birthLocale, LINE_LENGTH, '-'));
+	builder = new StringBuilder();
+	builder.append(getResourceBundle().getString("documents.birthLocale"));
+	builder.append(SINGLE_SPACE).append(person.getParishOfBirth().toUpperCase());
+	builder.append(",").append(SINGLE_SPACE).append(person.getDistrictSubdivisionOfBirth().toUpperCase());
+	addParameter("birthLocale", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
-	final String nationality = person.getCountry().getFilteredNationality().toUpperCase();
-	addParameter("nationality", StringUtils.multipleLineRightPad("de nacionalidade " + nationality, LINE_LENGTH, '-'));
+	builder = new StringBuilder();
+	builder.append(getResourceBundle().getString("documents.nationality.one"));
+	final String code = person.getCountry().getCode();
+	builder.append(SINGLE_SPACE).append(getEnumerationBundle().getString(code.toLowerCase()).toUpperCase());
+	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.nationality.two"));
+	addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
     }
 
     protected String getDegreeDescription() {
-	final Registration registration = getDocumentRequest().getRegistration();
+	final Registration registration = getRegistration();
 	final DegreeType degreeType = registration.getDegreeType();
-	return registration.getDegreeDescription(degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
-		.getCurrentCycleType());
+	final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
+		.getCurrentCycleType();
+	return registration.getDegreeDescription(cycleType);
     }
 
     final protected String getCreditsDescription() {
@@ -230,28 +254,45 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     final protected String generateEndLine() {
-	return StringUtils.rightPad(StringUtils.EMPTY, LINE_LENGTH, '-');
+	return StringUtils.rightPad(EMPTY_STR, LINE_LENGTH, END_CHAR);
     }
 
     final protected String getCurriculumEntryName(final Map<Unit, String> academicUnitIdentifiers, final ICurriculumEntry entry) {
-	StringBuilder result = new StringBuilder();
+	final StringBuilder result = new StringBuilder();
 
 	if (entry instanceof ExternalEnrolment) {
 	    result.append(getAcademicUnitIdentifier(academicUnitIdentifiers, ((ExternalEnrolment) entry).getAcademicUnit()));
 	}
-
 	result.append(getPresentationNameFor(entry).toUpperCase());
 
 	return result.toString();
     }
 
     protected String getPresentationNameFor(final ICurriculumEntry entry) {
+	final MultiLanguageString result;
+
 	if (entry instanceof OptionalEnrolment) {
 	    final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) entry;
-	    return optionalEnrolment.getCurricularCourse().getName();
+	    result = optionalEnrolment.getCurricularCourse().getNameI18N();
 	} else {
-	    return entry.getName().getContent();
+	    result = entry.getName();
 	}
+
+	return getMLSTextContent(result);
+    }
+
+    protected String getMLSTextContent(final MultiLanguageString mls) {
+	if (mls == null) {
+	    return EMPTY_STR;
+	}
+	final String content = mls.hasContent(getLanguage()) && !StringUtils.isEmpty(mls.getContent(getLanguage())) ? mls
+		.getContent(getLanguage()) : mls.getContent();
+	return convert(content);
+    }
+
+    protected String convert(final String content) {
+	return HtmlToTextConverterUtil.convertToText(content).replace("\n\n", "\t").replace(LINE_BREAK, EMPTY_STR).replace("\t",
+		"\n\n").trim();
     }
 
     @SuppressWarnings("static-access")
@@ -272,29 +313,32 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	final StringBuilder result = new StringBuilder();
 	if (remainingCredits != BigDecimal.ZERO) {
-	    result.append("\n");
-	    result.append(StringUtils.multipleLineRightPadWithSuffix("Créditos obtidos por Equivalência:", LINE_LENGTH, '-',
+	    result.append(LINE_BREAK);
+
+	    final String remainingCreditsInfo = getResourceBundle().getString("documents.remainingCreditsInfo");
+	    result.append(StringUtils.multipleLineRightPadWithSuffix(remainingCreditsInfo + ":", LINE_LENGTH, END_CHAR,
 		    remainingCredits + getCreditsDescription()));
-	    result.append("\n");
+
+	    result.append(LINE_BREAK);
 	}
 
 	return result.toString();
     }
 
-    final protected String getAcademicUnitInfo(final Map<Unit, String> academicUnitIdentifiers,
-	    final MobilityProgram mobilityProgram) {
+    final protected String getAcademicUnitInfo(final Map<Unit, String> unitIDs, final MobilityProgram mobilityProgram) {
 	final StringBuilder result = new StringBuilder();
 
-	for (final Entry<Unit, String> academicUnitIdentifier : academicUnitIdentifiers.entrySet()) {
-	    final StringBuilder academicUnit = new StringBuilder();
+	for (final Entry<Unit, String> academicUnitIdentifier : unitIDs.entrySet()) {
+	    final StringBuilder unit = new StringBuilder();
 
-	    academicUnit.append(academicUnitIdentifier.getValue());
-	    academicUnit.append(" ").append(resourceBundle.getString("documents.external.curricular.courses.program"));
-	    academicUnit.append(" ").append(mobilityProgram.getDescription().toUpperCase());
-	    academicUnit.append(" ").append(resourceBundle.getString("in.feminine"));
-	    academicUnit.append(" ").append(academicUnitIdentifier.getKey().getName().toUpperCase());
+	    unit.append(academicUnitIdentifier.getValue());
+	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.program"));
+	    unit.append(SINGLE_SPACE).append(mobilityProgram.getDescription().toUpperCase());
+	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("in.feminine"));
+	    unit.append(SINGLE_SPACE).append(academicUnitIdentifier.getKey().getName().toUpperCase());
 
-	    result.append(StringUtils.multipleLineRightPad(academicUnit.toString(), LINE_LENGTH, '-') + "\n");
+	    result.append(StringUtils.multipleLineRightPad(unit.toString(), LINE_LENGTH, END_CHAR));
+	    result.append(LINE_BREAK);
 	}
 
 	return result.toString();
