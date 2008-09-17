@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.util.Collection;
-import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -10,7 +9,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StringUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
@@ -28,7 +26,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
     @Override
     protected String getDegreeDescription() {
-	final Registration registration = getDocumentRequest().getRegistration();
+	final Registration registration = getRegistration();
 	return registration.getDegreeType().isComposite() ? registration.getDegreeDescription(null) : super
 		.getDegreeDescription();
     }
@@ -38,12 +36,9 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
 	if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
 	    final ExecutionYear executionYear = getDocumentRequest().getExecutionYear();
-	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration()
-		    .getCurricularYear(executionYear));
-	    final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources/EnumerationResources", Language
-		    .getLocale());
+	    final Integer curricularYear = Integer.valueOf(getRegistration().getCurricularYear(executionYear));
 
-	    result.append(enumerationResources.getString(curricularYear.toString() + ".ordinal").toUpperCase());
+	    result.append(getEnumerationBundle().getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");
 	}
 
@@ -88,7 +83,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
     final private void reportRemainingEnrolments(final StringBuilder result, final Collection<Enrolment> enrolments,
 	    final String title) {
-	result.append(generateEndLine()).append("\n").append(title).append(":\n");
+	result.append(generateEndLine()).append(LINE_BREAK).append(title).append(":").append(LINE_BREAK);
 
 	for (final Enrolment enrolment : enrolments) {
 	    reportEnrolment(result, enrolment);
@@ -97,8 +92,8 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
     final private void reportEnrolment(final StringBuilder result, final Enrolment enrolment) {
 	result.append(
-		StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH, '-',
-			getCreditsInfo(enrolment))).append("\n");
+		StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
+			END_CHAR, getCreditsInfo(enrolment))).append(LINE_BREAK);
     }
 
     final private String getCreditsInfo(final Enrolment enrolment) {
