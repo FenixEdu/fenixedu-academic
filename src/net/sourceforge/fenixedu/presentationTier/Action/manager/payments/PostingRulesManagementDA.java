@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
@@ -39,7 +41,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "viewDFAPostingRuleDetails", path = "/manager/payments/postingRules/management/viewDFAPostingRuleDetails.jsp"),
 	@Forward(name = "createDFAGratuityPR", path = "/manager/payments/postingRules/management/createDFAGratuityPR.jsp"),
 	@Forward(name = "editDFAGratuityPR", path = "/manager/payments/postingRules/management/editDFAGratuityPR.jsp"),
-	@Forward(name = "editDFADegreeCurricularPlanPostingRule", path = "/manager/payments/postingRules/management/editDFADegreeCurricularPlanPostingRule.jsp")
+	@Forward(name = "editDFADegreeCurricularPlanPostingRule", path = "/manager/payments/postingRules/management/editDFADegreeCurricularPlanPostingRule.jsp"),
+	@Forward(name = "showInsurancePostingRules", path = "/manager/payments/postingRules/management/showInsurancePostingRules.jsp"),
+	@Forward(name = "editInsurancePR", path = "/manager/payments/postingRules/management/editInsurancePR.jsp")
 
 })
 public class PostingRulesManagementDA extends FenixDispatchAction {
@@ -220,6 +224,35 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
 	return showPostingRulesForDFADegreeCurricularPlan(mapping, form, request, response);
 
+    }
+
+    public ActionForward showInsurancePostingRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("postingRules", getInsurancePostingRules());
+
+	return mapping.findForward("showInsurancePostingRules");
+    }
+
+    private Set<PostingRule> getInsurancePostingRules() {
+	return RootDomainObject.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate().getAllPostingRulesFor(
+		EventType.INSURANCE);
+    }
+
+    public ActionForward prepareEditInsurancePR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("postingRule", getPostingRule(request));
+
+	return mapping.findForward("editInsurancePR");
+    }
+
+    public ActionForward prepareEditInsurancePRInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("postingRule", getRenderedObject("postingRuleEditor"));
+
+	return mapping.findForward("editInsurancePR");
     }
 
 }

@@ -7,16 +7,25 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="MANAGER">
-	
+
 	<h2><bean:message key="label.payments.postingRules.category"
 		bundle="MANAGER_RESOURCES" /></h2>
-		
-		<br/>
 
-	<html:link
-		action="/postingRules.do?method=chooseDFADegreeCurricularPlan">
-		<bean:message
-			key="<%=DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA.getQualifiedName()%>"
-			bundle="ENUMERATION_RESOURCES" />
-	</html:link>
+	<br />
+	
+	<p>
+		<html:link
+			action="/postingRules.do?method=chooseDFADegreeCurricularPlan">
+			<bean:message
+				key="<%=DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA.getQualifiedName()%>"
+				bundle="ENUMERATION_RESOURCES" />
+		</html:link>
+	</p>
+	<p>
+		<html:link
+			action="/postingRules.do?method=showInsurancePostingRules">
+			<bean:message key="label.payments.postingRules.insurance"
+				bundle="MANAGER_RESOURCES" />
+		</html:link></td>	
+	</p>
 </logic:present>
