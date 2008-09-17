@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -597,10 +598,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("ano lectivo");
 	spreadsheet.setHeader("nome Disciplina");
 	setDegreeHeaders(spreadsheet, "disciplina");
-	spreadsheet.setHeader("nota");
 	spreadsheet.setHeader("creditos");
 	spreadsheet.setHeader("estado");
 	spreadsheet.setHeader("época");
+	spreadsheet.setHeader("nota");
+	spreadsheet.setHeader("época normal");
+	spreadsheet.setHeader("época especial");
+	spreadsheet.setHeader("melhoria");
 	spreadsheet.setHeader("tipo Aluno");
 	spreadsheet.setHeader("número inscricoes anteriores");
 	spreadsheet.setHeader("executionCourseId");
@@ -657,10 +661,19 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(executionSemester.getExecutionYear().getYear());
 	row.setCell(curricularCourse.getName());
 	setDegreeColumns(row, degree);
-	row.setCell(enrolment.getGradeValue());
 	row.setCell(enrolment.getEctsCredits().toString().replace('.', ','));
 	row.setCell(enrolment.getEnrollmentState().getDescription());
 	row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
+	row.setCell(enrolment.getGradeValue());
+
+	final EnrolmentEvaluation normal = enrolment.getLatestNormalEnrolmentEvaluation();
+	row.setCell(normal == null ? "" : normal.getGradeValue());
+	final EnrolmentEvaluation special = enrolment.getLatestSpecialSeasonEnrolmentEvaluation();
+	row.setCell(special == null ? "" : special.getGradeValue());
+	final EnrolmentEvaluation improvement = enrolment.getLatestImprovementEnrolmentEvaluation();
+	row.setCell(improvement == null ? "" : improvement.getGradeValue());
+	
+
 	row.setCell(registration.getRegistrationAgreement().getName());
 	row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));
 	final Attends attends = enrolment.getAttendsFor(executionSemester);
