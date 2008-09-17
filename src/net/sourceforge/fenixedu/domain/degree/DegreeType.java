@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,9 +22,7 @@ import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-
-import org.apache.commons.lang.StringUtils;
-
+import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -349,18 +348,32 @@ public enum DegreeType {
     }
 
     public String getPrefix() {
+	return getPrefix(Language.getLocale());
+    }
+
+    public String getPrefix(final Locale locale) {
+	final StringBuilder result = new StringBuilder();
+
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
 	switch (this) {
 	case BOLONHA_PHD_PROGRAM:
-	    return "";
+	    return result.toString();
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-	    return "curso conducente ao ";
+	    result.append(bundle.getString("degree.DegreeType.prefix.one")).append(StringUtils.SINGLE_SPACE);
 	default:
-	    return "curso de ";
+	    final String string = bundle.getString("degree.DegreeType.prefix.two");
+	    result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : StringUtils.SINGLE_SPACE);
 	}
+
+	return result.toString();
     }
 
     public String getLocalizedName() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+	return getLocalizedName(Language.getLocale());
+    }
+
+    public String getLocalizedName(final Locale locale) {
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
 
     public String getQualifiedName() {
@@ -368,22 +381,24 @@ public enum DegreeType {
     }
 
     final public String getFilteredName() {
-	final StringBuilder result = new StringBuilder(getLocalizedName());
+	return getFilteredName(Language.getLocale());
+    }
+
+    final public String getFilteredName(final Locale locale) {
+	final StringBuilder result = new StringBuilder(getLocalizedName(locale));
 	final String toRemove;
 
 	if (isBolonhaType()) {
 	    toRemove = " Bolonha";
 	} else if (this == DegreeType.DEGREE) {
-	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
-		    .getLocale());
-	    toRemove = StringAppender.append(" (", Integer.toString(getYears()), " ", applicationResources.getString("years"),
-		    ")");
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);
+	    toRemove = StringAppender.append(" (", Integer.toString(getYears()), " ", bundle.getString("years"), ")");
 	} else {
-	    toRemove = "";
+	    toRemove = StringUtils.EMPTY;
 	}
 
 	if (result.toString().contains(toRemove)) {
-	    result.replace(result.indexOf(toRemove), result.indexOf(toRemove) + toRemove.length(), "");
+	    result.replace(result.indexOf(toRemove), result.indexOf(toRemove) + toRemove.length(), StringUtils.EMPTY);
 	}
 
 	return result.toString();
