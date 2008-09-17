@@ -8,11 +8,10 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 public class CreditNoteDocument extends FenixReport {
 
@@ -83,7 +82,7 @@ public class CreditNoteDocument extends FenixReport {
 	addParameter("receiptNumber", this.creditNote.getReceipt().getNumberWithSeries() + "/"
 		+ this.creditNote.getReceipt().getYear().toString());
 	addParameter("annulled", this.creditNote.isAnnulled());
-	addParameter("creditNoteDate", this.creditNote.getWhenCreated().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("creditNoteDate", this.creditNote.getWhenCreated().toString(DD_MM_YYYY, getLocale()));
 	addParameter("total", this.creditNote.getTotalAmount().toPlainString());
 
 	addParameter("original", this.original);
@@ -110,7 +109,7 @@ public class CreditNoteDocument extends FenixReport {
 
     @Override
     public String getReportFileName() {
-	return "CreditNote-" + new DateTime().toString("yyyyMMddHHmmss");
+	return "CreditNote-" + new DateTime().toString(YYYYMMDDHHMMSS, getLocale());
     }
 
 }

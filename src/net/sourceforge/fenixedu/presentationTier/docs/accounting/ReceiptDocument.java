@@ -8,12 +8,11 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 public class ReceiptDocument extends FenixReport {
 
@@ -86,7 +85,7 @@ public class ReceiptDocument extends FenixReport {
 	addParameter("year", this.receipt.getYear().toString());
 	addParameter("secondPrintVersion", this.receipt.isSecondPrintVersion());
 	addParameter("annulled", this.receipt.isAnnulled());
-	addParameter("receiptDate", this.receipt.getReceiptDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("receiptDate", this.receipt.getReceiptDate().toString(DD_MM_YYYY, getLocale()));
 	addParameter("total", this.receipt.getTotalAmount().toPlainString());
 
 	addParameter("original", this.original);
@@ -96,7 +95,7 @@ public class ReceiptDocument extends FenixReport {
 	    addParameter("contributorAddress", this.receipt.getContributorParty().getAddress());
 	    addParameter("contributorArea", !StringUtils.isEmpty(this.receipt.getContributorParty().getAreaCode()) ? this.receipt
 		    .getContributorParty().getAreaCode()
-		    + " " + this.receipt.getContributorParty().getAreaOfAreaCode() : null);
+		    + SINGLE_SPACE + this.receipt.getContributorParty().getAreaOfAreaCode() : null);
 	} else {
 	    addParameter("contributorName", this.receipt.getContributorName());
 	    addParameter("contributorSocialSecurityNumber", Receipt.GENERIC_CONTRIBUTOR_PARTY_NUMBER);
@@ -124,7 +123,7 @@ public class ReceiptDocument extends FenixReport {
 
     @Override
     public String getReportFileName() {
-	return "Receipt-" + new DateTime().toString("yyyyMMddHHmmss");
+	return "Receipt-" + new DateTime().toString(YYYYMMDDHHMMSS, getLocale());
     }
 
 }

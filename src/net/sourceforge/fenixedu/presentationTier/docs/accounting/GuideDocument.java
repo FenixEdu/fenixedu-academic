@@ -7,12 +7,11 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 public class GuideDocument extends FenixReport {
 
@@ -72,7 +71,7 @@ public class GuideDocument extends FenixReport {
     protected void fillReport() {
 
 	addParameter("total", this.paymentsManagementDTO.getTotalAmountToPay().toPlainString());
-	addParameter("date", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("date", new LocalDate().toString(DD_MM_YYYY, getLocale()));
 	addParameter("unit", unit.getName());
 	addParameter("costCenter", unit.getCostCenterCode().toString());
 	addParameter("documentIdType", this.paymentsManagementDTO.getPerson().getIdDocumentType().getLocalizedName());
@@ -98,7 +97,7 @@ public class GuideDocument extends FenixReport {
 
     @Override
     public String getReportFileName() {
-	return "Guide-" + new DateTime().toString("yyyyMMddHHmmss");
+	return "Guide-" + new DateTime().toString(YYYYMMDDHHMMSS, getLocale());
     }
 
 }
