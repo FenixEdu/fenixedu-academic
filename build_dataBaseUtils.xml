@@ -4,6 +4,8 @@
     <property environment="env"/>
 	<property name="encoding" value="ISO-8859-15"/>
 
+    <property file="build.properties" />
+
     <property name="lib" location="lib" />
 
 	   <target name="set-properties-copy" if="institution.project"
@@ -91,20 +93,6 @@
 			<arg value="${db.alias}"/>
 			<arg value="${db.user}"/>
 			<arg value="${db.pass}"/>
-		</java>
-
-		<java classname="pt.utl.ist.codeGenerator.SQLUpdateGenerator" fork="true">
-<!--				jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y" -->
-			<classpath>
-				<pathelement path="${build.home.temp.classes}"/>
-				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-			    <fileset dir="${build.home.webinf.lib}">
-			        <include name="**/*.jar"/>
-                </fileset>
-			</classpath>
 		</java>
     </target>
 
