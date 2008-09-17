@@ -74,9 +74,18 @@ public class StudentDA extends FenixDispatchAction {
     public ActionForward editPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	getStudent(request);
-	executeFactoryMethod(request);
-	RenderUtils.invalidateViewState();
+	try {
+	    executeFactoryMethod(request);
+	    RenderUtils.invalidateViewState();
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+
+	    request.setAttribute("personBean", getRenderedObject());
+	    return mapping.findForward("editPersonalData");
+	}
+
 	addActionMessage(request, "message.student.personDataEditedWithSuccess");
+
 	return mapping.findForward("viewStudentDetails");
     }
 
