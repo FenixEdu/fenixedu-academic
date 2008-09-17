@@ -65,7 +65,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
 
 	    if (roomOccupation.isLessonSpaceOccupation()) {
 		final Lesson lesson = ((LessonSpaceOccupation) roomOccupation).getLesson();
-		getLessonOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, lesson);
+		getLessonOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay.plusDays(1), lesson);
 	    }
 
 	    if (roomOccupation.isLessonInstanceSpaceOccupation()) {
