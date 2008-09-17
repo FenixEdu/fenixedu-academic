@@ -22,7 +22,6 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import pt.ist.utl.fenix.utils.NumberToWordsConverter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocument {
 
@@ -55,17 +54,17 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	addParameter("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("day", new LocalDate().toString(DD_MM_YYYY, getLocale()));
 
 	createProgramsList();
     }
 
     private String getStudentNumber() {
-	final Registration registration = getDocumentRequest().getRegistration();
+	final Registration registration = getRegistration();
 	if (ProgramCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
 	    final String agreementInformation = registration.getAgreementInformation();
 	    if (!StringUtils.isEmpty(agreementInformation)) {
-		return registration.getRegistrationAgreement().toString() + " " + agreementInformation;
+		return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
 	    }
 	}
 	return registration.getStudent().getNumber().toString();
@@ -128,7 +127,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
 	private String buildCurricularCourseName(final CurricularCourse curricularCourse) {
 	    return curricularCourse.getName()
-		    + (StringUtils.isEmpty(curricularCourse.getAcronym()) ? "" : " (" + curricularCourse.getAcronym() + ")");
+		    + (StringUtils.isEmpty(curricularCourse.getAcronym()) ? EMPTY_STR : " (" + curricularCourse.getAcronym()
+			    + ")");
 	}
 
 	public String getDegree() {
@@ -221,7 +221,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 		this.generalObjectives = HtmlToTextConverterUtil.convertToText(curriculum.getGeneralObjectives());
 		this.operationalObjectives = HtmlToTextConverterUtil.convertToText(curriculum.getOperacionalObjectives());
 	    } else {
-		this.program = this.generalObjectives = this.operationalObjectives = StringUtils.EMPTY;
+		this.program = this.generalObjectives = this.operationalObjectives = EMPTY_STR;
 	    }
 	}
 

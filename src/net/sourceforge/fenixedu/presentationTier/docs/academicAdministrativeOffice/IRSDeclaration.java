@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 public class IRSDeclaration extends AdministrativeOfficeDocument {
 
     protected IRSDeclaration(final DocumentRequest documentRequest) {
@@ -29,7 +27,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 
-	final Registration registration = getDocumentRequest().getRegistration();
+	final Registration registration = getRegistration();
 	addParameter("registration", registration);
 
 	final Person person = registration.getPerson();
@@ -41,19 +39,19 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	setAmounts(person, civilYear);
 	setEmployeeFields();
 
-	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("day", new YearMonthDay().toString(DD_MM_YYYY, getLocale()));
     }
 
     final private void setPersonFields(final Registration registration, final Person person) {
 	final String name = person.getName().toUpperCase();
-	addParameter("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
+	addParameter("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, END_CHAR));
 
 	final String registrationNumber = registration.getNumber().toString();
 	addParameter("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH
-		- "aluno deste Instituto com o Número ".length(), '-'));
+		- "aluno deste Instituto com o Número ".length(), END_CHAR));
 
 	final StringBuilder documentIdType = new StringBuilder();
-	documentIdType.append("portador" + (person.isMale() ? "" : "a"));
+	documentIdType.append("portador" + (person.isMale() ? EMPTY_STR : "a"));
 	documentIdType.append(" do ");
 	documentIdType.append(person.getIdDocumentType().getLocalizedName());
 	documentIdType.append(" Nº ");
@@ -61,7 +59,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
 	final String documentIdNumber = person.getDocumentIdNumber();
 	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH
-		- documentIdType.toString().length(), '-'));
+		- documentIdType.toString().length(), END_CHAR));
     }
 
     final private void setAmounts(final Person person, final Integer civilYear) {
@@ -71,12 +69,13 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	final StringBuilder eventTypes = new StringBuilder();
 	final StringBuilder payedAmounts = new StringBuilder();
 	if (!gratuityPayedAmount.isZero()) {
-	    eventTypes.append("- ").append(enumerationBundle.getString(EventType.GRATUITY.getQualifiedName())).append("\n");
-	    payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append("\n");
+	    eventTypes.append("- ").append(getEnumerationBundle().getString(EventType.GRATUITY.getQualifiedName())).append(
+		    LINE_BREAK);
+	    payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
 	}
 	if (!othersPayedAmount.isZero()) {
-	    eventTypes.append("- Outras despesas de educação").append("\n");
-	    payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append("\n");
+	    eventTypes.append("- Outras despesas de educação").append(LINE_BREAK);
+	    payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
 	}
 	addParameter("eventTypes", eventTypes.toString());
 	addParameter("payedAmounts", payedAmounts.toString());

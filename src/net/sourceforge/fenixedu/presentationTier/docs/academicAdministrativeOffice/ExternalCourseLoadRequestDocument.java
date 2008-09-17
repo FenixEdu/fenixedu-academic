@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import pt.ist.utl.fenix.utils.NumberToWordsConverter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExternalCourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
@@ -43,18 +42,18 @@ public class ExternalCourseLoadRequestDocument extends AdministrativeOfficeDocum
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	addParameter("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("day", new LocalDate().toString(DD_MM_YYYY, getLocale()));
 
 	addParameter("numberOfCourseLoads", NumberToWordsConverter.convert(getDocumentRequest().getNumberOfCourseLoads()));
 	addParameter("externalInstitutionName", getDocumentRequest().getInstitution().getName());
     }
 
     private String getStudentNumber() {
-	final Registration registration = getDocumentRequest().getRegistration();
+	final Registration registration = getRegistration();
 	if (ExternalCourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
 	    final String agreementInformation = registration.getAgreementInformation();
 	    if (!StringUtils.isEmpty(agreementInformation)) {
-		return registration.getRegistrationAgreement().toString() + " " + agreementInformation;
+		return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
 	    }
 	}
 	return registration.getStudent().getNumber().toString();
