@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -85,6 +86,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     protected Degree() {
 	super();
+
 	setRootDomainObject(RootDomainObject.getInstance());
 	new DegreeSite(this);
     }
@@ -92,6 +94,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
 	this();
 	commonFieldsChange(name, nameEn, code, gradeScale, ExecutionYear.readCurrentExecutionYear());
+
 	if (degreeType == null) {
 	    throw new DomainException("degree.degree.type.not.null");
 	}
@@ -497,20 +500,24 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     final public String getFilteredName() {
-	return getFilteredName(ExecutionYear.readCurrentExecutionYear());
+	return getFilteredName(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
     }
 
-    final public String getFilteredName(ExecutionYear executionYear) {
-	final StringBuilder result = new StringBuilder(getNameFor(executionYear).getContent());
+    final public String getFilteredName(final ExecutionYear executionYear) {
+	return getFilteredName(executionYear, Language.getLocale());
+    }
+
+    final public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
+	final StringBuilder res = new StringBuilder(getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage())));
 
 	for (final net.sourceforge.fenixedu.domain.space.Campus campus : Space.getAllCampus()) {
 	    final String toRemove = " - " + campus.getName();
-	    if (result.toString().contains(toRemove)) {
-		result.replace(result.indexOf(toRemove), result.indexOf(toRemove) + toRemove.length(), "");
+	    if (res.toString().contains(toRemove)) {
+		res.replace(res.indexOf(toRemove), res.indexOf(toRemove) + toRemove.length(), "");
 	    }
 	}
 
-	return result.toString();
+	return res.toString();
     }
 
     public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code,
@@ -871,7 +878,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      * of the execution year.
      * 
      * @param person
-     *            the person to check
+     *                the person to check
      * @return <code>true</code> if the person was a coordinator for a certain
      *         execution degree
      */
