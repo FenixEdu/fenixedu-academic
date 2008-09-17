@@ -108,7 +108,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
 
 	result.append(", ").append(resourceBundle.getString("documents.registration.final.arithmetic.mean"));
-	result.append(SINGLE_SPACE).append(resourceBundle.getString("message.declaration.registration.of"));
+	result.append(SINGLE_SPACE).append(resourceBundle.getString("label.of.both"));
 	result.append(SINGLE_SPACE).append(finalAverage);
 	result.append(" (").append(enumerationBundle.getString(finalAverage.toString()));
 	result.append(") ").append(resourceBundle.getString("values"));
