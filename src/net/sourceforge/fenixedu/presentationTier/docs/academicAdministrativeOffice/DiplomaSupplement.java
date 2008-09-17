@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -29,22 +28,14 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.NameUtils;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
-import org.joda.time.format.DateTimeFormat;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
-
-    private Language language = null;
-    static final private String DATE_FORMAT = "dd/MM/yyyy";
-    static final public Locale[] suportedLocales = { Language.getDefaultLocale(), new Locale("en") };
 
     protected DiplomaSupplement(final DocumentRequest documentRequest, final Locale locale) {
 	super(documentRequest, locale);
@@ -57,9 +48,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-	language = Language.valueOf(resourceBundle.getLocale().getLanguage());
-	addParameter("bundle", resourceBundle);
-	addParameter("day", new YearMonthDay().toString(DATE_FORMAT));
+	addParameter("bundle", getResourceBundle());
+	addParameter("day", new YearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
 	addUniversityParameters();
 	addPersonParameters();
 	addRegistrationParameters();
@@ -73,49 +63,34 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
     }
 
-    private void addPersonParameters() {
-	final Person person = getDocumentRequest().getRegistration().getPerson();
+    protected void addPersonParameters() {
+	final Person person = getRegistration().getPerson();
 	final String name = StringFormatter.prettyPrint(person.getName().trim());
 	addParameter("name", name);
 	addParameter("familyName", NameUtils.getLastName(name));
 	addParameter("givenName", NameUtils.getFirstName(name));
-	addParameter("birthDay", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern(DATE_FORMAT)));
+	addParameter("birthDay", person.getDateOfBirthYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
 	addParameter("nationality", StringFormatter.prettyPrint(person.getCountry().getNationality()));
 	addDocumentIdParameters(person);
     }
 
     private void addDocumentIdParameters(final Person person) {
-	addParameter("documentIdType", ResourceBundle.getBundle("resources.EnumerationResources", resourceBundle.getLocale())
-		.getString(person.getIdDocumentType().getName()));
+	addParameter("documentIdType", getEnumerationBundle().getString(person.getIdDocumentType().getName()));
 	addParameter("documentIdNumber", person.getDocumentIdNumber());
-	addParameter("documentIdExpiration", person.getExpirationDateOfDocumentIdYearMonthDay().toString(
-		DateTimeFormat.forPattern(DATE_FORMAT)));
+	addParameter("documentIdExpiration", person.getExpirationDateOfDocumentIdYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY,
+		getLocale()));
     }
 
     private Integer addRegistrationParameters() {
-	final Registration reg = getDocumentRequest().getRegistration();
-	addParameter("registrationNumber", reg.getNumber());
-	return addDegreeParameters(reg);
-    }
-
-    private String getMLSTextContent(final MultiLanguageString mls) {
-	if (mls == null) {
-	    return StringUtils.EMPTY;
-	}
-	final String content = mls.hasContent(language) && !StringUtils.isEmpty(mls.getContent(language)) ? mls
-		.getContent(language) : mls.getContent();
-	return convert(content);
-    }
-
-    private String convert(final String content) {
-	return HtmlToTextConverterUtil.convertToText(content).replace("\n\n", "\t").replace("\n", "").replace("\t", "\n\n")
-		.trim();
+	final Registration registration = getRegistration();
+	addParameter("registrationNumber", registration.getNumber());
+	return addDegreeParameters(registration);
     }
 
     private Integer addDegreeParameters(final Registration registration) {
 	final Degree degree = registration.getDegree();
-	addParameter("degreeFilteredName", degree.getDegreeType().getFilteredName() + " " + resourceBundle.getString("label.in")
-		+ " " + degree.getFilteredName());
+	addParameter("degreeFilteredName", degree.getDegreeType().getFilteredName() + SINGLE_SPACE
+		+ getResourceBundle().getString("label.in") + SINGLE_SPACE + degree.getFilteredName());
 	addParameter("prevailingScientificArea", degree.getPrevailingScientificArea());
 	addDegreeInfoParameters(registration, degree);
 
@@ -157,20 +132,20 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	    return;
 	}
 
-	final String content = mls.hasContent(language) ? mls.getContent(language) : mls.getContent();
+	final String content = mls.hasContent(getLanguage()) ? mls.getContent(getLanguage()) : mls.getContent();
 	for (String ahref : content.split("<a href")) {
 	    if (ahref.contains("</a>")) {
 		ahref = "<a href" + ahref.substring(0, ahref.indexOf("</a>")) + "</a>";
-		ahref = ahref.replace("\n", StringUtils.EMPTY);
+		ahref = ahref.replace(LINE_BREAK, EMPTY_STR);
 		String result = convert(ahref);
 		final String betweenBrackets = result.substring(result.indexOf("("), result.indexOf(")") + 1).trim();
-		final String outsideBrackets = result.replace(betweenBrackets, StringUtils.EMPTY).trim();
+		final String outsideBrackets = result.replace(betweenBrackets, EMPTY_STR).trim();
 		if (betweenBrackets.contains("mailto") || betweenBrackets.contains(outsideBrackets)) {
 		    result = outsideBrackets;
 		}
 		if (!builder.toString().contains(result)) {
 		    builder.append(result);
-		    builder.append("\n");
+		    builder.append(LINE_BREAK);
 		}
 	    }
 	}
@@ -179,7 +154,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     private Integer addCycleTypeParameters(final Registration registration, final Degree degree) {
 	final CycleType cycleType = ((DiplomaRequest) getDocumentRequest()).getWhatShouldBeRequestedCycle();
 	addEntriesParameters(registration, cycleType);
-	addParameter("weeksOfStudyPerYear", resourceBundle.getString("diploma.supplement.weeksOfStudyPerYear." + cycleType));
+	addParameter("weeksOfStudyPerYear", getResourceBundle().getString("diploma.supplement.weeksOfStudyPerYear." + cycleType));
 	//addParameter("ectsCredits", cycleType.getDefaultEcts());
 
 	final DegreeType degreeType = degree.getDegreeType();
@@ -214,11 +189,11 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
 	final StringBuilder access = new StringBuilder();
 	if (cycleType == CycleType.THIRD_CYCLE) {
-	    access.append(resourceBundle.getString("diploma.supplement.five.one.three"));
+	    access.append(getResourceBundle().getString("diploma.supplement.five.one.three"));
 	} else {
-	    access.append(resourceBundle.getString("diploma.supplement.five.one.one")).append(" ");
-	    access.append(graduateTitle).append(" ");
-	    access.append(resourceBundle.getString("diploma.supplement.five.one.two"));
+	    access.append(getResourceBundle().getString("diploma.supplement.five.one.one")).append(SINGLE_SPACE);
+	    access.append(graduateTitle).append(SINGLE_SPACE);
+	    access.append(getResourceBundle().getString("diploma.supplement.five.one.two"));
 	}
 	addParameter("accessToHigherLevelOfEducation", access.toString());
     }
@@ -233,8 +208,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	final Distribution distribution = gradeDistr.getDistribution(result);
 	addParameter("finalAverageDistribution", distribution);
 
-	final ResourceBundle resources = ResourceBundle.getBundle("resources.ApplicationResources", resourceBundle.getLocale());
-	addParameter("finalAverageQualified", resources.getString("label.grade." + distribution.getScale().toLowerCase()));
+	addParameter("finalAverageQualified", getApplicationBundle().getString(
+		"label.grade." + distribution.getScale().toLowerCase()));
 	return result;
     }
 
@@ -243,7 +218,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	@Override
 	public int compare(DiplomaSupplementEntry o1, DiplomaSupplementEntry o2) {
 	    final int c = o1.getExecutionYear().compareTo(o2.getExecutionYear());
-	    return c == 0 ? Collator.getInstance().compare(o1, o2) : c;
+	    return c == 0 ? Collator.getInstance().compare(o1.getName(), o2.getName()) : c;
 	}
 
     };
