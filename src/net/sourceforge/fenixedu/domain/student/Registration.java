@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
@@ -96,14 +97,16 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Registration extends Registration_Base {
 
@@ -1807,22 +1810,31 @@ public class Registration extends Registration_Base {
     }
 
     final public String getDegreeDescription(final CycleType cycleType) {
+	return getDegreeDescription(cycleType, Language.getLocale());
+    }
+
+    final public String getDegreeDescription(final CycleType cycleType, final Locale locale) {
 	final StringBuilder result = new StringBuilder();
+
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
 
 	final Degree degree = getDegree();
 	final DegreeType degreeType = degree.getDegreeType();
-
-	if (cycleType != null && getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
-	    result.append(cycleType.getDescription()).append(" do ");
+	if (getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
+	    result.append(cycleType.getDescription(locale));
+	    result.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.male"));
+	    result.append(StringUtils.SINGLE_SPACE);
 	}
 
-	result.append(degreeType.getPrefix());
-	result.append(degreeType.getFilteredName().toUpperCase());
+	result.append(degreeType.getPrefix(locale));
+	result.append(degreeType.getFilteredName(locale).toUpperCase());
 
-	if (cycleType != null && getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
-	    result.append(" (").append(cycleType.getDescription()).append(")");
+	if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
+	    result.append(" (").append(cycleType.getDescription(locale)).append(")");
 	}
-	result.append(" em ").append(degree.getFilteredName(this.getStartExecutionYear()).toUpperCase());
+	result.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.in"));
+	result.append(StringUtils.SINGLE_SPACE)
+		.append(degree.getFilteredName(this.getStartExecutionYear(), locale).toUpperCase());
 
 	return result.toString();
     }
