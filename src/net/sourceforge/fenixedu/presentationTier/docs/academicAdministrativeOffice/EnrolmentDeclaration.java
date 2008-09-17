@@ -23,7 +23,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
 	addParameter("curricularYear", getCurricularYear());
 
-	final List<Enrolment> enrolments = (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(
+	final List<Enrolment> enrolments = (List<Enrolment>) getRegistration().getEnrolments(
 		getDocumentRequest().getExecutionYear());
 	addParameter("numberEnrolments", Integer.valueOf(enrolments.size()));
 	addParameter("approvementInfo", getApprovementInfo());
@@ -32,7 +32,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected String getDegreeDescription() {
-	final Registration registration = getDocumentRequest().getRegistration();
+	final Registration registration = getRegistration();
 	return registration.getDegreeType().isComposite() ? registration.getDegreeDescription(null) : super
 		.getDegreeDescription();
     }
@@ -41,10 +41,10 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	final StringBuilder result = new StringBuilder();
 
 	if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
-	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(
+	    final Integer curricularYear = Integer.valueOf(getRegistration().getCurricularYear(
 		    getDocumentRequest().getExecutionYear()));
 
-	    result.append(enumerationBundle.getString(curricularYear.toString() + ".ordinal").toUpperCase());
+	    result.append(getEnumerationBundle().getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");
 	}
 
@@ -55,10 +55,10 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	final StringBuilder result = new StringBuilder();
 
 	final EnrolmentDeclarationRequest enrolmentDeclarationRequest = (EnrolmentDeclarationRequest) getDocumentRequest();
-	final Registration registration = enrolmentDeclarationRequest.getRegistration();
-	final ExecutionYear executionYear = enrolmentDeclarationRequest.getExecutionYear();
 
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.PPRE) {
+	    final Registration registration = getRegistration();
+	    final ExecutionYear executionYear = enrolmentDeclarationRequest.getExecutionYear();
 	    final boolean transition = registration.isTransition(executionYear);
 
 	    if (registration.isFirstTime(executionYear) && !transition) {
@@ -82,12 +82,12 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	final EnrolmentDeclarationRequest enrolmentDeclarationRequest = (EnrolmentDeclarationRequest) getDocumentRequest();
 
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() != null) {
-	    result.append(resourceBundle.getString("documents.declaration.valid.purpose")).append(" ");
+	    result.append(getResourceBundle().getString("documents.declaration.valid.purpose")).append(SINGLE_SPACE);
 	    if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.OTHER
 		    && !StringUtils.isEmpty(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription())) {
 		result.append(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription().toUpperCase());
 	    } else {
-		result.append(enumerationBundle.getString(enrolmentDeclarationRequest.getDocumentPurposeType().name())
+		result.append(getEnumerationBundle().getString(enrolmentDeclarationRequest.getDocumentPurposeType().name())
 			.toUpperCase());
 	    }
 	    result.append(".");
