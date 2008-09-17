@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * Base document for Thesis related reports. This document tries to setup the
@@ -29,7 +28,7 @@ public abstract class ThesisDocument extends FenixReport {
     public ThesisDocument(Thesis thesis) {
 	super();
 	this.thesis = thesis;
-	this.resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+	setResourceBundle(ResourceBundle.getBundle("resources.ApplicationResources", getLocale()));
 	fillReport();
     }
 
@@ -84,9 +83,9 @@ public abstract class ThesisDocument extends FenixReport {
 	    addParameter("coorientatorCategory", participantCategoryName(coorientator));
 	    addParameter("coorientatorAffiliation", neverNull(coorientator.getAffiliation()));
 	} else {
-	    addParameter("coorientatorName", "");
-	    addParameter("coorientatorCategory", "");
-	    addParameter("coorientatorAffiliation", "");
+	    addParameter("coorientatorName", EMPTY_STR);
+	    addParameter("coorientatorCategory", EMPTY_STR);
+	    addParameter("coorientatorAffiliation", EMPTY_STR);
 	}
     }
 
@@ -111,22 +110,22 @@ public abstract class ThesisDocument extends FenixReport {
 		addParameter(vowelPrefix + "Category", participantCategoryName(vowel));
 		addParameter(vowelPrefix + "Affiliation", neverNull(vowel.getAffiliation()));
 	    } else {
-		addParameter(vowelPrefix + "Name", "");
-		addParameter(vowelPrefix + "Category", "");
-		addParameter(vowelPrefix + "Affiliation", "");
+		addParameter(vowelPrefix + "Name", EMPTY_STR);
+		addParameter(vowelPrefix + "Category", EMPTY_STR);
+		addParameter(vowelPrefix + "Affiliation", EMPTY_STR);
 	    }
 	}
     }
 
     protected String neverNull(String value) {
-	return value == null ? "" : value;
+	return value == null ? EMPTY_STR : value;
     }
 
     private String participantCategoryName(ThesisEvaluationParticipant participant) {
 	if (participant == null) {
-	    return "";
+	    return EMPTY_STR;
 	} else if (participant.getCategory() == null) {
-	    return "";
+	    return EMPTY_STR;
 	} else {
 	    return participant.getCategory();
 	}
