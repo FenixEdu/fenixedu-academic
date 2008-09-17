@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 public class IRSCustomDeclaration extends FenixReport {
 
     public static class IRSDeclarationDTO {
@@ -160,7 +158,7 @@ public class IRSCustomDeclaration extends FenixReport {
 
 	addParameter("civilYear", String.valueOf(this.declaration.getCivilYear()));
 
-	addParameter("date", new YearMonthDay().toString("yyyy/MM/dd", Language.getLocale()));
+	addParameter("date", new YearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
 	addParameter("gratuityAmount", this.declaration.getGratuityAmount().toPlainString());
 	addParameter("otherAmount", this.declaration.getOtherAmount().toPlainString());
 	addParameter("totalAmount", this.declaration.getTotalAmount().toPlainString());
@@ -175,7 +173,7 @@ public class IRSCustomDeclaration extends FenixReport {
     @Override
     public String getReportFileName() {
 	return MessageFormat.format("DECLARATION-{0}-{1}", this.declaration.getStudentNumber().toString(), new DateTime()
-		.toString("yyyyMMdd"));
+		.toString(YYYYMMMDD, getLocale()));
 
     }
 
