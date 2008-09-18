@@ -14,7 +14,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
-import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
@@ -701,26 +700,29 @@ public class Person extends Person_Base {
 	setWorkPhone(infoPerson.getWorkPhone());
 
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
-	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
-	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()));
+	if (infoPerson.getDataEmissaoDocumentoIdentificacao() != null) {
+	    setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay
+		    .fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
+	}
+	if (infoPerson.getDataValidadeDocumentoIdentificacao() != null) {
+	    setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
+		    .getDataValidadeDocumentoIdentificacao()));
+	}
 	setDistrictOfBirth(infoPerson.getDistritoNaturalidade());
 
 	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
 	setParishOfBirth(infoPerson.getFreguesiaNaturalidade());
 	setEmissionLocationOfDocumentId(infoPerson.getLocalEmissaoDocumentoIdentificacao());
 
-	setDateOfBirthYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getNascimento()));
+	if (infoPerson.getNascimento() != null) {
+	    setDateOfBirthYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getNascimento()));
+	}
 	setNameOfMother(infoPerson.getNomeMae());
 	setNameOfFather(infoPerson.getNomePai());
 	setSocialSecurityNumber(infoPerson.getNumContribuinte());
 
 	setProfession(infoPerson.getProfissao());
 	setGender(infoPerson.getSexo());
-
-	// Generate person's Password
-	if (getPassword() == null) {
-	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this)));
-	}
 
 	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail() : Boolean.TRUE);
 	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite() : Boolean.TRUE);
