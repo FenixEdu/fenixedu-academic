@@ -665,8 +665,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    final public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
-	Collection<Enrolment> result = new HashSet<Enrolment>();
+    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
+	final Collection<Enrolment> result = new HashSet<Enrolment>();
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    result.addAll(curriculumModule.getSpecialSeasonEnrolments(executionYear));
 	}
@@ -818,6 +818,10 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public boolean isExtraCurriculum() {
+	return false;
+    }
+
+    public boolean isStandalone() {
 	return false;
     }
 
