@@ -17,91 +17,82 @@
 	</html:messages>
 </logic:messagesPresent>
 
-<logic:notPresent name="candidatedYearDelegate" >
-	<logic:notPresent name="notCandidatedYearDelegate" >
-		<logic:notPresent name="votedYearDelegate" >
-			<logic:notPresent name="notVotedYearDelegate" >
-				<p class="mvert15">
-					<em><bean:message key="label.student.elections.noCandidacyOrVotePeriods" bundle="APPLICATION_RESOURCES"/>.</em>
-				</p>
-					<logic:present name="yearDelegateResultsElection" >
-						<bean:define id="electionOID" name="yearDelegateElection" property="idInternal" />
-						<p class="mtop1 mbottom05">
-							<b><bean:message key="title.student.elections.results.elections" bundle="APPLICATION_RESOURCES"/></b>
-						</p>
-					
-						<fr:view name="yearDelegateElection" layout="tabular-nonNullValues" schema="student.electionPeriod.showResults.resume" >
-							<fr:layout>
-								<fr:property name="classes" value="tstyle2 thlight thright mtop05"/>
-								<fr:property name="columnClasses" value="nowrap, nowrap"/>
-								<fr:property name="rowClasses" value="bold,,,,,bold"/>
-							</fr:layout>
-						</fr:view>
-					
-						<fr:view name="yearDelegateResultsElection" layout="tabular-sortable" schema="student.yearDelegateElection.showResults" >
-							<fr:layout>
-								<fr:property name="classes" value="tstyle2 thlight tdcenter"/>
-								<fr:property name="columnClasses" value="width80px,aleft,,"/>
-								<fr:property name="sortParameter" value="sortBy"/>
-								<fr:property name="sortableSlots" value="student.number,student.person.name,votesNumber,votesRelativePercentage"/>
-				            	<fr:property name="sortUrl" value="/yearDelegateManagement.do?method=prepare"/>
-				            	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "votesNumber=descending" : request.getParameter("sortBy")  %>"/>
-							</fr:layout>
-						</fr:view>
-					</logic:present>
-			</logic:notPresent>
+<logic:notPresent name="currentYearDelegateElection" >
+	<logic:notPresent name="votedYearDelegate" >
+		<logic:notPresent name="notVotedYearDelegate" >
+			<p class="mvert15">
+				<em><bean:message key="label.student.elections.noCandidacyOrVotePeriods" bundle="APPLICATION_RESOURCES"/>.</em>
+			</p>
+				<logic:present name="yearDelegateResultsElection" >
+					<bean:define id="electionOID" name="yearDelegateElection" property="idInternal" />
+					<p class="mtop1 mbottom05">
+						<b><bean:message key="title.student.elections.results.elections" bundle="APPLICATION_RESOURCES"/></b>
+					</p>
+				
+					<fr:view name="yearDelegateElection" layout="tabular-nonNullValues" schema="student.electionPeriod.showResults.resume" >
+						<fr:layout>
+							<fr:property name="classes" value="tstyle2 thlight thright mtop05"/>
+							<fr:property name="columnClasses" value="nowrap, nowrap"/>
+							<fr:property name="rowClasses" value="bold,,,,,bold"/>
+						</fr:layout>
+					</fr:view>
+				
+					<fr:view name="yearDelegateResultsElection" layout="tabular-sortable" schema="student.yearDelegateElection.showResults" >
+						<fr:layout>
+							<fr:property name="classes" value="tstyle2 thlight tdcenter"/>
+							<fr:property name="columnClasses" value="width80px,aleft,,"/>
+							<fr:property name="sortParameter" value="sortBy"/>
+							<fr:property name="sortableSlots" value="student.number,student.person.name,votesNumber,votesRelativePercentage"/>
+			            	<fr:property name="sortUrl" value="/yearDelegateManagement.do?method=prepare"/>
+			            	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "votesNumber=descending" : request.getParameter("sortBy")  %>"/>
+						</fr:layout>
+					</fr:view>
+				</logic:present>
 		</logic:notPresent>
 	</logic:notPresent>
 </logic:notPresent>
 
 
-<!-- CANDIDATED STUDENT -->
-<logic:present name="candidatedYearDelegate" >	
+<logic:present name="currentYearDelegateElection" >	
 	<p class="mtop1 mbottom05">
 		<b><bean:message key="label.elections.candidacyPeriod" bundle="APPLICATION_RESOURCES"/></b></p>
 	<p class="color888 mvert05">
 		<bean:message key="label.elections.candidacyPeriod.candidate.help" bundle="APPLICATION_RESOURCES" /></p>
 	
-	<fr:view name="candidatedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
+	<fr:view name="currentYearDelegateElection" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
 		<fr:layout>
 			<fr:property name="classes" value="tstyle2 thlight thright mtop05"/>
 			<fr:property name="columnClasses" value="nowrap, nowrap"/>
 			<fr:property name="rowClasses" value="bold,,,"/>
 		</fr:layout>
 	</fr:view>
+
+	<logic:present name="candidatedYearDelegate">
+		<p><strong><bean:message key="label.elections.candidated" bundle="APPLICATION_RESOURCES" /></strong></p>
+		<fr:view name="candidatedYearDelegate" layout="tabular" schema="student.candidated.year.delegate">
+			<fr:layout>
+				<fr:property name="classes" value="tstyle2 thlight thleft tdleft mtop0"/>
+				<fr:property name="linkFormat(remove)" value="/yearDelegateManagement.do?method=removeCandidateStudent" />
+				<fr:property name="key(remove)" value="link.remove.candidate"/>
+				<fr:property name="bundle(remove)" value="APPLICATION_RESOURCES"/>
+				<fr:property name="contextRelative(remove)" value="true"/>      
+				<fr:property name="order(remove)" value="1"/>
+			</fr:layout>
+		</fr:view>	
+	</logic:present>
+	<logic:notPresent name="candidatedYearDelegate">
+		<ul>
+			<li>
+				<p class="mtop0 mbottom1">
+					<html:link page="/yearDelegateManagement.do?method=addCandidateStudent" >
+						<bean:message key="link.student.elections.addCandidateStudent" bundle="APPLICATION_RESOURCES" /></html:link></p>
+			</li>
+		</ul>
+	</logic:notPresent>
+
 	
-	<ul>
-		<li>
-			<p class="mtop0 mbottom2">
-				<html:link page="/yearDelegateManagement.do?method=removeCandidateStudent" >
-					<bean:message key="link.student.elections.removeCandidateStudent" bundle="APPLICATION_RESOURCES" /></html:link>	
-		</li>
-	</ul>	
 </logic:present>
 
-<!-- NOT CANDIDATED STUDENT -->
-<logic:present name="notCandidatedYearDelegate" >
-	<p class="mtop1 mbottom05">
-		<b><bean:message key="label.elections.candidacyPeriod" bundle="APPLICATION_RESOURCES"/></b></p>
-	<p class="color888 mvert05">
-		<bean:message key="label.elections.candidacyPeriod.notCandidate.help" bundle="APPLICATION_RESOURCES" /></p>
-		
-	<fr:view name="notCandidatedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
-		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thlight thright mtop05"/>
-			<fr:property name="columnClasses" value="nowrap, nowrap"/>
-			<fr:property name="rowClasses" value="bold,,,"/>
-		</fr:layout>
-	</fr:view>
-
-	<ul>
-		<li>
-			<p class="mtop0 mbottom1">
-				<html:link page="/yearDelegateManagement.do?method=addCandidateStudent" >
-					<bean:message key="link.student.elections.addCandidateStudent" bundle="APPLICATION_RESOURCES" /></html:link></p>
-		</li>
-	</ul>
-</logic:present>
 
 <!-- CANDIDATES LIST -->
 <logic:notPresent name="votedYearDelegate" >

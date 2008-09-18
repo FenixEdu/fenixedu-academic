@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.Email;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class VoteYearDelegateElections extends Service {
 
@@ -18,7 +17,8 @@ public class VoteYearDelegateElections extends Service {
 	    throws FenixServiceException {
 
 	try {
-	    if (!yearDelegateElection.getVotingStudents().contains(student)) {
+	    if (!student.hasAlreadyVotedForYearDelegateElection(yearDelegateElection.getExecutionYear())
+		    && !yearDelegateElection.getVotingStudents().contains(student)) {
 		final String msg = "A sua votação para a eleição de Delegado de Ano encontra-se registada. Obrigado pela sua participação.";
 		final Person person = student.getPerson();
 		DelegateElectionVote vote = new DelegateElectionVote(yearDelegateElection, votedStudent);

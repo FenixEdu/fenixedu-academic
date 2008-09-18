@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
@@ -198,9 +199,10 @@ public class Student extends Student_Base {
 
     public Registration getLastActiveRegistration() {
 	List<Registration> activeRegistrations = getActiveRegistrations();
-	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
+	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
+		Registration.COMPARATOR_BY_START_DATE);
     }
-    
+
     public Registration getLastRegistrationForDegreeType(final DegreeType degreeType) {
 	Collection<Registration> registrations = getRegistrationsByDegreeType(degreeType);
 	return registrations.isEmpty() ? null : (Registration) Collections.max(registrations, new BeanComparator("startDate"));
@@ -1347,5 +1349,17 @@ public class Student extends Student_Base {
 	    }
 	}
 	return firstYear;
+    }
+
+    public boolean hasAlreadyVotedForYearDelegateElection(ExecutionYear executionYear) {
+	for (DelegateElection delegateElection : getElectionsWithVotingStudentsSet()) {
+	    if (delegateElection instanceof YearDelegateElection) {
+		YearDelegateElection yearDelegateElection = (YearDelegateElection) delegateElection;
+		if (yearDelegateElection.getExecutionYear() == executionYear) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 }

@@ -456,6 +456,12 @@
 	</slot>
 </schema>
 
+<schema name="student.candidated.year.delegate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+	<slot name="degree.name" key="label.Degree" read-only="true" />
+	<slot name="executionYear.year" key="label.executionYear"	/>
+	<slot name="curricularYear.year" key="label.curricularYear"	/>
+</schema>
+
 <schema name="student.delegates.yearDelegate" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
 	<slot name="person.name" key="label.name" />
 	<slot name="number" key="label.studentNumber"/>
