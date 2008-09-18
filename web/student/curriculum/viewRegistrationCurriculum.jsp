@@ -116,7 +116,7 @@
 				<td><bean:write name="weightedAverage"/></td>
 				<td>
 					<logic:equal name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
-					-
+						<td>-</td>
 					</logic:equal>
 					<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
 						<%
