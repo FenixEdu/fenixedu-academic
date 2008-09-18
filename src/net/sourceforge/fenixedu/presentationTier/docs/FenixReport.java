@@ -52,7 +52,7 @@ abstract public class FenixReport implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    protected FenixReport(final Collection dataSource, final Locale locale) {
+    private FenixReport(final Collection dataSource, final Locale locale) {
 	this.dataSource = (dataSource == null) ? new ArrayList() : dataSource;
 	this.enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
 	this.applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);

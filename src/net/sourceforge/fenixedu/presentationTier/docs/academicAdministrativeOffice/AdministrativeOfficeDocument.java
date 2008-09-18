@@ -109,10 +109,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     }
 
-    protected AdministrativeOfficeDocument() {
-	super();
-    }
-
     @SuppressWarnings("static-access")
     protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
 	this(documentRequest, Language.getLocale());
