@@ -9,6 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.student.IStudentCurricularPlanBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -97,5 +98,9 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
 	}
 
 	return result;
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
     }
 }
