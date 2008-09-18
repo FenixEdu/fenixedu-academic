@@ -1249,8 +1249,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public boolean isSpecialSeasonEnroled(final ExecutionYear executionYear) {
-	return getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON
-		&& getExecutionPeriod().getExecutionYear() == executionYear && getTempSpecialSeasonEvaluation() != null;
+	return isSpecialSeason() && getExecutionPeriod().getExecutionYear() == executionYear
+		&& getTempSpecialSeasonEvaluation() != null;
     }
 
     private EnrolmentEvaluation getTempSpecialSeasonEvaluation() {
@@ -1271,9 +1271,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    final public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear) {
-	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON
-		&& getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+    final public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
+	if (isSpecialSeason() && getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 	    return Collections.singleton(this);
 	}
 	return Collections.emptySet();
