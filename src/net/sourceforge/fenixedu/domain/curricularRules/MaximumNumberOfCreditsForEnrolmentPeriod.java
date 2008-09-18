@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
 
-    static final private double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
+    static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
+    static final public double MAXIMUM_NUMBER_OF_CREDITS_PART_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2d;
     static final private double ACCUMULATED_FACTOR = 0.75;
 
     public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin,
@@ -75,6 +76,6 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
     static public double getMaximumNumberOfCredits(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {
 	final Registration registration = studentCurricularPlan.getRegistration();
-	return registration.isPartTimeRegime(executionYear) ? MAXIMUM_NUMBER_OF_CREDITS / 2d : MAXIMUM_NUMBER_OF_CREDITS;
+	return registration.isPartTimeRegime(executionYear) ? MAXIMUM_NUMBER_OF_CREDITS_PART_TIME : MAXIMUM_NUMBER_OF_CREDITS;
     }
 }
