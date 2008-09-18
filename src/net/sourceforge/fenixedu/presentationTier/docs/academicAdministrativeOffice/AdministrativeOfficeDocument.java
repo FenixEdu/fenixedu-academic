@@ -235,8 +235,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	builder = new StringBuilder();
 	builder.append(getResourceBundle().getString("documents.nationality.one"));
-	final String code = person.getCountry().getCode();
-	builder.append(SINGLE_SPACE).append(getEnumerationBundle().getString(code.toLowerCase()).toUpperCase());
+	final String nationality = person.getCountry().getFilteredNationality();
+	builder.append(SINGLE_SPACE).append(nationality.toUpperCase());
 	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.nationality.two"));
 	addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
     }
