@@ -360,12 +360,12 @@ public enum DegreeType {
 	    return result.toString();
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 	    result.append(bundle.getString("degree.DegreeType.prefix.one")).append(StringUtils.SINGLE_SPACE);
+	    return result.toString();
 	default:
 	    final String string = bundle.getString("degree.DegreeType.prefix.two");
 	    result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : StringUtils.SINGLE_SPACE);
+	    return result.toString();
 	}
-
-	return result.toString();
     }
 
     public String getLocalizedName() {
