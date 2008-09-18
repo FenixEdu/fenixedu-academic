@@ -43,7 +43,7 @@
             </tr>
         </tbody>
     </table>
-    		
+
             		<p class="mtop1 mbottom0">
     				    <html:link page="/uploadPhoto.do?method=prepare">
     					   <bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />

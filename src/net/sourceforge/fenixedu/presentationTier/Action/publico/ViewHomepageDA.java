@@ -13,6 +13,8 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -43,6 +45,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
+import net.sourceforge.fenixedu.presentationTier.Action.person.RetrievePersonalPhotoAction;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -279,6 +282,11 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 		return email.getValue();
 	}
 	return "";
+    }
+
+    public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	return RetrievePersonalPhotoAction.retrieveByUUID(mapping, form, request, response);
     }
 
     public ActionForward retrievePhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
