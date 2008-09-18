@@ -40,6 +40,7 @@
 	<fr:edit id="person" name="personBean" visible="false" />	
 	<fr:edit id="chooseIngression" name="ingressionInformationBean" visible="false" />
 	<fr:edit id="precedentDegreeInformation" name="precedentDegreeInformationBean" visible="false" />
+	<fr:edit id="originInformation" name="originInformationBean" visible="false" />
 
 	<fr:edit name="ingressionInformationBean" schema="student.createRegistrationStartDates" >
 		<fr:layout name="tabular" >

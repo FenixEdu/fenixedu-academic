@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 //TODO: Refactor remaining object to use district subdivision instead of strings
 public class DistrictSubdivision extends DistrictSubdivision_Base {
@@ -47,6 +50,22 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
 	    throw new DomainException("error.net.sourceforge.fenixedu.domain.DistrictSubdivision.district.cannot.be.null");
 	}
 
+    }
+    
+    static public Collection<DistrictSubdivision> findByName(String name, int size) {
+	String normalizedName = StringNormalizer.normalize(name).toLowerCase();
+	Collection<DistrictSubdivision> result = new TreeSet<DistrictSubdivision>(COMPARATOR_BY_NAME);
+
+	for (DistrictSubdivision districtSubdivision : RootDomainObject.getInstance().getDistrictSubdivisions()) {
+	    if (StringNormalizer.normalize(districtSubdivision.getName()).toLowerCase().contains(normalizedName)) {
+		result.add(districtSubdivision);
+		if (result.size() >= size) {
+		    break;
+		}
+	    }
+	}
+
+	return result;
     }
 
 }

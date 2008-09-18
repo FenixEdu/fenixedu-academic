@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -233,21 +234,40 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return true;
     }
 
+    public ActionForward prepareShowFillOriginInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+	final Object personBean = getRenderedObject("person");
+	request.setAttribute("personBean", personBean);
+
+	Object originInformation = getRenderedObject("originInformation");
+	request.setAttribute("originInformationBean", originInformation != null ? originInformation : new OriginInformationBean(
+		(PersonBean) personBean));
+
+	final PrecedentDegreeInformationBean precedentDegreeBean = (PrecedentDegreeInformationBean) getRenderedObject("precedentDegreeInformation");
+	request.setAttribute("precedentDegreeInformationBean", precedentDegreeBean);
+
+	try {
+	    precedentDegreeBean.validate();
+	} catch (DomainException e) {
+	    RenderUtils.invalidateViewState();
+	    addActionMessage(request, e.getKey());
+	    return mapping.findForward("fillNewPersonData");
+	}
+
+	return mapping.findForward("fillOriginInformation");
+    }
+
     public ActionForward prepareShowCreateStudentConfirmation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
-		.getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
-		"chooseIngression").getMetaObject().getObject();
-	PersonBean personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject().getObject();
-	PrecedentDegreeInformationBean precedentDegreeInformationBean = (PrecedentDegreeInformationBean) RenderUtils
-		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
-
-	request.setAttribute("executionDegreeBean", executionDegreeBean);
-	request.setAttribute("ingressionInformationBean", ingressionInformationBean);
-	request.setAttribute("personBean", personBean);
-	request.setAttribute("precedentDegreeInformationBean", precedentDegreeInformationBean);
+	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+	request.setAttribute("personBean", getRenderedObject("person"));
+	request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
+	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
 
 	return mapping.findForward("showCreateStudentConfirmation");
     }
@@ -255,32 +275,23 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
     public ActionForward prepareCreateStudentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("executionDegreeBean", RenderUtils.getViewState("executionDegree").getMetaObject().getObject());
-	request.setAttribute("ingressionInformationBean", RenderUtils.getViewState("chooseIngression").getMetaObject()
-		.getObject());
-	request.setAttribute("precedentDegreeInformationBean", RenderUtils.getViewState("precedentDegreeInformation")
-		.getMetaObject().getObject());
-
-	PersonBean personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject().getObject();
+	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+	PersonBean personBean = (PersonBean) getRenderedObject("person");
 	request.setAttribute("personBean", personBean);
+	request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
+	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
 
 	return isEmployeeAndHasCurrentWorkingContract(personBean.getPerson()) ? mapping
 		.findForward("fillNewPersonDataForEmployee") : mapping.findForward("fillNewPersonData");
-
     }
 
     public ActionForward createStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
-		.getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
-		"chooseIngression").getMetaObject().getObject();
-	PersonBean personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject().getObject();
-	PrecedentDegreeInformationBean precedentDegreeInformationBean = (PrecedentDegreeInformationBean) RenderUtils
-		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
-
-	Object[] args = { personBean, executionDegreeBean, precedentDegreeInformationBean, ingressionInformationBean };
+	Object[] args = { getRenderedObject("person"), getRenderedObject("executionDegree"),
+		getRenderedObject("precedentDegreeInformation"), getRenderedObject("chooseIngression"),
+		getRenderedObject("originInformation") };
 
 	try {
 	    Registration registration = (Registration) ServiceUtils.executeService("CreateStudent", args);

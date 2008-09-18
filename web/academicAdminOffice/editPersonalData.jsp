@@ -11,7 +11,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editPersonalData"/>
 	<bean:define id="studentID" type="java.lang.Integer" name="student" property="idInternal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="studentID" value="<%= studentID.toString() %>"/>
-	
+
 	<logic:messagesPresent message="true">
 		<ul class="nobullet list6">
 			<html:messages id="messages" message="true">
@@ -21,7 +21,7 @@
 	</logic:messagesPresent>
 
 	<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<fr:edit id="personData" name="personBean" schema="student.personalData-edit" >
+	<fr:edit id="personData" name="personBean" schema="student.personalData-withoutProfessionDetails" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>

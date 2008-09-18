@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeO
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -24,7 +25,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class CreateStudent extends Service {
 
     public Registration run(PersonBean personBean, ExecutionDegreeBean executionDegreeBean,
-	    PrecedentDegreeInformationBean precedentDegreeInformationBean, IngressionInformationBean ingressionInformationBean) {
+	    PrecedentDegreeInformationBean precedentDegreeInformationBean, IngressionInformationBean ingressionInformationBean,
+	    OriginInformationBean originInformationBean) {
 
 	// get or update person
 	Person person = getPerson(personBean);
@@ -32,6 +34,7 @@ public class CreateStudent extends Service {
 	// create candidacy
 	StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(executionDegreeBean.getExecutionDegree(),
 		person);
+	studentCandidacy.fillOriginInformation(originInformationBean, personBean);
 	new RegisteredCandidacySituation((Candidacy) studentCandidacy, ingressionInformationBean.getRegistrationAgreement(),
 		executionDegreeBean.getCycleType(), ingressionInformationBean.getIngression(), ingressionInformationBean
 			.getEntryPhase());

@@ -7,8 +7,12 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.student.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
+
 <fr:form action="/createStudent.do">	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareShowCreateStudentConfirmation"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareShowFillOriginInformation"/>
 	<fr:edit id="executionDegree" name="executionDegreeBean" visible="false" />
 	<fr:edit id="person" name="personBean" visible="false" />	
 	<fr:edit id="chooseIngression" name="ingressionInformationBean" visible="false" />	

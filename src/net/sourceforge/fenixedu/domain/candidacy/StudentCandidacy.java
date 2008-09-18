@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -191,5 +193,31 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     public boolean hasApplyForResidence() {
 	return getApplyForResidence() != null;
+    }
+
+    public void fillOriginInformation(OriginInformationBean originInformationBean, PersonBean personBean) {
+	
+	setDistrictSubdivisionOfResidence(personBean.getDistrictSubdivisionOfResidenceObject());
+	setCountryOfResidence(personBean.getCountryOfResidence());
+	setSchoolTimeDistrictSubDivisionOfResidence(originInformationBean.getSchoolTimeDistrictSubdivisionOfResidence());
+	setDislocatedFromPermanentResidence(originInformationBean.getDislocatedFromPermanentResidence());
+	setGrantOwnerType(originInformationBean.getGrantOwnerType());
+	setNumberOfCandidaciesToHigherSchool(originInformationBean.getNumberOfCandidaciesToHigherSchool());
+	setNumberOfFlunksOnHighSchool(originInformationBean.getNumberOfFlunksOnHighSchool());
+	setHighSchoolType(originInformationBean.getHighSchoolType());
+	setMaritalStatus(personBean.getMaritalStatus());
+	setProfessionType(personBean.getProfessionType());
+	setProfessionalCondition(personBean.getProfessionalCondition());
+	
+	setMotherSchoolLevel(originInformationBean.getMotherSchoolLevel());
+	setMotherProfessionType(originInformationBean.getMotherProfessionType());
+	setMotherProfessionalCondition(originInformationBean.getMotherProfessionalCondition());
+	setFatherSchoolLevel(originInformationBean.getFatherSchoolLevel());
+	setFatherProfessionType(originInformationBean.getFatherProfessionType());
+	setFatherProfessionalCondition(originInformationBean.getFatherProfessionalCondition());
+	setSpouseSchoolLevel(originInformationBean.getSpouseSchoolLevel());
+	setSpouseProfessionType(originInformationBean.getSpouseProfessionType());
+	setSpouseProfessionalCondition(originInformationBean.getSpouseProfessionalCondition());
+
     }
 }

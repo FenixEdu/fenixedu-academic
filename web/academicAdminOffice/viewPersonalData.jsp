@@ -14,7 +14,7 @@
 </p>
 
 <h3 class="mbottom025"><bean:message key="label.person.title.personal.info" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-<fr:view name="personBean" schema="student.personalData-edit" >
+<fr:view name="personBean" schema="student.personalData-withoutProfessionDetails" >
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
 		<fr:property name="columnClasses" value="width14em,"/>

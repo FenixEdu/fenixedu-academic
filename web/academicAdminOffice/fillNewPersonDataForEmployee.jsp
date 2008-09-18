@@ -10,7 +10,7 @@
 <p><bean:message key="message.student.personIsEmployee" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 
 <fr:form action="/createStudent.do">	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareShowCreateStudentConfirmation"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareShowFillOriginInformation"/>
 	<fr:edit id="executionDegree" name="executionDegreeBean" visible="false" />
 	<fr:edit id="person" name="personBean" visible="false" />	
 	<fr:edit id="chooseIngression" name="ingressionInformationBean" visible="false" />	

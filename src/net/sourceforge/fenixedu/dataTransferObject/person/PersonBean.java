@@ -5,8 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ProfessionType;
+import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
@@ -47,6 +50,10 @@ public class PersonBean implements Serializable {
 
     private String socialSecurityNumber;
 
+    private ProfessionType professionType;
+
+    private ProfessionalSituationConditionType professionalCondition;
+    
     private String profession;
 
     private MaritalStatus maritalStatus;
@@ -76,7 +83,7 @@ public class PersonBean implements Serializable {
     private String districtSubdivisionOfBirth;
 
     private String districtOfBirth;
-
+    
     private String fatherName;
 
     private String motherName;
@@ -98,6 +105,8 @@ public class PersonBean implements Serializable {
 
     private String districtOfResidence;
 
+    private DomainReference<DistrictSubdivision> districtSubdivisionOfResidenceObject;
+    
     private DomainReference<Country> countryOfResidence;
 
     public PersonBean() {
@@ -231,11 +240,21 @@ public class PersonBean implements Serializable {
     }
 
     public String getDistrictOfResidence() {
-	return districtOfResidence;
+	return getDistrictSubdivisionOfResidenceObject() != null ? getDistrictSubdivisionOfResidenceObject().getDistrict().getName() : districtOfResidence;
     }
 
     public void setDistrictOfResidence(String districtOfResidence) {
 	this.districtOfResidence = districtOfResidence;
+    }
+
+    public DistrictSubdivision getDistrictSubdivisionOfResidenceObject() {
+	return (this.districtSubdivisionOfResidenceObject != null) ? this.districtSubdivisionOfResidenceObject
+		.getObject() : null;
+    }
+
+    public void setDistrictSubdivisionOfResidenceObject(DistrictSubdivision districtSubdivision) {
+	this.districtSubdivisionOfResidenceObject = (districtSubdivision != null) ? new DomainReference<DistrictSubdivision>(
+		districtSubdivision) : null;
     }
 
     public String getDistrictSubdivisionOfBirth() {
@@ -247,7 +266,8 @@ public class PersonBean implements Serializable {
     }
 
     public String getDistrictSubdivisionOfResidence() {
-	return districtSubdivisionOfResidence;
+	return getDistrictSubdivisionOfResidenceObject() != null ? getDistrictSubdivisionOfResidenceObject().getName()
+		: districtSubdivisionOfResidence;
     }
 
     public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
@@ -404,6 +424,22 @@ public class PersonBean implements Serializable {
 
     public void setPhone(String phoneNumber) {
 	this.phone = phoneNumber;
+    }
+
+    public ProfessionType getProfessionType() {
+	return professionType;
+    }
+
+    public void setProfessionType(ProfessionType professionType) {
+	this.professionType = professionType;
+    }
+
+    public ProfessionalSituationConditionType getProfessionalCondition() {
+	return professionalCondition;
+    }
+
+    public void setProfessionalCondition(ProfessionalSituationConditionType professionalCondition) {
+	this.professionalCondition = professionalCondition;
     }
 
     public String getProfession() {

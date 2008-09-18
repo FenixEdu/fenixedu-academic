@@ -192,6 +192,7 @@
 			<forward name="chooseNewStudentExecutionDegreeAndIdentification" path="student.chooseNewStudentExecutionDegreeAndIdentification"/>
 			<forward name="fillNewPersonData" path="student.fillNewPersonData"/>
 			<forward name="fillNewPersonDataForEmployee" path="student.fillNewPersonDataForEmployee"/>
+			<forward name="fillOriginInformation" path="student.fillOriginInformation"/>
 			<forward name="createStudentSuccess" path="student.createStudentSuccess"/>
 			<forward name="showCreateStudentConfirmation" path="student.showCreateStudentConfirmation"/>			
 			<forward name="printRegistrationDeclarationTemplate" path="/printRegistrationDeclarationTemplate.jsp"/>			

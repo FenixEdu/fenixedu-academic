@@ -7,9 +7,13 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.SchoolLevelType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -28,6 +32,10 @@ public class PrecedentDegreeInformationBean implements Serializable {
     private String conclusionGrade;
 
     private Integer conclusionYear;
+    
+    private SchoolLevelType schoolLevel;
+
+    private String otherSchoolLevel;
 
     private DomainReference<Country> country;
 
@@ -102,6 +110,28 @@ public class PrecedentDegreeInformationBean implements Serializable {
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
 	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
+    }
+
+    public SchoolLevelType getSchoolLevel() {
+        return schoolLevel;
+    }
+
+    public void setSchoolLevel(SchoolLevelType schoolLevel) {
+        this.schoolLevel = schoolLevel;
+    }
+
+    public String getOtherSchoolLevel() {
+        return otherSchoolLevel;
+    }
+
+    public void setOtherSchoolLevel(String otherSchoolLevel) {
+        this.otherSchoolLevel = otherSchoolLevel;
+    }
+    
+    public void validate() {
+	if (this.schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(this.otherSchoolLevel)) {
+	    throw new DomainException("error.registration.PrecedentDegreeInformationBean.otherSchoolLevel.must.be.filled");
+	}
     }
 
 }

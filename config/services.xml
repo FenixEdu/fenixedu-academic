@@ -12441,5 +12441,12 @@
         <description />
         <isTransactional>true</isTransactional>
         <filterChains />
-    </service>     
+    </service>
+    <service>
+        <name>SearchDistrictSubdivisions</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchDistrictSubdivisions</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>         
 </serviceDefinitions>
