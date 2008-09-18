@@ -2,13 +2,14 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 
 import org.joda.time.DateTime;
-
-import pt.ist.fenixWebFramework.services.Service;
 
 public class RegistrationRegime extends RegistrationRegime_Base {
 
@@ -50,6 +51,21 @@ public class RegistrationRegime extends RegistrationRegime_Base {
 
 	if (registration.hasRegistrationRegime(executionYear, type)) {
 	    throw new DomainException("error.RegistrationRegime.already.has.regime.type.in.given.executionYear");
+	}
+
+	checkEctsCredits(registration, executionYear);
+    }
+
+    private void checkEctsCredits(final Registration registration, final ExecutionYear executionYear) {
+	final RootCurriculumGroup root = registration.getLastStudentCurricularPlan().getRoot();
+
+	for (final ExecutionSemester semester : executionYear.getExecutionPeriods()) {
+	    final double enroledEctsCredits = root.getEnroledEctsCredits(semester).doubleValue();
+	    if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PART_TIME) {
+		throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed", String
+			.valueOf(enroledEctsCredits), semester.getQualifiedName(), String
+			.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PART_TIME));
+	    }
 	}
     }
 
