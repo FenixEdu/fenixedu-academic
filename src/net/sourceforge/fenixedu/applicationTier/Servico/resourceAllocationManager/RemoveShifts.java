@@ -16,11 +16,6 @@ public class RemoveShifts extends Service {
 	for (int i = 0; i < shifts.size(); i++) {
 	    final Shift shift = shifts.get(i);
 	    if (shiftOIDs.contains(shift.getIdInternal())) {
-
-		// TODO: temporary ------------------------------------
-		shift.checkXpto();
-		// TODO: temporary ------------------------------------
-
 		shifts.remove(shift);
 		i--;
 	    }

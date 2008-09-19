@@ -11,13 +11,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.apache.commons.lang.StringUtils;
@@ -59,13 +56,7 @@ public class Shift extends Shift_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public Shift(final ExecutionCourse executionCourse, Collection<ShiftType> types, final Integer lotacao) {
-
 	super();
-
-	// TODO: temporary ------------------------------------
-	checkXpto(executionCourse);
-	// TODO: temporary ------------------------------------
-
 	setRootDomainObject(RootDomainObject.getInstance());
 	shiftTypeManagement(types, executionCourse);
 	setLotacao(lotacao);
@@ -76,38 +67,8 @@ public class Shift extends Shift_Base {
 	}
     }
 
-    public void checkXpto() {
-	checkXpto(getExecutionCourse());
-    }
-
-    public void checkXpto(final ExecutionCourse executionCourse) {
-
-	if (AccessControl.getUserView().hasRoleType(RoleType.MANAGER)
-		|| AccessControl.getUserView().hasRoleType(RoleType.DIRECTIVE_COUNCIL)) {
-	    return;
-	}
-
-	final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-
-	    if (!curricularCourse.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
-		    && !curricularCourse.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
-		continue;
-	    }
-
-	    if (curricularCourse.hasAnyActiveDegreModuleScope(executionSemester)
-		    && curricularCourse.hasAnyActiveDegreModuleScope(1, 1)) {
-		throw new DomainException("error.Shift.temporary.cannot.modify.information");
-	    }
-	}
-    }
-
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName) {
-
-	// TODO: temporary ------------------------------------
-	checkXpto(getExecutionCourse());
-	// TODO: temporary ------------------------------------
 
 	ExecutionCourse beforeExecutionCourse = getExecutionCourse();
 
@@ -135,11 +96,6 @@ public class Shift extends Shift_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void delete() {
-
-	// TODO: temporary ------------------------------------
-	checkXpto(getExecutionCourse());
-	// TODO: temporary ------------------------------------
-
 	if (canBeDeleted()) {
 
 	    final ExecutionCourse executionCourse = getExecutionCourse();
@@ -277,11 +233,6 @@ public class Shift extends Shift_Base {
     }
 
     public void associateSchoolClass(SchoolClass schoolClass) {
-
-	// TODO: temporary ------------------------------------
-	checkXpto(getExecutionCourse());
-	// TODO: temporary ------------------------------------
-
 	if (schoolClass == null) {
 	    throw new NullPointerException();
 	}

@@ -22,11 +22,6 @@ public class AddShiftsToSchoolClass extends Service {
 	    if (shift == null) {
 		throw new InvalidArgumentsServiceException();
 	    }
-
-	    // TODO: temporary ------------------------------------
-	    shift.checkXpto();
-	    // TODO: temporary ------------------------------------
-
 	    schoolClass.associateShift(shift);
 	}
     }
