@@ -242,7 +242,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isInStandBy()) {
+	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}

@@ -222,7 +222,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isInStandBy()) {
+	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
