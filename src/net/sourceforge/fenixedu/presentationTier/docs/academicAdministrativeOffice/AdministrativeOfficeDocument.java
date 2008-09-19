@@ -241,7 +241,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	final Registration registration = getRegistration();
 	final DegreeType degreeType = registration.getDegreeType();
 	final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
-		.getCurrentCycleType();
+		.getCycleType(getDocumentRequest().getExecutionYear());
 	return registration.getDegreeDescription(cycleType);
     }
 
