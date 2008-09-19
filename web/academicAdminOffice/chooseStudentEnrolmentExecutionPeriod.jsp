@@ -27,7 +27,7 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
-</fr:form>	
+</fr:form>
 
 <logic:present name="studentEnrolmentBean" property="executionPeriod">
 	<ul class="mvert1">
@@ -39,6 +39,7 @@
 			<bean:define id="url2">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;withRules=true</bean:define>
 			<html:link action='<%= url2 %>'><bean:message key="label.course.enrolmentWithRules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
+		<br/>
 		<li>
 			<bean:define id="url5">/improvementBolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
 			<html:link action='<%= url5 %>'><bean:message key="label.course.improvementEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
@@ -46,7 +47,8 @@
 		<li>
 			<bean:define id="url6">/specialSeasonBolonhaStudentEnrollment.do?method=changeSpecialSeasonCode&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
 			<html:link action='<%= url6 %>'><bean:message key="label.course.specialSeasonEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
-		</li>				
+		</li>
+		<br/>				
 		<li>
 			<bean:define id="url3">/studentExtraEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;type=PROPAEDEUTICS</bean:define>
 			<html:link action='<%= url3 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="PROPAEDEUTICS" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
@@ -55,6 +57,7 @@
 			<bean:define id="url4">/studentExtraEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;type=EXTRA_CURRICULAR</bean:define>
 			<html:link action='<%= url4 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="EXTRA_CURRICULAR" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
+		<br/>
 		<li>
 			<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
 			<html:link action='<%= url5 %>'><bean:message key="label.course.moveEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
@@ -66,6 +69,12 @@
 		</li>
 		</logic:equal>
 	</ul>
+
+	<br/>
+	<fr:form action="/studentEnrolments.do?method=backViewRegistration">
+		<fr:edit id="studentEnrolment-back" name="studentEnrolmentBean" visible="false" />
+		<html:cancel><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+	</fr:form>
 
 	<p class="mtop2 mbottom0"><strong><bean:message key="label.student.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	<logic:notEmpty name="studentEnrolments">
@@ -99,6 +108,23 @@
 		</p>
 	</logic:empty>
 	
+	<p class="mtop2 mbottom0"><strong><bean:message key="label.student.specialSeason.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+	<logic:notEmpty name="studentSpecialSeasonEnrolments">
+		<fr:view name="studentSpecialSeasonEnrolments" schema="student.show.enrolments">
+			<fr:layout name="tabular">	 
+				<fr:property name="classes" value="tstyle2"/>
+		      	<fr:property name="columnClasses" value="nowrap,acenter,nowrap,smalltxt color888,acenter"/>
+				<fr:property name="sortBy" value="name"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	<logic:empty name="studentSpecialSeasonEnrolments">
+		<p class="mtop15">
+			<em><bean:message key="label.no.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em>
+		</p>
+	</logic:empty>	
+
+
 </logic:present>
 
 <fr:form action="/studentEnrolments.do?method=backViewRegistration">

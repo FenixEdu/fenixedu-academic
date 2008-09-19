@@ -56,6 +56,8 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 		    .getEnrolmentsByExecutionPeriod(studentEnrolmentBean.getExecutionPeriod()));
 	    request.setAttribute("studentImprovementEnrolments", studentEnrolmentBean.getStudentCurricularPlan()
 		    .getEnroledImprovements(studentEnrolmentBean.getExecutionPeriod()));
+	    request.setAttribute("studentSpecialSeasonEnrolments", studentEnrolmentBean.getStudentCurricularPlan()
+		    .getSpecialSeasonEnrolments(studentEnrolmentBean.getExecutionYear()));
 	}
 
 	return mapping.findForward("prepareChooseExecutionPeriod");
