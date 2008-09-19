@@ -2265,6 +2265,10 @@ public class Registration extends Registration_Base {
 	return getLastStudentCurricularPlan().hasConcludedCycle(cycleType);
     }
 
+    final public boolean hasConcludedCycle(final CycleType cycleType, final ExecutionYear executionYear) {
+	return getLastStudentCurricularPlan().hasConcludedCycle(cycleType, executionYear);
+    }
+
     public boolean hasConcluded() {
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 
@@ -2286,22 +2290,30 @@ public class Registration extends Registration_Base {
     }
 
     final public Collection<CycleType> getConcludedCycles() {
-	return getDegreeType().hasAnyCycleTypes() ? getConcludedCycles(null) : Collections.EMPTY_SET;
-    }
-
-    /**
-     * Retrieve concluded cycles before or equal to the given cycle
-     */
-    final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
 	if (!getDegreeType().hasAnyCycleTypes()) {
 	    return Collections.EMPTY_SET;
 	}
 
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 
-	for (final CycleType cycleType : CycleType.getSortedValues()) {
-	    if ((lastCycleTypeToInspect == null || cycleType.isBeforeOrEquals(lastCycleTypeToInspect))
-		    && hasConcludedCycle(cycleType)) {
+	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
+	    if (hasConcludedCycle(cycleType)) {
+		result.add(cycleType);
+	    }
+	}
+
+	return result;
+    }
+
+    final public Collection<CycleType> getConcludedCycles(final ExecutionYear executionYear) {
+	if (!getDegreeType().hasAnyCycleTypes()) {
+	    return Collections.EMPTY_SET;
+	}
+
+	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
+
+	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
+	    if (hasConcludedCycle(cycleType, executionYear)) {
 		result.add(cycleType);
 	    }
 	}
@@ -2310,24 +2322,33 @@ public class Registration extends Registration_Base {
     }
 
     final public CycleType getCurrentCycleType() {
+	return getCycleType(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    final public CycleType getCycleType(final ExecutionYear executionYear) {
 	if (!isBolonha()) {
 	    return null;
 	}
 
-	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
+	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles(executionYear));
 
 	if (concludedCycles.isEmpty()) {
 	    return getLastStudentCurricularPlan().getFirstOrderedCycleCurriculumGroup().getCycleType();
 	} else {
-	    final CycleType lastConcludedCycle = concludedCycles.last();
-
-	    if (getDegreeType().getLastCycleType() == lastConcludedCycle) {
-		return lastConcludedCycle;
-	    } else if (lastConcludedCycle.hasNext()) {
-		return lastConcludedCycle.getNext();
-	    } else {
-		return lastConcludedCycle;
+	    CycleType result = null;
+	    for (CycleType cycleType : concludedCycles) {
+		final CycleCurriculumGroup group = getLastStudentCurricularPlan().getCycle(cycleType);
+		if (group.hasEnrolment(executionYear)) {
+		    result = cycleType;
+		}
 	    }
+
+	    if (result != null) {
+		return result;
+	    }
+
+	    final CycleType last = concludedCycles.last();
+	    return last.hasNext() ? last.getNext() : last;
 	}
     }
 
