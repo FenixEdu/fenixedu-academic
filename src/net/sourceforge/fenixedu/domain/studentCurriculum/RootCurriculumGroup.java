@@ -239,6 +239,27 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}
     }
 
+    public boolean hasConcludedCycle(CycleType cycleType, final ExecutionYear executionYear) {
+	for (CycleType degreeCycleType : getDegreeType().getCycleTypes()) {
+	    if (cycleType == null || degreeCycleType == cycleType) {
+		if (!isConcluded(degreeCycleType, executionYear)) {
+		    return false;
+		}
+	    }
+	}
+
+	return cycleType == null || getDegreeType().getCycleTypes().contains(cycleType);
+    }
+
+    private boolean isConcluded(CycleType cycleType, final ExecutionYear executionYear) {
+	final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
+	if (cycleCurriculumGroup != null) {
+	    return cycleCurriculumGroup.isConcluded(executionYear).value();
+	} else {
+	    return false;
+	}
+    }
+
     /**
      * Only the DegreeType's CycleTypes should be inspected.
      * CycleCurriculumGroups of other CycleType might exist and shouldn't be
