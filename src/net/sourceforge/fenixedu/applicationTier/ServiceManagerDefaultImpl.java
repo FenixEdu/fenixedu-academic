@@ -98,21 +98,24 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
 	    if (pt.ist.fenixWebFramework.services.ServiceManager.isInsideService()) {
 		serviceResult = manager.execute(id, service, method, args);
 	    } else {
-		pt.ist.fenixWebFramework.services.ServiceManager.enterBerserkService();
-		// Replace this line with the following block if conflicting
-		// transactions should restart automatically
-		// Object serviceResult = manager.execute(id, service, method,
-		// args);
-
-		final String username = id != null ? id.getUtilizador() : null;
-		ServiceInfo.setCurrentServiceInfo(username, service, args);
-
-		// try read-only transaction first, but only for non-public
-		// sessions...
-		Transaction.setDefaultReadOnly(!KNOWN_WRITE_SERVICES.containsKey(service));
-
 		int tries = 0;
+		
 		try {
+		    pt.ist.fenixWebFramework.services.ServiceManager.enterBerserkService();
+		    // Replace this line with the following block if conflicting
+		    // transactions should restart automatically
+		    // Object serviceResult = manager.execute(id, service, method,
+		    // args);
+		    
+		    final String username = id != null ? id.getUtilizador() : null;
+		    ServiceInfo.setCurrentServiceInfo(username, service, args);
+		    
+		    // try read-only transaction first, but only for non-public
+		    // sessions...
+		    Transaction.setDefaultReadOnly(!KNOWN_WRITE_SERVICES.containsKey(service));
+		    
+		    
+		    
 		    while (true) {
 			tries++;
 			try {
