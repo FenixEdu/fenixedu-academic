@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 public class ExtraCurriculumGroup extends ExtraCurriculumGroup_Base {
 
-    public ExtraCurriculumGroup(final CurriculumGroup curriculumGroup) {
+    protected ExtraCurriculumGroup(final RootCurriculumGroup curriculumGroup) {
 	super();
 	init(curriculumGroup);
     }
 
     @Override
     public Integer getChildOrder() {
-	return super.getChildOrder() - 2;
+	return super.getChildOrder() - 3;
     }
 
     @Override

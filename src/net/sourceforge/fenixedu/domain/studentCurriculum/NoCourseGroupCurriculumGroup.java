@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -33,17 +34,18 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	if (!curriculumGroup.isRoot()) {
 	    throw new DomainException("error.no.root.curriculum.group");
 	}
-
 	this.setCurriculumGroup(curriculumGroup);
     }
 
     public static NoCourseGroupCurriculumGroup createNewNoCourseGroupCurriculumGroup(
-	    final NoCourseGroupCurriculumGroupType groupType, final CurriculumGroup curriculumGroup) {
+	    final NoCourseGroupCurriculumGroupType groupType, final RootCurriculumGroup curriculumGroup) {
 	switch (groupType) {
 	case PROPAEDEUTICS:
 	    return new PropaedeuticsCurriculumGroup(curriculumGroup);
 	case EXTRA_CURRICULAR:
 	    return new ExtraCurriculumGroup(curriculumGroup);
+	case STANDALONE:
+	    return new StandaloneCurriculumGroup(curriculumGroup);
 	default:
 	    throw new DomainException("error.unknown.NoCourseGroupCurriculumGroupType");
 	}
@@ -57,10 +59,8 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     @Override
     public MultiLanguageString getName() {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-
 	multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
 		new Locale("pt", "PT")).getString(getNoCourseGroupCurriculumGroupType().toString()));
-
 	return multiLanguageString;
     }
 
@@ -192,5 +192,10 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     @Override
     public int getNumberOfAllApprovedCurriculumLines() {
 	return 0;
+    }
+
+    @Override
+    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
+	return Collections.emptyList();
     }
 }

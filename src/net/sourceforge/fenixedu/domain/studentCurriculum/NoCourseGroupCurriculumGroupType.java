@@ -4,6 +4,8 @@ public enum NoCourseGroupCurriculumGroupType {
 
     PROPAEDEUTICS,
 
-    EXTRA_CURRICULAR;
+    EXTRA_CURRICULAR,
+    
+    STANDALONE;
 
 }

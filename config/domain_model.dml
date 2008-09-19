@@ -3975,6 +3975,9 @@ class DomainObject {
 
 				class studentCurriculum.PropaedeuticsCurriculumGroup extends studentCurriculum.NoCourseGroupCurriculumGroup {
 				}
+				
+				class studentCurriculum.StandaloneCurriculumGroup extends studentCurriculum.NoCourseGroupCurriculumGroup {
+				}
 
 			class studentCurriculum.RootCurriculumGroup extends studentCurriculum.CurriculumGroup {
 			}
