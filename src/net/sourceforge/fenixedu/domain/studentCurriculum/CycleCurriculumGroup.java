@@ -168,8 +168,14 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     @Override
+    public boolean isConcluded() {
+	return hasFinalAverage() || super.isConcluded();
+    }
+
+    @Override
     public ConclusionValue isConcluded(final ExecutionYear executionYear) {
-	return hasFinalAverage() ? ConclusionValue.CONCLUDED : super.isConcluded(executionYear);
+	return hasConclusionDate() && !executionYear.getBeginDateYearMonthDay().isBefore(getConclusionDate()) ? ConclusionValue.CONCLUDED
+		: super.isConcluded(executionYear);
     }
 
     final public BigDecimal getAverage() {
@@ -183,6 +189,10 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     public boolean hasFinalAverage() {
 	return super.getFinalAverage() != null;
+    }
+
+    public boolean hasConclusionDate() {
+	return super.getConclusionDate() != null;
     }
 
     public boolean isConclusionProcessed() {
