@@ -90,8 +90,8 @@
 <schema name="student.documentId-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
 	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
-	<slot name="documentIdEmissionLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="documentIdEmissionDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+	<slot name="documentIdEmissionLocation" />
+	<slot name="documentIdEmissionDate" >
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
