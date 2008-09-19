@@ -218,10 +218,17 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return getStudentCurricularPlan().getDegreeType();
     }
 
+    /**
+     * Must not implement this method depending on
+     * hasConcludedCycle(CycleType,ExecutionYear). Each group knows what
+     * ExecutionYear to invoke by internal invocation of the
+     * getApprovedCurriculumLinesLastExecutionYear() method.
+     * 
+     */
     public boolean hasConcludedCycle(CycleType cycleType) {
 	for (CycleType degreeCycleType : getDegreeType().getCycleTypes()) {
 	    if (cycleType == null || degreeCycleType == cycleType) {
-		if (!isConcluded(degreeCycleType)) {
+		if (!checkIfCycleIsConcluded(degreeCycleType)) {
 		    return false;
 		}
 	    }
@@ -230,19 +237,15 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return cycleType == null || getDegreeType().getCycleTypes().contains(cycleType);
     }
 
-    private boolean isConcluded(CycleType cycleType) {
+    private boolean checkIfCycleIsConcluded(CycleType cycleType) {
 	final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
-	if (cycleCurriculumGroup != null) {
-	    return cycleCurriculumGroup.isConcluded();
-	} else {
-	    return false;
-	}
+	return cycleCurriculumGroup != null && cycleCurriculumGroup.isConcluded();
     }
 
     public boolean hasConcludedCycle(CycleType cycleType, final ExecutionYear executionYear) {
 	for (CycleType degreeCycleType : getDegreeType().getCycleTypes()) {
 	    if (cycleType == null || degreeCycleType == cycleType) {
-		if (!isConcluded(degreeCycleType, executionYear)) {
+		if (!checkIfCycleIsConcluded(degreeCycleType, executionYear)) {
 		    return false;
 		}
 	    }
@@ -251,13 +254,9 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return cycleType == null || getDegreeType().getCycleTypes().contains(cycleType);
     }
 
-    private boolean isConcluded(CycleType cycleType, final ExecutionYear executionYear) {
+    private boolean checkIfCycleIsConcluded(CycleType cycleType, final ExecutionYear executionYear) {
 	final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
-	if (cycleCurriculumGroup != null) {
-	    return cycleCurriculumGroup.isConcluded(executionYear).value();
-	} else {
-	    return false;
-	}
+	return cycleCurriculumGroup != null && cycleCurriculumGroup.isConcluded(executionYear).value();
     }
 
     /**
