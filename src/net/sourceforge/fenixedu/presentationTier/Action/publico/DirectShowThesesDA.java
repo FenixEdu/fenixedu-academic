@@ -1,0 +1,25 @@
+package net.sourceforge.fenixedu.presentationTier.Action.publico;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.thesis.ThesisSite;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+public class DirectShowThesesDA extends PublicShowThesesDA {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	FunctionalityContext context = FilterFunctionalityContext.getCurrentContext(request);
+	if (context.getSelectedContainer() instanceof ThesisSite) {
+	    ThesisSite site = (ThesisSite) context.getSelectedContainer();
+	    request.setAttribute("thesis", site.getThesis());
+	}
+	return mapping.findForward("showThesisDetails");
+    }
+}

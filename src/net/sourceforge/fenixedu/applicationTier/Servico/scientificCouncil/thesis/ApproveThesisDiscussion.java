@@ -21,11 +21,12 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFil
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.domain.thesis.ThesisSite;
 import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.Month;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -43,6 +44,9 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	thesis.approveEvaluation();
 
 	if (thesis.isFinalAndApprovedThesis()) {
+	    // Evaluated thesis have a public page in
+	    // ../dissertacoes/<id_internal>
+	    new ThesisSite(thesis);
 	    createResult(thesis);
 	}
     }

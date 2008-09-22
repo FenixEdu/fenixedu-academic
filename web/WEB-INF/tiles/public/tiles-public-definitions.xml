@@ -222,4 +222,7 @@
 		<put name="body" value="/publico/researcher/participationDetails.jsp"/>
 	</definition>	
 	
+    <definition name="showThesisDetails" page="/layout/secondaryIstLayout.jsp">
+        <put name="body" value="/publico/showDirectThesisDetails.jsp"/>
+    </definition>
 </tiles-definitions>

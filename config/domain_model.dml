@@ -3975,7 +3975,7 @@ class DomainObject {
 
 				class studentCurriculum.PropaedeuticsCurriculumGroup extends studentCurriculum.NoCourseGroupCurriculumGroup {
 				}
-				
+
 				class studentCurriculum.StandaloneCurriculumGroup extends studentCurriculum.NoCourseGroupCurriculumGroup {
 				}
 
@@ -4876,6 +4876,8 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 			Boolean lessonPlanningAvailable;
 			String mail;
 		}
+
+        class thesis.ThesisSite extends Site;
 
 		class UnitSite extends Site {
 			UnitSiteLayoutType layout;
@@ -6226,6 +6228,11 @@ relation DegreeInfoDegreeInfoFuture {
 relation DegreeHasSite {
 	Degree playsRole degree;
 	DegreeSite playsRole site;
+}
+
+relation ThesisHasSite {
+    thesis.Thesis playsRole thesis;
+    thesis.ThesisSite playsRole site;
 }
 
 relation DegreeInfoExecutionYear {

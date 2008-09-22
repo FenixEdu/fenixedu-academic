@@ -993,6 +993,10 @@
             <forward name="eventsRSSAction" path="/units/eventsRSS.do"/>
         </action>
 
+    <!-- Thesis Direct Access -->
+    <action path="/theses/thesis" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.DirectShowThesesDA">
+        <forward name="showThesisDetails" path="showThesisDetails"/>
+    </action>
    
    <!--  Directive Council Students Site -->
      <action path="/studentsSite/viewSite"
