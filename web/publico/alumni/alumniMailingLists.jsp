@@ -120,7 +120,7 @@
         </tr>
         <tr>
             <td>
-                <a href="mailto:alumni-lemat@mlists.ist.utl.pt">Engenharia de Materiais</a>
+                <a href="mailto:demat_e@mlists.ist.utl.pt">Engenharia de Materiais</a>
             </td>
             <td>
                 José Carlos Pereira<br/>Augusto Moita de Deus
