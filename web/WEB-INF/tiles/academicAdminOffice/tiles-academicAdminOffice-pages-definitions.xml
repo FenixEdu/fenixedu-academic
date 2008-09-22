@@ -71,12 +71,6 @@
     <definition name="student.enrolment.prepareChooseExecutionPeriod" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/chooseStudentEnrolmentExecutionPeriod.jsp"></put>
     </definition> 
-    <definition name="student.enrolment.showExtraEnrolments" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/showExtraEnrolments.jsp"></put>
-    </definition>
-    <definition name="student.enrolment.chooseExtraEnrolment" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/chooseExtraEnrolment.jsp"></put>
-    </definition>
     <definition name="student.externalEnrolment.manageExternalEnrolments" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"/>
     </definition>

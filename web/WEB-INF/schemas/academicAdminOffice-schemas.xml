@@ -631,10 +631,9 @@
 
 <schema name="studentOptionalEnrolment.base" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean">
-	<slot name="degreeType" key="label.degreeType"
-		layout="menu-postback"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="degreeType" key="label.degreeType" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="destination" value="postBack"/>
+		<property name="excludedValues" value="DEGREE,MASTER_DEGREE" />
 	</slot>
 	<slot name="degree" key="label.degree"
 		layout="menu-select-postback"
@@ -654,7 +653,7 @@
 	</slot>
 </schema>
 
-<schema name="student.studentExtraEnrolments" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="student.no.course.group.enrolments" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="name" key="label.name" />
 	<slot name="degreeModule.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />	
 	<slot name="executionPeriod" layout="format" key="label.semester" >

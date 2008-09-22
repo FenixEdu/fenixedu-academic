@@ -4,8 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<bean:define id="type" name="enrolmentBean" property="groupType"/>
+<bean:define id="actionName" name="actionName" />
+
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<bean:define id="type" name="extraEnrolmentBean" property="groupType"/>
 <h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="<%= type.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -14,14 +16,14 @@
 	</p>
 </html:messages>
 
-<fr:form action="/studentExtraEnrolments.do">
+<fr:form action='<%= "/" + actionName + ".do" %>'>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseCurricular"/>
-	<fr:edit id="extraEnrolmentBean" name="extraEnrolmentBean" visible="false"/>
-	<logic:present name="extraEnrolments">
-		<bean:define id="bean" name="extraEnrolmentBean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentExtraEnrolmentBean"/>
-		<bean:define id="url">/studentExtraEnrolments.do?method=delete&amp;enrolment=${idInternal}&amp;scpID=<%= bean.getStudentCurricularPlan().getIdInternal().toString() %>&amp;executionPeriodID=<%= bean.getExecutionPeriod().getIdInternal().toString() %>&amp;type=<%= bean.getGroupType().toString() %></bean:define>
-		<fr:view name="extraEnrolments" property="enrolments" schema="student.studentExtraEnrolments">
-			<fr:layout name="tabular">	 
+	<fr:edit id="enrolmentBean" name="enrolmentBean" visible="false"/>
+	<logic:present name="enrolments">
+		<bean:define id="bean" name="enrolmentBean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean"/>
+		<bean:define id="url">/<%= actionName %>.do?method=delete&amp;enrolment=${idInternal}&amp;scpID=<%= bean.getStudentCurricularPlan().getIdInternal().toString() %>&amp;executionPeriodID=<%= bean.getExecutionPeriod().getIdInternal().toString() %></bean:define>
+		<fr:view name="enrolments" property="enrolments" schema="student.no.course.group.enrolments">
+			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4"/>
 		      	<fr:property name="columnClasses" value="listClasses,,"/>
 				<fr:property name="linkFormat(enrolment)" value="<%= url %>" />
@@ -32,7 +34,7 @@
 		</fr:view>
 	</logic:present>
 	
-	<logic:notPresent name="extraEnrolments">
+	<logic:notPresent name="enrolments">
 		<p class="mtop2">
 			<em><bean:message key="label.no.extra.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em>
 		</p>
