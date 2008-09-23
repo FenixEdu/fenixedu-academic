@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails;
@@ -42,7 +42,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 1/Set/2003, 14:47:35
  * 
  */
-public class ReadCandidacies extends Service {
+public class ReadCandidacies extends FenixService {
 
     public List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id, Integer case2Id, Integer case3Id,
 	    Integer case4Id, Integer case5Id, Integer curricularCourseID, Integer degreeCurricularPlanID, Boolean approved)

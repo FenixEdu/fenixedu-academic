@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 /**
  * @author Luis Cruz
  */
-public class ConfirmAttributionOfFinalDegreeWork extends Service {
+public class ConfirmAttributionOfFinalDegreeWork extends FenixService {
 
     public ConfirmAttributionOfFinalDegreeWork() {
 	super();

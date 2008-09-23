@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
@@ -26,7 +26,7 @@ import org.apache.commons.collections.CollectionUtils;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class CreateMasterDegreeThesis extends Service {
+public class CreateMasterDegreeThesis extends FenixService {
 
     public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle, List<Integer> guidersNumbers,
 	    List<Integer> assistentGuidersNumbers, List<Integer> externalGuidersIDs, List<Integer> externalAssistentGuidersIDs)

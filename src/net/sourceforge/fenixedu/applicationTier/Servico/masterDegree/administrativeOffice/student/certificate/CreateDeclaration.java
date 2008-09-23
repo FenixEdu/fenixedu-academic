@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class CreateDeclaration extends Service {
+public class CreateDeclaration extends FenixService {
 
     public List run(InfoStudent infoStudent, Specialization specialization) throws Exception {
 

@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 
-public class RemoverAula extends Service {
+public class RemoverAula extends FenixService {
 
     public Object run(final InfoLesson infoLesson, final InfoShift infoShift) {
 	rootDomainObject.readLessonByOID(infoLesson.getIdInternal()).delete();

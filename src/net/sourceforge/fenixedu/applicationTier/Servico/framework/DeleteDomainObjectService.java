@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
-public abstract class DeleteDomainObjectService extends Service {
+public abstract class DeleteDomainObjectService extends FenixService {
 
     public void run(Integer objectId) throws Exception {
 	DomainObject domainObject = readDomainObject(objectId);

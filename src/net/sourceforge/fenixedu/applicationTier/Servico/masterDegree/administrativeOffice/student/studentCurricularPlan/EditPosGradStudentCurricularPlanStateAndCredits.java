@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
-public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
+public class EditPosGradStudentCurricularPlanStateAndCredits extends FenixService {
 
     public void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits, String startDate,
 	    List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)

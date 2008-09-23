@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.util.Email;
 
 /**
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.util.Email;
  *         Created at 18/Set/2003, 19:16:29
  * 
  */
-public class SendMail extends Service {
+public class SendMail extends FenixService {
 
     public Collection<String> run(List toList, List ccList, List bccList, String fromName, String from, String subject,
 	    String text) {

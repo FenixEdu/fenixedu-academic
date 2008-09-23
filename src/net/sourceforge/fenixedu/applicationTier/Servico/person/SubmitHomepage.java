@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class SubmitHomepage extends Service {
+public class SubmitHomepage extends FenixService {
 
     public void run(final Person person, final Boolean activated, final Boolean showUnit, final Boolean showCategory,
 	    final Boolean showPhoto, final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses,

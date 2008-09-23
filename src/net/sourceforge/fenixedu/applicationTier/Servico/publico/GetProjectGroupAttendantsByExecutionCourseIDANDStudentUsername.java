@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.StudentGroupAttendacyInformation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 10/Set/2003, 20:47:24
  * 
  */
-public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername extends Service {
+public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername extends FenixService {
 
     public StudentGroupAttendacyInformation run(Integer executionCourseID, String username) throws BDException {
 

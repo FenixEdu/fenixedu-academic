@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.DateTime;
 
-public class CreatePaymentsForEvents extends Service {
+public class CreatePaymentsForEvents extends FenixService {
 
     public CreatePaymentsForEvents() {
 	super();

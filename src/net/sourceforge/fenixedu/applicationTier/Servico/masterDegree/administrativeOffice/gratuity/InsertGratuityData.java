@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
@@ -26,7 +26,7 @@ import org.apache.commons.beanutils.BeanComparator;
  * @author Tânia Pousão
  * 
  */
-public class InsertGratuityData extends Service {
+public class InsertGratuityData extends FenixService {
 
     public Object run(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
 	if (infoGratuityValues == null) {

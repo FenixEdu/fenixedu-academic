@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -18,7 +18,7 @@ import org.apache.commons.collections.Transformer;
  * @author Jo�o Mota
  * 
  */
-public class ReadShiftsByTypeFromExecutionCourse extends Service {
+public class ReadShiftsByTypeFromExecutionCourse extends FenixService {
 
     public List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());

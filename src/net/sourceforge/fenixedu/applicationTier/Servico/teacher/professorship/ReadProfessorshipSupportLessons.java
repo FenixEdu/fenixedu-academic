@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author jpvl
  */
-public class ReadProfessorshipSupportLessons extends Service {
+public class ReadProfessorshipSupportLessons extends FenixService {
 
     public ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId) throws FenixServiceException {
 

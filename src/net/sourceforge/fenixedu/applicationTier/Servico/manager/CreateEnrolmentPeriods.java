@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
-public class CreateEnrolmentPeriods extends Service {
+public class CreateEnrolmentPeriods extends FenixService {
 
     public void run(final Integer executionPeriodID, final DegreeType degreeType, final String enrolmentPeriodClassName,
 	    final Date startDate, final Date endDate) throws FenixServiceException {

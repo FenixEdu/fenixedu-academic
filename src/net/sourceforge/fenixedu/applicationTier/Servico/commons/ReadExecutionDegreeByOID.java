@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  * 
  */
-public class ReadExecutionDegreeByOID extends Service {
+public class ReadExecutionDegreeByOID extends FenixService {
 
     public InfoExecutionDegree run(Integer oid) {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(oid);

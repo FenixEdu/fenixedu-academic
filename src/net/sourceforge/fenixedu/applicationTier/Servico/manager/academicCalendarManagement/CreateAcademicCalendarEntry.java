@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInS
 import net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 
-public class CreateAcademicCalendarEntry extends Service {
+public class CreateAcademicCalendarEntry extends FenixService {
 
     public AcademicCalendarEntry run(CalendarEntryBean bean, boolean toCreate) {
 

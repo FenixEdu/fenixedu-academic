@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
 import java.util.ArrayList;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.util.Email;
@@ -14,7 +14,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-public class ChangeConvokeActive extends Service {
+public class ChangeConvokeActive extends FenixService {
 
     public void run(Vigilancy convoke, Boolean bool, Person person) {
 

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.prizes;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.presentationTier.Action.research.UnitNameBean;
 
-public class AddPartyToPrize extends Service {
+public class AddPartyToPrize extends FenixService {
 
     public void run(PersonNameBean bean, Prize prize) {
 	Person person = (bean.getPersonName() == null) ? getNewExternalPerson(bean.getName()) : bean.getPersonName().getPerson();

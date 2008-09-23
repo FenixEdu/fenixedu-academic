@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class ReadReimbursementGuidesByGuide extends Service {
+public class ReadReimbursementGuidesByGuide extends FenixService {
 
     public List run(Integer guideId) {
 	List<InfoReimbursementGuide> result = new ArrayList<InfoReimbursementGuide>();

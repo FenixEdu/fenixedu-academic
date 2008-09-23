@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -15,7 +15,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class TransferDomainObjectProperty extends Service {
+public class TransferDomainObjectProperty extends FenixService {
 
     public void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws Throwable {
 	try {

@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
-public class EditExecutionCourse extends Service {
+public class EditExecutionCourse extends FenixService {
 
     public void run(CourseLoadBean bean) throws FenixServiceException {
 	if (bean != null) {

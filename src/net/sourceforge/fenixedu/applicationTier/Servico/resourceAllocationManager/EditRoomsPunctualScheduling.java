@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 
-public class EditRoomsPunctualScheduling extends Service {
+public class EditRoomsPunctualScheduling extends FenixService {
 
     public void run(RoomsPunctualSchedulingBean bean) {
 

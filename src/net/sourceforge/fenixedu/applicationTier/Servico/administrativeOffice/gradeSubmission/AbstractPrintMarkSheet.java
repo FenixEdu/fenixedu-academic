@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrintServiceException;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public abstract class AbstractPrintMarkSheet extends Service {
+public abstract class AbstractPrintMarkSheet extends FenixService {
 
     protected void print(MarkSheet markSheet, String printerName) throws FenixServiceException {
 	if (markSheet == null) {

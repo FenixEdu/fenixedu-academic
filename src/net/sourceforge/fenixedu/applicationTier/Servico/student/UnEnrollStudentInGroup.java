@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -26,7 +26,7 @@ import pt.utl.ist.fenix.tools.util.EMail;
  * 
  */
 
-public class UnEnrollStudentInGroup extends Service {
+public class UnEnrollStudentInGroup extends FenixService {
 
     public String mailServer() {
 	final String server = PropertiesManager.getProperty("mail.smtp.host");

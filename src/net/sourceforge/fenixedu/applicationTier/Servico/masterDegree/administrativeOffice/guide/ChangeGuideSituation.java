@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.util.State;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class ChangeGuideSituation extends Service {
+public class ChangeGuideSituation extends FenixService {
 
     public void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate, String remarks,
 	    String situationOfGuideString, String paymentType, IUserView userView) throws ExcepcaoInexistente,

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -16,7 +16,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class EditUnit extends Service {
+public class EditUnit extends FenixService {
 
     public void run(Integer unitID, MultiLanguageString unitName, String unitCostCenter, String acronym, YearMonthDay begin,
 	    YearMonthDay end, Integer departmentID, Integer degreeID, Integer administrativeOfficeID, String webAddress,

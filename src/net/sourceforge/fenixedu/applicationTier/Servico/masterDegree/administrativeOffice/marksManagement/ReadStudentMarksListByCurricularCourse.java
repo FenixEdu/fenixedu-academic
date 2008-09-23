@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class ReadStudentMarksListByCurricularCourse extends Service {
+public class ReadStudentMarksListByCurricularCourse extends FenixService {
 
     public List run(IUserView userView, Integer curricularCourseID, String executionYear) throws ExcepcaoInexistente,
 	    FenixServiceException {

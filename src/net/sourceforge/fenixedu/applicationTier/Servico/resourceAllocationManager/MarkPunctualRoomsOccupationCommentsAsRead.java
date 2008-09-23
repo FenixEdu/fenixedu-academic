@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 
-public class MarkPunctualRoomsOccupationCommentsAsRead extends Service {
+public class MarkPunctualRoomsOccupationCommentsAsRead extends FenixService {
 
     public void run(PunctualRoomsOccupationRequest request, boolean forTeacher) {
 	if (request != null) {

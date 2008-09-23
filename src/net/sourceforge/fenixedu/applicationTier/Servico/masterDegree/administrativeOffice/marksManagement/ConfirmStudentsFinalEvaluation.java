@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 
-public class ConfirmStudentsFinalEvaluation extends Service {
+public class ConfirmStudentsFinalEvaluation extends FenixService {
 
     public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView) {
 

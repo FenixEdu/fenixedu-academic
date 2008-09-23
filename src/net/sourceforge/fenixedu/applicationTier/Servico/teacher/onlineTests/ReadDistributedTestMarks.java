@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -30,7 +30,7 @@ import org.apache.commons.beanutils.BeanComparator;
  * @author Susana Fernandes
  * 
  */
-public class ReadDistributedTestMarks extends Service {
+public class ReadDistributedTestMarks extends FenixService {
 
     public InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId, String path)
 	    throws FenixServiceException {

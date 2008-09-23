@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
-public class WriteEnrollmentsList extends Service {
+public class WriteEnrollmentsList extends FenixService {
 
     public void run(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
 	    ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)

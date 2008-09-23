@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithFirstTimeEnrolment;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -22,7 +22,7 @@ import org.apache.commons.collections.Predicate;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ListMasterDegreeStudents extends Service {
+public class ListMasterDegreeStudents extends FenixService {
 
     public Collection run(String executionYearName) {
 	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);

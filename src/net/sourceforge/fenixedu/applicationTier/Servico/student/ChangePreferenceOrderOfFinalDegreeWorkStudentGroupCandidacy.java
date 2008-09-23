@@ -3,14 +3,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 
 /**
  * @author Luis Cruz
  */
-public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy extends Service {
+public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy extends FenixService {
 
     public ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy() {
 	super();

@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -15,7 +15,7 @@ import org.joda.time.YearMonthDay;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class RegisterCandidate extends Service {
+public class RegisterCandidate extends FenixService {
 
     public void run(RegisterCandidacyBean candidacyBean) {
 

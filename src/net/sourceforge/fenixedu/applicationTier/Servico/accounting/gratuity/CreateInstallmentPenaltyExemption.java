@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 
-public class CreateInstallmentPenaltyExemption extends Service {
+public class CreateInstallmentPenaltyExemption extends FenixService {
 
     public CreateInstallmentPenaltyExemption() {
 	super();

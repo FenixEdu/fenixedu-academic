@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
+public class EditTeacherDegreeFinalProjectStudentByOID extends FenixService {
 
     public void run(Integer objectID, InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
 	    throws FenixServiceException {

@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
 /**
  * @author Susana Fernandes
  */
-public class InsertNewProjectAccess extends Service {
+public class InsertNewProjectAccess extends FenixService {
 
     public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate,
 	    String userNumber) throws ExcepcaoPersistencia {

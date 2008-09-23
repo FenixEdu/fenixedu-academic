@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.util.Email;
 
-public class GradesToSubmitSendMail extends Service {
+public class GradesToSubmitSendMail extends FenixService {
 
     public void run(Collection<ExecutionCourse> executionCourses, String from, String cc, String subject, String message) {
 	List<String> mails = new ArrayList<String>();

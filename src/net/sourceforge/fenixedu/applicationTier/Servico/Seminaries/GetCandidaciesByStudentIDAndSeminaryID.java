@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 5/Ago/2003, 19:44:39
  * 
  */
-public class GetCandidaciesByStudentIDAndSeminaryID extends Service {
+public class GetCandidaciesByStudentIDAndSeminaryID extends FenixService {
 
     public List run(Integer studentID, Integer seminaryID) throws BDException {
 	List candidaciesInfo = new LinkedList();

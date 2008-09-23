@@ -10,7 +10,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
  */
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.joda.time.YearMonthDay;
 
-public class CreateLesson extends Service {
+public class CreateLesson extends FenixService {
 
     public void run(DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
 	    InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay beginDate, YearMonthDay endDate)

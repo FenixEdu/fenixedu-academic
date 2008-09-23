@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class EditCareer extends Service {
+public class EditCareer extends FenixService {
 
     public void run(Integer careerId, InfoCareer infoCareer) {
 	if (infoCareer instanceof InfoTeachingCareer) {

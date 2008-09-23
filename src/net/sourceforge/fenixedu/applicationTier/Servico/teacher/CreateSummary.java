@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.Summary;
 
-public class CreateSummary extends Service {
+public class CreateSummary extends FenixService {
 
     public void run(SummariesManagementBean bean) {
 	if (bean.isNewSummary()) {

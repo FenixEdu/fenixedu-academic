@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
@@ -25,7 +25,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Pica
  * 
  */
-public class SearchGrantOwner extends Service {
+public class SearchGrantOwner extends FenixService {
 
     public List run(String name, String IdNumber, IDDocumentType IdType, Integer grantOwnerNumber, Boolean onlyGrantOwner,
 	    Integer startIndex) throws FenixServiceException {

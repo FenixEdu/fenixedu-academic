@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
-public class EditDistributedTest extends Service {
+public class EditDistributedTest extends FenixService {
 
     public void run(Integer executionCourseId, final Integer distributedTestId, String testInformation, String evaluationTitle,
 	    Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,

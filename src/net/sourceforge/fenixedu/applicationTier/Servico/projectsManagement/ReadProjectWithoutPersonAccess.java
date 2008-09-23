@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectAccess;
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
 /**
  * @author Susana Fernandes
  */
-public class ReadProjectWithoutPersonAccess extends Service {
+public class ReadProjectWithoutPersonAccess extends FenixService {
 
     public List run(String userName, String costCenter, List<InfoProjectAccess> projectAccessList, String userNumber)
 	    throws ExcepcaoPersistencia {

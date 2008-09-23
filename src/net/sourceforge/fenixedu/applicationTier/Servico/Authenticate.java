@@ -21,7 +21,7 @@ import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -50,7 +50,7 @@ import edu.yale.its.tp.cas.client.ProxyTicketValidator;
  * @author Luis Cruz
  * 
  */
-public class Authenticate extends Service implements Serializable {
+public class Authenticate extends FenixService implements Serializable {
 
     private static final String URL_ENCODING = "UTF-8";
 

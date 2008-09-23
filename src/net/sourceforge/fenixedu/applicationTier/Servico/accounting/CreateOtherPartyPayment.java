@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 
 import org.joda.time.DateTime;
 
-public class CreateOtherPartyPayment extends Service {
+public class CreateOtherPartyPayment extends FenixService {
 
     public CreateOtherPartyPayment() {
 	super();

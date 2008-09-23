@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  * @author Pica
  * 
  */
-public class ReadLastGrantContractCreatedByGrantOwner extends Service {
+public class ReadLastGrantContractCreatedByGrantOwner extends FenixService {
 
     public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException {
 

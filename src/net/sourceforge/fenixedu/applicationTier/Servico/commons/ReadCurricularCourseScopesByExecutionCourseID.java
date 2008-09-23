@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
-public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
+public class ReadCurricularCourseScopesByExecutionCourseID extends FenixService {
 
     public List run(Integer executionCourseID) throws FenixServiceException {
 

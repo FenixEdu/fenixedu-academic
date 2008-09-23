@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 
-public class CreateResultUnitAssociation extends Service {
+public class CreateResultUnitAssociation extends FenixService {
 
     public void run(ResultUnitAssociationCreationBean bean) {
 

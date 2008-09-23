@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -19,7 +19,7 @@ import org.joda.time.DateTime;
  *         23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 
  */
-public class InsertCurriculum extends Service {
+public class InsertCurriculum extends FenixService {
 
     public Boolean run(Integer curricularCourseId, String program, String programEn, String operacionalObjectives,
 	    String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification,

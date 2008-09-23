@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
 /**
  * @author Susana Fernandes
  */
-public class ReviewProjectAccess extends Service {
+public class ReviewProjectAccess extends FenixService {
 
     public void run(Person person, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
 	IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();

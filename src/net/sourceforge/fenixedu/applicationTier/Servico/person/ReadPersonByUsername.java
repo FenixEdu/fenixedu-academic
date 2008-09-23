@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
 
-public class ReadPersonByUsername extends Service {
+public class ReadPersonByUsername extends FenixService {
 
     public InfoPerson run(String username) throws ExcepcaoInexistente {
 	final Person person = Person.readPersonByUsername(username);

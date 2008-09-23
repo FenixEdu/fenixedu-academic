@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.PublicSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
  * 
  * 
  */
-public class ClassSiteComponentService extends Service {
+public class ClassSiteComponentService extends FenixService {
 
     public Object run(ISiteComponent bodyComponent, String executionYearName, String executionPeriodName, String degreeInitials,
 	    String nameDegreeCurricularPlan, String className, Integer curricularYear, Integer classId)

@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -38,7 +38,7 @@ import net.sourceforge.fenixedu.util.Ftp;
 
 import org.apache.commons.lang.StringUtils;
 
-public class SubmitMarks extends Service {
+public class SubmitMarks extends FenixService {
 
     private static final String NA = GradeScale.NA;
 

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  * 
  */
-public class TeacherAdministrationSiteComponentService extends Service {
+public class TeacherAdministrationSiteComponentService extends FenixService {
 
     public Object run(Integer infoExecutionCourseCode, ISiteComponent commonComponent, ISiteComponent bodyComponent,
 	    Integer infoSiteCode, Object obj1, Object obj2) throws FenixServiceException {

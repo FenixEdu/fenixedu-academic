@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 // this service reads ALL the execution course's projects
 // to read the projects which has opened enrollments use the same service in
 // student package net.sourceforge.fenixedu.(ReadExecutionCourseProjects)
-public class ReadExecutionCourseProjects extends Service {
+public class ReadExecutionCourseProjects extends FenixService {
 
     public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
 

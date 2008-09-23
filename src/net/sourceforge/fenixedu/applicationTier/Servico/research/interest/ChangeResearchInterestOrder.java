@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.interest;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 
-public class ChangeResearchInterestOrder extends Service {
+public class ChangeResearchInterestOrder extends FenixService {
 
     public void run(Party party, List<ResearchInterest> researchInterests) {
 	if (party.getResearchInterests().size() != researchInterests.size()) {

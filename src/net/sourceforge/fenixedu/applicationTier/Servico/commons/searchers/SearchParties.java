@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.Collection;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 
-public abstract class SearchParties extends Service implements AutoCompleteSearchService {
+public abstract class SearchParties extends FenixService implements AutoCompleteSearchService {
 
     private static int DEFAULT_SIZE = 50;
 

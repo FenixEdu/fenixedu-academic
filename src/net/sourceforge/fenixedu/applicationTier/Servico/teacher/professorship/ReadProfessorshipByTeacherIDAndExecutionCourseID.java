@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class ReadProfessorshipByTeacherIDAndExecutionCourseID extends Service {
+public class ReadProfessorshipByTeacherIDAndExecutionCourseID extends FenixService {
 
     public Professorship run(final Integer teacherID, final Integer executionCourseID) {
 	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);

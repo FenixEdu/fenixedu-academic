@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 
-public class RemoveCurricularCoursesFromCompetenceCourse extends Service {
+public class RemoveCurricularCoursesFromCompetenceCourse extends FenixService {
     public void run(Integer competenceCourseID, Integer[] curricularCoursesIDs) throws Exception {
 	CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
 	if (competenceCourse == null) {

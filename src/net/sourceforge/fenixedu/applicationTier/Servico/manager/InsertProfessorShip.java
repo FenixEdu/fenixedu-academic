@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 
-public class InsertProfessorShip extends Service {
+public class InsertProfessorShip extends FenixService {
 
     public void run(final Integer executionCourseId, final Integer teacherNumber, final Boolean responsibleFor, final Double hours)
 	    throws FenixServiceException {

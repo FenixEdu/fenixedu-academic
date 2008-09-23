@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class VerifyStudentGroupAtributes extends Service {
+public class VerifyStudentGroupAtributes extends FenixService {
 
     private boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
 	boolean result = false;

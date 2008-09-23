@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.department.CourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.curriculum.IGrade;
  * @author pcma
  */
 
-public abstract class ComputeCourseStatistics extends Service {
+public abstract class ComputeCourseStatistics extends FenixService {
     public ComputeCourseStatistics() {
 	super();
     }

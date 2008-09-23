@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 
-public class DeleteExemption extends Service {
+public class DeleteExemption extends FenixService {
 
     public DeleteExemption() {
 	super();

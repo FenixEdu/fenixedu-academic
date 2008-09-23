@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadAttendsByStudentIdAndExecutionPeriodId extends Service {
+public class ReadAttendsByStudentIdAndExecutionPeriodId extends FenixService {
 
     public List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> run(Integer studentId, Integer executionPeriodId,
 	    Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) {

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author joaosa & rmalo
  * 
  */
-public class VerifyStudentGroupWithoutShift extends Service {
+public class VerifyStudentGroupWithoutShift extends FenixService {
 
     public Integer run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, String shiftCodeString)
 	    throws FenixServiceException {

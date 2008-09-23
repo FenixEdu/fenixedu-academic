@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class LerAulasDeTurma extends Service {
+public class LerAulasDeTurma extends FenixService {
 
     public List<InfoLesson> run(InfoClass infoClass) {
 	SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());

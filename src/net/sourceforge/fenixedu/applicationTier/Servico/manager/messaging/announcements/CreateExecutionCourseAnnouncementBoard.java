@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
@@ -23,7 +23,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  *         Created on Jun 30, 2006,5:19:09 PM
  * 
  */
-public class CreateExecutionCourseAnnouncementBoard extends Service {
+public class CreateExecutionCourseAnnouncementBoard extends FenixService {
     public static class ExecutionCourseBoardAnnouncementBoardParameters {
 	public Integer executionCourseId;
 

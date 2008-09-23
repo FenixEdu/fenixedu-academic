@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -12,7 +12,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
-public class CreateResultDocumentFile extends Service {
+public class CreateResultDocumentFile extends FenixService {
     public void run(ResultDocumentFileSubmissionBean bean) {
 	final ResearchResult result = bean.getResult();
 	final String displayName = bean.getDisplayName();

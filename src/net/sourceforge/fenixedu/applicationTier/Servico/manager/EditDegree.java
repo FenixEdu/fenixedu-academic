@@ -4,7 +4,7 @@ import java.util.List;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class EditDegree extends Service {
+public class EditDegree extends FenixService {
 
     public void run(final Integer idInternal, final String code, final String name, final String nameEn,
 	    final DegreeType degreeType, final GradeScale gradeScale, ExecutionYear executionYear) throws FenixServiceException {

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
@@ -23,7 +23,7 @@ import org.apache.struts.util.LabelValueBean;
 /**
  * @author Susana Fernandes
  */
-public class DeleteExerciseVariation extends Service {
+public class DeleteExerciseVariation extends FenixService {
 
     public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws InvalidArgumentsServiceException {
 	List<LabelValueBean> result = new ArrayList<LabelValueBean>();

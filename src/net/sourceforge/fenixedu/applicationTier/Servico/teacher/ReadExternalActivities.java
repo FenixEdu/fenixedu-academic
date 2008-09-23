@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
@@ -23,7 +23,7 @@ import org.apache.commons.collections.Transformer;
  * @author Sergio Montelobo
  * 
  */
-public class ReadExternalActivities extends Service {
+public class ReadExternalActivities extends FenixService {
 
     public SiteView run(String user) {
 	Teacher teacher = Teacher.readTeacherByUsername(user);

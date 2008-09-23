@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Fernanda Quitério 21/Nov/2003
  * 
  */
-public class EditCurriculumForCurricularCourse extends Service {
+public class EditCurriculumForCurricularCourse extends FenixService {
 
     public Boolean run(Integer infoExecutionDegreeId, Integer oldCurriculumId, Integer curricularCourseCode,
 	    InfoCurriculum newInfoCurriculum, String username, String language) throws FenixServiceException {

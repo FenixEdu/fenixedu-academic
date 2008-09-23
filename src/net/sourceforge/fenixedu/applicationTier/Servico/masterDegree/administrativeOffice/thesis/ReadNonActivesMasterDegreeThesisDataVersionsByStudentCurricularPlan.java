@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndResp;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan extends Service {
+public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan extends FenixService {
 
     public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) {
 

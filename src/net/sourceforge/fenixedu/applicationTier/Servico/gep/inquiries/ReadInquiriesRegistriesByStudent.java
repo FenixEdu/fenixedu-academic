@@ -4,14 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadInquiriesRegistriesByStudent extends Service {
+public class ReadInquiriesRegistriesByStudent extends FenixService {
 
     public List<InfoInquiriesRegistry> run(Registration registration) throws FenixServiceException, NoSuchMethodException,
 	    InvocationTargetException, NoSuchMethodException, IllegalAccessException {

@@ -11,7 +11,7 @@ import java.util.zip.ZipInputStream;
 
 import javax.mail.IllegalWriteException;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
@@ -32,7 +32,7 @@ import com.sun.faces.el.impl.parser.ParseException;
 /**
  * @author Susana Fernandes
  */
-public class InsertExerciseVariation extends Service {
+public class InsertExerciseVariation extends FenixService {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 

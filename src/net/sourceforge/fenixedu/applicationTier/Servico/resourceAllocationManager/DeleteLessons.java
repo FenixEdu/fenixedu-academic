@@ -8,12 +8,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class DeleteLessons extends Service {
+public class DeleteLessons extends FenixService {
 
     public void run(final List<Integer> lessonOIDs) throws FenixServiceException {
 	final List<DomainException> exceptionList = new ArrayList<DomainException>();

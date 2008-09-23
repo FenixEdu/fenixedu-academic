@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AnnulAccountingTransactionBean;
 import net.sourceforge.fenixedu.domain.Employee;
 
-public class AnnulAccountingTransaction extends Service {
+public class AnnulAccountingTransaction extends FenixService {
 
     public AnnulAccountingTransaction() {
 	super();

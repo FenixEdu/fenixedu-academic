@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 /**
  * @author joaosa and rmalo
  */
-public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends Service {
+public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends FenixService {
 
     public List run(IUserView userView) throws FenixServiceException {
 

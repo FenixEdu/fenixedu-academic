@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
-public class ReadDegreeCandidatesWithFilter extends Service {
+public class ReadDegreeCandidatesWithFilter extends FenixService {
 
     public List run(Integer degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
 	    throws FenixServiceException {

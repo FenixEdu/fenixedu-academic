@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.utl.ist.fenix.tools.util.Pair;
 
-public class ReadTSDTeachersFromTSDProcesses extends Service {
+public class ReadTSDTeachersFromTSDProcesses extends FenixService {
     public List<TSDTeacherDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
 	List<TSDTeacherDTOEntry> tsdTeacherDTOEntryList = new ArrayList<TSDTeacherDTOEntry>();
 	Map<Teacher, TSDTeacherDTOEntry> teacherDTOMap = new HashMap<Teacher, TSDTeacherDTOEntry>();

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
@@ -16,7 +16,7 @@ import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ExportJustifications extends Service {
+public class ExportJustifications extends FenixService {
 
     public StyledExcelSpreadsheet run(AssiduousnessExportChoices assiduousnessExportChoices) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());

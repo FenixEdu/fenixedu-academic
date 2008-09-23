@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -34,7 +34,7 @@ import org.apache.commons.collections.Transformer;
  *          ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType
  *          .java 37647 2008-08-13 15:50:44Z nmgo $
  */
-public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType extends Service {
+public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType extends FenixService {
 
     private class CurricularPlanIdPredicate implements Predicate {
 

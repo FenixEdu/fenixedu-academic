@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Luis Cruz
  * 
  */
-public class ReadExecutionDegreesByExecutionYearAndType extends Service {
+public class ReadExecutionDegreesByExecutionYearAndType extends FenixService {
 
     public List run(Integer executionYearOID, HashSet<DegreeType> degreeTypes) {
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearOID);

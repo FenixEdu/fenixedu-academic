@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  * @author Fernanda Quitério 22/Dez/2003
  */
-public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear extends Service {
+public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear extends FenixService {
 
     public Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
 	    throws FenixServiceException {

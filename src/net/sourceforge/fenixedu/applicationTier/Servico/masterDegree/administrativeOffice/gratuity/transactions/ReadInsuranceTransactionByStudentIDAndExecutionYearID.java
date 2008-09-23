@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Service {
+public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends FenixService {
 
     /**
      * Constructor

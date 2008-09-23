@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
-public class AssociateTSDCourseWithTeacherServiceDistribution extends Service {
+public class AssociateTSDCourseWithTeacherServiceDistribution extends FenixService {
     public void run(Integer tsdId, Integer tsdcourseId) {
 	TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
 

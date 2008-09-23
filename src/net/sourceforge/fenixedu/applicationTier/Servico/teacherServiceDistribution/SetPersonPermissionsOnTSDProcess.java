@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 
-public class SetPersonPermissionsOnTSDProcess extends Service {
+public class SetPersonPermissionsOnTSDProcess extends FenixService {
     public void run(Integer tsdProcessId, Integer personId, Boolean phaseManagementPermission,
 	    Boolean automaticValuationPermission, Boolean omissionConfigurationPermission,
 	    Boolean tsdCoursesAndTeachersManagementPermission) {

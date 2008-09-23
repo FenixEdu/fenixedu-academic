@@ -12,10 +12,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
  * @author tfc130
  * @author Pedro Santos e Rita Carvalho
  */
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 
-public class ApagarTurma extends Service {
+public class ApagarTurma extends FenixService {
 
     public Boolean run(InfoClass infoClass) {
 	rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal()).delete();

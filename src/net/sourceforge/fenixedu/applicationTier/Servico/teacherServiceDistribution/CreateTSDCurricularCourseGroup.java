@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
-public class CreateTSDCurricularCourseGroup extends Service {
+public class CreateTSDCurricularCourseGroup extends FenixService {
     public TSDCurricularCourseGroup run(Integer tsdId, Integer[] tsdCurricularCourseToGroupArray) {
 
 	TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);

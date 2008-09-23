@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gr
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
-public class CreateRectificationMarkSheet extends Service {
+public class CreateRectificationMarkSheet extends FenixService {
 
     public MarkSheet run(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Grade newGrade, Date evaluationDate,
 	    String reason, Employee employee) throws InvalidArgumentsServiceException {

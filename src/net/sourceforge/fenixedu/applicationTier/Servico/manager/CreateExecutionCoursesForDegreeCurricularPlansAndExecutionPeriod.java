@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod extends Service {
+public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod extends FenixService {
 
     public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);

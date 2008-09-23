@@ -9,13 +9,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
  * 
  * @author tfc130
  */
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 
-public class EditarTurno extends Service {
+public class EditarTurno extends FenixService {
 
     public Object run(InfoShift infoShiftOld, InfoShiftEditor infoShiftNew) {
 	final Shift shiftToEdit = rootDomainObject.readShiftByOID(infoShiftOld.getIdInternal());

@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import java.text.ParseException;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class UpdatePersonInformationFromCitizenCard extends Service {
+public class UpdatePersonInformationFromCitizenCard extends FenixService {
 
     public void run(PersonInformationFromUniqueCardDTO personDTO) {
 	Collection<Person> persons = Person.readByDocumentIdNumber(personDTO.getDocumentIdNumber());

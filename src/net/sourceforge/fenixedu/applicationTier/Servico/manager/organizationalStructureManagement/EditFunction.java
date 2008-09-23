@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -11,7 +11,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class EditFunction extends Service {
+public class EditFunction extends FenixService {
 
     public void run(Integer functionID, MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end, FunctionType type)
 	    throws FenixServiceException, DomainException {

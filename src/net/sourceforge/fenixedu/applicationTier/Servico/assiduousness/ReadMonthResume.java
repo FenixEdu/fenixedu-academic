@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessMonthlyResume;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
@@ -26,7 +26,7 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
-public class ReadMonthResume extends Service {
+public class ReadMonthResume extends FenixService {
 
     public List<AssiduousnessMonthlyResume> run(AssiduousnessExportChoices assiduousnessExportChoices) {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(assiduousnessExportChoices.getYearMonth());

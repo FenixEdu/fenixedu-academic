@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventProjectAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventProjectAssociationSimpleCreationBean;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 
-public class CreateEventProjectAssociation extends Service {
+public class CreateEventProjectAssociation extends FenixService {
 
     /**
      * Service responsible for creating an association between a project and an

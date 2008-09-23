@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
  * 
  * @author cfgi
  */
-public class DeleteFunctionality extends Service {
+public class DeleteFunctionality extends FenixService {
 
     /**
      * @param functionality

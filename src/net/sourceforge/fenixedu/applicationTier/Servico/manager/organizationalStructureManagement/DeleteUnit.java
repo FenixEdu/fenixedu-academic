@@ -4,12 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class DeleteUnit extends Service {
+public class DeleteUnit extends FenixService {
 
     public void run(Integer unitID) throws FenixServiceException {
 	Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);

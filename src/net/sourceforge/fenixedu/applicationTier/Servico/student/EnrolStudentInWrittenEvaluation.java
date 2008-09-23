@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
-public class EnrolStudentInWrittenEvaluation extends Service {
+public class EnrolStudentInWrittenEvaluation extends FenixService {
 
     public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException {
 

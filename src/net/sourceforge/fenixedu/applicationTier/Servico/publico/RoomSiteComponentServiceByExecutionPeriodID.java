@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
@@ -24,7 +24,7 @@ import org.joda.time.DateTimeFieldType;
  * 
  * 
  */
-public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
+public class RoomSiteComponentServiceByExecutionPeriodID extends FenixService {
 
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID)
 	    throws Exception {

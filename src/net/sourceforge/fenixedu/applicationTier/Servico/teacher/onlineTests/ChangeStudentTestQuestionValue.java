@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.IQuestionCorrectionStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.QuestionCorrectionStrategyFactory;
@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ChangeStudentTestQuestionValue extends Service {
+public class ChangeStudentTestQuestionValue extends FenixService {
     public void run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId, Integer studentId,
 	    TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
 

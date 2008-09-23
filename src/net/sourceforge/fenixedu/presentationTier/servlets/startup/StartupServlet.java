@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Role;
@@ -38,7 +38,7 @@ public class StartupServlet extends HttpServlet {
 	String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
 	FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
 
-	Service.init(RootDomainObject.getInstance());
+	FenixService.init(RootDomainObject.getInstance());
 
 	try {
 	    try {

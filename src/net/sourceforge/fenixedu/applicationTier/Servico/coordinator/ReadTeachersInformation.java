@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class ReadTeachersInformation extends Service {
+public class ReadTeachersInformation extends FenixService {
 
     public List run(Integer executionDegreeId, Boolean basic, String executionYearString) throws FenixServiceException {
 

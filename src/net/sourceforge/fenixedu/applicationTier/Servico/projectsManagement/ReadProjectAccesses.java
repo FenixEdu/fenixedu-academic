@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
 /**
  * @author Susana Fernandes
  */
-public class ReadProjectAccesses extends Service {
+public class ReadProjectAccesses extends FenixService {
 
     public List run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
 	IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();

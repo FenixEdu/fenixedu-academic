@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.senior;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Senior;
 
-public class ReadStudentSenior extends Service {
+public class ReadStudentSenior extends FenixService {
 
     public Senior run(final Registration registration) {
 	if (registration.hasSenior()) {

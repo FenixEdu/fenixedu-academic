@@ -5,13 +5,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-public class SearchOtherFormationInstitutions extends Service implements AutoCompleteSearchService {
+public class SearchOtherFormationInstitutions extends FenixService implements AutoCompleteSearchService {
 
     public Collection run(Class type, String value, final int limit, Map<String, String> arguments) {
 

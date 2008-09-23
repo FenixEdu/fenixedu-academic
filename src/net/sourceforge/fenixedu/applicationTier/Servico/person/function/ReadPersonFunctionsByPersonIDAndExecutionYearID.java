@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -18,7 +18,7 @@ import org.joda.time.YearMonthDay;
  * @author naat
  * 
  */
-public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends Service {
+public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends FenixService {
 
     public List<PersonFunction> run(Integer personID, Integer executionYearID) throws FenixServiceException {
 	Person person = (Person) rootDomainObject.readPartyByOID(personID);

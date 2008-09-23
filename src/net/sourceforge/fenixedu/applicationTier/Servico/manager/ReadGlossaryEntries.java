@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
 import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadGlossaryEntries extends Service {
+public class ReadGlossaryEntries extends FenixService {
 
     public List<InfoGlossaryEntry> run() {
 	List<InfoGlossaryEntry> result = new ArrayList<InfoGlossaryEntry>();

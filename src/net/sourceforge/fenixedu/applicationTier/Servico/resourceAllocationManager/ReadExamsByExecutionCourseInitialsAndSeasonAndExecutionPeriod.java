@@ -13,7 +13,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.Season;
 
-public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod extends Service {
+public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod extends FenixService {
 
     public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season, InfoExecutionPeriod infoExecutionPeriod) {
 	InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();

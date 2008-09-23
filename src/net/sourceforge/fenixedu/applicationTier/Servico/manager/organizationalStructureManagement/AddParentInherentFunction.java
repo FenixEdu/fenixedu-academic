@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 
-public class AddParentInherentFunction extends Service {
+public class AddParentInherentFunction extends FenixService {
 
     public void run(Integer functionID, Integer parentInherentFunctionID) throws FenixServiceException, DomainException {
 

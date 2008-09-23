@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
@@ -26,7 +26,7 @@ import org.apache.struts.util.LabelValueBean;
 /**
  * @author Susana Fernandes
  */
-public class ReadInquiryStatistics extends Service {
+public class ReadInquiryStatistics extends FenixService {
 
     public List<InfoInquiryStatistics> run(Integer executionCourseId, Integer distributedTestId, String path)
 	    throws FenixServiceException {

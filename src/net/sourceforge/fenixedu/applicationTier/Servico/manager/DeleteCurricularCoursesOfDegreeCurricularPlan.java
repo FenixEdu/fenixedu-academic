@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -21,7 +21,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * @author lmac1 modified by Fernanda Quiterio
  */
-public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
+public class DeleteCurricularCoursesOfDegreeCurricularPlan extends FenixService {
 
     // delete a set of curricularCourses
     public List run(List curricularCoursesIds) throws FenixServiceException {

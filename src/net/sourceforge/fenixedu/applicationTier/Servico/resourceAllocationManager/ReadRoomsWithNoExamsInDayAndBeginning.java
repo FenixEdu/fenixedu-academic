@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 
-public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
+public class ReadRoomsWithNoExamsInDayAndBeginning extends FenixService {
 
     public List run(Calendar day, Calendar beginning) {
 	List exams = Exam.getAllByDate(day, beginning);

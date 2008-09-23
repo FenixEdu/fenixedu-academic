@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadDepartmentTotalCreditsByPeriod extends Service {
+public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 
     public Map<ExecutionYear, PeriodCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
 	    ExecutionSemester untilExecutionPeriod) throws ParseException {

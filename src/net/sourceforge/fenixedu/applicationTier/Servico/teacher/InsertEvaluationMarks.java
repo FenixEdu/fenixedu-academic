@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Fernanda Quitério
  * 
  */
-public class InsertEvaluationMarks extends Service {
+public class InsertEvaluationMarks extends FenixService {
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks) throws ExcepcaoInexistente,
 	    FenixServiceException {

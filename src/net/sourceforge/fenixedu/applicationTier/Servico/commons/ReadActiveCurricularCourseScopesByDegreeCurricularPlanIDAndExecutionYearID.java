@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID extends Service {
+public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID extends FenixService {
 
     public Set<DegreeModuleScope> run(Integer degreeCurricularPlanId, Integer executionYearID) {
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);

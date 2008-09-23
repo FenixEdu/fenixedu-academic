@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-public class AlterExecutionPeriodState extends Service {
+public class AlterExecutionPeriodState extends FenixService {
 
     public void run(final String year, final Integer semester, final PeriodState periodState) throws FenixServiceException {
 

@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadExecutionPeriodsByExecutionYear extends Service {
+public class ReadExecutionPeriodsByExecutionYear extends FenixService {
 
     public List run(Integer executionYearId) {
 	final ExecutionYear executionYear = executionYearId != null ? rootDomainObject.readExecutionYearByOID(executionYearId)

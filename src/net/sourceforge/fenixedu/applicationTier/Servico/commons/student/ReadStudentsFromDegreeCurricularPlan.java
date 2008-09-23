@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class ReadStudentsFromDegreeCurricularPlan extends Service {
+public class ReadStudentsFromDegreeCurricularPlan extends FenixService {
 
     public List run(Integer degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException {
 	// Read the Students

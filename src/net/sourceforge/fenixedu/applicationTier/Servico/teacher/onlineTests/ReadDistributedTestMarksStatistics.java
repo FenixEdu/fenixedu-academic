@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
  * @author Susana Fernandes
  * 
  */
-public class ReadDistributedTestMarksStatistics extends Service {
+public class ReadDistributedTestMarksStatistics extends FenixService {
 
     public SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
 

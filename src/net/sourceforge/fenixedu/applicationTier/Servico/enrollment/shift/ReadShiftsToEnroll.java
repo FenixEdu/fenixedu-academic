@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class ReadShiftsToEnroll extends Service {
+public class ReadShiftsToEnroll extends FenixService {
 
     public List run(Registration registration) throws FenixServiceException {
 

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
  * @author Fernanda Quitério 01/07/2003
  * 
  */
-public class ReadCurricularCoursesByDegree extends Service {
+public class ReadCurricularCoursesByDegree extends FenixService {
 
     public List run(String executionYearString, String degreeName) throws FenixServiceException {
 	ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);

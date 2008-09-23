@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadStudentsByShiftID extends Service {
+public class ReadStudentsByShiftID extends FenixService {
 
     public List run(final Integer executionCourseID, final Integer shiftID) {
 	final List infoStudents = new LinkedList();

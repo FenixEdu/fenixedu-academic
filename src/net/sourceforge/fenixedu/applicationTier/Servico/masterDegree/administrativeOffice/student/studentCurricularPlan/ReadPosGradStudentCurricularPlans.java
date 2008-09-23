@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class ReadPosGradStudentCurricularPlans extends Service {
+public class ReadPosGradStudentCurricularPlans extends FenixService {
 
     public List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException {
 	List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();

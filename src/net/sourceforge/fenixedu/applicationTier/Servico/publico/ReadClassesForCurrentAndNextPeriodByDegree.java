@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  * @author Luis Cruz
  */
-public class ReadClassesForCurrentAndNextPeriodByDegree extends Service {
+public class ReadClassesForCurrentAndNextPeriodByDegree extends FenixService {
 
     public Object run(final Integer degreeOID) {
 

@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -32,7 +32,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * @author Luis Cruz
  */
-public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
+public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 
     public boolean run(Integer groupOID, String username) throws FenixServiceException {
 	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);

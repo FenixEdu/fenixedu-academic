@@ -3,11 +3,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
-public class DeleteMarkSheet extends Service {
+public class DeleteMarkSheet extends FenixService {
 
     public void run(Integer markSheetID) throws FenixServiceException {
 	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);

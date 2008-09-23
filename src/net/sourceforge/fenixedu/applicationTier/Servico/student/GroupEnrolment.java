@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author asnr and scpo
  * 
  */
-public class GroupEnrolment extends Service {
+public class GroupEnrolment extends FenixService {
 
     public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames, String studentUsername)
 	    throws FenixServiceException {

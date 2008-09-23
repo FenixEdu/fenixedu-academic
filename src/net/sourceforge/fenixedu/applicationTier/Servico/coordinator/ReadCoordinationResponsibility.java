@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
  * @author João Mota 17/Set/2003
  * 
  */
-public class ReadCoordinationResponsibility extends Service {
+public class ReadCoordinationResponsibility extends FenixService {
 
     public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException {
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);

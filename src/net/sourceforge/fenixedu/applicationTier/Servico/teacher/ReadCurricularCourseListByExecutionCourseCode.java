@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
  * @author Ângela
  * 
  */
-public class ReadCurricularCourseListByExecutionCourseCode extends Service {
+public class ReadCurricularCourseListByExecutionCourseCode extends FenixService {
 
     public Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 

@@ -13,7 +13,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -25,7 +25,7 @@ import pt.utl.ist.fenix.tools.smtp.EmailSender;
  *         May 18, 2006, 12:07:00 PM
  * 
  */
-public class ForwardEmailToExecutionCourses extends Service {
+public class ForwardEmailToExecutionCourses extends FenixService {
 
     public static class ForwardMailsReport {
 	private Collection<String> mailsToSend = new ArrayList<String>();

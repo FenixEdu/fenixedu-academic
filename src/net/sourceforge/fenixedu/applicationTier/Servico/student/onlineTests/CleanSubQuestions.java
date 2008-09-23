@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 /**
  * @author Susana Fernandes
  */
-public class CleanSubQuestions extends Service {
+public class CleanSubQuestions extends FenixService {
 
     public void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
 	    String path) throws FenixServiceException {

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -33,7 +33,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author T�nia & Alexandra
  */
-public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
+public class ReadTeacherExecutionCourseShiftsPercentage extends FenixService {
 
     public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse)
 	    throws FenixServiceException {

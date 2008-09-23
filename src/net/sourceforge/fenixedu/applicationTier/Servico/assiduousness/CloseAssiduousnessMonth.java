@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeBalanceResume;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
@@ -36,7 +36,7 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
 
-public class CloseAssiduousnessMonth extends Service {
+public class CloseAssiduousnessMonth extends FenixService {
 
     protected final Duration DAY_HOUR_LIMIT = Hours.TWO.toStandardDuration();
     protected final Duration hourDuration = new Duration(3600000);

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
  * @author Luis Cruz
  * 
  */
-public class DeleteStudentCurricularPlan extends Service {
+public class DeleteStudentCurricularPlan extends FenixService {
 
     public void run(final Integer studentCurricularPlanId) throws DomainException, NonExistingServiceException {
 	final StudentCurricularPlan studentCurricularPlan = rootDomainObject

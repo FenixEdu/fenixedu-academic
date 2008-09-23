@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
  * 
  */
 
-public class EditTeacherAdviseService extends Service {
+public class EditTeacherAdviseService extends FenixService {
 
     public void run(Integer teacherID, Integer executionPeriodID, final Integer studentNumber, Double percentage,
 	    AdviseType adviseType, RoleType roleType) throws FenixServiceException {

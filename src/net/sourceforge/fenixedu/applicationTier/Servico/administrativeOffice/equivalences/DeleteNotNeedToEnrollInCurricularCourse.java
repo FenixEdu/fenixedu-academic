@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class DeleteNotNeedToEnrollInCurricularCourse extends Service {
+public class DeleteNotNeedToEnrollInCurricularCourse extends FenixService {
 
     public void run(Integer notNeedToEnrollInCurricularCourseID) {
 	NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = rootDomainObject

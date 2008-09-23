@@ -4,7 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.domain.Person;
 
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Person;
  * @version $Id: ReadDomainPersonByUsername.java 17212 2006-02-13 19:00:09Z sana
  *          $
  */
-public class ReadDomainPersonByUsername extends Service {
+public class ReadDomainPersonByUsername extends FenixService {
 
     public Person run(String username) throws ExcepcaoInexistente {
 	Person person = Person.readPersonByUsername(username);

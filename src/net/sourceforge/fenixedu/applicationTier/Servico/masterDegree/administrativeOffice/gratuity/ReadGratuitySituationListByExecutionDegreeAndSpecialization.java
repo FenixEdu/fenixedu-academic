@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
@@ -28,7 +28,7 @@ import org.apache.commons.collections.Predicate;
  * 
  */
 
-public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends Service {
+public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends FenixService {
 
     /**
      * Constructor

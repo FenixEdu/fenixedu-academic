@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  * @author Sergio Montelobo
  * 
  */
-public class ReadCourseInformation extends Service {
+public class ReadCourseInformation extends FenixService {
 
     public TeacherAdministrationSiteView run(final Integer executionCourseOID) throws FenixServiceException {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class InsertTestQuestion extends Service {
+public class InsertTestQuestion extends FenixService {
 
     private String path = new String();
 

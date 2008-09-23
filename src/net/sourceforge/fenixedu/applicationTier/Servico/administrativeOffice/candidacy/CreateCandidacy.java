@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.YearMonthDay;
 
-public class CreateCandidacy extends Service {
+public class CreateCandidacy extends FenixService {
 
     public Candidacy run(ExecutionDegree executionDegree, DegreeType degreeType, String name,
 	    String identificationDocumentNumber, IDDocumentType identificationDocumentType, String contributorNumber,

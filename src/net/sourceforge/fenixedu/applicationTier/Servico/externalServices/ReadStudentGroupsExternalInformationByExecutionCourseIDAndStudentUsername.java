@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalDegreeCurricularPlanInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalExecutionCourseInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalGroupInfo;
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  *         Created at 11:23, February the 28th, 2005
  */
-public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername extends Service {
+public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername extends FenixService {
     public Collection run(Integer executionCourseID, String username) {
 	Collection result = new ArrayList();
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);

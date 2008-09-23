@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -20,7 +20,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 /**
  * @author Pedro Santos & Rita Carvalho
  */
-public class ReadExecutionDegreeRecentByDegreeId extends Service {
+public class ReadExecutionDegreeRecentByDegreeId extends FenixService {
 
     public InfoExecutionDegree run(final Integer degreeId) {
 	List<ExecutionDegree> listExecutionDegrees = new ArrayList<ExecutionDegree>();

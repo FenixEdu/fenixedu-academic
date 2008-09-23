@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -14,7 +14,7 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
-public class UploadSibsPaymentsFile extends Service {
+public class UploadSibsPaymentsFile extends FenixService {
 
     public void run(final Person person, final PaymentsFileBean paymentsFileBean) throws FenixServiceException {
 

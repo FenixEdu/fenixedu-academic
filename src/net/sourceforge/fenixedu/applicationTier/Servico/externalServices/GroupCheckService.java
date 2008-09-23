@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -36,7 +36,7 @@ import org.apache.commons.lang.StringUtils;
  * @author naat
  * 
  */
-public class GroupCheckService extends Service {
+public class GroupCheckService extends FenixService {
 
     private static final String PAIR_SEPARATOR = ";";
 

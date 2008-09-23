@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Luis Cruz
  * 
  */
-public class DefineFinalDegreeWorkCandidacySubmisionPeriod extends Service {
+public class DefineFinalDegreeWorkCandidacySubmisionPeriod extends FenixService {
 
     public void run(Integer executionDegreeOID, Date startOfCandidacyPeriod, Date endOfCandidacyPeriod) {
 

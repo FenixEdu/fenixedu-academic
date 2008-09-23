@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 
-public class DeleteInvitation extends Service {
+public class DeleteInvitation extends FenixService {
 
     public void run(Invitation invitation) {
 	if (invitation != null) {

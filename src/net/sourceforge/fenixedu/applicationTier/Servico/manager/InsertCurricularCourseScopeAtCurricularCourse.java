@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -18,7 +18,7 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
 /**
  * @author lmac1
  */
-public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
+public class InsertCurricularCourseScopeAtCurricularCourse extends FenixService {
 
     public void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException {
 	Branch branch = null;

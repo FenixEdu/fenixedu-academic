@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Tânia Pousão
  * 
  */
-public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extends Service {
+public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extends FenixService {
 
     public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID) throws FenixServiceException {
 

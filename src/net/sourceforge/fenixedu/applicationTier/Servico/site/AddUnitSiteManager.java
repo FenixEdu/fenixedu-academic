@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.site;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
 
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
  * 
  * @author cfgi
  */
-public class AddUnitSiteManager extends Service {
+public class AddUnitSiteManager extends FenixService {
 
     public void run(UnitSite site, Person person) {
 	site.addManagers(person);

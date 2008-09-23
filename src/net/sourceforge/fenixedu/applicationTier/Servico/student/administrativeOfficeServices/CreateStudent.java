@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
-public class CreateStudent extends Service {
+public class CreateStudent extends FenixService {
 
     public Registration run(PersonBean personBean, ExecutionDegreeBean executionDegreeBean,
 	    PrecedentDegreeInformationBean precedentDegreeInformationBean, IngressionInformationBean ingressionInformationBean,

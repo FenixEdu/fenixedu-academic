@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class CreatePortal extends Service {
+public class CreatePortal extends FenixService {
 
     public void run(MetaDomainObject metaDomainObject, MultiLanguageString name, String prefix) {
 

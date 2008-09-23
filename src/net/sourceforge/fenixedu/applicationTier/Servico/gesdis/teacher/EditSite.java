@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 /**
  * @author PTRLV
  */
-public class EditSite extends Service {
+public class EditSite extends FenixService {
 
     public Boolean run(InfoSite infoSiteOld, final String alternativeSite, final String mail, final String initialStatement,
 	    final String introduction) throws FenixServiceException {

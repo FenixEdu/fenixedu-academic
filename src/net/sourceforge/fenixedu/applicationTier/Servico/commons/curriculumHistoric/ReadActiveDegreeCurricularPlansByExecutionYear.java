@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHisto
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -20,7 +20,7 @@ import org.apache.commons.collections.Transformer;
  * @author nmgo
  * @author lmre
  */
-public class ReadActiveDegreeCurricularPlansByExecutionYear extends Service {
+public class ReadActiveDegreeCurricularPlansByExecutionYear extends FenixService {
 
     public List run(Integer executionYearID) throws FenixServiceException {
 	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);

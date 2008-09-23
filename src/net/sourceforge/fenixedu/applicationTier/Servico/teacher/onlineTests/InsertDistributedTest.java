@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.Map.Entry;
 
 import jvstm.TransactionalCommand;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -36,7 +36,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
-public class InsertDistributedTest extends Service {
+public class InsertDistributedTest extends FenixService {
 
     public void run(Integer executionCourseId, Integer testId, String testInformation, String evaluationTitle,
 	    Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,

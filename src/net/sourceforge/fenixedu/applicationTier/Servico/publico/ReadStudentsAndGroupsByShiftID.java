@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
@@ -30,7 +30,7 @@ import org.apache.commons.beanutils.BeanComparator;
  * @author joaosa & rmalo
  * 
  */
-public class ReadStudentsAndGroupsByShiftID extends Service {
+public class ReadStudentsAndGroupsByShiftID extends FenixService {
 
     public InfoSiteStudentsAndGroups run(Integer groupPropertiesId, Integer shiftId) throws FenixServiceException {
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class GenetareStudentTestForSimulation extends Service {
+public class GenetareStudentTestForSimulation extends FenixService {
     public List run(Integer executionCourseId, Integer testId, String path, TestType testType,
 	    CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
 	    throws FenixServiceException {

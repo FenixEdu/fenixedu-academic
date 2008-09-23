@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
-public class ReadActiveExecutionDegreebyDegreeCurricularPlanID extends Service {
+public class ReadActiveExecutionDegreebyDegreeCurricularPlanID extends FenixService {
 
     public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws FenixServiceException {
 

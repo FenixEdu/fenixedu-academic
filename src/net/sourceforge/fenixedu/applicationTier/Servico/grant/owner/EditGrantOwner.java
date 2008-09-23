@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class EditGrantOwner extends Service {
+public class EditGrantOwner extends FenixService {
 
     private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) {
 	return GrantOwner.readGrantOwnerByNumber(grantOwnerNumber);

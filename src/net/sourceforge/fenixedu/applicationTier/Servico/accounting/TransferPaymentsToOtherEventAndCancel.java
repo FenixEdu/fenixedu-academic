@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 
-public class TransferPaymentsToOtherEventAndCancel extends Service {
+public class TransferPaymentsToOtherEventAndCancel extends FenixService {
 
     public TransferPaymentsToOtherEventAndCancel() {
 	super();

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.ArrayList;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
-public class DeleteWrittenEvaluation extends Service {
+public class DeleteWrittenEvaluation extends FenixService {
 
     /**
      * @param Integer

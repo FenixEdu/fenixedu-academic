@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class SelectCandidaciesService extends Service {
+public class SelectCandidaciesService extends FenixService {
 
     public SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, Integer seminaryID) throws FenixServiceException {
 	SelectCandidaciesDTO result = new SelectCandidaciesDTO();

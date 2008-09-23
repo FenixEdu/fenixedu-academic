@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 
-public class DeleteUnitSiteBanner extends Service {
+public class DeleteUnitSiteBanner extends FenixService {
 
     public void run(UnitSite site, UnitSiteBanner banner) {
 	UnitSiteBannerFile mainImage = banner.getMainImage();

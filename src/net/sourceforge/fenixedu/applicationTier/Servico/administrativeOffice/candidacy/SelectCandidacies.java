@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean;
 import net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.util.StateMachine;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class SelectCandidacies extends Service {
+public class SelectCandidacies extends FenixService {
 
     public void run(List<SelectDFACandidacyBean> admittedCandidacies, List<SelectDFACandidacyBean> substituteCandidacies,
 	    List<SelectDFACandidacyBean> notAdmittedCandidacies) {

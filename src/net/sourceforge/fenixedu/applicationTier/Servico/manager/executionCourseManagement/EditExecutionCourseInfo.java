@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
-public class EditExecutionCourseInfo extends Service {
+public class EditExecutionCourseInfo extends FenixService {
 
     public InfoExecutionCourse run(InfoExecutionCourseEditor infoExecutionCourse) throws InvalidArgumentsServiceException {
 

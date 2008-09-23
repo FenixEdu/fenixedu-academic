@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author lmac1
  */
 
-public class DeleteDegreeCurricularPlans extends Service {
+public class DeleteDegreeCurricularPlans extends FenixService {
 
     public List run(List degreeCurricularPlansIds) throws FenixServiceException {
 	Iterator<Integer> iter = degreeCurricularPlansIds.iterator();

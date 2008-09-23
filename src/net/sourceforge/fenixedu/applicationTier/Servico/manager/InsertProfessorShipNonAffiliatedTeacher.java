@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 
-public class InsertProfessorShipNonAffiliatedTeacher extends Service {
+public class InsertProfessorShipNonAffiliatedTeacher extends FenixService {
 
     public void run(Integer nonAffiliatedTeacherID, Integer executionCourseID) throws Exception {
 

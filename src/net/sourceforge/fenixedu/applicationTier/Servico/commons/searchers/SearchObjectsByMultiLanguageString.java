@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -20,7 +20,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class SearchObjectsByMultiLanguageString extends Service implements AutoCompleteSearchService {
+public class SearchObjectsByMultiLanguageString extends FenixService implements AutoCompleteSearchService {
 
     public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
 	List<DomainObject> result = new ArrayList<DomainObject>();

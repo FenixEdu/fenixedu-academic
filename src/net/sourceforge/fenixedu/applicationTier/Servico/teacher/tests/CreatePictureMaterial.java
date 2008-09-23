@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -20,7 +20,7 @@ import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
-public class CreatePictureMaterial extends Service {
+public class CreatePictureMaterial extends FenixService {
 
     public NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline, File mainFile,
 	    String originalFilename, String displayName) throws FenixServiceException, DomainException, IOException {

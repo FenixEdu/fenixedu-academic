@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ChangeStudentTestQuestion extends Service {
+public class ChangeStudentTestQuestion extends FenixService {
 
     public Boolean run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId, Integer newMetadataId,
 	    Integer studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType,

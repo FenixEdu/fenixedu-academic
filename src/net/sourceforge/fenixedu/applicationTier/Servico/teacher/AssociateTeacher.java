@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -16,7 +16,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * @author Fernanda Quitério
  */
-public class AssociateTeacher extends Service {
+public class AssociateTeacher extends FenixService {
 
     /**
      * Executes the service.

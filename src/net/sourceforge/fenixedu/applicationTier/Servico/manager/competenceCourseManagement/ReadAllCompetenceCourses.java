@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCours
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 
-public class ReadAllCompetenceCourses extends Service {
+public class ReadAllCompetenceCourses extends FenixService {
 
     public List<InfoCompetenceCourse> run() throws Exception {
 

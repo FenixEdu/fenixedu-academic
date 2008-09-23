@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class WriteInquiry extends Service {
+public class WriteInquiry extends FenixService {
 
     public void run(final InfoInquiry inquiry, final InfoStudent infoStudent) throws FenixServiceException {
 	if (inquiry == null) {

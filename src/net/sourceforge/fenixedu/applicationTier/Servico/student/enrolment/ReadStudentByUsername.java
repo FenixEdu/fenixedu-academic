@@ -4,12 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadStudentByUsername extends Service {
+public class ReadStudentByUsername extends FenixService {
 
     public Registration run(String studentUsername) throws FenixServiceException {
 	final Registration registration = Registration.readByUsername(studentUsername);

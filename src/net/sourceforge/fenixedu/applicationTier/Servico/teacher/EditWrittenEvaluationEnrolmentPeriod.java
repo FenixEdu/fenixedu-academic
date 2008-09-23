@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 
-public class EditWrittenEvaluationEnrolmentPeriod extends Service {
+public class EditWrittenEvaluationEnrolmentPeriod extends FenixService {
 
     public void run(Integer executionCourseID, Integer writtenEvaluationID, Date beginDate, Date endDate, Date beginTime,
 	    Date endTime) throws FenixServiceException {

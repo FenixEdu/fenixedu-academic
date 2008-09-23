@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -24,7 +24,7 @@ import com.sun.faces.el.impl.parser.ParseException;
 /**
  * @author Susana Fernandes
  */
-public class AddStudentsToDistributedTest extends Service {
+public class AddStudentsToDistributedTest extends FenixService {
 
     public void run(Integer executionCourseId, Integer distributedTestId, List<InfoStudent> infoStudentList, String contextPath)
 	    throws InvalidArgumentsServiceException {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
 
-public class RemoveResearchActivityParticipation extends Service {
+public class RemoveResearchActivityParticipation extends FenixService {
 
     public void run(EventParticipation participation) {
 	ResearchEvent event = participation.getEvent();

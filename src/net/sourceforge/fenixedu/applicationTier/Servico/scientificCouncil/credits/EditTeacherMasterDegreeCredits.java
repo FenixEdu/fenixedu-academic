@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class EditTeacherMasterDegreeCredits extends Service {
+public class EditTeacherMasterDegreeCredits extends FenixService {
 
     public void run(Map<String, String> hoursMap, Map<String, String> creditsMap) throws NumberFormatException {
 	Set<String> professorshipIDs = new HashSet<String>(hoursMap.keySet());

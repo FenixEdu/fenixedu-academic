@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
-public class ReadCoursesInformation extends Service {
+public class ReadCoursesInformation extends FenixService {
 
     public List<InfoSiteCourseInformation> run(final Integer executionDegreeOID, final Boolean basic,
 	    final String executionYearString) {

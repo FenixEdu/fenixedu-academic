@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
  *         Created at 26/Ago/2003, 9:14:57
  * 
  */
-public class GetThemeById extends Service {
+public class GetThemeById extends FenixService {
 
     public InfoTheme run(Integer themeID) {
 	InfoTheme infoTheme = null;

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author naat
  * 
  */
-public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID extends Service {
+public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID extends FenixService {
 
     public List<Teacher> run(Integer departmentID, Integer executionYearID) throws FenixServiceException {
 	Department department = rootDomainObject.readDepartmentByOID(departmentID);

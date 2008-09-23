@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean.MaterialType;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.FireExtinguisher;
 
-public class CreateMaterial extends Service {
+public class CreateMaterial extends FenixService {
 
     public void run(MaterialBean bean) {
 

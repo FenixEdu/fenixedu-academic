@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
-public class SearchStudents extends Service {
+public class SearchStudents extends FenixService {
 
     public List<RegistrationWithStateForExecutionYearBean> run(SearchStudentsByDegreeParametersBean searchbean)
 	    throws FenixServiceException {

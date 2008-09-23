@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.site;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
 
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
  * 
  * @author cfgi
  */
-public class ChangeUnitSiteLayout extends Service {
+public class ChangeUnitSiteLayout extends FenixService {
 
     public void run(UnitSite site, UnitSiteLayoutType layout) {
 	site.setLayout(layout);

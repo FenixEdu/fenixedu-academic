@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 
 import org.apache.commons.collections.Predicate;
 
-public class CreateTSDTeacher extends Service {
+public class CreateTSDTeacher extends FenixService {
     public Boolean run(String teacherName, Integer categoryId, Integer requiredHours, Integer tsdId) {
 
 	Category category = rootDomainObject.readCategoryByOID(categoryId);

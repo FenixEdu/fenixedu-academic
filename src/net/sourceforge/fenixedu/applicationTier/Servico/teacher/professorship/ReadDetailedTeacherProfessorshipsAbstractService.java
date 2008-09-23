@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author jpvl
  */
-public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
+public class ReadDetailedTeacherProfessorshipsAbstractService extends FenixService {
 
     private final class Professorships2DetailProfessorship implements Transformer {
 	private Professorships2DetailProfessorship() {

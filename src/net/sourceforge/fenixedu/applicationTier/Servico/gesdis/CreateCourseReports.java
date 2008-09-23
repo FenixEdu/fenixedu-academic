@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateCourseReports extends Service {
+public class CreateCourseReports extends FenixService {
 
     public void run(Integer executionPeriodID) {
 	Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();

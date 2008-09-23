@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  *         Created at 4/Ago/2003, 13:05:42
  * 
  */
-public class GetEquivalency extends Service {
+public class GetEquivalency extends FenixService {
 
     public InfoEquivalency run(Integer equivalencyID) throws BDException {
 	InfoEquivalency infoEquivalency = null;

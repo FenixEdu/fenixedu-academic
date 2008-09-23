@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformati
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean;
 
-public class CreateCompetenceCourseInformationChangeRequest extends Service {
+public class CreateCompetenceCourseInformationChangeRequest extends FenixService {
 
     public void run(CompetenceCourseInformationRequestBean bean, CompetenceCourseLoadBean loadBean, Person requestor) {
 

@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
-public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Service {
+public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends FenixService {
 
     public Set<ExecutionCourseView> run(final Degree degree) {
 	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();

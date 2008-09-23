@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class UnEnrollGroupShift extends Service {
+public class UnEnrollGroupShift extends FenixService {
 
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username) throws FenixServiceException {
 	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);

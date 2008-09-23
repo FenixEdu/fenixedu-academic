@@ -4,7 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IOpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 /**
  * @author Susana Fernandes
  */
-public class ReadOpeningProjectFileReport extends Service {
+public class ReadOpeningProjectFileReport extends FenixService {
 
     public InfoOpeningProjectFileReport run(String username, String costCenter, Integer projectCode, String userNumber)
 	    throws ExcepcaoPersistencia {

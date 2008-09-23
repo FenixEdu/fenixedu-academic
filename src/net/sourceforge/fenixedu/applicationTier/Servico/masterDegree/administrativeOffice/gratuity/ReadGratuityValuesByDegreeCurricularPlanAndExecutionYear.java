@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
  * @author T�nia Pous�o
  * 
  */
-public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Service {
+public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends FenixService {
 
     public Object run(Integer degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
 	if (degreeCurricularPlanID == null || executionYearName == null) {

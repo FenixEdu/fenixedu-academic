@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.LoginAliasType;
 
-public class CreateNewLoginAlias extends Service {
+public class CreateNewLoginAlias extends FenixService {
 
     public void run(LoginAliasBean bean) {
 	if (bean != null) {

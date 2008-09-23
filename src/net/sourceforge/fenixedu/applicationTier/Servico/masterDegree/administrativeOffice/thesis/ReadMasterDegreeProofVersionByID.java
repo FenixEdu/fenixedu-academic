@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadMasterDegreeProofVersionByID extends Service {
+public class ReadMasterDegreeProofVersionByID extends FenixService {
 
     public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException {
 	MasterDegreeProofVersion masterDegreeProofVersion = rootDomainObject

@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
-public class EditInstitution extends Service {
+public class EditInstitution extends FenixService {
 
     public void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException {
 

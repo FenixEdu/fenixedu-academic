@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -27,7 +27,7 @@ import org.apache.commons.collections.Predicate;
  * executionDegree persistentSupportecified in executionDegreeIndex
  */
 
-public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
+public class ReadExecutionDegreeByDegreeCurricularPlanID extends FenixService {
 
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex) {
 	List infoExecutionDegreeList = null;

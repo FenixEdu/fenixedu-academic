@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 /**
  * @author David Santos Jan 26, 2004
  */
-public class WriteEnrollment extends Service {
+public class WriteEnrollment extends FenixService {
 
     // some of these arguments may be null. they are only needed for filter
     public Integer run(Integer executionDegreeId, Registration registration, Integer curricularCourseID,

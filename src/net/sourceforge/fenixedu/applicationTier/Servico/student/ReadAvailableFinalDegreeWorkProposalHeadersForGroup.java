@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -22,7 +22,7 @@ import org.apache.commons.collections.Predicate;
  * @author Luis Cruz
  * 
  */
-public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends Service {
+public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends FenixService {
 
     public List run(Integer groupOID) {
 	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder;
@@ -23,7 +23,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
-public class ListGrantContractByCriteria extends Service {
+public class ListGrantContractByCriteria extends FenixService {
 
     /**
      * Query the grant owner by criteria of grant contract

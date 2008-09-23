@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.course.inquiries;
 
 import java.lang.reflect.InvocationTargetException;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode extends Service {
+public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode extends FenixService {
 
     public InfoOldInquiriesCoursesRes run(Integer executionPeriodId, Integer degreeId, String courseCode)
 	    throws FenixServiceException, NoSuchMethodException, InvocationTargetException, NoSuchMethodException,

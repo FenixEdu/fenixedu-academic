@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class MergePrecedencesForDegreeCurricularPlan extends Service {
+public class MergePrecedencesForDegreeCurricularPlan extends FenixService {
 
     public void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException {
 

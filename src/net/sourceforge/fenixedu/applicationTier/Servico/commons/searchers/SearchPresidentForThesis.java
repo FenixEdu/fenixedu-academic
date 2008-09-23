@@ -5,14 +5,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
-public class SearchPresidentForThesis extends Service implements AutoCompleteSearchService {
+public class SearchPresidentForThesis extends FenixService implements AutoCompleteSearchService {
 
     public Collection<PersonName> run(Class type, String value, int limit, Map<String, String> arguments) {
 	if (type != PersonName.class) {

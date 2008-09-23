@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
  * 
  */
-public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends Service {
+public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixService {
 
     public List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException {
 	final List infoExecutionCourses = new ArrayList();

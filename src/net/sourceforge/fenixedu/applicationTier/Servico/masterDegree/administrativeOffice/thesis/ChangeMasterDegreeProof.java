@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.util.State;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
  */
-public class ChangeMasterDegreeProof extends Service {
+public class ChangeMasterDegreeProof extends FenixService {
 
     public void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
 	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<Integer> teacherJuriesNumbers,

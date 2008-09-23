@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
-public class ReadStudentCurriculum extends Service {
+public class ReadStudentCurriculum extends FenixService {
 
     public List run(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FenixServiceException {
 

@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
  *         21/Jul/2003 fenix-head ServidorAplicacao.Servico.teacher
  * 
  */
-public class DeleteSummary extends Service {
+public class DeleteSummary extends FenixService {
 
     public boolean run(ExecutionCourse executionCourse, Summary summary, Teacher loggedTeacher) throws FenixServiceException {
 

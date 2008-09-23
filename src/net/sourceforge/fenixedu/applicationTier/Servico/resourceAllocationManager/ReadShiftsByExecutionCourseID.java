@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadShiftsByExecutionCourseID extends Service {
+public class ReadShiftsByExecutionCourseID extends FenixService {
 
     public InfoExecutionCourseOccupancy run(Integer executionCourseID) {
 

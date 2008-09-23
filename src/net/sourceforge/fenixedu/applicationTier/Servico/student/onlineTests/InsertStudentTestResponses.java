@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuthorizedStudentToDoTestException;
@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
-public class InsertStudentTestResponses extends Service {
+public class InsertStudentTestResponses extends FenixService {
     private static final Logger logger = Logger.getLogger(InsertStudentTestResponses.class);
 
     private String path;

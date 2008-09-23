@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
@@ -18,7 +18,7 @@ import org.apache.commons.collections.Transformer;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends Service {
+public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends FenixService {
 
     public List run(Integer degreeCurricularPlanID) throws FenixServiceException {
 

@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
  *         May 23, 2006, 3:48:23 PM
  * 
  */
-public abstract class ForumService extends Service {
+public abstract class ForumService extends FenixService {
 
     protected static final Locale DEFAULT_LOCALE = new Locale("pt");
 

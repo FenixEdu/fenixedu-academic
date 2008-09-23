@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.MergeScientificJournalPageContainerBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
 
-public class MergeScientificJournals extends Service {
+public class MergeScientificJournals extends FenixService {
 
     public void run(MergeScientificJournalPageContainerBean mergeScientificJournalPageContainerBean) {
 	ScientificJournal scientificJournal = new ScientificJournal(mergeScientificJournalPageContainerBean.getName(),

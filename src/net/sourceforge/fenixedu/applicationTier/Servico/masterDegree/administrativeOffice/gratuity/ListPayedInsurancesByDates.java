@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
@@ -17,7 +17,7 @@ import org.joda.time.YearMonthDay;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ListPayedInsurancesByDates extends Service {
+public class ListPayedInsurancesByDates extends FenixService {
 
     public List<InsuranceTransaction> run(ExecutionYear executionYear, YearMonthDay beginDate, YearMonthDay endDate) {
 

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.elections;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.Email;
 
-public class VoteYearDelegateElections extends Service {
+public class VoteYearDelegateElections extends FenixService {
 
     public void run(YearDelegateElection yearDelegateElection, Student student, Student votedStudent)
 	    throws FenixServiceException {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  *           23/11/2004
  * 
  */
-abstract public class ReadDegreeCurricularPlanBaseService extends Service {
+abstract public class ReadDegreeCurricularPlanBaseService extends FenixService {
 
     protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId) {
 	List<InfoCurricularCourseScope> infoActiveScopes = null;

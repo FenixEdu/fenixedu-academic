@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author jdnf, mrsp and Luis Cruz
  * 
  */
-public class DeleteExecutionCourses extends Service {
+public class DeleteExecutionCourses extends FenixService {
 
     public List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException {
 	final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();

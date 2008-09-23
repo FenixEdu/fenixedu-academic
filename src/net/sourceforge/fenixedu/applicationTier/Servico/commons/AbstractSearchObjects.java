@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public abstract class AbstractSearchObjects extends Service implements AutoCompleteSearchService {
+public abstract class AbstractSearchObjects extends FenixService implements AutoCompleteSearchService {
 
     protected Collection process(Collection objects, String value, int limit, Map<String, String> arguments) {
 	List result;

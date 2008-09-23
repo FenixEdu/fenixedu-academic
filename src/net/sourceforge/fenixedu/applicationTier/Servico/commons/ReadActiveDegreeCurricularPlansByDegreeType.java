@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -18,7 +18,7 @@ import org.apache.commons.collections.Transformer;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadActiveDegreeCurricularPlansByDegreeType extends Service {
+public class ReadActiveDegreeCurricularPlansByDegreeType extends FenixService {
 
     public Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
 

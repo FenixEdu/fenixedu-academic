@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.Collection;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 
-public class SearchDistrictSubdivisions extends Service implements AutoCompleteSearchService {
+public class SearchDistrictSubdivisions extends FenixService implements AutoCompleteSearchService {
 
     private static int DEFAULT_SIZE = 50;
 

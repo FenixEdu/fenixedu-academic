@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author naat
  * 
  */
-public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID extends Service {
+public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID extends FenixService {
 
     public List<TeacherPersonalExpectation> run(Integer departmentID, Integer executionYearID, Integer teacherID)
 	    throws FenixServiceException {

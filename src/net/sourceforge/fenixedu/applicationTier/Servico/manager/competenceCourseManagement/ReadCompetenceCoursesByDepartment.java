@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCours
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class ReadCompetenceCoursesByDepartment extends Service {
+public class ReadCompetenceCoursesByDepartment extends FenixService {
 
     public List<InfoCompetenceCourse> run(Integer departmentID) throws Exception {
 

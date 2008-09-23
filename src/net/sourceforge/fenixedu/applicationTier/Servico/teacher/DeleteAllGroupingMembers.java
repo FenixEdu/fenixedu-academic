@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
  * 
  */
 
-public class DeleteAllGroupingMembers extends Service {
+public class DeleteAllGroupingMembers extends FenixService {
 
     public boolean run(Integer objectCode, Integer groupingCode) throws FenixServiceException {
 	Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);

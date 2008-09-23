@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
-public class PublishAprovedFinalDegreeWorkProposals extends Service {
+public class PublishAprovedFinalDegreeWorkProposals extends FenixService {
 
     public void run(Integer executionDegreeOID) throws FenixServiceException {
 	if (executionDegreeOID != null) {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class LoggedCoordinatorCanEdit extends Service {
+public class LoggedCoordinatorCanEdit extends FenixService {
 
     public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username) throws FenixServiceException {
 	Boolean result = new Boolean(false);

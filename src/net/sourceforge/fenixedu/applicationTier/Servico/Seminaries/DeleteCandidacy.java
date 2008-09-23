@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 25/Ago/2003, 15:09:58
  * 
  */
-public class DeleteCandidacy extends Service {
+public class DeleteCandidacy extends FenixService {
 
     public void run(Integer id) throws BDException {
 	SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class ReadExecutionDegreesOfTypeDegree extends Service {
+public class ReadExecutionDegreesOfTypeDegree extends FenixService {
 
     public List run() {
 	String year = ExecutionYear.readCurrentExecutionYear().getYear();

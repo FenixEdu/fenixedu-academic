@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
  * @author Luis Cruz
  * 
  */
-public class AddFinalDegreeWorkProposalCandidacyForGroup extends Service {
+public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
 
     public boolean run(Integer groupOID, Integer proposalOID) throws FenixServiceException {
 

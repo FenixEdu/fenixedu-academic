@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 
-public class RemoveProposalFromFinalDegreeWorkStudentGroup extends Service {
+public class RemoveProposalFromFinalDegreeWorkStudentGroup extends FenixService {
 
     public boolean run(Integer groupOID, Integer groupProposalOID) throws FenixServiceException {
 	final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);

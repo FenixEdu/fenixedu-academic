@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.Email;
 
-public class ChangeStudentsShift extends Service {
+public class ChangeStudentsShift extends FenixService {
 
     public void run(IUserView userView, Integer oldShiftId, Integer newShiftId, final Set<Registration> registrations)
 	    throws FenixServiceException {

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *         30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
  */
-public class ReadAvailableClassesForShift extends Service {
+public class ReadAvailableClassesForShift extends FenixService {
 
     public List run(Integer shiftOID) {
 

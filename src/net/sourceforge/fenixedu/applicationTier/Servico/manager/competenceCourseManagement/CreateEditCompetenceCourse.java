@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCours
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class CreateEditCompetenceCourse extends Service {
+public class CreateEditCompetenceCourse extends FenixService {
 
     public InfoCompetenceCourse run(Integer competenceCourseID, String code, String name, Integer[] departmentIDs)
 	    throws Exception {

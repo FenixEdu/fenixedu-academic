@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
 
-public class CreateGratuityExemption extends Service {
+public class CreateGratuityExemption extends FenixService {
 
     public CreateGratuityExemption() {
 	super();

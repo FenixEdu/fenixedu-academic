@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnit;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean;
@@ -12,7 +12,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
-public class CreateExternalUnit extends Service {
+public class CreateExternalUnit extends FenixService {
 
     public Unit run(final CreateExternalUnitBean externalUnitBean) throws FenixServiceException {
 

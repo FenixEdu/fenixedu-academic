@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class PrepareDegreesListByStudentNumber extends Service {
+public class PrepareDegreesListByStudentNumber extends FenixService {
 
     // student and degreeType used by filter
     public List<ExecutionDegree> run(final Registration registration, final DegreeType degreeType,

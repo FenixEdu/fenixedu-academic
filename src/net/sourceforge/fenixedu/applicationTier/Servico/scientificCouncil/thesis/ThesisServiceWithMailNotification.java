@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
 
-public abstract class ThesisServiceWithMailNotification extends Service {
+public abstract class ThesisServiceWithMailNotification extends FenixService {
 
     public SendMailReport run(Thesis thesis) throws FenixServiceException, SenderNotAllowed {
 	process(thesis);

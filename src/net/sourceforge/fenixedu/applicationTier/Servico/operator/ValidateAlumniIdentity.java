@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.Email;
 
 import org.joda.time.DateTime;
 
-public class ValidateAlumniIdentity extends Service {
+public class ValidateAlumniIdentity extends FenixService {
 
     public void run(AlumniIdentityCheckRequest identityRequest, Boolean approval, Person operator) {
 

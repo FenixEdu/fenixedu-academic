@@ -7,13 +7,13 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
-public class ReadStudentCurricularPlan extends Service {
+public class ReadStudentCurricularPlan extends FenixService {
 
     final public InfoStudentCurricularPlan run(final Integer studentCurricularPlanID) throws FenixServiceException {
 	if (studentCurricularPlanID == null) {

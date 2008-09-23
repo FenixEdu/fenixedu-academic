@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
  * @author joaosa & rmalo
  * 
  */
-public class ExecutionCourseWaitingAnswer extends Service {
+public class ExecutionCourseWaitingAnswer extends FenixService {
 
     public boolean run(Integer executionCourseID) throws FenixServiceException {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);

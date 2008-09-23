@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  * 
  */
-public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends Service {
+public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends FenixService {
     public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;

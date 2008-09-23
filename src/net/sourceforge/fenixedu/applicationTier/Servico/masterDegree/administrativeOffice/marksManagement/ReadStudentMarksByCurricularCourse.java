@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
@@ -30,7 +30,7 @@ import org.apache.commons.collections.Predicate;
  * @author Fernanda Quitério 01/07/2003
  * 
  */
-public class ReadStudentMarksByCurricularCourse extends Service {
+public class ReadStudentMarksByCurricularCourse extends FenixService {
 
     public List run(Integer curricularCourseID, Integer studentNumber, String executionYear, Integer enrolmentId)
 	    throws FenixServiceException {

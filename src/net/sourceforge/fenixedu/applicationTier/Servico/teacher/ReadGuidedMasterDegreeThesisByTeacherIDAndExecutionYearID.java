@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author naat
  */
-public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID extends Service {
+public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID extends FenixService {
 
     public List<MasterDegreeThesisDataVersion> run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
 	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);

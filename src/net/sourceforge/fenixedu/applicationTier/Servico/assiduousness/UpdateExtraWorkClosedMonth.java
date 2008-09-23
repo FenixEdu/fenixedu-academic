@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.DateTimeFieldType;
 
-public class UpdateExtraWorkClosedMonth extends Service {
+public class UpdateExtraWorkClosedMonth extends FenixService {
 
     public ActionMessage run(ClosedMonth closedMonth) throws ExcepcaoPersistencia {
 	BigDecimal totalMonthAmount = new BigDecimal(0.0);

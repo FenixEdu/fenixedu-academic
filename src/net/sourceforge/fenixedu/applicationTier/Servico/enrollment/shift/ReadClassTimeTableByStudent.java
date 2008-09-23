@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class ReadClassTimeTableByStudent extends Service {
+public class ReadClassTimeTableByStudent extends FenixService {
 
     public List<InfoLesson> run(final Registration registration, final SchoolClass schoolClass,
 	    final ExecutionCourse executionCourse) throws FenixServiceException {

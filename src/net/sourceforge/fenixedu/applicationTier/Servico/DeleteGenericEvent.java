@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 
-public class DeleteGenericEvent extends Service {
+public class DeleteGenericEvent extends FenixService {
 
     public void run(GenericEvent genericEvent) {
 	if (genericEvent != null) {

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.utils.ExamsNotEnrolledPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -31,7 +31,7 @@ import org.apache.commons.collections.Transformer;
  * 
  */
 
-public class ReadExamsByStudent extends Service {
+public class ReadExamsByStudent extends FenixService {
 
     public Object run(String username) {
 

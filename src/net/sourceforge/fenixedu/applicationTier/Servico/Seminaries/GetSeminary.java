@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalenciesWithAll;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 31/Jul/2003, 19:12:41
  * 
  */
-public class GetSeminary extends Service {
+public class GetSeminary extends FenixService {
 
     public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
 	InfoSeminaryWithEquivalencies infoSeminary = null;

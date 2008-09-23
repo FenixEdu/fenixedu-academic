@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author asnr and scpo
  */
-public class EditGrouping extends Service {
+public class EditGrouping extends FenixService {
 
     public List run(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(infoGroupProperties.getIdInternal());

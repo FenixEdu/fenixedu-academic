@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
-public class EditMasterDegreeCandidate extends Service {
+public class EditMasterDegreeCandidate extends FenixService {
 
     public InfoMasterDegreeCandidate run(MasterDegreeCandidate oldMasterDegreeCandidate, InfoMasterDegreeCandidate newCandidate,
 	    InfoPersonEditor infoPersonEditor) throws ExcepcaoInexistente, FenixServiceException {

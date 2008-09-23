@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
-public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
+public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixService {
 
     public byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
 

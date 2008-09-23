@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 
-public class DeleteCredits extends Service {
+public class DeleteCredits extends FenixService {
 
     public void run(StudentCurricularPlan studentCurricularPlan, String[] creditsIDs) throws FenixServiceException {
 	for (String creditsID : creditsIDs) {

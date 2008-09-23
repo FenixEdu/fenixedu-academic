@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
@@ -15,7 +15,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
 
-public class UpdateParkingParty extends Service {
+public class UpdateParkingParty extends FenixService {
 
     public void run(ParkingRequest parkingRequest, final ParkingRequestState parkingRequestState, final Long cardCode,
 	    final Integer groupId, final String note, final DateTime cardStartDate, final DateTime cardEndDate) {

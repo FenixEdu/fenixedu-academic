@@ -4,13 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 
-public class ReadInquiriesRegistriesByExecutionPeriod extends Service {
+public class ReadInquiriesRegistriesByExecutionPeriod extends FenixService {
 
     public List<InfoInquiriesRegistry> run(Integer executionPeriodId) throws FenixServiceException, IllegalAccessException,
 	    InvocationTargetException, NoSuchMethodException {

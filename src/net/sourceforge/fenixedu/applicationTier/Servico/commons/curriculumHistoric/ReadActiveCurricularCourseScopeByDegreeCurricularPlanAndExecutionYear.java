@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHisto
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -20,7 +20,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  * @author nmgo
  * @author lmre
  */
-public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear extends Service {
+public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear extends FenixService {
 
     public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, Integer executioYearID) throws FenixServiceException {
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);

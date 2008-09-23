@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
-public class ChangeCompetenceCourseInformationChangeRequestStatus extends Service {
+public class ChangeCompetenceCourseInformationChangeRequestStatus extends FenixService {
 
     public void run(CompetenceCourseInformationChangeRequest changeRequest, Person analisedBy, Boolean status)
 	    throws FenixServiceException {

@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Teacher;
 
-public class InsertStudentsFinalEvaluation extends Service {
+public class InsertStudentsFinalEvaluation extends FenixService {
 
     public void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final Integer teacherNumber, final Date evaluationDate)
 	    throws NonExistingServiceException {

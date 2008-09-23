@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -29,7 +29,7 @@ import org.apache.commons.collections.Transformer;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
  * 
  */
-public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
+public class ReadProfessorshipsAndResponsibilitiesByDepartment extends FenixService {
 
     public List run(Integer departmentId, Integer executionYearId) throws FenixServiceException {
 

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class InsertNonAffiliatedTeacher extends Service {
+public class InsertNonAffiliatedTeacher extends FenixService {
 
     public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws NotExistingServiceException {
 	final Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);

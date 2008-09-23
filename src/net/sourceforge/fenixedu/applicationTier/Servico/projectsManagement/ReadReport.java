@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.IReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoMovementReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 /**
  * @author Susana Fernandes
  */
-public class ReadReport extends Service {
+public class ReadReport extends FenixService {
 
     public InfoProjectReport run(String userView, String costCenter, ReportType reportType, Integer projectCode, String userNumber)
 	    throws ExcepcaoPersistencia {

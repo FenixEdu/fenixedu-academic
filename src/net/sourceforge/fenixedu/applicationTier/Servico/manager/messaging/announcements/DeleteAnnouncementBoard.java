@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 
 /**
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
  *         Created on Jun 28, 2006,5:23:53 PM
  * 
  */
-public class DeleteAnnouncementBoard extends Service {
+public class DeleteAnnouncementBoard extends FenixService {
 
     public void run(AnnouncementBoard board) {
 	board.delete();

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -29,7 +29,7 @@ import org.apache.commons.collections.Transformer;
  * @author Tânia Pousão
  * 
  */
-public class ReadStudentsAndMarksByEvaluation extends Service {
+public class ReadStudentsAndMarksByEvaluation extends FenixService {
 
     public Object run(Integer executionCourseCode, Integer evaluationCode) throws FenixServiceException {
 

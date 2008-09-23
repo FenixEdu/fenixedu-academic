@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurric
  * 
  */
 
-public class InsertNotNeedToEnrollInCurricularCourses extends Service {
+public class InsertNotNeedToEnrollInCurricularCourses extends FenixService {
 
     public void run(Integer studentCurricularPlanID, Integer[] curricularCoursesID) {
 	StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);

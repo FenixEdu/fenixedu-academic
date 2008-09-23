@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -35,7 +35,7 @@ import org.apache.struts.util.MessageResources;
  * 
  */
 
-public class EditGroupShift extends Service {
+public class EditGroupShift extends FenixService {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 

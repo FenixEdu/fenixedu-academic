@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  * @author Luis Cruz
  */
-public class ReadDegreeByOID extends Service {
+public class ReadDegreeByOID extends FenixService {
 
     public InfoDegree run(Integer degreeId) {
 	Degree degree = rootDomainObject.readDegreeByOID(degreeId);

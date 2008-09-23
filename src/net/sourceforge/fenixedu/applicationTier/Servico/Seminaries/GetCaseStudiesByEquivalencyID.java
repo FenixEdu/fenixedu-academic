@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 25/Ago/2003, 18:18:02
  * 
  */
-public class GetCaseStudiesByEquivalencyID extends Service {
+public class GetCaseStudiesByEquivalencyID extends FenixService {
 
     public List run(Integer equivalencyID) throws BDException {
 	List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 3/Set/2003, 15:10:43
  * 
  */
-public class GetAllModalities extends Service {
+public class GetAllModalities extends FenixService {
 
     public List run() throws BDException {
 	List infoCases = new LinkedList();

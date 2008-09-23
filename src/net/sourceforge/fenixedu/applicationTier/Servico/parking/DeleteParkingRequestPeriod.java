@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 
-public class DeleteParkingRequestPeriod extends Service {
+public class DeleteParkingRequestPeriod extends FenixService {
 
     public void run(Integer id) {
 	rootDomainObject.readParkingRequestPeriodByOID(id).delete();

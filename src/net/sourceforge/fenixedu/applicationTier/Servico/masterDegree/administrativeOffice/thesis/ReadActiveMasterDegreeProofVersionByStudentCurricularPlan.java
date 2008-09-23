@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends Service {
+public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends FenixService {
 
     public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID) throws FenixServiceException {
 

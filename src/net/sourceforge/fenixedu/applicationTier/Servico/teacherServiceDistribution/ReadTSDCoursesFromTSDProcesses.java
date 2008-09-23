@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDCourseDTOEntry;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.utl.ist.fenix.tools.util.Pair;
 
-public class ReadTSDCoursesFromTSDProcesses extends Service {
+public class ReadTSDCoursesFromTSDProcesses extends FenixService {
     public List<TSDCourseDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
 	List<TSDCourseDTOEntry> tsdCourseDTOEntryList = new ArrayList<TSDCourseDTOEntry>();
 

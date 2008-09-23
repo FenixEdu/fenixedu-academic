@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
-public class SetCoursesAndTeachersValuationPermission extends Service {
+public class SetCoursesAndTeachersValuationPermission extends FenixService {
     public void run(Integer tsdId, Integer personId, Boolean coursesValuationPermission, Boolean teachersValuationPermission,
 	    Boolean coursesManagementPermission, Boolean teachersManagementPermission) {
 	TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);

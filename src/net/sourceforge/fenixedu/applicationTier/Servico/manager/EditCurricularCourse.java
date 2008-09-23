@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
@@ -18,7 +18,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * @author lmac1
  */
-public class EditCurricularCourse extends Service {
+public class EditCurricularCourse extends FenixService {
 
     public EditCurricularCourse() {
     }

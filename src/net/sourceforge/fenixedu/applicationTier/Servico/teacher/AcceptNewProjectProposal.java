@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
  * @author joaosa & rmalo
  * 
  */
-public class AcceptNewProjectProposal extends Service {
+public class AcceptNewProjectProposal extends FenixService {
 
     public Boolean run(Integer executionCourseId, Integer groupPropertiesId, String acceptancePersonUserName)
 	    throws FenixServiceException {

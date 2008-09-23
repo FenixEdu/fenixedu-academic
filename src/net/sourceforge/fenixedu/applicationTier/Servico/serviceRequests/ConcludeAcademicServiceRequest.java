@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 
 import org.joda.time.YearMonthDay;
 
-public class ConcludeAcademicServiceRequest extends Service {
+public class ConcludeAcademicServiceRequest extends FenixService {
 
     public void run(final AcademicServiceRequest academicServiceRequest, final Boolean sendEmailToStudent,
 	    final YearMonthDay situationDate, final String justification) {

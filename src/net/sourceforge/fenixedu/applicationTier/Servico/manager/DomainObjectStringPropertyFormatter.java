@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -17,7 +17,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class DomainObjectStringPropertyFormatter extends Service {
+public class DomainObjectStringPropertyFormatter extends FenixService {
 
     public void run(Class clazz, String slotName) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 

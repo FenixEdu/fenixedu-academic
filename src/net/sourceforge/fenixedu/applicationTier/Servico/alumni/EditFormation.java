@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 
-public class CreateResultParticipation extends Service {
+public class CreateResultParticipation extends FenixService {
 
     public void run(ResultParticipationCreationBean bean) throws FenixServiceException {
 	final ResearchResult result = bean.getResult();

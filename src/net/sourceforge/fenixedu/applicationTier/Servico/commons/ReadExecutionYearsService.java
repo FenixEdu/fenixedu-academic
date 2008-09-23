@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadExecutionYearsService extends Service {
+public class ReadExecutionYearsService extends FenixService {
 
     public List run() {
 	final List<InfoExecutionYear> infoExecutionYears = new ArrayList<InfoExecutionYear>();

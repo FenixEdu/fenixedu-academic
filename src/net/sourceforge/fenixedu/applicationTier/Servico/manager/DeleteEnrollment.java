@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
  * @author Luis Cruz
  * 
  */
-public class DeleteEnrollment extends Service {
+public class DeleteEnrollment extends FenixService {
 
     public void run(final Integer studentNumber, final DegreeType degreeType, final Integer enrollmentId) {
 	for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {

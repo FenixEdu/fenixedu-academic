@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curri
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class CreateDegree extends Service {
+public class CreateDegree extends FenixService {
 
     public void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits, GradeScale gradeScale,
 	    String prevailingScientificArea) throws FenixServiceException {

@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 
 import org.joda.time.LocalDate;
 
-public class CalculateArticles17And18 extends Service {
+public class CalculateArticles17And18 extends FenixService {
 
     public void run(int year) {
 	LocalDate beginDate = new LocalDate(year, 1, 1);

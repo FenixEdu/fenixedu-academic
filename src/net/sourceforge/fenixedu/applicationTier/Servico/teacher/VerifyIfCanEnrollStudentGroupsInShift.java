@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author joaosa & rmalo
  * 
  */
-public class VerifyIfCanEnrollStudentGroupsInShift extends Service {
+public class VerifyIfCanEnrollStudentGroupsInShift extends FenixService {
 
     public boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);

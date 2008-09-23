@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ComputeCurricularCourseStatistics extends Service {
+public class ComputeCurricularCourseStatistics extends FenixService {
 
     public String run(Integer degreeCurricularPlanID, Integer executionYearID, RegistrationAgreement agreement) {
 

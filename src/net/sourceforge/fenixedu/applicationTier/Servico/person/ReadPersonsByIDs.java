@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
 
-public class ReadPersonsByIDs extends Service {
+public class ReadPersonsByIDs extends FenixService {
 
     public List<InfoPerson> run(final List<Integer> personIds) {
 

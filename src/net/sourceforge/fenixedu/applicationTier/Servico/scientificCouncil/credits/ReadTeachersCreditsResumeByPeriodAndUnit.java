@@ -11,7 +11,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
+public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
 
     public List<TeacherCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
 	    ExecutionSemester untilExecutionPeriod) throws ParseException {

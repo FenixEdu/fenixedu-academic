@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadBuildings extends Service {
+public class ReadBuildings extends FenixService {
 
     public List<InfoBuilding> run() {
 	final List<InfoBuilding> result = new ArrayList<InfoBuilding>();

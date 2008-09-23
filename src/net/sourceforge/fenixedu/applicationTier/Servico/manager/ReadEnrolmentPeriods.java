@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriodInCurricularCoursesSpecialSeason;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnr
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadEnrolmentPeriods extends Service {
+public class ReadEnrolmentPeriods extends FenixService {
 
     public List<InfoEnrolmentPeriod> run(final Integer executionPeriodID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);

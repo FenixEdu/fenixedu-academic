@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Pica
  * 
  */
-public class ReadAllGrantPaymentEntitiesByClassName extends Service {
+public class ReadAllGrantPaymentEntitiesByClassName extends FenixService {
 
     public List run(String className) throws FenixServiceException {
 	final Set<GrantPaymentEntity> grantPaymentEntities = GrantPaymentEntity.findGrantPaymentEntityByConcreteClass(className);

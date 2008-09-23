@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -20,7 +20,7 @@ import org.apache.commons.collections.Transformer;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldInquiriesTeachersResByDegreeId extends Service {
+public class ReadOldInquiriesTeachersResByDegreeId extends FenixService {
 
     public List run(Integer degreeId) throws FenixServiceException {
 	Degree degree = rootDomainObject.readDegreeByOID(degreeId);

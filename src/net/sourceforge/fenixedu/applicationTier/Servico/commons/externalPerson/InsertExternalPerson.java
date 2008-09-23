@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Country;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 import org.joda.time.YearMonthDay;
 
-public class InsertExternalPerson extends Service {
+public class InsertExternalPerson extends FenixService {
 
     public static class ServiceArguments {
 	private Unit unit;

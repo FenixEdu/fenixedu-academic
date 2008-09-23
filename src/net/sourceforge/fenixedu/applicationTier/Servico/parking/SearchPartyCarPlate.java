@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 
@@ -19,7 +19,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
  * 
  */
 
-public class SearchPartyCarPlate extends Service {
+public class SearchPartyCarPlate extends FenixService {
 
     public List<Party> run(String nameSearch, String carPlateNumber) {
 	List<Party> result = new ArrayList<Party>();

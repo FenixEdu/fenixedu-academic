@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Node;
 
-public class DeleteTemplatedContent extends Service {
+public class DeleteTemplatedContent extends FenixService {
 
     public void run(MetaDomainObjectPortal portal, Content content) {
 

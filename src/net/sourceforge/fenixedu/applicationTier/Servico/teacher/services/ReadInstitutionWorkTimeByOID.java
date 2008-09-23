@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class ReadInstitutionWorkTimeByOID extends Service {
+public class ReadInstitutionWorkTimeByOID extends FenixService {
 
     public InstitutionWorkTime run(Integer institutionWorkTimeID) {
 	return (InstitutionWorkTime) rootDomainObject.readTeacherServiceItemByOID(institutionWorkTimeID);

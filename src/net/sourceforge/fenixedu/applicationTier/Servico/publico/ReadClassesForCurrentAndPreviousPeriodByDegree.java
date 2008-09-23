@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  * @author Luis Cruz
  */
-public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
+public class ReadClassesForCurrentAndPreviousPeriodByDegree extends FenixService {
 
     public Object run(Integer degreeOID) {
 	ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();

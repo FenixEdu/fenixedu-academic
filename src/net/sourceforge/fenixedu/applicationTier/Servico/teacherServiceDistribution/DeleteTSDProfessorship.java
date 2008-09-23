@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 
-public class DeleteTSDProfessorship extends Service {
+public class DeleteTSDProfessorship extends FenixService {
     public void run(Integer tsdProfessorshipId) {
 	TSDProfessorship tsdProfessorship = rootDomainObject.readTSDProfessorshipByOID(tsdProfessorshipId);
 	TSDTeacher tsdTeacher = tsdProfessorship.getTSDTeacher();

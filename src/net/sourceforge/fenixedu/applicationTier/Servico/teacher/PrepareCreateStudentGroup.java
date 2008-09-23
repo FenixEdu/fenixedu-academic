@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
@@ -26,7 +26,7 @@ import org.apache.commons.beanutils.BeanComparator;
  * @author ansr and scpo
  * 
  */
-public class PrepareCreateStudentGroup extends Service {
+public class PrepareCreateStudentGroup extends FenixService {
 
     public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode) throws ExistingServiceException {
 

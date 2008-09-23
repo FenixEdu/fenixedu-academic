@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class SubmitFinalWorkProposal extends Service {
+public class SubmitFinalWorkProposal extends FenixService {
 
     public void run(InfoProposalEditor infoProposal) throws FenixServiceException {
 	Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();

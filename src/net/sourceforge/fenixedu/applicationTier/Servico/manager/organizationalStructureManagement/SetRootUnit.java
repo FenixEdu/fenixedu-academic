@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-public class SetRootUnit extends Service {
+public class SetRootUnit extends FenixService {
 
     public void run(final Unit unit, final Boolean institutionUnit) {
 

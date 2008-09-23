@@ -12,12 +12,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 
-public class RemoveClasses extends Service {
+public class RemoveClasses extends FenixService {
 
     public Boolean run(InfoShift infoShift, List classOIDs) {
 	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());

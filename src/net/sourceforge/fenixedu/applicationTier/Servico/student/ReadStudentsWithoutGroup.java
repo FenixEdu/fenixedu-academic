@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
  * @author asnr and scpo
  * 
  */
-public class ReadStudentsWithoutGroup extends Service {
+public class ReadStudentsWithoutGroup extends FenixService {
 
     public class NewStudentGroupAlreadyExists extends FenixServiceException {
     }

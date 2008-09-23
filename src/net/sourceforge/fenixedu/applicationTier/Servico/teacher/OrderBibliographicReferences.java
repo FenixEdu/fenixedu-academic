@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  * 
  * @author cfgi
  */
-public class OrderBibliographicReferences extends Service {
+public class OrderBibliographicReferences extends FenixService {
 
     public void run(ExecutionCourse executionCourse, List<BibliographicReference> references) {
 	executionCourse.setBibliographicReferencesOrder(references);

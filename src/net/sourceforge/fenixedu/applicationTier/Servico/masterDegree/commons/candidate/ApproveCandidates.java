@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.ca
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.State;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ApproveCandidates extends Service {
+public class ApproveCandidates extends FenixService {
 
     public void run(String[] situations, String[] ids, String[] remarks, String[] substitutes) {
 

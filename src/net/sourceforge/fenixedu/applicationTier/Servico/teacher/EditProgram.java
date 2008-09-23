@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Person;
  * 
  *         Modified by Tânia Pousão at 2/Dez/2003
  */
-public class EditProgram extends Service {
+public class EditProgram extends FenixService {
 
     public boolean run(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew, String username)
 	    throws FenixServiceException {

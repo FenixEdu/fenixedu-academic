@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-public class RegisterStudentInquiryResponseIntention extends Service {
+public class RegisterStudentInquiryResponseIntention extends FenixService {
 
     public void run(final Person person, final Boolean dontWantToRespond) {
 	final Student student = person.getStudent();

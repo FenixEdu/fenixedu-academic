@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 /**
  * @author Luis Cruz
  */
-public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
+public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
     public boolean run(IUserView userView, Integer executionDegreeOID) throws FenixServiceException {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);

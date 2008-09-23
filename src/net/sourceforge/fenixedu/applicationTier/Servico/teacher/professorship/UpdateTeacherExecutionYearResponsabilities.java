@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author jpvl
  */
-public class UpdateTeacherExecutionYearResponsabilities extends Service {
+public class UpdateTeacherExecutionYearResponsabilities extends FenixService {
 
     public void run(Integer teacherId, Integer executionYearId, final List executionCourseResponsabilities)
 	    throws FenixServiceException, DomainException {

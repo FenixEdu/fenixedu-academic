@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -47,7 +47,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.joda.time.YearMonthDay;
 
-public class ReadTeacherInformation extends Service {
+public class ReadTeacherInformation extends FenixService {
 
     public SiteView run(String user, String argExecutionYear) throws FenixServiceException {
 

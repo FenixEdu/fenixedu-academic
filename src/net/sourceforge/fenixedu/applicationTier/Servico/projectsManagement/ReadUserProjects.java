@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
@@ -19,7 +19,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author Susana Fernandes
  */
-public class ReadUserProjects extends Service {
+public class ReadUserProjects extends FenixService {
 
     public List<InfoProject> run(String username, String costCenter, Boolean all, String userNumber) throws ExcepcaoPersistencia {
 	List<InfoProject> infoProjectList = new ArrayList<InfoProject>();

@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.PasswordVerifierUtil;
@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.Email;
 
-public class RegisterAlumniData extends Service {
+public class RegisterAlumniData extends FenixService {
 
     protected static final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", new Locale("pt"));
 

@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRuleParametersDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
-public class CreateRule extends Service {
+public class CreateRule extends FenixService {
 
     public void run(Integer degreeModuleToApplyRuleID, CurricularRuleType selectedCurricularRuleType,
 	    CurricularRuleParametersDTO parametersDTO, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)

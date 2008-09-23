@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 /**
  * @author lmac1 modified by Fernanda Quitério
  */
-public class InsertExecutionCourseAtExecutionPeriod extends Service {
+public class InsertExecutionCourseAtExecutionPeriod extends FenixService {
 
     public void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
 

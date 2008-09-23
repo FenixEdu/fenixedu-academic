@@ -3,13 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
-public class CreateCompositeRule extends Service {
+public class CreateCompositeRule extends FenixService {
 
     public void run(LogicOperator logicOperator, Integer[] selectedCurricularRuleIDs) throws FenixServiceException {
 	if (selectedCurricularRuleIDs != null) {

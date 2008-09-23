@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
  * @author Angela 04/07/2003
  * 
  */
-public class AlterStudentEnrolmentEvaluation extends Service {
+public class AlterStudentEnrolmentEvaluation extends FenixService {
 
     public void run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
 	    InfoEnrolmentEvaluation infoEnrolmentEvaluation, Integer teacherNumber, IUserView userView)

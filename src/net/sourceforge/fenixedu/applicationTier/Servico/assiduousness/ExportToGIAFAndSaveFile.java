@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthDocument;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
 
 import org.apache.struts.action.ActionMessage;
 
-public class ExportToGIAFAndSaveFile extends Service {
+public class ExportToGIAFAndSaveFile extends FenixService {
 
     public ActionMessage run(ClosedMonth closedMonth, String fileName, ClosedMonthDocumentType closedMonthDocumentType,
 	    String file) throws FileNotFoundException {

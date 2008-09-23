@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -27,7 +27,7 @@ import org.apache.struts.util.MessageResources;
  * @author asnr and scpo
  * 
  */
-public class GroupStudentEnrolment extends Service {
+public class GroupStudentEnrolment extends FenixService {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 

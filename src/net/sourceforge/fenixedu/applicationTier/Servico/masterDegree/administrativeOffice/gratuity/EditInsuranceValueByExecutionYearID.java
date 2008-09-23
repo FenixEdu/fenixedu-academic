@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class EditInsuranceValueByExecutionYearID extends Service {
+public class EditInsuranceValueByExecutionYearID extends FenixService {
 
     public void run(Integer executionYearID, Double annualValue, Date endDate) {
 

@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
+public class DeleteExecutionDegreesOfDegreeCurricularPlan extends FenixService {
 
     public List run(List<Integer> executionDegreesIds) throws FenixServiceException {
 	List<String> undeletedExecutionDegreesYears = new ArrayList<String>();

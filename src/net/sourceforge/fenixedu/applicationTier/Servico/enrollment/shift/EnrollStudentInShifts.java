@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class EnrollStudentInShifts extends Service {
+public class EnrollStudentInShifts extends FenixService {
 
     public class StudentNotFoundServiceException extends FenixServiceException {
     }

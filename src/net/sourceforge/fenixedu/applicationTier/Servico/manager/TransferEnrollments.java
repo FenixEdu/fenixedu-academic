@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
-public class TransferEnrollments extends Service {
+public class TransferEnrollments extends FenixService {
 
     public void run(final Integer destinationStudentCurricularPlanId, final Integer[] enrollmentIDsToTransfer,
 	    final Integer destinationCurriculumGroupID) {

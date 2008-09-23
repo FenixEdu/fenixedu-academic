@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  * 
  */
-public class ReadTeacherExecutionCoursesSitesService extends Service {
+public class ReadTeacherExecutionCoursesSitesService extends FenixService {
 
     public List run(InfoTeacher infoTeacher) throws FenixServiceException {
 

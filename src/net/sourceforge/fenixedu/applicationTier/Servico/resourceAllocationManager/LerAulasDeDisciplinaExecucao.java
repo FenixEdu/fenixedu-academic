@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Shift;
  * 
  * @author Luis Cruz
  */
-public class LerAulasDeDisciplinaExecucao extends Service {
+public class LerAulasDeDisciplinaExecucao extends FenixService {
 
     public Object run(final InfoExecutionCourse infoExecutionCourse) {
 

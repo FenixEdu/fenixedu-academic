@@ -3,13 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 
-public class EditCurricularRule extends Service {
+public class EditCurricularRule extends FenixService {
 
     public void run(Integer curricularRuleID, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)
 	    throws FenixServiceException {

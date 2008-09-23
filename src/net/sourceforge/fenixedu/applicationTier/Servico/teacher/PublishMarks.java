@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSentServiceException;
@@ -17,7 +17,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 /**
  * @author Fernanda Quitério
  */
-public class PublishMarks extends Service {
+public class PublishMarks extends FenixService {
 
     private final static int MOBILE_NUMBER_LENGHT = 9;
 

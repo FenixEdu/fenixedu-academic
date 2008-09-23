@@ -11,9 +11,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 
-public class DeleteClasses extends Service {
+public class DeleteClasses extends FenixService {
 
     public Boolean run(final List<Integer> classOIDs) {
 	for (final Integer classId : classOIDs) {

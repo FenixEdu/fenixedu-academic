@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.documents;
 
 import java.io.InputStream;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.documents.ReceiptGeneratedDocument;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class StoreGeneratedDocument extends Service {
+public class StoreGeneratedDocument extends FenixService {
     public static final String CONFIG_DSPACE_DOCUMENT_STORE = "dspace.generated.document.store";
 
     public void run(String filename, InputStream stream, Object source) throws FenixServiceException {

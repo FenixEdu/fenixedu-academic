@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
+public class UpdateDepartmentsCompetenceCourseManagementGroup extends FenixService {
 
     public void run(Department department, Integer[] add, Integer[] remove) {
 	List<Person> toAdd = materializePersons(add);

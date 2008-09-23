@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadTeachersByNumbers extends Service {
+public class ReadTeachersByNumbers extends FenixService {
 
     public Collection<InfoTeacher> run(Collection<Integer> teacherNumbers) {
 	Collection<InfoTeacher> infoTeachers = new ArrayList(teacherNumbers.size());

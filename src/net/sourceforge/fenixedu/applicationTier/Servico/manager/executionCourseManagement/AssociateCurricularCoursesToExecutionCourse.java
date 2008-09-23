@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  * 
  * @author Fernanda Quitério 29/Dez/2003
  */
-public class AssociateCurricularCoursesToExecutionCourse extends Service {
+public class AssociateCurricularCoursesToExecutionCourse extends FenixService {
 
     public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException {
 	if (executionCourseId == null) {

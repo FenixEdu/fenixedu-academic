@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class EditExternalActivity extends Service {
+public class EditExternalActivity extends FenixService {
 
     public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException {
 	ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);

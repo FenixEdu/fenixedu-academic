@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProjectStudents;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 10/Set/2003, 20:47:24
  * 
  */
-public class GetProjectsGroupsByExecutionCourseID extends Service {
+public class GetProjectsGroupsByExecutionCourseID extends FenixService {
 
     public List run(Integer executionCourseID) throws BDException {
 

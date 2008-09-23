@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  *         Created at 18/Set/2003, 18:17:51
  * 
  */
-public class ReadStudentsByStudentGroupID extends Service {
+public class ReadStudentsByStudentGroupID extends FenixService {
 
     public List run(Integer executionCourseId, Integer groupId) throws FenixServiceException {
 

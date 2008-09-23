@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Luis Cruz
  * 
  */
-public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Service {
+public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends FenixService {
 
     public InfoExecutionCourse run(final Integer oid) {
 	InfoExecutionCourse infoExecutionCourse = null;

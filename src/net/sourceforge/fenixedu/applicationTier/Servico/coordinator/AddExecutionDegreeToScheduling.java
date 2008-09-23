@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 
-public class AddExecutionDegreeToScheduling extends Service {
+public class AddExecutionDegreeToScheduling extends FenixService {
 
     private class SchedulingContainsProposalsException extends FenixServiceException {
     }

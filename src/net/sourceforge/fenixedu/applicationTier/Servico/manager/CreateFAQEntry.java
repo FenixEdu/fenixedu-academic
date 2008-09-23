@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
 import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Luis Cruz
  */
-public class CreateFAQEntry extends Service {
+public class CreateFAQEntry extends FenixService {
 
     public void run(InfoFAQEntry infoFAQEntry) {
 	FAQSection parentFAQSection = null;

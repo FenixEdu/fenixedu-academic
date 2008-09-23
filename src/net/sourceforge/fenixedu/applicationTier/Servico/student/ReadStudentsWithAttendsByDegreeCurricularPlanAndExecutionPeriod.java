@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod extends Service {
+public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod extends FenixService {
 
     public Set<Student> run(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester)
 	    throws FenixServiceException {

@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.util.State;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class CreateGuideFromTransactions extends Service {
+public class CreateGuideFromTransactions extends FenixService {
 
     public InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide, List transactionsIDs)
 	    throws FenixServiceException {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchCooperationCreationBean;
@@ -22,7 +22,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
-public class CreateResearchActivityParticipation extends Service {
+public class CreateResearchActivityParticipation extends FenixService {
 
     public void run(ResearchEvent event, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage)
 	    throws FenixServiceException {

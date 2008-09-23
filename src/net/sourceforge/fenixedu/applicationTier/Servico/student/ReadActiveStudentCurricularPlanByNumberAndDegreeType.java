@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *         Created at 24/Set/2003, 11:26:29
  * 
  */
-public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Service {
+public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends FenixService {
 
     public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
 	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.util.State;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class CreateGuide extends Service {
+public class CreateGuide extends FenixService {
 
     public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
 	    GuideState situationOfGuide, String paymentType) throws FenixServiceException {

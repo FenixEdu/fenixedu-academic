@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 
-public class ReadPersonCandidates extends Service {
+public class ReadPersonCandidates extends FenixService {
 
     public List<InfoMasterDegreeCandidate> run(final String username) throws FenixServiceException {
 	final Person person = Person.readPersonByUsername(username);

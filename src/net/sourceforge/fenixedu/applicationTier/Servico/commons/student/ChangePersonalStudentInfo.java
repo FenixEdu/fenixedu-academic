@@ -12,7 +12,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 
-public class ChangePersonalStudentInfo extends Service {
+public class ChangePersonalStudentInfo extends FenixService {
 
     public InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
 

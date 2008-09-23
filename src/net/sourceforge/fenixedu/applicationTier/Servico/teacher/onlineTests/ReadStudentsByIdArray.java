@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -26,7 +26,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentsByIdArray extends Service {
+public class ReadStudentsByIdArray extends FenixService {
 
     public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts)
 	    throws FenixServiceException {

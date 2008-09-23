@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         3/Ago/2003, 21:37:27
  * 
  */
-public class ReadCurricularCoursesByUsername extends Service {
+public class ReadCurricularCoursesByUsername extends FenixService {
 
     public List run(String username) throws BDException, NonExistingServiceException {
 	List curricularCourses = new LinkedList();

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Department;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author naat
  */
-public class ReadDepartmentTeachersByDepartmentID extends Service {
+public class ReadDepartmentTeachersByDepartmentID extends FenixService {
 
     public List<InfoTeacher> run(Integer departmentID) throws FenixServiceException {
 

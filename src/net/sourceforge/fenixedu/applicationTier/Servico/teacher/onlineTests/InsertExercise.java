@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
@@ -41,7 +41,7 @@ import com.sun.faces.el.impl.parser.ParseException;
 /**
  * @author Susana Fernandes
  */
-public class InsertExercise extends Service {
+public class InsertExercise extends FenixService {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
@@ -22,7 +22,7 @@ import org.apache.commons.collections.Transformer;
  * @author Pica
  * 
  */
-public class ReadGrantContractRegimeByContractAndState extends Service {
+public class ReadGrantContractRegimeByContractAndState extends FenixService {
 
     public List run(Integer grantContractId, Integer state) throws FenixServiceException {
 	List contractRegimes = null;

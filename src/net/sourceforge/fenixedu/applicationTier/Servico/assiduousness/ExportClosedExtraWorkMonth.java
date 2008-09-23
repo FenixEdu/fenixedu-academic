@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.LeaveBean;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Holiday;
@@ -40,7 +40,7 @@ import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class ExportClosedExtraWorkMonth extends Service {
+public class ExportClosedExtraWorkMonth extends FenixService {
     private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("yyyyMMdd");
 
     private DecimalFormat monthFormat = new DecimalFormat("00");

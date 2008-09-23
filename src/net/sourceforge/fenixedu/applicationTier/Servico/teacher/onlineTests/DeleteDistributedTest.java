@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class DeleteDistributedTest extends Service {
+public class DeleteDistributedTest extends FenixService {
 
     public void run(Integer executionCourseId, final Integer distributedTestId) {
 	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);

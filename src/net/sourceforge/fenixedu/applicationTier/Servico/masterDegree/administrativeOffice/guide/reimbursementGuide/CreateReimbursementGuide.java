@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.util.State;
  *         service also generates the number of the new reimbursement guide
  *         using a sequential method.
  */
-public class CreateReimbursementGuide extends Service {
+public class CreateReimbursementGuide extends FenixService {
 
     /**
      * @throws FenixServiceException

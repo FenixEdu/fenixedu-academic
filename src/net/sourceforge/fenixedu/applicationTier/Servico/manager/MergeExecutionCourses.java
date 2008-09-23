@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -56,7 +56,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * @author <a href="mailto:joao.mota@ist.utl.pt"> João Mota </a> 29/Nov/2003
  * 
  */
-public class MergeExecutionCourses extends Service {
+public class MergeExecutionCourses extends FenixService {
 
     public class SourceAndDestinationAreTheSameException extends FenixServiceException {
 	private static final long serialVersionUID = 3761968254943244338L;

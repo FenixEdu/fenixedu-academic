@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentDistributedTest extends Service {
+public class ReadStudentDistributedTest extends FenixService {
     public List<StudentTestQuestion> run(Integer executionCourseId, Integer distributedTestId, Integer studentId, String path)
 	    throws FenixServiceException {
 

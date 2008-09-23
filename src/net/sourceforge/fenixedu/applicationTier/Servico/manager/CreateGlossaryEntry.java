@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
 import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Luis Cruz
  */
-public class CreateGlossaryEntry extends Service {
+public class CreateGlossaryEntry extends FenixService {
 
     public void run(InfoGlossaryEntry infoGlossaryEntry) {
 	GlossaryEntry glossaryEntry = new GlossaryEntry();

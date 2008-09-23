@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  * 
  */
-public class CreateInsuranceTransaction extends Service {
+public class CreateInsuranceTransaction extends FenixService {
 
     public void run(Integer guideEntryID, IUserView userView) throws ExistingServiceException {
 

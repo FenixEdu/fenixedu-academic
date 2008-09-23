@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.joda.time.YearMonthDay;
 
-public class EditPersonFunction extends Service {
+public class EditPersonFunction extends FenixService {
 
     public void run(Integer personFunctionID, Integer functionID, YearMonthDay beginDate, YearMonthDay endDate, Double credits)
 	    throws FenixServiceException, DomainException {

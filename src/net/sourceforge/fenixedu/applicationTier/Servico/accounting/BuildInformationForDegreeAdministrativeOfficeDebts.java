@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFee
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 
-public abstract class BuildInformationForDegreeAdministrativeOfficeDebts extends Service {
+public abstract class BuildInformationForDegreeAdministrativeOfficeDebts extends FenixService {
 
     protected static final String ENTITY_CODE;
 

@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  * 
  */
-public class ReadExecutionYearsByDegreeCurricularPlanID extends Service {
+public class ReadExecutionYearsByDegreeCurricularPlanID extends FenixService {
 
     public List run(Integer degreeCurricularPlanID) {
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);

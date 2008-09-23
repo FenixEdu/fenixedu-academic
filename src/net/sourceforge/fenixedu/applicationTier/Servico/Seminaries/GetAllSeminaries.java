@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 
 import org.joda.time.DateTime;
 
-public class GetAllSeminaries extends Service {
+public class GetAllSeminaries extends FenixService {
 
     public List run(Boolean inEnrollmentPeriod) throws BDException {
 	List<InfoSeminary> result = new LinkedList<InfoSeminary>();

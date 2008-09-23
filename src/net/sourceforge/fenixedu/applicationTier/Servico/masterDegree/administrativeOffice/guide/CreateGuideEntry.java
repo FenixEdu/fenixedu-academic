@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  * 
  */
-public class CreateGuideEntry extends Service {
+public class CreateGuideEntry extends FenixService {
 
     public void run(Integer guideID, GraduationType graduationType, DocumentType documentType, String description, Double price,
 	    Integer quantity) {

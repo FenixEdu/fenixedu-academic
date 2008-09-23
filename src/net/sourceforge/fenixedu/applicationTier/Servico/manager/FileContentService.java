@@ -12,7 +12,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
  * @author naat
  * 
  */
-public abstract class FileContentService extends Service {
+public abstract class FileContentService extends FenixService {
 
     protected boolean isPublic(Group permittedGroup) {
 	if (permittedGroup == null) {

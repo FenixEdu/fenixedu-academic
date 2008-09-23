@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class DeleteCurricularCourseEquivalency extends Service {
+public class DeleteCurricularCourseEquivalency extends FenixService {
 
     public void run(final Integer curricularCourseEquivalencyID) {
 	final CurricularCourseEquivalence curricularCourseEquivalence = rootDomainObject

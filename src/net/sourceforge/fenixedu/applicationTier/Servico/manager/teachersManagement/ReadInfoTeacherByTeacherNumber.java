@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Fernanda Quitério 5/Dez/2003
  * 
  */
-public class ReadInfoTeacherByTeacherNumber extends Service {
+public class ReadInfoTeacherByTeacherNumber extends FenixService {
 
     public InfoTeacher run(Integer teacherNumber) throws FenixServiceException {
 	if (teacherNumber == null) {

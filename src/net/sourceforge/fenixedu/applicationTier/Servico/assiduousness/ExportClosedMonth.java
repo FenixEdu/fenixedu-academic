@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
@@ -38,7 +38,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ExportClosedMonth extends Service {
+public class ExportClosedMonth extends FenixService {
 
     private final static String durationZeroString = "00:00";
 

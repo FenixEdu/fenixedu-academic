@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.en
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.ExternalCurricularCourseEnrolmentBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
-public class CreateExternalEnrolments extends Service {
+public class CreateExternalEnrolments extends FenixService {
 
     public void run(final Registration registration, final List<ExternalCurricularCourseEnrolmentBean> beans)
 	    throws FenixServiceException {

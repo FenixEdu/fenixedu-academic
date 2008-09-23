@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 /**
  * @author Tânia Pousão Create on 13/Nov/2003
  */
-public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
+public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends FenixService {
 
     public List<InfoExecutionDegree> run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException {
 	if (degreeId == null) {

@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
@@ -26,7 +26,7 @@ import org.apache.commons.beanutils.BeanComparator;
  * @author asnr and scpo
  * 
  */
-public class ReadStudentGroupInformation extends Service {
+public class ReadStudentGroupInformation extends FenixService {
 
     public ISiteComponent run(Integer studentGroupCode) throws FenixServiceException {
 

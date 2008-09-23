@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class EditQualification extends Service {
+public class EditQualification extends FenixService {
 
     public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException {
 	Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);

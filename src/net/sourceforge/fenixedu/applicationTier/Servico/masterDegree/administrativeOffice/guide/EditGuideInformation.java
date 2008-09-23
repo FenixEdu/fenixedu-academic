@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeServiceException;
@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 
-public class EditGuideInformation extends Service {
+public class EditGuideInformation extends FenixService {
 
     public InfoGuide run(InfoGuide infoGuide, String[] quantityList, Integer contributorNumber, String othersRemarks,
 	    Integer othersQuantity, Double othersPrice) throws FenixServiceException {

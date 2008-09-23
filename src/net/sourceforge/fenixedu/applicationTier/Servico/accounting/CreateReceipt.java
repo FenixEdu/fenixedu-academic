@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-public class CreateReceipt extends Service {
+public class CreateReceipt extends FenixService {
 
     public CreateReceipt() {
 	super();

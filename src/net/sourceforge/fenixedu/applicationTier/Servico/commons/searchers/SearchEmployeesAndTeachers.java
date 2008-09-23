@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,7 +15,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class SearchEmployeesAndTeachers extends Service implements AutoCompleteSearchService {
+public class SearchEmployeesAndTeachers extends FenixService implements AutoCompleteSearchService {
 
     public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
 	List<Person> result = new ArrayList<Person>();

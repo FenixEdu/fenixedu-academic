@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -23,7 +23,7 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
-public class EditWrittenEvaluation extends Service {
+public class EditWrittenEvaluation extends FenixService {
 
     public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
 	    Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,

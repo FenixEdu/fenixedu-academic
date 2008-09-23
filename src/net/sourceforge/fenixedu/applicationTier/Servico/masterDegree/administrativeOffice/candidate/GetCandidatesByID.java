@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.util.State;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class GetCandidatesByID extends Service {
+public class GetCandidatesByID extends FenixService {
 
     public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
 	MasterDegreeCandidate masterDegreeCandidate = null;

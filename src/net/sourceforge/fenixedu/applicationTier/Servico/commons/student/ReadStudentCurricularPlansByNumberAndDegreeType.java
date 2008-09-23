@@ -10,13 +10,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class ReadStudentCurricularPlansByNumberAndDegreeType extends Service {
+public class ReadStudentCurricularPlansByNumberAndDegreeType extends FenixService {
 
     public List<StudentCurricularPlan> run(Integer studentNumber, DegreeType degreeType) throws NonExistingServiceException {
 

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Luis Cruz
  */
-public class ReadExecutionCourseOIDByCodeInLatestPeriod extends Service {
+public class ReadExecutionCourseOIDByCodeInLatestPeriod extends FenixService {
 
     public Integer run(String executionCourseCode) {
 	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();

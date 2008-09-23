@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
-public class CreateCompetenceCourse extends Service {
+public class CreateCompetenceCourse extends FenixService {
 
     public CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
 	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, Integer unitID) throws FenixServiceException {

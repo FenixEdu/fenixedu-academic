@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class RemoveVigilantsFromGroup extends Service {
+public class RemoveVigilantsFromGroup extends FenixService {
 
     public List<Vigilant> run(Map<VigilantGroup, List<Vigilant>> vigilantsToRemove) {
 

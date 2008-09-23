@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.util.State;
  * @author <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali </a>
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  */
-public class CreateMasterDegreeCandidate extends Service {
+public class CreateMasterDegreeCandidate extends FenixService {
 
     public InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID, String name,
 	    String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {

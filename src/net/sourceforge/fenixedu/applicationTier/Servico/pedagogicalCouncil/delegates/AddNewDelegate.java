@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCounci
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 
-public class AddNewDelegate extends Service {
+public class AddNewDelegate extends FenixService {
 
     /* Year Delegates */
     public void run(Student student, YearDelegateElection election) throws FenixServiceException {

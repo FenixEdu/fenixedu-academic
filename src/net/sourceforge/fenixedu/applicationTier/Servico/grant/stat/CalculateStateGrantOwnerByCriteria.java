@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.stat;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatResultGrantOwner;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  * @author Pica
  * @author Barbosa
  */
-public class CalculateStateGrantOwnerByCriteria extends Service {
+public class CalculateStateGrantOwnerByCriteria extends FenixService {
 
     public Object[] run(InfoStatGrantOwner infoStatGrantOwner) throws FenixServiceException {
 

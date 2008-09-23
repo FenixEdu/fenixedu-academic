@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 
-public class DeleteGroupingMembersByExecutionCourseID extends Service {
+public class DeleteGroupingMembersByExecutionCourseID extends FenixService {
 
     public boolean run(Integer executionCourseCode, Integer groupingCode) throws FenixServiceException {
 	Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);

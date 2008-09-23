@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.domain.Job;
 
-public class EditProfessionalInformation extends Service {
+public class EditProfessionalInformation extends FenixService {
 
     public void run(final AlumniJobBean jobBean) {
 

@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 
-public class SetTSDProfessorship extends Service {
+public class SetTSDProfessorship extends FenixService {
     public TSDProfessorship run(Integer tsdCourseId, Integer tsdTeacherId, Map<String, Object> tsdCourseParameters) {
 
 	TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(tsdCourseId);

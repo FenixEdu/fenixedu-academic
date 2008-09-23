@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -18,7 +18,7 @@ import org.apache.commons.collections.Predicate;
  * @author Ana e Ricardo
  * 
  */
-public class ReadExecutionCourseWithAssociatedCurricularCourses extends Service {
+public class ReadExecutionCourseWithAssociatedCurricularCourses extends FenixService {
 
     public InfoExecutionCourse run(Integer executionCourseID) throws FenixServiceException {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);

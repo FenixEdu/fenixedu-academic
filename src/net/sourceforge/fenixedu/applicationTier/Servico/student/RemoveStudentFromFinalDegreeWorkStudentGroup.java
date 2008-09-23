@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -16,7 +16,7 @@ import org.apache.commons.collections.Predicate;
  * @author Luis Cruz
  * 
  */
-public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
+public class RemoveStudentFromFinalDegreeWorkStudentGroup extends FenixService {
 
     public RemoveStudentFromFinalDegreeWorkStudentGroup() {
 	super();

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *         30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
  */
-public class ReadAllClasses extends Service {
+public class ReadAllClasses extends FenixService {
 
     public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
 	List<InfoClass> infoClasses = null;

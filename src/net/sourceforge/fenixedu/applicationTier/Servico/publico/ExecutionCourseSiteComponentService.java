@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.ExecutionCourseSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingAssociatedCurricularCoursesServiceException;
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  * 
  */
-public class ExecutionCourseSiteComponentService extends Service {
+public class ExecutionCourseSiteComponentService extends FenixService {
 
     public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
 	    Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException,

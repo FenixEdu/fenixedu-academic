@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean;
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.joda.time.YearMonthDay;
 
-public class CreateMarkSheetByTeacher extends Service {
+public class CreateMarkSheetByTeacher extends FenixService {
 
     public List<EnrolmentEvaluation> run(MarkSheetTeacherGradeSubmissionBean submissionBean)
 	    throws InvalidArgumentsServiceException {

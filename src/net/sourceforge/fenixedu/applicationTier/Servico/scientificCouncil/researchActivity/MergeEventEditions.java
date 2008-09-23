@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventEditionPageContainerBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation;
 
-public class MergeEventEditions extends Service {
+public class MergeEventEditions extends FenixService {
 
     public void run(MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean) {
 	EventEdition eventEdition = new EventEdition(mergeEventEditionPageContainerBean.getEvent());

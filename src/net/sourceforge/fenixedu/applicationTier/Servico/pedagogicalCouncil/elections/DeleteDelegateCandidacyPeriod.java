@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class DeleteDelegateCandidacyPeriod extends Service {
+public class DeleteDelegateCandidacyPeriod extends FenixService {
 
     public void run(ElectionPeriodBean bean) throws FenixServiceException {
 	try {

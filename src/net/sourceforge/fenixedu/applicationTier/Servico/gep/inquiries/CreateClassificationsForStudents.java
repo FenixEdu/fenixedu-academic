@@ -17,7 +17,7 @@ import java.util.ListIterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -31,7 +31,7 @@ import org.apache.commons.collections.Transformer;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateClassificationsForStudents extends Service {
+public class CreateClassificationsForStudents extends FenixService {
 
     private static Transformer getEntryGradeTransformer = new Transformer() {
 	public Object transform(Object input) {

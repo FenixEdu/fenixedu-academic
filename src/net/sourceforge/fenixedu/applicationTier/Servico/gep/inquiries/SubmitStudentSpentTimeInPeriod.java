@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class SubmitStudentSpentTimeInPeriod extends Service {
+public class SubmitStudentSpentTimeInPeriod extends FenixService {
 
     public void run(Student student, List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
 	    ExecutionSemester executionSemester) {

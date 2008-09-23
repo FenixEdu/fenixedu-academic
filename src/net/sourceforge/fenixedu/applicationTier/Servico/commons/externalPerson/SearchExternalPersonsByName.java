@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class SearchExternalPersonsByName extends Service {
+public class SearchExternalPersonsByName extends FenixService {
 
     public List run(String name) throws FenixServiceException {
 	List infoExternalPersons = new ArrayList();

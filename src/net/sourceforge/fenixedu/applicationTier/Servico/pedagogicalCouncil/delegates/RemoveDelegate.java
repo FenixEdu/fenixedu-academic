@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class RemoveDelegate extends Service {
+public class RemoveDelegate extends FenixService {
 
     public void run(Student student) throws FenixServiceException {
 	this.run(student, FunctionType.DELEGATE_OF_YEAR);

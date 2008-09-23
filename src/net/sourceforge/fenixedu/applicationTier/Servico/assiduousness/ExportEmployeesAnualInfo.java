@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeAnualInfo;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeMonthInfo;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
@@ -29,7 +29,7 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
-public class ExportEmployeesAnualInfo extends Service {
+public class ExportEmployeesAnualInfo extends FenixService {
 
     public List<EmployeeAnualInfo> run(YearMonth yearMonth, AssiduousnessStatus assiduousnessStatus) {
 

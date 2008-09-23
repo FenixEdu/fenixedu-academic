@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
  * 
  * @author jpmsit, amak
  */
-public class AddTeacherToTeacherServiceDistribution extends Service {
+public class AddTeacherToTeacherServiceDistribution extends FenixService {
 
     public void run(Integer tsdId, final Integer teacherId) throws FenixServiceException {
 

@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ReadPublicExecutionPeriods extends Service {
+public class ReadPublicExecutionPeriods extends FenixService {
 
     public List<InfoExecutionPeriod> run() throws FenixServiceException {
 	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();

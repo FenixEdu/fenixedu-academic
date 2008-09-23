@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Tânia Pousão
  * 
  */
-public class InsertSimplePrecedence extends Service {
+public class InsertSimplePrecedence extends FenixService {
 
     public void run(String className, Integer curricularCourseToAddPrecedenceID, Integer precedentCurricularCourseID,
 	    Integer number) throws FenixServiceException {

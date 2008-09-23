@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
 /**
  * @author Susana Fernandes
  */
-public class ReadUserCostCenters extends Service {
+public class ReadUserCostCenters extends FenixService {
 
     public List run(Person person, String costCenter, String userNumber) throws ExcepcaoPersistencia {
 	List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();

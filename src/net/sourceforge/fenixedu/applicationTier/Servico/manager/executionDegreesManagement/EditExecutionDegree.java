@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionDegree
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
-public class EditExecutionDegree extends Service {
+public class EditExecutionDegree extends FenixService {
 
     public void run(Integer executionDegreeID, Integer executionYearID, Integer campusID, Boolean temporaryExamMap,
 	    Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,

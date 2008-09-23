@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author tfc130
  */
-public class ReadCurricularCourseListOfExecutionCourse extends Service {
+public class ReadCurricularCourseListOfExecutionCourse extends FenixService {
 
     public Object run(InfoExecutionCourse infoExecCourse) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecCourse

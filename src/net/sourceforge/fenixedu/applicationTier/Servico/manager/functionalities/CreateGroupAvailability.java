@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
 
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailabili
  * 
  * @author cfgi
  */
-public class CreateGroupAvailability extends Service {
+public class CreateGroupAvailability extends FenixService {
 
     public ExpressionGroupAvailability run(Content functionality, String expression) {
 	if (!isEmpty(expression)) {

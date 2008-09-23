@@ -13,7 +13,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
-public class ChangeApplicationInfo extends Service {
+public class ChangeApplicationInfo extends FenixService {
 
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate, InfoPersonEditor infoPersonEditor,
 	    IUserView userView, Boolean isNewPerson) throws FenixServiceException {

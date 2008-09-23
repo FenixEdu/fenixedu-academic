@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Pica
  * @author Barbosa
  */
-public class ReadGrantSubsidy extends Service {
+public class ReadGrantSubsidy extends FenixService {
 
     protected InfoGrantSubsidy newInfoFromDomain(DomainObject domainObject) {
 	return InfoGrantSubsidyWithContract.newInfoFromDomain((GrantSubsidy) domainObject);

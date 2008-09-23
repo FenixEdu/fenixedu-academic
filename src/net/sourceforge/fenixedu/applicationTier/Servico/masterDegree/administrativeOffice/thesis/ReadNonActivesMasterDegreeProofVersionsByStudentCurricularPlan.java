@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -18,7 +18,7 @@ import org.apache.commons.collections.Transformer;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan extends Service {
+public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan extends FenixService {
 
     public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException {
 

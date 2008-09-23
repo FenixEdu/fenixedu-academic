@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.ExecutionCourseSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Factory.GroupSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class GroupSiteComponentService extends Service {
+public class GroupSiteComponentService extends FenixService {
 
     public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
 	    Integer groupPropertiesCode, Integer code, Integer shiftCode, Integer value) throws FenixServiceException {

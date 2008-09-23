@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Luis Cruz
  * 
  */
-public class ReadFinalDegreeWorkProposal extends Service {
+public class ReadFinalDegreeWorkProposal extends FenixService {
 
     public InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
 	return InfoProposal.newInfoFromDomain(rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID));

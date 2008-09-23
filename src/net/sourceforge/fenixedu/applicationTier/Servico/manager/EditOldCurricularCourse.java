@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 
-public class EditOldCurricularCourse extends Service {
+public class EditOldCurricularCourse extends FenixService {
 
     public void run(final Integer curricularCourseId, final String name, final String nameEn, final String code,
 	    final String acronym, final Integer minimumValueForAcumulatedEnrollments,

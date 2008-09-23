@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.joda.time.DateTime;
 
-public class EditUnavailablePeriod extends Service {
+public class EditUnavailablePeriod extends FenixService {
 
     public void run(Integer idInternal, DateTime begin, DateTime end, String justification) {
 

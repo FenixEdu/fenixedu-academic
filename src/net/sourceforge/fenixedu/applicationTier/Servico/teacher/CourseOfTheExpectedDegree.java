@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 /**
  * @author Tânia Pousão Create on 3/Dez/2003
  */
-public class CourseOfTheExpectedDegree extends Service {
+public class CourseOfTheExpectedDegree extends FenixService {
 
     public Boolean run(Integer curricularCourseCode, String degreeCode) throws FenixServiceException {
 	return Boolean.valueOf(CurricularCourseDegree(curricularCourseCode, degreeCode)

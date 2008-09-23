@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoType;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.ContentType;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class StorePersonalPhoto extends Service {
+public class StorePersonalPhoto extends FenixService {
     public void run(byte[] contents, byte[] compressed, ContentType contentType, String personUsername)
 	    throws ExcepcaoInexistente {
 	Person person = Person.readPersonByUsername(personUsername);

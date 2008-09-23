@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailAddress;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailSender;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
  *         <br/> Created on 8:11:44, 17/Fev/2006
  * @version $Id$
  */
-public class SendEMail extends Service {
+public class SendEMail extends FenixService {
 
     static public class SendEMailParameters {
 	public EMailAddress from;

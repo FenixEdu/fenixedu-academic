@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class SaveTeachersBody extends Service {
+public class SaveTeachersBody extends FenixService {
 
     public Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
 	    final Integer executionCourseId) throws FenixServiceException {

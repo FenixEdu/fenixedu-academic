@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author Fernanda Quitério 17/Nov/2003
  */
-public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName extends Service {
+public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName extends FenixService {
 
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode, String stringExecutionYear)
 	    throws FenixServiceException {

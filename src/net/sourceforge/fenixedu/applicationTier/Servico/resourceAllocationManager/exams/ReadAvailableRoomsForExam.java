@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -18,7 +18,7 @@ import org.joda.time.YearMonthDay;
 /**
  * @author Ana e Ricardo
  */
-public class ReadAvailableRoomsForExam extends Service {
+public class ReadAvailableRoomsForExam extends FenixService {
 
     public List<InfoRoom> run(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTimeHMS,
 	    HourMinuteSecond endTimeHMS, DiaSemana dayOfWeek, Integer normalCapacity, FrequencyType frequency, Boolean withLabs) {

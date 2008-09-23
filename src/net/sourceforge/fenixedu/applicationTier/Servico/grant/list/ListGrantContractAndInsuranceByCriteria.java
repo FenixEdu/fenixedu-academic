@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder;
@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
-public class ListGrantContractAndInsuranceByCriteria extends Service {
+public class ListGrantContractAndInsuranceByCriteria extends FenixService {
     private static final double dayValueOfInsurance = 0.17;
 
     /**

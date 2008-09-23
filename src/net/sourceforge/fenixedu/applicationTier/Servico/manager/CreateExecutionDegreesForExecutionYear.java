@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
-public class CreateExecutionDegreesForExecutionYear extends Service {
+public class CreateExecutionDegreesForExecutionYear extends FenixService {
 
     public List<DegreeCurricularPlan> run(final Integer[] degreeCurricularPlansIDs,
 	    final Integer[] bolonhaDegreeCurricularPlansIDs, final Integer executionYearID, final String campusName,

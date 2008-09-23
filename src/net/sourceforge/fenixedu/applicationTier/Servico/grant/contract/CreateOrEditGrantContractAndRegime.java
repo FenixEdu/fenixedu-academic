@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantTypeNotFoundException;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.lang.StringUtils;
 
-public class CreateOrEditGrantContractAndRegime extends Service {
+public class CreateOrEditGrantContractAndRegime extends FenixService {
 
     public void run(InfoGrantContract infoGrantContract, InfoGrantContractRegime infoGrantContractRegime) throws Exception {
 	GrantContract grantContract = createOrEditGrantContract(infoGrantContract);

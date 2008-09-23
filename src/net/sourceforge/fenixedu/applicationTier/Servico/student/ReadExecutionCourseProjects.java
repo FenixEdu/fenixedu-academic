@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
  * @author asnr and scpo
  * 
  */
-public class ReadExecutionCourseProjects extends Service {
+public class ReadExecutionCourseProjects extends FenixService {
 
     public ISiteComponent run(Integer executionCourseID, String userName) throws FenixServiceException {
 

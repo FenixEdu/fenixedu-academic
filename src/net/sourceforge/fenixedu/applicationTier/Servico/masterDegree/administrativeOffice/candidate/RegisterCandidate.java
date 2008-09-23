@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
-public class RegisterCandidate extends Service {
+public class RegisterCandidate extends FenixService {
 
     public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
 	    throws FenixServiceException {

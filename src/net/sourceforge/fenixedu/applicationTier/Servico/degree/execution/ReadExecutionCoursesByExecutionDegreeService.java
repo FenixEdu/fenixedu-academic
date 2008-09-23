@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.execution;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class ReadExecutionCoursesByExecutionDegreeService extends Service {
+public class ReadExecutionCoursesByExecutionDegreeService extends FenixService {
 
     public class NonExistingExecutionDegree extends FenixServiceException {
 	public NonExistingExecutionDegree() {

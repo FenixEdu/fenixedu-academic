@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
-public class EditDegreeCurricularPlan extends Service {
+public class EditDegreeCurricularPlan extends FenixService {
 
     public void run(Integer dcpId, String name, CurricularStage curricularStage,
 	    DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, Integer executionYearID)

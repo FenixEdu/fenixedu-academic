@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.DateTime;
 
-public class EnrolInAffinityCycle extends Service {
+public class EnrolInAffinityCycle extends FenixService {
 
     /**
      * This method is used when student is enroling second cycle without

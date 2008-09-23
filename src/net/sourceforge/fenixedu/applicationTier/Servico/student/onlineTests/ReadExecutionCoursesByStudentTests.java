@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Susana Fernandes
  */
-public class ReadExecutionCoursesByStudentTests extends Service {
+public class ReadExecutionCoursesByStudentTests extends FenixService {
 
     public Object run(final Registration someRegistration) {
 	final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();

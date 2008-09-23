@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCours
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 
-public class ReadAllCurricularCoursesByCompetenceCourse extends Service {
+public class ReadAllCurricularCoursesByCompetenceCourse extends FenixService {
 
     public List<CurricularCourse> run(final Integer competenceID) throws NonExistingServiceException {
 	final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceID);

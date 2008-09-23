@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
-public class EditUnitFile extends Service {
+public class EditUnitFile extends FenixService {
 
     public void run(UnitFile file, String name, String description, String tags, IGroup group) {
 	file.setDisplayName(name);

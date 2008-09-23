@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationBean;
 import net.sourceforge.fenixedu.domain.resource.VehicleAllocation;
 
-public class CreateVehicleAllocation extends Service {
+public class CreateVehicleAllocation extends FenixService {
 
     public void run(VehicleAllocationBean bean) {
 	if (bean != null) {

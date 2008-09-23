@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -71,7 +71,7 @@ import org.apache.commons.beanutils.BeanComparator;
  * 
  *         Created at 2:40:27 PM, Mar 11, 2005
  */
-public class ReadStudentExternalInformation extends Service {
+public class ReadStudentExternalInformation extends FenixService {
 
     public Collection run(String username) throws FenixServiceException {
 	Person person = Person.readPersonByUsername(username);

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
@@ -31,7 +31,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ReadAssiduousnessWorkSheet extends Service {
+public class ReadAssiduousnessWorkSheet extends FenixService {
 
     public EmployeeWorkSheet run(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
 	if (assiduousness == null) {

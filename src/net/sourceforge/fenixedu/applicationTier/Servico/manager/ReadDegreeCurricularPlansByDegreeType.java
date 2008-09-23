@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Luis Cruz
  * 
  */
-public class ReadDegreeCurricularPlansByDegreeType extends Service {
+public class ReadDegreeCurricularPlansByDegreeType extends FenixService {
 
     public List run(final DegreeType tipoCurso) {
 	final List degreeCurricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);

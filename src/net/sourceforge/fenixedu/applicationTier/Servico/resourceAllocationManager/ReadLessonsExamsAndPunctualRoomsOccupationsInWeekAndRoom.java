@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
@@ -38,7 +38,7 @@ import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
-public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Service {
+public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends FenixService {
 
     public List<InfoObject> run(AllocatableSpace room, YearMonthDay day) throws FenixServiceException {
 

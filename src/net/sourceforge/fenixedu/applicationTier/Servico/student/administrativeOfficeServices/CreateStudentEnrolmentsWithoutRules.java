@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeO
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentRuleServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
-public class CreateStudentEnrolmentsWithoutRules extends Service {
+public class CreateStudentEnrolmentsWithoutRules extends FenixService {
 
     public void run(StudentEnrolmentBean enrolmentBean) throws FenixServiceException {
 	Set<CurriculumModule> initialCurriculumModules = enrolmentBean.getInitialCurriculumModules();

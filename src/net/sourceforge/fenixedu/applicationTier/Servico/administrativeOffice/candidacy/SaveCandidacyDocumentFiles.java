@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -26,7 +26,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class SaveCandidacyDocumentFiles extends Service {
+public class SaveCandidacyDocumentFiles extends FenixService {
 
     public void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
 

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class WriteMarks extends Service {
+public class WriteMarks extends FenixService {
 
     public void run(final Integer executioCourseOID, final Integer evaluationOID, final Map<Integer, String> marks)
 	    throws FenixServiceException {

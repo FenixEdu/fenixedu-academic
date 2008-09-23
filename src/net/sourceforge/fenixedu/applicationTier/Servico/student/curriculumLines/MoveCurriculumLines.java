@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.curriculumLines;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean.EnrolmentLocationBean;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class MoveCurriculumLines extends Service {
+public class MoveCurriculumLines extends FenixService {
 
     public void run(final MoveCurriculumLinesBean moveCurriculumLinesBean) {
 	final StudentCurricularPlan studentCurricularPlan = moveCurriculumLinesBean.getStudentCurricularPlan();

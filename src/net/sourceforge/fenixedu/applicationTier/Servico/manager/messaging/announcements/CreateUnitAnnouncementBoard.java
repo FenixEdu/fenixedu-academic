@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
@@ -30,7 +30,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  *         Created on Jun 27, 2006,12:07:53 PM
  * 
  */
-public class CreateUnitAnnouncementBoard extends Service {
+public class CreateUnitAnnouncementBoard extends FenixService {
 
     public static class UnitAnnouncementBoardParameters {
 	public Integer unitId;

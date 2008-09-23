@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.pstm.Transaction;
@@ -13,7 +13,7 @@ import pt.ist.fenixframework.pstm.Transaction;
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
-public class ReadNumberCachedItems extends Service {
+public class ReadNumberCachedItems extends FenixService {
 
     public Integer run() throws FenixServiceException {
 	Integer numberCachedObjects = null;

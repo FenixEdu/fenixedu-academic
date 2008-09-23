@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
-public class CreateTSDVirtualGroup extends Service {
+public class CreateTSDVirtualGroup extends FenixService {
     public TSDCourse run(String courseName, Integer tsdId, Integer periodId, String[] shiftTypesArray,
 	    String[] degreeCurricularPlansIdArray) {
 

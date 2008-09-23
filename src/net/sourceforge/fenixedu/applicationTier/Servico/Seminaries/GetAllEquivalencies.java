@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalencyWithCurricularCourse;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class GetAllEquivalencies extends Service {
+public class GetAllEquivalencies extends FenixService {
 
     public List<InfoEquivalency> run() {
 	List<InfoEquivalency> result = new LinkedList<InfoEquivalency>();

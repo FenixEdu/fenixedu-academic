@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhaseStatus;
 
-public class DeleteTSDProcessPhase extends Service {
+public class DeleteTSDProcessPhase extends FenixService {
     public void run(Integer tsdProcessPhaseId) {
 	TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
 

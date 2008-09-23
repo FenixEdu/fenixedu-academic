@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Pica
  * 
  */
-public class ReadAllGrantSubsidiesByGrantContract extends Service {
+public class ReadAllGrantSubsidiesByGrantContract extends FenixService {
 
     public List run(Integer idContract) throws FenixServiceException {
 	GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);

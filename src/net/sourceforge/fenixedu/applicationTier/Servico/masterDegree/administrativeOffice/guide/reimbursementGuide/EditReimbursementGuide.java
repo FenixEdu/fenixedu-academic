@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
@@ -46,7 +46,7 @@ import net.sourceforge.fenixedu.util.State;
  *         state is payed it cannot be changed d) if the current state is
  *         annuled it cannot be changed
  */
-public class EditReimbursementGuide extends Service {
+public class EditReimbursementGuide extends FenixService {
 
     public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
 	    throws FenixServiceException {

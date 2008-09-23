@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentTestQuestionImage extends Service {
+public class ReadStudentTestQuestionImage extends FenixService {
     public String run(Integer registrationId, Integer distributedTestId, Integer questionId, Integer imageId, String feedbackId,
 	    Integer itemIndex, String path) throws FenixServiceException {
 	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);

@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
-public class AddResultToTeacherInformationSheet extends Service {
+public class AddResultToTeacherInformationSheet extends FenixService {
 
     public void run(Teacher teacher, Integer resultId, String publicationArea) throws Exception {
 
