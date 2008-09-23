@@ -343,7 +343,7 @@
 <schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="APPLICATION_RESOURCES">
 	<slot name="number" />
 	<slot name="identificationNumber" />
-	<slot name="documentType" />
+	<slot name="documentType" key="label.idDocumentType" />
 	<slot name="name" />
 	<slot name="username" />
 </schema>
