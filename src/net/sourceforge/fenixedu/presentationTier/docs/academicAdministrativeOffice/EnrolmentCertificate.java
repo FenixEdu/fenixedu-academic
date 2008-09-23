@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -35,8 +34,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	final StringBuilder result = new StringBuilder();
 
 	if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
-	    final ExecutionYear executionYear = getDocumentRequest().getExecutionYear();
-	    final Integer curricularYear = Integer.valueOf(getRegistration().getCurricularYear(executionYear));
+	    final Integer curricularYear = Integer.valueOf(getRegistration().getCurricularYear(getExecutionYear()));
 
 	    result.append(getEnumerationBundle().getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");

@@ -23,8 +23,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
 	addParameter("curricularYear", getCurricularYear());
 
-	final List<Enrolment> enrolments = (List<Enrolment>) getRegistration().getEnrolments(
-		getDocumentRequest().getExecutionYear());
+	final List<Enrolment> enrolments = (List<Enrolment>) getRegistration().getEnrolments(getExecutionYear());
 	addParameter("numberEnrolments", Integer.valueOf(enrolments.size()));
 	addParameter("approvementInfo", getApprovementInfo());
 	addParameter("documentPurpose", getDocumentPurpose());
@@ -41,8 +40,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	final StringBuilder result = new StringBuilder();
 
 	if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
-	    final Integer curricularYear = Integer.valueOf(getRegistration().getCurricularYear(
-		    getDocumentRequest().getExecutionYear()));
+	    final Integer curricularYear = Integer.valueOf(getRegistration().getCurricularYear(getExecutionYear()));
 
 	    result.append(getEnumerationBundle().getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");

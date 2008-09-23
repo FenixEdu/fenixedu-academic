@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -162,7 +163,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	setPersonFields();
 
 	if (getDocumentRequest().hasExecutionYear()) {
-	    String situation = getDocumentRequest().getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was";
+	    String situation = getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was";
 	    addParameter("situation", getResourceBundle().getString(situation));
 	}
 
@@ -241,8 +242,16 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	final Registration registration = getRegistration();
 	final DegreeType degreeType = registration.getDegreeType();
 	final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
-		.getCycleType(getDocumentRequest().getExecutionYear());
+		.getCycleType(getExecutionYear());
 	return registration.getDegreeDescription(cycleType);
+    }
+
+    protected ExecutionYear getExecutionYear() {
+	if (getDocumentRequest().hasExecutionYear()) {
+	    return getDocumentRequest().getExecutionYear();
+	}
+
+	return ExecutionYear.readByDateTime(getDocumentRequest().getRequestDate());
     }
 
     final protected String getCreditsDescription() {
