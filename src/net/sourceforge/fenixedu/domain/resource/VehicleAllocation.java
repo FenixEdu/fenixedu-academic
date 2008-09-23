@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;

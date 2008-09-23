@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import dml.runtime.RelationAdapter;
 
 public class Context extends Context_Base implements Comparable<Context> {

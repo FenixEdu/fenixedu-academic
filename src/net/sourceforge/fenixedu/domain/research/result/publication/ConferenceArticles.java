@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Month;
 import bibtex.dom.BibtexEntry;
 

@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.joda.time.DateMidnight;

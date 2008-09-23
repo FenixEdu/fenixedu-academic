@@ -30,7 +30,7 @@
 		<injectCode verbose="false" 
 				targetClassesDir="${build.home.webinf.classes}" 
 				codeProducerClassName="net.sourceforge.fenixedu.injectionCode.FenixAccessControlCallsGenerator"
-				annotation="net.sourceforge.fenixedu.injectionCode.Checked">
+				annotation="pt.ist.fenixWebFramework.security.accessControl.Checked">
 			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
@@ -64,7 +64,7 @@
 		<injectCode verbose="false" 
 				targetClassesDir="${build.home.webinf.classes}" 
 				codeProducerClassName="net.sourceforge.fenixedu.injectionCode.FenixVoidAccessControlCallsGenerator"
-				annotation="net.sourceforge.fenixedu.injectionCode.Checked">
+				annotation="pt.ist.fenixWebFramework.security.accessControl.Checked">
 			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>

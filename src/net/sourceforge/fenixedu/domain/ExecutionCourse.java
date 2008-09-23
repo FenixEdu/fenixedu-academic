@@ -46,7 +46,7 @@ import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;

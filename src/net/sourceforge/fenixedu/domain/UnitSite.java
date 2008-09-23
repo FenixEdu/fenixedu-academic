@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import pt.utl.ist.fenix.tools.util.i18n.Language;

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.joda.time.YearMonthDay;
 

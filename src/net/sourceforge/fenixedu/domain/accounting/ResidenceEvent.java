@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 

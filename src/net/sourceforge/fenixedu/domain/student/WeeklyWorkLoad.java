@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;

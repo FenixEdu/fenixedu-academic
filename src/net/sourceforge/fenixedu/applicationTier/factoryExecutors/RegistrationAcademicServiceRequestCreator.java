@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionReques
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.joda.time.DateTime;
 

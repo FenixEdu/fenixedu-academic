@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;

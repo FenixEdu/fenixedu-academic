@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.Equ
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.EquivalencyPlanEntryWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanEquivalencePlan_Base {
 

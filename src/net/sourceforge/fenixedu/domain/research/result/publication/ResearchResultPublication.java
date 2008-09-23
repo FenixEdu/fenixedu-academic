@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFil
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;

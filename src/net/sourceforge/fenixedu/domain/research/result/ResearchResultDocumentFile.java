@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base {
