@@ -35,31 +35,30 @@ abstract public class StudentCurricularPlanEnrolment {
     protected Person responsiblePerson;
 
     protected StudentCurricularPlanEnrolment(final StudentCurricularPlan studentCurricularPlan,
-	    final EnrolmentContext enrolmentContext, final Person responsiblePerson) {
+	    final EnrolmentContext enrolmentContext) {
 
+	checkParameters(studentCurricularPlan, enrolmentContext);
+	
 	this.studentCurricularPlan = studentCurricularPlan;
 	this.enrolmentContext = enrolmentContext;
 	this.executionSemester = enrolmentContext.getExecutionPeriod();
 	this.curricularRuleLevel = enrolmentContext.getCurricularRuleLevel();
-	this.responsiblePerson = responsiblePerson;
+	this.responsiblePerson = enrolmentContext.getResponsiblePerson();
     }
 
-    static public StudentCurricularPlanEnrolment createManager(final StudentCurricularPlan studentCurricularPlan,
-	    final EnrolmentContext enrolmentContext, final Person responsiblePerson) {
-
-	if (enrolmentContext.getCurricularRuleLevel().managesEnrolments()) {
-	    return new StudentCurricularPlanEnrolmentManager(studentCurricularPlan, enrolmentContext, responsiblePerson);
-
-	} else if (enrolmentContext.getCurricularRuleLevel() == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
-	    return new StudentCurricularPlanImprovementOfApprovedEnrolmentManager(studentCurricularPlan, enrolmentContext,
-		    responsiblePerson);
-
-	} else if (enrolmentContext.getCurricularRuleLevel() == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
-	    return new StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(studentCurricularPlan, enrolmentContext,
-		    responsiblePerson);
+    private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final EnrolmentContext enrolmentContext) {
+	if (studentCurricularPlan == null) {
+	    throw new DomainException("error.StudentCurricularPlanEnrolment.invalid.studentCurricularPlan");
 	}
-
-	throw new DomainException("StudentCurricularPlanEnrolment");
+	
+	if (enrolmentContext == null) {
+	    throw new DomainException("error.StudentCurricularPlanEnrolment.invalid.enrolmentContext");
+	}
+	
+	if (!enrolmentContext.hasResponsiblePerson()) {
+	    throw new DomainException("error.StudentCurricularPlanEnrolment.enrolmentContext.invalid.person");
+	}
+	
     }
 
     final public RuleResult manage() {
@@ -167,4 +166,28 @@ abstract public class StudentCurricularPlanEnrolment {
     abstract protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate();
 
     abstract protected void performEnrolments(Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap);
+    
+    // static information
+
+    static public StudentCurricularPlanEnrolment createManager(final StudentCurricularPlan studentCurricularPlan,
+	    final EnrolmentContext enrolmentContext) {
+
+	if (enrolmentContext.getCurricularRuleLevel().managesEnrolments()) {
+	    return new StudentCurricularPlanEnrolmentManager(studentCurricularPlan, enrolmentContext);
+
+	} else if (enrolmentContext.isImprovement()) {
+	    return new StudentCurricularPlanImprovementOfApprovedEnrolmentManager(studentCurricularPlan, enrolmentContext);
+
+	} else if (enrolmentContext.isSpecialSeason()) {
+	    return new StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(studentCurricularPlan, enrolmentContext);
+
+	} else if (enrolmentContext.isExtra()) {
+	    return new StudentCurricularPlanExtraEnrolmentManager(studentCurricularPlan, enrolmentContext);
+
+	} else if (enrolmentContext.isPropaeudeutics()) {
+	    return new StudentCurricularPlanPropaeudeuticsEnrolmentManager(studentCurricularPlan, enrolmentContext);
+	}
+
+	throw new DomainException("StudentCurricularPlanEnrolment");
+    }
 }

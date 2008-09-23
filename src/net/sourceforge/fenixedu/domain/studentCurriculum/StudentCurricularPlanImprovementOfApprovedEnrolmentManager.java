@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
@@ -24,9 +23,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanImprovementOfApprovedEnrolmentManager(StudentCurricularPlan plan,
-	    EnrolmentContext enrolmentContext, Person responsiblePerson) {
-	super(plan, enrolmentContext, responsiblePerson);
+    public StudentCurricularPlanImprovementOfApprovedEnrolmentManager(final StudentCurricularPlan plan,
+	    final EnrolmentContext enrolmentContext) {
+	super(plan, enrolmentContext);
     }
 
     @Override

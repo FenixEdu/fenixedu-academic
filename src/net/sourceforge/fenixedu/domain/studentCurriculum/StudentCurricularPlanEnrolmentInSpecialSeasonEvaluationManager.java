@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -24,8 +23,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager extends StudentCurricularPlanEnrolment {
 
     public StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(StudentCurricularPlan plan,
-	    EnrolmentContext enrolmentContext, Person responsiblePerson) {
-	super(plan, enrolmentContext, responsiblePerson);
+	    EnrolmentContext enrolmentContext) {
+	super(plan, enrolmentContext);
     }
 
     @Override

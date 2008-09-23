@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -31,9 +30,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanEnrolmentManager(StudentCurricularPlan plan, EnrolmentContext enrolmentContext,
-	    Person responsiblePerson) {
-	super(plan, enrolmentContext, responsiblePerson);
+    public StudentCurricularPlanEnrolmentManager(final StudentCurricularPlan plan, final EnrolmentContext enrolmentContext) {
+	super(plan, enrolmentContext);
     }
 
     @Override

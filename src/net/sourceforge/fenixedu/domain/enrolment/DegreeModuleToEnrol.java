@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -16,9 +17,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluate {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -6337658191828772384L;
 
     private DomainReference<CurriculumGroup> curriculumGroup;
@@ -27,7 +25,10 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     private DomainReference<ExecutionSemester> executionSemester;
 
-    public DegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionSemester executionSemester) {
+    protected DegreeModuleToEnrol() {
+    }
+
+    public DegreeModuleToEnrol(final CurriculumGroup curriculumGroup, final Context context, final ExecutionSemester executionSemester) {
 	this.curriculumGroup = new DomainReference<CurriculumGroup>(curriculumGroup);
 	this.context = new DomainReference<Context>(context);
 	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
@@ -73,7 +74,12 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     }
 
     @Override
-    public boolean isEnroled() {
+    final public boolean isEnroling() {
+	return true;
+    }
+
+    @Override
+    final public boolean isEnroled() {
 	return false;
     }
 
@@ -148,11 +154,7 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     }
 
     public Double getEctsCredits() {
-	return getEctsCredits(null);
-    }
-
-    public boolean isEnroling() {
-	return true;
+	return getEctsCredits(getExecutionPeriod());
     }
 
     public boolean isFor(DegreeModule degreeModule) {
@@ -166,4 +168,7 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 	return false;
     }
 
+    protected StudentCurricularPlan getStudentCurricularPlan() {
+	return getCurriculumGroup().getStudentCurricularPlan();
+    }
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -13,6 +14,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 
 public class EnrolmentContext {
 
@@ -33,7 +35,6 @@ public class EnrolmentContext {
 	    final List<CurriculumModule> curriculumModulesToRemove, final CurricularRuleLevel curricularRuleLevel) {
 
 	this.responsiblePerson = responsiblePerson;
-
 	this.studentCurricularPlan = studentCurricularPlan;
 
 	this.degreeModulesToEvaluate = new HashSet<IDegreeModuleToEvaluate>();
@@ -111,18 +112,49 @@ public class EnrolmentContext {
 	this.responsiblePerson = responsiblePerson;
     }
 
+    public boolean hasResponsiblePerson() {
+	return getResponsiblePerson() != null;
+    }
+
+    public boolean isImprovement() {
+	return getCurricularRuleLevel() == CurricularRuleLevel.IMPROVEMENT_ENROLMENT;
+    }
+
+    public boolean isSpecialSeason() {
+	return getCurricularRuleLevel() == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT;
+    }
+
+    public boolean isExtra() {
+	return getCurricularRuleLevel() == CurricularRuleLevel.EXTRA_ENROLMENT;
+    }
+
+    public boolean isPropaeudeutics() {
+	return getCurricularRuleLevel() == CurricularRuleLevel.PROPAEUDEUTICS_ENROLMENT;
+    }
+
     @SuppressWarnings("unchecked")
-    public static EnrolmentContext createForVerifyWithRules(final Person person,
+    static public EnrolmentContext createForVerifyWithRules(final Person person,
 	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 	return createForVerifyWithRules(person, studentCurricularPlan, executionSemester, Collections.EMPTY_SET);
     }
 
     @SuppressWarnings("unchecked")
-    public static EnrolmentContext createForVerifyWithRules(final Person person,
+    static public EnrolmentContext createForVerifyWithRules(final Person person,
 	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
 	    final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate) {
 	return new EnrolmentContext(person, studentCurricularPlan, executionSemester, degreeModulesToEvaluate,
 		Collections.EMPTY_LIST, CurricularRuleLevel.ENROLMENT_WITH_RULES);
+    }
+
+    static public EnrolmentContext createForNoCourseGroupCurriculumGroup(final Person person,
+	    final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
+	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
+
+	final IDegreeModuleToEvaluate moduleToEvaluate = new ExternalCurricularCourseToEnrol(studentCurricularPlan
+		.getNoCourseGroupCurriculumGroup(groupType), curricularCourse, executionSemester);
+
+	return new EnrolmentContext(person, studentCurricularPlan, executionSemester, Collections.singleton(moduleToEvaluate),
+		Collections.EMPTY_LIST, groupType.getCurricularRuleLevel());
     }
 
 }

@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.ExternalCurricularCourseToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -1923,8 +1924,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	final EnrolmentContext enrolmentContext = new EnrolmentContext(responsiblePerson, this, executionSemester,
 		degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
+
 	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this,
-		enrolmentContext, responsiblePerson).manage();
+		enrolmentContext).manage();
     }
 
     final public RuleResult enrol(final Person responsiblePerson, final ExecutionSemester executionSemester,
@@ -1970,17 +1972,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		.getUserView().getUtilizador(), optionalCurricularCourse);
     }
 
-    final public void createNoCourseGroupCurriculumGroupEnrolment(final CurricularCourse curricularCourse,
-	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
-	if (getRoot().isApproved(curricularCourse, executionSemester)) {
-	    throw new DomainException("error.already.aproved", new String[] { curricularCourse.getName() });
-	}
-	if (getRoot().isEnroledInExecutionPeriod(curricularCourse, executionSemester)) {
-	    throw new DomainException("error.already.enroled.in.executioPerdiod", new String[] { curricularCourse.getName(),
-		    executionSemester.getQualifiedName() });
-	}
+    final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final CurricularCourse curricularCourse,
+	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType, final Person person) {
 
-	getRoot().createNoCourseGroupCurriculumGroupEnrolment(this, curricularCourse, executionSemester, groupType);
+	final EnrolmentContext enrolmentContext = EnrolmentContext.createForNoCourseGroupCurriculumGroup(person, this,
+		curricularCourse, executionSemester, groupType);
+
+	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this,
+		enrolmentContext).manage();
     }
 
     final public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(final NoCourseGroupCurriculumGroupType groupType) {
