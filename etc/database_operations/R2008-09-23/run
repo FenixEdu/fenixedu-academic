@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Thesis Site" thesisSite.sql
+execute "Create Thesis Site Portal" thesisSitePortal.sql
