@@ -12,7 +12,13 @@ public enum CurricularRuleLevel {
 
     IMPROVEMENT_ENROLMENT(false),
 
-    SPECIAL_SEASON_ENROLMENT(false);
+    SPECIAL_SEASON_ENROLMENT(false),
+
+    EXTRA_ENROLMENT(false),
+
+    PROPAEUDEUTICS_ENROLMENT(false),
+
+    STANDALONE_ENROLMENT(false);
 
     private boolean isNormal;
 
@@ -29,14 +35,7 @@ public enum CurricularRuleLevel {
     }
 
     public boolean managesEnrolments() {
-	switch (this) {
-	case IMPROVEMENT_ENROLMENT:
-	    return false;
-	case SPECIAL_SEASON_ENROLMENT:
-	    return false;
-	default:
-	    return true;
-	}
+	return isNormal();
     }
 
     public boolean isNormal() {
