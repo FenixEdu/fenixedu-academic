@@ -659,7 +659,7 @@
 	<slot name="executionPeriod" layout="format" key="label.semester" >
 		<property name="format" value="${semester}º Sem ${executionYear.year}"/>
 	</slot>
-	<slot name="weigth" key="label.ects.credits"/>
+	<slot name="ectsCreditsForCurriculum" key="label.ects.credits"/>
 </schema>
 
 <schema name="student.show.enrolments" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
