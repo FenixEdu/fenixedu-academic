@@ -199,6 +199,14 @@ public class Section extends Section_Base {
 	return (List<Section>) getChildren(Section.class);
     }
 
+    public List<FileContent> getOrderedAssociatedFiles() {
+	List<FileContent> contents = new ArrayList<FileContent>();
+	for (Attachment attachment : getOrderedChildren(Attachment.class)) {
+	    contents.add(attachment.getFile());
+	}
+	return contents;
+    }
+    
     public List<FileContent> getAssociatedFiles() {
 	List<FileContent> contents = new ArrayList<FileContent>();
 	for (Attachment attachment : getChildren(Attachment.class)) {
@@ -248,7 +256,7 @@ public class Section extends Section_Base {
 
     public List<Attachment> getVisibleFiles() {
 	List<Attachment> visibleFiles = new ArrayList<Attachment>();
-	for (Attachment attachment : getChildrenFiles()) {
+	for (Attachment attachment : getOrderedChildrenFiles()) {
 	    if (attachment.getParentNode(this).isNodeVisible()) {
 		visibleFiles.add(attachment);
 	    }
@@ -256,6 +264,10 @@ public class Section extends Section_Base {
 	return visibleFiles;
     }
 
+    public List<Attachment> getOrderedChildrenFiles() {
+	return (List<Attachment>) getOrderedChildren(Attachment.class);
+    }
+    
     public List<Attachment> getChildrenFiles() {
 	return (List<Attachment>) getChildren(Attachment.class);
     }

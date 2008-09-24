@@ -551,7 +551,7 @@
 	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
 	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
                     		</tr>
-                        	<logic:iterate id="fileItem" name="section" property="associatedFiles" type="net.sourceforge.fenixedu.domain.FileContent">
+                        	<logic:iterate id="fileItem" name="section" property="orderedAssociatedFiles" type="net.sourceforge.fenixedu.domain.FileContent">
 							<tr>
 								<td>
 	                        		<bean:define id="downloadUrl">
