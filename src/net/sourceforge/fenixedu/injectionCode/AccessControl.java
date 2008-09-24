@@ -44,4 +44,21 @@ public class AccessControl {
 	    throw new IllegalDataAccessException(message.toString(), requester);
 	}
     }
+
+    static public void check(Object c, AccessControlPredicate<Object> predicate) {
+	Person requester = AccessControl.getPerson();
+	boolean result = false;
+
+	result |= (predicate != null && predicate.evaluate(c));
+
+	if (!result) {
+	    StringBuilder message = new StringBuilder();
+	    message.append("User ").append(requester.getUsername()).append(" tried to execute access content instance number")
+		    .append(c.toString());
+	    message.append("but he/she is not authorized to do so");
+
+	    throw new IllegalDataAccessException(message.toString(), requester);
+	}
+    }
+
 }

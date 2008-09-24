@@ -11,9 +11,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionReques
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements
 	FactoryExecutor {
@@ -24,6 +25,10 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public Object execute() {
+	{
+	    net.sourceforge.fenixedu.injectionCode.AccessControl.check(
+		    this, net.sourceforge.fenixedu.predicates.RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE);;
+	}
 	final Object result;
 	switch (getAcademicServiceRequestType()) {
 	case REINGRESSION:
