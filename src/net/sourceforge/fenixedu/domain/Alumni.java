@@ -248,4 +248,13 @@ public class Alumni extends Alumni_Base {
 	}
 	return false;
     }
+    
+    public String getLoginUsername() {
+	Person person = getStudent().getPerson(); 
+	if (person.getIstUsername() == null) {
+	    return person.getLoginAlias().iterator().next().getAlias();
+	}
+
+	return person.getIstUsername();
+    }
 }

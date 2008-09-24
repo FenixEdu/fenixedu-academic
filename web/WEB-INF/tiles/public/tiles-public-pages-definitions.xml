@@ -800,8 +800,11 @@
 	<definition name="alumni.alumniPublicAccessCreateFormation" extends="definition.public.alumni">
 		<put name="body" value="/publico/alumni/alumniPublicAccessCreateFormation.jsp" />
 	</definition>
-	<definition name="alumni.alumniCreatePassword" extends="definition.public.alumni">
-		<put name="body" value="/publico/alumni/alumniCreatePassword.jsp" />
+	<definition name="alumni.alumniCreatePasswordRequest" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniCreatePasswordRequest.jsp" />
+	</definition>
+	<definition name="alumni.alumniPasswordRequired" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPasswordRequired.jsp" />
 	</definition>
 	<definition name="alumni.alumniRegistrationResult" extends="definition.public.alumni">
 		<put name="body" value="/publico/alumni/alumniRegistrationResult.jsp" />

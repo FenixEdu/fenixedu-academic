@@ -13,6 +13,13 @@
     <serviceClass>net.sourceforge.fenixedu.webServices.IPersonManagement</serviceClass>    
     <implementationClass>net.sourceforge.fenixedu.webServices.PersonManagement</implementationClass>    
   </service>    
+  
+  <service>
+    <name>AlumniManagement</name>
+    <namespace>AlumniManagement</namespace>
+    <serviceClass>net.sourceforge.fenixedu.webServices.IAlumniManagement</serviceClass>
+    <implementationClass>net.sourceforge.fenixedu.webServices.AlumniManagement</implementationClass>    
+  </service>
 
 	 <service>
 	    <name>SendMail</name>

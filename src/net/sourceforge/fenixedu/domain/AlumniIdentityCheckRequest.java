@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -22,18 +23,19 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 	checkParameters(contactEmail, documentIdNumber, fullName, dateOfBirthYearMonthDay, districtOfBirth,
 		districtSubdivisionOfBirth, parishOfBirth, socialSecurityNumber, nameOfFather, nameOfMother, requestType);
 
-	setContactEmail(contactEmail);
-	setDocumentIdNumber(documentIdNumber);
-	setFullName(fullName);
+	setContactEmail(contactEmail.trim());
+	setDocumentIdNumber(documentIdNumber.trim());
+	setFullName(fullName.trim());
 	setDateOfBirthYearMonthDay(dateOfBirthYearMonthDay);
-	setDistrictOfBirth(districtOfBirth);
-	setDistrictSubdivisionOfBirth(districtSubdivisionOfBirth);
-	setParishOfBirth(parishOfBirth);
+	setDistrictOfBirth(districtOfBirth.trim());
+	setDistrictSubdivisionOfBirth(districtSubdivisionOfBirth.trim());
+	setParishOfBirth(parishOfBirth.trim());
 	setSocialSecurityNumber(socialSecurityNumber);
-	setNameOfFather(nameOfFather);
-	setNameOfMother(nameOfMother);
+	setNameOfFather(nameOfFather.trim());
+	setNameOfMother(nameOfMother.trim());
 	setCreationDateTime(new DateTime());
 	setRequestType(requestType);
+	setRequestToken(UUID.randomUUID());
 
 	setRootDomainObject(RootDomainObject.getInstance());
     }
@@ -94,6 +96,31 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 	    }
 	}
 	return pendingRequests;
+    }
+
+    public boolean isValid() {
+	// ugly: refactor
+	Person person = getAlumni().getStudent().getPerson();
+	return (!StringUtils.isEmpty(person.getName()) && person.getName().equals(getFullName()))
+		&& (person.getDateOfBirthYearMonthDay().equals(getDateOfBirthYearMonthDay()))
+		&& (!StringUtils.isEmpty(person.getDistrictOfBirth()) && person.getDistrictOfBirth().equals(getDistrictOfBirth()))
+		&& (!StringUtils.isEmpty(person.getDistrictSubdivisionOfBirth()) && person.getDistrictSubdivisionOfBirth()
+			.equals(getDistrictSubdivisionOfBirth()))
+		&& (!StringUtils.isEmpty(person.getParishOfBirth()) && person.getParishOfBirth().equals(getParishOfBirth()))
+		&& (!StringUtils.isEmpty(person.getSocialSecurityNumber()) && person.getSocialSecurityNumber().equals(
+			getSocialSecurityNumber()))
+		&& (!StringUtils.isEmpty(person.getNameOfFather()) && person.getNameOfFather().equals(getNameOfFather()))
+		&& (!StringUtils.isEmpty(person.getNameOfMother()) && person.getNameOfMother().equals(getNameOfMother()));
+    }
+
+    public void validate(Boolean approval) {
+	setApproved(approval);
+	setDecisionDateTime(new DateTime());
+    }
+
+    public void validate(Boolean approval, Person operator) {
+	validate(approval);
+	setOperator(operator);
     }
 
 }

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPas
 import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
 
@@ -37,7 +36,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
     public ActionForward initFenixPublicAccess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
+
 	request.getSession(true);
 
 	if (getFromRequest(request, "showForm") != null) {
@@ -93,8 +92,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 		return false;
 	    }
 	    return true;
-	} catch (Exception e) { // should not happen, may be thrown if the id is
-	    // not valid
+	} catch (Exception e) { // may be thrown if the id is not valid
 	    request.setAttribute("captcha.unknown.error", "captcha.unknown.error");
 	    request.setAttribute("showForm", "true");
 	    request.setAttribute("alumniBean", getObjectFromViewState("alumniBean"));
@@ -123,13 +121,12 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	    final Alumni alumni = (Alumni) executeService("RegisterAlumniData", alumniBean.getStudentNumber(), alumniBean
 		    .getDocumentIdNumber().trim(), alumniBean.getEmail());
 
-	    //TODO: remove
+	    // development help
 	    String url = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
 		    .getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
 		    ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
 	    request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
-	    //TODO: remove
-	    
+
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("showForm", "true");
@@ -285,7 +282,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
 	    try {
 		executeService("RegisterAlumniData", alumni, Boolean.TRUE);
-		request.setAttribute("loginAlias", getAlumniLoginUsername(alumni.getStudent().getPerson()));
+		request.setAttribute("loginAlias", alumni.getLoginUsername());
 		request.setAttribute("registrationResult", "true");
 	    } catch (FenixServiceException e) {
 		request.setAttribute("registrationResult", "false");
@@ -296,11 +293,11 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	    return mapping.findForward("alumniRegistrationResult");
 
 	} else {
-	    request.setAttribute("passwordAccessBean", new AlumniPasswordBean(alumni, AlumniRequestType.IDENTITY_CHECK));
+	    request.setAttribute("passwordAccessBean", new AlumniPasswordBean(alumni, AlumniRequestType.PASSWORD_REQUEST));
 	    if (alumni.hasAnyPendingIdentityRequests()) {
 		request.setAttribute("pendingRequests", "true");
 	    }
-	    return mapping.findForward("alumniCreatePassword");
+	    return mapping.findForward("alumniCreatePasswordRequest");
 	}
     }
 
@@ -366,72 +363,37 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	return mapping.findForward("alumniCreateFormation");
     }
 
-    public ActionForward createPasswordInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward createPasswordRequestInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("publicAccessBean", getObjectFromViewState("publicAccessBean"));
-	return mapping.findForward("alumniCreatePassword");
+	return mapping.findForward("alumniCreatePasswordRequest");
     }
 
-    public ActionForward createPassword(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward createPasswordRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	AlumniPasswordBean alumniBean = (AlumniPasswordBean) getObjectFromViewState("passwordAccessBean");
-	if (StringUtils.isEmpty(alumniBean.getPassword()) || StringUtils.isEmpty(alumniBean.getPasswordConfirmation())) {
-
-	    if (StringUtils.isEmpty(alumniBean.getPassword())) {
-		addActionMessage("error", request, "registration.error.empty.password");
-	    }
-
-	    if (StringUtils.isEmpty(alumniBean.getPasswordConfirmation())) {
-		addActionMessage("error", request, "registration.error.empty.password.confirmation");
-	    }
-
-	    request.setAttribute("passwordAccessBean", alumniBean);
-	    return mapping.findForward("alumniCreatePassword");
-	}
-
-	if (!alumniBean.getPassword().equals(alumniBean.getPasswordConfirmation())) {
-
-	    addActionMessage("error", request, "registration.error.password.mismatch");
-	    alumniBean.setPassword("");
-	    alumniBean.setPasswordConfirmation("");
-	    request.setAttribute("passwordAccessBean", alumniBean);
-	    return mapping.findForward("alumniCreatePassword");
-	}
-
-	final Person alumniPerson = alumniBean.getAlumni().getStudent().getPerson();
 
 	try {
 	    executeService("RegisterAlumniData", alumniBean);
-	    request.setAttribute("loginAlias", getAlumniLoginUsername(alumniPerson));
+	    request.setAttribute("loginAlias", alumniBean.getAlumni().getLoginUsername());
 	    request.setAttribute("registrationResult", "true");
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey());
-	    alumniBean.setPassword("");
-	    alumniBean.setPasswordConfirmation("");
-	    request.setAttribute("passwordAccessBean", alumniBean);
 	    request.setAttribute("registrationResult", "false");
-	    return mapping.findForward("alumniCreatePassword");
+	    return mapping.findForward("alumniCreatePasswordRequest");
 	}
 
 	request.setAttribute("publicAccessBean", new AlumniPublicAccessBean(alumniBean.getAlumni()));
 	request.setAttribute("alumni", alumniBean.getAlumni());
-	return mapping.findForward("alumniRegistrationResult");
-    }
-
-    private String getAlumniLoginUsername(final Person alumniPerson) {
-	if (alumniPerson.getIstUsername() == null) {
-	    return alumniPerson.getLoginAlias().iterator().next().getAlias();
-	}
-
-	return alumniPerson.getIstUsername();
+	return mapping.findForward("alumniPasswordRequired");
     }
 
     public ActionForward checkLists(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	String publicAccessURL = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url.content.path"), 
+	String publicAccessURL = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url.content.path"),
 		ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
 	request.setAttribute("publicAccessUrl", publicAccessURL);
 	return mapping.findForward("alumniMailingLists");

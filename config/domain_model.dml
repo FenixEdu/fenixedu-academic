@@ -242,6 +242,7 @@ class DomainObject {
 		Boolean approved;
 		DateTime decisionDateTime;
 		AlumniRequestType requestType;
+		UUID requestToken;
 	}
 
 	class Attends extends DomainObject {
@@ -3975,7 +3976,7 @@ class DomainObject {
 
 				class studentCurriculum.PropaedeuticsCurriculumGroup extends studentCurriculum.NoCourseGroupCurriculumGroup {
 				}
-
+				
 				class studentCurriculum.StandaloneCurriculumGroup extends studentCurriculum.NoCourseGroupCurriculumGroup {
 				}
 

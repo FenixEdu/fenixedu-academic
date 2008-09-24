@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<!-- alumniCreatePassword.jsp -->
+<!-- alumniCreatePasswordRequest.jsp -->
 
 
 <h1>Alumni</h1>
@@ -34,7 +34,7 @@
 </html:messages>
 
 
-<fr:form id="reg_form" action="/alumni.do?method=createPassword">
+<fr:form id="reg_form" action="/alumni.do?method=createPasswordRequest">
 
 	<fr:edit id="passwordAccessBean" name="passwordAccessBean" visible="false" />
 
@@ -46,7 +46,7 @@
 			</p>
 		
 			<fr:edit id="alumniFormationDegree" name="passwordAccessBean" schema="alumni.public.access.passwordCreation.personal.info" >
-				<fr:destination name="invalid" path="/alumni.do?method=createPasswordInvalid"/>
+				<fr:destination name="invalid" path="/alumni.do?method=createPasswordRequestInvalid"/>
 				<fr:layout name="tabular-break">
 					<fr:property name="classes" value="thleft"/>
 					<fr:property name="columnClasses" value=",tderror1"/>
@@ -58,7 +58,7 @@
 		</fieldset>
 	</logic:notPresent>
 
-
+<%--
 	<logic:notPresent name="pendingRequests">
 		<h2 class="mtop15">
 			Escolher Password		
@@ -107,6 +107,7 @@
 		<span class="error0"><fr:message for="passwordConfirmation-validated" /></span>
 	</fieldset>
 
+--%>
 	<p>
 		<html:submit>
 			<bean:message key="label.conclude" bundle="ALUMNI_RESOURCES" />

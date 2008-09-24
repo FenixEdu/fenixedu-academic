@@ -1361,7 +1361,8 @@
 	 	<forward name="alumniPublicAccessMessage" path="alumni.alumniPublicAccessMessage" />
 	 	<forward name="alumniCreateFormation" path="alumni.alumniPublicAccessCreateFormation" />
 	 	<forward name="alumniRegistrationResult" path="alumni.alumniRegistrationResult" />
-	 	<forward name="alumniCreatePassword" path="alumni.alumniCreatePassword" />
+	 	<forward name="alumniCreatePasswordRequest" path="alumni.alumniCreatePasswordRequest" />
+	 	<forward name="alumniPasswordRequired" path="alumni.alumniPasswordRequired" />
 	 	<forward name="alumniMailingLists" path="alumni.alumniMailingLists" />
 	 </action>
 
