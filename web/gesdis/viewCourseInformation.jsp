@@ -244,7 +244,11 @@
 	<p class="infoop mtop2"><span class="emphasis-box">7</span>
 	<bean:message key="message.courseInformation.courseAvaliationMethods" /></p>
 
-	<p><bean:write name="siteCourseInformation" property="executionCourse.evaluationMethod.evaluationElements" filter="false"/></p>
+	<logic:present name="siteCourseInformation" property="executionCourse.evaluationMethod">
+		<logic:present name="siteCourseInformation" property="executionCourse.evaluationMethod.evaluationElements">
+			<p><bean:write name="siteCourseInformation" property="executionCourse.evaluationMethod.evaluationElements" filter="false"/></p>
+		</logic:present>
+	</logic:present>
 
 
 	<p class="infoop mtop2"><span class="emphasis-box">8</span>
