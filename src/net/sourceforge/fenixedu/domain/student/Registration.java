@@ -842,18 +842,6 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public Collection<Enrolment> getExtraCurricularEnrolments() {
-	final Collection<Enrolment> result = new HashSet<Enrolment>();
-
-	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
-		: getStudentCurricularPlansSet());
-	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
-	    result.addAll(studentCurricularPlan.getExtraCurricularEnrolments());
-	}
-
-	return result;
-    }
-
     final public Collection<CurriculumLine> getExtraCurricularCurriculumLines() {
 	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
 
