@@ -24,4 +24,8 @@ public enum AdministrativeOfficeType {
 	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
     }
 
+    public AdministrativeOffice getAdministrativeOffice() {
+	return AdministrativeOffice.readByAdministrativeOfficeType(this);
+    }
+
 }
