@@ -1,92 +1,50 @@
 /**
- * $RCSfile$
- * $Revision$
- * $Date$
+ * $Id: editor_plugin_src.js 895 2008-07-10 14:34:23Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
  */
 
-/* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('preview', 'en,tr,cs,de,el,fr_ca,it,ko,pt,sv,zh_cn,fa,fr,pl,pt_br,nl,da,he,nb,hu,ru,ru_KOI8-R,ru_UTF-8,nn,es,cy,is,zh_tw,zh_tw_utf8,sk');
+(function() {
+	tinymce.create('tinymce.plugins.Preview', {
+		init : function(ed, url) {
+			var t = this, css = tinymce.explode(ed.settings.content_css);
 
-var TinyMCE_PreviewPlugin = {
-	getInfo : function() {
-		return {
-			longname : 'Preview',
-			author : 'Moxiecode Systems',
-			authorurl : 'http://tinymce.moxiecode.com',
-			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_preview.html',
-			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
-		};
-	},
+			t.editor = ed;
 
-	/**
-	 * Returns the HTML contents of the preview control.
-	 */
-	getControlHTML : function(cn) {
-		switch (cn) {
-			case "preview":
-				return tinyMCE.getButtonHTML(cn, 'lang_preview_desc', '{$pluginurl}/images/preview.gif', 'mcePreview');
+			// Force absolute CSS urls	
+			tinymce.each(css, function(u, k) {
+				css[k] = ed.documentBaseURI.toAbsolute(u);
+			});
+
+			ed.addCommand('mcePreview', function() {
+				ed.windowManager.open({
+					file : ed.getParam("plugin_preview_pageurl", url + "/preview.html"),
+					width : parseInt(ed.getParam("plugin_preview_width", "550")),
+					height : parseInt(ed.getParam("plugin_preview_height", "600")),
+					resizable : "yes",
+					scrollbars : "yes",
+					popup_css : css.join(','),
+					inline : ed.getParam("plugin_preview_inline", 1)
+				}, {
+					base : ed.documentBaseURI.getURI()
+				});
+			});
+
+			ed.addButton('preview', {title : 'preview.preview_desc', cmd : 'mcePreview'});
+		},
+
+		getInfo : function() {
+			return {
+				longname : 'Preview',
+				author : 'Moxiecode Systems AB',
+				authorurl : 'http://tinymce.moxiecode.com',
+				infourl : 'http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/preview',
+				version : tinymce.majorVersion + "." + tinymce.minorVersion
+			};
 		}
+	});
 
-		return "";
-	},
-
-	/**
-	 * Executes the mcePreview command.
-	 */
-	execCommand : function(editor_id, element, command, user_interface, value) {
-		// Handle commands
-		switch (command) {
-			case "mcePreview":
-				var previewPage = tinyMCE.getParam("plugin_preview_pageurl", null);
-				var previewWidth = tinyMCE.getParam("plugin_preview_width", "550");
-				var previewHeight = tinyMCE.getParam("plugin_preview_height", "600");
-
-				// Use a custom preview page
-				if (previewPage) {
-					var template = new Array();
-
-					template['file'] = previewPage;
-					template['width'] = previewWidth;
-					template['height'] = previewHeight;
-
-					tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "yes", inline : "yes", content : tinyMCE.getContent(), content_css : tinyMCE.getParam("content_css")});
-				} else {
-					var win = window.open("", "mcePreview", "menubar=no,toolbar=no,scrollbars=yes,resizable=yes,left=20,top=20,width=" + previewWidth + ",height="  + previewHeight);
-					var html = "";
-					var c = tinyMCE.getContent();
-					var pos = c.indexOf('<body'), pos2;
-
-					if (pos != -1) {
-						pos = c.indexOf('>', pos);
-						pos2 = c.lastIndexOf('</body>');
-						c = c.substring(pos + 1, pos2);
-					}
-
-					html += tinyMCE.getParam('doctype');
-					html += '<html xmlns="http://www.w3.org/1999/xhtml">';
-					html += '<head>';
-					html += '<title>' + tinyMCE.getLang('lang_preview_desc') + '</title>';
-					html += '<base href="' + tinyMCE.settings['base_href'] + '" />';
-					html += '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
-					html += '<link href="' + tinyMCE.getParam("content_css") + '" rel="stylesheet" type="text/css" />';
-					html += '</head>';
-					html += '<body dir="' + tinyMCE.getParam("directionality") + '">';
-					html += c;
-					html += '</body>';
-					html += '</html>';
-
-					win.document.write(html);
-					win.document.close();
-				}
-
-				return true;
-		}
-
-		return false;
-	}
-};
-
-tinyMCE.addPlugin("preview", TinyMCE_PreviewPlugin);
+	// Register plugin
+	tinymce.PluginManager.add('preview', tinymce.plugins.Preview);
+})();

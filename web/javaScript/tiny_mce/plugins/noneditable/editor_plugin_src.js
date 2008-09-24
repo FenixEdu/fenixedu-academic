@@ -1,164 +1,87 @@
 /**
- * $RCSfile$
- * $Revision$
- * $Date$
+ * $Id: editor_plugin_src.js 743 2008-03-23 17:47:33Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
  */
 
-var TinyMCE_NonEditablePlugin = {
-	getInfo : function() {
-		return {
-			longname : 'Non editable elements',
-			author : 'Moxiecode Systems',
-			authorurl : 'http://tinymce.moxiecode.com',
-			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_noneditable.html',
-			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
-		};
-	},
+(function() {
+	var Event = tinymce.dom.Event;
 
-	initInstance : function(inst) {
-		tinyMCE.importCSS(inst.getDoc(), tinyMCE.baseURL + "/plugins/noneditable/css/noneditable.css");
+	tinymce.create('tinymce.plugins.NonEditablePlugin', {
+		init : function(ed, url) {
+			var t = this, editClass, nonEditClass;
 
-		// Ugly hack
-		if (tinyMCE.isMSIE5_0)
-			tinyMCE.settings['plugins'] = tinyMCE.settings['plugins'].replace(/noneditable/gi, 'Noneditable');
+			t.editor = ed;
+			editClass = ed.getParam("noneditable_editable_class", "mceEditable");
+			nonEditClass = ed.getParam("noneditable_noneditable_class", "mceNonEditable");
 
-		if (tinyMCE.isGecko) {
-			tinyMCE.addEvent(inst.getDoc(), "keyup", TinyMCE_NonEditablePlugin._fixKeyUp);
-	//		tinyMCE.addEvent(inst.getDoc(), "keypress", TinyMCE_NonEditablePlugin._selectAll);
-	//		tinyMCE.addEvent(inst.getDoc(), "mouseup", TinyMCE_NonEditablePlugin._selectAll);
-		}
-	},
+			ed.onNodeChange.addToTop(function(ed, cm, n) {
+				var sc, ec;
 
-	cleanup : function(type, content, inst) {
-		switch (type) {
-			case "insert_to_editor_dom":
-				var nodes = tinyMCE.getNodeTree(content, new Array(), 1);
-				var editClass = tinyMCE.getParam("noneditable_editable_class", "mceEditable");
-				var nonEditClass = tinyMCE.getParam("noneditable_noneditable_class", "mceNonEditable");
+				// Block if start or end is inside a non editable element
+				sc = ed.dom.getParent(ed.selection.getStart(), function(n) {
+					return ed.dom.hasClass(n, nonEditClass);
+				});
 
-				for (var i=0; i<nodes.length; i++) {
-					var elm = nodes[i];
+				ec = ed.dom.getParent(ed.selection.getEnd(), function(n) {
+					return ed.dom.hasClass(n, nonEditClass);
+				});
 
-					// Convert contenteditable to classes
-					var editable = tinyMCE.getAttrib(elm, "contenteditable");
-					if (new RegExp("true|false","gi").test(editable))
-						TinyMCE_NonEditablePlugin._setEditable(elm, editable == "true");
+				// Block or unblock
+				if (sc || ec) {
+					t._setDisabled(1);
+					return false;
+				} else
+					t._setDisabled(0);
+			});
+		},
 
-					if (tinyMCE.isMSIE) {
-						var className = elm.className ? elm.className : "";
+		getInfo : function() {
+			return {
+				longname : 'Non editable elements',
+				author : 'Moxiecode Systems AB',
+				authorurl : 'http://tinymce.moxiecode.com',
+				infourl : 'http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/noneditable',
+				version : tinymce.majorVersion + "." + tinymce.minorVersion
+			};
+		},
 
-						if (className.indexOf(editClass) != -1)
-							elm.contentEditable = true;
+		_block : function(ed, e) {
+			var k = e.keyCode;
 
-						if (className.indexOf(nonEditClass) != -1)
-							elm.contentEditable = false;
-					}
+			// Don't block arrow keys, pg up/down, and F1-F12
+			if ((k > 32 && k < 41) || (k > 111 && k < 124))
+				return;
+
+			return Event.cancel(e);
+		},
+
+		_setDisabled : function(s) {
+			var t = this, ed = t.editor;
+
+			tinymce.each(ed.controlManager.controls, function(c) {
+				c.setDisabled(s);
+			});
+
+			if (s !== t.disabled) {
+				if (s) {
+					ed.onKeyDown.addToTop(t._block);
+					ed.onKeyPress.addToTop(t._block);
+					ed.onKeyUp.addToTop(t._block);
+					ed.onPaste.addToTop(t._block);
+				} else {
+					ed.onKeyDown.remove(t._block);
+					ed.onKeyPress.remove(t._block);
+					ed.onKeyUp.remove(t._block);
+					ed.onPaste.remove(t._block);
 				}
 
-				break;
-
-			case "insert_to_editor":
-				if (tinyMCE.isMSIE) {
-					var editClass = tinyMCE.getParam("noneditable_editable_class", "mceEditable");
-					var nonEditClass = tinyMCE.getParam("noneditable_noneditable_class", "mceNonEditable");
-
-					content = content.replace(new RegExp("class=\"(.*)(" + editClass + ")([^\"]*)\"", "gi"), 'class="$1$2$3" contenteditable="true"');
-					content = content.replace(new RegExp("class=\"(.*)(" + nonEditClass + ")([^\"]*)\"", "gi"), 'class="$1$2$3" contenteditable="false"');
-				}
-
-				break;
-
-			case "get_from_editor_dom":
-				if (tinyMCE.getParam("noneditable_leave_contenteditable", false)) {
-					var nodes = tinyMCE.getNodeTree(content, new Array(), 1);
-
-					for (var i=0; i<nodes.length; i++)
-						nodes[i].removeAttribute("contenteditable");
-				}
-
-				break;
+				t.disabled = s;
+			}
 		}
+	});
 
-		return content;
-	},
-
-	// Private internal plugin methods
-
-	_fixKeyUp : function(e) {
-		var inst = tinyMCE.selectedInstance;
-		var sel = inst.getSel();
-		var rng = inst.getRng();
-		var an = sel.anchorNode;
-
-		// Move cursor outside non editable fields
-		if ((e.keyCode == 38 || e.keyCode == 37 || e.keyCode == 40 || e.keyCode == 39) && (elm = TinyMCE_NonEditablePlugin._isNonEditable(an)) != null) {
-			rng = inst.getDoc().createRange();
-			rng.selectNode(elm);
-			rng.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(rng);
-			tinyMCE.cancelEvent(e);
-		}
-	},
-/*
-	_selectAll : function(e) {
-		var inst = tinyMCE.selectedInstance;
-		var sel = inst.getSel();
-		var doc = inst.getDoc();
-
-		if ((elm = TinyMCE_NonEditablePlugin._isNonEditable(sel.focusNode)) != null) {
-			inst.selection.selectNode(elm, false);
-			tinyMCE.cancelEvent(e);
-			return;
-		}
-
-		if ((elm = TinyMCE_NonEditablePlugin._isNonEditable(sel.anchorNode)) != null) {
-			inst.selection.selectNode(elm, false);
-			tinyMCE.cancelEvent(e);
-			return;
-		}
-	},*/
-
-	_isNonEditable : function(elm) {
-		var editClass = tinyMCE.getParam("noneditable_editable_class", "mceEditable");
-		var nonEditClass = tinyMCE.getParam("noneditable_noneditable_class", "mceNonEditable");
-
-		if (!elm)
-			return;
-
-		do {
-			var className = elm.className ? elm.className : "";
-
-			if (className.indexOf(editClass) != -1)
-				return null;
-
-			if (className.indexOf(nonEditClass) != -1)
-				return elm;
-		} while (elm = elm.parentNode);
-
-		return null;
-	},
-
-	_setEditable : function(elm, state) {
-		var editClass = tinyMCE.getParam("noneditable_editable_class", "mceEditable");
-		var nonEditClass = tinyMCE.getParam("noneditable_noneditable_class", "mceNonEditable");
-
-		var className = elm.className ? elm.className : "";
-
-		if (className.indexOf(editClass) != -1 || className.indexOf(nonEditClass) != -1)
-			return;
-
-		if ((className = tinyMCE.getAttrib(elm, "class")) != "")
-			className += " ";
-
-		className += state ? editClass : nonEditClass;
-
-		elm.setAttribute("class", className);
-		elm.className = className;
-	}
-};
-
-tinyMCE.addPlugin("noneditable", TinyMCE_NonEditablePlugin);
+	// Register plugin
+	tinymce.PluginManager.add('noneditable', tinymce.plugins.NonEditablePlugin);
+})();

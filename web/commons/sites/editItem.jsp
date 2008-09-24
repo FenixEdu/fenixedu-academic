@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -59,9 +61,11 @@
             </fr:layout>
         </fr:edit>
         
+		
+		<%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
         <script type="text/javascript">
             function hasTinyMCE() {
-                return tinyMCE.configs.length > 0;
+                return tinyMCE.settings != null;
             }
             
             function insertLink(url, name) {
@@ -74,6 +78,8 @@
                 switchGlobal();
             }
         </script>
+        <%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
+ 
     </logic:notEmpty>
 
     <p class="mtop15">
