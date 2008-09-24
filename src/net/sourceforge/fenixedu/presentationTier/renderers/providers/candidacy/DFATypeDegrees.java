@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
@@ -24,7 +23,7 @@ public class DFATypeDegrees implements DataProvider {
 	final List<Degree> result = new ArrayList<Degree>();
 	DegreeType degreeType = bean.getDegreeType();
 	if (degreeType != null) {
-	    for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	    for (Degree degree : Degree.readNotEmptyDegrees()) {
 		if (degree.getDegreeType() == degreeType) {
 		    result.add(degree);
 		}

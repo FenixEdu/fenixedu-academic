@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -58,6 +57,7 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -74,7 +74,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	public int compare(ExecutionCourse o1, ExecutionCourse o2) {
 	    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
 	}
-	
+
     };
 
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new Comparator<ExecutionCourse>() {
@@ -84,7 +84,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
 	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-	
+
     };
 
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new Comparator<ExecutionCourse>() {
@@ -96,9 +96,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		return cep;
 	    }
 	    final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
-	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;	    
+	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-	
+
     };
 
     public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;

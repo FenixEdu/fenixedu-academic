@@ -16,14 +16,15 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
 import net.sourceforge.fenixedu.domain.exceptions.InDebtEnrolmentsException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MarkSheet extends MarkSheet_Base {
 

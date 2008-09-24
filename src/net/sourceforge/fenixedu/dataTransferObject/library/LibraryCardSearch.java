@@ -201,7 +201,7 @@ public class LibraryCardSearch implements Serializable {
     private void getPersonsFromDegreeType(PersonSearchSet resultSet, DegreeType degreeType) {
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
-	for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.getDegreeType() == degreeType) {
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
 		    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {

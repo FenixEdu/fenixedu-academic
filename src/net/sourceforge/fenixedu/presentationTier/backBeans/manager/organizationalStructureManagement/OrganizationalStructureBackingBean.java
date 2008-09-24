@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -410,7 +409,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	List<SelectItem> list = new ArrayList<SelectItem>();
 	SelectItem selectItem = null;
 
-	List<Degree> allDegrees = rootDomainObject.getDegrees();
+	List<Degree> allDegrees = Degree.readNotEmptyDegrees();
 
 	for (Degree degree : allDegrees) {
 	    selectItem = new SelectItem();

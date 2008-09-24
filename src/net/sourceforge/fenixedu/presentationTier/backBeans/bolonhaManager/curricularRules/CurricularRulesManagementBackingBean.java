@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -514,7 +513,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 	if (selectedCurricularRuleType != null
 		&& selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
 
-	    final List<Degree> allDegrees = rootDomainObject.getDegrees();
+	    final List<Degree> allDegrees = Degree.readNotEmptyDegrees();
 	    final DegreeType bolonhaDegreeType = (selectedDegreeType == null || selectedDegreeType.equals(NO_SELECTION_STRING)) ? null
 		    : DegreeType.valueOf(selectedDegreeType);
 	    for (final Degree degree : allDegrees) {

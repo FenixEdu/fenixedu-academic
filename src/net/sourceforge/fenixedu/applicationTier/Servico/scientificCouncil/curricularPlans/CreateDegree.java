@@ -20,7 +20,7 @@ public class CreateDegree extends FenixService {
 	    throw new InvalidArgumentsServiceException();
 	}
 
-	final List<Degree> degrees = rootDomainObject.getDegrees();
+	final List<Degree> degrees = Degree.readNotEmptyDegrees();
 
 	for (Degree degree : degrees) {
 	    if (degree.getSigla().equalsIgnoreCase(acronym)) {

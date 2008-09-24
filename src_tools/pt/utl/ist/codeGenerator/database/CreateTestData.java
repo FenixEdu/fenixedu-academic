@@ -677,7 +677,7 @@ public class CreateTestData {
     public static class CreateCurricularStructure extends AtomicAction {
 
 	public void doIt() {
-	    for (final DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlansSet()) {
+	    for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans()) {
 		createCurricularCourses(degreeCurricularPlan);
 	    }
 	}
@@ -1133,7 +1133,7 @@ public class CreateTestData {
     private static void createStudents() {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	int i = 1;
-	for (final DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlansSet()) {
+	for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans()) {
 	    for (int k = 1; k <= 20; k++) {
 		createStudent(degreeCurricularPlan, i++);
 	    }

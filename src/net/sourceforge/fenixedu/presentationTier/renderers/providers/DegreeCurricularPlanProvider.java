@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -13,8 +12,8 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class DegreeCurricularPlanProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	final List<DegreeCurricularPlan> degreeCurricularPlans = new ArrayList<DegreeCurricularPlan>(RootDomainObject
-		.getInstance().getDegreeCurricularPlansSet());
+	final List<DegreeCurricularPlan> degreeCurricularPlans = new ArrayList<DegreeCurricularPlan>(DegreeCurricularPlan
+		.readNotEmptyDegreeCurricularPlans());
 	Collections.sort(degreeCurricularPlans, DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
 	return degreeCurricularPlans;
     }

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -98,7 +97,7 @@ public class GenerateStudentReport implements Serializable {
 	final Spreadsheet spreadsheet = new Spreadsheet("StudentDataAuthorizations");
 	addHeaders(spreadsheet);
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    final DegreeType degreeType = degree.getDegreeType();
 	    if (studentReportPredicate.applyFor(degreeType)) {
 		processDegree(spreadsheet, studentReportPredicate, degree, executionYear);

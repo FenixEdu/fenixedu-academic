@@ -376,6 +376,9 @@ class DomainObject {
         String ministryCode;
 		String idCardName;
 	}
+	
+		class EmptyDegree extends Degree;
+		
 
 	class DegreeCurricularPlan extends DomainObject {
 		String anotation;
@@ -395,6 +398,9 @@ class DomainObject {
 		DegreeCurricularPlanState state;
 		Boolean applyPreviousYearsEnrolmentRule;
 	}
+	
+		class EmptyDegreeCurricularPlan extends DegreeCurricularPlan;
+	
 	
 	class DegreeContext extends DomainObject {
 		AcademicInterval beginInterval (REQUIRED);
@@ -1159,7 +1165,7 @@ class DomainObject {
 		YearMonthDay startDateYearMonthDay;
 		DateTime whenDateTime;
 	}
-
+	
 	class StudentGroup extends DomainObject {
 		Integer groupNumber;
 	}

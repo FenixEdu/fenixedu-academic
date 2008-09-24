@@ -13,13 +13,11 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
@@ -29,8 +27,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
@@ -58,8 +54,6 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
     protected void getExecutionPeriod(HttpServletRequest request, Integer executionPeriodId) throws FenixServiceException,
 	    FenixFilterException {
-	IUserView userView = UserView.getUser();
-
 	Object[] args = { executionPeriodId };
 
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID",
@@ -70,8 +64,6 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
     protected void getSourceAndDestinationDegrees(HttpServletRequest request, Integer sourceDegreeId, Integer destinationDegreeId)
 	    throws FenixServiceException, FenixFilterException {
-	IUserView userView = UserView.getUser();
-
 	Object[] args1 = { sourceDegreeId };
 	Object[] args2 = { destinationDegreeId };
 
@@ -84,8 +76,6 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
     protected void getSourceAndDestinationExecutionCourses(HttpServletRequest request, Integer sourceDegreeId,
 	    Integer destinationDegreeId, Integer executionPeriodId) throws FenixServiceException, FenixFilterException {
-	IUserView userView = UserView.getUser();
-
 	Object[] args1 = { destinationDegreeId, executionPeriodId };
 	Object[] args2 = { sourceDegreeId, executionPeriodId };
 	List destinationExecutionCourses = (List) ServiceUtils.executeService("ReadExecutionCoursesByDegreeAndExecutionPeriodId",
@@ -103,10 +93,8 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
     public ActionForward prepareChooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	IUserView userView = getUserView(request);
-
 	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-	degrees.addAll(RootDomainObject.getInstance().getDegrees());
+	degrees.addAll(Degree.readNotEmptyDegrees());
 
 	List executionPeriods = (List) ServiceUtils.executeService("ReadAllExecutionPeriods", new Object[0]);
 
@@ -125,7 +113,6 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
     public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	IUserView userView = getUserView(request);
 	DynaActionForm mergeExecutionCoursesForm = (DynaActionForm) form;
 	Integer sourceExecutionCourseId = (Integer) mergeExecutionCoursesForm.get("sourceExecutionCourseId");
 	Integer destinationExecutionCourseId = (Integer) mergeExecutionCoursesForm.get("destinationExecutionCourseId");
@@ -135,4 +122,5 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
 	return mapping.findForward("sucess");
     }
+
 }

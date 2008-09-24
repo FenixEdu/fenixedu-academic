@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
@@ -44,7 +43,7 @@ public class DegreeShowThesesDA extends PublicShowThesesDA {
     protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
 	ThesisFilterBean bean = super.getFilterBean(request);
 	bean.setDegree(getDegree(request));
-	bean.setDegreeOptions(RootDomainObject.getInstance().getDegrees());
+	bean.setDegreeOptions(Degree.readNotEmptyDegrees());
 	return bean;
     }
 

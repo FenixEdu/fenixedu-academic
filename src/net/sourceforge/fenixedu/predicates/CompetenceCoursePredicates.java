@@ -9,7 +9,6 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -112,7 +111,7 @@ public class CompetenceCoursePredicates {
     };
 
     private static boolean isMemberOfDegreeCurricularPlansGroup(Person person) {
-	Collection<DegreeCurricularPlan> degreeCurricularPlans = RootDomainObject.getInstance().getDegreeCurricularPlans();
+	Collection<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans();
 
 	Collection<IGroup> groups = new ArrayList<IGroup>();
 	for (DegreeCurricularPlan plan : degreeCurricularPlans) {

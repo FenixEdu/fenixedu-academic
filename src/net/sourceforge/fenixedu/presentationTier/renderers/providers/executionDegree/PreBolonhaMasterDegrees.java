@@ -3,10 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionD
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -16,8 +14,7 @@ public class PreBolonhaMasterDegrees implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	final List<Degree> result = new ArrayList<Degree>();
-	Set<Degree> degreesSet = RootDomainObject.getInstance().getDegreesSet();
-	for (Degree degree : degreesSet) {
+	for (Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
 		result.add(degree);
 	    }

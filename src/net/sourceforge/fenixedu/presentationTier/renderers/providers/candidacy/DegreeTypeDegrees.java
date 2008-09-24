@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
@@ -20,7 +19,7 @@ public class DegreeTypeDegrees implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
 	final List<Degree> result = new ArrayList<Degree>();
-	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	for (Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.getTipoCurso() == DegreeType.BOLONHA_DEGREE) {
 		result.add(degree);
 	    }

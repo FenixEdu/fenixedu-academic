@@ -28,7 +28,7 @@ public class EditDegree extends FenixService {
 		|| !degreeToEdit.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name)
 		|| !degreeToEdit.getDegreeType().equals(degreeType)) {
 
-	    final List<Degree> degrees = rootDomainObject.getDegrees();
+	    final List<Degree> degrees = Degree.readNotEmptyDegrees();
 
 	    // assert unique degree code and unique pair name/type
 	    for (Degree degree : degrees) {

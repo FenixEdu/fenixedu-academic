@@ -7,7 +7,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -45,8 +44,9 @@ public class DegreesWithDissertationProvider implements DataProvider {
 	return degrees;
     }
 
-    protected Collection<Degree> getDegrees(Object source) {
-	return RootDomainObject.getInstance().getDegrees();
+    protected Collection<Degree> getDegrees(@SuppressWarnings("unused")
+    Object source) {
+	return Degree.readNotEmptyDegrees();
     }
 
     public Converter getConverter() {

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
@@ -20,7 +19,7 @@ public class DegreePathProcessor extends AbstractPathProcessor {
 	    return degree.getSite();
 	}
 
-	for (final Degree otherDegree : RootDomainObject.getInstance().getDegreesSet()) {
+	for (final Degree otherDegree : Degree.readNotEmptyDegrees()) {
 	    final DegreeUnit otherDegreeUnit = otherDegree.getUnit();
 	    if (otherDegreeUnit != null && otherDegreeUnit.getAcronym().equalsIgnoreCase(unitAcronym)) {
 		final Site site = otherDegreeUnit.getSite();

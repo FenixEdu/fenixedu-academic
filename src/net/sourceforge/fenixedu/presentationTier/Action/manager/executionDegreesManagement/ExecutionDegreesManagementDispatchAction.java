@@ -279,7 +279,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     private void readAndSetDegreeCurricularPlans(HttpServletRequest request, final String degreeTypeName) {
 
 	final List<DegreeCurricularPlan> toShow = new ArrayList<DegreeCurricularPlan>();
-	for (final DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlansSet()) {
+	for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans()) {
 	    if (degreeCurricularPlan.getDegree().getDegreeType().name().equals(degreeTypeName)
 		    && degreeCurricularPlan.hasAnyExecutionDegrees()) {
 		toShow.add(degreeCurricularPlan);

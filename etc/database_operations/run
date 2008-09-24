@@ -42,3 +42,5 @@ function executeWithTempFile() {
 
 execute "updateWeightInOldEnrolments" updateWeightInOldEnrolments.sql
 execute "updateAlumniIdentityCheckRequest" updateAlumniIdentityCheckRequest.sql
+execute "addOJBColumnsToDegreeAndDCP" addOJBColumnsToDegreeAndDCP.sql
+execute "insertEmptyDegreeAndDCP" insertEmptyDegreeAndDCP.sql

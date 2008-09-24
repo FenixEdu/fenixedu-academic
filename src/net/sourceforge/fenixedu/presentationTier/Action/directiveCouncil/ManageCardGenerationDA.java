@@ -165,7 +165,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected Set<Degree> getDegrees(final DegreeType degreeType) {
 	final Set<Degree> degrees = new TreeSet<Degree>();
-	for (final Degree degree : rootDomainObject.getDegreesSet()) {
+	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degreeType == null || degree.getDegreeType() == degreeType) {
 		degrees.add(degree);
 	    }
@@ -191,7 +191,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     protected Boolean anyDegreeHasAnyProblem() {
-	for (final Degree degree : rootDomainObject.getDegreesSet()) {
+	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (checkHasProblem(degree)) {
 		return Boolean.TRUE;
 	    }
@@ -200,7 +200,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     protected Boolean checkHasProblem(final DegreeType degreeType) {
-	for (final Degree degree : rootDomainObject.getDegreesSet()) {
+	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.getDegreeType() == degreeType && checkHasProblem(degree)) {
 		return Boolean.TRUE;
 	    }
