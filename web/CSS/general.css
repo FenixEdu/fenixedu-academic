@@ -2450,3 +2450,9 @@ height: 100%;
 }
 input.bright { position: absolute; bottom: 0; left: 5.5em; }
 input.bleft { position: absolute; bottom: 0; left: 0;  }
+
+.addlanguage {
+font-weight: bold;
+margin: 0.25em 0;
+display: block;
+}
