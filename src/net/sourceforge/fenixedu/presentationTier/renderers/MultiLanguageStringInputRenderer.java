@@ -280,6 +280,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
 
 	    // add link
 	    HtmlActionLink addLink = new HtmlActionLink(RenderUtils.getResourceString("renderers.language.add"));
+	    addLink.setClasses("addLanguage");
 	    addLink.setName(getLocalName("add"));
 	    container.addChild(addLink);
 
