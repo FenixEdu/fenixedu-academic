@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.student;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean.EnrolmentLocationBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -20,17 +19,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	
+
 	final EnrolmentLocationBean bean = (EnrolmentLocationBean) source;
 	final StudentCurricularPlan studentCurricularPlan = bean.getEnrolment().getStudentCurricularPlan();
-	final List<DegreeModule> dcpDegreeModules = new ArrayList<DegreeModule>();
+
+	final Set<DegreeModule> dcpDegreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
 
 	for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = cycle.getDegreeCurricularPlanOfDegreeModule();
 
 	    dcpDegreeModules.addAll(degreeCurricularPlan.getDcpDegreeModules(OptionalCurricularCourse.class, ExecutionYear
 		    .readCurrentExecutionYear()));
-	    
+
 	    final Iterator<DegreeModule> degreeModulesIter = dcpDegreeModules.iterator();
 	    while (degreeModulesIter.hasNext()) {
 		final CurricularCourse curricularCourse = (CurricularCourse) degreeModulesIter.next();
@@ -41,8 +41,6 @@ public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements 
 		}
 	    }
 	}
-
-	Collections.sort(dcpDegreeModules, DegreeModule.COMPARATOR_BY_NAME);
 
 	return dcpDegreeModules;
     }

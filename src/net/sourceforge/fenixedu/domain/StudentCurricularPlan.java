@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
-import net.sourceforge.fenixedu.domain.enrolment.ExternalCurricularCourseToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -2538,4 +2537,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	enrolment.delete();
 	return result;
     }
+
 }
