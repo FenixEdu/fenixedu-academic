@@ -388,7 +388,8 @@
 				<pathelement path="${build.home.webinf.classes}" />
 			</classpath>
 			<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(this, net.sourceforge.fenixedu.predicates." />
-			<arg value=");" />
+			<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(net.sourceforge.fenixedu.predicates." />
+			<arg value=");" />			
 			<arg value="${build.home.webinf.classes}" />
 			<arg value="${build.home.webinf.libs}/dml.jar" />
 			<arg value="${build.home.webinf.libs}/jvstm.jar" />
