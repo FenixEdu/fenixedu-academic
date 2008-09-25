@@ -26,6 +26,7 @@ public class LibraryCard extends LibraryCard_Base {
 		|| !getValidUntil().equals(libraryCardDTO.getValidUntil())) {
 	    setValidUntil(libraryCardDTO.getValidUntil());
 	    setCardEmitionDate(null);
+	    setLetterGenerationDate(null);
 	}
     }
 

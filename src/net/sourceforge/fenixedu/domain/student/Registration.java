@@ -95,7 +95,6 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -106,6 +105,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Registration extends Registration_Base {
@@ -309,8 +309,7 @@ public class Registration extends Registration_Base {
 	if (studentCurricularPlans.isEmpty()) {
 	    return null;
 	}
-	return (StudentCurricularPlan) Collections.max(studentCurricularPlans,
-		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
+	return Collections.max(studentCurricularPlans, StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
     }
 
     public StudentCurricularPlan getFirstStudentCurricularPlan() {
@@ -434,7 +433,7 @@ public class Registration extends Registration_Base {
     final public AllocatableSpace getRoomFor(final WrittenEvaluation writtenEvaluation) {
 	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolments()) {
 	    if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
-		return (AllocatableSpace) writtenEvaluationEnrolment.getRoom();
+		return writtenEvaluationEnrolment.getRoom();
 	    }
 	}
 	return null;
@@ -556,7 +555,7 @@ public class Registration extends Registration_Base {
     }
 
     final public ICurriculum getCurriculum(final CycleType cycleType) {
-	return getCurriculum((ExecutionYear) null, (CycleType) cycleType);
+	return getCurriculum((ExecutionYear) null, cycleType);
     }
 
     final public ICurriculum getCurriculum(final ExecutionYear executionYear, final CycleType cycleType) {
@@ -1063,7 +1062,12 @@ public class Registration extends Registration_Base {
     }
 
     final public ExecutionYear getLastEnrolmentExecutionYear() {
-	return getSortedEnrolmentsExecutionYears().last();
+	SortedSet<ExecutionYear> sorted = getSortedEnrolmentsExecutionYears();
+	if (!sorted.isEmpty()) {
+	    return sorted.last();
+	} else {
+	    return null;
+	}
     }
 
     final public Collection<ExecutionSemester> getEnrolmentsExecutionPeriods() {
@@ -1740,6 +1744,7 @@ public class Registration extends Registration_Base {
 	return getIngression() == Ingression.CIA2C;
     }
 
+    @Override
     public void setIngression(Ingression ingression) {
 	checkIngression(ingression);
 	super.setIngression(ingression);
@@ -2038,7 +2043,7 @@ public class Registration extends Registration_Base {
 
 	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
 		.hasPrevious();) {
-	    RegistrationState state = (RegistrationState) iter.previous();
+	    RegistrationState state = iter.previous();
 
 	    if (state.getStateDate().isAfter(endDateTime)) {
 		continue;
@@ -2065,7 +2070,7 @@ public class Registration extends Registration_Base {
 
 	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
 		.hasPrevious();) {
-	    RegistrationState state = (RegistrationState) iter.previous();
+	    RegistrationState state = iter.previous();
 	    if (state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
 		continue;
 	    }
