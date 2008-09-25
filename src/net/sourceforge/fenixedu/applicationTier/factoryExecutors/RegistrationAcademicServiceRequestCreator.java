@@ -25,10 +25,6 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public Object execute() {
-	{
-	    net.sourceforge.fenixedu.injectionCode.AccessControl.check(
-		    this, net.sourceforge.fenixedu.predicates.RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE);;
-	}
 	final Object result;
 	switch (getAcademicServiceRequestType()) {
 	case REINGRESSION:
