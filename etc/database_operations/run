@@ -40,7 +40,7 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "updateWeightInOldEnrolments" updateWeightInOldEnrolments.sql
+execute "updateWeightInOldEnrolments" updateWeightInOldEnrolments.sql IST
 execute "updateAlumniIdentityCheckRequest" updateAlumniIdentityCheckRequest.sql
 execute "addOJBColumnsToDegreeAndDCP" addOJBColumnsToDegreeAndDCP.sql
 execute "insertEmptyDegreeAndDCP" insertEmptyDegreeAndDCP.sql
