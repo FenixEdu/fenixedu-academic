@@ -72,7 +72,7 @@ public class ResidenceEventBean implements Serializable {
     }
 
     public boolean getStatus() {
-	if (!StringUtils.isNumeric(userName)) {
+	if (StringUtils.isEmpty(userName) || !StringUtils.isNumeric(userName)) {
 	    statusMessage = "label.error.invalid.student.number";
 	    return false;
 	}

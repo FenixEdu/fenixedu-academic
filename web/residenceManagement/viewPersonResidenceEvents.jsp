@@ -35,7 +35,7 @@
 			<fr:property name="param(cancel)" value="OID/event,person.OID/person,residenceMonth.OID/month" />
 			<fr:property name="bundle(cancel)" value="RESIDENCE_MANAGEMENT_RESOURCES" />
 			<fr:property name="visibleIfNot(cancel)" value="payed" />
-			<fr:property name="link(pay)" value="<%= "/residenceEventManagement.do?method=payResidenceEvent&monthOID=" + monthOID%>"/>
+			<fr:property name="link(pay)" value="<%= "/residenceEventManagement.do?method=preparePayResidenceEvent&monthOID=" + monthOID%>"/>
 			<fr:property name="key(pay)" value="label.pay.residence.event" />
 			<fr:property name="param(pay)" value="OID/event,person.OID/person,residenceMonth.OID/month" />
 			<fr:property name="bundle(pay)" value="RESIDENCE_MANAGEMENT_RESOURCES" />

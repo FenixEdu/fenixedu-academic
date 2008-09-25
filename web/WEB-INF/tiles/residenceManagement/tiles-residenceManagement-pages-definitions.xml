@@ -22,4 +22,8 @@
 		<put name="body" value="/residenceManagement/viewPersonResidenceEvents.jsp"/>
 	</definition>	
 
+	<definition name="insert-paying-date" extends="definition.residenceManagement.master">
+		<put name="body" value="/residenceManagement/insertPayingDate.jsp"/>
+	</definition>	
+
 </tiles-definitions>

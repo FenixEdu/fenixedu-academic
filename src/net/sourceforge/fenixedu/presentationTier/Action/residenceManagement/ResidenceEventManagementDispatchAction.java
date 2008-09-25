@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
@@ -14,13 +15,13 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
-import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -29,7 +30,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/residenceEventManagement", module = "residenceManagement")
 @Forwards( { @Forward(name = "manageResidenceEvents", path = "residenceManagement-events-management"),
-	@Forward(name = "viewPersonResidenceEvents", path = "view-person-residence-events") })
+	@Forward(name = "viewPersonResidenceEvents", path = "view-person-residence-events"),
+	@Forward(name="insertPayingDate", path="insert-paying-date")})
 public class ResidenceEventManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward manageResidenceEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -92,18 +94,35 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	return viewPersonResidenceEvents(mapping, actionForm, request, response);
     }
 
-    public ActionForward payResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward preparePayResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(Long.parseLong(request.getParameter("event")));
+	VariantBean bean = new VariantBean();
+	bean.setYearMonthDay(new YearMonthDay());
+	ResidenceMonth month = getResidenceMonth(request);
+	
+	request.setAttribute("month",month);
+	request.setAttribute("residenceEvent",residenceEvent);
+	request.setAttribute("bean", bean);
+	return mapping.findForward("insertPayingDate");
+	
+	
+    }
 
+    public ActionForward payResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
+	ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(Long.parseLong(request.getParameter("event")));
+	YearMonthDay date = (YearMonthDay) getRenderedObject("date");
+	
 	try {
-	    executeService("PayResidenceEvent", new Object[] { getLoggedPerson(request).getUser(), residenceEvent });
+	    executeService("PayResidenceEvent", new Object[] { getLoggedPerson(request).getUser(), residenceEvent, date });
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	}
 
 	return viewPersonResidenceEvents(mapping, actionForm, request, response);
     }
-
+    
 }

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -136,7 +137,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	POIFSFileSystem fs = new POIFSFileSystem(bean.getFile());
 	HSSFWorkbook wb = new HSSFWorkbook(fs);
 
-	HSSFSheet sheet = wb.getSheet(bean.getSpreadsheetName());
+	HSSFSheet sheet = wb.getSheetAt(0);
 
 	if (sheet == null) {
 	    throw new InvalidSpreadSheetName(bean.getSpreadsheetName(), getAllSpreadsheets(wb));
@@ -149,10 +150,10 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	    if (StringUtils.isEmpty(room))
 		break;
 
-	    String userName = String.valueOf(new Double(row.getCell((short) 1).getNumericCellValue()).intValue());
-	    String name = row.getCell((short) 2).getStringCellValue();
-	    String fiscalNumber = getValueFromColumn(row, 6);
-	    Double roomValue = new Double(row.getCell((short) 8).getNumericCellValue());
+	    String userName = getValueFromColumnMayBeNull(row, 1);
+	    String fiscalNumber = getValueFromColumnMayBeNull(row, 2);
+	    String name = getValueFromColumnMayBeNull(row, 3);
+	    Double roomValue = new Double(row.getCell((short) 4).getNumericCellValue());
 	    beans.add(new ResidenceEventBean(userName, fiscalNumber, name, roomValue));
 
 	    i++;
@@ -160,6 +161,14 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	return beans;
     }
 
+    private String getValueFromColumnMayBeNull(HSSFRow row, int i) {
+	HSSFCell cell = row.getCell((short)i);
+	if (cell == null) {
+	    return StringUtils.EMPTY;
+	}
+	return getValueFromColumn(row, i);
+    }
+    
     private String[] getAllSpreadsheets(HSSFWorkbook wb) {
 	String[] spreadsheets = new String[wb.getNumberOfSheets()];
 	for (int i = 0; i < wb.getNumberOfSheets(); i++) {
@@ -170,9 +179,9 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
     private String getValueFromColumn(HSSFRow row, int i) {
 	try {
-	    return new Integer(new Double(row.getCell((short) 6).getNumericCellValue()).intValue()).toString();
+	    return new Integer(new Double(row.getCell((short) i).getNumericCellValue()).intValue()).toString();
 	} catch (NumberFormatException e) {
-	    return row.getCell((short) 6).getStringCellValue();
+	    return row.getCell((short) i).getStringCellValue();
 	}
     }
 

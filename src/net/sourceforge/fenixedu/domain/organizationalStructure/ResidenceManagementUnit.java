@@ -29,4 +29,5 @@ public class ResidenceManagementUnit extends ResidenceManagementUnit_Base {
     public boolean isResidencePriceTableConfigured() {
 	return getResidencePriceTable().isConfigured();
     }
+
 }
