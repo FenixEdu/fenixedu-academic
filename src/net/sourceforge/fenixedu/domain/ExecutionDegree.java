@@ -494,10 +494,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return getAllByExecutionYearAndDegreeType(executionYear, typeOfCourse);
     }
 
-    private DegreeType getDegreeType() {
-	return getDegree().getDegreeType();
-    }
-
     public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(ExecutionYear executionYear, DegreeType typeOfCourse) {
 
 	if (executionYear == null || typeOfCourse == null) {
@@ -701,6 +697,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
+    }
+    
+    public DegreeType getDegreeType() {
+	return getDegree().getDegreeType();
     }
 
     public Set<DFACandidacy> getDfaCandidacies() {
