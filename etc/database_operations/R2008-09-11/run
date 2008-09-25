@@ -45,5 +45,5 @@ execute "Alter table Candidacy" AlterTableCandidacy.sql
 execute "Changing Degree codes" AlterDegreeCodes.sql IST
 execute "Add ojb concrete class column to EnrolmentLog table" alterTableEnrolmentLog.sql
 execute "Update EnrolmentLog ojb concrete class data" updateEnrolmentLogInformation.sql
-execute "Alter Table Country" alterTableCountry.sql
+execute "Alter Table Country" alterTableCountry2.sql
 
