@@ -17,8 +17,8 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	    final CurriculumGroup curriculumGroup) {
 
 	int numberOfDegreeModulesToEnrol = countNumberOfDegreeModulesToEnrol(enrolmentContext, courseGroup);
-	int numberOfApprovedEnrolments = curriculumGroup.getNumberOfApprovedCurriculumLines();
-	int numberOfEnrolments = curriculumGroup.getNumberOfEnrolments(enrolmentContext.getExecutionPeriod());
+	int numberOfApprovedEnrolments = curriculumGroup.getNumberOfApprovedChildCurriculumLines();
+	int numberOfEnrolments = curriculumGroup.getNumberOfChildEnrolments(enrolmentContext.getExecutionPeriod());
 	int numberOfChildCurriculumGroups = curriculumGroup.getNumberOfChildCurriculumGroupsWithCourseGroup();
 
 	return numberOfApprovedEnrolments + numberOfEnrolments + numberOfDegreeModulesToEnrol + numberOfChildCurriculumGroups;
@@ -91,7 +91,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	    }
 
 	    final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
-	    total += curriculumGroup.getNumberOfEnrolments(executionSemester.getPreviousExecutionPeriod());
+	    total += curriculumGroup.getNumberOfChildEnrolments(executionSemester.getPreviousExecutionPeriod());
 
 	    return rule.numberOfDegreeModulesExceedMaximum(total) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY,
 		    sourceDegreeModuleToEvaluate.getDegreeModule()) : RuleResult.createTrue(sourceDegreeModuleToEvaluate

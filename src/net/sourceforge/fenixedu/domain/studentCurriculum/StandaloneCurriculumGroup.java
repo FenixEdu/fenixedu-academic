@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+
 public class StandaloneCurriculumGroup extends StandaloneCurriculumGroup_Base {
-    
+
     private StandaloneCurriculumGroup() {
-        super();
+	super();
     }
-    
+
     protected StandaloneCurriculumGroup(final RootCurriculumGroup curriculumGroup) {
 	this();
 	init(curriculumGroup);
@@ -15,19 +17,28 @@ public class StandaloneCurriculumGroup extends StandaloneCurriculumGroup_Base {
     public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType() {
 	return NoCourseGroupCurriculumGroupType.STANDALONE;
     }
-    
+
     @Override
     public boolean canAdd(CurriculumLine curriculumLine) {
 	return true;
     }
-    
+
     @Override
     public Integer getChildOrder() {
 	return super.getChildOrder() - 1;
     }
-    
+
     @Override
     public boolean isStandalone() {
-        return true;
+	return true;
+    }
+
+    @Override
+    public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
+	int result = 0;
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    result += curriculumModule.getNumberOfAllApprovedEnrolments(executionSemester);
+	}
+	return result;
     }
 }

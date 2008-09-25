@@ -354,4 +354,6 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 		    StringAppender.append(ConclusionValue.class.getSimpleName(), ".", name()));
 	}
     }
+    
+    abstract public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester);
 }

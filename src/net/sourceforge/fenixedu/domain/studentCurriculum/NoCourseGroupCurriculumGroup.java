@@ -198,4 +198,9 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
 	return Collections.emptyList();
     }
+    
+    @Override
+    public int getNumberOfAllApprovedEnrolments(ExecutionSemester executionSemester) {
+        return 0;
+    }
 }

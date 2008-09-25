@@ -604,7 +604,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     /**
      * This method returns the number of approved child CurriculumLines
      */
-    final public int getNumberOfApprovedCurriculumLines() {
+    final public int getNumberOfApprovedChildCurriculumLines() {
 	int result = 0;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (curriculumModule.isCurriculumLine()) {
@@ -640,7 +640,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
-    final public int getNumberOfEnrolments(final ExecutionSemester executionSemester) {
+    final public int getNumberOfChildEnrolments(final ExecutionSemester executionSemester) {
 	int result = 0;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (curriculumModule instanceof Enrolment) {
@@ -649,6 +649,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 		    result++;
 		}
 	    }
+	}
+	return result;
+    }
+    
+    public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
+	int result = 0;
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    result += curriculumModule.getNumberOfAllApprovedEnrolments(executionSemester);
 	}
 	return result;
     }

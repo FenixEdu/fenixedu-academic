@@ -257,4 +257,9 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     public boolean hasCreatedBy() {
 	return getCreatedBy() != null && !getCreatedBy().isEmpty();
     }
+    
+    @Override
+    public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
+        return 0;
+    }
 }
