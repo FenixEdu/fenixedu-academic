@@ -45,3 +45,4 @@ execute "updateAlumniIdentityCheckRequest" updateAlumniIdentityCheckRequest.sql
 execute "addOJBColumnsToDegreeAndDCP" addOJBColumnsToDegreeAndDCP.sql
 execute "insertEmptyDegreeAndDCP" insertEmptyDegreeAndDCP.sql
 execute "Correct bibliopraphic references from competence course information" dataFix.sql IST
+execute "Residence Unit Hack for quick access" residenceUnitHack.sql

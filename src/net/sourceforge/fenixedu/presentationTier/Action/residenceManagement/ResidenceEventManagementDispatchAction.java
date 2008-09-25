@@ -11,9 +11,11 @@ import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -45,11 +47,15 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 
 	RenderUtils.invalidateViewState();
 
-	request.setAttribute("currentResidence", getLoggedPerson(request).getEmployee().getCurrentWorkingPlace());
+	request.setAttribute("currentResidence", getManagementUnit(request));
 	request.setAttribute("searchBean", importResidenceEventBean);
 	return mapping.findForward("manageResidenceEvents");
     }
 
+    private ResidenceManagementUnit getManagementUnit(HttpServletRequest request) {
+	return RootDomainObject.getInstance().getResidenceManagementUnit();
+    }
+    
     public ActionForward generatePaymentCodes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

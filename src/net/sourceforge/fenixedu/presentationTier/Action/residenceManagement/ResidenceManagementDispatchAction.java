@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportRes
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -107,7 +108,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     }
 
     private ResidenceManagementUnit getManagementUnit(HttpServletRequest request) {
-	return (ResidenceManagementUnit) getLoggedPerson(request).getEmployee().getCurrentWorkingPlace();
+	return RootDomainObject.getInstance().getResidenceManagementUnit();
     }
 
     private ResidenceMonth getResidenceMonth(HttpServletRequest request) {
