@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -120,6 +121,14 @@ public class DegreeInfo extends DegreeInfo_Base {
 	return getDegreeInfoFuture().getDesignedFor();
     }
 
+    public String getDesignedFor(final Language language) {
+	return hasDesignedFor(language) ? getDesignedFor().getContent(language) : "";
+    }
+
+    public boolean hasDesignedFor(final Language language) {
+	return getDesignedFor() != null && getDesignedFor().hasContent(language);
+    }
+
     public MultiLanguageString getEnrolmentPeriod() {
 	return getDegreeInfoCandidacy().getEnrolmentPeriod();
     }
@@ -128,8 +137,24 @@ public class DegreeInfo extends DegreeInfo_Base {
 	return getDegreeInfoFuture().getObjectives();
     }
 
+    public boolean hasObjectives(final Language language) {
+	return getObjectives() != null && getObjectives().hasContent(language);
+    }
+
+    public String getObjectives(final Language language) {
+	return hasObjectives(language) ? getObjectives().getContent(language) : "";
+    }
+
     public MultiLanguageString getProfessionalExits() {
 	return getDegreeInfoFuture().getProfessionalExits();
+    }
+
+    public boolean hasProfessionalExits(final Language language) {
+	return getProfessionalExits() != null && getProfessionalExits().hasContent(language);
+    }
+
+    public String getProfessionalExits(final Language language) {
+	return hasProfessionalExits(language) ? getProfessionalExits().getContent(language) : "";
     }
 
     public MultiLanguageString getQualificationLevel() {
@@ -194,6 +219,22 @@ public class DegreeInfo extends DegreeInfo_Base {
 
     public void setTestIngression(MultiLanguageString testIngression) {
 	getDegreeInfoCandidacy().setTestIngression(testIngression);
+    }
+
+    public boolean hasOperationalRegime(final Language language) {
+	return getOperationalRegime() != null && getOperationalRegime().hasContent(language);
+    }
+
+    public String getOperationalRegime(final Language language) {
+	return hasOperationalRegime(language) ? getOperationalRegime().getContent(language) : "";
+    }
+
+    public boolean hasAdditionalInfo(final Language language) {
+	return getAdditionalInfo() != null && getAdditionalInfo().hasContent(language);
+    }
+
+    public String getAdditionalInfo(final Language language) {
+	return hasAdditionalInfo(language) ? getAdditionalInfo().getContent(language) : "";
     }
 
 }
