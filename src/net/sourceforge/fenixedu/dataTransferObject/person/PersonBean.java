@@ -222,6 +222,10 @@ public class PersonBean implements Serializable {
     public void setCountryOfResidence(Country countryOfResidence) {
 	this.countryOfResidence = countryOfResidence == null ? null : new DomainReference<Country>(countryOfResidence);
     }
+    
+    public boolean hasCountryOfResidence() {
+	return getCountryOfResidence() != null;
+    }
 
     public YearMonthDay getDateOfBirth() {
 	return dateOfBirth;

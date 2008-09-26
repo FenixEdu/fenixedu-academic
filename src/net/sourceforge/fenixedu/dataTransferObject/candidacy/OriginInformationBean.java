@@ -60,7 +60,7 @@ public class OriginInformationBean implements Serializable {
     private ProfessionalSituationConditionType spouseProfessionalCondition;
 
     public OriginInformationBean(PersonBean personBean) {
-	if (!personBean.getCountryOfResidence().isDefaultCountry()) {
+	if (personBean.hasCountryOfResidence() && !personBean.getCountryOfResidence().isDefaultCountry()) {
 	    setDislocatedFromPermanentResidence(true);
 	}
     }
