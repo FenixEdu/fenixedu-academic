@@ -161,11 +161,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public DegreeType getDegreeType() {
-	return null;
-    }
-
-    @Override
     public void setDegreeType(final DegreeType degreeType) {
 	throw new DomainException("EmptyDegree.not.available");
     }
@@ -215,11 +210,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public MultiLanguageString getNameFor(final ExecutionYear executionYear) {
-	return MultiLanguageString.i18n().add("pt", super.getNome()).add("en", super.getNameEn()).finish();
-    }
-
-    @Override
     @Deprecated
     final public String getName() {
 	return getPresentationName();
@@ -232,7 +222,7 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     @Override
     final public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
-	return getPresentationName();
+	return getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage()));
     }
 
     @Override
