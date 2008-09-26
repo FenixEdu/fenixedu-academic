@@ -80,7 +80,6 @@ public class RegisterAlumniData extends AlumniNotificationService {
     public void run(final AlumniIdentityCheckRequestBean bean) {
 
 	final Alumni alumni = new AlumniManager().checkAlumniIdentity(bean.getDocumentIdNumber(), bean.getContactEmail());
-
 	if (!alumni.hasAnyPendingIdentityRequests()) {
 
 	    AlumniIdentityCheckRequest identityRequest = new AlumniIdentityCheckRequest(bean.getContactEmail(), bean
@@ -89,6 +88,11 @@ public class RegisterAlumniData extends AlumniNotificationService {
 			    .getNameOfFather(), bean.getNameOfMother(), bean.getRequestType());
 
 	    identityRequest.setAlumni(alumni);
+	    if (identityRequest.isValid()) {
+		identityRequest.validate(Boolean.TRUE);
+		sendIdentityCheckEmail(identityRequest, Boolean.TRUE);
+	    }
+
 	} else {
 	    throw new DomainException("alumni.has.pending.identity.requests");
 	}
