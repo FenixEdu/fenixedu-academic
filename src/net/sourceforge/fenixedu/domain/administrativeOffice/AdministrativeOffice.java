@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -183,7 +183,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 	}
 
-	result.add(EmptyDegree.getInstance());
+	Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
 	return result;
     }
