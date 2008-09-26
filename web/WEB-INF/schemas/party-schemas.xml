@@ -207,3 +207,6 @@
 		<property name="fileContentTypeSlot" value="contentType" />
 	</slot>
 </schema>
+<schema name="party.photo.upload.clean" type="net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean"
+    bundle="APPLICATION_RESOURCES">
+</schema>

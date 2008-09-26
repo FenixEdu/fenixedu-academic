@@ -24,18 +24,27 @@
 
 <fr:form action="/uploadPhoto.do" encoding="multipart/form-data">
 	<html:hidden property="method" value="" />
-	<fr:edit id="photoUpload" name="photo" schema="party.photo.upload">
-        <fr:layout name="tabular-editable">
-            <fr:property name="classes" value="tstyle2 thlight thwhite"/>
-        </fr:layout>
-    </fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-		onclick="this.form.method.value='upload'">
-		<bean:message key="button.submit" />
-	</html:submit>
+    <logic:notPresent name="preview">
+    	<fr:edit id="photoUpload" name="photo" schema="party.photo.upload">
+            <fr:layout name="tabular-editable">
+                <fr:property name="classes" value="tstyle2 thlight thwhite"/>
+            </fr:layout>
+        </fr:edit>
+    	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
+		  onclick="this.form.method.value='upload'">
+		  <bean:message key="button.submit" />
+	   </html:submit>
+    </logic:notPresent>
 
 	<logic:present name="preview">
+        <p>
+            <html:link page="/uploadPhoto.do?method=prepare">
+                <bean:message key="link.back" bundle="COMMON_RESOURCES" />
+            </html:link>
+        </p>
+
+        <fr:edit id="photoUpload" name="photo" schema="party.photo.upload.clean" />
 		<bean:define id="tempfile" name="photo" property="tempCompressedFile.absolutePath" />
 		<div class="mvert1"><html:img align="middle"
 			src="<%=request.getContextPath() + "/person/uploadPhoto.do?method=preview&amp;file=" + tempfile%>"

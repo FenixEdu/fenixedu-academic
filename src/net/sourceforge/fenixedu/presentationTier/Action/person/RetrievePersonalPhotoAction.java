@@ -43,7 +43,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     }
 
     public static ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	final String uuid = request.getParameter("uuid");
 	final User user = User.readUserByUserUId(uuid);
 	return user == null ? null : retrieve(request, response, user.getPerson());
@@ -53,54 +53,58 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	if (person.isPhotoPubliclyAvailable()) {
 	    return true;
 	}
-        final IUserView userView = UserView.getUser();
-        final Person requester = userView == null ? null : userView.getPerson();
-        if (requester != null) {
-            if (requester == person) {
-        	return true;
-            }
-            if (requester.hasRole(RoleType.MANAGER) || requester.hasRole(RoleType.DIRECTIVE_COUNCIL)) {
-        	return true;
-            }
-            if (person.hasRole(RoleType.STUDENT)
-        	    && (requester.hasRole(RoleType.TEACHER) || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
-        	return true;
-            }
-        }
-        return false;
+	final IUserView userView = UserView.getUser();
+	final Person requester = userView == null ? null : userView.getPerson();
+	if (requester != null) {
+	    if (requester == person) {
+		return true;
+	    }
+	    if (requester.hasRole(RoleType.MANAGER) || requester.hasRole(RoleType.DIRECTIVE_COUNCIL)) {
+		return true;
+	    }
+	    if (person.hasRole(RoleType.STUDENT)
+		    && (requester.hasRole(RoleType.TEACHER) || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        final IUserView userView = UserView.getUser();
-        return retrieve(request, response, userView.getPerson());
+	    HttpServletResponse response) {
+	final IUserView userView = UserView.getUser();
+	final Photograph personalPhoto = userView.getPerson().getPersonalPhotoEvenIfPending();
+	if (personalPhoto != null) {
+	    writePhoto(response, personalPhoto);
+	}
+	return null;
     }
 
     public ActionForward retrieveByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        final Integer personID = new Integer(request.getParameter("personCode"));
-        final Person person = (Person) rootDomainObject.readPartyByOID(personID);
-        return retrieve(request, response, person);
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final Integer personID = new Integer(request.getParameter("personCode"));
+	final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+	return retrieve(request, response, person);
     }
 
     public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        final Integer photoID = new Integer(request.getParameter("photoCode"));
-        Photograph photo = rootDomainObject.readPhotographByOID(photoID);
-        if (photo != null) {
-            writePhoto(response, photo);
-        }
-        return null;
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final Integer photoID = new Integer(request.getParameter("photoCode"));
+	Photograph photo = rootDomainObject.readPhotographByOID(photoID);
+	if (photo != null) {
+	    writePhoto(response, photo);
+	}
+	return null;
     }
-    
+
     protected static void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
-        try {
-            response.setContentType(personalPhoto.getContentType().getMimeType());
-            final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            dos.write(personalPhoto.getContents());
-            dos.close();
-        } catch (IOException e) {
-        }
+	try {
+	    response.setContentType(personalPhoto.getContentType().getMimeType());
+	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+	    dos.write(personalPhoto.getContents());
+	    dos.close();
+	} catch (IOException e) {
+	}
     }
 
 }
