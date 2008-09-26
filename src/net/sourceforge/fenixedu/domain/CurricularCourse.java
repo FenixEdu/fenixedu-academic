@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModu
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -1935,4 +1936,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 	curricularCourseFunctor.doWith(this);
     }
 
+    public CompetenceCourseLevel getCompetenceCourseLevel() {
+	return hasCompetenceCourse() ? getCompetenceCourse().getCompetenceCourseLevel() : null;
+    }
+    
+    public boolean hasCompetenceCourseLevel() {
+	return getCompetenceCourseLevel() != null;
+    }
 }
