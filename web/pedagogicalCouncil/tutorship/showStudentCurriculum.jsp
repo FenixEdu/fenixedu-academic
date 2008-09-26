@@ -18,7 +18,7 @@
 	<fr:edit id="filterForm" name="tutorateBean" schema="tutorship.student.number">
 		<fr:edit id="tutorateBean" name="tutorateBean" visible="false" />
 		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+			<fr:property name="classes" value="tstyle5 thnowrap_print thlight thleft mtop0"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="invalid" path="/studentTutorship.do?method=prepareStudentCurriculum" />
@@ -51,7 +51,7 @@
 		<span class="showpersonid">
 			<fr:view name="registration" property="student.person" schema="tutorship.tutorate.student">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
+					<fr:property name="classes" value="tstyle1 thnowrap_print thright thlight mtop0"/>
 					<fr:property name="rowClasses" value=",,,,,,"/>
 			    </fr:layout>
 			</fr:view>
@@ -64,7 +64,7 @@
 		<h3 class="separator2 mbottom1 fwnormal"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<fr:view name="registration" schema="student.registrationsWithStartData" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
+				<fr:property name="classes" value="tstyle1 thnowrap_print thright thlight mtop0"/>
 				<fr:property name="rowClasses" value=",,,,,,"/>
 			</fr:layout>
 		</fr:view>
@@ -73,7 +73,7 @@
 		<h3 class="separator2 mbottom1 fwnormal"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<fr:view name="registration" schema="student.registrationDetail" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
+				<fr:property name="classes" value="tstyle1 thnowrap_print thright thlight mtop0"/>
 				<fr:property name="rowClasses" value=",,,,,,"/>
 			</fr:layout>
 		</fr:view>

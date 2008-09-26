@@ -47,11 +47,14 @@ padding: 0px !important;
 border-collapse: collapse;
 margin-bottom: 10px;
 }
-.tstyle1  tr th, .tstyle5  tr th, .tstyle1  tr td, .tstyle5  tr td {
+.tstyle1 tr th, .tstyle5 tr th, .tstyle1 tr td, .tstyle5 tr td {
 padding: 3px;
 border: 1px solid #ccc;
 }
-.tstyle1  tr th, .tstyle5  tr th {
-white-space: nowrap;
+.tstyle1 tr th, .tstyle5 tr th {
 font-weight: normal;
+}
+
+table.thnowrap_print tr th {
+white-space: nowrap;
 }
