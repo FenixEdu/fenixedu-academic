@@ -43,7 +43,7 @@
 		</tr>
 		<tr>
 			<th><bean:message key="label.person.postCode" /></th>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.areaCode" property="areaCode" size="10"/></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.areaCode" property="areaCode" size="10" maxlength="8"/></td>
 		</tr>
 		<tr>
 			<th><bean:message key="label.person.areaOfPostCode" /></th>
