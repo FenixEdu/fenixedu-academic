@@ -25,9 +25,10 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
 
