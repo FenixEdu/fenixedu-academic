@@ -220,4 +220,8 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	setSpouseProfessionalCondition(originInformationBean.getSpouseProfessionalCondition());
 
     }
+    
+    public ExecutionYear getExecutionYear() {
+	return getExecutionDegree().getExecutionYear();
+    }
 }
