@@ -21,7 +21,6 @@
             <bean:message key="link.operator.photo.pending" bundle="MANAGER_RESOURCES"/>
         </html:link>
     </li>
-	<%--
 	<li>
 		<html:link page="/generatePasswordsForCandidacies.do?method=prepareChooseExecutionDegree">
 			<bean:message key="link.operator.candidacy.passwords" />
@@ -34,5 +33,4 @@
 			</html:link>
 		</li>
 	</li>
-	--%>
 </ul>
