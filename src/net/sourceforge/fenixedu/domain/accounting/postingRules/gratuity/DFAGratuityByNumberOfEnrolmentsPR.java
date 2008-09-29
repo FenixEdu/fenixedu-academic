@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -56,7 +57,8 @@ public class DFAGratuityByNumberOfEnrolmentsPR extends DFAGratuityByNumberOfEnro
     protected Money calculateDFAGratuityTotalAmountToPay(final Event event) {
 	final GratuityEvent gratuityEvent = (GratuityEvent) event;
 	final BigDecimal numberOfEnrolments = BigDecimal.valueOf(gratuityEvent.getEnrolmentsEctsForRegistration());
-	final BigDecimal ectsCredits = BigDecimal.valueOf(gratuityEvent.getEctsCreditsForRegistrationDegreeType());
+	final BigDecimal ectsCredits = BigDecimal.valueOf(gratuityEvent.getStudentCurricularPlan()
+		.getCycle(CycleType.THIRD_CYCLE).getDefaultEcts(gratuityEvent.getExecutionYear()));
 
 	final Money result = getDfaTotalAmount().multiply(numberOfEnrolments.divide(ectsCredits));
 	return result.lessOrEqualThan(getDfaTotalAmount()) ? result : getDfaTotalAmount();
