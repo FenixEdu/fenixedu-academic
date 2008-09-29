@@ -137,6 +137,7 @@ public class Person extends Person_Base {
 	throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getName() {
 	return super.getPartyName().getPreferedContent();
     }
@@ -221,6 +222,7 @@ public class Person extends Person_Base {
      * @deprecated use Person(PersonBean personBean)
      * @see Person(PersonBean personBean)
      */
+    @Deprecated
     public Person(InfoPersonEditor personToCreate, Country country) {
 
 	super();
@@ -415,6 +417,7 @@ public class Person extends Person_Base {
      * @deprecated use edit(PersonBean personBean)
      * @see edit(PersonBean personBean)
      */
+    @Deprecated
     public void edit(InfoPersonEditor personToEdit, Country country) {
 	setProperties(personToEdit);
 	if (country != null) {
@@ -582,6 +585,7 @@ public class Person extends Person_Base {
 	return null;
     }
 
+    @Override
     public List<ResearchResultPublication> getResearchResultPublications() {
 	List<ResearchResultPublication> resultPublications = new ArrayList<ResearchResultPublication>();
 	ResearchResult result = null;
@@ -1057,6 +1061,7 @@ public class Person extends Person_Base {
      * 
      * @return true if the person have been deleted, false otherwise
      */
+    @Override
     public void delete() {
 
 	if (!canBeDeleted()) {
@@ -2517,6 +2522,7 @@ public class Person extends Person_Base {
     /**
      * @use getInstitutionalOrDefaultEmailAddress()
      */
+    @Override
     @Deprecated
     public String getEmail() {
 	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
@@ -2621,6 +2627,7 @@ public class Person extends Person_Base {
 	return proposals;
     }
 
+    @Override
     public List<TSDProcess> getTSDProcesses() {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
 	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(department
@@ -2746,6 +2753,7 @@ public class Person extends Person_Base {
 	if (super.hasPersonalPhoto())
 	    photo.setPrevious(super.getPersonalPhoto());
 	super.setPersonalPhoto(photo);
+	addPersonalPhotoHistory(photo);
     }
 
     public boolean isPhotoPubliclyAvailable() {

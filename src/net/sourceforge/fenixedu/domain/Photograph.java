@@ -78,7 +78,7 @@ public class Photograph extends Photograph_Base {
     @Override
     public void setPrevious(Photograph previous) {
 	if (previous.getState() == PhotoState.PENDING) {
-	    previous.setState(PhotoState.REJECTED);
+	    previous.setState(PhotoState.USER_REJECTED);
 	    previous.setRejectedAcknowledged(Boolean.TRUE);
 	}
 	super.setPrevious(previous);
@@ -89,10 +89,19 @@ public class Photograph extends Photograph_Base {
     }
 
     public void delete() {
-	this.removePerson();
 	removeRootDomainObject();
-	if (hasPrevious()) {
-	    getPrevious().delete();
+	if (hasPendingHolder())
+	    removePendingHolder();
+	removePerson();
+	removeHistoricalPerson();
+	Photograph prev = getPrevious();
+	if (prev != null) {
+	    removePrevious();
+	    prev.delete();
+	}
+	Photograph next = getNext();
+	if (next != null) {
+	    removeNext();
 	}
 	super.deleteDomainObject();
     }

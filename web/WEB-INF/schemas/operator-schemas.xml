@@ -123,7 +123,9 @@
 		<property name="imageFormat"
 			value="/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=${idInternal}" />
 	</slot>
-	<slot name="state" key="label.operator.photo.state" layout="radio" />
+	<slot name="state" key="label.operator.photo.state" layout="radio">
+        <property name="excludedValues" value="USER_REJECTED" />
+	</slot>
 </schema>
 
 <schema name="operator.photo.photo.details" type="net.sourceforge.fenixedu.domain.Person"

@@ -12,7 +12,7 @@ public class CancelPhotographSubmission extends FenixService {
     public void run() {
 	Photograph photo = AccessControl.getPerson().getPersonalPhotoEvenIfRejected();
 	if (photo != null && photo.getState() == PhotoState.PENDING) {
-	    photo.setState(PhotoState.REJECTED);
+	    photo.setState(PhotoState.USER_REJECTED);
 	    photo.setRejectedAcknowledged(Boolean.TRUE);
 	}
     }
