@@ -141,7 +141,7 @@
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{markSheet}.getCurricularCourse().getName()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{markSheet}.getCurricularCourseName()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -175,7 +175,7 @@
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Curso de " + $P{markSheet}.getCurricularCourse().getDegreeCurricularPlan().getDegree().getNome()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Curso de " + $P{markSheet}.getDegreeName()]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
