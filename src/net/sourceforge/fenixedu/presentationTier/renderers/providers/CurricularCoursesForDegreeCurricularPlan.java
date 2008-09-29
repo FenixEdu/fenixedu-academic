@@ -4,41 +4,76 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.CurricularCourseMarksheetManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-
 	final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
-	final List<DegreeModule> result = new ArrayList<DegreeModule>();
-	if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getDegreeCurricularPlan() != null
-		&& markSheetManagementBean.getExecutionPeriod() != null) {
+
+	final List<CurricularCourseMarksheetManagementBean> result = new ArrayList<CurricularCourseMarksheetManagementBean>();
+
+	if (markSheetManagementBean.hasDegree() && markSheetManagementBean.hasDegreeCurricularPlan()
+		&& markSheetManagementBean.hasExecutionPeriod()) {
 
 	    if (markSheetManagementBean.getDegree().hasDegreeCurricularPlans(markSheetManagementBean.getDegreeCurricularPlan())) {
 		if (markSheetManagementBean.getDegree().isBolonhaDegree()) {
-		    result.addAll(markSheetManagementBean.getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class,
-			    null));
+		    addCurricularCourses(result, markSheetManagementBean.getDegreeCurricularPlan().getDcpDegreeModules(
+			    CurricularCourse.class, null), markSheetManagementBean.getExecutionPeriod());
 		} else {
-		    result.addAll(markSheetManagementBean.getDegreeCurricularPlan().getCurricularCourses());
+		    addCurricularCourses(result, markSheetManagementBean.getDegreeCurricularPlan().getCurricularCourses(),
+			    markSheetManagementBean.getExecutionPeriod());
 		}
 	    } else {
 		markSheetManagementBean.setDegreeCurricularPlan(null);
-		markSheetManagementBean.setCurricularCourse(null);
+		markSheetManagementBean.setCurricularCourseBean(null);
 	    }
 	}
+	Collections.sort(result, CurricularCourseMarksheetManagementBean.COMPARATOR_BY_NAME);
 
-	Collections.sort(result, DegreeModule.COMPARATOR_BY_NAME);
 	return result;
     }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
+    private void addCurricularCourses(final List<CurricularCourseMarksheetManagementBean> result,
+	    final List<? extends DegreeModule> dcpDegreeModules, final ExecutionSemester executionSemester) {
+
+	for (final DegreeModule degreeModule : dcpDegreeModules) {
+	    result.add(new CurricularCourseMarksheetManagementBean((CurricularCourse) degreeModule, executionSemester));
+	}
+
     }
 
+    public Converter getConverter() {
+	return new BiDirectionalConverter() {
+
+	    @Override
+	    public Object convert(Class type, Object value) {
+		final String str = (String) value;
+		if (StringUtils.isEmpty(str)) {
+		    return null;
+		}
+		final String[] values = str.split(":");
+
+		final CurricularCourse course = (CurricularCourse) DomainObject.fromOID(Long.valueOf(values[0]).longValue());
+		final ExecutionSemester semester = (ExecutionSemester) DomainObject.fromOID(Long.valueOf(values[1]).longValue());
+
+		return new CurricularCourseMarksheetManagementBean(course, semester);
+	    }
+
+	    @Override
+	    public String deserialize(final Object object) {
+		return (object == null) ? "" : ((CurricularCourseMarksheetManagementBean) object).getKey();
+	    }
+	};
+    }
 }

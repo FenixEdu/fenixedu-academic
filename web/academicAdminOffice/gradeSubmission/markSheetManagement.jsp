@@ -46,7 +46,7 @@
 <logic:present name="searchResult">
 <div class="mtop15">
 	<p>
-		<strong><bean:write name="edit" property="curricularCourse.name"/></strong>
+		<strong><bean:write name="edit" property="curricularCourseName"/></strong>
 		
 		<bean:define id="executionPeriodID" name="edit" property="executionPeriod.idInternal" />
 		<bean:define id="degreeID" name="edit" property="degree.idInternal" />

@@ -30,15 +30,9 @@
 		<property name="format" value="${name}" />
 		<property name="destination" value="postBack"/>
 	</slot>
-	<slot name="curricularCourse" key="label.curricularCourse"
-		layout="menu-select"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursesForDegreeCurricularPlan" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.CurricularCourse" />
-		<property name="eachLayout" value="values-dash" />
-		<property name="eachSchema" value="curricularCourse.name.code" />
+	<slot name="curricularCourseBean" key="label.curricularCourse" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursesForDegreeCurricularPlan" />
+		<property name="format" value="${name}" />
 	</slot>
 </schema>
 
@@ -74,18 +68,11 @@
 		<property name="format" value="${name}" />
 		<property name="destination" value="postBack"/>
 	</slot>
-	<slot name="curricularCourse" key="label.curricularCourse"
-		layout="menu-select"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursesForDegreeCurricularPlan" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.CurricularCourse" />
-		<property name="eachLayout" value="values-dash" />
-		<property name="eachSchema" value="curricularCourse.name.code" />
+	<slot name="curricularCourseBean" key="label.curricularCourse" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursesForDegreeCurricularPlan" />
+		<property name="format" value="${name}" />
 	</slot>
 </schema>
-
 
 <schema name="curricularCourse.name.code" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.CurricularCourse">
@@ -118,10 +105,10 @@
 <schema name="markSheet.view" bundle="ACADEMIC_OFFICE_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.MarkSheet">
 
-	<slot name="curricularCourse.degree.name" key="label.degree"/>
-	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
-	<slot name="curricularCourse.name" key="label.curricular.course.name" />
-	<slot name="curricularCourse.code" key="label.curricular.course.code" />	
+	<slot name="degreeName" key="label.degree"/>
+	<slot name="degreeCurricularPlanName" key="label.degreeCurricularPlan" />
+	<slot name="curricularCourseName" key="label.curricular.course.name" />
+	<slot name="curricularCourseAcronym" key="label.curricular.course.code" />	
 	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
 		<property name="format" value="${semester}ºS ${executionYear.year}" />
 	</slot>
@@ -173,11 +160,9 @@
 <schema name="markSheet.view.step2" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean">
 	
-	<slot name="degree.name" key="label.degree"/>
-	<slot name="degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
-	<slot name="curricularCourse" layout="format" key="label.curricularCourse" >
-		<property name="format" value="${name} (${code})" />
-	</slot>
+	<slot name="degreeName" key="label.degree"/>
+	<slot name="degreeCurricularPlanName" key="label.degreeCurricularPlan" />
+	<slot name="curricularCourseNameAndCode" key="label.curricularCourse" />
 	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
 		<property name="format" value="${semester}º ${executionYear.year}" />
 	</slot>
@@ -220,11 +205,9 @@
 <schema name="markSheet.view.edit" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementEditBean">
 	
-	<slot name="degree.name" key="label.degree"/>
-	<slot name="degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
-	<slot name="curricularCourse" layout="format" key="label.curricularCourse" >
-		<property name="format" value="${name} (${code})" />
-	</slot>
+	<slot name="degreeName" key="label.degree"/>
+	<slot name="degreeCurricularPlanName" key="label.degreeCurricularPlan" />
+	<slot name="curricularCourseNameAndCode" key="label.curricularCourse" />
 	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
 		<property name="format" value="${semester}º ${executionYear.year}" />
 	</slot>
@@ -401,14 +384,14 @@
 	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
 		<property name="format" value="${semester}º ${executionYear.year}" />
 	</slot>
-	<slot name="degree.name" key="label.degree"/>
-	<slot name="degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>	
+	<slot name="degreeName" key="label.degree"/>
+	<slot name="degreeCurricularPlanName" key="label.degreeCurricularPlan"/>	
 </schema>
 
 <schema name="markSheet.send.mail.choose.markSheets" bundle="ACADEMIC_OFFICE_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetToConfirmSendMailBean">
 	<slot name="toSubmit" key="label.blank" />		
-	<slot name="markSheet.curricularCourse.name" key="label.curricularCourse" read-only="true"/>
+	<slot name="curricularCourseName" key="label.curricularCourse" read-only="true"/>
 	<slot name="markSheet.responsibleTeacher.person.name" key="label.responsibleTeacher" read-only="true"/>
 </schema>
 
@@ -417,8 +400,6 @@
 	<slot name="toSubmit" key="label.blank" />		
 	<slot name="executionCourse.nome" key="label.executionCourse" read-only="true"/>
 </schema>
-
-
 
 <schema name="markSheet.teacher.gradeSubmission.view.submited.marks" bundle="APPLICATION_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
@@ -469,9 +450,9 @@
 
 <schema name="markSheet.teacher.gradeSubmission.view.submited.markSheets" bundle="ACADEMIC_OFFICE_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.MarkSheet">
-	<slot name="curricularCourse.degree.name" key="label.degree"/>
-	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
-	<slot name="curricularCourse.name" key="label.curricular.course.name" />
+	<slot name="degreeName" key="label.degree"/>
+	<slot name="degreeCurricularPlanName" key="label.degreeCurricularPlan" />
+	<slot name="curricularCourseName" key="label.curricular.course.name" />
 	<slot name="responsibleTeacher.teacherNumber" key="label.responsibleTeacher"/>	
 	<slot name="markSheetType"  key="label.markSheetType"/>
 	<slot name="creationDateDateTime" key="label.creationDate"/>

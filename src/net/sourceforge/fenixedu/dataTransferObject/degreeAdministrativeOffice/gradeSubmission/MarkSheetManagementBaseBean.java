@@ -13,18 +13,21 @@ public class MarkSheetManagementBaseBean implements Serializable {
 
     private DomainReference<Degree> degree;
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
-    private DomainReference<CurricularCourse> curricularCourse;
     private DomainReference<ExecutionSemester> executionSemester;
+    private CurricularCourseMarksheetManagementBean curricularCourseBean;
     transient private DomainReference<Teacher> teacher;
-
     private String url;
 
-    public CurricularCourse getCurricularCourse() {
-	return (this.curricularCourse == null) ? null : this.curricularCourse.getObject();
+    public CurricularCourseMarksheetManagementBean getCurricularCourseBean() {
+	return curricularCourseBean;
     }
 
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = (curricularCourse != null) ? new DomainReference<CurricularCourse>(curricularCourse) : null;
+    public void setCurricularCourseBean(CurricularCourseMarksheetManagementBean curricularCourseBean) {
+	this.curricularCourseBean = curricularCourseBean;
+    }
+
+    public CurricularCourse getCurricularCourse() {
+	return getCurricularCourseBean().getCurricularCourse();
     }
 
     public Degree getDegree() {
@@ -33,6 +36,10 @@ public class MarkSheetManagementBaseBean implements Serializable {
 
     public void setDegree(Degree degree) {
 	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+    }
+
+    public boolean hasDegree() {
+	return getDegree() != null;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
@@ -44,12 +51,20 @@ public class MarkSheetManagementBaseBean implements Serializable {
 		degreeCurricularPlan) : null;
     }
 
+    public boolean hasDegreeCurricularPlan() {
+	return getDegreeCurricularPlan() != null;
+    }
+
     public ExecutionSemester getExecutionPeriod() {
 	return (this.executionSemester == null) ? null : this.executionSemester.getObject();
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
 	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+    }
+
+    public boolean hasExecutionPeriod() {
+	return getExecutionPeriod() != null;
     }
 
     public Teacher getTeacher() {
@@ -68,4 +83,19 @@ public class MarkSheetManagementBaseBean implements Serializable {
 	this.url = url;
     }
 
+    public String getDegreeName() {
+	return getDegree().getNameFor(getExecutionPeriod()).getContent();
+    }
+
+    public String getDegreeCurricularPlanName() {
+	return getDegreeCurricularPlan().getName();
+    }
+
+    public String getCurricularCourseName() {
+	return getCurricularCourse().getName(getExecutionPeriod());
+    }
+
+    public String getCurricularCourseNameAndCode() {
+	return getCurricularCourse().getName(getExecutionPeriod()) + " " + getCurricularCourse().getAcronym(getExecutionPeriod());
+    }
 }

@@ -30,4 +30,8 @@ public class MarkSheetToConfirmSendMailBean implements Serializable {
     public void setToSubmit(boolean toSubmit) {
 	this.toSubmit = toSubmit;
     }
+    
+    public String getCurricularCourseName() {
+	return getMarkSheet().getCurricularCourseName();
+    }
 }

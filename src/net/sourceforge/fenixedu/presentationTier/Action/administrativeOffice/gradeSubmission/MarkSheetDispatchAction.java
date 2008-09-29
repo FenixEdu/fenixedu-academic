@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.CurricularCourseMarksheetManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -53,10 +54,13 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 	Integer degreeCurricularPlanID = (Integer) form.get("dcpID");
 	Integer curricularCourseID = (Integer) form.get("ccID");
 
-	markSheetBean.setExecutionPeriod(rootDomainObject.readExecutionSemesterByOID(executionPeriodID));
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+
+	markSheetBean.setExecutionPeriod(executionSemester);
 	markSheetBean.setDegree(rootDomainObject.readDegreeByOID(degreeID));
 	markSheetBean.setDegreeCurricularPlan(rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID));
-	markSheetBean.setCurricularCourse((CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID));
+	markSheetBean.setCurricularCourseBean(new CurricularCourseMarksheetManagementBean(curricularCourse, executionSemester));
 
 	request.setAttribute("edit", markSheetBean);
     }
