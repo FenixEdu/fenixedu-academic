@@ -21,7 +21,17 @@
 <logic:present name="alumniPublicAccessMessage">
 	<span class="error0"><bean:write name="alumniPublicAccessMessage" scope="request" /></span><br/>
 </logic:present>
-<p class="btt_inscrever"><a href="#" id="show" onclick="document.getElementById('registration').style.display='block'"><bean:message key="label.alumni.register" bundle="ALUMNI_RESOURCES" /></a></p>
+
+<table>
+	<tr>
+		<td>
+			<span class="btt_inscrever"><a href="#" id="show" onclick="document.getElementById('registration').style.display='block'"><bean:message key="label.alumni.register" bundle="ALUMNI_RESOURCES" /></a></span>
+		</td>
+		<td style="padding-left: 0.5em;">
+			<span class="btt_login"><a href="<bean:message key="label.fenix.login.hostname" bundle="ALUMNI_RESOURCES" />"><bean:message key="label.alumni.register" bundle="ALUMNI_RESOURCES" /></a></span>
+		</td>
+	</tr>
+</table>
 
 <logic:present name="showForm">
 	<logic:equal name="showForm" value="true">

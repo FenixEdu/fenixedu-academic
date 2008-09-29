@@ -17,6 +17,9 @@ ul.material li.feedback { background: url(http://www.ist.utl.pt/img/alumni/icon_
 
 .btt_inscrever a, .btt_inscrever a:visited, .btt_inscrever a:hover { text-indent: -9999px; background: url(http://www.ist.utl.pt/img/alumni/btt_inscrever.gif) no-repeat; width: 162px; height: 34px; display: block; text-decoration: none; border: none; overflow: hidden; margin: 0.5em 0 1.33em; }
 .btt_inscrever a:hover { background: url(http://www.ist.utl.pt/img/alumni/btt_inscrever_h.gif) no-repeat; margin: 0.5em 0 1.33em; }
+.btt_login a, .btt_login a:visited, .btt_login a:hover { text-indent: -9999px; background: url(../images/btt_login.gif) no-repeat; width: 88px; height: 34px; display: block; text-decoration: none; border: none; overflow: hidden; margin: 0.5em 0 1.33em; }
+.btt_login a:hover { background: url(../images/btt_login_h.gif) no-repeat; margin: 0.5em 0 1.33em; }
+
 .col_right_alumni { float: right; margin: 30px; }
 .h_box p { margin-top: 0; padding: 0.5em 0 0 35px; }
 
