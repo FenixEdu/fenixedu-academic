@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import pt.ist.fenixWebFramework.rendererExtensions.factories.DomainMetaObjectCollection;
 import pt.ist.fenixWebFramework.renderers.model.DefaultMetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectCollection;
