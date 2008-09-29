@@ -801,4 +801,19 @@ public class MarkSheet extends MarkSheet_Base {
 	return stringBuilder.toString();
     }
 
+    public String getDegreeName() {
+	return getCurricularCourse().getDegree().getNameFor(getExecutionPeriod()).getContent();
+    }
+    
+    public String getDegreeCurricularPlanName() {
+	return getCurricularCourse().getDegreeCurricularPlan().getName();
+    }
+    
+    public String getCurricularCourseName() {
+	return getCurricularCourse().getName(getExecutionPeriod());
+    }
+    
+    public String getCurricularCourseAcronym() {
+	return getCurricularCourse().getAcronym(getExecutionPeriod());
+    }
 }
