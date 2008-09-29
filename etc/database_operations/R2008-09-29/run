@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Deleting Dangling Photos" deleteDanglingPhotos.sql
