@@ -93,7 +93,6 @@ public class Photograph extends Photograph_Base {
 	if (hasPendingHolder())
 	    removePendingHolder();
 	removePerson();
-	removeHistoricalPerson();
 	Photograph prev = getPrevious();
 	if (prev != null) {
 	    removePrevious();
