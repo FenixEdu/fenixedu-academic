@@ -25,9 +25,11 @@
 	<bean:write name="alumniEmailErrorMessage"  scope="request" />
 </logic:present>
 
+<%--
 <logic:present name="alumniEmailSuccessMessage">
 	<p>O endereço abaixo será enviado por email. Nesta fase de testes, estará aqui visível:</p>
 	<p><a href='<bean:write name="alumniEmailSuccessMessage"  scope="request" />'><bean:write name="alumniEmailSuccessMessage"  scope="request" /></a></p>
 </logic:present>
+--%>
 
 <br/><br/><br/><br/><br/><br/><br/><br/>
