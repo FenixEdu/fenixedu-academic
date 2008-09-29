@@ -66,8 +66,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(translateDegreeType(degreeType));
 	stringBuilder.append(fillLeftString(student.getNumber().toString(), '0', 8));
 	stringBuilder.append("A");
-	stringBuilder.append("1012");
-	stringBuilder.append(" ");
+	stringBuilder.append("1112");
+	stringBuilder.append(" "); 
 	stringBuilder.append(" ");
 	stringBuilder.append("00");
 	stringBuilder.append("00");
@@ -244,7 +244,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	}
 	return degreeName;
     }
-
+    
     public static String normalize(final String string) {
 	final String normalized = StringNormalizer.normalize(string);
 	return StringUtils.upperCase(normalized);
