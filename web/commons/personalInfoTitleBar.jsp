@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<bean:message key="label.user" bundle="GLOBAL_RESOURCES"/>
+<bean:message key="label.user" bundle="GLOBAL_RESOURCES"/>: 
 <bean:write name="USER_SESSION_ATTRIBUTE" property="person.nickname"/>
 
 <%--
