@@ -107,9 +107,9 @@
 						key="textField-1"/>
 					<box></box>
 					<textElement textAlignment="Justified" markup="html" lineSpacing="Single">
-						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="13" isUnderline="false" isPdfEmbedded ="true"/>
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="13" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["       Com o seu código pessoal (PIN abaixo indicado) poderá consultar o seu registo de utilizador da Biblioteca, assim como as informações sobre os livros que tem requisitados e a  respectiva data de devolução. Para aceder a esta facilidade deverá entrar na base \"Millenium\", por exemplo, através da página da Biblioteca Central (<u>http://bist.ist.utl.pt</u>) e seleccionar <u>\"millenium catálogo on-line\"</u> e depois no campo \"área pessoal\" seleccionar <u>\"Meu Millenium\"</u>. Nessa altura deverá preencher os três campos indicados: \"O Seu Nome\"; \"Número do seu Cartão da Biblioteca\" (que se encontra no verso do mesmo) e \"Introduza o seu PIN\" e, finalmente, \"Submeter\"."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Com o seu c&oacute;digo pessoal (PIN abaixo indicado) poder&aacute; consultar o seu registo de utilizador da Biblioteca, assim como as informa&ccedil;&otilde;es sobre os livros que tem requisitados e a respectiva data de devolu&ccedil;&atilde;o. Para aceder a esta facilidade dever&aacute; entrar na base \"Millenium\", por exemplo, atrav&eacute;s da p&aacute;gina da Biblioteca Central (<u>http://bist.ist.utl.pt</u>) e seleccionar <u>\"millenium cat&aacute;logo on-line\"</u> e depois no campo \"&aacute;rea pessoal\" seleccionar <u>\"Meu Millenium\"</u>. Nessa altura dever&aacute; preencher os tr&ecirc;s campos indicados: \"O Seu Nome\"; \"N&uacute;mero do seu Cart&atilde;o da Biblioteca\" (que se encontra no verso do mesmo) e \"Introduza o seu PIN\" e, finalmente, \"Submeter\"."]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
