@@ -385,10 +385,10 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	row.setCell(degree.getDegreeType().getLocalizedName());
 	row.setCell(degree.getDegreeType().getYears());
-	row.setCell(degree.getDegreeType().getYears() * 24);
+	row.setCell(degree.getDegreeType().getYears() * 40);
 	row.setCell(degree.getEctsCredits());
 
-	final DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
+	final DegreeInfo degreeInfo = degree.getMostRecentDegreeInfo(executionYear);
 	if (degreeInfo != null) {
 	    row.setCell(normalize(degreeInfo.getDesignedFor(Language.pt)));
 	    row.setCell(normalize(degreeInfo.getDesignedFor(Language.en)));
