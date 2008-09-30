@@ -2539,6 +2539,10 @@ public class Registration extends Registration_Base {
 	return getLastStudentCurricularPlan().getDegreeCurricularPlan();
     }
 
+    public Degree getLastDegree() {
+	return getLastDegreeCurricularPlan().getDegree();
+    }
+
     private boolean hasAnyNotPayedGratuityEvents() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.hasAnyNotPayedGratuityEvents()) {
