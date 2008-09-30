@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
+import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -100,15 +102,12 @@ public class UploadPhotoDA extends FenixDispatchAction {
 	return mapping.findForward("visualizePersonalInformation");
     }
 
-    public ActionForward acknowledgeRejection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	executeService(request, "AcknowledgePhotographRejection", new Object[0]);
-	return mapping.findForward("visualizePersonalInformation");
-    }
-
     public ActionForward cancelSubmission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	executeService(request, "CancelPhotographSubmission", new Object[0]);
+	Photograph photo = AccessControl.getPerson().getPersonalPhotoEvenIfRejected();
+	if (photo != null) {
+	    photo.cancelSubmission();
+	}
 	return mapping.findForward("visualizePersonalInformation");
     }
 }

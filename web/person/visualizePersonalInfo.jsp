@@ -59,15 +59,6 @@
                             </html:link>
                             </p>
 					    </logic:equal>
-    					<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="REJECTED">
-                            <logic:equal name="person" property="personalPhotoEvenIfRejected.rejectedAcknowledged" value="false">
-  								<p><em><bean:message key="label.person.photo.rejected.info" bundle="APPLICATION_RESOURCES" /></em>
-                                <html:link action="/uploadPhoto.do?method=acknowledgeRejection">
-                                    <bean:message key="link.hide.message" bundle="APPLICATION_RESOURCES" />
-                                </html:link>
-                                </p>
-                            </logic:equal>
-					    </logic:equal>
     				</logic:notEmpty>
                     </p>
 				</div>

@@ -660,7 +660,6 @@ class DomainObject {
         PhotoState state;
         DateTime submission;
         DateTime stateChange;
-        Boolean rejectedAcknowledged;
     }
     
     relation PreviousPhotograph {

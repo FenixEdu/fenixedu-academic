@@ -319,20 +319,6 @@
 			<src path="${src_gen}" />
 			<src path="${src}" />
 		</javac>
-		<copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true" failonerror="false" />
-		<java classname="pt.ist.fenixWebFramework.services.ServiceAnnotationInjector" failonerror="true">
-			<classpath refid="class.path.lib.ref" />
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}" />
-			</classpath>
-			<arg value="${build.home.webinf.classes}" />
-			<arg value="${build.home.webinf.libs}/jvstm.jar" />
-			<arg value="${build.home.webinf.libs}/fenix-framework.jar" />
-			<arg value="${build.home.webinf.libs}/fenix-web-framework.jar" />
-			<arg value="${build.home.webinf.libs}/joda-time-1.5.2.jar" />
-			<arg value="${build.home.webinf.libs}/struts.jar" />
-			<arg value="lib/servlet-api-2.3.jar" />
-		</java>
 	</target>
 
 	<target name="post-compile" description="Does some stuff after compile">
@@ -344,12 +330,26 @@
 			<arg value="-d" />
 			<arg value="${dml.definition.file.completed}" />
 		</java>
+	      <copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true" failonerror="false" />
+	        <java classname="pt.ist.fenixWebFramework.services.ServiceAnnotationInjector" failonerror="true">
+	            <classpath refid="class.path.lib.ref" />
+	            <classpath>
+	                <pathelement path="${build.home.webinf.classes}" />
+	            </classpath>
+	            <arg value="${build.home.webinf.classes}" />
+	            <arg value="${build.home.webinf.libs}/jvstm.jar" />
+	            <arg value="${build.home.webinf.libs}/fenix-framework.jar" />
+	            <arg value="${build.home.webinf.libs}/fenix-web-framework.jar" />
+	            <arg value="${build.home.webinf.libs}/joda-time-1.5.2.jar" />
+	            <arg value="${build.home.webinf.libs}/struts.jar" />
+	            <arg value="lib/servlet-api-2.3.jar" />
+	        </java>
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes}">
 			<fileset dir="${src}">
 				<include name="**/*.*" />
 				<exclude name="**/*.java" />
 			</fileset>
-		</copy>		
+		</copy>
 	</target>
 
 	<target name="generateStubs" depends="set-properties">
@@ -389,7 +389,7 @@
 			</classpath>
 			<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(this, net.sourceforge.fenixedu.predicates." />
 			<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(net.sourceforge.fenixedu.predicates." />
-			<arg value=");" />			
+			<arg value=");" />
 			<arg value="${build.home.webinf.classes}" />
 			<arg value="${build.home.webinf.libs}/dml.jar" />
 			<arg value="${build.home.webinf.libs}/jvstm.jar" />
@@ -620,4 +620,50 @@
 		</java>
 	</target>
 
+	<target name="compile-dev" description="Compile application" depends="i18nDefault, compile-domain-dev, write-all-properties, 
+	        base-compile-dev" />
+
+	<target name="compile-domain-dev" description="Compile application's domain" depends="generate-groups-language">
+		<javac destdir="${build.home.webinf.classes}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
+			<classpath refid="class.path.lib.ref" />
+			<src path="${src_gen}" />
+			<src path="${src}" />
+			<include name="net/sourceforge/fenixedu/tools/**" />
+			<include name="net/sourceforge/fenixedu/domain/**" />
+			<include name="relation/**" />
+		</javac>
+	</target>
+	<target name="base-compile-dev" description="Compile application">
+		<javac destdir="${build.home.webinf.classes}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
+			<classpath refid="class.path.lib.ref" />
+			<src path="${src_gen}" />
+			<src path="${src}" />
+		</javac>
+		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" dir="${build.home.webinf.classes}" fork="true">
+			<classpath refid="class.path.lib.ref" />
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}" />
+			</classpath>
+			<arg value="-d" />
+			<arg value="${dml.definition.file.completed}" />
+		</java>
+		<copy encoding="${encoding}" todir="${build.home.webinf.classes}">
+			<fileset dir="${src}">
+				<include name="**/*.*" />
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+    <target name="berserk-trash" depends="compile-dev">
+        <java classname="net.sourceforge.fenixedu.tools.BerserkReplacer" 
+            dir="${build.home.webinf.classes}"
+            fork="true">
+            <classpath>
+                <pathelement path="${build.home.webinf.classes}" />
+            </classpath>
+            <classpath refid="class.path.lib.ref" />
+        </java>
+    </target>
+	
 </project>

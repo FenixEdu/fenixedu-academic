@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -13,10 +16,14 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Photograph extends Photograph_Base {
 
@@ -24,11 +31,20 @@ public class Photograph extends Photograph_Base {
 
     private static final int COMPRESSED_PHOTO_HEIGHT = 100;
 
+    private static final String RESOURCE_BUNDLE_NAME = "resources.PersonalInformationResources";
+
+    private static final String REJECTION_MAIL_SENDER = "noreply@ist.utl.pt";
+
+    private static final String REJECTION_MAIL_SENDER_KEY = "photo.email.sender.rejection";
+
+    private static final String REJECTION_MAIL_SUBJECT_KEY = "photo.email.subject.rejection";
+
+    private static final String REJECTION_MAIL_BODY_KEY = "photo.email.body.rejection";
+
     public Photograph() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setSubmission(new DateTime());
-	setRejectedAcknowledged(Boolean.FALSE);
     }
 
     public Photograph(ContentType contentType, ByteArray content, ByteArray compressed, PhotoType photoType) {
@@ -73,19 +89,31 @@ public class Photograph extends Photograph_Base {
 	} else {
 	    setPendingHolder(null);
 	}
+	if (state == PhotoState.REJECTED) {
+	    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
+	    Set<String> sendTo = Collections.singleton(getPerson().getInstitutionalOrDefaultEmailAddress().getValue());
+	    new Email(bundle.getString(REJECTION_MAIL_SENDER_KEY), REJECTION_MAIL_SENDER, null, sendTo, null, null, bundle
+		    .getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY));
+	}
     }
 
     @Override
     public void setPrevious(Photograph previous) {
 	if (previous.getState() == PhotoState.PENDING) {
 	    previous.setState(PhotoState.USER_REJECTED);
-	    previous.setRejectedAcknowledged(Boolean.TRUE);
 	}
 	super.setPrevious(previous);
     }
 
     public byte[] getContents() {
 	return this.getContent().getBytes();
+    }
+
+    @Service
+    public void cancelSubmission() {
+	if (getState() == PhotoState.PENDING) {
+	    setState(PhotoState.USER_REJECTED);
+	}
     }
 
     public void delete() {

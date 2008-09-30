@@ -6222,24 +6222,6 @@
         </filterChains>
     </service>
     <service>
-        <name>AcknowledgePhotographRejection</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.AcknowledgePhotographRejection</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="PersonAuthorization" />
-        </filterChains>
-    </service>
-    <service>
-        <name>CancelPhotographSubmission</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.CancelPhotographSubmission</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="PersonAuthorization" />
-        </filterChains>
-    </service>
-    <service>
         <name>GenerateOutgoingSibsPaymentFileByExecutionYearID</name>
         <implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity.GenerateOutgoingSibsPaymentFileByExecutionYearID</implementationClass>
