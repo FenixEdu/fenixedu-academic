@@ -53,6 +53,8 @@ public class ChangeThesisPerson extends FenixService {
     public void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, PersonChange change) throws FenixServiceException {
 	Person person = getPerson(change);
 
+	thesis.checkIsScientificCommission();
+
 	switch (change.type) {
 	case orientator:
 	    thesis.setOrientator(person);

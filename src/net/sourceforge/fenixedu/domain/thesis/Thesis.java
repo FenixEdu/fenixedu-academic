@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -51,6 +50,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import dml.runtime.RelationAdapter;
@@ -333,6 +333,7 @@ public class Thesis extends Thesis_Base {
 	return result;
     }
 
+    @Checked("ThesisPredicates.isScientificCommission")
     public void delete() {
 	if (getState() != ThesisState.DRAFT) {
 	    throw new DomainException("thesis.delete.notDraft");
@@ -516,6 +517,7 @@ public class Thesis extends Thesis_Base {
     }
 
     // / DRAFT -> SUBMITTED
+    @Checked("ThesisPredicates.isScientificCommission")
     public void submit() {
 	if (getState() != ThesisState.DRAFT) {
 	    throw new DomainException("thesis.submit.notDraft");
@@ -539,6 +541,7 @@ public class Thesis extends Thesis_Base {
     }
 
     // / SUBMITTED -> DRAFT
+    @Checked("ThesisPredicates.isScientificCommission")
     public void cancelSubmit() {
 	switch (getState()) {
 	case SUBMITTED:
@@ -1225,11 +1228,17 @@ public class Thesis extends Thesis_Base {
 	    } else {
 		boolean isMember = false;
 
-		for (ScientificCommission member : getDegree().getCurrentScientificCommissionMembers()) {
-		    isMember = isMember || president == member.getPerson();
+		final Enrolment enrolment = getEnrolment();
+		final DegreeCurricularPlan degreeCurricularPlan = enrolment.getDegreeCurricularPlanOfDegreeModule();
+		final ExecutionYear executionYear = enrolment.getExecutionYear();
+		final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+		if (executionDegree != null) {
+		    for (ScientificCommission member : executionDegree.getScientificCommissionMembersSet()) {
+			isMember = isMember || president == member.getPerson();
 
-		    if (isMember) {
-			break;
+			if (isMember) {
+			    break;
+			}			
 		    }
 		}
 
@@ -1417,6 +1426,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
+    @Checked("ThesisPredicates.isScientificCommission")
     public void setOrientator(Person person) {
 	setParticipation(person, ThesisParticipationType.ORIENTATOR);
 
@@ -1425,6 +1435,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
+    @Checked("ThesisPredicates.isScientificCommission")
     public void setCoorientator(Person person) {
 	setParticipation(person, ThesisParticipationType.COORIENTATOR);
 
@@ -1433,6 +1444,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
+    @Checked("ThesisPredicates.isScientificCommission")
     public void setPresident(Person person) {
 	setParticipation(person, ThesisParticipationType.PRESIDENT);
     }
@@ -1465,6 +1477,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
+    @Checked("ThesisPredicates.isScientificCommission")
     public void addVowel(Person person) {
 	if (person != null) {
 	    new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
@@ -1556,6 +1569,11 @@ public class Thesis extends Thesis_Base {
 
     public boolean hasCurrentDiscussedDate() {
 	return getCurrentDiscussedDate() != null;
+    }
+
+    @Checked("ThesisPredicates.isScientificCommission")
+    public void checkIsScientificCommission() {
+	// Nothing to do here... just the access control stuff that is injected whenever necessary
     }
 
 }

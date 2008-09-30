@@ -61,7 +61,7 @@
         <property name="format" value="${text}"/>
         <property name="indicatorShown" value="true"/>
         <property name="serviceName" value="SearchPresidentForThesis"/>
-        <property name="serviceArgs" value="degree=${degree.idInternal}"/>
+        <property name="serviceArgs" value="thesis=${thesis.idInternal}"/>
         <property name="minChars" value="0"/>
     </slot>
 </schema>
@@ -236,6 +236,7 @@
 <schema name="coordinator.thesis.table" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.StudentThesisInfo">
     <slot name="student.number" key="label.student.number.short"/>
     <slot name="student.person.name" key="student"/>
+    <slot name="semester" key="label.semester.short"/>
     <slot name="title" key="label.coordinator.title" layout="short">
         <property name="length" value="60"/>
     </slot>

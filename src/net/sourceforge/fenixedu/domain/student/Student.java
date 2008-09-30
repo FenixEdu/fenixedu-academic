@@ -54,7 +54,6 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -62,6 +61,8 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class Student extends Student_Base {
 
@@ -717,15 +718,15 @@ public class Student extends Student_Base {
     }
 
     final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
-	for (Registration registration : getRegistrations()) {
-	    Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
-
+	final TreeSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
+	for (final Registration registration : getRegistrations()) {
+	    final Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
 	    if (dissertationEnrolment != null) {
-		return dissertationEnrolment;
+		enrolments.add(dissertationEnrolment);
 	    }
 	}
 
-	return null;
+	return enrolments.isEmpty() ? null : enrolments.last();
     }
 
     public boolean doesNotWantToRespondToInquiries() {

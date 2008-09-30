@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 
 import org.joda.time.DateTime;
@@ -41,6 +42,8 @@ public class ThesisBean implements Serializable {
     private String mark;
     private DateTime discussion;
 
+    private DomainReference<Thesis> thesis;
+
     public ThesisBean() {
 	super();
 
@@ -51,6 +54,11 @@ public class ThesisBean implements Serializable {
 	this.target = new DomainReference<ThesisEvaluationParticipant>(null);
 
 	this.internal = true;
+    }
+
+    public ThesisBean(final Thesis thesis) {
+	this();
+	setThesis(thesis);
     }
 
     public Degree getDegree() {
@@ -183,6 +191,14 @@ public class ThesisBean implements Serializable {
 
     public void setMark(String mark) {
 	this.mark = mark;
+    }
+
+    public Thesis getThesis() {
+        return thesis == null ? null : thesis.getObject();
+    }
+
+    public void setThesis(final Thesis thesis) {
+        this.thesis = thesis == null ? null : new DomainReference<Thesis>(thesis);
     }
 
 }

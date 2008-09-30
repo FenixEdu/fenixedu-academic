@@ -1782,4 +1782,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return getDegree().getEctsCredits();
     }
 
+    public boolean isScientificCommissionMember(final ExecutionYear executionYear) {
+	final ExecutionDegree executionDegree = getExecutionDegreeByYear(executionYear);
+	return executionDegree != null && executionDegree.isScientificCommissionMember();
+    }
+
+    public void checkUserIsScientificCommissionMember(final ExecutionYear executionYear) {
+	if (!isScientificCommissionMember(executionYear)) {
+	    throw new DomainException("degree.scientificCommission.notMember");
+	}
+    }
+
 }

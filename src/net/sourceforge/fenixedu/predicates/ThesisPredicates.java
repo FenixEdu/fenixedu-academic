@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -34,4 +37,16 @@ public class ThesisPredicates {
 	}
 
     };
+
+    public static final AccessControlPredicate<Thesis> isScientificCommission = new AccessControlPredicate<Thesis>() {
+
+	public boolean evaluate(final Thesis thesis) {
+	    final Enrolment enrolment = thesis.getEnrolment();
+	    final ExecutionYear executionYear = enrolment.getExecutionYear();
+	    final DegreeCurricularPlan degreeCurricularPlan = enrolment.getDegreeCurricularPlanOfDegreeModule();
+	    return degreeCurricularPlan.isScientificCommissionMember(executionYear);
+	}
+
+    };
+
 }

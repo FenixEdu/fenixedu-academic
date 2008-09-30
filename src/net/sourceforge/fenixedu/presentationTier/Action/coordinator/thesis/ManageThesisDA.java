@@ -422,7 +422,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 	    return editProposal(mapping, actionForm, request, response);
 	}
 
-	ThesisBean bean = new ThesisBean();
+	Thesis thesis = getThesis(request);
+	ThesisBean bean = new ThesisBean(thesis);
 
 	Degree degree = getDegreeCurricularPlan(request).getDegree();
 	bean.setDegree(degree);
@@ -442,7 +443,6 @@ public class ManageThesisDA extends FenixDispatchAction {
 
 	if (remove) {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	    Thesis thesis = getThesis(request);
 	    executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), null, bean
 		    .getTarget()));
 

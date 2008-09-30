@@ -7,33 +7,41 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.person.PersonName;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 public class SearchPresidentForThesis extends FenixService implements AutoCompleteSearchService {
 
-    public Collection<PersonName> run(Class type, String value, int limit, Map<String, String> arguments) {
+    public Collection<PersonName> run(final Class type, final String value, final int limit, final Map<String, String> arguments) {
 	if (type != PersonName.class) {
 	    return null;
 	}
 
-	String degreeIdString = arguments.get("degree");
-	if (degreeIdString == null) {
+	final String thesisIdString = arguments.get("thesis");
+	if (thesisIdString == null) {
 	    return null;
 	}
 
-	Integer degreeId = new Integer(degreeIdString);
-	Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
-
-	if (degree == null) {
+	final Integer thesisId = new Integer(thesisIdString);
+	final Thesis thesis = rootDomainObject.readThesisByOID(thesisId);
+	if (thesis == null) {
 	    return null;
 	}
 
-	List<PersonName> result = new ArrayList<PersonName>();
-	for (ScientificCommission member : degree.getCurrentScientificCommissionMembers()) {
-	    result.add(member.getPerson().getPersonName());
+	final List<PersonName> result = new ArrayList<PersonName>();
+	final Enrolment enrolment = thesis.getEnrolment();
+	final DegreeCurricularPlan degreeCurricularPlan = enrolment.getDegreeCurricularPlanOfDegreeModule();
+	final ExecutionYear executionYear = enrolment.getExecutionYear();
+	final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+	if (executionDegree != null) {
+	    for (ScientificCommission member : executionDegree.getScientificCommissionMembersSet()) {
+		result.add(member.getPerson().getPersonName());
+	    }
 	}
 
 	return result;

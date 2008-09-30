@@ -11111,7 +11111,6 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>   
     <service>
@@ -11120,7 +11119,6 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>   
     <service>
@@ -11129,7 +11127,6 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>   
     <service>
@@ -11138,7 +11135,6 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -11156,7 +11152,6 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>   
     <service>

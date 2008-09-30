@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -931,6 +932,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    this.endThesisCreationPeriod = endThesisCreationPeriod;
 	}
 
+    }
+
+    public boolean isScientificCommissionMember() {
+	final Person person = AccessControl.getPerson();
+	for (final ScientificCommission scientificCommission : getScientificCommissionMembersSet()) {
+	    if (person == scientificCommission.getPerson()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

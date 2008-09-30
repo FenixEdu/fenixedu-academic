@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -44,9 +45,14 @@ public class StudentThesisInfo {
 	setState(thesis);
     }
 
-    public MultiLanguageString getTitle() {
-	Thesis thesis = getThesis();
+    public String getSemester() {
+	final Enrolment enrolment = getEnrolment();
+	final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+	return curricularCourse.isAnual() ? "" : enrolment.getExecutionPeriod().getSemester().toString();
+    }
 
+    public MultiLanguageString getTitle() {
+	final Thesis thesis = getThesis();
 	return thesis == null ? new MultiLanguageString("-") : thesis.getTitle();
     }
 
