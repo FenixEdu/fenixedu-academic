@@ -10,10 +10,15 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandidacy_Base {
@@ -153,6 +158,17 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
 	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
 		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	createInternalAbandonStateInPreviousRegistration();
 	return registration;
+    }
+
+    private void createInternalAbandonStateInPreviousRegistration() {
+	if (getPrecedentDegreeInformation().isInternal()) {
+	    final InstitutionPrecedentDegreeInformation information = (InstitutionPrecedentDegreeInformation) getPrecedentDegreeInformation();
+	    if (information.getRegistration().isActive()) {
+		RegistrationState.createState(information.getRegistration(), AccessControl.getPerson(), new DateTime(),
+			RegistrationStateType.INTERNAL_ABANDON);
+	    }
+	}
     }
 }
