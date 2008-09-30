@@ -58,13 +58,14 @@ public class ParkingRequestPeriod extends ParkingRequestPeriod_Base {
 	return new Interval(getBeginDate(), getEndDate());
     }
 
-    public static boolean isDateInAnyRequestPeriod(DateTime date) {
+    public static ParkingRequestPeriod getCurrentRequestPeriod() {
+	DateTime now = new DateTime();
 	for (ParkingRequestPeriod parkingRequestPeriod : RootDomainObject.getInstance().getParkingRequestPeriods()) {
-	    if (new Interval(parkingRequestPeriod.getBeginDate(), parkingRequestPeriod.getEndDate()).contains(date)) {
-		return Boolean.TRUE;
+	    if (new Interval(parkingRequestPeriod.getBeginDate(), parkingRequestPeriod.getEndDate()).contains(now)) {
+		return parkingRequestPeriod;
 	    }
 	}
-	return Boolean.FALSE;
+	return null;
     }
 
     public void delete() {

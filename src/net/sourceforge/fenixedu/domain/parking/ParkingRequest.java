@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -17,10 +18,18 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType;
+import net.sourceforge.fenixedu.domain.parking.NewParkingDocument;
+import net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType;
+import net.sourceforge.fenixedu.domain.parking.ParkingFile;
+import net.sourceforge.fenixedu.domain.parking.ParkingParty;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequestType;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequest_Base;
+import net.sourceforge.fenixedu.domain.parking.Vehicle;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
 
@@ -29,6 +38,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ParkingRequest extends ParkingRequest_Base {
 
@@ -36,15 +46,23 @@ public class ParkingRequest extends ParkingRequest_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setParkingRequestState(ParkingRequestState.PENDING);
-	setDriverLicenseDeliveryType(getDriverLicenseDeliveryType());
+	setDriverLicenseDeliveryType(creator.getDriverLicenseDeliveryType());
 	setParkingParty(creator.getParkingParty());
 	setCreationDate(new DateTime());
-	setPhone(((Person) creator.getParkingParty().getParty()).getWorkPhone());
-	setMobile(((Person) creator.getParkingParty().getParty()).getMobile());
-	setEmail(((Person) creator.getParkingParty().getParty()).getEmail());
-	setFirstRequest(true);
-	setRequestedAs(creator.getRequestAs());
-	setLimitlessAccessCard(creator.isLimitlessAccessCard());
+	setPhone(((Person) creator.getParkingParty().getParty()).getDefaultPhone().getNumber());
+	setMobile(((Person) creator.getParkingParty().getParty()).getDefaultMobilePhone().getNumber());
+	setEmail(((Person) creator.getParkingParty().getParty()).getDefaultEmailAddress().getValue());
+
+	setRequestedAs(creator.getRequestAs() != null ? creator.getRequestAs() : creator.getParkingParty().getSubmitAsRoles()
+		.get(0));
+	boolean limitlessAccessCard = creator.isLimitlessAccessCard();
+	if (limitlessAccessCard = false && (creator.getParkingParty().getParty().getPartyClassification().equals(
+		PartyClassification.TEACHER) || creator.getParkingParty().getParty().getPartyClassification().equals(
+		PartyClassification.EMPLOYEE))) {
+	    limitlessAccessCard = true;
+	}
+	setLimitlessAccessCard(limitlessAccessCard);
+	setParkingRequestType(ParkingRequestType.FIRST_TIME);
     }
 
     public ParkingRequest(ParkingRequest oldParkingRequest, Boolean limitlessAccessCard) {
@@ -54,12 +72,16 @@ public class ParkingRequest extends ParkingRequest_Base {
 	setDriverLicenseDeliveryType(oldParkingRequest.getDriverLicenseDeliveryType());
 	setParkingParty(oldParkingRequest.getParkingParty());
 	setCreationDate(new DateTime());
-	setPhone(((Person) oldParkingRequest.getParkingParty().getParty()).getWorkPhone());
-	setMobile(((Person) oldParkingRequest.getParkingParty().getParty()).getMobile());
-	setEmail(((Person) oldParkingRequest.getParkingParty().getParty()).getEmail());
-	setFirstRequest(true);
-	setRequestedAs(oldParkingRequest.getRequestedAs());
+	setPhone(((Person) oldParkingRequest.getParkingParty().getParty()).getDefaultPhone().getNumber());
+	setMobile(((Person) oldParkingRequest.getParkingParty().getParty()).getDefaultMobilePhone().getNumber());
+	setEmail(((Person) oldParkingRequest.getParkingParty().getParty()).getDefaultEmailAddress().getValue());
+	RoleType requestedAs = oldParkingRequest.getRequestedAs();
+	if (requestedAs == null) {
+	    requestedAs = oldParkingRequest.getParkingParty().getSubmitAsRoles().get(0);
+	}
+	setRequestedAs(requestedAs);
 	setLimitlessAccessCard(limitlessAccessCard);
+	setParkingRequestType(ParkingRequestType.RENEW);
     }
 
     public ParkingRequestFactoryEditor getParkingRequestFactoryEditor() {
@@ -889,5 +911,9 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     private boolean canBeDeleted() {
 	return getParkingRequestState() != ParkingRequestState.ACCEPTED;
+    }
+
+    public boolean getHasHistory() {
+	return getParkingParty().getParty().getParkingPartyHistories().size() != 0;
     }
 }

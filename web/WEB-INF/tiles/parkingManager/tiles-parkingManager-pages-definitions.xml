@@ -40,4 +40,7 @@
 	<definition name="show-parking-details" extends="definition.parkingManager.masterPage">
 		<put name="body" value="/parkingManager/showParkingDetails.jsp" />
 	</definition>		
+	<definition name="show-parking-histories" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/showParkingHistories.jsp" />
+	</definition>
 </tiles-definitions>

@@ -63,10 +63,11 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean getHasAllNecessaryPersonalInfo() {
-	Person person = (Person) getParty();
-	return ((person.getPersonWorkPhone() != null && !StringUtils.isEmpty(person.getPersonWorkPhone().getNumber())) || !StringUtils
-		.isEmpty(person.getMobile()))
-		&& (isEmployee() || !StringUtils.isEmpty(person.getEmail()));
+	return ((getParty().getDefaultPhone() != null && !StringUtils.isEmpty(getParty().getDefaultPhone().getNumber())) || (getParty()
+		.getDefaultMobilePhone() != null && !StringUtils.isEmpty(getParty().getDefaultMobilePhone().getNumber())))
+		&& (isEmployee() || (getParty().getDefaultEmailAddress() != null
+			&& getParty().getDefaultEmailAddress().hasValue() && !StringUtils.isEmpty(getParty()
+			.getDefaultEmailAddress().getValue())));
     }
 
     private boolean isEmployee() {
@@ -83,33 +84,26 @@ public class ParkingParty extends ParkingParty_Base {
 	return false;
     }
 
-    public ParkingRequest getFirstRequest() {
-	ParkingRequest first = null;
-	if (!getParkingRequests().isEmpty()) {
-	    if (getParkingRequests().size() == 1) {
-		return getParkingRequests().get(0);
-	    }
+    public List<ParkingRequest> getOrderedParkingRequests() {
+	List<ParkingRequest> requests = new ArrayList<ParkingRequest>(getParkingRequests());
+	Collections.sort(requests, new BeanComparator("creationDate"));
+	return requests;
+    }
 
-	    for (ParkingRequest parkingRequest : getParkingRequests()) {
-		if (first == null || parkingRequest.getCreationDate().isBefore(first.getCreationDate())) {
-		    first = parkingRequest;
-		}
-	    }
+    public ParkingRequest getFirstRequest() {
+	List<ParkingRequest> requests = getOrderedParkingRequests();
+	if (requests.size() != 0) {
+	    return requests.get(0);
 	}
-	return first;
+	return null;
     }
 
     public ParkingRequest getLastRequest() {
-	if (getParkingRequests().isEmpty() || getParkingRequests().size() < 2) {
-	    return null;
+	List<ParkingRequest> requests = getOrderedParkingRequests();
+	if (requests.size() != 0) {
+	    return requests.get(requests.size() - 1);
 	}
-	ParkingRequest last = null;
-	for (ParkingRequest parkingRequest : getParkingRequests()) {
-	    if (last == null || parkingRequest.getCreationDate().isAfter(last.getCreationDate())) {
-		last = parkingRequest;
-	    }
-	}
-	return last;
+	return null;
     }
 
     public ParkingRequestFactoryCreator getParkingRequestFactoryCreator() {
@@ -189,7 +183,7 @@ public class ParkingParty extends ParkingParty_Base {
 
     public String getWorkPhone() {
 	if (getParty().isPerson()) {
-	    return ((Person) getParty()).getWorkPhone();
+	    return getParty().getDefaultPhone().getNumber();
 	}
 	return null;
     }
@@ -225,6 +219,9 @@ public class ParkingParty extends ParkingParty_Base {
 	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
 		roles.add(RoleType.GRANT_OWNER);
 	    }
+	}
+	if (roles.size() == 0) {
+	    roles.add(RoleType.PERSON);
 	}
 	return roles;
     }
@@ -332,14 +329,15 @@ public class ParkingParty extends ParkingParty_Base {
 	    GrantOwner grantOwner = person.getGrantOwner();
 	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
 		List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
-		occupations.add("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
 		for (GrantContract contract : grantOwner.getGrantContracts()) {
 		    contractRegimeList.addAll(contract.getContractRegimes());
 		}
 		Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
 		for (GrantContractRegime contractRegime : contractRegimeList) {
-		    StringBuilder stringBuilder = new StringBuilder();
-		    stringBuilder.append("<strong>Início:</strong> "
+
+		    stringBuilder.append("<br/><strong>Início:</strong> "
 			    + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
 		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
 			    + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
@@ -349,8 +347,8 @@ public class ParkingParty extends ParkingParty_Base {
 		    } else {
 			stringBuilder.append("Não");
 		    }
-		    occupations.add(stringBuilder.toString());
 		}
+		occupations.add(stringBuilder.toString());
 	    }
 	    List<Invitation> invitations = person.getActiveInvitations();
 	    if (!invitations.isEmpty()) {
@@ -461,14 +459,14 @@ public class ParkingParty extends ParkingParty_Base {
 	    GrantOwner grantOwner = person.getGrantOwner();
 	    if (grantOwner != null) {
 		List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
-		occupations.add("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
 		for (GrantContract contract : grantOwner.getGrantContracts()) {
 		    contractRegimeList.addAll(contract.getContractRegimes());
 		}
 		Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
 		for (GrantContractRegime contractRegime : contractRegimeList) {
-		    StringBuilder stringBuilder = new StringBuilder();
-		    stringBuilder.append("<strong>Início:</strong> "
+		    stringBuilder.append("<br/><strong>Início:</strong> "
 			    + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
 		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
 			    + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
@@ -478,8 +476,8 @@ public class ParkingParty extends ParkingParty_Base {
 		    } else {
 			stringBuilder.append("Não");
 		    }
-		    occupations.add(stringBuilder.toString());
 		}
+		occupations.add(stringBuilder.toString());
 	    }
 	    List<Invitation> invitations = person.getActiveInvitations();
 	    if (!invitations.isEmpty()) {
@@ -557,12 +555,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean hasFirstTimeRequest() {
-	for (ParkingRequest parkingRequest : getParkingRequests()) {
-	    if (parkingRequest.getFirstRequest()) {
-		return true;
-	    }
-	}
-	return false;
+	return getFirstRequest() != null;
     }
 
     public Integer getMostSignificantNumber() {
@@ -612,6 +605,14 @@ public class ParkingParty extends ParkingParty_Base {
 		&& parkingPartyBean.getCardStartDate().isAfter(parkingPartyBean.getCardEndDate())) {
 	    throw new DomainException("error.parkingParty.invalidPeriod");
 	}
+	if (getCardNumber() != null
+		&& (changedDates(getCardStartDate(), parkingPartyBean.getCardStartDate(), parkingPartyBean.getCardAlwaysValid())
+			|| changedDates(getCardEndDate(), parkingPartyBean.getCardEndDate(), parkingPartyBean
+				.getCardAlwaysValid()) || changedObject(getCardNumber(), parkingPartyBean.getCardNumber())
+			|| changedObject(getParkingGroup(), parkingPartyBean.getParkingGroup()) || changedObject(getPhdNumber(),
+			parkingPartyBean.getPhdNumber()))) {
+	    new ParkingPartyHistory(this, false);
+	}
 	setCardNumber(parkingPartyBean.getCardNumber());
 	setCardStartDate(parkingPartyBean.getCardStartDate());
 	setCardEndDate(parkingPartyBean.getCardEndDate());
@@ -630,10 +631,17 @@ public class ParkingParty extends ParkingParty_Base {
 		}
 	    }
 	}
-	if (getParty().isPerson() && !StringUtils.isEmpty(parkingPartyBean.getEmail())) {
-	    ((Person) getParty()).setEmail(parkingPartyBean.getEmail());
-	}
 	setNotes(parkingPartyBean.getNotes());
+    }
+
+    private boolean changedDates(DateTime oldDate, DateTime newDate, Boolean cardAlwaysValid) {
+	return cardAlwaysValid ? (oldDate == null ? false : true) : ((oldDate == null || (!oldDate.equals(newDate))) ? true
+		: oldDate.equals(newDate));
+    }
+
+    private boolean changedObject(Object oldObject, Object newObject) {
+	return oldObject == null && newObject == null ? false : (oldObject != null && newObject != null ? (!oldObject
+		.equals(newObject)) : true);
     }
 
     public void edit(ParkingRequest parkingRequest) {
@@ -650,6 +658,7 @@ public class ParkingParty extends ParkingParty_Base {
 		vehicle.deleteDocuments();
 	    }
 	}
+	setRequestedAs(parkingRequest.getRequestedAs());
     }
 
     private Vehicle geVehicleByPlateNumber(String plateNumber) {
@@ -703,12 +712,17 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean getCanRequestUnlimitedCardAndIsInAnyRequestPeriod() {
-	return canRequestUnlimitedCard() && ParkingRequestPeriod.isDateInAnyRequestPeriod(new DateTime());
+	ParkingRequestPeriod current = ParkingRequestPeriod.getCurrentRequestPeriod();
+	return current != null && canRequestUnlimitedCard(current);
     }
 
     public boolean canRequestUnlimitedCard() {
+	return canRequestUnlimitedCard(ParkingRequestPeriod.getCurrentRequestPeriod());
+    }
+
+    public boolean canRequestUnlimitedCard(ParkingRequestPeriod parkingRequestPeriod) {
 	List<RoleType> roles = getSubmitAsRoles();
-	if (getLastRequest() == null) {
+	if (!alreadyRequestParkingRequestTypeInPeriod(ParkingRequestType.RENEW, parkingRequestPeriod)) {
 	    if (roles.contains(RoleType.GRANT_OWNER)) {
 		return Boolean.TRUE;
 	    } else if (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
@@ -716,6 +730,18 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	}
 	return Boolean.FALSE;
+    }
+
+    public boolean alreadyRequestParkingRequestTypeInPeriod(ParkingRequestType parkingRequestType,
+	    ParkingRequestPeriod parkingRequestPeriod) {
+	List<ParkingRequest> requests = getOrderedParkingRequests();
+	for (ParkingRequest parkingRequest : requests) {
+	    if (parkingRequestPeriod.getRequestPeriodInterval().contains(parkingRequest.getCreationDate())
+		    && parkingRequest.getParkingRequestType().equals(parkingRequestType)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public boolean canRequestUnlimitedCard(Student student) {

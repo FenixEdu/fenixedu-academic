@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,6 +31,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
+import net.sourceforge.fenixedu.domain.parking.ParkingPartyHistory;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
@@ -40,6 +42,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.util.Region;
 import org.apache.struts.action.ActionForm;
@@ -182,7 +185,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(parkingRequestID);
 
 	String note = request.getParameter("note");
-	Object args[] = { parkingRequest, null, null, null, note, null, null };
+	Object args[] = { parkingRequest, null, null, null, note, null, null, null };
 
 	String parkingRequestState = request.getParameter("parkingRequestState");
 	if (parkingRequestState == null) {
@@ -276,9 +279,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    }
 	    args[1] = ParkingRequestState.ACCEPTED;
 	    args[2] = cardNumber;
-	    args[3] = group;
+	    ParkingGroup parkingGroup = rootDomainObject.readParkingGroupByOID(group);
+	    args[3] = parkingGroup;
 	    args[5] = parkingPartyBean.getCardStartDate();
 	    args[6] = parkingPartyBean.getCardEndDate();
+	    args[7] = new Integer(getMostSignificantNumber((Person) parkingRequest.getParkingParty().getParty(), parkingGroup));
 	} else if (request.getParameter("reject") != null) {
 	    args[1] = ParkingRequestState.REJECTED;
 	} else {
@@ -309,7 +314,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat("/images/Logo_IST_color.tiff"));
 
 	Person person = (Person) parkingParty.getParty();
-	parameters.put("number", getMostSignificantNumber(person, parkingGroup));
+	parameters.put("number", getMostSignificantNumberString(person, parkingGroup));
 
 	List<Person> persons = new ArrayList<Person>();
 	persons.add(person);
@@ -327,36 +332,50 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("");
     }
 
-    private String getMostSignificantNumber(Person p, ParkingGroup parkingGroup) {
-	if (p.getParkingParty().getPhdNumber() != null) {
-	    return "Nº: " + p.getParkingParty().getPhdNumber();
+    private String getMostSignificantNumberString(Person person, ParkingGroup parkingGroup) {
+	Integer number = getMostSignificantNumber(person, parkingGroup);
+	if (number != null) {
+	    if ((person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null)
+		    || (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null && person
+			    .getPersonRole(RoleType.TEACHER) == null)) {
+		return "Nº Mec: " + number;
+	    } else {
+		return "Nº" + number;
+	    }
 	}
-	if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
-		&& !p.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
-	    return "Nº Mec: " + p.getTeacher().getTeacherNumber();
+	return "";
+    }
+
+    private Integer getMostSignificantNumber(Person person, ParkingGroup parkingGroup) {
+	if (person.getParkingParty().getPhdNumber() != null) {
+	    return person.getParkingParty().getPhdNumber();
 	}
-	if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null
-		&& p.getPersonRole(RoleType.TEACHER) == null) {
-	    return "Nº Mec: " + p.getEmployee().getEmployeeNumber();
+	if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
+		&& !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
+	    return person.getTeacher().getTeacherNumber();
 	}
-	if (p.getStudent() != null && !parkingGroup.getGroupName().equalsIgnoreCase("Bolseiros")) {
-	    DegreeType degreeType = p.getStudent().getMostSignificantDegreeType();
-	    Collection<Registration> registrations = p.getStudent().getRegistrationsByDegreeType(degreeType);
+	if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null
+		&& person.getPersonRole(RoleType.TEACHER) == null) {
+	    return person.getEmployee().getEmployeeNumber();
+	}
+	if (person.getStudent() != null && !parkingGroup.getGroupName().equalsIgnoreCase("Bolseiros")) {
+	    DegreeType degreeType = person.getStudent().getMostSignificantDegreeType();
+	    Collection<Registration> registrations = person.getStudent().getRegistrationsByDegreeType(degreeType);
 	    for (Registration registration : registrations) {
 		StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
 		if (scp != null) {
-		    return "Nº: " + p.getStudent().getNumber();
+		    return person.getStudent().getNumber();
 		}
 	    }
 	}
-	if (p.getGrantOwner() != null && p.getGrantOwner().hasCurrentContract()) {
-	    return "Nº: " + p.getGrantOwner().getNumber();
+	if (person.getGrantOwner() != null && person.getGrantOwner().hasCurrentContract()) {
+	    return person.getGrantOwner().getNumber();
 	}
-	if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
-		&& p.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
-	    return "Nº Mec: " + p.getTeacher().getTeacherNumber();
+	if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
+		&& person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
+	    return person.getTeacher().getTeacherNumber();
 	}
-	return "";
+	return null;
     }
 
     private boolean isValidGroup(Integer groupId) {
@@ -586,6 +605,44 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	writer.flush();
 	response.flushBuffer();
 	return null;
+    }
+
+    public ActionForward showHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final String codeString = request.getParameter("idInternal");
+	Integer code = null;
+	if (codeString == null) {
+	    code = (Integer) request.getAttribute("idInternal");
+	} else {
+	    code = new Integer(codeString);
+	}
+	final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(code);
+	List<ParkingPartyHistory> parkingPartyHistories = new ArrayList<ParkingPartyHistory>(parkingRequest.getParkingParty()
+		.getParty().getParkingPartyHistories());
+
+	Collections.sort(parkingPartyHistories, new BeanComparator("historyDate"));
+	request.setAttribute("parkingPartyHistories", parkingPartyHistories);
+	request.setAttribute("parkingParty", parkingRequest.getParkingParty());
+	return mapping.findForward("showParkingHistories");
+    }
+
+    public ActionForward showParkingPartyHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final String codeString = request.getParameter("idInternal");
+	Integer code = null;
+	if (codeString == null) {
+	    code = (Integer) request.getAttribute("idInternal");
+	} else {
+	    code = new Integer(codeString);
+	}
+	final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(code);
+	List<ParkingPartyHistory> parkingPartyHistories = new ArrayList<ParkingPartyHistory>(parkingParty.getParty()
+		.getParkingPartyHistories());
+
+	Collections.sort(parkingPartyHistories, new BeanComparator("historyDate"));
+	request.setAttribute("parkingPartyHistories", parkingPartyHistories);
+	request.setAttribute("parkingParty", parkingParty);
+	return mapping.findForward("showParkingHistories");
     }
 
     private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {

@@ -65,6 +65,7 @@
 			<forward name="searchParty" path="search-party" />
 			<forward name="showParkingPartyRequests" path="show-party-parking-requests"/>
 			<forward name="editParkingParty" path="edit-parking-party"/>	
+			<forward name="showParkingHistories" path="show-parking-histories"/>
 		</action>
 
        	<action path="/externalPerson"
@@ -96,7 +97,7 @@
        		<forward name="cardsSearch" path="cards-search"/>
        		<forward name="cardsRenewal" path="cards-renewal"/>     
        		<forward name="showParkingDetails" path="show-parking-details"/>
-       		<forward name="manageRequestsPeriods" path="manage-requests-periods"/>  		
+       		<forward name="manageRequestsPeriods" path="manage-requests-periods"/>
        	</action>
        	
 	</action-mappings>

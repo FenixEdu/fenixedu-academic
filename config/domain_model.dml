@@ -102,6 +102,7 @@ enum      net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType        
 enum      net.sourceforge.fenixedu.domain.parking.ParkingDocumentState                                               as ParkingDocumentState;
 enum      net.sourceforge.fenixedu.domain.parking.ParkingDocumentType                                                as ParkingDocumentType;
 enum      net.sourceforge.fenixedu.domain.parking.ParkingRequestState                                                as ParkingRequestState;
+enum      net.sourceforge.fenixedu.domain.parking.ParkingRequestType                                                 as ParkingRequestType;
 enum      net.sourceforge.fenixedu.domain.person.Gender                                                              as Gender;
 enum      net.sourceforge.fenixedu.domain.person.IDDocumentType                                                      as IDDocumentType;
 enum      net.sourceforge.fenixedu.domain.person.MaritalStatus                                                       as MaritalStatus;
@@ -3172,6 +3173,20 @@ class DomainObject {
 		ParkingDocumentState secondCarOwnerIdDocumentState;
 		ParkingDocumentState secondCarPropertyRegistryDocumentState;
 		String notes;
+		RoleType requestedAs;
+		Integer usedNumber;
+	}
+	
+	class parking.ParkingPartyHistory extends DomainObject {
+		DateTime cardEndDate;
+		DateTime cardStartDate;
+		Long cardNumber;
+		Integer phdNumber;
+		String notes;
+		RoleType requestedAs;
+		Integer usedNumber;
+		DateTime historyDate;
+		Boolean onlineRequest;
 	}
 
 	class parking.ParkingRequest extends DomainObject {
@@ -3183,7 +3198,6 @@ class DomainObject {
 		ParkingDocumentState firstCarInsuranceDocumentState;
 		ParkingDocumentState firstCarOwnerIdDocumentState;
 		ParkingDocumentState firstCarPropertyRegistryDocumentState;
-		Boolean firstRequest;
 		Boolean limitlessAccessCard;
 		String mobile;
 		String note;
@@ -3194,6 +3208,7 @@ class DomainObject {
 		ParkingDocumentState secondCarInsuranceDocumentState;
 		ParkingDocumentState secondCarOwnerIdDocumentState;
 		ParkingDocumentState secondCarPropertyRegistryDocumentState;
+		ParkingRequestType parkingRequestType;
 	}
 	
 	class parking.ParkingRequestPeriod extends DomainObject {
@@ -8004,6 +8019,20 @@ relation ParkingRequestParkingParty {
 	}
 }
 
+relation PartyParkingHistoryParty {
+	organizationalStructure.Party playsRole party;
+	parking.ParkingPartyHistory playsRole parkingPartyHistories {
+		multiplicity *;
+	}
+}
+
+relation ParkingPartyHistoryParkingGroup {
+	parking.ParkingGroup playsRole parkingGroup;
+	parking.ParkingPartyHistory playsRole parkingPartyHistories {
+		multiplicity *;
+	}
+}
+
 relation ParticipationParty {
 	organizationalStructure.Party playsRole party;
 	research.activity.Participation playsRole participations {
@@ -10383,6 +10412,13 @@ relation RootDomainObjectParkingGroup {
 relation RootDomainObjectParkingParty {
 	RootDomainObject playsRole rootDomainObject;
 	parking.ParkingParty playsRole parkingParties {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectParkingPartyHistory {
+	RootDomainObject playsRole rootDomainObject;
+	parking.ParkingPartyHistory playsRole parkingPartyHistories {
 		multiplicity *;
 	}
 }

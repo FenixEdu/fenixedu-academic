@@ -70,6 +70,12 @@
 					 | <html:link target="printFrame" page="<%= "/parking.do?method=exportToPDFParkingCard&amp;parkingPartyID=" +  parkingParty.getIdInternal()%>">
 					<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
 				</logic:notEmpty>
+
+				<bean:size id="historySize" name="parkingParty" property="party.parkingPartyHistories"/>
+				<logic:notEqual name="historySize" value="0">
+					 | <html:link page="<%= "/parking.do?method=showParkingPartyHistory&amp;idInternal=" +  parkingParty.getIdInternal()%>">
+					<bean:message key="link.viewHistory" bundle="PARKING_RESOURCES"/></html:link>
+				</logic:notEqual>
 			</p>
 			
 			<fr:view name="parkingParty" schema="view.parkingParty.personalInfo">

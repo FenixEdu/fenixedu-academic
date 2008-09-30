@@ -73,6 +73,11 @@
 					<fr:property name="key(viewRequest)" value="link.viewRequest" />
 					<fr:property name="param(viewRequest)" value="idInternal" />
 					<fr:property name="bundle(viewRequest)" value="PARKING_RESOURCES" />
+					<fr:property name="link(viewHistory)" value="<%="/parking.do?method=showHistory"+query.toString()%>" />
+					<fr:property name="key(viewHistory)" value="link.viewHistory" />
+					<fr:property name="param(viewHistory)" value="idInternal" />
+					<fr:property name="bundle(viewHistory)" value="PARKING_RESOURCES" />
+					<fr:property name="visibleIf(viewHistory)" value="hasHistory" />
 					<fr:property name="sortUrl" value="<%= "/parking.do?method=showParkingRequests"+query.toString()%>"/>
 					<fr:property name="sortParameter" value="sortBy"/>
 					<fr:property name="sortBy" value="<%= sortCriteria %>"/>

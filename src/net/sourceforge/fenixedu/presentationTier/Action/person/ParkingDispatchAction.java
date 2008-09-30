@@ -91,8 +91,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	}
 
 	if (parkingParty.canRequestUnlimitedCard()) {
-	    DateTime now = new DateTime();
-	    if (ParkingRequestPeriod.isDateInAnyRequestPeriod(now)) {
+	    if (ParkingRequestPeriod.getCurrentRequestPeriod() != null) {
 		request.setAttribute("allowToChoose", "true");
 	    } else {
 		request.setAttribute("periodExpired", "true");
