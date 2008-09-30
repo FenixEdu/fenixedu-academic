@@ -895,6 +895,10 @@ public class Student extends Student_Base {
 	return getActiveRegistrationFor(degreeCurricularPlan) != null;
     }
 
+    public boolean hasActiveRegistrationFor(final Degree degree) {
+	return getActiveRegistrationFor(degree) != null;
+    }
+
     public boolean hasActiveRegistrations() {
 	return getActiveRegistrations().size() > 0;
     }
@@ -912,9 +916,19 @@ public class Student extends Student_Base {
 	return getRegistrationFor(degree) != null;
     }
 
-    public Registration getActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
+    public Registration getActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	for (final Registration registration : getActiveRegistrations()) {
 	    if (registration.getLastDegreeCurricularPlan() == degreeCurricularPlan) {
+		return registration;
+	    }
+	}
+
+	return null;
+    }
+
+    public Registration getActiveRegistrationFor(final Degree degree) {
+	for (final Registration registration : getActiveRegistrations()) {
+	    if (registration.getLastDegree() == degree) {
 		return registration;
 	    }
 	}

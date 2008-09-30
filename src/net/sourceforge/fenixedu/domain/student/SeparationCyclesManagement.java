@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -28,6 +29,8 @@ import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMo
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
@@ -140,13 +143,22 @@ public class SeparationCyclesManagement {
 	registration = new Registration(student.getPerson(), student.getNumber());
 	registration.setDegree(oldSecondCycle.getDegreeCurricularPlanOfDegreeModule().getDegree());
 	registration.setStudentCandidacy(createStudentCandidacy(student, oldSecondCycle));
-	registration.setStartDate(getExecutionPeriod().getBeginDateYearMonthDay());
-	registration.getActiveState().setStateDate(getExecutionPeriod().getBeginDateYearMonthDay());
+
+	registration.setStartDate(getBeginDate(sourceStudentCurricularPlan, getExecutionPeriod()));
+	registration.getActiveState().setStateDate(getBeginDate(sourceStudentCurricularPlan, getExecutionPeriod()));
+
 	registration.setSourceRegistration(sourceStudentCurricularPlan.getRegistration());
 	registration.getActiveState().setResponsiblePerson(null);
 	registration.setRegistrationAgreement(RegistrationAgreement.NORMAL);
 
 	return registration;
+    }
+
+    private YearMonthDay getBeginDate(final StudentCurricularPlan sourceStudentCurricularPlan,
+	    final ExecutionSemester executionSemester) {
+	final YearMonthDay start = sourceStudentCurricularPlan.getStartDateYearMonthDay();
+	return executionSemester.getBeginDateYearMonthDay().isBefore(start) ? start : executionSemester
+		.getBeginDateYearMonthDay();
     }
 
     private StudentCandidacy createStudentCandidacy(final Student student, final CycleCurriculumGroup oldSecondCycle) {
@@ -244,10 +256,57 @@ public class SeparationCyclesManagement {
 	    if (parent.hasChildDegreeModule(optional.getOptionalCurricularCourse())) {
 		return;
 	    }
-	    new OptionalDismissal(substitution, parent, optional.getOptionalCurricularCourse(), optional.getEctsCredits());
+	    createNewOptionalDismissal(substitution, parent, optional.getOptionalCurricularCourse(), optional.getEctsCredits());
 	} else {
-	    new Dismissal(substitution, parent, enrolment.getCurricularCourse());
+	    createNewDismissal(substitution, parent, enrolment.getCurricularCourse());
 	}
+    }
+
+    private Dismissal createNewDismissal(final Credits credits, final CurriculumGroup parent,
+	    final CurricularCourse curricularCourse) {
+
+	if (!hasCurricularCourseToDismissal(parent, curricularCourse, getExecutionYear())) {
+	    throw new DomainException("error.SeparationCyclesManagement.parent.doesnot.have.curricularCourse.to.dismissal");
+	}
+
+	final Dismissal dismissal = new Dismissal();
+	dismissal.setCredits(credits);
+	dismissal.setCurriculumGroup(parent);
+	dismissal.setCurricularCourse(curricularCourse);
+
+	return dismissal;
+    }
+
+    private OptionalDismissal createNewOptionalDismissal(final Credits credits, final CurriculumGroup parent,
+	    final OptionalCurricularCourse curricularCourse, final Double ectsCredits) {
+	if (ectsCredits == null || ectsCredits.doubleValue() == 0) {
+	    throw new DomainException("error.OptionalDismissal.invalid.credits");
+	}
+
+	if (!hasCurricularCourseToDismissal(parent, curricularCourse, getExecutionYear())) {
+	    throw new DomainException("error.SeparationCyclesManagement.parent.doesnot.have.curricularCourse.to.dismissal");
+	}
+
+	final OptionalDismissal dismissal = new OptionalDismissal();
+	dismissal.setCredits(credits);
+	dismissal.setCurriculumGroup(parent);
+	dismissal.setCurricularCourse(curricularCourse);
+	dismissal.setEctsCredits(ectsCredits);
+
+	return dismissal;
+    }
+
+    private boolean hasCurricularCourseToDismissal(final CurriculumGroup curriculumGroup,
+	    final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
+
+	final CourseGroup degreeModule = curriculumGroup.getDegreeModule();
+	for (final Context context : degreeModule.getValidChildContexts(CurricularCourse.class, executionYear)) {
+	    final CurricularCourse each = (CurricularCourse) context.getChildDegreeModule();
+	    if (each == curricularCourse && !curriculumGroup.hasChildDegreeModule(degreeModule)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private void createDismissal(final Dismissal dismissal, final CurriculumGroup parent) {
@@ -285,10 +344,11 @@ public class SeparationCyclesManagement {
 	if (dismissal.hasCurricularCourse()) {
 	    if (dismissal instanceof OptionalDismissal) {
 		final OptionalDismissal optionalDismissal = (OptionalDismissal) dismissal;
-		new OptionalDismissal(newCredits, parent, (OptionalCurricularCourse) optionalDismissal.getCurricularCourse(),
-			optionalDismissal.getEctsCredits());
+		createNewOptionalDismissal(newCredits, parent,
+			(OptionalCurricularCourse) optionalDismissal.getCurricularCourse(), optionalDismissal.getEctsCredits());
+
 	    } else {
-		new Dismissal(newCredits, parent, dismissal.getCurricularCourse());
+		createNewDismissal(newCredits, parent, dismissal.getCurricularCourse());
 	    }
 	} else if (dismissal.isCreditsDismissal()) {
 	    final CreditsDismissal creditsDismissal = (CreditsDismissal) dismissal;

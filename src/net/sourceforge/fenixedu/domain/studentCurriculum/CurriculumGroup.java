@@ -265,10 +265,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
-    public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
+    public Collection<CurricularCourse> getCurricularCoursesToDismissal(final ExecutionSemester executionSemester) {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-	for (final Context context : this.getDegreeModule().getValidChildContexts(CurricularCourse.class,
-		(ExecutionSemester) null)) {
+	for (final Context context : getDegreeModule().getValidChildContexts(CurricularCourse.class, executionSemester)) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 	    if (!getStudentCurricularPlan().getRoot().isApproved(curricularCourse, null)) {
 		result.add(curricularCourse);
@@ -653,7 +652,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
-    
+
     public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
 	int result = 0;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {

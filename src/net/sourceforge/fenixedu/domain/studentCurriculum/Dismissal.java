@@ -44,18 +44,19 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	setCurriculumGroup(curriculumGroup);
     }
 
-    protected void init(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+    protected void init(final Credits credits, final CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse) {
 	if (curricularCourse == null) {
 	    throw new DomainException("error.dismissal.wrong.arguments");
 	}
-	checkCurriculumGroupCurricularCourse(curriculumGroup, curricularCourse);
+	checkCurriculumGroupCurricularCourse(credits, curriculumGroup, curricularCourse);
 	init(credits, curriculumGroup);
 	setCurricularCourse(curricularCourse);
     }
 
-    private void checkCurriculumGroupCurricularCourse(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+    private void checkCurriculumGroupCurricularCourse(final Credits credits, final CurriculumGroup curriculumGroup,
+	    final CurricularCourse curricularCourse) {
 	if (!(curriculumGroup instanceof NoCourseGroupCurriculumGroup)) {
-	    if (!curriculumGroup.getCurricularCoursesToDismissal().contains(curricularCourse)) {
+	    if (!curriculumGroup.getCurricularCoursesToDismissal(credits.getExecutionPeriod()).contains(curricularCourse)) {
 		throw new DomainException("error.dismissal.invalid.curricular.course.to.dismissal");
 	    }
 	}

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class OptionalDismissal extends OptionalDismissal_Base {
 
-    protected OptionalDismissal() {
+    public OptionalDismissal() {
 	super();
     }
 
