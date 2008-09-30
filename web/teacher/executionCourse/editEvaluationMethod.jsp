@@ -14,14 +14,27 @@
 </p>
 
 <div class="infoop2">
-	<bean:message key="label.evaluationMethod.explanation" />
+	<bean:message key="label.editEvaluationMethod.explanation" />
 </div>
 
+
+<style>
+span.flowblock div div {
+margin: 0.5em 0 1.25em 0;
+}
+span.flowblock div div div {
+border: none;
+margin: 0;
+}
+</style>
+
+
 <logic:present name="executionCourse">
-	<h4 class="mbottom05">
+	<h3 class="mbottom05">
 		<bean:message key="title.evaluationMethod"/>
-	</h4>
+	</h3>
 	<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=evaluationMethod&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+
 	<fr:edit name="executionCourse" property="evaluationMethod"
 			schema="net.sourceforge.fenixedu.domain.EvaluationMethod"
 			action="<%= url %>">
