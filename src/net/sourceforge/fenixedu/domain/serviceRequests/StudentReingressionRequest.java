@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent;
@@ -93,16 +95,15 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     private boolean hasOpenEnrolmentPeriod(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear,
 	    final DateTime requestDate) {
-	/*
-	 * for (final ExecutionSemester executionSemester :
-	 * executionYear.getExecutionPeriodsSet()) { final EnrolmentPeriod
-	 * enrolmentPeriod = degreeCurricularPlan
-	 * .getEnrolmentPeriodInCurricularCoursesBy(executionSemester); if
-	 * (enrolmentPeriod != null &&
-	 * enrolmentPeriod.containsDate(requestDate)) { return true; } } return
-	 * false;
-	 */
-	return true;
+
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+	    final EnrolmentPeriod enrolmentPeriod = degreeCurricularPlan
+		    .getEnrolmentPeriodInCurricularCoursesBy(executionSemester);
+	    if (enrolmentPeriod != null && enrolmentPeriod.containsDate(requestDate)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     @Override
