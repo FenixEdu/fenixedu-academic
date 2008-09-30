@@ -100,7 +100,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("AlunosPorCurso");
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getNextYearsYearString());
+	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear());
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " Alunos");
