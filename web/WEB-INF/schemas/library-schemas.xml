@@ -1,6 +1,7 @@
 <schema name="library.thesis.search" type="net.sourceforge.fenixedu.dataTransferObject.thesis.ThesisSearchBean"
 	bundle="DOMAIN_RESOURCES">
 	<slot name="text" key="label.searchField" layout="input-with-comment" bundle="COMMON_RESOURCES">
+		<property name="subProperty(size)" value="40"/>
 		<property name="bundle" value="LIBRARY_RESOURCES" />
 		<property name="comment" value="thesis.validation.message.help.searchfor" />
 	</slot>

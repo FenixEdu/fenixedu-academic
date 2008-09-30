@@ -308,3 +308,42 @@ height: 10px;
 background: #ebe6d6;
 border-bottom: 12px solid #ebe6d6;
 }
+
+
+
+
+/* --- Help --- */ 
+
+div.hcontent {
+padding: 7px 10px 7px 10px;
+/*
+background: #eff5f9;
+border: 2px solid #cde1ec;
+*/
+background: #f2f9ef;
+border: 2px solid #d7eccd;
+border-top: none;
+}
+div.htop {
+background: url(../images/htop_green.gif) top right no-repeat;
+height: 14px;
+}
+a.hlink {
+background: url(../images/icon_help_green.gif) top right no-repeat;
+display: block;
+width: 18px;
+height: 18px;
+border: none !important;
+outline: none;
+}
+a.hlink:hover {
+border-bottom: 1px solid #97b7ce !important;
+}
+div.help {
+clear: right;
+}
+span.helpicon {
+padding-right: 1em;
+float: right;
+}
+

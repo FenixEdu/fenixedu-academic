@@ -7,7 +7,48 @@
 
 <html:xhtml />
 
-<h2><bean:message key="thesis.validation.title.list" /></h2>
+
+
+<script language="JavaScript">	
+function check(e,v){
+	if (e.className == "dnone")
+  	{
+	  e.className = "dblock";
+	  v.value = "-";
+	}
+	else {
+	  e.className = "dnone";
+  	  v.value = "+";
+	}
+}
+</script>
+
+
+<span class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">
+	<span class="helpicon">
+		<a href="" class="hlink"></a>
+	</span>
+</span>
+
+<h2 class="mbottom0"><bean:message key="thesis.validation.title.list" /></h2>
+
+<div id="instructions" class="dblock">
+	<div class="help">
+		<div class="htop"></div>
+		<div class="hcontent">
+			<bean:message key="thesis.validation.help" />
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+	check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
+	document.getElementById('instructionsButton').className="dblock";
+</script>
+
+
 
 <fr:form action="/theses/search.do?method=search">
 	<fr:edit id="search" name="searchFilter" schema="library.thesis.search">
