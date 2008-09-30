@@ -29,7 +29,8 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
 	    if (markSheetManagementBean.getDegree().hasDegreeCurricularPlans(markSheetManagementBean.getDegreeCurricularPlan())) {
 		if (markSheetManagementBean.getDegree().isBolonhaDegree()) {
 		    addCurricularCourses(result, markSheetManagementBean.getDegreeCurricularPlan().getDcpDegreeModules(
-			    CurricularCourse.class, null), markSheetManagementBean.getExecutionPeriod());
+			    CurricularCourse.class, markSheetManagementBean.getExecutionPeriod().getExecutionYear()),
+			    markSheetManagementBean.getExecutionPeriod());
 		} else {
 		    addCurricularCourses(result, markSheetManagementBean.getDegreeCurricularPlan().getCurricularCourses(),
 			    markSheetManagementBean.getExecutionPeriod());
