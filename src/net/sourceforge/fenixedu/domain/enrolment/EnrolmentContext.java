@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 
 public class EnrolmentContext {
@@ -132,6 +133,10 @@ public class EnrolmentContext {
 	return getCurricularRuleLevel() == CurricularRuleLevel.PROPAEUDEUTICS_ENROLMENT;
     }
 
+    public boolean isStandalone() {
+	return getCurricularRuleLevel() == CurricularRuleLevel.STANDALONE_ENROLMENT;
+    }
+
     @SuppressWarnings("unchecked")
     static public EnrolmentContext createForVerifyWithRules(final Person person,
 	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
@@ -146,15 +151,25 @@ public class EnrolmentContext {
 		Collections.EMPTY_LIST, CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
 
+    @SuppressWarnings("unchecked")
     static public EnrolmentContext createForNoCourseGroupCurriculumGroup(final Person person,
 	    final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
 
-	final IDegreeModuleToEvaluate moduleToEvaluate = new ExternalCurricularCourseToEnrol(studentCurricularPlan
-		.getNoCourseGroupCurriculumGroup(groupType), curricularCourse, executionSemester);
+	final IDegreeModuleToEvaluate moduleToEvaluate = new ExternalCurricularCourseToEnrol(
+		readOrCreateNoCourseGroupCurriculumGroup(studentCurricularPlan, groupType), curricularCourse, executionSemester);
 
 	return new EnrolmentContext(person, studentCurricularPlan, executionSemester, Collections.singleton(moduleToEvaluate),
 		Collections.EMPTY_LIST, groupType.getCurricularRuleLevel());
+    }
+
+    static private NoCourseGroupCurriculumGroup readOrCreateNoCourseGroupCurriculumGroup(
+	    final StudentCurricularPlan studentCurricularPlan, final NoCourseGroupCurriculumGroupType groupType) {
+	NoCourseGroupCurriculumGroup group = studentCurricularPlan.getNoCourseGroupCurriculumGroup(groupType);
+	if (group == null) {
+	    group = studentCurricularPlan.createNoCourseGroupCurriculumGroup(groupType);
+	}
+	return group;
     }
 
 }

@@ -186,6 +186,10 @@ abstract public class StudentCurricularPlanEnrolment {
 
 	} else if (enrolmentContext.isPropaeudeutics()) {
 	    return new StudentCurricularPlanPropaeudeuticsEnrolmentManager(studentCurricularPlan, enrolmentContext);
+	    
+	} else if (enrolmentContext.isStandalone()) {
+	    //return new StudentCurricularPlanStandaloneEnrolmentManager(studentCurricularPlan, enrolmentContext);
+	    throw new DomainException("StudentCurricularPlanEnrolment");
 	}
 
 	throw new DomainException("StudentCurricularPlanEnrolment");

@@ -30,11 +30,15 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	super();
     }
 
-    protected void init(final CurriculumGroup curriculumGroup) {
-	if (!curriculumGroup.isRoot()) {
-	    throw new DomainException("error.no.root.curriculum.group");
-	}
+    protected void init(final RootCurriculumGroup curriculumGroup) {
+	checkParameters(curriculumGroup);
 	this.setCurriculumGroup(curriculumGroup);
+    }
+
+    private void checkParameters(final RootCurriculumGroup curriculumGroup) {
+	if (curriculumGroup == null) {
+	    throw new DomainException("error.NoCourseGroupCurriculumGroup.invalid.curriculumGroup");
+	}
     }
 
     public static NoCourseGroupCurriculumGroup createNewNoCourseGroupCurriculumGroup(
@@ -75,7 +79,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     @Override
-    public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
+    public Collection<CurricularCourse> getCurricularCoursesToDismissal(final ExecutionSemester executionSemester) {
 	return Collections.EMPTY_LIST;
     }
 
@@ -198,9 +202,9 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
 	return Collections.emptyList();
     }
-    
+
     @Override
     public int getNumberOfAllApprovedEnrolments(ExecutionSemester executionSemester) {
-        return 0;
+	return 0;
     }
 }
