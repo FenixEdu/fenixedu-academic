@@ -2737,7 +2737,7 @@ public class Person extends Person_Base {
 	if (photo == null)
 	    return null;
 	do {
-	    if (photo.getState() != PhotoState.REJECTED)
+	    if (photo.getState() != PhotoState.REJECTED && photo.getState() != PhotoState.USER_REJECTED)
 		return photo;
 	    photo = photo.getPrevious();
 	} while (photo != null);
