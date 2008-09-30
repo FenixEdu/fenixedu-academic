@@ -72,7 +72,7 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
 	return getRootDomainObject().getInstitutionUnit();
     }
 
-    private Registration getRegistration() {
+    public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
     }
 
@@ -106,6 +106,11 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
     @Override
     public BigDecimal getEnroledEcts() {
 	return BigDecimal.valueOf(getStudentCurricularPlan().getRoot().getEctsCredits());
+    }
+
+    @Override
+    public boolean isInternal() {
+	return true;
     }
 
 }
