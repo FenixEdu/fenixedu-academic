@@ -189,6 +189,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     protected boolean personHasDegree(final Person person, final Degree selectedDegree) {
-	return person.hasStudent() ? person.getStudent().hasRegistrationFor(selectedDegree) : false;
+	return person.hasStudent() ? person.getStudent().hasActiveRegistrationFor(selectedDegree) : false;
     }
 }

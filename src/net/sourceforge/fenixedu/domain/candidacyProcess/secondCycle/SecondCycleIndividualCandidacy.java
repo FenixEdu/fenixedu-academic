@@ -55,7 +55,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	}
 
 	if (personHasDegree(person, degree)) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", degree.getName());
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", degree.getNameFor(
+		    process.getCandidacyExecutionInterval()).getContent());
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -148,4 +149,5 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 		.getNextExecutionYear() : getCandidacyExecutionInterval());
 	return registration;
     }
+
 }
