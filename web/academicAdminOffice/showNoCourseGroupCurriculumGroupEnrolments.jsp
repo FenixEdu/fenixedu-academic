@@ -26,10 +26,15 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4"/>
 		      	<fr:property name="columnClasses" value="listClasses,,"/>
-				<fr:property name="linkFormat(enrolment)" value="<%= url %>" />
-				<fr:property name="key(enrolment)" value="link.student.unenrol"/>
-				<fr:property name="bundle(enrolment)" value="ACADEMIC_OFFICE_RESOURCES"/>
-				<fr:property name="contextRelative(enrolment)" value="true"/>      	
+
+				<fr:property name="linkFormat(unenrol)" value="<%= url %>" />
+				<fr:property name="key(unenrol)" value="link.student.unenrol"/>
+				<fr:property name="bundle(unenrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
+				<fr:property name="contextRelative(unenrol)" value="true"/>
+				<fr:property name="confirmationKey(unenrol)" value="label.student.noCourseGroupCurriculumGroup.unenrol.confirmation.message" />
+				<fr:property name="confirmationBundle(unenrol)" value="ACADEMIC_OFFICE_RESOURCES" />
+
+				<fr:property name="sortBy" value="executionPeriod=desc,name=asc" />
 			</fr:layout>
 		</fr:view>
 	</logic:present>

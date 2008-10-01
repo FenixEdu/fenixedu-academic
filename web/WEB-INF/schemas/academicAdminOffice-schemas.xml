@@ -631,6 +631,7 @@
 
 <schema name="studentOptionalEnrolment.base" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean">
+	<slot name="executionPeriod.qualifiedName" read-only="true" key="label.executionPeriod" />
 	<slot name="degreeType" key="label.degreeType" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="destination" value="postBack"/>
 		<property name="excludedValues" value="DEGREE,MASTER_DEGREE" />

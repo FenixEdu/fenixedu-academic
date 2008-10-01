@@ -24,6 +24,13 @@
 	</fr:edit>
 </fr:form>
 
+<logic:notPresent name="enrolmentBean" property="degreeCurricularPlan">
+	<fr:form action='<%= "/" + actionName + ".do?method=back2" %>'>
+		<fr:edit id="enrolmentBean" name="enrolmentBean" visible="false" />
+		<html:submit><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+	</fr:form>
+</logic:notPresent>
+
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<br/>
 	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
@@ -32,15 +39,14 @@
 
 <br />
 <br />
-<br />
 
 <logic:present name="enrolmentBean" property="degreeCurricularPlan">
-
 	<fr:form action='<%= "/" + actionName + ".do?method=back2" %>'>
-		<fr:edit id="degreeCurricularPlan"
-				 name="enrolmentBean">
+		<fr:edit id="enrolmentBean" name="enrolmentBean" visible="false" />
+
+		<fr:edit id="degreeCurricularPlan" name="enrolmentBean">
 			<fr:layout name="student-optional-enrolments">
-				<fr:property name="linkFormat" value='<%= "/" + actionName + ".do?method=enrol&amp;scpID=${studentCurricularPlan.idInternal}&amp;executionPeriodID=${executionPeriod.idInternal}&amp;degreeType=${degreeType}&amp;degreeID=${degree.idInternal}&amp;dcpID=${degreeCurricularPlan.idInternal}&amp;type=${groupType}" %>' />
+				<fr:property name="linkFormat(enrol)" value='<%= "/" + actionName + ".do?method=enrol&amp;scpID=${studentCurricularPlan.idInternal}&amp;executionPeriodID=${executionPeriod.idInternal}&amp;degreeType=${degreeType}&amp;degreeID=${degree.idInternal}&amp;dcpID=${degreeCurricularPlan.idInternal}&amp;type=${groupType}" %>' />
 			</fr:layout>
 		</fr:edit>
 		<br/>

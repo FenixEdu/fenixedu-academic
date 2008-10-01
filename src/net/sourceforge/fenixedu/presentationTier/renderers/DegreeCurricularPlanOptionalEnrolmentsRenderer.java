@@ -35,8 +35,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRenderer {
 
-    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
-
     private final ResourceBundle academicAdminOfficeResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
 
     private Integer initialWidth = 70;
@@ -167,9 +165,9 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    htmlTableRow.createCell().setBody(new HtmlText(courseGroup.getName()));
 
 	    final List<Context> childCourseGroupContexts = courseGroup.getValidChildContexts(CourseGroup.class,
-		    studentOptionalEnrolmentBean.getExecutionPeriod());
+		    getExecutionSemester());
 	    final List<Context> childCurricularCourseContexts = courseGroup.getValidChildContexts(CurricularCourse.class,
-		    studentOptionalEnrolmentBean.getExecutionPeriod());
+		    getExecutionSemester());
 
 	    Collections.sort(childCourseGroupContexts, new BeanComparator("childOrder"));
 	    Collections.sort(childCurricularCourseContexts, new BeanComparator("childOrder"));
@@ -182,6 +180,10 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    }
 	}
 
+	private ExecutionSemester getExecutionSemester() {
+	    return studentOptionalEnrolmentBean.getExecutionPeriod();
+	}
+
 	private void generateCurricularCourses(HtmlBlockContainer blockContainer, List<Context> contexts, int depth) {
 	    final HtmlTable table = new HtmlTable();
 	    blockContainer.addChild(table);
@@ -190,12 +192,13 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 
 	    for (Context context : contexts) {
 		final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+
 		if (!curricularCourse.isOptionalCurricularCourse()) {
 
 		    final HtmlTableRow htmlTableRow = table.createRow();
 		    HtmlTableCell cellName = htmlTableRow.createCell();
 		    cellName.setClasses(getCurricularCourseNameClasses());
-		    cellName.setBody(new HtmlText(curricularCourse.getName()));
+		    cellName.setBody(new HtmlText(curricularCourse.getName(getExecutionSemester())));
 
 		    // Year
 		    final HtmlTableCell yearCell = htmlTableRow.createCell();
@@ -207,7 +210,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 		    ectsCell.setClasses(getCurricularCourseEctsClasses());
 
 		    final StringBuilder ects = new StringBuilder();
-		    ects.append(curricularCourse.getEctsCredits()).append(" ").append(
+		    ects.append(curricularCourse.getEctsCredits(getExecutionSemester())).append(" ").append(
 			    academicAdminOfficeResources.getString("credits.abbreviation"));
 		    ectsCell.setBody(new HtmlText(ects.toString()));
 
@@ -225,7 +228,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 
 	private void generateDCP(HtmlBlockContainer container, int depth) {
 	    Map<Branch, SortedSet<DegreeModuleScope>> branchMap = getBranchMap(studentOptionalEnrolmentBean
-		    .getDegreeCurricularPlan(), studentOptionalEnrolmentBean.getExecutionPeriod());
+		    .getDegreeCurricularPlan(), getExecutionSemester());
 	    for (Entry<Branch, SortedSet<DegreeModuleScope>> entry : branchMap.entrySet()) {
 		generateBranch(container, entry.getKey(), entry.getValue(), depth + getWidthDecreasePerLevel());
 	    }
@@ -259,7 +262,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 		final HtmlTableRow htmlTableRow = table.createRow();
 		HtmlTableCell cellName = htmlTableRow.createCell();
 		cellName.setClasses(getCurricularCourseNameClasses());
-		cellName.setBody(new HtmlText(scope.getCurricularCourse().getName()));
+		cellName.setBody(new HtmlText(scope.getCurricularCourse().getName(getExecutionSemester())));
 
 		// Year
 		final HtmlTableCell yearCell = htmlTableRow.createCell();
@@ -272,7 +275,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 		final HtmlTableCell ectsCell = htmlTableRow.createCell();
 		ectsCell.setClasses(getCurricularCourseEctsClasses());
 		final StringBuilder ects = new StringBuilder();
-		ects.append(scope.getCurricularCourse().getEctsCredits()).append(" ").append(
+		ects.append(scope.getCurricularCourse().getEctsCredits(getExecutionSemester())).append(" ").append(
 			academicAdminOfficeResources.getString("credits.abbreviation"));
 		ectsCell.setBody(new HtmlText(ects.toString()));
 
@@ -285,7 +288,6 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 		htmlLink.setUrl(linkFormatted);
 		htmlLink.setParameter("optionalCCID", scope.getCurricularCourse().getIdInternal());
 	    }
-
 	}
 
 	private Map<Branch, SortedSet<DegreeModuleScope>> getBranchMap(final DegreeCurricularPlan degreeCurricularPlan,
@@ -311,6 +313,5 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    }
 	    list.add(scope.getDegreeModuleScopeCurricularCourseScope());
 	}
-
     }
 }
