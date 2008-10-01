@@ -69,9 +69,9 @@ public class Attends extends Attends_Base {
 
 	@Override
 	public int compare(Attends o1, Attends o2) {
-	    return Collator.getInstance().compare(o1.getDisciplinaExecucao().getNome(), o2.getDisciplinaExecucao().getNome());
+	    return Collator.getInstance().compare(o1.getExecutionCourse().getNome(), o2.getExecutionCourse().getNome());
 	}
-	
+
     };
 
     public Attends() {
@@ -88,6 +88,9 @@ public class Attends extends Attends_Base {
     public void delete() throws DomainException {
 	if (canDelete()) {
 
+	    for (; hasAnyWeeklyWorkLoads(); getWeeklyWorkLoads().get(0).delete())
+		;
+
 	    getProjectSubmissionLogsSet().clear();
 	    getGroupingsSet().clear();
 	    removeAluno();
@@ -100,16 +103,19 @@ public class Attends extends Attends_Base {
     }
 
     private boolean canDelete() {
-	if (hasAnyShiftEnrolments())
+	if (hasAnyShiftEnrolments()) {
 	    throw new DomainException("error.attends.cant.delete");
-	if (hasAnyStudentGroups())
+	}
+	if (hasAnyStudentGroups()) {
 	    throw new DomainException("error.attends.cant.delete");
-	if (hasAnyAssociatedMarks())
+	}
+	if (hasAnyAssociatedMarks()) {
 	    throw new DomainException("error.attends.cant.delete");
-	if (hasAnyProjectSubmissions())
+	}
+	if (hasAnyProjectSubmissions()) {
 	    throw new DomainException("error.attends.cant.delete");
-	if (hasAnyWeeklyWorkLoads())
-	    throw new DomainException("error.attends.cant.delete");
+	}
+
 	return true;
     }
 
