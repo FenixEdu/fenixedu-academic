@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditGrantOwner extends FenixService {
 
@@ -61,6 +61,11 @@ public class EditGrantOwner extends FenixService {
 
 	// verify if person is new
 	if (infoGrantOwner.getInfoPersonEditor().getIdInternal() != null) {
+	    if (infoGrantOwner.getGrantOwnerNumber() == null) {
+		if (person.getGrantOwner() != null) {
+		    infoGrantOwner.setGrantOwnerNumber(person.getGrantOwner().getNumber());
+		}
+	    }
 	    grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber());
 	}
 
