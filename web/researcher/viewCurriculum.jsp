@@ -99,8 +99,11 @@
 	<ul>			
 	<li><bean:message key="researcher.viewCurriculum.name" bundle="RESEARCHER_RESOURCES"/>: <strong><fr:view name="person" property="nickname"/></strong> <logic:present name="person" property="teacher"> (<fr:view name="person" property="teacher.teacherNumber"/>)</li>
 	</logic:present>
-	<logic:present name="person" property="teacher">
-		<li><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES"/>: <fr:view name="person" property="teacher.category.name"/></li>
+	
+	<logic:present role="TEACHER">		
+		<logic:present name="person" property="teacher">
+			<li><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES"/>: <fr:view name="person" property="teacher.category.name"/></li>
+		</logic:present>
 	</logic:present>
 	</ul>
 	
