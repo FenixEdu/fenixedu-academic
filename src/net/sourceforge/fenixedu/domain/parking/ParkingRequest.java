@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType;
 import net.sourceforge.fenixedu.domain.parking.NewParkingDocument;
@@ -72,8 +74,14 @@ public class ParkingRequest extends ParkingRequest_Base {
 	setDriverLicenseDeliveryType(oldParkingRequest.getDriverLicenseDeliveryType());
 	setParkingParty(oldParkingRequest.getParkingParty());
 	setCreationDate(new DateTime());
-	setPhone(((Person) oldParkingRequest.getParkingParty().getParty()).getDefaultPhone().getNumber());
-	setMobile(((Person) oldParkingRequest.getParkingParty().getParty()).getDefaultMobilePhone().getNumber());
+	Phone defaultPhone = ((Person) oldParkingRequest.getParkingParty().getParty()).getDefaultPhone();
+	if (defaultPhone != null) {
+	    setPhone(defaultPhone.getNumber());
+	}
+	MobilePhone defaultMobilePhone = ((Person) oldParkingRequest.getParkingParty().getParty()).getDefaultMobilePhone();
+	if (defaultMobilePhone != null) {
+	    setMobile(defaultMobilePhone.getNumber());
+	}
 	setEmail(((Person) oldParkingRequest.getParkingParty().getParty()).getDefaultEmailAddress().getValue());
 	RoleType requestedAs = oldParkingRequest.getRequestedAs();
 	if (requestedAs == null) {
