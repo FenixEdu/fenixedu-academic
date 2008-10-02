@@ -31,8 +31,8 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 /**
  * @author Pedro Santos (pmrsa)
  */
-@Mapping(path = "/documents", module = "manager")
-@Forwards( { @Forward(name = "search", path = "/manager/documents/search.jsp") })
+@Mapping(path = "/generatedDocuments", module = "manager")
+@Forwards( { @Forward(name = "search", path = "/manager/documents/generatedDocuments.jsp") })
 public class GeneratedDocumentsDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

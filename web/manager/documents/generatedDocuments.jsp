@@ -19,7 +19,7 @@
 		<p>
 	</logic:messagesPresent>
 
-	<fr:form action="/documents.do?method=search">
+	<fr:form action="/generatedDocuments.do?method=search">
 		<fr:edit name="searchBean" id="searchBean" schema="documents.search">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle1" />
