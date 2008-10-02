@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -402,4 +403,14 @@ public class Shift extends Shift_Base {
 	}
 	return false;
     }
+    
+    public boolean hasSchoolClassForDegreeType(DegreeType degreeType) {
+	for (SchoolClass schoolClass : getAssociatedClasses()) {
+	    if (schoolClass.getExecutionDegree().getDegreeType() == degreeType) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
 }

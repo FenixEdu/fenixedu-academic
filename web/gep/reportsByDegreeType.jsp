@@ -28,6 +28,8 @@
 		<bean:define id="urlRegistrations" type="java.lang.String">/reportsByDegreeType.do?method=downloadRegistrations&amp;<bean:write name="args" filter="false"/></bean:define>
 		<bean:define id="urlFlunked" type="java.lang.String">/reportsByDegreeType.do?method=downloadFlunked&amp;<bean:write name="args" filter="false"/></bean:define>
 		<bean:define id="urlGraduations" type="java.lang.String">/reportsByDegreeType.do?method=downloadGraduations&amp;<bean:write name="args" filter="false"/></bean:define>
+		<bean:define id="urlTeachersByShift" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersByShift&amp;<bean:write name="args" filter="false"/></bean:define>
+		<bean:define id="urlCourseLoads" type="java.lang.String">/reportsByDegreeType.do?method=downloadCourseLoads&amp;<bean:write name="args" filter="false"/></bean:define>				
 		<table class="tstyle1 thleft thlight mtop025">
 			<tr>
 				<th>
@@ -167,6 +169,40 @@
 					</html:link>
 				</td>
 			</tr>
+			<tr>
+				<th>
+					<bean:message key="label.report.teachersByShift" bundle="GEP_RESOURCES"/>
+				</th>
+				<td>
+					<bean:define id="urlTeachersByShiftCsv" type="java.lang.String"><bean:write name="urlTeachersByShift" filter="false"/>&amp;format=csv</bean:define>
+					<html:link page="<%= urlTeachersByShiftCsv %>">
+						<bean:message key="label.download.csv" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+				<td>
+					<bean:define id="urlTeachersByShiftXls" type="java.lang.String"><bean:write name="urlTeachersByShift" filter="false"/>&amp;format=xls</bean:define>
+					<html:link page="<%= urlTeachersByShiftXls %>">
+						<bean:message key="label.download.xls" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="label.report.courseLoads" bundle="GEP_RESOURCES"/>
+				</th>
+				<td>
+					<bean:define id="urlCourseLoadsCsv" type="java.lang.String"><bean:write name="urlCourseLoads" filter="false"/>&amp;format=csv</bean:define>
+					<html:link page="<%= urlCourseLoadsCsv %>">
+						<bean:message key="label.download.csv" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+				<td>
+					<bean:define id="urlCourseLoadsXls" type="java.lang.String"><bean:write name="urlCourseLoads" filter="false"/>&amp;format=xls</bean:define>
+					<html:link page="<%= urlCourseLoadsXls %>">
+						<bean:message key="label.download.xls" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+			</tr>				
 		</table>
 	</logic:present>
 </logic:present>

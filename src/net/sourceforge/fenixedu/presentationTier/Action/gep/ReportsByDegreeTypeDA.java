@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.gep;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -28,6 +30,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
@@ -44,6 +47,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
@@ -61,6 +65,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public static class ReportBean implements Serializable {
 	private DegreeType degreeType;
+
 	private DomainReference<ExecutionYear> executionYearReference;
 
 	public DegreeType getDegreeType() {
@@ -276,6 +281,34 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward downloadTeachersByShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+	final String reportName = getReportName("teachersByShift", degreeType.getLocalizedName(), executionYear);
+
+	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
+	reportTeachersByShift(spreadsheet, degreeType, executionYear);
+
+	outputReport(response, reportName, spreadsheet, format);
+	return null;
+    }
+
+    public ActionForward downloadCourseLoads(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+	final String reportName = getReportName("teachersByShift", degreeType.getLocalizedName(), executionYear);
+
+	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
+	reportCourseLoads(spreadsheet, degreeType, executionYear);
+
+	outputReport(response, reportName, spreadsheet, format);
+	return null;
+    }
+    
     private void reportEurAce(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("nome disciplina");
@@ -572,6 +605,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public static class EnrolmentAndAprovalCounter {
 	private int enrolments = 0;
+
 	private int aprovals = 0;
 
 	public void count(final Enrolment enrolment) {
@@ -593,6 +627,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     public static class EnrolmentAndAprovalCounterMap extends HashMap<ExecutionSemester, EnrolmentAndAprovalCounter> {
 
 	private final ExecutionSemester firstExecutionSemester;
+
 	private final ExecutionSemester lastExecutionSemester;
 
 	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
@@ -953,5 +988,86 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    }
 	}
     }
+
+    private void reportTeachersByShift(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
+
+	spreadsheet.setHeader("semestre");
+	spreadsheet.setHeader("nº docente");
+	spreadsheet.setHeader("id turno");
+	spreadsheet.setHeader("nome turno");
+	spreadsheet.setHeader("id execution course");
+	spreadsheet.setHeader("% assegurada pelo docente");
+
+	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    for (TeacherService teacherService : executionSemester.getTeacherServices()) {
+		for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
+
+		    final Shift shift = degreeTeachingService.getShift();
+
+		    if (!shift.hasSchoolClassForDegreeType(degreeType)) {
+			continue;
+		    }
+
+		    Row row = spreadsheet.addRow();
+		    row.setCell(executionSemester.getSemester());
+		    row.setCell(teacherService.getTeacher().getTeacherNumber());
+		    row.setCell(shift.getIdInternal());
+		    row.setCell(shift.getNome());
+		    row.setCell(shift.getExecutionCourse().getIdInternal());
+		    row.setCell(degreeTeachingService.getPercentage());
+
+		}
+	    }
+	}
+
+    }
+    
+    private void reportCourseLoads(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
+
+	spreadsheet.setHeader("semestre");
+	spreadsheet.setHeader("id execution course");
+	spreadsheet.setHeader("id turno");
+	spreadsheet.setHeader("nome turno");
+	spreadsheet.setHeader("tipo aula");
+	spreadsheet.setHeader("horas aula");
+	spreadsheet.setHeader("total turnos");
+	spreadsheet.setHeader("total horas");
+
+	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+
+		BigDecimal totalQuantity = new BigDecimal(0);
+		for (CourseLoad courseLoad : executionCourse.getCourseLoads()) {
+		    totalQuantity = totalQuantity.add(courseLoad.getTotalQuantity());
+		}
+
+		for (CourseLoad courseLoad : executionCourse.getCourseLoads()) {
+
+		    int shiftsCount = courseLoad.getShiftsCount();
+
+		    for (Shift shift : courseLoad.getShifts()) {
+
+			if (!shift.hasSchoolClassForDegreeType(degreeType)) {
+			    shiftsCount--;
+			    continue;
+			}
+
+			Row row = spreadsheet.addRow();
+			row.setCell(executionSemester.getSemester());
+			row.setCell(executionCourse.getIdInternal());
+			row.setCell(shift.getIdInternal());
+			row.setCell(shift.getNome());
+			row.setCell(courseLoad.getType().name());
+			row.setCell(courseLoad.getTotalQuantity());
+			row.setCell(shiftsCount);
+			row.setCell(totalQuantity);
+
+		    }
+		}
+	    }
+	}
+
+    }
+    
 
 }
