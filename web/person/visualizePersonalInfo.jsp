@@ -33,7 +33,7 @@
 				<td><html:img align="middle"
 					src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES"
-					styleClass="float: right; border: 1px solid #aaa; padding: 3px;" /></td>
+					style="border: 1px solid #aaa; padding: 3px;" /></td>
 				<td>
                     <div style="padding: 0 2em;">
                     <div class="infoop2">

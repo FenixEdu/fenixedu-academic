@@ -729,3 +729,22 @@
 	<slot name="username" />
 	<slot name="name" />
 </schema>
+
+<schema name="photographs.filter.main" type="net.sourceforge.fenixedu.dataTransferObject.photographs.PhotographFilterBean"
+	bundle="DOMAIN_RESOURCES">
+	<slot name="state" key="label.Photograph.state" />
+	<slot name="type" key="label.Photograph.type" />
+</schema>
+
+<schema name="photographs.filter.person" type="net.sourceforge.fenixedu.dataTransferObject.photographs.PhotographFilterBean"
+    bundle="DOMAIN_RESOURCES">
+	<slot name="personType" key="label.RoleType.name">
+        <property name="includedValues" value="ALUMNI, TEACHER, STUDENT, EMPLOYEE, GRANT_OWNER" />
+        <property name="key" value="true" />
+        <property name="defaultText" value="label.dropDown.all" />
+        <property name="bundle" value="ENUMERATION_RESOURCES" />
+    </slot>
+	<slot name="name" key="label.Party.name">
+	    <property name="size" value="50" />
+	</slot>
+</schema>

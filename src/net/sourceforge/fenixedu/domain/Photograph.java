@@ -25,7 +25,7 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class Photograph extends Photograph_Base {
+public class Photograph extends Photograph_Base implements Comparable<Photograph> {
 
     private static final int COMPRESSED_PHOTO_WIDTH = 100;
 
@@ -168,5 +168,10 @@ public class Photograph extends Photograph_Base {
 	    throw new DomainException("photograph.compress.errorWritingImage", e);
 	}
 	return new ByteArray(outputStream.toByteArray());
+    }
+
+    @Override
+    public int compareTo(Photograph photo) {
+	return getSubmission().compareTo(photo.getSubmission());
     }
 }

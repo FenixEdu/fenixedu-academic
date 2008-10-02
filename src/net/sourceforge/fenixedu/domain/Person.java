@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -2753,6 +2754,14 @@ public class Person extends Person_Base {
 	if (super.hasPersonalPhoto())
 	    photo.setPrevious(super.getPersonalPhoto());
 	super.setPersonalPhoto(photo);
+    }
+
+    public List<Photograph> getPhotographHistory() {
+	LinkedList<Photograph> history = new LinkedList<Photograph>();
+	for (Photograph photo = super.getPersonalPhoto(); photo != null; photo = photo.getPrevious()) {
+	    history.addFirst(photo);
+	}
+	return history;
     }
 
     public boolean isPhotoPubliclyAvailable() {

@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Photograph History Manager Portal" fotoHistoryPortal.sql
