@@ -44,7 +44,6 @@ import org.joda.time.LocalTime;
 import org.joda.time.Partial;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
-import org.joda.time.TimeOfDay;
 import org.joda.time.chrono.GregorianChronology;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -83,9 +82,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     private LocalDate endDate;
 
-    private TimeOfDay beginTime;
+    private LocalTime beginTime;
 
-    private TimeOfDay endTime;
+    private LocalTime endTime;
 
     private String notes;
 
@@ -134,9 +133,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (actionMessage != null) {
 			    return new ActionMessage(actionMessage);
 			}
-			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(getBeginTime().toLocalTime()),
-				getDuration(getBeginTime().toDateTimeToday(), getEndTime().toDateTimeToday()),
-				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
+			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(getBeginTime()), getDuration(
+				getBeginTime().toDateTimeToday(), getEndTime().toDateTimeToday()), getJustificationMotive(),
+				null, getNotes(), new DateTime(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
@@ -242,7 +241,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
 
-			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTimeAtMidnight(), null,
+			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTimeAtStartOfDay(), null,
 				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
 		    } else {
 			// error - regul
@@ -266,8 +265,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingAnotherAssiduousnessRecord(null)) {
 			    return new ActionMessage("errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
-			new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
-				getBeginTime().toLocalTime()), getJustificationMotive(), getModifiedBy());
+			new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(getBeginTime()),
+				getJustificationMotive(), getModifiedBy());
 		    } else {
 			// erro - just
 			return new ActionMessage("errors.error");
@@ -293,9 +292,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    if (justification.isLeave()) {
 		setCorrectionType(CorrectionType.JUSTIFICATION);
 		setJustificationType(justification.getJustificationMotive().getJustificationType());
-		setBeginTime(((Leave) justification).getDate().toTimeOfDay());
+		setBeginTime(((Leave) justification).getDate().toLocalTime());
 		setEndDate(((Leave) justification).getEndLocalDate());
-		setEndTime(new TimeOfDay(((Leave) justification).getEndLocalTime()));
+		setEndTime(((Leave) justification).getEndLocalTime());
 
 		if (justification.getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
 			|| getJustificationMotive().getJustificationType().equals(JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
@@ -321,7 +320,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		}
 	    } else {
 		setCorrectionType(CorrectionType.REGULARIZATION);
-		setBeginTime(justification.getDate().toTimeOfDay());
+		setBeginTime(justification.getDate().toLocalTime());
 	    }
 	}
 
@@ -350,9 +349,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage(actionMessage);
 			}
 
-			((Leave) getJustification()).modify(getBeginDate().toDateTime(getBeginTime().toLocalTime()), getDuration(
-				getBeginTime().toDateTimeToday(), getEndTime().toDateTimeToday()), getJustificationMotive(),
-				null, getNotes(), getModifiedBy());
+			((Leave) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()), getDuration(getBeginTime()
+				.toDateTimeToday(), getEndTime().toDateTimeToday()), getJustificationMotive(), null, getNotes(),
+				getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
@@ -491,7 +490,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingAnotherAssiduousnessRecord((MissingClocking) getJustification())) {
 			    return new ActionMessage("errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
-			((MissingClocking) getJustification()).modify(getBeginDate().toDateTime(getBeginTime().toLocalTime()),
+			((MissingClocking) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()),
 				getJustificationMotive(), getModifiedBy());
 		    } else {
 			// erro - just
@@ -567,7 +566,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	public Object execute() {
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	    if (getJustificationMotive() != null && getJustificationMotive().getJustificationType() != null) {
-		final GregorianChronology gregorianChronology = GregorianChronology.getInstanceUTC();
 		if (getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {
 		    if (getBeginDate() == null) {
 			return new ActionMessage("errors.required", bundle.getString("label.date"));
@@ -588,8 +586,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    if (actionMessage != null) {
 			return new ActionMessage(actionMessage);
 		    }
-		    createJustification(getBeginDate().toDateTime(getBeginTime().toLocalTime()), getDuration(getBeginTime()
-			    .toDateTimeToday(), getEndTime().toDateTimeToday()), bundle);
+		    createJustification(getBeginDate().toDateTime(getBeginTime()), getDuration(getBeginTime().toDateTimeToday(),
+			    getEndTime().toDateTimeToday()), bundle);
 		} else if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			|| getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		    if (getBeginDate() == null) {
@@ -639,7 +637,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			return new ActionMessage("errors.datesInClosedMonth");
 		    }
 
-		    String result = createJustification(getBeginDate().toDateTimeAtMidnight(), dayDuration, bundle);
+		    String result = createJustification(getBeginDate().toDateTimeAtStartOfDay(), dayDuration, bundle);
 		    if (result != null) {
 			return new ActionMessage("errors", result);
 		    }
@@ -872,7 +870,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     protected boolean isOverlapingAnotherAssiduousnessRecord(MissingClocking missingClocking) {
 	final List<Leave> leaves = getEmployee().getAssiduousness().getLeaves(getBeginDate(), getBeginDate());
-	DateTime date = getBeginDate().toDateTime(getBeginTime().toLocalTime());
+	DateTime date = getBeginDate().toDateTime(getBeginTime());
 	final List<AssiduousnessRecord> clockings = getEmployee().getAssiduousness().getClockingsAndMissingClockings(date,
 		date.plusMinutes(1));
 	if (!leaves.isEmpty()) {
@@ -881,7 +879,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			|| leave.getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		    return true;
 		} else if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)
-			&& leave.getTotalInterval().contains(getBeginDate().toDateTime(getBeginTime().toLocalTime()))) {
+			&& leave.getTotalInterval().contains(getBeginDate().toDateTime(getBeginTime()))) {
 		    return true;
 		}
 	    }
@@ -981,9 +979,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    int before = 0;
 	    int middle = 0;
 	    for (AssiduousnessRecord assiduousnessRecord : clocks) {
-		if (!assiduousnessRecord.getDateWithoutSeconds().toTimeOfDay().isAfter(getBeginTime())) {
+		if (!assiduousnessRecord.getDateWithoutSeconds().toLocalTime().isAfter(getBeginTime())) {
 		    before++;
-		} else if (assiduousnessRecord.getDateWithoutSeconds().toTimeOfDay().isBefore(getEndTime())) {
+		} else if (assiduousnessRecord.getDateWithoutSeconds().toLocalTime().isBefore(getEndTime())) {
 		    middle++;
 		} else {
 		    break;
@@ -1028,15 +1026,15 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	return !leaves.isEmpty() && (justitication == null || !leaves.contains(justitication) || leaves.size() != 1);
     }
 
-    protected Duration getDuration(TimeOfDay begin, TimeOfDay end) {
+    protected Duration getDuration(LocalTime begin, LocalTime end) {
 	if (begin == null || end == null) {
 	    return null;
 	}
 	LocalDate now = new LocalDate();
-	return new Duration(now.toDateTime(begin.toLocalTime()), now.toDateTime(end.toLocalTime()));
+	return new Duration(now.toDateTime(begin), now.toDateTime(end));
     }
 
-    protected Duration getDuration(TimeOfDay time) {
+    protected Duration getDuration(LocalTime time) {
 	if (time == null) {
 	    return null;
 	}
@@ -1058,11 +1056,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	this.beginDate = beginDate;
     }
 
-    public TimeOfDay getBeginTime() {
+    public LocalTime getBeginTime() {
 	return beginTime;
     }
 
-    public void setBeginTime(TimeOfDay beginTime) {
+    public void setBeginTime(LocalTime beginTime) {
 	this.beginTime = beginTime;
     }
 
@@ -1074,11 +1072,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	this.endDate = endDate;
     }
 
-    public TimeOfDay getEndTime() {
+    public LocalTime getEndTime() {
 	return endTime;
     }
 
-    public void setEndTime(TimeOfDay endTime) {
+    public void setEndTime(LocalTime endTime) {
 	this.endTime = endTime;
     }
 
