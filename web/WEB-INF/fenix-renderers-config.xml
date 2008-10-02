@@ -661,7 +661,7 @@ Documentation:
 		<property name="second" value="true"/>
 	</renderer>
 	
-	<renderer mode="input" type="org.joda.time.TimeOfDay" layout="multiple-format-hour-minute" class="net.sourceforge.fenixedu.presentationTier.renderers.MultipleFormatTimeInputRenderer">
+	<renderer mode="input" type="org.joda.time.LocalTime" layout="multiple-format-hour-minute" class="net.sourceforge.fenixedu.presentationTier.renderers.MultipleFormatTimeInputRenderer">
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
 	</renderer>
