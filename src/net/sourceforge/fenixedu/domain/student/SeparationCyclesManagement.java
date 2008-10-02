@@ -123,12 +123,41 @@ public class SeparationCyclesManagement {
 
 	copyCycleCurriculumGroupsInformation(oldSecondCycle, newSecondCycle);
 	moveExtraCurriculumGroupInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
+	moveExtraAttends(oldStudentCurricularPlan, newStudentCurricularPlan);
 	tryRemoveOldSecondCycle(oldSecondCycle);
 	markOldRegistrationWithConcludedState(oldStudentCurricularPlan);
 	moveGratuityEventsInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
 	createAdministrativeOfficeFeeAndInsurance(newStudentCurricularPlan);
 
 	return newRegistration;
+    }
+
+    private void moveExtraAttends(final StudentCurricularPlan oldStudentCurricularPlan,
+	    final StudentCurricularPlan newStudentCurricularPlan) {
+
+	final Set<Attends> attends = new HashSet<Attends>();
+	for (final Attends attend : oldStudentCurricularPlan.getRegistration().getAssociatedAttendsSet()) {
+	    if (!belongsTo(oldStudentCurricularPlan, attend) && isToMoveAttendsFrom(oldStudentCurricularPlan, attend)) {
+		attends.add(attend);
+	    }
+	}
+
+	for (final Attends attend : attends) {
+	    attend.setRegistration(newStudentCurricularPlan.getRegistration());
+	}
+    }
+
+    private boolean belongsTo(final StudentCurricularPlan studentCurricularPlan, final Attends attend) {
+	for (final CurricularCourse curricularCourse : attend.getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+	    if (studentCurricularPlan.getDegreeCurricularPlan().hasDegreeModule(curricularCourse)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private boolean isToMoveAttendsFrom(final StudentCurricularPlan studentCurricularPlan, final Attends attend) {
+	return !attend.hasEnrolment() || !studentCurricularPlan.hasEnrolments(attend.getEnrolment());
     }
 
     private Registration createRegistration(final Student student, final StudentCurricularPlan sourceStudentCurricularPlan) {
