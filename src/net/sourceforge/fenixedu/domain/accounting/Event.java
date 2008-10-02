@@ -876,18 +876,7 @@ public abstract class Event extends Event_Base {
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void transferPaymentsAndCancel(Employee employee, Event targetEvent, String justification) {
 
-	if (getEventType() != targetEvent.getEventType()) {
-	    throw new DomainException("error.accounting.Event.events.must.be.compatible");
-	}
-
-	if (isCancelled()) {
-	    throw new DomainException("error.accounting.Event.cannot.transfer.payments.from.cancelled.events");
-	}
-
-	if (this == targetEvent) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.Event.target.event.must.be.different.from.source");
-	}
+	checkConditionsToTransferPaymentsAndCancel(targetEvent);
 
 	for (final Entry entryToTransfer : getPositiveEntries()) {
 
@@ -903,6 +892,21 @@ public abstract class Event extends Event_Base {
 
 	cancel(employee, justification);
 
+    }
+
+    protected void checkConditionsToTransferPaymentsAndCancel(Event targetEvent) {
+	if (getEventType() != targetEvent.getEventType()) {
+	    throw new DomainException("error.accounting.Event.events.must.be.compatible");
+	}
+
+	if (isCancelled()) {
+	    throw new DomainException("error.accounting.Event.cannot.transfer.payments.from.cancelled.events");
+	}
+
+	if (this == targetEvent) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.Event.target.event.must.be.different.from.source");
+	}
     }
 
     private AccountingTransactionDetailDTO createAccountingTransactionDetailForTransfer(final AccountingTransaction transaction) {
