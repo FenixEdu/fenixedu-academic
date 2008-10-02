@@ -1974,7 +1974,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType, final Person person) {
 
-	final EnrolmentContext enrolmentContext = EnrolmentContext.createForNoCourseGroupCurriculumGroup(person, this,
+	final EnrolmentContext enrolmentContext = EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(person, this,
 		curricularCourse, executionSemester, groupType);
 
 	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this,

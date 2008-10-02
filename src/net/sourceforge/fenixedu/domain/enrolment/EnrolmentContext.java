@@ -152,7 +152,7 @@ public class EnrolmentContext {
     }
 
     @SuppressWarnings("unchecked")
-    static public EnrolmentContext createForNoCourseGroupCurriculumGroup(final Person person,
+    static public EnrolmentContext createForNoCourseGroupCurriculumGroupEnrolment(final Person person,
 	    final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
 
