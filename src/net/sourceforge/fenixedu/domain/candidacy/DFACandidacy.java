@@ -46,6 +46,7 @@ public class DFACandidacy extends DFACandidacy_Base {
 
 	Set<String> preCandidacy = new HashSet<String>();
 	preCandidacy.add(CandidacySituationType.STAND_BY.toString());
+	preCandidacy.add(CandidacySituationType.CANCELLED.toString());
 	stateMap.put(CandidacySituationType.PRE_CANDIDACY.toString(), preCandidacy);
 
 	stateMap.put(CandidacySituationType.REGISTERED.toString(), new HashSet());
