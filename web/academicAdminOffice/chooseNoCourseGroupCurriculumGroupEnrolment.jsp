@@ -46,7 +46,7 @@
 
 		<fr:edit id="degreeCurricularPlan" name="enrolmentBean">
 			<fr:layout name="student-optional-enrolments">
-				<fr:property name="linkFormat(enrol)" value='<%= "/" + actionName + ".do?method=enrol&amp;scpID=${studentCurricularPlan.idInternal}&amp;executionPeriodID=${executionPeriod.idInternal}&amp;degreeType=${degreeType}&amp;degreeID=${degree.idInternal}&amp;dcpID=${degreeCurricularPlan.idInternal}&amp;type=${groupType}" %>' />
+				<fr:property name="linkFormat" value='<%= "/" + actionName + ".do?method=enrol&amp;scpID=${studentCurricularPlan.idInternal}&amp;executionPeriodID=${executionPeriod.idInternal}&amp;degreeType=${degreeType}&amp;degreeID=${degree.idInternal}&amp;dcpID=${degreeCurricularPlan.idInternal}&amp;type=${groupType}" %>' />
 			</fr:layout>
 		</fr:edit>
 		<br/>
