@@ -51,8 +51,15 @@ public class ParkingRequest extends ParkingRequest_Base {
 	setDriverLicenseDeliveryType(creator.getDriverLicenseDeliveryType());
 	setParkingParty(creator.getParkingParty());
 	setCreationDate(new DateTime());
-	setPhone(((Person) creator.getParkingParty().getParty()).getDefaultPhone().getNumber());
-	setMobile(((Person) creator.getParkingParty().getParty()).getDefaultMobilePhone().getNumber());
+
+	Phone defaultPhone = ((Person) creator.getParkingParty().getParty()).getDefaultPhone();
+	if (defaultPhone != null) {
+	    setPhone(defaultPhone.getNumber());
+	}
+	MobilePhone defaultMobilePhone = ((Person) creator.getParkingParty().getParty()).getDefaultMobilePhone();
+	if (defaultMobilePhone != null) {
+	    setMobile(defaultMobilePhone.getNumber());
+	}
 	setEmail(((Person) creator.getParkingParty().getParty()).getDefaultEmailAddress().getValue());
 
 	setRequestedAs(creator.getRequestAs() != null ? creator.getRequestAs() : creator.getParkingParty().getSubmitAsRoles()

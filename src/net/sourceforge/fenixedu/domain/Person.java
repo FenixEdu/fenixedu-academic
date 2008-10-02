@@ -2082,9 +2082,6 @@ public class Person extends Person_Base {
 		return PartyClassification.TEACHER;
 	    }
 	}
-	if (isPersonResearcher()) {
-	    return PartyClassification.RESEARCHER;
-	}
 	final Employee employee = getEmployee();
 	if (employee != null && employee.getCurrentWorkingContract() != null && teacher == null) {
 	    return PartyClassification.EMPLOYEE;
@@ -2092,6 +2089,9 @@ public class Person extends Person_Base {
 	final GrantOwner grantOwner = getGrantOwner();
 	if (grantOwner != null && grantOwner.hasCurrentContract()) {
 	    return PartyClassification.GRANT_OWNER;
+	}
+	if (isPersonResearcher()) {
+	    return PartyClassification.RESEARCHER;
 	}
 	final Student student = getStudent();
 	if (student != null) {

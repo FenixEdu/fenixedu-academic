@@ -92,6 +92,11 @@
 				</ul>
 			</div>
 		</logic:equal>
+		<logig:present name="renewUnlimitedParkingRequest.sucess">
+			<logic:equal name="renewUnlimitedParkingRequest.sucess" value="true">
+			<p class="mtop15"><strong class="success0"><bean:message key="message.renewUnlimitedParkingRequest.sucess" bundle="PARKING_RESOURCES"/></strong></p>
+			</logic:equal>
+		</logig:present
 		
 		<%-- editar --%>
 		<logic:equal name="canEdit" value="true">
@@ -105,10 +110,10 @@
 				</html:link>
 			</p>
 		</logic:equal>
-		<br/>
+		
 		<bean:define id="parkingPartyOrRequest" name="parkingParty"/>
 		<logic:notEmpty name="parkingParty" property="vehicles">
-			<h3><bean:message key="label.actualState" bundle="PARKING_RESOURCES"/></h3>
+			<h3 class="separator2 mtop2"><bean:message key="label.actualState" bundle="PARKING_RESOURCES"/></h3>
 			<fr:view name="parkingParty" schema="show.parkingParty.cardValidPeriod">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 thright thlight mtop025 mbottom1" />
@@ -117,7 +122,7 @@
 			</fr:view>
 		</logic:notEmpty>
 		<logic:empty name="parkingParty" property="vehicles">
-			<h3><bean:message key="label.request" bundle="PARKING_RESOURCES"/></h3>
+			<h3 class="separator2 mtop2"><bean:message key="label.request" bundle="PARKING_RESOURCES"/></h3>
 			<bean:define id="parkingPartyOrRequest" name="parkingParty" property="lastRequest"/>
 		</logic:empty>
 		
@@ -206,11 +211,11 @@
 		</table>
 
 
-		<h3><bean:message key="label.requests" bundle="PARKING_RESOURCES"/></h3>
+		<h3 class="separator2 mtop2"><bean:message key="label.requests" bundle="PARKING_RESOURCES"/></h3>
 
 		<fr:view name="parkingParty" property="orderedParkingRequests" schema="show.parkingRequestToUser">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 printborder" />
+				<fr:property name="classes" value="tstyle1 mtop05 printborder" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>
 		</fr:view>

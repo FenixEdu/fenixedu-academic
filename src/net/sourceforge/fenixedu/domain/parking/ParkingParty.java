@@ -290,6 +290,40 @@ public class ParkingParty extends ParkingParty_Base {
 		}
 		occupations.add(stringBuilder.toString());
 	    }
+	    GrantOwner grantOwner = person.getGrantOwner();
+	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
+		List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
+		for (GrantContract contract : grantOwner.getGrantContracts()) {
+		    contractRegimeList.addAll(contract.getContractRegimes());
+		}
+		Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
+		for (GrantContractRegime contractRegime : contractRegimeList) {
+
+		    stringBuilder.append("<br/><strong>Início:</strong> "
+			    + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
+		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
+			    + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
+		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Activo:</strong> ");
+		    if (contractRegime.isActive()) {
+			stringBuilder.append("Sim");
+		    } else {
+			stringBuilder.append("Não");
+		    }
+		}
+		occupations.add(stringBuilder.toString());
+	    }
+	    if (person.isPersonResearcher()) {
+		String researchUnitNames = person.getWorkingResearchUnitNames();
+		if (!StringUtils.isEmpty(researchUnitNames)
+			|| !person.getPartyClassification().equals(PartyClassification.TEACHER)) {
+		    occupations.add("<strong>Investigador</strong><br/> Nº " + person.getMostSignificantNumber());
+		    if (!StringUtils.isEmpty(researchUnitNames)) {
+			occupations.add("<br/>" + researchUnitNames);
+		    }
+		}
+	    }
 	    Student student = person.getStudent();
 	    if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
 
@@ -315,40 +349,6 @@ public class ParkingParty extends ParkingParty_Base {
 		if (stringBuilder != null) {
 		    occupations.add(stringBuilder.toString());
 		}
-	    }
-	    if (person.isPersonResearcher()) {
-		String researchUnitNames = person.getWorkingResearchUnitNames();
-		if (!StringUtils.isEmpty(researchUnitNames)
-			|| !person.getPartyClassification().equals(PartyClassification.TEACHER)) {
-		    occupations.add("<strong>Investigador</strong><br/> Nº " + person.getMostSignificantNumber());
-		    if (!StringUtils.isEmpty(researchUnitNames)) {
-			occupations.add("<br/>" + researchUnitNames);
-		    }
-		}
-	    }
-	    GrantOwner grantOwner = person.getGrantOwner();
-	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
-		List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
-		for (GrantContract contract : grantOwner.getGrantContracts()) {
-		    contractRegimeList.addAll(contract.getContractRegimes());
-		}
-		Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
-		for (GrantContractRegime contractRegime : contractRegimeList) {
-
-		    stringBuilder.append("<br/><strong>Início:</strong> "
-			    + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
-		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
-			    + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
-		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Activo:</strong> ");
-		    if (contractRegime.isActive()) {
-			stringBuilder.append("Sim");
-		    } else {
-			stringBuilder.append("Não");
-		    }
-		}
-		occupations.add(stringBuilder.toString());
 	    }
 	    List<Invitation> invitations = person.getActiveInvitations();
 	    if (!invitations.isEmpty()) {

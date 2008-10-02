@@ -640,6 +640,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 	ServiceUtils.executeService("RenewUnlimitedParkingRequest", new Object[] {
 		userView.getPerson().getParkingParty().getFirstRequest(), Boolean.TRUE });
+	request.setAttribute("renewUnlimitedParkingRequest.sucess", true);
 	return prepareParking(mapping, actionForm, request, response);
     }
 }
