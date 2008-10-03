@@ -115,7 +115,7 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
     public void removeImprovementEnrolmentEvaluations(EnrolmentEvaluation improvementEnrolmentEvaluations) {
 	super.removeImprovementEnrolmentEvaluations(improvementEnrolmentEvaluations);
 
-	if (!hasAnyImprovementEnrolmentEvaluations()) {
+	if (!hasAnyImprovementEnrolmentEvaluations() && !hasAnyAccountingTransactions()) {
 	    this.delete();
 	}
     }

@@ -41,6 +41,10 @@ public class ImprovementOfApprovedEnrolmentExecutor extends CurricularRuleExecut
 		    "curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.degree.module.hasnt.been.approved",
 		    degreeModule.getName());
 	}
+	
+	if (!enrolment.isBolonhaDegree()) {
+	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+	}
 
 	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 

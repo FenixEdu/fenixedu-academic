@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -66,11 +67,9 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
 		if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
+		    result.put(degreeModuleToEvaluate, Collections
+			    .<ICurricularRule> singleton(new ImprovementOfApprovedEnrolment(enrolment)));
 
-		    final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-		    curricularRules.add(new ImprovementOfApprovedEnrolment(enrolment));
-
-		    result.put(degreeModuleToEvaluate, curricularRules);
 		} else {
 		    throw new DomainException(
 			    "StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
