@@ -73,6 +73,10 @@ public class EnrolmentContext {
 	getDegreeModulesToEvaluate().add(degreeModuleToEvaluate);
     }
 
+    public boolean hasDegreeModulesToEvaluate() {
+	return degreeModulesToEvaluate != null && !degreeModulesToEvaluate.isEmpty();
+    }
+
     public ExecutionSemester getExecutionPeriod() {
 	return executionSemester;
     }
