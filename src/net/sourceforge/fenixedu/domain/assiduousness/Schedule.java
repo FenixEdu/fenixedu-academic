@@ -143,7 +143,7 @@ public class Schedule extends Schedule_Base {
 
     private boolean validDates(LocalDate beginDate, LocalDate endDate) {
 	if (endDate != null) {
-	    return endDate.isAfter(beginDate);
+	    return !endDate.isBefore(beginDate);
 	}
 	return true;
     }
