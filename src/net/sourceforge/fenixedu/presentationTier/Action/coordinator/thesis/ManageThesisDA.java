@@ -45,8 +45,13 @@ public class ManageThesisDA extends FenixDispatchAction {
 	request.setAttribute("thesis", getThesis(request));
 	request.setAttribute("student", getStudent(request));
 
-	ExecutionYear executionYear = getExecutionYear(request);
-
+	final ExecutionYear executionYear;
+	final ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
+	if (bean == null) {
+	    executionYear = getExecutionYear(request);
+	} else {
+	    executionYear = bean.getExecutionYear();
+	}
 	setFilterContext(request, executionYear);
 
 	return super.execute(mapping, actionForm, request, response);
@@ -98,6 +103,9 @@ public class ManageThesisDA extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYear(HttpServletRequest request) {
 	Integer id = getId(request.getParameter("executionYearId"));
+	if (id == null) {
+	    id = getId(request.getParameter("executionYear"));
+	}
 	if (id == null) {
 	    TreeSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(new ReverseComparator());
 	    executionYears.addAll(getDegreeCurricularPlan(request).getExecutionYears());
