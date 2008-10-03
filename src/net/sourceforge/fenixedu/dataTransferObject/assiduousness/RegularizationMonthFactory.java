@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.TimeOfDay;
+import org.joda.time.LocalTime;
 
 public class RegularizationMonthFactory implements Serializable, FactoryExecutor {
 
@@ -60,9 +60,9 @@ public class RegularizationMonthFactory implements Serializable, FactoryExecutor
 
     public Object execute() {
 	for (RegularizationDayBean regularizationDayBean : getRegularizationMap().values()) {
-	    for (TimeOfDay timeOfDay : regularizationDayBean.getTimeClockingsToFill()) {
+	    for (LocalTime timeOfDay : regularizationDayBean.getTimeClockingsToFill()) {
 		if (timeOfDay != null) {
-		    DateTime missingClockingDateTime = regularizationDayBean.getDate().toDateTime(timeOfDay.toLocalTime());
+		    DateTime missingClockingDateTime = regularizationDayBean.getDate().toDateTime(timeOfDay);
 		    new MissingClocking(getAssiduousness(), getJustificationMotive(), missingClockingDateTime, getModifiedBy());
 		}
 	    }
@@ -72,8 +72,8 @@ public class RegularizationMonthFactory implements Serializable, FactoryExecutor
 
     private List<DateTime> getClockingsDateTime(RegularizationDayBean regularizationDayBean) {
 	List<DateTime> dateTimeList = new ArrayList<DateTime>();
-	for (TimeOfDay timeOfDay : regularizationDayBean.getTimeClockingsToFill()) {
-	    dateTimeList.add(regularizationDayBean.getDate().toDateTime(timeOfDay.toLocalTime()));
+	for (LocalTime timeOfDay : regularizationDayBean.getTimeClockingsToFill()) {
+	    dateTimeList.add(regularizationDayBean.getDate().toDateTime(timeOfDay));
 	}
 	return dateTimeList;
     }

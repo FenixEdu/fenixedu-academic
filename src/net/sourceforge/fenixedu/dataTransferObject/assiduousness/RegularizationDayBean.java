@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.LocalDate;
-import org.joda.time.TimeOfDay;
+import org.joda.time.LocalTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -17,9 +17,9 @@ public class RegularizationDayBean implements Serializable {
 
     private LocalDate date;
 
-    private TimeOfDay[] timeClockings = { null, null, null, null };
+    private LocalTime[] timeClockings = { null, null, null, null };
 
-    private TimeOfDay[] timeClockingsToFill = { null, null, null, null };
+    private LocalTime[] timeClockingsToFill = { null, null, null, null };
 
     public RegularizationDayBean(LocalDate date, List<AssiduousnessRecord> clockings) {
 	setDate(date);
@@ -27,7 +27,7 @@ public class RegularizationDayBean implements Serializable {
 	    Iterator<AssiduousnessRecord> iterator = clockings.iterator();
 	    for (int counter = 0; counter < 4 && iterator.hasNext(); counter++) {
 		AssiduousnessRecord clocking = iterator.next();
-		timeClockings[counter] = clocking.getDate().toTimeOfDay();
+		timeClockings[counter] = clocking.getDate().toLocalTime();
 	    }
 	}
     }
@@ -37,7 +37,7 @@ public class RegularizationDayBean implements Serializable {
 	return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtStartOfDay()).toString() + "_ACRONYM");
     }
 
-    public TimeOfDay[] getTimeClockingsToFill() {
+    public LocalTime[] getTimeClockingsToFill() {
 	return timeClockingsToFill;
     }
 
@@ -49,51 +49,51 @@ public class RegularizationDayBean implements Serializable {
 	this.date = date;
     }
 
-    public TimeOfDay getFirstTimeClock() {
+    public LocalTime getFirstTimeClock() {
 	return timeClockings[0];
     }
 
-    public TimeOfDay getSecondTimeClock() {
+    public LocalTime getSecondTimeClock() {
 	return timeClockings[1];
     }
 
-    public TimeOfDay getThirdTimeClock() {
+    public LocalTime getThirdTimeClock() {
 	return timeClockings[2];
     }
 
-    public TimeOfDay getFourthTimeClock() {
+    public LocalTime getFourthTimeClock() {
 	return timeClockings[3];
     }
 
-    public TimeOfDay getFirstTimeClockToFill() {
+    public LocalTime getFirstTimeClockToFill() {
 	return timeClockingsToFill[0];
     }
 
-    public TimeOfDay getSecondTimeClockToFill() {
+    public LocalTime getSecondTimeClockToFill() {
 	return timeClockingsToFill[1];
     }
 
-    public TimeOfDay getThirdTimeClockToFill() {
+    public LocalTime getThirdTimeClockToFill() {
 	return timeClockingsToFill[2];
     }
 
-    public TimeOfDay getFourthTimeClockToFill() {
+    public LocalTime getFourthTimeClockToFill() {
 	return timeClockingsToFill[3];
     }
 
-    public void setFirstTimeClockToFill(TimeOfDay timeOfDay) {
-	timeClockingsToFill[0] = timeOfDay;
+    public void setFirstTimeClockToFill(LocalTime LocalTime) {
+	timeClockingsToFill[0] = LocalTime;
     }
 
-    public void setSecondTimeClockToFill(TimeOfDay timeOfDay) {
-	timeClockingsToFill[1] = timeOfDay;
+    public void setSecondTimeClockToFill(LocalTime LocalTime) {
+	timeClockingsToFill[1] = LocalTime;
     }
 
-    public void setThirdTimeClockToFill(TimeOfDay timeOfDay) {
-	timeClockingsToFill[2] = timeOfDay;
+    public void setThirdTimeClockToFill(LocalTime LocalTime) {
+	timeClockingsToFill[2] = LocalTime;
     }
 
-    public void setFourthTimeClockToFill(TimeOfDay timeOfDay) {
-	timeClockingsToFill[3] = timeOfDay;
+    public void setFourthTimeClockToFill(LocalTime LocalTime) {
+	timeClockingsToFill[3] = LocalTime;
     }
 }

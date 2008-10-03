@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.assiduousness.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -643,7 +645,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		if (equivalentWorkScheduleType == null) {
 		    if (!getWorkScheduleType().getWorkSchedules().isEmpty()
 			    || getWorkScheduleType().getBeginValidDate().isBefore(firstDay)) {
-			List<Schedule> scheduleToChangeDate = new ArrayList<Schedule>();
+			Set<Schedule> scheduleToChangeDate = new HashSet<Schedule>();
 			List<WorkSchedule> workScheduleToChangeWorkScheduleType = new ArrayList<WorkSchedule>();
 
 			for (WorkSchedule workSchedule : getWorkScheduleType().getWorkSchedules()) {
@@ -653,7 +655,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 					    && !scheduleToChangeDate.contains(workSchedule)) {
 					workScheduleToChangeWorkScheduleType.add(workSchedule);
 				    }
-				} else if (!scheduleToChangeDate.contains(workSchedule)) {
+				} else if ((!scheduleToChangeDate.contains(workSchedule))
+					&& (schedule.getEndDate() == null || (!schedule.getEndDate().isBefore(firstDay)))) {
 				    scheduleToChangeDate.add(schedule);
 				    if (workScheduleToChangeWorkScheduleType.contains(workSchedule)) {
 					workScheduleToChangeWorkScheduleType.remove(workSchedule);
