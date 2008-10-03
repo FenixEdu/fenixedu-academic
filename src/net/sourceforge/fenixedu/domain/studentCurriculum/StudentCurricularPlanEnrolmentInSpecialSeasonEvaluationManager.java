@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
@@ -17,21 +16,16 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(StudentCurricularPlan plan,
-	    EnrolmentContext enrolmentContext) {
-	super(plan, enrolmentContext);
+    public StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(final EnrolmentContext enrolmentContext) {
+	super(enrolmentContext);
     }
 
     @Override
     protected void assertEnrolmentPreConditions() {
-	final Registration registration = studentCurricularPlan.getRegistration();
-
-	if (!responsiblePerson.hasRole(RoleType.MANAGER) && !registration.isInRegisteredState(executionSemester)) {
+	if (!isResponsiblePersonManager() && !getRegistration().isInRegisteredState(getExecutionSemester())) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 
@@ -53,8 +47,8 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void addEnroled() {
-	for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionSemester.getExecutionYear())) {
-	    enrolmentContext.addDegreeModuleToEvaluate(new EnroledCurriculumModuleWrapper(enrolment, executionSemester));
+	for (final Enrolment enrolment : getStudentCurricularPlan().getSpecialSeasonEnrolments(getExecutionYear())) {
+	    enrolmentContext.addDegreeModuleToEvaluate(new EnroledCurriculumModuleWrapper(enrolment, getExecutionSemester()));
 	}
     }
 
@@ -99,7 +93,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 
 			if (!enrolment.hasSpecialSeason()) {
-			    enrolment.createSpecialSeasonEvaluation(responsiblePerson.getEmployee());
+			    enrolment.createSpecialSeasonEvaluation(getResponsiblePerson().getEmployee());
 			}
 		    } else {
 			throw new DomainException(

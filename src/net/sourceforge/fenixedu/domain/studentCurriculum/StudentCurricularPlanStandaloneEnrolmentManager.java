@@ -9,27 +9,29 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanStandaloneEnrolmentManager(final StudentCurricularPlan plan,
-	    final EnrolmentContext enrolmentContext) {
-	super(plan, enrolmentContext);
+    public StudentCurricularPlanStandaloneEnrolmentManager(final EnrolmentContext enrolmentContext) {
+	super(enrolmentContext);
     }
 
     @Override
     protected void assertEnrolmentPreConditions() {
-	if (!(responsiblePerson.hasRole(RoleType.MANAGER) || responsiblePerson.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
+	if (!(isResponsiblePersonManager() || isResponsiblePersonAcademicAdminOffice())) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
 	}
+
+	if (getRegistration().isPartTimeRegime(getExecutionYear())) {
+	    throw new DomainException("error.StudentCurricularPlan.with.part.time.regime.cannot.enrol");
+	}
+
 	checkEnrolingDegreeModules();
     }
 
@@ -46,13 +48,13 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
     }
 
     private void checkIDegreeModuleToEvaluate(final CurricularCourse curricularCourse) {
-	if (studentCurricularPlan.isApproved(curricularCourse, executionSemester)) {
+	if (getStudentCurricularPlan().isApproved(curricularCourse, getExecutionSemester())) {
 	    throw new DomainException("error.already.aproved", curricularCourse.getName());
 	}
 
-	if (studentCurricularPlan.isEnroledInExecutionPeriod(curricularCourse, executionSemester)) {
-	    throw new DomainException("error.already.enroled.in.executioPerdiod", curricularCourse.getName(), executionSemester
-		    .getQualifiedName());
+	if (getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, getExecutionSemester())) {
+	    throw new DomainException("error.already.enroled.in.executioPerdiod", curricularCourse.getName(),
+		    getExecutionSemester().getQualifiedName());
 	}
     }
 
@@ -85,8 +87,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
 
 		    checkIDegreeModuleToEvaluate(curricularCourse);
-		    new Enrolment(studentCurricularPlan, degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
-			    executionSemester, EnrollmentCondition.VALIDATED, responsiblePerson.getIstUsername());
+		    new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
+			    getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getIstUsername());
 		}
 	    }
 	}
@@ -109,13 +111,13 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	    }
 	}
 
-	if (!studentCurricularPlan.isEmptyDegree() && !enrolmentContext.hasDegreeModulesToEvaluate() && isStandaloneEmpty()) {
-	    studentCurricularPlan.getStandaloneCurriculumGroup().delete();
+	if (!getStudentCurricularPlan().isEmptyDegree() && !enrolmentContext.hasDegreeModulesToEvaluate() && isStandaloneEmpty()) {
+	    getStudentCurricularPlan().getStandaloneCurriculumGroup().delete();
 	}
     }
 
     private boolean isStandaloneEmpty() {
-	return studentCurricularPlan.hasStandaloneCurriculumGroup()
-		&& !studentCurricularPlan.getStandaloneCurriculumGroup().hasAnyCurriculumModules();
+	return getStudentCurricularPlan().hasStandaloneCurriculumGroup()
+		&& !getStudentCurricularPlan().getStandaloneCurriculumGroup().hasAnyCurriculumModules();
     }
 }

@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -21,44 +22,30 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 abstract public class StudentCurricularPlanEnrolment {
 
-    protected StudentCurricularPlan studentCurricularPlan;
-
     protected EnrolmentContext enrolmentContext;
 
-    protected ExecutionSemester executionSemester;
-
-    protected CurricularRuleLevel curricularRuleLevel;
-
-    protected Person responsiblePerson;
-
-    protected StudentCurricularPlanEnrolment(final StudentCurricularPlan studentCurricularPlan,
-	    final EnrolmentContext enrolmentContext) {
-
-	checkParameters(studentCurricularPlan, enrolmentContext);
-	
-	this.studentCurricularPlan = studentCurricularPlan;
+    protected StudentCurricularPlanEnrolment(final EnrolmentContext enrolmentContext) {
+	checkParameters(enrolmentContext);
 	this.enrolmentContext = enrolmentContext;
-	this.executionSemester = enrolmentContext.getExecutionPeriod();
-	this.curricularRuleLevel = enrolmentContext.getCurricularRuleLevel();
-	this.responsiblePerson = enrolmentContext.getResponsiblePerson();
     }
 
-    private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final EnrolmentContext enrolmentContext) {
-	if (studentCurricularPlan == null) {
+    private void checkParameters(final EnrolmentContext enrolmentContext) {
+	if (enrolmentContext.getStudentCurricularPlan() == null) {
 	    throw new DomainException("error.StudentCurricularPlanEnrolment.invalid.studentCurricularPlan");
 	}
-	
+
 	if (enrolmentContext == null) {
 	    throw new DomainException("error.StudentCurricularPlanEnrolment.invalid.enrolmentContext");
 	}
-	
+
 	if (!enrolmentContext.hasResponsiblePerson()) {
 	    throw new DomainException("error.StudentCurricularPlanEnrolment.enrolmentContext.invalid.person");
 	}
-	
+
     }
 
     final public RuleResult manage() {
@@ -77,29 +64,26 @@ abstract public class StudentCurricularPlanEnrolment {
 
     protected void assertEnrolmentPreConditions() {
 
-	final Registration registration = studentCurricularPlan.getRegistration();
-
-	if (!responsiblePerson.hasRole(RoleType.MANAGER) && registration.getStudent().isAnyTuitionInDebt()) {
+	if (!isResponsiblePersonManager() && getStudent().isAnyTuitionInDebt()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
 	}
 
-	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-	if (responsiblePerson.hasRole(RoleType.STUDENT)) {
+	if (isResponsiblePersonStudent()) {
 
-	    if (!responsiblePerson.getStudent().getRegistrationsToEnrolByStudent().contains(registration)) {
+	    if (!getResponsiblePerson().getStudent().getRegistrationsToEnrolByStudent().contains(getRegistration())) {
 		throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
 	    }
 
-	    if (curricularRuleLevel != CurricularRuleLevel.ENROLMENT_WITH_RULES) {
+	    if (getCurricularRuleLevel() != CurricularRuleLevel.ENROLMENT_WITH_RULES) {
 		throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
 	    }
 
-	    if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
-		if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester)) {
+	    if (getExecutionSemester().isFirstOfYear() && getStudentCurricularPlan().hasSpecialSeasonFor(getExecutionSemester())) {
+		if (!getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(getExecutionSemester())) {
 		    throw new DomainException(
 			    "error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 		}
-	    } else if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionSemester)) {
+	    } else if (!getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesFor(getExecutionSemester())) {
 		throw new DomainException(
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
@@ -159,6 +143,54 @@ abstract public class StudentCurricularPlanEnrolment {
 	information.add(degreeModuleToEnrol);
     }
 
+    protected ExecutionSemester getExecutionSemester() {
+	return enrolmentContext.getExecutionPeriod();
+    }
+
+    protected ExecutionYear getExecutionYear() {
+	return getExecutionSemester().getExecutionYear();
+    }
+
+    protected StudentCurricularPlan getStudentCurricularPlan() {
+	return enrolmentContext.getStudentCurricularPlan();
+    }
+
+    protected Registration getRegistration() {
+	return getStudentCurricularPlan().getRegistration();
+    }
+
+    protected RootCurriculumGroup getRoot() {
+	return getStudentCurricularPlan().getRoot();
+    }
+
+    protected Student getStudent() {
+	return getRegistration().getStudent();
+    }
+
+    protected DegreeCurricularPlan getDegreeCurricularPlan() {
+	return getStudentCurricularPlan().getDegreeCurricularPlan();
+    }
+
+    protected CurricularRuleLevel getCurricularRuleLevel() {
+	return enrolmentContext.getCurricularRuleLevel();
+    }
+
+    protected Person getResponsiblePerson() {
+	return enrolmentContext.getResponsiblePerson();
+    }
+
+    protected boolean isResponsiblePersonManager() {
+	return getResponsiblePerson().hasRole(RoleType.MANAGER);
+    }
+
+    protected boolean isResponsiblePersonAcademicAdminOffice() {
+	return getResponsiblePerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+    }
+
+    protected boolean isResponsiblePersonStudent() {
+	return getResponsiblePerson().hasRole(RoleType.STUDENT);
+    }
+
     abstract protected void unEnrol();
 
     abstract protected void addEnroled();
@@ -166,30 +198,30 @@ abstract public class StudentCurricularPlanEnrolment {
     abstract protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate();
 
     abstract protected void performEnrolments(Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap);
-    
-    // static information
 
-    static public StudentCurricularPlanEnrolment createManager(final StudentCurricularPlan studentCurricularPlan,
-	    final EnrolmentContext enrolmentContext) {
+    // -------------------
+    // static information
+    // -------------------
+
+    static public StudentCurricularPlanEnrolment createManager(final EnrolmentContext enrolmentContext) {
 
 	if (enrolmentContext.getCurricularRuleLevel().managesEnrolments()) {
-	    return new StudentCurricularPlanEnrolmentManager(studentCurricularPlan, enrolmentContext);
+	    return new StudentCurricularPlanEnrolmentManager(enrolmentContext);
 
 	} else if (enrolmentContext.isImprovement()) {
-	    return new StudentCurricularPlanImprovementOfApprovedEnrolmentManager(studentCurricularPlan, enrolmentContext);
+	    return new StudentCurricularPlanImprovementOfApprovedEnrolmentManager(enrolmentContext);
 
 	} else if (enrolmentContext.isSpecialSeason()) {
-	    return new StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(studentCurricularPlan, enrolmentContext);
+	    return new StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(enrolmentContext);
 
 	} else if (enrolmentContext.isExtra()) {
-	    return new StudentCurricularPlanExtraEnrolmentManager(studentCurricularPlan, enrolmentContext);
+	    return new StudentCurricularPlanExtraEnrolmentManager(enrolmentContext);
 
 	} else if (enrolmentContext.isPropaeudeutics()) {
-	    return new StudentCurricularPlanPropaeudeuticsEnrolmentManager(studentCurricularPlan, enrolmentContext);
-	    
+	    return new StudentCurricularPlanPropaeudeuticsEnrolmentManager(enrolmentContext);
+
 	} else if (enrolmentContext.isStandalone()) {
-	    //return new StudentCurricularPlanStandaloneEnrolmentManager(studentCurricularPlan, enrolmentContext);
-	    throw new DomainException("StudentCurricularPlanEnrolment");
+	    return new StudentCurricularPlanStandaloneEnrolmentManager(enrolmentContext);
 	}
 
 	throw new DomainException("StudentCurricularPlanEnrolment");

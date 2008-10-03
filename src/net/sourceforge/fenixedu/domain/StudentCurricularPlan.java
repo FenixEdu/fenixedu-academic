@@ -70,8 +70,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -80,6 +78,9 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author David Santos in Jun 24, 2004
@@ -1926,8 +1927,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final EnrolmentContext enrolmentContext = new EnrolmentContext(responsiblePerson, this, executionSemester,
 		degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
 
-	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this,
-		enrolmentContext).manage();
+	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(enrolmentContext)
+		.manage();
     }
 
     final public RuleResult enrol(final Person responsiblePerson, final ExecutionSemester executionSemester,
@@ -1979,8 +1980,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final EnrolmentContext enrolmentContext = EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(person, this,
 		curricularCourse, executionSemester, groupType);
 
-	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this,
-		enrolmentContext).manage();
+	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(enrolmentContext)
+		.manage();
     }
 
     @Service
@@ -1988,8 +1989,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType, final Person person) {
 	final EnrolmentContext context = new EnrolmentContext(person, this, executionSemester, Collections.EMPTY_SET,
 		curriculumModules, groupType.getCurricularRuleLevel());
-	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this, context)
-		.manage();
+	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(context).manage();
     }
 
     final public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(final NoCourseGroupCurriculumGroupType groupType) {

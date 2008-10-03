@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
@@ -25,20 +24,16 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanEnrolmentManager(final StudentCurricularPlan plan, final EnrolmentContext enrolmentContext) {
-	super(plan, enrolmentContext);
+    public StudentCurricularPlanEnrolmentManager(final EnrolmentContext enrolmentContext) {
+	super(enrolmentContext);
     }
 
     @Override
     protected void assertEnrolmentPreConditions() {
-	final Registration registration = studentCurricularPlan.getRegistration();
-
-	if (!responsiblePerson.hasRole(RoleType.MANAGER) && !registration.isInRegisteredState(executionSemester)) {
+	if (!isResponsiblePersonManager() && !getRegistration().isInRegisteredState(getExecutionSemester())) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 
@@ -64,8 +59,8 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
     @Override
     protected void addEnroled() {
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : studentCurricularPlan
-		.getDegreeModulesToEvaluate(executionSemester)) {
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan().getDegreeModulesToEvaluate(
+		getExecutionSemester())) {
 	    enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
 	}
     }
@@ -79,8 +74,8 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 	    if (degreeModuleToEvaluate.canCollectRules()) {
 
 		final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-		curricularRules.addAll(degreeModuleToEvaluate.getCurricularRulesFromDegreeModule(executionSemester));
-		curricularRules.addAll(degreeModuleToEvaluate.getCurricularRulesFromCurriculumGroup(executionSemester));
+		curricularRules.addAll(degreeModuleToEvaluate.getCurricularRulesFromDegreeModule(getExecutionSemester()));
+		curricularRules.addAll(degreeModuleToEvaluate.getCurricularRulesFromCurriculumGroup(getExecutionSemester()));
 
 		if (degreeModuleToEvaluate.isLeaf()) {
 		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
@@ -95,7 +90,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
-	final String createdBy = responsiblePerson.getIstUsername();
+	final String createdBy = getResponsiblePerson().getIstUsername();
 	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesEnrolMap.entrySet()) {
 
 	    if (entry.getKey() == EnrolmentResultType.NULL) {
@@ -123,16 +118,16 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 			    createOptionalEnrolmentFor(enrollmentCondition, degreeModuleToEvaluate, curriculumGroup);
 
 			} else {
-			    new Enrolment(studentCurricularPlan, curriculumGroup, (CurricularCourse) degreeModule,
-				    executionSemester, enrollmentCondition, createdBy);
+			    new Enrolment(getStudentCurricularPlan(), curriculumGroup, (CurricularCourse) degreeModule,
+				    getExecutionSemester(), enrollmentCondition, createdBy);
 			}
 
 		    } else if (degreeModule instanceof CycleCourseGroup) {
 			new CycleCurriculumGroup((RootCurriculumGroup) degreeModuleToEvaluate.getCurriculumGroup(),
-				(CycleCourseGroup) degreeModule, executionSemester);
+				(CycleCourseGroup) degreeModule, getExecutionSemester());
 		    } else {
 			new CurriculumGroup(degreeModuleToEvaluate.getCurriculumGroup(), (CourseGroup) degreeModule,
-				executionSemester);
+				getExecutionSemester());
 		    }
 		}
 	    }
@@ -147,30 +142,29 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 		.getDegreeModule();
 	final CurricularCourse curricularCourse = optionalDegreeModuleToEnrol.getCurricularCourse();
 
-	enrolmentContext.getStudentCurricularPlan().createOptionalEnrolment(curriculumGroup, executionSemester,
-		optionalCurricularCourse, curricularCourse, enrollmentCondition);
+	getStudentCurricularPlan().createOptionalEnrolment(curriculumGroup, getExecutionSemester(), optionalCurricularCourse,
+		curricularCourse, enrollmentCondition);
     }
 
     @Override
     protected RuleResult evaluateExtraRules(RuleResult actualResult) {
-	if (actualResult.isFalse() || !this.studentCurricularPlan.getDegreeCurricularPlan().isToApplyPreviousYearsEnrolmentRule()) {
+	if (actualResult.isFalse() || !getDegreeCurricularPlan().isToApplyPreviousYearsEnrolmentRule()) {
 	    return actualResult;
 	}
 
 	RuleResult finalResult = RuleResult.createInitialTrue();
-	if (!this.studentCurricularPlan.getRoot().hasExternalCycles()) {
+	if (!getRoot().hasExternalCycles()) {
 	    final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule = new PreviousYearsEnrolmentCurricularRule(
-		    this.studentCurricularPlan.getRoot().getDegreeModule());
+		    getRoot().getDegreeModule());
 	    finalResult = finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(new EnroledCurriculumModuleWrapper(
-		    this.studentCurricularPlan.getRoot(), this.enrolmentContext.getExecutionPeriod()), this.enrolmentContext));
+		    getRoot(), getExecutionSemester()), this.enrolmentContext));
 
 	} else {
-	    for (final CycleCurriculumGroup cycleCurriculumGroup : this.studentCurricularPlan.getRoot()
-		    .getCycleCurriculumGroups()) {
+	    for (final CycleCurriculumGroup cycleCurriculumGroup : getRoot().getCycleCurriculumGroups()) {
 		final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule = new PreviousYearsEnrolmentCurricularRule(
 			cycleCurriculumGroup.getDegreeModule());
 		finalResult = finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(new EnroledCurriculumModuleWrapper(
-			cycleCurriculumGroup, this.enrolmentContext.getExecutionPeriod()), this.enrolmentContext));
+			cycleCurriculumGroup, getExecutionSemester()), this.enrolmentContext));
 	    }
 	}
 
