@@ -41,3 +41,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Generated Documents Manager Portal" generatedDocumentsPortal.sql
+execute "Photograph History Manager Portal" photoHistoryPortal.sql
+execute "Photo Rejector Column" photoRejector.sql
