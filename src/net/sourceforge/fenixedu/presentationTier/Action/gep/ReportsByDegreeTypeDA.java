@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.gep;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -53,6 +52,7 @@ import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -308,7 +308,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	outputReport(response, reportName, spreadsheet, format);
 	return null;
     }
-    
+
     private void reportEurAce(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("nome disciplina");
@@ -1019,14 +1019,15 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 		    row.setCell(shift.getIdInternal());
 		    row.setCell(shift.getNome());
 		    row.setCell(shift.getExecutionCourse().getIdInternal());
-		    row.setCell(degreeTeachingService.getPercentage());
+		    row.setCell(degreeTeachingService.getPercentage() != null ? degreeTeachingService.getPercentage().toString()
+			    .replace('.', ',') : StringUtils.EMPTY);
 
 		}
 	    }
 	}
 
     }
-    
+
     private void reportCourseLoads(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
 
 	spreadsheet.setHeader("semestre");
@@ -1036,24 +1037,17 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("tipo aula");
 	spreadsheet.setHeader("horas aula");
 	spreadsheet.setHeader("total turnos");
-	spreadsheet.setHeader("total horas");
 
 	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
 	    for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
 
-		BigDecimal totalQuantity = new BigDecimal(0);
-		for (CourseLoad courseLoad : executionCourse.getCourseLoads()) {
-		    totalQuantity = totalQuantity.add(courseLoad.getTotalQuantity());
-		}
+		int shiftsCount = executionCourse.getAssociatedShifts().size();
 
 		for (CourseLoad courseLoad : executionCourse.getCourseLoads()) {
-
-		    int shiftsCount = courseLoad.getShiftsCount();
 
 		    for (Shift shift : courseLoad.getShifts()) {
 
 			if (!shift.hasSchoolClassForDegreeType(degreeType)) {
-			    shiftsCount--;
 			    continue;
 			}
 
@@ -1063,9 +1057,9 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 			row.setCell(shift.getIdInternal());
 			row.setCell(shift.getNome());
 			row.setCell(courseLoad.getType().name());
-			row.setCell(courseLoad.getTotalQuantity());
+			row.setCell(courseLoad.getTotalQuantity() != null ? courseLoad.getTotalQuantity().toPlainString()
+				.replace('.', ',') : StringUtils.EMPTY);
 			row.setCell(shiftsCount);
-			row.setCell(totalQuantity);
 
 		    }
 		}
@@ -1073,6 +1067,5 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	}
 
     }
-    
 
 }
