@@ -63,6 +63,10 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 
     @Override
     protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
+	if (!enrolmentContext.hasDegreeModulesToEvaluate()) {
+	    return Collections.emptyMap();
+	}
+
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
 
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
@@ -90,7 +94,28 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 
     @Override
     protected void unEnrol() {
-	// nothing to be done
+
+	// First remove Enrolments
+	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
+	    if (curriculumModule.isLeaf()) {
+		curriculumModule.delete();
+	    }
+	}
+
+	// After, remove CurriculumGroups
+	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
+	    if (!curriculumModule.isLeaf()) {
+		curriculumModule.delete();
+	    }
+	}
+
+	if (!studentCurricularPlan.isEmptyDegree() && !enrolmentContext.hasDegreeModulesToEvaluate() && isStandaloneEmpty()) {
+	    studentCurricularPlan.getStandaloneCurriculumGroup().delete();
+	}
     }
 
+    private boolean isStandaloneEmpty() {
+	return studentCurricularPlan.hasStandaloneCurriculumGroup()
+		&& !studentCurricularPlan.getStandaloneCurriculumGroup().hasAnyCurriculumModules();
+    }
 }

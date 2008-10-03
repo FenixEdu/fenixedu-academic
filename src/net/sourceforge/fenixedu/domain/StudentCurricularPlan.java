@@ -65,11 +65,13 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -1981,6 +1983,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		enrolmentContext).manage();
     }
 
+    @Service
+    public RuleResult removeCurriculumModulesFromNoCourseGroupCurriculumGroup(final List<CurriculumModule> curriculumModules,
+	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType, final Person person) {
+	final EnrolmentContext context = new EnrolmentContext(person, this, executionSemester, Collections.EMPTY_SET,
+		curriculumModules, groupType.getCurricularRuleLevel());
+	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this, context)
+		.manage();
+    }
+
     final public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(final NoCourseGroupCurriculumGroupType groupType) {
 	return (getRoot() != null) ? getRoot().getNoCourseGroupCurriculumGroup(groupType) : null;
     }
@@ -2003,6 +2014,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean hasExtraCurriculumGroup() {
 	return getExtraCurriculumGroup() != null;
+    }
+
+    public StandaloneCurriculumGroup getStandaloneCurriculumGroup() {
+	return (StandaloneCurriculumGroup) getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.STANDALONE);
+    }
+
+    public boolean hasStandaloneCurriculumGroup() {
+	return getStandaloneCurriculumGroup() != null;
     }
 
     final public Collection<CurriculumLine> getExtraCurricularCurriculumLines() {
@@ -2538,4 +2557,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    public boolean isEmptyDegree() {
+	return getDegreeCurricularPlan().isEmpty();
+    }
 }
