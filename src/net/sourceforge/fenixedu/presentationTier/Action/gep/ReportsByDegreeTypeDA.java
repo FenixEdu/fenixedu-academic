@@ -524,8 +524,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(normalize(curricular.getProgramEn(executionSemester)));
 
 	final BibliographicReferences references = getBibliographicReferences(curricular, executionSemester);
-	row.setCell(normalize(getBibliographicReferences(references.getMainBibliographicReferences())));
-	row.setCell(normalize(getBibliographicReferences(references.getSecondaryBibliographicReferences())));
+	if (references == null) {
+	    row.setCell("");
+	    row.setCell("");
+	} else {
+	    row.setCell(normalize(getBibliographicReferences(references.getMainBibliographicReferences())));
+	    row.setCell(normalize(getBibliographicReferences(references.getSecondaryBibliographicReferences())));
+	}
 
 	row.setCell(normalize(curricular.getEvaluationMethod(executionSemester)));
 	row.setCell(normalize(curricular.getEvaluationMethodEn(executionSemester)));
