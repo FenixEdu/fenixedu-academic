@@ -42,4 +42,5 @@ function executeWithTempFile() {
 }
 
 execute "Generated Documents Manager Portal" generatedDocumentsPortal.sql
-execute "Photograph History Manager Portal" fotoHistoryPortal.sql
+execute "Photograph History Manager Portal" photoHistoryPortal.sql
+execute "Photo Rejector Column" photoRejector.sql

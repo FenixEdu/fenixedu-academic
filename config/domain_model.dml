@@ -7077,6 +7077,13 @@ relation PersonPhoto {
 	Person playsRole person;
 }
 
+relation PhotoRejector {
+    Photograph playsRole rejectedPhoto {
+        multiplicity *;
+    }
+    Person playsRole rejector;
+}
+
 relation FileTagging {
 	UnitFileTag playsRole unitFileTags {
 		multiplicity *;
