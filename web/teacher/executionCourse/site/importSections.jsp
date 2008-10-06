@@ -12,7 +12,7 @@
 	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportSections&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
 	<bean:define id="showSections">/manageExecutionCourseSite.do?method=sections&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportSectionsPostBack&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareBiliographicReferencesInvalid&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareImportBiliographicReferencesInvalid&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
 	<H2><bean:message key="label.import.sections"/></H2>
 			
