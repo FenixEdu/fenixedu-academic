@@ -188,17 +188,25 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     private boolean canContinueToEnrolment(final HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 
-	if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+	if (executionSemester.isFirstOfYear() && hasSpecialSeason(studentCurricularPlan, executionSemester)) {
 	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
 			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
 		return false;
 	    }
-	} else {
-	    if (!studentCurricularPlan.getDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses()) {
-		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan().getNextEnrolmentPeriod());
+	} else if (executionSemester.isFirstOfYear()
+		&& studentCurricularPlan.getRegistration().hasFlunkedState(executionSemester.getExecutionYear())
+		&& studentCurricularPlan.getRegistration().hasRegisteredActiveState()) {
+
+	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
+		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
+			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
 		return false;
 	    }
+
+	} else if (!studentCurricularPlan.getDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses()) {
+	    addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan().getNextEnrolmentPeriod());
+	    return false;
 	}
 
 	if (studentCurricularPlan.getRegistration().getStudent().isAnyTuitionInDebt()) {
@@ -207,6 +215,17 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	}
 
 	return true;
+    }
+
+    private boolean hasSpecialSeason(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+	    return true;
+	}
+
+	final Registration registration = studentCurricularPlan.getRegistration();
+
+	return registration.hasSourceRegistration()
+		&& registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(executionSemester);
     }
 
     private void addOutOfPeriodMessage(HttpServletRequest request, final EnrolmentPeriod nextEnrollmentPeriod) {

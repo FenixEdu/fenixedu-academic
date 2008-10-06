@@ -78,7 +78,14 @@ abstract public class StudentCurricularPlanEnrolment {
 		throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
 	    }
 
-	    if (getExecutionSemester().isFirstOfYear() && getStudentCurricularPlan().hasSpecialSeasonFor(getExecutionSemester())) {
+	    if (getExecutionSemester().isFirstOfYear() && hasSpecialSeason()) {
+		if (!getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(getExecutionSemester())) {
+		    throw new DomainException(
+			    "error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
+		}
+	    } else if (getExecutionSemester().isFirstOfYear() && getRegistration().hasFlunkedState(getExecutionYear())
+		    && getRegistration().hasRegisteredActiveState()) {
+		// TODO: create EnrolmentPeriod!!!!!!!!!!!!!!
 		if (!getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(getExecutionSemester())) {
 		    throw new DomainException(
 			    "error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
@@ -88,6 +95,16 @@ abstract public class StudentCurricularPlanEnrolment {
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
 	}
+    }
+
+    private boolean hasSpecialSeason() {
+	if (getStudentCurricularPlan().hasSpecialSeasonFor(getExecutionSemester())) {
+	    return true;
+	}
+
+	return getRegistration().hasSourceRegistration()
+		&& getRegistration().getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(
+			getExecutionSemester());
     }
 
     private RuleResult evaluateDegreeModules(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {

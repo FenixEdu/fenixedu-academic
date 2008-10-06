@@ -2097,6 +2097,14 @@ public class Registration extends Registration_Base {
 	return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
     }
 
+    public boolean hasFlunkedState(final ExecutionYear executionYear) {
+	return hasStateType(executionYear, RegistrationStateType.FLUNKED);
+    }
+    
+    public boolean hasRegisteredActiveState() {
+	return getActiveStateType() == RegistrationStateType.REGISTERED;
+    }
+
     public Collection<RegistrationState> getRegistrationStates(final RegistrationStateType registrationStateType) {
 	return getRegistrationStates(Collections.singletonList(registrationStateType));
     }

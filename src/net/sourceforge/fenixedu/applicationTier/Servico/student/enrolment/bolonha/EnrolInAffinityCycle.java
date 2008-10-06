@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.MDCandidacy;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
+import net.sourceforge.fenixedu.domain.student.AffinityCyclesManagement;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
-import net.sourceforge.fenixedu.domain.student.AffinityCyclesManagement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -113,7 +113,14 @@ public class EnrolInAffinityCycle extends FenixService {
 
     private void checkConditionsToEnrol(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) throws FenixServiceException {
-	if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+
+	if (executionSemester.isFirstOfYear() && hasSpecialSeason(studentCurricularPlan, executionSemester)) {
+	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
+		throw new FenixServiceException("error.out.of.enrolment.period");
+	    }
+	} else if (executionSemester.isFirstOfYear()
+		&& studentCurricularPlan.getRegistration().hasFlunkedState(executionSemester.getExecutionYear())
+		&& studentCurricularPlan.getRegistration().hasRegisteredActiveState()) {
 	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		throw new FenixServiceException("error.out.of.enrolment.period");
 	    }
@@ -127,4 +134,16 @@ public class EnrolInAffinityCycle extends FenixService {
 	    throw new FenixServiceException("error.message.tuitionNotPayed");
 	}
     }
+
+    private boolean hasSpecialSeason(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+	    return true;
+	}
+
+	final Registration registration = studentCurricularPlan.getRegistration();
+
+	return registration.hasSourceRegistration()
+		&& registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(executionSemester);
+    }
+
 }

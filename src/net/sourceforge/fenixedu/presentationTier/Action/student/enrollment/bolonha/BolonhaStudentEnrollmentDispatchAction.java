@@ -31,20 +31,29 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 
-	if (executionSemester.isFirstOfYear() && studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
-	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+
+	if (executionSemester.isFirstOfYear() && hasSpecialSeason(studentCurricularPlan, executionSemester)) {
 
 	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester)) {
 		addOutOfPeriodMessage(request, "message.out.curricular.course.enrolment.period.specialSeason",
 			degreeCurricularPlan.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
-	} else {
-	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionSemester)) {
-		addOutOfPeriodMessage(request, "message.out.curricular.course.enrolment.period.normal", degreeCurricularPlan.getNextEnrolmentPeriod());
+	} else if (executionSemester.isFirstOfYear()
+		&& studentCurricularPlan.getRegistration().hasFlunkedState(executionSemester.getExecutionYear())
+		&& studentCurricularPlan.getRegistration().hasRegisteredActiveState()) {
+
+	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester)) {
+		addOutOfPeriodMessage(request, "message.out.curricular.course.enrolment.period.specialSeason",
+			degreeCurricularPlan.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
+
+	} else if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionSemester)) {
+	    addOutOfPeriodMessage(request, "message.out.curricular.course.enrolment.period.normal", degreeCurricularPlan
+		    .getNextEnrolmentPeriod());
+	    return mapping.findForward("enrollmentCannotProceed");
 	}
 
 	if (studentCurricularPlan.getRegistration().getStudent().isAnyTuitionInDebt()) {
@@ -55,12 +64,23 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionSemester);
     }
 
+    private boolean hasSpecialSeason(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
+	    return true;
+	}
+
+	final Registration registration = studentCurricularPlan.getRegistration();
+
+	return registration.hasSourceRegistration()
+		&& registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(executionSemester);
+    }
+
     private void addOutOfPeriodMessage(final HttpServletRequest request, final String message,
 	    final EnrolmentPeriod nextEnrollmentPeriod) {
 	if (nextEnrollmentPeriod != null) {
-	    addActionMessage(request, message, nextEnrollmentPeriod
-		    .getStartDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), nextEnrollmentPeriod
-		    .getEndDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+	    addActionMessage(request, message, nextEnrollmentPeriod.getStartDateDateTime().toString(
+		    DateFormatUtil.DEFAULT_DATE_FORMAT), nextEnrollmentPeriod.getEndDateDateTime().toString(
+		    DateFormatUtil.DEFAULT_DATE_FORMAT));
 	} else {
 	    addActionMessage(request, "message.out.curricular.course.enrolment.period.default");
 	}
