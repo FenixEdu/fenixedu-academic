@@ -1829,7 +1829,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    .getContent(Language.pt) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
 		    .getEvaluationMethod() : "";
 	} else {
-	    return getCompetenceCourses().iterator().next().getEvaluationMethod();
+	    return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
+		    .getEvaluationMethod() : "";
 	}
     }
 
@@ -1841,7 +1842,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    .getContent(Language.en) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
 		    .getEvaluationMethod() : "";
 	} else {
-	    return getCompetenceCourses().iterator().next().getEvaluationMethodEn();
+	    return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
+		    .getEvaluationMethod() : "";
 	}
     }
 
