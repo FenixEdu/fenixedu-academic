@@ -43,10 +43,12 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	}
 	endDate = lastActiveStatus;
 	LocalDate lowerBeginDate = beginDate.minusDays(8);
-	HashMap<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
+	HashMap<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(lowerBeginDate, endDate
+		.plusDays(1));
 	DateTime init = getInit(lowerBeginDate, workScheduleMap);
 	DateTime end = getEnd(endDate, workScheduleMap);
-	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = assiduousness.getClockingsMap(workScheduleMap, init, end);
+	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = assiduousness.getClockingsMap(workScheduleMap, init, end
+		.plusDays(1));
 	HashMap<LocalDate, List<Leave>> leavesMap = assiduousness.getLeavesMap(beginDate, endDate);
 
 	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, endDate, new LocalDate());
