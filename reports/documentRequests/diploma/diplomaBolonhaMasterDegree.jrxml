@@ -463,7 +463,7 @@ lhe manda passar a presente carta de curso.]]></text>
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[por]]></text>
+				<text><![CDATA[com a qualificação de]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -481,7 +481,7 @@ lhe manda passar a presente carta de curso.]]></text>
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Maioria"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Aprovado"]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
