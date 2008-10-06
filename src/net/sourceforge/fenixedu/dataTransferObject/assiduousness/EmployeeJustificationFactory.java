@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -44,7 +45,6 @@ import org.joda.time.LocalTime;
 import org.joda.time.Partial;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
-import org.joda.time.chrono.GregorianChronology;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -1021,8 +1021,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     protected boolean isOverlapingOtherJustification(Assiduousness assiduousness, Duration duration, Justification justitication) {
-	List<Leave> leaves = assiduousness.getLeaves(getBeginDate(), getBeginDate().toDateTimeAtStartOfDay().plus(duration)
-		.toLocalDate());
+	Set<Leave> leaves = new HashSet(assiduousness.getLeaves(getBeginDate(), getBeginDate().toDateTimeAtStartOfDay().plus(
+		duration).toLocalDate()));
 	return !leaves.isEmpty() && (justitication == null || !leaves.contains(justitication) || leaves.size() != 1);
     }
 
