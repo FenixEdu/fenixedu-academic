@@ -2103,7 +2103,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	} else {
 	    for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
-		if (!isApproved(curricularCourse)) {
+		if (curricularCourse.isActive(executionSemester) && !isApproved(curricularCourse)) {
 		    result.add(curricularCourse);
 		}
 	    }
