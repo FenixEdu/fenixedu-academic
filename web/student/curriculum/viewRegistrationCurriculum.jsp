@@ -114,18 +114,16 @@
 			<td><bean:write name="sumEctsCredits"/></td>
 			<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="false">
 				<td><bean:write name="weightedAverage"/></td>
-				<td>
-					<logic:equal name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
-						<td>-</td>
-					</logic:equal>
-					<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
-						<%
-							curriculum.setAverageType(AverageType.SIMPLE);
-							request.setAttribute("simpleAverage", curriculum.getAverage());
-						%>
-						<td><bean:write name="simpleAverage"/></td>
-					</logic:notEqual>
-				</td>
+				<logic:equal name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
+					<td>-</td>
+				</logic:equal>
+				<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
+					<%
+						curriculum.setAverageType(AverageType.SIMPLE);
+						request.setAttribute("simpleAverage", curriculum.getAverage());
+					%>
+					<td><bean:write name="simpleAverage"/></td>
+				</logic:notEqual>
 				<td><bean:write name="curricularYear"/></td>
 			</logic:equal>
 			<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="true">
