@@ -756,5 +756,3 @@
 <schema name="EditLoginAliasDomainObject" type="net.sourceforge.fenixedu.domain.LoginAlias" bundle="MANAGER_RESOURCES">
 	<slot name="alias" />
 </schema>
-
-LoginAlias
