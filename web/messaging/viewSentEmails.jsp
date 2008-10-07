@@ -1,0 +1,61 @@
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<html:xhtml/>
+
+<h2><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails"/></h2>
+<br/>
+
+<logic:present name="sender">
+
+	<fr:view name="sender" schema="net.sourceforge.fenixedu.domain.util.email.Sender.info">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1"/>
+			<fr:property name="rowClasses" value=",tdbold"/>
+		</fr:layout>
+	</fr:view>
+
+	<div class="infoop2">
+    	<p class="mvert0"><bean:message bundle="MESSAGING_RESOURCES" key="message.email.send.queue"/></p>
+	</div>
+
+	<logic:empty name="sender" property="messages">
+		<p>
+			<span>
+				<bean:message bundle="MESSAGING_RESOURCES" key="message.no.emails.found"/>
+			</span>
+		</p>
+	</logic:empty>
+	<fr:view name="sender" property="messages" schema="net.sourceforge.fenixedu.domain.util.email.Message.list">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 mtop05"/>
+			<fr:property name="columnClasses" value=",,aleft,"/>
+			<fr:property name="link(view)" value="/emails.do?method=viewEmail"/>
+			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
+			<fr:property name="key(view)" value="link.view"/>
+			<fr:property name="param(view)" value="idInternal/messagesId"/>
+			<fr:property name="order(view)" value="1"/>
+			<fr:property name="sortBy" value="created=desc"/>
+		</fr:layout>
+	</fr:view>
+
+</logic:present>
+
+<logic:present name="senders">
+
+	<fr:view name="senders" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 mtop05"/>
+			<fr:property name="columnClasses" value=",,aleft,"/>
+			<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
+			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
+			<fr:property name="key(view)" value="link.view"/>
+			<fr:property name="param(view)" value="idInternal/senderId"/>
+			<fr:property name="order(view)" value="1"/>
+			<fr:property name="sortBy" value="fromName=asc"/>
+		</fr:layout>
+	</fr:view>
+
+</logic:present>

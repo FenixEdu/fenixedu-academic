@@ -41,6 +41,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create new email stuff" updates.sql
 execute "Change EnrolmentLog column from timestamp to datetime" alterTableEnrolmentLog.sql
 execute "Update Country data: change nationality SEUECA to SUECA" updateCountryData.sql IST
-execute "setEmptyDegreeDegreeType" setEmptyDegreeDegreeType.sql IST
+execute "setEmptyDegreeDegreeType" setEmptyDegreeDegreeType.sql IST>>>>>>> .r38902

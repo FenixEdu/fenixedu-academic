@@ -1,7 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<html:xhtml/>
 
 <ul>
 	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.menu.announcements.link"/></li>
@@ -27,6 +28,21 @@
 		</html:link>
 	</li>
 --%>
+	<logic:present role="MANAGER">
+		<logic:present user="ist24439">
+			<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.emails"/></li>
+			<li>
+				<html:link page="/emails.do?method=newEmail">
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.email.new"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link page="/emails.do?method=viewSentEmails">
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.email.sent"/>
+				</html:link>
+			</li>
+		</logic:present>
+	</logic:present>
 	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.navheader.files"/></li>
 	<li>
 		<html:link page="/viewFiles.do?method=showSources">

@@ -4625,6 +4625,25 @@ class DomainObject {
 		EmailAddressList toAddresses;
 	}
 
+	class util.email.Message extends DomainObject {
+		String subject;
+		String body;
+		DateTime created;
+		DateTime sent;
+		String bccs;
+	}
+
+	class util.email.Recipient extends DomainObject {
+		String toName;
+		Group members;
+	}
+
+	class util.email.Sender extends DomainObject {
+		String fromName;
+		String fromAddress;
+		Group members;
+	}
+
 	class util.FunctionalityPrinters extends DomainObject {
 		String functionality;
 		String keyPrinters;
@@ -13466,4 +13485,65 @@ relation StudentCandidacySchoolTimeDistrictSubdivisionOfResidence {
 relation RootDomainObjectResidenceManagementUnitHack {
 	organizationalStructure.ResidenceManagementUnit playsRole residenceManagementUnit;
 	RootDomainObject playsRole rootDomainObjectForResidenceUnit;
+}
+
+
+relation RootDomainObjectUtilEmailMessage {
+	RootDomainObject playsRole rootDomainObject;
+	util.email.Message playsRole utilEmailMessages {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUtilEmailRecipient {
+	RootDomainObject playsRole rootDomainObject;
+	util.email.Recipient playsRole utilEmailRecipients {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUtilEmailSender {
+	RootDomainObject playsRole rootDomainObject;
+	util.email.Sender playsRole utilEmailSenders {
+		multiplicity *;
+	}
+}
+
+relation UtilEmailSenderUtilEmailMessage {
+	util.email.Sender playsRole sender;
+	util.email.Message playsRole messages {
+		multiplicity *;
+	}
+}
+
+relation UtilEmailMessageUtilEmailRecipient {
+	util.email.Message playsRole messages {
+		multiplicity *;
+	}
+	util.email.Recipient playsRole recipients {
+		multiplicity *;
+	}
+}
+
+relation PersonUtilEmailMessage {
+	Person playsRole person;
+	util.email.Message playsRole messages {
+		multiplicity *;
+	}
+}
+
+relation UtilEmailSenderUtilEmailRecipient {
+	util.email.Sender playsRole senders {
+		multiplicity *;
+	}
+	util.email.Recipient playsRole recipients {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPendingUtilEmailMessage {
+	RootDomainObject playsRole rootDomainObjectFromPendingRelation;
+	util.email.Message playsRole pendingUtilEmailMessages {
+		multiplicity *;
+	}
 }
