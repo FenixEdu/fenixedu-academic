@@ -440,7 +440,7 @@ public class CreateTestData {
 	}
 
 	private void createDegreeUnits(final AggregateUnit degreeUnits) {
-	    for (final DegreeType degreeType : DegreeType.values()) {
+	    for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
 		createAggregateUnit(degreeUnits, degreeType.getName());
 	    }
 	}
@@ -453,7 +453,7 @@ public class CreateTestData {
     public static class CreateDegrees extends AtomicAction {
 	public void doIt() {
 	    final Unit unit = findUnitByName("Degrees");
-	    for (final DegreeType degreeType : DegreeType.values()) {
+	    for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
 		if (degreeType.isBolonhaType()) {
 		    for (int i = 0; i < 1; i++) {
 			final Degree degree = createDegree(degreeType, (degreeType.ordinal() * 10) + i);
@@ -1178,7 +1178,7 @@ public class CreateTestData {
 	final Campus campus = Space.getAllCampus().iterator().next();
 
 	int i = 0;
-	for (final DegreeType degreeType : DegreeType.values()) {
+	for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
 	    ++i;
 	    final GradeScale gradeScale = degreeType.getGradeScale();
 	    final Degree degree;
@@ -1255,7 +1255,7 @@ public class CreateTestData {
     private static void createSchoolClasses(final ExecutionDegree executionDegree) {
 	final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	final Degree degree = executionDegree.getDegree();
-	final DegreeType degreeType = degree.getTipoCurso();
+	final DegreeType degreeType = degree.getDegreeType();
 	for (final ExecutionSemester executionPeriod : executionYear.getExecutionPeriodsSet()) {
 	    for (int y = 1; y <= degreeType.getYears(); y++) {
 		for (int i = 1; i <= 3; i++) {

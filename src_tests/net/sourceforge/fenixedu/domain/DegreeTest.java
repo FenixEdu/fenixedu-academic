@@ -209,7 +209,7 @@ public class DegreeTest extends DomainTestBase {
 		assertTrue(errorMessagePrefix + ": name", degree.getNome().equals(name));
 		assertTrue(errorMessagePrefix + ": nameEn", degree.getNameEn().equals(nameEn));
 		assertTrue(errorMessagePrefix + ": code", degree.getSigla().equals(code));
-		assertTrue(errorMessagePrefix + ": DegreeType", degree.getTipoCurso().equals(type));
+		assertTrue(errorMessagePrefix + ": DegreeType", degree.getDegreeType().equals(type));
 		assertTrue(errorMessagePrefix + ": DegreeInfos", degree.hasAnyDegreeInfos());
 	}
 }
