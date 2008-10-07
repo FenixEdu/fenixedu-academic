@@ -1949,6 +1949,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getDegreeCurricularPlan().getName();
     }
 
+    final public String getPresentationName() {
+	return getPresentationName(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    final public String getPresentationName(final ExecutionYear executionYear) {
+	return getDegreeCurricularPlan().getPresentationName();
+    }
+
     final public Campus getCurrentCampus() {
 	final Campus currentCampus = getDegreeCurricularPlan().getCurrentCampus();
 	return currentCampus == null ? getLastCampus() : currentCampus;
