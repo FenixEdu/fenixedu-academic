@@ -17,14 +17,13 @@ public class DocumentRequestQuickTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-	AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee().getAdministrativeOffice()
-		.getAdministrativeOfficeType();
+	final AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee()
+		.getAdministrativeOffice().getAdministrativeOfficeType();
 
-	Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
-	for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
-	    if (documentRequestType.isAllowedToQuickDeliver() && documentRequestType != DocumentRequestType.IRS_DECLARATION
-		    && documentRequestType.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
-		result.add(documentRequestType);
+	final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
+	for (final DocumentRequestType type : DocumentRequestType.values()) {
+	    if (type.isAllowedToQuickDeliver() && type.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
+		result.add(type);
 	    }
 	}
 
