@@ -139,7 +139,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	    }
 	    fileContents += enumerationResources.getString(attends.getAttendsStateType().getQualifiedName()) + SEPARATOR;
 	    fileContents += attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName() + SEPARATOR;
-	    fileContents += attends.getRegistration().getStudent().getPerson().getFirstAndLastName() + SEPARATOR;
+	    fileContents += attends.getRegistration().getStudent().getPerson().getName() + SEPARATOR;
 	    for (Grouping grouping : groupings) {
 		StudentGroup studentGroup = attends.getStudentGroupByGrouping(grouping);
 		if (studentGroup == null) {
