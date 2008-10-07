@@ -90,4 +90,8 @@
 	<definition name="reports-by-degree-type" extends="definition.gep.two-column">
         <put name="body" value="/gep/reportsByDegreeType.jsp"/>
     </definition>	
+    <!-- ALUMNI -->
+	<definition name="alumni.showAlumniStatistics" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/alumniStatistics.jsp"/>
+    </definition>	
 </tiles-definitions>

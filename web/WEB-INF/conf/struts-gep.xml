@@ -299,6 +299,12 @@
 	      		type="net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA"> 	                   
    	       <forward name="selectDegreeType" path="reports-by-degree-type"/>
 	    </action>
+			
+		<action path="/alumni"
+	      		parameter="method"  
+	      		type="net.sourceforge.fenixedu.presentationTier.Action.gep.AlumniInformationAction"> 	                   
+   	       <forward name="alumni.showAlumniStatistics" path="alumni.showAlumniStatistics"/>
+	    </action>
 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
@@ -327,6 +333,7 @@
 	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/> 
    	<message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false" />
    	<message-resources parameter="resources.ScientificCouncilResources"	key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.AlumniResources" key="ALUMNI_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

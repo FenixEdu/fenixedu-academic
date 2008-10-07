@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
@@ -113,6 +117,12 @@ public class Alumni extends Alumni_Base {
 	return getPersonalPhone() != null;
     }
 
+    public PhysicalAddress getLastPersonalAddress() {
+	SortedSet<PhysicalAddress> addressSet = new TreeSet<PhysicalAddress>(PartyContact.COMPARATOR_BY_ID);
+	addressSet.addAll(getStudent().getPerson().getPhysicalAddresses());
+	return addressSet.last() != null ? addressSet.last() : null;
+    }
+    
     public PhysicalAddress getPersonalAddress() {
 	if (getStudent().getPerson().hasDefaultPhysicalAddress()) {
 	    return getStudent().getPerson().getDefaultPhysicalAddress();

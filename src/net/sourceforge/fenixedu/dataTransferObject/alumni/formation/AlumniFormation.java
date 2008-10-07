@@ -17,7 +17,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitu
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -266,7 +268,7 @@ public class AlumniFormation implements Serializable {
 		if (getChildInstitution() != null) {
 		    return getChildInstitution();
 		} else if (getParentInstitution() != null) {
-		    if (!getParentInstitution().hasAnyChilds()) {
+		    if ((getParentInstitution() instanceof UniversityUnit) && (getParentInstitution().getChildParties(SchoolUnit.class).isEmpty())) {
 			return getParentInstitution();
 		    }
 		}

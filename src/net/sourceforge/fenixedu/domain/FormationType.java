@@ -7,4 +7,9 @@ public enum FormationType {
     public String getName() {
 	return name();
     }
+
+    public String getQualifiedName() {
+	return FormationType.class.getSimpleName() + "." + name();
+    }
+
 }
