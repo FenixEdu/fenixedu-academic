@@ -748,3 +748,13 @@
 	    <property name="size" value="50" />
 	</slot>
 </schema>
+
+<schema name="EditUserDomainObject" type="net.sourceforge.fenixedu.domain.User" bundle="MANAGER_RESOURCES">
+	<slot name="userUId" />
+</schema>
+
+<schema name="EditLoginAliasDomainObject" type="net.sourceforge.fenixedu.domain.LoginAlias" bundle="MANAGER_RESOURCES">
+	<slot name="alias" />
+</schema>
+
+LoginAlias
