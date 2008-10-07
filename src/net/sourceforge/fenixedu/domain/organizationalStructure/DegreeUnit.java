@@ -229,10 +229,13 @@ public class DegreeUnit extends DegreeUnit_Base {
 
 	/* Check if there is another active person function with this type */
 	if (function != null) {
-	    PersonFunction delegateFunction = getActiveYearDelegatePersonFunctionByCurricularYear(curricularYear);
-	    if (delegateFunction != null) {
-		delegateFunction.setOccupationInterval(delegateFunction.getBeginDate(), currentDate.minusDays(1));
+
+	    List<PersonFunction> delegateFunctions = function.getActivePersonFunctionsByPerson(student.getPerson());
+
+	    for (PersonFunction personFunction : delegateFunctions) {
+		personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1));
 	    }
+
 	}
 
 	PersonFunction

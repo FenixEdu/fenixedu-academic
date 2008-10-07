@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -104,6 +105,20 @@ public class Function extends Function_Base {
 	for (Accountability accountability : getAccountabilities()) {
 	    if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
 		personFunctions.add((PersonFunction) accountability);
+	    }
+	}
+	return personFunctions;
+    }
+
+    public List<PersonFunction> getActivePersonFunctionsByPerson(final Person person) {
+	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
+	YearMonthDay currentDate = new YearMonthDay();
+	for (Accountability accountability : getAccountabilities()) {
+	    if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
+		PersonFunction personFunction = (PersonFunction) accountability;
+		if (personFunction.getPerson().equals(person)) {
+		    personFunctions.add(personFunction);
+		}
 	    }
 	}
 	return personFunctions;
