@@ -756,3 +756,7 @@
 <schema name="EditLoginAliasDomainObject" type="net.sourceforge.fenixedu.domain.LoginAlias" bundle="MANAGER_RESOURCES">
 	<slot name="alias" />
 </schema>
+
+<schema name="EditTeacherDomainObject" type="net.sourceforge.fenixedu.domain.Teacher" bundle="MANAGER_RESOURCES">
+	<slot name="teacherNumber" />
+</schema>
