@@ -43,3 +43,4 @@ function executeWithTempFile() {
 
 execute "Change EnrolmentLog column from timestamp to datetime" alterTableEnrolmentLog.sql
 execute "Update Country data: change nationality SEUECA to SUECA" updateCountryData.sql IST
+execute "setEmptyDegreeDegreeType" setEmptyDegreeDegreeType.sql
