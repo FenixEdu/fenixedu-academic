@@ -55,6 +55,10 @@ public class InfoDegree extends InfoObject implements Comparable {
 	return getDegree().getDegreeType();
     }
 
+    public Enum getTipoCurso() {
+        return getDegree().getDegreeType();
+    }
+
     public List getInfoDegreeCurricularPlans() {
 	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegree().getDegreeCurricularPlansSet()) {
