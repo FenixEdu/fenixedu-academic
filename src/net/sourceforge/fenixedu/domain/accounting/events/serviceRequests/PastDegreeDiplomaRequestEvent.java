@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.accounting.events.serviceRequests;
 
+import java.util.Collections;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -17,6 +21,11 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
 	    final DiplomaRequest diplomaRequest) {
 	this();
 	super.init(administrativeOffice, EventType.PAST_DEGREE_DIPLOMA_REQUEST, person, diplomaRequest);
+    }
+
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+	return Collections.singleton(EntryType.DIPLOMA_REQUEST_FEE);
     }
 
     @Override
