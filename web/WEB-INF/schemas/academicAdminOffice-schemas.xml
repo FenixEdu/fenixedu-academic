@@ -410,7 +410,7 @@
 
 <schema name="registration-select-execution-year" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="menu-select" key="label.executionYear">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsFromRegistrationCurriculumLines"/>
 		<property name="format" value="${year}"/>
 		<property name="key" value="true" />
 		<property name="defaultText" value="label.dropDown.all" />
