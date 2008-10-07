@@ -65,7 +65,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public static class ReportBean implements Serializable {
 	private DegreeType degreeType;
-
 	private DomainReference<ExecutionYear> executionYearReference;
 
 	public DegreeType getDegreeType() {
@@ -180,7 +179,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public ActionForward downloadEctsLabelForDegrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
@@ -346,10 +344,10 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 			    }
 			}
 		    }
-		}
-	    }
-	}
-    }
+				    }
+				}
+			    }
+			}
 
     private void reportEctsLabelForDegrees(final Spreadsheet spreadsheet, final DegreeType degreeType,
 	    final ExecutionYear executionYear) {
@@ -435,7 +433,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    row.setCell(normalize(degreeInfo.getAdditionalInfo(Language.pt)));
 	    row.setCell(normalize(degreeInfo.getAdditionalInfo(Language.en)));
 	}
-    }
+	    }
 
     private String getResponsibleCoordinatorNames(final DegreeCurricularPlan degreeCurricularPlan,
 	    final ExecutionYear executionYear) {
@@ -498,7 +496,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private void addEctsLabelContextRow(final Spreadsheet spreadsheet, final Context context, final ExecutionYear executionYear) {
 
-	final Row row = spreadsheet.addRow();
+				    final Row row = spreadsheet.addRow();
 	final ExecutionSemester executionSemester = getExecutionSemester(context, executionYear);
 	final CurricularCourse curricular = (CurricularCourse) context.getChildDegreeModule();
 
@@ -509,7 +507,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(curricular.getNameEn(executionSemester));
 	row.setCell(curricular.getCompetenceCourse().getAcronym(executionSemester));
 
-	row.setCell(context.getCurricularYear());
+				    row.setCell(context.getCurricularYear());
 	setSemesterAndDuration(row, context);
 	row.setCell(curricular.hasCompetenceCourseLevel() ? curricular.getCompetenceCourseLevel().getLocalizedName() : "");
 	row.setCell(curricular.getEctsCredits(executionSemester));
@@ -525,8 +523,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	final BibliographicReferences references = getBibliographicReferences(curricular, executionSemester);
 	if (references == null) {
-	    row.setCell("");
-	    row.setCell("");
+					row.setCell(" ");
+					row.setCell(" ");
 	} else {
 	    row.setCell(normalize(getBibliographicReferences(references.getMainBibliographicReferences())));
 	    row.setCell(normalize(getBibliographicReferences(references.getSecondaryBibliographicReferences())));
@@ -536,31 +534,31 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(normalize(curricular.getEvaluationMethodEn(executionSemester)));
 
 	row.setCell(curricular.getTotalLoad(context.getCurricularPeriod(), executionSemester));
-    }
+				    }
 
     private String getLanguage(final CurricularCourse curricularCourse) {
 	final DegreeType degreeType = curricularCourse.getDegreeType();
 	if (degreeType.hasExactlyOneCycleType() && degreeType.getCycleType() == CycleType.FIRST_CYCLE) {
 	    return "Português";
-	} else {
+				    } else {
 	    return "Português/Inglês";
-	}
-    }
+				    }
+				}
 
     private String getTeachers(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 	final StringBuilder builder = new StringBuilder();
 	for (final ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
 	    for (final Professorship professorship : executionCourse.getProfessorshipsSortedAlphabetically()) {
 		builder.append(professorship.getTeacher().getPerson().getName()).append("; ");
-	    }
-	}
+			    }
+			}
 	return builder.toString();
-    }
+		    }
 
     private BibliographicReferences getBibliographicReferences(final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester) {
 	return curricularCourse.getCompetenceCourse().getBibliographicReferences(executionSemester);
-    }
+		}
 
     private String getBibliographicReferences(final List<BibliographicReference> references) {
 	Collections.sort(references);
@@ -578,7 +576,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    stringBuilder.append(bibliographicReference.getReference());
 	}
 	return stringBuilder.toString();
-    }
+	    }
 
     private ExecutionSemester getExecutionSemester(final Context context, final ExecutionYear executionYear) {
 	final CurricularPeriod curricularPeriod = context.getCurricularPeriod();
@@ -610,7 +608,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public static class EnrolmentAndAprovalCounter {
 	private int enrolments = 0;
-
 	private int aprovals = 0;
 
 	public void count(final Enrolment enrolment) {
@@ -632,7 +629,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     public static class EnrolmentAndAprovalCounterMap extends HashMap<ExecutionSemester, EnrolmentAndAprovalCounter> {
 
 	private final ExecutionSemester firstExecutionSemester;
-
 	private final ExecutionSemester lastExecutionSemester;
 
 	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
@@ -939,7 +935,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("email");
 	spreadsheet.setHeader("sexo");
 
-	final CycleType cycleType = degreeType.getLastCycleType();
+	final CycleType cycleType = degreeType.getLastOrderedCycleType();
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.getDegreeType() == degreeType) {
@@ -1011,7 +1007,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 		    if (!shift.hasSchoolClassForDegreeType(degreeType)) {
 			continue;
-		    }
+			    }
 
 		    Row row = spreadsheet.addRow();
 		    row.setCell(executionSemester.getSemester());
@@ -1022,11 +1018,10 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 		    row.setCell(degreeTeachingService.getPercentage() != null ? degreeTeachingService.getPercentage().toString()
 			    .replace('.', ',') : StringUtils.EMPTY);
 
+			}
+		    }
 		}
 	    }
-	}
-
-    }
 
     private void reportCourseLoads(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
 
@@ -1049,7 +1044,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 			if (!shift.hasSchoolClassForDegreeType(degreeType)) {
 			    continue;
-			}
+	}
 
 			Row row = spreadsheet.addRow();
 			row.setCell(executionSemester.getSemester());

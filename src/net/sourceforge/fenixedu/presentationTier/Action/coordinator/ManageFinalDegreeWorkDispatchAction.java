@@ -395,7 +395,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 				.toString());
 		    }
 		    if (infoProposal.getDegreeType() != null) {
-			finalWorkForm.set("degreeType", infoProposal.getDegreeType().toString());
+			finalWorkForm.set("degreeType", infoProposal.getDegreeType().getName());
 		    }
 		    finalWorkForm.set("observations", infoProposal.getObservations());
 		    finalWorkForm.set("location", infoProposal.getLocation());
@@ -1300,7 +1300,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    if (proposal.getDegreeType() == null) {
 		row.setCell(applicationResources.getMessage("label.both"));
 	    } else {
-		row.setCell(enumerationResources.getMessage(proposal.getDegreeType().toString()));
+		row.setCell(enumerationResources.getMessage(proposal.getDegreeType().getName()));
 	    }
 	    row.setCell(proposal.getObservations());
 	    row.setCell(proposal.getLocation());

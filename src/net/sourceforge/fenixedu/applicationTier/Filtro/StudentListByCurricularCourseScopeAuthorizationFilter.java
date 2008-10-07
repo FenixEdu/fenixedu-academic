@@ -68,7 +68,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 
 	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 	    DegreeType degreeType = curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree()
-		    .getTipoCurso();
+		    .getDegreeType();
 	    if (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		return true;
 	    }

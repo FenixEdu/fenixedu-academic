@@ -76,7 +76,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 	}
 
 	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-	    if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+	    if (executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 
 		return true;
 	    }

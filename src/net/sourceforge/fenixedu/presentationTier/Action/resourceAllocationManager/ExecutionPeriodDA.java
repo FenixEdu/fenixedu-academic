@@ -40,7 +40,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 	    final Degree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
 	    final Degree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
 
-	    int degreeTypeComparison = degree1.getTipoCurso().compareTo(degree2.getTipoCurso());
+	    int degreeTypeComparison = degree1.getDegreeType().compareTo(degree2.getDegreeType());
 	    return (degreeTypeComparison != 0) ? degreeTypeComparison : degree1.getNome().compareTo(degree2.getNome());
 	}
     };

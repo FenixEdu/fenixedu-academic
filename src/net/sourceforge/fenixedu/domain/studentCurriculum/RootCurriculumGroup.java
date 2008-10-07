@@ -100,7 +100,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     private void createCycle(final RootCourseGroup rootCourseGroup, final ExecutionSemester executionSemester, CycleType cycle) {
 	if (cycle == null) {
-	    cycle = rootCourseGroup.getDegree().getDegreeType().getFirstCycleType();
+	    cycle = rootCourseGroup.getDegree().getDegreeType().getFirstOrderedCycleType();
 	}
 	if (cycle != null) {
 	    if (executionSemester != null) {

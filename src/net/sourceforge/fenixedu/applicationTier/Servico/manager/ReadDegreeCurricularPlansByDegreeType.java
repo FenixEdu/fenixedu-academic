@@ -5,16 +5,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Luis Cruz
@@ -22,29 +19,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDegreeCurricularPlansByDegreeType extends FenixService {
 
-    public List run(final DegreeType tipoCurso) {
-	final List degreeCurricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
-	return constructInfoDegreeCurricularPlans(tipoCurso, degreeCurricularPlans);
-    }
+    public List<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
+	final List<DegreeCurricularPlan> dcps = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
+	final List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>(dcps.size());
 
-    protected List constructInfoDegreeCurricularPlans(final DegreeType tipoCurso, final List degreeCurricularPlans) {
-	final List infoDegreeCurricularPlans = new ArrayList(degreeCurricularPlans.size());
-	for (final Iterator iterator = degreeCurricularPlans.iterator(); iterator.hasNext();) {
-	    final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iterator.next();
-	    final Degree degree = degreeCurricularPlan.getDegree();
-
-	    if (degree.getTipoCurso().equals(tipoCurso)) {
-		final InfoDegreeCurricularPlan infoDegreeCurricularPlan = constructInfoDegreeCurricularPlan(degreeCurricularPlan,
-			degree);
-		infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
+	for (final DegreeCurricularPlan degreeCurricularPlan : dcps) {
+	    if (degreeCurricularPlan.getDegreeType().equals(degreeType)) {
+		result.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
 	    }
 	}
-	return infoDegreeCurricularPlans;
-    }
 
-    protected InfoDegreeCurricularPlan constructInfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan,
-	    final Degree degree) {
-	return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+	return result;
     }
 
 }

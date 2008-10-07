@@ -531,12 +531,12 @@ public class CurricularCourse extends CurricularCourse_Base {
     // END: Only for enrollment purposes
     // -------------------------------------------------------------
 
-    private String constructUniqueEnrollmentKey(String code, String name, DegreeType tipoCurso) {
+    private String constructUniqueEnrollmentKey(String code, String name, DegreeType degreeType) {
 	StringBuilder stringBuffer = new StringBuilder(50);
 	stringBuffer.append(code);
 	stringBuffer.append(name);
-	if (tipoCurso != null) {
-	    stringBuffer.append(tipoCurso.toString());
+	if (degreeType != null) {
+	    stringBuffer.append(degreeType.toString());
 	}
 	return StringUtils.lowerCase(stringBuffer.toString());
     }
@@ -1059,7 +1059,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Double getEctsCredits(final ExecutionSemester executionSemester) {
 	return getEctsCredits((CurricularPeriod) null, executionSemester);
     }
-    
+
     public Double getEctsCredits(final ExecutionYear executionYear) {
 	return getEctsCredits((CurricularPeriod) null, executionYear);
     }
@@ -1939,7 +1939,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public CompetenceCourseLevel getCompetenceCourseLevel() {
 	return hasCompetenceCourse() ? getCompetenceCourse().getCompetenceCourseLevel() : null;
     }
-    
+
     public boolean hasCompetenceCourseLevel() {
 	return getCompetenceCourseLevel() != null;
     }

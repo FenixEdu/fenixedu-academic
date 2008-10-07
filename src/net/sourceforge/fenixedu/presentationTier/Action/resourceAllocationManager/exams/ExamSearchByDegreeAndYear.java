@@ -69,7 +69,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = resourceBundle.getString(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
+	    name = resourceBundle.getString(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType()
 		    .name())
 		    + " de " + name;
 

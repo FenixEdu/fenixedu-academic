@@ -457,7 +457,7 @@ public class ContextUtils {
 
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	    final Degree degree = degreeCurricularPlan.getDegree();
-	    final String degreeTypeString = bundle.getString(degree.getTipoCurso().toString());
+	    final String degreeTypeString = bundle.getString(degree.getDegreeType().toString());
 	    final StringBuilder name = new StringBuilder();
 	    name.append(degreeTypeString);
 	    name.append(" ").append(applicationResources.getString("label.in")).append(" ");
@@ -582,7 +582,7 @@ public class ContextUtils {
 
 	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " de " + name;
+	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " de " + name;
 
 	    return new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString());
 	}
@@ -626,7 +626,7 @@ public class ContextUtils {
 	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
+	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " em " + name;
 
 	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
 		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";

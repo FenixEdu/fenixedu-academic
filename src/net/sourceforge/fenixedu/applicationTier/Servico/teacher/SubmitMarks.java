@@ -72,7 +72,7 @@ public class SubmitMarks extends FenixService {
     private void checkEvaluationDateInExamsPeriod(ExecutionCourse executionCourse, Date evaluationDate)
 	    throws OutOfPeriodException {
 	for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-	    if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+	    if (curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
 		ExecutionDegree executionDegree = curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(
 			executionCourse.getExecutionPeriod().getExecutionYear());
 		OccupationPeriod occupationPeriod = null;

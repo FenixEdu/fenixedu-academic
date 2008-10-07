@@ -180,7 +180,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected void checkForProblemasInDegrees(final HttpServletRequest request) {
 	final Map<DegreeType, Boolean> problemsMap = new HashMap<DegreeType, Boolean>();
-	for (final DegreeType degreeType : DegreeType.values()) {
+	for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
 	    problemsMap.put(degreeType, checkHasProblem(degreeType));
 	}
 	request.setAttribute("problemsMap", problemsMap);

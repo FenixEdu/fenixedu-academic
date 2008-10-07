@@ -117,7 +117,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 	final Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
 	for (final ExecutionDegree executionDegree : selectedExecutionPeriod.getExecutionYear()
 		.getExecutionDegreesSortedByDegreeName()) {
-	    if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso() == DegreeType.DEGREE) {
+	    if (executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType() == DegreeType.DEGREE) {
 		executionDegrees.add(executionDegree);
 	    }
 	}

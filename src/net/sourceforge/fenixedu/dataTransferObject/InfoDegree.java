@@ -51,8 +51,8 @@ public class InfoDegree extends InfoObject implements Comparable {
 	return getDegree().isBolonhaDegree();
     }
 
-    public Enum getTipoCurso() {
-	return getDegree().getTipoCurso();
+    public Enum getDegreeType() {
+	return getDegree().getDegreeType();
     }
 
     public List getInfoDegreeCurricularPlans() {

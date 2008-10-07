@@ -117,7 +117,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
+	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " em " + name;
 
 	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
 		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
@@ -186,7 +186,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
+	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " em " + name;
 
 	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
 		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";

@@ -23,7 +23,7 @@ public class InfoExecutionDegree extends InfoObject {
 	public int compare(InfoExecutionDegree o1, InfoExecutionDegree o2) {
 	    final Degree degree1 = o1.getExecutionDegree().getDegree();
 	    final Degree degree2 = o2.getExecutionDegree().getDegree();
-	    final int c = degree1.getTipoCurso().compareTo(degree2.getTipoCurso());
+	    final int c = degree1.getDegreeType().compareTo(degree2.getDegreeType());
 	    return c == 0 ? degree1.getNome().compareTo(degree2.getName()) : c;
 	}
 
@@ -123,10 +123,10 @@ public class InfoExecutionDegree extends InfoObject {
 		String degreeType = null;
 		if (messageResources != null) {
 		    degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-			    .getTipoCurso().toString());
+			    .getDegreeType().toString());
 		}
 		if (degreeType == null)
-		    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
+		    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString();
 
 		result.add(new LabelValueBean(degreeType + "  "
 			+ infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), infoExecutionDegree
@@ -135,10 +135,10 @@ public class InfoExecutionDegree extends InfoObject {
 		String degreeType = null;
 		if (messageResources != null) {
 		    degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-			    .getTipoCurso().toString());
+			    .getDegreeType().toString());
 		}
 		if (degreeType == null)
-		    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
+		    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString();
 
 		result.add(new LabelValueBean(degreeType + "  "
 			+ infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome() + " - "

@@ -28,7 +28,7 @@ public class EditDegree extends FenixService {
 	    throw new NonExistingServiceException();
 	} else if (!degreeToEdit.getSigla().equalsIgnoreCase(code)
 		|| !degreeToEdit.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name)
-		|| !degreeToEdit.getTipoCurso().equals(degreeType)) {
+		|| !degreeToEdit.getDegreeType().equals(degreeType)) {
 
 	    final List<Degree> degrees = Degree.readOldDegrees();
 
@@ -40,7 +40,7 @@ public class EditDegree extends FenixService {
 		    }
 		    if ((degree.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree.getNameEn()
 			    .equalsIgnoreCase(nameEn))
-			    && degree.getTipoCurso().equals(degreeType)) {
+			    && degree.getDegreeType().equals(degreeType)) {
 			throw new FenixServiceException("error.existing.name.and.type");
 		    }
 		}

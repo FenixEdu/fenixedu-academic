@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -10,7 +10,7 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 public class DegreeTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(DegreeType.values());
+	return new ArrayList<DegreeType>(DegreeType.NOT_EMPTY_VALUES);
     }
 
     public Converter getConverter() {

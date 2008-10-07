@@ -283,8 +283,8 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
     private void sortExecutionDegrees(List<ExecutionDegree> result) {
 	Collections.sort(result, new Comparator<ExecutionDegree>() {
 	    public int compare(ExecutionDegree o1, ExecutionDegree o2) {
-		final String name = "" + o1.getDegree().getTipoCurso().name() + o1.getDegree().getName();
-		final String name2 = "" + o2.getDegree().getTipoCurso().name() + o2.getDegree().getName();
+		final String name = "" + o1.getDegree().getDegreeType().name() + o1.getDegree().getName();
+		final String name2 = "" + o2.getDegree().getDegreeType().name() + o2.getDegree().getName();
 		return name.compareToIgnoreCase(name2);
 	    }
 	});
@@ -483,7 +483,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	checkIfStudentHasPayedTuition(request, studentCurricularPlan);
 
 	actionForm.set("studentNumber", studentCurricularPlan.getRegistration().getStudent().getNumber().toString());
-	actionForm.set("degreeType", studentCurricularPlan.getRegistration().getDegreeType().toString());
+	actionForm.set("degreeType", studentCurricularPlan.getRegistration().getDegreeType().getName());
 
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);

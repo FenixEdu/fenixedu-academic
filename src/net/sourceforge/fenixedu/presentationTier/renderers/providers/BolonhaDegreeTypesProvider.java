@@ -8,7 +8,7 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 public class BolonhaDegreeTypesProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	return DegreeType.getBolonhaDegreeTypes();
+	return DegreeType.NOT_EMPTY_BOLONHA_VALUES;
     }
 
     public Converter getConverter() {

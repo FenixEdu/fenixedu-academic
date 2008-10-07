@@ -77,7 +77,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 	}
 
 	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-	    if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+	    if (curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 		return true;
 	    }
 	    return false;

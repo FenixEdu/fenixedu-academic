@@ -170,7 +170,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	List<SelectItem> result = new ArrayList<SelectItem>();
 	result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
 
-	for (DegreeType degreeType : DegreeType.values()) {
+	for (DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
 	    if (degreeType.isBolonhaType()) {
 		result.add(new SelectItem(degreeType.name(), enumerationBundle.getString(degreeType.getName()) + " ("
 			+ degreeType.getYears() + " ano(s))"));

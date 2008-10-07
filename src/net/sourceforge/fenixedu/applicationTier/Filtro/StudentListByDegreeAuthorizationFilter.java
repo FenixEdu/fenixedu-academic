@@ -63,13 +63,13 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
 
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-	if ((degreeCurricularPlan == null) || (!degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType))) {
+	if ((degreeCurricularPlan == null) || (!degreeCurricularPlan.getDegree().getDegreeType().equals(degreeType))) {
 	    return false;
 	}
 
 	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-	    if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)
-		    || degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+	    if (degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.MASTER_DEGREE)
+		    || degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		return true;
 	    }
 	    return false;

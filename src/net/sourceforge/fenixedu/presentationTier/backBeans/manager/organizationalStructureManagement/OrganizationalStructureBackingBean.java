@@ -415,9 +415,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    selectItem = new SelectItem();
 
 	    if (!degree.isBolonhaDegree()) {
-		if (degree.getTipoCurso().equals(DegreeType.DEGREE)) {
+		if (degree.getDegreeType().equals(DegreeType.DEGREE)) {
 		    selectItem.setLabel("(L) " + degree.getNome());
-		} else if (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+		} else if (degree.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 		    selectItem.setLabel("(M) " + degree.getNome());
 		}
 	    } else if (degree.isBolonhaDegree()) {

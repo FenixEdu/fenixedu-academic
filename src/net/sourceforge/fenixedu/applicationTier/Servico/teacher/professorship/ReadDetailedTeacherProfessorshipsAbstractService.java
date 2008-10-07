@@ -56,7 +56,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends FenixServi
 			public Object transform(Object input) {
 			    CurricularCourse curricularCourse = (CurricularCourse) input;
 			    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-			    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
+			    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
 			    if (degreeType.equals(DegreeType.DEGREE)) {
 				detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
 			    }

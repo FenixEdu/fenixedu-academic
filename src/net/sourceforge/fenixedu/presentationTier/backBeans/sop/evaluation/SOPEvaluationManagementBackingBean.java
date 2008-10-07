@@ -477,7 +477,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	result.add(new SelectItem(0, this.chooseMessage));
 	for (InfoExecutionDegree infoExecutionDegree : (List<InfoExecutionDegree>) infoExecutionDegrees) {
 	    StringBuilder label = new StringBuilder();
-	    label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
+	    label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType()
 		    .toString()));
 	    label.append(" em ");
 	    label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());

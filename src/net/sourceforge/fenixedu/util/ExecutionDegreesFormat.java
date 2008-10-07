@@ -39,11 +39,11 @@ public class ExecutionDegreesFormat extends FenixUtil {
 	    if (messageResources != null) {
 		final Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
 		degreeType = messageResources.getMessage(locale, infoExecutionDegree.getInfoDegreeCurricularPlan()
-			.getInfoDegree().getTipoCurso().name());
+			.getInfoDegree().getDegreeType().name());
 	    }
 
 	    if (degreeType == null)
-		degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
+		degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString();
 
 	    name = degreeType + " em " + name;
 
@@ -62,7 +62,7 @@ public class ExecutionDegreesFormat extends FenixUtil {
 	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
+	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " em " + name;
 
 	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? " - "
 		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";

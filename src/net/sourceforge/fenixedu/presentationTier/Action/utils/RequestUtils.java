@@ -75,7 +75,7 @@ public class RequestUtils {
 		InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
 
 		StringBuilder label = new StringBuilder();
-		label.append(infoDegree.getTipoCurso().toString());
+		label.append(infoDegree.getDegreeType().toString());
 		label.append(" em ");
 		label.append(infoDegree.getNome());
 		if (((Boolean) duplicateDegreesMap.get(infoDegree.getNome())).booleanValue()) {

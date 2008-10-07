@@ -39,7 +39,7 @@ public class ReadExecutionDegreesByExecutionYearAndType extends FenixService {
 	final List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>();
 	for (final ExecutionDegree executionDegree : executionDegrees) {
 	    final Degree degree = executionDegree.getDegreeCurricularPlan().getDegree();
-	    if (degree.getTipoCurso().equals(typeOfCourse)) {
+	    if (degree.getDegreeType().equals(typeOfCourse)) {
 		infoExecutionDegrees.add(getInfoExecutionDegree(executionDegree));
 	    }
 	}

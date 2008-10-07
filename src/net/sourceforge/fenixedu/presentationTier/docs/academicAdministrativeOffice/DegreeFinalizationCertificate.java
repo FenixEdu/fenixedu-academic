@@ -22,7 +22,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument {
 
     protected DegreeFinalizationCertificate(final DocumentRequest documentRequest) {
-	super(documentRequest, Language.getDefaultLocale());
+	super(documentRequest, Language.getLocale());
     }
 
     @Override

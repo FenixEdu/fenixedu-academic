@@ -11,7 +11,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -418,11 +417,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public DegreeType getDegreeType() {
-	return null;
-    }
-
-    @Override
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	return false;
     }
@@ -458,7 +452,7 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public CycleCourseGroup getLastCycleCourseGroup() {
+    public CycleCourseGroup getLastOrderedCycleCourseGroup() {
 	return null;
     }
 

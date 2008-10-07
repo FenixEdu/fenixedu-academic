@@ -33,7 +33,7 @@ public class CreateFile {
 	while (iterador.hasNext()) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) iterador.next();
 
-	    if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+	    if (curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
 		List enrolmentEvaluationCurricularCourseList = new ArrayList();
 
 		enrolmentEvaluationCurricularCourseList = (List) CollectionUtils.select(enrolmentEvaluationList, new Predicate() {

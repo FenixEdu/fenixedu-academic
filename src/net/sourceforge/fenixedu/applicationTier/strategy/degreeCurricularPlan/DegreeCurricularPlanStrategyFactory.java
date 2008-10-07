@@ -39,9 +39,9 @@ public class DegreeCurricularPlanStrategyFactory implements IDegreeCurricularPla
 	if (degreeCurricularPlan == null)
 	    throw new IllegalArgumentException("Must initialize Degree Curricular Plan!");
 
-	if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+	if (degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
 	    strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
-	} else if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+	} else if (degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 	    strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan);
 	}
 	return strategyInstance;

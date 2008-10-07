@@ -90,20 +90,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
      */
     public static final Comparator<DegreeCurricularPlan> DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE = new Comparator<DegreeCurricularPlan>() {
 
-	public int compare(DegreeCurricularPlan degreeCurricularPlan1, DegreeCurricularPlan degreeCurricularPlan2) {
-	    final int degreeTypeCompare = degreeCurricularPlan1.getDegreeType().toString().compareTo(
-		    degreeCurricularPlan2.getDegreeType().toString());
+	public int compare(DegreeCurricularPlan o1, DegreeCurricularPlan o2) {
+	    final int degreeTypeCompare = o1.getDegreeType().getLocalizedName().compareTo(o2.getDegreeType().getLocalizedName());
 	    if (degreeTypeCompare != 0) {
 		return degreeTypeCompare;
 	    }
 
-	    int finalCompare = degreeCurricularPlan1.getDegree().getSigla().compareTo(
-		    degreeCurricularPlan2.getDegree().getSigla());
+	    int finalCompare = o1.getDegree().getSigla().compareTo(o2.getDegree().getSigla());
 	    if (finalCompare == 0) {
-		finalCompare = degreeCurricularPlan2.getName().compareTo(degreeCurricularPlan1.getName());
+		finalCompare = o2.getName().compareTo(o1.getName());
 	    }
 	    if (finalCompare == 0) {
-		finalCompare = degreeCurricularPlan1.getIdInternal().compareTo(degreeCurricularPlan2.getIdInternal());
+		finalCompare = o1.getIdInternal().compareTo(o2.getIdInternal());
 	    }
 	    return finalCompare;
 	}
@@ -1452,13 +1450,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return isBolonhaDegree() ? getRoot().getCycleCourseGroup(cycleType) : null;
     }
 
-    public CycleCourseGroup getLastCycleCourseGroup() {
-	return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastCycleType()) : null;
+    public CycleCourseGroup getLastOrderedCycleCourseGroup() {
+	return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastOrderedCycleType()) : null;
     }
 
     public String getGraduateTitle(ExecutionYear executionYear) {
 	if (isBolonhaDegree()) {
-	    return getLastCycleCourseGroup().getGraduateTitle(executionYear);
+	    return getLastOrderedCycleCourseGroup().getGraduateTitle(executionYear);
 	} else {
 	    final StringBuilder result = new StringBuilder(getDegreeType().getGraduateTitle());
 	    final String in = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(

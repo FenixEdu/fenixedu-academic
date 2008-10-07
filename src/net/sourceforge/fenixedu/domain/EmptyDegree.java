@@ -25,6 +25,9 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     private EmptyDegree() {
 	super();
+	if (EmptyDegree.getInstance() != null) {
+	    throw new DomainException("");
+	}
 
 	setRootDomainObject(RootDomainObject.getInstance());
     }

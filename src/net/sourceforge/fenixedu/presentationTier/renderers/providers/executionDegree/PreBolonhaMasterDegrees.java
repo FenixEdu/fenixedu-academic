@@ -15,7 +15,7 @@ public class PreBolonhaMasterDegrees implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 	final List<Degree> result = new ArrayList<Degree>();
 	for (Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+	    if (degree.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 		result.add(degree);
 	    }
 	}

@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -138,7 +139,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     public Collection<DegreeType> getAdministratedDegreeTypes() {
 	Collection<DegreeType> result = new HashSet<DegreeType>();
 
-	for (final DegreeType degreeType : DegreeType.values()) {
+	for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
 	    if (degreeType.getAdministrativeOfficeType() == getAdministrativeOfficeType()) {
 		result.add(degreeType);
 	    }
@@ -181,6 +182,11 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 		    && degreeType.canCreateStudent() && !degreeType.canCreateStudentOnlyWithCandidacy()) {
 		result.add(degree);
 	    }
+	}
+
+	final EmptyDegree emptyDegree = EmptyDegree.getInstance();
+	if (emptyDegree.getDegreeType().getAdministrativeOfficeType().getAdministrativeOffice() == this) {
+	    result.add(emptyDegree);
 	}
 
 	Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);

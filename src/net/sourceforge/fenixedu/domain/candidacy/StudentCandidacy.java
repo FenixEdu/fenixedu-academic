@@ -89,6 +89,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
 	case BOLONHA_DEGREE:
 	case DEGREE:
+	case EMPTY:
 	    return new DegreeCandidacy(studentPerson, executionDegree);
 
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
@@ -196,7 +197,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     public void fillOriginInformation(OriginInformationBean originInformationBean, PersonBean personBean) {
-	
+
 	setDistrictSubdivisionOfResidence(personBean.getDistrictSubdivisionOfResidenceObject());
 	setCountryOfResidence(personBean.getCountryOfResidence());
 	setSchoolTimeDistrictSubDivisionOfResidence(originInformationBean.getSchoolTimeDistrictSubdivisionOfResidence());
@@ -208,7 +209,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	setMaritalStatus(personBean.getMaritalStatus());
 	setProfessionType(personBean.getProfessionType());
 	setProfessionalCondition(personBean.getProfessionalCondition());
-	
+
 	setMotherSchoolLevel(originInformationBean.getMotherSchoolLevel());
 	setMotherProfessionType(originInformationBean.getMotherProfessionType());
 	setMotherProfessionalCondition(originInformationBean.getMotherProfessionalCondition());
@@ -220,7 +221,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	setSpouseProfessionalCondition(originInformationBean.getSpouseProfessionalCondition());
 
     }
-    
+
     public ExecutionYear getExecutionYear() {
 	return getExecutionDegree().getExecutionYear();
     }

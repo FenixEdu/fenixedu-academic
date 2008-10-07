@@ -530,7 +530,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 				.toString());
 		    }
 		    if (infoProposal.getDegreeType() != null) {
-			finalWorkForm.set("degreeType", infoProposal.getDegreeType().toString());
+			finalWorkForm.set("degreeType", infoProposal.getDegreeType().getName());
 		    }
 		    finalWorkForm.set("observations", infoProposal.getObservations());
 		    finalWorkForm.set("location", infoProposal.getLocation());

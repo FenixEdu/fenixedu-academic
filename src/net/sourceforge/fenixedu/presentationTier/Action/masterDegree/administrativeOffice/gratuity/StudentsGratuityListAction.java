@@ -131,7 +131,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 
 	    InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
 	    InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
-	    DegreeType degreeTypeEnum = (DegreeType) infoDegree.getTipoCurso();
+	    DegreeType degreeTypeEnum = (DegreeType) infoDegree.getDegreeType();
 	    MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
 	    String degreeType = messageResources.getMessage(degreeTypeEnum.name());
 
@@ -281,7 +281,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 	}
 
 	// required data
-	String degree = new String(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString()
+	String degree = new String(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString()
 		+ " em " + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 	String specialization = "all";
 	String situation = "all";

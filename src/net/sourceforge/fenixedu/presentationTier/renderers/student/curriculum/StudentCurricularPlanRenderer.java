@@ -990,7 +990,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private HtmlComponent createDegreeCurricularPlanNameLink(final DegreeCurricularPlan degreeCurricularPlan,
 		ExecutionSemester executionSemester) {
-	    if (degreeCurricularPlan.isPast()) {
+	    if (degreeCurricularPlan.isPast() || degreeCurricularPlan.isEmpty()) {
 		return new HtmlText(degreeCurricularPlan.getName());
 	    }
 

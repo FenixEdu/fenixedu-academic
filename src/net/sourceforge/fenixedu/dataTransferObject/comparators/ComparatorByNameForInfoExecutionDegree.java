@@ -18,9 +18,9 @@ public class ComparatorByNameForInfoExecutionDegree implements Comparator {
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) obj1;
 	InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) obj2;
 
-	String name = "" + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString()
+	String name = "" + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString()
 		+ infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
-	String name2 = "" + infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString()
+	String name2 = "" + infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString()
 		+ infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 	return name.compareToIgnoreCase(name2);
     }

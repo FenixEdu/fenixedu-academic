@@ -52,7 +52,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	    final Degree degree = degreeCurricularPlan.getDegree();
 	    executionDegreeLabelValueBeans.add(new LabelValueBean(StringAppender.append(enumMessages.getMessage(
-		    getLocale(request), degree.getTipoCurso().toString()), " ", messages.getMessage(getLocale(request),
+		    getLocale(request), degree.getDegreeType().toString()), " ", messages.getMessage(getLocale(request),
 		    "public.degree.information.label.in"), " ", degree.getNameFor(executionSemester.getExecutionYear())
 		    .getContent(), addAnotherInfoToLabel(executionDegree, executionSemester) ? " - "
 		    + executionDegree.getDegreeCurricularPlan().getName() : ""), executionDegree.getIdInternal().toString()));
@@ -101,8 +101,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 		    public int compare(ExecutionDegree executionDegree1, ExecutionDegree executionDegree2) {
 			final Degree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
 			final Degree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
-			return (degree1.getTipoCurso() == degree2.getTipoCurso()) ? degree1.getNome()
-				.compareTo(degree2.getNome()) : degree1.getTipoCurso().compareTo(degree2.getTipoCurso());
+			return (degree1.getDegreeType() == degree2.getDegreeType()) ? degree1.getNome()
+				.compareTo(degree2.getNome()) : degree1.getDegreeType().compareTo(degree2.getDegreeType());
 		    }
 		});
 	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
