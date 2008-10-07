@@ -102,7 +102,7 @@ public enum DocumentRequestType {
     }
 
     public boolean getCanBeFreeProcessed() {
-	return isDeclaration() || this == DEGREE_FINALIZATION_CERTIFICATE;
+	return isDeclaration() || this == SCHOOL_REGISTRATION_CERTIFICATE || this == DEGREE_FINALIZATION_CERTIFICATE;
     }
 
 }
