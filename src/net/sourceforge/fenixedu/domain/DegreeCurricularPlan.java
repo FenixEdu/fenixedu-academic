@@ -1079,7 +1079,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getPresentationName() {
-	return getDegree().getPresentationName() + " - " + getName();
+	return getPresentationName(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public String getPresentationName(final ExecutionYear executionYear) {
+	return getDegree().getPresentationName(executionYear) + " - " + getName();
     }
 
     public Set<MasterDegreeCandidate> readMasterDegreeCandidates() {
