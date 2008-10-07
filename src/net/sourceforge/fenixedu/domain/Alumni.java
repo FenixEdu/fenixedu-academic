@@ -257,4 +257,16 @@ public class Alumni extends Alumni_Base {
 
 	return person.getIstUsername();
     }
+
+    public boolean hasStartedPublicRegistry() {
+	return getUrlRequestToken() != null;
+    }
+
+    public boolean hasFinishedPublicRegistry() {
+	return hasStartedPublicRegistry() && isRegistered();
+    }
+    
+    public String getName() {
+	return getStudent().getPerson().getName();
+    }
 }
