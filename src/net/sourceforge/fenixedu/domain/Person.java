@@ -2751,7 +2751,7 @@ public class Person extends Person_Base {
 
     @Override
     public void setPersonalPhoto(Photograph photo) {
-	if (super.hasPersonalPhoto())
+	if (super.getPersonalPhoto() != null)
 	    photo.setPrevious(super.getPersonalPhoto());
 	super.setPersonalPhoto(photo);
     }
