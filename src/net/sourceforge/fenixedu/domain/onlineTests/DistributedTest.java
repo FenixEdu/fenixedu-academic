@@ -142,6 +142,17 @@ public class DistributedTest extends DistributedTest_Base {
 	return null;
     }
 
+    public StudentTestLog getLastSubmissionStudentTestLog(final Integer studentNumber) {
+	Student student = Student.readStudentByNumber(studentNumber);
+	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
+	    if (studentTestLog.getEvent().startsWith("Submeter Teste;")
+		    && student.getRegistrations().contains(studentTestLog.getStudent())) {
+		return studentTestLog;
+	    }
+	}
+	return null;
+    }
+
     public List<StudentTestLog> getStudentTestLogs(final Registration registration) {
 	List<StudentTestLog> result = new ArrayList<StudentTestLog>();
 	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {

@@ -29,7 +29,7 @@
 			<td class="listClasses">
 				<% 
 				net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastStudentTestLog(user.getPerson().getStudent().getNumber());
+				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 					if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 				<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>
 				<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">

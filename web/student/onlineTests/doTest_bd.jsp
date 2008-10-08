@@ -10,7 +10,8 @@ response.setHeader("Cache-Control","no-cache");
 response.setHeader("Pragma","no-cache");
 response.setDateHeader ("Expires", 0);
 %>
-
+<bean:message key="message.onlineTest.info"/>
+<br/><br/>
 <logic:present name="studentTestQuestionList">
 	<center>
 <logic:empty name="studentTestQuestionList">
