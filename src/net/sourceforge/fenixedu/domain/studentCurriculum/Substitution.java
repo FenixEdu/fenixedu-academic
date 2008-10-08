@@ -6,6 +6,7 @@ import java.util.HashSet;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -83,8 +84,17 @@ public class Substitution extends Substitution_Base {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<ICurriculumEntry> getAverageEntries() {
-	return new HashSet<ICurriculumEntry>(getIEnrolments());
+    public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
+	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+
+	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
+	    final IEnrolment enrolment = enrolmentWrapper.getIEnrolment();
+	    if (enrolment != null && (executionYear == null || enrolment.getExecutionYear().isBefore(executionYear))) {
+		result.add(enrolmentWrapper.getIEnrolment());
+	    }
+	}
+
+	return result;
     }
 
 }

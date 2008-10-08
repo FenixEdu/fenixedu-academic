@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
@@ -28,7 +29,7 @@ public class TemporarySubstitution extends TemporarySubstitution_Base {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<ICurriculumEntry> getAverageEntries() {
+    public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
 	return Collections.EMPTY_SET;
     }
 

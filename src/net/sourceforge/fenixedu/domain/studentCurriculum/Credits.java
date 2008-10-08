@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -233,7 +234,7 @@ public class Credits extends Credits_Base {
 	return false;
     }
 
-    public Collection<ICurriculumEntry> getAverageEntries() {
+    public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
 	return Collections.emptyList();
     }
 

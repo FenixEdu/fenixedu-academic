@@ -159,16 +159,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-	return isValid(executionSemester) && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester);
-    }
-
-    protected boolean isValid(final ExecutionSemester executionSemester) {
-	return (executionSemester == null || !hasExecutionPeriod() || getExecutionPeriod().isBeforeOrEquals(executionSemester));
-    }
-
-    protected boolean isValid(final ExecutionYear executionYear) {
-	return (executionYear == null || !hasExecutionPeriod() || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(
-		executionYear));
+	return (executionSemester == null || !hasExecutionPeriod() || getExecutionPeriod().isBeforeOrEquals(executionSemester))
+		&& hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester);
     }
 
     @Override
@@ -264,13 +256,26 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Curriculum getCurriculum(final ExecutionYear executionYear) {
-	return isValid(executionYear) ? new Curriculum(this, executionYear, Collections.EMPTY_SET, getAverageEntries(),
-		Collections.singleton((ICurriculumEntry) this)) : Curriculum.createEmpty(this, executionYear);
+    public Curriculum getCurriculum(final ExecutionYear year) {
+	if ((year == null || !hasExecutionPeriod() || getExecutionYear().isBeforeOrEquals(year))) {
+
+	    final Collection<ICurriculumEntry> averageEntries = getAverageEntries(year);
+	    if (!averageEntries.isEmpty()) {
+		return new Curriculum(this, year, Collections.EMPTY_SET, averageEntries, Collections
+			.singleton((ICurriculumEntry) this));
+	    }
+
+	}
+
+	return Curriculum.createEmpty(this, year);
     }
 
-    private Collection<ICurriculumEntry> getAverageEntries() {
-	return getCredits().isEquivalence() ? Collections.singleton((ICurriculumEntry) this) : getCredits().getAverageEntries();
+    private Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear year) {
+	if (getCredits().isEquivalence() && (year == null || !hasExecutionPeriod() || getExecutionYear().isBefore(year))) {
+	    return Collections.singleton((ICurriculumEntry) this);
+	}
+
+	return getCredits().getAverageEntries(year);
     }
 
     public Grade getGrade() {
