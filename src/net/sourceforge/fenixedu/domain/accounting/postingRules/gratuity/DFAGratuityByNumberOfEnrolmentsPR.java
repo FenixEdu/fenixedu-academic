@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -14,6 +15,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 
 public class DFAGratuityByNumberOfEnrolmentsPR extends DFAGratuityByNumberOfEnrolmentsPR_Base {
+
+    private static final int SCALE_FOR_INTERMEDIATE_CALCULATIONS = 8;
 
     public static class DFAGratuityByNumberOfEnrolmentsPREditor extends DFAGratuityPREditor {
 
@@ -60,7 +63,8 @@ public class DFAGratuityByNumberOfEnrolmentsPR extends DFAGratuityByNumberOfEnro
 	final BigDecimal ectsCredits = BigDecimal.valueOf(gratuityEvent.getStudentCurricularPlan()
 		.getCycle(CycleType.THIRD_CYCLE).getDefaultEcts(gratuityEvent.getExecutionYear()));
 
-	final Money result = getDfaTotalAmount().multiply(numberOfEnrolments.divide(ectsCredits));
+	final Money result = getDfaTotalAmount().multiply(
+		numberOfEnrolments.divide(ectsCredits, SCALE_FOR_INTERMEDIATE_CALCULATIONS, RoundingMode.HALF_EVEN));
 	return result.lessOrEqualThan(getDfaTotalAmount()) ? result : getDfaTotalAmount();
     }
 
