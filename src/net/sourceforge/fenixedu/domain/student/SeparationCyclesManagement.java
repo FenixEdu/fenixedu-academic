@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
@@ -137,14 +139,37 @@ public class SeparationCyclesManagement {
 
 	final Set<Attends> attends = new HashSet<Attends>();
 	for (final Attends attend : oldStudentCurricularPlan.getRegistration().getAssociatedAttendsSet()) {
-	    if (!belongsTo(oldStudentCurricularPlan, attend) && isToMoveAttendsFrom(oldStudentCurricularPlan, attend)) {
+	    if (!belongsTo(oldStudentCurricularPlan, attend)
+		    && isToMoveAttendsFrom(oldStudentCurricularPlan, newStudentCurricularPlan, attend)) {
 		attends.add(attend);
 	    }
 	}
 
 	for (final Attends attend : attends) {
+	    changeShifts(attend, oldStudentCurricularPlan, newStudentCurricularPlan);
 	    attend.setRegistration(newStudentCurricularPlan.getRegistration());
 	}
+    }
+
+    private void changeShifts(final Attends attend, final StudentCurricularPlan oldStudentCurricularPlan,
+	    final StudentCurricularPlan newStudentCurricularPlan) {
+
+	for (final Shift shift : getShiftsToMove(attend, oldStudentCurricularPlan)) {
+	    shift.unEnrolStudent(oldStudentCurricularPlan.getRegistration());
+	    if (!shift.hasStudents(newStudentCurricularPlan.getRegistration())) {
+		shift.addStudents(newStudentCurricularPlan.getRegistration());
+	    }
+	}
+    }
+
+    private List<Shift> getShiftsToMove(final Attends attend, final StudentCurricularPlan oldStudentCurricularPlan) {
+	final List<Shift> shifts = new ArrayList<Shift>();
+	for (final Shift shift : oldStudentCurricularPlan.getRegistration().getShifts()) {
+	    if (attend.isFor(shift.getExecutionCourse())) {
+		shifts.add(shift);
+	    }
+	}
+	return shifts;
     }
 
     private boolean belongsTo(final StudentCurricularPlan studentCurricularPlan, final Attends attend) {
@@ -156,8 +181,15 @@ public class SeparationCyclesManagement {
 	return false;
     }
 
-    private boolean isToMoveAttendsFrom(final StudentCurricularPlan studentCurricularPlan, final Attends attend) {
-	return !attend.hasEnrolment() || !studentCurricularPlan.hasEnrolments(attend.getEnrolment());
+    private boolean isToMoveAttendsFrom(final StudentCurricularPlan oldStudentCurricularPlan,
+	    final StudentCurricularPlan newStudentCurricularPlan, final Attends attend) {
+
+	if (attend.hasEnrolment()) {
+	    return !oldStudentCurricularPlan.hasEnrolments(attend.getEnrolment())
+		    && newStudentCurricularPlan.hasEnrolments(attend.getEnrolment());
+	}
+
+	return !attend.getExecutionPeriod().isBefore(newStudentCurricularPlan.getStartExecutionPeriod());
     }
 
     private Registration createRegistration(final Student student, final StudentCurricularPlan sourceStudentCurricularPlan) {
@@ -262,11 +294,14 @@ public class SeparationCyclesManagement {
 	    }
 	}
 
+	final StudentCurricularPlan oldStudentCurricularPlan = enrolment.getStudentCurricularPlan();
 	final Registration registration = parent.getStudentCurricularPlan().getRegistration();
+
 	enrolment.setCurriculumGroup(parent);
 
-	for (final Attends attends : enrolment.getAttends()) {
-	    attends.setRegistration(registration);
+	for (final Attends attend : enrolment.getAttends()) {
+	    changeShifts(attend, oldStudentCurricularPlan, parent.getStudentCurricularPlan());
+	    attend.setRegistration(registration);
 	}
     }
 
