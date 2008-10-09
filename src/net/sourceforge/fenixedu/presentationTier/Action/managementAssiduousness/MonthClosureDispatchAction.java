@@ -229,7 +229,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
 	    double a66NextYearDays = getA66NextYearDays(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 		    .getAssiduousness(), beginDate, endDate);
-	    int vacationsDays = getVacationsDays(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness(),
+	    double vacationsDays = getVacationsDays(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness(),
 		    beginDate, endDate);
 	    int medicalIssuesDays = getMedicalIssuesDays(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 		    .getAssiduousness(), beginDate, endDate);
@@ -279,22 +279,26 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	return countWorkDays;
     }
 
-    private int getVacationsDays(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
-	int countWorkDays = 0;
+    private double getVacationsDays(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
+	double countWorkDays = 0;
 	for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
-	    if ((leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.CURRENT_YEAR_HOLIDAYS
-		    || leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.LAST_YEAR_HOLIDAYS || leave
-		    .getJustificationMotive().getJustificationGroup() == JustificationGroup.NEXT_YEAR_HOLIDAYS)
-		    && leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
-		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
-			.toDateTimeAtStartOfDay()));
+	    if (leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.CURRENT_YEAR_HOLIDAYS
+		    || leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.LAST_YEAR_HOLIDAYS
+		    || leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.NEXT_YEAR_HOLIDAYS) {
+		if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
+		    countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
+			    .toDateTimeAtStartOfDay()));
+		} else if (leave.getJustificationMotive().getJustificationType() == JustificationType.HALF_OCCURRENCE
+			|| leave.getJustificationMotive().getJustificationType() == JustificationType.HALF_OCCURRENCE_TIME) {
+		    countWorkDays += 0.5;
+		}
 	    }
 	}
 	return countWorkDays;
     }
 
     private void fillInRow(StyledExcelSpreadsheet spreadsheet, AssiduousnessClosedMonth assiduousnessClosedMonth, double a66,
-	    double totalA66, double unjustified, double totalUnjustified, double a66NextYearDays, int vacationDays,
+	    double totalA66, double unjustified, double totalUnjustified, double a66NextYearDays, double vacationDays,
 	    int medicalIssuesDays, int familyDeathDays, int weddingDays, int paternityDays, int leaveWithoutPayDays) {
 	spreadsheet.newRow();
 	DecimalFormat decimalFormat = new DecimalFormat(".0");
@@ -313,7 +317,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	spreadsheet.addCell(unjustifiedString + "  " + totalUnjustifiedString);
 	spreadsheet.addCell(a66String + "  " + totalA66String);
 	spreadsheet.addCell(a66NextYearDays == 0 ? "" : decimalFormat.format(a66NextYearDays));
-	spreadsheet.addCell(getNumberToCell(vacationDays));
+	spreadsheet.addCell(vacationDays == 0 ? "" : decimalFormat.format(vacationDays));
 	spreadsheet.addCell(getNumberToCell(medicalIssuesDays));
 	spreadsheet.addCell(getNumberToCell(familyDeathDays));
 	spreadsheet.addCell(getNumberToCell(weddingDays));
