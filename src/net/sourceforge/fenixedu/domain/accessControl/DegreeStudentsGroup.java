@@ -75,7 +75,7 @@ public class DegreeStudentsGroup extends DegreeGroup {
 	}
 
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
 	public int getMaxArguments() {

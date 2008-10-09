@@ -10,6 +10,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -53,7 +56,28 @@ public class AllStudentsByCampus extends Group {
 
     @Override
     protected Argument[] getExpressionArguments() {
-	return null;
+	return new Argument[] { new IdOperator(getCampus()) };
+    }
+
+    public static class Builder implements GroupBuilder {
+
+	public Group build(Object[] arguments) {
+	    final Campus campus = (Campus) arguments[0];
+	    if (campus == null) {
+		throw new VariableNotDefinedException("campus");
+	    }
+	    return new AllStudentsByCampus(campus);
+
+	}
+
+	public int getMaxArguments() {
+	    return 1;
+	}
+
+	public int getMinArguments() {
+	    return 1;
+	}
+
     }
 
 }

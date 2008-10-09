@@ -8,6 +8,10 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -51,7 +55,8 @@ public class DelegatesGroup extends LeafGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-	return new Argument[] {};
+	final Argument argument = functionType == null ? new IdOperator(getDegree()) : new StaticArgument(functionType.getName());
+	return new Argument[] { argument };
     }
 
     @Override
@@ -94,6 +99,32 @@ public class DelegatesGroup extends LeafGroup {
 
     public void setFunctionType(FunctionType functionType) {
 	this.functionType = functionType;
+    }
+
+    public static class Builder implements GroupBuilder {
+
+	public Group build(Object[] arguments) {
+	    final Object arg0 = arguments[0];
+	    if (arg0 instanceof Degree) {
+		final Degree degree = (Degree) arg0;
+		return new DelegatesGroup(degree);
+	    } else {
+		final FunctionType functionType = FunctionType.valueOf((String) arg0);
+		if (functionType == null) {
+		    throw new VariableNotDefinedException("functionType");
+		}
+		return new DelegatesGroup(functionType);
+	    }
+	}
+
+	public int getMaxArguments() {
+	    return 1;
+	}
+
+	public int getMinArguments() {
+	    return 1;
+	}
+
     }
 
 }

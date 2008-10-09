@@ -4,6 +4,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class Recipient extends Recipient_Base {
     
@@ -35,6 +36,24 @@ public class Recipient extends Recipient_Base {
 	} catch (InterruptedException e) {
 	    throw new Error(e);
 	}
+    }
+
+    @Override
+    public String getToName() {
+	if (super.getToName() == null) {
+	    initToName();
+	}
+	return super.getToName();
+    }
+
+    @Service
+    private void initToName() {
+	setToName(getMembers().getName());
+    }
+
+    @Override
+    public void setToName(final String toName) {
+	super.setToName(toName);
     }
 
 }

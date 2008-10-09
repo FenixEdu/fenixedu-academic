@@ -8,7 +8,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -44,6 +46,27 @@ public class StudentsFromDegreeTypeGroup extends Group {
     @Override
     protected Argument[] getExpressionArguments() {
 	return new Argument[] { new StaticArgument(degreeType.getName()) };
+    }
+
+    public static class Builder implements GroupBuilder {
+
+	public Group build(Object[] arguments) {
+	    final DegreeType degreeType = DegreeType.valueOf((String) arguments[0]);
+	    if (degreeType == null) {
+		throw new VariableNotDefinedException("degreeType");
+	    }
+	    return new StudentsFromDegreeTypeGroup(degreeType);
+
+	}
+
+	public int getMaxArguments() {
+	    return 1;
+	}
+
+	public int getMinArguments() {
+	    return 1;
+	}
+
     }
 
 }

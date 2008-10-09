@@ -7,7 +7,14 @@ import java.util.Map;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AllEmployeesByCampus;
+import net.sourceforge.fenixedu.domain.accessControl.AllEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
+import net.sourceforge.fenixedu.domain.accessControl.AllResearchersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AllStudentsByCampus;
+import net.sourceforge.fenixedu.domain.accessControl.AllStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AllTeachersByCampus;
+import net.sourceforge.fenixedu.domain.accessControl.AllTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
@@ -48,6 +55,7 @@ import net.sourceforge.fenixedu.domain.accessControl.TeachersAndInstitutionSiteM
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTypeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException;
 
@@ -195,6 +203,12 @@ public class GroupBuilderRegistry {
 		new ManagementGroups.AssiduousnessSectionStaffGroupBuilder());
 	register("scientificAreaMembers", ScientificAreaMemberGroup.class, new ScientificAreaMemberGroup.Builder());
 	register("payrollSectionStaff", ManagementGroups.class, new ManagementGroups.PayrollSectionStaffGroupBuilder());
+	register("allStudentsByCampus", AllStudentsByCampus.class, new AllStudentsByCampus.Builder());
+	register("allTeachersByCampus", AllTeachersByCampus.class, new AllTeachersByCampus.Builder());
+	register("allEmployeesByCampus", AllEmployeesByCampus.class, new AllEmployeesByCampus.Builder());
+	register("studentsFromDegreeType", StudentsFromDegreeTypeGroup.class, new StudentsFromDegreeTypeGroup.Builder());
+	register("delegates", DelegatesGroup.class, new DelegatesGroup.Builder());
+	
 	registerGroupsWithNoArguments();
     }
 
@@ -203,8 +217,9 @@ public class GroupBuilderRegistry {
 		DegreeCoordinatorsGroup.class, AllMasterDegreesStudents.class, AllDegreesStudentsGroup.class,
 		InternalPersonGroup.class, ExecutionCourseResponsiblesGroup.class, InstitutionSiteManagers.class,
 		TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
-		ScientificCouncilMembersGroup.class, DelegatesGroup.class, DelegateStudentsGroup.class,
-		DelegateCurricularCourseStudentsGroup.class };
+		ScientificCouncilMembersGroup.class, DelegateStudentsGroup.class,
+		DelegateCurricularCourseStudentsGroup.class,
+		AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class, AllResearchersGroup.class };
 
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();
