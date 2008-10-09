@@ -214,4 +214,8 @@ public class Spreadsheet {
 	new SpreadsheetXLSExporter().exportToXLSSheet(workbook, this, headerCellStyle, cellStyle);
     }
 
+    public static void exportToXLSSheets(final OutputStream outputStream, List<Spreadsheet> spreadsheets) throws IOException {
+	new SpreadsheetXLSExporter().exportToXLSSheets(outputStream, spreadsheets);
+    }
+
 }

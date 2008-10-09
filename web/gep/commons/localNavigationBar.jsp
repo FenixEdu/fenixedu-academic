@@ -82,7 +82,7 @@
 	</li>
 	<li>
 		<html:link page="/alumni.do?method=showAlumniStatistics">
-	  		<bean:message key="link.protocols.search" key="label.alumni.statistics" bundle="GEP_RESOURCES"/>
+	  		<bean:message key="label.alumni.statistics" bundle="GEP_RESOURCES"/>
 	  	</html:link>
 	</li>	
 </ul>
