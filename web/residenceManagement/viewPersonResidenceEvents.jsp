@@ -12,17 +12,15 @@
 
 <bean:define id="monthOID" name="month" property="OID"/>
 
-<ul>
-	<li>
-		<html:link page="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID="  + monthOID%>"> 
-			<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
-	</li>
-</ul>
+<p>
+	<html:link page="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID="  + monthOID%>"> 
+		&laquo; <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+</p>
 
 <fr:view name="person" schema="show.residence.person">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 thleft" />
+		<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom2" />
 	</fr:layout>
 </fr:view>
 
@@ -44,6 +42,9 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
 <logic:empty name="residenceEvents">
-	<bean:message key="message.person.has.no.events" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
+	<p class="mvert05">
+		<em><bean:message key="message.person.has.no.events" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>.</em>
+	</p>
 </logic:empty>

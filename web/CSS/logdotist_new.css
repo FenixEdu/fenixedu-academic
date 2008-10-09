@@ -37,6 +37,10 @@ background: transparent;
 Structural Classes: Header & Tables
 ******************************************/
 
+form { padding: 0 20px;	}
+span.required { color: #b55; }
+
+
 table#wrapper {
 width: 600px;
 margin: 60px auto 0 auto;
@@ -93,7 +97,7 @@ white-space: nowrap;
 table.tform p {
 margin: 0;
 }
-table.tform .smalltxt {
+.smalltxt {
 color: #888;
 font-size: 0.9em;
 }

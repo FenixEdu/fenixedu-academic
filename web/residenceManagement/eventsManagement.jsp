@@ -13,6 +13,7 @@
 	<p class="mtop15 mbottom025">
 		<bean:message key="label.currentYear.prices" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>:
 	</p>
+	
 	<table class="tstyle1 thright thlight mvert05">
 	<tr>
 		<th>
@@ -48,6 +49,7 @@
 	<fr:edit id="searchEventMonth" name="searchBean" schema="edit.import.residence.bean">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thleft thlight"/>
+				<fr:property name="columnClasses" value=",,dnone"/>
 			</fr:layout>
 			<fr:destination name="postback" path="/residenceEventManagement.do?method=manageResidenceEvents"/>
 	</fr:edit>
@@ -75,7 +77,7 @@
 		</p>
 
 		<logic:notEmpty name="searchBean" property="residenceMonth.events">		
-			<p  class="mtop15 mbottom05"><bean:message key="label.residents.with.paymentCodes" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>:</p>
+			<p class="mtop15 mbottom05"><bean:message key="label.residents.with.paymentCodes" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></p>
 			<logic:notEmpty name="searchBean" property="residenceMonth.eventsWithPaymentCodes">
 				<fr:view name="searchBean" property="residenceMonth.eventsWithPaymentCodes" schema="show.residenceEvent.with.dates">	
 						<fr:layout name="tabular">
@@ -90,7 +92,7 @@
 				<p class="mtop05"><em><bean:message key="message.month.no.payments.with.codes" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>.</em></p>
 			</logic:empty>
 			
-			<p  class="mtop2 mbottom05"><bean:message key="label.residents.with.no.paymentCodes" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>:</p>
+			<p class="mtop2 mbottom05"><bean:message key="label.residents.with.no.paymentCodes" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></p>
 			<logic:notEmpty name="searchBean" property="residenceMonth.eventsWithoutPaymentCodes">
 				<fr:view name="searchBean" property="residenceMonth.eventsWithoutPaymentCodes" schema="show.residenceEvent.with.dates">	
 						<fr:layout name="tabular">

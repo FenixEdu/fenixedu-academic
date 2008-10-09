@@ -15,21 +15,25 @@
 
 <fr:view name="residenceEvent" property="person" schema="show.residence.person">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 thleft" />
+		<fr:property name="classes" value="tstyle2 thlight thleft" />
 	</fr:layout>
 </fr:view>
 
 <div class="dinline forminline">
 <fr:form action="<%= "/residenceEventManagement.do?method=payResidenceEvent&monthOID=" + monthOID  + "&event=" + eventOID + "&person="  + personOID %>" >
-	<table>
-	<tr>
-	<td>
-	<bean:message key="label.paymentDate" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>:
-	</td>
-	<td>
-	<fr:edit id="date" name="bean" slot="yearMonthDay"/>
-	</td>
-	</tr>
+	<table class="tstyle5">
+		<tr>
+			<td>
+				<bean:message key="label.paymentDate" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>:
+			</td>
+			<td>
+				<fr:edit id="date" name="bean" slot="yearMonthDay">
+					<fr:layout name="default">
+						<fr:property name="size" value="10"/>
+					</fr:layout>
+				</fr:edit>
+			</td>
+		</tr>
 	</table>
 	
 	<html:submit><bean:message key="label.pay.residence.event" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></html:submit>

@@ -115,10 +115,16 @@
 </schema>
 
 <schema  name="configuration.roomValues" type="net.sourceforge.fenixedu.domain.residence.ResidencePriceTable" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
-	<slot name="singleRoomValue" key="label.singleRoom.value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="doubleRoomValue" key="label.doubleRoom.value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="singleRoomValue" key="label.singleRoom.value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="doubleRoomValue" key="label.doubleRoom.value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="10"/>
+	</slot>
 </schema>
 
 <schema  name="configuration.paymentLimitDay" type="net.sourceforge.fenixedu.domain.residence.ResidencePriceTable" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
-	<slot name="paymentLimitDay" key="label.paymentLimitDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="paymentLimitDay" key="label.paymentLimitDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="5"/>
+	</slot>
 </schema>

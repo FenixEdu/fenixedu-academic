@@ -8,17 +8,15 @@
 <html:xhtml />
 
 <em><bean:message key="label.residenceManagement" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></em>
-<h2><bean:message key="label.import.residences" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></h2>
+<h2><bean:message key="label.import.debt" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></h2>
 
 <bean:define id="monthOID" name="importFileBean" property="residenceMonth.OID"/>
 
-<ul>
-	<li>
-		<html:link page="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID="  + monthOID%>"> 
-			<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
-	</li>
-</ul>
+<p>
+	<html:link page="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID="  + monthOID%>"> 
+		&laquo; <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+</p>
 
 <logic:present name="importFileBean" property="residenceMonth">
 
@@ -41,18 +39,21 @@
 		</ul>
 	</logic:notEmpty>
 	
-	
+
+	<div class="infoop2">
+		<bean:message key="label.information.xls.format" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
+		<p>Nº do Quarto <span class="colorbbb">|</span> ISTxxxx <span class="colorbbb">|</span> NIF <span class="colorbbb">|</span> Nome <span class="colorbbb">|</span> Valor do Quarto</p>
+	</div>
+
+
 	<logic:present name="createdDebts">
-		<p class="mtop15 mbottom1">
+		<p class="mtop15 mbottom05">
 			<span class="success0">
-				<bean:message key="label.debts.created" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
+				<bean:message key="label.debts.created" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>.
 			</span>
 		</p>
 	</logic:present>
-	
-	<div class="infoop2">
-		<bean:message key="label.information.xls.format" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
-	</div>
+
 	
 	<fr:form action="<%= "/residenceManagement.do?method=importData&monthOID=" + monthOID %>" encoding="multipart/form-data">
 		<fr:edit id="importFile" name="importFileBean" visible="false" />
@@ -92,7 +93,7 @@
 			<logic:notEmpty name="importList" property="unsuccessfulEvents">
 				<bean:size id="numberOfErrors" name="importList"	property="unsuccessfulEvents" />
 				<p>
-					<span class="error">
+					<span class="error" style="padding: 3px 6px;">
 						<bean:message key="label.errors.in.import" arg0="<%= numberOfErrors.toString() %>" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />. 
 						<%=ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX%><a href="#statusNotOk"> 
 							<bean:message key="label.details" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />

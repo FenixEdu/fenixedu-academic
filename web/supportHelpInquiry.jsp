@@ -17,13 +17,6 @@
    	<link href="<%= request.getContextPath() %>/CSS/logdotist_new.css" rel="stylesheet" type="text/css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
-	<style>
-		form {
-			padding: 0 20px;
-		}
-		span.required { color: #b55; }
-	</style>
-
 </head>
 
 <body>
@@ -42,12 +35,12 @@
 
 		<logic:present name="exceptionInfo">
 			<h1><bean:message key="error.Contact" bundle="APPLICATION_RESOURCES" /></h1>
-			<p><bean:message key="error.contact.welcome" bundle="APPLICATION_RESOURCES" /></p>
+			<p><bean:message key="error.contact.welcome" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.allFieldsRequired" bundle="APPLICATION_RESOURCES" /></p>
 		</logic:present>
 
 		<logic:notPresent name="exceptionInfo">
 			<h1><bean:message key="support.Contact" bundle="APPLICATION_RESOURCES" /></h1>
-			<p><bean:message key="support.contact.welcome" bundle="APPLICATION_RESOURCES" /></p>
+			<p><bean:message key="support.contact.welcome" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.allFieldsRequired" bundle="APPLICATION_RESOURCES" /></p>
 		</logic:notPresent>
 		
 		<div id="alert">
@@ -71,7 +64,6 @@
 						<fr:property name="columnClasses" value=",,tderror1"/>
 						<fr:property name="rowClasses" value="inputtext,select,select,inputtext inputw400,textarea textareaw400 textareah100,inobullet,,,"/>
 						<fr:property name="labelTerminator" value=""/>
-						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
 					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
 				</fr:edit>
@@ -92,7 +84,6 @@
 						<fr:property name="columnClasses" value=",,tderror1"/>
 						<fr:property name="rowClasses" value="inputtext,inputtext inputw400,textarea textareaw400 textareah100,,,,"/>
 						<fr:property name="labelTerminator" value=""/>
-						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
 					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
 				</fr:edit>
@@ -103,7 +94,8 @@
 					<bean:message key="label.submit.support.form" bundle="APPLICATION_RESOURCES" />
 				</html:submit>
 			</p>
-			<em><bean:message key="renderers.validator.required.mark.explanation" bundle="RENDERER_RESOURCES" /></em>
+
+	
 		</fr:form>
 
 	</div> <!-- form -->
