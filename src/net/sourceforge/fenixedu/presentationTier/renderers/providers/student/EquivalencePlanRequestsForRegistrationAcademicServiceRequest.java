@@ -10,7 +10,7 @@ public class EquivalencePlanRequestsForRegistrationAcademicServiceRequest implem
 
     public Object provide(Object source, Object currentValue) {
 	final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
-	return bean.getRegistration().getAcademicServiceRequests(EquivalencePlanRequest.class);
+	return bean.getRegistration().getStudent().getAcademicServiceRequests(EquivalencePlanRequest.class);
     }
 
     public Converter getConverter() {

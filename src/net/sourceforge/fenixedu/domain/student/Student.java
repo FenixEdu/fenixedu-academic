@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -1376,5 +1377,14 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
+    }
+
+    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
+	    final Class<? extends AcademicServiceRequest> clazz) {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+	for (final Registration registration : getRegistrations()) {
+	    result.addAll(registration.getAcademicServiceRequests(clazz));
+	}
+	return result;
     }
 }
