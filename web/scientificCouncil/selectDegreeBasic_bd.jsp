@@ -19,7 +19,7 @@
 <logic:iterate id="degree" name="degreeList">
 <tr>
 <bean:define id="degreeId" name="degree" property="idInternal"/>
-<td class="listClasses" ><html:link page="<%= "/basicCurricularCourseManager.do?method=showDegreeCurricularPlans&index=" + degreeId %>"><bean:write name="degree" property="nome"/></html:link></td>
+<td class="listClasses" ><html:link page="<%= "/basicCurricularCourseManager.do?method=showDegreeCurricularPlans&index=" + degreeId %>"><bean:write name="degree" property="presentationName"/></html:link></td>
 </tr>
 </logic:iterate>
 </table></center>
