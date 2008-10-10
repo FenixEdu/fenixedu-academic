@@ -736,10 +736,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	}
 
-	private Boolean loggedPersonIsManager() {
-	    return AccessControl.getPerson().hasRole(RoleType.MANAGER);
-	}
-
 	private void generateDismissalDetails(final HtmlTable mainTable, Dismissal dismissal, int level) {
 	    for (final IEnrolment enrolment : dismissal.getSourceIEnrolments()) {
 		if (enrolment.isExternalEnrolment()) {
