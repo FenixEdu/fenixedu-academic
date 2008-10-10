@@ -30,21 +30,7 @@
 
 <!-- COURSE NAME -->
 <h1>
-	<logic:equal name="degree" property="bolonhaDegree" value="true">
-		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="bolonhaDegreeType.name"/>
-	</logic:equal>
-	<logic:equal name="degree" property="bolonhaDegree" value="false">
-		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/>
-	</logic:equal>
-	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in"/>
-	<logic:present name="inEnglish">
-		<logic:equal name="inEnglish" value="false">
-			<bean:write name="degree" property="nome"/>
-		</logic:equal>
-		<logic:equal name="inEnglish" value="true">
-			<bean:write name="degree" property="nameEn"/>
-		</logic:equal>
-	</logic:present>
+	<bean:write name="degree" property="presentationName"/>
 </h1>
 
 <logic:present name="infoDegreeCurricularPlan">

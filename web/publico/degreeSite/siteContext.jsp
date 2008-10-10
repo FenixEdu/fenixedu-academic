@@ -47,14 +47,7 @@
 
 <!-- COURSE NAME -->
 <h1 class="mbottom15">
-    <logic:equal name="degree" property="bolonhaDegree" value="true">
-        <bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="bolonhaDegreeType.name"/>
-    </logic:equal>
-    <logic:equal name="degree" property="bolonhaDegree" value="false">
-        <bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/>
-    </logic:equal>
-    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in"/>
-   <fr:view name="degree" property="nameI18N"/>
+	<bean:write name="degree" property="presentationName"/>
 </h1>
 
 <bean:define id="site" name="degree" property="site" toScope="request"/>
