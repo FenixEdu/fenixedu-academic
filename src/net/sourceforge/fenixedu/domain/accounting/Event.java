@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Event extends Event_Base {
@@ -292,6 +292,22 @@ public abstract class Event extends Event_Base {
 	}
 
 	return payedAmount;
+    }
+
+    public Money getPayedAmountBetween(final DateTime startDate, final DateTime endDate) {
+	if (isCancelled()) {
+	    throw new DomainException("error.accounting.Event.cannot.calculatePayedAmountBetween.on.invalid.events");
+	}
+
+	Money payedAmount = Money.ZERO;
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (!transaction.getWhenRegistered().isBefore(startDate) && !transaction.getWhenRegistered().isAfter(endDate)) {
+		payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+
+	return payedAmount;
+
     }
 
     private Money getPayedAmountUntil(final int civilYear) {
