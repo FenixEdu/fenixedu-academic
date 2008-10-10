@@ -17,9 +17,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -136,7 +138,8 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	}
 
 	if (StringUtils.isEmpty(actionForm.getString("select"))) {
-	    actionForm.set("select", EnrolmentStateFilterType.APPROVED_OR_ENROLED.name());
+	    actionForm.set("select", loggedPersonIsManagerOrAdminOfficeEmployee() ? EnrolmentStateFilterType.ALL.name()
+		    : EnrolmentStateFilterType.APPROVED_OR_ENROLED.name());
 	}
 
 	if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
@@ -152,6 +155,14 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
 	    return mapping.findForward("ShowStudentCurriculumForCoordinator");
 	}
+    }
+
+    private Boolean loggedPersonIsManager() {
+	return AccessControl.getPerson().hasRole(RoleType.MANAGER);
+    }
+
+    private Boolean loggedPersonIsManagerOrAdminOfficeEmployee() {
+	return loggedPersonIsManager() || AccessControl.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
     }
 
     private List<StudentCurricularPlan> getSelectedStudentCurricularPlans(final Registration registration,
