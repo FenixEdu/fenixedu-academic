@@ -2,7 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>	
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
+<em class="invisible"><bean:message key="title.student.portalTitle"/></em>
+<h2><bean:message key="link.tests"/></h2>
+	
 <table>
 <logic:present name="testToDoList">
 	<logic:notEmpty name="testToDoList">

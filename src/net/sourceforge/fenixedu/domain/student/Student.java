@@ -1378,7 +1378,7 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-
+    
     public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
 	    final Class<? extends AcademicServiceRequest> clazz) {
 	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
@@ -1386,5 +1386,13 @@ public class Student extends Student_Base {
 	    result.addAll(registration.getAcademicServiceRequests(clazz));
 	}
 	return result;
+    }
+
+    public Collection<ExecutionYear> getEnrolmentsExecutionYears() {
+	Set<ExecutionYear> executionYears = new HashSet<ExecutionYear>();
+	for (final Registration registration : getRegistrationsSet()) {
+	    executionYears.addAll(registration.getEnrolmentsExecutionYears());
+	}
+	return executionYears;
     }
 }

@@ -8,32 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadExecutionCoursesByStudentTests extends FenixService {
 
-    public Object run(final Registration someRegistration) {
-	final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-
-	final Student student = someRegistration.getStudent();
+    public List<ExecutionCourse> run(final Student student, final ExecutionYear executionYear) {
+	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	for (final Registration registration : student.getRegistrationsSet()) {
 	    for (Attends attend : registration.getAssociatedAttendsSet()) {
 		final ExecutionCourse executionCourse = attend.getExecutionCourse();
-		if (student.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
-		    infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+		if (executionCourse.getExecutionYear().equals(executionYear)
+			&& student.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
+		    executionCourses.add(executionCourse);
 		}
 	    }
 	}
-
-	return infoExecutionCourses;
+	return executionCourses;
     }
 
 }

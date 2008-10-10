@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +26,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuth
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -59,15 +60,24 @@ public class StudentTestsAction extends FenixDispatchAction {
     public ActionForward viewStudentExecutionCoursesWithTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final IUserView userView = getUserView(request);
-	List studentExecutionCoursesList = null;
 	try {
-	    final Collection<Registration> students = userView.getPerson().getStudentsSet();
-	    final Object[] args = { students.isEmpty() ? null : students.iterator().next() };
-	    studentExecutionCoursesList = (List) ServiceUtils.executeService("ReadExecutionCoursesByStudentTests", args);
+	    final Student student = userView.getPerson().getStudent();
+	    RegistrationSelectExecutionYearBean registrationSelectExecutionYearBean = new RegistrationSelectExecutionYearBean(
+		    student.getRegistrations().iterator().next());
+	    ExecutionYear executionYear = (ExecutionYear) getRenderedObject();
+
+	    if (executionYear == null) {
+		executionYear = ExecutionYear.readCurrentExecutionYear();
+	    }
+	    registrationSelectExecutionYearBean.setExecutionYear(executionYear);
+	    request.setAttribute("registrationSelectExecutionYearBean", registrationSelectExecutionYearBean);
+	    List<ExecutionCourse> studentExecutionCoursesList = (List<ExecutionCourse>) ServiceUtils.executeService(
+		    "ReadExecutionCoursesByStudentTests", new Object[] { student, executionYear });
+	    request.setAttribute("studentExecutionCoursesList", studentExecutionCoursesList);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
-	request.setAttribute("studentExecutionCoursesList", studentExecutionCoursesList);
+
 	return mapping.findForward("viewStudentExecutionCoursesWithTests");
     }
 
@@ -267,6 +277,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 	final Integer studentCode = new Integer(request.getParameter("studentCode"));
 	final String path = getServlet().getServletContext().getRealPath("/");
 
+	request.setAttribute("date", getDate());
+
 	Integer testCode = null;
 	try {
 	    testCode = new Integer(request.getParameter("testCode"));
@@ -275,12 +287,22 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    return mapping.findForward("testError");
 	}
 
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testCode);
+	if (distributedTest == null) {
+	    request.setAttribute("invalidTest", new Boolean(true));
+	    return mapping.findForward("testError");
+	}
+	request.setAttribute("distributedTest", distributedTest);
 	final Registration registration = Registration.readByUsername(userView.getUtilizador());
 
 	List studentTestQuestionList;
 	try {
+
 	    studentTestQuestionList = (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration,
 		    testCode, new Boolean(false), path });
+	} catch (NotAuthorizedFilterException e) {
+	    request.setAttribute("cantDoTest", new Boolean(true));
+	    return mapping.findForward("testError");
 	} catch (NotAuthorizedException e) {
 	    request.setAttribute("cantDoTest", new Boolean(true));
 	    return mapping.findForward("testError");
