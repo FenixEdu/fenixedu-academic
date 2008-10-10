@@ -486,6 +486,15 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(Language.pt);
     }
 
+    /**
+     * @deprecated Use {@link #getNameFor(ExecutionYear)}
+     */
+    @Deprecated
+    public String getNameEn() {
+	DegreeInfo degreeInfo = getMostRecentDegreeInfo();
+	return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(Language.en);
+    }
+
     final public MultiLanguageString getNameI18N() {
 	return getNameFor(ExecutionYear.readCurrentExecutionYear());
     }
@@ -495,15 +504,25 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     final public String getPresentationName() {
-	return getPresentationName(ExecutionYear.readCurrentExecutionYear());
+	return getPresentationName(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
     }
 
-    public String getPresentationName(ExecutionYear executionYear) {
-	final ResourceBundle enumResourceBundle = ResourceBundle
-		.getBundle("resources.EnumerationResources", Language.getLocale());
-	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
-	return enumResourceBundle.getString(getDegreeType().toString()) + " " + appResourceBundle.getString("label.in") + " "
-		+ getNameFor(executionYear).getContent(Language.pt);
+    public String getPresentationName(final ExecutionYear executionYear) {
+	return getPresentationName(executionYear, Language.getLocale());
+    }
+
+    protected String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
+	final StringBuilder res = new StringBuilder();
+
+	final String degreeType = getDegreeType().getLocalizedName(locale);
+	if (!StringUtils.isEmpty(degreeType)) {
+	    res.append(degreeType).append(StringUtils.SINGLE_SPACE);
+	    res.append(ResourceBundle.getBundle("resources.ApplicationResources", locale).getString("label.in"));
+	    res.append(StringUtils.SINGLE_SPACE);
+	}
+	res.append(getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage())));
+
+	return res.toString();
     }
 
     final public String getFilteredName() {
