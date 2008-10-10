@@ -28,7 +28,7 @@
 		<bean:message key="property.degrees"/>
 	<% } %>: <br/>	
 	<logic:iterate id="infoDegree" name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoDegrees" scope="request">
-			<strong><jsp:getProperty name="infoDegree" property="tipoCurso" /> em <jsp:getProperty name="infoDegree" property="nome" /></strong>
+			<strong><jsp:getProperty name="infoDegree" property="degree.presentationName" /></strong>
 			<br/>
 	</logic:iterate>
 

@@ -7,8 +7,7 @@
 <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>"  >
 	<bean:define id="infoDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" property="infoDegreeCurricularPlan.infoDegree"scope="request" />
    	<bean:define id="infoExecutionPeriod" name="<%= SessionConstants.EXECUTION_PERIOD %>" scope="request"/>
-   	<jsp:getProperty name="infoDegree" property="tipoCurso" /> em 
-	<jsp:getProperty name="infoDegree" property="nome" />
+	<jsp:getProperty name="infoDegree" property="degree.presentationName" />
 	<br/>
 	<jsp:getProperty name="infoExecutionPeriod" property="name"/> -
 	<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
