@@ -69,4 +69,8 @@ public class InvocationResult {
     static public InvocationResult createSuccess() {
 	return new InvocationResult().setSuccess(true);
     }
+
+    static public InvocationResult createInsuccess() {
+	return new InvocationResult().setSuccess(false);
+    }
 }
