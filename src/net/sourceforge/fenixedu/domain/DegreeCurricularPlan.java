@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
@@ -1079,11 +1080,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getPresentationName() {
-	return getPresentationName(ExecutionYear.readCurrentExecutionYear());
+	return getPresentationName(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear) {
-	return getDegree().getPresentationName(executionYear) + " - " + getName();
+	return getPresentationName(executionYear, Language.getLocale());
+    }
+
+    public String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
+	return getDegree().getPresentationName(executionYear, locale) + " - " + getName();
     }
 
     public Set<MasterDegreeCandidate> readMasterDegreeCandidates() {
