@@ -433,4 +433,9 @@ public class EmptyDegree extends EmptyDegree_Base {
 	return Collections.emptySet();
     }
 
+    @Override
+    public boolean canCreateGratuityEvent() {
+	return false;
+    }
+
 }
