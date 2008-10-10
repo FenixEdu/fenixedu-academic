@@ -21,7 +21,7 @@
 			<h:outputText value="<table style='width: 100%;' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
-			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{bolonhaBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</td>" escape="false"/>
+			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
 			<h:outputText value="<td style='width: 110px'>" escape="false"/>
 			<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
