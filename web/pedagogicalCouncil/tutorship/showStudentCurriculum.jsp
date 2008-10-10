@@ -121,10 +121,7 @@
 				<strong>
 					<bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: 
 				</strong> 
-				<bean:message bundle="ENUMERATION_RESOURCES" name="studentCurricularPlan" property="degreeType.name"/>
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.in"/> 
-				<bean:write name="studentCurricularPlan" property="degree.name"/>,
-				<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.name"/>
+				<bean:write name="studentCurricularPlan" property="presentationName"/>
 				<logic:present name="studentCurricularPlan" property="specialization">
 					- <bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 				</logic:present>
