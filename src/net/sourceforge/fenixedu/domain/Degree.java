@@ -1415,4 +1415,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
 	}
     }
+
+    public boolean canCreateGratuityEvent() {
+	return true;
+    }
 }
