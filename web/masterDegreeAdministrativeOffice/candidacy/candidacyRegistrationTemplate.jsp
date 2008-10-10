@@ -24,7 +24,7 @@
 			                <table border="0" width="100%" height="100%">
 			                  <tr valign="top" align="left"> 
 			                    <td>&nbsp;<b><bean:message bundle="GLOBAL_RESOURCES" key="institution.nameUpperCase" /></b><br/>
-				                    &nbsp;<b><bean:message name="candidacy" property="executionDegree.degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/> - <bean:write name="candidacy" property="executionDegree.degreeCurricularPlan.degree.nome" /><br/> 
+				                    &nbsp;<b><bean:write name="candidacy" property="executionDegree.degreeCurricularPlan.degree.presentationName" /><br/> 
 				                    &nbsp;<b><bean:write name="candidacy" property="executionDegree.executionYear.year" /><br/>
 			                      <hr size="1">
 			                    </td>	                    
