@@ -10,10 +10,10 @@
 		<h3><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.editing"/></h3>
 	</td>
 	<td>
-		<h2><b><bean:write name="infoDegree" property="sigla"/> - </b></h2>
+		<h2><b><bean:write name="infoDegree" property="sigla"/></b></h2>
 	</td>
 	<td>
-		<h2><bean:write name="infoDegree" property="nome"/></h2>
+		<h2><bean:write name="infoDegree" property="degree.presentationName"/></h2>
 	</td>		
 </tr>
 </table>

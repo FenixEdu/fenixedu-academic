@@ -29,8 +29,8 @@
 	<table cellpadding="1" >
 	<tr >
 	<td valign="top">
-	<bean:write name="sourceInfoDegree" property="nome" /> -
-	<bean:write name="sourceInfoDegree" property="sigla" />
+	<bean:write name="sourceInfoDegree" property="sigla" /> - 
+	<bean:write name="sourceInfoDegree" property="presentationName" />
 	<br/>
 	<strong>Escolha a Disciplina Execução de Origem</strong>
 	<br/>	
@@ -52,8 +52,8 @@
 	</table>
 	</td>
 	<td valign="top">
-	<bean:write name="destinationInfoDegree" property="nome" /> -
-	<bean:write name="destinationInfoDegree" property="sigla" />
+	<bean:write name="destinationInfoDegree" property="sigla" /> - 
+	<bean:write name="destinationInfoDegree" property="presentationName" />
 	<br/>
 	<strong>Escolha a Disciplina Execução de Destino</strong>
 	<table>
