@@ -36,7 +36,7 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="studentExecutionCoursesList" >
-		Disciplinas com fichas:
+		<bean:message key="message.CoursesWithTests"/>:
 		<table class="tstyle1 thlight tdcenter">
 			<tr>
 				<th><bean:message key="label.curricular.course.acronym"/></th>
