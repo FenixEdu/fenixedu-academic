@@ -61,4 +61,19 @@ public class AccessControl {
 	}
     }
 
+    static public void check(AccessControlPredicate<Object> predicate) {
+	Person requester = AccessControl.getPerson();
+	boolean result = false;
+
+	result |= (predicate != null && predicate.evaluate(null));
+
+	if (!result) {
+	    StringBuilder message = new StringBuilder();
+	    message.append("User ").append(requester.getUsername()).append(
+		    " tried to execute method but he/she is not authorized to do so");
+
+	    throw new IllegalDataAccessException(message.toString(), requester);
+	}
+    }
+
 }
