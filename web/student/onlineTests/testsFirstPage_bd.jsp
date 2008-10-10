@@ -5,70 +5,66 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <em class="invisible"><bean:message key="title.student.portalTitle"/></em>
-<h2><bean:message key="link.tests"/></h2>
-	
-<table>
+<h2 class="mbottom15"><bean:message key="link.tests"/></h2>
+
+
 <logic:present name="testToDoList">
 	<logic:notEmpty name="testToDoList">
-		<tr>
-		<td colspan="3" ><h2><bean:message key="link.toDoTests"/></h2></td>
-		</tr>
-		<tr>
-			<td class="listClasses"><b><bean:message key="label.title"/></b></td>
-			<td class="listClasses"><b><bean:message key="label.testBeginDate"/></b></td>
-			<td class="listClasses"><b><bean:message key="label.testEndDate"/></b></td>
-			<td class="listClasses"><b><bean:message key="message.studentTestLog.checksumReport"/></b></td>
-		</tr>
-		<logic:iterate id="distributedTest" name="testToDoList" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
-		<tr>
-			<td class="listClasses">
-		
-				<html:link page="/studentTests.do?method=prepareToDoTest" paramId="testCode" paramName="distributedTest" paramProperty="idInternal">
-				<bean:write name="distributedTest" property="title"/>
-				</html:link>
-								
-			</td>
-			<td class="listClasses"><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>
-			<td class="listClasses"><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
-			<td class="listClasses">
-				<% 
-				net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
-					if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
-				<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>
-				<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
-					<bean:message key="message.studentTestLog.checksumReport" />
-				</html:link>
-				<%} else {%>
-					-
-				<%}%>
-			</td>
-		</tr>
-		</logic:iterate>
+		<h3 class="mbottom05"><bean:message key="link.toDoTests"/></h3>
+		<table class="tstyle1 thlight mtop05">
+			<tr>
+				<th><bean:message key="label.title"/></th>
+				<th><bean:message key="label.testBeginDate"/></th>
+				<th><bean:message key="label.testEndDate"/></th>
+				<th><bean:message key="message.studentTestLog.checksumReport"/></th>
+			</tr>
+			<logic:iterate id="distributedTest" name="testToDoList" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
+				<tr>
+					<td>
+						<html:link page="/studentTests.do?method=prepareToDoTest" paramId="testCode" paramName="distributedTest" paramProperty="idInternal">
+						<bean:write name="distributedTest" property="title"/>
+						</html:link>
+					</td>
+					<td><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>
+					<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
+					<td class="acenter">
+						<% 
+						net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+						net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
+							if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
+						<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>
+						<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
+							<bean:message key="message.studentTestLog.checksumReport" />
+						</html:link>
+						<%} else {%>
+							-
+						<%}%>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
 	</logic:notEmpty>
 </logic:present>
 <logic:present name="doneTestsList">
 	<logic:notEmpty name="doneTestsList">
+		<h3 class="mbottom05"><bean:message key="link.doneTests"/></h3>
+		<table class="tstyle1 thlight mtop05">
 		<tr>
-			<td colspan="3"><br/><br/><h2><bean:message key="link.doneTests"/></h2></td>
-		</tr>
-		<tr>
-			<td class="listClasses"><b><bean:message key="label.title"/></b></td>
-			<td class="listClasses"><b><bean:message key="label.testBeginDate"/></b></td>
-			<td class="listClasses"><b><bean:message key="label.testEndDate"/></b></td>
-			<td class="listClasses"><b><bean:message key="message.studentTestLog.checksumReport"/></b></td>
+			<th><bean:message key="label.title"/></th>
+			<th><bean:message key="label.testBeginDate"/></th>
+			<th><bean:message key="label.testEndDate"/></th>
+			<th><bean:message key="message.studentTestLog.checksumReport"/></th>
 		</tr>
 		<logic:iterate id="distributedTest" name="doneTestsList" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
 		<tr>
-			<td class="listClasses">
+			<td>
 				<html:link page="/studentTests.do?method=showTestCorrection" paramId="testCode" paramName="distributedTest" paramProperty="idInternal">
 				<bean:write name="distributedTest" property="title"/>
 				</html:link>
-				
 			</td>
-			<td class="listClasses"><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>
-			<td class="listClasses"><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
-			<td class="listClasses">
+			<td><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>
+			<td><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
+			<td class="acenter">
 				<% 
 				net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
