@@ -83,7 +83,7 @@
 		            <span class="smalltxt">
 						<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
 							<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
-							<bean:define id="degreeLabel" type="java.lang.String"><bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/> <bean:message key="label.in"/> <bean:write name="degree" property="name"/></bean:define>
+							<bean:define id="degreeLabel" type="java.lang.String"><bean:write name="degree" property="presentationName"/></bean:define>
 							<app:contentLink name="degree" property="site" target="_blank" title="<%= degreeLabel %>">
 								<bean:write name="degreeCode"/>	
 							</app:contentLink>					

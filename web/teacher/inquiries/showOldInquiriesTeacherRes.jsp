@@ -21,10 +21,7 @@
 		<tr>
 			<td>
 				<b>
-					<bean:message bundle="ENUMERATION_RESOURCES"
-						name="oldInquiriesCoursesRes" property="degree.tipoCurso.name" />
-					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
-					<bean:write name="oldInquiriesCoursesRes" property="degree.nome"/>
+					<bean:write name="oldInquiriesCoursesRes" property="degree.presentationName"/>
 				</b>
 			</td>
 		</tr>

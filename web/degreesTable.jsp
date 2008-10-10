@@ -35,7 +35,7 @@
 		<logic:equal name="degree" property="degreeType" value="<%= degreeType.toString() %>">
 			<%if ((renderBolonha.equals("false") && !degree.isBolonhaDegree())|| (renderBolonha.equals("true") && degree.isBolonhaDegree())) { %>
 				<bean:define id="degreeCode" name="degree" property="sigla"/>
-				<bean:define id="degreeName" name="degree" property="nome"/>
+				<bean:define id="degreeName" name="degree" property="presentationName"/>
 				<tr>
 					<td>
 						<bean:define id="degreeSitePath" name="degree" property="site.reversePath"/>
