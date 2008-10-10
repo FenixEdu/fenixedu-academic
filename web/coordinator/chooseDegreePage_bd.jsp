@@ -28,9 +28,7 @@
 
 		<tr>
 		   <td>
-				<bean:message bundle="ENUMERATION_RESOURCES" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name" />
-				<bean:message bundle="GLOBAL_RESOURCES" key="in"/>
-				<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
+				<bean:write name="infoDegreeCurricularPlan" property="degreeCurricularPlan.degree.presentationName" />
 		   </td>
 		   <td class="acenter">
 				<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
