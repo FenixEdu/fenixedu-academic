@@ -15,10 +15,7 @@
 	</logic:notPresent>
 	<logic:present name="executionDegree">
 		<b>
-			<bean:message bundle="ENUMERATION_RESOURCES"
-				name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name" />
-			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
-			<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> 
+			<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.degree.presentationName"/> 
 		</b> - 
 	</logic:present>
 	<%= request.getAttribute("searchDetails").toString() %> - 

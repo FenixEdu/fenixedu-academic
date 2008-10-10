@@ -69,9 +69,7 @@
 						<bean:define    id="executionDegreeId"   name="executionDegree" property="idInternal"/>
 						<bean:define id="degreeType"  name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>
 						<html:option value="<%= executionDegreeId.toString() %>"> 
-						<bean:message bundle="ENUMERATION_RESOURCES" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name" />
-						<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
-						<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> </html:option>
+						<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.degree.presentationName"/> </html:option>
 					</logic:iterate>
 				</html:select>
 			</p>
