@@ -339,4 +339,17 @@ public class GratuitySituation extends GratuitySituation_Base {
 	}
     }
 
+    public Money getPayedAmountBetween(DateTime startDate, DateTime endDate) {
+	Money result = Money.ZERO;
+
+	for (final GratuityTransaction transaction : getTransactionList()) {
+	    if (!transaction.getTransactionDateDateTime().isBefore(startDate)
+		    && !transaction.getTransactionDateDateTime().isAfter(endDate)) {
+		result = result.add(transaction.getValueWithAdjustment());
+	    }
+	}
+
+	return result;
+    }
+
 }
