@@ -5,9 +5,9 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 
 import org.joda.time.DateTime;
 
@@ -57,10 +57,11 @@ public class RegistrationRegime extends RegistrationRegime_Base {
     }
 
     private void checkEctsCredits(final Registration registration, final ExecutionYear executionYear) {
-	final RootCurriculumGroup root = registration.getLastStudentCurricularPlan().getRoot();
+	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
 	for (final ExecutionSemester semester : executionYear.getExecutionPeriods()) {
-	    final double enroledEctsCredits = root.getEnroledEctsCredits(semester).doubleValue();
+	    final double enroledEctsCredits = studentCurricularPlan.getAccumulatedEctsCredits(semester);
+
 	    if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PART_TIME) {
 		throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed", String
 			.valueOf(enroledEctsCredits), semester.getQualifiedName(), String
