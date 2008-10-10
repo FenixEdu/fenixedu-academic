@@ -1954,7 +1954,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public String getPresentationName(final ExecutionYear executionYear) {
-	return getDegreeCurricularPlan().getPresentationName();
+	return getDegreeCurricularPlan().getPresentationName(executionYear);
     }
 
     final public Campus getCurrentCampus() {
