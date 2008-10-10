@@ -697,8 +697,7 @@ public enum DegreeType {
 	return canCreateStudentOnlyWithCandidacy;
     }
 
-    public boolean canRemoveEnrolmentIn(@SuppressWarnings("unused")
-    final CycleType cycleType) {
+    public boolean canRemoveEnrolmentIn(@SuppressWarnings("unused") final CycleType cycleType) {
 	return false;
     }
 
@@ -895,6 +894,18 @@ public enum DegreeType {
     public TreeSet<CycleType> getOrderedCycleTypes() {
 	TreeSet<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 	result.addAll(cycleTypes());
+	return result;
+    }
+
+    static public Set<DegreeType> getDegreeTypesFor(AdministrativeOfficeType administrativeOfficeType) {
+	final Set<DegreeType> result = new HashSet<DegreeType>();
+
+	for (final DegreeType degreeType : values()) {
+	    if (degreeType.getAdministrativeOfficeType() == administrativeOfficeType) {
+		result.add(degreeType);
+	    }
+	}
+
 	return result;
     }
 
