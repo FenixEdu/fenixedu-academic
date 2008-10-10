@@ -19,7 +19,7 @@
 <fr:form action='<%= "/caseHandling" + processName.toString() + ".do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeCreateRegistration" />
 	
-	<bean:define id="degreeName" name="degree" property="name" />
+	<bean:define id="degreeName" name="degree" property="presentationName" />
 	
 	<strong><bean:message key="label.candidacy.createRegistration.confirm.message" arg0="<%= degreeName.toString() %>" bundle="APPLICATION_RESOURCES" />?</strong>
 	<br/>
