@@ -260,7 +260,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	if ((year == null || !hasExecutionPeriod() || getExecutionYear().isBeforeOrEquals(year))) {
 
 	    final Collection<ICurriculumEntry> averageEntries = getAverageEntries(year);
-	    if (!averageEntries.isEmpty()) {
+	    if (!averageEntries.isEmpty() || getCredits().isCredits()) {
 		return new Curriculum(this, year, Collections.EMPTY_SET, averageEntries, Collections
 			.singleton((ICurriculumEntry) this));
 	    }
