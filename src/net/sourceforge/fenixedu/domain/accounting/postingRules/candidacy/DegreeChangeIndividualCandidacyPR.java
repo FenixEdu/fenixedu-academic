@@ -33,7 +33,7 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
 	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money amountForInstitutionStudent,
 	    final Money amountForExternalStudent) {
 	this();
-	super.init(EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDICAY_FEE, EventType.DEGREE_CHANGE_INDIVIDUAL_CANDICAY, start, end,
+	super.init(EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_FEE, EventType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY, start, end,
 		serviceAgreementTemplate);
 	checkParameters(amountForInstitutionStudent, amountForExternalStudent);
 	super.setAmountForInstitutionStudent(amountForInstitutionStudent);

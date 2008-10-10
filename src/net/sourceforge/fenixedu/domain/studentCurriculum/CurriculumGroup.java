@@ -946,4 +946,26 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return false;
     }
 
+    public Set<Enrolment> getEnrolmentsBy(final ExecutionYear executionYear) {
+	final Set<Enrolment> result = new HashSet<Enrolment>();
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.getExecutionYear() == executionYear) {
+		result.add(enrolment);
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<Enrolment> getEnrolmentsBy(final ExecutionSemester executionSemester) {
+	final Set<Enrolment> result = new HashSet<Enrolment>();
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.getExecutionPeriod() == executionSemester) {
+		result.add(enrolment);
+	    }
+	}
+
+	return result;
+    }
+
 }

@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum EventType {
 
     PAST_SCHOOL_REGISTRATION_CERTIFICATE_REQUEST,
@@ -94,9 +97,13 @@ public enum EventType {
 
     RESIDENCE_PAYMENT,
 
-    DEGREE_CHANGE_INDIVIDUAL_CANDICAY,
+    DEGREE_CHANGE_INDIVIDUAL_CANDIDACY,
 
-    DEGREE_TRANSFER_INDIVIDUAL_CANDICAY;
+    DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY,
+
+    STANDALONE_ENROLMENT_GRATUITY;
+
+    final static List<EventType> GRATUITY_EVENTS = Arrays.asList(EventType.GRATUITY, EventType.STANDALONE_ENROLMENT_GRATUITY);
 
     public String getName() {
 	return name();
@@ -108,6 +115,10 @@ public enum EventType {
 
     public String getFullyQualifiedName() {
 	return EventType.class.getName() + "." + name();
+    }
+
+    static public List<EventType> getGratuityEventTypes() {
+	return GRATUITY_EVENTS;
     }
 
 }

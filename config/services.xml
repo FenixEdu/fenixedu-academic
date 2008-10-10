@@ -10567,24 +10567,6 @@
         </filterChains>     
     </service>
     <service>
-        <name>BuildInformationForDegreeGratuityLetters</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.BuildInformationForDegreeGratuityLetters</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="ManagerAuthorization"></chain>
-        </filterChains>     
-    </service>
-    <service>
-        <name>GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="ManagerAuthorization"></chain>
-        </filterChains>     
-    </service>
-    <service>
         <name>CreateOptionalEnrolment</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateOptionalEnrolment</implementationClass>
         <description></description>
@@ -10601,15 +10583,6 @@
         <filterChains>
             <chain name="AcademicAdministrativeOfficeAuthorization"/>
         </filterChains>             
-    </service>    
-    <service>
-        <name>UploadSibsPaymentsFile</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.UploadSibsPaymentsFile</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="ManagerAuthorization"></chain>
-        </filterChains>     
     </service>    
     
     <service>
@@ -11995,15 +11968,6 @@
         </filterChains>
     </service>
     <service>
-        <name>CreatePostingRule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePostingRule</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerAuthorization" />
-        </filterChains>
-    </service>
-    <service>
         <name>AnnulAccountingTransaction</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulAccountingTransaction</implementationClass>
         <description />
@@ -12371,14 +12335,7 @@
         <filterChains>
             <chain name="ManagerOrGEPAuthorization"/>
         </filterChains>
-    </service>      
-    <service>
-        <name>DeletePostingRule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.DeletePostingRule</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>  
+    </service>        
     <service>
         <name>DepositAmountOnEvent</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.DepositAmountOnEvent</implementationClass>

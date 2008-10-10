@@ -84,8 +84,8 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     private static List<AnnualEvent> readBy(final ExecutionYear executionYear, final EventState eventState) {
 	final List<AnnualEvent> result = new ArrayList<AnnualEvent>();
-	for (final Event event : RootDomainObject.getInstance().getAccountingEventsSet()) {
-	    if (event.isAnnual() && event.isInState(eventState) && ((AnnualEvent) event).getExecutionYear() == executionYear) {
+	for (final Event event : executionYear.getAnnualEvents()) {
+	    if (event.isInState(eventState)) {
 		result.add((AnnualEvent) event);
 	    }
 	}

@@ -1607,9 +1607,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    final public GratuityEvent getGratuityEvent(final ExecutionYear executionYear) {
+    final public GratuityEvent getGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
-	    if (!gratuityEvent.isCancelled() && gratuityEvent.getExecutionYear() == executionYear) {
+	    if (!gratuityEvent.isCancelled() && gratuityEvent.getExecutionYear() == executionYear
+		    && gratuityEvent.getClass().equals(type)) {
 		return gratuityEvent;
 	    }
 	}
@@ -1617,8 +1618,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    final public boolean hasGratuityEvent(final ExecutionYear executionYear) {
-	return getGratuityEvent(executionYear) != null;
+    final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
+	return getGratuityEvent(executionYear, type) != null;
     }
 
     final public Set<GratuityEvent> getNotPayedGratuityEvents() {

@@ -1330,6 +1330,9 @@ class DomainObject {
 
 				class accounting.events.gratuity.DfaGratuityEvent extends accounting.events.gratuity.GratuityEvent {
 				}
+				
+				class accounting.events.gratuity.StandaloneEnrolmentGratuityEvent extends accounting.events.gratuity.GratuityEvent {
+				}
 
 				class accounting.events.gratuity.GratuityEventWithPaymentPlan extends accounting.events.gratuity.GratuityEvent {
 				}
@@ -1500,6 +1503,11 @@ class DomainObject {
 				Integer maxMonthsToApplyPenalty;
 				YearMonthDay whenStartToApplyPenalty;
 			}
+			
+			class accounting.installments.PartialRegimeInstallment extends accounting.installments.InstallmentWithMonthlyPenalty {
+				Boolean penaltyAppliable;
+				BigDecimal ectsForAmount;
+			}
 
 	class accounting.PaymentCode extends DomainObject {
 		String code;
@@ -1542,6 +1550,13 @@ class DomainObject {
 
 				class accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends accounting.paymentPlans.GratuityPaymentPlan {
 				}
+				
+				class accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime extends accounting.paymentPlans.GratuityPaymentPlan {
+					
+				}
+				
+					class accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester extends accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime {
+					}
 				
 		class accounting.ServiceAgreementPaymentPlan extends accounting.PaymentPlan {
 		}
@@ -1662,6 +1677,10 @@ class DomainObject {
 			class accounting.postingRules.gratuity.PastDegreeGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
 			}
 			
+			class accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
+				BigDecimal ectsForYear;
+			}
+			
 			class accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR extends accounting.postingRules.GenericSingleEntryTypePR {
 			}
 			
@@ -1710,6 +1729,7 @@ class DomainObject {
 			class accounting.postingRules.ResidencePR extends accounting.postingRules.GenericSingleEntryTypePR {
 				Money penaltyPerDay;
 			}
+			
 			
 	class accounting.Receipt extends DomainObject {
 		Integer number;
@@ -13544,6 +13564,17 @@ relation UtilEmailSenderUtilEmailRecipient {
 relation RootDomainObjectPendingUtilEmailMessage {
 	RootDomainObject playsRole rootDomainObjectFromPendingRelation;
 	util.email.Message playsRole pendingUtilEmailMessages {
+		multiplicity *;
+	}
+}
+
+
+relation PartialRegimeInstallmentExecutionSemester {
+	accounting.installments.PartialRegimeInstallment playsRole partialRegimeInstallments {
+		multiplicity *;
+	}
+	
+	ExecutionSemester playsRole executionSemesters {
 		multiplicity *;
 	}
 }

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -97,53 +96,6 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 	    SibsTransactionDetailDTO transactionDetail) {
 	return internalProcess(responsibleUser, Collections
 		.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
-    }
-
-    @Override
-    public boolean isOpen() {
-	if (isCancelled()) {
-	    return false;
-	}
-
-	return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
-    }
-
-    @Override
-    public boolean isClosed() {
-	if (isCancelled()) {
-	    return false;
-	}
-
-	return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
-    }
-
-    @Override
-    public boolean isInState(final EventState eventState) {
-	if (eventState == EventState.OPEN) {
-	    return isOpen();
-	} else if (eventState == EventState.CLOSED) {
-	    return isClosed();
-	} else if (eventState == EventState.CANCELLED) {
-	    return isCancelled();
-	} else {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
-	}
-    }
-
-    @Override
-    protected void internalRecalculateState(DateTime whenRegistered) {
-	// We can safely change event state and date because the are no
-	// penalties
-	if (canCloseEvent(whenRegistered)) {
-	    closeNonProcessedCodes();
-	    closeEvent();
-	} else {
-	    if (getCurrentEventState() != EventState.OPEN) {
-		changeState(EventState.OPEN, new DateTime());
-		reopenCancelledCodes();
-	    }
-	}
     }
 
     @Override

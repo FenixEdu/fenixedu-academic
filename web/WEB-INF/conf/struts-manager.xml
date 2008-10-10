@@ -2156,20 +2156,7 @@
        			parameter="method">
        		<forward name="manageDepartmentDegrees" path="manage-department-degrees"/>
        	</action>
-       	
-       	<action path="/degreePaymentsManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.DegreePaymentsManagementDA"
-       			scope="request"
-       			name="printDegreeGratuityLetters"
-				input="/printDegreeGratuityLetters.do?method=prepare"
-       			parameter="method">
-       			
-       		<forward name="preparePrintGratuityLetters" path="manager.payments.preparePrintDegreeGratuityLetters"/>
-       		<forward name="printGratuityLetters"   path="manager.payments.printDegreeGratuityLetters"/>
-       		<forward name="prepareGenerateSibsOutgoingFile"   path="manager.payments.prepareGenerateSibsOutgoingFile"/>
-       		<forward name="prepareUploadSibsPaymentsFile"   path="manager.payments.prepareUploadSibsPaymentsFile"/>
-       		<forward name="uploadSibsPaymentsFileSuccess"   path="manager.payments.uploadSibsPaymentsFileSuccess"/>
-       	</action>       	
+       
        	
    		<!-- =================== Logins Management =================== -->
         <action path="/loginsManagement"

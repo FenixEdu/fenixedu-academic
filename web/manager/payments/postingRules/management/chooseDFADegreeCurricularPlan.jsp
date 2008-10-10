@@ -15,7 +15,7 @@
 	<fr:view name="degreeCurricularPlans"
 		schema="DegreeCurricularPlan.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+			<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
 			<fr:property name="sortBy" value="degree.name=asc" />
 			<fr:property name="linkFormat(view)"
 				value="/postingRules.do?method=showPostingRulesForDFADegreeCurricularPlan&amp;degreeCurricularPlanId=${idInternal}" />

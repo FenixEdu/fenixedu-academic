@@ -9,6 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -27,7 +28,7 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
-abstract public class DFAGratuityPR extends DFAGratuityPR_Base {
+abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratuityPR {
 
     abstract protected static class DFAGratuityPREditor implements FactoryExecutor, Serializable {
 
@@ -219,6 +220,11 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base {
 	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
 		.getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
 		.calculateAmountToPay(when)));
+    }
+
+    @Override
+    public Money getDefaultGratuityAmount(ExecutionYear executionYear) {
+	return getDfaTotalAmount();
     }
 
 }

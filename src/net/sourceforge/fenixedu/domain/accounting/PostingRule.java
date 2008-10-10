@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
@@ -13,11 +14,12 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import dml.runtime.RelationAdapter;
 
 public abstract class PostingRule extends PostingRule_Base {
@@ -318,6 +320,11 @@ public abstract class PostingRule extends PostingRule_Base {
 	return Collections.max(getServiceAgreementTemplate().getAllPostingRulesFor(getEventType()),
 		PostingRule.COMPARATOR_BY_END_DATE).equals(this);
 
+    }
+
+    public String getFormulaDescription() {
+	return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+		this.getClass().getSimpleName() + ".formulaDescription");
     }
 
     abstract public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);

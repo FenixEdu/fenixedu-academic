@@ -6,14 +6,14 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
-public abstract class Installment extends Installment_Base {
+public class Installment extends Installment_Base {
 
     public static Comparator<Installment> COMPARATOR_BY_END_DATE = new Comparator<Installment>() {
 	public int compare(Installment leftInstallment, Installment rightInstallment) {
@@ -35,6 +35,11 @@ public abstract class Installment extends Installment_Base {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setWhenCreated(new DateTime());
+    }
+
+    public Installment(final PaymentPlan paymentPlan, final Money amount, YearMonthDay startDate, YearMonthDay endDate) {
+	this();
+	init(paymentPlan, amount, startDate, endDate);
     }
 
     protected void init(final PaymentPlan paymentPlan, final Money amount, YearMonthDay startDate, YearMonthDay endDate) {
@@ -98,12 +103,16 @@ public abstract class Installment extends Installment_Base {
 	throw new DomainException("error.accounting.Installment.cannot.modify.installmentOrder");
     }
 
-    public Money calculateAmount(DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
-	return calculateAmountWithDiscount(discountPercentage);
+    public Money calculateAmount(Event event, DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
+	return calculateAmountWithDiscount(event, discountPercentage);
     }
 
-    protected Money calculateAmountWithDiscount(BigDecimal discountPercentage) {
-	return getAmount().multiply(BigDecimal.ONE.subtract(discountPercentage));
+    protected Money calculateAmountWithDiscount(Event event, BigDecimal discountPercentage) {
+	return calculateBaseAmount(event).multiply(BigDecimal.ONE.subtract(discountPercentage));
+    }
+
+    protected Money calculateBaseAmount(Event event) {
+	return getAmount();
     }
 
     public int getOrder() {
@@ -112,10 +121,9 @@ public abstract class Installment extends Installment_Base {
 
     public LabelFormatter getDescription() {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel("label.installment", "application").appendLabel(" ").appendLabel(
-		getInstallmentOrder().toString()).appendLabel(" (").appendLabel(
-		getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(" - ").appendLabel(
-		getEndDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
+	labelFormatter.appendLabel("application", "label.Installment.description", getInstallmentOrder().toString(),
+		getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate().toString(
+			DateFormatUtil.DEFAULT_DATE_FORMAT));
 
 	return labelFormatter;
 

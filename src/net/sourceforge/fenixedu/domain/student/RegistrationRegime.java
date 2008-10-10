@@ -62,16 +62,16 @@ public class RegistrationRegime extends RegistrationRegime_Base {
 	for (final ExecutionSemester semester : executionYear.getExecutionPeriods()) {
 	    final double enroledEctsCredits = studentCurricularPlan.getAccumulatedEctsCredits(semester);
 
-	    if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PART_TIME) {
+	    if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME) {
 		throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed", String
 			.valueOf(enroledEctsCredits), semester.getQualifiedName(), String
-			.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PART_TIME));
+			.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME));
 	    }
 	}
     }
 
     public boolean isPartTime() {
-	return getRegimeType() == RegistrationRegimeType.PART_TIME;
+	return getRegimeType() == RegistrationRegimeType.PARTIAL_TIME;
     }
 
     public void delete() {

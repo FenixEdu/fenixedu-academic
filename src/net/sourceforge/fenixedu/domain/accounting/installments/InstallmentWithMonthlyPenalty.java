@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.installments;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
@@ -9,6 +10,9 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty_Base {
 
@@ -53,17 +57,17 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     }
 
     @Override
-    protected Money calculatePenaltyAmount(DateTime when, BigDecimal discountPercentage) {
+    protected Money calculatePenaltyAmount(Event event, DateTime when, BigDecimal discountPercentage) {
 	if (when.toDateMidnight().compareTo(getWhenStartToApplyPenalty().toDateMidnight()) >= 0) {
-	    return new Money(calculateMonthPenalty(discountPercentage).multiply(
+	    return new Money(calculateMonthPenalty(event, discountPercentage).multiply(
 		    new BigDecimal(getNumberOfMonthsToChargePenalty(when))));
 	} else {
 	    return Money.ZERO;
 	}
     }
 
-    private BigDecimal calculateMonthPenalty(BigDecimal discountPercentage) {
-	final BigDecimal amount = calculateAmountWithDiscount(discountPercentage).getAmount();
+    private BigDecimal calculateMonthPenalty(Event event, BigDecimal discountPercentage) {
+	final BigDecimal amount = calculateAmountWithDiscount(event, discountPercentage).getAmount();
 	amount.setScale(10);
 	return amount.multiply(getPenaltyPercentage());
     }
@@ -77,6 +81,17 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     @Override
     public boolean isWithMonthlyPenalty() {
 	return true;
+    }
+
+    @Override
+    public LabelFormatter getDescription() {
+	final LabelFormatter labelFormatter = new LabelFormatter();
+	labelFormatter.appendLabel("application", "label.InstallmentWithMonthlyPenalty.description", getInstallmentOrder()
+		.toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate().toString(
+		DateFormatUtil.DEFAULT_DATE_FORMAT), getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
+		getWhenStartToApplyPenalty().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+
+	return labelFormatter;
     }
 
 }

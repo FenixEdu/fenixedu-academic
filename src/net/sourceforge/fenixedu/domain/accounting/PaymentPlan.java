@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -16,6 +17,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class PaymentPlan extends PaymentPlan_Base {
 
@@ -167,8 +171,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	}
 
 	public boolean subtractMoneyFor(final Installment installment) {
-	    final Money instalmentAmount = installment.calculateAmount(this.currentTransactionDate, this.discountPercentage,
-		    isToApplyPenalty(this.event, installment));
+	    final Money instalmentAmount = installment.calculateAmount(this.event, this.currentTransactionDate,
+		    this.discountPercentage, isToApplyPenalty(this.event, installment));
 	    if (hasMoneyFor(instalmentAmount)) {
 		this.amount = this.amount.subtract(instalmentAmount);
 
@@ -188,7 +192,7 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	}
 
 	public Money subtractRemaingingFor(final Installment installment) {
-	    final Money result = installment.calculateAmount(this.when, this.discountPercentage,
+	    final Money result = installment.calculateAmount(this.event, this.when, this.discountPercentage,
 		    isToApplyPenalty(this.event, installment)).subtract(this.amount);
 	    this.amount = Money.ZERO;
 
@@ -197,8 +201,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 
 	public Money calculateTotalAmountFor(final Installment installment) {
 	    final DateTime dateToCalculate = !subtractMoneyFor(installment) ? this.when : this.currentTransactionDate;
-	    return installment.calculateAmount(dateToCalculate, this.discountPercentage,
-		    isToApplyPenalty(this.event, installment));
+	    return installment.calculateAmount(this.event, dateToCalculate, this.discountPercentage, isToApplyPenalty(this.event,
+		    installment));
 
 	}
 
@@ -267,10 +271,39 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	return false;
     }
 
+    public String getDescription() {
+	return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+		this.getClass().getSimpleName() + ".description");
+    }
+
     public boolean isFor(final ExecutionYear executionYear) {
 	return hasExecutionYear() && getExecutionYear().equals(executionYear);
     }
 
     abstract public ServiceAgreementTemplate getServiceAgreementTemplate();
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void delete() {
+	if (!getGratuityEventsWithPaymentPlan().isEmpty()) {
+	    throw new DomainException("error.accounting.PaymentPlan.cannot.delete.with.already.associated.gratuity.events");
+	}
+
+	while (hasAnyInstallments()) {
+	    getInstallments().get(0).delete();
+	}
+
+	removeParameters();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+
+    }
+
+    public boolean isForPartialRegime() {
+	return false;
+    }
+
+    public boolean hasSingleInstallment() {
+	return getInstallmentsCount() == 1;
+    }
 
 }

@@ -13,7 +13,7 @@ public abstract class ServiceAgreementTemplatePaymentPlan extends ServiceAgreeme
 		    public void beforeAdd(ServiceAgreementTemplatePaymentPlan paymentPlanToAdd,
 			    ServiceAgreementTemplate serviceAgreementTemplate) {
 
-			if (paymentPlanToAdd != null) {
+			if (paymentPlanToAdd != null && serviceAgreementTemplate != null) {
 			    if (paymentPlanToAdd.isDefault()
 				    && serviceAgreementTemplate.hasDefaultPaymentPlan(paymentPlanToAdd.getExecutionYear())) {
 				throw new DomainException(
@@ -47,4 +47,11 @@ public abstract class ServiceAgreementTemplatePaymentPlan extends ServiceAgreeme
     public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
 	throw new DomainException("error.accounting.ServiceAgreementTemplatePaymentPlan.cannot.modify.serviceAgreementTemplate");
     }
+
+    @Override
+    protected void removeParameters() {
+	super.removeParameters();
+	super.setServiceAgreementTemplate(null);
+    }
+
 }

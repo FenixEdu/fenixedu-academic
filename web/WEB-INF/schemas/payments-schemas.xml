@@ -338,7 +338,7 @@
 </schema>
 
 <schema name="PaymentCode.view" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode" bundle="APPLICATION_RESOURCES">
-	<slot name="type" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.type" />
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.type" />
 	<slot name="entityCode" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.entityCode" />
 	<slot name="formattedCode" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.formattedCode" />
 	<slot name="minAmount" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.minAmount" />
@@ -408,6 +408,11 @@
 
 <schema name="Installment.view-description-only" type="net.sourceforge.fenixedu.domain.accounting.Installment" bundle="APPLICATION_RESOURCES">
 	<slot name="description" />
+</schema>
+
+<schema name="Installment.view-description-and-amount" type="net.sourceforge.fenixedu.domain.accounting.Installment" bundle="APPLICATION_RESOURCES">
+	<slot name="description" />
+	<slot name="amount" />
 </schema>
 
 <schema name="CancelEventBean.editJustification" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CancelEventBean" bundle="APPLICATION_RESOURCES">

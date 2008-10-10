@@ -5,7 +5,7 @@ public enum RegistrationRegimeType {
     
     FULL_TIME,
     
-    PART_TIME;
+    PARTIAL_TIME;
 
     public String getName() {
 	return name();

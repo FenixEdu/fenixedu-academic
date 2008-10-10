@@ -1796,6 +1796,26 @@ public class Person extends Person_Base {
 	return getPayments(AcademicEvent.class);
     }
 
+    public Set<? extends Event> getEventsByEventTypes(final EventType... eventTypes) {
+	return getEventsByEventTypes(Arrays.asList(eventTypes));
+    }
+
+    public Set<? extends Event> getEventsByEventTypes(final Collection<EventType> eventTypes) {
+
+	final Set<Event> result = new HashSet<Event>();
+
+	for (final EventType eventType : eventTypes) {
+	    for (final Event event : getAcademicEvents()) {
+		if (!event.isCancelled() && event.getEventType() == eventType) {
+		    result.add(event);
+		}
+	    }
+	}
+
+	return result;
+
+    }
+
     public Set<? extends Event> getEventsByEventType(final EventType eventType) {
 	return getEventsByEventTypeAndClass(eventType, null);
     }
@@ -1953,7 +1973,7 @@ public class Person extends Person_Base {
     }
 
     public Set<GratuityEvent> getGratuityEvents() {
-	return (Set<GratuityEvent>) getEventsByEventType(EventType.GRATUITY);
+	return (Set<GratuityEvent>) getEventsByEventTypes(EventType.getGratuityEventTypes());
     }
 
     public List<Event> getEventsWithExemptionAppliable() {

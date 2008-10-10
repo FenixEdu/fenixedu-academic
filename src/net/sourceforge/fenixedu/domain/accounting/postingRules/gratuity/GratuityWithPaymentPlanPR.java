@@ -11,6 +11,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -28,10 +29,15 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
+public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base implements IGratuityPR {
 
     protected GratuityWithPaymentPlanPR() {
 	super();
+    }
+
+    public GratuityWithPaymentPlanPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate) {
+	this(EntryType.GRATUITY_FEE, EventType.GRATUITY, startDate, endDate, serviceAgreementTemplate);
+
     }
 
     public GratuityWithPaymentPlanPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
@@ -184,6 +190,11 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	    AccountingTransactionDetailDTO transactionDetail) {
 	return new InstallmentAccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(), from),
 		makeEntry(entryType, amount, to), installment, makeAccountingTransactionDetail(transactionDetail));
+    }
+
+    @Override
+    public Money getDefaultGratuityAmount(ExecutionYear executionYear) {
+	return getServiceAgreementTemplate().getDefaultPaymentPlan(executionYear).calculateOriginalTotalAmount();
     }
 
 }

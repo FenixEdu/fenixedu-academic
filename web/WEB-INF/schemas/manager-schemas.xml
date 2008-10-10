@@ -571,13 +571,6 @@
 	</slot> 
 </schema>
 
-<schema name="PaymentsFileBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PaymentsFileBean" bundle="MANAGER_RESOURCES">	
-	<slot name="file">
-		<property name="fileNameSlot" value="filename"/>
-		<property name="size" value="40"/>
-	</slot>	
-</schema>
-
 <schema name="ViewUnitInfoToMergeUnits" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES">
 	<slot name="presentationNameWithParents"/>
 </schema>

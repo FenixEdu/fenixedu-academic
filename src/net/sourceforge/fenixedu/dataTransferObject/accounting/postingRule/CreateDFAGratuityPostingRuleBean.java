@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -20,8 +19,6 @@ public class CreateDFAGratuityPostingRuleBean extends CreatePostingRuleBean {
     private BigDecimal partialAcceptedPercentage;
 
     private Money totalAmount;
-
-    private Class<? extends DFAGratuityPR> rule;
 
     public CreateDFAGratuityPostingRuleBean(ServiceAgreementTemplate serviceAgreementTemplate) {
 	super(serviceAgreementTemplate);
@@ -49,14 +46,6 @@ public class CreateDFAGratuityPostingRuleBean extends CreatePostingRuleBean {
 
     public void setTotalAmount(Money totalAmount) {
 	this.totalAmount = totalAmount;
-    }
-
-    public Class<? extends DFAGratuityPR> getRule() {
-	return rule;
-    }
-
-    public void setRule(Class<? extends DFAGratuityPR> rule) {
-	this.rule = rule;
     }
 
     @Override

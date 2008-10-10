@@ -25,6 +25,7 @@ public class GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends
     @Override
     public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 	return getExecutionYear() == executionYear
+		&& !studentCurricularPlan.getRegistration().isPartialRegime(executionYear)
 		&& !studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod())
 		&& studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod()
 			.getNextExecutionPeriod());

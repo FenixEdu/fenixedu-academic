@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Comparator;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
@@ -13,6 +14,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class PaymentCode extends PaymentCode_Base {
 
@@ -213,6 +216,12 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public String getDescription() {
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
+		.getLocale());
+	return enumerationResources.getString(getType().getQualifiedName());
     }
 
     static public PaymentCode readByCode(final String code) {

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
@@ -17,11 +18,11 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
@@ -32,8 +33,10 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 	GratuityEventStudentCurricularPlan.addListener(new RelationAdapter<GratuityEvent, StudentCurricularPlan>() {
 	    @Override
 	    public void beforeAdd(GratuityEvent gratuityEvent, StudentCurricularPlan studentCurricularPlan) {
-		if (gratuityEvent != null && studentCurricularPlan != null
-			&& studentCurricularPlan.getRegistration().hasGratuityEvent(gratuityEvent.getExecutionYear())) {
+		if (gratuityEvent != null
+			&& studentCurricularPlan != null
+			&& studentCurricularPlan.getRegistration().hasGratuityEvent(gratuityEvent.getExecutionYear(),
+				gratuityEvent.getClass())) {
 		    throw new DomainException(
 			    "error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.in.registration.and.year");
 
@@ -48,7 +51,14 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
 	    ExecutionYear executionYear) {
-	super.init(administrativeOffice, EventType.GRATUITY, person, executionYear);
+
+	init(administrativeOffice, EventType.GRATUITY, person, studentCurricularPlan, executionYear);
+
+    }
+
+    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
+	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+	super.init(administrativeOffice, eventType, person, executionYear);
 	checkParameters(administrativeOffice, studentCurricularPlan);
 	super.setStudentCurricularPlan(studentCurricularPlan);
 
@@ -137,10 +147,6 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 	return getRegistration().getEnrolments(getExecutionYear()).size();
     }
 
-    public Double getEctsCreditsForRegistrationDegreeType() {
-	return getRegistration().getDegree().getEctsCredits();
-    }
-
     public boolean canRemoveExemption(final DateTime when) {
 	if (hasGratuityExemption()) {
 	    if (isClosed()) {
@@ -201,5 +207,52 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     public boolean isGratuityEventWithPaymentPlan() {
 	return false;
+    }
+
+    @Override
+    public boolean isOpen() {
+	if (isCancelled()) {
+	    return false;
+	}
+
+	return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
+    }
+
+    @Override
+    public boolean isClosed() {
+	if (isCancelled()) {
+	    return false;
+	}
+
+	return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
+    }
+
+    @Override
+    public boolean isInState(final EventState eventState) {
+	if (eventState == EventState.OPEN) {
+	    return isOpen();
+	} else if (eventState == EventState.CLOSED) {
+	    return isClosed();
+	} else if (eventState == EventState.CANCELLED) {
+	    return isCancelled();
+	} else {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
+	}
+    }
+
+    @Override
+    protected void internalRecalculateState(DateTime whenRegistered) {
+	// We can safely change event state and date because the are no
+	// penalties
+	if (canCloseEvent(whenRegistered)) {
+	    closeNonProcessedCodes();
+	    closeEvent();
+	} else {
+	    if (getCurrentEventState() != EventState.OPEN) {
+		changeState(EventState.OPEN, new DateTime());
+		reopenCancelledCodes();
+	    }
+	}
     }
 }

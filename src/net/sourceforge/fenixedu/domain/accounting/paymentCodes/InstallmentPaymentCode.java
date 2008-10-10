@@ -1,15 +1,19 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 
@@ -78,6 +82,20 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     public void delete() {
 	super.setInstallment(null);
 	super.delete();
+    }
+
+    @Override
+    public String getDescription() {
+	if (getInstallment().getPaymentPlan().hasSingleInstallment()) {
+	    final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
+		    .getLocale());
+
+	    return enumerationResources.getString(PaymentCodeType.TOTAL_GRATUITY.getQualifiedName());
+
+	}
+
+	return super.getDescription();
+
     }
 
 }

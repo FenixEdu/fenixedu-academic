@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.installments;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
@@ -32,10 +33,10 @@ public abstract class InstallmentWithPenalty extends InstallmentWithPenalty_Base
     }
 
     @Override
-    public Money calculateAmount(DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
-	return super.calculateAmount(when, discountPercentage, applyPenalty).add(
-		(applyPenalty ? calculatePenaltyAmount(when, discountPercentage) : Money.ZERO));
+    public Money calculateAmount(Event event, DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
+	return super.calculateAmount(event, when, discountPercentage, applyPenalty).add(
+		(applyPenalty ? calculatePenaltyAmount(event, when, discountPercentage) : Money.ZERO));
     }
 
-    abstract protected Money calculatePenaltyAmount(DateTime when, BigDecimal discountPercentage);
+    abstract protected Money calculatePenaltyAmount(Event event, DateTime when, BigDecimal discountPercentage);
 }

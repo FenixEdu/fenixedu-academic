@@ -34,7 +34,7 @@ public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividua
 	    final Money amountForExternalStudent) {
 
 	this();
-	super.init(EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDICAY_FEE, EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDICAY, start, end,
+	super.init(EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_FEE, EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY, start, end,
 		agreementTemplate);
 	checkParameters(amountForInstitutionStudent, amountForExternalStudent);
 	super.setAmountForInstitutionStudent(amountForInstitutionStudent);

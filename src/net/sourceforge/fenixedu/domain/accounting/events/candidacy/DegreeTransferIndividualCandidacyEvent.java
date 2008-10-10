@@ -18,9 +18,9 @@ public class DegreeTransferIndividualCandidacyEvent extends DegreeTransferIndivi
 
     private static final List<EventType> COMPATIBLE_TYPES = Arrays.asList(
 
-    EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDICAY,
+    EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY,
 
-    EventType.DEGREE_CHANGE_INDIVIDUAL_CANDICAY);
+    EventType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY);
 
     private DegreeTransferIndividualCandidacyEvent() {
 	super();
@@ -28,7 +28,7 @@ public class DegreeTransferIndividualCandidacyEvent extends DegreeTransferIndivi
 
     public DegreeTransferIndividualCandidacyEvent(final DegreeTransferIndividualCandidacy candidacy, final Person person) {
 	this();
-	super.init(candidacy, EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDICAY, person);
+	super.init(candidacy, EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY, person);
     }
 
     @Override
@@ -55,6 +55,6 @@ public class DegreeTransferIndividualCandidacyEvent extends DegreeTransferIndivi
 
     @Override
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
-	return Collections.singleton(EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDICAY_FEE);
+	return Collections.singleton(EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_FEE);
     }
 }

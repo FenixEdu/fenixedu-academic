@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplatePaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
@@ -122,6 +123,18 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
 	}
 
 	return null;
+    }
+
+    public List<GratuityPaymentPlan> getGratuityPaymentPlansFor(final ExecutionYear executionYear) {
+	final List<GratuityPaymentPlan> result = new ArrayList<GratuityPaymentPlan>();
+
+	for (final ServiceAgreementTemplatePaymentPlan paymentPlan : getPaymentPlansSet()) {
+	    if (paymentPlan instanceof GratuityPaymentPlan && paymentPlan.isFor(executionYear)) {
+		result.add((GratuityPaymentPlan) paymentPlan);
+	    }
+	}
+
+	return result;
     }
 
 }

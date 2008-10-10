@@ -16,15 +16,22 @@
 	<p>
 		<html:link
 			action="/postingRules.do?method=chooseDFADegreeCurricularPlan">
-			<bean:message
-				key="<%=DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA.getQualifiedName()%>"
-				bundle="ENUMERATION_RESOURCES" />
+			<bean:message	key="label.payments.postingRules.category.postGraduate"
+				bundle="MANAGER_RESOURCES" />
 		</html:link>
 	</p>
 	<p>
 		<html:link
+			action="/postingRules.do?method=manageGraduationRules">
+			<bean:message	key="label.payments.postingRules.category.graduation"
+				bundle="MANAGER_RESOURCES" />
+		</html:link>
+	</p>
+
+	<p>
+		<html:link
 			action="/postingRules.do?method=showInsurancePostingRules">
-			<bean:message key="label.payments.postingRules.insurance"
+			<bean:message key="label.payments.postingRules.category.insurance"
 				bundle="MANAGER_RESOURCES" />
 		</html:link></td>	
 	</p>

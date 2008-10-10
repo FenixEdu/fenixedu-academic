@@ -708,29 +708,7 @@
 	<definition name="manage-department-degrees" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/manageDepartmentDegrees.jsp" />
 	</definition>		
-	
-	<!-- ################ Payments Management #####################-->
-	
-	<definition name="manager.payments.preparePrintDegreeGratuityLetters" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/payments/preparePrintDegreeGratuityLetters.jsp" />
-	</definition>
-	
-	<definition name="manager.payments.printDegreeGratuityLetters" extends="df.layout.print" >
-		<put name="body" value="/manager/payments/printDegreeGratuityLettersTemplate.jsp" />
-	</definition>
-	
-	<definition name="manager.payments.prepareGenerateSibsOutgoingFile" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/payments/prepareGenerateSibsOutgoingFile.jsp" />
-	</definition>
-	
-	<definition name="manager.payments.prepareUploadSibsPaymentsFile" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/payments/prepareUploadSibsPaymentsFile.jsp" />
-	</definition>
-	
-	<definition name="manager.payments.uploadSibsPaymentsFileSuccess" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/payments/uploadSibsPaymentsFileSuccess.jsp" />
-	</definition>
-	
+		
 	<!-- ################### Logins Management #######################-->
 
 	<definition name="prepare-search-person-to-logins-management" extends="definition.manager.masterPage" >

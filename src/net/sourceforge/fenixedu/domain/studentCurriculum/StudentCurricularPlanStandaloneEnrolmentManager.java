@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -28,7 +29,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
 	}
 
-	if (getRegistration().isPartTimeRegime(getExecutionYear())) {
+	if (getRegistration().isPartialRegime(getExecutionYear())) {
 	    throw new DomainException("error.StudentCurricularPlan.with.part.time.regime.cannot.enrol");
 	}
 
@@ -92,6 +93,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 		}
 	    }
 	}
+
+	new AccountingEventsManager().createStandaloneEnrolmentGratuityEvent(getStudentCurricularPlan(), getExecutionYear());
     }
 
     @Override
@@ -111,13 +114,6 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	    }
 	}
 
-	if (!getStudentCurricularPlan().isEmptyDegree() && !enrolmentContext.hasDegreeModulesToEvaluate() && isStandaloneEmpty()) {
-	    getStudentCurricularPlan().getStandaloneCurriculumGroup().delete();
-	}
     }
 
-    private boolean isStandaloneEmpty() {
-	return getStudentCurricularPlan().hasStandaloneCurriculumGroup()
-		&& !getStudentCurricularPlan().getStandaloneCurriculumGroup().hasAnyCurriculumModules();
-    }
 }

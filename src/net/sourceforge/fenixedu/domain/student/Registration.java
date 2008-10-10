@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -2872,9 +2873,9 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    final public boolean hasGratuityEvent(final ExecutionYear executionYear) {
+    final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-	    if (studentCurricularPlan.hasGratuityEvent(executionYear)) {
+	    if (studentCurricularPlan.hasGratuityEvent(executionYear, type)) {
 		return true;
 	    }
 	}
@@ -3236,8 +3237,8 @@ public class Registration extends Registration_Base {
 	return RegistrationRegimeType.defaultType();
     }
 
-    public boolean isPartTimeRegime(final ExecutionYear executionYear) {
-	return getRegimeType(executionYear) == RegistrationRegimeType.PART_TIME;
+    public boolean isPartialRegime(final ExecutionYear executionYear) {
+	return getRegimeType(executionYear) == RegistrationRegimeType.PARTIAL_TIME;
     }
 
 }
