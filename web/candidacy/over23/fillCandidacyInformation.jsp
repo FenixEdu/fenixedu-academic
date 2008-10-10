@@ -61,7 +61,7 @@
 			<table class="tstyle1 mtop025">
 			<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegrees">
 				<tr>
-					<td><bean:write name="degree" property="name" /> - <bean:write name="degree" property="sigla" /></td>
+					<td><bean:write name="degree" property="presentationName" /> - <bean:write name="degree" property="sigla" /></td>
 					<td>
 						<bean:define id="degreeId" name="degree" property="idInternal" />
 						<html:hidden property="degreeToDelete" value="<%= degreeId.toString() %>" />
