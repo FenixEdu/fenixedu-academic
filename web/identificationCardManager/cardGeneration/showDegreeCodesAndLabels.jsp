@@ -25,7 +25,7 @@
   </tr>
   	<logic:iterate id="degree" name="degrees">
 	  	<tr>
-    		<td><bean:write name="degree" property="name"/></td>
+    		<td><bean:write name="degree" property="presentationName"/></td>
     		<td>
     			<logic:present name="degree" property="ministryCode">
 	    			<bean:write name="degree" property="ministryCode"/>
