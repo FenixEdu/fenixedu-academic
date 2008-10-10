@@ -18,9 +18,6 @@
 		<h:outputText value="</div>" escape="false"/>
 				
 		<h:outputText value="<h1>" escape="false"/>
-		<h:outputText rendered="#{!publicEvaluations.degree.bolonhaDegree}" value="#{bundleEnum[publicEvaluations.degree.tipoCurso.name]}"/>
-		<h:outputText rendered="#{publicEvaluations.degree.bolonhaDegree}" value="#{bundleEnum[publicEvaluations.degree.bolonhaDegreeType.name]}"/>
-		<h:outputText value="#{bundle['public.degree.information.label.in']}"/>
 		<h:outputText value="#{publicEvaluations.degreeName}"/>
 		<h:outputText value="</h1>" escape="false"/>
 		

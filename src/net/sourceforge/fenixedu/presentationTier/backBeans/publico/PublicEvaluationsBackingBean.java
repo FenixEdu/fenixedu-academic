@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -35,8 +33,6 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
@@ -188,10 +184,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     }
 
     public String getDegreeName() {
-
-	final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-	return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameFor(getExecutionYear()).getContent(
-		Language.en) : getDegree().getNameFor(getExecutionYear()).getContent(Language.pt);
+	return getDegree().getPresentationName(getExecutionYear());
     }
 
     public List<SelectItem> getDegreeCurricularPlanSelectItems() {
