@@ -38,9 +38,7 @@
 			
 				<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
 				<p class="mtop15 mbottom025 color777">
-					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
-					<bean:message key="label.in"/>
-					<bean:write name="degree" property="nome"/>
+					<bean:write name="degree" property="presentationName"/>
 				</p>
 				<h3 class="mtop025">
 					<bean:write name="competenceCourse" property="name"/>  
@@ -71,9 +69,7 @@
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
 				<h3 class="mtop2">
-					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
-					<bean:message key="label.in"/>
-					<bean:write name="degree" property="nome"/>
+					<bean:write name="degree" property="presentationName"/>
 					<br/>
 					<bean:write name="curricularCourse" property="name"/>
 				</h3>

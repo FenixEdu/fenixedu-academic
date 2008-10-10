@@ -26,9 +26,7 @@
 	<bean:define id="curricularCourse" name="curriculum" property="curricularCourse"/>
 	<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 	<h3 class="mtop15">
-		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
-		<bean:message key="label.in"/>
-		<bean:write name="degree" property="nome"/>
+		<bean:write name="degree" property="presentationName"/>
 		<br/>
 		<bean:write name="curricularCourse" property="name"/>
 	</h3>
