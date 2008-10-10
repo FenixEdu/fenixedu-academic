@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.student;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,11 +27,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType;
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType;
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
+import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -41,7 +40,6 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -50,9 +48,6 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 
 public class CurriculumDispatchAction extends FenixDispatchAction {
-
-    private final static ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-	    Language.getLocale());
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	RenderUtils.invalidateViewState();
@@ -225,9 +220,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 	    final StringBuilder label = new StringBuilder();
 
-	    label.append(studentCurricularPlan.getDegreeType().getLocalizedName());
-	    label.append(" ").append(applicationResources.getString("label.in"));
-	    label.append(" ").append(studentCurricularPlan.getRegistration().getDegreeName());
+	    label.append(studentCurricularPlan.getRegistration().getDegreeNameWithDescription());
 	    label.append(", ").append(studentCurricularPlan.getDegreeCurricularPlan().getName());
 
 	    if (studentCurricularPlan.getSpecialization() != null) {
