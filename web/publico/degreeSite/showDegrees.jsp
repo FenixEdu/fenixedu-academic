@@ -49,7 +49,7 @@
 								
 									<li>
 										<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + pageContext.findAttribute("degreeID").toString()+ "&amp;index=" + pageContext.findAttribute("index").toString() %>" >
-											<bean:write name="infoDegree" property="nome" />&nbsp;(<bean:write name="infoDegree" property="sigla"/>)
+											<bean:write name="infoDegree" property="degree.presentationName" />&nbsp;(<bean:write name="infoDegree" property="sigla"/>)
 										</html:link>
 									</li>
 								</logic:iterate>
