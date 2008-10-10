@@ -1776,21 +1776,18 @@ public class Registration extends Registration_Base {
     }
 
     public String getDegreeNameWithDegreeCurricularPlanName() {
-	StringBuffer buffer = new StringBuffer("");
-	buffer.append(getDegreeName());
-	buffer.append(" - ");
-	buffer.append(getStudentCurricularPlan(getStartExecutionYear()).getDegreeCurricularPlan().getName());
+	final StudentCurricularPlan toAsk = getStudentCurricularPlan(getStartExecutionYear()) == null ? getFirstStudentCurricularPlan()
+		: getStudentCurricularPlan(getStartExecutionYear());
 
-	return buffer.toString();
+	if (toAsk == null) {
+	    return StringUtils.EMPTY;
+	}
+
+	return toAsk.getPresentationName(getStartExecutionYear());
     }
 
     public String getDegreeNameWithDescription() {
-	StringBuffer buffer = new StringBuffer("");
-	buffer.append(getDegree().getDegreeType().getLocalizedName());
-	buffer.append(" - ");
-	buffer.append(getDegreeName());
-
-	return buffer.toString();
+	return getDegree().getPresentationName(getStartExecutionYear());
     }
 
     public String getDegreeName() {
@@ -2100,7 +2097,7 @@ public class Registration extends Registration_Base {
     public boolean hasFlunkedState(final ExecutionYear executionYear) {
 	return hasStateType(executionYear, RegistrationStateType.FLUNKED);
     }
-    
+
     public boolean hasRegisteredActiveState() {
 	return getActiveStateType() == RegistrationStateType.REGISTERED;
     }
