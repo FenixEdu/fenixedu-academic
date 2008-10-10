@@ -21,7 +21,7 @@
 			<h:outputText value="<table style='width: 750px' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
-			<h:outputText value="<td> #{enumerationBundle[degree.degreeType.name]} #{bolonhaBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</td>" escape="false"/>
+			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
 			<h:outputText value="<td style='width: 140px'>" escape="false"/>
 			<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
@@ -86,7 +86,7 @@
 			<h:outputText value="<table style='width: 750px' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
-			<h:outputText value="<td> #{enumerationBundle[degree.degreeType.name]} #{bolonhaBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</td>" escape="false"/>
+			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
 			<h:outputText value="<td style='width: 140px'>" escape="false"/>
 			<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
