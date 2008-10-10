@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEn
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
@@ -972,13 +973,13 @@ public class Person extends Person_Base {
      * PersonFunctions that selection indicated in the parameters.
      * 
      * @param unit
-     *            filter all PersonFunctions to this unit, or <code>null</code>
-     *            for all PersonFunctions
+     *                filter all PersonFunctions to this unit, or
+     *                <code>null</code> for all PersonFunctions
      * @param includeSubUnits
-     *            if even subunits of the given unit are considered
+     *                if even subunits of the given unit are considered
      * @param active
-     *            the state of the function, <code>null</code> for all
-     *            PersonFunctions
+     *                the state of the function, <code>null</code> for all
+     *                PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -2104,7 +2105,8 @@ public class Person extends Person_Base {
 	    }
 	}
 	final Employee employee = getEmployee();
-	if (employee != null && employee.getCurrentWorkingContract() != null && teacher == null) {
+	if (employee != null && employee.getAssiduousness() != null && employee.getAssiduousness().getCurrentStatus() != null
+		&& employee.getAssiduousness().getCurrentStatus().getState() == AssiduousnessState.ACTIVE && teacher == null) {
 	    return PartyClassification.EMPLOYEE;
 	}
 	final GrantOwner grantOwner = getGrantOwner();
