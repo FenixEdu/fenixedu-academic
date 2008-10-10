@@ -89,7 +89,9 @@ public class Substitution extends Substitution_Base {
 
 	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
 	    final IEnrolment enrolment = enrolmentWrapper.getIEnrolment();
-	    if (enrolment != null && (executionYear == null || enrolment.getExecutionYear().isBefore(executionYear))) {
+	    if (enrolment != null
+		    && (executionYear == null || enrolment.getExecutionYear() == null || enrolment.getExecutionYear().isBefore(
+			    executionYear))) {
 		result.add(enrolmentWrapper.getIEnrolment());
 	    }
 	}
