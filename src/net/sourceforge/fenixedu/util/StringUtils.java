@@ -157,4 +157,8 @@ public class StringUtils {
 	return org.apache.commons.lang.StringUtils.isEmpty(content);
     }
 
+    public static boolean isNumeric(String content) {
+	return org.apache.commons.lang.StringUtils.isNumeric(content);
+    }
+
 }
