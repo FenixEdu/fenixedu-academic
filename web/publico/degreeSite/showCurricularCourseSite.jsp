@@ -34,10 +34,7 @@
 </div>	
 
 <h1>
-	<bean:message bundle="ENUMERATION_RESOURCES"
-		name="infoDegree" property="tipoCurso.name" />
-	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
-	<bean:write name="infoDegree" property="nome" />
+	<bean:write name="infoDegree" property="degree.presentationName" />
 </h1>
 
 <!-- CURRICULAR PLAN -->
