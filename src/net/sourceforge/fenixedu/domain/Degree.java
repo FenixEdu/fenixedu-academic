@@ -520,7 +520,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    res.append(ResourceBundle.getBundle("resources.ApplicationResources", locale).getString("label.in"));
 	    res.append(StringUtils.SINGLE_SPACE);
 	}
-	res.append(getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage())));
+
+	final MultiLanguageString mls = getNameFor(executionYear);
+	final Language language = Language.valueOf(locale.getLanguage());
+	res.append(mls.hasContent(language) ? mls.getContent(language) : mls.getPreferedContent());
 
 	return res.toString();
     }
