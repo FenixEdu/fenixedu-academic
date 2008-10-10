@@ -146,7 +146,7 @@ function check(e,v){
 						<logic:iterate id="degree" name="nonMasterDegree" > 
 						   	<bean:define id="degreeID" name="degree" property="idInternal"/>
 							<html:option value="<%= degreeID.toString() %>">
-								<bean:write name="degree" property="nome"/> 
+								<bean:write name="degree" property="degree.presentationName"/> 
 							</html:option>
 						</logic:iterate>
 					</html:select>
