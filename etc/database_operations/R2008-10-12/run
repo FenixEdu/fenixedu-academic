@@ -41,3 +41,8 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing wrong event types and entry types" UpdateWrongEventTypeAndEntryType.sql
+execute "Changing PostingRule table" AlterTablePostingRule.sql
+execute "Changing Table Installment" AlterTableInstallment.sql
+execute "Creating table PartialRegimeInstallmentExecutionSemester" CreateTablePartialRegimeInstallmentExecutionSemester.sql
+execute "Updating RegistrationRegime" UpdateRegistrationRegime.sql
