@@ -973,13 +973,13 @@ public class Person extends Person_Base {
      * PersonFunctions that selection indicated in the parameters.
      * 
      * @param unit
-     *                filter all PersonFunctions to this unit, or
-     *                <code>null</code> for all PersonFunctions
+     *            filter all PersonFunctions to this unit, or <code>null</code>
+     *            for all PersonFunctions
      * @param includeSubUnits
-     *                if even subunits of the given unit are considered
+     *            if even subunits of the given unit are considered
      * @param active
-     *                the state of the function, <code>null</code> for all
-     *                PersonFunctions
+     *            the state of the function, <code>null</code> for all
+     *            PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -1355,7 +1355,7 @@ public class Person extends Person_Base {
 
     public DegreeCandidacy getDegreeCandidacyByExecutionDegree(final ExecutionDegree executionDegree) {
 	for (final Candidacy candidacy : this.getCandidaciesSet()) {
-	    if (candidacy instanceof DegreeCandidacy) {
+	    if (candidacy instanceof DegreeCandidacy && candidacy.isActive()) {
 		final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
 		if (degreeCandidacy.getExecutionDegree().equals(executionDegree)) {
 		    return degreeCandidacy;
@@ -1389,7 +1389,7 @@ public class Person extends Person_Base {
 
     public StudentCandidacy getStudentCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
 	for (final Candidacy candidacy : this.getCandidaciesSet()) {
-	    if (candidacy instanceof StudentCandidacy) {
+	    if (candidacy instanceof StudentCandidacy && candidacy.isActive()) {
 		final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
 		if (studentCandidacy.getExecutionDegree().equals(executionDegree)) {
 		    return studentCandidacy;

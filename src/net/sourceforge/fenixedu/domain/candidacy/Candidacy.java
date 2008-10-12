@@ -229,4 +229,7 @@ public abstract class Candidacy extends Candidacy_Base {
 		&& person.hasDefaultPhysicalAddress() && person.getEmail() != null);
     }
 
+    public boolean isActive() {
+	return getActiveCandidacySituationType().isActive();
+    }
 }
