@@ -43,7 +43,11 @@
 
 	<definition name="publicRelationsOffice-sendMail" extends="definition.publicRelationOffice.master" >
 	    <put name="body" value="/publicRelations/email/sendEmail.jsp" />
-	</definition>	
+	</definition>
+
+     <definition name="df.page.send.email.redirect" extends="definition.publicRelationOffice.master">
+        <put name="body" value="/email/sendEmailRedirect.jsp"/>
+    </definition>
 
 	<!-- ==================== Reports ================== -->
 

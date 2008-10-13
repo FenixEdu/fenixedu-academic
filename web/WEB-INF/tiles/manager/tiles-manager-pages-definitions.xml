@@ -963,5 +963,8 @@
      <definition name="df.page.send.email.result" extends="definition.manager.masterPage">
         <put name="body" value="/email/sendEmailResult.jsp"/>
     </definition>
+     <definition name="df.page.send.email.redirect" extends="definition.manager.masterPage">
+        <put name="body" value="/email/sendEmailRedirect.jsp"/>
+    </definition>
 	
 </tiles-definitions>

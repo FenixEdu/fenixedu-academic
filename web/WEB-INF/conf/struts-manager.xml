@@ -2449,13 +2449,8 @@
 			validate="true">
 	        <forward name="searchEnrolmentLogs" path="enrolmentLogs.searchEnrolmentLogs"/>
 	    </action>
-	    
-		<action path="/sendEmail"
-				type="net.sourceforge.fenixedu.presentationTier.Action.email.SendEmailDA"
-				parameter="method">
-			<forward name="showSendEmailForm" path="df.page.send.email.form"/>
-			<forward name="showSendEmailResult" path="df.page.send.email.result"/>
-		</action>
+
+		<action path="/sendEmail" forward="df.page.send.email.redirect"/>
 
 	</action-mappings>
     

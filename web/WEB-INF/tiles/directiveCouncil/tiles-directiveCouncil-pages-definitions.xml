@@ -53,6 +53,9 @@
      <definition name="df.page.send.email.result" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/email/sendEmailResult.jsp"/>
     </definition>
+     <definition name="df.page.send.email.redirect" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/email/sendEmailRedirect.jsp"/>
+    </definition>
      <definition name="df.page.people.search" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/directiveCouncil/searchPeople.jsp"/>
     </definition>
