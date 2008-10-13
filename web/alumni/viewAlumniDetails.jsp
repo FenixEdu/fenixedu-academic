@@ -65,7 +65,7 @@
 				<bean:message key="label.photo" bundle="ALUMNI_RESOURCES" />:
 			</th>
 			<td>
-				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=" + personId.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
+				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=" + personId.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 			</td>
 		</tr>
 	</logic:equal>

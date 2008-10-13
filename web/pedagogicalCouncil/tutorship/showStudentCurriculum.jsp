@@ -43,7 +43,7 @@
 	<!-- Foto -->
 	<div style="float: right;" class="printhidden">
 		<bean:define id="personID" name="registration" property="student.person.idInternal"/>
-		<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 	
 	<!-- Person and Student short info -->

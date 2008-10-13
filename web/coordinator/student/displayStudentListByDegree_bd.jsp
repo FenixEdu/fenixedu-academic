@@ -48,7 +48,7 @@
 	        <logic:equal name="viewPhoto" value="true">
 				<th>
 					<bean:define id="personID" name="studentCP" property="infoStudent.infoPerson.idInternal"/>
-					<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+					<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 			   </th>
 			</logic:equal> 
         	<td>
