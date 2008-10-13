@@ -36,6 +36,10 @@ public class EmailsDA extends FenixDispatchAction {
 	EmailBean emailBean = (EmailBean) getRenderedObject();
 	if (emailBean == null) {
 	    emailBean = new EmailBean();
+	    final Set<Sender> availableSenders = Sender.getAvailableSenders();
+	    if (availableSenders.size() == 1) {
+		emailBean.setSender(availableSenders.iterator().next());
+	    }
 	}
 	RenderUtils.invalidateViewState();
 	request.setAttribute("emailBean", emailBean);

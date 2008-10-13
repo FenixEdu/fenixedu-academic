@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
 import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class Sender extends Sender_Base {
     
@@ -43,6 +47,19 @@ public class Sender extends Sender_Base {
 	}
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public static Set<Sender> getAvailableSenders() {
+	final IUserView userView = UserView.getUser();
+
+	final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
+	for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
+	    if (sender.getMembers().allows(userView)) {
+		senders.add(sender);
+	    }
+	}
+
+	return senders;
     }
 
 }

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@page import="net.sourceforge.fenixedu.domain.util.email.Sender"%>
 <html:xhtml/>
 
 <ul>
@@ -28,21 +29,19 @@
 		</html:link>
 	</li>
 --%>
-	<logic:present role="MANAGER">
-		<logic:present user="ist24439">
-			<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.emails"/></li>
-			<li>
-				<html:link page="/emails.do?method=newEmail">
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.email.new"/>
-				</html:link>
-			</li>
-			<li>
-				<html:link page="/emails.do?method=viewSentEmails">
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.email.sent"/>
-				</html:link>
-			</li>
-		</logic:present>
-	</logic:present>
+	<% if (!Sender.getAvailableSenders().isEmpty()) { %>
+		<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.emails"/></li>
+		<li>
+			<html:link page="/emails.do?method=newEmail">
+				<bean:message bundle="MESSAGING_RESOURCES" key="label.email.new"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/emails.do?method=viewSentEmails">
+				<bean:message bundle="MESSAGING_RESOURCES" key="label.email.sent"/>
+			</html:link>
+		</li>
+	<% } %>
 	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.navheader.files"/></li>
 	<li>
 		<html:link page="/viewFiles.do?method=showSources">
