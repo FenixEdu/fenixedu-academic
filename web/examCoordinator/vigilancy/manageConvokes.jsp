@@ -16,13 +16,17 @@
 	</p>
 </logic:messagesPresent>
 
-<ul>
-	<li>
-		<html:link page="/vigilancy/convokeManagement.do?method=prepareConvoke">
-		<bean:message key="label.create" bundle="VIGILANCY_RESOURCES"/> <bean:message key="label.vigilancy.convokes" bundle="VIGILANCY_RESOURCES"/>
-		</html:link>
-	</li>
-</ul>
+<logic:present name="bean" property="executionYear">
+	<logic:equal name="bean" property="executionYear.current" value="true">
+		<ul>
+			<li>
+				<html:link page="/vigilancy/convokeManagement.do?method=prepareConvoke">
+				<bean:message key="label.create" bundle="VIGILANCY_RESOURCES"/> <bean:message key="label.vigilancy.convokes" bundle="VIGILANCY_RESOURCES"/>
+				</html:link>
+			</li>
+		</ul>
+	</logic:equal>
+</logic:present>
 
 <fr:form action="/vigilancy/convokeManagement.do?method=changeVisualizationOptions">
 	<fr:edit id="options" name="bean" schema="examCoordinatorOptions">
@@ -53,15 +57,19 @@
 		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #00427b; background: #9ebcd7; float:left; margin-right: 0.5em;"></div> <bean:message key="label.vigilancy.convokes" bundle="VIGILANCY_RESOURCES"/></td>
 		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #007b4d; background: #9ed7c2; float:left; margin-right: 0.5em;"></div> <bean:message key="label.teachersVigilants" bundle="VIGILANCY_RESOURCES"/></td>
 		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #888; background: #ccc; float:left; margin-right: 0.5em;"></div> <bean:message key="label.cancelledConvokes" bundle="VIGILANCY_RESOURCES"/></td>
+		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #d2d292; background: #ffffe5; float:left; margin-right: 0.5em;"></div> <bean:message key="label.problematicConvoke" bundle="VIGILANCY_RESOURCES"/></td>
 	</tr>
 </table>
 
 </div>
 
+<logic:present name="bean" property="executionYear">
+	<logic:equal name="bean" property="executionYear.current" value="true">
+
 <logic:equal name="bean" property="showInformationByVigilant" value="false">
 <ul>
 	<li>
-		<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByVigilants&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
+		<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByVigilants&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getIdInternal().toString() : "") %>">
 		<bean:message key="label.vigilancy.showConvokesByVigilant" bundle="VIGILANCY_RESOURCES"/>
 		</html:link>, 
 		<span class="highlight1"><bean:message key="label.vigilancy.showConvokesByEvaluation" bundle="VIGILANCY_RESOURCES"/></span>,	
@@ -73,28 +81,31 @@
 <ul>
 	<li>
 	<span class="highlight1"><bean:message key="label.vigilancy.showConvokesByVigilant" bundle="VIGILANCY_RESOURCES"/></span>, 
-	<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByEvaluation&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
+	<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByEvaluation&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getIdInternal().toString() : "")%>">
 	<bean:message key="label.vigilancy.showConvokesByEvaluation" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>,
 	<span>
-		<html:link target="_blank" page="<%= "/vigilancy/convokeManagement.do?method=exportVigilancyTable&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showPointsWeight=" + bean.isShowPointsWeight() + "&showStartPoints=" + bean.isShowStartPoints() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
+		<html:link target="_blank" page="<%= "/vigilancy/convokeManagement.do?method=exportVigilancyTable&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showPointsWeight=" + bean.isShowPointsWeight() + "&showStartPoints=" + bean.isShowStartPoints() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") + ((bean.getExecutionYear()!=null) ? "&executionYear=" + bean.getExecutionYear().getIdInternal().toString() : "") %>">
 			<bean:message key="label.vigilancy.exportVigilantTable" bundle="VIGILANCY_RESOURCES"/>
 		</html:link>
 	</span>
 	</li>
 </ul>
 </logic:equal>
+	</logic:equal>
+</logic:present>
 
 <logic:equal name="bean" property="showInformationByVigilant" value="true"> 
 
 <logic:notPresent name="writtenEvaluations">
-<logic:empty name="vigilants">
+
+<logic:empty name="group">
 <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noConvokes"/>
 </logic:empty>
 
-<logic:notEmpty name="vigilants">
+<logic:present name="group">
 
-<fr:view name="vigilants" layout="vigilant-table">
+<fr:view name="group" layout="vigilant-table">
 	<fr:layout>                                
 		<fr:property name="classes" value="tstyle1" />	
 		<fr:property name="rowClasses" value="vigilancyHeaderColumns" />
@@ -120,7 +131,7 @@
 	</fr:layout>
 </fr:view>
 
-</logic:notEmpty>
+</logic:present>
 </logic:notPresent>
 
 </logic:equal>
@@ -266,6 +277,34 @@
 </logic:notEmpty>
 </logic:present>
 </logic:equal>
+
+<logic:present name="bean" property="executionYear">
+	<logic:equal name="bean" property="executionYear.current" value="false">
+
+<div class="mbottom2">
+	<p class="mtop15 mbottom05"><em><bean:message key="label.vigilancy.label" bundle="VIGILANCY_RESOURCES"/>:</em></p>
+	<ul class="list2 mvert025 liinline">
+		<li><em><strong><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/> </strong> <span class="color888"><bean:message key="label.vigilancy.category" bundle="VIGILANCY_RESOURCES"/></span></em></li>
+		<li><em><strong><bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/> </strong> <span class="color888"><bean:message key="label.vigilancy.totalPoints" bundle="VIGILANCY_RESOURCES"/></span></em></li>
+		<li><em><strong><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/> </strong> <span class="color888"><bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></span></em></li>
+		<li><em><strong><bean:message key="label.vigilancy.attended.header" bundle="VIGILANCY_RESOURCES"/> </strong> <span class="color888"><bean:message key="label.vigilancy.attended" bundle="VIGILANCY_RESOURCES"/></span></em></li>
+		<li><em><strong><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/> </strong> <span class="color888"><bean:message key="label.vigilancy.confirmed" bundle="VIGILANCY_RESOURCES"/></span></em></li>
+		<li><em><strong><bean:message key="label.vigilancy.active.header" bundle="VIGILANCY_RESOURCES"/> </strong> <span class="color888"><bean:message key="label.vigilancy.active" bundle="VIGILANCY_RESOURCES"/></span></em></li>
+		<li><em><strong><bean:message key="label.vigilancy.startPoints.header" bundle="VIGILANCY_RESOURCES"/> </strong> <span class="color888"><bean:message key="label.vigilancy.startPoints" bundle="VIGILANCY_RESOURCES"/></span></em></li>
+	</ul>
+	
+<table class="mtop05">
+	<tr class="color888">
+		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #00427b; background: #9ebcd7; float:left; margin-right: 0.5em;"></div> <bean:message key="label.vigilancy.convokes" bundle="VIGILANCY_RESOURCES"/></td>
+		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #007b4d; background: #9ed7c2; float:left; margin-right: 0.5em;"></div> <bean:message key="label.teachersVigilants" bundle="VIGILANCY_RESOURCES"/></td>
+		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #888; background: #ccc; float:left; margin-right: 0.5em;"></div> <bean:message key="label.cancelledConvokes" bundle="VIGILANCY_RESOURCES"/></td>
+		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #d2d292; background: #ffffe5; float:left; margin-right: 0.5em;"></div> <bean:message key="label.problematicConvoke" bundle="VIGILANCY_RESOURCES"/></td>
+	</tr>
+</table>
+
+</div>
+	</logic:equal>
+</logic:present>
 
 <script type="text/javascript" language="javascript">
 switchGlobal();

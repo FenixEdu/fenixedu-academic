@@ -20,10 +20,6 @@
     <definition name="display-groups-unavailablePeriods" extends="examCoordinator.masterPage" >
 		<put name="body" value="/examCoordinator/vigilancy/manageGroupsUnavailablePeriods.jsp" />
     </definition>      
-
-   <definition name="display-group-history" extends="examCoordinator.masterPage" >
-		<put name="body" value="/examCoordinator/vigilancy/displayVigilantGroupHistory.jsp" />
-    </definition>  
     
     <definition name="edit-unavailable-period-of-vigilant" extends="examCoordinator.masterPage" >
 		<put name="body" value="/examCoordinator/vigilancy/editUnavailablePeriodOfVigilant.jsp" />

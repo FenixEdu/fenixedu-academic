@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Altering Evaluation Table" alterWrittenEvaluation.sql

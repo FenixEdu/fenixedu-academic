@@ -8,15 +8,17 @@
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.writtenEvaluationReport"/></h2>
 <bean:define id="writtenEvaluationId" name="writtenEvaluation" property="idInternal"/>
+<bean:define id="permission" name="permission" type="java.lang.Boolean"/>
 
 <ul>
 	<li><html:link page="/vigilancy/convokeManagement.do?method=prepareEditConvoke"><bean:message key="label.vigilancy.back" bundle="VIGILANCY_RESOURCES"/></html:link>
+<logic:equal name="permission" value="true">
 	<li>
 		<html:link page="<%= "/vigilancy/convokeManagement.do?writtenEvaluationId=" + writtenEvaluationId + "&amp;method=prepareAddMoreVigilants" %>">
 			<bean:message key="label.convokeMore" bundle="VIGILANCY_RESOURCES"/>
 		</html:link>
 	</li>
-
+</logic:equal>
 </ul>
 <p class="mtop2 mbottom05"><strong><bean:message key="label.vigilancy.course" bundle="VIGILANCY_RESOURCES"/>:</strong> <span class="highlight1"><fr:view name="writtenEvaluation" property="fullName"/></span></p>
 <p class="mvert05"><strong><bean:message key="label.vigilancy.date" bundle="VIGILANCY_RESOURCES"/>:</strong> <fr:view name="writtenEvaluation" property="beginningDateTime"/></p>
@@ -75,9 +77,7 @@
 	</tr>
 
 	<logic:iterate id="vigilancy"  name="writtenEvaluation" property="teachersVigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
-
-	<bean:define id="vigilancy" name="vigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy"/>
-		
+	<logic:equal name="permission" value="true">
 	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 		<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/></td>
 			<td><fr:view name="vigilancy" property="vigilant.person.username"/></td>
@@ -98,9 +98,9 @@
 			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" checked="checked"/></td>
 			</logic:equal>
 
-			<logic:equal name="vigilancy" property="active" value="true">
+			<logic:equal name="vigilancy" property="active" value="true">	
 				<logic:equal name="vigilancy" property="attended" value="true">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" ></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="attended" value="false">
 						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "ATTENDED")%>"/></td>
@@ -129,7 +129,61 @@
 
 			<td class="acenter"><fr:view name="vigilancy" property="points"/></td>
 	</tr>
+	</logic:equal>
 
+	<logic:equal name="permission" value="false">
+	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
+		<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/></td>
+			<td><fr:view name="vigilancy" property="vigilant.person.username"/></td>
+			<td><fr:view name="vigilancy" property="vigilant.person.name"/></td>
+			
+			<logic:equal name="vigilancy" property="active" value="true">
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled" />
+			</td>
+			<td class="acenter">
+			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" disabled="disabled"/>	
+			</td>
+			</logic:equal>
+ 
+			<logic:equal name="vigilancy" property="active" value="false">
+			<td class="acenter">
+			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" disabled="disabled"/>	
+			</td>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" checked="checked" disabled="disabled"/></td>
+			</logic:equal>
+
+			<logic:equal name="vigilancy" property="active" value="true">	
+				<logic:equal name="vigilancy" property="attended" value="true">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"></td>
+				</logic:equal>
+				<logic:equal name="vigilancy" property="attended" value="false">
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>
+				</logic:equal>
+				
+				<logic:equal name="vigilancy" property="notAttended" value="true">
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+				</logic:equal>			
+				<logic:equal name="vigilancy" property="notAttended" value="false">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>
+				</logic:equal>
+							
+				<logic:equal name="vigilancy" property="dismissed" value="true">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+				</logic:equal>
+				<logic:equal name="vigilancy" property="dismissed" value="false">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>			
+				</logic:equal>
+			</logic:equal>
+
+			<logic:equal name="vigilancy" property="active" value="false">
+				<td class="acenter">-</td>
+				<td class="acenter">-</td>
+				<td class="acenter">-</td>
+			</logic:equal>
+
+			<td class="acenter"><fr:view name="vigilancy" property="points"/></td>
+	</tr>
+	</logic:equal>
 	</logic:iterate>
 	
 </table>
@@ -165,9 +219,9 @@
 	</tr>
 
 	<logic:iterate id="vigilancy"  name="writtenEvaluation" property="othersVigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
-
+	
 	<bean:define id="vigilancy" name="vigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy"/>
-		
+	<logic:equal name="permission" value="true">
 	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 		<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/></td>
 			<td><fr:view name="vigilancy" property="vigilant.person.username"/></td>
@@ -221,7 +275,63 @@
 			
 			<td class="acenter"><fr:view name="vigilancy" property="points"/></td>			
 	</tr>
+	</logic:equal>
 
+	<logic:equal name="permission" value="false">
+	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
+		<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/></td>
+			<td><fr:view name="vigilancy" property="vigilant.person.username"/></td>
+			<td><fr:view name="vigilancy" property="vigilant.person.name"/></td>
+			
+			<logic:equal name="vigilancy" property="active" value="true">
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/>
+			</td>
+			<td class="acenter">
+			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" disabled="disabled"/>	
+			</td>
+			</logic:equal>
+ 
+			<logic:equal name="vigilancy" property="active" value="false">
+			<td class="acenter">
+			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" disabled="disabled"/>	
+			</td>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" checked="checked" disabled="disabled"/></td>
+			</logic:equal>
+
+			<td class="acenter"><fr:view name="vigilancy" property="confirmed"/></td>
+
+			<logic:equal name="vigilancy" property="active" value="true">
+				<logic:equal name="vigilancy" property="attended" value="true">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+				</logic:equal>
+				<logic:equal name="vigilancy" property="attended" value="false">
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>
+				</logic:equal>
+				
+				<logic:equal name="vigilancy" property="notAttended" value="true">
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+				</logic:equal>			
+				<logic:equal name="vigilancy" property="notAttended" value="false">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>
+				</logic:equal>
+							
+				<logic:equal name="vigilancy" property="dismissed" value="true">
+							<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+				</logic:equal>
+				<logic:equal name="vigilancy" property="dismissed" value="false">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>			
+				</logic:equal>
+			</logic:equal>
+			
+			<logic:equal name="vigilancy" property="active" value="false">
+				<td class="acenter">-</td>
+				<td class="acenter">-</td>
+				<td class="acenter">-</td>
+			</logic:equal>
+			
+			<td class="acenter"><fr:view name="vigilancy" property="points"/></td>			
+	</tr>
+	</logic:equal>
 	</logic:iterate>
 	
 </table>

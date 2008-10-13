@@ -38,9 +38,15 @@ public class ConvokeManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	String writtenEvaluationId = request.getParameter("writtenEvaluationId");
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
 		Integer.valueOf(writtenEvaluationId));
 
+	if (currentExecutionYear != writtenEvaluation.getExecutionYear()) {
+	    request.setAttribute("permission", false);
+	} else {
+	    request.setAttribute("permission", true);
+	}
 	request.setAttribute("writtenEvaluation", writtenEvaluation);
 	return mapping.findForward("showReport");
     }
@@ -55,9 +61,23 @@ public class ConvokeManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("options").getMetaObject().getObject();
+
+	Person person = getLoggedPerson(request);
+	ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(bean.getExecutionYear());
+
+	bean.setExamCoordinator(coordinator);
+	if (coordinator != null) {
+	    bean.setVigilantGroups(coordinator.getVigilantGroups());
+	} else {
+	    bean.setVigilantGroups(getVigilantGroups(request, bean.getExecutionYear()));
+	}
+
 	VigilantGroup group = bean.getSelectedVigilantGroup();
-	putInformationOnRequest(request, group, bean.isShowInformationByVigilant());
+
+	putInformationOnRequest(request, group, bean.isShowInformationByVigilant(), bean.getExecutionYear());
 	request.setAttribute("bean", bean);
+
+	RenderUtils.invalidateViewState("options");
 	return mapping.findForward("prepareEditConvoke");
     }
 
@@ -99,12 +119,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 	} catch (DomainException exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
-
-	String writtenEvaluationId = request.getParameter("writtenEvaluationId");
-	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
-		Integer.valueOf(writtenEvaluationId));
-	request.setAttribute("writtenEvaluation", writtenEvaluation);
-	return mapping.findForward("showReport");
+	return showReport(mapping, form, request, response);
     }
 
     private void editActive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -113,7 +128,6 @@ public class ConvokeManagement extends FenixDispatchAction {
 	Integer idInternal = Integer.valueOf(id);
 	String bool = request.getParameter("bool");
 	Boolean value = Boolean.valueOf(bool);
-
 	Person person = getLoggedPerson(request);
 	Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
 
@@ -367,47 +381,45 @@ public class ConvokeManagement extends FenixDispatchAction {
 	ExamCoordinator coordinator = getCoordinatorForCurrentYear(request);
 	bean.setExamCoordinator(coordinator);
 	bean.setVigilantGroups(coordinator.getVigilantGroups());
-
+	String executionYear = request.getParameter("executionYear");
+	ExecutionYear executionYearObj = executionYear != null ? (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class, Integer.valueOf(executionYear)) : null;
 	VigilantGroup group = null;
 	if (vigilantGroup != null) {
 	    group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroup));
 	    bean.setSelectedVigilantGroup(group);
 	}
-
-	putInformationOnRequest(request, group, bean.isShowInformationByVigilant());
+	bean.setExecutionYear(executionYearObj);
+	putInformationOnRequest(request, group, bean.isShowInformationByVigilant(), executionYearObj);
 	request.setAttribute("bean", bean);
     }
 
-    private void putInformationOnRequest(HttpServletRequest request, boolean showVigilants) throws FenixFilterException,
-	    FenixServiceException {
-
-	ExamCoordinator coordinator = getCoordinatorForCurrentYear(request);
-
+    private void putInformationOnRequest(HttpServletRequest request, VigilantGroup group, boolean showVigilants,
+	    ExecutionYear executionYear) throws FenixFilterException, FenixServiceException {
+	
 	if (showVigilants) {
-	    request.setAttribute("vigilants", coordinator.getVigilantsThatCanManage());
+	    request.setAttribute("group", group);
 	} else {
 	    List<WrittenEvaluation> writtenEvaluations = new ArrayList<WrittenEvaluation>();
-	    writtenEvaluations.addAll(coordinator.getAssociatedWrittenEvaluations());
+	    if (group != null) {
+		writtenEvaluations.addAll(group.getAllAssociatedWrittenEvaluations());
+	    } else {
+		List<VigilantGroup> groups = getVigilantGroups(request, executionYear);
 
+		for (VigilantGroup vigilantGroup : groups) {
+		    writtenEvaluations.addAll(vigilantGroup.getAllAssociatedWrittenEvaluations());
+		}
+	    }
 	    Collections.sort(writtenEvaluations, new ReverseComparator(WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE));
 	    request.setAttribute("writtenEvaluations", writtenEvaluations);
 	}
     }
 
-    private void putInformationOnRequest(HttpServletRequest request, VigilantGroup group, boolean showVigilants)
-	    throws FenixFilterException, FenixServiceException {
-	if (group == null) {
-	    putInformationOnRequest(request, showVigilants);
-	} else {
-	    if (showVigilants) {
-		request.setAttribute("vigilants", group.getVigilants());
-	    } else {
-		List<WrittenEvaluation> writtenEvaluations = new ArrayList<WrittenEvaluation>();
-		writtenEvaluations.addAll(group.getAllAssociatedWrittenEvaluations());
-
-		Collections.sort(writtenEvaluations, new ReverseComparator(WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE));
-		request.setAttribute("writtenEvaluations", writtenEvaluations);
-	    }
-	}
+    private List<VigilantGroup> getVigilantGroups(HttpServletRequest request, ExecutionYear executionYear) {
+	Person person = getLoggedPerson(request);
+	ExamCoordinator examcoordinatior = person.getExamCoordinatorForGivenExecutionYear(ExecutionYear
+		.readCurrentExecutionYear());
+	Unit unit = examcoordinatior.getUnit();
+	List<VigilantGroup> groups = unit.getVigilantGroupsForGivenExecutionYear(executionYear);
+	return groups;
     }
 }

@@ -24,7 +24,7 @@ public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
 	if (isActive() && !isStatusUndefined()) {
 	    return isAttended() ? getAssociatedVigilantGroup().getPointsForTeacher()
 		    : (isDismissed() ? getAssociatedVigilantGroup().getPointsForDismissedTeacher()
-			    : (hasPointsAttributed() ? getAssociatedVigilantGroup().getPointsForMissingTeacher()
+			    : (getWrittenEvaluation().getVigilantsReport() ? getAssociatedVigilantGroup().getPointsForMissingTeacher()
 				    : this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN));
 	}
 	return getAssociatedVigilantGroup().getPointsForDisconvoked();

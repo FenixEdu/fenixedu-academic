@@ -1,17 +1,25 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.layouts.TabularLayout;
@@ -65,6 +73,26 @@ public class VigilantTableRender extends OutputRenderer {
     private boolean showPointsWeight = Boolean.FALSE;
 
     private boolean showOwnVigilancies = Boolean.FALSE;
+
+    private String warningClass;
+    
+    private VigilantGroup group;
+
+    public String getWarningClass() {
+	return warningClass;
+    }
+
+    public void setWarningClass(String warningClass) {
+	this.warningClass = warningClass;	
+    }
+
+    public VigilantGroup getGroup() {
+	return group;
+    }
+
+    public void setGroup(VigilantGroup group) {
+	this.group = group;
+    }
 
     public boolean isShowOwnVigilancies() {
 	return showOwnVigilancies;
@@ -234,6 +262,12 @@ public class VigilantTableRender extends OutputRenderer {
 	    schema.addSlotDescription(getSlot("pointsWeight", "label.vigilancy.pointsWeight"));
 	}
 
+	if (isShowStartPoints()) {
+	    schema.addSlotDescription(getSlot("startPoints", "label.vigilancy.startPoints.header"));
+	}
+
+	schema.addSlotDescription(getSlot("points", "label.vigilancy.totalpoints.header"));
+
 	if (isShowUnavailables()) {
 	    schema.addSlotDescription(getSlot("unavailablePeriodsAsString", "label.vigilancy.unavailablePeriodsShortLabel"));
 	}
@@ -243,12 +277,6 @@ public class VigilantTableRender extends OutputRenderer {
 	if (isShowBoundsJustification()) {
 	    schema.addSlotDescription(getSlot("boundsAsString", "label.vigilancy.boundsJustification"));
 	}
-
-	if (isShowStartPoints()) {
-	    schema.addSlotDescription(getSlot("startPoints", "label.vigilancy.startPoints.header"));
-	}
-
-	schema.addSlotDescription(getSlot("points", "label.vigilancy.totalpoints.header"));
 
 	return schema;
     }
@@ -283,7 +311,9 @@ public class VigilantTableRender extends OutputRenderer {
 	chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
 	chain.addComparator(Vigilant.USERNAME_COMPARATOR);
 
-	List<Vigilant> vigilants = new ArrayList<Vigilant>((Collection) object);
+	this.group = (VigilantGroup) object;
+	List<Vigilant> vigilants = new ArrayList<Vigilant>(this.group.getVigilants());
+
 	Collections.sort(vigilants, chain);
 
 	return new VigilantTableRenderLayout(vigilants);
@@ -339,16 +369,17 @@ public class VigilantTableRender extends OutputRenderer {
 	protected String getHeaderGroup(int columnIndex) {
 	    MetaObject one = getVigilantWithConvokes();
 
-	    if (columnIndex < one.getSlots().size()) {
+	    if (isInformationColumn(columnIndex, one)) {
 		return null;
-	    } else {
+	    } else if (isVigilancy(columnIndex, one)) {
 		String convokeHeadPrefix = getConvokeTitle();
 		int numberOfColumns = (this.getNumberOfColumns() - this.getNumberOfVigilantsSlots())
 			/ this.getNumberOfConvokeSlots();
 		int index = numberOfColumns - getConvokeIndex(one, columnIndex);
 
 		return convokeHeadPrefix + " " + index;
-	    }
+	    } else
+		return null;
 	}
 
 	private String getConvokeTitle() {
@@ -424,7 +455,7 @@ public class VigilantTableRender extends OutputRenderer {
 	@Override
 	protected boolean isHeader(int rowIndex, int columnIndex) {
 	    MetaObject one = getVigilantWithConvokes();
-	    if (columnIndex < one.getSlots().size()) {
+	    if (isInformationColumn(columnIndex, one)) {
 		return false;
 	    } else {
 		// we are now asking if a column of a convoke is an header, so
@@ -438,14 +469,21 @@ public class VigilantTableRender extends OutputRenderer {
 	protected HtmlComponent getHeaderComponent(int columnIndex) {
 	    MetaObject one = getVigilantWithConvokes();
 
-	    if (columnIndex < one.getSlots().size()) {
+	    if (isInformationColumn(columnIndex, one)) {
 		return new HtmlText(one.getSlots().get(columnIndex).getLabel());
-	    } else {
+	    } else if (isVigilancy(columnIndex, one)) {
 		int index = getConvokeSlotIndex(one, columnIndex);
 		MetaObject convokeMetaObject = getConvokeMetaObject(one);
 		return (convokeMetaObject == null) ? findVigilantWithConvokesToGetLabels(index) : new HtmlText(
 			getConvokeMetaObject(one).getSlots().get(index).getLabel());
-	    }
+	    } else
+
+		return new HtmlText(RenderUtils.getResourceString(one.getSlots().get(0).getBundle(), "label.avgVigilancies"));
+
+	}
+
+	private boolean isInformationColumn(int columnIndex, MetaObject one) {
+	    return columnIndex < one.getSlots().size();
 	}
 
 	private MetaObject getVigilantWithConvokes() {
@@ -506,7 +544,6 @@ public class VigilantTableRender extends OutputRenderer {
 		    columns = Math.max(columns, vigilantMetaObject.getSlots().size() + convokesSlots
 			    * getConvokes(vigilant).size());
 		}
-
 		return numberOfColumnsCache = columns;
 	    }
 	}
@@ -518,7 +555,23 @@ public class VigilantTableRender extends OutputRenderer {
 
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
-	    return super.createComponent(object, type);
+
+	    HtmlBlockContainer block = new HtmlBlockContainer();
+
+	    if (group.getVigilants().size() != 0) {
+		block.addChild(super.createComponent(object, type));
+
+		NumberFormat formatter = new DecimalFormat("##0.0");
+		String avg = formatter.format(group.getPointsAverage());
+
+		block.addChild(new HtmlText("<b>" + RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.avgVigilancies")
+			+ ":</b> " + avg, false));
+	    } else {
+		block.addChild(new HtmlText("<b>"
+			+ RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.noVigilantsInGroup") + "</b>",
+			false));
+	    }
+	    return block;
 	}
 
 	@Override
@@ -526,19 +579,52 @@ public class VigilantTableRender extends OutputRenderer {
 	    if (this.empty) {
 		component.setClasses(getEmptyMessageClasses());
 	    } else {
-		super.applyStyle(component);
+		HtmlBlockContainer block = (HtmlBlockContainer) component;
+		if (block.getChildren().size() > 1) {
+		    super.applyStyle(block.getChild(new Predicate() {
+
+			@Override
+			public boolean evaluate(Object arg0) {
+			    return arg0 instanceof HtmlTable;
+			}
+
+		    }));
+		}
+
+	    }
+	}
+
+	@Override
+	protected void costumizeCell(HtmlTableCell cell, int rowIndex, int columnIndex) {
+	    MetaObject metavigilant = getVigilantForRow(rowIndex);
+
+	    if (!isInformationColumn(columnIndex, metavigilant)) {
+		int index = getConvokeIndex(metavigilant, columnIndex);
+		MetaObject convoke = getConvokeMetaObjectToPutInTable(metavigilant, index);
+
+		if (convoke != null) {
+		    Vigilancy v = (Vigilancy) convoke.getObject();
+
+		    if (v.getStatus() == AttendingStatus.NOT_ATTENDED) {
+			cell.setClasses(getWarningClass());
+		    }
+
+		    if (!v.getWrittenEvaluation().getVigilantsReport()) {
+			cell.setClasses(getWarningClass());
+		    }
+		}
 	    }
 	}
 
 	@Override
 	protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
-
 	    MetaObject vigilant = getVigilantForRow(rowIndex);
 
-	    if (columnIndex < vigilant.getSlots().size()) {
+	    if (isInformationColumn(columnIndex, vigilant)) {
 		getContext().setMetaObject(vigilant);
+
 		return renderSlot(vigilant.getSlots().get(columnIndex));
-	    } else {
+	    } else {// if (isVigilancy(columnIndex, vigilant)) {
 		int index = getConvokeIndex(vigilant, columnIndex);
 		MetaObject convoke = getConvokeMetaObjectToPutInTable(vigilant, index);
 
@@ -561,6 +647,10 @@ public class VigilantTableRender extends OutputRenderer {
 		}
 		return component;
 	    }
+	}
+
+	private boolean isVigilancy(int columnIndex, MetaObject vigilant) {
+	    return columnIndex >= vigilant.getSlots().size();
 	}
     }
 

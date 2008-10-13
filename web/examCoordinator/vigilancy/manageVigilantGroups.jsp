@@ -49,7 +49,7 @@
 
 <logic:equal name="show" value="groups">
 <div>
-	<fr:form action="/vigilancy/vigilantGroupManagement.do?method=changeDisplaySettings">
+	<fr:form action="/vigilancy/vigilantGroupManagement.do?method=changeDisplaySettingsByGroups">
 	<fr:edit id="options" name="bean" schema="selectColumnsToDisplay">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
@@ -70,7 +70,6 @@
 	</html:messages>
 </logic:messagesPresent>
 
-<logic:equal name="bean" property="executionYear.current" value="true">
 <logic:equal name="show" value="groups">
 <logic:notEmpty name="bean" property="vigilantGroups">
 <logic:iterate id="vigilantGroup" name="bean" property="vigilantGroups">
@@ -116,8 +115,14 @@
 	</logic:equal>
 	</logic:equal>
 	
-	<%= group.getName() + ", " + group.getUnit().getName() %><span style="font-weight: normal;"> (<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=attributes&oid=" + group.getIdInternal() %>"><bean:message key="label.edit" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteVigilantGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=generateReportForGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.generateStats" bundle="VIGILANCY_RESOURCES"/></a>)</span></th>
+	 <%= group.getName() + ", " + group.getUnit().getName() %><span style="font-weight: normal;"> (
+	<logic:equal name="bean" property="executionYear.current" value="true">
+		<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=attributes&oid=" + group.getIdInternal() %>"><bean:message key="label.edit" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteVigilantGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/></a>, 
+	</logic:equal>
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=generateReportForGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.generateStats" bundle="VIGILANCY_RESOURCES"/></a>)</span></th>
 </tr>
+
+<logic:equal name="bean" property="executionYear.current" value="true">
 <tr>
 		<logic:equal name="bean" property="showVigilantColumn" value="true">
 	<logic:equal name="bean" property="showCourseColumn" value="true">
@@ -165,6 +170,7 @@
 	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=editCoordinators&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.examCoordinators" bundle="VIGILANCY_RESOURCES"/></a>  
 	</td>
 </tr>
+</logic:equal>
 <tr>
 <logic:equal name="bean" property="showVigilantColumn" value="true">
 	<td>
@@ -222,7 +228,6 @@
 </table>
 </logic:iterate>
 </logic:notEmpty>
-</logic:equal>
 
 <logic:empty name="bean" property="vigilantGroups">
 <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noVigilantGroupsToDisplay"/> 
@@ -230,6 +235,20 @@
 </logic:equal>
 
 
+
+<logic:equal name="show" value="vigilants">
+<div>
+	<fr:form action="/vigilancy/vigilantGroupManagement.do?method=changeDisplaySettingsByVigilants">
+	<fr:edit id="options" name="bean" schema="selectYearToDisplay">
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+			<fr:property name="columnClasses" value=",,tdclear"/>
+		</fr:layout>
+		</fr:edit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	</fr:form>
+</div>
+</logic:equal>
 
 <logic:equal name="show" value="vigilants">
 <table class="tstyle1">

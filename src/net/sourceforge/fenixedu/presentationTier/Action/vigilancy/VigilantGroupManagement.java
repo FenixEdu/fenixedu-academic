@@ -72,23 +72,6 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
     }
 
-    public ActionForward prepareGroupInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	Person person = getLoggedPerson(request);
-	VigilantGroupBean bean = prepareBean(person);
-
-	Unit unit = bean.getUnit();
-	ExecutionYear currentYear = bean.getExecutionYear();
-	List<VigilantGroup> groups = unit.getVigilantGroupsForGivenExecutionYear(currentYear);
-	if (groups.size() == 1) {
-	    bean.setSelectedVigilantGroup(groups.get(0));
-	}
-	bean.setVigilantGroups(groups);
-	request.setAttribute("bean", bean);
-	return mapping.findForward("displayGroupHistory");
-    }
-
     private void putIncompatibilitiesInRequest(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 	Person person = getLoggedPerson(request);
 	ExamCoordinator coordinator = person.getCurrentExamCoordinator();
@@ -181,15 +164,37 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	return mapping.findForward("manageVigilantGroups");
     }
 
-    public ActionForward changeDisplaySettings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward changeDisplaySettingsByGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("options").getMetaObject().getObject();
-
+	VigilantGroupBean bean = prepareVigilantGroups(request);
 	request.setAttribute("bean", bean);
 	request.setAttribute("show", "groups");
 	return mapping.findForward("manageVigilantGroups");
 
+    }
+
+    public ActionForward changeDisplaySettingsByVigilants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	VigilantGroupBean bean = prepareVigilantGroups(request);
+	request.setAttribute("bean", bean);
+	request.setAttribute("show", "vigilants");
+	return mapping.findForward("manageVigilantGroups");
+
+    }
+
+    private VigilantGroupBean prepareVigilantGroups(HttpServletRequest request) {
+	VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("options").getMetaObject().getObject();
+
+	Person person = getLoggedPerson(request);
+	ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(bean.getExecutionYear());
+	if (coordinator != null) {
+	    bean.setVigilantGroups(coordinator.getVigilantGroups());
+	} else {
+	    bean.setVigilantGroups(Collections.EMPTY_LIST);
+	}
+	return bean;
     }
 
     public ActionForward createVigilantGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,

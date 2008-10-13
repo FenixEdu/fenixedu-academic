@@ -258,7 +258,7 @@
 <schema name="present.convokes" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${idInternal}&amp;method=showWrittenEvaluationReport"/>
-			<property name="subLayout" value="values"/>
+			<property name="subLayout" value="values-comma"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="contextRelative" value="true"/>
 		</slot>
@@ -271,7 +271,7 @@
 <schema name="presentSimpleConvokesWithLink" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=showReport"/>
-			<property name="subLayout" value="values-with-br"/>
+			<property name="subLayout" value="values-comma"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="indentation" value="true"/>
 			<property name="contextRelative" value="true"/>
@@ -280,7 +280,7 @@
 </schema>
 
 <schema name="presentSimpleConvokesWithoutLink" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
-		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="values" schema="presentWrittenEvaluationName">
+		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="values-comma" schema="presentWrittenEvaluationName">
 			<property name="classes" value="bluetxt"/>
 			<property name="indentation" value="true"/>
 		</slot>
@@ -290,7 +290,7 @@
 <schema name="presentSimpleConvokesForVigilant" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${idInternal}&amp;method=showWrittenEvaluationReport"/>
-			<property name="subLayout" value="values-with-br"/>
+			<property name="subLayout" value="values-comma"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="contextRelative" value="true"/>
 		</slot>
@@ -317,7 +317,7 @@ extends="presentSimpleConvokesWithoutLink">
 </schema>
 
 <schema name="presentWrittenEvaluationName" type="net.sourceforge.fenixedu.domain.WrittenEvaluation" bundle="VIGILANCY_RESOURCES">	
-		<slot name="name" key="label.vigilancy.writtenEvaluation.header"/>
+		<slot name="fullName" key="label.vigilancy.writtenEvaluation.header"/>
 		<slot name="dayDateYearMonthDay" key="label.vigilancy.date"/>		
 		<slot name="beginningDateHourMinuteSecond" key="label.vigilancy.date"/>
 		<slot name="campus.name" key="label.campus"/>		
@@ -435,8 +435,16 @@ extends="presentSimpleConvokesWithoutLink">
 			<property name="classes" value="tstyle1a" />
 		</slot>
 </schema>
-	
-<schema name="examCoordinatorOptions" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+
+<schema name="prepare.yearselect" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantBean" bundle="VIGILANCY_RESOURCES">
+		<slot name="executionYear" key="label.vigilancy.executionYear" layout="menu-select-postback" >
+			<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+			<property name="format" value="${year}"/>
+		</slot>
+</schema> 
+
+<schema name="examCoordinatorOptions" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES" extends="prepare.yearselect">
 		<slot name="selectedVigilantGroup" layout="menu-select-postback" key="label.vigilancy.vigilantGroup">
 		<property name="providerClass" 
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsOfExamCoordinator" />
@@ -466,7 +474,7 @@ extends="presentSimpleConvokesWithoutLink">
 		<slot name="vigilant.points" key="label.vigilancy.totalPoints.header"/>
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
-			<property name="subLayout" value="values"/>
+			<property name="subLayout" value="values-comma"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="contextRelative" value="true"/>
 		</slot>		
@@ -752,20 +760,24 @@ extends="presentSimpleConvokesWithoutLink">
 			<property name="format" value="${name}"/>
 		</slot>
 </schema>
-
-		
-<schema name="prepare.yearselect" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="executionYear" key="label.vigilancy.executionYear" layout="menu-select-postback" >
+	
+<schema name="selectColumnsToDisplay" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+		<slot name="executionYear" key="label.vigilancy.executionYear" layout="menu-select-postback">
 			<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
 			<property name="format" value="${year}"/>
 		</slot>
-</schema>
-	
-<schema name="selectColumnsToDisplay" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
 		<slot name="showVigilantColumn" key="label.vigilancy.vigilants" layout="option-select-postback"/>
 		<slot name="showCourseColumn" key="label.vigilancy.courses" layout="option-select-postback"/>
 		<slot name="showCoordinators" key="label.vigilancy.examCoordinators" layout="option-select-postback"/>
+</schema>
+
+<schema name="selectYearToDisplay" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+		<slot name="executionYear" key="label.vigilancy.executionYear" layout="menu-select-postback">
+			<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+			<property name="format" value="${year}"/>
+		</slot>
 </schema>
 
 <schema name="selectVigilantsOfVigilantGroup" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">

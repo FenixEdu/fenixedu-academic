@@ -39,7 +39,7 @@
 			parameter="method"
 			scope="request">
 			<forward name="prepareVigilantGroup" path="vigilantGroup-create"/>	
-			<forward name="displayGroupHistory" path="display-group-history" />
+
 			<forward name="manageVigilantGroups" path="manage-vigilant-groups"/>
 			<forward name="addVigilants" path="add-vigilants"/>
 			<forward name="removeVigilants" path="remove-vigilants"/>

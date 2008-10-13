@@ -678,7 +678,7 @@ a.color888 { color: #888 !important; border-bottom: 1px solid #ddd !important;}
 .color007b4d { color: #007b4d; }
 a.color007b4d { color: #007b4d !important; }
 .color890 { color: #890; }
-
+.color339550 { color: #339550 !important; }
 .color973 { color: #8f613d; }
 .color379 { color: #3d868f; }
 
@@ -693,6 +693,7 @@ a.color007b4d { color: #007b4d !important; }
 .highlight5 { background-color: #fdfbdd; } /* amarelo */
 .highlight6 { background-color: #ffc !important; }
 .highlight7 { background-color: #fffaee !important; } /* amarelo */
+.highlight8 { background: #ffffe5 !important; }
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fcfae4; }
 .bgcolor3 { background-color: #fafaf6; }
@@ -2462,3 +2463,5 @@ font-weight: bold;
 margin: 0.25em 0;
 display: block;
 }
+
+

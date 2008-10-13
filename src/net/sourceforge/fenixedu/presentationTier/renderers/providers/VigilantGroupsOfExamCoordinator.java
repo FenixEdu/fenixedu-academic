@@ -14,12 +14,12 @@ public class VigilantGroupsOfExamCoordinator implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
 	VigilantGroupBean bean = (VigilantGroupBean) source;
-	ExamCoordinator coordinator = bean.getExamCoordinator();
 
-	List<VigilantGroup> vigilantGroups = coordinator.getVigilantGroups();
+	ExamCoordinator coordinator = bean.getExamCoordinator();
+	List<VigilantGroup> vigilantGroups = (coordinator == null) ? bean.getVigilantGroups() : coordinator
+		.getVigilantGroups();
 
 	return vigilantGroups;
-
     }
 
     public Converter getConverter() {

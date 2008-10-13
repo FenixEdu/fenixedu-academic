@@ -85,15 +85,16 @@ white-space: nowrap;
 		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #00427b; background: #9ebcd7; float:left; margin-right: 0.5em;"></div> <bean:message key="label.vigilancy.convokes" bundle="VIGILANCY_RESOURCES"/></td>
 		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #007b4d; background: #9ed7c2; float:left; margin-right: 0.5em;"></div> <bean:message key="label.teachersVigilants" bundle="VIGILANCY_RESOURCES"/></td>
 		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #888; background: #ccc; float:left; margin-right: 0.5em;"></div> <bean:message key="label.cancelledConvokes" bundle="VIGILANCY_RESOURCES"/></td>
+		<td style="padding-right: 0.5em;"><div style="width: 10px; height: 10px; border: 1px solid #d2d292; background: #ffffe5; float:left; margin-right: 0.5em;"></div> <bean:message key="label.problematicConvoke" bundle="VIGILANCY_RESOURCES"/></td>
 	</tr>
 </table>
 
 
 </div>
 
-	<logic:notEmpty name="vigilants">
+	<logic:present name="group">
 
-	<fr:view name="vigilants" layout="vigilant-table">
+	<fr:view name="group" layout="vigilant-table">
 	<fr:layout>                                
 		<fr:property name="classes" value="tstyle1" />	
 		<fr:property name="rowClasses" value="vigilancyHeaderColumns" />
@@ -118,7 +119,7 @@ white-space: nowrap;
 	</fr:layout>
 </fr:view>
 
-</logic:notEmpty>
+</logic:present>
 
 </body>
 </html:html>

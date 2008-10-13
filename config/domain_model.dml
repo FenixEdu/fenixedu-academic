@@ -582,15 +582,17 @@ class DomainObject {
 			DateTime projectEndDateTime;
 		}
 
-		class WrittenEvaluation extends Evaluation {
-			HourMinuteSecond beginningDateHourMinuteSecond;
-			YearMonthDay dayDateYearMonthDay;
-			HourMinuteSecond endDateHourMinuteSecond;
-			YearMonthDay enrollmentBeginDayDateYearMonthDay;
-			HourMinuteSecond enrollmentBeginTimeDateHourMinuteSecond;
-			YearMonthDay enrollmentEndDayDateYearMonthDay;
-			HourMinuteSecond enrollmentEndTimeDateHourMinuteSecond;
-		}
+
+        class WrittenEvaluation extends Evaluation {
+            HourMinuteSecond beginningDateHourMinuteSecond;
+            YearMonthDay dayDateYearMonthDay;
+            HourMinuteSecond endDateHourMinuteSecond;
+            YearMonthDay enrollmentBeginDayDateYearMonthDay;
+            HourMinuteSecond enrollmentBeginTimeDateHourMinuteSecond;
+            YearMonthDay enrollmentEndDayDateYearMonthDay;
+            HourMinuteSecond enrollmentEndTimeDateHourMinuteSecond;
+            Boolean vigilantsReport;
+        }
 
 			class Exam extends WrittenEvaluation {
 				Season season;

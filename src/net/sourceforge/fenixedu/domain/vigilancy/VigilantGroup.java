@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,6 +25,14 @@ public class VigilantGroup extends VigilantGroup_Base {
     public VigilantGroup() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+    
+    public double getPointsAverage(){
+	double sumOfPoints = 0;
+	for (Vigilant v : this.getVigilantsThatCanBeConvoked()) {
+	    sumOfPoints += v.getPoints();
+	}
+	return ((this.getVigilantsThatCanBeConvoked().isEmpty()) ? 0 :sumOfPoints / (double) this.getVigilantsThatCanBeConvoked().size());
     }
 
     public StrategySugestion sugestVigilantsToConvoke(WrittenEvaluation writtenEvaluation) {

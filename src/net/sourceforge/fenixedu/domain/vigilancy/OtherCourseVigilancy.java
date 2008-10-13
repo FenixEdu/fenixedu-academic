@@ -25,7 +25,7 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 
 	DateTime currentDate = new DateTime();
 	if (currentDate.isBefore(this.getBeginDate()))
-	    return this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
+	    return POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
 
 	if (!isActive() || isStatusUndefined()) {
 	    return getAssociatedVigilantGroup().getPointsForDisconvoked();
@@ -33,11 +33,8 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 	if (isDismissed()) {
 	    return getAssociatedVigilantGroup().getPointsForDismissed();
 	}
-	if (!hasPointsAttributed()) {
-	    // no vigilancy has been yet setted to attended so maybe the
-	    // coordinator did not yet filled the report. Let's just give
-	    // 0 points yet.
-	    return this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
+	if (!getWrittenEvaluation().getVigilantsReport()) {
+	    return POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
 	}
 	if (this.getAttendedToConvoke())
 	    return getAssociatedVigilantGroup().getPointsForConvoked();

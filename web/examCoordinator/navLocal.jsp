@@ -17,6 +17,5 @@
 	
 		<li><html:link  page="/vigilancy/unavailablePeriodManagement.do?method=prepareManageUnavailablePeriodsOfVigilants"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayUnavailableInformation"/></html:link></li>
 		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareManageIncompatiblesOfVigilants"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayIncompatibleInformation"/></html:link></li>
-		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareGroupInformation"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayGroupHistory"/></html:link></li>
 	</ul>
 	</logic:equal>

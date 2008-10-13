@@ -62,7 +62,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected WrittenEvaluation() {
-	super();
+    	super();
+    	this.setVigilantsReport(false);
     }
 
     public String getName() {
@@ -97,6 +98,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    return rooms.get(0).getSpaceCampus();
 	} else
 	    return null;
+    }
+    
+    public ExecutionYear getExecutionYear (){
+	return this.getAssociatedExecutionCourses().get(0).getExecutionYear();
     }
 
     public Boolean getIsAfterCurrentDate() {
@@ -777,5 +782,11 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public abstract boolean canBeAssociatedToRoom(AllocatableSpace room);
+
+    public void fillVigilancyReport() {
+	if (!getVigilantsReport()) {
+	    setVigilantsReport(Boolean.TRUE);
+	}
+    }
 
 }
