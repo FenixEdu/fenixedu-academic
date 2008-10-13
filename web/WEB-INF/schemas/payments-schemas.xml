@@ -401,7 +401,7 @@
 
 <schema name="GratuityEvent.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
 	<slot name="degree" layout="format">
-		<property name="format" value="${degreeType.localizedName} - ${name}" />
+		<property name="format" value="${presentationName}" />
 	</slot>
 	<slot name="executionYear.year" />
 </schema>

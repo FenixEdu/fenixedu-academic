@@ -17,7 +17,7 @@
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeDegrees" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.Degree" />
-		<property name="format" value="${tipoCurso.localizedName} - ${name}" />
+		<property name="format" value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
@@ -55,7 +55,7 @@
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.markSheet.DegreeTypeDegreesManager" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.Degree" />
-		<property name="format" value="${tipoCurso.localizedName} - ${name}" />
+		<property name="format" value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"

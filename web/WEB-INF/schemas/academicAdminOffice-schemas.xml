@@ -7,7 +7,7 @@
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreesByEmployeeUnit" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.Degree" />
-		<property name="format" value="${tipoCurso.localizedName} - ${name}" />
+		<property name="format" value="${presentationName}" />
 	</slot>
 	<slot name="executionYear" key="label.executionYear" 
 		layout="menu-select-postback"
@@ -1322,7 +1322,7 @@
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesForExecutionYear" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Degree" />
-		<property name="format" value="${degreeType.localizedName} - ${name}" />
+		<property name="format" value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
 </schema>
