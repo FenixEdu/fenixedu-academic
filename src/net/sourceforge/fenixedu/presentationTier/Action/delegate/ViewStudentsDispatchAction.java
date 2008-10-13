@@ -187,7 +187,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 	    for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
 		if (curricularCourse.hasAnyExecutionCourseIn(executionSemester)) {
 		    for (DegreeModuleScope scope : curricularCourse.getDegreeModuleScopes()) {
-			if (!scope.getCurricularSemester().equals(executionSemester.getSemester())) {
+			if (!scope.isActiveForExecutionPeriod(executionSemester)) {
 			    continue;
 			}
 
@@ -195,13 +195,15 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 				&& !scopeBelongsToDelegateCurricularYear(scope, delegateFunction.getCurricularYear().getYear())) {
 			    continue;
 			}
+
 			DelegateCurricularCourseBean bean = new DelegateCurricularCourseBean(curricularCourse, executionYear,
 				scope.getCurricularYear(), executionSemester);
-			bean.calculateEnrolledStudents();
-			result.add(bean);
+			if (!result.contains(bean)) {
+			    bean.calculateEnrolledStudents();
+			    result.add(bean);
+			}
 		    }
 		}
-
 	    }
 	}
 	Collections.sort(result,

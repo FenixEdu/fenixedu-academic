@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -86,11 +85,8 @@ public class DelegateCurricularCourseBean implements Serializable {
     public void calculateEnrolledStudents() {
 	List<Student> enrolledStudents = new ArrayList<Student>();
 	for (Enrolment enrolment : getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod())) {
-	    Registration registration = enrolment.getRegistration();
+	    enrolledStudents.add(enrolment.getRegistration().getStudent());
 
-	    if (registration.getCurricularYear(getExecutionYear()) == getCurricularYear()) {
-		enrolledStudents.add(registration.getStudent());
-	    }
 	}
 	Collections.sort(enrolledStudents, Student.NUMBER_COMPARATOR);
 	setEnrolledStudents(enrolledStudents);
@@ -119,4 +115,21 @@ public class DelegateCurricularCourseBean implements Serializable {
 	return 0;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+	return obj instanceof DelegateCurricularCourseBean ? equals((DelegateCurricularCourseBean) obj) : false;
+    }
+
+    public boolean equals(DelegateCurricularCourseBean delegateCurricularCourseBean) {
+	return getCurricularCourse().equals(delegateCurricularCourseBean.getCurricularCourse())
+		&& getCurricularYear().equals(delegateCurricularCourseBean.getCurricularYear())
+		&& getExecutionPeriod().equals(delegateCurricularCourseBean.getExecutionPeriod())
+		&& getExecutionYear().equals(delegateCurricularCourseBean.getExecutionYear());
+    }
+
+    @Override
+    public int hashCode() {
+	return getCurricularCourse().hashCode() + getCurricularYear().hashCode() + getExecutionPeriod().hashCode()
+		+ getExecutionYear().hashCode();
+    }
 }
