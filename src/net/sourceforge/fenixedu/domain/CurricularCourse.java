@@ -1537,7 +1537,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 		if (isInSamePeriod(enrolment, executionSemester)
 			&& markSheetType.getEnrolmentEvaluationType() == enrolment.getEnrolmentEvaluationType()) {
-		    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(markSheetType)) {
+		    if (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION
+			    || !enrolment.hasAssociatedMarkSheetOrFinalGrade(markSheetType)) {
 			result.add(enrolment);
 		    }
 		} else if (markSheetType == MarkSheetType.IMPROVEMENT) {
