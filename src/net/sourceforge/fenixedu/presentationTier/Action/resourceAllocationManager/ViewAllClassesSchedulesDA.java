@@ -82,8 +82,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 	}
 
 	Object[] args = { selectedInfoExecutionDegrees, infoExecutionPeriod };
-	List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService(userView,
-		"ReadDegreesClassesLessons", args);
+	List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService("ReadDegreesClassesLessons", args);
 
 	if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
 	    request.removeAttribute(SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE);

@@ -90,7 +90,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
 	if (studentNumber == null) {
 	    try {
 		Object args1[] = { userView.getUtilizador() };
-		infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername", args1);
+		infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", args1);
 
 		Object args2[] = { infoPerson };
 		infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
@@ -100,8 +100,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
 	} else {
 	    try {
 		Object args[] = { Integer.valueOf(studentNumber), DegreeType.MASTER_DEGREE };
-		InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
-			"ReadStudentByNumberAndDegreeType", args);
+		InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByNumberAndDegreeType", args);
 		infoStudents = new ArrayList();
 		infoStudents.add(infoStudent);
 		infoPerson = infoStudent.getInfoPerson();

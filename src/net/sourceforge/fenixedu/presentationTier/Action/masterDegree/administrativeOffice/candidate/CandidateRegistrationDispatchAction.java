@@ -94,8 +94,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
 	    Object args[] = { executionDegree };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegreeByOID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByOID", args);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e);
 	}

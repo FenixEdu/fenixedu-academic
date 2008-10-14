@@ -327,16 +327,14 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	    studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
 	    if (userType.equals(0)) {
-		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory.executeService(
-			getUserView(request), "ReadCurricularCoursesToEnroll", new Object[] {
-				registration.getLastStudentCurricularPlan(), getDegreeType(form), executionSemester,
-				executionDegreeID, curricularYearsList, curricularSemesters });
+		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory.executeService("ReadCurricularCoursesToEnroll", new Object[] {
+			registration.getLastStudentCurricularPlan(), getDegreeType(form), executionSemester,
+			executionDegreeID, curricularYearsList, curricularSemesters });
 
 	    } else {
-		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory.executeService(
-			getUserView(request), "ReadCurricularCoursesToEnrollSuperUser", new Object[] {
-				registration.getLastStudentCurricularPlan(), getDegreeType(form), executionSemester,
-				executionDegreeID, curricularYearsList, curricularSemesters });
+		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory.executeService("ReadCurricularCoursesToEnrollSuperUser", new Object[] {
+			registration.getLastStudentCurricularPlan(), getDegreeType(form), executionSemester,
+			executionDegreeID, curricularYearsList, curricularSemesters });
 	    }
 
 	} catch (NotAuthorizedFilterException e) {
@@ -583,16 +581,14 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	    final Integer userType = (Integer) form.get("userType");
 
 	    if (userType.equals(0)) {
-		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory.executeService(
-			getUserView(request), "ReadCurricularCoursesToEnroll", new Object[] { studentCurricularPlan,
-				getDegreeType(form), executionSemester, executionDegreeID, curricularYearsList,
-				curricularSemesters });
+		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory.executeService("ReadCurricularCoursesToEnroll", new Object[] { studentCurricularPlan,
+			getDegreeType(form), executionSemester, executionDegreeID, curricularYearsList,
+			curricularSemesters });
 
 	    } else {
-		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory.executeService(
-			getUserView(request), "ReadCurricularCoursesToEnrollSuperUser", new Object[] { studentCurricularPlan,
-				getDegreeType(form), executionSemester, executionDegreeID, curricularYearsList,
-				curricularSemesters });
+		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory.executeService("ReadCurricularCoursesToEnrollSuperUser", new Object[] { studentCurricularPlan,
+			getDegreeType(form), executionSemester, executionDegreeID, curricularYearsList,
+			curricularSemesters });
 	    }
 
 	} catch (NotAuthorizedFilterException e) {

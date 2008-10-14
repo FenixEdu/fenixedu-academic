@@ -37,9 +37,7 @@ public class PrepararEscolherDisciplinaETipoFormAction extends Action {
 
 	Object argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular[] = { new CurricularYearAndSemesterAndInfoExecutionDegree(
 		anoCurricular, semestre, iLE) };
-	List infoDisciplinasExecucao = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
-		"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
-		argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
+	List infoDisciplinasExecucao = (ArrayList) ServiceManagerServiceFactory.executeService("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 
 	List disciplinasExecucao = new ArrayList();
 	disciplinasExecucao.add(new LabelValueBean("escolher", ""));

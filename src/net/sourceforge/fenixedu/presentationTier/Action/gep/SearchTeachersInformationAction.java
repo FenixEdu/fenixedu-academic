@@ -106,8 +106,7 @@ public class SearchTeachersInformationAction extends SearchAction {
 	    if (executionYear != null) {
 		Object[] args = { executionYear };
 
-		infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(null, "ReadExecutionYear",
-			args);
+		infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService("ReadExecutionYear", args);
 	    } else {
 		infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadCurrentExecutionYear", new Object[] {});
 	    }

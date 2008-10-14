@@ -130,8 +130,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 		Object args[] = { Integer.valueOf(studentNumber), DegreeType.MASTER_DEGREE };
 
 		try {
-		    infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
-			    "ReadStudentByNumberAndDegreeType", args);
+		    infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByNumberAndDegreeType", args);
 		} catch (FenixServiceException e) {
 		    throw new FenixActionException(e);
 		}

@@ -417,8 +417,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	    // Object args[] = { resultForm.get("executionYear"),
 	    // resultForm.get("degree")};
 	    Object args[] = { executionDegree };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegreeByOID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByOID", args);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}

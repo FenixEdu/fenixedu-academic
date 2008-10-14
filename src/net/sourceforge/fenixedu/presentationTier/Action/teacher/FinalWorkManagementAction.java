@@ -685,8 +685,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	if (studentNumber == null) {
 	    try {
 		Object args1[] = { userView.getUtilizador() };
-		InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
-			"ReadPersonByUsername", args1);
+		InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", args1);
 
 		Object args2[] = { infoPerson };
 		infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
@@ -696,8 +695,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	} else {
 	    try {
 		Object args[] = { Integer.valueOf(studentNumber), DegreeType.DEGREE };
-		InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
-			"ReadStudentByNumberAndDegreeType", args);
+		InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByNumberAndDegreeType", args);
 		infoStudents = new ArrayList();
 		infoStudents.add(infoStudent);
 	    } catch (FenixServiceException e) {

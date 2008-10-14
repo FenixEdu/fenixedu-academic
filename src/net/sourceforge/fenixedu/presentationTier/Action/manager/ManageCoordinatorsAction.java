@@ -47,8 +47,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 	Object[] args = { executionDegreeId };
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegree", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
 	    errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
@@ -109,8 +108,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 	Object[] args = { executionDegreeId };
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegree", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
 	    errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));

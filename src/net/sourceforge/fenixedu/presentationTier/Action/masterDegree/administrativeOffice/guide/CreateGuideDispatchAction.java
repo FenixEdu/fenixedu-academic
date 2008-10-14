@@ -77,8 +77,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
 	    Object[] readExecutionDegreeArgs = { executionDegreeID };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegreeByOID", readExecutionDegreeArgs);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByOID", readExecutionDegreeArgs);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 

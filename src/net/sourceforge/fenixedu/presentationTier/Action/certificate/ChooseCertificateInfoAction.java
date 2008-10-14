@@ -107,8 +107,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
 	    }
 
-	    infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadCurrentExecutionYear", null);
+	    infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionYear", null);
 
 	} catch (RuntimeException e) {
 	    throw new RuntimeException("Error", e);

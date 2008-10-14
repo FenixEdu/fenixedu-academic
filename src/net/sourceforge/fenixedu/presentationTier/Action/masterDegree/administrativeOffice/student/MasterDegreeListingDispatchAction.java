@@ -130,8 +130,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
 	    Object args[] = { degreeCurricularPlanID };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
 	} catch (NonExistingServiceException e) {
 
 	} catch (FenixServiceException e) {

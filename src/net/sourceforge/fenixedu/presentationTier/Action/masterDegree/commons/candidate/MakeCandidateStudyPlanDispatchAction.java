@@ -284,8 +284,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	if (infoExecutionDegree == null) {
 	    try {
 		Object args[] = { new Integer(candidateID) };
-		infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-			"ReadExecutionDegreeByCandidateID", args);
+		infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByCandidateID", args);
 	    } catch (NotAuthorizedException e) {
 		throw new NotAuthorizedActionException(e);
 	    } catch (FenixServiceException e) {
@@ -450,8 +449,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
 	try {
 	    Object args[] = { candidateID };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegreeByCandidateID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByCandidateID", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -543,8 +541,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
 	    Object args[] = { candidateID };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegreeByCandidateID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByCandidateID", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

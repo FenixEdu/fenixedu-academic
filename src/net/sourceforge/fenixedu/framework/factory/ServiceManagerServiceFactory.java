@@ -22,7 +22,7 @@ public class ServiceManagerServiceFactory {
     public static Object executeService(String serviceName, Object[] serviceArgs) throws FenixServiceException,
 	    FenixFilterException {
 	final IUserView userView = UserView.getUser();
-	return executeService(userView, serviceName, serviceArgs);
+	return ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
     }
 
     public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)

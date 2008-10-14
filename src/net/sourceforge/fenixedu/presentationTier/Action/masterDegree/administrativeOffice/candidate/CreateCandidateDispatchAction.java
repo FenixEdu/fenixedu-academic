@@ -194,8 +194,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
 	InfoMasterDegreeCandidate createdCandidate = null;
 	try {
-	    createdCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView,
-		    "CreateMasterDegreeCandidate", args);
+	    createdCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService("CreateMasterDegreeCandidate", args);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("O Candidato", e);
 	}

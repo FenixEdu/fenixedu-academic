@@ -272,8 +272,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegreeByDegreeCurricularPlanID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByDegreeCurricularPlanID", args);
 	} catch (FenixServiceException exception) {
 	    exception.printStackTrace();
 	    saveErrors(request, errors);
@@ -360,8 +359,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 	Object args[] = { executionDegreeID };
 
 	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadExecutionDegree", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
 	} catch (FenixServiceException exception) {
 	    throw new FenixActionException(exception);
 	}

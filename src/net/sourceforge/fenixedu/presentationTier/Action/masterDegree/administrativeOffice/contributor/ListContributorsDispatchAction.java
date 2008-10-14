@@ -144,7 +144,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 		area, parishOfResidence, districtSubdivisionOfResidence, districtOfResidence };
 	InfoContributor newInfoContributor = null;
 	try {
-	    newInfoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(userView, "EditContributor", args);
+	    newInfoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService("EditContributor", args);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("O Contribuinte", e);
 	}

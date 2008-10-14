@@ -75,8 +75,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
 
 	siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("ReadStudentsByCurricularCourse",
 		argsReadSiteView);
-	infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(userView,
-		"ReadExecutionCourseByOID", argsReadExecutionCourse);
+	infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService("ReadExecutionCourseByOID", argsReadExecutionCourse);
 	Object argsReadSite[] = { infoExecutionCourse };
 	infoSite = (InfoSite) ServiceManagerServiceFactory.executeService("ReadSite", argsReadSite);
 

@@ -129,8 +129,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 	InfoCurricularCourse infoCurricularCourse = null;
 	try {
 	    Object args[] = { courseID };
-	    infoCurricularCourse = (InfoCurricularCourse) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadCurricularCourseByID", args);
+	    infoCurricularCourse = (InfoCurricularCourse) ServiceManagerServiceFactory.executeService("ReadCurricularCourseByID", args);
 	} catch (NonExistingServiceException e) {
 
 	} catch (FenixServiceException e) {

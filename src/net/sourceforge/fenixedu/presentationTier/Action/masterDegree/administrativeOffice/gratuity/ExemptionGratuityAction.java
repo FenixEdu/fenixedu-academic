@@ -179,8 +179,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	InfoGratuityValues infoGratuityValues = null;
 	Object args3[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear };
 	try {
-	    infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear", args3);
+	    infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService("ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear", args3);
 	} catch (FenixServiceException fenixServiceException) {
 	    fenixServiceException.printStackTrace();
 	    errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -204,8 +203,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	InfoGratuitySituation infoGratuitySituation = null;
 	Object args2[] = { studentCurricularPlanID, infoGratuityValues.getIdInternal() };
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(userView,
-		    "ReadGratuitySituationByStudentCurricularPlanByGratuityValues", args2);
+	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService("ReadGratuitySituationByStudentCurricularPlanByGratuityValues", args2);
 	} catch (FenixServiceException fenixServiceException) {
 	    fenixServiceException.printStackTrace();
 	    errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));

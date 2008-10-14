@@ -267,8 +267,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	InfoExecutionCourse infoExecutionCourse = null;
 	Object args[] = { infoExecutionCourseEditor };
 	try {
-	    infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(userView,
-		    "EditExecutionCourseByManager", args);
+	    infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService("EditExecutionCourseByManager", args);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();

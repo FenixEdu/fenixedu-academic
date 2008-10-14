@@ -100,8 +100,7 @@ public class GenerateFilesAction extends FenixDispatchAction {
 	Object[] argsExecutionYear = { executionYear };
 	InfoExecutionYear infoExecutionYear = null;
 	try {
-	    infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionYear",
-		    argsExecutionYear);
+	    infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService("ReadExecutionYear", argsExecutionYear);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException();

@@ -58,8 +58,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
 	List infoExecutionCourses;
 	try {
-	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(null, "SelectExportExecutionCourse",
-		    argsSelectExecutionCourse);
+	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService("SelectExportExecutionCourse", argsSelectExecutionCourse);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

@@ -227,7 +227,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	Object args[] = { candidateID };
 	try {
-	    result = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
+	    result = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService("GetCandidatesByID", args);
 	} catch (Exception e) {
 	    throw new Exception(e);
 	}

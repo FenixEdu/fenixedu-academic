@@ -35,8 +35,7 @@ public class InstitucionalProjectManagerIndexAction extends FenixAction {
 
 	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(),
 		mapping.getModuleConfig().getPrefix() });
-	List<InfoRubric> infoCostCenterList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadUserCostCenters",
-		new Object[] { userView.getPerson(), mapping.getModuleConfig().getPrefix() });
+	List<InfoRubric> infoCostCenterList = (List) ServiceManagerServiceFactory.executeService("ReadUserCostCenters", new Object[] { userView.getPerson(), mapping.getModuleConfig().getPrefix() });
 	request.setAttribute("infoCostCenterList", infoCostCenterList);
 	request.setAttribute("infoCostCenter", new InfoRubric());
 	return mapping.findForward("success");

@@ -77,8 +77,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 	    String anoLectivo = new String();
 	    InfoExecutionYear infoExecutionYear = null;
 	    try {
-		infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(userView,
-			"ReadCurrentExecutionYear", null);
+		infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionYear", null);
 	    } catch (RuntimeException e) {
 
 		throw new RuntimeException("Error", e);
@@ -238,8 +237,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				}
 				Object args[] = { infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED };
 				try {
-				    enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
-					    "GetEnrolmentList", args);
+				    enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", args);
 				} catch (NonExistingServiceException e) {
 				    throw new NonExistingActionException("Inscrição", e);
 				}
