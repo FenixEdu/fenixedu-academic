@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
-import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -27,12 +26,12 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOff
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
@@ -179,6 +178,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
 	    SibsTransactionDetailDTO transactionDetail) {
 	return internalProcess(responsibleUser, buildEntryDTOsFrom(amountToPay), transactionDetail);
+    }
+
+    @Override
+    public boolean isInDebt() {
+	return isOpen() && (getPaymentEndDate() == null || getPaymentEndDate().isBefore(new YearMonthDay()));
     }
 
     private List<EntryDTO> buildEntryDTOsFrom(final Money amountToPay) {
