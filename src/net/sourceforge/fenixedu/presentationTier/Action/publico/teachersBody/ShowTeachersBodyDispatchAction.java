@@ -58,8 +58,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 	    Object[] args = { executionYearId };
 
 	    List executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYearId", args);
-	    List executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears");
-	    List departments = (List) ServiceUtils.executeService("ReadAllDepartments");
+	    List executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears", null);
+	    List departments = (List) ServiceUtils.executeService("ReadAllDepartments", null);
 
 	    if (executionDegrees != null && executionDegrees.size() > 0) {
 		// put execution year in the form

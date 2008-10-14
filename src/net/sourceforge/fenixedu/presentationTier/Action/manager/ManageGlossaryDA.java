@@ -28,7 +28,7 @@ public class ManageGlossaryDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	List infoGlossaryEntries = (List) ServiceUtils.executeService("ReadGlossaryEntries");
+	List infoGlossaryEntries = (List) ServiceUtils.executeService("ReadGlossaryEntries", null);
 	Collections.sort(infoGlossaryEntries, new BeanComparator("term"));
 	request.setAttribute("infoGlossaryEntries", infoGlossaryEntries);
 

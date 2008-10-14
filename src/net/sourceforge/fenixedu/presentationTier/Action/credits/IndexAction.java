@@ -34,7 +34,7 @@ public class IndexAction extends Action {
 
 	DynaValidatorForm executionPeriodForm = (DynaValidatorForm) form;
 
-	List executionPeriodsNotClosed = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
+	List executionPeriodsNotClosed = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
 
 	removeCreditsPointZeroExecutionPeriod(executionPeriodsNotClosed);
 	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, executionPeriodForm);

@@ -71,7 +71,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	request.setAttribute("grantOwnerNumber", request.getParameter("grantOwnerNumber"));
 
 	List countryList = null;
-	countryList = (List) ServiceUtils.executeService("ReadAllCountries");
+	countryList = (List) ServiceUtils.executeService("ReadAllCountries", null);
 
 	// Adding a select country line to the list (presentation reasons)
 	InfoCountryEditor selectCountry = new InfoCountryEditor();

@@ -434,7 +434,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // BEGIN Drop down menu logic
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
 	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
-		.executeService("ReadNotClosedExecutionPeriods");
+		.executeService("ReadNotClosedExecutionPeriods", null);
 
 	Collections.sort(infoExecutionPeriods, InfoExecutionPeriod.COMPARATOR_BY_YEAR_AND_SEMESTER);
 

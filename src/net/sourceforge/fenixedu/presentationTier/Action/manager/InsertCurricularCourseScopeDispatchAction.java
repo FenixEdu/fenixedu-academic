@@ -77,7 +77,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
 	List<InfoExecutionPeriod> infoExecutionPeriods = null;
 	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
+	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

@@ -50,7 +50,7 @@ public class PersonManagement implements IPersonManagement {
 	personDTO.print();
 
 	try {
-	    ServiceUtils.executeService("UpdatePersonInformationFromCitizenCard", personDTO);
+	    ServiceUtils.executeService("UpdatePersonInformationFromCitizenCard", new Object[] { personDTO });
 	} catch (FenixFilterException e) {
 	    return Boolean.FALSE;
 	} catch (FenixServiceException e) {

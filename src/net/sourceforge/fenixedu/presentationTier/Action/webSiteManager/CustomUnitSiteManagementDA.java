@@ -416,7 +416,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	    orderedLinks.add(initialLinks.get(itemIndex - 1));
 	}
 
-	ServiceUtils.executeService("RearrangeUnitSiteLinks", site, top, orderedLinks);
+	ServiceUtils.executeService("RearrangeUnitSiteLinks", new Object[] { site, top, orderedLinks });
     }
 
     public ActionForward chooseIntroductionSections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

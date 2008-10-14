@@ -31,10 +31,10 @@ public class ManageFAQDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	List infoFAQSections = (List) ServiceUtils.executeService("ReadFAQSections");
+	List infoFAQSections = (List) ServiceUtils.executeService("ReadFAQSections", null);
 	request.setAttribute("infoFAQSections", infoFAQSections);
 
-	List infoFAQEntries = (List) ServiceUtils.executeService("ReadFAQEntries");
+	List infoFAQEntries = (List) ServiceUtils.executeService("ReadFAQEntries", null);
 	request.setAttribute("infoFAQEntries", infoFAQEntries);
 
 	List rootInfoFAQSections = new ArrayList(infoFAQSections);

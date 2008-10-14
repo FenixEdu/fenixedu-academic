@@ -89,7 +89,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	    throws FenixServiceException, FenixFilterException {
 	prepareConstants(teacherExecutionCourseForm, request);
 
-	List executionPeriodsNotClosed = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
+	List executionPeriodsNotClosed = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
 
 	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, teacherExecutionCourseForm);
 

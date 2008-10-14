@@ -171,7 +171,7 @@ public class ViewTeacherService extends FenixBackingBean {
     private List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 
 	List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
-		.executeService("ReadNotClosedExecutionYears");
+		.executeService("ReadNotClosedExecutionYears", null);
 
 	List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
 	for (InfoExecutionYear executionYear : executionYears) {

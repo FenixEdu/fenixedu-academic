@@ -84,7 +84,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
 
-	List executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears");
+	List executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears", null);
 
 	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
 	    public boolean evaluate(Object arg0) {

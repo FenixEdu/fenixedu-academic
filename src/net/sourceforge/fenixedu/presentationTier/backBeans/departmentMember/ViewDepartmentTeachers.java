@@ -151,7 +151,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 	if (this.executionYearItems == null) {
 
 	    List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
-		    .executeService("ReadNotClosedExecutionYears");
+		    .executeService("ReadNotClosedExecutionYears", null);
 
 	    List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
 	    for (InfoExecutionYear executionYear : executionYears) {

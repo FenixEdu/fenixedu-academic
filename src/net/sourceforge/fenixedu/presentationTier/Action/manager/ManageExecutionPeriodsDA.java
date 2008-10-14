@@ -32,7 +32,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 	    throws Exception {
 
 	try {
-	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
+	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
 	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 

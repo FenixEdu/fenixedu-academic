@@ -50,7 +50,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
 	Integer degreeId = ied.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
 
-	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods");
+	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
 	Object[] args = { degreeId };
 	List teachersRes = (List) ServiceUtils.executeService("ReadOldInquiriesTeachersResByDegreeId", args);

@@ -130,7 +130,7 @@ public class ManageHomepageDA extends SiteManagementDA {
     @Override
     protected Homepage getSite(HttpServletRequest request) {
 	try {
-	    return (Homepage) ServiceUtils.executeService("GetHomepage", getUserView(request).getPerson(), true);
+	    return (Homepage) ServiceUtils.executeService("GetHomepage", new Object[] { getUserView(request).getPerson(), true });
 	} catch (Exception e) {
 	    throw new RuntimeException(e);
 	}

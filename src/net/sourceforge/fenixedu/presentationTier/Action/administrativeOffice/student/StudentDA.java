@@ -374,7 +374,7 @@ public class StudentDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    final RegistrationRegime regime = getRegistrationRegime(request);
-	    ServiceUtils.executeService("DeleteRegistrationRegime", regime);
+	    ServiceUtils.executeService("DeleteRegistrationRegime", new Object[] { regime });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}

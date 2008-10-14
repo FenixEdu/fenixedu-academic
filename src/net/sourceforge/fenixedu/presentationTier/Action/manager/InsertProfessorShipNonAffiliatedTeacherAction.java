@@ -40,7 +40,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 
 	List institutions = null;
 	try {
-	    institutions = (List) ServiceUtils.executeService("ReadInstitutions");
+	    institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
 
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
@@ -71,7 +71,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 
 	List institutions = null;
 	try {
-	    institutions = (List) ServiceUtils.executeService("ReadInstitutions");
+	    institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
 
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
@@ -112,7 +112,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 	}
 	List institutions = null;
 	try {
-	    institutions = (List) ServiceUtils.executeService("ReadInstitutions");
+	    institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
 
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
@@ -135,7 +135,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 
 	List institutions = null;
 	try {
-	    institutions = (List) ServiceUtils.executeService("ReadInstitutions");
+	    institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
 
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));

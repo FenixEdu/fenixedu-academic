@@ -226,7 +226,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
 		"ReadOldIquiriesSummaryByDegreeID", argsDegree);
 
 	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
-		.executeService("ReadExecutionPeriods");
+		.executeService("ReadExecutionPeriods", null);
 	List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(infoExecutionPeriods);
 	for (InfoExecutionPeriod iep : infoExecutionPeriods) {
 	    boolean found = false;

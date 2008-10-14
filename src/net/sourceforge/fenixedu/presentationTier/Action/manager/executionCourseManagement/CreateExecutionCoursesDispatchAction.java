@@ -49,7 +49,7 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
 	Collection<InfoDegreeCurricularPlan> degreeCurricularPlans = (Collection<InfoDegreeCurricularPlan>) ServiceUtils
 		.executeService("ReadActiveDegreeCurricularPlansByDegreeType", args);
 
-	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
+	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
 
 	request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
 	request.setAttribute("executionPeriods", executionPeriods);

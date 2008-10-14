@@ -65,7 +65,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	if (roleType != null && roleType.length() != 0) {
 	    if (roleType.equals(RoleType.EMPLOYEE.getName()) || roleType.equals(RoleType.TEACHER.getName())) {
 		if (roleType.equals(RoleType.TEACHER.getName())) {
-		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments");
+		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", null);
 		    request.setAttribute("departments", departments);
 		}
 	    }
@@ -166,7 +166,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	if (roleType.equals(RoleType.TEACHER.getName())) {
-	    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments");
+	    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", null);
 	    request.setAttribute("departments", departments);
 	}
 

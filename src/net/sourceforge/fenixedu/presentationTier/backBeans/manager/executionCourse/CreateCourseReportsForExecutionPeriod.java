@@ -25,7 +25,7 @@ public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
 
     public List getExecutionPeriods() throws FenixFilterException, FenixServiceException {
 
-	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
+	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
 
 	CollectionUtils.transform(executionPeriods, new Transformer() {
 

@@ -131,8 +131,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 	}
 
 	// Obtaining the current execution period
-	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-		.executeService("ReadCurrentExecutionPeriod");
+	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
+		"ReadCurrentExecutionPeriod", null);
 	request.setAttribute("executionPeriod", currentExecutionPeriod.getExecutionPeriod());
 	final Date inquiryResponseBegin = currentExecutionPeriod.getInquiryResponseBegin();
 	final Date inquiryResponseEnd = currentExecutionPeriod.getInquiryResponseEnd();
@@ -946,7 +946,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	// FIXME: THIS SHOULD BE PARAMETRIZABLE!!!!!
 	// Obtaining the current execution period
 	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-		.executeService("ReadCurrentExecutionPeriod");
+		.executeService("ReadCurrentExecutionPeriod", null);
 
 	Integer studentExecutionDegreeId = (Integer) inquiryForm.get("studentExecutionDegreeId");
 	InfoExecutionDegree infoExecutionDegreeStudent;

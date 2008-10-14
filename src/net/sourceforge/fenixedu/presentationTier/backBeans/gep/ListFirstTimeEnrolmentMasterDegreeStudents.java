@@ -40,7 +40,7 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
     public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 	List<SelectItem> result = new ArrayList<SelectItem>();
 	List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
-		.executeService("ReadNotClosedExecutionYears");
+		.executeService("ReadNotClosedExecutionYears", null);
 
 	Collections.sort(executionYears, new Comparator<InfoExecutionYear>() {
 

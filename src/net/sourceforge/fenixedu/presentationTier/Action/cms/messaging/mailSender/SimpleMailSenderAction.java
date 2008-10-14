@@ -68,7 +68,7 @@ public class SimpleMailSenderAction extends FenixDispatchAction {
 
 	SendMailReport report;
 	try {
-	    report = (SendMailReport) ServiceUtils.executeService("SendEMail", bean.getEmailParameters());
+	    report = (SendMailReport) ServiceUtils.executeService("SendEMail", new Object[] { bean.getEmailParameters() });
 	    processReport(request, bean, report);
 	} catch (Exception e) {
 	    addActionMessage("error", request, "messaging.mail.send.error");

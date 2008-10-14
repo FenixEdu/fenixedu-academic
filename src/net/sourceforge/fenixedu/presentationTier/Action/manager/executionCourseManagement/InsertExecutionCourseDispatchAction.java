@@ -47,7 +47,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
 	List infoExecutionPeriods = null;
 	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
+	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 	} catch (FenixServiceException ex) {
 	    throw new FenixActionException();
 	}

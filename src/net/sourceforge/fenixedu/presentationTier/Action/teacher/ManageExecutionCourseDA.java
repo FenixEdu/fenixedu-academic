@@ -48,6 +48,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ManageExecutionCourseDA extends FenixDispatchAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	propageContextIds(request);
@@ -782,7 +783,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    finalOrderedReferences.addAll(getOptionalBibliographicReferences(executionCourse));
 	}
 
-	ServiceUtils.executeService("OrderBibliographicReferences", executionCourse, finalOrderedReferences);
+	ServiceUtils.executeService("OrderBibliographicReferences", new Object[] { executionCourse, finalOrderedReferences });
 	return mapping.findForward("bibliographicReference");
     }
 

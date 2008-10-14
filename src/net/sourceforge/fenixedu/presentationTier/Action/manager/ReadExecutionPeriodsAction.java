@@ -32,7 +32,7 @@ public class ReadExecutionPeriodsAction extends FenixAction {
 	    throws FenixActionException, FenixFilterException {
 
 	try {
-	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
+	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
 	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 

@@ -64,8 +64,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	List infoExecutionYearList = null;
 	List infoCampusList;
 	try {
-	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears");
-	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus");
+	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears", null);
+	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -420,8 +420,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	 * jsp
 	 */
 	try {
-	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears");
-	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus");
+	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears", null);
+	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -480,8 +480,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	 * jsp
 	 */
 	try {
-	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears");
-	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus");
+	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears", null);
+	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

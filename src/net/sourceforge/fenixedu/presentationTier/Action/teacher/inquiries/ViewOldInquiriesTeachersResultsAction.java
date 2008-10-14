@@ -44,7 +44,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
 	request.setAttribute("infoTeacher", it);
 
-	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods");
+	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
 	Object[] args = { it.getTeacherNumber() };
 	List teachersRes = (List) ServiceUtils.executeService("ReadOldInquiriesTeachersResByTeacherNumber", args);

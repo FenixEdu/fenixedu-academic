@@ -50,7 +50,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
     public ActionForward listFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ServiceUtils.executeService("ConfirmManagerIdentity");
+	ServiceUtils.executeService("ConfirmManagerIdentity", null);
 
 	DynaActionForm actionForm = (DynaActionForm) form;
 	String logDirName = (String) actionForm.get("logDirName");
@@ -79,7 +79,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
     public ActionForward analyseFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ServiceUtils.executeService("ConfirmManagerIdentity");
+	ServiceUtils.executeService("ConfirmManagerIdentity", null);
 
 	DynaActionForm actionForm = (DynaActionForm) form;
 	String logDirName = (String) actionForm.get("logDirName");

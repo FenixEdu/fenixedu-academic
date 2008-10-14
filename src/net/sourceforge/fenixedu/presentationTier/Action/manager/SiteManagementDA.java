@@ -588,7 +588,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	}
 
 	try {
-	    ServiceUtils.executeService("DeleteFileContent", fileContent);
+	    ServiceUtils.executeService("DeleteFileContent", new Object[] { fileContent });
 	} catch (FileManagerException e1) {
 	    addErrorMessage(request, "items", "errors.unableToDeleteFile");
 	}
@@ -660,7 +660,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	FileItemPermissionBean bean = (FileItemPermissionBean) viewState.getMetaObject().getObject();
 	try {
 	    Site site = fileItem.getSite();
-	    ServiceUtils.executeService("EditFilePermissions", site, fileItem, bean.getPermittedGroup());
+	    ServiceUtils.executeService("EditFilePermissions", new Object[] { site, fileItem, bean.getPermittedGroup() });
 	    return mapping.findForward("section");
 	} catch (FileManagerException ex) {
 	    addErrorMessage(request, "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions");
@@ -856,7 +856,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	}
 
 	Container container = (Container) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(containerId));
-	Content content = (Content) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(contentId));
+	Content content = RootDomainObject.getInstance().readContentByOID(Integer.valueOf(contentId));
 
 	executeService("AddFunctionalityToContainer", new Object[] { content, container });
 

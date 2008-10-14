@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
@@ -156,7 +155,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
     }
 
     protected Integer getObjectId(HttpServletRequest request, String name) {
-	return getId((String) request.getParameter(name));
+	return getId(request.getParameter(name));
     }
 
     protected Integer getId(String id) {
@@ -186,7 +185,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception throw by the service
      */
     public static void deleteFunctionality(Content functionality) throws Exception {
-	ServiceUtils.executeService("DeleteFunctionality", functionality);
+	ServiceUtils.executeService("DeleteFunctionality", new Object[] { functionality });
     }
 
     /**
@@ -201,7 +200,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void rearrangeFunctionalities(List<Pair<Module, Content>> arrangements) throws Exception {
-	ServiceUtils.executeService("ArrangeFunctionalities", arrangements);
+	ServiceUtils.executeService("ArrangeFunctionalities", new Object[] { arrangements });
     }
 
     /**
@@ -214,7 +213,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void enable(Functionality functionality) throws Exception {
-	ServiceUtils.executeService("ChangeEnableInFunctionality", functionality, true);
+	ServiceUtils.executeService("ChangeEnableInFunctionality", new Object[] { functionality, true });
     }
 
     /**
@@ -227,7 +226,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void disable(Functionality functionality) throws Exception {
-	ServiceUtils.executeService("ChangeEnableInFunctionality", functionality, false);
+	ServiceUtils.executeService("ChangeEnableInFunctionality", new Object[] { functionality, false });
     }
 
     /**
@@ -241,7 +240,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            availability
      */
     public static void setGroupAvailability(Content functionality, String expression) throws Exception {
-	ServiceUtils.executeService("CreateGroupAvailability", functionality, expression);
+	ServiceUtils.executeService("CreateGroupAvailability", new Object[] { functionality, expression });
     }
 
     /**
@@ -264,7 +263,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      */
     public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed)
 	    throws Exception {
-	ServiceUtils.executeService("ImportFunctionalities", module, stream, principalPreserved, uuidUsed);
+	ServiceUtils.executeService("ImportFunctionalities", new Object[] { module, stream, principalPreserved, uuidUsed });
     }
 
     /**
@@ -276,6 +275,6 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            the stream containing the XML funcitonalities structure
      */
     public static void importStartupFunctionalities(InputStream stream) throws Exception {
-	ServiceUtils.executeService("ImportStartupFunctionalities", stream);
+	ServiceUtils.executeService("ImportStartupFunctionalities", new Object[] { stream });
     }
 }

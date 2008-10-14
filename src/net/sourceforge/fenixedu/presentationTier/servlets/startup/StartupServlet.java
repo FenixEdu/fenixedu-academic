@@ -43,7 +43,7 @@ public class StartupServlet extends HttpServlet {
 	try {
 	    try {
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-			.executeService("ReadCurrentExecutionPeriod");
+			.executeService("ReadCurrentExecutionPeriod", null);
 		config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
 		setScheduleForGratuitySituationCreation();
@@ -54,7 +54,7 @@ public class StartupServlet extends HttpServlet {
 
 	    try {
 		long start = System.currentTimeMillis();
-		ServiceUtils.executeService("CreateMetaDomainObectTypes");
+		ServiceUtils.executeService("CreateMetaDomainObectTypes", null);
 		long end = System.currentTimeMillis();
 		System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
 	    } catch (Throwable throwable) {

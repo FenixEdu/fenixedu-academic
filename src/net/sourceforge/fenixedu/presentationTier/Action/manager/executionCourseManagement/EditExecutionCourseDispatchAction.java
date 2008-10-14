@@ -57,7 +57,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	List infoExecutionPeriods = null;
 
 	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
+	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
 	} catch (FenixServiceException ex) {
 	    throw new FenixActionException();
@@ -267,7 +267,8 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	InfoExecutionCourse infoExecutionCourse = null;
 	Object args[] = { infoExecutionCourseEditor };
 	try {
-	    infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService("EditExecutionCourseByManager", args);
+	    infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
+		    "EditExecutionCourseByManager", args);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();

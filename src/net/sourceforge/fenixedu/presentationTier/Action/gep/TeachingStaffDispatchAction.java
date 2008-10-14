@@ -106,7 +106,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-	List institutions = (List) ServiceUtils.executeService("ReadAllInstitutions");
+	List institutions = (List) ServiceUtils.executeService("ReadAllInstitutions", null);
 	Collections.sort(institutions, new BeanComparator("name"));
 
 	request.setAttribute("professorships", executionCourse.getProfessorships());
@@ -218,7 +218,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     private List getExecutionYears(IUserView userView) throws FenixServiceException, FenixFilterException {
-	List executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears");
+	List executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears", null);
 	return executionYears;
     }
 
