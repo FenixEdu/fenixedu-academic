@@ -1,0 +1,124 @@
+package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
+
+import java.io.Serializable;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.interfaces.HasDegreeType;
+import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/studentStatistics", module = "directiveCouncil")
+@Forwards( {
+    @Forward(name = "show.student.statistics", path = "df.page.student.statistics")
+})
+public class StudentStatisticsDA extends FenixDispatchAction {
+
+    public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {
+	private DegreeType degreeType;
+	private DomainReference<ExecutionYear> executionYearReference;
+	private DomainReference<ExecutionDegree> executionDegreeReference;
+
+	public DegreeType getDegreeType() {
+	    return degreeType;
+	}
+
+	public void setDegreeType(DegreeType degreeType) {
+	    this.degreeType = degreeType;
+	}
+
+	public ExecutionYear getExecutionYear() {
+	    return executionYearReference == null ? null : executionYearReference.getObject();
+	}
+
+	public void setExecutionYear(final ExecutionYear executionYear) {
+	    executionYearReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	}
+
+	public ExecutionDegree getExecutionDegree() {
+	    return executionDegreeReference == null ? null : executionDegreeReference.getObject();
+	}
+
+	public void setExecutionDegree(final ExecutionDegree executionDegree) {
+	    executionDegreeReference = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	}
+
+	public ExecutionYear getExecutionYearFourYearsBack() {
+	    final ExecutionYear executionYear = getExecutionYear();
+	    return executionYear == null ? null : ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(executionYear);
+	}
+    }
+
+    public static class StatisticsBean implements Serializable {
+
+	private final ContextBean contextBean;
+
+	public StatisticsBean(final ContextBean contextBean) {
+	    this.contextBean = contextBean;
+	}
+
+	public int getNumberOfRegisteredStudents() {
+	    final ExecutionDegree executionDegree = contextBean.getExecutionDegree();
+	    int counter = 0;
+	    if (executionDegree == null) {
+		final ExecutionYear executionYear = contextBean.getExecutionYear();
+		final DegreeType degreeType = contextBean.getDegreeType();
+		for (final Degree degree : rootDomainObject.getDegreesSet()) {
+		    if (degree.getDegreeType() == degreeType) {
+			counter += countDegreeRegistrations(executionYear, degree);
+		    }
+		}
+	    } else {
+		final Degree degree = executionDegree.getDegree();
+		counter = countDegreeRegistrations(executionDegree.getExecutionYear(), degree);
+	    }
+	    return counter;
+	}
+
+	private int countDegreeRegistrations(final ExecutionYear executionYear, final Degree degree) {
+	    int counter = 0;
+	    for (final Registration registration : degree.getRegistrationsSet()) {
+		if (registration.isInRegisteredState(executionYear)) {
+		    counter++;
+		}
+	    }
+	    return counter;
+	}
+
+	public Boolean getShowResult() {
+	    return (contextBean.getDegreeType() != null && contextBean.getExecutionYear() != null) || contextBean.getExecutionDegree() != null;
+	}
+    }
+
+    public ActionForward showStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ContextBean contextBean = (ContextBean) getRenderedObject();
+	if (contextBean == null) {
+	    contextBean = new ContextBean();
+	    contextBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	}
+	RenderUtils.invalidateViewState();
+	request.setAttribute("contextBean", contextBean);
+	request.setAttribute("statisticsBean", new StatisticsBean(contextBean));
+
+	return mapping.findForward("show.student.statistics");
+    }
+
+}

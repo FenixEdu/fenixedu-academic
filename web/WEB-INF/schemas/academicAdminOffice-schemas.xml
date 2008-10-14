@@ -1698,3 +1698,29 @@
 		<property name="excludedValues" value="FULL_TIME" />
 	</slot>
 </schema>
+
+<schema name="student.statistics.bean"
+		type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.StudentStatisticsDA$ContextBean"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="degreeType" key="label.degreeType"
+		layout="menu-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="executionDegree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionYearAndDegreeTypeProvider" />
+		<property name="format" value="${presentationName}" />
+		<property name="destination" value="showForm"/>
+	</slot>
+</schema>
+
+<schema name="student.statistics.bean.results"
+		type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.StudentStatisticsDA$StatisticsBean"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="numberOfRegisteredStudents" key="label.numberOfRegisteredStudents"/>
+</schema>

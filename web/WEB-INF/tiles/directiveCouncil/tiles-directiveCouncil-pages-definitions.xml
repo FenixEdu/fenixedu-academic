@@ -59,4 +59,7 @@
      <definition name="df.page.people.search" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/directiveCouncil/searchPeople.jsp"/>
     </definition>
+     <definition name="df.page.student.statistics" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/directiveCouncil/showStudentStatistics.jsp"/>
+    </definition>
 </tiles-definitions>
