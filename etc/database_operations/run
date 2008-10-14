@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Updating Vigilancy Reports that were left untouch in the previous script" vigilancyDataFix.sql
