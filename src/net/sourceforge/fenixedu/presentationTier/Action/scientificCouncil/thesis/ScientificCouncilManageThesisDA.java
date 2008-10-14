@@ -195,7 +195,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	Thesis thesis = getThesis(request);
 
 	if (thesis != null) {
-	    executeService("ApproveThesisProposal", thesis);
+	    executeService("ApproveThesisProposal", new Object[] { thesis });
 	    addActionMessage("mail", request, "thesis.approved.mail.sent");
 	}
 
@@ -231,7 +231,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
 	if (thesis != null) {
 	    try {
-		executeService("ApproveThesisDiscussion", thesis);
+		executeService("ApproveThesisDiscussion", new Object[] { thesis });
 		addActionMessage("mail", request, "thesis.evaluated.mail.sent");
 	    } catch (DomainException e) {
 		addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -330,8 +330,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisDissertationFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean
-			.getTitle(), bean.getSubTitle(), bean.getLanguage());
+		executeService("CreateThesisDissertationFile", new Object[] { getThesis(request), temporaryFile,
+			bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage() });
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -352,8 +352,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisAbstractFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean
-			.getTitle(), bean.getSubTitle(), bean.getLanguage());
+		executeService("CreateThesisAbstractFile", new Object[] { getThesis(request), temporaryFile,
+			bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage() });
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();

@@ -69,7 +69,7 @@ public abstract class AbstractOptionalCurricularCoursesLocationManagementDA exte
 
 	final OptionalCurricularCoursesLocationBean bean = getBean();
 	try {
-	    executeService("MoveCurriculumLines", bean);
+	    executeService("MoveCurriculumLines", new Object[] { bean });
 	    return backToStudentEnrolments(mapping, actionForm, request, response);
 
 	} catch (EnrollmentDomainException ex) {

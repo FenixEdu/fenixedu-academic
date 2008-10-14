@@ -83,7 +83,7 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
 	final Object[] args = { equivalencePlanEntry };
-	executeService(request, "DeleteEquivalencePlanEntry", args);
+	executeService("DeleteEquivalencePlanEntry", args);
 	return mapping.findForward("showPlan");
     }
 

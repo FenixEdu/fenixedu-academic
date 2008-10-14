@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -43,6 +42,7 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
@@ -55,6 +55,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -76,12 +77,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return UserView.getUser();
     }
 
-    protected Object executeService(final HttpServletRequest request, final String serviceName, final Object[] serviceArgs)
-	    throws FenixFilterException, FenixServiceException {
-	return ServiceUtils.executeService(serviceName, serviceArgs);
-    }
-
-    protected Object executeService(final String serviceName, final Object... serviceArgs) throws FenixFilterException,
+    protected Object executeService(final String serviceName, final Object[] serviceArgs) throws FenixFilterException,
 	    FenixServiceException {
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
@@ -217,11 +213,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	// messages are not shown in page
 	e.printStackTrace();
 	return input;
-    }
-
-    protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-	final Object[] args = { getFactoryObject() };
-	return executeService(request, "ExecuteFactoryMethod", args);
     }
 
     protected Object executeFactoryMethod() throws FenixFilterException, FenixServiceException {

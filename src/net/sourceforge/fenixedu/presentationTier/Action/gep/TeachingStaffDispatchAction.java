@@ -209,8 +209,8 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     public ActionForward deleteNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    executeService("DeleteNonAffiliatedTeacher", rootDomainObject.readNonAffiliatedTeacherByOID(getIntegerFromRequest(
-		    request, "nonAffiliatedTeacherID")));
+	    executeService("DeleteNonAffiliatedTeacher", new Object[] { rootDomainObject
+		    .readNonAffiliatedTeacherByOID(getIntegerFromRequest(request, "nonAffiliatedTeacherID")) });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	}

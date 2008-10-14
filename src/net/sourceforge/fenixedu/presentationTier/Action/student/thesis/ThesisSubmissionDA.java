@@ -144,14 +144,15 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 
 	boolean confirmation = request.getParameter("confirmReject") != null;
 	if (confirmation) {
-	    executeService("RejectThesisDeclaration", thesis);
+	    executeService("RejectThesisDeclaration", new Object[] { thesis });
 	} else {
 	    DeclarationBean bean = (DeclarationBean) getRenderedObject("declarationBean");
 
 	    boolean accepted = request.getParameter("accept") != null;
 	    if (accepted) {
 		if (bean.getVisibility() != null) {
-		    executeService("AcceptThesisDeclaration", thesis, bean.getVisibility(), bean.getAvailableAfter());
+		    executeService("AcceptThesisDeclaration", new Object[] { thesis, bean.getVisibility(),
+			    bean.getAvailableAfter() });
 		} else {
 		    if (bean.getVisibility() == null) {
 			addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
@@ -164,7 +165,7 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 		    request.setAttribute("confirmRejectWithFiles", true);
 		    return mapping.findForward("thesis-declaration");
 		} else {
-		    executeService("RejectThesisDeclaration", thesis);
+		    executeService("RejectThesisDeclaration", new Object[] { thesis });
 		}
 	    }
 	}
@@ -188,8 +189,8 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisDissertationFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean
-			.getTitle(), bean.getSubTitle(), bean.getLanguage());
+		executeService("CreateThesisDissertationFile", new Object[] { getThesis(request), temporaryFile,
+			bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage() });
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -202,7 +203,7 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 
     public ActionForward removeDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	executeService("CreateThesisDissertationFile", getThesis(request), null, null, null, null, null);
+	executeService("CreateThesisDissertationFile", new Object[] { getThesis(request), null, null, null, null, null });
 
 	return prepareThesisSubmission(mapping, actionForm, request, response);
     }
@@ -223,8 +224,8 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisAbstractFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), null,
-			null, null);
+		executeService("CreateThesisAbstractFile", new Object[] { getThesis(request), temporaryFile,
+			bean.getSimpleFileName(), null, null, null });
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -237,7 +238,7 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 
     public ActionForward removeAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	executeService("CreateThesisAbstractFile", getThesis(request), null, null, null, null, null);
+	executeService("CreateThesisAbstractFile", new Object[] { getThesis(request), null, null, null, null, null });
 
 	return prepareThesisSubmission(mapping, actionForm, request, response);
     }

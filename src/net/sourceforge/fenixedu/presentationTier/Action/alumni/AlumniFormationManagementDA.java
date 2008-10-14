@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
@@ -73,9 +74,10 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
 	try {
 	    if (formationInfo.hasAssociatedFormation()) {
-		executeService("EditFormation", formationInfo);
+		executeService("EditFormation", new Object[] { formationInfo });
 	    } else {
-		executeService("CreateFormation", getLoggedPerson(request).getStudent().getAlumni(), formationInfo);
+		executeService("CreateFormation",
+			new Object[] { getLoggedPerson(request).getStudent().getAlumni(), formationInfo });
 	    }
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
@@ -120,7 +122,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
 	if (getFromRequest(request, "cancel") == null) {
 	    try {
-		executeService("DeleteQualification", getIntegerFromRequest(request, "formationId"));
+		executeService("DeleteQualification", new Object[] { getIntegerFromRequest(request, "formationId") });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey(), e.getArgs());
 		// addActionMessage("error", request, e.getMessage());

@@ -307,8 +307,8 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    request.setAttribute("process", executeService("CreateNewProcess", getProcessType().getName(),
-		    getIndividualCandidacyProcessBean()));
+	    request.setAttribute("process", executeService("CreateNewProcess", new Object[] { getProcessType().getName(),
+		    getIndividualCandidacyProcessBean() }));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());

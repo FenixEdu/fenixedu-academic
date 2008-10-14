@@ -221,7 +221,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
 	    if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
-		executeService(request, "StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
+		executeService("StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
 			new ByteArrayInputStream(data), receipt });
 	    }
 	    executeService("RegisterReceiptPrint", new Object[] { receipt, getUserView(request).getPerson().getEmployee() });
@@ -295,8 +295,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	final EditReceiptBean editReceiptBean = (EditReceiptBean) getObjectFromViewState("editReceiptBean");
 
 	try {
-	    executeService("EditReceipt", editReceiptBean.getReceipt(), editReceiptBean.getEmployee(), editReceiptBean
-		    .getContributorParty(), editReceiptBean.getContributorName());
+	    executeService("EditReceipt", new Object[] { editReceiptBean.getReceipt(), editReceiptBean.getEmployee(),
+		    editReceiptBean.getContributorParty(), editReceiptBean.getContributorName() });
 	} catch (DomainException e) {
 	    request.setAttribute("editReceiptBean", editReceiptBean);
 	    addActionMessage(request, e.getKey(), e.getArgs());

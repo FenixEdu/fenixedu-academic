@@ -150,7 +150,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	}
 
 	UnitSiteLayoutType layout = UnitSiteLayoutType.valueOf(layoutParamenter);
-	executeService("ChangeUnitSiteLayout", site, layout);
+	executeService("ChangeUnitSiteLayout", new Object[] { site, layout });
 
 	return mapping.findForward("editConfiguration");
     }
@@ -180,7 +180,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	RenderUtils.invalidateViewState("logoUpload");
 	File file = FileUtils.copyToTemporaryFile(bean.getFile());
 	try {
-	    executeService("UploadUnitSiteLogo", site, file, bean.getName());
+	    executeService("UploadUnitSiteLogo", new Object[] { site, file, bean.getName() });
 	} finally {
 	    file.delete();
 	}
@@ -238,8 +238,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	File backgroundFile = back.getFile() == null ? null : FileUtils.copyToTemporaryFile(back.getFile());
 
 	try {
-	    executeService("UpdateUnitSiteBanner", site, banner, mainFile, main.getName(), backgroundFile, back.getName(), bean
-		    .getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight());
+	    executeService("UpdateUnitSiteBanner", new Object[] { site, banner, mainFile, main.getName(), backgroundFile,
+		    back.getName(), bean.getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight() });
 	} finally {
 	    if (mainFile != null) {
 		mainFile.delete();
@@ -262,7 +262,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	for (UnitSiteBanner banner : site.getBanners()) {
 	    if (banner.getIdInternal().equals(bannerId)) {
-		executeService("DeleteUnitSiteBanner", site, banner);
+		executeService("DeleteUnitSiteBanner", new Object[] { site, banner });
 		break;
 	    }
 	}
@@ -286,8 +286,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	File mainFile = FileUtils.copyToTemporaryFile(main.getFile());
 	File backgroundFile = background.getFile() == null ? null : FileUtils.copyToTemporaryFile(background.getFile());
 	try {
-	    executeService("CreateUnitSiteBanner", site, mainFile, main.getName(), backgroundFile, background.getName(), bean
-		    .getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight());
+	    executeService("CreateUnitSiteBanner", new Object[] { site, mainFile, main.getName(), backgroundFile,
+		    background.getName(), bean.getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight() });
 	} finally {
 	    if (mainFile != null) {
 		mainFile.delete();
@@ -321,7 +321,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	for (UnitSiteLink link : site.getTopLinks()) {
 	    if (link.getIdInternal().equals(linkId)) {
-		executeService("DeleteUnitSiteLink", site, link);
+		executeService("DeleteUnitSiteLink", new Object[] { site, link });
 		break;
 	    }
 	}
@@ -356,7 +356,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	for (UnitSiteLink link : site.getFooterLinks()) {
 	    if (link.getIdInternal().equals(linkId)) {
-		executeService("DeleteUnitSiteLink", site, link);
+		executeService("DeleteUnitSiteLink", new Object[] { site, link });
 		break;
 	    }
 	}
@@ -558,7 +558,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	VariantBean bean = (VariantBean) getRenderedObject("create");
 	if (bean != null) {
-	    executeService("CreateVirtualFunction", site, unit, bean.getMLString());
+	    executeService("CreateVirtualFunction", new Object[] { site, unit, bean.getMLString() });
 	}
 
 	return manageExistingFunctions(mapping, actionForm, request, response);
@@ -588,7 +588,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	VariantBean bean = (VariantBean) getRenderedObject("edit");
 	if (bean != null) {
-	    executeService("EditVirtualFunction", getSite(request), function, bean.getMLString());
+	    executeService("EditVirtualFunction", new Object[] { getSite(request), function, bean.getMLString() });
 	}
 
 	return manageExistingFunctions(mapping, actionForm, request, response);
@@ -605,7 +605,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward confirmDeleteFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	if (request.getParameter("cancel") == null) {
-	    executeService("DeleteVirtualFunction", getSite(request), getTargetFunction(request));
+	    executeService("DeleteVirtualFunction", new Object[] { getSite(request), getTargetFunction(request) });
 	}
 
 	return manageExistingFunctions(mapping, actionForm, request, response);
@@ -646,7 +646,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	    orderedFunctions.add(initialFunctions.get(functionIndex - 1));
 	}
 
-	executeService("RearrangeUnitSiteFunctions", getSite(request), unit, orderedFunctions);
+	executeService("RearrangeUnitSiteFunctions", new Object[] { getSite(request), unit, orderedFunctions });
 	return manageExistingFunctions(mapping, actionForm, request, response);
     }
 
@@ -677,7 +677,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward removePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	PersonFunction personFunction = getPersonFunction(request);
-	executeService("DeleteUnitSitePersonFunction", getSite(request), personFunction);
+	executeService("DeleteUnitSitePersonFunction", new Object[] { getSite(request), personFunction });
 
 	return managePersonFunctions(mapping, actionForm, request, response);
     }
@@ -765,11 +765,11 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     protected void removeUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
-	executeService(getRemoveManagerServiceName(), site, person);
+	executeService(getRemoveManagerServiceName(), new Object[] { site, person });
     }
 
     protected void addUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
-	executeService(getAddManagerServiceName(), site, person);
+	executeService(getAddManagerServiceName(), new Object[] { site, person });
     }
 
     protected String getAddManagerServiceName() {

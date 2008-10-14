@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -38,7 +37,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	    final ExecutionSemester executionSemester) {
 
 	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(studentCurricularPlan,
-		executionSemester, getCurricularYearForCurricularCourses(), getCurricularRuleLevel((DynaActionForm) form)));
+		executionSemester, getCurricularYearForCurricularCourses(), getCurricularRuleLevel(form)));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
 
@@ -58,10 +57,11 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", getLoggedPerson(request),
-		    bolonhaStudentEnrollmentBean.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod(),
-		    bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(), bolonhaStudentEnrollmentBean
-			    .getCurriculumModulesToRemove(), bolonhaStudentEnrollmentBean.getCurricularRuleLevel());
+	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
+		    getLoggedPerson(request), bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+		    bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
+		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
+		    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
 
 	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
@@ -109,10 +109,11 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", getLoggedPerson(request),
-		    optionalStudentEnrollmentBean.getStudentCurricularPlan(), optionalStudentEnrollmentBean.getExecutionPeriod(),
+	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
+		    getLoggedPerson(request), optionalStudentEnrollmentBean.getStudentCurricularPlan(),
+		    optionalStudentEnrollmentBean.getExecutionPeriod(),
 		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean), Collections.EMPTY_LIST,
-		    getCurricularRuleLevel(form));
+		    getCurricularRuleLevel(form) });
 
 	    if (ruleResults.isWarning()) {
 		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
@@ -199,7 +200,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
 	try {
-	    executeService("EnrolInAffinityCycle", getLoggedPerson(request), cycleEnrolmentBean);
+	    executeService("EnrolInAffinityCycle", new Object[] { getLoggedPerson(request), cycleEnrolmentBean });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 

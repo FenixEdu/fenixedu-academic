@@ -30,7 +30,7 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
 	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
 
 	if (RenderUtils.getViewState() != null) {
-	    executeFactoryMethod(request);
+	    executeFactoryMethod();
 	    enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) RenderUtils.getViewState().getMetaObject().getObject();
 	} else {
 	    Registration registration = rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request,

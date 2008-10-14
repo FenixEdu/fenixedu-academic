@@ -318,7 +318,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
 
     private void deleteFunctionalityParameter(FunctionalityParameter functionalityParameter) throws FenixFilterException,
 	    FenixServiceException {
-	executeService("DeleteFunctionalityParameter", functionalityParameter);
+	executeService("DeleteFunctionalityParameter", new Object[] { functionalityParameter });
 
     }
 

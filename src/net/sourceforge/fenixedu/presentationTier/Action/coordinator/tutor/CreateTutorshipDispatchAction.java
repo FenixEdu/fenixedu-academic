@@ -153,7 +153,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 
 	List<TutorshipErrorBean> tutorshipsNotInserted = new ArrayList<TutorshipErrorBean>();
 	try {
-	    tutorshipsNotInserted = (List<TutorshipErrorBean>) executeService(request, "InsertTutorship", args);
+	    tutorshipsNotInserted = (List<TutorshipErrorBean>) executeService("InsertTutorship", args);
 	} catch (FenixServiceException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}

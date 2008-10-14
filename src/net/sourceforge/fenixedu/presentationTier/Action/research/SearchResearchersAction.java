@@ -74,7 +74,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
 
 	    CollectionPager<Person> result = null;
 	    try {
-		result = (CollectionPager<Person>) executeService("SearchPerson", parameters, predicate);
+		result = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate });
 	    } catch (FenixFilterException e) {
 		e.printStackTrace();
 	    } catch (FenixServiceException e) {

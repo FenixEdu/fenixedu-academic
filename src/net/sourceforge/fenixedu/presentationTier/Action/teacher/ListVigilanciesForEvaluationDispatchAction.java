@@ -91,7 +91,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
 	    Boolean active = Boolean.valueOf(bool);
 	    try {
 		Object[] args = { vigilancy, active, getLoggedPerson(request) };
-		executeService(request, "ChangeConvokeActive", args);
+		executeService("ChangeConvokeActive", args);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }
@@ -119,7 +119,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
 	    for (Vigilancy vigilancy : vigilancies.subList(0, numberOfVigilantsToUnconvoke)) {
 		try {
 		    Object[] args = { vigilancy, Boolean.FALSE, getLoggedPerson(request) };
-		    executeService(request, "ChangeConvokeActive", args);
+		    executeService("ChangeConvokeActive", args);
 		} catch (DomainException e) {
 		    addActionMessage(request, e.getMessage());
 		}

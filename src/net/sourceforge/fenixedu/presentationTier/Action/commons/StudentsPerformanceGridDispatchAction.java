@@ -27,8 +27,8 @@ public abstract class StudentsPerformanceGridDispatchAction extends FenixDispatc
 
 	PerformanceGridTableDTO performanceGridTable = null;
 	try {
-	    performanceGridTable = (PerformanceGridTableDTO) executeService("CreatePerformanceGridTable", tutors, entryYear,
-		    monitoringYear);
+	    performanceGridTable = (PerformanceGridTableDTO) executeService("CreatePerformanceGridTable", new Object[] { tutors,
+		    entryYear, monitoringYear });
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}

@@ -456,8 +456,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	try {
 	    Object[] arguments = new Object[] { getUserView(request).getPerson(), importBibtexBean.getCurrentPublicationBean(),
 		    importBibtexBean.getCurrentBibtexPublication() };
-	    ResearchResultPublication result = (ResearchResultPublication) executeService(request, "ImportBibtexPublication",
-		    arguments);
+	    ResearchResultPublication result = (ResearchResultPublication) executeService("ImportBibtexPublication", arguments);
 	    request.setAttribute("result", result);
 	    ResultDocumentFileSubmissionBean fileBean = new ResultDocumentFileSubmissionBean(result);
 	    request.setAttribute("fileBean", fileBean);

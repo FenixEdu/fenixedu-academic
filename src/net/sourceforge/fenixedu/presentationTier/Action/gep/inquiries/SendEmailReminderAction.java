@@ -47,7 +47,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	InfoExecutionYear currentExecutionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear");
+	InfoExecutionYear currentExecutionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear", null);
 
 	Object[] argsExecutionYearId = { currentExecutionYear.getIdInternal() };
 	List<InfoDegreeCurricularPlan> degreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils.executeService(
@@ -89,8 +89,8 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		    .readDegreeCurricularPlanByOID(degreeCurricularPlanIds[i]);
 
 	    Set<Student> studentsList = (Set<Student>) executeService(
-		    "student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod", degreeCurricularPlan,
-		    executionSemester);
+		    "student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod", new Object[] {
+			    degreeCurricularPlan, executionSemester });
 
 	    InfoInquiriesEmailReminderReport report = new InfoInquiriesEmailReminderReport();
 
@@ -151,7 +151,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	bccs.add(emailAddress);
 
 	final Object[] args = { null, null, bccs, fromName, fromAddress, subject, body.toString() };
-	executeService(request, "commons.SendMail", args);
+	executeService("commons.SendMail", args);
 
 	return false;
     }

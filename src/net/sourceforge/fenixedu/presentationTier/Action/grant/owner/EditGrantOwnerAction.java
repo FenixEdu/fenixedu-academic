@@ -124,7 +124,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	List maritalStatusList = Arrays.asList(MaritalStatus.values());
 	request.setAttribute("maritalStatusList", maritalStatusList);
 
-	List countryList = (List) executeService("ReadAllCountries");
+	List countryList = (List) executeService("ReadAllCountries", null);
 
 	// Adding a select country line to the list (presentation reasons)
 	InfoCountryEditor selectCountry = new InfoCountryEditor();

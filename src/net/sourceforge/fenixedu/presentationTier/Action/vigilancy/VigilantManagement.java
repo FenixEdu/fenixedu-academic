@@ -62,7 +62,7 @@ public class VigilantManagement extends FenixDispatchAction {
 	OtherCourseVigilancy vigilancy = (OtherCourseVigilancy) RootDomainObject.readDomainObjectByOID(
 		OtherCourseVigilancy.class, idInternal);
 
-	executeService("ConfirmConvoke", vigilancy);
+	executeService("ConfirmConvoke", new Object[] { vigilancy });
 
 	Person person = getLoggedPerson(request);
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
@@ -114,7 +114,7 @@ public class VigilantManagement extends FenixDispatchAction {
 	Person incompatiblePerson = (Person) RootDomainObject.readDomainObjectByOID(Person.class, idInternal);
 
 	Object[] args = { vigilant, incompatiblePerson };
-	executeService(request, "AddIncompatiblePerson", args);
+	executeService("AddIncompatiblePerson", args);
 
 	List<VigilantGroup> groups;
 	groups = (vigilant != null) ? vigilant.getVigilantGroups() : new ArrayList<VigilantGroup>();
@@ -147,7 +147,7 @@ public class VigilantManagement extends FenixDispatchAction {
 
 	Vigilant vigilant = person.getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	Object[] args = { vigilant };
-	executeService(request, "RemoveIncompatiblePerson", args);
+	executeService("RemoveIncompatiblePerson", args);
 
 	List<VigilantGroup> groups;
 	groups = (vigilant != null) ? vigilant.getVigilantGroups() : new ArrayList<VigilantGroup>();

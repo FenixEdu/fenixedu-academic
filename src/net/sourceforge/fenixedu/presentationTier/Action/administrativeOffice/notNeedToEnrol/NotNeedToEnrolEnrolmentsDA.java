@@ -89,7 +89,7 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	NotNeedToEnrolEnrolmentsBean bean = (NotNeedToEnrolEnrolmentsBean) getRenderedObject("notNeedToEnrolBean");
 
-	executeService(request, "AssociateEnrolmentsToNotNeedToEnrol", new Object[] { bean.getStudent(), bean.getSelected(),
+	executeService("AssociateEnrolmentsToNotNeedToEnrol", new Object[] { bean.getStudent(), bean.getSelected(),
 		bean.getSelectedAprovedEnrolments(), bean.getSelectedExternalEnrolments() });
 
 	return readNotNeedToEnrol(mapping, form, request, response, bean);
@@ -125,7 +125,7 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction {
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException, FenixServiceException {
 	NotNeedToEnrolEnrolmentsBean bean = (NotNeedToEnrolEnrolmentsBean) getRenderedObject("notNeedToEnrolBeanDelete");
-	executeService(request, "DeleteNotNeedToEnrollInCurricularCourse", new Object[] { bean.getSelected().getIdInternal() });
+	executeService("DeleteNotNeedToEnrollInCurricularCourse", new Object[] { bean.getSelected().getIdInternal() });
 	return readNotNeedToEnrol(mapping, form, request, response, bean);
     }
 }

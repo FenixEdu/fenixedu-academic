@@ -312,7 +312,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	    formFileInputStream = bean.getFile();
 	    file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-	    executeService(request, "CreateFileContentForBoard", new Object[] { (AnnouncementBoard) bean.getFileHolder(), file,
+	    executeService("CreateFileContentForBoard", new Object[] { (AnnouncementBoard) bean.getFileHolder(), file,
 		    bean.getFileName(), bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request) });
 	} catch (FileManagerException e) {
 	    addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
@@ -333,7 +333,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
 	FileContent fileContent = getFileContent(request);
 
-	executeService("DeleteFileContent", fileContent);
+	executeService("DeleteFileContent", new Object[] { fileContent });
 	return prepareAddFile(mapping, form, request, response);
     }
 

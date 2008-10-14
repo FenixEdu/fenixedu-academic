@@ -125,7 +125,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
 	Enrolment enrolment = (Enrolment) rootDomainObject
 		.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
-	executeService("SetEnrolmentState", enrolment, EnrollmentState.ENROLLED);
+	executeService("SetEnrolmentState", new Object[] { enrolment, EnrollmentState.ENROLLED });
 
 	request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getIdInternal());
 

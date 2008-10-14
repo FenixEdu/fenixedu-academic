@@ -83,7 +83,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     protected SpaceInformation executeSpaceFactoryMethod(final HttpServletRequest request) throws FenixFilterException,
 	    FenixServiceException, DomainException {
-	Object serviceResult = executeFactoryMethod(request);
+	Object serviceResult = executeFactoryMethod();
 	if (serviceResult instanceof Space) {
 	    return ((Space) serviceResult).getSuroundingSpace() != null ? ((Space) serviceResult).getSuroundingSpace()
 		    .getSpaceInformation() : ((Space) serviceResult).getSpaceInformation();
@@ -140,7 +140,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final Object[] args = { space };
 	try {
-	    executeService(request, "DeleteSpace", args);
+	    executeService("DeleteSpace", args);
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	    return manageSpace(mapping, request, space.getSpaceInformation());
@@ -196,7 +196,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final Object[] args = { spaceInformation };
 	try {
-	    executeService(request, "DeleteSpaceInformation", args);
+	    executeService("DeleteSpaceInformation", args);
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	}
@@ -242,7 +242,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		(bean != null) ? bean.getMaintainElements() : false, groupExpression };
 
 	try {
-	    executeService(request, "SpaceAccessGroupsManagement", args);
+	    executeService("SpaceAccessGroupsManagement", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -259,7 +259,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final Object[] args = { space, groupType, false, false, groupExpression };
 	try {
-	    executeService(request, "SpaceAccessGroupsManagement", args);
+	    executeService("SpaceAccessGroupsManagement", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

@@ -232,7 +232,7 @@ public class ContentManagement extends FenixDispatchAction {
 	Container parent = getParentContainer(request);
 	Node node = content.getParentNode(parent);
 	try {
-	    executeService("DeleteNode", node);
+	    executeService("DeleteNode", new Object[] { node });
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}

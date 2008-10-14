@@ -130,7 +130,7 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 	} else if (request.getParameter("confirm") != null) {
 	    try {
 		for (Participation participation : objectWithParticipations.getParticipationsFor(getLoggedPerson(request))) {
-		    executeService(request, "RemoveResearchActivityParticipation", new Object[] { participation });
+		    executeService("RemoveResearchActivityParticipation", new Object[] { participation });
 		}
 	    } catch (Exception e) {
 		addActionMessage(request, e.getMessage());

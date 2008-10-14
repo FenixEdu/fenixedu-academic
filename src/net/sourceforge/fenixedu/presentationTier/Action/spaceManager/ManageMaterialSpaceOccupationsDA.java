@@ -66,7 +66,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
 	Class occupationClass = materialOccupation.getMaterial().getMaterialSpaceOccupationSubClass();
 	Object[] args = { occupationClass.cast(materialOccupation) };
 	try {
-	    executeService(request, "DeleteMaterialSpaceOccupation", args);
+	    executeService("DeleteMaterialSpaceOccupation", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

@@ -25,7 +25,7 @@ public class ManageHolidaysDA extends FenixDispatchAction {
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException, FenixServiceException {
-	executeFactoryMethod(request);
+	executeFactoryMethod();
 	return prepare(mapping, form, request, response);
     }
 
@@ -36,7 +36,7 @@ public class ManageHolidaysDA extends FenixDispatchAction {
 	    final Integer holidayID = Integer.valueOf(holidayIDString);
 	    final Holiday holiday = rootDomainObject.readHolidayByOID(holidayID);
 	    final Object[] args = { holiday };
-	    executeService(request, "DeleteHoliday", args);
+	    executeService("DeleteHoliday", args);
 	}
 	return prepare(mapping, form, request, response);
     }

@@ -7,11 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 
@@ -53,7 +54,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	    HttpServletResponse response) throws Exception {
 
 	try {
-	    executeService("CreateProfessionalInformation", getRenderedObject());
+	    executeService("CreateProfessionalInformation", new Object[] { getRenderedObject() });
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("jobCreateBean", getObjectFromViewState("jobCreateBean"));
@@ -85,7 +86,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	    HttpServletResponse response) throws Exception {
 
 	try {
-	    executeService("EditProfessionalInformation", getRenderedObject());
+	    executeService("EditProfessionalInformation", new Object[] { getRenderedObject() });
 	} catch (FenixServiceException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("jobUpdateBean", getObjectFromViewState("jobUpdateBean"));
@@ -100,7 +101,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 
 	if (getFromRequest(request, "cancel") == null) {
 	    try {
-		executeService("DeleteProfessionalInformation", getJob(request));
+		executeService("DeleteProfessionalInformation", new Object[] { getJob(request) });
 	    } catch (FenixServiceException e) {
 		addActionMessage("error", request, e.getMessage());
 	    }

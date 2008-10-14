@@ -31,7 +31,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 
     public ActionForward prepareDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final ResearchResultPatent patent = (ResearchResultPatent) (ResearchResultPatent) getResultFromRequest(request);
+	final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
 	if (patent == null) {
 	    return management(mapping, form, request, response);
 	}
@@ -45,7 +45,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
 	Object[] args = { patent };
 	try {
-	    executeService(request, "AddDefaultDocumentToResearchResult", args);
+	    executeService("AddDefaultDocumentToResearchResult", args);
 	} catch (FileManagerException e) {
 	    e.printStackTrace();
 	    addActionMessage(request, "label.communicationError");
@@ -91,7 +91,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	}
 
 	try {
-	    executeService("UpdateMetaInformation", patent);
+	    executeService("UpdateMetaInformation", new Object[] { patent });
 	} catch (FileManagerException e) {
 	    e.printStackTrace();
 	    addActionMessage(request, "label.communicationError");
@@ -124,7 +124,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	if (getFromRequest(request, "confirm") != null) {
 	    try {
 		final Object[] args = { resultId };
-		executeService(request, "DeleteResultPatent", args);
+		executeService("DeleteResultPatent", args);
 	    } catch (Exception e) {
 		final ActionForward defaultForward = management(mapping, form, request, response);
 		return processException(request, mapping, defaultForward, e);

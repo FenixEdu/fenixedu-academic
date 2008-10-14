@@ -251,7 +251,7 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("protocolFactory", protocolFactory);
 	    return mapping.findForward("prepareCreate-protocol-units");
 	} else {
-	    Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod", new Object[] { protocolFactory });
+	    Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
 	    request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
 	    return mapping.findForward("view-protocol");
 	}
@@ -335,7 +335,7 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("prepareCreate-protocol-units");
 	}
 	if (request.getParameter("createProtocol") != null) {
-	    Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod", new Object[] { protocolFactory });
+	    Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
 	    request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
 	    return mapping.findForward("view-protocol");
 	}

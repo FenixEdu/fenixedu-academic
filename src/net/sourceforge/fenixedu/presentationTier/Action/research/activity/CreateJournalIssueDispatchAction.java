@@ -133,7 +133,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 
 	if (bean.getRole() != null) {
 	    try {
-		executeService(request, "CreateResearchActivityParticipation", new Object[] { bean.getJournalIssue(),
+		executeService("CreateResearchActivityParticipation", new Object[] { bean.getJournalIssue(),
 			bean.getRole(), person, bean.getRoleMessage() });
 
 	    } catch (DomainException e) {
@@ -155,7 +155,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 	    return prepareJournalIssueSearch(mapping, form, request, response);
 
 	try {
-	    executeService(request, "CreateResearchActivityParticipation", new Object[] { bean.getJournalIssue(), bean.getRole(),
+	    executeService("CreateResearchActivityParticipation", new Object[] { bean.getJournalIssue(), bean.getRole(),
 		    person, bean.getRoleMessage() });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());

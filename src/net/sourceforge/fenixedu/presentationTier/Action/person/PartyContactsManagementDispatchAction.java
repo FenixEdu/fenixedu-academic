@@ -124,7 +124,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	if (getRenderedObject() instanceof PartyContactBean) {
 	    PartyContactBean contact = (PartyContactBean) getRenderedObject("edit-contact");
 	    try {
-		executeService("CreatePartyContact", contact);
+		executeService("CreatePartyContact", new Object[] { contact });
 	    } catch (DomainException e) {
 		addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	    }
@@ -161,7 +161,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	if (getRenderedObject() instanceof PartyContactBean) {
 	    PartyContactBean contact = (PartyContactBean) getRenderedObject("edit-contact");
 	    try {
-		executeService("EditPartyContact", contact);
+		executeService("EditPartyContact", new Object[] { contact });
 	    } catch (DomainException e) {
 		addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	    }

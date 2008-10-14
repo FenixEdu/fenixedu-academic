@@ -45,7 +45,7 @@ public class AlumniOperations extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	AlumniIdentityCheckRequest identityRequest = (AlumniIdentityCheckRequest) getObjectFromViewState("requestBody");
-	executeService("ValidateAlumniIdentity", identityRequest, Boolean.TRUE, getLoggedPerson(request));
+	executeService("ValidateAlumniIdentity", new Object[] { identityRequest, Boolean.TRUE, getLoggedPerson(request) });
 
 	request.setAttribute("identityRequestResult", "identity.validation.ok");
 	return mapping.findForward("alumni.validate.request.result");
@@ -55,7 +55,7 @@ public class AlumniOperations extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	AlumniIdentityCheckRequest identityRequest = (AlumniIdentityCheckRequest) getObjectFromViewState("requestBody");
-	executeService("ValidateAlumniIdentity", identityRequest, Boolean.FALSE, getLoggedPerson(request));
+	executeService("ValidateAlumniIdentity", new Object[] { identityRequest, Boolean.FALSE, getLoggedPerson(request) });
 
 	request.setAttribute("identityRequestResult", "identity.validation.nok");
 	return mapping.findForward("alumni.validate.request.result");

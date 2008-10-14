@@ -41,7 +41,7 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	request.setAttribute("executionYears", executeService(request, "ReadNotClosedExecutionYears", null));
+	request.setAttribute("executionYears", executeService("ReadNotClosedExecutionYears", null));
 	return mapping.findForward("chooseExecutionYear");
     }
 
@@ -85,7 +85,7 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
 	    processingDegreeCurricularPlans.add(degreeCurricularPlan.getName());
 
 	    Object[] args = { degreeCurricularPlan.getIdInternal(), executionYearID, agreement };
-	    result.append((String) executeService(request, "ComputeCurricularCourseStatistics", args));
+	    result.append((String) executeService("ComputeCurricularCourseStatistics", args));
 
 	    processingDegreeCurricularPlans.clear();
 	    processedDegreeCurricularPlans.add(degreeCurricularPlan.getName());

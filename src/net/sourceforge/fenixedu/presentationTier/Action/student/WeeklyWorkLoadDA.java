@@ -218,7 +218,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     public void create(final HttpServletRequest request, final Integer attendsID, final Integer contact,
 	    final Integer autonomousStudy, final Integer other) throws FenixFilterException, FenixServiceException {
 	final Object[] args = { attendsID, contact, autonomousStudy, other };
-	executeService(request, "CreateWeeklyWorkLoad", args);
+	executeService("CreateWeeklyWorkLoad", args);
     }
 
     private WeeklyWorkLoadBean getWeeklyWorkLoadBean(final HttpServletRequest request) {

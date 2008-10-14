@@ -136,7 +136,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	Vigilant vigilant = (Vigilant) RootDomainObject.readDomainObjectByOID(Vigilant.class, idInternal);
 
 	Object[] args = { vigilant };
-	executeService(request, "RemoveIncompatiblePerson", args);
+	executeService("RemoveIncompatiblePerson", args);
 
 	String gid = request.getParameter("gid");
 	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
@@ -205,7 +205,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	Object[] args = { bean.getName(), bean.getUnit(), bean.getConvokeStrategy(), bean.getContactEmail(), bean.getRulesLink(),
 		bean.getBeginFirstUnavailablePeriod(), bean.getEndFirstUnavailablePeriod(),
 		bean.getBeginSecondUnavailablePeriod(), bean.getEndSecondUnavailablePeriod() };
-	executeService(request, "CreateVigilantGroup", args);
+	executeService("CreateVigilantGroup", args);
 
 	prepareManagementBean(request, ExecutionYear.readCurrentExecutionYear());
 
@@ -253,7 +253,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		beanWithFirstPeriod.getBeginFirstUnavailablePeriod(), beanWithFirstPeriod.getEndFirstUnavailablePeriod(),
 		beanWithSecondPeriod.getBeginSecondUnavailablePeriod(), beanWithSecondPeriod.getEndSecondUnavailablePeriod() };
 
-	executeService(request, "UpdateVigilantGroup", args);
+	executeService("UpdateVigilantGroup", args);
 
 	prepareManagementBean(request, ExecutionYear.readCurrentExecutionYear());
 
@@ -268,7 +268,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 	Object[] args = { idInternal };
 	try {
-	    executeService(request, "DeleteVigilantGroupByOID", args);
+	    executeService("DeleteVigilantGroupByOID", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -305,7 +305,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	VigilantGroup group = bean.getSelectedVigilantGroup();
 
 	Object[] args = { coordinators, group };
-	executeService(request, "RemoveExamCoordinatorsFromVigilantGroup", args);
+	executeService("RemoveExamCoordinatorsFromVigilantGroup", args);
 
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("removeCoordinators");
@@ -319,7 +319,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	VigilantGroup group = bean.getSelectedVigilantGroup();
 
 	Object[] args = { coordinators, group };
-	executeService(request, "AddExamCoordinatorsToVigilantGroup", args);
+	executeService("AddExamCoordinatorsToVigilantGroup", args);
 
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("addCoordinators");
@@ -334,7 +334,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
 	Object[] args = { person };
 	if (coordinator == null) {
-	    executeService(request, "RemoveExamCoordinatorRole", args);
+	    executeService("RemoveExamCoordinatorRole", args);
 	}
 	return mapping.findForward("blank");
     }
@@ -390,7 +390,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		.valueOf(groupId));
 
 	Object[] args = { vigilant, person };
-	executeService(request, "AddIncompatiblePerson", args);
+	executeService("AddIncompatiblePerson", args);
 
 	VigilantGroupBean bean = prepareBean(getLoggedPerson(request));
 
@@ -554,11 +554,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	}
 
 	Object[] args = { peopleToAdd };
-	executeService(request, "AddVigilantsToGroup", args);
+	executeService("AddVigilantsToGroup", args);
 
 	Object[] args2 = { vigilantsToRemove };
-	List<Vigilant> vigilantsThatCouldNotBeRemoved = (List<Vigilant>) executeService(request, "RemoveVigilantsFromGroup",
-		args2);
+	List<Vigilant> vigilantsThatCouldNotBeRemoved = (List<Vigilant>) executeService("RemoveVigilantsFromGroup", args2);
 
 	request.setAttribute("vigilants", vigilantsThatCouldNotBeRemoved);
 	RenderUtils.invalidateViewState("bounds");
@@ -584,7 +583,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		personToAdd.put(group, people);
 	    }
 	    Object[] args = { personToAdd };
-	    executeService(request, "AddVigilantsToGroup", args);
+	    executeService("AddVigilantsToGroup", args);
 	} else {
 	    addActionMessage(request, "label.vigilancy.inexistingUsername");
 	}

@@ -89,7 +89,7 @@ public class CreateCooperationDispatchAction extends FenixDispatchAction {
 
 	Person person = getLoggedPerson(request);
 	try {
-	    executeService(request, "CreateResearchActivityParticipation", new Object[] { cooperationBean, person });
+	    executeService("CreateResearchActivityParticipation", new Object[] { cooperationBean, person });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return prepareCreateCooperationParticipation(mapping, form, request, response);

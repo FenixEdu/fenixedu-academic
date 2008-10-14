@@ -228,7 +228,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	final Unit parent = getAnyParentUnit(unit);
 
 	try {
-	    executeService("DeleteExternalUnit", unit);
+	    executeService("DeleteExternalUnit", new Object[] { unit });
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("unit", unit);
@@ -315,7 +315,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	final Unit parent = externalCurricularCourse.getUnit();
 
 	try {
-	    executeService("DeleteExternalCurricularCourse", externalCurricularCourse);
+	    executeService("DeleteExternalCurricularCourse", new Object[] { externalCurricularCourse });
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("externalCurricularCourse", getExternalCurricularCourse(request));

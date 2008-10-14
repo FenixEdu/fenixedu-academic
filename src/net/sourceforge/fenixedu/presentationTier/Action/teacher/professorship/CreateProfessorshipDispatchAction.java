@@ -46,21 +46,16 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	final Boolean responsibleFor = (Boolean) teacherExecutionCourseForm.get("responsibleFor");
 
 	final Object arguments[] = { executionCourseId, teacherNumber, responsibleFor, 0.0 };
-	executeService("InsertProfessorshipByDepartment", request, arguments);
+	executeService("InsertProfessorshipByDepartment", arguments);
 
 	return mapping.findForward("final-step");
-    }
-
-    private Object executeService(String serviceName, HttpServletRequest request, Object[] arguments)
-	    throws FenixServiceException, FenixFilterException {
-	return ServiceUtils.executeService(serviceName, arguments);
     }
 
     private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
 	Object[] arguments = { infoExecutionPeriod.getInfoExecutionYear().getYear(), null };
 	List<InfoExecutionDegree> executionDegrees = (List) executeService("ReadExecutionDegreesByExecutionYearAndDegreeType",
-		request, arguments);
+		arguments);
 
 	ComparatorChain comparatorChain = new ComparatorChain();
 
@@ -80,7 +75,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
 
 	Object[] arguments = { teacherNumber };
-	InfoTeacher infoTeacher = (InfoTeacher) executeService("ReadTeacherByNumber", request, arguments);
+	InfoTeacher infoTeacher = (InfoTeacher) executeService("ReadTeacherByNumber", arguments);
 
 	request.setAttribute("infoTeacher", infoTeacher);
     }
@@ -113,10 +108,10 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	Integer executionPeriodId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionPeriodId"));
 	Object[] arguments = { executionDegreeId, executionPeriodId };
 
-	List executionCourses = (List) executeService("ReadExecutionCoursesByExecutionDegree", request, arguments);
+	List executionCourses = (List) executeService("ReadExecutionCoursesByExecutionDegree", arguments);
 	Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
 	Object[] args = { teacherNumber };
-	List executionCoursesToRemove = (List) executeService("ReadExecutionCoursesByTeacherResponsibility", request, args);
+	List executionCoursesToRemove = (List) executeService("ReadExecutionCoursesByTeacherResponsibility", args);
 	executionCourses.removeAll(executionCoursesToRemove);
 	Collections.sort(executionCourses, new BeanComparator("nome"));
 

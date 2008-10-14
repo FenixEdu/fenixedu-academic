@@ -121,7 +121,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward createProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-	executeFactoryMethod(request);
+	executeFactoryMethod();
 	return mapping.findForward("program");
     }
 
@@ -152,7 +152,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-	executeFactoryMethod(request);
+	executeFactoryMethod();
 	return mapping.findForward("program");
     }
 
@@ -171,7 +171,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward createObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
-	executeFactoryMethod(request);
+	executeFactoryMethod();
 	return mapping.findForward("objectives");
     }
 
@@ -204,7 +204,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward editObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	executeFactoryMethod(request);
+	executeFactoryMethod();
 	return mapping.findForward("objectives");
     }
 
@@ -230,7 +230,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		evaluationMethodMls.setContent(Language.en, en == null ? "" : en);
 	    }
 	    final Object args[] = { executionCourse, new MultiLanguageString() };
-	    executeService(request, "EditEvaluation", args);
+	    executeService("EditEvaluation", args);
 	    evaluationMethod = executionCourse.getEvaluationMethod();
 	}
 	final MultiLanguageString multiLanguageString = evaluationMethod.getEvaluationElements();
@@ -254,7 +254,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
 	final Object args[] = { executionCourse, multiLanguageString };
-	executeService(request, "EditEvaluation", args);
+	executeService("EditEvaluation", args);
 
 	return mapping.findForward("evaluationMethod");
     }
@@ -459,7 +459,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	if (importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.PLANNING)) {
 	    final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null };
 	    try {
-		executeService(request, "ImportLessonPlannings", args);
+		executeService("ImportLessonPlannings", args);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey(), e.getArgs());
 	    }
@@ -482,7 +482,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
 	final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, shiftFrom.getExecutionCourse(), shiftFrom };
 	try {
-	    executeService(request, "ImportLessonPlannings", args);
+	    executeService("ImportLessonPlannings", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}
@@ -514,7 +514,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning,
 		(lessonPlanning.getOrderOfPlanning() - 1) };
 	try {
-	    executeService(request, "MoveLessonPlanning", args);
+	    executeService("MoveLessonPlanning", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}
@@ -530,7 +530,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning,
 		(lessonPlanning.getOrderOfPlanning() + 1) };
 	try {
-	    executeService(request, "MoveLessonPlanning", args);
+	    executeService("MoveLessonPlanning", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}
@@ -564,7 +564,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		lessonPlanningBean.getPlanning(), lessonPlanningBean.getLessonType(), lessonPlanningBean.getExecutionCourse() };
 
 	try {
-	    executeService(request, "CreateLessonPlanning", args);
+	    executeService("CreateLessonPlanning", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("lessonPlanningBean", lessonPlanningBean);
@@ -581,7 +581,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	if (lessonPlanning != null) {
 	    final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, null, null };
 	    try {
-		executeService(request, "DeleteLessonPlanning", args);
+		executeService("DeleteLessonPlanning", args);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey(), e.getArgs());
 	    }
@@ -598,7 +598,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	if (lessonType != null && executionCourse != null) {
 	    final Object args[] = { executionCourse.getIdInternal(), null, executionCourse, lessonType };
 	    try {
-		executeService(request, "DeleteLessonPlanning", args);
+		executeService("DeleteLessonPlanning", args);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey(), e.getArgs());
 	    }

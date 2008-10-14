@@ -152,7 +152,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	final String proposalIdString = request.getParameter("finalDegreeWorkProposalOID");
 	final Proposal proposal = rootDomainObject.readProposalByOID(Integer.valueOf(proposalIdString));
-	executeService("DeleteFinalDegreeWorkProposal", proposal);
+	executeService("DeleteFinalDegreeWorkProposal", new Object[] { proposal });
 	return prepare(mapping, form, request, response);
     }
 
@@ -160,7 +160,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	final String groupProposalIdString = request.getParameter("groupProposal");
 	final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(Integer.valueOf(groupProposalIdString));
-	executeService("DeleteGroupProposalAttribution", groupProposal);
+	executeService("DeleteGroupProposalAttribution", new Object[] { groupProposal });
 	return prepare(mapping, form, request, response);
     }
 
@@ -168,7 +168,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	final String groupProposalIdString = request.getParameter("groupProposal");
 	final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(Integer.valueOf(groupProposalIdString));
-	executeService("DeleteGroupProposal", groupProposal);
+	executeService("DeleteGroupProposal", new Object[] { groupProposal });
 	return prepare(mapping, form, request, response);
     }
 
@@ -424,7 +424,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		    if (infoProposal.getBranches() != null && infoProposal.getBranches().size() > 0) {
 			String[] branchList = new String[infoProposal.getBranches().size()];
 			for (int i = 0; i < infoProposal.getBranches().size(); i++) {
-			    InfoBranch infoBranch = ((InfoBranch) infoProposal.getBranches().get(i));
+			    InfoBranch infoBranch = (infoProposal.getBranches().get(i));
 			    if (infoBranch != null && infoBranch.getIdInternal() != null) {
 				String brachOIDString = infoBranch.getIdInternal().toString();
 				if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
@@ -556,7 +556,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	Object args[] = { executionDegreeOID, startOfProposalPeriod, endOfProposalPeriod };
 	try {
-	    executeService(request, "DefineFinalDegreeWorkProposalSubmisionPeriod", args);
+	    executeService("DefineFinalDegreeWorkProposalSubmisionPeriod", args);
 	} catch (NotAuthorizedFilterException e) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("error", new ActionError("error.exception.notAuthorized2"));
@@ -611,7 +611,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	Object args[] = { executionDegreeOID, startOfCandidacyPeriod, endOfCandidacyPeriod };
 	try {
-	    executeService(request, "DefineFinalDegreeWorkCandidacySubmisionPeriod", args);
+	    executeService("DefineFinalDegreeWorkCandidacySubmisionPeriod", args);
 	} catch (NotAuthorizedFilterException e) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("error", new ActionError("error.exception.notAuthorized2"));
@@ -1093,7 +1093,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    final ExecutionDegree otherExecutionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
 		    Integer.valueOf(otherExecutionDegreeIDString));
 	    final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
-	    executeService(request, "AddExecutionDegreeToScheduling", args);
+	    executeService("AddExecutionDegreeToScheduling", args);
 	}
 	dynaActionForm.set("otherExecutionDegreeID", null);
 	return prepare(mapping, form, request, response);
@@ -1110,7 +1110,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		.valueOf(otherExecutionDegreeIDString));
 
 	final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
-	executeService(request, "RemoveExecutionDegreeToScheduling", args);
+	executeService("RemoveExecutionDegreeToScheduling", args);
 
 	dynaActionForm.set("otherExecutionDegreeID", null);
 

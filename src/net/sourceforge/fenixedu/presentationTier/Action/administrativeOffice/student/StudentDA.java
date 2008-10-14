@@ -75,7 +75,7 @@ public class StudentDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	getStudent(request);
 	try {
-	    executeFactoryMethod(request);
+	    executeFactoryMethod();
 	    RenderUtils.invalidateViewState();
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
@@ -221,7 +221,7 @@ public class StudentDA extends FenixDispatchAction {
 	final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
 
 	try {
-	    executeService("RegistrationConclusionProcess", registrationConclusionBean);
+	    executeService("RegistrationConclusionProcess", new Object[] { registrationConclusionBean });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("registrationConclusionBean", registrationConclusionBean);
@@ -332,7 +332,7 @@ public class StudentDA extends FenixDispatchAction {
 	final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
 	final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
 
-	executeService("WriteStudentAttendingCourse", registration, executionCourse.getIdInternal());
+	executeService("WriteStudentAttendingCourse", new Object[] { registration, executionCourse.getIdInternal() });
 
 	return viewAttends(mapping, actionForm, request, response);
     }
@@ -347,7 +347,8 @@ public class StudentDA extends FenixDispatchAction {
 		: null;
 	final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
 
-	executeService("DeleteStudentAttendingCourse", registration, attends.getExecutionCourse().getIdInternal());
+	executeService("DeleteStudentAttendingCourse",
+		new Object[] { registration, attends.getExecutionCourse().getIdInternal() });
 
 	return viewAttends(mapping, actionForm, request, response);
     }

@@ -117,7 +117,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 	getStudent(request);
 	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
 	final Object[] args = { equivalencePlanEntry };
-	executeService(request, "DeleteEquivalencePlanEntry", args);
+	executeService("DeleteEquivalencePlanEntry", args);
 	return showTable(mapping, actionForm, request, response);
     }
 
@@ -138,7 +138,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 		request, student);
 	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
 	final Object[] args = { studentCurricularPlanEquivalencePlan, equivalencePlanEntry };
-	executeService(request, service, args);
+	executeService(service, args);
 	return showTable(mapping, actionForm, request, response);
     }
 

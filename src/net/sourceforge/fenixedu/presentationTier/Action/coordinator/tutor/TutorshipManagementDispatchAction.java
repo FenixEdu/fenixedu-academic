@@ -33,7 +33,7 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
 
 	Object[] args = new Object[] { bean.getExecutionDegreeID(), bean };
 	try {
-	    executeService(request, "InsertTutorship", args);
+	    executeService("InsertTutorship", args);
 	} catch (FenixServiceException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}
@@ -80,7 +80,7 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
 
 	    List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
 	    try {
-		tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService(request, "DeleteTutorship", args);
+		tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("DeleteTutorship", args);
 	    } catch (FenixServiceException e) {
 		addActionMessage(request, e.getMessage(), e.getArgs());
 	    }
@@ -156,7 +156,7 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
 
 	List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
 	try {
-	    tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService(request, "TransferTutorship", args);
+	    tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("TransferTutorship", args);
 	} catch (FenixServiceException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 

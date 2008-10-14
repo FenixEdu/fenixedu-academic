@@ -61,7 +61,7 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) getRenderedObject();
 	if (!isCancelled(request)) {
-	    Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { assiduousnessPersonFunctionFactory });
+	    Object result = executeService("ExecuteFactoryMethod", new Object[] { assiduousnessPersonFunctionFactory });
 	    if (result != null) {
 		ActionMessages actionMessages = new ActionMessages();
 		actionMessages.add("errorMessage", (ActionMessage) result);

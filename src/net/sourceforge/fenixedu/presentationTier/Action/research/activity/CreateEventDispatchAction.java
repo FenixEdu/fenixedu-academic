@@ -66,7 +66,7 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
 
 	if (bean.getRole() != null) {
 	    try {
-		executeService(request, "CreateResearchActivityParticipation", new Object[] { bean.getEvent(), bean.getRole(),
+		executeService("CreateResearchActivityParticipation", new Object[] { bean.getEvent(), bean.getRole(),
 			person });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
@@ -89,9 +89,9 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
 
 	ResearchEvent event = null;
 	try {
-	    event = (ResearchEvent) executeService(request, "CreateResearchEvent", new Object[] { bean.getEventName(),
+	    event = (ResearchEvent) executeService("CreateResearchEvent", new Object[] { bean.getEventName(),
 		    bean.getEventType(), bean.getLocationType(), bean.getUrl() });
-	    executeService(request, "CreateResearchActivityParticipation", new Object[] { event, bean.getRole(), person });
+	    executeService("CreateResearchActivityParticipation", new Object[] { event, bean.getRole(), person });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("inexistentEventBean", bean);

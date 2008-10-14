@@ -73,7 +73,7 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
 	YearMonth yearMonth = new YearMonth();
 	yearMonth.setYear(unitExtraWorkAmountFactory.getYear());
 
-	executeService(request, "ExecuteFactoryMethod", new Object[] { unitExtraWorkAmountFactory });
+	executeService("ExecuteFactoryMethod", new Object[] { unitExtraWorkAmountFactory });
 
 	request.setAttribute("year", yearMonth);
 	request.setAttribute("unitExtraWorkAmountList", getUnitsExtraWorkAmounts(yearMonth));
@@ -101,8 +101,7 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
     public ActionForward insertNewAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	UnitExtraWorkAmountFactory unitExtraWorkAmountFactory = (UnitExtraWorkAmountFactory) getRenderedObject("amountFactory");
-	UnitExtraWorkAmount unitExtraWorkAmount = (UnitExtraWorkAmount) executeService(request, "ExecuteFactoryMethod",
-		new Object[] { unitExtraWorkAmountFactory });
+	UnitExtraWorkAmount unitExtraWorkAmount = (UnitExtraWorkAmount) executeService("ExecuteFactoryMethod", new Object[] { unitExtraWorkAmountFactory });
 	request.setAttribute("unitExtraWorkAmountFactory", new UnitExtraWorkAmountFactory(unitExtraWorkAmount));
 	return mapping.findForward("show-unit-extra-work-movements");
     }

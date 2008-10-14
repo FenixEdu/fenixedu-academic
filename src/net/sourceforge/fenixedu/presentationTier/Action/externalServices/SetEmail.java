@@ -28,7 +28,7 @@ public class SetEmail extends FenixDispatchAction {
 
 	try {
 	    final Object[] args = new Object[] { host, ip, password, userUId, email };
-	    executeService(request, "SetEmail", args);
+	    executeService("SetEmail", args);
 	    message = "ok";
 	} catch (NotAuthorizedException ex) {
 	    message = "Not authorized";

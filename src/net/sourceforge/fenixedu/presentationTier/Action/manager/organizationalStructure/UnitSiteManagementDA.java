@@ -30,6 +30,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	return (Unit) RootDomainObject.getInstance().readPartyByOID(unitId);
     }
 
+    @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("units", Collections.singleton(RootDomainObject.getInstance().getInstitutionUnit()));
@@ -41,7 +42,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	Unit unit = getUnit(request);
 
 	try {
-	    executeService("CreateUnitSite", unit);
+	    executeService("CreateUnitSite", new Object[] { unit });
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	}

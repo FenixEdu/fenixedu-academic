@@ -31,7 +31,7 @@ public class RoomClassificationDA extends FenixDispatchAction {
     public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	try {
-	    executeFactoryMethod(request);
+	    executeFactoryMethod();
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}
@@ -53,7 +53,7 @@ public class RoomClassificationDA extends FenixDispatchAction {
 	final RoomClassification roomClassification = retrieveRoomClassification(request);
 	final Object[] args = { roomClassification };
 	try {
-	    executeService(request, "DeleteRoomClassification", args);
+	    executeService("DeleteRoomClassification", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}

@@ -29,7 +29,7 @@ public class ConsultRoles extends FenixAction {
 
 	try {
 	    final Object[] args = new Object[] { host, ip, password, userUId };
-	    final Set<Role> roles = (Set<Role>) executeService(request, "ConsultRoles", args);
+	    final Set<Role> roles = (Set<Role>) executeService("ConsultRoles", args);
 	    final StringBuilder stringBuilder = new StringBuilder();
 	    if (roles == null) {
 		stringBuilder.append("User does not exist");

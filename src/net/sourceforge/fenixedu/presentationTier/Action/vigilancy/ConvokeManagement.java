@@ -91,7 +91,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
 	try {
 	    Object[] args = { convoke, value };
-	    executeService(request, "ConvokesAttended", args);
+	    executeService("ConvokesAttended", args);
 	} catch (DomainException exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
@@ -133,7 +133,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
 	try {
 	    Object[] args = { convoke, value, person };
-	    executeService(request, "ChangeConvokeActive", args);
+	    executeService("ChangeConvokeActive", args);
 	} catch (DomainException exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
@@ -206,7 +206,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 	Object[] args = { vigilantSugestion, writtenEvaluation, bean.getSelectedVigilantGroup(), bean.getExamCoordinator(),
 		bean.getEmailMessage() };
 	try {
-	    executeService(request, "CreateConvokes", args);
+	    executeService("CreateConvokes", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -382,7 +382,8 @@ public class ConvokeManagement extends FenixDispatchAction {
 	bean.setExamCoordinator(coordinator);
 	bean.setVigilantGroups(coordinator.getVigilantGroups());
 	String executionYear = request.getParameter("executionYear");
-	ExecutionYear executionYearObj = executionYear != null ? (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class, Integer.valueOf(executionYear)) : null;
+	ExecutionYear executionYearObj = executionYear != null ? (ExecutionYear) RootDomainObject.readDomainObjectByOID(
+		ExecutionYear.class, Integer.valueOf(executionYear)) : null;
 	VigilantGroup group = null;
 	if (vigilantGroup != null) {
 	    group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroup));
@@ -395,7 +396,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
     private void putInformationOnRequest(HttpServletRequest request, VigilantGroup group, boolean showVigilants,
 	    ExecutionYear executionYear) throws FenixFilterException, FenixServiceException {
-	
+
 	if (showVigilants) {
 	    request.setAttribute("group", group);
 	} else {

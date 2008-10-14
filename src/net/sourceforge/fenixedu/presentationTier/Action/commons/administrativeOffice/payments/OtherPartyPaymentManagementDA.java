@@ -58,7 +58,7 @@ public abstract class OtherPartyPaymentManagementDA extends PaymentsManagementDi
 	final CreateOtherPartyPaymentBean createOtherPartyPaymentBean = getCreateOtherPartyBeanFromViewState("confirmCreateOtherPartyPayment");
 
 	try {
-	    executeService(request, "CreateOtherPartyPayment", new Object[] { getUserView(request).getPerson(),
+	    executeService("CreateOtherPartyPayment", new Object[] { getUserView(request).getPerson(),
 		    createOtherPartyPaymentBean });
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());

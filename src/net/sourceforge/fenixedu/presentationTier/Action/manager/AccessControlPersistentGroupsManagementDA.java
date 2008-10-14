@@ -39,7 +39,7 @@ public class AccessControlPersistentGroupsManagementDA extends FenixDispatchActi
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	PersistentGroupMembers persistentGroup = getPersistentGroupFromParameter(request);
-	executeService(request, "DeletePersistentGroupInManager", new Object[] { persistentGroup });
+	executeService("DeletePersistentGroupInManager", new Object[] { persistentGroup });
 	return listAllGroups(mapping, form, request, response);
     }
 
@@ -48,7 +48,7 @@ public class AccessControlPersistentGroupsManagementDA extends FenixDispatchActi
 
 	PersistentGroupMembers persistentGroup = getPersistentGroupFromParameter(request);
 	Person person = getPersonFromParameter(request);
-	executeService(request, "RemovePersistentGroupMemberInManager", new Object[] { person, persistentGroup });
+	executeService("RemovePersistentGroupMemberInManager", new Object[] { person, persistentGroup });
 	return prepareEditPersistentGroup(mapping, form, request, response);
     }
 

@@ -125,7 +125,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
 	String treeStructure = (String) getFromRequest(request, "tree");
 	List<ResearchInterest> newInterestsOrder = reOrderInterests(treeStructure, getOrderedInterests(request));
-	executeService(request, "ChangeResearchInterestOrder", new Object[] { getLoggedPerson(request), newInterestsOrder });
+	executeService("ChangeResearchInterestOrder", new Object[] { getLoggedPerson(request), newInterestsOrder });
 
 	return prepare(mapping, form, request, response);
     }

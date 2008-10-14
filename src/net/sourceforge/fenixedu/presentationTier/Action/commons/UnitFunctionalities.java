@@ -36,6 +36,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
      */
     protected static final int PAGE_SIZE = 20;
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
@@ -218,7 +219,8 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	IViewState viewState = RenderUtils.getViewState("editFile");
 	if (viewState != null) {
 	    UnitFileBean bean = (UnitFileBean) viewState.getMetaObject().getObject();
-	    executeService("EditUnitFile", bean.getFile(), bean.getName(), bean.getDescription(), bean.getTags(), bean.getGroup());
+	    executeService("EditUnitFile", new Object[] { bean.getFile(), bean.getName(), bean.getDescription(), bean.getTags(),
+		    bean.getGroup() });
 	}
 	return manageFiles(mapping, form, request, response);
     }
@@ -245,7 +247,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 
     protected PersistentGroupMembers getGroup(HttpServletRequest request) {
 	Integer id = getIdInternal(request, "groupId");
-	return (PersistentGroupMembers) RootDomainObject.getInstance().readPersistentGroupMembersByOID(id);
+	return RootDomainObject.getInstance().readPersistentGroupMembersByOID(id);
     }
 
     protected PersistentGroupMembersBean getNewPersistentGroupBean(HttpServletRequest request) {

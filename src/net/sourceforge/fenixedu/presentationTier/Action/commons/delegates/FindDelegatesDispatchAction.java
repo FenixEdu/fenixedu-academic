@@ -122,7 +122,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
 
 	CollectionPager<Person> result = null;
 	try {
-	    result = (CollectionPager<Person>) executeService(request, "SearchPerson", args);
+	    result = (CollectionPager<Person>) executeService("SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    addActionMessage(request, "error.delegates.searchDelegates.impossibleToFindDelegate", e.getMessage());

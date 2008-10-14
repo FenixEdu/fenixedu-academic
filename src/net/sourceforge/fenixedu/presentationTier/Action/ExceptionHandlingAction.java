@@ -156,7 +156,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	String mailBody = generateEmailBody(request, requestBean, getLoggedPerson(request), builder);
 
 	try {
-	    executeService("CreateSupportRequest", getLoggedPerson(request), requestBean);
+	    executeService("CreateSupportRequest", new Object[] { getLoggedPerson(request), requestBean });
 	} catch (DomainException e) {
 	    // a mail must be always sent, no need to give error feedback
 	}
@@ -186,7 +186,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     protected void sendMail(HttpServletRequest request, SupportRequestBean requestBean, String mailSubject, String mailBody) {
 	final EMail email = new EMail(!request.getServerName().equals("localhost") ? "mail.adm" : "mail.rnl.ist.utl.pt",
 		isEmailValid(requestBean) ? requestBean.getResponseEmail() : "erro@dot.ist.utl.pt");
-	
+
 	email.send(getSendToEmailAddress(request, requestBean), mailSubject, mailBody);
     }
 
@@ -233,11 +233,11 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	appendNewLine(builder);
 	appendFormInfo(builder, requestBean);
 	appendNewLine(builder);
-	appendUserInfo(builder, (String) request.getParameter("userAgent"));
+	appendUserInfo(builder, request.getParameter("userAgent"));
 	appendNewLine(builder);
 	builder.append(SEPARATOR);
 	appendNewLine(builder, 2);
-	appendComments(builder, requestBean, (String) request.getParameter("exceptionInfo"));
+	appendComments(builder, requestBean, request.getParameter("exceptionInfo"));
 	return builder.toString();
     }
 

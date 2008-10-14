@@ -17,7 +17,7 @@ public abstract class AlumniEntityManagementDA extends FenixDispatchAction {
 	if (alumniStudent.hasAlumni()) {
 	    return alumniStudent.getAlumni();
 	} else {
-	    return (Alumni) executeService("RegisterAlumniData", alumniStudent);
+	    return (Alumni) executeService("RegisterAlumniData", new Object[] { alumniStudent });
 	}
     }
 

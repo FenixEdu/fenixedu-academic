@@ -151,7 +151,7 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
 	    if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
-		executeService(request, "StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
+		executeService("StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
 			new ByteArrayInputStream(data), creditNote });
 	    }
 	    response.setContentLength(data.length);

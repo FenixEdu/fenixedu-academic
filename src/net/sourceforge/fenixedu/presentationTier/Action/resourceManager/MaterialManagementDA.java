@@ -84,7 +84,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
 	MaterialBean bean = (MaterialBean) getRenderedObject("createMaterialBeanID");
 
 	try {
-	    executeService(request, "CreateMaterial", new Object[] { bean });
+	    executeService("CreateMaterial", new Object[] { bean });
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -103,7 +103,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
 	MaterialType materialType = MaterialType.getMaterialTypeByMaterialClass(materialClass);
 
 	try {
-	    executeService(request, "DeleteMaterial", new Object[] { material });
+	    executeService("DeleteMaterial", new Object[] { material });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    MaterialBean bean = new MaterialBean(material.getIdentification(), materialType);

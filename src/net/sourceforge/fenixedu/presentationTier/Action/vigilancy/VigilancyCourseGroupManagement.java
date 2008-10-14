@@ -72,7 +72,7 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 	if (executionCourses.size() > 0) {
 	    List<ExecutionCourse> coursesUnableToAdd;
 	    Object[] args = { group, executionCourses };
-	    coursesUnableToAdd = (List<ExecutionCourse>) executeService(request, "AddExecutionCourseToGroup", args);
+	    coursesUnableToAdd = (List<ExecutionCourse>) executeService("AddExecutionCourseToGroup", args);
 
 	    request.setAttribute("coursesUnableToAdd", coursesUnableToAdd);
 	}
@@ -93,7 +93,7 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 
 	try {
 	    Object[] args = { group, executionCourses };
-	    executeService(request, "RemoveExecutionCoursesFromGroup", args);
+	    executeService("RemoveExecutionCoursesFromGroup", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -120,7 +120,7 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 
 	    try {
 		Object[] args = { group, courses };
-		executeService(request, "AddExecutionCourseToGroup", args);
+		executeService("AddExecutionCourseToGroup", args);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }

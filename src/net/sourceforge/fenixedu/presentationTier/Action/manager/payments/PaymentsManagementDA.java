@@ -110,8 +110,8 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
 	final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-	final CollectionPager<Person> result = (CollectionPager<Person>) executeService("SearchPerson", searchParameters,
-		predicate);
+	final CollectionPager<Person> result = (CollectionPager<Person>) executeService("SearchPerson", new Object[] {
+		searchParameters, predicate });
 
 	return result.getCollection();
 
@@ -131,8 +131,8 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final CancelEventBean cancelEventBean = getCancelEventBean();
 
 	try {
-	    executeService("CancelEvent", cancelEventBean.getEvent(), cancelEventBean.getEmployee(), cancelEventBean
-		    .getJustification());
+	    executeService("CancelEvent", new Object[] { cancelEventBean.getEvent(), cancelEventBean.getEmployee(),
+		    cancelEventBean.getJustification() });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -156,7 +156,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward openEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    executeService("OpenEvent", getEvent(request));
+	    executeService("OpenEvent", new Object[] { getEvent(request) });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	} catch (DomainException ex) {
@@ -211,8 +211,9 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean = (TransferPaymentsToOtherEventAndCancelBean) getObjectFromViewState("transferPaymentsBean");
 
 	try {
-	    executeService("TransferPaymentsToOtherEventAndCancel", transferPaymentsBean.getEmployee(), transferPaymentsBean
-		    .getSourceEvent(), transferPaymentsBean.getTargetEvent(), transferPaymentsBean.getCancelJustification());
+	    executeService("TransferPaymentsToOtherEventAndCancel", new Object[] { transferPaymentsBean.getEmployee(),
+		    transferPaymentsBean.getSourceEvent(), transferPaymentsBean.getTargetEvent(),
+		    transferPaymentsBean.getCancelJustification() });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -255,7 +256,8 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final AnnulAccountingTransactionBean annulAccountingTransactionBean = (AnnulAccountingTransactionBean) getObjectFromViewState("annulAccountingTransactionBean");
 	try {
 
-	    executeService("AnnulAccountingTransaction", getLoggedPerson(request).getEmployee(), annulAccountingTransactionBean);
+	    executeService("AnnulAccountingTransaction", new Object[] { getLoggedPerson(request).getEmployee(),
+		    annulAccountingTransactionBean });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -305,7 +307,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeService("AnnulReceipt", getLoggedPerson(request).getEmployee(), getReceipt(request));
+	    executeService("AnnulReceipt", new Object[] { getLoggedPerson(request).getEmployee(), getReceipt(request) });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	} catch (DomainException ex) {
@@ -348,7 +350,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
 	final DepositAmountBean renderedObject = (DepositAmountBean) getRenderedObject("depositAmountBean");
 	try {
-	    executeService("DepositAmountOnEvent", renderedObject);
+	    executeService("DepositAmountOnEvent", new Object[] { renderedObject });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 

@@ -127,7 +127,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	final ExecutionSemester executionSemester = getExecutionSemester(request);
 
 	try {
-	    executeService("ExecuteFactoryMethod", new Enrolment.DeleteEnrolmentExecutor(enrolment));
+	    executeService("ExecuteFactoryMethod", new Object[] { new Enrolment.DeleteEnrolmentExecutor(enrolment) });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

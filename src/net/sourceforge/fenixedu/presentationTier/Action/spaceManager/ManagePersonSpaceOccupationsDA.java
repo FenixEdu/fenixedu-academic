@@ -62,7 +62,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 	final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
 	Object[] args = { personSpaceOccupation };
 	try {
-	    executeService(request, "DeletePersonSpaceOccupation", args);
+	    executeService("DeletePersonSpaceOccupation", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

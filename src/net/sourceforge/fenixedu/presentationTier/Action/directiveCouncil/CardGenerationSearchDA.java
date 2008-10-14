@@ -48,8 +48,8 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
 	if (!searchParameters.emptyParameters()) {
 	    final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 	    final Object[] args = { searchParameters, predicate };
-	    final CollectionPager<Person> searchPersonCollectionPager = (CollectionPager<Person>) executeService(request,
-		    "SearchPerson", args);
+	    final CollectionPager<Person> searchPersonCollectionPager = (CollectionPager<Person>) executeService("SearchPerson",
+		    args);
 	    request.setAttribute("searchPersonCollectionPager", searchPersonCollectionPager);
 	    request.setAttribute("numberOfPages", searchPersonCollectionPager.getNumberOfPages());
 	    final String pageNumberString = request.getParameter("pageNumber");

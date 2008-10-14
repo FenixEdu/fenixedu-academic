@@ -57,8 +57,8 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 	final Object[] args = { executionDegreeBean.getDegreeCurricularPlan().getIdInternal(),
 		executionDegreeBean.getExecutionYear().getIdInternal() };
 
-	final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>) executeService(request,
-		"ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
+	final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>) executeService("ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear",
+		args);
 
 	final ActionErrors errors = new ActionErrors();
 	if (degreeModuleScopes.isEmpty()) {

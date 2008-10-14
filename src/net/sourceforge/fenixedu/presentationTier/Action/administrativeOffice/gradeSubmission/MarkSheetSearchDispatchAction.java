@@ -214,7 +214,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
 	List<EnrolmentEvaluation> evaluations = getEvaluationsToRemove(form);
 	try {
-	    executeService("RemoveGradesFromConfirmedMarkSheet", markSheet, evaluations);
+	    executeService("RemoveGradesFromConfirmedMarkSheet", new Object[] { markSheet, evaluations });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return listMarkSheet(mapping, actionForm, request, response);

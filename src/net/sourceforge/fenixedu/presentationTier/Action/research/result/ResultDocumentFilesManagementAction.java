@@ -38,7 +38,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
 
 	try {
 	    final Object[] args = { bean };
-	    executeService(request, "CreateResultDocumentFile", args);
+	    executeService("CreateResultDocumentFile", args);
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);
@@ -54,7 +54,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
 
 	try {
 	    final Object[] args = { documentFileId };
-	    executeService(request, "DeleteResultDocumentFile", args);
+	    executeService("DeleteResultDocumentFile", args);
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);

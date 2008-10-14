@@ -60,7 +60,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
 	final Student student = AccessControl.getPerson().getStudent();
 	final Collection<InquiriesRegistry> coursesToAnswer = (Collection<InquiriesRegistry>) executeService(
-		"RetrieveOrCreateStudentInquiriesRegistries", student, executionSemester);
+		"RetrieveOrCreateStudentInquiriesRegistries", new Object[] { student, executionSemester });
 
 	boolean isAnyInquiryToAnswer = false;
 	final List<CurricularCourseInquiriesRegistryDTO> courses = new ArrayList<CurricularCourseInquiriesRegistryDTO>();
@@ -93,8 +93,8 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	VariantBean weeklySpentHours = (VariantBean) getRenderedObject("weeklySpentHours");
 
 	try {
-	    executeService("SubmitStudentSpentTimeInPeriod", AccessControl.getPerson().getStudent(), courses, weeklySpentHours
-		    .getInteger(), executionSemester);
+	    executeService("SubmitStudentSpentTimeInPeriod", new Object[] { AccessControl.getPerson().getStudent(), courses,
+		    weeklySpentHours.getInteger(), executionSemester });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	}
@@ -124,7 +124,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    addActionMessage(request, "error.inquiries.notAnsweredFillAtLeastOneField");
 	    return handleDontRespondError(actionMapping, request, inquiriesRegistry);
 	}
-	
+
 	if (inquiriesRegistry.getStudent().getPerson() != AccessControl.getPerson()) {
 	    // FIXME: ERROR MESSAGE
 	    return null;
@@ -132,18 +132,19 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
 	InquiryNotAnsweredJustification justification = InquiryNotAnsweredJustification.valueOf(notAnsweredJustification);
 	String notAnsweredOtherJustification = (String) form.get("notAnsweredOtherJustification");
-	
-	if(justification == InquiryNotAnsweredJustification.OTHER ){
-	    if(StringUtils.isEmpty(notAnsweredOtherJustification)){
+
+	if (justification == InquiryNotAnsweredJustification.OTHER) {
+	    if (StringUtils.isEmpty(notAnsweredOtherJustification)) {
 		addActionMessage(request, "error.inquiries.fillOtherJustification");
 		return handleDontRespondError(actionMapping, request, inquiriesRegistry);
-	    } else if(notAnsweredOtherJustification.length() > 200){
+	    } else if (notAnsweredOtherJustification.length() > 200) {
 		addActionMessage(request, "error.inquiries.fillOtherJustificationLengthOversized");
 		return handleDontRespondError(actionMapping, request, inquiriesRegistry);
 	    }
 	}
 
-	executeService("WriteStudentInquiryNotAnswer", inquiriesRegistry, justification, notAnsweredOtherJustification);
+	executeService("WriteStudentInquiryNotAnswer", new Object[] { inquiriesRegistry, justification,
+		notAnsweredOtherJustification });
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
     }
 
@@ -239,7 +240,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
-	executeService("WriteStudentInquiry", studentInquiry);
+	executeService("WriteStudentInquiry", new Object[] { studentInquiry });
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
     }
 

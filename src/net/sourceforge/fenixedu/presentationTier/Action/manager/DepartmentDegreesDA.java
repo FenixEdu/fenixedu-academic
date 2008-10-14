@@ -28,7 +28,7 @@ public class DepartmentDegreesDA extends FenixDispatchAction {
 
     public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-	executeFactoryMethod(request);
+	executeFactoryMethod();
 	return prepare(mapping, form, request, response);
     }
 
@@ -38,7 +38,7 @@ public class DepartmentDegreesDA extends FenixDispatchAction {
 	final String degreeString = request.getParameter("degreeID");
 	final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentString));
 	final Degree degree = rootDomainObject.readDegreeByOID(Integer.valueOf(degreeString));
-	executeService("RemoveDegreeFromDepartment", department, degree);
+	executeService("RemoveDegreeFromDepartment", new Object[] { department, degree });
 	final DepartmentDegreeBean departmentDegreeBean = new DepartmentDegreeBean();
 	departmentDegreeBean.setDepartment(department);
 	return forwardToPage(mapping, request, departmentDegreeBean);

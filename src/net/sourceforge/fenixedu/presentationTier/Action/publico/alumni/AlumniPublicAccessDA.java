@@ -71,7 +71,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	}
 
 	try {
-	    executeService("RegisterAlumniData", getObjectFromViewState("alumniBean"));
+	    executeService("RegisterAlumniData", new Object[] { getObjectFromViewState("alumniBean") });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return processRequestIdentityCheckError(mapping, actionForm, request, response);
@@ -118,8 +118,8 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	}
 
 	try {
-	    final Alumni alumni = (Alumni) executeService("RegisterAlumniData", alumniBean.getStudentNumber(), alumniBean
-		    .getDocumentIdNumber().trim(), alumniBean.getEmail());
+	    final Alumni alumni = (Alumni) executeService("RegisterAlumniData", new Object[] { alumniBean.getStudentNumber(),
+		    alumniBean.getDocumentIdNumber().trim(), alumniBean.getEmail() });
 
 	    // development help
 	    String url = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
@@ -228,7 +228,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	}
 
 	try {
-	    executeService("RegisterAlumniData", alumniBean);
+	    executeService("RegisterAlumniData", new Object[] { alumniBean });
 	} catch (FenixServiceException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    return updateAlumniInformationError(mapping, actionForm, request, response);
@@ -281,7 +281,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	if (alumni.hasPastLogin()) {
 
 	    try {
-		executeService("RegisterAlumniData", alumni, Boolean.TRUE);
+		executeService("RegisterAlumniData", new Object[] { alumni, Boolean.TRUE });
 		request.setAttribute("loginAlias", alumni.getLoginUsername());
 		request.setAttribute("registrationResult", "true");
 	    } catch (FenixServiceException e) {
@@ -331,9 +331,9 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	if (alumniFormation.hasFullInformation()) {
 	    try {
 		if (alumniFormation.hasAssociatedFormation()) {
-		    executeService("EditFormation", alumniFormation);
+		    executeService("EditFormation", new Object[] { alumniFormation });
 		} else {
-		    executeService("CreateFormation", formationBean.getAlumni(), alumniFormation);
+		    executeService("CreateFormation", new Object[] { formationBean.getAlumni(), alumniFormation });
 		}
 		return Boolean.TRUE;
 
@@ -352,7 +352,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	    HttpServletResponse response) throws Exception {
 
 	try {
-	    executeService("DeleteAlumniQualification", getIntegerFromRequest(request, "formationId"));
+	    executeService("DeleteAlumniQualification", new Object[] { getIntegerFromRequest(request, "formationId") });
 	} catch (FenixServiceException e) {
 	    addActionMessage("error", request, e.getMessage());
 	}
@@ -376,7 +376,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	AlumniPasswordBean alumniBean = (AlumniPasswordBean) getObjectFromViewState("passwordAccessBean");
 
 	try {
-	    executeService("RegisterAlumniData", alumniBean);
+	    executeService("RegisterAlumniData", new Object[] { alumniBean });
 	    request.setAttribute("loginAlias", alumniBean.getAlumni().getLoginUsername());
 	    request.setAttribute("registrationResult", "true");
 	} catch (DomainException e) {

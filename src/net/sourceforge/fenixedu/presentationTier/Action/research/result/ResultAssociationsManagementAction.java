@@ -40,7 +40,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 
 	try {
 	    final Object[] args = { bean };
-	    executeService(request, "CreateResultUnitAssociation", args);
+	    executeService("CreateResultUnitAssociation", args);
 	} catch (FileManagerException e) {
 	    e.printStackTrace();
 	    addActionMessage(request, "label.communicationError");
@@ -81,7 +81,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	bean.setSuggestion(false);
 	try {
 	    final Object[] args = { bean };
-	    executeService(request, "CreateResultUnitAssociation", args);
+	    executeService("CreateResultUnitAssociation", args);
 	} catch (FileManagerException e) {
 	    e.printStackTrace();
 	    addActionMessage(request, "label.communicationError");
@@ -98,7 +98,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 
 	try {
 	    final Object[] args = { associationId };
-	    executeService(request, "DeleteResultUnitAssociation", args);
+	    executeService("DeleteResultUnitAssociation", args);
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);

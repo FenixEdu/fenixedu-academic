@@ -97,7 +97,7 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("researchActivity");
 
-	executeService(request, getServiceName(), new Object[] { researchActivityPageContainerBean });
+	executeService(getServiceName(), new Object[] { researchActivityPageContainerBean });
 
 	researchActivityPageContainerBean.reset();
 	return setObjects(mapping, form, request, response, researchActivityPageContainerBean);

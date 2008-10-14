@@ -167,8 +167,8 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
 	    List<ResearchActivityParticipantEditionBean> notEditedParticipants = null;
 	    try {
-		notEditedParticipants = (List<ResearchActivityParticipantEditionBean>) executeService(request,
-			"EditResearchActivityParticipants", new Object[] { beans });
+		notEditedParticipants = (List<ResearchActivityParticipantEditionBean>) executeService("EditResearchActivityParticipants",
+			new Object[] { beans });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }
@@ -231,7 +231,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 			participantBean.getRoleMessage() };
 	    }
 	    try {
-		executeService(request, "CreateResearchActivityParticipation", objects);
+		executeService("CreateResearchActivityParticipation", objects);
 
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
@@ -252,7 +252,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
 	if (participation != null) {
 	    try {
-		executeService(request, "RemoveResearchActivityParticipation", new Object[] { participation });
+		executeService("RemoveResearchActivityParticipation", new Object[] { participation });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }

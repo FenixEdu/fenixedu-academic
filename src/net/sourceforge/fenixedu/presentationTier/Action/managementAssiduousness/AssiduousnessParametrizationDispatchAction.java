@@ -144,7 +144,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	}
 	if (validateWorkScheduleAcronym(request, workScheduleTypeFactory)
 		&& validateWorkScheduleTypeFactory(request, workScheduleTypeFactory)) {
-	    Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { workScheduleTypeFactory });
+	    Object result = executeService("ExecuteFactoryMethod", new Object[] { workScheduleTypeFactory });
 	    if (result == null) {
 		request.setAttribute("workScheduleList", getScheduleList());
 		return mapping.findForward("show-all-schedules");
@@ -164,7 +164,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	}
 	if (hasWorkScheduleAcronym(request, workScheduleTypeFactory)
 		&& validateWorkScheduleTypeFactory(request, workScheduleTypeFactory)) {
-	    Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { workScheduleTypeFactory });
+	    Object result = executeService("ExecuteFactoryMethod", new Object[] { workScheduleTypeFactory });
 	    if (result == null) {
 		request.setAttribute("workScheduleList", getScheduleList());
 		return mapping.findForward("show-all-schedules");
@@ -380,8 +380,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	if (assiduousnessExemptionBean == null) {
 	    assiduousnessExemptionBean = new AssiduousnessExemptionBean();
 	} else {
-	    ActionMessage actionMessage = (ActionMessage) executeService(request, "ExecuteFactoryMethod",
-		    new Object[] { assiduousnessExemptionBean });
+	    ActionMessage actionMessage = (ActionMessage) executeService("ExecuteFactoryMethod", new Object[] { assiduousnessExemptionBean });
 	    if (actionMessage == null) {
 		return showAssiduousnessExemptions(mapping, form, request, response);
 	    } else {

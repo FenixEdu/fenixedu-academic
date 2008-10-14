@@ -68,7 +68,7 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
 
 	    List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
 	    try {
-		tutorshipsNotChanged = (List<TutorshipErrorBean>) executeService(request, "ChangeTutorship", args);
+		tutorshipsNotChanged = (List<TutorshipErrorBean>) executeService("ChangeTutorship", args);
 	    } catch (FenixServiceException e) {
 		addActionMessage(request, e.getMessage(), e.getArgs());
 	    }
@@ -113,7 +113,7 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
 
 	    List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
 	    try {
-		tutorshipsNotChanged = (List<TutorshipErrorBean>) executeService(request, "ChangeTutorship", args);
+		tutorshipsNotChanged = (List<TutorshipErrorBean>) executeService("ChangeTutorship", args);
 	    } catch (FenixServiceException e) {
 		addActionMessage(request, e.getMessage(), e.getArgs());
 	    }

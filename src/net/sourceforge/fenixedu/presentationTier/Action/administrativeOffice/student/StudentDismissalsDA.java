@@ -216,7 +216,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	final StudentCurricularPlan studentCurricularPlan = getSCP(request);
 
 	try {
-	    executeService(request, "DeleteCredits", new Object[] { studentCurricularPlan, creditsIDs });
+	    executeService("DeleteCredits", new Object[] { studentCurricularPlan, creditsIDs });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

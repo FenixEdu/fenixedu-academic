@@ -62,7 +62,7 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 	}
 
 	try {
-	    executeService("MoveCurriculumLines", moveCurriculumLinesBean);
+	    executeService("MoveCurriculumLines", new Object[] { moveCurriculumLinesBean });
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages(request, ex.getFalseResult());
 

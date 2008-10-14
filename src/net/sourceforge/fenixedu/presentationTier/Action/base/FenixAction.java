@@ -85,13 +85,12 @@ public abstract class FenixAction extends Action {
 	this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
     }
 
-    protected Object executeService(final HttpServletRequest request, final String serviceName, final Object[] serviceArgs)
+    protected Object executeService(final String serviceName, final Object[] serviceArgs)
 	    throws FenixFilterException, FenixServiceException {
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
-    
-    
-    protected  void addErrorMessage(HttpServletRequest request, String property, String key, String ... args) {
+
+    protected void addErrorMessage(HttpServletRequest request, String property, String key, String... args) {
 	final ActionMessages messages = getErrors(request);
 	messages.add(property, new ActionMessage(key, args));
 	saveErrors(request, messages);

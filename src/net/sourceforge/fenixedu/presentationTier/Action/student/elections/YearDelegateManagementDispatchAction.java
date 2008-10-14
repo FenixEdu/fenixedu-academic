@@ -118,7 +118,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	args = new Object[] { yearDelegateElection, person.getStudent() };
 
 	try {
-	    executeService(request, "AddCandidateYearDelegateElections", args);
+	    executeService("AddCandidateYearDelegateElections", args);
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}
@@ -135,7 +135,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	args = new Object[] { yearDelegateElection, person.getStudent() };
 
 	try {
-	    executeService(request, "RemoveCandidateYearDelegateElections", args);
+	    executeService("RemoveCandidateYearDelegateElections", args);
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}
@@ -151,7 +151,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 
 	final Student votedStudent = voteBean.getStudent();
 	try {
-	    executeService(request, "VoteYearDelegateElections", new Object[] { yearDelegateElection, person.getStudent(),
+	    executeService("VoteYearDelegateElections", new Object[] { yearDelegateElection, person.getStudent(),
 		    votedStudent });
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());

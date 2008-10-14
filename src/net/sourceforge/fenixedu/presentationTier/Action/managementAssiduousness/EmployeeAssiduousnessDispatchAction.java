@@ -82,7 +82,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	RegularizationMonthFactory regularizationMonthFactory = (RegularizationMonthFactory) getFactoryObject();
-	executeService(request, "ExecuteFactoryMethod", new Object[] { regularizationMonthFactory });
+	executeService("ExecuteFactoryMethod", new Object[] { regularizationMonthFactory });
 	request.setAttribute("employeeNumber", regularizationMonthFactory.getAssiduousness().getEmployee().getEmployeeNumber());
 	request.setAttribute("yearMonth", regularizationMonthFactory.getYearMonth());
 	return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request, response);
@@ -137,7 +137,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	EmployeeJustificationFactory employeeJustificationFactory = (EmployeeJustificationFactory) getFactoryObject();
 	try {
-	    Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { employeeJustificationFactory });
+	    Object result = executeService("ExecuteFactoryMethod", new Object[] { employeeJustificationFactory });
 	    if (result != null) {
 		setError(request, "errorMessage", (ActionMessage) result);
 		request.setAttribute("employeeJustificationFactory", employeeJustificationFactory);
@@ -169,7 +169,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	request.setAttribute("employeeNumber", justification.getAssiduousness().getEmployee().getEmployeeNumber());
 	request.setAttribute("yearMonth", employeeAnulateJustificationFactory.getYearMonth());
 	try {
-	    Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { employeeAnulateJustificationFactory });
+	    Object result = executeService("ExecuteFactoryMethod", new Object[] { employeeAnulateJustificationFactory });
 	    if (result != null) {
 		setError(request, "errorMessage", (ActionMessage) result);
 		request.setAttribute("employeeJustificationFactory", employeeAnulateJustificationFactory);
@@ -342,7 +342,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 
 	Schedule schedule = employeeScheduleFactory.getSchedule();
 	if (hasAnythingChanged(employeeScheduleFactory)) {
-	    schedule = (Schedule) executeService(request, "ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });
+	    schedule = (Schedule) executeService("ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });
 	}
 	request.setAttribute("scheduleID", schedule.getIdInternal());
 	RenderUtils.invalidateViewState();
@@ -369,7 +369,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	employeeScheduleFactory.setToDeleteDays(true);
 	if (canDeleteDays(employeeScheduleFactory)) {
 	    if (!areEmptyDays(employeeScheduleFactory)) {
-		schedule = (Schedule) executeService(request, "ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });
+		schedule = (Schedule) executeService("ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });
 	    }
 	} else {
 	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.schedule.canNotDeleteAllDays"));
@@ -443,8 +443,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward insertJustification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	SeveralEmployeeJustificationFactoryCreator severalEmployeeJustificationFactoryCreator = (SeveralEmployeeJustificationFactoryCreator) getFactoryObject();
-	Object result = executeService(request, "ExecuteFactoryMethod",
-		new Object[] { severalEmployeeJustificationFactoryCreator });
+	Object result = executeService("ExecuteFactoryMethod", new Object[] { severalEmployeeJustificationFactoryCreator });
 	RenderUtils.invalidateViewState();
 	if (result != null) {
 	    setError(request, "errorMessage", (ActionMessage) result);

@@ -73,7 +73,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 	    Integer classToDeleteId = (Integer) actionForm.get("classToManageId");
 
 	    try {
-		executeService("DeleteObjectByOID", Class.forName(classToDelete), classToDeleteId);
+		executeService("DeleteObjectByOID", new Object[] { Class.forName(classToDelete), classToDeleteId });
 		request.setAttribute("message", "Object " + classToDelete + " with ID:" + classToDeleteId
 			+ " Deleted. God have mercy of your soul...");
 
@@ -159,7 +159,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
     private List<LabelValueBean> getClasses() {
 	List<LabelValueBean> classes = new ArrayList<LabelValueBean>();
 	for (Iterator<DomainClass> iter = FenixFramework.getDomainModel().getClasses(); iter.hasNext();) {
-	    DomainClass domainClass = (DomainClass) iter.next();
+	    DomainClass domainClass = iter.next();
 	    classes.add(new LabelValueBean(domainClass.getName(), domainClass.getFullName()));
 	}
 

@@ -151,7 +151,8 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
 		ExecutionDegree executionDegree = getExecutionDegree(request);
 
 		try {
-		    executeService("AddScientificCommission", executionDegree.getIdInternal(), employee.getPerson());
+		    executeService("AddScientificCommission", new Object[] { executionDegree.getIdInternal(),
+			    employee.getPerson() });
 		    RenderUtils.invalidateViewState("usernameChoice");
 		} catch (DomainException e) {
 		    addActionMessage("addError", request, e.getKey(), e.getArgs());
@@ -172,7 +173,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
 	    for (ScientificCommission commission : executionDegree.getScientificCommissionMembers()) {
 		if (commission.getIdInternal().equals(memberId)) {
 		    try {
-			executeService("DeleteScientificCommission", executionDegree.getIdInternal(), commission);
+			executeService("DeleteScientificCommission", new Object[] { executionDegree.getIdInternal(), commission });
 		    } catch (DomainException e) {
 			addActionMessage("addError", request, e.getKey(), e.getArgs());
 		    }

@@ -122,7 +122,7 @@ public class ManageHomepageDA extends SiteManagementDA {
 		Boolean.valueOf(showCurrentAttendingExecutionCourses), Boolean.valueOf(showPublications),
 		Boolean.valueOf(showPatents), Boolean.valueOf(showInterests), Boolean.valueOf(showParticipations),
 		Boolean.valueOf(showPrizes) };
-	executeService(request, "SubmitHomepage", args);
+	executeService("SubmitHomepage", args);
 
 	return options(mapping, actionForm, request, response);
     }

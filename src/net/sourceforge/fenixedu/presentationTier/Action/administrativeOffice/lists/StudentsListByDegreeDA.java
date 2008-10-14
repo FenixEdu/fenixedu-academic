@@ -58,7 +58,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
 
 	final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) executeService(
-		"SearchStudents", searchBean);
+		"SearchStudents", new Object[] { searchBean });
 
 	request.setAttribute("searchParametersBean", searchBean);
 	request.setAttribute("studentCurricularPlanList", registrations);
@@ -72,7 +72,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
 	if (searchBean != null) {
 	    final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) executeService(
-		    "SearchStudents", (SearchStudentsByDegreeParametersBean) searchBean);
+		    "SearchStudents", new Object[] { searchBean });
 
 	    try {
 		String filename;
@@ -112,7 +112,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear) {
 	setHeaders(spreadsheet);
 	for (RegistrationWithStateForExecutionYearBean registrationWithStateForExecutionYearBean : registrations) {
-	    Registration registration = (Registration) registrationWithStateForExecutionYearBean.getRegistration();
+	    Registration registration = registrationWithStateForExecutionYearBean.getRegistration();
 	    spreadsheet.newRow();
 	    spreadsheet.addCell(registration.getNumber().toString());
 	    spreadsheet.addCell(registration.getPerson().getName());

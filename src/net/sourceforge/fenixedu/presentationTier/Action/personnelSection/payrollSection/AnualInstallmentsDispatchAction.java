@@ -82,8 +82,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
 	}
 	if (anualBonusInstallmentFactory.getAnualBonusInstallmentBeanList() != null) {
-	    List<ActionMessage> actionMessageList = (List<ActionMessage>) executeService(request, "ExecuteFactoryMethod",
-		    new Object[] { anualBonusInstallmentFactory });
+	    List<ActionMessage> actionMessageList = (List<ActionMessage>) executeService("ExecuteFactoryMethod", new Object[] { anualBonusInstallmentFactory });
 	    if (!actionMessageList.isEmpty()) {
 		for (ActionMessage actionMessage : actionMessageList) {
 		    actionMessages.add("message", actionMessage);

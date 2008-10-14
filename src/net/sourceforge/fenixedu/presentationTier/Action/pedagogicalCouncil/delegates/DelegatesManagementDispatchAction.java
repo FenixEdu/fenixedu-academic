@@ -194,7 +194,7 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response, Object[] args, DelegateBean bean, String forwardTo) throws Exception {
 
 	try {
-	    executeService(request, "AddNewDelegate", args);
+	    executeService("AddNewDelegate", args);
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}
@@ -221,7 +221,7 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	try {
-	    executeService(request, "RemoveDelegate", args);
+	    executeService("RemoveDelegate", args);
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}
@@ -348,7 +348,7 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	final Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionId);
 
 	try {
-	    executeService(request, "RemoveDelegate", new Object[] { person, function });
+	    executeService("RemoveDelegate", new Object[] { person, function });
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}

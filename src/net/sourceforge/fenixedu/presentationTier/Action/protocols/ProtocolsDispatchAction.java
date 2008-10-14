@@ -89,8 +89,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	    return showProtocolAlerts(mapping, actionForm, request, response);
 	}
 	ProtocolHistoryRenewerFactory protocolHistoryFactory = (ProtocolHistoryRenewerFactory) getRenderedObject("protocolHistoryFactory");
-	ActionMessage actionMessage = (ActionMessage) executeService(request, "ExecuteFactoryMethod",
-		new Object[] { protocolHistoryFactory });
+	ActionMessage actionMessage = (ActionMessage) executeService("ExecuteFactoryMethod", new Object[] { protocolHistoryFactory });
 	if (actionMessage != null) {
 	    setError(request, "message", actionMessage);
 	    request.setAttribute("protocolHistoryFactory", protocolHistoryFactory);
@@ -115,8 +114,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	    return showProtocolAlerts(mapping, actionForm, request, response);
 	}
 	ProtocolHistoryEditorFactory protocolHistoryFactory = (ProtocolHistoryEditorFactory) getRenderedObject("protocolHistoryFactory");
-	ActionMessage actionMessage = (ActionMessage) executeService(request, "ExecuteFactoryMethod",
-		new Object[] { protocolHistoryFactory });
+	ActionMessage actionMessage = (ActionMessage) executeService("ExecuteFactoryMethod", new Object[] { protocolHistoryFactory });
 	if (actionMessage != null) {
 	    setError(request, "message", actionMessage);
 	    request.setAttribute("protocolHistoryFactory", protocolHistoryFactory);

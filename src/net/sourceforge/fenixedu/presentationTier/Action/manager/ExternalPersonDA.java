@@ -64,7 +64,7 @@ public class ExternalPersonDA extends FenixDispatchAction {
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	final Person person = (Person) executeFactoryMethod(request);
+	final Person person = (Person) executeFactoryMethod();
 	request.setAttribute("person", person);
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("showCreatedPerson");
@@ -88,7 +88,7 @@ public class ExternalPersonDA extends FenixDispatchAction {
 	}
 	if (person != null) {
 	    final Object[] args = { person };
-	    executeService(request, "CreateParkingParty", args);
+	    executeService("CreateParkingParty", args);
 	    final ActionForward actionForward = new ActionForward("/parking.do?plateNumber=&partyID=" + person.getIdInternal()
 		    + "&method=showParkingPartyRequests");
 	    return actionForward;

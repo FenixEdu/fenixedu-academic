@@ -109,7 +109,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	try {
-	    executeService("ProcessNewAcademicServiceRequests", academicServiceRequest);
+	    executeService("ProcessNewAcademicServiceRequests", new Object[] { academicServiceRequest });
 	    addActionMessage(request, "academic.service.request.processed.with.success");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
@@ -389,7 +389,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 
 	for (Iterator<AcademicServiceRequest> iter = remainingRequests.iterator(); iter.hasNext();) {
-	    final AcademicServiceRequest academicServiceRequest = (AcademicServiceRequest) iter.next();
+	    final AcademicServiceRequest academicServiceRequest = iter.next();
 	    if (bean.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.NEW) {
 		if (!academicServiceRequest.getActiveSituation().hasEmployee()) {
 		    iter.remove();
@@ -442,7 +442,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeFactoryMethod(request);
+	    executeFactoryMethod();
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    return confirmCreateServiceRequest(mapping, actionForm, request, response);

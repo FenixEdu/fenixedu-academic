@@ -21,15 +21,15 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventW
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/exemptionsManagement", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( {
@@ -109,7 +109,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	}
 
 	try {
-	    executeService(request, "CreateGratuityExemption", new Object[] { getUserView(request).getPerson().getEmployee(),
+	    executeService("CreateGratuityExemption", new Object[] { getUserView(request).getPerson().getEmployee(),
 		    createGratuityExemptionBean });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    return invalidCreateGratuityExemption(mapping, request, ex.getKey(), solveLabelFormatterArgs(request, ex
@@ -131,7 +131,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	request.setAttribute("eventId", exemption.getEvent().getIdInternal());
 
 	try {
-	    executeService(request, "DeleteExemption", new Object[] { exemption });
+	    executeService("DeleteExemption", new Object[] { exemption });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	} catch (DomainException ex) {
@@ -170,7 +170,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	request.setAttribute("eventId", createInstallmentPenaltyExemptionBean.getGratuityEventWithPaymentPlan().getIdInternal());
 
 	try {
-	    executeService(request, "CreateInstallmentPenaltyExemption", new Object[] { getLoggedPerson(request).getEmployee(),
+	    executeService("CreateInstallmentPenaltyExemption", new Object[] { getLoggedPerson(request).getEmployee(),
 		    createInstallmentPenaltyExemptionBean });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -214,7 +214,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
     }
 
     private Exemption getExemption(final HttpServletRequest request) {
-	return (Exemption) rootDomainObject.readExemptionByOID(getIntegerFromRequest(request, "exemptionId"));
+	return rootDomainObject.readExemptionByOID(getIntegerFromRequest(request, "exemptionId"));
     }
 
     public ActionForward prepareCreateImprovementOfApprovedEnrolmentPenaltyExemption(ActionMapping mapping, ActionForm form,
@@ -241,7 +241,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
 
 	try {
-	    executeService(request, "CreateImprovementOfApprovedEnrolmentPenaltyExemption", new Object[] {
+	    executeService("CreateImprovementOfApprovedEnrolmentPenaltyExemption", new Object[] {
 		    getLoggedPerson(request).getEmployee(), penaltyExemptionBean });
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
@@ -277,7 +277,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
 
 	try {
-	    executeService(request, "CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption", new Object[] {
+	    executeService("CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption", new Object[] {
 		    getLoggedPerson(request).getEmployee(), penaltyExemptionBean });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -310,8 +310,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeService("CreateSecondCycleIndividualCandidacyExemption", getLoggedPerson(request).getEmployee(),
-		    getRenderedObject("create-penalty-exemption-bean"));
+	    executeService("CreateSecondCycleIndividualCandidacyExemption", new Object[] {
+		    getLoggedPerson(request).getEmployee(), getRenderedObject("create-penalty-exemption-bean") });
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));

@@ -71,7 +71,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
 
 	if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
-	    executeService(request, "StoreGeneratedDocument", new Object[] {
+	    executeService("StoreGeneratedDocument", new Object[] {
 		    documents.iterator().next().getReportFileName() + ".pdf", new ByteArrayInputStream(data), documentRequest });
 	}
 	response.setContentLength(data.length);
@@ -282,7 +282,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	DocumentRequest documentRequest = null;
 	try {
-	    documentRequest = (DocumentRequest) executeFactoryMethod(request);
+	    documentRequest = (DocumentRequest) executeFactoryMethod();
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	    return mapping.findForward("viewRegistrationDetails");

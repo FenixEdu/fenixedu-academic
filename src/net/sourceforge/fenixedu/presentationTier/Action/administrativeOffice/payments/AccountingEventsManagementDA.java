@@ -87,8 +87,8 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
 	try {
 
-	    executeService("CreateGratuityEvent", accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean
-		    .getExecutionYear());
+	    executeService("CreateGratuityEvent", new Object[] { accountingEventCreateBean.getStudentCurricularPlan(),
+		    accountingEventCreateBean.getExecutionYear() });
 
 	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
@@ -124,8 +124,8 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
 	try {
 
-	    executeService("CreateAdministrativeOfficeFeeAndInsuranceEvent",
-		    accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean.getExecutionYear());
+	    executeService("CreateAdministrativeOfficeFeeAndInsuranceEvent", new Object[] {
+		    accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean.getExecutionYear() });
 
 	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
@@ -173,8 +173,9 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
 	try {
 
-	    executeService("CreateEnrolmentOutOfPeriodEvent", accountingEventCreateBean.getStudentCurricularPlan(),
-		    accountingEventCreateBean.getExecutionPeriod(), accountingEventCreateBean.getNumberOfDelayDays());
+	    executeService("CreateEnrolmentOutOfPeriodEvent", new Object[] {
+		    accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean.getExecutionPeriod(),
+		    accountingEventCreateBean.getNumberOfDelayDays() });
 
 	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 

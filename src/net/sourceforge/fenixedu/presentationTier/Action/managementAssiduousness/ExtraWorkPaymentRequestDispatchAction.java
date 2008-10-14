@@ -69,7 +69,7 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
 	} else {
 	    extraWorkRequestFactory.setPerformPayment(true);
 	}
-	Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { extraWorkRequestFactory });
+	Object result = executeService("ExecuteFactoryMethod", new Object[] { extraWorkRequestFactory });
 	if (result != null) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", (ActionMessage) result);
@@ -85,7 +85,7 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	Integer extraWorkRequestID = getIdInternal(request, "idInternal");
-	executeService(request, "DeleteExtraWorkRequest", new Object[] { extraWorkRequestID });
+	executeService("DeleteExtraWorkRequest", new Object[] { extraWorkRequestID });
 	ExtraWorkRequestFactory extraWorkRequestFactory = new ExtraWorkRequestFactory(getIntegerFromRequest(request, "year"),
 		(String) getFromRequest(request, "month"), getIntegerFromRequest(request, "unitCode"), getIntegerFromRequest(
 			request, "doneInYear"), (String) getFromRequest(request, "doneInMonth"));
@@ -97,7 +97,7 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory = (EmployeeExtraWorkRequestFactory) getRenderedObject();
-	Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { employeeExtraWorkRequestFactory });
+	Object result = executeService("ExecuteFactoryMethod", new Object[] { employeeExtraWorkRequestFactory });
 
 	if (result != null) {
 	    ActionMessages actionMessages = getMessages(request);

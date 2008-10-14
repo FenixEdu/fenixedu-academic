@@ -28,7 +28,7 @@ public class RecoverInactivePersonDA extends FenixDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException, FenixServiceException {
-	final FindPersonFactory findPersonFactory = (FindPersonFactory) executeFactoryMethod(request);
+	final FindPersonFactory findPersonFactory = (FindPersonFactory) executeFactoryMethod();
 	for (final Iterator<Person> personIterator = findPersonFactory.getPeople().iterator(); personIterator.hasNext();) {
 	    final Person person = personIterator.next();
 	    if (!person.getPersonRolesSet().isEmpty()) {
@@ -48,7 +48,7 @@ public class RecoverInactivePersonDA extends FenixDispatchAction {
 	    final Set<Role> roles = new HashSet<Role>();
 	    roles.add(Role.getRoleByRoleType(RoleType.PERSON));
 	    final Object[] args = { person, roles };
-	    executeService(request, "SetPersonRoles", args);
+	    executeService("SetPersonRoles", args);
 	}
 	return prepare(mapping, form, request, response);
     }

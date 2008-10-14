@@ -244,9 +244,9 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
 	try {
-	    final Registration registration = (Registration) executeService("EnrolInAffinityCycle", getLoggedPerson(request),
-		    cycleEnrolmentBean.getStudentCurricularPlan(), cycleEnrolmentBean.getCycleCourseGroupToEnrol(),
-		    cycleEnrolmentBean.getExecutionPeriod());
+	    final Registration registration = (Registration) executeService("EnrolInAffinityCycle", new Object[] {
+		    getLoggedPerson(request), cycleEnrolmentBean.getStudentCurricularPlan(),
+		    cycleEnrolmentBean.getCycleCourseGroupToEnrol(), cycleEnrolmentBean.getExecutionPeriod() });
 
 	    request.setAttribute("registration", registration);
 

@@ -51,7 +51,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
 	try {
 	    Object[] args = { vigilant, periodBean.getBeginDate(), periodBean.getEndDate(), periodBean.getJustification() };
-	    executeService(request, "CreateUnavailablePeriod", args);
+	    executeService("CreateUnavailablePeriod", args);
 	} catch (DomainException e) {
 	    request.setAttribute("bean", periodBean);
 	    addActionMessage(request, e.getMessage());
@@ -196,7 +196,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
 	    Object[] args = { bean.getVigilant(), bean.getBeginDate(), bean.getEndDate(), bean.getJustification(),
 		    bean.getSelectedVigilantGroup() };
-	    executeService(request, "CreateUnavailablePeriod", args);
+	    executeService("CreateUnavailablePeriod", args);
 	} catch (DomainException e) {
 	    String gid = request.getParameter("gid");
 	    request.setAttribute("gid", gid);
@@ -240,7 +240,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
 	try {
 	    Object[] args = { idInternal };
-	    executeService(request, "DeleteUnavailablePeriodByOID", args);
+	    executeService("DeleteUnavailablePeriodByOID", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -253,7 +253,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
     private void applyChangesToUnavailablePeriod(HttpServletRequest request, Integer idInternal, DateTime begin, DateTime end,
 	    String justification) throws Exception {
 	Object[] args = { idInternal, begin, end, justification };
-	executeService(request, "EditUnavailablePeriod", args);
+	executeService("EditUnavailablePeriod", args);
     }
 
     private void putRequestVigilantManagementCompliant(HttpServletRequest request, Vigilant vigilant) {

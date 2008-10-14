@@ -90,7 +90,8 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Process process = (Process) executeService("CreateNewProcess", getProcessType().getName(), getRenderedObject());
+	Process process = (Process) executeService("CreateNewProcess", new Object[] { getProcessType().getName(),
+		getRenderedObject() });
 	request.setAttribute("process", process);
 	return listProcessAllowedActivities(mapping, form, request, response);
     }
@@ -101,7 +102,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     protected void executeActivity(Process process, String activityId, Object object) throws FenixFilterException,
 	    FenixServiceException {
-	executeService("ExecuteProcessActivity", process, activityId, object);
+	executeService("ExecuteProcessActivity", new Object[] { process, activityId, object });
     }
 
 }

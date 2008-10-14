@@ -84,7 +84,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	final String justification = ((DynaActionForm) actionForm).getString("justification");
 	try {
-	    executeService("CancelAcademicServiceRequest", academicServiceRequest, justification);
+	    executeService("CancelAcademicServiceRequest", new Object[] { academicServiceRequest, justification });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	    return mapping.findForward("prepareCancelAcademicServiceRequest");
@@ -144,7 +144,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    executeFactoryMethod(request);
+	    executeFactoryMethod();
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return viewDocumentRequestToCreate(mapping, actionForm, request, response);

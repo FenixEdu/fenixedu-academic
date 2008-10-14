@@ -298,8 +298,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 	}
 
 	try {
-	    Thesis thesis = (Thesis) executeService("CreateThesisProposal", degreeCurricularPlan, bean.getStudent(), bean
-		    .getTitle(), bean.getComment());
+	    Thesis thesis = (Thesis) executeService("CreateThesisProposal", new Object[] { degreeCurricularPlan,
+		    bean.getStudent(), bean.getTitle(), bean.getComment() });
 	    request.setAttribute("thesis", thesis);
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -316,8 +316,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 	Student student = getStudent(request);
 	Enrolment enrolment = student.getDissertationEnrolment();
 
-	Thesis thesis = (Thesis) executeService("CreateThesisProposalWithAssignment", degreeCurricularPlan, student, enrolment
-		.getDissertationProposal());
+	Thesis thesis = (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan,
+		student, enrolment.getDissertationProposal() });
 	request.setAttribute("thesis", thesis);
 
 	return editProposal(mapping, actionForm, request, response);
@@ -451,8 +451,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 
 	if (remove) {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	    executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), null, bean
-		    .getTarget()));
+	    executeService("ChangeThesisPerson", new Object[] { degreeCurricularPlan, thesis,
+		    new PersonChange(bean.getTargetType(), null, bean.getTarget()) });
 
 	    return editProposal(mapping, actionForm, request, response);
 	} else {
@@ -526,8 +526,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 	} else {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	    Thesis thesis = getThesis(request);
-	    executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(),
-		    selectedPerson, bean.getTarget()));
+	    executeService("ChangeThesisPerson", new Object[] { degreeCurricularPlan, thesis,
+		    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()) });
 
 	    return editProposal(mapping, actionForm, request, response);
 	}
@@ -573,8 +573,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 	} else {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	    Thesis thesis = getThesis(request);
-	    executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(),
-		    selectedPerson, bean.getTarget()));
+	    executeService("ChangeThesisPerson", new Object[] { degreeCurricularPlan, thesis,
+		    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()) });
 
 	    return editProposal(mapping, actionForm, request, response);
 	}
@@ -608,8 +608,12 @@ public class ManageThesisDA extends FenixDispatchAction {
 	    if (create) {
 		DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 		Thesis thesis = getThesis(request);
-		executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), bean
-			.getRawPersonName(), bean.getRawUnitName(), bean.getTarget()));
+		executeService("ChangeThesisPerson",
+			new Object[] {
+				degreeCurricularPlan,
+				thesis,
+				new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getRawUnitName(), bean
+					.getTarget()) });
 
 		return editProposal(mapping, actionForm, request, response);
 	    } else {
@@ -624,8 +628,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 	} else {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	    Thesis thesis = getThesis(request);
-	    executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), bean
-		    .getRawPersonName(), bean.getUnit(), bean.getTarget()));
+	    executeService("ChangeThesisPerson", new Object[] { degreeCurricularPlan, thesis,
+		    new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getUnit(), bean.getTarget()) });
 
 	    return editProposal(mapping, actionForm, request, response);
 	}
@@ -641,7 +645,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 
 	try {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	    executeService("SubmitThesis", degreeCurricularPlan, thesis);
+	    executeService("SubmitThesis", new Object[] { degreeCurricularPlan, thesis });
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	    return editProposal(mapping, actionForm, request, response);
@@ -666,7 +670,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 
 	try {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	    executeService("DeleteThesis", degreeCurricularPlan, thesis);
+	    executeService("DeleteThesis", new Object[] { degreeCurricularPlan, thesis });
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	}
@@ -697,7 +701,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 
 	try {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	    executeService("CancelSubmitThesis", degreeCurricularPlan, thesis);
+	    executeService("CancelSubmitThesis", new Object[] { degreeCurricularPlan, thesis });
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	    return viewSubmitted(mapping, actionForm, request, response);
@@ -756,7 +760,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 	}
 
 	try {
-	    executeService("ReviseThesis", thesis);
+	    executeService("ReviseThesis", new Object[] { thesis });
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	}

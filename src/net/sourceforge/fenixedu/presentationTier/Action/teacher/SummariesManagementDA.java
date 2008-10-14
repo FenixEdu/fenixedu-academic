@@ -242,7 +242,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	final Object args[] = { bean };
 	try {
-	    executeService(request, service, args);
+	    executeService(service, args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
@@ -263,7 +263,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	final Object args[] = { bean };
 	try {
-	    executeService(request, "CreateSummary", args);
+	    executeService("CreateSummary", args);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -286,7 +286,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	final Object args[] = { bean };
 	try {
-	    executeService(request, "CreateSummary", args);
+	    executeService("CreateSummary", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
@@ -348,7 +348,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	final Object args[] = { executionCourse, summary, professorshipLogged.getTeacher() };
 	try {
-	    executeService(request, "DeleteSummary", args);
+	    executeService("DeleteSummary", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return prepareShowSummaries(mapping, form, request, response);
@@ -520,7 +520,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	    final Object args[] = { summaryBean };
 	    try {
-		executeService(request, "CreateSummary", args);
+		executeService("CreateSummary", args);
 
 	    } catch (DomainException e) {
 		return returnToCreateComplexSummary(mapping, form, request, summaryBean, e);

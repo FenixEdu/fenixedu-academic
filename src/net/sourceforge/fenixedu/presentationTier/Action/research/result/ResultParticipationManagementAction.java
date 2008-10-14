@@ -144,7 +144,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 
 	    try {
 		final Object[] args = { participation };
-		executeService(request, "DeleteResultParticipation", args);
+		executeService("DeleteResultParticipation", args);
 	    } catch (Exception e) {
 		final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 		return processException(request, mapping, defaultForward, e);
@@ -163,7 +163,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	    final List<ResultParticipation> newParticipationsOrder = reOrderParticipations(treeStructure, result);
 	    try {
 		final Object[] args = { result, newParticipationsOrder };
-		executeService(request, "SaveResultParticipationsOrder", args);
+		executeService("SaveResultParticipationsOrder", args);
 	    } catch (Exception e) {
 		final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 		return processException(request, mapping, defaultForward, e);
@@ -285,7 +285,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 
 	try {
 	    final Object[] args = { participation, orderChange };
-	    executeService(request, "ChangeResultParticipationsOrder", args);
+	    executeService("ChangeResultParticipationsOrder", args);
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);

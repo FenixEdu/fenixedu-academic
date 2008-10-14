@@ -148,7 +148,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
 
 	if (selectedDegrees == null) {
 	    try {
-		executeService(request, service, new Object[] { newElectionPeriodBean });
+		executeService(service, new Object[] { newElectionPeriodBean });
 
 	    } catch (FenixServiceException ex) {
 		addActionMessage(request, ex.getMessage(), ex.getArgs());
@@ -156,7 +156,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
 	} else {
 	    for (String degreeOID : selectedDegrees) {
 		try {
-		    executeService(request, service, new Object[] { newElectionPeriodBean, degreeOID });
+		    executeService(service, new Object[] { newElectionPeriodBean, degreeOID });
 		} catch (FenixServiceException ex) {
 		    addActionMessage(request, ex.getMessage(), ex.getArgs());
 		}

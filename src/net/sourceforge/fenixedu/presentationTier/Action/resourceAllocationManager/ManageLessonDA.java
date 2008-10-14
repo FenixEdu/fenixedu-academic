@@ -87,7 +87,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		.getParameter("lessonDate"));
 
 	try {
-	    executeService(request, "DeleteLessonInstance", new Object[] { bean.getLesson(), bean.getDate() });
+	    executeService("DeleteLessonInstance", new Object[] { bean.getLesson(), bean.getDate() });
 
 	} catch (DomainException domainException) {
 	    ActionErrors actionErrors = new ActionErrors();

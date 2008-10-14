@@ -113,7 +113,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
 	    try {
 		final Object[] args = { section.getSite(), item };
-		executeService(request, "DeleteItem", args);
+		executeService("DeleteItem", args);
 	    } catch (DomainException e) {
 		addErrorMessage(request, "items", e.getKey(), (Object[]) e.getArgs());
 	    }
@@ -212,7 +212,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 		Section superiorSection = section.getSuperiorSection();
 
 		Site site = section.getSite();
-		executeService(request, "DeleteSection", new Object[] { site, section });
+		executeService("DeleteSection", new Object[] { site, section });
 
 		section = superiorSection;
 	    } catch (DomainException e) {
@@ -407,7 +407,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
 	    file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-	    executeService(request, service, new Object[] { bean.getSite(), container, file, bean.getFileName(),
+	    executeService(service, new Object[] { bean.getSite(), container, file, bean.getFileName(),
 		    bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
 		    bean.getEducationalLearningResourceType() });
 	} catch (FileManagerException e) {
@@ -519,7 +519,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 		    displayName, bean.getPermittedGroup(), bean.getMetaInformation(), getLoggedPerson(request), bean
 			    .getEducationalLearningResourceType()) };
 
-	    executeService(request, "CreateScormFile", args);
+	    executeService("CreateScormFile", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    RenderUtils.invalidateViewState("scormPackage");

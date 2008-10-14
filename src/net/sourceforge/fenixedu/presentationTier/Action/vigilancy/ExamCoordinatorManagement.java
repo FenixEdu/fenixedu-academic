@@ -48,7 +48,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 	User user = User.readUserByUserUId(username);
 	if (user != null && user.getPerson() != null) {
 	    Object args[] = { user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit() };
-	    executeService(request, "AddExamCoordinator", args);
+	    executeService("AddExamCoordinator", args);
 	} else {
 	    addActionMessage(request, "label.vigilancy.inexistingUsername");
 	}
@@ -67,7 +67,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 	ExamCoordinator coordinator = (ExamCoordinator) RootDomainObject.readDomainObjectByOID(ExamCoordinator.class, idInternal);
 
 	Object[] args = { coordinator };
-	executeService(request, "DeleteExamCoordinator", args);
+	executeService("DeleteExamCoordinator", args);
 
 	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
 		.valueOf(departmentId));
