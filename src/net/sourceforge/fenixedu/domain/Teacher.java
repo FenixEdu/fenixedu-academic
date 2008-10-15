@@ -1148,9 +1148,16 @@ public class Teacher extends Teacher_Base {
     }
 
     public List<Tutorship> getActiveTutorshipsByStudentsEntryYearAndDegree(ExecutionYear entryYear, Degree degree) {
-	List<Tutorship> tutorships = new ArrayList<Tutorship>();
+	return getTutorshipsByStudentsEntryYearAndDegree(this.getActiveTutorships(), entryYear, degree);
+    }
 
-	for (Tutorship tutorship : this.getActiveTutorships()) {
+    public List<Tutorship> getPastTutorshipsByStudentsEntryYearAndDegree(ExecutionYear entryYear, Degree degree) {
+	return getTutorshipsByStudentsEntryYearAndDegree(this.getPastTutorships(), entryYear, degree);
+    }
+
+    private List<Tutorship> getTutorshipsByStudentsEntryYearAndDegree(List<Tutorship> tutorshipsList, ExecutionYear entryYear, Degree degree) {
+	List<Tutorship> tutorships = new ArrayList<Tutorship>();
+	for (Tutorship tutorship : tutorshipsList) {
 	    StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
 	    ExecutionYear studentEntryYear = ExecutionYear.getExecutionYearByDate(studentCurricularPlan.getRegistration()
 		    .getStartDate());
@@ -1185,7 +1192,7 @@ public class Teacher extends Teacher_Base {
     public Integer getNumberOfPastTutorships() {
 	return this.getPastTutorships().size();
     }
-
+    
     public Integer getNumberOfActiveTutorships() {
 	return this.getActiveTutorships().size();
     }

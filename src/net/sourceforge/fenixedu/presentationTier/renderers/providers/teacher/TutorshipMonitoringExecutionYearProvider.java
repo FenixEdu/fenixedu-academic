@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -14,24 +14,20 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class ExecutionYearsForTutorEntryYearProvider implements DataProvider {
+public class TutorshipMonitoringExecutionYearProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
+	return getExecutionYears(bean);
+    }
 
+    public static List<ExecutionYear> getExecutionYears(StudentsPerformanceInfoBean bean) {
 	List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
-	List<Tutorship> tutors = bean.getPerson().getTeacher().getActiveTutorships();
-
-	for (Tutorship tutor : tutors) {
-	    ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(tutor.getStudentCurricularPlan().getRegistration()
-		    .getStartDate());
-	    if (!executionYears.contains(executionYear)
-		    && bean.getDegree().equals(tutor.getStudentCurricularPlan().getRegistration().getDegree())) {
-		executionYears.add(executionYear);
-	    }
+	for (ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
+	    if (year.isAfterOrEquals(bean.getStudentsEntryYear()))
+		executionYears.add(year);
 	}
 	Collections.sort(executionYears, new ReverseComparator());
-
 	return executionYears;
     }
 

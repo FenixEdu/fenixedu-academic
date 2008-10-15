@@ -1,33 +1,33 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
-import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class TeacherDepartmentDegreesProvider implements DataProvider {
+public class TutorshipEntryExecutionYearProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	Set<Degree> degrees = new HashSet<Degree>();
-
 	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
-	List<Tutorship> tutorships = bean.getPerson().getTeacher().getActiveTutorships();
+	return getExecutionYears(bean);
+    }
 
-	if (tutorships.isEmpty()) {
-	    tutorships = bean.getPerson().getTeacher().getPastTutorships();
+    public static List<ExecutionYear> getExecutionYears(StudentsPerformanceInfoBean bean) {
+	Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
+	for (Tutorship tutor : bean.getTutorships()) {
+	    if (bean.getDegree().equals(tutor.getStudentCurricularPlan().getRegistration().getDegree())) {
+		executionYears.add(ExecutionYear.getExecutionYearByDate(tutor.getStudentCurricularPlan().getRegistration()
+			.getStartDate()));
+	    }
 	}
-	
-	for (Tutorship tutorship : tutorships) {
-		degrees.add(tutorship.getStudentCurricularPlan().getRegistration().getDegree());
-	}
-	return new ArrayList<Degree>(degrees);
+	return new ArrayList<ExecutionYear>(executionYears);
     }
 
     public Converter getConverter() {

@@ -6,9 +6,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRenderer.DateTimeConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
@@ -118,5 +121,21 @@ public class Tutorship extends Tutorship_Base {
 	    }
 	}
 	return tutorships;
+    }
+    
+    public List<ExecutionYear> getCoveredExecutionYears() {
+	return ExecutionYear.readExecutionYears(getStartDateExecutionYear(), getEndDateExecutionYear());
+    }
+
+    private ExecutionYear getStartDateExecutionYear() {
+	int year = getStartDate().get(DateTimeFieldType.year());
+	int month = getStartDate().get(DateTimeFieldType.monthOfYear());
+	return ExecutionYear.readByDateTime(new LocalDate(year, month, 1).toDateTimeAtCurrentTime());
+    }
+
+    private ExecutionYear getEndDateExecutionYear() {
+	int year = getEndDate().get(DateTimeFieldType.year());
+	int month = getEndDate().get(DateTimeFieldType.monthOfYear());
+	return ExecutionYear.readByDateTime(new LocalDate(year, month, 1).toDateTimeAtCurrentTime());
     }
 }

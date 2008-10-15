@@ -17,21 +17,31 @@
     </fr:layout>
 </fr:view>
 
-<logic:notEmpty name="tutor" property="teacher.activeTutorships">
+<logic:equal name="tutor" property="teacher.numberOfTutorships" value="0">
+	<p class="mtop1">
+		<em>
+			<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.tutor.emptyStudentsList" />
+		</em>
+	</p>
+</logic:equal>
+
+<logic:notEqual name="tutor" property="teacher.numberOfTutorships" value="0">
+
 	<logic:present name="performanceGridFiltersBean">
 		<fr:form action="/viewStudentsPerformanceGrid.do?method=prepare">
 			<fr:edit id="performanceGridFiltersBean" name="performanceGridFiltersBean" layout="tabular-editable" schema="teacher.tutor.performanceGrid.filters">
 				<fr:layout>
-					<fr:property name="classes" value="tstyle5 thlight thleft"/>
-					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					<fr:property name="classes" value="tstyle5 thlight thleft mbottom0"/>
+					<fr:property name="columnClasses" value="width12em,width35em,tdclear tderror1"/>
 				</fr:layout>
-				<fr:destination name="invalid" path="/viewStudentsPerformanceGrid.do?method=prepare" />
-				<fr:destination name="post-back" path="/viewStudentsPerformanceGrid.do?method=prepare" />
+				<fr:destination name="invalid" path="/viewStudentsPerformanceGrid.do?method=prepare&gridSet=" />
+				<fr:destination name="post-back" path="/viewStudentsPerformanceGrid.do?method=prepare&gridSet=" />
 			</fr:edit>
 		</fr:form>
 	</logic:present>
-	
+
 	<logic:present name="performanceGridTable">
+		
 		<logic:notEmpty name="performanceGridTable" property="performanceGridTableLines">
 			<bean:define id="degreeMaxYears" name="performanceGridFiltersBean" property="degreeCurricularPeriod"  />
 			<%
@@ -58,55 +68,54 @@
 				<li class="mvert05"><span class="notApprovedAnotherYear performanceGridLegend">&nbsp;</span> Inscrito e não aprovado noutro ano lectivo</li>
 			</ul>
 		</logic:notEmpty>
-	</logic:present>
-	
-	
-	<logic:present name="tutorStatistics">
-		<logic:notEmpty name="tutorStatistics">
-			<div style="width: 400px; float: left;">
-				<p class="mtop2 mbottom025">
-					<em>
-						<bean:message bundle="APPLICATION_RESOURCES" key="label.executionYear" />
-						<bean:write name="monitoringYear" property="year" /><br/>
-					</em>
-				</p>
-				<h3 class="mtop025">
-					<bean:message bundle="APPLICATION_RESOURCES" key="label.tutorStatistics" />
-				</h3>
-				
-				<table class="tstyle1 thlight tdcenter">
-					<tr>
-						<th><bean:message bundle="APPLICATION_RESOURCES" key="label.approvedEnrolments" /></th>
-						<th><bean:message bundle="APPLICATION_RESOURCES" key="label.studentsNumber" /></th>
-						<th colspan="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.studentsPercentage" /></th>
-					</tr>
-	
-					<logic:iterate id="statistics" name="tutorStatistics" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorStatisticsBean">
+
+		<logic:present name="tutorStatistics">
+			<logic:notEmpty name="tutorStatistics">
+				<div style="width: 400px; float: left;">
+					<p class="mtop2 mbottom025">
+						<em>
+							<bean:message bundle="APPLICATION_RESOURCES" key="label.executionYear" />
+							<bean:write name="monitoringYear" property="year" /><br/>
+						</em>
+					</p>
+					<h3 class="mtop025">
+						<bean:message bundle="APPLICATION_RESOURCES" key="label.tutorStatistics" />
+					</h3>
+					
+					<table class="tstyle1 thlight tdcenter">
 						<tr>
-							<td width="75px"><%= statistics.getApprovedEnrolmentsNumber()  %></td>
-							<td width="75px"><%= statistics.getStudentsNumber() %></td>
-							<td><%= statistics.getStudentsRatio() %>%</td>
-							<td width="100px"><div style="background: #369; width: <%= statistics.getStudentsRatio() %>px;">&nbsp;</div></td>
+							<th><bean:message bundle="APPLICATION_RESOURCES" key="label.approvedEnrolments" /></th>
+							<th><bean:message bundle="APPLICATION_RESOURCES" key="label.studentsNumber" /></th>
+							<th colspan="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.studentsPercentage" /></th>
 						</tr>
-					</logic:iterate>
-		 			 
-				</table>
-				<p class="mtop05">
-					<bean:message bundle="APPLICATION_RESOURCES" key="label.totalTutorStudents" />:
-					<bean:write name="totalStudents" />
-				</p>
-			</div>
-		</logic:notEmpty>		
-	</logic:present>
-	
-	<logic:present name="performanceGridFiltersBean">
-		<bean:define id="filtersBean" name="performanceGridFiltersBean" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean"/>
-		<bean:define id="degreeOID" value="<%= filtersBean.getDegree().getIdInternal().toString() %>" />
-		<bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getIdInternal().toString() %>" />
-		<bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getIdInternal().toString() %>" />
-		<bean:define id="parameters" value="<%="degreeOID=" + degreeOID + "&entryYearOID=" + entryYearOID + "&monitoringYearOID=" + monitoringYearOID %>" />
 		
-		<div style="width: 400px; float: left;">
+						<logic:iterate id="statistics" name="tutorStatistics" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorStatisticsBean">
+							<tr>
+								<td width="75px"><%= statistics.getApprovedEnrolmentsNumber()  %></td>
+								<td width="75px"><%= statistics.getStudentsNumber() %></td>
+								<td><%= statistics.getStudentsRatio() %>%</td>
+								<td width="100px"><div style="background: #369; width: <%= statistics.getStudentsRatio() %>px;">&nbsp;</div></td>
+							</tr>
+						</logic:iterate>
+			 			 
+					</table>
+					<p class="mtop05">
+						<bean:message bundle="APPLICATION_RESOURCES" key="label.totalTutorStudents" />:
+						<bean:write name="totalStudents" />
+					</p>
+				</div>
+			</logic:notEmpty>		
+		</logic:present>
+	
+		<logic:present name="performanceGridFiltersBean">
+			<bean:define id="filtersBean" name="performanceGridFiltersBean" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean"/>
+			<bean:define id="degreeOID" value="<%= filtersBean.getDegree().getIdInternal().toString() %>" />
+			<bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getIdInternal().toString() %>" />
+			<bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getIdInternal().toString() %>" />
+			<bean:define id="parameters" value="<%="degreeOID=" + degreeOID + "&entryYearOID=" + entryYearOID + "&monitoringYearOID=" + monitoringYearOID %>" />
+			
+			<div style="width: 400px; float: left;">
+	
 			<logic:notPresent name="allStudentsStatistics">
 					<p class="mtop2 mbottom025">
 						<em>
@@ -156,16 +165,18 @@
 						<bean:write name="totalEntryStudents" />
 					</p>
 				</logic:notEmpty>
-			</logic:present>		
+			</logic:present>
+		</logic:present>
 		</div>
 	</logic:present>
-</logic:notEmpty>
-<logic:empty name="tutor" property="teacher.activeTutorships">
+	<logic:notPresent name="performanceGridTable">
 		<p class="mtop1">
-		<em>
-			<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.tutor.emptyStudentsList" />
-		</em>
+			<em>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.tutor.no.results" />
+			</em>
 		</p>
-</logic:empty>
+	</logic:notPresent>
+
+</logic:notEqual>
 
 <div class="cboth"></div>

@@ -1341,6 +1341,14 @@ public class Student extends Student_Base {
 	return tutorships;
     }
 
+    public List<ExecutionYear> getTutorshipsExecutionYears() {
+	HashSet<ExecutionYear> coveredYears = new HashSet<ExecutionYear>();
+	for (Tutorship tutorship : getTutorships()) {
+	    coveredYears.addAll(tutorship.getCoveredExecutionYears());
+	}
+	return new ArrayList<ExecutionYear>(coveredYears);
+    }
+
     public List<Tutorship> getActiveTutorships() {
 	List<Tutorship> tutorships = new ArrayList<Tutorship>();
 	for (Tutorship tutorship : getTutorships()) {

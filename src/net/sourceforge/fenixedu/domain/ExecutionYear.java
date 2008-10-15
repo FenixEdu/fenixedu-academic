@@ -348,6 +348,18 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return result;
     }
 
+    static public List<ExecutionYear> readExecutionYears(ExecutionYear startYear, ExecutionYear endYear) {
+	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+	result.add(startYear);
+	
+	ExecutionYear year = startYear.getNextExecutionYear();
+	while(year.isBeforeOrEquals(endYear)) {
+	    result.add(year);
+	    year = startYear.getNextExecutionYear();
+	}
+	return result;
+    }
+
     static public ExecutionYear readExecutionYearByName(final String year) {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 	    if (executionYear.isFor(year)) {
