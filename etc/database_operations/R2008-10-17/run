@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Yet Another Vigilancy Fix" yetAnotherVigilancyFix.sql
