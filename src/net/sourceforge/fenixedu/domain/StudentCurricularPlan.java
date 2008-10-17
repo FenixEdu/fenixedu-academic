@@ -67,13 +67,16 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculum
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByApproval;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionSemester;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionYear;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
@@ -81,6 +84,8 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.predicates.AndPredicate;
+import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 
 /**
  * @author David Santos in Jun 24, 2004
@@ -591,12 +596,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public Collection<Enrolment> getStudentEnrollmentsWithEnrolledState() {
-	return (List) CollectionUtils.select(getEnrolmentsSet(), new Predicate() {
-	    final public boolean evaluate(Object obj) {
-		Enrolment enrollment = (Enrolment) obj;
-		return enrollment.isEnroled() && !enrollment.isInvisible();
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.isEnroled() && !enrolment.isInvisible()) {
+		result.add(enrolment);
 	    }
-	});
+	}
+
+	return result;
     }
 
     final public int getNumberOfEnrolledCurricularCourses() {
@@ -700,6 +708,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return aprovedEnrolments;
     }
 
+    public Collection<? extends CurriculumModule> getCurriculumModules(final ResultCollection<CurriculumModule> collection) {
+	if (hasRoot()) {
+	    getRoot().getCurriculumModules(collection);
+	    return collection.getResult();
+	} else {
+	    throw new DomainException("not.supported");
+	}
+    }
+
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
 	if (hasRoot()) {
 	    final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
@@ -708,6 +725,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	} else {
 	    return new HashSet<CurriculumLine>(getAprovedEnrolments());
 	}
+    }
+
+    public Collection<CurriculumLine> getApprovedCurriculumLines(final ExecutionSemester executionSemester) {
+	final AndPredicate<CurriculumModule> andPredicate = new AndPredicate<CurriculumModule>();
+	andPredicate.add(new CurriculumModulePredicateByType(CurriculumLine.class));
+	andPredicate.add(new CurriculumModulePredicateByExecutionSemester(executionSemester));
+	andPredicate.add(new CurriculumModulePredicateByApproval());
+
+	return (Collection<CurriculumLine>) getCurriculumModules(new ResultCollection<CurriculumModule>(andPredicate));
+    }
+
+    public Collection<CurriculumLine> getApprovedCurriculumLines(final ExecutionYear executionYear) {
+	final AndPredicate<CurriculumModule> andPredicate = new AndPredicate<CurriculumModule>();
+	andPredicate.add(new CurriculumModulePredicateByType(CurriculumLine.class));
+	andPredicate.add(new CurriculumModulePredicateByExecutionYear(executionYear));
+	andPredicate.add(new CurriculumModulePredicateByApproval());
+
+	return (Collection<CurriculumLine>) getCurriculumModules(new ResultCollection<CurriculumModule>(andPredicate));
     }
 
     final public ExecutionYear getApprovedCurriculumLinesLastExecutionYear() {
@@ -842,13 +877,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Enrolment getEnrolmentByCurricularCourseAndExecutionPeriod(final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester) {
 
-	return (Enrolment) CollectionUtils.find(getEnrolmentsSet(), new Predicate() {
-	    final public boolean evaluate(Object o) {
-		Enrolment enrolment = (Enrolment) o;
-		return (enrolment.getCurricularCourse().equals(curricularCourse))
-			&& (enrolment.getExecutionPeriod().equals(executionSemester));
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.getCurricularCourse().equals(curricularCourse)
+		    && enrolment.getExecutionPeriod().equals(executionSemester)) {
+		return enrolment;
 	    }
-	});
+	}
+
+	return null;
     }
 
     final public Set<ExecutionSemester> getEnrolmentsExecutionPeriods() {
@@ -995,7 +1031,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // BEGIN: Only for enrollment purposes (PUBLIC)
     // -------------------------------------------------------------
 
-    public List getAllEnrollments() {
+    public List<Enrolment> getAllEnrollments() {
 	List<Enrolment> allEnrollments = new ArrayList<Enrolment>();
 	addNonInvisibleEnrolments(allEnrollments, getEnrolments());
 
@@ -1019,23 +1055,27 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public List<Enrolment> getStudentEnrollmentsWithApprovedState() {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
 
-	return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
-	    final public boolean evaluate(Object obj) {
-		Enrolment enrollment = (Enrolment) obj;
-		return enrollment.isApproved();
+	for (final Enrolment enrolment : getAllEnrollments()) {
+	    if (enrolment.isApproved()) {
+		result.add(enrolment);
 	    }
-	});
+	}
+
+	return result;
     }
 
     final public int getNumberOfStudentEnrollmentsWithApprovedState() {
+	int result = 0;
 
-	return CollectionUtils.countMatches(getAllEnrollments(), new Predicate() {
-	    final public boolean evaluate(Object obj) {
-		Enrolment enrollment = (Enrolment) obj;
-		return enrollment.isApproved();
+	for (final Enrolment enrolment : getAllEnrollments()) {
+	    if (enrolment.isApproved()) {
+		result++;
 	    }
-	});
+	}
+
+	return result;
     }
 
     final public boolean isCurricularCourseApprovedInCurrentOrPreviousPeriod(final CurricularCourse course,
@@ -1111,23 +1151,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isApproved(course, approvedCurricularCourses);
     }
 
-    final public boolean isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(final CurricularCourse course,
-	    final ExecutionSemester executionSemester) {
-	final List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
+    final public boolean isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(
+	    final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 
-	Enrolment enrolment = (Enrolment) CollectionUtils.find(studentApprovedEnrollments, new Predicate() {
-	    final public boolean evaluate(Object arg0) {
-		Enrolment enrolment = (Enrolment) arg0;
-		if ((enrolment.getCurricularCourse().getIdInternal().equals(course.getIdInternal())) && (enrolment.isApproved())
-			&& (enrolment.getExecutionPeriod().compareTo(executionSemester) <= 0)) {
-		    return true;
-		}
-		return false;
+	for (final Enrolment enrolment : getStudentEnrollmentsWithApprovedState()) {
+	    if (enrolment.getCurricularCourse().getIdInternal().equals(curricularCourse.getIdInternal())
+		    && enrolment.isApproved() && (enrolment.getExecutionPeriod().compareTo(executionSemester) <= 0)) {
+		return true;
 	    }
-	});
+	}
 
-	if (enrolment != null)
-	    return true;
 	return false;
     }
 
@@ -1583,14 +1616,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public GratuitySituation getGratuitySituationByGratuityValues(final GratuityValues gratuityValues) {
-
-	return (GratuitySituation) CollectionUtils.find(getGratuitySituations(), new Predicate() {
-	    final public boolean evaluate(Object arg0) {
-		GratuitySituation gratuitySituation = (GratuitySituation) arg0;
-		return gratuitySituation.getGratuityValues().equals(gratuityValues);
+	for (final GratuitySituation gratuitySituation : getGratuitySituations()) {
+	    if (gratuitySituation.getGratuityValues().equals(gratuityValues)) {
+		return gratuitySituation;
 	    }
-	});
+	}
 
+	return null;
     }
 
     final public GratuitySituation getGratuitySituationByGratuityValuesAndGratuitySituationType(
@@ -2569,4 +2601,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isEmptyDegree() {
 	return getDegreeCurricularPlan().isEmpty();
     }
+
 }
