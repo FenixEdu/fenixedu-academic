@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class CurriculumLine extends CurriculumLine_Base {
@@ -121,6 +122,11 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     @Override
     public ExecutionYear getIEnrolmentsLastExecutionYear() {
 	return getExecutionYear();
+    }
+
+    @Override
+    public void getCurriculumModules(final ResultCollection<CurriculumModule> collection) {
+	collection.condicionalAdd(this);
     }
 
     final public CurricularCourse getCurricularCourse() {
@@ -257,9 +263,10 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     public boolean hasCreatedBy() {
 	return getCreatedBy() != null && !getCreatedBy().isEmpty();
     }
-    
+
     @Override
     public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
-        return 0;
+	return 0;
     }
+
 }

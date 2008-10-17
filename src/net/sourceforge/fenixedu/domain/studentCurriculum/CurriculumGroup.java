@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
 
@@ -406,6 +407,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    }
 	}
 	return null;
+    }
+
+    @Override
+    public void getCurriculumModules(final ResultCollection<CurriculumModule> collection) {
+	collection.condicionalAdd(this);
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    curriculumModule.getCurriculumModules(collection);
+	}
     }
 
     final public Set<CurriculumLine> getCurriculumLines() {

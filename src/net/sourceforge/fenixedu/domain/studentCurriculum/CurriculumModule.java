@@ -25,11 +25,13 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.predicates.Predicate;
+import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -354,6 +356,88 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 		    StringAppender.append(ConclusionValue.class.getSimpleName(), ".", name()));
 	}
     }
-    
+
     abstract public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester);
+
+    abstract public void getCurriculumModules(final ResultCollection<CurriculumModule> collection);
+
+    static public class CurriculumModulePredicateByType extends Predicate<CurriculumModule> {
+
+	private Class<? extends CurriculumModule> clazz;
+
+	public CurriculumModulePredicateByType(final Class<? extends CurriculumModule> clazz) {
+	    this.clazz = clazz;
+	}
+
+	@Override
+	public boolean eval(final CurriculumModule curriculumModule) {
+	    if (clazz.isAssignableFrom(curriculumModule.getClass())) {
+		return true;
+	    }
+
+	    return false;
+	}
+
+    }
+
+    static public class CurriculumModulePredicateByExecutionSemester extends Predicate<CurriculumModule> {
+
+	private ExecutionSemester executionYear;
+
+	public CurriculumModulePredicateByExecutionSemester(final ExecutionSemester executionYear) {
+	    this.executionYear = executionYear;
+	}
+
+	@Override
+	public boolean eval(final CurriculumModule curriculumModule) {
+	    if (curriculumModule.isCurriculumLine()) {
+		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
+		if (curriculumLine.getExecutionPeriod().equals(executionYear)) {
+		    return true;
+		}
+	    }
+
+	    return false;
+	}
+
+    }
+
+    static public class CurriculumModulePredicateByExecutionYear extends Predicate<CurriculumModule> {
+
+	private ExecutionYear executionYear;
+
+	public CurriculumModulePredicateByExecutionYear(final ExecutionYear executionYear) {
+	    this.executionYear = executionYear;
+	}
+
+	@Override
+	public boolean eval(final CurriculumModule curriculumModule) {
+	    if (curriculumModule.isCurriculumLine()) {
+		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
+		if (curriculumLine.getExecutionYear().equals(executionYear)) {
+		    return true;
+		}
+	    }
+
+	    return false;
+	}
+
+    }
+
+    static public class CurriculumModulePredicateByApproval extends Predicate<CurriculumModule> {
+
+	@Override
+	public boolean eval(final CurriculumModule curriculumModule) {
+	    if (curriculumModule.isCurriculumLine()) {
+		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
+		if (curriculumLine.isApproved()) {
+		    return true;
+		}
+	    }
+
+	    return false;
+	}
+
+    }
+
 }
