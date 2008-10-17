@@ -332,7 +332,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{situation} + " INSCRIT" + ($P{registration}.getPerson().isMale() ? "O" : "A") + " no ano lectivo " + $P{documentRequest}.getExecutionYear().getYear() + " no " + $P{degreeDescription} + "."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{situation} + " MATRICULAD" + ($P{registration}.getPerson().isMale() ? "O" : "A") + " no ano lectivo " + $P{documentRequest}.getExecutionYear().getYear() + " no " + $P{degreeDescription} + "."]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
