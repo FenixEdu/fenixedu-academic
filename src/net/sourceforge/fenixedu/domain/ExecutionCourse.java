@@ -1829,8 +1829,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    .getContent(Language.pt) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
 		    .getEvaluationMethod() : "";
 	} else {
-	    return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
-		    .getEvaluationMethod() : "";
+	    return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
 	}
     }
 
@@ -1842,8 +1841,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    .getContent(Language.en) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
 		    .getEvaluationMethod() : "";
 	} else {
-	    return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
-		    .getEvaluationMethod() : "";
+	    return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
 	}
     }
 
@@ -2004,4 +2002,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return result;
     }
 
+    public List<WrittenEvaluation> getAssociatedWrittenEvaluationsForScopeAndContext(List<Integer> curricularYears,
+	    DegreeCurricularPlan degreeCurricularPlan) {
+	List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
+	for (WrittenEvaluation writtenEvaluation : getWrittenEvaluations()) {
+	    if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
+		result.add(writtenEvaluation);
+	    }
+	}
+	return result;
+    }
 }

@@ -433,8 +433,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     // BEGIN Drop down menu logic
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
-	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
-		.executeService("ReadNotClosedExecutionPeriods", null);
+	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
+		"ReadNotClosedExecutionPeriods", null);
 
 	Collections.sort(infoExecutionPeriods, InfoExecutionPeriod.COMPARATOR_BY_YEAR_AND_SEMESTER);
 
@@ -477,8 +477,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	result.add(new SelectItem(0, this.chooseMessage));
 	for (InfoExecutionDegree infoExecutionDegree : (List<InfoExecutionDegree>) infoExecutionDegrees) {
 	    StringBuilder label = new StringBuilder();
-	    label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType()
-		    .toString()));
+	    label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+		    .getDegreeType().toString()));
 	    label.append(" em ");
 	    label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 	    label.append(addAnotherInfoDegreeToLabel(infoExecutionDegrees, infoExecutionDegree) ? " - "
@@ -838,9 +838,17 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public List<ExecutionCourse> getExecutionCoursesWithoutWrittenEvaluations() throws FenixFilterException,
 	    FenixServiceException {
 	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-	for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-	    if (executionCourse.getAssociatedWrittenTests().isEmpty() && executionCourse.getAssociatedExams().isEmpty()) {
-		result.add(executionCourse);
+	Integer[] curricularYearIDs = getCurricularYearIDs();
+
+	if (curricularYearIDs != null) {
+	    List<Integer> curricularYears = Arrays.asList(curricularYearIDs);
+	    DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
+
+	    for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+		if (executionCourse.getAssociatedWrittenEvaluationsForScopeAndContext(curricularYears, degreeCurricularPlan)
+			.isEmpty()) {
+		    result.add(executionCourse);
+		}
 	    }
 	}
 	return result;
