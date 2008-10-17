@@ -142,14 +142,14 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 	}
 
 	if (nonAffiliatedTeacherInstitutionID == 0) {
-	    // create institution
-	    Object[] args = { nonAffiliatedTeacherInstitutionName };
 	    try {
-		Unit institution = (Unit) ServiceUtils.executeService("InsertInstitution", args);
+		Unit institution = (Unit) ServiceUtils.executeService("InsertInstitution",
+			new Object[] { nonAffiliatedTeacherInstitutionName });
 		nonAffiliatedTeacherInstitutionID = institution.getIdInternal();
 	    } catch (ExistingServiceException e) {
 		// define message error...
-		InfoInstitution infoInstitution = (InfoInstitution) ServiceUtils.executeService("ReadInstitutionByName", args);
+		InfoInstitution infoInstitution = (InfoInstitution) ServiceUtils.executeService("ReadInstitutionByName",
+			new Object[] { nonAffiliatedTeacherInstitutionName });
 		nonAffiliatedTeacherInstitutionID = infoInstitution.getIdInternal();
 	    }
 	}

@@ -48,16 +48,15 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 	    session.removeAttribute(SessionConstants.INFO_SECTION);
 	    IUserView userView = getUserView(request);
 	    InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-	    Object args[] = { infoSite.getInfoExecutionCourse() };
 	    boolean result = false;
-	    List teachers = (List) ServiceManagerServiceFactory
-		    .executeService("ReadTeachersByExecutionCourseProfessorship", args);
+	    List teachers = (List) ServiceManagerServiceFactory.executeService("ReadTeachersByExecutionCourseProfessorship",
+		    new Object[] { infoSite.getInfoExecutionCourse() });
 	    if (teachers != null && !teachers.isEmpty()) {
 		session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
 	    }
 
 	    List responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadTeachersByExecutionCourseResponsibility", args);
+		    "ReadTeachersByExecutionCourseResponsibility", new Object[] { infoSite.getInfoExecutionCourse() });
 
 	    Object[] args1 = { userView.getUtilizador() };
 	    InfoTeacher teacher = (InfoTeacher) ServiceManagerServiceFactory.executeService("ReadTeacherByUsername", args1);

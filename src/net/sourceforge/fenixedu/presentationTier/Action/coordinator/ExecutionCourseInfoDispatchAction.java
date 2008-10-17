@@ -302,13 +302,12 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
-	Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
-
 	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-		"ReadExecutionCourseByOID", args);
+		"ReadExecutionCourseByOID", new Object[] { new Integer(request.getParameter("executionCourseOID")) });
 
 	List curricularCoursesWithScopes = (List) ServiceManagerServiceFactory.executeService(
-		"ReadCurricularCourseScopesByExecutionCourseID", args);
+		"ReadCurricularCourseScopesByExecutionCourseID", new Object[] { new Integer(request
+			.getParameter("executionCourseOID")) });
 
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 	request.setAttribute("curricularCourses", curricularCoursesWithScopes);

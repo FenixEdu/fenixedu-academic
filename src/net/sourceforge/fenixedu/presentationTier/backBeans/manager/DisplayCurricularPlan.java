@@ -55,7 +55,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {
 
 	List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-		"ReadNotClosedExecutionYears", (Object[]) null);
+		"ReadNotClosedExecutionYears", null);
 
 	List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
 	for (InfoExecutionYear executionYear : executionYears) {

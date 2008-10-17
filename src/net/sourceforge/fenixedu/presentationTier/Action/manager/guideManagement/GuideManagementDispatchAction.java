@@ -105,9 +105,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	List executionYears = null;
-	Object[] argsEmpty = {};
 	try {
-	    executionYears = (List) ServiceUtils.executeService("ReadExecutionYears", argsEmpty);
+	    executionYears = (List) ServiceUtils.executeService("ReadExecutionYears", null);
 	} catch (FenixServiceException e1) {
 	    // TODO Auto-generated catch block
 	    e1.printStackTrace();
@@ -115,7 +114,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	List degreeCurricularPlans = null;
 	try {
-	    degreeCurricularPlans = (List) ServiceUtils.executeService("ReadDegreeCurricularPlans", argsEmpty);
+	    degreeCurricularPlans = (List) ServiceUtils.executeService("ReadDegreeCurricularPlans", null);
 	} catch (FenixServiceException e1) {
 	    // TODO Auto-generated catch block
 	    e1.printStackTrace();

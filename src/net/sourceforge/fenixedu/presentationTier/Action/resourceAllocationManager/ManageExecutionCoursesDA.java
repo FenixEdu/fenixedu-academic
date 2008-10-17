@@ -102,8 +102,8 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 	/* Generate a label list for the above list of degrees */
 	List labelListOfExecutionDegrees = ExecutionDegreesFormat.buildExecutionDegreeLabelValueBean(executionDegreeList,
 		messageResources, request);// ContextUtils.
-					   // getLabelListOfExecutionDegrees
-					   // (executionDegreeList);
+	// getLabelListOfExecutionDegrees
+	// (executionDegreeList);
 	request.setAttribute(SessionConstants.LIST_INFOEXECUTIONDEGREE, labelListOfExecutionDegrees);
 
 	return mapping.findForward("ShowSearchForm");
@@ -343,12 +343,12 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
 	IUserView userView = getUserView(request);
 
-	Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
-
+	Integer executionCourceOId = new Integer(request.getParameter("executionCourseOID"));
 	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-		"ReadExecutionCourseByOID", args);
+		"ReadExecutionCourseByOID", new Object[] { executionCourceOId });
 
-	List scopes = (List) ServiceManagerServiceFactory.executeService("ReadCurricularCourseScopesByExecutionCourseID", args);
+	List scopes = (List) ServiceManagerServiceFactory.executeService("ReadCurricularCourseScopesByExecutionCourseID",
+		new Object[] { executionCourceOId });
 
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 	request.setAttribute("curricularCourses", scopes);

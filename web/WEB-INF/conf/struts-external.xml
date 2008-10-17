@@ -87,14 +87,14 @@
 			>
 		</action>		
 
-    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.SetEmail"
+    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.SetEmailDA"
             path="/setEmail"
 	        scope="request"
 	        parameter="method"
 			validate="true">
     	</action>
 
-    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.ConsultRoles"
+    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.ConsultRolesAction"
             path="/consultRoles"
 	        scope="request"
 	        parameter="method"
