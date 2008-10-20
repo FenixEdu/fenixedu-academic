@@ -811,7 +811,11 @@ public class ParkingParty extends ParkingParty_Base {
 	}
     }
 
-    public void renewParkingCard(DateTime newEndDate, ParkingGroup newParkingGroup) {
+    public void renewParkingCard(DateTime newBeginDate, DateTime newEndDate, ParkingGroup newParkingGroup) {
+	new ParkingPartyHistory(this, false);
+	if (newBeginDate != null) {
+	    setCardStartDate(newBeginDate);
+	}
 	setCardEndDate(newEndDate);
 	if (newParkingGroup != null) {
 	    setParkingGroup(newParkingGroup);

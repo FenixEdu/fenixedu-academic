@@ -11,9 +11,9 @@ import org.joda.time.DateTime;
 public class RenewParkingCards extends FenixService {
 
     public void run(List<ParkingParty> parkingParties, DateTime newEndDate, ParkingGroup newParkingGroup) {
-
+	DateTime newBeginDate = new DateTime();
 	for (ParkingParty parkingParty : parkingParties) {
-	    parkingParty.renewParkingCard(newEndDate, newParkingGroup);
+	    parkingParty.renewParkingCard(newBeginDate, newEndDate, newParkingGroup);
 	}
     }
 }
