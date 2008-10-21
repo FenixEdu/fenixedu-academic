@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -12,7 +10,6 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -51,23 +48,14 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final Student student = registration.getStudent();
 	final Person person = student.getPerson();
 
-	final String campus = getCampus(degreeCurricularPlan);
-	if (campus == null) {
-	    stringBuilder.append("9999");
-	} else if ("Alameda".equals(campus)) {
-	    stringBuilder.append("0807");
-	} else {
-	    stringBuilder.append("0808");
-	}
-
-	stringBuilder.append(degree.getMinistryCode() == null ? "9999" : degree.getMinistryCode());
-
+	stringBuilder.append(Campus.getUniversityCode(degreeCurricularPlan.getCurrentCampus()));
+	stringBuilder.append(degree.getMinistryCode());
 	stringBuilder.append("002");
 	stringBuilder.append(translateDegreeType(degreeType));
 	stringBuilder.append(fillLeftString(student.getNumber().toString(), '0', 8));
 	stringBuilder.append("A");
 	stringBuilder.append("1112");
-	stringBuilder.append(" "); 
+	stringBuilder.append(" ");
 	stringBuilder.append(" ");
 	stringBuilder.append("00");
 	stringBuilder.append("00");
@@ -83,8 +71,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("        ");
 	stringBuilder.append(normalizeDegreeType12(degreeType));
 	stringBuilder.append("     "); // Academic year - no longer specified
-				       // because the cards last for more than
-				       // one year.
+	// because the cards last for more than
+	// one year.
 	stringBuilder.append("        ");
 	stringBuilder.append("                       ");
 	stringBuilder.append(fillString(normalizeDegreeName(degree), ' ', 42));
@@ -127,17 +115,6 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch().getCardGenerationBatchProblems();
 	setCardGenerationBatch(cardGenerationBatch);
 	new CardGenerationProblem(cardGenerationBatch, message, "", getPerson());
-    }
-
-    protected String getCampus(final DegreeCurricularPlan degreeCurricularPlan) {
-	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
-	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
-		final Campus campus = executionDegree.getCampus();
-		return campus.getName();
-	    }
-	}
-	return null;
     }
 
     public static Category getCategoryFromDegreeType(final DegreeType degreeType) {
@@ -244,7 +221,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	}
 	return degreeName;
     }
-    
+
     public static String normalize(final String string) {
 	final String normalized = StringNormalizer.normalize(string);
 	return StringUtils.upperCase(normalized);
