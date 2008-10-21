@@ -52,6 +52,8 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
 
+    private static final String DEFAULT_MINISTRY_CODE = "9999";
+
     private static final Collator collator = Collator.getInstance();
 
     static final public Comparator<Degree> COMPARATOR_BY_NAME = new Comparator<Degree>() {
@@ -1378,6 +1380,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     @Override
+    public String getMinistryCode() {
+	return super.getMinistryCode() == null ? DEFAULT_MINISTRY_CODE : super.getMinistryCode();
+    }
+
+    @Override
     public void setMinistryCode(final String ministryCode) {
 	final String value = ministryCode == null || ministryCode.length() == 0 ? null : ministryCode;
 	super.setMinistryCode(value);
@@ -1422,4 +1429,5 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public boolean canCreateGratuityEvent() {
 	return true;
     }
+
 }
