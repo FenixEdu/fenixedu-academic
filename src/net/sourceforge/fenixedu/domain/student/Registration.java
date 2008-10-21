@@ -2795,6 +2795,10 @@ public class Registration extends Registration_Base {
 	return getLastStudentCurricularPlan().getLastCampus();
     }
 
+    public Campus getCampus(final ExecutionYear executionYear) {
+	return getStudentCurricularPlan(executionYear).getCampus(executionYear);
+    }
+
     final public String getIstUniversity() {
 	return getCampus().getName();
     }
@@ -3239,6 +3243,10 @@ public class Registration extends Registration_Base {
 
     public boolean isPartialRegime(final ExecutionYear executionYear) {
 	return getRegimeType(executionYear) == RegistrationRegimeType.PARTIAL_TIME;
+    }
+
+    public String getUniversityCode(final ExecutionYear executionYear) {
+	return Campus.getUniversityCode(getCampus(executionYear)) + getDegree().getMinistryCode();
     }
 
 }
