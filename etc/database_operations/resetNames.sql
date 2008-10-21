@@ -1,0 +1,1 @@
+update RECIPIENT set TO_NAME=NULL;

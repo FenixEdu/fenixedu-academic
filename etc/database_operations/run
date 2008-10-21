@@ -40,4 +40,4 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
+execute "Reseting To Names" resetNames.sql

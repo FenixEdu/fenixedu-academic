@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.HashSet;
 import java.util.Set;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
@@ -40,4 +42,9 @@ public class RoleTypeGroup extends Group {
 	return null;
     }
 
+    @Override
+    public String getName() {
+	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName() + "." + roleType);
+	return name != null ? name : super.getName();
+    } 
 }
