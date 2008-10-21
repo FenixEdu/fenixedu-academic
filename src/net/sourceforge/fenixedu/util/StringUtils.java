@@ -161,4 +161,8 @@ public class StringUtils {
 	return org.apache.commons.lang.StringUtils.isNumeric(content);
     }
 
+    public static String upperCase(String content) {
+	return org.apache.commons.lang.StringUtils.upperCase(content);
+    }
+
 }
