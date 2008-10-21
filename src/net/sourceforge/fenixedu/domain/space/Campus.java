@@ -18,7 +18,7 @@ public class Campus extends Campus_Base {
     private static final String ALAMEDA_NAME = "Alameda";
     private static final String TAGUSPARK_NAME = "Taguspark";
 
-    private static final String DEFAULT_UNIVERSITY_CODE = "9999";
+    public static final String DEFAULT_UNIVERSITY_CODE = "9999";
     private static final String ALAMEDA_UNIVERSITY_CODE = "0807";
     private static final String TAGUSPARK_UNIVERSITY_CODE = "0808";
 
@@ -97,9 +97,9 @@ public class Campus extends Campus_Base {
 	    return DEFAULT_UNIVERSITY_CODE;
 	}
 
-	if (campus.getLocation().equals(ALAMEDA_NAME)) {
+	if (campus.getLocation().equalsIgnoreCase(ALAMEDA_NAME)) {
 	    return ALAMEDA_UNIVERSITY_CODE;
-	} else if (campus.getLocation().equals(TAGUSPARK_NAME)) {
+	} else if (campus.getLocation().equalsIgnoreCase(TAGUSPARK_NAME)) {
 	    return TAGUSPARK_UNIVERSITY_CODE;
 	} else {
 	    return DEFAULT_UNIVERSITY_CODE;
