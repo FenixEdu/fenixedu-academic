@@ -2,13 +2,43 @@ package net.sourceforge.fenixedu.domain.student;
 
 public enum RegistrationAgreement {
 
-    NORMAL(true), AFA(false), MA(false), NC(false), ERASMUS(false), SOCRATES(false), SOCRATES_ERASMUS(false), TEMPUS(false), BILATERAL_AGREEMENT(
-	    false), ALFA2(false), UNIFOR(false), TIME(false), TOTAL(false), OTHER_EXTERNAL(false), MITP(false);
+    NORMAL(true, true),
+
+    AFA(false, false),
+
+    MA(false, false),
+
+    NC(false, false),
+
+    ERASMUS(false, false),
+
+    SOCRATES(false, false),
+
+    SOCRATES_ERASMUS(false, false),
+
+    TEMPUS(false, false),
+
+    BILATERAL_AGREEMENT(false, false),
+
+    ALFA2(false, false),
+
+    UNIFOR(false, false),
+
+    TIME(false, false),
+
+    TOTAL(false, false),
+
+    OTHER_EXTERNAL(false, false),
+
+    MITP(false, true);
 
     private boolean enrolmentByStudentAllowed;
 
-    private RegistrationAgreement(final boolean enrolmentByStudentAllowed) {
+    private boolean payGratuity;
+
+    private RegistrationAgreement(final boolean enrolmentByStudentAllowed, final boolean payGratuity) {
 	this.enrolmentByStudentAllowed = enrolmentByStudentAllowed;
+	this.payGratuity = payGratuity;
     }
 
     public boolean isNormal() {
@@ -25,6 +55,10 @@ public enum RegistrationAgreement {
 
     public boolean isEnrolmentByStudentAllowed() {
 	return this.enrolmentByStudentAllowed;
+    }
+
+    public boolean isToPayGratuity() {
+	return payGratuity;
     }
 
     public static RegistrationAgreement getByLegacyCode(int code) {

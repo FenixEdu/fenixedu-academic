@@ -365,7 +365,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     public boolean hasCustomGratuityPaymentPlan() {
-	return getGratuityPaymentPlan().isCustomGratuityPaymentPlan();
+	return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isCustomGratuityPaymentPlan();
     }
 
     public Money getPayedAmountLessPenalty() {

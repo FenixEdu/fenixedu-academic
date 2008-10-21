@@ -2622,7 +2622,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasToPayGratuityOrInsurance() {
-	return getInterruptedStudies() ? false : getRegistrationAgreement() == RegistrationAgreement.NORMAL;
+	return getInterruptedStudies() ? false : getRegistrationAgreement().isToPayGratuity();
     }
 
     final public DiplomaRequest getDiplomaRequest(final CycleType cycleType) {
