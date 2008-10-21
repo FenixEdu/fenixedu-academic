@@ -10,9 +10,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-
-import org.apache.commons.lang.StringUtils;
-
+import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CardGenerationEntry extends CardGenerationEntry_Base {
@@ -118,11 +116,11 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public static int translateDegreeType(final DegreeType degreeType) {
-	final Category category = degreeType.getCategory();
-	if (category == null) {
+	final String ministryCode = degreeType.getMinistryCode();
+	if (StringUtils.isEmpty(ministryCode)) {
 	    throw new Error("Unkown degree type: " + degreeType.getName());
 	}
-	return category.getCode();
+	return Integer.valueOf(ministryCode);
     }
 
     protected String fillLeftString(final String uppered, final char c, final int fillTo) {
