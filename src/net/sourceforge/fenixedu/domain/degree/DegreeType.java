@@ -38,6 +38,11 @@ public enum DegreeType {
     ) {
 
 	@Override
+	protected String ministryCode() {
+	    return "92";
+	}
+
+	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -99,6 +104,11 @@ public enum DegreeType {
     ) {
 
 	@Override
+	protected String ministryCode() {
+	    return "94";
+	}
+
+	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -149,6 +159,11 @@ public enum DegreeType {
 	    false, // canCreateStudentOnlyWithCandidacy
 	    true // qualifiesForGraduateTitle
     ) {
+
+	@Override
+	protected String ministryCode() {
+	    return "92";
+	}
 
 	@Override
 	protected String concreteName() {
@@ -215,6 +230,11 @@ public enum DegreeType {
     ) {
 
 	@Override
+	protected String ministryCode() {
+	    return "94";
+	}
+
+	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -272,6 +292,11 @@ public enum DegreeType {
 	    false, // canCreateStudentOnlyWithCandidacy
 	    true // qualifiesForGraduateTitle
     ) {
+
+	@Override
+	protected String ministryCode() {
+	    return "94";
+	}
 
 	@Override
 	protected String concreteName() {
@@ -354,6 +379,11 @@ public enum DegreeType {
     ) {
 
 	@Override
+	protected String ministryCode() {
+	    return "95";
+	}
+
+	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -411,6 +441,11 @@ public enum DegreeType {
 	    true, // canCreateStudentOnlyWithCandidacy
 	    false // qualifiesForGraduateTitle
     ) {
+
+	@Override
+	protected String ministryCode() {
+	    return "97";
+	}
 
 	@Override
 	protected String concreteName() {
@@ -472,6 +507,11 @@ public enum DegreeType {
     ) {
 
 	@Override
+	protected String ministryCode() {
+	    return "98";
+	}
+
+	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -529,6 +569,11 @@ public enum DegreeType {
 	    false, // canCreateStudentOnlyWithCandidacy
 	    false // qualifiesForGraduateTitle
     ) {
+
+	@Override
+	protected String ministryCode() {
+	    return StringUtils.EMPTY;
+	}
 
 	@Override
 	protected String concreteName() {
@@ -631,6 +676,12 @@ public enum DegreeType {
 	return concreteName();
     }
 
+    abstract protected String ministryCode();
+
+    public String getMinistryCode() {
+	return ministryCode();
+    }
+
     abstract protected String concreteName();
 
     public String getQualifiedName() {
@@ -697,7 +748,8 @@ public enum DegreeType {
 	return canCreateStudentOnlyWithCandidacy;
     }
 
-    public boolean canRemoveEnrolmentIn(@SuppressWarnings("unused") final CycleType cycleType) {
+    public boolean canRemoveEnrolmentIn(@SuppressWarnings("unused")
+    final CycleType cycleType) {
 	return false;
     }
 
