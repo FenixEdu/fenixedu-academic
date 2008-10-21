@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -17,7 +20,11 @@ public class GraduationDegreeCurricularPlansProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-	return DegreeCurricularPlan.readByDegreeTypesAndState(DegreeType.getDegreeTypesFor(AdministrativeOfficeType.DEGREE),
-		DegreeCurricularPlanState.ACTIVE);
+	final Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+	result.addAll(DegreeCurricularPlan.readByDegreeTypesAndState(DegreeType
+		.getDegreeTypesFor(AdministrativeOfficeType.DEGREE), DegreeCurricularPlanState.ACTIVE));
+	result.add(DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
+
+	return result;
     }
 }
