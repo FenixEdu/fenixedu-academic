@@ -539,6 +539,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
 		<property name="classes" value="nobullet noindent"/>
+		<property name="sortBy" value="degree.name=ASC" />
 	</slot>
 </schema>
 
@@ -598,6 +599,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
 		<property name="classes" value="nobullet noindent"/>
+		<property name="sortBy" value="degree.name=ASC" />
 	</slot>
 </schema>
 
@@ -612,6 +614,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
 		<property name="classes" value="nobullet noindent"/>
+		<property name="sortBy" value="degree.name=ASC" />
 	</slot>
 </schema>
 
