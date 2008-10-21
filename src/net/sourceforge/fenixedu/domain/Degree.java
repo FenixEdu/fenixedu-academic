@@ -52,7 +52,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
 
-    private static final String DEFAULT_MINISTRY_CODE = "9999";
+    public static final String DEFAULT_MINISTRY_CODE = "9999";
 
     private static final Collator collator = Collator.getInstance();
 
