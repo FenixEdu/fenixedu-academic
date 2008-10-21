@@ -2796,7 +2796,8 @@ public class Registration extends Registration_Base {
     }
 
     public Campus getCampus(final ExecutionYear executionYear) {
-	return getStudentCurricularPlan(executionYear).getCampus(executionYear);
+	final StudentCurricularPlan scp = getStudentCurricularPlan(executionYear);
+	return scp == null ? getLastStudentCurricularPlan().getCampus(executionYear) : scp.getCampus(executionYear);
     }
 
     final public String getIstUniversity() {
