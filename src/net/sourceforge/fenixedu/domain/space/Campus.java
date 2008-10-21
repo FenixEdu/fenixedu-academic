@@ -97,9 +97,9 @@ public class Campus extends Campus_Base {
 	    return DEFAULT_UNIVERSITY_CODE;
 	}
 
-	if (campus.getLocation().equalsIgnoreCase(ALAMEDA_NAME)) {
+	if (campus.getName().equalsIgnoreCase(ALAMEDA_NAME)) {
 	    return ALAMEDA_UNIVERSITY_CODE;
-	} else if (campus.getLocation().equalsIgnoreCase(TAGUSPARK_NAME)) {
+	} else if (campus.getName().equalsIgnoreCase(TAGUSPARK_NAME)) {
 	    return TAGUSPARK_UNIVERSITY_CODE;
 	} else {
 	    return DEFAULT_UNIVERSITY_CODE;
