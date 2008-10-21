@@ -117,19 +117,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	new CardGenerationProblem(cardGenerationBatch, message, "", getPerson());
     }
 
-    public static Category getCategoryFromDegreeType(final DegreeType degreeType) {
-	for (final Category category : Category.values()) {
-	    for (final DegreeType otherDegreeType : category.getDegreeTypes()) {
-		if (degreeType == otherDegreeType) {
-		    return category;
-		}
-	    }
-	}
-	return null;
-    }
-
     public static int translateDegreeType(final DegreeType degreeType) {
-	final Category category = getCategoryFromDegreeType(degreeType);
+	final Category category = degreeType.getCategory();
 	if (category == null) {
 	    throw new Error("Unkown degree type: " + degreeType.getName());
 	}
