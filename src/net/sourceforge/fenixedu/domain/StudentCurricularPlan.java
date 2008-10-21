@@ -1995,6 +1995,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return currentCampus == null ? getLastCampus() : currentCampus;
     }
 
+    final public Campus getCampus(final ExecutionYear executionYear) {
+	final Campus result = getDegreeCurricularPlan().getCampus(executionYear);
+	return result == null ? getLastCampus() : result;
+    }
+
     final public Campus getLastCampus() {
 	final Campus lastScpCampus = getDegreeCurricularPlan().getCampus(getLastExecutionYear());
 	return lastScpCampus == null ? getDegreeCurricularPlan().getLastCampus() : lastScpCampus;
