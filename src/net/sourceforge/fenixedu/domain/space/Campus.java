@@ -7,12 +7,20 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 public class Campus extends Campus_Base {
+
+    private static final String ALAMEDA_NAME = "Alameda";
+    private static final String TAGUSPARK_NAME = "Taguspark";
+
+    private static final String DEFAULT_UNIVERSITY_CODE = "9999";
+    private static final String ALAMEDA_UNIVERSITY_CODE = "0807";
+    private static final String TAGUSPARK_UNIVERSITY_CODE = "0808";
 
     public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	super();
@@ -84,6 +92,20 @@ public class Campus extends Campus_Base {
 	return null;
     }
 
+    static public String getUniversityCode(final Campus campus) {
+	if (campus == null) {
+	    return DEFAULT_UNIVERSITY_CODE;
+	}
+
+	if (campus.getLocation().equals(ALAMEDA_NAME)) {
+	    return ALAMEDA_UNIVERSITY_CODE;
+	} else if (campus.getLocation().equals(TAGUSPARK_NAME)) {
+	    return TAGUSPARK_UNIVERSITY_CODE;
+	} else {
+	    return DEFAULT_UNIVERSITY_CODE;
+	}
+    }
+
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {
 	private String name;
 
@@ -149,4 +171,5 @@ public class Campus extends Campus_Base {
 	    return new CampusInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
     }
+
 }
