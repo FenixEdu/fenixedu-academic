@@ -1380,14 +1380,37 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     @Override
+    @Deprecated
+    public String getCode() {
+	return getMinistryCode();
+    }
+
+    @Override
+    @Deprecated
+    public void setCode(final String ministryCode) {
+	setMinistryCode(ministryCode);
+    }
+
+    @Override
     public String getMinistryCode() {
-	return super.getMinistryCode() == null ? DEFAULT_MINISTRY_CODE : super.getMinistryCode();
+	final String code = super.getCode();
+	if (!StringUtils.isEmpty(code)) {
+	    return code;
+	}
+
+	final String ministryCode = super.getMinistryCode();
+	if (!StringUtils.isEmpty(ministryCode)) {
+	    return ministryCode;
+	}
+
+	return DEFAULT_MINISTRY_CODE;
     }
 
     @Override
     public void setMinistryCode(final String ministryCode) {
 	final String value = ministryCode == null || ministryCode.length() == 0 ? null : ministryCode;
 	super.setMinistryCode(value);
+	super.setCode(value);
     }
 
     @Override
