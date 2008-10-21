@@ -19,6 +19,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
@@ -36,11 +37,6 @@ public enum DegreeType {
 	    false, // canCreateStudentOnlyWithCandidacy
 	    true // qualifiesForGraduateTitle
     ) {
-
-	@Override
-	protected String ministryCode() {
-	    return "92";
-	}
 
 	@Override
 	protected String concreteName() {
@@ -104,11 +100,6 @@ public enum DegreeType {
     ) {
 
 	@Override
-	protected String ministryCode() {
-	    return "94";
-	}
-
-	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -159,11 +150,6 @@ public enum DegreeType {
 	    false, // canCreateStudentOnlyWithCandidacy
 	    true // qualifiesForGraduateTitle
     ) {
-
-	@Override
-	protected String ministryCode() {
-	    return "92";
-	}
 
 	@Override
 	protected String concreteName() {
@@ -230,11 +216,6 @@ public enum DegreeType {
     ) {
 
 	@Override
-	protected String ministryCode() {
-	    return "94";
-	}
-
-	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -292,11 +273,6 @@ public enum DegreeType {
 	    false, // canCreateStudentOnlyWithCandidacy
 	    true // qualifiesForGraduateTitle
     ) {
-
-	@Override
-	protected String ministryCode() {
-	    return "94";
-	}
 
 	@Override
 	protected String concreteName() {
@@ -379,11 +355,6 @@ public enum DegreeType {
     ) {
 
 	@Override
-	protected String ministryCode() {
-	    return "95";
-	}
-
-	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -441,11 +412,6 @@ public enum DegreeType {
 	    true, // canCreateStudentOnlyWithCandidacy
 	    false // qualifiesForGraduateTitle
     ) {
-
-	@Override
-	protected String ministryCode() {
-	    return "97";
-	}
 
 	@Override
 	protected String concreteName() {
@@ -507,11 +473,6 @@ public enum DegreeType {
     ) {
 
 	@Override
-	protected String ministryCode() {
-	    return "98";
-	}
-
-	@Override
 	protected String concreteName() {
 	    return name();
 	}
@@ -569,11 +530,6 @@ public enum DegreeType {
 	    false, // canCreateStudentOnlyWithCandidacy
 	    false // qualifiesForGraduateTitle
     ) {
-
-	@Override
-	protected String ministryCode() {
-	    return StringUtils.EMPTY;
-	}
 
 	@Override
 	protected String concreteName() {
@@ -676,10 +632,18 @@ public enum DegreeType {
 	return concreteName();
     }
 
-    abstract protected String ministryCode();
-
     public String getMinistryCode() {
-	return ministryCode();
+	return getCategory() == null ? StringUtils.EMPTY : String.valueOf(getCategory().getCode());
+    }
+
+    public Category getCategory() {
+	for (final Category category : Category.values()) {
+	    if (category.getDegreeTypes().contains(this)) {
+		return category;
+	    }
+	}
+
+	return null;
     }
 
     abstract protected String concreteName();
