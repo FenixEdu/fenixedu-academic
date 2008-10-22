@@ -13,14 +13,17 @@ public class SearchPartyBean implements Serializable {
 
     private String carPlateNumber;
 
+    private Long parkingCardNumber;
+
     public SearchPartyBean() {
 
     }
 
-    public SearchPartyBean(Party party, String carPlateNumber) {
+    public SearchPartyBean(Party party, String carPlateNumber, Long parkingCardNumber) {
 	setParty(party);
 	setPartyName(party.getName());
 	setCarPlateNumber(carPlateNumber);
+	setParkingCardNumber(parkingCardNumber);
     }
 
     public Party getParty() {
@@ -49,6 +52,14 @@ public class SearchPartyBean implements Serializable {
 
     public void setCarPlateNumber(String carPlateNumber) {
 	this.carPlateNumber = carPlateNumber;
+    }
+
+    public Long getParkingCardNumber() {
+	return parkingCardNumber;
+    }
+
+    public void setParkingCardNumber(Long parkingCardNumber) {
+	this.parkingCardNumber = parkingCardNumber;
     }
 
 }

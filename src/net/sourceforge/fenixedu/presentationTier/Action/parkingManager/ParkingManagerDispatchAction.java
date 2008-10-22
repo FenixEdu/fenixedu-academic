@@ -421,7 +421,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
 	if (searchPartyBean != null) {
 	    searchPartyBean.setParty(null);
-	    Object[] args = { searchPartyBean.getPartyName(), searchPartyBean.getCarPlateNumber() };
+	    Object[] args = { searchPartyBean.getPartyName(), searchPartyBean.getCarPlateNumber(),
+		    searchPartyBean.getParkingCardNumber() };
 	    List<Party> partyList = (List<Party>) executeService("SearchPartyCarPlate", args);
 	    request.setAttribute("searchPartyBean", searchPartyBean);
 	    request.setAttribute("partyList", partyList);
@@ -429,8 +430,13 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	} else if (request.getParameter("partyID") != null || request.getAttribute("partyID") != null) {
 	    final Integer idInternal = getPopertyID(request, "partyID");
 	    final String carPlateNumber = request.getParameter("plateNumber");
+	    final String parkingCardNumberString = request.getParameter("parkingCardNumber");
+	    Long parkingCardNumber = null;
+	    if (parkingCardNumberString != null) {
+		parkingCardNumber = new Long(parkingCardNumberString);
+	    }
 	    Party party = rootDomainObject.readPartyByOID(idInternal);
-	    setupParkingRequests(request, party, carPlateNumber);
+	    setupParkingRequests(request, party, carPlateNumber, parkingCardNumber);
 	}
 
 	return mapping.findForward("showParkingPartyRequests");
@@ -444,12 +450,12 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
     }
 
-    private void setupParkingRequests(HttpServletRequest request, Party party, String carPlateNumber)
+    private void setupParkingRequests(HttpServletRequest request, Party party, String carPlateNumber, Long parkingCardNumber)
 	    throws FenixFilterException, FenixServiceException {
 	if (party.getParkingParty() != null) {
 	    request.setAttribute("parkingRequests", party.getParkingParty().getParkingRequests());
 	}
-	request.setAttribute("searchPartyBean", new SearchPartyBean(party, carPlateNumber));
+	request.setAttribute("searchPartyBean", new SearchPartyBean(party, carPlateNumber, parkingCardNumber));
     }
 
     public ActionForward prepareEditParkingParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

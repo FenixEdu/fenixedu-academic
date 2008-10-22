@@ -433,6 +433,7 @@
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="carPlateNumber" key="label.firstCarPlateNumber"/>
+	<slot name="parkingCardNumber" key="label.cardNumber"/>
 </schema>
 
 <schema name="read.msAccessFile" type="net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean">

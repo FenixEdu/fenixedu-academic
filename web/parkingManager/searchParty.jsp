@@ -249,7 +249,7 @@
 				</logic:iterate>
 				<td class="nowrap" rowspan="<%= numberUnits %>">
 					<bean:define id="searchPartyBean" name="searchPartyBean" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean"/>
-					<bean:define id="url" type="java.lang.String">/parking.do?method=showParkingPartyRequests&amp;partyID=<bean:write name="person" property="idInternal"/>&amp;plateNumber=<bean:write name="searchPartyBean" property="carPlateNumber"/></bean:define>
+					<bean:define id="url" type="java.lang.String">/parking.do?method=showParkingPartyRequests&amp;partyID=<bean:write name="person" property="idInternal"/>&amp;plateNumber=<bean:write name="searchPartyBean" property="carPlateNumber"/>&amp;parkingCardNumber=<bean:write name="searchPartyBean" property="parkingCardNumber"/></bean:define>
 					<html:link page="<%= url %>"><bean:message key="link.viewUser" /></html:link>
 				</td>
 			</tr>
