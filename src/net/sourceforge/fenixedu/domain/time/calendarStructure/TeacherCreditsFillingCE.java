@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class TeacherCreditsFillingCE extends TeacherCreditsFillingCE_Base {
 

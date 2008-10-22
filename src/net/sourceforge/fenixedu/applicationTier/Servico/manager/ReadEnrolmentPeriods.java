@@ -15,11 +15,12 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadEnrolmentPeriods extends FenixService {
 
-    public List<InfoEnrolmentPeriod> run(final Integer executionPeriodID) {
+    @Service
+    public static List<InfoEnrolmentPeriod> run(final Integer executionPeriodID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	final List<EnrolmentPeriod> enrolmentPeriods = executionSemester.getEnrolmentPeriod();

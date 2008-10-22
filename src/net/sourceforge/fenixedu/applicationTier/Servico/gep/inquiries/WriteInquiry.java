@@ -21,11 +21,12 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class WriteInquiry extends FenixService {
 
-    public void run(final InfoInquiry inquiry, final InfoStudent infoStudent) throws FenixServiceException {
+    @Service
+    public static void run(final InfoInquiry inquiry, final InfoStudent infoStudent) throws FenixServiceException {
 	if (inquiry == null) {
 	    throw new FenixServiceException("nullInquiry");
 	}
@@ -58,7 +59,7 @@ public class WriteInquiry extends FenixService {
 	writeInquiriesRegistry(inquiriesCourse, infoStudent);
     }
 
-    private InquiriesCourse writeInquiriesCourse(final InfoInquiry ii, final InfoInquiriesCourse iic,
+    private static InquiriesCourse writeInquiriesCourse(final InfoInquiry ii, final InfoInquiriesCourse iic,
 	    final InfoStudent infoStudent) {
 
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(ii.getExecutionCourse().getIdInternal());
@@ -80,7 +81,7 @@ public class WriteInquiry extends FenixService {
 		registration.getArithmeticMeanClassification());
     }
 
-    private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final InquiriesCourse inquiriesCourse) {
+    private static void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final InquiriesCourse inquiriesCourse) {
 	for (ShiftType shiftType : iit.getClassTypes()) {
 
 	    InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes = iit
@@ -97,12 +98,12 @@ public class WriteInquiry extends FenixService {
 	}
     }
 
-    private void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse) {
+    private static void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse) {
 	AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(iir.getRoom().getIdInternal());
 	inquiriesCourse.createInquiriesRoom(room, iir);
     }
 
-    private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) {
+    private static InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) {
 	Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
 	return new InquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), registration);
     }

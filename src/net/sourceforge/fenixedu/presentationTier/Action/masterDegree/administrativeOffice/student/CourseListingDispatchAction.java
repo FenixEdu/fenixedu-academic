@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -23,8 +24,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -92,11 +91,10 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	String degreeCurricularPlanId = getFromRequest("curricularPlanID", request);
 
-	Object args[] = { Integer.valueOf(degreeCurricularPlanId) };
 	List curricularCourseList = null;
 	try {
-	    curricularCourseList = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadCurricularCoursesByDegreeCurricularPlanId", args);
+	    curricularCourseList = (List) ReadCurricularCoursesByDegreeCurricularPlan
+		    .run(Integer.valueOf(degreeCurricularPlanId));
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

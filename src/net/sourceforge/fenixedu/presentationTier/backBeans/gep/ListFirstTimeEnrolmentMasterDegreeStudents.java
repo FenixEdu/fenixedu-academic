@@ -9,9 +9,10 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.ListMasterDegreeStudents;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 /**
@@ -33,14 +34,12 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
 	    return new ArrayList();
 	}
 
-	Object[] args = { getSelectedExecutionYear() };
-	return (Collection) ServiceUtils.executeService("ListMasterDegreeStudents", args);
+	return (Collection) ListMasterDegreeStudents.run(getSelectedExecutionYear());
     }
 
     public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 	List<SelectItem> result = new ArrayList<SelectItem>();
-	List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
-		.executeService("ReadNotClosedExecutionYears", null);
+	List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
 
 	Collections.sort(executionYears, new Comparator<InfoExecutionYear>() {
 

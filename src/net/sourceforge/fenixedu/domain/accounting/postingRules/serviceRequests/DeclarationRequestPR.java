@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class DeclarationRequestPR extends DeclarationRequestPR_Base {
 

@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.domain.Person;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -16,7 +17,8 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class ReadDomainPersonByUsername extends FenixService {
 
-    public Person run(String username) throws ExcepcaoInexistente {
+    @Service
+    public static Person run(String username) throws ExcepcaoInexistente {
 	Person person = Person.readPersonByUsername(username);
 
 	if (person == null)

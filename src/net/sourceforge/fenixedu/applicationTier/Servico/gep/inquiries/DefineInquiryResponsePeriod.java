@@ -5,7 +5,6 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DefineInquiryResponsePeriod extends FenixService {
 

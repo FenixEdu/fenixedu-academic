@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadBranchesByDegreeCurricularPlan extends FenixService {
 
-    public List<InfoBranch> run(Integer idDegreeCurricularPlan) throws FenixServiceException {
+    @Service
+    public static List<InfoBranch> run(Integer idDegreeCurricularPlan) throws FenixServiceException {
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
 	if (degreeCurricularPlan == null) {
 	    throw new NonExistingServiceException();

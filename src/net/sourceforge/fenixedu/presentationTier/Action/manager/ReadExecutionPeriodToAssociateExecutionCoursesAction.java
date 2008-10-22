@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -41,11 +42,9 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 	IUserView userView = UserView.getUser();
 	Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-	Object args1[] = { curricularCourseId };
-
 	List executionCoursesList = null;
 	try {
-	    executionCoursesList = (List) ServiceUtils.executeService("ReadExecutionCoursesByCurricularCourse", args1);
+	    executionCoursesList = (List) ReadExecutionCoursesByCurricularCourse.run(curricularCourseId);
 
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e.getMessage(), "");

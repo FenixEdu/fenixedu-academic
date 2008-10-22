@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuthorizedStudentToDoTestException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTestQuestionImage;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
@@ -246,9 +247,9 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    if (feedbackId == null) {
 		feedbackId = "";
 	    }
-	    Object[] args = { registration.getIdInternal(), distributedTest.getIdInternal(), new Integer(exerciseIdString),
-		    new Integer(imgCodeString), feedbackId, itemIndex, path };
-	    img = (String) ServiceUtils.executeService("ReadStudentTestQuestionImage", args);
+
+	    img = (String) ReadStudentTestQuestionImage.run(registration.getIdInternal(), distributedTest.getIdInternal(),
+		    new Integer(exerciseIdString), new Integer(imgCodeString), feedbackId, itemIndex, path);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

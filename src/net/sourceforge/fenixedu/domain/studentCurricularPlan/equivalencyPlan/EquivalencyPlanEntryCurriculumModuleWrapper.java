@@ -22,7 +22,7 @@ public class EquivalencyPlanEntryCurriculumModuleWrapper {
 	    final int c = Collator.getInstance().compare(d1.getName(), d2.getName());
 	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(d1, d2) : c;
 	}
-	
+
     };
 
     private final CurriculumModule curriculumModule;

@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurmas;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -19,12 +18,10 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -37,6 +34,7 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ViewClassesActionNew extends FenixContextAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 	final ActionErrors errors = new ActionErrors();
@@ -102,23 +100,13 @@ public class ViewClassesActionNew extends FenixContextAction {
 	    // SessionConstants.INFO_DEGREE_CURRICULAR_PLAN
 	    request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());
 
-	    // classList
-	    try {
-		final Object[] args = { infoExecutionDegree, infoExecutionPeriod, null };
-		List<InfoClass> classList = (List<InfoClass>) ServiceUtils.executeService("LerTurmas", args);
+	    List<InfoClass> classList = LerTurmas.run(infoExecutionDegree, infoExecutionPeriod, null);
 
-		if (!classList.isEmpty()) {
-		    ComparatorChain comparatorChain = new ComparatorChain();
-		    comparatorChain.addComparator(new BeanComparator("anoCurricular"));
-		    Collections.sort(classList, comparatorChain);
-		    request.setAttribute("classList", classList);
-		}
-	    } catch (NonExistingServiceException e) {
-		errors.add("nonExisting", new ActionError("error.exception.noStudents"));
-		saveErrors(request, errors);
-		return mapping.findForward("Sucess");
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException(e);
+	    if (!classList.isEmpty()) {
+		ComparatorChain comparatorChain = new ComparatorChain();
+		comparatorChain.addComparator(new BeanComparator("anoCurricular"));
+		Collections.sort(classList, comparatorChain);
+		request.setAttribute("classList", classList);
 	    }
 	}
 

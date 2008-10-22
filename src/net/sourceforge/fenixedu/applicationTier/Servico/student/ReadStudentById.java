@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -20,7 +20,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadStudentById extends FenixService {
 
-    public Object run(Integer id) throws FenixServiceException {
+    @Service
+    public static Object run(Integer id) throws FenixServiceException {
 	InfoStudent infoStudent = null;
 
 	Registration registration = rootDomainObject.readRegistrationByOID(id);

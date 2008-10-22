@@ -11,14 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteAnswer;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GetStudentTest;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GiveUpQuestion;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.tests.AtomicQuestionState;
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewTest;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -65,12 +68,12 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixFilterException, FenixServiceException {
+	    throws FenixServiceException, ExcepcaoPersistencia {
 	Integer testGroupId = getCodeFromRequest(request, "oid");
 
 	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-	NewTest test = (NewTest) ServiceUtils.executeService("GetStudentTest", new Object[] { getPerson(request), testGroup });
+	NewTest test = GetStudentTest.run(getPerson(request), testGroup);
 
 	request.setAttribute("test", test);
 	request.setAttribute("stateClasses", stateClasses);
@@ -79,14 +82,14 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteAnswer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
 	Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
 	NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
 
 	NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 
-	ServiceUtils.executeService("DeleteAnswer", new Object[] { atomicQuestion });
+	DeleteAnswer.run(atomicQuestion);
 
 	request.setAttribute("oid", testGroup.getIdInternal());
 
@@ -94,14 +97,14 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward giveUpQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
 	Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
 	NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
 
 	NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 
-	ServiceUtils.executeService("GiveUpQuestion", new Object[] { atomicQuestion });
+	GiveUpQuestion.run(atomicQuestion);
 
 	request.setAttribute("oid", testGroup.getIdInternal());
 
@@ -109,7 +112,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward answerQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
 	return this.viewTest(mapping, form, request, response);
     }
 

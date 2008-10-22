@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.Period;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * This class represents the research project. The research Project is inserted

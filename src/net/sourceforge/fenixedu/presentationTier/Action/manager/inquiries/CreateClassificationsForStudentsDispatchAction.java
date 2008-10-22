@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -41,7 +42,7 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
 
 	IUserView userView = UserView.getUser();
 
-	InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadCurrentExecutionYear", null);
+	InfoExecutionYear executionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
 
 	Object[] argsDCPs = { executionYear.getIdInternal() };
 	List degreeCurricularPlans = (List) ServiceUtils.executeService("ReadActiveDegreeCurricularPlansByExecutionYear",

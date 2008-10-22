@@ -6,11 +6,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-/**
- * Servi�o CriarTurma
- * 
- * @author tfc130
- */
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -19,10 +14,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CriarTurma extends FenixService {
 
-    public Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
+    @Service
+    public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
 	    final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());

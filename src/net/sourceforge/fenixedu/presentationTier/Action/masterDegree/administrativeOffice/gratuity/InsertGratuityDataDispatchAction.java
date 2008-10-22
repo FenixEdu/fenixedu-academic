@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -18,10 +21,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -51,13 +52,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     public ActionForward prepareInsertChooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	// execution years
-	List executionYears = null;
-	Object[] args = {};
-	try {
-	    executionYears = (List) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionYears", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+	List executionYears = ReadNotClosedExecutionYears.run();
 
 	if (executionYears != null && !executionYears.isEmpty()) {
 	    ComparatorChain comparator = new ComparatorChain();
@@ -92,14 +87,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 	String executionYear = (String) gratuityForm.get("executionYear");
 	request.setAttribute("executionYear", executionYear);
 
-	Object args[] = { executionYear, DegreeType.MASTER_DEGREE };
-	List executionDegreeList = null;
-	try {
-	    executionDegreeList = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	List executionDegreeList = ReadExecutionDegreesByExecutionYearAndDegreeType.run(executionYear, DegreeType.MASTER_DEGREE);
 
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(executionDegreeList);
@@ -157,9 +145,9 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 	request.setAttribute("executionYear", executionYear);
 
 	InfoGratuityValues infoGratuityValues = null;
-	Object args[] = { degreeId };
+
 	try {
-	    infoGratuityValues = (InfoGratuityValues) ServiceUtils.executeService("ReadGratuityValuesByExecutionDegree", args);
+	    infoGratuityValues = (InfoGratuityValues) ReadGratuityValuesByExecutionDegree.run(degreeId);
 	} catch (FenixServiceException ex) {
 	    errors.add("gratuityValues", new ActionError(ex.getMessage()));
 	    saveErrors(request, errors);

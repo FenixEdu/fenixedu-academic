@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadMasterDegrees;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadNonMasterExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
@@ -39,12 +40,10 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 	    infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
 	}
 
-	Object[] args = { infoExecutionYear };
 	List executionDegreesList = null;
 	try {
 	    // ReadExecutionDegreesByExecutionYear
-	    executionDegreesList = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadNonMasterExecutionDegreesByExecutionYear", args);
+	    executionDegreesList = (List) ReadNonMasterExecutionDegreesByExecutionYear.run(infoExecutionYear);
 	} catch (FenixServiceException e) {
 	    errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
 	    saveErrors(request, errors);
@@ -72,12 +71,10 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 	    ano = infoExecutionYear.getYear();
 	}
 
-	Object[] args = { ano };
-
 	List executionDegreesList = null;
 	try {
 	    // ReadExecutionDegreesByExecutionYear
-	    executionDegreesList = (List) ServiceManagerServiceFactory.executeService("ReadMasterDegrees", args);
+	    executionDegreesList = (List) ReadMasterDegrees.run(ano);
 	} catch (FenixServiceException e) {
 	    errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
 	    saveErrors(request, errors);

@@ -7,10 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Node;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteTemplatedContent extends FenixService {
 
-    public void run(MetaDomainObjectPortal portal, Content content) {
+    @Service
+    public static void run(MetaDomainObjectPortal portal, Content content) {
 
 	portal.removePool(content);
 	List<Node> nodesToDelete = new ArrayList<Node>();

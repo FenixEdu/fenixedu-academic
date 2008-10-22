@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadClassesForCurrentAndPreviousPeriodByDegree extends FenixService {
 
-    public Object run(Integer degreeOID) {
+    @Service
+    public static Object run(Integer degreeOID) {
 	ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 	ExecutionSemester previouseExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 
@@ -28,7 +29,7 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree extends FenixService
 	return constructViews(classes, degree, currentExecutionPeriod, previouseExecutionPeriod);
     }
 
-    private Object constructViews(List classes, final Degree degree, final ExecutionSemester currentExecutionPeriod,
+    private static Object constructViews(List classes, final Degree degree, final ExecutionSemester currentExecutionPeriod,
 	    final ExecutionSemester previouseExecutionPeriod) {
 	List classViews = new ArrayList();
 	for (Iterator iterator = classes.iterator(); iterator.hasNext();) {
@@ -41,7 +42,7 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree extends FenixService
 	return classViews;
     }
 
-    private boolean isInPeriodsAndForDegree(SchoolClass klass, Degree degree, ExecutionSemester currentExecutionPeriod,
+    private static boolean isInPeriodsAndForDegree(SchoolClass klass, Degree degree, ExecutionSemester currentExecutionPeriod,
 	    ExecutionSemester previouseExecutionPeriod) {
 	return (klass.getExecutionPeriod().getIdInternal().equals(currentExecutionPeriod.getIdInternal()) || klass
 		.getExecutionPeriod().getIdInternal().equals(previouseExecutionPeriod.getIdInternal()))

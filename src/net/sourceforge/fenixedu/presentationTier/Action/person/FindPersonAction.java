@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadAllDegreesByType;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
@@ -19,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -65,7 +66,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	if (roleType != null && roleType.length() != 0) {
 	    if (roleType.equals(RoleType.EMPLOYEE.getName()) || roleType.equals(RoleType.TEACHER.getName())) {
 		if (roleType.equals(RoleType.TEACHER.getName())) {
-		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", null);
+		    List<InfoDepartment> departments = (List<InfoDepartment>) ReadAllDepartments.run();
 		    request.setAttribute("departments", departments);
 		}
 	    }
@@ -73,9 +74,8 @@ public class FindPersonAction extends FenixDispatchAction {
 	    if (roleType.equals(RoleType.STUDENT.getName())) {
 
 		if (degreeType.length() != 0) {
-		    Object[] args = { degreeType };
-		    List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService("ReadAllDegreesByType",
-			    args);
+
+		    List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ReadAllDegreesByType.run(degreeType);
 
 		    request.setAttribute("nonMasterDegree", nonMasterDegree);
 		    request.setAttribute("degreeType", true);
@@ -148,8 +148,8 @@ public class FindPersonAction extends FenixDispatchAction {
 	    degreeType = null;
 	} else if (roleType.equals(RoleType.STUDENT.getName())) {
 	    if (degreeType.length() != 0) {
-		Object[] args1 = { degreeType };
-		List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService("ReadAllDegreesByType", args1);
+
+		List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ReadAllDegreesByType.run(degreeType);
 
 		request.setAttribute("nonMasterDegree", nonMasterDegree);
 		request.setAttribute("degreeType", degreeType);
@@ -166,7 +166,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	if (roleType.equals(RoleType.TEACHER.getName())) {
-	    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", null);
+	    List<InfoDepartment> departments = (List<InfoDepartment>) ReadAllDepartments.run();
 	    request.setAttribute("departments", departments);
 	}
 

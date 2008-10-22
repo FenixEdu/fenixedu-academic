@@ -21,7 +21,7 @@ public abstract class Contract extends Contract_Base {
 	    final int c = o1.getBeginDate().compareTo(o2.getBeginDate());
 	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-	
+
     };
     public static final Comparator<Contract> CONTRACT_COMPARATOR_BY_PERSON_NAME = new Comparator<Contract>() {
 
@@ -30,7 +30,7 @@ public abstract class Contract extends Contract_Base {
 	    final int c = o1.getPerson().getName().compareTo(o2.getPerson().getName());
 	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-	
+
     };
 
     protected Contract() {

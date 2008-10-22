@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansByDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -94,9 +95,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
 	    final IUserView userView = UserView.getUser();
 
-	    final Object[] args = new Object[] { degreeType };
-	    final List infoDegreeCurricularPlans = (List) ServiceUtils.executeService("ReadDegreeCurricularPlansByDegreeType",
-		    args);
+	    final List infoDegreeCurricularPlans = (List) ReadDegreeCurricularPlansByDegreeType.run(degreeType);
 
 	    putDegreeCurricularPlansInRequest(request, infoDegreeCurricularPlans);
 	}

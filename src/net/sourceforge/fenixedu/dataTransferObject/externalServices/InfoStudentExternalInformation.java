@@ -20,11 +20,11 @@ public class InfoStudentExternalInformation {
     private InfoExternalDegreeCurricularPlanInfo degree;
     private Collection courses = new ArrayList();
     private Collection availableRemainingCourses = new ArrayList(); // courses
-								    // that the
-								    // student
-								    // must
-								    // choose
-								    // from
+    // that the
+    // student
+    // must
+    // choose
+    // from
     private int curricularYear;
     private double average;
 

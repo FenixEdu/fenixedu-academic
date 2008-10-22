@@ -7,8 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -35,8 +35,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 /**
  * @author Fernanda Quitério 17/Dez/2003
  * 
@@ -46,11 +44,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	List infoExecutionPeriods = null;
-	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
-	} catch (FenixServiceException ex) {
-	    throw new FenixActionException();
-	}
+	infoExecutionPeriods = ReadExecutionPeriods.run();
 
 	if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 	    // exclude closed execution periods

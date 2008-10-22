@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurma;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurmas;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -47,9 +49,8 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-	Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
-
-	List<InfoClass> classesList = (List<InfoClass>) ServiceUtils.executeService("LerTurmas", argsLerTurmas);
+	List<InfoClass> classesList = (List<InfoClass>) LerTurmas.run(infoExecutionDegree, infoExecutionPeriod,
+		infoCurricularYear.getYear());
 
 	if (classesList != null && !classesList.isEmpty()) {
 	    BeanComparator nameComparator = new BeanComparator("nome");
@@ -75,10 +76,8 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 	Integer curricularYear = infoCurricularYear.getYear();
 
-	Object argsCriarTurma[] = { className, curricularYear, infoExecutionDegree, infoExecutionPeriod };
-
 	try {
-	    ServiceUtils.executeService("CriarTurma", argsCriarTurma);
+	    CriarTurma.run(className, curricularYear, infoExecutionDegree, infoExecutionPeriod);
 
 	} catch (DomainException e) {
 	    throw new ExistingActionException("A SchoolClass", e);

@@ -17,6 +17,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadTeachersByExecutionCourseProfessorship;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadTeachersByExecutionCourseResponsibility;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadTeacherByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -49,17 +52,14 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 	    IUserView userView = getUserView(request);
 	    InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 	    boolean result = false;
-	    List teachers = (List) ServiceManagerServiceFactory.executeService("ReadTeachersByExecutionCourseProfessorship",
-		    new Object[] { infoSite.getInfoExecutionCourse() });
+	    List teachers = (List) ReadTeachersByExecutionCourseProfessorship.run(infoSite.getInfoExecutionCourse());
 	    if (teachers != null && !teachers.isEmpty()) {
 		session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
 	    }
 
-	    List responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadTeachersByExecutionCourseResponsibility", new Object[] { infoSite.getInfoExecutionCourse() });
+	    List responsibleTeachers = (List) ReadTeachersByExecutionCourseResponsibility.run(infoSite.getInfoExecutionCourse());
 
-	    Object[] args1 = { userView.getUtilizador() };
-	    InfoTeacher teacher = (InfoTeacher) ServiceManagerServiceFactory.executeService("ReadTeacherByUsername", args1);
+	    InfoTeacher teacher = (InfoTeacher) ReadTeacherByUsername.run(userView.getUtilizador());
 	    if (responsibleTeachers != null && !responsibleTeachers.isEmpty() && responsibleTeachers.contains(teacher)) {
 		result = true;
 	    }

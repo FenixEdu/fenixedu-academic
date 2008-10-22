@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByUser;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -34,8 +34,7 @@ public class PrepareListDepartmentTeachersAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	IUserView userView = UserView.getUser();
-	InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService("ReadDepartmentByUser",
-		new Object[] { userView.getUtilizador() });
+	InfoDepartment infoDepartment = (InfoDepartment) ReadDepartmentByUser.run(userView.getUtilizador());
 	request.setAttribute("infoDepartment", infoDepartment);
 
 	ActionForward actionForward = buildActionForward(mapping.findForward("successfull-prepare"), infoDepartment);

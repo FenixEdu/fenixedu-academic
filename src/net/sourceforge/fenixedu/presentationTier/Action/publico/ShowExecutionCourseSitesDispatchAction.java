@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree;
 import net.sourceforge.fenixedu.commons.collections.Table;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -69,9 +69,9 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
 
     private List<ExecutionCourseView> getExecutionCourseViews(HttpServletRequest request, Degree degree)
 	    throws FenixServiceException, FenixFilterException {
-	final Object[] args = { degree };
-	List<ExecutionCourseView> result = new ArrayList((Collection<ExecutionCourseView>) ServiceManagerServiceFactory
-		.executeService("ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args));
+
+	List<ExecutionCourseView> result = new ArrayList(
+		(Collection<ExecutionCourseView>) ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree.run(degree));
 	Collections.sort(result, ExecutionCourseView.COMPARATOR_BY_NAME);
 
 	return result;

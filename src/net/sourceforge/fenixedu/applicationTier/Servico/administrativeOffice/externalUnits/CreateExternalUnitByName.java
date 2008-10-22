@@ -2,10 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ex
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateExternalUnitByName extends FenixService {
 
-    public Unit run(String name) {
+    @Service
+    public static Unit run(String name) {
 	return Unit.createNewNoOfficialExternalInstitution(name);
     }
 }

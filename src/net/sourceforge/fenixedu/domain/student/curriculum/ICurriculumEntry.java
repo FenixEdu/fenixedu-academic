@@ -6,9 +6,10 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public interface ICurriculumEntry {
 

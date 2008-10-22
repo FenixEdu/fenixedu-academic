@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadFAQEntries;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadFAQSections;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -31,10 +33,10 @@ public class ManageFAQDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	List infoFAQSections = (List) ServiceUtils.executeService("ReadFAQSections", null);
+	List infoFAQSections = (List) ReadFAQSections.run();
 	request.setAttribute("infoFAQSections", infoFAQSections);
 
-	List infoFAQEntries = (List) ServiceUtils.executeService("ReadFAQEntries", null);
+	List infoFAQEntries = (List) ReadFAQEntries.run();
 	request.setAttribute("infoFAQEntries", infoFAQEntries);
 
 	List rootInfoFAQSections = new ArrayList(infoFAQSections);

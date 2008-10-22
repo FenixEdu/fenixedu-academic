@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeByOID;
 import net.sourceforge.fenixedu.commons.collections.Table;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -125,8 +125,8 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
 
     private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) throws FenixServiceException,
 	    FenixFilterException {
-	Object[] args = { degree.getIdInternal() };
-	InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService("ReadDegreeByOID", args);
+
+	InfoDegree infoDegree = (InfoDegree) ReadDegreeByOID.run(degree.getIdInternal());
 	request.setAttribute("infoDegree", infoDegree);
     }
 

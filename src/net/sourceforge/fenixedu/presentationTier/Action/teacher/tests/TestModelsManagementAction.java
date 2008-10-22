@@ -9,6 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateModelGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteModelRestriction;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GenerateTests;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.SelectAtomicQuestionRestrictions;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.SelectQuestionGroupRestriction;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.SwitchPosition;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.UnselectRestriction;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.tests.NewModelGroup;
@@ -16,7 +23,6 @@ import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.NewTestModel;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -64,7 +70,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	TestModelBean bean = (TestModelBean) getMetaObject("create-model-group");
 
-	ServiceUtils.executeService("CreateModelGroup", new Object[] { bean.getModelGroup(), bean.getName() });
+	CreateModelGroup.run(bean.getModelGroup(), bean.getName());
 
 	request.setAttribute("oid", bean.getTestModel().getIdInternal());
 
@@ -95,8 +101,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 
 	List<NewModelRestriction> modelRestrictions = validateSelectAtomicQuestionRestriction(request);
 
-	ServiceUtils.executeService("SelectAtomicQuestionRestrictions", new Object[] { testModel, modelRestrictions, modelGroup,
-		bean.getValue() });
+	SelectAtomicQuestionRestrictions.run(testModel, modelRestrictions, modelGroup, bean.getValue());
 
 	return mapping.findForward("selectQuestions");
     }
@@ -147,8 +152,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 	    return mapping.findForward("selectQuestions");
 	}
 
-	ServiceUtils.executeService("SelectQuestionGroupRestriction", new Object[] { testModel, modelRestriction,
-		bean.getModelGroup(), bean.getCount(), bean.getValue() });
+	SelectQuestionGroupRestriction.run(testModel, modelRestriction, bean.getModelGroup(), bean.getCount(), bean.getValue());
 
 	RenderUtils.invalidateViewState("select-question-group.model-group");
 
@@ -191,7 +195,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 
 	NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
 
-	ServiceUtils.executeService("UnselectRestriction", new Object[] { modelRestriction });
+	UnselectRestriction.run(modelRestriction);
 
 	NewTestModel testModel = modelRestriction.getTestModel();
 
@@ -254,7 +258,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 
 	NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
 
-	ServiceUtils.executeService("SwitchPosition", new Object[] { modelRestriction, relativePosition });
+	SwitchPosition.run(modelRestriction, relativePosition);
 
 	request.setAttribute("testModel", modelRestriction.getTestModel());
 
@@ -292,7 +296,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 
 	NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
 
-	ServiceUtils.executeService("DeleteModelRestriction", new Object[] { testModel });
+	DeleteModelRestriction.run(testModel);
 
 	return this.manageTestModels(mapping, form, request, response);
     }
@@ -305,7 +309,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 
 	NewTestModel testModel = modelRestriction.getTestModel();
 
-	ServiceUtils.executeService("DeleteModelRestriction", new Object[] { modelRestriction });
+	DeleteModelRestriction.run(modelRestriction);
 
 	return new ActionForward(request.getParameter("returnTo") + "&oid=" + testModel.getIdInternal(), true);
     }
@@ -360,8 +364,8 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
 
-	ServiceUtils.executeService("GenerateTests", new Object[] { bean.getTestModel(), bean.getName(),
-		bean.getExecutionCourse(), bean.getVariations(), bean.getFinalDate() });
+	GenerateTests.run(bean.getTestModel(), bean.getName(), bean.getExecutionCourse(), bean.getVariations(), bean
+		.getFinalDate());
 
 	return this.manageTestModels(mapping, form, request, response);
     }

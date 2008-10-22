@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SwitchPublishedExamsFlag extends FenixService {
 

@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityToContainer;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.AddPortalToContainer;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.AddSectionToContainer;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ApplyStructureModifications;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.CopyModuleFunctionalityToContainer;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.DeleteNode;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
@@ -146,9 +152,9 @@ public class ContentManagement extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	PortalBean bean = (PortalBean) RenderUtils.getViewState("portal").getMetaObject().getObject();
-	Object[] args = { bean.getContainer(), bean.getPortal() };
+
 	try {
-	    executeService("AddPortalToContainer", args);
+	    AddPortalToContainer.run(bean.getContainer(), bean.getPortal());
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -169,10 +175,9 @@ public class ContentManagement extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	SectionBean bean = (SectionBean) RenderUtils.getViewState("createSection").getMetaObject().getObject();
-	Object[] args = { bean.getContainer(), bean.getName(), bean.isVisible(), bean.getNextSection() };
 
 	try {
-	    executeService("AddSectionToContainer", args);
+	    AddSectionToContainer.run(bean.getContainer(), bean.getName(), bean.isVisible(), bean.getNextSection());
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -199,9 +204,8 @@ public class ContentManagement extends FenixDispatchAction {
 	Functionality functionality = (Functionality) getElement(request);
 	Container container = getParentContainer(request);
 
-	Object[] args = { functionality, container };
 	try {
-	    executeService("AddFunctionalityToContainer", args);
+	    AddFunctionalityToContainer.run(functionality, container);
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -216,9 +220,8 @@ public class ContentManagement extends FenixDispatchAction {
 	Module module = (Module) getContainer(request);
 	Container container = getParentContainer(request);
 
-	Object[] args = { module, container };
 	try {
-	    executeService("CopyModuleFunctionalityToContainer", args);
+	    CopyModuleFunctionalityToContainer.run(module, container);
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -232,7 +235,7 @@ public class ContentManagement extends FenixDispatchAction {
 	Container parent = getParentContainer(request);
 	Node node = content.getParentNode(parent);
 	try {
-	    executeService("DeleteNode", new Object[] { node });
+	    DeleteNode.run(node);
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -272,7 +275,7 @@ public class ContentManagement extends FenixDispatchAction {
 	List<ModifiedContentBean> modifiedContent = getModifiedContent(container, structure);
 
 	try {
-	    executeService("ApplyStructureModifications", new Object[] { modifiedContent });
+	    ApplyStructureModifications.run(modifiedContent);
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}

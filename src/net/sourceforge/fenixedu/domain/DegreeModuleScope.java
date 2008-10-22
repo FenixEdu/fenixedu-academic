@@ -29,7 +29,7 @@ public abstract class DegreeModuleScope {
 	    }
 	    return o1.getIdInternal().compareTo(o2.getIdInternal());
 	}
-	
+
     };
 
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH = new Comparator<DegreeModuleScope>() {
@@ -51,7 +51,7 @@ public abstract class DegreeModuleScope {
 	    final int cb = Collator.getInstance().compare(o1.getBranch(), o2.getBranch());
 	    return o1.getIdInternal().compareTo(o2.getIdInternal());
 	}
-	
+
     };
 
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_NAME = new Comparator<DegreeModuleScope>() {
@@ -61,7 +61,7 @@ public abstract class DegreeModuleScope {
 	    final int c = o1.getCurricularCourse().getName().compareTo(o2.getCurricularCourse().getName());
 	    return c == 0 ? o1.getIdInternal().compareTo(o2.getIdInternal()) : c;
 	}
-	
+
     };
 
     public abstract String getClassName();

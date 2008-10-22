@@ -13,11 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadStudentsAndGroupsByShiftID;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -42,10 +43,10 @@ public class ViewStudentsAndGroupsByShiftAction extends FenixContextAction {
 	Integer shiftCode = new Integer(shiftCodeString);
 
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
-	Object[] args = { groupPropertiesCode, shiftCode };
+
 	try {
-	    infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceUtils.executeService("ReadStudentsAndGroupsByShiftID",
-		    args);
+	    infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ReadStudentsAndGroupsByShiftID.run(groupPropertiesCode,
+		    shiftCode);
 
 	} catch (InvalidSituationServiceException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();
@@ -60,8 +61,8 @@ public class ViewStudentsAndGroupsByShiftAction extends FenixContextAction {
 
 	request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
 
-	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.executeService(
-		"ReadExportGroupingsByGrouping", new Object[] { groupPropertiesCode });
+	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ReadExportGroupingsByGrouping
+		.run(groupPropertiesCode);
 	request.setAttribute("infoExportGroupings", infoExportGroupings);
 
 	return mapping.findForward("sucess");

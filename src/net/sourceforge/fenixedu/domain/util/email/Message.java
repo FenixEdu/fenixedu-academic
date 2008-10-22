@@ -15,29 +15,30 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class Message extends Message_Base {
-    
+
     public Message() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Message(final Sender sender, final Collection<Recipient> recipients, final String subject, final String body, final String bccs) {
-        super();
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-        setRootDomainObject(rootDomainObject);
-        setRootDomainObjectFromPendingRelation(rootDomainObject);
-        setSender(sender);
-        if (recipients != null) {
-            for (final Recipient recipient : recipients) {
-        	addRecipients(recipient);
-            }
-        }
-        setSubject(subject);
-        setBody(body);
-        setBccs(bccs);
-        final Person person = AccessControl.getPerson();
-        setPerson(person);
-        setCreated(new DateTime());
+    public Message(final Sender sender, final Collection<Recipient> recipients, final String subject, final String body,
+	    final String bccs) {
+	super();
+	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+	setRootDomainObject(rootDomainObject);
+	setRootDomainObjectFromPendingRelation(rootDomainObject);
+	setSender(sender);
+	if (recipients != null) {
+	    for (final Recipient recipient : recipients) {
+		addRecipients(recipient);
+	    }
+	}
+	setSubject(subject);
+	setBody(body);
+	setBccs(bccs);
+	final Person person = AccessControl.getPerson();
+	setPerson(person);
+	setCreated(new DateTime());
     }
 
     @Service
@@ -93,8 +94,8 @@ public class Message extends Message_Base {
 
     public void dispatch() {
 	final Sender sender = getSender();
-	new Email(sender.getFromName(), sender.getFromAddress(), new String[0], Collections.EMPTY_SET,
-		Collections.EMPTY_SET, getDestinationEmailAddresses(), getSubject(), getBody());
+	new Email(sender.getFromName(), sender.getFromAddress(), new String[0], Collections.EMPTY_SET, Collections.EMPTY_SET,
+		getDestinationEmailAddresses(), getSubject(), getBody());
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
     }

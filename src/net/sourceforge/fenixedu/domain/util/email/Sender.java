@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import pt.ist.fenixWebFramework.security.UserView;
 
 public class Sender extends Sender_Base {
-    
+
     public static Comparator<Sender> COMPARATOR_BY_FROM_NAME = new Comparator<Sender>() {
 
 	@Override
@@ -18,20 +18,20 @@ public class Sender extends Sender_Base {
 	    final int c = sender1.getFromName().compareTo(sender2.getFromName());
 	    return c == 0 ? COMPARATOR_BY_ID.compare(sender1, sender2) : c;
 	}
-	
+
     };
 
     public Sender() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Sender(final String fromName, final String fromAddress, final Group members) {
-        this();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setFromName(fromName);
-        setFromAddress(fromAddress);
-        setMembers(members);
+	this();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setFromName(fromName);
+	setFromAddress(fromAddress);
+	setMembers(members);
     }
 
     public void delete() {

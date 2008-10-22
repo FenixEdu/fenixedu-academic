@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -25,7 +25,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername extends FenixService {
 
-    public StudentGroupAttendacyInformation run(Integer executionCourseID, String username) throws BDException {
+    @Service
+    public static StudentGroupAttendacyInformation run(Integer executionCourseID, String username) throws BDException {
 
 	Registration registration = Registration.readByUsername(username);
 

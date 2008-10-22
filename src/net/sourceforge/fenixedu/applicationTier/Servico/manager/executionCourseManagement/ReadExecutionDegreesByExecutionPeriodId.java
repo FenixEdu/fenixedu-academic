@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /*
  * 
@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesByExecutionPeriodId extends FenixService {
 
-    public List run(Integer executionPeriodId) throws FenixServiceException {
+    @Service
+    public static List run(Integer executionPeriodId) throws FenixServiceException {
 	if (executionPeriodId == null) {
 	    throw new FenixServiceException("nullId");
 	}

@@ -221,8 +221,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
 	    if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
-		executeService("StoreGeneratedDocument", new Object[] { original.getReportFileName() + ".pdf",
-			new ByteArrayInputStream(data), receipt });
+		StoreGeneratedDocument.run(original.getReportFileName() + ".pdf", new ByteArrayInputStream(data), receipt);
 	    }
 	    executeService("RegisterReceiptPrint", new Object[] { receipt, getUserView(request).getPerson().getEmployee() });
 

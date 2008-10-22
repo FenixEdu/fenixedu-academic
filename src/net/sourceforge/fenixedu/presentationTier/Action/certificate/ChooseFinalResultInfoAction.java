@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -62,10 +64,8 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
-	Object args[] = { studentCurricularPlanID };
 	try {
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentCurricularPlan", args);
+	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadStudentCurricularPlan.run(studentCurricularPlanID);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("O aluno");
 	}
@@ -131,15 +131,15 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
 	BigDecimal roundedSum = new BigDecimal(sum);
 	request.setAttribute("total", roundedSum.setScale(1, BigDecimal.ROUND_HALF_UP));// .
-											// toBigInteger
-											// (
-											// )
-											// )
-											// ;
+	// toBigInteger
+	// (
+	// )
+	// )
+	// ;
 
 	request.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);
 	try {
-	    ServiceManagerServiceFactory.executeService("ReadCurrentExecutionYear", null);
+	    ReadCurrentExecutionYear.run();
 
 	} catch (RuntimeException e) {
 	    throw new RuntimeException("Error", e);

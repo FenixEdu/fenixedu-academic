@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -22,7 +24,6 @@ import net.sourceforge.fenixedu.domain.util.workflow.Form;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -129,11 +130,10 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
 	try {
 	    final IUserView userView = getUserView(request);
-	    ServiceUtils.executeService("ExecuteStateOperation", new Object[] { candidacyOperation, getLoggedPerson(request) });
+	    ExecuteStateOperation.run(candidacyOperation, getLoggedPerson(request));
 
 	    if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
-		final List<InfoLesson> infoLessons = (List) ServiceUtils.executeService("ReadStudentTimeTable",
-			new Object[] { getCandidacy(request).getRegistration() });
+		final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
 		request.setAttribute("infoLessons", infoLessons);
 
 		return mapping.findForward("printSchedule");

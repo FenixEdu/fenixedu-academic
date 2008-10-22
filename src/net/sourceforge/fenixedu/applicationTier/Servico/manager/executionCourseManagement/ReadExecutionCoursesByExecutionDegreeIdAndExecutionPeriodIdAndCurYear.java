@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /*
  * 
@@ -20,7 +20,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear extends FenixService {
 
-    public Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
+    @Service
+    public static Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
 	    throws FenixServiceException {
 
 	if (executionPeriodId == null) {
@@ -48,7 +49,8 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 	return infoExecutionCourseList;
     }
 
-    private ExecutionDegree findExecutionDegreeByID(final ExecutionSemester executionSemester, final Integer executionDegreeId) {
+    private static ExecutionDegree findExecutionDegreeByID(final ExecutionSemester executionSemester,
+	    final Integer executionDegreeId) {
 	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
 	    if (executionDegree.getIdInternal().equals(executionDegreeId)) {

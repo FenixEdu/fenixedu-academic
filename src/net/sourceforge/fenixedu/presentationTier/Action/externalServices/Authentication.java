@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -48,7 +48,7 @@ public class Authentication extends FenixAction {
 		    person = Person.readPersonByIstUsername(username);
 		}
 		if (person != null) {
-		    ServiceUtils.executeService("SetUserUID", new Object[] { person });
+		    SetUserUID.run(person);
 		}
 
 		ServiceManagerServiceFactory.executeService(PropertiesManager.getProperty("authenticationService"),

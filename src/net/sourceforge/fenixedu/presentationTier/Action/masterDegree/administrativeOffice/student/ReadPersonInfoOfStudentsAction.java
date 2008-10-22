@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -73,7 +74,7 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
 
 	// Get List of available Countries
 	Object result = null;
-	result = ServiceManagerServiceFactory.executeService("ReadAllCountries", null);
+	result = ReadAllCountries.run();
 	List country = (ArrayList) result;
 
 	// Build List of Countries for the Form

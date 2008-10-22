@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
@@ -77,9 +79,9 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 		request.setAttribute("toShow", "toShow");
 	    } else if (personId != null) {
 		// Read the person (grant owner doesn't exist)
-		Object[] args = { personId };
+
 		InfoPerson infoPerson = null;
-		infoPerson = (InfoPerson) executeService("ReadPersonByID", args);
+		infoPerson = (InfoPerson) ReadPersonByID.run(personId);
 		infoGrantOwner.setPersonInfo(infoPerson);
 		request.setAttribute("toShow", "toShow");
 	    }
@@ -124,7 +126,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	List maritalStatusList = Arrays.asList(MaritalStatus.values());
 	request.setAttribute("maritalStatusList", maritalStatusList);
 
-	List countryList = (List) executeService("ReadAllCountries", null);
+	List countryList = (List) ReadAllCountries.run();
 
 	// Adding a select country line to the list (presentation reasons)
 	InfoCountryEditor selectCountry = new InfoCountryEditor();

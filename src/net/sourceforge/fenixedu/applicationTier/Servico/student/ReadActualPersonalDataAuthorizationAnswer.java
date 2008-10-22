@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -13,7 +14,8 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
  */
 public class ReadActualPersonalDataAuthorizationAnswer extends FenixService {
 
-    public StudentPersonalDataAuthorizationChoice run(Integer registrationID) {
+    @Service
+    public static StudentPersonalDataAuthorizationChoice run(Integer registrationID) {
 	final Registration registration = rootDomainObject.readRegistrationByOID(registrationID);
 	return registration.getStudent().getPersonalDataAuthorizationForCurrentExecutionYear();
     }

@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Jo�o Mota
@@ -27,8 +28,9 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
  */
 public class ClassSiteComponentService extends FenixService {
 
-    public Object run(ISiteComponent bodyComponent, String executionYearName, String executionPeriodName, String degreeInitials,
-	    String nameDegreeCurricularPlan, String className, Integer curricularYear, Integer classId)
+    @Service
+    public static Object run(ISiteComponent bodyComponent, String executionYearName, String executionPeriodName,
+	    String degreeInitials, String nameDegreeCurricularPlan, String className, Integer curricularYear, Integer classId)
 	    throws FenixServiceException {
 
 	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
@@ -57,7 +59,7 @@ public class ClassSiteComponentService extends FenixService {
 	return siteView;
     }
 
-    private SchoolClass getDomainClass(String className, Integer curricularYear, ExecutionSemester executionSemester,
+    private static SchoolClass getDomainClass(String className, Integer curricularYear, ExecutionSemester executionSemester,
 	    ExecutionDegree executionDegree) {
 
 	SchoolClass domainClass = null;

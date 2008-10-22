@@ -6,7 +6,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadTeachersByNumbers extends FenixService {
 
-    public Collection<InfoTeacher> run(Collection<Integer> teacherNumbers) {
+    @Service
+    public static Collection<InfoTeacher> run(Collection<Integer> teacherNumbers) {
 	Collection<InfoTeacher> infoTeachers = new ArrayList(teacherNumbers.size());
 	Collection<Teacher> teachers = Teacher.readByNumbers(teacherNumbers);
 

@@ -10,8 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.ConfirmStudentsFinalEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.ReadStudentsFinalEvaluationForConfirmation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -38,12 +39,11 @@ public class ConfirmMarksAction extends FenixDispatchAction {
 	MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
 	// Get students final evaluation
-	Object args[] = { curricularCourseCode, null };
+
 	IUserView userView = UserView.getUser();
 	InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 	try {
-	    infoSiteEnrolmentEvaluation = (InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentsFinalEvaluationForConfirmation", args);
+	    infoSiteEnrolmentEvaluation = ReadStudentsFinalEvaluationForConfirmation.run(curricularCourseCode, null);
 	} catch (NonExistingServiceException e) {
 	    sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
 	    return mapping.findForward("ShowMarksManagementMenu");
@@ -92,12 +92,8 @@ public class ConfirmMarksAction extends FenixDispatchAction {
 
 	// set final evaluation to final state
 	IUserView userView = UserView.getUser();
-	Object args[] = { curricularCourseCode, null, userView };
-	try {
-	    ServiceManagerServiceFactory.executeService("ConfirmStudentsFinalEvaluation", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+
+	ConfirmStudentsFinalEvaluation.run(curricularCourseCode, null, userView);
 
 	return mapping.findForward("ShowMarksManagementMenu");
     }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteRoomClassification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.RoomClassification.RoomClassificationFactoryEditor;
@@ -51,9 +52,9 @@ public class RoomClassificationDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final RoomClassification roomClassification = retrieveRoomClassification(request);
-	final Object[] args = { roomClassification };
+
 	try {
-	    executeService("DeleteRoomClassification", args);
+	    DeleteRoomClassification.run(roomClassification);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}

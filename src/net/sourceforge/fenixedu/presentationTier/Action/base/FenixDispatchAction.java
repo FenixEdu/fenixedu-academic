@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
@@ -216,13 +217,13 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Object executeFactoryMethod() throws FenixFilterException, FenixServiceException {
-	final Object[] args = { getFactoryObject() };
-	return executeService("ExecuteFactoryMethod", args);
+
+	return ExecuteFactoryMethod.run(getFactoryObject());
     }
 
     protected Object executeFactoryMethod(FactoryExecutor executor) throws FenixFilterException, FenixServiceException {
-	final Object[] args = { executor };
-	return executeService("ExecuteFactoryMethod", args);
+
+	return ExecuteFactoryMethod.run(executor);
     }
 
     protected FactoryExecutor getFactoryObject() {

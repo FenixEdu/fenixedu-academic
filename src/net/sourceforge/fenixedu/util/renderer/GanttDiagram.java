@@ -25,7 +25,7 @@ public class GanttDiagram {
 	public int compare(Interval o1, Interval o2) {
 	    return o1.getStart().compareTo(o2.getStart());
 	}
-	
+
     };
     public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_END = new Comparator<Interval>() {
 
@@ -33,7 +33,7 @@ public class GanttDiagram {
 	public int compare(Interval o1, Interval o2) {
 	    return o1.getEnd().compareTo(o2.getEnd());
 	}
-	
+
     };
 
     private Locale locale;

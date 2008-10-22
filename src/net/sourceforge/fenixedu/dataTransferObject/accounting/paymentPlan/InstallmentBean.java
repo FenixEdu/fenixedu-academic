@@ -39,7 +39,6 @@ public class InstallmentBean implements Serializable {
     private Integer maxMonthsToApplyPenalty;
 
     private PaymentPlanBean paymentPlanBean;
-    
 
     public InstallmentBean(PaymentPlanBean paymentPlanBean) {
 	setExecutionSemesters(new ArrayList<ExecutionSemester>());

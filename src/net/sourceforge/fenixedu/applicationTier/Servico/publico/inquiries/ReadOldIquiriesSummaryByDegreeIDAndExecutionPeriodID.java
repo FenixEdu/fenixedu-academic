@@ -12,10 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSum
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -23,7 +24,8 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID extends FenixService {
 
-    public List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException {
+    @Service
+    public static List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException {
 	Degree degree = rootDomainObject.readDegreeByOID(degreeID);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 

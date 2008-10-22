@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurriculumByCurricularCourseCode extends FenixService {
 
-    public InfoCurriculum run(final Integer curricularCourseCode) throws FenixServiceException {
+    @Service
+    public static InfoCurriculum run(final Integer curricularCourseCode) throws FenixServiceException {
 
 	if (curricularCourseCode == null) {
 	    throw new FenixServiceException("nullCurricularCourse");
@@ -45,7 +46,7 @@ public class ReadCurriculumByCurricularCourseCode extends FenixService {
 	return infoCurriculum;
     }
 
-    private List buildExecutionCourses(final CurricularCourse curricularCourse) {
+    private static List buildExecutionCourses(final CurricularCourse curricularCourse) {
 	final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
 	for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
 	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
@@ -56,7 +57,7 @@ public class ReadCurriculumByCurricularCourseCode extends FenixService {
 	return infoExecutionCourses;
     }
 
-    private List<InfoCurricularCourseScope> buildActiveScopes(final CurricularCourse curricularCourse) {
+    private static List<InfoCurricularCourseScope> buildActiveScopes(final CurricularCourse curricularCourse) {
 	final List<InfoCurricularCourseScope> activeInfoCurricularCourseScopes = new ArrayList<InfoCurricularCourseScope>();
 	for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
 	    if (curricularCourseScope.isActive()) {

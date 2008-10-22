@@ -7,10 +7,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -20,15 +21,11 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -86,7 +83,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 		.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 	if (infoExecutionPeriod == null) {
 	    IUserView userView = UserView.getUser();
-	    infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod", new Object[0]);
+	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 	    request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 	}
 	return infoExecutionPeriod;
@@ -118,10 +115,8 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	request.setAttribute("curricularYearList", anosCurriculares);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils
-		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
 	List<LabelValueBean> licenciaturas = new ArrayList<LabelValueBean>();
 
@@ -188,10 +183,8 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	request.setAttribute("anoCurricular", anoCurricular);
 	request.setAttribute("semestre", semestre);
 
-	Object argsLerLicenciaturas[] = { ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD))
-		.getInfoExecutionYear() };
-	List infoExecutionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
-		argsLerLicenciaturas);
+	List infoExecutionDegreeList = ReadExecutionDegreesByExecutionYear.run(((InfoExecutionPeriod) request
+		.getAttribute(SessionConstants.EXECUTION_PERIOD)).getInfoExecutionYear());
 	List<LabelValueBean> licenciaturas = new ArrayList<LabelValueBean>();
 	licenciaturas.add(new LabelValueBean("escolher", ""));
 	Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
@@ -263,15 +256,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	    executionPeriodID = getFromRequest("indice", request);
 	}
 	if (executionPeriodID != null) {
-	    try {
-		final Object args[] = { executionPeriodID };
-		infoExecutionPeriod = (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(
-			"ReadExecutionPeriodByOID", args);
-	    } catch (FenixServiceException e) {
-		errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-		saveErrors(request, errors);
-		return new ActionForward(mapping.getInput());
-	    }
+	    infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
 	}
 	request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
 	escolherContextoForm.set("indice", infoExecutionPeriod.getIdInternal());

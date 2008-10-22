@@ -8,10 +8,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -20,7 +21,8 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadActiveDegreeCurricularPlansByDegreeType extends FenixService {
 
-    public Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
+    @Service
+    public static Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
 
 	List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(degreeType,
 		DegreeCurricularPlanState.ACTIVE);

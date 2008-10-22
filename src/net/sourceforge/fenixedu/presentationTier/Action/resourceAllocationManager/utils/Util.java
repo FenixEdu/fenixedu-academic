@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
@@ -28,8 +29,7 @@ public class Util {
 	if (name != null)
 	    edificios.add(new LabelValueBean(name, value));
 
-	final Object args[] = {};
-	final List<InfoBuilding> infoBuildings = (List<InfoBuilding>) ServiceUtils.executeService("ReadBuildings", args);
+	final List<InfoBuilding> infoBuildings = (List<InfoBuilding>) ReadBuildings.run();
 	Collections.sort(infoBuildings, new BeanComparator("name"));
 
 	for (final Iterator<InfoBuilding> iterator = infoBuildings.iterator(); iterator.hasNext();) {

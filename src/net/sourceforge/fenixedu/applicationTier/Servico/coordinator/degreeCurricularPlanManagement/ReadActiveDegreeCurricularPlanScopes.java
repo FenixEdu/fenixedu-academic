@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCurricularPlanBaseService;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Fernanda Quitério 5/Nov/2003

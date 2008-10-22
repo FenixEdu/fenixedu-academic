@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
  * @author Luis Cruz
@@ -31,11 +31,11 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	final Person person = getRemoteUser(request).getPerson();
-	
+
 	if (person.getStudent().hasInquiriesToRespond()) {
 	    throw new InquiriesNotAnswered();
-	}	
-	
+	}
+
 	final SortedSet<StudentCurricularPlan> activeStudentCurricularPlans = person
 		.getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName();
 
@@ -101,7 +101,7 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     public class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends NotAuthorizedFilterException {
     }
-    
+
     public class InquiriesNotAnswered extends NotAuthorizedFilterException {
     }
 

@@ -5,9 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 /**
  * 
@@ -21,7 +22,7 @@ public class SchoolClass extends SchoolClass_Base {
 	public int compare(SchoolClass o1, SchoolClass o2) {
 	    return o1.getNome().compareTo(o2.getNome());
 	}
-	
+
     };
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")

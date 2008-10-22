@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByNumber;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -76,8 +77,9 @@ public class EditGrantProjectAction extends FenixDispatchAction {
 	    // Check if teacher exists
 	    InfoTeacher infoTeacher = null;
 	    if (infoGrantProject.getInfoResponsibleTeacher() != null) {
-		Object[] argsTeacher = { infoGrantProject.getInfoResponsibleTeacher().getTeacherNumber() };
-		infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber", argsTeacher);
+
+		infoTeacher = (InfoTeacher) ReadTeacherByNumber.run(infoGrantProject.getInfoResponsibleTeacher()
+			.getTeacherNumber());
 	    }
 
 	    if (infoTeacher == null) {

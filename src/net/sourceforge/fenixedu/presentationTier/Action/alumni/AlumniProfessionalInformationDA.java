@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.alumni;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.alumni.CreateProfessionalInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.alumni.DeleteProfessionalInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.alumni.EditProfessionalInformation;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -54,7 +56,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	    HttpServletResponse response) throws Exception {
 
 	try {
-	    executeService("CreateProfessionalInformation", new Object[] { getRenderedObject() });
+	    CreateProfessionalInformation.run((AlumniJobBean) getRenderedObject());
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("jobCreateBean", getObjectFromViewState("jobCreateBean"));
@@ -85,13 +87,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
     public ActionForward updateProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	try {
-	    executeService("EditProfessionalInformation", new Object[] { getRenderedObject() });
-	} catch (FenixServiceException e) {
-	    addActionMessage("error", request, e.getMessage());
-	    request.setAttribute("jobUpdateBean", getObjectFromViewState("jobUpdateBean"));
-	    return mapping.findForward("editProfessionalInformation");
-	}
+	EditProfessionalInformation.run((AlumniJobBean) getRenderedObject());
 
 	return innerProfessionalInformation(mapping, actionForm, request, response);
     }
@@ -100,11 +96,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	    HttpServletResponse response) throws Exception {
 
 	if (getFromRequest(request, "cancel") == null) {
-	    try {
-		executeService("DeleteProfessionalInformation", new Object[] { getJob(request) });
-	    } catch (FenixServiceException e) {
-		addActionMessage("error", request, e.getMessage());
-	    }
+	    DeleteProfessionalInformation.run(getJob(request));
 	}
 
 	return innerProfessionalInformation(mapping, actionForm, request, response);

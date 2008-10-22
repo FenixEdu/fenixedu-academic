@@ -26,13 +26,16 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Fernanda Quitério 01/07/2003
  * 
  */
 public class ReadStudentMarksByCurricularCourse extends FenixService {
 
-    public List run(Integer curricularCourseID, Integer studentNumber, String executionYear, Integer enrolmentId)
+    @Service
+    public static List run(Integer curricularCourseID, Integer studentNumber, String executionYear, Integer enrolmentId)
 	    throws FenixServiceException {
 
 	List enrolmentEvaluations = null;
@@ -84,7 +87,7 @@ public class ReadStudentMarksByCurricularCourse extends FenixService {
 	return infoSiteEnrolmentEvaluations;
     }
 
-    private Enrolment getEnrolment(Integer curricularCourseID, Integer studentNumber, String executionYear)
+    private static Enrolment getEnrolment(Integer curricularCourseID, Integer studentNumber, String executionYear)
 	    throws ExistingServiceException {
 	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 

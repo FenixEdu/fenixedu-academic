@@ -25,18 +25,20 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author T�nia & Alexandra
  */
 public class ReadTeacherExecutionCourseShiftsPercentage extends FenixService {
 
-    public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse)
-	    throws FenixServiceException {
+    @Service
+    public static TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher,
+	    InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 
 	TeacherExecutionCourseProfessorshipShiftsDTO result = new TeacherExecutionCourseProfessorshipShiftsDTO();
 
@@ -92,11 +94,11 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends FenixService {
 	return result;
     }
 
-    private Teacher readTeacher(InfoTeacher infoTeacher) {
+    private static Teacher readTeacher(InfoTeacher infoTeacher) {
 	return rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
     }
 
-    private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+    private static ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 	return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
     }
 }

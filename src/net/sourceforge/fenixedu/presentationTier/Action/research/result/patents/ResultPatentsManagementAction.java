@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.AddDefaultDocumentToResearchResult;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.DeleteResultPatent;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.UpdateMetaInformation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
 
@@ -43,9 +46,9 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
-	Object[] args = { patent };
+
 	try {
-	    executeService("AddDefaultDocumentToResearchResult", args);
+	    AddDefaultDocumentToResearchResult.run(patent);
 	} catch (FileManagerException e) {
 	    e.printStackTrace();
 	    addActionMessage(request, "label.communicationError");
@@ -91,7 +94,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	}
 
 	try {
-	    executeService("UpdateMetaInformation", new Object[] { patent });
+	    UpdateMetaInformation.run(patent);
 	} catch (FileManagerException e) {
 	    e.printStackTrace();
 	    addActionMessage(request, "label.communicationError");
@@ -123,8 +126,8 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 
 	if (getFromRequest(request, "confirm") != null) {
 	    try {
-		final Object[] args = { resultId };
-		executeService("DeleteResultPatent", args);
+
+		DeleteResultPatent.run(resultId);
 	    } catch (Exception e) {
 		final ActionForward defaultForward = management(mapping, form, request, response);
 		return processException(request, mapping, defaultForward, e);

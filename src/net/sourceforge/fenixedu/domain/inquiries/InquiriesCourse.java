@@ -7,8 +7,6 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import java.util.Collection;
 import java.util.Map;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
@@ -26,6 +24,8 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+
+import org.joda.time.DateTime;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira
@@ -139,7 +139,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 
 	return inquiriesCourse;
     }
-    
+
     public static InquiriesCourse makeNewNotAnswered(final InquiriesRegistry inquiriesRegistry,
 	    final InquiryNotAnsweredJustification justification, final String otherJustification) {
 	final InquiriesCourse inquiriesCourse = new InquiriesCourse(inquiriesRegistry);
@@ -147,10 +147,10 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 		.getInquiriesStudentExecutionPeriod(inquiriesRegistry.getExecutionPeriod());
 	inquiriesCourse.setWeeklyHoursSpentInClassesSeason(inquiriesStudentExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
 	inquiriesRegistry.setState(InquiriesRegistryState.NOT_ANSWERED);
-	
+
 	inquiriesCourse.setNotAnsweredJustification(justification);
 	inquiriesCourse.setNotAnsweredOtherJustification(otherJustification);
-	
+
 	return inquiriesCourse;
     }
 

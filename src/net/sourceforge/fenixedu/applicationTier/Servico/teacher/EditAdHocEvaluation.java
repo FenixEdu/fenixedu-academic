@@ -4,12 +4,13 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditAdHocEvaluation extends FenixService {
 
-    public void run(Integer executionCourseID, Integer adHocEvaluationID, String name, String description, GradeScale gradeScale)
-	    throws FenixServiceException {
+    @Service
+    public static void run(Integer executionCourseID, Integer adHocEvaluationID, String name, String description,
+	    GradeScale gradeScale) throws FenixServiceException {
 
 	AdHocEvaluation adHocEvaluation = (AdHocEvaluation) rootDomainObject.readEvaluationByOID(adHocEvaluationID);
 

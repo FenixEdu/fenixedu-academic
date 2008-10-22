@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.AcceptRegulation;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.RenewUnlimitedParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocumentState;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
@@ -19,7 +23,6 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFact
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.httpclient.HttpException;
 import org.apache.struts.action.ActionForm;
@@ -28,7 +31,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
@@ -41,8 +43,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 	ParkingParty parkingParty = userView.getPerson().getParkingParty();
 	if (parkingParty == null) {
-	    parkingParty = (ParkingParty) ServiceUtils
-		    .executeService("CreateParkingParty", new Object[] { userView.getPerson() });
+	    parkingParty = (ParkingParty) CreateParkingParty.run(userView.getPerson());
 	}
 	ParkingRequest parkingRequest = parkingParty.getFirstRequest();
 	boolean canEdit = true;
@@ -61,7 +62,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 	ParkingParty parkingParty = userView.getPerson().getParkingParty();
 	if (parkingParty != null) {
-	    ServiceUtils.executeService("AcceptRegulation", new Object[] { parkingParty });
+	    AcceptRegulation.run(parkingParty);
 	}
 	return prepareParking(mapping, actionForm, request, response);
     }
@@ -189,7 +190,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
 	fillInDocumentStates(parkingForm, parkingRequestFactoryEditor);
 	try {
-	    executeService("ExecuteFactoryMethod", new Object[] { parkingRequestFactoryEditor });
+	    ExecuteFactoryMethod.run(parkingRequestFactoryEditor);
 	} catch (FileManagerException ex) {
 	    ActionMessages actionMessages = getActionMessages(request);
 	    actionMessages.add("fileError", new ActionMessage(ex.getKey(), ex.getArgs()));
@@ -533,7 +534,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
 	fillInDocumentStates(parkingForm, parkingRequestFactoryCreator);
 	try {
-	    executeService("ExecuteFactoryMethod", new Object[] { parkingRequestFactoryCreator });
+	    ExecuteFactoryMethod.run(parkingRequestFactoryCreator);
 	} catch (FileManagerException ex) {
 	    ActionMessages actionMessages = getActionMessages(request);
 	    actionMessages.add("fileError", new ActionMessage(ex.getKey(), ex.getArgs()));
@@ -638,8 +639,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
     public ActionForward renewUnlimitedParkingRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	IUserView userView = UserView.getUser();
-	ServiceUtils.executeService("RenewUnlimitedParkingRequest", new Object[] {
-		userView.getPerson().getParkingParty().getFirstRequest(), Boolean.TRUE });
+	RenewUnlimitedParkingRequest.run(userView.getPerson().getParkingParty().getFirstRequest(), Boolean.TRUE);
 	request.setAttribute("renewUnlimitedParkingRequest.sucess", true);
 	return prepareParking(mapping, actionForm, request, response);
     }

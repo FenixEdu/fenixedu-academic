@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomsWithNoExamsInDayAndBeginning;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.Action;
@@ -47,8 +47,8 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 	time.set(Calendar.SECOND, 0);
 
 	// Chamar servico que vai ler salas vazias no dia escolhido
-	Object[] args = { date, time };
-	List infoRoomsList = (List) ServiceManagerServiceFactory.executeService("ReadRoomsWithNoExamsInDayAndBeginning", args);
+
+	List infoRoomsList = (List) ReadRoomsWithNoExamsInDayAndBeginning.run(date, time);
 
 	if (infoRoomsList != null && infoRoomsList.isEmpty()) {
 	    request.removeAttribute(SessionConstants.INFO_EMPTY_ROOMS_KEY);

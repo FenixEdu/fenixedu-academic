@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.CloseLogin;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Person;
@@ -80,8 +81,8 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 	// INA(NumeroDocumentoIdentificacao)
 	if (oldInfoPerson.getUsername().charAt(0) == 'B') {
 	    Person person = (Person) rootDomainObject.readPartyByOID(oldInfoPerson.getIdInternal());
-	    Object[] argsChangeUsername = { person.getLoginIdentification() };
-	    ServiceUtils.executeService("CloseLogin", argsChangeUsername);
+
+	    CloseLogin.run(person.getLoginIdentification());
 	}
 
 	// Change username of the new person if is a "INA***" to

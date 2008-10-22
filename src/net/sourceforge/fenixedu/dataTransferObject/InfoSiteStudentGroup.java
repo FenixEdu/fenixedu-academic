@@ -22,10 +22,11 @@ public class InfoSiteStudentGroup extends DataTranferObject implements ISiteComp
 	    final InfoStudentGroup g2 = o2.getInfoStudentGroup();
 	    return g1.getGroupNumber().compareTo(g2.getGroupNumber());
 	}
-	
+
     };
 
-    //Collections.sort(infoSiteStudentGroupsList, new BeanComparator("infoStudentGroup.groupNumber"));
+    // Collections.sort(infoSiteStudentGroupsList, new
+    // BeanComparator("infoStudentGroup.groupNumber"));
 
     private List infoSiteStudentInformationList;
 

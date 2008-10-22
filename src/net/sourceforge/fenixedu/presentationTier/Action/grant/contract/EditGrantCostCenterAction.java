@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByNumber;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -70,8 +71,9 @@ public class EditGrantCostCenterAction extends FenixDispatchAction {
 
 	    IUserView userView = UserView.getUser();
 	    // Check if teacher exists
-	    Object[] argTeacher = { infoGrantCostCenter.getInfoResponsibleTeacher().getTeacherNumber() };
-	    InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber", argTeacher);
+
+	    InfoTeacher infoTeacher = (InfoTeacher) ReadTeacherByNumber.run(infoGrantCostCenter.getInfoResponsibleTeacher()
+		    .getTeacherNumber());
 	    if (infoTeacher == null) {
 		return setError(request, mapping, "errors.grant.paymententity.unknownTeacher", null, infoGrantCostCenter
 			.getInfoResponsibleTeacher().getTeacherNumber());

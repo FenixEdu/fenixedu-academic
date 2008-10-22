@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveVigilantsFromGroup extends FenixService {
 
-    public List<Vigilant> run(Map<VigilantGroup, List<Vigilant>> vigilantsToRemove) {
+    @Service
+    public static List<Vigilant> run(Map<VigilantGroup, List<Vigilant>> vigilantsToRemove) {
 
 	List<Vigilant> unableToRemove = new ArrayList<Vigilant>();
 

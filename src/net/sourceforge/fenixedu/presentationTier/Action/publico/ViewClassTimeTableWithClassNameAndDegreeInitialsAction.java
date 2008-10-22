@@ -24,13 +24,12 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends FenixContextAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	super.execute(mapping, form, request, response);
 
 	String degreeInitials = request.getParameter("degreeInitials");
-	// String nameDegreeCurricularPlan =
-	// request.getParameter("nameDegreeCurricularPlan");
 	String classIdString = request.getParameter("classId");
 	if (degreeInitials == null && classIdString == null) {
 	    return mapping.getInputForward();
@@ -39,18 +38,6 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Feni
 	final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(Integer.valueOf(classIdString));
 	final InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreesByExecutionYearAndDegreeInitials
 		.getInfoExecutionDegree(schoolClass.getExecutionDegree());
-
-	// InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod)
-	// request
-	// .getAttribute(SessionConstants.EXECUTION_PERIOD);
-	//
-	// Object[] args = { infoExecutionPeriod.getInfoExecutionYear(),
-	// degreeInitials,
-	// nameDegreeCurricularPlan };
-	// InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree)
-	// ServiceUtils.executeService(
-	// null, "ReadExecutionDegreesByExecutionYearAndDegreeInitials", args);
-
 	request.setAttribute("exeDegree", infoExecutionDegree);
 	return mapping.findForward("Sucess");
     }

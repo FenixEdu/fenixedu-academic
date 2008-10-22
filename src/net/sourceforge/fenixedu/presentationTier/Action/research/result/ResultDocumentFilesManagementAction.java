@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultDocumentFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultDocumentFile;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 
@@ -37,8 +39,8 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
 	final ResultDocumentFileSubmissionBean bean = getRenderedObject("editBean");
 
 	try {
-	    final Object[] args = { bean };
-	    executeService("CreateResultDocumentFile", args);
+
+	    CreateResultDocumentFile.run(bean);
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);
@@ -53,8 +55,8 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
 	final Integer documentFileId = getRequestParameterAsInteger(request, "documentFileId");
 
 	try {
-	    final Object[] args = { documentFileId };
-	    executeService("DeleteResultDocumentFile", args);
+
+	    DeleteResultDocumentFile.run(documentFileId);
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);

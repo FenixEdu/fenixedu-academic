@@ -4,11 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInstitutionByName extends FenixService {
 
-    public Unit run(String institutionName) throws FenixServiceException {
+    @Service
+    public static Unit run(String institutionName) throws FenixServiceException {
 	return UnitUtils.readExternalInstitutionUnitByName(institutionName);
     }
 }

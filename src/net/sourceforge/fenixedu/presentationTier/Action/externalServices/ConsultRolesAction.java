@@ -7,6 +7,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.ConsultRoles;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.ConsultRoles.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -28,8 +29,8 @@ public class ConsultRolesAction extends FenixAction {
 	String message = "ko";
 
 	try {
-	    final Object[] args = new Object[] { host, ip, password, userUId };
-	    final Set<Role> roles = (Set<Role>) executeService("ConsultRoles", args);
+
+	    final Set<Role> roles = (Set<Role>) ConsultRoles.run(host, ip, password, userUId);
 	    final StringBuilder stringBuilder = new StringBuilder();
 	    if (roles == null) {
 		stringBuilder.append("User does not exist");

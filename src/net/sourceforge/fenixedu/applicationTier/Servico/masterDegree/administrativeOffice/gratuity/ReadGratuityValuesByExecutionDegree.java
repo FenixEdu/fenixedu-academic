@@ -11,16 +11,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadGratuityValuesByExecutionDegree extends FenixService {
 
-    public Object run(Integer executionDegreeID) throws FenixServiceException {
+    @Service
+    public static Object run(Integer executionDegreeID) throws FenixServiceException {
 	if (executionDegreeID == null) {
 	    throw new FenixServiceException("error.impossible.noGratuityValues");
 	}

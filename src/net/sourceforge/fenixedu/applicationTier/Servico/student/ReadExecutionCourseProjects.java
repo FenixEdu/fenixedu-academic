@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGroupin
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
@@ -26,7 +27,8 @@ import net.sourceforge.fenixedu.domain.Grouping;
  */
 public class ReadExecutionCourseProjects extends FenixService {
 
-    public ISiteComponent run(Integer executionCourseID, String userName) throws FenixServiceException {
+    @Service
+    public static ISiteComponent run(Integer executionCourseID, String userName) throws FenixServiceException {
 
 	InfoSiteProjects infoSiteProjects = null;
 

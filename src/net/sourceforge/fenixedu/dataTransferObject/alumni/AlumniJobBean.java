@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ContractType;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Job;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 
 import org.joda.time.LocalDate;
 

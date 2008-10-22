@@ -11,10 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentEnrolmentEvaluation extends FenixService {
 
-    public InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) {
+    @Service
+    public static InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) {
 
 	final EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(studentEvaluationCode);
 	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(enrolmentEvaluation.getPersonResponsibleForGrade()

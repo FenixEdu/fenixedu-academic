@@ -10,10 +10,11 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.User;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ConsultRoles extends FenixService {
 
-    public class NotAuthorizedException extends FenixServiceException {
+    public static class NotAuthorizedException extends FenixServiceException {
     }
 
     private static final Set<String> allowedHosts = new HashSet<String>();
@@ -34,7 +35,8 @@ public class ConsultRoles extends FenixService {
 		&& (allowedHosts.contains(host) || allowedHosts.contains(ip));
     }
 
-    public Set<Role> run(final String host, final String ip, final String password, final String userUId)
+    @Service
+    public static Set<Role> run(final String host, final String ip, final String password, final String userUId)
 	    throws FenixServiceException {
 	if (isAllowed(host, ip, password)) {
 	    final Login login = Login.readLoginByUsername(userUId);

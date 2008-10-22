@@ -36,13 +36,13 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 	this.setState(executionCourse.getAvailableForInquiries() ? InquiriesRegistryState.ANSWER_LATER
 		: InquiriesRegistryState.UNAVAILABLE);
     }
-    
+
     public InquiriesRegistry(ExecutionCourse executionCourse, CurricularCourse curricularCourse,
 	    ExecutionSemester executionSemester, Registration registration) {
 	this(executionCourse, executionSemester, registration);
 	if (curricularCourse == null) {
 	    throw new NullArgumentException("CurricularCourse should not be null!");
-	}	
+	}
 	this.setCurricularCourse(curricularCourse);
     }
 
@@ -75,9 +75,9 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
     public boolean isNotAvailableToInquiries() {
 	return !getExecutionCourse().getAvailableForInquiries();
     }
-    
+
     public boolean isOpenToAnswer() {
-	
+
 	if (isAnswered() || isNotAnswered()) {
 	    return false;
 	}
@@ -89,7 +89,7 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 	if (getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() && isNotAvailableToInquiries()) {
 	    return false;
 	}
-	
+
 	return true;
     }
 

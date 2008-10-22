@@ -194,11 +194,11 @@ public class ThesisBean implements Serializable {
     }
 
     public Thesis getThesis() {
-        return thesis == null ? null : thesis.getObject();
+	return thesis == null ? null : thesis.getObject();
     }
 
     public void setThesis(final Thesis thesis) {
-        this.thesis = thesis == null ? null : new DomainReference<Thesis>(thesis);
+	this.thesis = thesis == null ? null : new DomainReference<Thesis>(thesis);
     }
 
 }

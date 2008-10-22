@@ -231,7 +231,7 @@ public abstract class Container extends Container_Base {
 	if (policy != null) {
 	    return policy;
 	}
-	//Collection<Node> nodes = getOrderedChildrenNodes();
+	// Collection<Node> nodes = getOrderedChildrenNodes();
 	Collection<Node> nodes = getChildrenSet();
 	return nodes.isEmpty() ? null : nodes.iterator().next().getChild().getAvailabilityPolicy();
     }

@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateThesisDissertationFile extends CreateThesisFile {
 

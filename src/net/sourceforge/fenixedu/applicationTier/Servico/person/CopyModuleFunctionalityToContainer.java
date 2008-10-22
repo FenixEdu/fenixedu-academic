@@ -10,14 +10,16 @@ import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailabili
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CopyModuleFunctionalityToContainer extends FenixService {
 
-    public void run(Module module, Container container) {
+    @Service
+    public static void run(Module module, Container container) {
 	process(module, container);
     }
 
-    private void process(Module module, Container container) {
+    private static void process(Module module, Container container) {
 	mimicPolicy(module.getAvailabilityPolicy(), container);
 	for (Functionality functionality : module.getFunctionalities()) {
 	    final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(container, functionality);
@@ -29,7 +31,7 @@ public class CopyModuleFunctionalityToContainer extends FenixService {
 	}
     }
 
-    private void mimicPolicy(AvailabilityPolicy availabilityPolicy, Content content) {
+    private static void mimicPolicy(AvailabilityPolicy availabilityPolicy, Content content) {
 	if (availabilityPolicy instanceof GroupAvailability) {
 	    new GroupAvailability(content, ((GroupAvailability) availabilityPolicy).getTargetGroup());
 	} else if (availabilityPolicy instanceof ExpressionGroupAvailability) {

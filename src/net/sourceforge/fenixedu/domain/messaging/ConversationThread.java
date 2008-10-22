@@ -10,9 +10,10 @@ import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
 import net.sourceforge.fenixedu.domain.contents.IDateContent;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ConversationThread extends ConversationThread_Base implements IDateContent {
 

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
@@ -549,7 +550,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    saveErrorMessage(request, "noVehicles", "error.parkingParty.no.vehicles");
 	    return prepareEditParkingParty(mapping, actionForm, request, response);
 	}
-	executeService("ExecuteFactoryMethod", new Object[] { parkingPartyBean });
+	ExecuteFactoryMethod.run(parkingPartyBean);
 	request.setAttribute("partyID", parkingPartyBean.getParkingParty().getParty().getIdInternal());
 
 	return showParkingPartyRequests(mapping, actionForm, request, response);

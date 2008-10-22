@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
@@ -26,7 +26,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixService {
 
-    public List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException {
+    @Service
+    public static List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException {
 	final List infoExecutionCourses = new ArrayList();
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
@@ -52,7 +53,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixServi
 	return infoExecutionCourses;
     }
 
-    private ExecutionDegree findExecutionDegree(final ExecutionSemester executionSemester, final Degree degree) {
+    private static ExecutionDegree findExecutionDegree(final ExecutionSemester executionSemester, final Degree degree) {
 	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
@@ -63,7 +64,8 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixServi
 	return null;
     }
 
-    private boolean satisfiesCriteria(final ExecutionCourse executionCourse, final DegreeCurricularPlan degreeCurricularPlan) {
+    private static boolean satisfiesCriteria(final ExecutionCourse executionCourse,
+	    final DegreeCurricularPlan degreeCurricularPlan) {
 	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
 	    if (curricularCourse.getDegreeCurricularPlan() == degreeCurricularPlan) {
 		return true;

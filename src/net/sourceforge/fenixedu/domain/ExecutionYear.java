@@ -351,9 +351,9 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     static public List<ExecutionYear> readExecutionYears(ExecutionYear startYear, ExecutionYear endYear) {
 	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
 	result.add(startYear);
-	
+
 	ExecutionYear year = startYear.getNextExecutionYear();
-	while(year.isBeforeOrEquals(endYear)) {
+	while (year.isBeforeOrEquals(endYear)) {
 	    result.add(year);
 	    year = startYear.getNextExecutionYear();
 	}

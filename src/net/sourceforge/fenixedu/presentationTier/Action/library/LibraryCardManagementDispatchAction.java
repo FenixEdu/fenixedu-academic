@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardSearch;
@@ -479,14 +480,15 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	}
 	ExternalContract externalContract = null;
 	if (externalPersonBean.getUnit() == null) {
-	    Object[] args = { externalPersonBean.getName(), externalPersonBean.getUnitName(), externalPersonBean.getPhone(),
-		    externalPersonBean.getMobile(), externalPersonBean.getEmail() };
-	    externalContract = (ExternalContract) executeService("InsertExternalPerson", args);
+
+	    externalContract = (ExternalContract) InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean
+		    .getUnitName(), externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean.getEmail());
 	}
 	if (externalPersonBean.getUnit() != null) {
-	    Object[] args = { externalPersonBean.getName(), externalPersonBean.getUnit().getIdInternal(),
-		    externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean.getEmail() };
-	    externalContract = (ExternalContract) executeService("InsertExternalPerson", args);
+
+	    externalContract = (ExternalContract) InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean
+		    .getUnit().getIdInternal(), externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean
+		    .getEmail());
 	}
 
 	request.setAttribute("personID", externalContract.getPerson().getIdInternal());

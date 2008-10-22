@@ -21,8 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AttributeFinalDegreeWork;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteFinalDegreeWorkProposal;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteGroupProposal;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteGroupProposalAttribution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegreesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -97,9 +102,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	final IUserView userView = UserView.getUser();
 
 	final Integer degreeCurricularPlanOID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-	final Object[] args = { degreeCurricularPlanOID };
-	final List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ServiceUtils.executeService(
-		"ReadExecutionDegreesByDegreeCurricularPlan", args);
+
+	final List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ReadExecutionDegreesByDegreeCurricularPlan
+		.run(degreeCurricularPlanOID);
 	request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
 	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
@@ -152,7 +157,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	final String proposalIdString = request.getParameter("finalDegreeWorkProposalOID");
 	final Proposal proposal = rootDomainObject.readProposalByOID(Integer.valueOf(proposalIdString));
-	executeService("DeleteFinalDegreeWorkProposal", new Object[] { proposal });
+	DeleteFinalDegreeWorkProposal.run(proposal);
 	return prepare(mapping, form, request, response);
     }
 
@@ -160,7 +165,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	final String groupProposalIdString = request.getParameter("groupProposal");
 	final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(Integer.valueOf(groupProposalIdString));
-	executeService("DeleteGroupProposalAttribution", new Object[] { groupProposal });
+	DeleteGroupProposalAttribution.run(groupProposal);
 	return prepare(mapping, form, request, response);
     }
 
@@ -168,7 +173,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	final String groupProposalIdString = request.getParameter("groupProposal");
 	final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(Integer.valueOf(groupProposalIdString));
-	executeService("DeleteGroupProposal", new Object[] { groupProposal });
+	DeleteGroupProposal.run(groupProposal);
 	return prepare(mapping, form, request, response);
     }
 
@@ -1063,8 +1068,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	if (selectedGroupProposal != null && !selectedGroupProposal.equals("") && StringUtils.isNumeric(selectedGroupProposal)) {
 	    IUserView userView = UserView.getUser();
 
-	    Object args[] = { Integer.valueOf(selectedGroupProposal) };
-	    ServiceUtils.executeService("AttributeFinalDegreeWork", args);
+	    AttributeFinalDegreeWork.run(Integer.valueOf(selectedGroupProposal));
 	}
 
 	return mapping.findForward("prepare-show-final-degree-work-proposal");

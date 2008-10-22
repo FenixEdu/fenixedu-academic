@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.apache.log4j.Logger;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CheckIsAliveService extends FenixService {
 
     private static final Logger logger = Logger.getLogger(CheckIsAliveService.class);
@@ -24,7 +26,8 @@ public class CheckIsAliveService extends FenixService {
 	}
     }
 
-    public Boolean run() {
+    @Service
+    public static Boolean run() {
 	try {
 	    if (CHECK_DB) {
 		checkFenixDatabaseOps();
@@ -39,7 +42,7 @@ public class CheckIsAliveService extends FenixService {
 	}
     }
 
-    private void checkFenixDatabaseOps() {
+    private static void checkFenixDatabaseOps() {
 
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 

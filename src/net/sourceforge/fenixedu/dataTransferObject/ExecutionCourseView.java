@@ -24,7 +24,7 @@ public class ExecutionCourseView {
 	public int compare(ExecutionCourseView o1, ExecutionCourseView o2) {
 	    return o1.getExecutionCourseName().compareTo(o2.getExecutionCourseName());
 	}
-	
+
     };
 
     private final DomainReference<ExecutionCourse> executionCourseDomainReference;

@@ -177,10 +177,10 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
     }
 
     private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception { // infoGratuitySituation
-												   // .
-												   // getRemainingValue
-												   // (
-												   // )
+	// .
+	// getRemainingValue
+	// (
+	// )
 	// contains the total value that
 	// a student has to
 

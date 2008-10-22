@@ -6,10 +6,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRenderer.DateTimeConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
@@ -122,7 +120,7 @@ public class Tutorship extends Tutorship_Base {
 	}
 	return tutorships;
     }
-    
+
     public List<ExecutionYear> getCoveredExecutionYears() {
 	return ExecutionYear.readExecutionYears(getStartDateExecutionYear(), getEndDateExecutionYear());
     }

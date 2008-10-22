@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.degree;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -14,7 +14,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadNumerusClausus extends FenixService {
 
-    public Integer run(Integer degreeCurricularPlanID) throws NonExistingServiceException {
+    @Service
+    public static Integer run(Integer degreeCurricularPlanID) throws NonExistingServiceException {
 
 	DegreeCurricularPlan degreeCurricularPlan = null;
 

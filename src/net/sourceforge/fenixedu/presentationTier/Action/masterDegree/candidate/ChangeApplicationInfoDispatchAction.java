@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
@@ -25,7 +27,6 @@ import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -184,7 +185,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 	// Get List of available Countries
 	List<InfoCountry> country = null;
 	try {
-	    country = (ArrayList) ServiceManagerServiceFactory.executeService("ReadAllCountries", null);
+	    country = (ArrayList) ReadAllCountries.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -220,13 +221,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
     private InfoMasterDegreeCandidate readMasterDegreeCandidate(IUserView userView, Integer candidateID)
 	    throws FenixFilterException, FenixActionException {
 	InfoMasterDegreeCandidate masterDegreeCandidate = null;
-	try {
-	    Object args[] = { candidateID };
-	    masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceUtils
-		    .executeService("ReadMasterDegreeCandidateByID", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
 	return masterDegreeCandidate;
     }
 

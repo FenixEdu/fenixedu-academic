@@ -6,9 +6,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.tests.NewTest;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class GetStudentTest extends FenixService {
-    public NewTest run(Person person, NewTestGroup testGroup) throws FenixServiceException, ExcepcaoPersistencia {
+    @Service
+    public static NewTest run(Person person, NewTestGroup testGroup) throws FenixServiceException, ExcepcaoPersistencia {
 	return testGroup.getOrAssignTest(person);
     }
 }

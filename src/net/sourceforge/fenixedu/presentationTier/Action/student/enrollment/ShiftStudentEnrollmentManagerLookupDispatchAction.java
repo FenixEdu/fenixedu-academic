@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -148,8 +149,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	request.setAttribute("infoClasslessons", infoClasslessons);
 	request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
-	final List infoLessons = (List) ServiceManagerServiceFactory.executeService("ReadStudentTimeTable",
-		new Object[] { registration });
+	final List infoLessons = (List) ReadStudentTimeTable.run(registration);
 
 	request.setAttribute("infoLessons", infoLessons);
 	request.setAttribute("infoLessonsEndTime", Integer.valueOf(getEndTime(infoLessons)));

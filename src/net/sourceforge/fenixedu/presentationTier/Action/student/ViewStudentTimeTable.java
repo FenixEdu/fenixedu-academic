@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -48,7 +48,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     private ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	List<InfoLesson> infoLessons = (List) ServiceUtils.executeService("ReadStudentTimeTable", new Object[] { registration });
+	List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(registration);
 
 	request.setAttribute("infoLessons", infoLessons);
 	return mapping.findForward("showTimeTable");

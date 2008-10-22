@@ -9,10 +9,12 @@ import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class MakeThesisDocumentsAvailable extends FenixService {
 
-    public void run(Thesis thesis) {
+    @Service
+    public static void run(Thesis thesis) {
 	final ThesisFile thesisFile = thesis.getDissertation();
 
 	RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);

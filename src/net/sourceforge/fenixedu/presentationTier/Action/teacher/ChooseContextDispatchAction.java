@@ -18,7 +18,9 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -99,10 +101,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, anosCurriculares);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils
-		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
 	ArrayList licenciaturas = new ArrayList();
 
@@ -168,10 +168,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	request.setAttribute("curricularYearList", anosCurriculares);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils
-		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
 	ArrayList licenciaturas = new ArrayList();
 
@@ -222,10 +220,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	request.setAttribute("anoCurricular", anoCurricular);
 	request.setAttribute("semestre", semestre);
 
-	Object argsLerLicenciaturas[] = { ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD))
-		.getInfoExecutionYear() };
-	List infoExecutionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
-		argsLerLicenciaturas);
+	List infoExecutionDegreeList = ReadExecutionDegreesByExecutionYear.run(((InfoExecutionPeriod) request
+		.getAttribute(SessionConstants.EXECUTION_PERIOD)).getInfoExecutionYear());
 	ArrayList licenciaturas = new ArrayList();
 	licenciaturas.add(new LabelValueBean("escolher", ""));
 	Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
@@ -281,15 +277,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	request.setAttribute("curYear", anoCurricular);
 	request.setAttribute("semester", semestre);
 
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
-
 	List infoExecutionDegreeList;
-	try {
-	    infoExecutionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
-		    argsLerLicenciaturas);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoExecutionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 	Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index.intValue());
@@ -358,7 +347,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 		.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 	if (infoExecutionPeriod == null) {
 	    IUserView userView = UserView.getUser();
-	    infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod", new Object[0]);
+	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 
 	    request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 	}

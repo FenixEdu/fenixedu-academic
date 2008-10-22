@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByDegreeAndExecutionPeriodId;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAllExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -54,21 +58,17 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
     protected void getExecutionPeriod(HttpServletRequest request, Integer executionPeriodId) throws FenixServiceException,
 	    FenixFilterException {
-	Object[] args = { executionPeriodId };
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID",
-		args);
+	InfoExecutionPeriod infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodId);
 
 	request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
     }
 
     protected void getSourceAndDestinationDegrees(HttpServletRequest request, Integer sourceDegreeId, Integer destinationDegreeId)
 	    throws FenixServiceException, FenixFilterException {
-	Object[] args1 = { sourceDegreeId };
-	Object[] args2 = { destinationDegreeId };
 
-	InfoDegree sourceInfoDegree = (InfoDegree) ServiceUtils.executeService("ReadDegreeByOID", args1);
-	InfoDegree destinationInfoDegree = (InfoDegree) ServiceUtils.executeService("ReadDegreeByOID", args2);
+	InfoDegree sourceInfoDegree = ReadDegreeByOID.run(sourceDegreeId);
+	InfoDegree destinationInfoDegree = ReadDegreeByOID.run(destinationDegreeId);
 
 	request.setAttribute("sourceInfoDegree", sourceInfoDegree);
 	request.setAttribute("destinationInfoDegree", destinationInfoDegree);
@@ -76,12 +76,10 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
     protected void getSourceAndDestinationExecutionCourses(HttpServletRequest request, Integer sourceDegreeId,
 	    Integer destinationDegreeId, Integer executionPeriodId) throws FenixServiceException, FenixFilterException {
-	Object[] args1 = { destinationDegreeId, executionPeriodId };
-	Object[] args2 = { sourceDegreeId, executionPeriodId };
-	List destinationExecutionCourses = (List) ServiceUtils.executeService("ReadExecutionCoursesByDegreeAndExecutionPeriodId",
-		args1);
-	List sourceExecutionCourses = (List) ServiceUtils.executeService("ReadExecutionCoursesByDegreeAndExecutionPeriodId",
-		args2);
+
+	List destinationExecutionCourses = ReadExecutionCoursesByDegreeAndExecutionPeriodId.run(destinationDegreeId,
+		executionPeriodId);
+	List sourceExecutionCourses = ReadExecutionCoursesByDegreeAndExecutionPeriodId.run(sourceDegreeId, executionPeriodId);
 
 	Collator collator = Collator.getInstance();
 	Collections.sort(destinationExecutionCourses, new BeanComparator("nome", collator));
@@ -96,7 +94,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	degrees.addAll(Degree.readNotEmptyDegrees());
 
-	List executionPeriods = (List) ServiceUtils.executeService("ReadAllExecutionPeriods", new Object[0]);
+	List executionPeriods = ReadAllExecutionPeriods.run();
 
 	ComparatorChain comparator = new ComparatorChain();
 	comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);

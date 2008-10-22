@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInquiriesRegistriesByStudent extends FenixService {
 
-    public List<InfoInquiriesRegistry> run(Registration registration) throws FenixServiceException, NoSuchMethodException,
+    @Service
+    public static List<InfoInquiriesRegistry> run(Registration registration) throws FenixServiceException, NoSuchMethodException,
 	    InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
 	if (registration == null) {

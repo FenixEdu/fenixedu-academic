@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultUnitAssociation;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 
@@ -39,8 +41,8 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	bean.setSuggestion(true);
 
 	try {
-	    final Object[] args = { bean };
-	    executeService("CreateResultUnitAssociation", args);
+
+	    CreateResultUnitAssociation.run(bean);
 	} catch (FileManagerException e) {
 	    e.printStackTrace();
 	    addActionMessage(request, "label.communicationError");
@@ -80,8 +82,8 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	final ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) getRenderedObject("unitBean");
 	bean.setSuggestion(false);
 	try {
-	    final Object[] args = { bean };
-	    executeService("CreateResultUnitAssociation", args);
+
+	    CreateResultUnitAssociation.run(bean);
 	} catch (FileManagerException e) {
 	    e.printStackTrace();
 	    addActionMessage(request, "label.communicationError");
@@ -97,8 +99,8 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	final Integer associationId = getRequestParameterAsInteger(request, "associationId");
 
 	try {
-	    final Object[] args = { associationId };
-	    executeService("DeleteResultUnitAssociation", args);
+
+	    DeleteResultUnitAssociation.run(associationId);
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);

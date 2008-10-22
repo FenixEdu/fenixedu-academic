@@ -13,6 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExamCoordinatorsToVigilantGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddIncompatiblePerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddVigilantsToGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateVigilantGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteVigilantGroupByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExamCoordinatorRole;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExamCoordinatorsFromVigilantGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveIncompatiblePerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveVigilantsFromGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.UpdateVigilantGroup;
 import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyView;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -135,8 +145,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 	Vigilant vigilant = (Vigilant) RootDomainObject.readDomainObjectByOID(Vigilant.class, idInternal);
 
-	Object[] args = { vigilant };
-	executeService("RemoveIncompatiblePerson", args);
+	RemoveIncompatiblePerson.run(vigilant);
 
 	String gid = request.getParameter("gid");
 	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
@@ -202,10 +211,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 	VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("createVigilantGroup").getMetaObject().getObject();
 
-	Object[] args = { bean.getName(), bean.getUnit(), bean.getConvokeStrategy(), bean.getContactEmail(), bean.getRulesLink(),
-		bean.getBeginFirstUnavailablePeriod(), bean.getEndFirstUnavailablePeriod(),
-		bean.getBeginSecondUnavailablePeriod(), bean.getEndSecondUnavailablePeriod() };
-	executeService("CreateVigilantGroup", args);
+	CreateVigilantGroup.run(bean.getName(), bean.getUnit(), bean.getConvokeStrategy(), bean.getContactEmail(), bean
+		.getRulesLink(), bean.getBeginFirstUnavailablePeriod(), bean.getEndFirstUnavailablePeriod(), bean
+		.getBeginSecondUnavailablePeriod(), bean.getEndSecondUnavailablePeriod());
 
 	prepareManagementBean(request, ExecutionYear.readCurrentExecutionYear());
 
@@ -248,12 +256,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 	VigilantGroup vigilantGroup = beanWithName.getSelectedVigilantGroup();
 
-	Object[] args = { vigilantGroup, beanWithName.getName(), beanWithName.getConvokeStrategy(),
-		beanWithName.getContactEmail(), beanWithName.getEmailPrefix(), beanWithName.getRulesLink(),
-		beanWithFirstPeriod.getBeginFirstUnavailablePeriod(), beanWithFirstPeriod.getEndFirstUnavailablePeriod(),
-		beanWithSecondPeriod.getBeginSecondUnavailablePeriod(), beanWithSecondPeriod.getEndSecondUnavailablePeriod() };
-
-	executeService("UpdateVigilantGroup", args);
+	UpdateVigilantGroup.run(vigilantGroup, beanWithName.getName(), beanWithName.getConvokeStrategy(), beanWithName
+		.getContactEmail(), beanWithName.getEmailPrefix(), beanWithName.getRulesLink(), beanWithFirstPeriod
+		.getBeginFirstUnavailablePeriod(), beanWithFirstPeriod.getEndFirstUnavailablePeriod(), beanWithSecondPeriod
+		.getBeginSecondUnavailablePeriod(), beanWithSecondPeriod.getEndSecondUnavailablePeriod());
 
 	prepareManagementBean(request, ExecutionYear.readCurrentExecutionYear());
 
@@ -266,9 +272,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	String oid = request.getParameter("oid");
 	Integer idInternal = Integer.valueOf(oid);
 
-	Object[] args = { idInternal };
 	try {
-	    executeService("DeleteVigilantGroupByOID", args);
+	    DeleteVigilantGroupByOID.run(idInternal);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -304,8 +309,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	List<ExamCoordinator> coordinators = bean.getExamCoordinators();
 	VigilantGroup group = bean.getSelectedVigilantGroup();
 
-	Object[] args = { coordinators, group };
-	executeService("RemoveExamCoordinatorsFromVigilantGroup", args);
+	RemoveExamCoordinatorsFromVigilantGroup.run(coordinators, group);
 
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("removeCoordinators");
@@ -318,8 +322,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	List<ExamCoordinator> coordinators = bean.getExamCoordinators();
 	VigilantGroup group = bean.getSelectedVigilantGroup();
 
-	Object[] args = { coordinators, group };
-	executeService("AddExamCoordinatorsToVigilantGroup", args);
+	AddExamCoordinatorsToVigilantGroup.run(coordinators, group);
 
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("addCoordinators");
@@ -332,9 +335,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	Person person = getLoggedPerson(request);
 	ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
-	Object[] args = { person };
+
 	if (coordinator == null) {
-	    executeService("RemoveExamCoordinatorRole", args);
+	    RemoveExamCoordinatorRole.run(person);
 	}
 	return mapping.findForward("blank");
     }
@@ -389,8 +392,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer
 		.valueOf(groupId));
 
-	Object[] args = { vigilant, person };
-	executeService("AddIncompatiblePerson", args);
+	AddIncompatiblePerson.run(vigilant, person);
 
 	VigilantGroupBean bean = prepareBean(getLoggedPerson(request));
 
@@ -553,11 +555,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	    }
 	}
 
-	Object[] args = { peopleToAdd };
-	executeService("AddVigilantsToGroup", args);
+	AddVigilantsToGroup.run(peopleToAdd);
 
-	Object[] args2 = { vigilantsToRemove };
-	List<Vigilant> vigilantsThatCouldNotBeRemoved = (List<Vigilant>) executeService("RemoveVigilantsFromGroup", args2);
+	List<Vigilant> vigilantsThatCouldNotBeRemoved = (List<Vigilant>) RemoveVigilantsFromGroup.run(vigilantsToRemove);
 
 	request.setAttribute("vigilants", vigilantsThatCouldNotBeRemoved);
 	RenderUtils.invalidateViewState("bounds");
@@ -582,8 +582,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	    for (VigilantGroup group : groups) {
 		personToAdd.put(group, people);
 	    }
-	    Object[] args = { personToAdd };
-	    executeService("AddVigilantsToGroup", args);
+
+	    AddVigilantsToGroup.run(personToAdd);
 	} else {
 	    addActionMessage(request, "label.vigilancy.inexistingUsername");
 	}

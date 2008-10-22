@@ -919,7 +919,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      * of the execution year.
      * 
      * @param person
-     *                the person to check
+     *            the person to check
      * @return <code>true</code> if the person was a coordinator for a certain
      *         execution degree
      */
@@ -1452,5 +1452,4 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public boolean canCreateGratuityEvent() {
 	return true;
     }
-
 }

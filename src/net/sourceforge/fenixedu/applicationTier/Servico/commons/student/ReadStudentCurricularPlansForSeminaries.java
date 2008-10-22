@@ -11,18 +11,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentCurricularPlansForSeminaries extends FenixService {
 
-    public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
+    @Service
+    public static List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
 	Registration registration = Registration.readByUsername(userView.getUtilizador());
 	List<StudentCurricularPlan> studentCurricularPlans = null;
 	if (registration != null) {

@@ -4,10 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularYearByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -44,18 +45,14 @@ public class ChooseExamsContextDA extends FenixContextDispatchAction {
 	/* Determine Selected Curricular Year */
 	Integer anoCurricular = new Integer((String) chooseExamsContextForm.get("curricularYear"));
 
-	Object argsReadCurricularYearByOID[] = { anoCurricular };
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService("ReadCurricularYearByOID",
-		argsReadCurricularYearByOID);
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ReadCurricularYearByOID.run(anoCurricular);
 
 	request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
 
 	/* Determine Selected Execution Degree */
 	Integer executionDegreeOID = new Integer((String) chooseExamsContextForm.get("executionDegreeOID"));
 
-	Object argsReadExecutionDegreeByOID[] = { executionDegreeOID };
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService("ReadExecutionDegreeByOID",
-		argsReadExecutionDegreeByOID);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ReadExecutionDegreeByOID.run(executionDegreeOID);
 
 	if (infoExecutionDegree == null) {
 	    ActionErrors actionErrors = new ActionErrors();

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.support;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
 
 public class SupportException extends SupportException_Base {

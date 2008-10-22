@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.Custodian;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadNumberCachedItems;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.tools.Profiler;
 
@@ -45,7 +45,7 @@ public class ManageCacheDA extends FenixDispatchAction {
 
 	// IUserView userView = UserView.getUser();
 
-	Integer numberCachedItems = (Integer) ServiceUtils.executeService("ReadNumberCachedItems", null);
+	Integer numberCachedItems = (Integer) ReadNumberCachedItems.run();
 
 	request.setAttribute(SessionConstants.NUMBER_CACHED_ITEMS, numberCachedItems);
 
@@ -90,7 +90,7 @@ public class ManageCacheDA extends FenixDispatchAction {
 		} else if (secondRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
 		    numberOfReadDomainObjects += loadDomainObjects(firstRole);
 		}
-		final Integer numberCachedItems = (Integer) ServiceUtils.executeService("ReadNumberCachedItems", null);
+		final Integer numberCachedItems = (Integer) ReadNumberCachedItems.run();
 		final Runtime runtime = Runtime.getRuntime();
 		System.out.println("   total read: " + numberOfReadDomainObjects + " in cache: " + numberCachedItems
 			+ " free memory: " + runtime.freeMemory() + " total memory: " + runtime.totalMemory() + " max memory: "

@@ -4,11 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationSearchBean;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -46,8 +46,8 @@ public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
-	ExtraWorkAuthorization extraWorkAuthorization = (ExtraWorkAuthorization) ServiceUtils.executeService(
-		"ExecuteFactoryMethod", new Object[] { extraWorkAuthorizationFactory });
+	ExtraWorkAuthorization extraWorkAuthorization = (ExtraWorkAuthorization) ExecuteFactoryMethod
+		.run(extraWorkAuthorizationFactory);
 	request.setAttribute("authorizationID", extraWorkAuthorization.getIdInternal());
 
 	return viewExtraWorkAuthorization(mapping, form, request, response);
@@ -113,7 +113,7 @@ public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
-	ServiceUtils.executeService("ExecuteFactoryMethod", new Object[] { extraWorkAuthorizationFactory });
+	ExecuteFactoryMethod.run(extraWorkAuthorizationFactory);
 	request.setAttribute("authorizationID", extraWorkAuthorizationFactory.getExtraWorkAuthorization().getIdInternal());
 
 	return viewExtraWorkAuthorization(mapping, form, request, response);

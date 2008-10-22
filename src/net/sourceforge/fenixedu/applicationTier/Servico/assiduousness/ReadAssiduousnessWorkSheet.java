@@ -29,11 +29,13 @@ import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ReadAssiduousnessWorkSheet extends FenixService {
 
-    public EmployeeWorkSheet run(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
+    @Service
+    public static EmployeeWorkSheet run(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
 	if (assiduousness == null) {
 	    return null;
 	}
@@ -54,7 +56,8 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, endDate, new LocalDate());
     }
 
-    private EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
+    private static EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness, LocalDate beginDate,
+	    LocalDate endDate) {
 	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
 	employeeWorkSheet.setEmployee(assiduousness.getEmployee());
 	Unit unit = assiduousness.getEmployee().getLastWorkingPlace(new YearMonthDay(beginDate), new YearMonthDay(endDate));
@@ -72,7 +75,8 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	return employeeWorkSheet;
     }
 
-    public EmployeeWorkSheet run(Assiduousness assiduousness, HashMap<LocalDate, WorkSchedule> workScheduleMap,
+    @Service
+    public static EmployeeWorkSheet run(Assiduousness assiduousness, HashMap<LocalDate, WorkSchedule> workScheduleMap,
 	    HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap, HashMap<LocalDate, List<Leave>> leavesMap,
 	    LocalDate beginDate, LocalDate endDate, LocalDate today) {
 	if (assiduousness == null) {
@@ -85,9 +89,9 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, lastActiveStatus, today);
     }
 
-    private EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness, HashMap<LocalDate, WorkSchedule> workScheduleMap,
-	    HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap, HashMap<LocalDate, List<Leave>> leavesMap,
-	    LocalDate beginDate, LocalDate endDate, LocalDate today) {
+    private static EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness,
+	    HashMap<LocalDate, WorkSchedule> workScheduleMap, HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap,
+	    HashMap<LocalDate, List<Leave>> leavesMap, LocalDate beginDate, LocalDate endDate, LocalDate today) {
 	final List<WorkDaySheet> workSheet = new ArrayList<WorkDaySheet>();
 	Duration totalBalance = Duration.ZERO;
 	Duration totalUnjustified = Duration.ZERO;
@@ -196,7 +200,7 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	return employeeWorkSheet;
     }
 
-    private DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
+    private static DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
 	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay);
 	WorkSchedule endWorkSchedule = workScheduleMap.get(endDate);
 	if (endWorkSchedule != null) {
@@ -209,7 +213,7 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	return end;
     }
 
-    private DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
+    private static DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
 	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {

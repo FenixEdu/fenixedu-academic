@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInform
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -18,7 +19,8 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
  */
 public class UpdatePersonInformationFromCitizenCard extends FenixService {
 
-    public void run(PersonInformationFromUniqueCardDTO personDTO) {
+    @Service
+    public static void run(PersonInformationFromUniqueCardDTO personDTO) {
 	Collection<Person> persons = Person.readByDocumentIdNumber(personDTO.getDocumentIdNumber());
 	if (persons.isEmpty() || persons.size() > 1) {
 	    throw new DomainException("UpdatePersonInformationFromCitizenCard.error.personNotFound");

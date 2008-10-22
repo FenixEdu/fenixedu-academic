@@ -7,13 +7,15 @@ import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreateUnavailablePeriod extends FenixService {
 
-    public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification) {
+    @Service
+    public static void run(Vigilant vigilant, DateTime begin, DateTime end, String justification) {
 
 	CreateUnavailable(vigilant, begin, end, justification);
 	for (VigilantGroup group : vigilant.getVigilantGroups()) {
@@ -21,16 +23,17 @@ public class CreateUnavailablePeriod extends FenixService {
 	}
     }
 
-    public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification, VigilantGroup group) {
+    @Service
+    public static void run(Vigilant vigilant, DateTime begin, DateTime end, String justification, VigilantGroup group) {
 	CreateUnavailable(vigilant, begin, end, justification);
 	sendEmail(vigilant, begin, end, justification, group);
     }
 
-    private void CreateUnavailable(Vigilant vigilant, DateTime begin, DateTime end, String justification) {
+    private static void CreateUnavailable(Vigilant vigilant, DateTime begin, DateTime end, String justification) {
 	new UnavailablePeriod(begin, end, justification, vigilant);
     }
 
-    private void sendEmail(Vigilant vigilant, DateTime begin, DateTime end, String justification, VigilantGroup group) {
+    private static void sendEmail(Vigilant vigilant, DateTime begin, DateTime end, String justification, VigilantGroup group) {
 	ArrayList<String> replyTos = new ArrayList<String>();
 	replyTos.add(group.getContactEmail());
 	String[] contactArray = { group.getContactEmail() };

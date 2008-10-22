@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventProjec
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateEventProjectAssociation extends FenixService {
 

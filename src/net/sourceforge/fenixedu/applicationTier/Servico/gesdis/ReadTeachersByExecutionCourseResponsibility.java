@@ -8,15 +8,17 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadTeachersByExecutionCourseResponsibility extends FenixService {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) {
+    @Service
+    public static List run(InfoExecutionCourse infoExecutionCourse) {
 	return run(infoExecutionCourse.getIdInternal());
     }
 
-    public List run(Integer executionCourseID) {
+    @Service
+    public static List run(Integer executionCourseID) {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
 	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();

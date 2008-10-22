@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAllExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.places.campus.ReadAllCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -64,8 +66,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	List infoExecutionYearList = null;
 	List infoCampusList;
 	try {
-	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears", null);
-	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
+	    infoExecutionYearList = (List) ReadAllExecutionYears.run();
+	    infoCampusList = (List) ReadAllCampus.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -420,8 +422,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	 * jsp
 	 */
 	try {
-	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears", null);
-	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
+	    infoExecutionYearList = (List) ReadAllExecutionYears.run();
+	    infoCampusList = (List) ReadAllCampus.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -480,8 +482,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	 * jsp
 	 */
 	try {
-	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears", null);
-	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
+	    infoExecutionYearList = (List) ReadAllExecutionYears.run();
+	    infoCampusList = (List) ReadAllCampus.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExamCoordinator;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteExamCoordinator;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -47,8 +49,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 	String username = bean.getUsername();
 	User user = User.readUserByUserUId(username);
 	if (user != null && user.getPerson() != null) {
-	    Object args[] = { user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit() };
-	    executeService("AddExamCoordinator", args);
+
+	    AddExamCoordinator.run(user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit());
 	} else {
 	    addActionMessage(request, "label.vigilancy.inexistingUsername");
 	}
@@ -66,8 +68,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 
 	ExamCoordinator coordinator = (ExamCoordinator) RootDomainObject.readDomainObjectByOID(ExamCoordinator.class, idInternal);
 
-	Object[] args = { coordinator };
-	executeService("DeleteExamCoordinator", args);
+	DeleteExamCoordinator.run(coordinator);
 
 	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
 		.valueOf(departmentId));

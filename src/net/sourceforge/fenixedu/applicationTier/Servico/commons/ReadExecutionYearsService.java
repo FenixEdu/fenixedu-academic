@@ -6,11 +6,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionYearsService extends FenixService {
 
-    public List run() {
+    @Service
+    public static List run() {
 	final List<InfoExecutionYear> infoExecutionYears = new ArrayList<InfoExecutionYear>();
 	for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
 	    infoExecutionYears.add(InfoExecutionYear.newInfoFromDomain(executionYear));
@@ -18,7 +19,8 @@ public class ReadExecutionYearsService extends FenixService {
 	return infoExecutionYears;
     }
 
-    public ExecutionYear run(Integer executionYearID) {
+    @Service
+    public static ExecutionYear run(Integer executionYearID) {
 	return rootDomainObject.readExecutionYearByOID(executionYearID);
     }
 }

@@ -6,10 +6,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams;
 
-/**
- * @author Ana e Ricardo
- * 
- */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -31,11 +27,12 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExamsMapByRooms extends FenixService {
 
-    public List<InfoRoomExamsMap> run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
+    @Service
+    public static List<InfoRoomExamsMap> run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
 	final List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();
 
 	final InfoPeriod period = calculateExamsSeason(infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod
@@ -76,7 +73,7 @@ public class ReadExamsMapByRooms extends FenixService {
 	return infoRoomExamMapList;
     }
 
-    private List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
+    private static List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
 	final List<InfoExam> result = new ArrayList<InfoExam>();
 	final AllocatableSpace oldRoom = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
 	for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
@@ -114,7 +111,7 @@ public class ReadExamsMapByRooms extends FenixService {
     // return result;
     // }
     //
-    private InfoPeriod calculateExamsSeason(final String year, final int semester) {
+    private static InfoPeriod calculateExamsSeason(final String year, final int semester) {
 
 	ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
 	final List<ExecutionDegree> executionDegreesList = executionYear.getExecutionDegrees();

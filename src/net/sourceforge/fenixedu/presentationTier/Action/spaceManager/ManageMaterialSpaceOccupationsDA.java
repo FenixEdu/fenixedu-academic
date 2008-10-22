@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;

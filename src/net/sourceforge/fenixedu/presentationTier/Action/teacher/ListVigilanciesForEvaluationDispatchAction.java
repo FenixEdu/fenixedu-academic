@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeActive;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeStatus;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -72,8 +74,8 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
 	String participationType = request.getParameter("participationType");
 	AttendingStatus status = AttendingStatus.valueOf(participationType);
 	try {
-	    Object[] args = { vigilancy, status };
-	    executeService("ChangeConvokeStatus", args);
+
+	    ChangeConvokeStatus.run(vigilancy, status);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -90,8 +92,8 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
 	    String bool = request.getParameter("bool");
 	    Boolean active = Boolean.valueOf(bool);
 	    try {
-		Object[] args = { vigilancy, active, getLoggedPerson(request) };
-		executeService("ChangeConvokeActive", args);
+
+		ChangeConvokeActive.run(vigilancy, active, getLoggedPerson(request));
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }
@@ -118,8 +120,8 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
 
 	    for (Vigilancy vigilancy : vigilancies.subList(0, numberOfVigilantsToUnconvoke)) {
 		try {
-		    Object[] args = { vigilancy, Boolean.FALSE, getLoggedPerson(request) };
-		    executeService("ChangeConvokeActive", args);
+
+		    ChangeConvokeActive.run(vigilancy, Boolean.FALSE, getLoggedPerson(request));
 		} catch (DomainException e) {
 		    addActionMessage(request, e.getMessage());
 		}

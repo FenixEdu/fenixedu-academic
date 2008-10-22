@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -37,10 +37,8 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 	// setExecutionContext(request);
 	/* Cria o form bean com as licenciaturas em execucao. */
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils
-		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+	List executionDegreeList = (List) ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 	MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
@@ -60,9 +58,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 	// setExecutionContext(request);
 
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
-	List infoExecutionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
-		argsLerLicenciaturas);
+	List infoExecutionDegreeList = (List) ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 	Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
 	Boolean selectAllDegrees = (Boolean) chooseViewAllClassesSchedulesContextForm.get("selectAllDegrees");

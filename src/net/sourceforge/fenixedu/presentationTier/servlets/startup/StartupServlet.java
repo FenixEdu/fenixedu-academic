@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Role;
@@ -18,7 +21,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -42,8 +44,7 @@ public class StartupServlet extends HttpServlet {
 
 	try {
 	    try {
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-			.executeService("ReadCurrentExecutionPeriod", null);
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
 		config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
 		setScheduleForGratuitySituationCreation();
@@ -54,7 +55,7 @@ public class StartupServlet extends HttpServlet {
 
 	    try {
 		long start = System.currentTimeMillis();
-		ServiceUtils.executeService("CreateMetaDomainObectTypes", null);
+		CreateMetaDomainObectTypes.run();
 		long end = System.currentTimeMillis();
 		System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
 	    } catch (Throwable throwable) {
@@ -62,7 +63,7 @@ public class StartupServlet extends HttpServlet {
 	    }
 
 	    try {
-		final Boolean result = (Boolean) ServiceManagerServiceFactory.executeService("CheckIsAliveService", null);
+		final Boolean result = (Boolean) CheckIsAliveService.run();
 
 		if (result != null && result.booleanValue()) {
 		    System.out.println("Check is alive is working.");

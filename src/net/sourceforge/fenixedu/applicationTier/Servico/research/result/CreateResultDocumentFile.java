@@ -7,13 +7,15 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateResultDocumentFile extends FenixService {
-    public void run(ResultDocumentFileSubmissionBean bean) {
+    @Service
+    public static void run(ResultDocumentFileSubmissionBean bean) {
 	final ResearchResult result = bean.getResult();
 	final String displayName = bean.getDisplayName();
 
@@ -36,7 +38,7 @@ public class CreateResultDocumentFile extends FenixService {
      *         Path examples: /Research/Results/Publications/pub{idInternal}/
      *         /Research/Results/Patents/pat{idInternal}/
      */
-    private VirtualPath getVirtualPath(ResearchResult result) {
+    private static VirtualPath getVirtualPath(ResearchResult result) {
 	final VirtualPath filePath = new VirtualPath();
 
 	filePath.addNode(new VirtualPathNode("Research", "Research"));

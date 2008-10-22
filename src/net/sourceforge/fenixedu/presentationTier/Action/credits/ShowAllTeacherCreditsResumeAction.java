@@ -3,18 +3,19 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.credits;
 
+import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -25,8 +26,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ShowAllTeacherCreditsResumeAction extends FenixDispatchAction {
 
-    protected void readAllTeacherCredits(HttpServletRequest request, Teacher teacher) throws FenixServiceException,
-	    FenixFilterException {
+    protected void readAllTeacherCredits(HttpServletRequest request, Teacher teacher) throws FenixActionException {
 
 	request.setAttribute("teacher", teacher);
 	Department department = teacher.getCurrentWorkingDepartment();
@@ -34,8 +34,12 @@ public class ShowAllTeacherCreditsResumeAction extends FenixDispatchAction {
 	    request.setAttribute("department", department.getRealName());
 	}
 
-	Object[] args = new Object[] { teacher.getIdInternal() };
-	List<CreditLineDTO> creditsLines = (List<CreditLineDTO>) executeService("ReadAllTeacherCredits", args);
+	List<CreditLineDTO> creditsLines;
+	try {
+	    creditsLines = ReadAllTeacherCredits.run(teacher.getIdInternal());
+	} catch (ParseException e) {
+	    throw new FenixActionException(e);
+	}
 
 	request.setAttribute("creditsLinesSize", creditsLines.size());
 

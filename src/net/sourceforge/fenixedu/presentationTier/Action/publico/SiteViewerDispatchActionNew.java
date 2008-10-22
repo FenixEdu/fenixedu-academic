@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -268,22 +267,26 @@ public class SiteViewerDispatchActionNew extends FenixContextDispatchAction {
 	    objectCode = new Integer(objectCodeString);
 	    ISiteComponent bodyComponent = new InfoSiteRoomTimeTable();
 
-	    Object[] args = { bodyComponent, roomKey, objectCode };
-
-	    try {
-		SiteView siteView = (SiteView) ServiceUtils.executeService("RoomSiteComponentService", args);
-
-		request.setAttribute("sigla", ((InfoSiteRoomTimeTable) siteView.getComponent()).getInfoRoom().getNome());
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("objectCode", objectCode);
-
-	    } catch (NonExistingServiceException e) {
-		throw new NonExistingActionException(e);
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException(e);
-	    }
-
-	    return mapping.findForward("roomViewer");
+	    // ****************************************************************
+	    // The following code was refactored from a berserk call into a not
+	    // compiling invocation.
+	    throw new FenixActionException();
+	    // try {
+	    // SiteView siteView = (SiteView)
+	    // RoomSiteComponentService.run(bodyComponent, roomKey, objectCode);
+	    //
+	    // request.setAttribute("sigla", ((InfoSiteRoomTimeTable)
+	    // siteView.getComponent()).getInfoRoom().getNome());
+	    // request.setAttribute("siteView", siteView);
+	    // request.setAttribute("objectCode", objectCode);
+	    //
+	    // } catch (NonExistingServiceException e) {
+	    // throw new NonExistingActionException(e);
+	    // } catch (FenixServiceException e) {
+	    // throw new FenixActionException(e);
+	    // }
+	    //
+	    // return mapping.findForward("roomViewer");
 	}
 	throw new FenixActionException();
 
@@ -304,32 +307,41 @@ public class SiteViewerDispatchActionNew extends FenixContextDispatchAction {
 
 	ISiteComponent commonComponent = new InfoSiteCommon();
 
-	Object[] args = { commonComponent, firstPageComponent, objectCode, groupPropertiesCode, studentGroupCode };
 	ExecutionCourseSiteView siteView = null;
-	try {
-	    siteView = (ExecutionCourseSiteView) ServiceUtils.executeService("GroupSiteComponentService", args);
-
-	    if (infoExecutionCourseCode != null) {
-		request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteIdInternal());
-	    } else {
-		request.setAttribute("objectCode", objectCode);
-	    }
-	    request.setAttribute("siteView", siteView);
-	    request.setAttribute("executionCourseCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-		    .getIdInternal());
-
-	    request.setAttribute("executionPeriodCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-		    .getInfoExecutionPeriod().getIdInternal());
-	    if (siteView.getComponent() instanceof InfoSiteSection) {
-		request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
-	    }
-
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("A disciplina", e);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-	return siteView;
+	// ****************************************************************
+	// The following code was refactored from a berserk call into a not
+	// compiling invocation.
+	throw new FenixActionException();
+	// try {
+	// siteView = (ExecutionCourseSiteView)
+	// GroupSiteComponentService.run(commonComponent, firstPageComponent,
+	// objectCode, groupPropertiesCode, studentGroupCode);
+	//
+	// if (infoExecutionCourseCode != null) {
+	// request.setAttribute("objectCode", ((InfoSiteFirstPage)
+	// siteView.getComponent()).getSiteIdInternal());
+	// } else {
+	// request.setAttribute("objectCode", objectCode);
+	// }
+	// request.setAttribute("siteView", siteView);
+	// request.setAttribute("executionCourseCode", ((InfoSiteCommon)
+	// siteView.getCommonComponent()).getExecutionCourse()
+	// .getIdInternal());
+	//
+	// request.setAttribute("executionPeriodCode", ((InfoSiteCommon)
+	// siteView.getCommonComponent()).getExecutionCourse()
+	// .getInfoExecutionPeriod().getIdInternal());
+	// if (siteView.getComponent() instanceof InfoSiteSection) {
+	// request.setAttribute("infoSection", ((InfoSiteSection)
+	// siteView.getComponent()).getSection());
+	// }
+	//
+	// } catch (NonExistingServiceException e) {
+	// throw new NonExistingActionException("A disciplina", e);
+	// } catch (FenixServiceException e) {
+	// throw new FenixActionException(e);
+	// }
+	// return siteView;
     }
 
     private void setFromRequest(HttpServletRequest request) {

@@ -11,15 +11,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadCurricularCourseListOfExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurno;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -51,12 +51,9 @@ public class ViewShiftTimeTableAction extends FenixContextAction {
 	    }
 	}
 
-	Object[] args = { new ShiftKey(shiftName, infoExecutionCourse) };
-	List lessons = (List) ServiceUtils.executeService("LerAulasDeTurno", args);
+	List lessons = (List) LerAulasDeTurno.run(new ShiftKey(shiftName, infoExecutionCourse));
 
-	Object argsReadCurricularCourseListOfExecutionCourse[] = { infoExecutionCourse };
-	List infoCurricularCourses = (List) ServiceManagerServiceFactory.executeService(
-		"ReadCurricularCourseListOfExecutionCourse", argsReadCurricularCourseListOfExecutionCourse);
+	List infoCurricularCourses = (List) ReadCurricularCourseListOfExecutionCourse.run(infoExecutionCourse);
 
 	if (infoCurricularCourses != null && !infoCurricularCourses.isEmpty()) {
 	    request.setAttribute("publico.infoCurricularCourses", infoCurricularCourses);

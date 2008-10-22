@@ -23,8 +23,6 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
 
     };
 
-
-
     private DomainReference<ExecutionSemester> executionPeriodDomainReference;
 
     private String qualifiedName;

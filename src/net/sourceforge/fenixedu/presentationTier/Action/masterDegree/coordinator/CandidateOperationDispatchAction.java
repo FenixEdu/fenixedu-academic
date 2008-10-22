@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -60,16 +61,8 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
 	Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
 	Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
 
-	Object[] args = { candidateID };
-
 	InfoMasterDegreeCandidate infoMasterDegreeCandidate;
-	try {
-	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "ReadMasterDegreeCandidateByID", args);
-	} catch (FenixServiceException e) {
-	    e.printStackTrace();
-	    throw new FenixActionException();
-	}
+	infoMasterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
 
 	List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
 

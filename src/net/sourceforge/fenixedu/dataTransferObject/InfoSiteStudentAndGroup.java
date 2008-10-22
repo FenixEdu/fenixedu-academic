@@ -16,12 +16,14 @@ public class InfoSiteStudentAndGroup extends DataTranferObject implements ISiteC
 
 	@Override
 	public int compare(InfoSiteStudentAndGroup o1, InfoSiteStudentAndGroup o2) {
-	    return InfoSiteStudentInformation.COMPARATOR_BY_NUMBER.compare(o1.getInfoSiteStudentInformation(), o2.getInfoSiteStudentInformation());
+	    return InfoSiteStudentInformation.COMPARATOR_BY_NUMBER.compare(o1.getInfoSiteStudentInformation(), o2
+		    .getInfoSiteStudentInformation());
 	}
-	
+
     };
 
-    //Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator("infoSiteStudentInformation.number"));
+    // Collections.sort(infoSiteStudentsAndGroupsList, new
+    // BeanComparator("infoSiteStudentInformation.number"));
 
     private InfoSiteStudentInformation infoSiteStudentInformation;
     private InfoStudentGroup infoStudentGroup;

@@ -8,9 +8,13 @@ import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class PayResidenceEvent extends FenixService {
 
-    public void run(User user, ResidenceEvent event, YearMonthDay date) {
-	event.process(user, event.calculateEntries(), new AccountingTransactionDetailDTO(date.toDateTimeAtMidnight(), PaymentMode.CASH));
+    @Service
+    public static void run(User user, ResidenceEvent event, YearMonthDay date) {
+	event.process(user, event.calculateEntries(), new AccountingTransactionDetailDTO(date.toDateTimeAtMidnight(),
+		PaymentMode.CASH));
     }
 }

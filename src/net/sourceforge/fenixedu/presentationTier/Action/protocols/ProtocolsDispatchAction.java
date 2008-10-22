@@ -9,6 +9,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory.ProtocolHistoryEditorFactory;
@@ -89,7 +90,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	    return showProtocolAlerts(mapping, actionForm, request, response);
 	}
 	ProtocolHistoryRenewerFactory protocolHistoryFactory = (ProtocolHistoryRenewerFactory) getRenderedObject("protocolHistoryFactory");
-	ActionMessage actionMessage = (ActionMessage) executeService("ExecuteFactoryMethod", new Object[] { protocolHistoryFactory });
+	ActionMessage actionMessage = (ActionMessage) ExecuteFactoryMethod.run(protocolHistoryFactory);
 	if (actionMessage != null) {
 	    setError(request, "message", actionMessage);
 	    request.setAttribute("protocolHistoryFactory", protocolHistoryFactory);
@@ -114,7 +115,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	    return showProtocolAlerts(mapping, actionForm, request, response);
 	}
 	ProtocolHistoryEditorFactory protocolHistoryFactory = (ProtocolHistoryEditorFactory) getRenderedObject("protocolHistoryFactory");
-	ActionMessage actionMessage = (ActionMessage) executeService("ExecuteFactoryMethod", new Object[] { protocolHistoryFactory });
+	ActionMessage actionMessage = (ActionMessage) ExecuteFactoryMethod.run(protocolHistoryFactory);
 	if (actionMessage != null) {
 	    setError(request, "message", actionMessage);
 	    request.setAttribute("protocolHistoryFactory", protocolHistoryFactory);

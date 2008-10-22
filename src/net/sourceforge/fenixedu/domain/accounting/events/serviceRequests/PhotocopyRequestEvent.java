@@ -4,9 +4,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhotocopyRequestEvent extends PhotocopyRequestEvent_Base {
 

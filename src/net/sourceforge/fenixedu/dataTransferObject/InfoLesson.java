@@ -29,7 +29,7 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
 	    final int c3 = o1.getFim().compareTo(o2.getFim());
 	    return c3 != 0 ? o1.getInfoSala().getNome().compareTo(o2.getInfoShift().getNome()) : c3;
 	}
-	
+
     };
 
     private DomainReference<Lesson> lesson;

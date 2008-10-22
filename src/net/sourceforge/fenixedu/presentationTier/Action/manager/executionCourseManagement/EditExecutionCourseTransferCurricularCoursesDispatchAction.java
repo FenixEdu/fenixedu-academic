@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -46,18 +50,13 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 	Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
 	Integer executionPeriodId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"));
 
-	Object[] args1 = { executionCourseId };
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService("ReadExecutionCourseByOID",
-		args1);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseByOID.run(executionCourseId);
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-	Object[] args2 = { curricularCourseId };
-	InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(
-		"ReadCurricularCourseByID", args2);
+	InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) ReadCurricularCourseByID.run(curricularCourseId);
 	request.setAttribute("infoCurricularCourse", infoCurricularCourse);
 
-	Object[] args3 = { executionPeriodId };
-	List executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionPeriodId", args3);
+	List executionDegrees = (List) ReadExecutionDegreesByExecutionPeriodId.run(executionPeriodId);
 	Collection executionDegreesLabelValueList = RequestUtils.buildExecutionDegreeLabelValueBean(executionDegrees);
 	request.setAttribute("executionDegrees", executionDegreesLabelValueList);
 
@@ -92,9 +91,8 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 	    Integer destinationExecutionDegreeId = new Integer(destinationExecutionDegreeIdString);
 	    Integer curricularYear = new Integer(curricularYearString);
 
-	    Object[] args = { destinationExecutionDegreeId, executionPeriodId, curricularYear };
-	    List executionCourses = (List) ServiceUtils.executeService(
-		    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
+	    List executionCourses = (List) ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(
+		    destinationExecutionDegreeId, executionPeriodId, curricularYear);
 	    request.setAttribute("executionCourses", executionCourses);
 	}
 

@@ -8,11 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class GroupSiteComponentService extends FenixService {
 
-    public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
+    @Service
+    public static Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
 	    Integer groupPropertiesCode, Integer code, Integer shiftCode, Integer value) throws FenixServiceException {
 	ExecutionCourseSite site = null;
 	if (infoSiteCode != null) {

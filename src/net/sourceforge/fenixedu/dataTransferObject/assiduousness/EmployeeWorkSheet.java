@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.joda.time.MutablePeriod;
 import org.joda.time.PeriodType;
-import org.joda.time.LocalDate;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 

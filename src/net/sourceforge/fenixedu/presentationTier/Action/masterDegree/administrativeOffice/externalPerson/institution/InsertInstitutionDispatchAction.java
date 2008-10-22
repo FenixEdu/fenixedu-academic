@@ -4,12 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -39,10 +39,8 @@ public class InsertInstitutionDispatchAction extends FenixDispatchAction {
 
 	String institutionName = (String) insertInstitutionForm.get("name");
 
-	Object args[] = { institutionName };
-
 	try {
-	    ServiceUtils.executeService("InsertInstitution", args);
+	    InsertInstitution.run(institutionName);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
 	} catch (FenixServiceException e) {

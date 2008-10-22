@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProtocolAction implements Serializable {
 

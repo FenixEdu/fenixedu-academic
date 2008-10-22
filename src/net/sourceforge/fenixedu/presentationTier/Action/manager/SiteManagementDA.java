@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityToContainer;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ApplyStructureModifications;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.RemoveContentFromContainer;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -29,6 +32,7 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -408,9 +412,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
 	    file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-	    executeService(service, new Object[] { bean.getSite(), container, file, bean.getFileName(),
-		    bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
-		    bean.getEducationalLearningResourceType() });
+	    executeService(service, new Object[] { bean.getSite(), container, file, bean.getFileName(), bean.getDisplayName(),
+		    bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType() });
 	} catch (FileManagerException e) {
 	    addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
 
@@ -680,7 +683,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	List<ModifiedContentBean> modifiedContent = getModifiedContent(site, orderString, Collections.EMPTY_LIST);
 
 	try {
-	    executeService("ApplyStructureModifications", new Object[] { modifiedContent });
+	    ApplyStructureModifications.run(modifiedContent);
 	} catch (DomainException de) {
 	    addActionMessage(request, de.getMessage(), de.getArgs());
 	} catch (Exception e) {
@@ -737,7 +740,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	List<Content> flatContent = new ArrayList<Content>();
 	for (Content content : contents) {
 	    if (!shouldBeIgnored(content, ignoreClasses)) {
-		if (content instanceof Container && ! (content instanceof Forum)) {
+		if (content instanceof Container && !(content instanceof Forum)) {
 		    flatContent.add(content);
 		    flatContent.addAll(flatten(((Container) content).getDirectChildrenAsContent(), ignoreClasses));
 		} else {
@@ -797,7 +800,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
 	List<ModifiedContentBean> modifiedContent = getModifiedContent(section, orderString, ignoreClasses);
 
-	executeService("ApplyStructureModifications", new Object[] { modifiedContent });
+	ApplyStructureModifications.run(modifiedContent);
 
 	return section(mapping, form, request, response);
     }
@@ -815,7 +818,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
 	List<ModifiedContentBean> modifiedContent = getModifiedContent(item, orderString, Collections.EMPTY_LIST);
 
-	executeService("ApplyStructureModifications", new Object[] { modifiedContent });
+	ApplyStructureModifications.run(modifiedContent);
 
 	return section(mapping, form, request, response);
     }
@@ -859,7 +862,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	Container container = (Container) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(containerId));
 	Content content = RootDomainObject.getInstance().readContentByOID(Integer.valueOf(contentId));
 
-	executeService("AddFunctionalityToContainer", new Object[] { content, container });
+	AddFunctionalityToContainer.run((Functionality) content, container);
 
 	return container instanceof Section ? section(mapping, actionForm, request, response) : sections(mapping, actionForm,
 		request, response);
@@ -873,7 +876,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	Container container = (Container) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(containerId));
 
 	try {
-	    executeService("RemoveContentFromContainer", new Object[] { container, content });
+	    RemoveContentFromContainer.run(container, content);
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}

@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.domain.material;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class FireExtinguisher extends FireExtinguisher_Base {
 

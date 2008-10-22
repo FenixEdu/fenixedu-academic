@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamsByDate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionError;
@@ -143,8 +143,7 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
 		    + new Integer(examEndTime.get(Calendar.MINUTE));
 	}
 
-	Object[] args = { examDate, examStartTime, examEndTime };
-	InfoViewExam infoViewExam = (InfoViewExam) ServiceUtils.executeService("ReadExamsByDate", args);
+	InfoViewExam infoViewExam = (InfoViewExam) ReadExamsByDate.run(examDate, examStartTime, examEndTime);
 
 	if (infoViewExam.getInfoViewExamsByDayAndShift().size() != 0) {
 	    request.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoViewExam.getInfoViewExamsByDayAndShift());

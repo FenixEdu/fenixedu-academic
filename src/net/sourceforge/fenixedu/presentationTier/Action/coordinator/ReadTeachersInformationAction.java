@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -55,8 +56,8 @@ public class ReadTeachersInformationAction extends FenixAction {
 	// Lists all years attatched to the degree curricular plan
 	List executionYearList = null;
 	try {
-	    Object[] args = { degreeCurricularPlanID };
-	    executionYearList = (List) ServiceUtils.executeService("ReadExecutionYearsByDegreeCurricularPlanID", args);
+
+	    executionYearList = (List) ReadExecutionYearsByDegreeCurricularPlanID.run(degreeCurricularPlanID);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}

@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -50,13 +53,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	// execution years
-	List executionYears = null;
-	Object[] args = {};
-	try {
-	    executionYears = (List) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionYears", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixServiceException();
-	}
+	List executionYears = ReadNotClosedExecutionYears.run();
 
 	if (executionYears != null && !executionYears.isEmpty()) {
 	    ComparatorChain comparator = new ComparatorChain();
@@ -101,16 +98,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 	String executionYear = (String) studentListForm.get("executionYear");
 	request.setAttribute("executionYear", executionYear);
 
-	Object args[] = { executionYear, DegreeType.MASTER_DEGREE };
-	List executionDegreeList = null;
-	try {
-	    executionDegreeList = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
-	} catch (FenixServiceException e) {
-	    errors.add("impossibleOperation", new ActionError("error.masterDegree.gratuity.impossible.operation"));
-	    saveErrors(request, errors);
-	    return mapping.findForward("choose");
-	}
+	List executionDegreeList = ReadExecutionDegreesByExecutionYearAndDegreeType.run(executionYear, DegreeType.MASTER_DEGREE);
 
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(executionDegreeList, request);
@@ -272,7 +260,8 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByDegreeCurricularPlanID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+		    "ReadExecutionDegreeByDegreeCurricularPlanID", args);
 	} catch (FenixServiceException exception) {
 	    exception.printStackTrace();
 	    saveErrors(request, errors);
@@ -285,16 +274,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 	String specialization = "all";
 	String situation = "all";
 
-	Object[] yearArgs = { degreeCurricularPlanID };
-	List executionYearList = null;
-	try {
-	    executionYearList = (List) ServiceManagerServiceFactory.executeService("ReadExecutionYearsByDegreeCurricularPlanID",
-		    yearArgs);
-	} catch (FenixServiceException exception) {
-	    exception.printStackTrace();
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
-	}
+	List executionYearList = ReadExecutionYearsByDegreeCurricularPlanID.run(degreeCurricularPlanID);
 
 	// getting the gratuity list
 	Object[] gratuityArgs = { infoExecutionDegree.getIdInternal(), infoExecutionDegree.getInfoExecutionYear().getYear(),

@@ -7,13 +7,14 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class LessonInstance extends LessonInstance_Base {
 
@@ -24,7 +25,7 @@ public class LessonInstance extends LessonInstance_Base {
 	    final int c = o1.getBeginDateTime().compareTo(o2.getBeginDateTime());
 	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-	
+
     };
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")

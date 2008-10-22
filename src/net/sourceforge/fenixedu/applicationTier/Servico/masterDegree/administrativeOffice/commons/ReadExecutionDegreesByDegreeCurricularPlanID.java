@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -23,7 +23,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesByDegreeCurricularPlanID extends FenixService {
 
-    public List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) {
+    @Service
+    public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) {
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
 	List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();

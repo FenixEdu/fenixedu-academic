@@ -2,9 +2,10 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class AccountingTransactionDetail extends AccountingTransactionDetail_Base {
 

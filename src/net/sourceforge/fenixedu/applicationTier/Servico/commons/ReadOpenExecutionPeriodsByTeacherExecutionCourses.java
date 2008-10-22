@@ -6,23 +6,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa and rmalo
  */
 public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends FenixService {
 
-    public List run(IUserView userView) throws FenixServiceException {
+    @Service
+    public static List run(IUserView userView) throws FenixServiceException {
 
 	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
 	final Person person = userView.getPerson();

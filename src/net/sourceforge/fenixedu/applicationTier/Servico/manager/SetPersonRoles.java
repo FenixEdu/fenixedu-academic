@@ -5,7 +5,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SetPersonRoles extends FenixService {
 

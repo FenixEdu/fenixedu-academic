@@ -7,8 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnitByName;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultParticipation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultParticipation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.SaveResultParticipationsOrder;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
 import net.sourceforge.fenixedu.domain.Person;
@@ -122,8 +127,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     }
 
     private void createParticipation(ResultParticipationCreationBean bean) throws FenixFilterException, FenixServiceException {
-	final Object[] args = { bean };
-	executeService("CreateResultParticipation", args);
+
+	CreateResultParticipation.run(bean);
     }
 
     public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -143,8 +148,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	if (getFromRequest(request, "confirm") != null || !participation.getPerson().equals(loggedPerson)) {
 
 	    try {
-		final Object[] args = { participation };
-		executeService("DeleteResultParticipation", args);
+
+		DeleteResultParticipation.run(participation);
 	    } catch (Exception e) {
 		final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 		return processException(request, mapping, defaultForward, e);
@@ -162,8 +167,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	if (treeStructure != null && treeStructure.length() != 0) {
 	    final List<ResultParticipation> newParticipationsOrder = reOrderParticipations(treeStructure, result);
 	    try {
-		final Object[] args = { result, newParticipationsOrder };
-		executeService("SaveResultParticipationsOrder", args);
+
+		SaveResultParticipationsOrder.run(result, newParticipationsOrder);
 	    } catch (Exception e) {
 		final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 		return processException(request, mapping, defaultForward, e);
@@ -233,8 +238,9 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		.getViewState("beanForExternalPerson").getMetaObject().getObject();
 
 	if (bean.getOrganization() != null) {
-	    Object[] args = { new InsertExternalPerson.ServiceArguments(bean.getParticipatorName(), bean.getOrganization()) };
-	    ExternalContract contract = (ExternalContract) executeService("InsertExternalPerson", args);
+
+	    ExternalContract contract = (ExternalContract) InsertExternalPerson.run(new InsertExternalPerson.ServiceArguments(
+		    bean.getParticipatorName(), bean.getOrganization()));
 	    bean.setParticipator(contract.getPerson().getPersonName());
 	    createParticipation(bean);
 	} else {
@@ -268,8 +274,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 
 	ResultParticipationCreationBean bean = (ResultParticipationCreationBean) RenderUtils
 		.getViewState("beanForExternalPerson").getMetaObject().getObject();
-	Object args[] = { bean.getOrganizationName() };
-	Unit unit = (Unit) executeService("CreateExternalUnitByName", args);
+
+	Unit unit = (Unit) CreateExternalUnitByName.run(bean.getOrganizationName());
 	bean.setOrganization(unit);
 	createParticipation(bean);
 
@@ -284,8 +290,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	}
 
 	try {
-	    final Object[] args = { participation, orderChange };
-	    executeService("ChangeResultParticipationsOrder", args);
+
+	    ChangeResultParticipationsOrder.run(participation, orderChange);
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);

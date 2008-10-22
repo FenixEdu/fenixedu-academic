@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCurricularCourseByIdInternal extends FenixService {
 
-    public InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException {
+    @Service
+    public static InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException {
 	InfoCurricularCourse infoCurricularCourse = null;
 	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 

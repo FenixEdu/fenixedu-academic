@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCandidatesWithFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
@@ -188,13 +187,9 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 	    String filterValue, boolean exportToCSV) throws FenixActionException, IOException {
 	List candidates = null;
 
-	Object args[] = { new Integer(degreeCurricularID), filterBy, filterValue };
-
 	try {
-	    candidates = (List) ServiceManagerServiceFactory.executeService("ReadDegreeCandidatesWithFilter", args);
+	    candidates = ReadDegreeCandidatesWithFilter.run(new Integer(degreeCurricularID), filterBy, filterValue);
 	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	} catch (FenixFilterException e) {
 	    throw new FenixActionException(e);
 	}
 

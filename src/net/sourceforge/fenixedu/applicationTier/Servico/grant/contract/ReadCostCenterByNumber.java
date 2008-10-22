@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -13,7 +14,8 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 
 public class ReadCostCenterByNumber extends FenixService {
 
-    public InfoGrantCostCenter run(String costContractNumber) throws FenixServiceException {
+    @Service
+    public static InfoGrantCostCenter run(String costContractNumber) throws FenixServiceException {
 	// When creating a New Contract its needed to verify if the costContract
 	// exists
 	// chosen for orientator really exists

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExceptionScheduleBean;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory;
@@ -82,7 +83,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	RegularizationMonthFactory regularizationMonthFactory = (RegularizationMonthFactory) getFactoryObject();
-	executeService("ExecuteFactoryMethod", new Object[] { regularizationMonthFactory });
+	ExecuteFactoryMethod.run(regularizationMonthFactory);
 	request.setAttribute("employeeNumber", regularizationMonthFactory.getAssiduousness().getEmployee().getEmployeeNumber());
 	request.setAttribute("yearMonth", regularizationMonthFactory.getYearMonth());
 	return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request, response);
@@ -137,7 +138,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	EmployeeJustificationFactory employeeJustificationFactory = (EmployeeJustificationFactory) getFactoryObject();
 	try {
-	    Object result = executeService("ExecuteFactoryMethod", new Object[] { employeeJustificationFactory });
+	    Object result = ExecuteFactoryMethod.run(employeeJustificationFactory);
 	    if (result != null) {
 		setError(request, "errorMessage", (ActionMessage) result);
 		request.setAttribute("employeeJustificationFactory", employeeJustificationFactory);
@@ -169,7 +170,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	request.setAttribute("employeeNumber", justification.getAssiduousness().getEmployee().getEmployeeNumber());
 	request.setAttribute("yearMonth", employeeAnulateJustificationFactory.getYearMonth());
 	try {
-	    Object result = executeService("ExecuteFactoryMethod", new Object[] { employeeAnulateJustificationFactory });
+	    Object result = ExecuteFactoryMethod.run(employeeAnulateJustificationFactory);
 	    if (result != null) {
 		setError(request, "errorMessage", (ActionMessage) result);
 		request.setAttribute("employeeJustificationFactory", employeeAnulateJustificationFactory);
@@ -342,7 +343,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 
 	Schedule schedule = employeeScheduleFactory.getSchedule();
 	if (hasAnythingChanged(employeeScheduleFactory)) {
-	    schedule = (Schedule) executeService("ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });
+	    schedule = (Schedule) ExecuteFactoryMethod.run(employeeScheduleFactory);
 	}
 	request.setAttribute("scheduleID", schedule.getIdInternal());
 	RenderUtils.invalidateViewState();
@@ -369,7 +370,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	employeeScheduleFactory.setToDeleteDays(true);
 	if (canDeleteDays(employeeScheduleFactory)) {
 	    if (!areEmptyDays(employeeScheduleFactory)) {
-		schedule = (Schedule) executeService("ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });
+		schedule = (Schedule) ExecuteFactoryMethod.run(employeeScheduleFactory);
 	    }
 	} else {
 	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.schedule.canNotDeleteAllDays"));
@@ -443,7 +444,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward insertJustification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	SeveralEmployeeJustificationFactoryCreator severalEmployeeJustificationFactoryCreator = (SeveralEmployeeJustificationFactoryCreator) getFactoryObject();
-	Object result = executeService("ExecuteFactoryMethod", new Object[] { severalEmployeeJustificationFactoryCreator });
+	Object result = ExecuteFactoryMethod.run(severalEmployeeJustificationFactoryCreator);
 	RenderUtils.invalidateViewState();
 	if (result != null) {
 	    setError(request, "errorMessage", (ActionMessage) result);

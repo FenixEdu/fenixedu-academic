@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Jo�o Mota
@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class SelectShifts extends FenixService {
 
-    public Object run(InfoShift infoShift) {
+    @Service
+    public static Object run(InfoShift infoShift) {
 	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 	final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 	final Set<Shift> shifts = executionCourse.getAssociatedShifts();

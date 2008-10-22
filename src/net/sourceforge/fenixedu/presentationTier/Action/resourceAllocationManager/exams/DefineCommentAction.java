@@ -8,13 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -43,8 +42,7 @@ public class DefineCommentAction extends
 
 	Integer indexExecutionCourse = Integer.valueOf(request.getParameter("indexExecutionCourse"));
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) infoExamsMap.getExecutionCourses().get(
-		indexExecutionCourse.intValue());
+	InfoExecutionCourse infoExecutionCourse = infoExamsMap.getExecutionCourses().get(indexExecutionCourse.intValue());
 
 	Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
@@ -102,15 +100,7 @@ public class DefineCommentAction extends
 	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
 		.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-	final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-	InfoExamsMap infoExamsMap;
-	try {
-	    infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadExamsMap", args);
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException(e);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	InfoExamsMap infoExamsMap = ReadExamsMap.run(infoExecutionDegree, curricularYears, infoExecutionPeriod);
 	return infoExamsMap;
     }
 

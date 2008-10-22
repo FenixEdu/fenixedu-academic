@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SendEmailBean implements Serializable {
@@ -72,9 +72,7 @@ public class SendEmailBean implements Serializable {
     private DomainReference<Campus> campusDomainReference = null;
 
     public void send() throws FenixFilterException, FenixServiceException {
-	final Object[] args = { getToList(), getCCList(), getBCCList(), getFromName(), getFrom(), getSubject(),
-		getMessageWithFooter() };
-	ServiceUtils.executeService("commons.SendMail", args);
+	SendMail.run(getToList(), getCCList(), getBCCList(), getFromName(), getFrom(), getSubject(), getMessageWithFooter());
 	sent = Boolean.TRUE;
     }
 

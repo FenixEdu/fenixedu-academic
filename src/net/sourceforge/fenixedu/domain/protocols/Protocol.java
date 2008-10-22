@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -35,6 +34,7 @@ import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Protocol extends Protocol_Base {
 

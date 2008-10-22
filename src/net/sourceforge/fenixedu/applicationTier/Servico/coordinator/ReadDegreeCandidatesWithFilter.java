@@ -13,21 +13,22 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDegreeCandidatesWithFilter extends FenixService {
 
-    public List run(Integer degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
+    @Service
+    public static List run(Integer degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
 	    throws FenixServiceException {
 
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 	return createInfoMasterDegreeCandidateFromDomain(getMasterDegreeCandidates(degreeCurricularPlan, filterBy, filterValue));
     }
 
-    private Set<MasterDegreeCandidate> getMasterDegreeCandidates(DegreeCurricularPlan degreeCurricularPlan,
+    private static Set<MasterDegreeCandidate> getMasterDegreeCandidates(DegreeCurricularPlan degreeCurricularPlan,
 	    PrintAllCandidatesFilter filterBy, String filterValue) {
 
 	switch (filterBy) {
@@ -48,7 +49,7 @@ public class ReadDegreeCandidatesWithFilter extends FenixService {
 	}
     }
 
-    private List createInfoMasterDegreeCandidateFromDomain(Set<MasterDegreeCandidate> masterDegreeCandidates) {
+    private static List createInfoMasterDegreeCandidateFromDomain(Set<MasterDegreeCandidate> masterDegreeCandidates) {
 
 	final State candidateSituationState = new State(State.ACTIVE);
 	final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();

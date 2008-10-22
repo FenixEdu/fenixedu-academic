@@ -8,10 +8,12 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends FenixService {
 
-    public Set<ExecutionCourseView> run(final Degree degree) {
+    @Service
+    public static Set<ExecutionCourseView> run(final Degree degree) {
 	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 	final ExecutionSemester previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 

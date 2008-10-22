@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import pt.ist.fenixframework.pstm.Transaction;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 

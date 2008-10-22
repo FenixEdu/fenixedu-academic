@@ -39,7 +39,7 @@ public class InfoShift extends InfoObject {
 	    final int c3 = o1.getLessonsStringComparator().compareTo(o2.getLessonsStringComparator());
 	    return c3 == 0 ? o1.getShift().getIdInternal().compareTo(o2.getShift().getIdInternal()) : c3;
 	}
-	
+
     };
 
     private final DomainReference<Shift> shift;

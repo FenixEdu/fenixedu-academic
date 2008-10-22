@@ -19,6 +19,10 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadMasterDegrees;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
@@ -89,10 +93,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	List degreeList = null;
 
-	Object args[] = { executionYear };
-
 	try {
-	    degreeList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadMasterDegrees", args);
+	    degreeList = (ArrayList) ReadMasterDegrees.run(executionYear);
 	} catch (Exception e) {
 	    throw new Exception(e);
 	}
@@ -225,9 +227,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	InfoMasterDegreeCandidate result = null;
 
-	Object args[] = { candidateID };
 	try {
-	    result = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService("GetCandidatesByID", args);
+	    result = (InfoMasterDegreeCandidate) GetCandidatesByID.run(candidateID);
 	} catch (Exception e) {
 	    throw new Exception(e);
 	}
@@ -255,10 +256,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
-	Object args[] = { candidateID };
 	try {
-	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "GetCandidatesByID", args);
+	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) GetCandidatesByID.run(candidateID);
 	} catch (Exception e) {
 	    throw new Exception(e);
 	}
@@ -270,7 +269,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	// Get List of available Countries
 	Object result = null;
-	result = ServiceManagerServiceFactory.executeService("ReadAllCountries", null);
+	result = ReadAllCountries.run();
 	List country = (ArrayList) result;
 
 	// Build List of Countries for the Form
@@ -448,9 +447,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
 	try {
-	    Object args[] = { candidateID };
-	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "GetCandidatesByID", args);
+
+	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) GetCandidatesByID.run(candidateID);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException();
 	}
@@ -458,7 +456,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	try {
 	    final Person person = (Person) rootDomainObject.readPartyByOID(infoMasterDegreeCandidate.getInfoPerson()
 		    .getIdInternal());
-	    pass = (String) ServiceManagerServiceFactory.executeService("GenerateNewPassword", new Object[] { person });
+	    pass = (String) GenerateNewPasswordService.run(person);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException();
 	}

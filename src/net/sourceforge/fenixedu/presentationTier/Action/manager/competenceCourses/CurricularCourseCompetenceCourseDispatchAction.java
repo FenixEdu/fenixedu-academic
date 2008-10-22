@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansByDegreeType;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -67,17 +69,13 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
     }
 
     public ActionForward readDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	IUserView userView = UserView.getUser();
 	Integer competenceCourseID = Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "competenceCourseID"));
 	DegreeType degreeType = DegreeType.DEGREE;
-	Object[] args = { degreeType };
+
 	List<InfoDegreeCurricularPlan> result = null;
-	try {
-	    result = (List<InfoDegreeCurricularPlan>) ServiceUtils.executeService("ReadDegreeCurricularPlansByDegreeType", args);
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
-	}
+	result = ReadDegreeCurricularPlansByDegreeType.run(degreeType);
 	DynaActionForm actionForm = (DynaActionForm) form;
 	actionForm.set("competenceCourseID", competenceCourseID);
 	request.setAttribute("degreeCurricularPlans", result);
@@ -89,11 +87,10 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
 	IUserView userView = UserView.getUser();
 	DynaActionForm actionForm = (DynaActionForm) form;
 	Integer degreeCurricularPlanID = (Integer) actionForm.get("degreeCurricularPlanID");
-	Object[] args = { degreeCurricularPlanID };
+
 	List<InfoCurricularCourse> result = null;
 	try {
-	    result = (List<InfoCurricularCourse>) ServiceUtils
-		    .executeService("ReadCurricularCoursesByDegreeCurricularPlan", args);
+	    result = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanID);
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}

@@ -9,11 +9,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInquiriesRegistriesByExecutionPeriod extends FenixService {
 
-    public List<InfoInquiriesRegistry> run(Integer executionPeriodId) throws FenixServiceException, IllegalAccessException,
-	    InvocationTargetException, NoSuchMethodException {
+    @Service
+    public static List<InfoInquiriesRegistry> run(Integer executionPeriodId) throws FenixServiceException,
+	    IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
 	if (executionPeriodId == null) {
 	    throw new FenixServiceException("nullExecutionPeriodId");

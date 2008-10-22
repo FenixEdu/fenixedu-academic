@@ -19,13 +19,15 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class GetCandidatesByID extends FenixService {
 
-    public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
+    @Service
+    public static InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
 	MasterDegreeCandidate masterDegreeCandidate = null;
 
 	if (candidateID == null) {

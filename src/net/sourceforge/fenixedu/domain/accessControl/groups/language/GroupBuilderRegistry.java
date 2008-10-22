@@ -208,7 +208,7 @@ public class GroupBuilderRegistry {
 	register("allEmployeesByCampus", AllEmployeesByCampus.class, new AllEmployeesByCampus.Builder());
 	register("studentsFromDegreeType", StudentsFromDegreeTypeGroup.class, new StudentsFromDegreeTypeGroup.Builder());
 	register("delegates", DelegatesGroup.class, new DelegatesGroup.Builder());
-	
+
 	registerGroupsWithNoArguments();
     }
 
@@ -217,8 +217,7 @@ public class GroupBuilderRegistry {
 		DegreeCoordinatorsGroup.class, AllMasterDegreesStudents.class, AllDegreesStudentsGroup.class,
 		InternalPersonGroup.class, ExecutionCourseResponsiblesGroup.class, InstitutionSiteManagers.class,
 		TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
-		ScientificCouncilMembersGroup.class, DelegateStudentsGroup.class,
-		DelegateCurricularCourseStudentsGroup.class,
+		ScientificCouncilMembersGroup.class, DelegateStudentsGroup.class, DelegateCurricularCourseStudentsGroup.class,
 		AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class, AllResearchersGroup.class };
 
 	for (Class groupClass : groups) {

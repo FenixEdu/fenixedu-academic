@@ -10,9 +10,10 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.struts.taglib.TagUtils;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class LabelFormatterTagLib extends BodyTagSupport implements PropertyContainerTag {
 

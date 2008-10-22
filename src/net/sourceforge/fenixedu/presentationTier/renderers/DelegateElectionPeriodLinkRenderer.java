@@ -358,9 +358,9 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 
 			HtmlText periodResume = new HtmlText(getPeriodResume(electionPeriod, preLabel, postLabel, true), false);
 			periodResume.setClasses(getPastPeriodClasses()); // Classes
-									 // for
-									 // candidacy
-									 // period
+			// for
+			// candidacy
+			// period
 			container.addChild(periodResume);
 			return container;
 		    } else {
@@ -381,9 +381,9 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 			    HtmlText periodResume = new HtmlText(
 				    getPeriodResume(electionPeriod, pastPeriodLabel, postLabel, true), false);
 			    periodResume.setClasses(getPastPeriodClasses()); // Classes
-									     // for
-									     // past
-									     // periods
+			    // for
+			    // past
+			    // periods
 			    container.addChild(periodResume);
 			    return container;
 			} else if (electionPeriod.isCurrentPeriod()) {
@@ -391,9 +391,9 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 			    String periodResume = getPeriodResume(electionPeriod, null, postLabel, true);
 			    link.setBody(new HtmlText(periodResume, false));
 			    link.setClasses(getCurrentPeriodClasses()); // Classes
-									// for
-									// current
-									// periods
+			    // for
+			    // current
+			    // periods
 			    container.addChild(link);
 			    return container;
 			} else {

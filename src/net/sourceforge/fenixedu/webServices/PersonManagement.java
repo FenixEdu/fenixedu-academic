@@ -8,13 +8,11 @@ import java.text.ParseException;
 import javax.servlet.ServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.UpdatePersonInformationFromCitizenCard;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationDTO;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
@@ -50,11 +48,7 @@ public class PersonManagement implements IPersonManagement {
 	personDTO.print();
 
 	try {
-	    ServiceUtils.executeService("UpdatePersonInformationFromCitizenCard", new Object[] { personDTO });
-	} catch (FenixFilterException e) {
-	    return Boolean.FALSE;
-	} catch (FenixServiceException e) {
-	    return Boolean.FALSE;
+	    UpdatePersonInformationFromCitizenCard.run(personDTO);
 	} catch (DomainException e) {
 	    return Boolean.FALSE;
 	}

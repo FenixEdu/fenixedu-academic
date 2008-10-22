@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -46,8 +48,8 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 		"ReadExecutionCourseWithShiftsAndCurricularCoursesByOID", new Object[] { executionCourseId });
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-	List executionDegrees = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByExecutionPeriodId",
-		new Object[] { infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() });
+	List executionDegrees = (List) ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod()
+		.getIdInternal());
 	transformExecutionDegreesIntoLabelValueBean(executionDegrees);
 	request.setAttribute("executionDegrees", executionDegrees);
 
@@ -91,10 +93,9 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
 	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute("infoExecutionCourse");
 
-	    Object args[] = { new Integer(destinationExecutionDegreeId),
-		    infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(), new Integer(destinationCurricularYear) };
-	    List executionCourses = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
+	    List executionCourses = (List) ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(new Integer(
+		    destinationExecutionDegreeId), infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(), new Integer(
+		    destinationCurricularYear));
 	    Collections.sort(executionCourses, new BeanComparator("nome"));
 	    request.setAttribute("executionCourses", executionCourses);
 	}

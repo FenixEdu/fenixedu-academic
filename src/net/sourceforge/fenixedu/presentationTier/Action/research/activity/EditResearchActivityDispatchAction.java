@@ -167,8 +167,8 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
 	    List<ResearchActivityParticipantEditionBean> notEditedParticipants = null;
 	    try {
-		notEditedParticipants = (List<ResearchActivityParticipantEditionBean>) executeService("EditResearchActivityParticipants",
-			new Object[] { beans });
+		notEditedParticipants = (List<ResearchActivityParticipantEditionBean>) executeService(
+			"EditResearchActivityParticipants", new Object[] { beans });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }

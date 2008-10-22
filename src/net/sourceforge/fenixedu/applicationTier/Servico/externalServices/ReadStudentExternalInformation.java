@@ -61,10 +61,11 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
+
+import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
@@ -73,7 +74,8 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class ReadStudentExternalInformation extends FenixService {
 
-    public Collection run(String username) throws FenixServiceException {
+    @Service
+    public static Collection run(String username) throws FenixServiceException {
 	Person person = Person.readPersonByUsername(username);
 
 	if (!person.getStudent().hasAnyActiveRegistration()) {
@@ -88,15 +90,15 @@ public class ReadStudentExternalInformation extends FenixService {
 
     }
 
-    private Collection getResultForBolonha(Person person) {
+    private static Collection getResultForBolonha(Person person) {
 	Collection result = new ArrayList();
 	Collection<CycleCurriculumGroup> studentCycles = getStudentCycles(person.getStudent());
 
 	InfoStudentExternalInformation info = new InfoStudentExternalInformation();
-	info.setPerson(this.buildExternalPersonInfo(person));
+	info.setPerson(buildExternalPersonInfo(person));
 	info.setNumber(person.getStudent().getNumber().toString());
 
-	info.setDegree(this.buildExternalDegreeCurricularPlanInfoBolonha(studentCycles));
+	info.setDegree(buildExternalDegreeCurricularPlanInfoBolonha(studentCycles));
 
 	setCoursesInformation(info, studentCycles);
 
@@ -108,7 +110,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return result;
     }
 
-    private void setCoursesInformation(InfoStudentExternalInformation info, Collection<CycleCurriculumGroup> studentCycles) {
+    private static void setCoursesInformation(InfoStudentExternalInformation info, Collection<CycleCurriculumGroup> studentCycles) {
 	for (CycleCurriculumGroup cycleCurriculumGroup : studentCycles) {
 	    for (CurriculumLine curriculumLine : cycleCurriculumGroup.getApprovedCurriculumLines()) {
 		if (curriculumLine.getDegreeModule() != null) {
@@ -134,11 +136,11 @@ public class ReadStudentExternalInformation extends FenixService {
 	}
     }
 
-    private Set<CurricularCourse> getStudentRemainingDegree(CycleCurriculumGroup cycleCurriculumGroup) {
+    private static Set<CurricularCourse> getStudentRemainingDegree(CycleCurriculumGroup cycleCurriculumGroup) {
 	return getRemainingCourses(cycleCurriculumGroup.getDegreeModule(), cycleCurriculumGroup);
     }
 
-    private Set<CurricularCourse> getRemainingCourses(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
+    private static Set<CurricularCourse> getRemainingCourses(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
 	if (isClosed(courseGroup, cycleCurriculumGroup)) {
 	    return Collections.emptySet();
 	}
@@ -150,7 +152,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return res;
     }
 
-    private Set<CourseGroup> getChildCourseGroups(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
+    private static Set<CourseGroup> getChildCourseGroups(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
 	CurriculumGroup groupFor = cycleCurriculumGroup.findCurriculumGroupFor(courseGroup);
 
 	if (groupFor != null) {
@@ -176,7 +178,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return res;
     }
 
-    private boolean isClosed(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
+    private static boolean isClosed(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
 	CurriculumGroup groupFor = cycleCurriculumGroup.findCurriculumGroupFor(courseGroup);
 	if (groupFor == null) {
 	    return false;
@@ -194,7 +196,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return false;
     }
 
-    private Set<CurricularCourse> getNotAprovedCourses(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
+    private static Set<CurricularCourse> getNotAprovedCourses(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
 	Set<CurricularCourse> res = new HashSet<CurricularCourse>();
 	for (Context context : courseGroup.getOpenChildContexts(CurricularCourse.class, ExecutionYear.readCurrentExecutionYear())) {
 	    CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
@@ -205,12 +207,13 @@ public class ReadStudentExternalInformation extends FenixService {
 	return res;
     }
 
-    private CurriculumLine getAprovedCurriculumLine(CycleCurriculumGroup cycleCurriculumGroup, CurricularCourse curricularCourse) {
+    private static CurriculumLine getAprovedCurriculumLine(CycleCurriculumGroup cycleCurriculumGroup,
+	    CurricularCourse curricularCourse) {
 	return cycleCurriculumGroup.getApprovedCurriculumLine(curricularCourse);
     }
 
-    private void addAvailableRemainingCoursesBolonha(InfoStudentExternalInformation info, CurricularCourse curricularCourse,
-	    CycleCurriculumGroup cycleCurriculumGroup) {
+    private static void addAvailableRemainingCoursesBolonha(InfoStudentExternalInformation info,
+	    CurricularCourse curricularCourse, CycleCurriculumGroup cycleCurriculumGroup) {
 	final InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
 		.newFromDomain(curricularCourse);
 	infoExternalCurricularCourseInfo.setName("" + curricularCourse.getIdInternal() + " " + curricularCourse.getName());
@@ -223,7 +226,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	info.getAvailableRemainingCourses().add(infoExternalCurricularCourseInfo);
     }
 
-    private void addExternalEnrolmentInfoBolonha(InfoStudentExternalInformation infoStudentExternalInformation,
+    private static void addExternalEnrolmentInfoBolonha(InfoStudentExternalInformation infoStudentExternalInformation,
 	    CurriculumLine curriculumLine, CycleCurriculumGroup cycleCurriculumGroup) {
 	if (curriculumLine.isEnrolment()) {
 	    Enrolment enrolment = (Enrolment) curriculumLine;
@@ -269,7 +272,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	}
     }
 
-    private void addCurricularCourse(InfoExternalDegreeCurricularPlanInfo info, CurricularCourse curricularCourse,
+    private static void addCurricularCourse(InfoExternalDegreeCurricularPlanInfo info, CurricularCourse curricularCourse,
 	    CycleCurriculumGroup cycleCurriculumGroup) {
 	InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
 		.newFromDomain(curricularCourse);
@@ -282,14 +285,14 @@ public class ReadStudentExternalInformation extends FenixService {
 	info.addCourse(infoExternalCurricularCourseInfo);
     }
 
-    private int getCurriculumYear(Collection<CycleCurriculumGroup> studentCycles) {
+    private static int getCurriculumYear(Collection<CycleCurriculumGroup> studentCycles) {
 	CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) Collections.max(studentCycles, new BeanComparator(
 		"cycleType"));
 	Integer curricularYear = cycleCurriculumGroup.getCurriculum().getCurricularYear();
 	return cycleCurriculumGroup.getCycleType() == CycleType.FIRST_CYCLE ? curricularYear : (curricularYear += 3);
     }
 
-    private double getDegreeAverage(Collection<CycleCurriculumGroup> studentCycles) {
+    private static double getDegreeAverage(Collection<CycleCurriculumGroup> studentCycles) {
 	Iterator<CycleCurriculumGroup> iterator = studentCycles.iterator();
 	Curriculum curriculum = iterator.next().getCurriculum();
 	while (iterator.hasNext()) {
@@ -298,7 +301,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return curriculum.getAverage().doubleValue();
     }
 
-    private Collection getResultForPreBolonha(Person person) {
+    private static Collection getResultForPreBolonha(Person person) {
 	Collection result = new ArrayList();
 	Collection students = person.getStudents();
 	for (Iterator iter = students.iterator(); iter.hasNext();) {
@@ -307,11 +310,11 @@ public class ReadStudentExternalInformation extends FenixService {
 	    if (registration.getActiveState().getStateType() != RegistrationStateType.CANCELED
 		    && registration.getActiveStudentCurricularPlan() != null) {
 
-		info.setPerson(this.buildExternalPersonInfo(person));
+		info.setPerson(buildExternalPersonInfo(person));
 
-		info.setDegree(this.buildExternalDegreeCurricularPlanInfo(registration));
-		info.setCourses(this.buildExternalEnrollmentsInfo(registration));
-		info.setAvailableRemainingCourses(this.buildAvailableRemainingCourses(registration));
+		info.setDegree(buildExternalDegreeCurricularPlanInfo(registration));
+		info.setCourses(buildExternalEnrollmentsInfo(registration));
+		info.setAvailableRemainingCourses(buildAvailableRemainingCourses(registration));
 		info.setNumber(registration.getNumber().toString());
 
 		final int curricularYear = registration.getCurricularYear();
@@ -326,7 +329,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return result;
     }
 
-    private Collection<CycleCurriculumGroup> getStudentCycles(Student student) {
+    private static Collection<CycleCurriculumGroup> getStudentCycles(Student student) {
 	Registration activeRegistration = getActiveRegistrationForBolonha(student);
 	if (activeRegistration.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)) {
 	    return Collections.singleton(activeRegistration.getActiveStudentCurricularPlan().getRoot().getCycleCurriculumGroup(
@@ -374,7 +377,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	}
     }
 
-    private CycleCurriculumGroup getConcludedFirstCycle(Student student) {
+    private static CycleCurriculumGroup getConcludedFirstCycle(Student student) {
 	for (Registration registration : student.getRegistrationsSet()) {
 	    for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan().getRoot()
 		    .getCycleCurriculumGroups()) {
@@ -386,7 +389,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return null;
     }
 
-    private Registration getActiveRegistrationForBolonha(Student student) {
+    private static Registration getActiveRegistrationForBolonha(Student student) {
 	for (Registration registration : student.getRegistrationsSet()) {
 	    if (registration.isActive()
 		    && (registration.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
@@ -398,7 +401,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return null;
     }
 
-    private Collection buildAvailableRemainingCourses(final Registration registration) {
+    private static Collection buildAvailableRemainingCourses(final Registration registration) {
 	final Collection<CurricularCourse> allCourses = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
 		.getCurricularCourses();
 	final Collection<InfoExternalCurricularCourseInfo> availableInfos = new ArrayList<InfoExternalCurricularCourseInfo>();
@@ -414,7 +417,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return availableInfos;
     }
 
-    private boolean studentIsNotApprovedInCurricularCourse(final Registration registration,
+    private static boolean studentIsNotApprovedInCurricularCourse(final Registration registration,
 	    final CurricularCourse curricularCourse) {
 	for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.isApproved(curricularCourse)) {
@@ -424,7 +427,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return true;
     }
 
-    private boolean hasActiveScope(final CurricularCourse curricularCourse) {
+    private static boolean hasActiveScope(final CurricularCourse curricularCourse) {
 	for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
 	    if (degreeModuleScope.isActive()) {
 		return true;
@@ -433,7 +436,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return false;
     }
 
-    private Collection buildExternalEnrollmentsInfo(Registration registration) {
+    private static Collection buildExternalEnrollmentsInfo(Registration registration) {
 	Collection enrollments = new ArrayList();
 	Collection curricularPlans = registration.getStudentCurricularPlans();
 	for (Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
@@ -491,7 +494,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return enrollments;
     }
 
-    private Grade getAverage(Substitution substitution) {
+    private static Grade getAverage(Substitution substitution) {
 	if (substitution.getEnrolments().size() == 1) {
 	    return substitution.getEnrolments().get(0).getIEnrolment().getGrade();
 	}
@@ -526,13 +529,13 @@ public class ReadStudentExternalInformation extends FenixService {
 
     }
 
-    private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(Registration registration) {
+    private static InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(Registration registration) {
 	InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
 	DegreeCurricularPlan degreeCurricularPlan = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
 
 	info.setName(degreeCurricularPlan.getDegree().getName());
 	info.setCode(degreeCurricularPlan.getDegree().getSigla());
-	info.setBranch(this.buildExternalDegreeBranchInfo(registration));
+	info.setBranch(buildExternalDegreeBranchInfo(registration));
 
 	Collection courses = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
 	for (Iterator iter = courses.iterator(); iter.hasNext();) {
@@ -556,7 +559,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return info;
     }
 
-    private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfoBolonha(
+    private static InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfoBolonha(
 	    Collection<CycleCurriculumGroup> studentCycles) {
 	InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
 	DegreeCurricularPlan degreeCurricularPlan = getCycleDegree(studentCycles);
@@ -568,7 +571,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return info;
     }
 
-    private DegreeCurricularPlan getCycleDegree(Collection<CycleCurriculumGroup> studentCycles) {
+    private static DegreeCurricularPlan getCycleDegree(Collection<CycleCurriculumGroup> studentCycles) {
 	for (CycleCurriculumGroup cycleCurriculumGroup : studentCycles) {
 	    if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE) {
 		return cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan();
@@ -584,7 +587,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return null;
     }
 
-    private InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(Registration registration) {
+    private static InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(Registration registration) {
 	InfoExternalDegreeBranchInfo info = new InfoExternalDegreeBranchInfo();
 	if (registration.getActiveStudentCurricularPlan().getBranch() != null) {
 	    info.setName(registration.getActiveStudentCurricularPlan().getBranch().getName());
@@ -594,12 +597,12 @@ public class ReadStudentExternalInformation extends FenixService {
 	return info;
     }
 
-    private InfoExternalPersonInfo buildExternalPersonInfo(Person person) {
+    private static InfoExternalPersonInfo buildExternalPersonInfo(Person person) {
 	InfoExternalPersonInfo info = new InfoExternalPersonInfo();
-	info.setAddress(this.buildInfoExternalAdressInfo(person));
+	info.setAddress(buildInfoExternalAdressInfo(person));
 	info.setBirthday(DateFormatUtil.format("yyyy-MM-dd", person.getDateOfBirth()));
 	info.setCelularPhone(person.getMobile());
-	info.setCitizenship(this.builsExternalCitizenshipInfo(person));
+	info.setCitizenship(builsExternalCitizenshipInfo(person));
 	StringBuilder emails = new StringBuilder();
 	Iterator<EmailAddress> iterator = person.getEmailAddresses().iterator();
 	while (iterator.hasNext()) {
@@ -610,7 +613,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	}
 	info.setEmail(emails.toString());
 	info.setFiscalNumber(person.getSocialSecurityNumber());
-	info.setIdentification(this.buildExternalIdentificationInfo(person));
+	info.setIdentification(buildExternalIdentificationInfo(person));
 	info.setName(person.getName());
 	info.setNationality(person.getCountry().getCode());
 	info.setPhone(person.getPhone());
@@ -619,7 +622,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return info;
     }
 
-    private InfoExternalIdentificationInfo buildExternalIdentificationInfo(Person person) {
+    private static InfoExternalIdentificationInfo buildExternalIdentificationInfo(Person person) {
 	InfoExternalIdentificationInfo info = new InfoExternalIdentificationInfo();
 	info.setDocumentType(person.getIdDocumentType().toString());
 	info.setNumber(person.getDocumentIdNumber());
@@ -636,7 +639,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return info;
     }
 
-    private InfoExternalCitizenshipInfo builsExternalCitizenshipInfo(Person person) {
+    private static InfoExternalCitizenshipInfo builsExternalCitizenshipInfo(Person person) {
 	InfoExternalCitizenshipInfo info = new InfoExternalCitizenshipInfo();
 	info.setArea(person.getParishOfBirth());
 	info.setCounty(person.getDistrictSubdivisionOfBirth());
@@ -644,7 +647,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	return info;
     }
 
-    private InfoExternalAdressInfo buildInfoExternalAdressInfo(Person person) {
+    private static InfoExternalAdressInfo buildInfoExternalAdressInfo(Person person) {
 	InfoExternalAdressInfo info = new InfoExternalAdressInfo();
 
 	if (person.hasDefaultPhysicalAddress()) {

@@ -6,11 +6,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDistrict;
 import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllDistricts extends FenixService {
 
-    public List<InfoDistrict> run() {
+    @Service
+    public static List<InfoDistrict> run() {
 	List<InfoDistrict> result = new ArrayList<InfoDistrict>();
 
 	for (District district : rootDomainObject.getDistricts()) {

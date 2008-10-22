@@ -216,7 +216,7 @@ public class PerformanceGridRenderer extends OutputRenderer {
 		    return enroled;
 		} else {
 		    return notApprovedAnotherYear; // not evaluated in another
-						   // year
+		    // year
 		}
 	    }
 	    return emptySpace;

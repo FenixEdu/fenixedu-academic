@@ -11,11 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedPublicExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -39,14 +37,9 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 	sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
 
 	/* Set in request ExecutionPeriods bean */
-	Object argsReadExecutionPeriods[] = {};
+
 	List executionPeriods;
-	try {
-	    executionPeriods = (ArrayList) ServiceUtils.executeService("ReadNotClosedPublicExecutionPeriods",
-		    argsReadExecutionPeriods);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+	executionPeriods = ReadNotClosedPublicExecutionPeriods.run();
 	List executionPeriodsLabelValueList = new ArrayList();
 	for (int i = 0; i < executionPeriods.size(); i++) {
 	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
@@ -78,14 +71,8 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 	    throws Exception {
 	DynaActionForm indexForm = (DynaActionForm) form;
 
-	Object argsReadExecutionPeriods[] = {};
 	List infoExecutionPeriods;
-	try {
-	    infoExecutionPeriods = (ArrayList) ServiceUtils.executeService("ReadNotClosedPublicExecutionPeriods",
-		    argsReadExecutionPeriods);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+	infoExecutionPeriods = ReadNotClosedPublicExecutionPeriods.run();
 
 	Integer index = (Integer) indexForm.get("index");
 	if (infoExecutionPeriods != null && index != null) {

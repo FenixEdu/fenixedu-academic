@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExecutionCourseToGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExecutionCoursesFromGroup;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -71,8 +73,8 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 
 	if (executionCourses.size() > 0) {
 	    List<ExecutionCourse> coursesUnableToAdd;
-	    Object[] args = { group, executionCourses };
-	    coursesUnableToAdd = (List<ExecutionCourse>) executeService("AddExecutionCourseToGroup", args);
+
+	    coursesUnableToAdd = (List<ExecutionCourse>) AddExecutionCourseToGroup.run(group, executionCourses);
 
 	    request.setAttribute("coursesUnableToAdd", coursesUnableToAdd);
 	}
@@ -92,8 +94,8 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 	VigilantGroup group = bean.getSelectedVigilantGroup();
 
 	try {
-	    Object[] args = { group, executionCourses };
-	    executeService("RemoveExecutionCoursesFromGroup", args);
+
+	    RemoveExecutionCoursesFromGroup.run(group, executionCourses);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -119,8 +121,8 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 	    courses.add(course);
 
 	    try {
-		Object[] args = { group, courses };
-		executeService("AddExecutionCourseToGroup", args);
+
+		AddExecutionCourseToGroup.run(group, courses);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }

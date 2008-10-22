@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.ServiceManager;
 
 public class LoginRequestManagement extends FenixDispatchAction {
 
@@ -65,7 +66,10 @@ public class LoginRequestManagement extends FenixDispatchAction {
 	    return cycleLoginScreen(mapping, actionForm, request, response);
 	}
 	try {
-	    executeService(PropertiesManager.getProperty("enableExternalLoginService"), new Object[] { bean });
+	    ServiceManager.invokeServiceByName(PropertiesManager.getProperty("enableExternalLoginService"), "run",
+		    new Object[] { bean });
+	    // executeService(PropertiesManager.getProperty(
+	    // "enableExternalLoginService"), new Object[] { bean });
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	    return mapping.findForward("startRequestLoginProcess");

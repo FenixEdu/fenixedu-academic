@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
@@ -56,12 +59,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 	List infoExecutionPeriods = null;
 
-	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
-
-	} catch (FenixServiceException ex) {
-	    throw new FenixActionException();
-	}
+	infoExecutionPeriods = ReadExecutionPeriods.run();
 	if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 	    infoExecutionPeriods = (List) CollectionUtils.select(infoExecutionPeriods, new Predicate() {
 		public boolean evaluate(Object input) {
@@ -112,10 +110,9 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 	request.setAttribute("executionPeriodId", executionPeriodId);
 
-	Object args[] = { executionPeriodId };
 	List executionDegreeList = null;
 	try {
-	    executionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionPeriodId", args);
+	    executionDegreeList = ReadExecutionDegreesByExecutionPeriodId.run(executionPeriodId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -181,11 +178,10 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("executionCoursesNotLinked", getNotLinked.toString());
 	}
 
-	Object args[] = { executionDegreeId, executionPeriodId, curYear };
 	List infoExecutionCourses;
 	try {
-	    infoExecutionCourses = (List) ServiceUtils.executeService(
-		    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
+	    infoExecutionCourses = (List) ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(
+		    executionDegreeId, executionPeriodId, curYear);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

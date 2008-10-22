@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
@@ -19,7 +20,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
  */
 public class ReadExecutionDegreesByExecutionYearAndDegree extends FenixService {
 
-    public List<InfoExecutionDegree> run(Degree curso, ExecutionYear year) {
+    @Service
+    public static List<InfoExecutionDegree> run(Degree curso, ExecutionYear year) {
 	List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 
 	List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByDegreeAndExecutionYear(curso, year.getYear());

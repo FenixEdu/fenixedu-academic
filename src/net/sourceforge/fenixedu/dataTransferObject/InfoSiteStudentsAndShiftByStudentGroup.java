@@ -13,16 +13,15 @@ import java.util.List;
  */
 public class InfoSiteStudentsAndShiftByStudentGroup extends DataTranferObject implements ISiteComponent {
 
-    public static final Comparator<InfoSiteStudentsAndShiftByStudentGroup> COMPARATOR_BY_NUMBER
-    		= new Comparator<InfoSiteStudentsAndShiftByStudentGroup>() {
+    public static final Comparator<InfoSiteStudentsAndShiftByStudentGroup> COMPARATOR_BY_NUMBER = new Comparator<InfoSiteStudentsAndShiftByStudentGroup>() {
 
-		    @Override
-		    public int compare(InfoSiteStudentsAndShiftByStudentGroup o1, InfoSiteStudentsAndShiftByStudentGroup o2) {
-			final InfoStudentGroup g1 = o1.getInfoStudentGroup();
-			final InfoStudentGroup g2 = o2.getInfoStudentGroup();
-			return g1.getGroupNumber().compareTo(g2.getGroupNumber());
-		    }
-	
+	@Override
+	public int compare(InfoSiteStudentsAndShiftByStudentGroup o1, InfoSiteStudentsAndShiftByStudentGroup o2) {
+	    final InfoStudentGroup g1 = o1.getInfoStudentGroup();
+	    final InfoStudentGroup g2 = o2.getInfoStudentGroup();
+	    return g1.getGroupNumber().compareTo(g2.getGroupNumber());
+	}
+
     };
 
     private List infoSiteStudentInformationList;

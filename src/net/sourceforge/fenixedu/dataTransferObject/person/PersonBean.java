@@ -53,7 +53,7 @@ public class PersonBean implements Serializable {
     private ProfessionType professionType;
 
     private ProfessionalSituationConditionType professionalCondition;
-    
+
     private String profession;
 
     private MaritalStatus maritalStatus;
@@ -83,7 +83,7 @@ public class PersonBean implements Serializable {
     private String districtSubdivisionOfBirth;
 
     private String districtOfBirth;
-    
+
     private String fatherName;
 
     private String motherName;
@@ -106,7 +106,7 @@ public class PersonBean implements Serializable {
     private String districtOfResidence;
 
     private DomainReference<DistrictSubdivision> districtSubdivisionOfResidenceObject;
-    
+
     private DomainReference<Country> countryOfResidence;
 
     public PersonBean() {
@@ -222,7 +222,7 @@ public class PersonBean implements Serializable {
     public void setCountryOfResidence(Country countryOfResidence) {
 	this.countryOfResidence = countryOfResidence == null ? null : new DomainReference<Country>(countryOfResidence);
     }
-    
+
     public boolean hasCountryOfResidence() {
 	return getCountryOfResidence() != null;
     }
@@ -244,7 +244,8 @@ public class PersonBean implements Serializable {
     }
 
     public String getDistrictOfResidence() {
-	return getDistrictSubdivisionOfResidenceObject() != null ? getDistrictSubdivisionOfResidenceObject().getDistrict().getName() : districtOfResidence;
+	return getDistrictSubdivisionOfResidenceObject() != null ? getDistrictSubdivisionOfResidenceObject().getDistrict()
+		.getName() : districtOfResidence;
     }
 
     public void setDistrictOfResidence(String districtOfResidence) {
@@ -252,8 +253,7 @@ public class PersonBean implements Serializable {
     }
 
     public DistrictSubdivision getDistrictSubdivisionOfResidenceObject() {
-	return (this.districtSubdivisionOfResidenceObject != null) ? this.districtSubdivisionOfResidenceObject
-		.getObject() : null;
+	return (this.districtSubdivisionOfResidenceObject != null) ? this.districtSubdivisionOfResidenceObject.getObject() : null;
     }
 
     public void setDistrictSubdivisionOfResidenceObject(DistrictSubdivision districtSubdivision) {

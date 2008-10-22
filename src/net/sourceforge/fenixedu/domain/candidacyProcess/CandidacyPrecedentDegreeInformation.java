@@ -17,7 +17,7 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
     public boolean hasInstitution() {
 	return getInstitution() != null;
     }
-    
+
     public boolean isInternal() {
 	return false;
     }

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeThesisPerson extends FenixService {
 
@@ -50,7 +51,9 @@ public class ChangeThesisPerson extends FenixService {
 	}
     }
 
-    public void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, PersonChange change) throws FenixServiceException {
+    @Service
+    public static void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, PersonChange change)
+	    throws FenixServiceException {
 	Person person = getPerson(change);
 
 	thesis.checkIsScientificCommission();
@@ -81,7 +84,7 @@ public class ChangeThesisPerson extends FenixService {
 	}
     }
 
-    private Person getPerson(PersonChange change) throws FenixServiceException {
+    private static Person getPerson(PersonChange change) throws FenixServiceException {
 	if (change.person != null) {
 	    return change.person;
 	} else {

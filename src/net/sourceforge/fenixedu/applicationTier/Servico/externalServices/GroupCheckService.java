@@ -31,6 +31,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * 
  * @author naat
@@ -46,7 +48,7 @@ public class GroupCheckService extends FenixService {
 	DEPARTMENT, DEGREE, CURRICULAR_COURSE, EXECUTION_COURSE, ROLE
     }
 
-    private class GroupCheckQuery {
+    private static class GroupCheckQuery {
 	public String username;
 
 	public RoleType roleType;
@@ -88,7 +90,8 @@ public class GroupCheckService extends FenixService {
      * TheYear>][;semester=<TheSemester>]
      * 
      */
-    public Boolean run(String query) throws FenixServiceException {
+    @Service
+    public static Boolean run(String query) throws FenixServiceException {
 
 	GroupCheckQuery groupCheckQuery = parseQuery(query);
 
@@ -123,7 +126,7 @@ public class GroupCheckService extends FenixService {
      * 
      * 
      */
-    private Boolean checkRoleGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
+    private static Boolean checkRoleGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
 	if (groupCheckQuery.roleType == RoleType.TEACHER || groupCheckQuery.roleType == RoleType.EMPLOYEE) {
 	    return new RoleGroup(Role.getRoleByRoleType(groupCheckQuery.roleType)).isMember(person);
 	} else {
@@ -146,7 +149,8 @@ public class GroupCheckService extends FenixService {
      * @throws NonExistingServiceException
      * @throws ExcepcaoPersistencia
      */
-    private Boolean checkExecutionCourseGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
+    private static Boolean checkExecutionCourseGroup(Person person, GroupCheckQuery groupCheckQuery)
+	    throws NonExistingServiceException {
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT) {
@@ -196,7 +200,8 @@ public class GroupCheckService extends FenixService {
      * @throws NonExistingServiceException
      * @throws ExcepcaoPersistencia
      */
-    private Boolean checkCurricularCourseGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
+    private static Boolean checkCurricularCourseGroup(Person person, GroupCheckQuery groupCheckQuery)
+	    throws NonExistingServiceException {
 	final String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.STUDENT) {
@@ -233,7 +238,7 @@ public class GroupCheckService extends FenixService {
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException
      */
-    private Boolean checkDegreeGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
+    private static Boolean checkDegreeGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT) {
@@ -253,7 +258,7 @@ public class GroupCheckService extends FenixService {
 
     }
 
-    private Degree getDegree(String[] unitAcronyms) throws NonExistingServiceException {
+    private static Degree getDegree(String[] unitAcronyms) throws NonExistingServiceException {
 	Unit unit = getUnit(unitAcronyms, 3);
 
 	if (!unit.isDegreeUnit()) {
@@ -264,7 +269,7 @@ public class GroupCheckService extends FenixService {
 	return degree;
     }
 
-    private Department getDepartment(String[] unitAcronyms) throws NonExistingServiceException {
+    private static Department getDepartment(String[] unitAcronyms) throws NonExistingServiceException {
 	final Unit unit = getUnit(unitAcronyms, 2);
 	if (!unit.isDepartmentUnit()) {
 	    throw new NonExistingServiceException();
@@ -273,7 +278,7 @@ public class GroupCheckService extends FenixService {
 	return unit.getDepartment();
     }
 
-    private Unit getUnit(String[] unitAcronyms, int maxIndex) throws NonExistingServiceException {
+    private static Unit getUnit(String[] unitAcronyms, int maxIndex) throws NonExistingServiceException {
 	Unit unit = UnitUtils.readInstitutionUnit();
 	if (unit == null || StringUtils.isEmpty(unit.getAcronym()) || !unit.getAcronym().equals(unitAcronyms[0])) {
 	    throw new NonExistingServiceException();
@@ -301,7 +306,8 @@ public class GroupCheckService extends FenixService {
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException
      */
-    private Boolean checkDepartmentGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
+    private static Boolean checkDepartmentGroup(Person person, GroupCheckQuery groupCheckQuery)
+	    throws NonExistingServiceException {
 
 	final String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT
@@ -322,7 +328,7 @@ public class GroupCheckService extends FenixService {
 
     }
 
-    private ExecutionSemester getExecutionPeriod(String year, Integer semester) throws NonExistingServiceException {
+    private static ExecutionSemester getExecutionPeriod(String year, Integer semester) throws NonExistingServiceException {
 
 	if (year != null && semester != null) {
 	    return ExecutionSemester.readBySemesterAndExecutionYear(semester, year);
@@ -334,7 +340,7 @@ public class GroupCheckService extends FenixService {
 
     }
 
-    private ExecutionYear getExecutionYear(String year) {
+    private static ExecutionYear getExecutionYear(String year) {
 	if (year != null) {
 	    return ExecutionYear.readExecutionYearByName(year);
 	} else {
@@ -343,7 +349,7 @@ public class GroupCheckService extends FenixService {
 
     }
 
-    private GroupCheckQuery parseQuery(String query) {
+    private static GroupCheckQuery parseQuery(String query) {
 	GroupCheckQuery groupCheckQuery = new GroupCheckQuery();
 
 	String[] nameValuePairs = query.split(PAIR_SEPARATOR);

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Mota
@@ -20,7 +20,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadTeachersByExecutionCourseProfessorship extends FenixService {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+    @Service
+    public static List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
 	return executionCourse == null ? null : executionCourse.getProfessorships();
     }

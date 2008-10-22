@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -14,7 +14,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadDomainExecutionPeriodByOID extends FenixService {
 
-    public ExecutionSemester run(final Integer executionPeriodID) {
+    @Service
+    public static ExecutionSemester run(final Integer executionPeriodID) {
 	return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
     }
 

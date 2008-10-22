@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentFactory;
@@ -82,7 +83,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
 	}
 	if (anualBonusInstallmentFactory.getAnualBonusInstallmentBeanList() != null) {
-	    List<ActionMessage> actionMessageList = (List<ActionMessage>) executeService("ExecuteFactoryMethod", new Object[] { anualBonusInstallmentFactory });
+	    List<ActionMessage> actionMessageList = (List<ActionMessage>) ExecuteFactoryMethod.run(anualBonusInstallmentFactory);
 	    if (!actionMessageList.isEmpty()) {
 		for (ActionMessage actionMessage : actionMessageList) {
 		    actionMessages.add("message", actionMessage);

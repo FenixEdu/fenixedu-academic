@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.annou
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -15,7 +16,8 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
  */
 public class DeleteAnnouncementBoard extends FenixService {
 
-    public void run(AnnouncementBoard board) {
+    @Service
+    public static void run(AnnouncementBoard board) {
 	board.delete();
     }
 }

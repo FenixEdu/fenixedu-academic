@@ -47,8 +47,7 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
 
 	try {
 	    PersonGroup personGroup = new PersonGroup(person);
-	    executeService("AddPersonToAccessGroup", new Object[] { accessGroupType, personGroup.getExpression(), true,
-		    role });
+	    executeService("AddPersonToAccessGroup", new Object[] { accessGroupType, personGroup.getExpression(), true, role });
 
 	} catch (DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQu
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
@@ -88,7 +87,7 @@ public class SimulateTest extends FenixService {
 	// if ((!infoDistributedTest.getTestType().equals(new
 	// TestType(TestType.INQUIRY)))
 	// &&
-	// infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions
+	//infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions
 	// ().size() != 0) {
 	//
 	// infoStudentTestQuestion =

@@ -18,11 +18,11 @@ public class DomainReference<T extends DomainObject> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String className; // is also used to know when we are storing the
-			      // null value
+    // null value
     private Integer oid;
 
     transient Class type; // chached type, transient to protect from class
-			  // hierarchy changes
+    // hierarchy changes
     transient T object;
 
     public DomainReference(T object) {

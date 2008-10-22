@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 import com.sun.faces.el.impl.parser.ParseException;
 
 /**
@@ -28,7 +30,8 @@ import com.sun.faces.el.impl.parser.ParseException;
  */
 public class ReadQuestionImage extends FenixService {
 
-    public String run(Integer exerciseId, Integer metadataCode, Integer imageId, Integer itemIndex, String path)
+    @Service
+    public static String run(Integer exerciseId, Integer metadataCode, Integer imageId, Integer itemIndex, String path)
 	    throws FenixServiceException {
 
 	Metadata metadata = rootDomainObject.readMetadataByOID(metadataCode);
@@ -53,7 +56,8 @@ public class ReadQuestionImage extends FenixService {
 	return null;
     }
 
-    public String run(Integer distributedTestId, Integer questionId, String optionShuffle, Integer imageId, String path)
+    @Service
+    public static String run(Integer distributedTestId, Integer questionId, String optionShuffle, Integer imageId, String path)
 	    throws FenixServiceException {
 
 	Question question = null;

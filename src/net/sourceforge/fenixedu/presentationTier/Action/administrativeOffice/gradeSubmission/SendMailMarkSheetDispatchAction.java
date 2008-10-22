@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.GradesToSubmitSendMail;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.MarkSheetsToConfirmSendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitExecutionCourseSendMailBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean;
@@ -16,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gr
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -87,10 +88,9 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
     public ActionForward markSheetsToConfirmSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
-	Object[] args = new Object[] { bean.getMarkSheetToConfirmSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(),
-		bean.getSubject(), bean.getMessage() };
 
-	ServiceUtils.executeService("MarkSheetsToConfirmSendMail", args);
+	MarkSheetsToConfirmSendMail.run(bean.getMarkSheetToConfirmSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(), bean
+		.getSubject(), bean.getMessage());
 	resetMail(bean);
 	return searchSendMail(mapping, actionForm, request, response);
     }
@@ -106,10 +106,9 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
     public ActionForward gradesToSubmitSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
-	Object[] args = new Object[] { bean.getGradesToSubmitExecutionCourseSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(),
-		bean.getSubject(), bean.getMessage() };
 
-	ServiceUtils.executeService("GradesToSubmitSendMail", args);
+	GradesToSubmitSendMail.run(bean.getGradesToSubmitExecutionCourseSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(),
+		bean.getSubject(), bean.getMessage());
 	resetMail(bean);
 	return searchSendMail(mapping, actionForm, request, response);
     }

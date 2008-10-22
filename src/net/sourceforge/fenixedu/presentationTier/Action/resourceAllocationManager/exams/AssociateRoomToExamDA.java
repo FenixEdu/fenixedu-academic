@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -60,10 +62,8 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
 	for (int iterEC = 0; iterEC < executionCourse.length; iterEC++) {
 
-	    Object args[] = { new Integer(executionCourse[iterEC]) };
-
-	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-		    "ReadExecutionCourseByOID", args);
+	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseByOID.run(new Integer(
+		    executionCourse[iterEC]));
 
 	    executionCourseNames.add(infoExecutionCourse.getNome());
 	}
@@ -111,8 +111,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 	if (rooms != null && rooms.length > 0) {
 
 	    for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
-		InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", new Object[] { Integer
-			.valueOf(rooms[iterRooms]) });
+		InfoRoom infoRoom = (InfoRoom) ReadRoomByOID.run(Integer.valueOf(rooms[iterRooms]));
 		selectedRooms.add(infoRoom);
 	    }
 

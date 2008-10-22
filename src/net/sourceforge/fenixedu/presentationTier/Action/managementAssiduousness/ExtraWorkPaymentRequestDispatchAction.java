@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory;
@@ -69,7 +70,7 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
 	} else {
 	    extraWorkRequestFactory.setPerformPayment(true);
 	}
-	Object result = executeService("ExecuteFactoryMethod", new Object[] { extraWorkRequestFactory });
+	Object result = ExecuteFactoryMethod.run(extraWorkRequestFactory);
 	if (result != null) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", (ActionMessage) result);
@@ -97,7 +98,7 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory = (EmployeeExtraWorkRequestFactory) getRenderedObject();
-	Object result = executeService("ExecuteFactoryMethod", new Object[] { employeeExtraWorkRequestFactory });
+	Object result = ExecuteFactoryMethod.run(employeeExtraWorkRequestFactory);
 
 	if (result != null) {
 	    ActionMessages actionMessages = getMessages(request);

@@ -9,9 +9,9 @@ package net.sourceforge.fenixedu.domain.teacher;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Leonor Almeida

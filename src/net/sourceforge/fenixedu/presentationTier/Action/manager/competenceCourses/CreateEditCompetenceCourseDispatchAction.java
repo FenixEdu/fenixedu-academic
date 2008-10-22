@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
@@ -29,10 +30,10 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	IUserView userView = UserView.getUser();
-	Object[] args = {};
+
 	List<InfoDepartment> departmentList = null;
 	try {
-	    departmentList = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", args);
+	    departmentList = ReadAllDepartments.run();
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}
@@ -70,14 +71,13 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	IUserView userView = UserView.getUser();
 
-	Integer competenceCourseID = Integer.valueOf((String) request.getParameter("competenceCourse"));
+	Integer competenceCourseID = Integer.valueOf(request.getParameter("competenceCourse"));
 	Object[] args = { competenceCourseID };
-	Object[] args2 = {};
 	InfoCompetenceCourse competenceCourse = null;
 	List<InfoDepartment> infoDepartments = null;
 	try {
 	    competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("ReadCompetenceCourse", args);
-	    infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", args2);
+	    infoDepartments = ReadAllDepartments.run();
 	} catch (NotExistingServiceException notExistingServiceException) {
 
 	} catch (FenixServiceException fenixServiceException) {

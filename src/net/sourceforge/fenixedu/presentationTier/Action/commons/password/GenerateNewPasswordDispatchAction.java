@@ -5,15 +5,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -45,8 +46,8 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
 	InfoPerson infoPerson = null;
 	try {
-	    Object args[] = { username };
-	    infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", args);
+
+	    infoPerson = (InfoPerson) ReadPersonByUsername.run(username);
 	} catch (ExcepcaoInexistente e) {
 	    throw new NonExistingActionException("A Person", e);
 	}
@@ -67,13 +68,13 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
 	final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
 	if (person != null) {
-	    ServiceUtils.executeService("SetUserUID", new Object[] { person });
+	    SetUserUID.run(person);
 	}
 
 	// Change the Password
 	try {
-	    Object args[] = { personID };
-	    password = (String) ServiceManagerServiceFactory.executeService("GenerateNewPassword", args);
+
+	    password = (String) GenerateNewPasswordService.run(personID);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -82,8 +83,8 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
 	InfoPerson infoPerson = null;
 	try {
-	    Object args[] = { request.getParameter("username") };
-	    infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", args);
+
+	    infoPerson = (InfoPerson) ReadPersonByUsername.run(request.getParameter("username"));
 	} catch (ExcepcaoInexistente e) {
 	    throw new NonExistingActionException("A Person", e);
 	}

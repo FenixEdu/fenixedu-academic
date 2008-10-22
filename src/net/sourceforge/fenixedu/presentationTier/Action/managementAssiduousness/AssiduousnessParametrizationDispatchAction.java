@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExemptionBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -144,7 +145,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	}
 	if (validateWorkScheduleAcronym(request, workScheduleTypeFactory)
 		&& validateWorkScheduleTypeFactory(request, workScheduleTypeFactory)) {
-	    Object result = executeService("ExecuteFactoryMethod", new Object[] { workScheduleTypeFactory });
+	    Object result = ExecuteFactoryMethod.run(workScheduleTypeFactory);
 	    if (result == null) {
 		request.setAttribute("workScheduleList", getScheduleList());
 		return mapping.findForward("show-all-schedules");
@@ -164,7 +165,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	}
 	if (hasWorkScheduleAcronym(request, workScheduleTypeFactory)
 		&& validateWorkScheduleTypeFactory(request, workScheduleTypeFactory)) {
-	    Object result = executeService("ExecuteFactoryMethod", new Object[] { workScheduleTypeFactory });
+	    Object result = ExecuteFactoryMethod.run(workScheduleTypeFactory);
 	    if (result == null) {
 		request.setAttribute("workScheduleList", getScheduleList());
 		return mapping.findForward("show-all-schedules");
@@ -380,7 +381,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	if (assiduousnessExemptionBean == null) {
 	    assiduousnessExemptionBean = new AssiduousnessExemptionBean();
 	} else {
-	    ActionMessage actionMessage = (ActionMessage) executeService("ExecuteFactoryMethod", new Object[] { assiduousnessExemptionBean });
+	    ActionMessage actionMessage = (ActionMessage) ExecuteFactoryMethod.run(assiduousnessExemptionBean);
 	    if (actionMessage == null) {
 		return showAssiduousnessExemptions(mapping, form, request, response);
 	    } else {

@@ -17,6 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpace;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpaceInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.MoveSpace;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.SpaceAccessGroupsManagement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean;
@@ -47,7 +52,6 @@ import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -138,9 +142,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final Space surroundingSpace = space.getSuroundingSpace();
 
-	final Object[] args = { space };
 	try {
-	    executeService("DeleteSpace", args);
+	    DeleteSpace.run(space);
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	    return manageSpace(mapping, request, space.getSpaceInformation());
@@ -194,9 +197,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final Space space = spaceInformation.getSpace();
 
-	final Object[] args = { spaceInformation };
 	try {
-	    executeService("DeleteSpaceInformation", args);
+	    DeleteSpaceInformation.run(spaceInformation);
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	}
@@ -238,11 +240,9 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    groupExpression = new RoleGroup(roleType).getExpression();
 	}
 
-	final Object[] args = { space, (bean != null) ? bean.getAccessGroupType() : null, true,
-		(bean != null) ? bean.getMaintainElements() : false, groupExpression };
-
 	try {
-	    executeService("SpaceAccessGroupsManagement", args);
+	    SpaceAccessGroupsManagement.run(space, (bean != null) ? bean.getAccessGroupType() : null, true, (bean != null) ? bean
+		    .getMaintainElements() : false, groupExpression);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -257,9 +257,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	final SpaceAccessGroupType groupType = SpaceAccessGroupType.valueOf(request.getParameter("spaceAccessGroupType"));
 	final String groupExpression = getGroupExpressionFromParameter(request);
 
-	final Object[] args = { space, groupType, false, false, groupExpression };
 	try {
-	    executeService("SpaceAccessGroupsManagement", args);
+	    SpaceAccessGroupsManagement.run(space, groupType, false, false, groupExpression);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -316,7 +315,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	final IViewState viewState = RenderUtils.getViewState();
 	MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
 
-	executeService("MoveSpace", new Object[] { bean });
+	MoveSpace.run(bean);
 	Space space = bean.getSpace();
 	SpaceInformation spaceInformation = space.getSpaceInformation();
 
@@ -406,9 +405,9 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	}
 
 	if (space != null && space.isAllocatableSpace() && day != null) {
-	    Object args[] = { space, day };
-	    List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService(
-		    "ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", args);
+
+	    List<InfoObject> showOccupations = ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(
+		    (AllocatableSpace) space, day);
 	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
 	}
 

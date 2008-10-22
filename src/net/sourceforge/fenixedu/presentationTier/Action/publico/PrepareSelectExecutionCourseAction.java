@@ -7,10 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.SelectExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
@@ -26,6 +25,7 @@ import org.apache.struts.action.ActionMapping;
  */
 public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 	try {
@@ -41,15 +41,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
 	Integer curricularYear = (Integer) request.getAttribute("curYear");
 
-	Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
-
-	List infoExecutionCourses;
-	try {
-	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService("SelectExecutionCourse",
-		    argsSelectExecutionCourse);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	List infoExecutionCourses = (List) SelectExecutionCourse.run(infoExecutionDegree, infoExecutionPeriod, curricularYear);
 	Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
 	request.setAttribute("exeCourseList", infoExecutionCourses);
 	return mapping.findForward("sucess");

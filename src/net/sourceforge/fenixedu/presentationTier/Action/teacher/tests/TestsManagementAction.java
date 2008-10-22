@@ -9,13 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CorrectTestGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteTestGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.FinishTestGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.PublishGrades;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.PublishTestGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.UnpublishTestGroup;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.tests.NewTest;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -86,7 +91,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-	ServiceUtils.executeService("PublishTestGroup", new Object[] { testGroup });
+	PublishTestGroup.run(testGroup);
 
 	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
 
@@ -99,7 +104,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-	ServiceUtils.executeService("UnpublishTestGroup", new Object[] { testGroup });
+	UnpublishTestGroup.run(testGroup);
 
 	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
 
@@ -126,7 +131,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
 
-	ServiceUtils.executeService("DeleteTestGroup", new Object[] { testGroup });
+	DeleteTestGroup.run(testGroup);
 
 	return this.manageTests(mapping, form, request, response);
     }
@@ -137,7 +142,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-	ServiceUtils.executeService("FinishTestGroup", new Object[] { testGroup });
+	FinishTestGroup.run(testGroup);
 
 	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
 
@@ -150,7 +155,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-	ServiceUtils.executeService("PublishGrades", new Object[] { testGroup });
+	PublishGrades.run(testGroup);
 
 	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
 
@@ -163,7 +168,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-	ServiceUtils.executeService("CorrectTestGroup", new Object[] { testGroup });
+	CorrectTestGroup.run(testGroup);
 
 	List<CorrectTestBean> uncorrectedByPerson = new ArrayList<CorrectTestBean>();
 	List<CorrectTestBean> correctedByPerson = new ArrayList<CorrectTestBean>();

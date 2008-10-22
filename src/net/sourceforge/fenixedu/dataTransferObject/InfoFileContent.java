@@ -17,7 +17,7 @@ public class InfoFileContent extends InfoObject {
 	public int compare(InfoFileContent o1, InfoFileContent o2) {
 	    return o1.getDisplayName().compareTo(o2.getDisplayName());
 	}
-	
+
     };
 
     private String name;

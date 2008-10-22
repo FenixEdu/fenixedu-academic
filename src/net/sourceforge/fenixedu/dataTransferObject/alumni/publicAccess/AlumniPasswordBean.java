@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess;
 
 import java.io.Serializable;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.DomainReference;
+
+import org.joda.time.YearMonthDay;
 
 public class AlumniPasswordBean implements Serializable {
 

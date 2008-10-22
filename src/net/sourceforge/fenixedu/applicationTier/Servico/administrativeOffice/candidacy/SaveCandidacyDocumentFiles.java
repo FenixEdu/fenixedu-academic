@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -28,7 +29,8 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  */
 public class SaveCandidacyDocumentFiles extends FenixService {
 
-    public void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
+    @Service
+    public static void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
 
 	Group masterDegreeOfficeEmployeesGroup = new RoleGroup(Role
 		.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
@@ -60,7 +62,7 @@ public class SaveCandidacyDocumentFiles extends FenixService {
 
     }
 
-    private VirtualPath getVirtualPath(Candidacy candidacy) {
+    private static VirtualPath getVirtualPath(Candidacy candidacy) {
 	final VirtualPath filePath = new VirtualPath();
 	filePath.addNode(new VirtualPathNode("Candidacies", "Candidacies"));
 	filePath.addNode(new VirtualPathNode("CANDIDACY" + candidacy.getNumber(), candidacy.getNumber().toString()));

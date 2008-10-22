@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
@@ -13,7 +14,8 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
  */
 public class DeleteAnnouncement extends FenixService {
 
-    public void run(Announcement announcement) {
+    @Service
+    public static void run(Announcement announcement) {
 
 	announcement.delete();
     }

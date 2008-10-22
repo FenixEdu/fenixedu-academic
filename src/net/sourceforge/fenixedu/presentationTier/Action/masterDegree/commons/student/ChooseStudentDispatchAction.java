@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 
@@ -36,8 +36,8 @@ public class ChooseStudentDispatchAction extends FenixDispatchAction {
 	List result = null;
 
 	try {
-	    Object args[] = { studentNumber, DegreeType.MASTER_DEGREE };
-	    result = (List) ServiceManagerServiceFactory.executeService("ReadStudentCurricularPlansByNumberAndDegreeType", args);
+
+	    result = (List) ReadStudentCurricularPlansByNumberAndDegreeType.run(studentNumber, DegreeType.MASTER_DEGREE);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("O Aluno");
 	}

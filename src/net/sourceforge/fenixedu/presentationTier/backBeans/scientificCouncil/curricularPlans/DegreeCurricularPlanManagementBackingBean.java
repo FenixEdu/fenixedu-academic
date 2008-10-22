@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -110,10 +112,10 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 
     public String createCurricularPlan() {
 	Object[] args = { this.getDegreeId(), this.name, null }; // GradeScale.
-								 // valueOf
-								 // (this.
-								 // gradeScale)
-								 // };
+	// valueOf
+	// (this.
+	// gradeScale)
+	// };
 	return changeDegreeCurricularPlan("CreateDegreeCurricularPlan", args, "degreeCurricularPlan.created",
 		"error.creatingDegreeCurricularPlan");
     }
@@ -160,10 +162,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getExecutionYearItems() throws FenixFilterException, FenixServiceException {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 
-	final InfoExecutionYear currentInfoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
-		"ReadCurrentExecutionYear", new Object[] {});
-	final List<InfoExecutionYear> notClosedInfoExecutionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-		"ReadNotClosedExecutionYears", new Object[] {});
+	final InfoExecutionYear currentInfoExecutionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
+	final List<InfoExecutionYear> notClosedInfoExecutionYears = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
 	for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
 	    if (notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
 		result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));

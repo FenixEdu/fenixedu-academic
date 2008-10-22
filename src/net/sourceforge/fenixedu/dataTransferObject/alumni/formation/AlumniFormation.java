@@ -268,7 +268,8 @@ public class AlumniFormation implements Serializable {
 		if (getChildInstitution() != null) {
 		    return getChildInstitution();
 		} else if (getParentInstitution() != null) {
-		    if ((getParentInstitution() instanceof UniversityUnit) && (getParentInstitution().getChildParties(SchoolUnit.class).isEmpty())) {
+		    if ((getParentInstitution() instanceof UniversityUnit)
+			    && (getParentInstitution().getChildParties(SchoolUnit.class).isEmpty())) {
 			return getParentInstitution();
 		    }
 		}

@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class LerAulasDeTurma extends FenixService {
 
-    public List<InfoLesson> run(InfoClass infoClass) {
+    @Service
+    public static List<InfoLesson> run(InfoClass infoClass) {
 	SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
 
 	final List<Shift> shiftList = schoolClass.getAssociatedShifts();

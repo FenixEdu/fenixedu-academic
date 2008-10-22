@@ -10,7 +10,6 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 
 /**

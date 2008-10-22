@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -12,7 +13,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
  */
 public class ClearCache extends FenixService {
 
-    public Boolean run() {
+    @Service
+    public static Boolean run() {
 	return Boolean.TRUE;
     }
 

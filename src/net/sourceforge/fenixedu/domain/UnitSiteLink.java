@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import dml.runtime.RelationAdapter;
 
 public class UnitSiteLink extends UnitSiteLink_Base {

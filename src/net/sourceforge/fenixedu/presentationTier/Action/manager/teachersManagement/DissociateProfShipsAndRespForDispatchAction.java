@@ -116,8 +116,8 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	if (professorshipsNotRemoved != null && professorshipsNotRemoved.size() > 0) {
 	    errors = createErrors(request, professorshipsNotRemoved, "supportLessons", "PSWithSL",
 		    "error.manager.teachersManagement.PSWithSL", errors);
-	    errors = createErrors(request, professorshipsNotRemoved, "shifts", "PSWithS", "error.manager.teachersManagement.PSWithS",
-		    errors);
+	    errors = createErrors(request, professorshipsNotRemoved, "shifts", "PSWithS",
+		    "error.manager.teachersManagement.PSWithS", errors);
 	    return prepareDissociateECShowProfShipsAndRespFor(mapping, form, request, response);
 	}
 	// must only set this to null when we're certain of not returning to the

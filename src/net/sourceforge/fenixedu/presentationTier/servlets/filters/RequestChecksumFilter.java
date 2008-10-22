@@ -12,20 +12,21 @@ import org.apache.commons.fileupload.FileUpload;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
 
-public class RequestChecksumFilter extends pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter implements Filter {
-
+public class RequestChecksumFilter extends pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter
+	implements Filter {
 
     protected boolean shoudFilterReques(final HttpServletRequest httpServletRequest) {
-	final String uri = httpServletRequest.getRequestURI().substring(FenixWebFramework.getConfig().getAppContext().length() + 1);
+	final String uri = httpServletRequest.getRequestURI().substring(
+		FenixWebFramework.getConfig().getAppContext().length() + 1);
 	if (uri.indexOf("domainbrowser/") >= 0) {
 	    return false;
 	}
 	if (uri.indexOf("images/") >= 0) {
 	    return false;
 	}
-        if (uri.indexOf("javaScript/") >= 0) {
-            return false;
-        }
+	if (uri.indexOf("javaScript/") >= 0) {
+	    return false;
+	}
 	if (uri.indexOf("script/") >= 0) {
 	    return false;
 	}
@@ -51,10 +52,10 @@ public class RequestChecksumFilter extends pt.ist.fenixWebFramework.servlets.fil
 		return false;
 	    }
 	}
-	if(uri.indexOf("notAuthorized.do") >= 0){
+	if (uri.indexOf("notAuthorized.do") >= 0) {
 	    return false;
 	}
-	
+
 	return RequestUtils.isPrivateURI(httpServletRequest);
     }
 

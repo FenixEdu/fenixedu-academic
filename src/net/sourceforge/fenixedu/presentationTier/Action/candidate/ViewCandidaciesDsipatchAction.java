@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SaveCandidacyDocumentFiles;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
@@ -71,8 +72,7 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 	    bean.createTemporaryFile();
 	}
 
-	Object[] args = { beans };
-	executeService("SaveCandidacyDocumentFiles", args);
+	SaveCandidacyDocumentFiles.run(beans);
 
 	for (CandidacyDocumentUploadBean bean : beans) {
 	    bean.deleteTemporaryFile();

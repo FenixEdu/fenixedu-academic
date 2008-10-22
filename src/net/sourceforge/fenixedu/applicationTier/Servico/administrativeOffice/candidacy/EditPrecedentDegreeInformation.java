@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -12,7 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInfo
  */
 public class EditPrecedentDegreeInformation extends FenixService {
 
-    public void run(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
+    @Service
+    public static void run(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
 
 	precedentDegreeInformationBean.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
 

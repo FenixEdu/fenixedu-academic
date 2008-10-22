@@ -5,10 +5,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveExamCoordinatorsFromVigilantGroup extends FenixService {
-    public void run(List<ExamCoordinator> coordinators, VigilantGroup group) {
+    @Service
+    public static void run(List<ExamCoordinator> coordinators, VigilantGroup group) {
 	for (ExamCoordinator coordinator : coordinators) {
 	    group.removeExamCoordinators(coordinator);
 	}

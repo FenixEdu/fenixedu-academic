@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalencyWithCurricularCourse;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class GetAllEquivalencies extends FenixService {
 

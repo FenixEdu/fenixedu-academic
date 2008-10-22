@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreesByExecutionYearAndType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -347,8 +348,9 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	degreeTypes.add(DegreeType.DEGREE);
 	degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-	Object[] args = new Object[] { infoExecutionYear.getIdInternal(), degreeTypes };
-	List infoExecutionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYearAndType", args);
+
+	List infoExecutionDegrees = (List) ReadExecutionDegreesByExecutionYearAndType.run(infoExecutionYear.getIdInternal(),
+		degreeTypes);
 	Collections.sort(infoExecutionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
 	request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
 

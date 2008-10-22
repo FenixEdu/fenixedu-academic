@@ -3,9 +3,10 @@ package net.sourceforge.fenixedu.domain.time.calendarStructure;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AcademicYearCE extends AcademicYearCE_Base {
 

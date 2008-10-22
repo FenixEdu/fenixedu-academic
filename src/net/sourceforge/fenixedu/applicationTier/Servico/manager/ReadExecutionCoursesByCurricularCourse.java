@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesByCurricularCourse extends FenixService {
 
-    public List run(Integer curricularCourseId) throws FenixServiceException {
+    @Service
+    public static List run(Integer curricularCourseId) throws FenixServiceException {
 	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 	if (curricularCourse == null) {
 	    throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);

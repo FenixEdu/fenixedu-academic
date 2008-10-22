@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.tests.NewPictureMaterial;
 import net.sourceforge.fenixedu.domain.tests.NewTestElement;
 import net.sourceforge.fenixedu.domain.tests.PictureMaterialFile;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
@@ -22,7 +22,8 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreatePictureMaterial extends FenixService {
 
-    public NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline, File mainFile,
+    @Service
+    public static NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline, File mainFile,
 	    String originalFilename, String displayName) throws FenixServiceException, DomainException, IOException {
 
 	final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
@@ -49,7 +50,7 @@ public class CreatePictureMaterial extends FenixService {
 
     }
 
-    private VirtualPath getVirtualPath() {
+    private static VirtualPath getVirtualPath() {
 	final VirtualPath filePath = new VirtualPath();
 	filePath.addNode(new VirtualPathNode("tests", "Online tests"));
 	filePath.addNode(new VirtualPathNode("materials", "Presentation materials"));

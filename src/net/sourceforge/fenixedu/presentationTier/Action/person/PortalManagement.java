@@ -3,9 +3,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.person.AddContentToPool;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.CreatePortal;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.DeleteTemplatedContent;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.EditPortal;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Element;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -46,9 +51,9 @@ public class PortalManagement extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	PortalBean bean = (PortalBean) RenderUtils.getViewState("editPortal").getMetaObject().getObject();
-	Object[] args = new Object[] { bean.getPortal(), bean.getName(), bean.getPrefix() };
+
 	try {
-	    executeService("EditPortal", args);
+	    EditPortal.run(bean.getPortal(), bean.getName(), bean.getPrefix());
 	} catch (Exception exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
@@ -59,11 +64,10 @@ public class PortalManagement extends FenixDispatchAction {
     public ActionForward createPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PortalBean bean = (PortalBean) RenderUtils.getViewState("createPortal").getMetaObject().getObject();
-	Object[] args = new Object[] { bean.getContainer() == null ? bean.getMetaDomainObject() : bean.getContainer(),
-		bean.getName(), bean.getPrefix() };
 
 	try {
-	    executeService("CreatePortal", args);
+	    CreatePortal.run((MetaDomainObject) (bean.getContainer() == null ? bean.getMetaDomainObject() : bean.getContainer()),
+		    bean.getName(), bean.getPrefix());
 	} catch (Exception exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
@@ -80,7 +84,7 @@ public class PortalManagement extends FenixDispatchAction {
 	Portal portal = getPortal(request);
 
 	try {
-	    executeService("DeleteTemplatedContent", new Object[] { portal, element });
+	    DeleteTemplatedContent.run((MetaDomainObjectPortal) portal, element);
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -106,7 +110,7 @@ public class PortalManagement extends FenixDispatchAction {
 	Element element = (elementId != null) ? (Element) RootDomainObject.getInstance().readContentByOID(
 		Integer.valueOf(elementId)) : null;
 	try {
-	    executeService("AddContentToPool", new Object[] { portal, element });
+	    AddContentToPool.run((MetaDomainObjectPortal) portal, element);
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -121,6 +125,6 @@ public class PortalManagement extends FenixDispatchAction {
 
     private MetaDomainObject getMetaDomainObject(HttpServletRequest request) {
 	String metaObjectID = request.getParameter("oid");
-	return (MetaDomainObject) rootDomainObject.readMetaDomainObjectByOID(Integer.valueOf(metaObjectID));
+	return rootDomainObject.readMetaDomainObjectByOID(Integer.valueOf(metaObjectID));
     }
 }

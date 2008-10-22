@@ -4,10 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class SpaceAccessGroupsManagement extends FenixService {
 
-    public void run(Space space, SpaceAccessGroupType accessGroupType, boolean toAdd, boolean isToMaintainElements,
+    @Service
+    public static void run(Space space, SpaceAccessGroupType accessGroupType, boolean toAdd, boolean isToMaintainElements,
 	    String expression) throws FenixServiceException {
 	space.addOrRemovePersonFromAccessGroup(accessGroupType, Boolean.valueOf(toAdd), Boolean.valueOf(isToMaintainElements),
 		expression);

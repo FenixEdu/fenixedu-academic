@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -21,7 +21,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllTeacherCredits extends FenixService {
 
-    public List<CreditLineDTO> run(Integer teacherID) throws ParseException {
+    @Service
+    public static List<CreditLineDTO> run(Integer teacherID) throws ParseException {
 
 	List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
 	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);

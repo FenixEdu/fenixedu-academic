@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCurricularYearByOID extends FenixService {
 
-    public InfoCurricularYear run(Integer oid) throws FenixServiceException {
+    @Service
+    public static InfoCurricularYear run(Integer oid) throws FenixServiceException {
 	InfoCurricularYear result = null;
 
 	CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(oid);
@@ -31,7 +32,7 @@ public class ReadCurricularYearByOID extends FenixService {
 	return result;
     }
 
-    public class UnexistingCurricularYearException extends FenixServiceException {
+    public static class UnexistingCurricularYearException extends FenixServiceException {
 	public UnexistingCurricularYearException() {
 	    super();
 	}

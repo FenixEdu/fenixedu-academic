@@ -11,12 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByNumber;
+import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionCoursesByExecutionDegreeService;
+import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.professorship.ReadExecutionCoursesByTeacherResponsibility;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -53,9 +57,9 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
-	Object[] arguments = { infoExecutionPeriod.getInfoExecutionYear().getYear(), null };
-	List<InfoExecutionDegree> executionDegrees = (List) executeService("ReadExecutionDegreesByExecutionYearAndDegreeType",
-		arguments);
+
+	List<InfoExecutionDegree> executionDegrees = (List) ReadExecutionDegreesByExecutionYearAndDegreeType.run(
+		infoExecutionPeriod.getInfoExecutionYear().getYear(), null);
 
 	ComparatorChain comparatorChain = new ComparatorChain();
 
@@ -74,8 +78,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	    throws FenixServiceException, FenixFilterException {
 	Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
 
-	Object[] arguments = { teacherNumber };
-	InfoTeacher infoTeacher = (InfoTeacher) executeService("ReadTeacherByNumber", arguments);
+	InfoTeacher infoTeacher = (InfoTeacher) ReadTeacherByNumber.run(teacherNumber);
 
 	request.setAttribute("infoTeacher", infoTeacher);
     }
@@ -84,7 +87,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	    throws FenixServiceException, FenixFilterException {
 	prepareConstants(teacherExecutionCourseForm, request);
 
-	List executionPeriodsNotClosed = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
+	List executionPeriodsNotClosed = (List) ReadNotClosedExecutionPeriods.run();
 
 	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, teacherExecutionCourseForm);
 
@@ -106,12 +109,11 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	prepareSecondStep(teacherExecutionCourseForm, request);
 	Integer executionDegreeId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionDegreeId"));
 	Integer executionPeriodId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionPeriodId"));
-	Object[] arguments = { executionDegreeId, executionPeriodId };
 
-	List executionCourses = (List) executeService("ReadExecutionCoursesByExecutionDegree", arguments);
+	List executionCourses = (List) ReadExecutionCoursesByExecutionDegreeService.run(executionDegreeId, executionPeriodId);
 	Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
-	Object[] args = { teacherNumber };
-	List executionCoursesToRemove = (List) executeService("ReadExecutionCoursesByTeacherResponsibility", args);
+
+	List executionCoursesToRemove = (List) ReadExecutionCoursesByTeacherResponsibility.run(teacherNumber);
 	executionCourses.removeAll(executionCoursesToRemove);
 	Collections.sort(executionCourses, new BeanComparator("nome"));
 

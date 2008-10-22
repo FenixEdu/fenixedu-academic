@@ -17,12 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -59,10 +60,8 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 	request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYearsList);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils
-		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
@@ -133,9 +132,8 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 	// (List) request.getAttribute(
 	// SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
-	List executionDegreeList = (List) ServiceUtils
-		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+
+	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 	// ////////
 
@@ -184,7 +182,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 		.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 	if (infoExecutionPeriod == null) {
 	    IUserView userView = UserView.getUser();
-	    infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod", new Object[0]);
+	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 
 	    request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 	}

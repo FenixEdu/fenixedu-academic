@@ -11,7 +11,7 @@ public class EnrolmentPeriodInCurricularCoursesSpecialSeason extends EnrolmentPe
 	public int compare(EnrolmentPeriodInCurricularCoursesSpecialSeason o1, EnrolmentPeriodInCurricularCoursesSpecialSeason o2) {
 	    return o1.getStartDateDateTime().compareTo(o2.getStartDateDateTime());
 	}
-	
+
     };
 
     public EnrolmentPeriodInCurricularCoursesSpecialSeason() {

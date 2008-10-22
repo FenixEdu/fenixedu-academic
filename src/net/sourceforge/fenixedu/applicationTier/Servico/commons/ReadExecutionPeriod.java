@@ -4,11 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriod extends FenixService {
 
-    public InfoExecutionPeriod run(final String name, final InfoExecutionYear infoExecutionYear) {
+    @Service
+    public static InfoExecutionPeriod run(final String name, final InfoExecutionYear infoExecutionYear) {
 
 	final ExecutionSemester executionSemester = ExecutionSemester.readByNameAndExecutionYear(name, infoExecutionYear
 		.getYear());

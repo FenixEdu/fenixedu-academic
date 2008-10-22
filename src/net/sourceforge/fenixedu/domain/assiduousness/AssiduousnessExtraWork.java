@@ -14,7 +14,7 @@ public class AssiduousnessExtraWork extends AssiduousnessExtraWork_Base {
 	public int compare(AssiduousnessExtraWork o1, AssiduousnessExtraWork o2) {
 	    return o1.getWorkScheduleType().getAcronym().compareTo(o2.getWorkScheduleType().getAcronym());
 	}
-	
+
     };
 
     public AssiduousnessExtraWork(AssiduousnessClosedMonth assiduousnessClosedMonth, WorkScheduleType workScheduleType,

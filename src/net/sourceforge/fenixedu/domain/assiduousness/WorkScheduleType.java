@@ -204,6 +204,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 
     private static final LocalTime beginDefaultTimeOfDay = new LocalTime(3, 0, 0, 0);
     private static final LocalTime endDefaultTimeOfDay = new LocalTime(6, 0, 0, 0);
+
     public static Interval getDefaultWorkTime(LocalDate localDate) {
 	return new Interval(localDate.toDateTime(beginDefaultTimeOfDay), localDate.toDateTime(endDefaultTimeOfDay).plusDays(1));
     }

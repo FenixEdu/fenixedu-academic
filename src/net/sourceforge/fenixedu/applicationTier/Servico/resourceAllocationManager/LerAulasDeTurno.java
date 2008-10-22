@@ -6,11 +6,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-/**
- * Servi�o LerAulasDeTurno
- * 
- * @author tfc130
- */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +15,12 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class LerAulasDeTurno extends FenixService {
 
-    public List run(ShiftKey shiftKey) {
+    @Service
+    public static List run(ShiftKey shiftKey) {
 
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(shiftKey.getInfoExecutionCourse()
 		.getIdInternal());

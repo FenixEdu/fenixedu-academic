@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegreesByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
@@ -223,11 +225,11 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    boolean found = false;
 	    while (iterator.hasNext()) {
 		infoStudentCurricularPlan = (InfoStudentCurricularPlan) iterator.next();
-		Object argsDCP[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal() };
+
 		List executionDegreesList = null;
 		try {
-		    executionDegreesList = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlan",
-			    argsDCP);
+		    executionDegreesList = (List) ReadExecutionDegreesByDegreeCurricularPlan.run(infoStudentCurricularPlan
+			    .getInfoDegreeCurricularPlan().getIdInternal());
 
 		} catch (FenixServiceException e) {
 		    throw new FenixActionException(e);
@@ -337,9 +339,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
     private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
 	    NonExistingActionException, FenixFilterException {
 	InfoStudent infoStudent = null;
-	Object argsStudent[] = { studentId };
+
 	try {
-	    infoStudent = (InfoStudent) ServiceUtils.executeService("student.ReadStudentById", argsStudent);
+	    infoStudent = (InfoStudent) ReadStudentById.run(studentId);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

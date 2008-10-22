@@ -12,13 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExecutionCourseProjects;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -50,13 +51,10 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 	}
 	Integer executionCourseCode = new Integer(executionCourseCodeString);
 
-	Object[] args = { executionCourseCode, userView.getUtilizador() };
-	ISiteComponent viewProjectsComponent = (InfoSiteProjects) ServiceUtils
-		.executeService("ReadExecutionCourseProjects", args);
+	ISiteComponent viewProjectsComponent = (InfoSiteProjects) ReadExecutionCourseProjects.run(executionCourseCode, userView
+		.getUtilizador());
 
-	Object[] args2 = { executionCourseCode };
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService("ReadExecutionCourseByOID",
-		args2);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseByOID.run(executionCourseCode);
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
 	InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;

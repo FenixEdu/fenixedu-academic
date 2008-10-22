@@ -9,10 +9,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResultUnitAssociation extends FenixService {
 
-    public void run(ResultUnitAssociationCreationBean bean) {
+    @Service
+    public static void run(ResultUnitAssociationCreationBean bean) {
 
 	if (bean.isSuggestion()) {
 	    run(bean.getResult(), bean.getSuggestedUnits());
@@ -22,14 +24,14 @@ public class CreateResultUnitAssociation extends FenixService {
 	ResearchResultMetaDataManager.updateMetaDataInStorageFor(bean.getResult());
     }
 
-    private void run(ResearchResult result, Unit unit) {
+    private static void run(ResearchResult result, Unit unit) {
 	if (unit == null) {
 	    throw new DomainException("error.label.invalidNameForInternalUnit");
 	}
 	result.addUnitAssociation(unit, ResultUnitAssociationRole.getDefaultRole());
     }
 
-    private void run(ResearchResult result, List<Unit> suggestedUnits) {
+    private static void run(ResearchResult result, List<Unit> suggestedUnits) {
 	for (Unit unit : suggestedUnits) {
 	    result.addUnitAssociation(unit, ResultUnitAssociationRole.getDefaultRole());
 	}

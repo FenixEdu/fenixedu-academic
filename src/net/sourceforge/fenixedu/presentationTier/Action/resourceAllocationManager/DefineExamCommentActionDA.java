@@ -7,16 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -41,8 +38,7 @@ public class DefineExamCommentActionDA extends
 
 	Integer indexExecutionCourse = new Integer(request.getParameter("indexExecutionCourse"));
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) infoExamsMap.getExecutionCourses().get(
-		indexExecutionCourse.intValue());
+	InfoExecutionCourse infoExecutionCourse = infoExamsMap.getExecutionCourses().get(indexExecutionCourse.intValue());
 
 	Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
@@ -94,15 +90,7 @@ public class DefineExamCommentActionDA extends
 
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-	Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-	InfoExamsMap infoExamsMap;
-	try {
-	    infoExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadExamsMap", args);
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException(e);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	InfoExamsMap infoExamsMap = ReadExamsMap.run(infoExecutionDegree, curricularYears, infoExecutionPeriod);
 	return infoExamsMap;
     }
 

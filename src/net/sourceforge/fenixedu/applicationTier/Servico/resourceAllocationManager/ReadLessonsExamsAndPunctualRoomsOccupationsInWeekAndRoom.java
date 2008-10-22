@@ -29,18 +29,20 @@ import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends FenixService {
 
-    public List<InfoObject> run(AllocatableSpace room, YearMonthDay day) throws FenixServiceException {
+    @Service
+    public static List<InfoObject> run(AllocatableSpace room, YearMonthDay day) throws FenixServiceException {
 
 	List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
@@ -77,7 +79,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Fe
 	return infoShowOccupations;
     }
 
-    private void getLessonOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
+    private static void getLessonOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
 	    YearMonthDay weekEndYearMonthDay, Lesson lesson) {
 
 	if (lesson != null
@@ -88,7 +90,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Fe
 	}
     }
 
-    private void getLessonInstanceOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
+    private static void getLessonInstanceOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
 	    YearMonthDay weekEndYearMonthDay, List<LessonInstance> lessonInstances) {
 
 	if (lessonInstances != null) {
@@ -102,7 +104,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Fe
 	}
     }
 
-    private void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations,
+    private static void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations,
 	    final YearMonthDay weekStartYearMonthDay, final YearMonthDay weekEndYearMonthDay,
 	    final List<WrittenEvaluation> writtenEvaluations) {
 
@@ -127,8 +129,8 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Fe
 	}
     }
 
-    private void getGenericEventRoomOccupations(List<InfoObject> infoShowOccupations, final YearMonthDay weekStartYearMonthDay,
-	    final YearMonthDay weekEndYearMonthDay, final GenericEvent genericEvent) {
+    private static void getGenericEventRoomOccupations(List<InfoObject> infoShowOccupations,
+	    final YearMonthDay weekStartYearMonthDay, final YearMonthDay weekEndYearMonthDay, final GenericEvent genericEvent) {
 
 	if (genericEvent != null) {
 

@@ -21,10 +21,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExamsByDate extends FenixService {
 
-    public InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {
+    @Service
+    public static InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {
 
 	final List<Exam> filteredExams = Exam.getAllByDate(examDay, examStartTime, examEndTime);
 
@@ -52,7 +54,7 @@ public class ReadExamsByDate extends FenixService {
 	return infoViewExam;
     }
 
-    private Integer calculateAvailableRoomOccupation(final Exam exam, final Integer numberStudentesAttendingCourse) {
+    private static Integer calculateAvailableRoomOccupation(final Exam exam, final Integer numberStudentesAttendingCourse) {
 	int totalExamCapacity = 0;
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : exam.getWrittenEvaluationSpaceOccupations()) {
 	    totalExamCapacity += ((AllocatableSpace) roomOccupation.getRoom()).getCapacidadeExame().intValue();
@@ -60,7 +62,7 @@ public class ReadExamsByDate extends FenixService {
 	return Integer.valueOf(numberStudentesAttendingCourse.intValue() - totalExamCapacity);
     }
 
-    private List<InfoDegree> readInfoDegrees(final Exam exam, InfoViewExamByDayAndShift viewExamByDayAndShift) {
+    private static List<InfoDegree> readInfoDegrees(final Exam exam, InfoViewExamByDayAndShift viewExamByDayAndShift) {
 
 	final List<InfoDegree> result = new ArrayList<InfoDegree>();
 	final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
@@ -82,7 +84,7 @@ public class ReadExamsByDate extends FenixService {
 	return result;
     }
 
-    private Integer calculateNumberOfEnrolmentStudents(final CurricularCourse curricularCourse,
+    private static Integer calculateNumberOfEnrolmentStudents(final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester) {
 	int numberOfStudents = 0;
 	for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
@@ -93,7 +95,7 @@ public class ReadExamsByDate extends FenixService {
 	return Integer.valueOf(numberOfStudents);
     }
 
-    private List<InfoExecutionCourse> readInfoExecutionCourses(final Exam exam) {
+    private static List<InfoExecutionCourse> readInfoExecutionCourses(final Exam exam) {
 	final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCoursesCount());
 	for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
 	    result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));

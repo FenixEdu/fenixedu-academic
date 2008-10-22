@@ -46,10 +46,11 @@ public class CronDA extends FenixDispatchAction {
 	return mapping.findForward("showCronScripts");
     }
 
-    public ActionForward runNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward runNow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 	final String cronScriptStateIDString = request.getParameter("cronScriptStateID");
-	final CronScriptState cronScriptState = rootDomainObject.readCronScriptStateByOID(Integer.valueOf(cronScriptStateIDString));
+	final CronScriptState cronScriptState = rootDomainObject.readCronScriptStateByOID(Integer
+		.valueOf(cronScriptStateIDString));
 
 	executeFactoryMethod(new RunNowExecutor(cronScriptState));
 

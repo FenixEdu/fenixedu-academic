@@ -75,7 +75,7 @@ public class VigilantTableRender extends OutputRenderer {
     private boolean showOwnVigilancies = Boolean.FALSE;
 
     private String warningClass;
-    
+
     private VigilantGroup group;
 
     public String getWarningClass() {
@@ -83,7 +83,7 @@ public class VigilantTableRender extends OutputRenderer {
     }
 
     public void setWarningClass(String warningClass) {
-	this.warningClass = warningClass;	
+	this.warningClass = warningClass;
     }
 
     public VigilantGroup getGroup() {

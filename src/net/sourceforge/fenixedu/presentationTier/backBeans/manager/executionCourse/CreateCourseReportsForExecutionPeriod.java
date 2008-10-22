@@ -6,6 +6,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -25,7 +26,7 @@ public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
 
     public List getExecutionPeriods() throws FenixFilterException, FenixServiceException {
 
-	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
+	List executionPeriods = (List) ReadNotClosedExecutionPeriods.run();
 
 	CollectionUtils.transform(executionPeriods, new Transformer() {
 

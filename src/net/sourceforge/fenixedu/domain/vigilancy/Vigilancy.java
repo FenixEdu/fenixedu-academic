@@ -61,15 +61,15 @@ public abstract class Vigilancy extends Vigilancy_Base {
 	}
 	return new ArrayList<VigilantGroup>(groups).get(0);
     }
-    
+
     @Override
     public void setStatus(AttendingStatus status) {
-        if (this.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
-            throw new DomainException("vigilancy.error.notAuthorized");
-        }else{
-            getWrittenEvaluation().fillVigilancyReport();
-            super.setStatus(status);
-        }
+	if (this.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
+	    throw new DomainException("vigilancy.error.notAuthorized");
+	} else {
+	    getWrittenEvaluation().fillVigilancyReport();
+	    super.setStatus(status);
+	}
     }
 
     @Override

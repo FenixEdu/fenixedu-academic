@@ -7,10 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.tests.NewModelGroup;
 import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
 import net.sourceforge.fenixedu.domain.tests.NewTestModel;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class SelectAtomicQuestionRestrictions extends FenixService {
-    public void run(NewTestModel testModel, List<NewModelRestriction> atomicRestrictions, NewModelGroup destinationGroup,
+    @Service
+    public static void run(NewTestModel testModel, List<NewModelRestriction> atomicRestrictions, NewModelGroup destinationGroup,
 	    Double value) throws FenixServiceException {
 	testModel.selectAtomicQuestionRestrictions(atomicRestrictions, destinationGroup, value);
     }

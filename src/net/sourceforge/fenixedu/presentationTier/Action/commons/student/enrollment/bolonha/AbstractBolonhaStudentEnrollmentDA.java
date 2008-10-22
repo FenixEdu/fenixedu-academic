@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
@@ -200,7 +201,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
 	try {
-	    executeService("EnrolInAffinityCycle", new Object[] { getLoggedPerson(request), cycleEnrolmentBean });
+	    EnrolInAffinityCycle.run(getLoggedPerson(request), cycleEnrolmentBean);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 

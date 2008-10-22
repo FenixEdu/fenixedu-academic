@@ -25,6 +25,7 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -34,7 +35,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -460,9 +460,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public ExecutionYear getExecutionYear(Integer executionYear) throws FenixFilterException, FenixServiceException {
-	final Object[] argsexecutionYearToRead = { executionYear };
-	ExecutionYear iExecutionYear = (ExecutionYear) ServiceUtils.executeService("ReadExecutionYearsService",
-		argsexecutionYearToRead);
+
+	ExecutionYear iExecutionYear = (ExecutionYear) ReadExecutionYearsService.run(executionYear);
 	return iExecutionYear;
     }
 

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -85,12 +86,11 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
 	String degreeCurricularPlanId = getFromRequest("objectCode", request);
 	getFromRequest("degreeId", request);
 
-	Object args[] = { Integer.valueOf(degreeCurricularPlanId) };
 	IUserView userView = UserView.getUser();
 	List curricularCourseList = null;
 	try {
-	    curricularCourseList = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadCurricularCoursesByDegreeCurricularPlanId", args);
+	    curricularCourseList = (List) ReadCurricularCoursesByDegreeCurricularPlan
+		    .run(Integer.valueOf(degreeCurricularPlanId));
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

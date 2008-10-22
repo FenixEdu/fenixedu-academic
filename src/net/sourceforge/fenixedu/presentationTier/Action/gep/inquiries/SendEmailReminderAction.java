@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -47,7 +49,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	InfoExecutionYear currentExecutionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear", null);
+	InfoExecutionYear currentExecutionYear = ReadCurrentExecutionYear.run();
 
 	Object[] argsExecutionYearId = { currentExecutionYear.getIdInternal() };
 	List<InfoDegreeCurricularPlan> degreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils.executeService(
@@ -147,11 +149,10 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
 	String subject = (String) form.get("bodyTextSubject");
 
-	final Collection<String> bccs = new ArrayList<String>(1);
+	final List<String> bccs = new ArrayList<String>(1);
 	bccs.add(emailAddress);
 
-	final Object[] args = { null, null, bccs, fromName, fromAddress, subject, body.toString() };
-	executeService("commons.SendMail", args);
+	SendMail.run(null, null, bccs, fromName, fromAddress, subject, body.toString());
 
 	return false;
     }

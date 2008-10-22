@@ -25,7 +25,7 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
 	public int compare(InfoEvaluation o1, InfoEvaluation o2) {
 	    return o1.getInicio().compareTo(o2.getInicio());
 	}
-	
+
     };
 
     private String publishmentMessage;

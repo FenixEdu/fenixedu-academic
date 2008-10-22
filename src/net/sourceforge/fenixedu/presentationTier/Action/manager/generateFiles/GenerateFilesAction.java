@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
@@ -56,12 +58,8 @@ public class GenerateFilesAction extends FenixDispatchAction {
 
 	// execution years
 	List executionYears = null;
-	Object[] args = {};
-	try {
-	    executionYears = (List) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionYears", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+
+	executionYears = ReadNotClosedExecutionYears.run();
 
 	if (executionYears != null && !executionYears.isEmpty()) {
 	    ComparatorChain comparator = new ComparatorChain();
@@ -97,14 +95,8 @@ public class GenerateFilesAction extends FenixDispatchAction {
 	String executionYear = request.getParameter("executionYear");
 	request.setAttribute("executionYear", executionYear);
 
-	Object[] argsExecutionYear = { executionYear };
 	InfoExecutionYear infoExecutionYear = null;
-	try {
-	    infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService("ReadExecutionYear", argsExecutionYear);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+	infoExecutionYear = ReadExecutionYear.run(executionYear);
 
 	if (infoExecutionYear == null) {
 	    throw new FenixActionException();
@@ -129,15 +121,15 @@ public class GenerateFilesAction extends FenixDispatchAction {
 	} catch (InsufficientSibsPaymentPhaseCodesServiceException exception) {
 	    addErrorMessage(request, "noList", "error.generateFiles.invalidBind", exception.getMessage());
 	    return mapping.getInputForward();
-	    
+
 	} catch (InsuranceNotDefinedServiceException exception) {
 	    addErrorMessage(request, "noList", exception.getMessage());
 	    return mapping.getInputForward();
-	    
+
 	} catch (FileNotCreatedServiceException exception) {
 	    addErrorMessage(request, "noList", exception.getMessage());
 	    return mapping.getInputForward();
-	    
+
 	} catch (FenixServiceException exception) {
 	    exception.printStackTrace();
 	    addErrorMessage(request, "noList", "error.generateFiles.emptyList");

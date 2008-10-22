@@ -12,9 +12,9 @@ package net.sourceforge.fenixedu.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-
 import org.apache.struts.util.LabelValueBean;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class Season extends FenixUtil {
 

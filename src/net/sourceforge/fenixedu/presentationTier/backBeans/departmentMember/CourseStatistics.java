@@ -8,6 +8,8 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -65,8 +67,7 @@ public class CourseStatistics extends FenixBackingBean {
 	    executionPeriodId = (Integer) getRequestAttribute("executionPeriodId");
 
 	    if (executionPeriodId == null) {
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-			"ReadCurrentExecutionPeriod", new Object[] {});
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
 
 		if (infoExecutionPeriod == null) {
 		    executionPeriodId = (Integer) this.getExecutionPeriods().get(this.executionPeriods.size() - 1).getValue();
@@ -106,9 +107,8 @@ public class CourseStatistics extends FenixBackingBean {
 
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
 	if (this.executionPeriods == null) {
-	    Object[] args = {};
-	    List<InfoExecutionYear> executionYearsList = (List<InfoExecutionYear>) ServiceUtils.executeService(
-		    "ReadNotClosedExecutionYears", args);
+
+	    List<InfoExecutionYear> executionYearsList = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
 	    List<SelectItem> result = new ArrayList<SelectItem>();
 	    for (InfoExecutionYear executionYear : executionYearsList) {
 		List<ExecutionSemester> executionSemesters = rootDomainObject.readExecutionYearByOID(

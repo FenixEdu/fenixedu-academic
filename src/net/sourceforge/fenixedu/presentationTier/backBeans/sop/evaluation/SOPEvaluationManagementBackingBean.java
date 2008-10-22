@@ -23,7 +23,9 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYearId;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -433,8 +435,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     // BEGIN Drop down menu logic
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
-	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
-		"ReadNotClosedExecutionPeriods", null);
+	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ReadNotClosedExecutionPeriods.run();
 
 	Collections.sort(infoExecutionPeriods, InfoExecutionPeriod.COMPARATOR_BY_YEAR_AND_SEMESTER);
 
@@ -468,9 +469,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    return new ArrayList<SelectItem>();
 	}
 
-	Object[] args = { this.getExecutionPeriod().getExecutionYear().getIdInternal() };
-	List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ServiceUtils.executeService(
-		"ReadExecutionDegreesByExecutionYearId", args);
+	List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ReadExecutionDegreesByExecutionYearId
+		.run(this.getExecutionPeriod().getExecutionYear().getIdInternal());
 	Collections.sort(infoExecutionDegrees, new ComparatorByNameForInfoExecutionDegree());
 
 	List<SelectItem> result = new ArrayList<SelectItem>(infoExecutionDegrees.size());

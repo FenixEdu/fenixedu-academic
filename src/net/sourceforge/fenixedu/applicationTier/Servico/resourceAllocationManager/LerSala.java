@@ -4,11 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class LerSala extends FenixService {
 
-    public Object run(RoomKey keySala) {
+    @Service
+    public static Object run(RoomKey keySala) {
 	final AllocatableSpace sala = AllocatableSpace.findAllocatableSpaceForEducationByName(keySala.getNomeSala());
 	return sala == null ? null : InfoRoom.newInfoFromDomain(sala);
     }

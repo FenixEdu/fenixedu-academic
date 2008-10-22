@@ -26,9 +26,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadStudentsFinalEvaluationForConfirmation extends FenixService {
 
-    public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
+    @Service
+    public static InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
 
 	List infoEnrolmentEvaluations = new ArrayList();
 	InfoTeacher infoTeacher = null;
@@ -76,7 +79,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends FenixService {
 	return infoSiteEnrolmentEvaluation;
     }
 
-    private List checkForInvalidSituations(List enrolmentEvaluations) throws ExistingServiceException,
+    private static List checkForInvalidSituations(List enrolmentEvaluations) throws ExistingServiceException,
 	    InvalidSituationServiceException {
 	// evaluations can only be confirmated if they are not already
 	// confirmated

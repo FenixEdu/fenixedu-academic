@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateCurrentDegreeInfo;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
@@ -14,7 +15,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
@@ -104,8 +104,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 		return new ActionForward(mapping.getInput());
 	    }
 
-	    final Object[] args = { degreeCurricularPlan.getDegree() };
-	    currentDegreeInfo = (DegreeInfo) ServiceManagerServiceFactory.executeService("CreateCurrentDegreeInfo", args);
+	    currentDegreeInfo = (DegreeInfo) CreateCurrentDegreeInfo.run(degreeCurricularPlan.getDegree());
 	}
 
 	request.setAttribute("currentDegreeInfo", currentDegreeInfo);

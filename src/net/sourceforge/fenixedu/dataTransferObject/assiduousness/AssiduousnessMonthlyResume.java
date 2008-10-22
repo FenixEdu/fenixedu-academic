@@ -20,14 +20,15 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 public class AssiduousnessMonthlyResume implements Serializable {
 
-    //Collections.sort(assiduousnessMonthlyResumeList, new BeanComparator("employee.employeeNumber"));
+    // Collections.sort(assiduousnessMonthlyResumeList, new
+    // BeanComparator("employee.employeeNumber"));
     public static final Comparator<AssiduousnessMonthlyResume> COMPARATOR_BY_EMPLOYEE_NUMBER = new Comparator<AssiduousnessMonthlyResume>() {
 
 	@Override
 	public int compare(AssiduousnessMonthlyResume o1, AssiduousnessMonthlyResume o2) {
 	    return o1.getEmployee().getEmployeeNumber().compareTo(o2.getEmployee().getEmployeeNumber());
 	}
-	
+
     };
 
     Employee employee;

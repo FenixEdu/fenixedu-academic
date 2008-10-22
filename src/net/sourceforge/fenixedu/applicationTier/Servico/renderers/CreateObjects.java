@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.renderers;
 import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.renderers.utils.RendererPropertyUtils;
 
 public class CreateObjects extends UpdateObjects {

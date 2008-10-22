@@ -7,14 +7,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadAllDegreesByType extends FenixService {
 
-    public List<InfoDegree> run(String degreeType) throws FenixServiceException {
+    @Service
+    public static List<InfoDegree> run(String degreeType) throws FenixServiceException {
 	List<Degree> degreesList = Degree.readAllByDegreeType(DegreeType.valueOf(degreeType));
 	List<InfoDegree> infoDegreesList = (List<InfoDegree>) CollectionUtils.collect(degreesList, new Transformer() {
 

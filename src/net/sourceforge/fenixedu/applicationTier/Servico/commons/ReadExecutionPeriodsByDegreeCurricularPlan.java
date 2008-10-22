@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriodsByDegreeCurricularPlan extends FenixService {
 
-    public List run(Integer degreeCurricularPlanID) {
+    @Service
+    public static List run(Integer degreeCurricularPlanID) {
 
 	// Start date of the DegreeCurricularPlan
 	final Date startDate = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();

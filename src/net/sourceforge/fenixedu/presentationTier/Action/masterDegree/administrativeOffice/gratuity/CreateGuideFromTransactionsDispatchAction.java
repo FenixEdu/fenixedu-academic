@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
@@ -197,9 +198,9 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
     private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
 	    NonExistingActionException, FenixFilterException {
 	InfoStudent infoStudent = null;
-	Object argsStudent[] = { studentId };
+
 	try {
-	    infoStudent = (InfoStudent) ServiceUtils.executeService("student.ReadStudentById", argsStudent);
+	    infoStudent = (InfoStudent) ReadStudentById.run(studentId);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

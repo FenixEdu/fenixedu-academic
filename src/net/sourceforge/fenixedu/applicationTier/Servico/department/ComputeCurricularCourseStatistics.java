@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -27,7 +28,8 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
  */
 public class ComputeCurricularCourseStatistics extends FenixService {
 
-    public String run(Integer degreeCurricularPlanID, Integer executionYearID, RegistrationAgreement agreement) {
+    @Service
+    public static String run(Integer degreeCurricularPlanID, Integer executionYearID, RegistrationAgreement agreement) {
 
 	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
@@ -103,7 +105,7 @@ public class ComputeCurricularCourseStatistics extends FenixService {
 	return result.toString();
     }
 
-    private void calculateEnrolmentsForDCP(Formatter result, CurricularCourse curricularCourse,
+    private static void calculateEnrolmentsForDCP(Formatter result, CurricularCourse curricularCourse,
 	    ExecutionSemester executionSemester, int year, int semester, ExecutionCourse executionCourse,
 	    Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap) {
 	// Calculate enrolments for each DegreeCurricularPlan
@@ -134,7 +136,7 @@ public class ComputeCurricularCourseStatistics extends FenixService {
 	}
     }
 
-    private Map<DegreeCurricularPlan, Collection<Enrolment>> organizeEnrolmentsByDCP(CurricularCourse curricularCourse,
+    private static Map<DegreeCurricularPlan, Collection<Enrolment>> organizeEnrolmentsByDCP(CurricularCourse curricularCourse,
 	    ExecutionSemester executionSemester, RegistrationAgreement agreement, ExecutionCourse executionCourse) {
 	Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = new HashMap<DegreeCurricularPlan, Collection<Enrolment>>();
 

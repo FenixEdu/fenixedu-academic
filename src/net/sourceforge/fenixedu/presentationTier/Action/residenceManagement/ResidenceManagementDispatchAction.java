@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.CreateResidenceEvents;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
@@ -122,8 +123,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	ResidentListsHolderBean listHolder = (ResidentListsHolderBean) getRenderedObject("importList");
 	ImportResidenceEventBean eventBean = (ImportResidenceEventBean) getRenderedObject("dateBean");
 	try {
-	    executeService("CreateResidenceEvents", new Object[] { listHolder.getSuccessfulEvents(),
-		    eventBean.getResidenceMonth() });
+	    CreateResidenceEvents.run(listHolder.getSuccessfulEvents(), eventBean.getResidenceMonth());
 	} catch (Exception e) {
 	    addActionMessage(request, e.getMessage());
 	    return importData(mapping, actionForm, request, response);
@@ -163,13 +163,13 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     }
 
     private String getValueFromColumnMayBeNull(HSSFRow row, int i) {
-	HSSFCell cell = row.getCell((short)i);
+	HSSFCell cell = row.getCell((short) i);
 	if (cell == null) {
 	    return StringUtils.EMPTY;
 	}
 	return getValueFromColumn(row, i);
     }
-    
+
     private String[] getAllSpreadsheets(HSSFWorkbook wb) {
 	String[] spreadsheets = new String[wb.getNumberOfSheets()];
 	for (int i = 0; i < wb.getNumberOfSheets(); i++) {

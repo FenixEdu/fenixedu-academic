@@ -151,8 +151,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 
 	final Student votedStudent = voteBean.getStudent();
 	try {
-	    executeService("VoteYearDelegateElections", new Object[] { yearDelegateElection, person.getStudent(),
-		    votedStudent });
+	    executeService("VoteYearDelegateElections", new Object[] { yearDelegateElection, person.getStudent(), votedStudent });
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	} catch (FenixServiceException ex) {

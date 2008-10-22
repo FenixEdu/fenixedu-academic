@@ -19,10 +19,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchC
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResearchContract extends FenixService {
 
-    public void run(ResearchContractBean bean, Person creator, String url) throws FenixServiceException {
+    @Service
+    public static void run(ResearchContractBean bean, Person creator, String url) throws FenixServiceException {
 	Person person = bean.getPerson();
 	if (person == null) {
 	    if (Person.readPersonByEmailAddress(bean.getEmail()) != null) {

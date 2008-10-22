@@ -10,14 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -63,7 +66,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 	    String roomOidString = request.getParameter(SessionConstants.ROOM_OID);
 	    if (roomOidString != null) {
 		Integer roomOid = new Integer(Integer.parseInt(roomOidString));
-		infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", new Object[] { roomOid });
+		infoRoom = (InfoRoom) ReadRoomByOID.run(roomOid);
 
 	    } else {
 		indexWeek = null;
@@ -118,10 +121,8 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 
 	final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
 
-	Object argsReadLessonsAndExams[] = { room, YearMonthDay.fromCalendarFields(today) };
-
-	List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService(
-		"ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", argsReadLessonsAndExams);
+	List<InfoObject> showOccupations = (List<InfoObject>) ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(room,
+		YearMonthDay.fromCalendarFields(today));
 
 	if (showOccupations != null) {
 	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
@@ -142,20 +143,18 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
     private InfoExecutionPeriod getExecutionPeriod(IUserView userView, Integer selectedExecutionPeriodOID)
 	    throws FenixFilterException, FenixServiceException {
 	if (selectedExecutionPeriodOID == null) {
-	    return (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod", new Object[] {});
+	    return (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
 	}
-	Object[] args = { selectedExecutionPeriodOID };
-	return (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID", args);
+
+	return (InfoExecutionPeriod) ReadExecutionPeriodByOID.run(selectedExecutionPeriodOID);
 
     }
 
     protected void setListOfExecutionPeriods(HttpServletRequest request, IUserView userView) throws FenixServiceException,
 	    FenixFilterException {
 
-	Object argsReadExecutionPeriods[] = {};
 	List<InfoExecutionPeriod> executionPeriods;
-	executionPeriods = (ArrayList<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
-		"ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
+	executionPeriods = (ArrayList<InfoExecutionPeriod>) ReadNotClosedExecutionPeriods.run();
 
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));

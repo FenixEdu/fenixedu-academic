@@ -59,13 +59,13 @@ public class SendEmailToTutoredStudents extends SimpleMailSenderAction {
 	bean.setReceiversOptions(getPossibleReceivers(request));
 	bean.setReceiversGroupList(getPossibleReceivers(request));
 	bean.setReceiversGroup(getPossibleReceivers(request).get(0)); // only
-								      // one
-								      // group
-								      // of
-								      // persons
-								      // (
-								      // teacher
-								      // tutors)
+	// one
+	// group
+	// of
+	// persons
+	// (
+	// teacher
+	// tutors)
 
 	return bean;
     }

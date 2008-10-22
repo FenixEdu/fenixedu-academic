@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.CheckIfUserCanAccessFile;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -34,8 +34,7 @@ public class UserPermissionCheck extends ExternalInterfaceDispatchAction {
 	    String username = request.getParameter("username");
 
 	    try {
-		Boolean result = (Boolean) ServiceManagerServiceFactory.executeService("CheckIfUserCanAccessFile", new Object[] {
-			username, dspaceBitstreamIdentification });
+		Boolean result = (Boolean) CheckIfUserCanAccessFile.run(username, dspaceBitstreamIdentification);
 
 		writeResponse(response, SUCCESS_CODE, result.toString());
 

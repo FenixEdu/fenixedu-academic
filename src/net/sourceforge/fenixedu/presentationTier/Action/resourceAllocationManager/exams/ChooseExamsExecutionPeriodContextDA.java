@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -34,8 +34,7 @@ public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAct
 	InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
 		.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-	Object argsReadExecutionPeriods[] = {};
-	List executionPeriods = (ArrayList) ServiceUtils.executeService("ReadExecutionPeriods", argsReadExecutionPeriods);
+	List executionPeriods = (ArrayList) ReadExecutionPeriods.run();
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
 	chainComparator.addComparator(new BeanComparator("semester"));
@@ -70,8 +69,7 @@ public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAct
 
 	IUserView userView = getUserView(request);
 
-	Object argsReadExecutionPeriods[] = {};
-	List infoExecutionPeriodList = (ArrayList) ServiceUtils.executeService("ReadExecutionPeriods", argsReadExecutionPeriods);
+	List infoExecutionPeriodList = (ArrayList) ReadExecutionPeriods.run();
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
 	chainComparator.addComparator(new BeanComparator("semester"));

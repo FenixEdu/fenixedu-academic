@@ -7,13 +7,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * Provides the default behaviour for a context.

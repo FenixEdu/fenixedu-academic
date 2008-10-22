@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeActive;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeStatus;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ConvokesAttended;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateConvokes;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -90,8 +94,8 @@ public class ConvokeManagement extends FenixDispatchAction {
 	Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
 
 	try {
-	    Object[] args = { convoke, value };
-	    executeService("ConvokesAttended", args);
+
+	    ConvokesAttended.run(convoke, value);
 	} catch (DomainException exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
@@ -114,8 +118,8 @@ public class ConvokeManagement extends FenixDispatchAction {
 
 	Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
 	try {
-	    Object[] args = { vigilancy, status };
-	    executeService("ChangeConvokeStatus", args);
+
+	    ChangeConvokeStatus.run(vigilancy, status);
 	} catch (DomainException exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
@@ -132,8 +136,8 @@ public class ConvokeManagement extends FenixDispatchAction {
 	Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
 
 	try {
-	    Object[] args = { convoke, value, person };
-	    executeService("ChangeConvokeActive", args);
+
+	    ChangeConvokeActive.run(convoke, value, person);
 	} catch (DomainException exception) {
 	    addActionMessage(request, exception.getMessage());
 	}
@@ -203,10 +207,9 @@ public class ConvokeManagement extends FenixDispatchAction {
 	List<Vigilant> vigilantSugestion = bean.getVigilants();
 	WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
 
-	Object[] args = { vigilantSugestion, writtenEvaluation, bean.getSelectedVigilantGroup(), bean.getExamCoordinator(),
-		bean.getEmailMessage() };
 	try {
-	    executeService("CreateConvokes", args);
+	    CreateConvokes.run(vigilantSugestion, writtenEvaluation, bean.getSelectedVigilantGroup(), bean.getExamCoordinator(),
+		    bean.getEmailMessage());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

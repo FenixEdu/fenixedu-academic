@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.webServices;
 
-import org.codehaus.xfire.MessageContext;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+
+import org.codehaus.xfire.MessageContext;
 
 public interface ISendMail {
 

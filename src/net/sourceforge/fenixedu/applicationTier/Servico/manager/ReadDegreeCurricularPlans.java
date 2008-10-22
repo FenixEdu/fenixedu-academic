@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -29,7 +30,8 @@ public class ReadDegreeCurricularPlans extends FenixService {
      * 
      * @throws ExcepcaoPersistencia
      */
-    public List run() {
+    @Service
+    public static List run() {
 	final List curricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
 	final List infoCurricularPlans = new ArrayList(curricularPlans.size());
 

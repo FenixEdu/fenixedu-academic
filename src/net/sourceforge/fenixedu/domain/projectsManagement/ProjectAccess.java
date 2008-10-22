@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
 /**
  * @author Susana Fernandes

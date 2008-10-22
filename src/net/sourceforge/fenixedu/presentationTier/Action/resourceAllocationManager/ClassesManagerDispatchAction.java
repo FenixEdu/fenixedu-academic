@@ -13,11 +13,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurmas;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -44,9 +44,7 @@ public class ClassesManagerDispatchAction extends
 
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 
-	Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
-
-	List classesList = (List) ServiceUtils.executeService("LerTurmas", argsLerTurmas);
+	List classesList = (List) LerTurmas.run(infoExecutionDegree, infoExecutionPeriod, curricularYear);
 
 	if (classesList != null && !classesList.isEmpty())
 	    request.setAttribute(CLASS_LIST_KEY, classesList);

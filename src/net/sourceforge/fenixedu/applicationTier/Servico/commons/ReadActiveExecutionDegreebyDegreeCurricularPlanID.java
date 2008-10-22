@@ -5,10 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadActiveExecutionDegreebyDegreeCurricularPlanID extends FenixService {
 
-    public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws FenixServiceException {
+    @Service
+    public static InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws FenixServiceException {
 
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 	if (degreeCurricularPlan == null) {

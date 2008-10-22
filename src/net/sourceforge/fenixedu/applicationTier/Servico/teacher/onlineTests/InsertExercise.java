@@ -25,8 +25,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
@@ -35,6 +33,8 @@ import org.apache.fop.tools.IOUtil;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
+
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 
 import com.sun.faces.el.impl.parser.ParseException;
 

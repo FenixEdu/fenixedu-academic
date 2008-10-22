@@ -20,10 +20,11 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
@@ -31,7 +32,8 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends FenixService {
 
-    public List run(Integer executionDegreeId) throws FenixServiceException {
+    @Service
+    public static List run(Integer executionDegreeId) throws FenixServiceException {
 
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 
@@ -86,7 +88,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Feni
 	return result;
     }
 
-    private List getResponsibleForsByDegree(ExecutionDegree executionDegree) {
+    private static List getResponsibleForsByDegree(ExecutionDegree executionDegree) {
 	List responsibleFors = new ArrayList();
 
 	List<ExecutionCourse> executionCourses = new ArrayList();
@@ -101,7 +103,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Feni
 	return responsibleFors;
     }
 
-    protected List getDetailedProfessorships(List professorships, final List responsibleFors) {
+    protected static List getDetailedProfessorships(List professorships, final List responsibleFors) {
 	List detailedProfessorshipList = (List) CollectionUtils.collect(professorships, new Transformer() {
 
 	    public Object transform(Object input) {

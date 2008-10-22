@@ -10,13 +10,14 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Susana Fernandes

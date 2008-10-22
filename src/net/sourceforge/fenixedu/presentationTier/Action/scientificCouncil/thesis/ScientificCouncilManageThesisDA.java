@@ -11,6 +11,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -309,14 +311,14 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
     public ActionForward makeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final Thesis thesis = getThesis(request);
-	executeService("MakeThesisDocumentsUnavailable", new Object[] { thesis });
+	MakeThesisDocumentsUnavailable.run(thesis);
 	return viewThesis(mapping, actionForm, request, response);
     }
 
     public ActionForward makeDocumentAvailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final Thesis thesis = getThesis(request);
-	executeService("MakeThesisDocumentsAvailable", new Object[] { thesis });
+	MakeThesisDocumentsAvailable.run(thesis);
 	return viewThesis(mapping, actionForm, request, response);
     }
 

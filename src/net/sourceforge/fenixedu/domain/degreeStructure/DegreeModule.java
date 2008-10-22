@@ -41,7 +41,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	    final int c = Collator.getInstance().compare(o1.getName(), o2.getName());
 	    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-	
+
     };
 
     public static class ComparatorByMinEcts implements Comparator<DegreeModule> {

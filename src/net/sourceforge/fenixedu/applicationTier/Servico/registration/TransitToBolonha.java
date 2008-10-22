@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.registration;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.joda.time.DateTime;
 
 public class TransitToBolonha extends FenixService {
 

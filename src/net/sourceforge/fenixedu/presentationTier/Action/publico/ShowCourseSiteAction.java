@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadCurriculumByCurricularCourseCode;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
@@ -62,12 +63,10 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
 	indexForm.set("indice", indexForm.get("indice"));
 	indexForm.set("curYear", curricularYear);
-	Object[] args = { curricularCourseId };
 
 	InfoCurriculum infoCurriculum = null;
 	try {
-	    infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService("ReadCurriculumByCurricularCourseCode",
-		    args);
+	    infoCurriculum = (InfoCurriculum) ReadCurriculumByCurricularCourseCode.run(curricularCourseId);
 	} catch (NonExistingServiceException e) {
 	    errors.add("chosenCurricularCourse", new ActionError("error.coordinator.chosenCurricularCourse"));
 	} catch (FenixServiceException e) {

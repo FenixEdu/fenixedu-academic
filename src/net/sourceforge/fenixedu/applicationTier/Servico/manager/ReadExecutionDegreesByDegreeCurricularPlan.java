@@ -8,11 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreesByDegreeCurricularPlan extends FenixService {
 
-    public List<InfoExecutionDegree> run(Integer idDegreeCurricularPlan) throws FenixServiceException {
+    @Service
+    public static List<InfoExecutionDegree> run(Integer idDegreeCurricularPlan) throws FenixServiceException {
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
 
 	final List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();

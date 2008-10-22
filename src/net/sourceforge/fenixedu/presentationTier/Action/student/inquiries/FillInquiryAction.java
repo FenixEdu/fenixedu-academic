@@ -16,7 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveExecutionDegreebyDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.ReadInquiriesRegistriesByStudent;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteInquiry;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadCurricularCourseListOfExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeDisciplinaExecucao;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -131,8 +138,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	}
 
 	// Obtaining the current execution period
-	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-		"ReadCurrentExecutionPeriod", null);
+	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
 	request.setAttribute("executionPeriod", currentExecutionPeriod.getExecutionPeriod());
 	final Date inquiryResponseBegin = currentExecutionPeriod.getInquiryResponseBegin();
 	final Date inquiryResponseEnd = currentExecutionPeriod.getInquiryResponseEnd();
@@ -155,9 +161,9 @@ public class FillInquiryAction extends FenixDispatchAction {
 	Collections.sort(studentAttends, new BeanComparator("disciplinaExecucao.nome"));
 
 	// Removing attends with no specified class types
-	Object[] argsStudent = { registration };
-	List<InfoInquiriesRegistry> studentInquiriesResgistries = (List<InfoInquiriesRegistry>) ServiceUtils.executeService(
-		"inquiries.ReadInquiriesRegistriesByStudent", argsStudent);
+
+	List<InfoInquiriesRegistry> studentInquiriesResgistries = (List<InfoInquiriesRegistry>) ReadInquiriesRegistriesByStudent
+		.run(registration);
 
 	List<InfoFrequenta> evaluatedAttends = new ArrayList<InfoFrequenta>();
 
@@ -889,9 +895,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 	inquiry.setInquiriesRoomsList(selectedAttendingCourseRooms);
 	inquiry.setInquiriesTeachersList(selectedAttendingCourseTeachers);
 
-	Object[] argsInquiryAndInfoStudent = { inquiry, infoStudent };
 	try {
-	    ServiceUtils.executeService("inquiries.WriteInquiry", argsInquiryAndInfoStudent);
+	    WriteInquiry.run(inquiry, infoStudent);
 	    request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.submition.ok");
 
 	} catch (FenixServiceException e) {
@@ -907,23 +912,21 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	List<InfoExecutionDegree> attendingCourseExecutionDegrees;
 	if (attends.getInfoEnrolment() != null) {
-	    Object[] argsDegreeCPId = { attends.getInfoEnrolment().getInfoCurricularCourse().getInfoDegreeCurricularPlan()
-		    .getIdInternal() };
-	    InfoExecutionDegree infoExecutionDegreeCourse = (InfoExecutionDegree) ServiceUtils.executeService(
-		    "ReadActiveExecutionDegreebyDegreeCurricularPlanID", argsDegreeCPId);
+
+	    InfoExecutionDegree infoExecutionDegreeCourse = (InfoExecutionDegree) ReadActiveExecutionDegreebyDegreeCurricularPlanID
+		    .run(attends.getInfoEnrolment().getInfoCurricularCourse().getInfoDegreeCurricularPlan().getIdInternal());
 	    attendingCourseExecutionDegrees = new ArrayList<InfoExecutionDegree>(1);
 	    attendingCourseExecutionDegrees.add(infoExecutionDegreeCourse);
 
 	} else {
 
-	    Object[] argsAttendingCourse = { attends.getDisciplinaExecucao() };
-	    List<InfoCurricularCourse> attendingCourseCurricularCourses = (List<InfoCurricularCourse>) ServiceUtils
-		    .executeService("ReadCurricularCourseListOfExecutionCourse", argsAttendingCourse);
+	    List<InfoCurricularCourse> attendingCourseCurricularCourses = (List<InfoCurricularCourse>) ReadCurricularCourseListOfExecutionCourse
+		    .run(attends.getDisciplinaExecucao());
 	    attendingCourseExecutionDegrees = new ArrayList<InfoExecutionDegree>(attendingCourseCurricularCourses.size());
 	    for (InfoCurricularCourse attendingCurricularCourse : attendingCourseCurricularCourses) {
-		Object[] argsDegreeCPId = { attendingCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal() };
-		InfoExecutionDegree infoExecutionDegreeCourse = (InfoExecutionDegree) ServiceUtils.executeService(
-			"ReadActiveExecutionDegreebyDegreeCurricularPlanID", argsDegreeCPId);
+
+		InfoExecutionDegree infoExecutionDegreeCourse = (InfoExecutionDegree) ReadActiveExecutionDegreebyDegreeCurricularPlanID
+			.run(attendingCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal());
 		attendingCourseExecutionDegrees.add(infoExecutionDegreeCourse);
 	    }
 	}
@@ -945,8 +948,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	// FIXME: THIS SHOULD BE PARAMETRIZABLE!!!!!
 	// Obtaining the current execution period
-	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-		.executeService("ReadCurrentExecutionPeriod", null);
+	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
 
 	Integer studentExecutionDegreeId = (Integer) inquiryForm.get("studentExecutionDegreeId");
 	InfoExecutionDegree infoExecutionDegreeStudent;
@@ -955,9 +957,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 		    .getMostRecentExecutionDegree();
 	    infoExecutionDegreeStudent = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 	} else {
-	    Object[] argsExecutionDegreeId = { studentExecutionDegreeId };
-	    infoExecutionDegreeStudent = (InfoExecutionDegree) ServiceUtils.executeService("ReadExecutionDegreeByOID",
-		    argsExecutionDegreeId);
+
+	    infoExecutionDegreeStudent = (InfoExecutionDegree) ReadExecutionDegreeByOID.run(studentExecutionDegreeId);
 
 	}
 
@@ -992,9 +993,9 @@ public class FillInquiryAction extends FenixDispatchAction {
 	Collections.sort(attendingCourseTeachers, new BeanComparator("teacherName"));
 
 	// Obtaining the rooms associated with the attending course
-	Object[] argsAttendingCourse = { attends.getDisciplinaExecucao() };
-	List<InfoLesson> attendingClassLessons = (List<InfoLesson>) ServiceUtils.executeService("LerAulasDeDisciplinaExecucao",
-		argsAttendingCourse);
+
+	List<InfoLesson> attendingClassLessons = (List<InfoLesson>) LerAulasDeDisciplinaExecucao.run(attends
+		.getDisciplinaExecucao());
 	List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms = new ArrayList<InfoRoomWithInfoInquiriesRoom>();
 	for (InfoLesson lesson : attendingClassLessons) {
 	    if (lesson.getInfoSala() != null) {

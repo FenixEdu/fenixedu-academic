@@ -5,10 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangePersonPassword extends FenixService {
 
-    public void run(Integer personID, String password) throws FenixServiceException {
+    @Service
+    public static void run(Integer personID, String password) throws FenixServiceException {
 	final Person person = (Person) rootDomainObject.readPartyByOID(personID);
 	if (person == null) {
 	    throw new ExcepcaoInexistente("error.changePersonPassword");

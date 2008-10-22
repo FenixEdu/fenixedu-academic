@@ -11,11 +11,11 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author tfc130

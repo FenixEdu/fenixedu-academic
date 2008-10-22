@@ -36,7 +36,8 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 	final IUserView userView = getUserView(request);
 	InfoGratuitySituation infoGratuitySituation = fillInfoGratuityValues(userView, request, (DynaActionForm) actionForm);
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService("EditGratuitySituationById", new Object[] { infoGratuitySituation });
+	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
+		    "EditGratuitySituationById", new Object[] { infoGratuitySituation });
 
 	} catch (FenixServiceException exception) {
 	    exception.printStackTrace();
@@ -133,7 +134,8 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
 	Object[] args = { infoGratuitySituation };
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService("EditGratuitySituationById", args);
+	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
+		    "EditGratuitySituationById", args);
 
 	} catch (FenixServiceException exception) {
 	    exception.printStackTrace();

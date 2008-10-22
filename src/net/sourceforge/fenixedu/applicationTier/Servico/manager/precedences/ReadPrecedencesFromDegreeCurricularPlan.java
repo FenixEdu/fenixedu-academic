@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.precedences.InfoPrecedenceWit
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPrecedencesFromDegreeCurricularPlan extends FenixService {
 

@@ -115,7 +115,7 @@ public class MultiLanguageRichTextInputRenderer extends MultiLanguageTextInputRe
 		    .getResourceString("renderers.rich-text.editor.remove")), "disable");
 
 	    radioList.setClasses("liinline nobullet mbottom05"); // TODO: use
-								 // style?
+	    // style?
 	    this.useEditor.setChecked(true);
 
 	    container.addChild(script);

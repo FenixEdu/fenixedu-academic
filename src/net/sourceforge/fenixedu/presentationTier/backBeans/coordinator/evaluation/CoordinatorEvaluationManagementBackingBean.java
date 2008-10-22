@@ -14,6 +14,8 @@ import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -109,14 +111,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     protected List<InfoExecutionPeriod> getExecutionPeriods() {
-	try {
-	    final Object args[] = { getDegreeCurricularPlanID() };
-	    return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
-		    "ReadExecutionPeriodsByDegreeCurricularPlan", args);
-	} catch (FenixFilterException e) {
-	} catch (FenixServiceException e) {
-	}
-	return new ArrayList();
+	return ReadExecutionPeriodsByDegreeCurricularPlan.run(getDegreeCurricularPlanID());
     }
 
     public List<SelectItem> getCurricularYearsLabels() {
@@ -156,13 +151,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     protected InfoExecutionPeriod getCurrentExecutionPeriod() {
-	try {
-	    final Object args[] = {};
-	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionPeriod", args);
-	} catch (FenixFilterException e) {
-	} catch (FenixServiceException e) {
-	}
-	return null;
+	return ReadCurrentExecutionPeriod.run();
     }
 
     public List<SelectItem> getExecutionCoursesLabels() {

@@ -15,6 +15,8 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreesByExecutionYearAndType;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublishedFinalDegreeWorkProposalHeaders;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
@@ -64,8 +66,9 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
 	degreeTypes.add(DegreeType.DEGREE);
 	degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-	Object args[] = new Object[] { new Integer(executionYearOID), degreeTypes };
-	List infoExecutionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYearAndType", args);
+
+	List infoExecutionDegrees = (List) ReadExecutionDegreesByExecutionYearAndType.run(new Integer(executionYearOID),
+		degreeTypes);
 	Collections.sort(infoExecutionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
 	request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
 	return mapping.findForward("show-final-degree-work-list");
@@ -195,9 +198,9 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
     private void putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(HttpServletRequest request,
 	    String executionDegreeOID, String sortBy) throws Exception {
 	if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
-	    Object[] args = { new Integer(executionDegreeOID) };
-	    List publishedFinalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(
-		    "ReadPublishedFinalDegreeWorkProposalHeaders", args);
+
+	    List publishedFinalDegreeWorkProposalHeaders = (List) ReadPublishedFinalDegreeWorkProposalHeaders.run(new Integer(
+		    executionDegreeOID));
 	    Collections.sort(publishedFinalDegreeWorkProposalHeaders, new BeanComparator(sortBy));
 	    request.setAttribute("publishedFinalDegreeWorkProposalHeaders", publishedFinalDegreeWorkProposalHeaders);
 	}

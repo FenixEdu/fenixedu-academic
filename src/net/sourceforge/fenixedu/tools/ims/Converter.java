@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewChoice;
@@ -30,7 +29,6 @@ import net.sourceforge.fenixedu.domain.tests.predicates.NumericLessThanOrEqualPr
 import net.sourceforge.fenixedu.domain.tests.predicates.NumericLessThanPredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.OrPredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
-import pt.ist.fenixframework.pstm.Transaction;
 
 import org.jaxen.JaxenException;
 import org.jaxen.jdom.JDOMXPath;
@@ -41,6 +39,8 @@ import org.jdom.input.SAXBuilder;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class Converter {
 

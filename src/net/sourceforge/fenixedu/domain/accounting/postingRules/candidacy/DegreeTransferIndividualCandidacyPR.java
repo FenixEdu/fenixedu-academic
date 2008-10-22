@@ -18,10 +18,11 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividualCandidacyPR_Base {
 
@@ -34,8 +35,8 @@ public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividua
 	    final Money amountForExternalStudent) {
 
 	this();
-	super.init(EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_FEE, EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY, start, end,
-		agreementTemplate);
+	super.init(EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_FEE, EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY, start,
+		end, agreementTemplate);
 	checkParameters(amountForInstitutionStudent, amountForExternalStudent);
 	super.setAmountForInstitutionStudent(amountForInstitutionStudent);
 	super.setAmountForExternalStudent(amountForExternalStudent);

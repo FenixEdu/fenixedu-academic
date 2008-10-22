@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByNumber;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadCostCenterByNumber;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
@@ -131,8 +133,8 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
 	    // Verify the teacher
 	    if (infoGrantContractRegime.getInfoTeacher() != null) {
 		InfoTeacher infoTeacher = null;
-		Object[] argsTeacher = { infoGrantContractRegime.getInfoTeacher().getTeacherNumber() };
-		infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber", argsTeacher);
+
+		infoTeacher = (InfoTeacher) ReadTeacherByNumber.run(infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
 		if (infoTeacher == null) {
 		    return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
 			    infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
@@ -148,10 +150,9 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
 	    if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {
 		if (infoGrantContractRegime.getGrantCostCenterInfo().getNumber().length() != 0) {
 		    InfoGrantCostCenter infoGrantCostCenter = null;
-		    Object[] argsCostCenter = { infoGrantContractRegime.getGrantCostCenterInfo().getNumber() };
 
-		    infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService("ReadCostCenterByNumber",
-			    argsCostCenter);
+		    infoGrantCostCenter = (InfoGrantCostCenter) ReadCostCenterByNumber.run(infoGrantContractRegime
+			    .getGrantCostCenterInfo().getNumber());
 		    if (infoGrantCostCenter == null) {
 			return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
 				infoGrantContractRegime.getInfoTeacher().getTeacherNumber());

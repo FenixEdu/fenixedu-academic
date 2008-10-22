@@ -179,17 +179,17 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
 	    HtmlMultipleHiddenField hiddenEnrollments = new HtmlMultipleHiddenField();
 	    hiddenEnrollments.bind(getInputContext().getMetaObject(), "curriculumModules"); // slot
-											    // refered
-											    // by
-											    // name
+	    // refered
+	    // by
+	    // name
 	    hiddenEnrollments.setConverter(new DomainObjectKeyArrayConverter());
 	    hiddenEnrollments.setController(enrollmentsController);
 
 	    HtmlMultipleHiddenField hiddenDegreeModulesToEnrol = new HtmlMultipleHiddenField();
 	    hiddenDegreeModulesToEnrol.bind(getInputContext().getMetaObject(), "degreeModulesToEnrol"); // slot
-													// refered
-													// by
-													// name
+	    // refered
+	    // by
+	    // name
 	    hiddenDegreeModulesToEnrol.setConverter(new DegreeModuleToEnrolKeyConverter());
 	    hiddenDegreeModulesToEnrol.setController(degreeModulesToEnrolController);
 

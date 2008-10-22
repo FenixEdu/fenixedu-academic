@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
@@ -50,7 +51,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
 	Integer degreeId = ied.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
 
-	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
+	List executionPeriodList = (List) ReadExecutionPeriods.run();
 
 	Object[] args = { degreeId };
 	List teachersRes = (List) ServiceUtils.executeService("ReadOldInquiriesTeachersResByDegreeId", args);

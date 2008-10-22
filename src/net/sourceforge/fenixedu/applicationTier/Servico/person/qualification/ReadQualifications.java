@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualificationWithP
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoSiteQualifications;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;

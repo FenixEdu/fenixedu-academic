@@ -1386,7 +1386,7 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-    
+
     public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
 	    final Class<? extends AcademicServiceRequest> clazz) {
 	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();

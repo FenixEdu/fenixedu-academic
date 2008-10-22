@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadEnrolmentPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -88,17 +90,16 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     private void setInfoEnrolmentPeriods(final HttpServletRequest request, final IUserView userView,
 	    final String executionPeriodIDString) throws FenixFilterException, FenixServiceException {
-	final Object[] args = { Integer.valueOf(executionPeriodIDString) };
-	final List<InfoEnrolmentPeriod> infoEnrolmentPeriods = (List<InfoEnrolmentPeriod>) ServiceManagerServiceFactory
-		.executeService("ReadEnrolmentPeriods", args);
+
+	final List<InfoEnrolmentPeriod> infoEnrolmentPeriods = (List<InfoEnrolmentPeriod>) ReadEnrolmentPeriods.run(Integer
+		.valueOf(executionPeriodIDString));
 	sortInfoEnrolmentPeriods(infoEnrolmentPeriods);
 	request.setAttribute("infoEnrolmentPeriods", infoEnrolmentPeriods);
     }
 
     private void setInfoExecutionPeriods(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
 	    FenixServiceException {
-	final List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory
-		.executeService("ReadExecutionPeriods", null);
+	final List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ReadExecutionPeriods.run();
 	sortInfoExecutionPeriods(infoExecutionPeriods);
 	request.setAttribute("infoExecutionPeriods", infoExecutionPeriods);
     }

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.struts.action.ActionForm;
@@ -15,7 +15,7 @@ public class CheckIsAliveAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final Boolean result = (Boolean) ServiceManagerServiceFactory.executeService("CheckIsAliveService", null);
+	final Boolean result = (Boolean) CheckIsAliveService.run();
 
 	if (result != null && result.booleanValue()) {
 	    request.setAttribute("isAlive", "ok");

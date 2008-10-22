@@ -39,8 +39,8 @@ public class LayoutLinkInjector {
 	addScript(stringBuilder, contextPath, "text/javascript", "/CSS/scripts/checkall.js");
     }
 
-    private static void addLink(final StringBuilder stringBuilder, final String contextPath, final String rel,
-	    final String type, final String media, final String path) {
+    private static void addLink(final StringBuilder stringBuilder, final String contextPath, final String rel, final String type,
+	    final String media, final String path) {
 	stringBuilder.append("<link rel=\"");
 	stringBuilder.append(rel);
 	stringBuilder.append("\" type=\"");
@@ -55,7 +55,8 @@ public class LayoutLinkInjector {
 	stringBuilder.append("\">\n");
     }
 
-    private static void addScript(final StringBuilder stringBuilder, final String contextPath, final String type, final String path) {
+    private static void addScript(final StringBuilder stringBuilder, final String contextPath, final String type,
+	    final String path) {
 	stringBuilder.append("<script ");
 	stringBuilder.append("type=\"");
 	stringBuilder.append(type);

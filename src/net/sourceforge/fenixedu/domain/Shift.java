@@ -16,9 +16,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class Shift extends Shift_Base {
 
@@ -403,7 +404,7 @@ public class Shift extends Shift_Base {
 	}
 	return false;
     }
-    
+
     public boolean hasSchoolClassForDegreeType(DegreeType degreeType) {
 	for (SchoolClass schoolClass : getAssociatedClasses()) {
 	    if (schoolClass.getExecutionDegree().getDegreeType() == degreeType) {
@@ -412,5 +413,5 @@ public class Shift extends Shift_Base {
 	}
 	return false;
     }
-    
+
 }

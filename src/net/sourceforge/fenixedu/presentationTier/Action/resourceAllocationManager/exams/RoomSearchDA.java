@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -169,8 +170,8 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 	String sortParameter = request.getParameter("sortParameter");
 	List<InfoRoom> availableRooms = new ArrayList<InfoRoom>();
 	for (int i = 0; i < availableRoomsId.length; i++) {
-	    Object args[] = { new Integer(availableRoomsId[i]) };
-	    InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", args);
+
+	    InfoRoom infoRoom = (InfoRoom) ReadRoomByOID.run(new Integer(availableRoomsId[i]));
 	    availableRooms.add(infoRoom);
 	}
 	if ((sortParameter != null) && (sortParameter.length() != 0)) {

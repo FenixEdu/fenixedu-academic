@@ -14,9 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
+import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -220,8 +225,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    .valueOf(executionYear)));
 	}
 
-	final List executionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYearAndDegreeType",
-		new Object[] { infoExecutionYear.getYear(), null });
+	final List executionDegreeList = ReadExecutionDegreesByExecutionYearAndDegreeType.run(infoExecutionYear.getYear(), null);
 	final BeanComparator name = new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
 	Collections.sort(executionDegreeList, name);
 	request.setAttribute("executionDegreeList", executionDegreeList);
@@ -428,25 +432,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	return prepareFinalWorkInformation(mapping, form, request, response);
     }
 
-    public ActionForward deleteFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException,
-	    IllegalAccessException, InstantiationException {
-	String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
-
-	if (finalDegreeWorkProposalOIDString != null && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
-	    IUserView userView = UserView.getUser();
-
-	    Object[] args = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
-	    try {
-		ServiceUtils.executeService("DeleteFinalDegreeWorkProposal", args);
-	    } catch (FenixServiceException fse) {
-		throw new FenixActionException(fse);
-	    }
-	}
-
-	return chooseDegree(mapping, form, request, response);
-    }
-
     public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
@@ -562,7 +547,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    if (infoProposal.getBranches() != null && infoProposal.getBranches().size() > 0) {
 			String[] branchList = new String[infoProposal.getBranches().size()];
 			for (int i = 0; i < infoProposal.getBranches().size(); i++) {
-			    InfoBranch infoBranch = ((InfoBranch) infoProposal.getBranches().get(i));
+			    InfoBranch infoBranch = (infoProposal.getBranches().get(i));
 			    if (infoBranch != null && infoBranch.getIdInternal() != null) {
 				String brachOIDString = infoBranch.getIdInternal().toString();
 				if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
@@ -661,9 +646,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 	try {
-	    Object args[] = { Integer.valueOf(studentCurricularPlanID) };
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentCurricularPlan", args);
+
+	    infoStudentCurricularPlan = ReadStudentCurricularPlan.run(Integer.valueOf(studentCurricularPlanID));
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}
@@ -684,8 +668,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	if (studentNumber == null) {
 	    try {
-		Object args1[] = { userView.getUtilizador() };
-		InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", args1);
+
+		InfoPerson infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
 
 		Object args2[] = { infoPerson };
 		infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
@@ -693,14 +677,10 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		throw new FenixActionException(e);
 	    }
 	} else {
-	    try {
-		Object args[] = { Integer.valueOf(studentNumber), DegreeType.DEGREE };
-		InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByNumberAndDegreeType", args);
-		infoStudents = new ArrayList();
-		infoStudents.add(infoStudent);
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException(e);
-	    }
+	    InfoStudent infoStudent = (InfoStudent) ReadStudentByNumberAndDegreeType.run(Integer.valueOf(studentNumber),
+		    DegreeType.DEGREE);
+	    infoStudents = new ArrayList();
+	    infoStudents.add(infoStudent);
 
 	}
 
@@ -710,8 +690,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    while (iterator.hasNext()) {
 		InfoStudent infoStudent = (InfoStudent) iterator.next();
 		try {
-		    Object args[] = { infoStudent.getNumber(), infoStudent.getDegreeType() };
-		    List resultTemp = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurricularPlans", args);
+
+		    List resultTemp = ReadStudentCurricularPlans.run(infoStudent.getNumber(), infoStudent.getDegreeType());
 		    result.addAll(resultTemp);
 		} catch (NonExistingServiceException e) {
 		    //

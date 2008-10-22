@@ -2,10 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteResearchContract extends FenixService {
 
-    public void run(ResearchContract contract) {
+    @Service
+    public static void run(ResearchContract contract) {
 	contract.delete();
     }
 }

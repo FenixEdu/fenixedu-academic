@@ -29,7 +29,7 @@ public class CronScriptState extends CronScriptState_Base {
 	public int compare(CronScriptState o1, CronScriptState o2) {
 	    return o1.getAbsoluteExecutionOrder().compareTo(o2.getAbsoluteExecutionOrder());
 	}
-	
+
     };
 
     public static final Comparator<CronScriptState> COMPARATOR_BY_CRON_SCRIPT_CLASSNAME = new Comparator<CronScriptState>() {
@@ -56,7 +56,7 @@ public class CronScriptState extends CronScriptState_Base {
 	    cronScriptState.setRunNow(Boolean.TRUE);
 	    return null;
 	}
-	
+
     }
 
     public CronScriptState(final Class cronScriptClass, final Period invocationPeriod, final WhenToSendEmail whenToSendEmail,
@@ -120,9 +120,8 @@ public class CronScriptState extends CronScriptState_Base {
 	    final Period invocationPeriod = getInvocationPeriod();
 	    final CronScriptInvocation lastCronScriptInvocation = getLastCronScriptInvocation();
 	    final Boolean runNow = getRunNow();
-	    return lastCronScriptInvocation == null 
-	    		|| (runNow != null && runNow.booleanValue()) 
-	    		|| lastCronScriptInvocation.hasReachedNextInvocationTime(invocationPeriod);
+	    return lastCronScriptInvocation == null || (runNow != null && runNow.booleanValue())
+		    || lastCronScriptInvocation.hasReachedNextInvocationTime(invocationPeriod);
 	}
 	return false;
     }

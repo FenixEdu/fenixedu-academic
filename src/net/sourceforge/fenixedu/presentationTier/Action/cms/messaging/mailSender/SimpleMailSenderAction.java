@@ -7,13 +7,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailAddress;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.SendMailReport;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.SendStatus;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -68,7 +68,7 @@ public class SimpleMailSenderAction extends FenixDispatchAction {
 
 	SendMailReport report;
 	try {
-	    report = (SendMailReport) ServiceUtils.executeService("SendEMail", new Object[] { bean.getEmailParameters() });
+	    report = (SendMailReport) SendEMail.run(bean.getEmailParameters());
 	    processReport(request, bean, report);
 	} catch (Exception e) {
 	    addActionMessage("error", request, "messaging.mail.send.error");

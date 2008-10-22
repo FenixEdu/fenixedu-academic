@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurno;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -37,15 +39,14 @@ public class RemoverAulaDeTurnoFormAction extends FenixShiftAndExecutionCourseAn
 	IUserView userView = UserView.getUser();
 
 	Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
-	Object args[] = { shiftOID };
-	InfoShift infoTurno = (InfoShift) ServiceManagerServiceFactory.executeService("ReadShiftByOID", args);
+
+	InfoShift infoTurno = (InfoShift) ReadShiftByOID.run(shiftOID);
 
 	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
 	Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
 
-	Object argsLerAulasDeTurno[] = { new ShiftKey(infoTurno.getNome(), infoExecutionCourse) };
-	List infoAulas = (ArrayList) ServiceManagerServiceFactory.executeService("LerAulasDeTurno", argsLerAulasDeTurno);
+	List infoAulas = (ArrayList) LerAulasDeTurno.run(new ShiftKey(infoTurno.getNome(), infoExecutionCourse));
 
 	InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());
 

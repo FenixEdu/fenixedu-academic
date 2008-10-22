@@ -117,7 +117,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
 	String alumniName;
 	Integer studentNumber;
-	
+
 	for (final Alumni alumni : rootDomainObject.getAlumnis()) {
 
 	    if (fullReport || alumni.getUrlRequestToken() != null) {

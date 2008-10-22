@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends FenixService {
 
-    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
+    @Service
+    public static List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
 
 	List allCurricularCourseScope = new ArrayList();
 

@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -11,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * Group of all the persons in the last coordination team defined for the target

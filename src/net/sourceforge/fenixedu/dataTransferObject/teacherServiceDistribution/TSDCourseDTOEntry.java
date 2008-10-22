@@ -22,7 +22,7 @@ public class TSDCourseDTOEntry extends DataTranferObject {
 	public int compare(TSDCourseDTOEntry o1, TSDCourseDTOEntry o2) {
 	    return o1.getTSDCourse().getName().compareTo(o2.getTSDCourse().getName());
 	}
-	
+
     };
 
     private TSDCourse tsdCourse;

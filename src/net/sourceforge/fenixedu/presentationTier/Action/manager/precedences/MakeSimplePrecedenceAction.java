@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse;
@@ -64,11 +65,10 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
 	// read all curricular courses belong to this degree curricular year
-	Object[] args = { degreeCurricularPlanID };
+
 	List curricularCoursesList = null;
 	try {
-	    curricularCoursesList = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadCurricularCoursesByDegreeCurricularPlan", args);
+	    curricularCoursesList = (List) ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanID);
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
 	    errors.add("impossibleCCOfDCP", new ActionError("error.manager.impossible.readCCofDCP"));

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.CreateSupportRequest;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -156,7 +157,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	String mailBody = generateEmailBody(request, requestBean, getLoggedPerson(request), builder);
 
 	try {
-	    executeService("CreateSupportRequest", new Object[] { getLoggedPerson(request), requestBean });
+	    CreateSupportRequest.run(getLoggedPerson(request), requestBean);
 	} catch (DomainException e) {
 	    // a mail must be always sent, no need to give error feedback
 	}

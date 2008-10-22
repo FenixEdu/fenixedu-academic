@@ -88,7 +88,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
 	}
 	return labelList;
     }
-    
+
     @Override
     protected boolean appliesToPeriod(final Context context) {
 	return getDegreeModuleToApplyRule().isCourseGroup() || super.appliesToPeriod(context);

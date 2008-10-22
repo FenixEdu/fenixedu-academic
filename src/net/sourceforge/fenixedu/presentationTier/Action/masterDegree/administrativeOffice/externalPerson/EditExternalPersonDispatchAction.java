@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.EditExternalPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.ReadExternalPersonByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -18,7 +21,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -49,9 +51,8 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
 	InfoExternalPerson infoExternalPerson = null;
 
-	Object args[] = { externalPersonId };
 	try {
-	    infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService("ReadExternalPersonByID", args);
+	    infoExternalPerson = (InfoExternalPerson) ReadExternalPersonByID.run(externalPersonId);
 	} catch (NonExistingServiceException e) {
 	    throw new FenixActionException(e);
 	} catch (FenixServiceException e) {
@@ -70,7 +71,8 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 	List institutions = getInstitutions(request);
 
 	if ((institutions == null) || (institutions.isEmpty())) {
-	    addErrorMessage(request, "label.masterDegree.administrativeOffice.nonExistingInstitutions", "label.masterDegree.administrativeOffice.nonExistingInstitutions");
+	    addErrorMessage(request, "label.masterDegree.administrativeOffice.nonExistingInstitutions",
+		    "label.masterDegree.administrativeOffice.nonExistingInstitutions");
 	    return mapping.findForward("error");
 	}
 
@@ -81,9 +83,8 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
     private List getInstitutions(HttpServletRequest request) throws FenixActionException, FenixFilterException {
 	List institutions = null;
 
-	Object args[] = {};
 	try {
-	    institutions = (ArrayList) ServiceUtils.executeService("ReadAllInstitutions", args);
+	    institutions = (ArrayList) ReadAllInstitutions.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -118,10 +119,8 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 	String homepage = (String) editExternalPersonForm.get("homepage");
 	String email = (String) editExternalPersonForm.get("email");
 
-	Object args[] = { externalPersonId, name, address, institutionID, phone, mobile, homepage, email };
-
 	try {
-	    ServiceUtils.executeService("EditExternalPerson", args);
+	    EditExternalPerson.run(externalPersonId, name, address, institutionID, phone, mobile, homepage, email);
 	} catch (ExistingServiceException e) {
 	    getInstitutions(request);
 	    throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));

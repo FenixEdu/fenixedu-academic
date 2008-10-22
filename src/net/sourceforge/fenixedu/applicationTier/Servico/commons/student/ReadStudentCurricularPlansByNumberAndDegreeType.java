@@ -15,10 +15,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentCurricularPlansByNumberAndDegreeType extends FenixService {
 
-    public List<StudentCurricularPlan> run(Integer studentNumber, DegreeType degreeType) throws NonExistingServiceException {
+    @Service
+    public static List<StudentCurricularPlan> run(Integer studentNumber, DegreeType degreeType)
+	    throws NonExistingServiceException {
 
 	List<Registration> registrations = Registration.readByNumberAndDegreeType(studentNumber, degreeType);
 

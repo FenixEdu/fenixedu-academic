@@ -20,11 +20,11 @@ public class EmailBean implements Serializable {
     }
 
     public Sender getSender() {
-        return sender == null ? null : sender.getObject();
+	return sender == null ? null : sender.getObject();
     }
 
     public void setSender(final Sender sender) {
-        this.sender = sender == null ? null : new DomainReference<Sender>(sender);
+	this.sender = sender == null ? null : new DomainReference<Sender>(sender);
     }
 
     public List<Recipient> getRecipients() {
@@ -34,7 +34,7 @@ public class EmailBean implements Serializable {
 		result.add(recipient.getObject());
 	    }
 	}
-        return result;
+	return result;
     }
 
     public void setRecipients(List<Recipient> recipients) {
@@ -49,43 +49,43 @@ public class EmailBean implements Serializable {
     }
 
     public String getTos() {
-        return tos;
+	return tos;
     }
 
     public void setTos(String tos) {
-        this.tos = tos;
+	this.tos = tos;
     }
 
     public String getCcs() {
-        return ccs;
+	return ccs;
     }
 
     public void setCcs(String ccs) {
-        this.ccs = ccs;
+	this.ccs = ccs;
     }
 
     public String getBccs() {
-        return bccs;
+	return bccs;
     }
 
     public void setBccs(String bccs) {
-        this.bccs = bccs;
+	this.bccs = bccs;
     }
 
     public String getSubject() {
-        return subject;
+	return subject;
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+	this.subject = subject;
     }
 
     public String getMessage() {
-        return message;
+	return message;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+	this.message = message;
     }
 
     @Service

@@ -44,8 +44,7 @@ public class DegreesWithDissertationProvider implements DataProvider {
 	return degrees;
     }
 
-    protected Collection<Degree> getDegrees(@SuppressWarnings("unused")
-    Object source) {
+    protected Collection<Degree> getDegrees(@SuppressWarnings("unused") Object source) {
 	return Degree.readNotEmptyDegrees();
     }
 

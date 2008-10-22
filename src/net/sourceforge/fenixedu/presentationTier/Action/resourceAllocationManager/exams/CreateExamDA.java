@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -220,8 +221,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	if (rooms != null && rooms.length > 0) {
 
 	    for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
-		Object argRoom[] = { new Integer(rooms[iterRooms]) };
-		InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", argRoom);
+
+		InfoRoom infoRoom = (InfoRoom) ReadRoomByOID.run(new Integer(rooms[iterRooms]));
 
 		roomNames.add(infoRoom);
 	    }
@@ -279,8 +280,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	if (rooms != null && rooms.length > 0) {
 
 	    for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
-		Object argRoom[] = { new Integer(rooms[iterRooms]) };
-		InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", argRoom);
+
+		InfoRoom infoRoom = (InfoRoom) ReadRoomByOID.run(new Integer(rooms[iterRooms]));
 
 		roomNames.add(infoRoom);
 	    }
@@ -399,8 +400,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	if (rooms != null && rooms.length > 0) {
 
 	    for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
-		Object argRoom[] = { new Integer(rooms[iterRooms]) };
-		InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", argRoom);
+
+		InfoRoom infoRoom = (InfoRoom) ReadRoomByOID.run(new Integer(rooms[iterRooms]));
 
 		roomNames.add(infoRoom);
 	    }
@@ -671,8 +672,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	if (rooms != null && rooms.length > 0) {
 
 	    for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
-		Object argRoom[] = { Integer.valueOf(rooms[iterRooms]) };
-		InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", argRoom);
+
+		InfoRoom infoRoom = (InfoRoom) ReadRoomByOID.run(Integer.valueOf(rooms[iterRooms]));
 
 		selectedRooms.add(infoRoom);
 	    }

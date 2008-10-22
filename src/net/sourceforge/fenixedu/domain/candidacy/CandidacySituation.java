@@ -13,9 +13,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.IStateWithOperations;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 // FIXME: Rename to CandidacyState
 public abstract class CandidacySituation extends CandidacySituation_Base implements IStateWithOperations {

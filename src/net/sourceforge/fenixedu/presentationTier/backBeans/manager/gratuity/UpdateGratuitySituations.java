@@ -6,6 +6,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -38,24 +39,16 @@ public class UpdateGratuitySituations extends FenixBackingBean {
 
     public List getExecutionYears() {
 
-	try {
-	    Object[] argsEmpty = {};
-	    List<LabelValueBean> executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears", argsEmpty);
+	List<LabelValueBean> executionYears = (List) ReadNotClosedExecutionYears.run();
 
-	    CollectionUtils.transform(executionYears, new Transformer() {
-		public Object transform(Object arg0) {
-		    InfoExecutionYear executionYear = (InfoExecutionYear) arg0;
-		    return new SelectItem(executionYear.getYear(), executionYear.getYear());
-		}
-	    });
+	CollectionUtils.transform(executionYears, new Transformer() {
+	    public Object transform(Object arg0) {
+		InfoExecutionYear executionYear = (InfoExecutionYear) arg0;
+		return new SelectItem(executionYear.getYear(), executionYear.getYear());
+	    }
+	});
 
-	    return executionYears;
-
-	} catch (FenixFilterException e) {
-	    return null;
-	} catch (FenixServiceException e1) {
-	    return null;
-	}
+	return executionYears;
     }
 
     public String getExecutionYear() {

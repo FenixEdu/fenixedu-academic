@@ -13,16 +13,16 @@ public enum FunctionType {
 
     DELEGATE_OF_YEAR, // Delegado de Ano
     DELEGATE_OF_DEGREE, // Delegado de Licenciatura (escolhido entre delegado de
-			// ano do 1º, 2º ou 3º ano)
+    // ano do 1º, 2º ou 3º ano)
     DELEGATE_OF_MASTER_DEGREE, // Delegado de Mestrado (delegado de ano do 1º ou
-			       // 2º ano do Mestrado | delegado de ano do 4º ou
-			       // 5º ano do Mestrado Integrado)
+    // 2º ano do Mestrado | delegado de ano do 4º ou
+    // 5º ano do Mestrado Integrado)
     DELEGATE_OF_INTEGRATED_MASTER_DEGREE, // Delegado de Mestrado Integrado
-					  // (delegado de ano do 4º ou 5º ano do
-					  // Mestrado Integrado)
+    // (delegado de ano do 4º ou 5º ano do
+    // Mestrado Integrado)
     DELEGATE_OF_GGAE, // Delegado de um Grupo de Grandes Áreas de Estudo
-		      // (delegado de Licenciatura, Mestrado ou Mestrado
-		      // Integrado )
+    // (delegado de Licenciatura, Mestrado ou Mestrado
+    // Integrado )
 
     VIRTUAL /* for functions that can be created unofficially */,
 

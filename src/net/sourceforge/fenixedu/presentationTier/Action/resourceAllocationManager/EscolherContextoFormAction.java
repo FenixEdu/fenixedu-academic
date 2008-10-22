@@ -6,12 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularYearByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -40,18 +41,13 @@ public class EscolherContextoFormAction extends FenixContextAction {
 	Integer semestre = infoExecutionPeriod.getSemester();
 	Integer anoCurricular = (Integer) escolherContextoForm.get("anoCurricular");
 
-	Object argsReadCurricularYearByOID[] = { anoCurricular };
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService("ReadCurricularYearByOID",
-		argsReadCurricularYearByOID);
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ReadCurricularYearByOID.run(anoCurricular);
 
 	int index = Integer.parseInt((String) escolherContextoForm.get("index"));
 
 	request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
 
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
-
-	List infoExecutionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
-		argsLerLicenciaturas);
+	List infoExecutionDegreeList = (List) ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index);
 

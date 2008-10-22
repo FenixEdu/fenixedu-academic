@@ -130,21 +130,17 @@ public class Grade implements Serializable, Comparable<Grade> {
 	/**
 	 * 
 	 * This was the original implementation, but it is very slow...
-	 * especially when generating reports that have to call this
-	 * method for practically every enrollment.
-	
-	try {
-	    Double.parseDouble(getValue());
-	    return true;
-	} catch (NumberFormatException e) {
-	    return false;
-	}
-
+	 * especially when generating reports that have to call this method for
+	 * practically every enrollment.
 	 * 
-	 * This alternative implementation is roughly 30-40x faster!
-	 * So I suggest you keep this ugly code where it is.
-	 * Using StringUtils may appear to be nicer, but beware that
-	 * it will produce different results!
+	 * try { Double.parseDouble(getValue()); return true; } catch
+	 * (NumberFormatException e) { return false; }
+	 * 
+	 * 
+	 * This alternative implementation is roughly 30-40x faster! So I
+	 * suggest you keep this ugly code where it is. Using StringUtils may
+	 * appear to be nicer, but beware that it will produce different
+	 * results!
 	 * 
 	 */
 	if (value.isEmpty()) {

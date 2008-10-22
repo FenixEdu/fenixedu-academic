@@ -1155,7 +1155,8 @@ public class Teacher extends Teacher_Base {
 	return getTutorshipsByStudentsEntryYearAndDegree(this.getPastTutorships(), entryYear, degree);
     }
 
-    private List<Tutorship> getTutorshipsByStudentsEntryYearAndDegree(List<Tutorship> tutorshipsList, ExecutionYear entryYear, Degree degree) {
+    private List<Tutorship> getTutorshipsByStudentsEntryYearAndDegree(List<Tutorship> tutorshipsList, ExecutionYear entryYear,
+	    Degree degree) {
 	List<Tutorship> tutorships = new ArrayList<Tutorship>();
 	for (Tutorship tutorship : tutorshipsList) {
 	    StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
@@ -1192,7 +1193,7 @@ public class Teacher extends Teacher_Base {
     public Integer getNumberOfPastTutorships() {
 	return this.getPastTutorships().size();
     }
-    
+
     public Integer getNumberOfActiveTutorships() {
 	return this.getActiveTutorships().size();
     }

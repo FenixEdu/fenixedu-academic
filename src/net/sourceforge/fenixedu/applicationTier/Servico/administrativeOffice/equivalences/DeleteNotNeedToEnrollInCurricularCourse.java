@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.eq
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Ricardo Rodrigues

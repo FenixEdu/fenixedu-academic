@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsernameOrIstUsername;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -39,8 +39,7 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
 	    String responseCode = null;
 
 	    try {
-		final Person person = (Person) ServiceUtils.executeService("ReadPersonByUsernameOrIstUsername",
-			new Object[] { username });
+		final Person person = (Person) ReadPersonByUsernameOrIstUsername.run(username);
 
 		if (person == null) {
 		    responseCode = USER_NOT_FOUND_CODE;

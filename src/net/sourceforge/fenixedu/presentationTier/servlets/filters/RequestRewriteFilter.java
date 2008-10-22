@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 
-public class RequestRewriteFilter extends pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter implements Filter {
+public class RequestRewriteFilter extends pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter
+	implements Filter {
 
     protected void writeResponse(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
 	    final ResponseWrapper responseWrapper) throws IOException, ServletException {
-	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(httpServletRequest));
+	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(
+		httpServletRequest));
     }
 
 }

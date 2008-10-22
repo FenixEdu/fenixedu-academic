@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormationBean;
@@ -351,11 +352,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
     public ActionForward deleteFormation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	try {
-	    executeService("DeleteAlumniQualification", new Object[] { getIntegerFromRequest(request, "formationId") });
-	} catch (FenixServiceException e) {
-	    addActionMessage("error", request, e.getMessage());
-	}
+	DeleteQualification.run(getIntegerFromRequest(request, "formationId"));
 
 	RenderUtils.invalidateViewState();
 	final Alumni alumni = rootDomainObject.readAlumniByOID(getIntegerFromRequest(request, "alumniId"));

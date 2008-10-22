@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddAnnouncementBoardBookmark;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.AproveActionAnnouncement;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.DeleteAnnouncement;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveAnnouncementBoardBookmark;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -25,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchive;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchiveAnnouncementsVisibility;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -102,7 +105,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     protected void createBookmark(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	final IUserView userView = getUserView(request);
 	final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-	ServiceUtils.executeService("AddAnnouncementBoardBookmark", new Object[] { board, userView.getPerson() });
+	AddAnnouncementBoardBookmark.run(board, userView.getPerson());
     }
 
     public ActionForward removeBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -115,7 +118,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     protected void removeBookmark(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	IUserView userView = getUserView(request);
 	AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-	ServiceUtils.executeService("RemoveAnnouncementBoardBookmark", new Object[] { board, userView.getPerson() });
+	RemoveAnnouncementBoardBookmark.run(board, userView.getPerson());
     }
 
     public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -219,7 +222,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	    addActionMessage(request, "error.not.allowed.to.write.board");
 	    return false;
 	}
-	ServiceUtils.executeService("DeleteAnnouncement", new Object[] { announcement });
+	DeleteAnnouncement.run(announcement);
 	return true;
     }
 
@@ -240,7 +243,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	    addActionMessage(request, "error.not.allowed.to.approve.board");
 	    return false;
 	}
-	ServiceUtils.executeService("AproveActionAnnouncement", new Object[] { announcement, action });
+	AproveActionAnnouncement.run(announcement, action);
 	return true;
     }
 

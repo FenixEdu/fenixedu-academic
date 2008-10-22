@@ -6,11 +6,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadPersonsByName extends FenixService {
 
-    public List<InfoPerson> run(String stringtoSearch) {
+    @Service
+    public static List<InfoPerson> run(String stringtoSearch) {
 
 	String names[] = stringtoSearch.split(" ");
 	StringBuilder authorName = new StringBuilder("%");

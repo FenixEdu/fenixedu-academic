@@ -31,11 +31,12 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurric
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_Base {
 

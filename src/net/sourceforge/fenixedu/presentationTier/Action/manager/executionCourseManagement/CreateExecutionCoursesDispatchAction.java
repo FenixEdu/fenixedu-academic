@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveDegreeCurricularPlansByDegreeType;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -45,11 +47,10 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
 	DynaActionForm actionForm = (DynaActionForm) form;
 	String degreeType = (String) actionForm.get("degreeType");
 
-	Object[] args = { DegreeType.valueOf(degreeType) };
-	Collection<InfoDegreeCurricularPlan> degreeCurricularPlans = (Collection<InfoDegreeCurricularPlan>) ServiceUtils
-		.executeService("ReadActiveDegreeCurricularPlansByDegreeType", args);
+	Collection<InfoDegreeCurricularPlan> degreeCurricularPlans = (Collection<InfoDegreeCurricularPlan>) ReadActiveDegreeCurricularPlansByDegreeType
+		.run(DegreeType.valueOf(degreeType));
 
-	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
+	List executionPeriods = (List) ReadNotClosedExecutionPeriods.run();
 
 	request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
 	request.setAttribute("executionPeriods", executionPeriods);

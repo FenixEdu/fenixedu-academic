@@ -5,11 +5,12 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteExamCoordinator extends FenixService {
 
-    public void run(ExamCoordinator coordinator) {
+    @Service
+    public static void run(ExamCoordinator coordinator) {
 
 	Person person = coordinator.getPerson();
 	coordinator.delete();

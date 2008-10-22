@@ -10,8 +10,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -34,7 +34,7 @@ public class IndexAction extends Action {
 
 	DynaValidatorForm executionPeriodForm = (DynaValidatorForm) form;
 
-	List executionPeriodsNotClosed = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
+	List executionPeriodsNotClosed = (List) ReadNotClosedExecutionPeriods.run();
 
 	removeCreditsPointZeroExecutionPeriod(executionPeriodsNotClosed);
 	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, executionPeriodForm);

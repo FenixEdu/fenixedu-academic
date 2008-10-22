@@ -25,13 +25,16 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
  * 
  */
 public class ReadProfessorshipsAndResponsibilitiesByDepartment extends FenixService {
 
-    public List run(Integer departmentId, Integer executionYearId) throws FenixServiceException {
+    @Service
+    public static List run(Integer departmentId, Integer executionYearId) throws FenixServiceException {
 
 	// Execution Year
 	ExecutionYear executionYear = null;
@@ -120,7 +123,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends FenixServ
 	return result;
     }
 
-    protected List getDetailedProfessorships(List professorships, final List responsibleFors) {
+    protected static List getDetailedProfessorships(List professorships, final List responsibleFors) {
 
 	List detailedProfessorshipList = (List) CollectionUtils.collect(professorships, new Transformer() {
 

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -19,7 +19,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExternalPersonsByInstitution extends FenixService {
 
-    public List run(Integer institutionID) throws FenixServiceException {
+    @Service
+    public static List run(Integer institutionID) throws FenixServiceException {
 	List infoExternalPersons = new ArrayList();
 
 	Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);

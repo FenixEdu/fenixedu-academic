@@ -18,7 +18,7 @@ public class InfoSiteStudentInformation extends DataTranferObject implements ISi
 	public int compare(InfoSiteStudentInformation o1, InfoSiteStudentInformation o2) {
 	    return o1.getNumber().compareTo(o2.getNumber());
 	}
-	
+
     };
 
     private String name;

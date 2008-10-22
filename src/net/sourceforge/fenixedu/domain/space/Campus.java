@@ -171,5 +171,4 @@ public class Campus extends Campus_Base {
 	    return new CampusInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
     }
-
 }

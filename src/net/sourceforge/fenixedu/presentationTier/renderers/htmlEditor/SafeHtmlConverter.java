@@ -170,7 +170,7 @@ public class SafeHtmlConverter extends TidyConverter {
 	}
 
 	if (value.toLowerCase().startsWith("javascript:")) { // javascript:
-							     // doSomething()
+	    // doSomething()
 	    return false;
 	}
 

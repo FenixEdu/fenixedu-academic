@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class EnrolInAffinityCycle extends FenixService {
 
     /**
@@ -26,7 +28,8 @@ public class EnrolInAffinityCycle extends FenixService {
      * conclude first cycle
      * 
      */
-    public void run(final Person person, final CycleEnrolmentBean cycleBean) {
+    @Service
+    public static void run(final Person person, final CycleEnrolmentBean cycleBean) {
 	final StudentCurricularPlan studentCurricularPlan = cycleBean.getStudentCurricularPlan();
 	studentCurricularPlan.enrolInAffinityCycle(cycleBean.getCycleCourseGroupToEnrol(), cycleBean.getExecutionPeriod());
     }
@@ -41,7 +44,8 @@ public class EnrolInAffinityCycle extends FenixService {
      * 
      * 
      */
-    public Registration run(final Person person, final StudentCurricularPlan studentCurricularPlan,
+    @Service
+    public static Registration run(final Person person, final StudentCurricularPlan studentCurricularPlan,
 	    final CycleCourseGroup cycleCourseGroupToEnrol, final ExecutionSemester executionSemester)
 	    throws FenixServiceException {
 
@@ -88,7 +92,7 @@ public class EnrolInAffinityCycle extends FenixService {
 	}
     }
 
-    private void markOldRegistrationWithConcludedState(final StudentCurricularPlan studentCurricularPlan) {
+    private static void markOldRegistrationWithConcludedState(final StudentCurricularPlan studentCurricularPlan) {
 	if (studentCurricularPlan.getRegistration().hasState(RegistrationStateType.CONCLUDED)) {
 	    return;
 	}
@@ -99,19 +103,19 @@ public class EnrolInAffinityCycle extends FenixService {
 	state.setResponsiblePerson(null);
     }
 
-    private boolean studentCurricularPlanAllowAffinityCycle(final StudentCurricularPlan studentCurricularPlan,
+    private static boolean studentCurricularPlanAllowAffinityCycle(final StudentCurricularPlan studentCurricularPlan,
 	    final CycleCourseGroup cycleCourseGroupToEnrol) {
 	return studentCurricularPlan.getCycleTypes().contains(cycleCourseGroupToEnrol.getCycleType())
 		&& studentCurricularPlan.getDegreeCurricularPlan() == cycleCourseGroupToEnrol.getParentDegreeCurricularPlan();
     }
 
-    private MDCandidacy createMDCandidacy(final Student student, final CycleCourseGroup cycleCourseGroupToEnrol,
+    private static MDCandidacy createMDCandidacy(final Student student, final CycleCourseGroup cycleCourseGroupToEnrol,
 	    final ExecutionSemester executionSemester) {
 	return new MDCandidacy(student.getPerson(), cycleCourseGroupToEnrol.getParentDegreeCurricularPlan()
 		.getExecutionDegreeByYear(executionSemester.getExecutionYear()));
     }
 
-    private void checkConditionsToEnrol(final StudentCurricularPlan studentCurricularPlan,
+    private static void checkConditionsToEnrol(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) throws FenixServiceException {
 
 	if (executionSemester.isFirstOfYear() && hasSpecialSeason(studentCurricularPlan, executionSemester)) {
@@ -135,7 +139,8 @@ public class EnrolInAffinityCycle extends FenixService {
 	}
     }
 
-    private boolean hasSpecialSeason(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+    private static boolean hasSpecialSeason(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionSemester executionSemester) {
 	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
 	    return true;
 	}

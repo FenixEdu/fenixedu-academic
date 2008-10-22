@@ -17,11 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
 
@@ -301,13 +299,7 @@ public class SearchAction extends FenixDispatchAction {
     public ActionForward doBeforeSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	// execution years
-	List executionYears = null;
-	Object[] args = {};
-	try {
-	    executionYears = (List) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionYears", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+	List executionYears = ReadNotClosedExecutionYears.run();
 
 	if (executionYears != null && !executionYears.isEmpty()) {
 	    ComparatorChain comparator = new ComparatorChain();

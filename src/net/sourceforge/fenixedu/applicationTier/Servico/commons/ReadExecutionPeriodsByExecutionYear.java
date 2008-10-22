@@ -7,11 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriodsByExecutionYear extends FenixService {
 
-    public List run(Integer executionYearId) {
+    @Service
+    public static List run(Integer executionYearId) {
 	final ExecutionYear executionYear = executionYearId != null ? rootDomainObject.readExecutionYearByOID(executionYearId)
 		: ExecutionYear.readCurrentExecutionYear();
 

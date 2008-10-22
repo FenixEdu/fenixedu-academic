@@ -37,7 +37,9 @@ public class PrepararEscolherDisciplinaExecucaoFormAction extends Action {
 
 	Object argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular[] = { new CurricularYearAndSemesterAndInfoExecutionDegree(
 		anoCurricular, semestre, iLE) };
-	List infoDisciplinasExecucao = (ArrayList) ServiceManagerServiceFactory.executeService("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
+	List infoDisciplinasExecucao = (ArrayList) ServiceManagerServiceFactory.executeService(
+		"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
+		argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 
 	// Collections.sort(infoDisciplinasExecucao);
 

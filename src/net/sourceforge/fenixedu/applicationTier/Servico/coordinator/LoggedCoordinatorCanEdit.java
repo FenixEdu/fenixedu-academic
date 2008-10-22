@@ -8,11 +8,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class LoggedCoordinatorCanEdit extends FenixService {
 
-    public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username) throws FenixServiceException {
+    @Service
+    public static Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
+	    throws FenixServiceException {
 	Boolean result = new Boolean(false);
 
 	if (executionDegreeCode == null) {

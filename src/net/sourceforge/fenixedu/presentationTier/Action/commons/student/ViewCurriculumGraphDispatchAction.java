@@ -49,7 +49,7 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 
 	// create the chart...
 	final JFreeChart chart = ChartFactory.createBarChart3D("Cadeiras Inscritas/Aprovadas", // chart
-											       // title
+		// title
 		null,// "Ano Lectivo - Semestre", // domain axis label
 		"Value", // range axis label
 		dataset1, // data

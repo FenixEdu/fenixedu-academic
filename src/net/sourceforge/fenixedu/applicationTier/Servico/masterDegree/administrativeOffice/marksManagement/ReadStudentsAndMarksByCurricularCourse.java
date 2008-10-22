@@ -31,9 +31,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadStudentsAndMarksByCurricularCourse extends FenixService {
 
-    public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
+    @Service
+    public static InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
 
 	List infoEnrolmentEvaluations = new ArrayList();
 	Date lastEvaluationDate = null;
@@ -111,7 +114,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends FenixService {
 	return infoSiteEnrolmentEvaluation;
     }
 
-    private Date getLastEvaluationDate(String yearString, CurricularCourse curricularCourse) {
+    private static Date getLastEvaluationDate(String yearString, CurricularCourse curricularCourse) {
 
 	Date lastEvaluationDate = null;
 	Iterator iterator = curricularCourse.getAssociatedExecutionCourses().listIterator();

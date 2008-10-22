@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadProfessorshipByTeacherIDAndExecutionCourseID extends FenixService {
 
-    public Professorship run(final Integer teacherID, final Integer executionCourseID) {
+    @Service
+    public static Professorship run(final Integer teacherID, final Integer executionCourseID) {
 	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 

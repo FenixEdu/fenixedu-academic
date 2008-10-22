@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoDegree extends InfoObject implements Comparable {
 
@@ -56,7 +56,7 @@ public class InfoDegree extends InfoObject implements Comparable {
     }
 
     public Enum getTipoCurso() {
-        return getDegree().getDegreeType();
+	return getDegree().getDegreeType();
     }
 
     public List getInfoDegreeCurricularPlans() {

@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadCurricularCoursesByDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -42,11 +44,11 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 	request.setAttribute("degree", degree);
 
 	// Get the Curricular Course List
-	Object args[] = { executionYear, degree };
+
 	IUserView userView = getUserView(request);
 	List curricularCourseList = null;
 	try {
-	    curricularCourseList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadCurricularCoursesByDegree", args);
+	    curricularCourseList = (ArrayList) ReadCurricularCoursesByDegree.run(executionYear, degree);
 	} catch (NonExistingServiceException e) {
 	    ActionErrors errors = new ActionErrors();
 	    errors.add("nonExisting", new ActionError("message.public.notfound.curricularCourses"));
@@ -128,8 +130,8 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 
 	InfoCurricularCourse infoCurricularCourse = null;
 	try {
-	    Object args[] = { courseID };
-	    infoCurricularCourse = (InfoCurricularCourse) ServiceManagerServiceFactory.executeService("ReadCurricularCourseByID", args);
+
+	    infoCurricularCourse = (InfoCurricularCourse) ReadCurricularCourseByID.run(courseID);
 	} catch (NonExistingServiceException e) {
 
 	} catch (FenixServiceException e) {

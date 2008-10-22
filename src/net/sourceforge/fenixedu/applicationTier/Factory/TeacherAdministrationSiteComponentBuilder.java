@@ -944,7 +944,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	    infoSiteStudentsAndShiftByStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
 	    infoSiteStudentsAndShiftByStudentGroupList.add(infoSiteStudentsAndShiftByStudentGroup);
 
-	    Collections.sort(infoSiteStudentsAndShiftByStudentGroupList, InfoSiteStudentsAndShiftByStudentGroup.COMPARATOR_BY_NUMBER);
+	    Collections.sort(infoSiteStudentsAndShiftByStudentGroupList,
+		    InfoSiteStudentsAndShiftByStudentGroup.COMPARATOR_BY_NUMBER);
 
 	}
 

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -52,10 +53,8 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 	request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYearsList);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils
-		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+	List executionDegreeList = (List) ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
@@ -131,8 +130,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-	Object argsReadDegrees[] = { infoExecutionPeriod.getInfoExecutionYear() };
-	List executionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear", argsReadDegrees);
+	List executionDegreeList = (List) ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
 	if (index != -1) {

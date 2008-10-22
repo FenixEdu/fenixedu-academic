@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurma;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -97,13 +97,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
 
-	Object[] args = { shiftOID };
-	InfoShift infoShift = null;
-	try {
-	    infoShift = (InfoShift) ServiceUtils.executeService("ReadShiftByOID", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+	InfoShift infoShift = ReadShiftByOID.run(shiftOID);
 
 	Object argsRemove[] = { infoShift, infoClass };
 	ServiceUtils.executeService("RemoverTurno", argsRemove);
@@ -142,10 +136,9 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 	classForm.set("className", infoClass.getNome());
 
 	// Place list of lessons in request
-	Object argsApagarTurma[] = { infoClass };
 
 	/** InfoLesson List */
-	List<InfoLesson> lessonList = (ArrayList<InfoLesson>) ServiceUtils.executeService("LerAulasDeTurma", argsApagarTurma);
+	List<InfoLesson> lessonList = LerAulasDeTurma.run(infoClass);
 
 	request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
 

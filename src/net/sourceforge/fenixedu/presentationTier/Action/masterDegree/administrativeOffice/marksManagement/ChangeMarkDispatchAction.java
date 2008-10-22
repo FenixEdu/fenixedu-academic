@@ -14,6 +14,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadTeacherByUsername;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.AlterStudentEnrolmentEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.ReadStudentMarksByCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
@@ -98,10 +101,9 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 	List infoSiteEnrolmentEvaluations = null;
 	IUserView userView = UserView.getUser();
 	try {
-	    Object args[] = { Integer.valueOf(curricularCourseId), studentNumber, null,
-		    getIntegerFromRequest(request, "enrolmentId") };
-	    infoSiteEnrolmentEvaluations = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentMarksByCurricularCourse", args);
+
+	    infoSiteEnrolmentEvaluations = ReadStudentMarksByCurricularCourse.run(Integer.valueOf(curricularCourseId),
+		    studentNumber, null, getIntegerFromRequest(request, "enrolmentId"));
 	} catch (ExistingServiceException e) {
 	    // invalid student number
 	    addErrorMessage(request, "StudentNotExist", "error.student.notExist");
@@ -222,12 +224,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 	InfoTeacher infoTeacher = null;
 
 	if (newEnrolmentEvaluation.getInfoPersonResponsibleForGrade() != null) {
-	    try {
-		Object args[] = { newEnrolmentEvaluation.getInfoPersonResponsibleForGrade().getUsername() };
-		infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService("ReadTeacherByUsername", args);
-	    } catch (ExistingServiceException e) {
-		throw new ExistingActionException(e);
-	    }
+	    infoTeacher = ReadTeacherByUsername.run(newEnrolmentEvaluation.getInfoPersonResponsibleForGrade().getUsername());
 	    studentNumberForm.set("teacherNumber", String.valueOf(infoTeacher.getTeacherNumber()));
 	} else {
 	    studentNumberForm.set("teacherNumber", "");
@@ -318,8 +315,8 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 	infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
 
 	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(teacherNumber));
-	final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) RootDomainObject.getInstance()
-		.readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
+	final EnrolmentEvaluation enrolmentEvaluation = RootDomainObject.getInstance().readEnrolmentEvaluationByOID(
+		enrolmentEvaluationCode);
 	infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 
 	infoEnrolmentEvaluation.setGradeValue(grade);
@@ -328,9 +325,9 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
 	try {
 	    IUserView userView = UserView.getUser();
-	    Object args[] = { Integer.valueOf(curricularCourseId), enrolmentEvaluationCode, infoEnrolmentEvaluation,
-		    infoTeacher.getTeacherNumber(), userView };
-	    ServiceManagerServiceFactory.executeService("AlterStudentEnrolmentEvaluation", args);
+
+	    AlterStudentEnrolmentEvaluation.run(Integer.valueOf(curricularCourseId), enrolmentEvaluationCode,
+		    infoEnrolmentEvaluation, infoTeacher.getTeacherNumber(), userView);
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getKey(), (Object[]) e.getArgs());
 	    return chooseStudentMarks(mapping, form, request, response);

@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -18,6 +17,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.DefaultCategoryDataset;
 import org.jfree.data.DefaultPieDataset;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class TeacherServiceDistributionChart {
     protected TeacherServiceDistribution tsd = null;

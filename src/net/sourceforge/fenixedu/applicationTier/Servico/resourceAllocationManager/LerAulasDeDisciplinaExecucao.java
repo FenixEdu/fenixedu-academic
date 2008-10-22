@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -21,7 +22,8 @@ import net.sourceforge.fenixedu.domain.Shift;
  */
 public class LerAulasDeDisciplinaExecucao extends FenixService {
 
-    public Object run(final InfoExecutionCourse infoExecutionCourse) {
+    @Service
+    public static Object run(final InfoExecutionCourse infoExecutionCourse) {
 
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
 	final Set<Shift> shifts = executionCourse.getAssociatedShifts();

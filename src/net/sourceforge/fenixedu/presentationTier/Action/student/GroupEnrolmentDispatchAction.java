@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup.NewStudentGroupAlreadyExists;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
@@ -132,8 +133,8 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 	request.setAttribute("infoUserStudent", studentsNotEnroled.getInfoUserStudent());
 	request.setAttribute("infoGrouping", studentsNotEnroled.getInfoGrouping());
 
-	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.executeService(
-		"ReadExportGroupingsByGrouping", new Object[] { groupPropertiesCode });
+	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ReadExportGroupingsByGrouping
+		.run(groupPropertiesCode);
 	request.setAttribute("infoExportGroupings", infoExportGroupings);
 
 	return mapping.findForward("sucess");

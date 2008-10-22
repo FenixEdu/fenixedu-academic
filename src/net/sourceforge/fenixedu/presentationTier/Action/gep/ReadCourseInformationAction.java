@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
@@ -45,9 +46,9 @@ public class ReadCourseInformationAction extends FenixAction {
 	request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);
 
 	if (request.getParameter("executionDegreeId") != null) {
-	    Object[] args2 = { new Integer(request.getParameter("executionDegreeId")) };
-	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-		    "ReadExecutionDegreeByOID", args2);
+
+	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ReadExecutionDegreeByOID.run(new Integer(request
+		    .getParameter("executionDegreeId")));
 	    request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 	}
 

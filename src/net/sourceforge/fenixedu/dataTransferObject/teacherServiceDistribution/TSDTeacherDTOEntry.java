@@ -25,7 +25,7 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
 	public int compare(TSDTeacherDTOEntry o1, TSDTeacherDTOEntry o2) {
 	    return o1.getName().compareTo(o2.getName());
 	}
-	
+
     };
 
     private List<TSDTeacher> tsdTeacherList;

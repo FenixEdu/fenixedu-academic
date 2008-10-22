@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllGrantPartsByGrantSubsidy extends FenixService {
 

@@ -52,8 +52,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends FenixServi
 		    return false;
 		}
 	    }
-	    if (studentNumber != null
-		    && studentNumber.intValue() != registration.getNumber().intValue()
+	    if (studentNumber != null && studentNumber.intValue() != registration.getNumber().intValue()
 		    && studentNumber.intValue() != student.getNumber().intValue()) {
 		return false;
 	    }
@@ -64,8 +63,8 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends FenixServi
 
     public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber) {
 	final SearchSet searchSet = new SearchSet(studentName, idNumber, studentNumber);
-	Registration.readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
-		searchSet, studentName, idNumber, idType, studentNumber);
+	Registration.readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(searchSet, studentName, idNumber, idType,
+		studentNumber);
 
 	final List<InfoStudent> result = new ArrayList<InfoStudent>();
 	for (final Registration registration : searchSet) {

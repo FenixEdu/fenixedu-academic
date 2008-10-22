@@ -2,11 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateSpaceInformation extends FenixService {
 
-    public void run(final Integer spaceInformationID) {
+    @Service
+    public static void run(final Integer spaceInformationID) {
 	final SpaceInformation spaceInformation = rootDomainObject.readSpaceInformationByOID(spaceInformationID);
 	// spaceInformation.createNewSpaceInformation();
     }

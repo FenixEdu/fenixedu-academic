@@ -7,11 +7,12 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateVigilants extends FenixService {
 
-    public void run(List<Person> persons, VigilantGroup vigilantGroup) {
+    @Service
+    public static void run(List<Person> persons, VigilantGroup vigilantGroup) {
 
 	for (Person person : persons) {
 	    Vigilant vigilant = new Vigilant(person);

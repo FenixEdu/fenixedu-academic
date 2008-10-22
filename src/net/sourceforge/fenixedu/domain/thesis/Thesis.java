@@ -1238,7 +1238,7 @@ public class Thesis extends Thesis_Base {
 
 			if (isMember) {
 			    break;
-			}			
+			}
 		    }
 		}
 
@@ -1573,7 +1573,8 @@ public class Thesis extends Thesis_Base {
 
     @Checked("ThesisPredicates.isScientificCommission")
     public void checkIsScientificCommission() {
-	// Nothing to do here... just the access control stuff that is injected whenever necessary
+	// Nothing to do here... just the access control stuff that is injected
+	// whenever necessary
     }
 
 }

@@ -191,9 +191,9 @@ public class ShowCandidacies extends FenixAction {
 	    throw new FenixActionException(e);
 	}
 	Collections.sort(avaliableCurricularPlans, new BeanComparator("name")); // TODO
-										// gedl
-										// remover
-										// dupicados
+	// gedl
+	// remover
+	// dupicados
 
 	request.setAttribute("seminaries", seminaries);
 	request.setAttribute("cases", cases);

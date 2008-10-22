@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.domain.student;
 
-
 public enum RegistrationRegimeType {
-    
+
     FULL_TIME,
-    
+
     PARTIAL_TIME;
 
     public String getName() {

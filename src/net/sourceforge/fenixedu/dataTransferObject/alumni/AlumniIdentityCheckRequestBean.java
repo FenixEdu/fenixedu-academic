@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.alumni;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 import org.joda.time.YearMonthDay;
 

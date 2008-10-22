@@ -9,20 +9,22 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadExecutionCoursesByExecutionDegreeService extends FenixService {
 
-    public class NonExistingExecutionDegree extends FenixServiceException {
+    public static class NonExistingExecutionDegree extends FenixServiceException {
 	public NonExistingExecutionDegree() {
 	    super();
 	}
     }
 
-    public List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException {
+    @Service
+    public static List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException {
 
 	final ExecutionSemester executionSemester;
 	if (executionPeriodId == null) {

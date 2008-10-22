@@ -14,8 +14,8 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
-    public PrecedentDegreeInformation(final StudentCandidacy studentCandidacy){
+
+    public PrecedentDegreeInformation(final StudentCandidacy studentCandidacy) {
 	this();
 	super.setStudentCandidacy(studentCandidacy);
     }

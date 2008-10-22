@@ -206,7 +206,7 @@ public class Section extends Section_Base {
 	}
 	return contents;
     }
-    
+
     public List<FileContent> getAssociatedFiles() {
 	List<FileContent> contents = new ArrayList<FileContent>();
 	for (Attachment attachment : getChildren(Attachment.class)) {
@@ -267,7 +267,7 @@ public class Section extends Section_Base {
     public List<Attachment> getOrderedChildrenFiles() {
 	return (List<Attachment>) getOrderedChildren(Attachment.class);
     }
-    
+
     public List<Attachment> getChildrenFiles() {
 	return (List<Attachment>) getChildren(Attachment.class);
     }

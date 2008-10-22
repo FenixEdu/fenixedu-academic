@@ -15,9 +15,10 @@ import net.sourceforge.fenixedu.domain.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhDCandidacyEvent extends PhDCandidacyEvent_Base {
 

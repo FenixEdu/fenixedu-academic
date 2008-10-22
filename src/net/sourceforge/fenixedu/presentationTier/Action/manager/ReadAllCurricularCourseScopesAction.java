@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCourseScopes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -44,11 +44,9 @@ public class ReadAllCurricularCourseScopesAction extends FenixAction {
 	request.setAttribute("degreeId", degreeId);
 	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 
-	Object args[] = { curricularCourseId };
-
 	List curricularCourseScopes = new ArrayList();
 	try {
-	    curricularCourseScopes = (List) ServiceUtils.executeService("ReadCurricularCourseScopes", args);
+	    curricularCourseScopes = (List) ReadCurricularCourseScopes.run(curricularCourseId);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

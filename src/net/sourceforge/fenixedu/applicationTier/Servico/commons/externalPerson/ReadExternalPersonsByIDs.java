@@ -6,7 +6,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExternalPersonsByIDs extends FenixService {
 
-    public Collection<InfoExternalPerson> run(Collection<Integer> externalPersonsIDs) {
+    @Service
+    public static Collection<InfoExternalPerson> run(Collection<Integer> externalPersonsIDs) {
 
 	Collection<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersonsIDs.size());
 

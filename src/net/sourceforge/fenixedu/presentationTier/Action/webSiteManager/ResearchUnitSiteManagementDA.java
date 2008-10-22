@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateResearchContract;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteResearchContract;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
@@ -77,8 +79,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
 	    ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
 	    try {
-		executeService("CreateResearchContract", new Object[] { bean, getLoggedPerson(request),
-			LoginRequestManagement.getRequestURL(request) });
+		CreateResearchContract.run(bean, getLoggedPerson(request), LoginRequestManagement.getRequestURL(request));
 	    } catch (FenixServiceException e) {
 		addActionMessage(request, e.getMessage());
 		return managePeople(mapping, actionForm, request, response);
@@ -100,8 +101,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 		return managePeoplePostBack(mapping, actionForm, request, response);
 	    }
 	    try {
-		executeService("CreateResearchContract", new Object[] { bean, getLoggedPerson(request),
-			LoginRequestManagement.getRequestURL(request) });
+		CreateResearchContract.run(bean, getLoggedPerson(request), LoginRequestManagement.getRequestURL(request));
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		return managePeople(mapping, actionForm, request, response);
@@ -118,7 +118,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	ResearchContract contract = (ResearchContract) RootDomainObject.readDomainObjectByOID(ResearchContract.class, Integer
 		.valueOf(contractID));
 	try {
-	    executeService("DeleteResearchContract", new Object[] { contract });
+	    DeleteResearchContract.run(contract);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

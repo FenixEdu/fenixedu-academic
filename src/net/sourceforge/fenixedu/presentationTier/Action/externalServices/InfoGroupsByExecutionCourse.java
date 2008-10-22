@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -74,9 +75,9 @@ public class InfoGroupsByExecutionCourse extends FenixAction {
     }
 
     private String buildInfo(Integer integer, IUserView userView) throws FenixFilterException, FenixServiceException {
-	Object[] args = { integer, userView.getUtilizador() };
-	Collection info = (Collection) ServiceManagerServiceFactory.executeService(
-		"ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername", args); //$NON-NLS-1$
+
+	Collection info = (Collection) ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername.run(integer,
+		userView.getUtilizador()); //$NON-NLS-1$
 	XStream xstream = new XStream();
 	String data = xstream.toXML(info);
 

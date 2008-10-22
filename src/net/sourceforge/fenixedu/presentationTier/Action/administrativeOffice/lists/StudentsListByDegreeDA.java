@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudents;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
@@ -57,8 +58,8 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
 	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
 
-	final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) executeService(
-		"SearchStudents", new Object[] { searchBean });
+	final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) SearchStudents
+		.run(searchBean);
 
 	request.setAttribute("searchParametersBean", searchBean);
 	request.setAttribute("studentCurricularPlanList", registrations);
@@ -71,8 +72,8 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
 	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
 	if (searchBean != null) {
-	    final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) executeService(
-		    "SearchStudents", new Object[] { searchBean });
+	    final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) SearchStudents
+		    .run(searchBean);
 
 	    try {
 		String filename;

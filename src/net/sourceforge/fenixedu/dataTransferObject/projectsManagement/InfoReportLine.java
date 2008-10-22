@@ -7,11 +7,12 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Susana Fernandes

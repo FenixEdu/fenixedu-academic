@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateStudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
@@ -151,8 +152,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
     private StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan(final HttpServletRequest request,
 	    final Student student) throws FenixFilterException, FenixServiceException {
-	final Object[] args = { student };
-	return (StudentCurricularPlanEquivalencePlan) executeService("CreateStudentCurricularPlanEquivalencePlan", args);
+	return CreateStudentCurricularPlanEquivalencePlan.run(student);
     }
 
     private Student getStudent(final HttpServletRequest request) {

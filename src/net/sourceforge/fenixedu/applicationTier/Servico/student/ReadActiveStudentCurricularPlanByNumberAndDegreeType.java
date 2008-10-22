@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /*
  * Created on 24/Set/2003, 11:26:29
@@ -21,7 +21,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends FenixService {
 
-    public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
+    @Service
+    public static InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
 	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
 	if (registration == null) {
 	    return null;

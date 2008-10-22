@@ -17,7 +17,7 @@ public class LeaveBean implements Serializable {
 	public int compare(LeaveBean o1, LeaveBean o2) {
 	    return o1.getDate().compareTo(o2.getDate());
 	}
-	
+
     };
 
     private DomainReference<Leave> leave;

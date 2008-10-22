@@ -11,12 +11,13 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemptionShift;
 import net.sourceforge.fenixedu.domain.assiduousness.util.PartialList;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AssiduousnessExemptionBean implements Serializable, FactoryExecutor {
     private Integer year;

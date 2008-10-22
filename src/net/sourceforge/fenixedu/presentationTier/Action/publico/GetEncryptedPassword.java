@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadTeacherByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -33,13 +32,13 @@ public class GetEncryptedPassword extends Action {
      * error codes: 1-> service unavailable 2-> input data error 3-> no such
      * user
      */
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException {
 	String username = request.getParameter("login");
 	String timestamp = request.getParameter("timestamp");
 	String url = request.getParameter("url");
 
-	Object[] args = { username };
 	InfoTeacher infoTeacher = null;
 	url = url + "?";
 	Integer error = new Integer(0);
@@ -47,11 +46,7 @@ public class GetEncryptedPassword extends Action {
 	    error = new Integer(2);
 	} else {
 
-	    try {
-		infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByUsername", args);
-	    } catch (FenixServiceException e) {
-		error = new Integer(1);
-	    }
+	    infoTeacher = ReadTeacherByUsername.run(username);
 	}
 	if (infoTeacher == null) {
 	    error = new Integer(3);

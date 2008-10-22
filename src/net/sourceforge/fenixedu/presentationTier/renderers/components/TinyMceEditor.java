@@ -111,7 +111,7 @@ public class TinyMceEditor extends HtmlTextArea {
 	Language language = Language.getLanguage();
 	properties.setProperty("language", language.toString());
 	properties.setProperty("docs_language", "en"); // hardcoded because pt
-						       // is not supported
+	// is not supported
 
 	builder.append("tinyMCE.init({\n");
 

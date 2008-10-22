@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.assidu
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessStructureSearch;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -61,7 +62,7 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) getRenderedObject();
 	if (!isCancelled(request)) {
-	    Object result = executeService("ExecuteFactoryMethod", new Object[] { assiduousnessPersonFunctionFactory });
+	    Object result = ExecuteFactoryMethod.run(assiduousnessPersonFunctionFactory);
 	    if (result != null) {
 		ActionMessages actionMessages = new ActionMessages();
 		actionMessages.add("errorMessage", (ActionMessage) result);

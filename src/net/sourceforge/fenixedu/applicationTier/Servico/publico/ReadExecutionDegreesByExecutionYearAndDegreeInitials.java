@@ -1,22 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-/**
- * Servico LerSalas
- * 
- * @author tfc130
- * @version
- */
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends FenixService {
 
-    public InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear, final String degreeInitials,
+    @Service
+    public static InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear, final String degreeInitials,
 	    final String nameDegreeCurricularPlan) {
 
 	final DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan,

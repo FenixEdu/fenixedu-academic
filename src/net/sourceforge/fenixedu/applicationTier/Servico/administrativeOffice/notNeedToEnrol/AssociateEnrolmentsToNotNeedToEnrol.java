@@ -8,10 +8,12 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class AssociateEnrolmentsToNotNeedToEnrol extends FenixService {
 
-    public void run(Student student, NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse,
+    @Service
+    public static void run(Student student, NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse,
 	    Collection<Enrolment> selectedEnrolments, Collection<ExternalEnrolment> externalEnrolments)
 	    throws FenixServiceException {
 
@@ -50,7 +52,7 @@ public class AssociateEnrolmentsToNotNeedToEnrol extends FenixService {
 
     }
 
-    private Enrolment getAprovedEnrolment(Collection<Enrolment> aprovedEnrolments, Enrolment selectedEnrolment) {
+    private static Enrolment getAprovedEnrolment(Collection<Enrolment> aprovedEnrolments, Enrolment selectedEnrolment) {
 	for (Enrolment enrolment : aprovedEnrolments) {
 	    if (enrolment.equals(selectedEnrolment)) {
 		return enrolment;

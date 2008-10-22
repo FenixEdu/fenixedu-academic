@@ -8,10 +8,12 @@ import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ApplyStructureModifications extends FenixService {
 
-    public void run(List<ModifiedContentBean> modifications) {
+    @Service
+    public static void run(List<ModifiedContentBean> modifications) {
 	for (ModifiedContentBean bean : modifications) {
 	    Container parentContainer = bean.getCurrentParent();
 	    Container newContainer = bean.getNewParent();
@@ -30,7 +32,7 @@ public class ApplyStructureModifications extends FenixService {
 	}
     }
 
-    private Node changeParent(Node node, Container parent) {
+    private static Node changeParent(Node node, Container parent) {
 	if (node instanceof ExplicitOrderNode) {
 	    ExplicitOrderNode oldNode = (ExplicitOrderNode) node;
 	    ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(parent, oldNode.getChild(), oldNode.isAscending(),

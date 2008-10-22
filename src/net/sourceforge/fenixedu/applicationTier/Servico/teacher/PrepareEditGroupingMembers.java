@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.ProposalState;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
@@ -23,7 +23,8 @@ import net.sourceforge.fenixedu.util.ProposalState;
 
 public class PrepareEditGroupingMembers extends FenixService {
 
-    public List run(Integer executionCourseCode, Integer groupingID) throws FenixServiceException {
+    @Service
+    public static List run(Integer executionCourseCode, Integer groupingID) throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
 	if (grouping == null) {
 	    throw new InvalidArgumentsServiceException();

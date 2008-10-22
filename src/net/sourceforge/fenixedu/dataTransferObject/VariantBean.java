@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
+
+import org.joda.time.YearMonthDay;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class VariantBean implements Serializable {
@@ -79,12 +80,12 @@ public class VariantBean implements Serializable {
 	this.value = new DomainReference<DomainObject>(domainObject);
 	setType(Type.DOMAIN_REFERENCE);
     }
-    
+
     public void setYearMonthDay(YearMonthDay date) {
 	this.value = date;
 	setType(Type.YEAR_MONTH_DAY);
     }
-    
+
     public YearMonthDay getYearMonthDay() {
 	return Type.YEAR_MONTH_DAY.equals(getType()) ? (YearMonthDay) this.value : null;
     }

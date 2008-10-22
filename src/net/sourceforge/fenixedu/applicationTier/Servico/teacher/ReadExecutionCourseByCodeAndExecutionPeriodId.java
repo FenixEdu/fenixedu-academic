@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -17,7 +18,9 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
  */
 public class ReadExecutionCourseByCodeAndExecutionPeriodId extends FenixService {
 
-    public InfoExecutionCourse run(Integer executionPeriodId, String code) throws ExcepcaoInexistente, FenixServiceException {
+    @Service
+    public static InfoExecutionCourse run(Integer executionPeriodId, String code) throws ExcepcaoInexistente,
+	    FenixServiceException {
 	InfoExecutionCourse infoExecCourse = null;
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	ExecutionCourse iExecCourse = executionSemester.getExecutionCourseByInitials(code);

@@ -22,13 +22,16 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author joaosa & rmalo
  * 
  */
 public class ReadStudentsAndGroupsWithoutShift extends FenixService {
 
-    public InfoSiteStudentsAndGroups run(Integer groupPropertiesId) throws FenixServiceException {
+    @Service
+    public static InfoSiteStudentsAndGroups run(Integer groupPropertiesId) throws FenixServiceException {
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
 	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
@@ -78,7 +81,7 @@ public class ReadStudentsAndGroupsWithoutShift extends FenixService {
 	return infoSiteStudentsAndGroups;
     }
 
-    private List getStudentGroupsWithoutShiftByGroupProperties(Grouping groupProperties) {
+    private static List getStudentGroupsWithoutShiftByGroupProperties(Grouping groupProperties) {
 	List result = new ArrayList();
 	List studentGroups = groupProperties.getStudentGroupsWithoutShift();
 	result.addAll(studentGroups);

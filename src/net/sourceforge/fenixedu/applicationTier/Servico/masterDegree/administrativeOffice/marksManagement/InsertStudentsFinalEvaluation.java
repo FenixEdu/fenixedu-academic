@@ -7,11 +7,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertStudentsFinalEvaluation extends FenixService {
 
-    public void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final Integer teacherNumber, final Date evaluationDate)
-	    throws NonExistingServiceException {
+    @Service
+    public static void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final Integer teacherNumber,
+	    final Date evaluationDate) throws NonExistingServiceException {
 	final Teacher teacher = Teacher.readByNumber(teacherNumber);
 	if (teacher == null) {
 	    throw new NonExistingServiceException();

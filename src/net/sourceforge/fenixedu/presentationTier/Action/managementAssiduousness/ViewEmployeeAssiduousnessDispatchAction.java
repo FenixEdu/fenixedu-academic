@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeBalanceResume;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -78,8 +78,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 
-	Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService("ReadEmployeeWorkSheet", args);
+	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ReadAssiduousnessWorkSheet.run(employee.getAssiduousness(),
+		beginDate, endDate);
 
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	setEmployeeStatus(request, employee, beginDate, endDate);
@@ -296,9 +296,9 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 			    .getAssiduousnessClosedMonth(assiduousnessStatusHistory);
 		    employeeBalanceResume.setEmployeeBalanceResume(assiduosunessClosedMonth);
 		} else {
-		    Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-		    EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
-			    "ReadEmployeeWorkSheet", args);
+
+		    EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ReadAssiduousnessWorkSheet.run(employee
+			    .getAssiduousness(), beginDate, endDate);
 		    employeeBalanceResume.setEmployeeBalanceResume(employeeWorkSheet.getTotalBalance() == null ? Duration.ZERO
 			    : employeeWorkSheet.getTotalBalance(),
 			    employeeWorkSheet.getBalanceToCompensate() == null ? Duration.ZERO : employeeWorkSheet

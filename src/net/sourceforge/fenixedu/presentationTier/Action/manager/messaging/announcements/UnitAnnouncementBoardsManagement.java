@@ -10,6 +10,9 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.DeleteAnnouncementBoard;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.EditUnitAnnouncementBoardApprovers;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard.UnitAnnouncementBoardParameters;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.AnnouncementBoardApproversBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -86,8 +89,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 	} else {
 
 	    try {
-		ServiceUtils.executeService("DeleteAnnouncementBoard",
-			new Object[] { this.getRequestedAnnouncementBoard(request) });
+		DeleteAnnouncementBoard.run(this.getRequestedAnnouncementBoard(request));
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey());
 		return prepareCreateBoard(mapping, actionForm, request, response);
@@ -127,7 +129,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 	    params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
 	    params.unitId = form.getKeyUnit();
 
-	    ServiceUtils.executeService("CreateUnitAnnouncementBoard", new Object[] { params });
+	    CreateUnitAnnouncementBoard.run(params);
 	}
 	return this.prepareCreateBoard(mapping, actionForm, request, response);
     }
@@ -212,7 +214,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
 	    Collection<AnnouncementBoardApproversBean> announcementApprovers = (Collection<AnnouncementBoardApproversBean>) getRenderedObject();
 
-	    ServiceUtils.executeService("EditUnitAnnouncementBoardApprovers", new Object[] { board, announcementApprovers });
+	    EditUnitAnnouncementBoardApprovers.run(board, announcementApprovers);
 
 	    UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
 	    if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {

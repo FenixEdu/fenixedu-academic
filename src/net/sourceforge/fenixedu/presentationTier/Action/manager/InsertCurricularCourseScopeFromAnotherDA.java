@@ -11,8 +11,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -36,8 +36,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -101,12 +99,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 
 	// obtain execution periods to show in jsp
 	List<InfoExecutionPeriod> infoExecutionPeriods = null;
-	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoExecutionPeriods = ReadExecutionPeriods.run();
 
 	if (infoExecutionPeriods == null)
 	    throw new NonExistingActionException("message.insert.executionPeriods.error", mapping

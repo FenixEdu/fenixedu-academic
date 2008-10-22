@@ -87,11 +87,11 @@ public class CycleEnrolmentBean implements Serializable {
 
     public List<CycleCourseGroup> getCycleDestinationAffinities() {
 	final List<CycleCourseGroup> affinities = getDegreeCurricularPlan().getDestinationAffinities(getSourceCycleAffinity());
-	
+
 	if (affinities.isEmpty()) {
 	    return Collections.emptyList();
 	}
-	
+
 	if (!isStudent()) {
 	    return affinities;
 	}

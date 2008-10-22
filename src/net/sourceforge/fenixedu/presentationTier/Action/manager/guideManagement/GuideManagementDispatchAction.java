@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlans;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
@@ -106,19 +108,14 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	List executionYears = null;
 	try {
-	    executionYears = (List) ServiceUtils.executeService("ReadExecutionYears", null);
+	    executionYears = ReadExecutionYears.run();
 	} catch (FenixServiceException e1) {
 	    // TODO Auto-generated catch block
 	    e1.printStackTrace();
 	}
 
 	List degreeCurricularPlans = null;
-	try {
-	    degreeCurricularPlans = (List) ServiceUtils.executeService("ReadDegreeCurricularPlans", null);
-	} catch (FenixServiceException e1) {
-	    // TODO Auto-generated catch block
-	    e1.printStackTrace();
-	}
+	degreeCurricularPlans = ReadDegreeCurricularPlans.run();
 
 	Collection degreeCurricularPlansInLabelValueBeanList = CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
 

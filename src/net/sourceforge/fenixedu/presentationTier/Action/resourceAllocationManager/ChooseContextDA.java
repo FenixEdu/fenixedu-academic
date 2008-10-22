@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularYearByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
@@ -43,18 +45,14 @@ public class ChooseContextDA extends FenixDateAndTimeDispatchAction {
 	/* Determine Selected Curricular Year */
 	Integer anoCurricular = new Integer((String) chooseScheduleContext.get("curricularYear"));
 
-	Object argsReadCurricularYearByOID[] = { anoCurricular };
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) executeService("ReadCurricularYearByOID",
-		argsReadCurricularYearByOID);
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ReadCurricularYearByOID.run(anoCurricular);
 
 	request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
 
 	/* Determine Selected Execution Degree */
 	Integer executionDegreeOID = new Integer((String) chooseScheduleContext.get("executionDegreeOID"));
 
-	Object argsReadExecutionDegreeByOID[] = { executionDegreeOID };
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) executeService("ReadExecutionDegreeByOID",
-		argsReadExecutionDegreeByOID);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ReadExecutionDegreeByOID.run(executionDegreeOID);
 
 	if (infoExecutionDegree == null) {
 	    ActionErrors actionErrors = new ActionErrors();

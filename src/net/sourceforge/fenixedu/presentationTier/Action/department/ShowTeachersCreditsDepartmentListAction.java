@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -102,10 +102,8 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
     private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 	List<InfoExecutionPeriod> notClosedExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-	Object[] args = {};
 
-	notClosedExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
-		"ReadNotClosedExecutionPeriods", args);
+	notClosedExecutionPeriods = (List<InfoExecutionPeriod>) ReadNotClosedExecutionPeriods.run();
 
 	List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(notClosedExecutionPeriods);
 	request.setAttribute("executionPeriods", executionPeriods);

@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -122,7 +120,7 @@ public class Alumni extends Alumni_Base {
 	addressSet.addAll(getStudent().getPerson().getPhysicalAddresses());
 	return addressSet.last() != null ? addressSet.last() : null;
     }
-    
+
     public PhysicalAddress getPersonalAddress() {
 	if (getStudent().getPerson().hasDefaultPhysicalAddress()) {
 	    return getStudent().getPerson().getDefaultPhysicalAddress();
@@ -258,9 +256,9 @@ public class Alumni extends Alumni_Base {
 	}
 	return false;
     }
-    
+
     public String getLoginUsername() {
-	Person person = getStudent().getPerson(); 
+	Person person = getStudent().getPerson();
 	if (person.getIstUsername() == null) {
 	    return person.getLoginAlias().iterator().next().getAlias();
 	}
@@ -275,7 +273,7 @@ public class Alumni extends Alumni_Base {
     public boolean hasFinishedPublicRegistry() {
 	return hasStartedPublicRegistry() && isRegistered();
     }
-    
+
     public String getName() {
 	return getStudent().getPerson().getName();
     }

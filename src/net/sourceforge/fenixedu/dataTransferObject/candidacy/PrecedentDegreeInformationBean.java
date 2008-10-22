@@ -32,7 +32,7 @@ public class PrecedentDegreeInformationBean implements Serializable {
     private String conclusionGrade;
 
     private Integer conclusionYear;
-    
+
     private SchoolLevelType schoolLevel;
 
     private String otherSchoolLevel;
@@ -113,21 +113,21 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public SchoolLevelType getSchoolLevel() {
-        return schoolLevel;
+	return schoolLevel;
     }
 
     public void setSchoolLevel(SchoolLevelType schoolLevel) {
-        this.schoolLevel = schoolLevel;
+	this.schoolLevel = schoolLevel;
     }
 
     public String getOtherSchoolLevel() {
-        return otherSchoolLevel;
+	return otherSchoolLevel;
     }
 
     public void setOtherSchoolLevel(String otherSchoolLevel) {
-        this.otherSchoolLevel = otherSchoolLevel;
+	this.otherSchoolLevel = otherSchoolLevel;
     }
-    
+
     public void validate() {
 	if (this.schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(this.otherSchoolLevel)) {
 	    throw new DomainException("error.registration.PrecedentDegreeInformationBean.otherSchoolLevel.must.be.filled");

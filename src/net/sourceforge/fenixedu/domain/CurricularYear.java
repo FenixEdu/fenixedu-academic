@@ -17,7 +17,7 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
 	public int compare(CurricularYear o1, CurricularYear o2) {
 	    return o1.getYear().compareTo(o2.getYear());
 	}
-	
+
     };
 
     public CurricularYear() {

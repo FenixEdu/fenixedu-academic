@@ -5,9 +5,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 import org.apache.struts.util.LabelValueBean;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author dcs-rjao

@@ -101,8 +101,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 		    public int compare(ExecutionDegree executionDegree1, ExecutionDegree executionDegree2) {
 			final Degree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
 			final Degree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
-			return (degree1.getDegreeType() == degree2.getDegreeType()) ? degree1.getNome()
-				.compareTo(degree2.getNome()) : degree1.getDegreeType().compareTo(degree2.getDegreeType());
+			return (degree1.getDegreeType() == degree2.getDegreeType()) ? degree1.getNome().compareTo(
+				degree2.getNome()) : degree1.getDegreeType().compareTo(degree2.getDegreeType());
 		    }
 		});
 	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {

@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -14,7 +14,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadOtherServiceByOID extends FenixService {
 
-    public OtherService run(Integer otherServiceID) {
+    @Service
+    public static OtherService run(Integer otherServiceID) {
 	return (OtherService) rootDomainObject.readTeacherServiceItemByOID(otherServiceID);
     }
 

@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.ReadStudentExternalInformation;
 import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -130,8 +131,8 @@ public class StudentInfoByUsername extends FenixAction {
      * @throws FenixFilterException
      */
     private Collection readInformation(String username) throws FenixFilterException, FenixServiceException {
-	Object args[] = { username };
-	return (Collection) ServiceManagerServiceFactory.executeService("ReadStudentExternalInformation", args);
+
+	return (Collection) ReadStudentExternalInformation.run(username);
     }
 
     private String buildInfo(Collection students) {

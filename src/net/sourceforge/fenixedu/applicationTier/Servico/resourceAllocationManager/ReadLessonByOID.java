@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -16,7 +17,8 @@ import net.sourceforge.fenixedu.domain.Lesson;
  */
 public class ReadLessonByOID extends FenixService {
 
-    public InfoLesson run(Integer oid) {
+    @Service
+    public static InfoLesson run(Integer oid) {
 	final Lesson lesson = rootDomainObject.readLessonByOID(oid);
 	return (lesson != null) ? InfoLesson.newInfoFromDomain(lesson) : null;
 

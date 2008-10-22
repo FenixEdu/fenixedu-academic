@@ -5,9 +5,9 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

@@ -37,7 +37,8 @@ public class ReadCurricularCourseListAction extends FenixDispatchAction {
 
 	TeacherAdministrationSiteView siteView = null;
 	try {
-	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("ReadCurricularCourseListByExecutionCourseCode", args);
+	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
+		    "ReadCurricularCourseListByExecutionCourseCode", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

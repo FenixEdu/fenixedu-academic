@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class InsertExternalPerson extends FenixService {
 
     public static class ServiceArguments {
@@ -34,8 +36,9 @@ public class InsertExternalPerson extends FenixService {
 
     }
 
-    public ExternalContract run(String name, String sex, String address, Integer institutionID, String phone, String mobile,
-	    String homepage, String email) throws FenixServiceException {
+    @Service
+    public static ExternalContract run(String name, String sex, String address, Integer institutionID, String phone,
+	    String mobile, String homepage, String email) throws FenixServiceException {
 
 	final ExternalContract storedExternalContract = ExternalContract.readByPersonNameAddressAndInstitutionID(name, address,
 		institutionID);
@@ -50,7 +53,8 @@ public class InsertExternalPerson extends FenixService {
 	return new ExternalContract(externalPerson, institutionLocation, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(String personName, String organizationName) {
+    @Service
+    public static ExternalContract run(String personName, String organizationName) {
 	final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
 	Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null, null, null, String
 		.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
@@ -58,7 +62,8 @@ public class InsertExternalPerson extends FenixService {
 	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(String personName, String organizationName, Country country) {
+    @Service
+    public static ExternalContract run(String personName, String organizationName, Country country) {
 	final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName, country);
 	Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null, null, null, String
 		.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
@@ -66,7 +71,8 @@ public class InsertExternalPerson extends FenixService {
 	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(ServiceArguments arguments) throws FenixServiceException {
+    @Service
+    public static ExternalContract run(ServiceArguments arguments) throws FenixServiceException {
 
 	ExternalContract storedExternalContract = null;
 	String personName = arguments.getPersonName();
@@ -81,7 +87,8 @@ public class InsertExternalPerson extends FenixService {
 	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(String name, String organizationName, String phone, String mobile, String email)
+    @Service
+    public static ExternalContract run(String name, String organizationName, String phone, String mobile, String email)
 	    throws FenixServiceException {
 
 	final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
@@ -91,7 +98,8 @@ public class InsertExternalPerson extends FenixService {
 	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(String name, Integer institutionID, String phone, String mobile, String email)
+    @Service
+    public static ExternalContract run(String name, Integer institutionID, String phone, String mobile, String email)
 	    throws FenixServiceException {
 
 	final Unit institutionLocation = (Unit) rootDomainObject.readPartyByOID(institutionID);

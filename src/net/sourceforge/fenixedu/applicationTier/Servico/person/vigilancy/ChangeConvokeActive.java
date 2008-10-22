@@ -13,16 +13,18 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeConvokeActive extends FenixService {
 
-    public void run(Vigilancy convoke, Boolean bool, Person person) {
+    @Service
+    public static void run(Vigilancy convoke, Boolean bool, Person person) {
 
 	convoke.setActive(bool);
 	sendEmailNotification(bool, person, convoke);
     }
 
-    private void sendEmailNotification(Boolean bool, Person person, Vigilancy convoke) {
+    private static void sendEmailNotification(Boolean bool, Person person, Vigilancy convoke) {
 
 	Vigilant vigilant = convoke.getVigilant();
 	String emailTo = vigilant.getEmail();
@@ -58,7 +60,7 @@ public class ChangeConvokeActive extends FenixService {
 		.getEmail(), replyTo, tos, null, null, subject, emailMessage);
     }
 
-    private String generateMessage(Boolean bool, Vigilancy convoke) {
+    private static String generateMessage(Boolean bool, Vigilancy convoke) {
 
 	String message = "";
 	WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();

@@ -10,7 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -31,20 +31,16 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	try {
-	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
+	List infoExecutionPeriods = ReadExecutionPeriods.run();
+
+	if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+
+	    Collections.sort(infoExecutionPeriods);
 
 	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-
-		Collections.sort(infoExecutionPeriods);
-
-		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-		    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-		}
-
+		request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
 	    }
-	} catch (FenixServiceException ex) {
-	    throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
+
 	}
 
 	return mapping.findForward("Manage");

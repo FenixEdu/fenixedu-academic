@@ -5,9 +5,12 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ConfirmThesisDocumentSubmission extends FenixService {
 
-    public void run(Thesis thesis) {
+    @Service
+    public static void run(Thesis thesis) {
 	thesis.setConfirmmedDocuments(new DateTime());
     }
 

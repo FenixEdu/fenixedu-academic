@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
 
-import dml.runtime.RelationAdapter;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
@@ -8,6 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import dml.runtime.RelationAdapter;
 
 public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
 

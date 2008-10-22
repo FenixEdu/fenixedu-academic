@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -18,7 +19,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
  */
 public class ReadCurricularCoursesByDegree extends FenixService {
 
-    public List run(String executionYearString, String degreeName) throws FenixServiceException {
+    @Service
+    public static List run(String executionYearString, String degreeName) throws FenixServiceException {
 	ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
 
 	// Read degree
@@ -40,7 +42,8 @@ public class ReadCurricularCoursesByDegree extends FenixService {
 
     }
 
-    public List run(Integer degreeCurricularPlanID) {
+    @Service
+    public static List run(Integer degreeCurricularPlanID) {
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
 	List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();

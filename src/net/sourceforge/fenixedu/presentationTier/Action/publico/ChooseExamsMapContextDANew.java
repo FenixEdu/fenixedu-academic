@@ -14,9 +14,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -24,14 +23,11 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -136,15 +132,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 	Integer executionPeriodID = (Integer) chooseExamContextoForm.get("indice");
 	if (executionPeriodID != null) {
-	    try {
-		final Object args[] = { executionPeriodID };
-		infoExecutionPeriod = (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(
-			"ReadExecutionPeriodByOID", args);
-	    } catch (FenixServiceException e) {
-		errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-		saveErrors(request, errors);
-		return new ActionForward(mapping.getInput());
-	    }
+	    infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
 	}
 	request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
 	chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());

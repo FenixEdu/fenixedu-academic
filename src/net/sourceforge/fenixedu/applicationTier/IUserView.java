@@ -26,5 +26,5 @@ public interface IUserView extends Serializable, User {
     public DateTime getExpirationDate();
 
     boolean hasRoleType(final RoleType roleType);
-    
+
 }

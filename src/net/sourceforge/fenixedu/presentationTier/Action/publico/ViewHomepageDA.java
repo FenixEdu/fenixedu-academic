@@ -285,7 +285,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     }
 
     public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	return RetrievePersonalPhotoAction.retrieveByUUID(mapping, form, request, response);
     }
 

@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.SearchExternalPersonsByName;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -47,11 +47,10 @@ public class FindExternalPersonDispatchAction extends FenixDispatchAction {
 	String externalPersonName = (String) findExternalPersonForm.get("name");
 
 	List infoExternalPersonsList = null;
-	Object args[] = { externalPersonName };
 
 	try {
 	    if (!externalPersonName.equals(""))
-		infoExternalPersonsList = (ArrayList) ServiceUtils.executeService("SearchExternalPersonsByName", args);
+		infoExternalPersonsList = (ArrayList) SearchExternalPersonsByName.run(externalPersonName);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

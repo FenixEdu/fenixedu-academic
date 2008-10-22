@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
@@ -366,8 +368,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 		    eventBean.setLocationType(bean.getScope());
 		    eventBean.setEventUrl(bean.getUrl());
 		    eventBean.setEventType(bean.getEventType());
-		    Object[] args = { eventBean };
-		    EventEdition edition = (EventEdition) executeService("CreateResearchEventEdition", args);
+
+		    EventEdition edition = (EventEdition) CreateResearchEventEdition.run(eventBean);
 		    bean.setEventEdition(edition);
 		    bean.setCreateEvent(false);
 		    return createPublication(mapping, form, request, response);
@@ -409,8 +411,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	    }
 	    if (issueBean.getIssueAlreadyChosen()) {
 		try {
-		    Object[] args = { issueBean };
-		    JournalIssue issue = (JournalIssue) executeService("CreateJournalIssue", args);
+
+		    JournalIssue issue = (JournalIssue) CreateJournalIssue.run(issueBean);
 		    bean.setJournalIssue(issue);
 		    bean.setCreateJournal(false);
 		    return createPublication(mapping, form, request, response);

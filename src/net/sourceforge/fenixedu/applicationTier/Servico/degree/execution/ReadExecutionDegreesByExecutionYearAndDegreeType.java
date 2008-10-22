@@ -11,14 +11,15 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author jpvl
  */
 public class ReadExecutionDegreesByExecutionYearAndDegreeType extends FenixService {
 
-    public List run(String executionYear, DegreeType degreeType) {
+    @Service
+    public static List run(String executionYear, DegreeType degreeType) {
 
 	final List<ExecutionDegree> executionDegrees = degreeType == null ? ExecutionDegree.getAllByExecutionYear(executionYear)
 		: ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear, degreeType);

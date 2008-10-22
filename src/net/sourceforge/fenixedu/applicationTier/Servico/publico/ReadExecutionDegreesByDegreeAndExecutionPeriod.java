@@ -11,13 +11,15 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Tânia Pousão Create on 13/Nov/2003
  */
 public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends FenixService {
 
-    public List<InfoExecutionDegree> run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException {
+    @Service
+    public static List<InfoExecutionDegree> run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException {
 	if (degreeId == null) {
 	    throw new FenixServiceException("error.impossibleDegreeSite");
 	}

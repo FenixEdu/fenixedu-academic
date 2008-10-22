@@ -5,10 +5,12 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.C
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.util.Month;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateJournalIssue extends FenixService {
 
-    public JournalIssue run(CreateIssueBean bean) {
+    @Service
+    public static JournalIssue run(CreateIssueBean bean) {
 
 	ScientificJournal journal;
 	if (bean.getJournal() == null) {
@@ -20,7 +22,8 @@ public class CreateJournalIssue extends FenixService {
 	return run(journal, bean.getYear(), bean.getMonth(), bean.getVolume(), bean.getNumber(), bean.getUrl());
     }
 
-    public JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number, String url) {
+    @Service
+    public static JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number, String url) {
 	JournalIssue issue = new JournalIssue(journal);
 	issue.setYear(year);
 	issue.setMonth(month);

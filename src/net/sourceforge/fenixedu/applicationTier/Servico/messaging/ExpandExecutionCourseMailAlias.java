@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutio
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
@@ -40,10 +41,11 @@ public class ExpandExecutionCourseMailAlias extends FenixService {
 	}
     }
 
-    public ForwardMailsReport run(String address, String prefix, String host) throws FenixServiceException {
+    @Service
+    public static ForwardMailsReport run(String address, String prefix, String host) throws FenixServiceException {
 	ForwardMailsReport report = new ForwardMailsReport();
 
-	Integer id = this.extractExecutionCourseId(address, prefix, host, report);
+	Integer id = extractExecutionCourseId(address, prefix, host, report);
 	if (id != null) {
 	    ExecutionCourse course = RootDomainObject.getInstance().readExecutionCourseByOID(id);
 	    if (course != null) {
@@ -70,7 +72,8 @@ public class ExpandExecutionCourseMailAlias extends FenixService {
 
     }
 
-    private Integer extractExecutionCourseId(String address, String emailAddressPrefix, String host, ForwardMailsReport report) {
+    private static Integer extractExecutionCourseId(String address, String emailAddressPrefix, String host,
+	    ForwardMailsReport report) {
 	Integer result = null;
 	if (address != null) {
 	    String[] splittedAddress = address.split("@");

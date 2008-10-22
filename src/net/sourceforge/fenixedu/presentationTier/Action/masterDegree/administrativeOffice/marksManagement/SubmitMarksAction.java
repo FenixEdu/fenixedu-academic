@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.InsertStudentsFinalEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.ReadStudentsAndMarksByCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
@@ -21,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -52,12 +53,12 @@ public class SubmitMarksAction extends FenixDispatchAction {
 	MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
 	// Get students List
-	Object args[] = { curricularCourseCode, null };
+
 	IUserView userView = UserView.getUser();
 	InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 	try {
-	    infoSiteEnrolmentEvaluation = (InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentsAndMarksByCurricularCourse", args);
+	    infoSiteEnrolmentEvaluation = (InfoSiteEnrolmentEvaluation) ReadStudentsAndMarksByCurricularCourse.run(
+		    curricularCourseCode, null);
 	} catch (NonExistingServiceException e) {
 	    sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
 	    return mapping.findForward("ShowMarksManagementMenu");
@@ -137,8 +138,8 @@ public class SubmitMarksAction extends FenixDispatchAction {
 	final Collection<InfoEnrolmentEvaluation> errors = new HashSet<InfoEnrolmentEvaluation>();
 	for (final InfoEnrolmentEvaluation infoEnrolmentEvaluation : infoEnrolmentEvaluations) {
 	    try {
-		final Object args[] = { infoEnrolmentEvaluation, teacherNumber, evaluationDate };
-		executeService("InsertStudentsFinalEvaluation", args);
+
+		InsertStudentsFinalEvaluation.run(infoEnrolmentEvaluation, teacherNumber, evaluationDate);
 	    } catch (NonExistingServiceException e) {
 		throw new NonExistingActionException(teacherNumber.toString(), e);
 	    } catch (DomainException e) {

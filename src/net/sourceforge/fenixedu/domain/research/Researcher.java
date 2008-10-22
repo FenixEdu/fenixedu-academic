@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.collections.comparators.ReverseComparator;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class Researcher extends Researcher_Base {
 

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublicExecutionDegreeByDCPID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionError;
@@ -54,9 +54,9 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 	InfoExecutionDegree infoExecutionDegreeForPeriod = null;
 	InfoExecutionDegree infoExecutionDegree1 = null;
 	try {
-	    final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-	    final List<InfoExecutionDegree> infoExecutionDegreeList = (List) ServiceUtils.executeService(
-		    "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
+
+	    final List<InfoExecutionDegree> infoExecutionDegreeList = ReadPublicExecutionDegreeByDCPID
+		    .run(degreeCurricularPlanId);
 
 	    if (!infoExecutionDegreeList.isEmpty()) {
 		List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
@@ -65,7 +65,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 			+ infoExecutionDegree1.getInfoExecutionYear().getIdInternal()));
 
 		for (int i = 1; i < infoExecutionDegreeList.size(); i++) {
-		    infoExecutionDegreeForPeriod = (InfoExecutionDegree) infoExecutionDegreeList.get(i);
+		    infoExecutionDegreeForPeriod = infoExecutionDegreeList.get(i);
 
 		    if (infoExecutionDegreeForPeriod.getInfoExecutionYear().getYear() != infoExecutionDegree1
 			    .getInfoExecutionYear().getYear()) {
@@ -115,12 +115,9 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = RequestUtils.getExecutionDegreeFromRequest(request, selectedExecutionPeriod
 		.getInfoExecutionYear());
 	if (infoExecutionDegree == null) {
-	    final Object arg[] = { degreeCurricularPlanId, selectedExecutionPeriod.getInfoExecutionYear().getIdInternal() };
-	    try {
-		infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID", arg);
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException(e);
-	    }
+
+	    infoExecutionDegree = ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId, selectedExecutionPeriod
+		    .getInfoExecutionYear().getIdInternal());
 	}
 	RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 

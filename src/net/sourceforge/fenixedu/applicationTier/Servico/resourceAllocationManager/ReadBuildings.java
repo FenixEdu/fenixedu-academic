@@ -6,11 +6,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadBuildings extends FenixService {
 
-    public List<InfoBuilding> run() {
+    @Service
+    public static List<InfoBuilding> run() {
 	final List<InfoBuilding> result = new ArrayList<InfoBuilding>();
 	for (final Building building : Building.getAllActiveBuildings()) {
 	    result.add(InfoBuilding.newInfoFromDomain(building));

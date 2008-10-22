@@ -24,11 +24,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/emails", module = "messaging")
-@Forwards( {
-    @Forward(name = "new.email", path = "/messaging/newEmail.jsp"),
-    @Forward(name = "view.sent.emails", path = "/messaging/viewSentEmails.jsp"),
-    @Forward(name = "view.email", path = "/messaging/viewEmail.jsp")
-})
+@Forwards( { @Forward(name = "new.email", path = "/messaging/newEmail.jsp"),
+	@Forward(name = "view.sent.emails", path = "/messaging/viewSentEmails.jsp"),
+	@Forward(name = "view.email", path = "/messaging/viewEmail.jsp") })
 public class EmailsDA extends FenixDispatchAction {
 
     public ActionForward newEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -95,16 +93,16 @@ public class EmailsDA extends FenixDispatchAction {
     public ActionForward viewEmail(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 	final String messageParam = request.getParameter("messagesId");
-	final Message message = messageParam != null && !messageParam.isEmpty() ?
-	    rootDomainObject.readMessageByOID(new Integer(messageParam)) : null;
+	final Message message = messageParam != null && !messageParam.isEmpty() ? rootDomainObject.readMessageByOID(new Integer(
+		messageParam)) : null;
 	return viewEmail(mapping, request, message);
     }
 
-    public ActionForward deleteMessage(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) {
+    public ActionForward deleteMessage(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	final String messageParam = request.getParameter("messagesId");
-	final Message message = messageParam != null && !messageParam.isEmpty() ?
-	    rootDomainObject.readMessageByOID(new Integer(messageParam)) : null;
+	final Message message = messageParam != null && !messageParam.isEmpty() ? rootDomainObject.readMessageByOID(new Integer(
+		messageParam)) : null;
 	if (message == null) {
 	    return viewSentEmails(mapping, actionForm, request, response);
 	} else {

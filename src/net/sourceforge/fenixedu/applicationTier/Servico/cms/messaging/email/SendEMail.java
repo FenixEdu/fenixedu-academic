@@ -8,11 +8,13 @@ import net.sourceforge.fenixedu.domain.cms.messaging.email.SendMailReport;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailSender.SenderNotAllowed;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.RecipientType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 8:11:44, 17/Fev/2006
- * @version $Id$
+ * @version $Id: SendEMail.java 38574 2008-09-23 15:33:28Z ist148357@IST.UTL.PT
+ *          $
  */
 public class SendEMail extends FenixService {
 
@@ -29,7 +31,8 @@ public class SendEMail extends FenixService {
 	public boolean copyToSender;
     }
 
-    public SendMailReport run(SendEMailParameters parameters) throws SenderNotAllowed {
+    @Service
+    public static SendMailReport run(SendEMailParameters parameters) throws SenderNotAllowed {
 	EMailSender sender = new EMailSender(parameters.allowedSenders);
 	sender.addRecipient(RecipientType.BCC, parameters.toRecipients);
 	sender.addRecipient(RecipientType.BCC, parameters.copyTo);

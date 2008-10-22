@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -39,9 +38,8 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
 	    String address = request.getParameter("address");
 
 	    try {
-		ExpandExecutionCourseMailAlias.ForwardMailsReport report = (ExpandExecutionCourseMailAlias.ForwardMailsReport) ServiceUtils
-			.executeService("ExpandExecutionCourseMailAlias", new Object[] { address, emailAddressPrefix,
-				mailingListDomainConfiguration() });
+		ExpandExecutionCourseMailAlias.ForwardMailsReport report = (ExpandExecutionCourseMailAlias.ForwardMailsReport) ExpandExecutionCourseMailAlias
+			.run(address, emailAddressPrefix, mailingListDomainConfiguration());
 
 		switch (report.getStatus()) {
 		case OK: {

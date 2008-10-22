@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.util.Email;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -21,7 +22,8 @@ import net.sourceforge.fenixedu.domain.util.Email;
  */
 public class SendMail extends FenixService {
 
-    public Collection<String> run(List toList, List ccList, List bccList, String fromName, String from, String subject,
+    @Service
+    public static Collection<String> run(List toList, List ccList, List bccList, String fromName, String from, String subject,
 	    String text) {
 	new Email(fromName, from, null, toList, ccList, bccList, subject, text);
 	return new ArrayList<String>();

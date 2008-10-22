@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.util.renderer;
 
 import java.util.List;
 
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 import org.joda.time.Interval;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public interface GanttDiagramEvent {
 

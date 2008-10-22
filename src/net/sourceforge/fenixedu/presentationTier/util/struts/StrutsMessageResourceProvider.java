@@ -6,12 +6,12 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import pt.utl.ist.fenix.tools.resources.AbstractMessageResourceProvider;
-
 import org.apache.struts.Globals;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
+
+import pt.utl.ist.fenix.tools.resources.AbstractMessageResourceProvider;
 
 public class StrutsMessageResourceProvider extends AbstractMessageResourceProvider {
 

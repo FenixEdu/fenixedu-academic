@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteQualification extends FenixService {
 
-    public void run(Integer qualificationId) {
+    @Service
+    public static void run(Integer qualificationId) {
 	Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
 	qualification.delete();
     }

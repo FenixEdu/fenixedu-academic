@@ -10,8 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadNumerusClausus;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadAdmitedCandidates;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidates;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadSubstituteCandidates;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateApproval;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateApprovalGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -67,8 +72,8 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	// Get Numerus Clausus
 	Integer numerusClausus = null;
 	try {
-	    Object args[] = { degreeCurricularPlanID };
-	    numerusClausus = (Integer) ServiceManagerServiceFactory.executeService("ReadNumerusClausus", args);
+
+	    numerusClausus = ReadNumerusClausus.run(degreeCurricularPlanID);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e);
 	}
@@ -180,8 +185,8 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	List candidatesAdmited = new ArrayList();
 
 	try {
-	    Object args[] = { candidateList, ids };
-	    candidatesAdmited = (ArrayList) ServiceManagerServiceFactory.executeService("ReadAdmitedCandidates", args);
+
+	    candidatesAdmited = ReadAdmitedCandidates.run(candidateList, ids);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}
@@ -200,8 +205,8 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	try {
 	    // Object args[] = { executionYear, degree };
 	    // Object args[] = { executionDegree };
-	    Object args[] = { degreeCurricularPlanID };
-	    numerusClausus = (Integer) ServiceManagerServiceFactory.executeService("ReadNumerusClausus", args);
+
+	    numerusClausus = ReadNumerusClausus.run(degreeCurricularPlanID);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e);
 	}
@@ -243,10 +248,10 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	request.setAttribute("remarks", remarks);
 
 	if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null)) {
-	    Object args[] = { candidateList, ids };
+
 	    List result = null;
 	    try {
-		result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadSubstituteCandidates", args);
+		result = ReadSubstituteCandidates.run(candidateList, ids);
 	    } catch (ExistingServiceException e) {
 		throw new ExistingActionException(e);
 	    }
@@ -295,9 +300,9 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
 
 	List result = null;
-	Object args[] = { ids };
+
 	try {
-	    result = (List) ServiceManagerServiceFactory.executeService("ReadCandidates", args);
+	    result = ReadCandidates.run(ids);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}
@@ -354,9 +359,8 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
 	List candidates = new ArrayList();
 
-	Object args[] = { ids };
 	try {
-	    candidates = (List) ServiceManagerServiceFactory.executeService("ReadCandidates", args);
+	    candidates = ReadCandidates.run(ids);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}
@@ -399,8 +403,8 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	List candidates = new ArrayList();
 
 	try {
-	    Object args[] = { ids };
-	    candidates = (List) ServiceManagerServiceFactory.executeService("ReadCandidates", args);
+
+	    candidates = ReadCandidates.run(ids);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}
@@ -413,14 +417,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
 	InfoExecutionDegree infoExecutionDegree = null;
 
-	try {
-	    // Object args[] = { resultForm.get("executionYear"),
-	    // resultForm.get("degree")};
-	    Object args[] = { executionDegree };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByOID", args);
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException(e);
-	}
+	infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegree);
 
 	request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 

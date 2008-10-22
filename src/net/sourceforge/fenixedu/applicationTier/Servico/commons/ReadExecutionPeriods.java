@@ -6,11 +6,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriods extends FenixService {
 
-    public List run() {
+    @Service
+    public static List run() {
 	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
 	for (final ExecutionSemester executionSemester : rootDomainObject.getExecutionPeriods()) {
 	    result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));

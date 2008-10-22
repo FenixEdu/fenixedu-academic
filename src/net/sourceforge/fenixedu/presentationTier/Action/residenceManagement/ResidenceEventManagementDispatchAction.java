@@ -6,7 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelResidenceEvent;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.CreateResidencePaymentCodes;
+import net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.PayResidenceEvent;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -33,7 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/residenceEventManagement", module = "residenceManagement")
 @Forwards( { @Forward(name = "manageResidenceEvents", path = "residenceManagement-events-management"),
 	@Forward(name = "viewPersonResidenceEvents", path = "view-person-residence-events"),
-	@Forward(name="insertPayingDate", path="insert-paying-date")})
+	@Forward(name = "insertPayingDate", path = "insert-paying-date") })
 public class ResidenceEventManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward manageResidenceEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -55,12 +58,12 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     private ResidenceManagementUnit getManagementUnit(HttpServletRequest request) {
 	return RootDomainObject.getInstance().getResidenceManagementUnit();
     }
-    
+
     public ActionForward generatePaymentCodes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	ResidenceMonth month = getResidenceMonth(request);
-	executeService("CreateResidencePaymentCodes", new Object[] { month.getEvents() });
+	CreateResidencePaymentCodes.run(month.getEvents());
 
 	return manageResidenceEvents(mapping, actionForm, request, response);
     }
@@ -92,7 +95,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(Long.parseLong(request.getParameter("event")));
 
 	try {
-	    executeService("CancelResidenceEvent", new Object[] { residenceEvent, AccessControl.getPerson().getEmployee() });
+	    CancelResidenceEvent.run(residenceEvent, AccessControl.getPerson().getEmployee());
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	}
@@ -107,28 +110,27 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	VariantBean bean = new VariantBean();
 	bean.setYearMonthDay(new YearMonthDay());
 	ResidenceMonth month = getResidenceMonth(request);
-	
-	request.setAttribute("month",month);
-	request.setAttribute("residenceEvent",residenceEvent);
+
+	request.setAttribute("month", month);
+	request.setAttribute("residenceEvent", residenceEvent);
 	request.setAttribute("bean", bean);
 	return mapping.findForward("insertPayingDate");
-	
-	
+
     }
 
     public ActionForward payResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	
+
 	ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(Long.parseLong(request.getParameter("event")));
 	YearMonthDay date = (YearMonthDay) getRenderedObject("date");
-	
+
 	try {
-	    executeService("PayResidenceEvent", new Object[] { getLoggedPerson(request).getUser(), residenceEvent, date });
+	    PayResidenceEvent.run(getLoggedPerson(request).getUser(), residenceEvent, date);
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	}
 
 	return viewPersonResidenceEvents(mapping, actionForm, request, response);
     }
-    
+
 }

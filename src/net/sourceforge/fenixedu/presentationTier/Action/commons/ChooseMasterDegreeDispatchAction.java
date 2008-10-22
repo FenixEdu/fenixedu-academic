@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadMasterDegrees;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -38,12 +38,12 @@ public class ChooseMasterDegreeDispatchAction extends FenixDispatchAction {
 	request.setAttribute("executionYear", executionYear);
 
 	// Get the Degree List
-	Object args[] = { executionYear };
+
 	IUserView userView = getUserView(request);
 	List degreeList = null;
 	try {
 
-	    degreeList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadMasterDegrees", args);
+	    degreeList = (ArrayList) ReadMasterDegrees.run(executionYear);
 	    // ver aqui o que devolvs o servico
 	} catch (NonExistingServiceException e) {
 

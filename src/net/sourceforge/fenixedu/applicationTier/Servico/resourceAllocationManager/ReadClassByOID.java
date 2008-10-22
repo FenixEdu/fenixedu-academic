@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadClassByOID extends FenixService {
 
-    public InfoClass run(Integer oid) throws FenixServiceException {
+    @Service
+    public static InfoClass run(Integer oid) throws FenixServiceException {
 	InfoClass result = null;
 	SchoolClass turma = rootDomainObject.readSchoolClassByOID(oid);
 	if (turma != null) {

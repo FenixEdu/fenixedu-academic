@@ -19,7 +19,7 @@ public class ExecutionDegreeForExecutionYearAndDegreeTypeProvider implements Dat
 	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
 
 	final HasExecutionYear hasExecutionYear = (HasExecutionYear) source;
-	final HasDegreeType hasDegreeType= (HasDegreeType) source;
+	final HasDegreeType hasDegreeType = (HasDegreeType) source;
 	final ExecutionYear executionYear = hasExecutionYear.getExecutionYear();
 	if (executionYear != null) {
 	    final DegreeType degreeType = hasDegreeType.getDegreeType();

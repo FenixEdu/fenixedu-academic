@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ClassSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -58,12 +58,11 @@ public class ViewClassTimeTableAction extends FenixContextAction {
 	}
 	InfoSiteTimetable component = new InfoSiteTimetable();
 
-	Object[] args = { component, infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getName(), null,
-		null, className, null, classId };
 	SiteView siteView = null;
 
 	try {
-	    siteView = (SiteView) ServiceUtils.executeService("ClassSiteComponentService", args);
+	    siteView = (SiteView) ClassSiteComponentService.run(component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
+		    infoExecutionPeriod.getName(), null, null, className, null, classId);
 	} catch (FenixServiceException e1) {
 	    throw new FenixActionException(e1);
 	}

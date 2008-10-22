@@ -15,11 +15,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadMasterDegrees extends FenixService {
 
-    public List run(String executionYearString) throws FenixServiceException {
+    @Service
+    public static List run(String executionYearString) throws FenixServiceException {
 	final ExecutionYear executionYear;
 	if (executionYearString != null) {
 	    executionYear = ExecutionYear.readExecutionYearByName(executionYearString);

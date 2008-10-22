@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTransaction;
@@ -47,9 +48,9 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 
 	// Read Registration
 	InfoStudent infoStudent = null;
-	Object argsStudent[] = { new Integer(studentId) };
+
 	try {
-	    infoStudent = (InfoStudent) ServiceUtils.executeService("student.ReadStudentById", argsStudent);
+	    infoStudent = (InfoStudent) ReadStudentById.run(new Integer(studentId));
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

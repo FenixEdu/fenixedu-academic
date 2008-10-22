@@ -9,6 +9,7 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditAdHocEvaluation;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -65,9 +66,8 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
 
     public String editAdHocEvaluation() {
 	try {
-	    final Object[] args = { getExecutionCourseID(), getAdHocEvaluationID(), getName(), getDescription(), getGradeScale() };
-	    ServiceUtils.executeService("EditAdHocEvaluation", args);
-	} catch (final FenixFilterException e) {
+
+	    EditAdHocEvaluation.run(getExecutionCourseID(), getAdHocEvaluationID(), getName(), getDescription(), getGradeScale());
 	} catch (final FenixServiceException e) {
 	    setErrorMessage(e.getMessage());
 	    return "";
@@ -115,6 +115,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
 	this.name = name;
     }
 
+    @Override
     public String getDescription() {
 	if (this.description == null && this.getAdHocEvaluation() != null) {
 	    this.description = this.getAdHocEvaluation().getDescription();

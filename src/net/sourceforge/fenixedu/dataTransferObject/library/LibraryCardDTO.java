@@ -60,7 +60,7 @@ public class LibraryCardDTO implements Serializable {
     private YearMonthDay validUntil;
 
     private static String separator = " / ";
-    
+
     private static String nullValue = "-";
 
     public LibraryCardDTO(Person person, PartyClassification partyClassification) {

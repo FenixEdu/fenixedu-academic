@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChange
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidStudentNumberServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -30,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuityValue
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -91,13 +92,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 	candidateRegistration.set("executionYear", executionYearString);
 	candidateRegistration.set("candidateID", null);
 
-	InfoExecutionDegree infoExecutionDegree = null;
-	try {
-	    Object args[] = { executionDegree };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByOID", args);
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException(e);
-	}
+	InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegree);
 
 	request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 	return mapping.findForward("ListCandidates");
@@ -125,9 +120,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
 	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 	try {
-	    Object args[] = { candidateID };
-	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "GetCandidatesByID", args);
+	    infoMasterDegreeCandidate = GetCandidatesByID.run(candidateID);
 	} catch (NonExistingServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -185,8 +178,8 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 		request.setAttribute("branchList", branchList);
 
 		try {
-		    Object args[] = { candidateID };
-		    ServiceManagerServiceFactory.executeService("GetCandidatesByID", args);
+
+		    GetCandidatesByID.run(candidateID);
 		} catch (NonExistingServiceException ex) {
 		    throw new FenixActionException(ex);
 		}

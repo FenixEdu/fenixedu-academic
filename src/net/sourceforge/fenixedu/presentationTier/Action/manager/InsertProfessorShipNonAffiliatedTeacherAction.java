@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
@@ -61,7 +62,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 	String institutionName = (String) dynaForm.get("institutionName");
 
 	try {
-	    ServiceUtils.executeService("InsertInstitution", new Object[] { institutionName });
+	    InsertInstitution.run(institutionName);
 	} catch (FenixServiceException e) {
 	    ActionMessages actionMessages = new ActionMessages();
 	    actionMessages.add("", new ActionMessage(e.getMessage()));

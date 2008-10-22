@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByNumber;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -29,8 +30,7 @@ public class TeacherBridge {
 	    return "";
 	}
 
-	Object[] args = { Integer.valueOf(number) };
-	InfoTeacher teacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber", args);
+	InfoTeacher teacher = (InfoTeacher) ReadTeacherByNumber.run(Integer.valueOf(number));
 
 	return (teacher != null && teacher.getInfoPerson() != null) ? teacher.getInfoPerson().getNome() : "";
     }

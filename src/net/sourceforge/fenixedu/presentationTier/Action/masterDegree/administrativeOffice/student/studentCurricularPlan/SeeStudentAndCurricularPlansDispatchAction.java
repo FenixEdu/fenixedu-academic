@@ -110,10 +110,11 @@ public class SeeStudentAndCurricularPlansDispatchAction extends FenixDispatchAct
 	@Override
 	public int compare(InfoStudent o1, InfoStudent o2) {
 	    final int n = o1.getNumber().compareTo(o2.getNumber());
-	    return n == 0 ? o1.getInfoPerson().getNome().compareTo(o2.getInfoPerson().getNome()): n;
+	    return n == 0 ? o1.getInfoPerson().getNome().compareTo(o2.getInfoPerson().getNome()) : n;
 	}
-	
+
     };
+
     private void sort(List listOfInfoStudents) {
 	if (listOfInfoStudents != null) {
 	    Collections.sort(listOfInfoStudents, infoStudentComparator);

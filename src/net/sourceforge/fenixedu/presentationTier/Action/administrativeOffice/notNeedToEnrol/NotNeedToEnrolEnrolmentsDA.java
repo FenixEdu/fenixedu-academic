@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.notNeedToEnrol.AssociateEnrolmentsToNotNeedToEnrol;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean.SelectedAprovedEnrolment;
@@ -89,8 +90,8 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	NotNeedToEnrolEnrolmentsBean bean = (NotNeedToEnrolEnrolmentsBean) getRenderedObject("notNeedToEnrolBean");
 
-	executeService("AssociateEnrolmentsToNotNeedToEnrol", new Object[] { bean.getStudent(), bean.getSelected(),
-		bean.getSelectedAprovedEnrolments(), bean.getSelectedExternalEnrolments() });
+	AssociateEnrolmentsToNotNeedToEnrol.run(bean.getStudent(), (NotNeedToEnrollInCurricularCourse) bean.getSelected(), bean
+		.getSelectedAprovedEnrolments(), bean.getSelectedExternalEnrolments());
 
 	return readNotNeedToEnrol(mapping, form, request, response, bean);
     }

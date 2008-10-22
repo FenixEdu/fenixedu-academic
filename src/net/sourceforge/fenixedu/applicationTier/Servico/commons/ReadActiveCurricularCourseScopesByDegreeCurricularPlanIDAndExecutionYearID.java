@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID extends FenixService {
 
-    public Set<DegreeModuleScope> run(Integer degreeCurricularPlanId, Integer executionYearID) {
+    @Service
+    public static Set<DegreeModuleScope> run(Integer degreeCurricularPlanId, Integer executionYearID) {
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 	final Set<DegreeModuleScope> degreeModuleScopes = degreeCurricularPlan.getDegreeModuleScopes();

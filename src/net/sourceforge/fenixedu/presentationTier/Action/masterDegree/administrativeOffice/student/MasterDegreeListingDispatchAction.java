@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveExecutionDegreebyDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -129,8 +130,9 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
-	    Object args[] = { degreeCurricularPlanID };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
+
+	    infoExecutionDegree = (InfoExecutionDegree) ReadActiveExecutionDegreebyDegreeCurricularPlanID
+		    .run(degreeCurricularPlanID);
 	} catch (NonExistingServiceException e) {
 
 	} catch (FenixServiceException e) {

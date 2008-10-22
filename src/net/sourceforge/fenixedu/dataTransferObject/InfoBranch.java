@@ -4,7 +4,6 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 

@@ -9,11 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreatePictureMaterial;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeletePresentationMaterial;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.SwitchPosition;
+import net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial;
+import net.sourceforge.fenixedu.domain.tests.NewPictureMaterial;
 import net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial;
 import net.sourceforge.fenixedu.domain.tests.NewPresentationMaterialType;
+import net.sourceforge.fenixedu.domain.tests.NewStringMaterial;
 import net.sourceforge.fenixedu.domain.tests.NewTestElement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -92,8 +97,13 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 	request.setAttribute("oid", presentationMaterial.getTestElement().getIdInternal());
 
-	ServiceUtils.executeService("DeletePresentationMaterial", new Object[] { presentationMaterial });
-
+	if (presentationMaterial instanceof NewMathMlMaterial) {
+	    DeletePresentationMaterial.run((NewMathMlMaterial) presentationMaterial);
+	} else if (presentationMaterial instanceof NewPictureMaterial) {
+	    DeletePresentationMaterial.run((NewPictureMaterial) presentationMaterial);
+	} else if (presentationMaterial instanceof NewStringMaterial) {
+	    DeletePresentationMaterial.run((NewStringMaterial) presentationMaterial);
+	}
 	PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("delete-presentation-material");
 
 	request.setAttribute("bean", bean);
@@ -109,7 +119,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 	Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-	ServiceUtils.executeService("SwitchPosition", new Object[] { presentationMaterial, relativePosition });
+	SwitchPosition.run(presentationMaterial, relativePosition);
 
 	request.setAttribute("bean", new PresentationMaterialBean(presentationMaterial.getTestElement(), request
 		.getParameter("returnPath"), getCodeFromRequest(request, "returnId"), request.getParameter("contextKey")));
@@ -138,8 +148,8 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 	File file = FileUtils.copyToTemporaryFile(bean.getInputStream());
 	try {
-	    executeService("CreatePictureMaterial", new Object[] { userView.getPerson().getTeacher(), bean.getTestElement(),
-		    bean.isInline(), file, bean.getOriginalFileName(), bean.getFileName() });
+	    CreatePictureMaterial.run(userView.getPerson().getTeacher(), bean.getTestElement(), bean.isInline(), file, bean
+		    .getOriginalFileName(), bean.getFileName());
 	} finally {
 	    file.delete();
 	}

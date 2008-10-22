@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -165,10 +165,9 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	Integer degreeId = new Integer(infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue());
 
 	infoGratuityValues = null;
-	Object argsRead[] = { degreeId };
+
 	try {
-	    infoGratuityValues = (InfoGratuityValues) ServiceUtils
-		    .executeService("ReadGratuityValuesByExecutionDegree", argsRead);
+	    infoGratuityValues = (InfoGratuityValues) ReadGratuityValuesByExecutionDegree.run(degreeId);
 	} catch (FenixServiceException ex) {
 	    errors.add("gratuityValues", new ActionError(ex.getMessage()));
 	    saveErrors(request, errors);

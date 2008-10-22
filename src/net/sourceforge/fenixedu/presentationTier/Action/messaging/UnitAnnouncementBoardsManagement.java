@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.DeleteAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -45,7 +45,7 @@ public class UnitAnnouncementBoardsManagement extends
 	}
 
 	try {
-	    ServiceUtils.executeService("DeleteAnnouncementBoard", new Object[] { this.getRequestedAnnouncementBoard(request) });
+	    DeleteAnnouncementBoard.run(this.getRequestedAnnouncementBoard(request));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	    return prepareEditAnnouncementBoard(mapping, actionForm, request, response);

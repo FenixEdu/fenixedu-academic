@@ -11,10 +11,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -22,7 +23,8 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldIquiriesSummaryByDegreeID extends FenixService {
 
-    public List run(Integer degreeID) throws FenixServiceException {
+    @Service
+    public static List run(Integer degreeID) throws FenixServiceException {
 	Degree degree = rootDomainObject.readDegreeByOID(degreeID);
 
 	if (degree == null) {

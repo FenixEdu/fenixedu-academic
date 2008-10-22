@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.EditPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
@@ -17,7 +18,6 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -56,14 +56,13 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
 	PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils.getViewState(
 		"precedentDegreeInformation").getMetaObject().getObject();
 
-	Object[] argsInstitution = { precedentDegreeInformation };
-	ServiceUtils.executeService("EditPrecedentDegreeInformation", argsInstitution);
+	EditPrecedentDegreeInformation.run(precedentDegreeInformation);
 
-	Object[] argsStateMachine = { new StateMachineRunner.RunnerArgs(precedentDegreeInformation
-		.getPrecedentDegreeInformation().getStudentCandidacy().getActiveCandidacySituation(),
-		CandidacySituationType.STAND_BY_FILLED_DATA.toString()) };
 	try {
-	    ServiceUtils.executeService("StateMachineRunner", argsStateMachine);
+	    StateMachineRunner
+		    .run(new StateMachineRunner.RunnerArgs(precedentDegreeInformation.getPrecedentDegreeInformation()
+			    .getStudentCandidacy().getActiveCandidacySituation(), CandidacySituationType.STAND_BY_FILLED_DATA
+			    .toString()));
 	} catch (DomainException e) {
 	    // Didn't move to next state
 	}

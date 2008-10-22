@@ -8,10 +8,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.util.Email;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class MarkSheetsToConfirmSendMail extends FenixService {
 
-    public void run(Collection<MarkSheet> markSheets, String from, String cc, String subject, String message) {
+    @Service
+    public static void run(Collection<MarkSheet> markSheets, String from, String cc, String subject, String message) {
 	List<String> mails = new ArrayList<String>();
 	for (MarkSheet markSheet : markSheets) {
 	    if (markSheet.getResponsibleTeacher().getPerson().getEmail() != null) {

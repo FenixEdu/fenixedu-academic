@@ -23,9 +23,9 @@ public class TeacherDepartmentDegreesProvider implements DataProvider {
 	if (tutorships.isEmpty()) {
 	    tutorships = bean.getPerson().getTeacher().getPastTutorships();
 	}
-	
+
 	for (Tutorship tutorship : tutorships) {
-		degrees.add(tutorship.getStudentCurricularPlan().getRegistration().getDegree());
+	    degrees.add(tutorship.getStudentCurricularPlan().getRegistration().getDegree());
 	}
 	return new ArrayList<Degree>(degrees);
     }

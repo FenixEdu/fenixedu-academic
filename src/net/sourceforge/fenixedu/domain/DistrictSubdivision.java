@@ -51,7 +51,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
 	}
 
     }
-    
+
     static public Collection<DistrictSubdivision> findByName(String name, int size) {
 	String normalizedName = StringNormalizer.normalize(name).toLowerCase();
 	Collection<DistrictSubdivision> result = new TreeSet<DistrictSubdivision>(COMPARATOR_BY_NAME);

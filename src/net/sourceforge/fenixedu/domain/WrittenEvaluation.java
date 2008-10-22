@@ -62,8 +62,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected WrittenEvaluation() {
-    	super();
-    	this.setVigilantsReport(false);
+	super();
+	this.setVigilantsReport(false);
     }
 
     public String getName() {
@@ -99,8 +99,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	} else
 	    return null;
     }
-    
-    public ExecutionYear getExecutionYear (){
+
+    public ExecutionYear getExecutionYear() {
 	return this.getAssociatedExecutionCourses().get(0).getExecutionYear();
     }
 

@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.RoomSiteComponentServiceByExecutionPeriodID;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -146,16 +149,14 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
 	    InfoExecutionPeriod executionPeriod;
 	    if (executionPeriodID == null) {
-		executionPeriod = (InfoExecutionPeriod) ServiceUtils
-			.executeService("ReadCurrentExecutionPeriod", new Object[] {});
+		executionPeriod = (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
 		executionPeriodID = executionPeriod.getIdInternal();
 		try {
 		    indexForm.set("selectedExecutionPeriodID", executionPeriod.getIdInternal().toString());
 		} catch (IllegalArgumentException ex) {
 		}
 	    } else {
-		executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID",
-			new Object[] { executionPeriodID });
+		executionPeriod = (InfoExecutionPeriod) ReadExecutionPeriodByOID.run(executionPeriodID);
 	    }
 
 	    // weeks
@@ -197,10 +198,10 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 	    if (indexWeek != null) {
 		today = (Calendar) weeks.get(indexWeek.intValue());
 	    }
-	    Object[] args = { bodyComponent, roomKey, today, executionPeriodID };
 
 	    try {
-		SiteView siteView = (SiteView) ServiceUtils.executeService("RoomSiteComponentServiceByExecutionPeriodID", args);
+		SiteView siteView = (SiteView) RoomSiteComponentServiceByExecutionPeriodID.run(bodyComponent, roomKey, today,
+			executionPeriodID);
 
 		request.setAttribute("siteView", siteView);
 

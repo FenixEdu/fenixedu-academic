@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -29,6 +28,8 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.Interval;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class Lesson extends Lesson_Base {
 
@@ -49,7 +50,7 @@ public class Lesson extends Lesson_Base {
 	    }
 	    return DomainObject.COMPARATOR_BY_ID.compare(o1, o2);
 	}
-	
+
     };
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")

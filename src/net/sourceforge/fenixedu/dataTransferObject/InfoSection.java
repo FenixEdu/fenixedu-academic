@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Section;
 
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * This is the view class that contains information about the seccao domain

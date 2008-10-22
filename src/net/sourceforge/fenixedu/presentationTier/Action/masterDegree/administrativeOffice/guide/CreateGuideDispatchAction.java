@@ -13,12 +13,14 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoActiveStudentCurricularPlanServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ChangePersonPassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
@@ -75,13 +77,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
 
 	InfoExecutionDegree infoExecutionDegree = null;
-	try {
-	    Object[] readExecutionDegreeArgs = { executionDegreeID };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByOID", readExecutionDegreeArgs);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-
-	}
+	infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeID);
 	if (infoExecutionDegree != null) {
 	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
 	}
@@ -298,9 +294,9 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 		    // Generate and write the password
 
 		    try {
-			Object args[] = { newInfoGuide.getInfoPerson().getIdInternal(),
-				RandomStringGenerator.getRandomStringGenerator(8) };
-			ServiceManagerServiceFactory.executeService("ChangePersonPassword", args);
+
+			ChangePersonPassword.run(newInfoGuide.getInfoPerson().getIdInternal(), RandomStringGenerator
+				.getRandomStringGenerator(8));
 		    } catch (FenixServiceException e) {
 			throw new FenixActionException();
 		    }

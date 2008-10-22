@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.EditInstitution;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -16,7 +18,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -41,10 +42,9 @@ public class EditInstitutionDispatchAction extends FenixDispatchAction {
 	    throws Exception {
 	IUserView userView = UserView.getUser();
 	ActionErrors actionErrors = new ActionErrors();
-	Object args[] = {};
 
 	try {
-	    List infoInstitutions = (List) ServiceUtils.executeService("ReadAllInstitutions", args);
+	    List infoInstitutions = (List) ReadAllInstitutions.run();
 
 	    if (infoInstitutions != null) {
 		if (infoInstitutions.isEmpty() == false) {
@@ -86,10 +86,8 @@ public class EditInstitutionDispatchAction extends FenixDispatchAction {
 	Integer oldInstitutionId = (Integer) editInstitutionForm.get("institutionId");
 	String newInstitutionName = (String) editInstitutionForm.get("name");
 
-	Object args[] = { oldInstitutionId, newInstitutionName };
-
 	try {
-	    ServiceUtils.executeService("EditInstitution", args);
+	    EditInstitution.run(oldInstitutionId, newInstitutionName);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e.getMessage(), mapping.findForward("errorLocationAlreadyExists"));
 	} catch (FenixServiceException e) {

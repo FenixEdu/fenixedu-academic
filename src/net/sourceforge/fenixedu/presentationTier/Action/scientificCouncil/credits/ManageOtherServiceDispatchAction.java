@@ -22,8 +22,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
     public ActionForward showOtherServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,

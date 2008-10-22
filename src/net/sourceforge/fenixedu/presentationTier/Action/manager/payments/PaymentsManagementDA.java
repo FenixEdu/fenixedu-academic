@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.DepositAmountOnEvent;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
@@ -350,7 +351,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
 	final DepositAmountBean renderedObject = (DepositAmountBean) getRenderedObject("depositAmountBean");
 	try {
-	    executeService("DepositAmountOnEvent", new Object[] { renderedObject });
+	    DepositAmountOnEvent.run(renderedObject);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 

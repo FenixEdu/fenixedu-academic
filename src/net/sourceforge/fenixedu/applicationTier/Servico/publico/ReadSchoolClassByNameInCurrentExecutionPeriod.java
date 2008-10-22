@@ -11,10 +11,11 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Mota
@@ -22,7 +23,8 @@ import org.apache.commons.collections.Predicate;
  */
 public class ReadSchoolClassByNameInCurrentExecutionPeriod extends FenixService {
 
-    public SchoolClassDTO run(final String schoolClassName) throws FenixServiceException {
+    @Service
+    public static SchoolClassDTO run(final String schoolClassName) throws FenixServiceException {
 	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(executionSemester.getSchoolClasses(), new Predicate() {
 

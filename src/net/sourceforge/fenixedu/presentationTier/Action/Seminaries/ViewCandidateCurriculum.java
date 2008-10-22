@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansForSeminaries;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
@@ -51,8 +52,8 @@ public class ViewCandidateCurriculum extends FenixAction {
 	List enrollments = null;
 	InfoStudentCurricularPlan selectedSCP = null;
 	try {
-	    Object args[] = { studentUserView };
-	    cps = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurricularPlansForSeminaries", args);
+
+	    cps = (ArrayList) ReadStudentCurricularPlansForSeminaries.run(studentUserView);
 	    long startDate = Long.MAX_VALUE;
 	    for (Iterator iter = cps.iterator(); iter.hasNext();) {
 		InfoStudentCurricularPlan cp = (InfoStudentCurricularPlan) iter.next();

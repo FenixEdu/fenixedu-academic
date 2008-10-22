@@ -7,10 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedPublicExecutionPeriodsByExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublicExecutionDegreeByDCPID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -64,19 +65,18 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 	    throws FenixActionException {
 	List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
 	try {
-	    final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-	    infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID",
-		    argsLerLicenciaturas);
+
+	    infoExecutionDegreeList = (List<InfoExecutionDegree>) ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId);
 	} catch (Exception e) {
 	    throw new FenixActionException(e);
 	}
 
 	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 	for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
-	    Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
+
 	    try {
-		List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
-			"ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
+		List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ReadNotClosedPublicExecutionPeriodsByExecutionYear
+			.run(infoExecutionDegree.getInfoExecutionYear());
 
 		for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
 		    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - "

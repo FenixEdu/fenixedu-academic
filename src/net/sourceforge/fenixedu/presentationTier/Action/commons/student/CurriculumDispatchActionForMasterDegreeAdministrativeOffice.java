@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -65,9 +69,8 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
 
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 	try {
-	    Object args[] = { Integer.valueOf(studentCurricularPlanID) };
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentCurricularPlan", args);
+
+	    infoStudentCurricularPlan = ReadStudentCurricularPlan.run(Integer.valueOf(studentCurricularPlanID));
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}
@@ -89,8 +92,8 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
 
 	if (studentNumber == null) {
 	    try {
-		Object args1[] = { userView.getUtilizador() };
-		infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", args1);
+
+		infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
 
 		Object args2[] = { infoPerson };
 		infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
@@ -98,15 +101,11 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
 		throw new FenixActionException(e);
 	    }
 	} else {
-	    try {
-		Object args[] = { Integer.valueOf(studentNumber), DegreeType.MASTER_DEGREE };
-		InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByNumberAndDegreeType", args);
-		infoStudents = new ArrayList();
-		infoStudents.add(infoStudent);
-		infoPerson = infoStudent.getInfoPerson();
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException(e);
-	    }
+	    InfoStudent infoStudent = (InfoStudent) ReadStudentByNumberAndDegreeType.run(Integer.valueOf(studentNumber),
+		    DegreeType.MASTER_DEGREE);
+	    infoStudents = new ArrayList();
+	    infoStudents.add(infoStudent);
+	    infoPerson = infoStudent.getInfoPerson();
 
 	}
 
@@ -116,8 +115,8 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
 	    while (iterator.hasNext()) {
 		InfoStudent infoStudent = (InfoStudent) iterator.next();
 		try {
-		    Object args[] = { infoStudent.getNumber(), infoStudent.getDegreeType() };
-		    List resultTemp = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurricularPlans", args);
+
+		    List resultTemp = ReadStudentCurricularPlans.run(infoStudent.getNumber(), infoStudent.getDegreeType());
 		    result.addAll(resultTemp);
 		} catch (NonExistingServiceException e) {
 		}

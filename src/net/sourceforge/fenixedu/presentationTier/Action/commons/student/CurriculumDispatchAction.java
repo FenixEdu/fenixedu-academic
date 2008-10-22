@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -274,9 +275,9 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 	try {
-	    Object args[] = { Integer.valueOf(studentCurricularPlanID) };
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentCurricularPlan", args);
+
+	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadStudentCurricularPlan.run(Integer
+		    .valueOf(studentCurricularPlanID));
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}

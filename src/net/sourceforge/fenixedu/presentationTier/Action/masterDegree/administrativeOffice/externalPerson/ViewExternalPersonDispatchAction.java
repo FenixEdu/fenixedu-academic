@@ -4,13 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.ReadExternalPersonByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,9 +36,8 @@ public class ViewExternalPersonDispatchAction extends FenixDispatchAction {
 
 	InfoExternalPerson infoExternalPerson = null;
 
-	Object args[] = { externalPersonId };
 	try {
-	    infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService("ReadExternalPersonByID", args);
+	    infoExternalPerson = (InfoExternalPerson) ReadExternalPersonByID.run(externalPersonId);
 	} catch (NonExistingServiceException e) {
 	    throw new FenixActionException(e);
 	} catch (FenixServiceException e) {

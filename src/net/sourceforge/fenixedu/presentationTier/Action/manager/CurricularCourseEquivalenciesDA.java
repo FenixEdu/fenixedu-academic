@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansByDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
@@ -143,18 +145,18 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final IUserView userView, final Integer degreeID,
 	    final String attributeName) throws FenixFilterException, FenixServiceException {
-	final Object[] argsReadCurricularPlans = { degreeID };
-	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils
-		.executeService("ReadDegreeCurricularPlansByDegree", argsReadCurricularPlans);
+
+	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ReadDegreeCurricularPlansByDegree
+		.run(degreeID);
 	sortInfoDegreeCurricularPlans(infoDegreeCurricularPlans);
 	request.setAttribute(attributeName, infoDegreeCurricularPlans);
     }
 
     private void setInfoCurricularCourses(final HttpServletRequest request, final IUserView userView,
 	    final Integer degreeCurricularPlanID, final String attribute) throws FenixFilterException, FenixServiceException {
-	final Object[] args = { degreeCurricularPlanID };
-	final List<InfoCurricularCourse> infoCurricularCourses = (List<InfoCurricularCourse>) ServiceUtils.executeService(
-		"ReadCurricularCoursesByDegreeCurricularPlan", args);
+
+	final List<InfoCurricularCourse> infoCurricularCourses = (List<InfoCurricularCourse>) ReadCurricularCoursesByDegreeCurricularPlan
+		.run(degreeCurricularPlanID);
 	sortInfoCurricularCourses(infoCurricularCourses);
 	request.setAttribute(attribute, infoCurricularCourses);
     }

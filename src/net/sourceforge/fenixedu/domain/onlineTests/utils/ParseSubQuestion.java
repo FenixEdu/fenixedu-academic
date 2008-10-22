@@ -644,8 +644,8 @@ public class ParseSubQuestion extends DefaultHandler {
 	    List<ResponseCondition> newResponseConditionList = new ArrayList<ResponseCondition>();
 	    for (ResponseCondition oldResponseCondition : oldResponseProcessing.getResponseConditions()) {
 		ResponseCondition newResponseCondition = oldResponseCondition;
-		newResponseCondition
-			.setResponse(Integer.valueOf(getPosition(shuffle, oldResponseCondition.getResponse())).toString());
+		newResponseCondition.setResponse(Integer.valueOf(getPosition(shuffle, oldResponseCondition.getResponse()))
+			.toString());
 		newResponseConditionList.add(newResponseCondition);
 	    }
 	    ResponseProcessing newReponseProcessing = oldResponseProcessing;

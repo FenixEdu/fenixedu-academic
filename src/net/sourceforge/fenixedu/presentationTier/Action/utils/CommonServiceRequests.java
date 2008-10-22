@@ -10,13 +10,15 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 /**
  * @author Luis Cruz
@@ -27,10 +29,9 @@ public class CommonServiceRequests {
     public static List getBranchesByDegreeCurricularPlan(IUserView userView, Integer degreeCurricularPlanOID)
 	    throws FenixActionException, FenixFilterException {
 
-	Object[] argsBranches = { degreeCurricularPlanOID };
 	List branches = null;
 	try {
-	    branches = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlanId", argsBranches);
+	    branches = ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanOID);
 	} catch (FenixServiceException fse) {
 	    throw new FenixActionException(fse);
 	}
@@ -55,17 +56,13 @@ public class CommonServiceRequests {
     public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID) throws FenixActionException,
 	    FenixFilterException {
 	InfoExecutionDegree infoExecutionDegree = null;
-	Object[] args = { degreeOID };
-	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService("ReadExecutionDegreeByOID", args);
-	} catch (FenixServiceException fse) {
-	    throw new FenixActionException(fse);
-	}
+
+	infoExecutionDegree = ReadExecutionDegreeByOID.run(degreeOID);
 	return infoExecutionDegree;
     }
 
     public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
-	return (List) ServiceUtils.executeService("ReadExecutionYearsService", null);
+	return ReadExecutionYearsService.run();
     }
 
 }

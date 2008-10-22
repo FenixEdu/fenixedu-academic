@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInsuranceValue;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -49,14 +50,8 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 
 	// execution years
 	List executionYears = null;
-	Object[] args = {};
-	try {
-	    executionYears = (List) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionYears", args);
-	} catch (FenixServiceException e) {
-	    errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
-	}
+
+	executionYears = ReadNotClosedExecutionYears.run();
 	if (executionYears == null || executionYears.size() <= 0) {
 	    errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
 	    saveErrors(request, errors);
@@ -83,10 +78,9 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 	Integer executionYearId = (Integer) editInsuranceForm.get("executionYear");
 
 	InfoInsuranceValue infoInsuranceValue = null;
-	Object argsInsuranceValue[] = { executionYearId };
 	try {
 	    infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService("ReadInsuranceValueByExecutionYearID",
-		    argsInsuranceValue);
+		    new Object[] { executionYearId });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -96,11 +90,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 	}
 
 	InfoExecutionYear infoExecutionYear = null;
-	try {
-	    infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadExecutionYearByID", argsInsuranceValue);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoExecutionYear = ReadExecutionYearByID.run(executionYearId);
 	if (infoExecutionYear == null) {
 	    throw new FenixActionException("Invalid Execution Year");
 	}

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddForumEmailSubscriber;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveForumEmailSubscriber;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -142,7 +144,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     public ActionForward emailSubscribe(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	executeService("AddForumEmailSubscriber", new Object[] { getRequestedForum(request), getLoggedPerson(request) });
+	AddForumEmailSubscriber.run(getRequestedForum(request), getLoggedPerson(request));
 
 	prepareViewForum(request);
 
@@ -152,7 +154,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     public ActionForward emailUnsubscribe(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	executeService("RemoveForumEmailSubscriber", new Object[] { getRequestedForum(request), getLoggedPerson(request) });
+	RemoveForumEmailSubscriber.run(getRequestedForum(request), getLoggedPerson(request));
 
 	prepareViewForum(request);
 

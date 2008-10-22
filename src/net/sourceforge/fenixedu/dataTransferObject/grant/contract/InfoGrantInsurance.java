@@ -43,7 +43,7 @@ public class InfoGrantInsurance extends InfoObject {
 
     /**
      * @param infoGrantContract
-     *                The infoGrantContract to set.
+     *            The infoGrantContract to set.
      */
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
 	this.infoGrantContract = infoGrantContract;
@@ -58,7 +58,7 @@ public class InfoGrantInsurance extends InfoObject {
 
     /**
      * @param dateBeginInsurance
-     *                The dateBeginInsurance to set.
+     *            The dateBeginInsurance to set.
      */
     public void setDateBeginInsurance(Date dateBeginInsurance) {
 	this.dateBeginInsurance = dateBeginInsurance;
@@ -73,7 +73,7 @@ public class InfoGrantInsurance extends InfoObject {
 
     /**
      * @param dateEndInsurance
-     *                The dateEndInsurance to set.
+     *            The dateEndInsurance to set.
      */
     public void setDateEndInsurance(Date dateEndInsurance) {
 	this.dateEndInsurance = dateEndInsurance;
@@ -88,7 +88,7 @@ public class InfoGrantInsurance extends InfoObject {
 
     /**
      * @param totalValue
-     *                The totalValue to set.
+     *            The totalValue to set.
      */
     public void setTotalValue(Double totalValue) {
 	this.totalValue = totalValue;
@@ -103,7 +103,7 @@ public class InfoGrantInsurance extends InfoObject {
 
     /**
      * @param infoGrantPaymentEntity
-     *                The infoGrantPaymentEntity to set.
+     *            The infoGrantPaymentEntity to set.
      */
     public void setInfoGrantPaymentEntity(InfoGrantPaymentEntity infoGrantPaymentEntity) {
 	this.infoGrantPaymentEntity = infoGrantPaymentEntity;

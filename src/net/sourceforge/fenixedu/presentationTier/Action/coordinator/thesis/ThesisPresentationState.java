@@ -4,15 +4,15 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 public enum ThesisPresentationState {
     UNEXISTING, DRAFT, SUBMITTED, REJECTED, APPROVED, DOCUMENTS_SUBMITTED, DOCUMENTS_CONFIRMED, CONFIRMED, EVALUATED_1ST, // Indicates
-															  // that
-															  // the
-															  // student
-															  // has
-															  // a
-															  // thesis
-															  // evaluated
-															  // but
-															  // he
+    // that
+    // the
+    // student
+    // has
+    // a
+    // thesis
+    // evaluated
+    // but
+    // he
     // can reevaluate the Thesis (or a new) in the second semester
     EVALUATED, UNKNOWN;
 

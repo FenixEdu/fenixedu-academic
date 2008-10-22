@@ -85,7 +85,7 @@ public class TestFilterAction extends FenixDispatchAction {
     private TestFilterBean getBean() {
 	TestFilterBean bean = (TestFilterBean) RenderUtils.getViewState("select-person").getMetaObject().getObject();
 	RenderUtils.invalidateViewState("select-person"); // bean will be
-							  // changed internly
+	// changed internly
 
 	return bean;
     }

@@ -6,11 +6,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
 import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadGlossaryEntries extends FenixService {
 
-    public List<InfoGlossaryEntry> run() {
+    @Service
+    public static List<InfoGlossaryEntry> run() {
 	List<InfoGlossaryEntry> result = new ArrayList<InfoGlossaryEntry>();
 
 	for (GlossaryEntry glossaryEntry : rootDomainObject.getGlossaryEntrys()) {

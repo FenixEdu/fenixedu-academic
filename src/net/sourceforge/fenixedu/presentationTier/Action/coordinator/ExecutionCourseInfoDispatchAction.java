@@ -11,6 +11,10 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseScopesByExecutionCourseID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
@@ -53,9 +57,8 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
-	Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear().getIdInternal() };
-	List executionPeriods = (List) ServiceManagerServiceFactory.executeService("ReadExecutionPeriodsByExecutionYear",
-		argsReadExecutionPeriods);
+	List executionPeriods = (List) ReadExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear()
+		.getIdInternal());
 
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -88,9 +91,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
-	Object argsReadExecutionPeriods[] = { degreeCurricularPlanID };
-	List executionPeriods = (List) ServiceManagerServiceFactory.executeService("ReadExecutionPeriodsByDegreeCurricularPlan",
-		argsReadExecutionPeriods);
+	List executionPeriods = (List) ReadExecutionPeriodsByDegreeCurricularPlan.run(degreeCurricularPlanID);
 
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -302,12 +303,11 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-		"ReadExecutionCourseByOID", new Object[] { new Integer(request.getParameter("executionCourseOID")) });
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseByOID.run(new Integer(request
+		.getParameter("executionCourseOID")));
 
-	List curricularCoursesWithScopes = (List) ServiceManagerServiceFactory.executeService(
-		"ReadCurricularCourseScopesByExecutionCourseID", new Object[] { new Integer(request
-			.getParameter("executionCourseOID")) });
+	List curricularCoursesWithScopes = (List) ReadCurricularCourseScopesByExecutionCourseID.run(new Integer(request
+		.getParameter("executionCourseOID")));
 
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 	request.setAttribute("curricularCourses", curricularCoursesWithScopes);

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallmentFileBean;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
@@ -36,7 +37,7 @@ public class UploadAnualInstallments extends FenixDispatchAction {
 	BonusInstallmentFileBean bonusInstallmentFileBean = (BonusInstallmentFileBean) getRenderedObject();
 	RenderUtils.invalidateViewState();
 	if (bonusInstallmentFileBean.isComplete()) {
-	    List<ActionMessage> actionMessageList = (List<ActionMessage>) executeService("ExecuteFactoryMethod", new Object[] { bonusInstallmentFileBean });
+	    List<ActionMessage> actionMessageList = (List<ActionMessage>) ExecuteFactoryMethod.run(bonusInstallmentFileBean);
 
 	    ActionMessages actionMessages = getMessages(request);
 	    if (actionMessageList != null && actionMessageList.size() != 0) {

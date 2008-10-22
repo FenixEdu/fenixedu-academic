@@ -18,7 +18,7 @@ public class EnrolmentPeriodInCurricularCourses extends EnrolmentPeriodInCurricu
 	public int compare(EnrolmentPeriodInCurricularCourses o1, EnrolmentPeriodInCurricularCourses o2) {
 	    return o1.getStartDateDateTime().compareTo(o2.getStartDateDateTime());
 	}
-	
+
     };
 
     public EnrolmentPeriodInCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan,

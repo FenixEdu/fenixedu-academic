@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -87,10 +88,9 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 	    getAndSetStringToRequest(request, "curYear");
 	}
 
-	Object args[] = { executionPeriodId };
 	List executionDegreeList = null;
 	try {
-	    executionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionPeriodId", args);
+	    executionDegreeList = (List) ReadExecutionDegreesByExecutionPeriodId.run(executionPeriodId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

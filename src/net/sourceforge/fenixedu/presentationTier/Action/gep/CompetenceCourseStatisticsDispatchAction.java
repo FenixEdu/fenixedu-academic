@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCurricularCourseStatistics;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -41,7 +43,7 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	request.setAttribute("executionYears", executeService("ReadNotClosedExecutionYears", null));
+	request.setAttribute("executionYears", ReadNotClosedExecutionYears.run());
 	return mapping.findForward("chooseExecutionYear");
     }
 
@@ -84,8 +86,8 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
 	    toProcessDegreeCurricularPlans.remove(degreeCurricularPlan.getName());
 	    processingDegreeCurricularPlans.add(degreeCurricularPlan.getName());
 
-	    Object[] args = { degreeCurricularPlan.getIdInternal(), executionYearID, agreement };
-	    result.append((String) executeService("ComputeCurricularCourseStatistics", args));
+	    result.append((String) ComputeCurricularCourseStatistics.run(degreeCurricularPlan.getIdInternal(), executionYearID,
+		    agreement));
 
 	    processingDegreeCurricularPlans.clear();
 	    processedDegreeCurricularPlans.add(degreeCurricularPlan.getName());

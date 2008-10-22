@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.example;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 
 public class ExecutionPeriods {
 
     public Collection getExecutionPeriods() {
 	try {
-	    final Object[] args = {};
-	    final Collection infoExecutionPeriods = (Collection) ServiceUtils.executeService("ReadExecutionPeriods", args);
+
+	    final Collection infoExecutionPeriods = (Collection) ReadExecutionPeriods.run();
 	    return infoExecutionPeriods;
 	} catch (Exception e) {
 	    throw new RuntimeException(e);

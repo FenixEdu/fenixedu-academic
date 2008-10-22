@@ -22,10 +22,11 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class CourseGroup extends CourseGroup_Base {
 

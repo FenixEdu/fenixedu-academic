@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadClassesForCurrentAndNextPeriodByDegree extends FenixService {
 
-    public Object run(final Integer degreeOID) {
+    @Service
+    public static Object run(final Integer degreeOID) {
 
 	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 	final ExecutionSemester nextExecutionPeriod = currentExecutionPeriod.getNextExecutionPeriod();
@@ -35,7 +36,7 @@ public class ReadClassesForCurrentAndNextPeriodByDegree extends FenixService {
 	return classViews;
     }
 
-    private void constructViews(final List classViews, final Degree degree, final ExecutionSemester executionSemester) {
+    private static void constructViews(final List classViews, final Degree degree, final ExecutionSemester executionSemester) {
 	for (final SchoolClass schoolClass : executionSemester.getSchoolClasses()) {
 	    if (isForDegree(schoolClass, degree)) {
 		ClassView classView = new ClassView(schoolClass);
@@ -44,7 +45,7 @@ public class ReadClassesForCurrentAndNextPeriodByDegree extends FenixService {
 	}
     }
 
-    private boolean isForDegree(final SchoolClass schoolClass, final Degree degree) {
+    private static boolean isForDegree(final SchoolClass schoolClass, final Degree degree) {
 	final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
 	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	final Degree degreeFromSchoolClass = degreeCurricularPlan.getDegree();

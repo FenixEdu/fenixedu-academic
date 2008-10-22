@@ -16,10 +16,12 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateConvokes extends FenixService {
 
-    public void run(List<Vigilant> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,
+    @Service
+    public static void run(List<Vigilant> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,
 	    ExamCoordinator coordinator, String emailMessage) {
 	group.convokeVigilants(vigilants, writtenEvaluation);
 	if (emailMessage.length() != 0) {

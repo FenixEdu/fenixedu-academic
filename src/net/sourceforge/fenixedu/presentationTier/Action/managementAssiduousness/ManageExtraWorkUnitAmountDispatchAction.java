@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitExtraWorkAmountFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
@@ -73,7 +74,7 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
 	YearMonth yearMonth = new YearMonth();
 	yearMonth.setYear(unitExtraWorkAmountFactory.getYear());
 
-	executeService("ExecuteFactoryMethod", new Object[] { unitExtraWorkAmountFactory });
+	ExecuteFactoryMethod.run(unitExtraWorkAmountFactory);
 
 	request.setAttribute("year", yearMonth);
 	request.setAttribute("unitExtraWorkAmountList", getUnitsExtraWorkAmounts(yearMonth));
@@ -101,7 +102,7 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
     public ActionForward insertNewAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	UnitExtraWorkAmountFactory unitExtraWorkAmountFactory = (UnitExtraWorkAmountFactory) getRenderedObject("amountFactory");
-	UnitExtraWorkAmount unitExtraWorkAmount = (UnitExtraWorkAmount) executeService("ExecuteFactoryMethod", new Object[] { unitExtraWorkAmountFactory });
+	UnitExtraWorkAmount unitExtraWorkAmount = (UnitExtraWorkAmount) ExecuteFactoryMethod.run(unitExtraWorkAmountFactory);
 	request.setAttribute("unitExtraWorkAmountFactory", new UnitExtraWorkAmountFactory(unitExtraWorkAmount));
 	return mapping.findForward("show-unit-extra-work-movements");
     }

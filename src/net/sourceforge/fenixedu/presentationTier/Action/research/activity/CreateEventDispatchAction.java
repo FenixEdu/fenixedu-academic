@@ -66,8 +66,7 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
 
 	if (bean.getRole() != null) {
 	    try {
-		executeService("CreateResearchActivityParticipation", new Object[] { bean.getEvent(), bean.getRole(),
-			person });
+		executeService("CreateResearchActivityParticipation", new Object[] { bean.getEvent(), bean.getRole(), person });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		request.setAttribute("existentEventBean", bean);

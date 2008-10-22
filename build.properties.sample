@@ -253,15 +253,15 @@ mailSender.max.recipients=50
 #         ChangePassword
 #         ChangePasswordKerberos
 #   enableExternalLoginService Known implementations:
-#         EnableExternalLogin
-#         EnableExternalLoginWithKerberos
+#         net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLogin
+#         net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLoginWithKerberos
 #   password.generator: Known implementations:
 #         net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordKerberos
 #
 #----------------------------------------------
 authenticationService=Authenticate
 changePassService=ChangePassword
-enableExternalLoginService=EnableExternalLoginWithKerberos
+enableExternalLoginService=net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLoginWithKerberos
 password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase
 
 #----------------------------------------------

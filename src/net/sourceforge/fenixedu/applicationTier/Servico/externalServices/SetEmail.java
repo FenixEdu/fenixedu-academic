@@ -11,9 +11,11 @@ import net.sourceforge.fenixedu.domain.User;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class SetEmail extends FenixService {
 
-    public class NotAuthorizedException extends FenixServiceException {
+    public static class NotAuthorizedException extends FenixServiceException {
     }
 
     public class UserAlreadyHasEmailException extends FenixServiceException {
@@ -30,7 +32,7 @@ public class SetEmail extends FenixService {
 
     }
 
-    public class UserDoesNotExistException extends FenixServiceException {
+    public static class UserDoesNotExistException extends FenixServiceException {
 
     }
 
@@ -52,7 +54,7 @@ public class SetEmail extends FenixService {
 		&& (allowedHosts.contains(host) || allowedHosts.contains(ip));
     }
 
-    private void set(final String userUId, final String email) throws FenixServiceException {
+    private static void set(final String userUId, final String email) throws FenixServiceException {
 	final User user = User.readUserByUserUId(userUId);
 	if (user == null) {
 	    throw new UserDoesNotExistException();
@@ -65,7 +67,8 @@ public class SetEmail extends FenixService {
 	person.updateInstitutionalEmail(newEmail);
     }
 
-    public void run(final String host, final String ip, final String password, final String userUId, final String email)
+    @Service
+    public static void run(final String host, final String ip, final String password, final String userUId, final String email)
 	    throws FenixServiceException {
 	if (isAllowed(host, ip, password)) {
 	    set(userUId, email);

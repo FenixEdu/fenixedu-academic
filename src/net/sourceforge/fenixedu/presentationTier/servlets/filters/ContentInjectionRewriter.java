@@ -195,7 +195,8 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		iOffset = continueToNextToken(response, source, iOffset, indexOfAreaOpen);
 		continue;
 	    } else if (firstIsMinValue(indexOfBlockHasContextopen, indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen)) {
-		final int indexOfEndBlockHasContextOpen = indexOf(source, END_BLOCK_HAS_CONTEXT_PREFIX, indexOfBlockHasContextopen);
+		final int indexOfEndBlockHasContextOpen = indexOf(source, END_BLOCK_HAS_CONTEXT_PREFIX,
+			indexOfBlockHasContextopen);
 		if (indexOfEndBlockHasContextOpen == -1) {
 		    iOffset = indexOfBlockHasContextopen + BLOCK_HAS_CONTEXT_PREFIX.length;
 		} else {

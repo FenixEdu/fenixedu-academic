@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
@@ -90,8 +92,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Process process = (Process) executeService("CreateNewProcess", new Object[] { getProcessType().getName(),
-		getRenderedObject() });
+	Process process = (Process) CreateNewProcess.run(getProcessType().getName(), getRenderedObject());
 	request.setAttribute("process", process);
 	return listProcessAllowedActivities(mapping, form, request, response);
     }
@@ -102,7 +103,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     protected void executeActivity(Process process, String activityId, Object object) throws FenixFilterException,
 	    FenixServiceException {
-	executeService("ExecuteProcessActivity", new Object[] { process, activityId, object });
+	ExecuteProcessActivity.run(process, activityId, object);
     }
 
 }

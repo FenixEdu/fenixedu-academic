@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -17,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException;
@@ -94,7 +94,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
 		}
 
-		/*  get master degree proof */
+		/* get master degree proof */
 		Object argsMasterDegreeProofVersion[] = { studentCurricularPlanID };
 		try {
 		    infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) ServiceUtils.executeService(
@@ -107,7 +107,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
 	    }
 
-	    infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionYear", null);
+	    infoExecutionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
 
 	} catch (RuntimeException e) {
 	    throw new RuntimeException("Error", e);

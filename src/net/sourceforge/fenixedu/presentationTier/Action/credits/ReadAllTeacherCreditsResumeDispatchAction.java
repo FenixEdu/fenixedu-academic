@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.CreditLine;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -52,8 +52,7 @@ public class ReadAllTeacherCreditsResumeDispatchAction extends FenixDispatchActi
 	dynaForm.set("teacherId", teacher.getIdInternal());
 	request.setAttribute("teacher", teacher);
 
-	Object[] args = new Object[] { teacher.getIdInternal() };
-	List<CreditLine> creditsLines = (List) ServiceUtils.executeService("ReadAllTeacherCredits", args);
+	List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getIdInternal());
 	request.setAttribute("creditsLinesSize", creditsLines.size());
 
 	BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");

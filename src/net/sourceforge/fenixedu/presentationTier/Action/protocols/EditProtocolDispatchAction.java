@@ -5,6 +5,9 @@ import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnitByNameAndCountry;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory.EditProtocolAction;
 import net.sourceforge.fenixedu.domain.Person;
@@ -59,7 +62,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	if (isProtocolNumberValid(protocolFactory)) {
 	    if (validateDates(protocolFactory, request)) {
 		protocolFactory.setEditProtocolAction(EditProtocolAction.EDIT_PROTOCOL_DATA);
-		Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+		Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 		request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
 		return mapping.findForward("view-protocol");
 	    } else {
@@ -69,7 +72,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	} else {
 	    request.setAttribute("protocolFactory", protocolFactory);
 	    validateDates(protocolFactory, request);
-	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.number.alreadyExists"));
+	    setError(request, "errorMessage", new ActionMessage("error.protocol.number.alreadyExists"));
 	    return mapping.findForward("edit-protocol-data");
 	}
     }
@@ -78,7 +81,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	for (ProtocolHistory protocolHistory : protocolFactory.getProtocolHistories()) {
 	    if (protocolHistory.getBeginDate() != null && protocolHistory.getEndDate() != null
 		    && !protocolHistory.getBeginDate().isBefore(protocolHistory.getEndDate())) {
-		setError(request, "errorDateMessage", (ActionMessage) new ActionMessage("error.protocol.dates.notContinuous"));
+		setError(request, "errorDateMessage", new ActionMessage("error.protocol.dates.notContinuous"));
 		return false;
 	    }
 	}
@@ -136,7 +139,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 		&& (protocolFactory.getResponsible() == null || !protocolFactory.getIstResponsibleIsPerson())
 		&& protocolFactory.getResponsibleFunction() == null) {
 	    if (StringUtils.isEmpty(protocolFactory.getResponsibleName()) || protocolFactory.getIstResponsible()) {
-		setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.person.selectFromList"));
+		setError(request, "errorMessage", new ActionMessage("error.protocol.person.selectFromList"));
 	    } else if (!protocolFactory.getIstResponsible()) {
 		request.setAttribute("needToCreatePerson", "true");
 	    }
@@ -153,13 +156,12 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    }
 	    if (protocolFactory.getResponsibles().contains(protocolFactory.getResponsibleToAdd())
 		    || protocolFactory.getPartnerResponsibles().contains(protocolFactory.getResponsibleToAdd())) {
-		setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.duplicated.responsible"));
+		setError(request, "errorMessage", new ActionMessage("error.protocol.duplicated.responsible"));
 	    } else if (protocolFactory.getResponsibleFunction() != null
 		    && protocolFactory.getResponsibleFunctions().contains(protocolFactory.getResponsibleFunction())) {
-		setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-			"error.protocol.duplicated.responsibleFunction"));
+		setError(request, "errorMessage", new ActionMessage("error.protocol.duplicated.responsibleFunction"));
 	    } else {
-		Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+		Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 		protocolFactory = new ProtocolFactory(protocol);
 	    }
 	}
@@ -176,11 +178,11 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("edit-protocol-responsibles");
 	}
 	if (protocolFactory.getUnitObject() != null) {
-	    ExternalContract externalContract = (ExternalContract) executeService("InsertExternalPerson", new Object[] {
-		    protocolFactory.getResponsibleName(), protocolFactory.getUnitObject().getUnit() });
+	    ExternalContract externalContract = InsertExternalPerson.run(new InsertExternalPerson.ServiceArguments(
+		    protocolFactory.getResponsibleName(), protocolFactory.getUnitObject().getUnit()));
 	    protocolFactory.setResponsibleToAdd(externalContract.getPerson());
 	    protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_RESPONSIBLE);
-	    Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	    Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	    protocolFactory = new ProtocolFactory(protocol);
 	} else if (request.getParameter("createNew") != null) {
 	    request.setAttribute("createExternalUnit", "true");
@@ -201,11 +203,11 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("edit-protocol-responsibles");
 	}
 
-	ExternalContract externalContract = (ExternalContract) executeService("InsertExternalPerson", new Object[] {
-		protocolFactory.getResponsibleName(), protocolFactory.getUnitName(), protocolFactory.getCountry() });
+	ExternalContract externalContract = InsertExternalPerson.run(protocolFactory.getResponsibleName(), protocolFactory
+		.getUnitName(), protocolFactory.getCountry());
 	protocolFactory.setResponsibleToAdd(externalContract.getPerson());
 	protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_RESPONSIBLE);
-	Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	protocolFactory = new ProtocolFactory(protocol);
 
 	request.setAttribute("protocolFactory", protocolFactory);
@@ -249,7 +251,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
 	if (protocolFactory.getUnitObject() == null) {
 	    if (StringUtils.isEmpty(protocolFactory.getUnitName()) || protocolFactory.getInternalUnit()) {
-		setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.unit.selectFromList"));
+		setError(request, "errorMessage", new ActionMessage("error.protocol.unit.selectFromList"));
 	    } else if (!protocolFactory.getInternalUnit()) {
 		request.setAttribute("needToCreateUnit", "true");
 	    }
@@ -257,10 +259,10 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    protocolFactory.setUnitToAdd(protocolFactory.getUnitObject().getUnit());
 	    if (protocolFactory.getUnits().contains(protocolFactory.getUnitToAdd())
 		    || protocolFactory.getPartnerUnits().contains(protocolFactory.getUnitToAdd())) {
-		setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.duplicated.unit"));
+		setError(request, "errorMessage", new ActionMessage("error.protocol.duplicated.unit"));
 	    } else {
 		protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_UNIT);
-		Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+		Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 		protocolFactory = new ProtocolFactory(protocol);
 	    }
 	}
@@ -277,11 +279,10 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("edit-protocol-units");
 	}
 
-	Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry", new Object[] {
-		protocolFactory.getUnitName(), protocolFactory.getCountry() });
+	Unit externalUnit = CreateExternalUnitByNameAndCountry.run(protocolFactory.getUnitName(), protocolFactory.getCountry());
 	protocolFactory.setUnitToAdd(externalUnit);
 	protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_UNIT);
-	Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	protocolFactory = new ProtocolFactory(protocol);
 
 	request.setAttribute("protocolFactory", protocolFactory);
@@ -293,11 +294,11 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
 	if ((protocolFactory.getResponsibles() == null || protocolFactory.getResponsibles().size() == 1)
 		&& (protocolFactory.getResponsibleFunctions() == null || protocolFactory.getResponsibleFunctions().size() == 0)) {
-	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.empty.istResponsibles"));
+	    setError(request, "errorMessage", new ActionMessage("error.protocol.empty.istResponsibles"));
 	} else {
 	    protocolFactory = prepareRemoveResponsible((DynaActionForm) actionForm, protocolFactory);
 	    protocolFactory.setIstResponsible(true);
-	    Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	    Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	    protocolFactory = new ProtocolFactory(protocol);
 	}
 	RenderUtils.invalidateViewState();
@@ -310,11 +311,11 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
 	if ((protocolFactory.getResponsibleFunctions() == null || protocolFactory.getResponsibleFunctions().size() == 1)
 		&& (protocolFactory.getResponsibles() == null || protocolFactory.getResponsibles().size() == 0)) {
-	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.empty.istResponsibles"));
+	    setError(request, "errorMessage", new ActionMessage("error.protocol.empty.istResponsibles"));
 	} else {
 	    protocolFactory = prepareRemoveResponsibleFunction((DynaActionForm) actionForm, protocolFactory);
 	    protocolFactory.setIstResponsible(true);
-	    Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	    Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	    protocolFactory = new ProtocolFactory(protocol);
 	}
 	RenderUtils.invalidateViewState();
@@ -327,7 +328,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
 	protocolFactory = prepareRemoveResponsible((DynaActionForm) actionForm, protocolFactory);
 	protocolFactory.setIstResponsible(false);
-	Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	RenderUtils.invalidateViewState();
 	request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
 	return mapping.findForward("edit-protocol-responsibles");
@@ -353,11 +354,11 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
 	if (protocolFactory.getUnits() == null || protocolFactory.getUnits().size() == 1) {
-	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.empty.units"));
+	    setError(request, "errorMessage", new ActionMessage("error.protocol.empty.units"));
 	} else {
 	    protocolFactory = prepareRemoveUnit((DynaActionForm) actionForm, protocolFactory);
 	    protocolFactory.setInternalUnit(true);
-	    Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	    Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	    protocolFactory = new ProtocolFactory(protocol);
 	}
 	RenderUtils.invalidateViewState();
@@ -369,11 +370,11 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
 	if (protocolFactory.getPartnerUnits() == null || protocolFactory.getPartnerUnits().size() == 1) {
-	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.protocol.empty.partnerUnits"));
+	    setError(request, "errorMessage", new ActionMessage("error.protocol.empty.partnerUnits"));
 	} else {
 	    protocolFactory = prepareRemoveUnit((DynaActionForm) actionForm, protocolFactory);
 	    protocolFactory.setInternalUnit(false);
-	    Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	    Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	    protocolFactory = new ProtocolFactory(protocol);
 	}
 	RenderUtils.invalidateViewState();
@@ -413,8 +414,8 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	}
 	if (protocolFactory.getInputStream() != null) {
 	    File file = FileUtils.copyToTemporaryFile(protocolFactory.getInputStream());
-	    Protocol protocol = (Protocol) executeService("AddFileToProtocol", new Object[] {
-		    protocolFactory.getProtocol(), file, protocolFactory.getFileName(), protocolFactory.getFilePermissionType() });
+	    Protocol protocol = (Protocol) executeService("AddFileToProtocol", new Object[] { protocolFactory.getProtocol(),
+		    file, protocolFactory.getFileName(), protocolFactory.getFilePermissionType() });
 	    protocolFactory = new ProtocolFactory(protocol);
 	    file.delete();
 	}
@@ -432,7 +433,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
 	protocolFactory.setFileToDelete(protocolFile);
 	protocolFactory.setEditProtocolAction(EditProtocolAction.DELETE_FILE);
-	Protocol protocol = (Protocol) executeService("ExecuteFactoryMethod", new Object[] { protocolFactory });
+	Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
 
 	return mapping.findForward("edit-protocol-files");

@@ -11,11 +11,13 @@ import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocumen
 import net.sourceforge.fenixedu.domain.documents.ReceiptGeneratedDocument;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class StoreGeneratedDocument extends FenixService {
     public static final String CONFIG_DSPACE_DOCUMENT_STORE = "dspace.generated.document.store";
 
-    public void run(String filename, InputStream stream, Object source) throws FenixServiceException {
+    @Service
+    public static void run(String filename, InputStream stream, Object source) throws FenixServiceException {
 	if (source instanceof CreditNote) {
 	    CreditNote creditNote = (CreditNote) source;
 	    new CreditNoteGeneratedDocument(creditNote, creditNote.getReceipt().getPerson(), AccessControl.getPerson(), filename,

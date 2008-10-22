@@ -420,9 +420,9 @@ public class AutoCompleteInputRenderer extends InputRenderer {
 		link.setParameter("serviceArgs", getFormatedServiceArgs());
 		link.setParameter("labelField", getLabelField());
 		link.setParameter("valueField", "idInternal"); // TODO: allow
-							       // configuration,
-							       // needs also
-							       // converter
+		// configuration,
+		// needs also
+		// converter
 		link.setParameter("styleClass", getAutoCompleteItemsStyleClass() == null ? "" : getAutoCompleteItemsStyleClass());
 		link.setParameter("class", getClassName());
 		link.setEscapeAmpersand(false);

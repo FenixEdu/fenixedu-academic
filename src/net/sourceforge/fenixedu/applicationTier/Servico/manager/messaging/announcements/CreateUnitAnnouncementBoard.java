@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -62,7 +63,8 @@ public class CreateUnitAnnouncementBoard extends FenixService {
 	}
     }
 
-    public void run(UnitAnnouncementBoardParameters parameters) throws FenixServiceException {
+    @Service
+    public static void run(UnitAnnouncementBoardParameters parameters) throws FenixServiceException {
 	Unit unit = (Unit) rootDomainObject.readPartyByOID(parameters.unitId);
 	UnitAnnouncementBoard board = new UnitAnnouncementBoard(unit);
 
@@ -71,12 +73,12 @@ public class CreateUnitAnnouncementBoard extends FenixService {
 	board.setUnitPermittedManagementGroupType(parameters.managementGroupType);
 	board.setName(new MultiLanguageString(parameters.name));
 	board.setMandatory(parameters.mandatory);
-	board.setReaders(this.buildGroup(parameters.readersGroupType, unit));
-	board.setWriters(this.buildGroup(parameters.writersGroupType, unit));
-	board.setManagers(this.buildGroup(parameters.managementGroupType, unit));
+	board.setReaders(buildGroup(parameters.readersGroupType, unit));
+	board.setWriters(buildGroup(parameters.writersGroupType, unit));
+	board.setManagers(buildGroup(parameters.managementGroupType, unit));
     }
 
-    protected Group buildGroup(UnitBoardPermittedGroupType type, Unit unit) {
+    protected static Group buildGroup(UnitBoardPermittedGroupType type, Unit unit) {
 	Group group = null;
 	Group managers = new RoleTypeGroup(RoleType.MANAGER);
 	switch (type) {

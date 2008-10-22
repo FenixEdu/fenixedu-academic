@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -21,7 +22,8 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
  */
 public class SearchStudents extends FenixService {
 
-    public List<RegistrationWithStateForExecutionYearBean> run(SearchStudentsByDegreeParametersBean searchbean)
+    @Service
+    public static List<RegistrationWithStateForExecutionYearBean> run(SearchStudentsByDegreeParametersBean searchbean)
 	    throws FenixServiceException {
 
 	final Set<Registration> registrations = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
@@ -34,7 +36,7 @@ public class SearchStudents extends FenixService {
 	return filterResults(searchbean, registrations, executionYear);
     }
 
-    private List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchbean,
+    private static List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchbean,
 	    final Set<Registration> registrations, final ExecutionYear executionYear) {
 
 	final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();

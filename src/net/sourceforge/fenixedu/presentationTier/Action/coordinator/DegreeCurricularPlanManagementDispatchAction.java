@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.LoggedCoordinatorCanEdit;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -206,9 +208,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 	// check that this user can edit curricular course information
 	Boolean canEdit = new Boolean(false);
-	Object[] argsAuthorization = { infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUtilizador() };
+
 	try {
-	    canEdit = (Boolean) ServiceUtils.executeService("LoggedCoordinatorCanEdit", argsAuthorization);
+	    canEdit = LoggedCoordinatorCanEdit.run(infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUtilizador());
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("nullExecutionDegreeCode")) {
@@ -292,13 +294,8 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     public ActionForward prepareViewCurricularCourseInformationHistory(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	List infoExecutionYears = null;
-	Object[] args = {};
-	try {
-	    infoExecutionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears", args);
 
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoExecutionYears = ReadNotClosedExecutionYears.run();
 
 	getAndSetIntegerToRequest("infoCurricularCourseCode", request);
 	getAndSetStringToRequest("infoCurricularCourseName", request);
@@ -376,9 +373,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 	// check that this user can edit curricular course information
 	Boolean canEdit = new Boolean(false);
-	Object[] argsAuthorization = { infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUtilizador() };
+
 	try {
-	    canEdit = (Boolean) ServiceUtils.executeService("LoggedCoordinatorCanEdit", argsAuthorization);
+	    canEdit = LoggedCoordinatorCanEdit.run(infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUtilizador());
 
 	} catch (NonExistingServiceException e) {
 	    addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");

@@ -5,9 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewQuestionGroup;
 import net.sourceforge.fenixedu.domain.tests.NewQuestionType;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateAtomicQuestion extends FenixService {
-    public NewQuestion run(NewQuestionGroup parentQuestionGroup, NewQuestionType questionType) throws FenixServiceException {
+    @Service
+    public static NewQuestion run(NewQuestionGroup parentQuestionGroup, NewQuestionType questionType)
+	    throws FenixServiceException {
 	return questionType.newInstance(parentQuestionGroup);
     }
 }

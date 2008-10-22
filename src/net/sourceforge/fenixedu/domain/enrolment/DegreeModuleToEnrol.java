@@ -28,7 +28,8 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     protected DegreeModuleToEnrol() {
     }
 
-    public DegreeModuleToEnrol(final CurriculumGroup curriculumGroup, final Context context, final ExecutionSemester executionSemester) {
+    public DegreeModuleToEnrol(final CurriculumGroup curriculumGroup, final Context context,
+	    final ExecutionSemester executionSemester) {
 	this.curriculumGroup = new DomainReference<CurriculumGroup>(curriculumGroup);
 	this.context = new DomainReference<Context>(context);
 	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);

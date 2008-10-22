@@ -12,13 +12,14 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class VehicleAllocation extends VehicleAllocation_Base {
 

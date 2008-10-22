@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
@@ -71,7 +72,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	request.setAttribute("grantOwnerNumber", request.getParameter("grantOwnerNumber"));
 
 	List countryList = null;
-	countryList = (List) ServiceUtils.executeService("ReadAllCountries", null);
+	countryList = (List) ReadAllCountries.run();
 
 	// Adding a select country line to the list (presentation reasons)
 	InfoCountryEditor selectCountry = new InfoCountryEditor();

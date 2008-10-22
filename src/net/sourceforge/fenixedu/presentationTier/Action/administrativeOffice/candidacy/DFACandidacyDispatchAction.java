@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.EditPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean;
@@ -206,7 +208,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	    throw new FenixActionException("error.enrolmentFee.to.pay");
 	}
 
-	String pass = (String) ServiceUtils.executeService("GenerateNewPassword", new Object[] { candidacy.getPerson() });
+	String pass = GenerateNewPasswordService.run(candidacy.getPerson());
 	request.setAttribute("password", pass);
 
 	request.setAttribute("candidacy", candidacy);
@@ -259,8 +261,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils.getViewState(
 		"precedentDegreeInformation").getMetaObject().getObject();
 
-	Object[] argsInstitution = { precedentDegreeInformation };
-	ServiceUtils.executeService("EditPrecedentDegreeInformation", argsInstitution);
+	EditPrecedentDegreeInformation.run(precedentDegreeInformation);
 
 	request.setAttribute("candidacyID", precedentDegreeInformation.getPrecedentDegreeInformation().getStudentCandidacy()
 		.getIdInternal());
@@ -287,9 +288,9 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	if (candidacy == null) {
 	    throw new FenixActionException("invalid cadidacy number");
 	}
-	Object[] args = { new StateMachineRunner.RunnerArgs(candidacy.getActiveCandidacySituation(), nextState) };
+
 	try {
-	    ServiceUtils.executeService("StateMachineRunner", args);
+	    StateMachineRunner.run(new StateMachineRunner.RunnerArgs(candidacy.getActiveCandidacySituation(), nextState));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("candidacy", candidacy);

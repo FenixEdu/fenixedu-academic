@@ -16,6 +16,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadCurricularCoursesByDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadMasterDegrees;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -140,12 +143,12 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	request.setAttribute("executionYear", executionYear);
 
 	// Get the Master Degree List
-	Object args[] = { executionYear };
+
 	IUserView userView = getUserView(request);
 	List masterDegreeList = null;
 	try {
 
-	    masterDegreeList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadMasterDegrees", args);
+	    masterDegreeList = ReadMasterDegrees.run(executionYear);
 	} catch (NonExistingServiceException e) {
 	    ActionErrors errors = new ActionErrors();
 	    errors.add("nonExisting", new ActionError("message.masterDegree.notfound.degrees", executionYear));
@@ -233,22 +236,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
 	IUserView userView = getUserView(request);
 	List curricularCourseList = null;
-	try {
-
-	    Object args[] = { degreeCurricularPlanID };
-	    curricularCourseList = (List) ServiceManagerServiceFactory.executeService("ReadCurricularCoursesByDegree", args);
-
-	}
-
-	catch (NonExistingServiceException e) {
-	    ActionErrors errors = new ActionErrors();
-	    errors.add("nonExisting", new ActionError("message.public.notfound.curricularCourses"));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
-
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException(e);
-	}
+	curricularCourseList = ReadCurricularCoursesByDegree.run(degreeCurricularPlanID);
 
 	List candidateEnrolments = null;
 
@@ -273,9 +261,8 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
 	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 	try {
-	    Object args[] = { new Integer(candidateID) };
-	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "GetCandidatesByID", args);
+
+	    infoMasterDegreeCandidate = GetCandidatesByID.run(new Integer(candidateID));
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -284,7 +271,8 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	if (infoExecutionDegree == null) {
 	    try {
 		Object args[] = { new Integer(candidateID) };
-		infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByCandidateID", args);
+		infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+			"ReadExecutionDegreeByCandidateID", args);
 	    } catch (NotAuthorizedException e) {
 		throw new NotAuthorizedActionException(e);
 	    } catch (FenixServiceException e) {
@@ -449,7 +437,8 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
 	try {
 	    Object args[] = { candidateID };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByCandidateID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+		    "ReadExecutionDegreeByCandidateID", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -515,9 +504,8 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
 	InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 	try {
-	    Object args[] = { candidateID };
-	    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "GetCandidatesByID", args);
+
+	    infoMasterDegreeCandidate = GetCandidatesByID.run(candidateID);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -541,7 +529,8 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {
 	    Object args[] = { candidateID };
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegreeByCandidateID", args);
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+		    "ReadExecutionDegreeByCandidateID", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

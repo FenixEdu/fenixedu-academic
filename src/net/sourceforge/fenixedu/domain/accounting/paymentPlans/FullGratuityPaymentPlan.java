@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
 
-import java.util.Locale;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;

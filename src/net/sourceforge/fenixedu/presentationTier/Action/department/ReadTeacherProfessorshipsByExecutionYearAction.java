@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByUser;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -84,7 +87,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
 
-	List executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears", null);
+	List executionYears = (List) ReadNotClosedExecutionYears.run();
 
 	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
 	    public boolean evaluate(Object arg0) {
@@ -96,13 +99,11 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 	    }
 	});
 
-	Object args2[] = { infoTeacher };
-	InfoDepartment teacherDepartment = (InfoDepartment) ServiceUtils.executeService("ReadDepartmentByTeacher", args2);
+	InfoDepartment teacherDepartment = (InfoDepartment) ReadDepartmentByTeacher.run(infoTeacher);
 
 	if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
-	    Object args[] = { userView.getUtilizador() };
 
-	    InfoDepartment userDepartment = (InfoDepartment) ServiceUtils.executeService("ReadDepartmentByUser", args);
+	    InfoDepartment userDepartment = (InfoDepartment) ReadDepartmentByUser.run(userView.getUtilizador());
 	    if (userDepartment != null) {
 		request.setAttribute("isDepartmentManager", Boolean.valueOf(userDepartment.equals(teacherDepartment)));
 	    } else {

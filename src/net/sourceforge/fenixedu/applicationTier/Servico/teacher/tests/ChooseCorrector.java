@@ -5,9 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewCorrector;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ChooseCorrector extends FenixService {
-    public void run(NewAtomicQuestion atomicQuestion, Predicate predicate, Integer percentage) throws FenixServiceException {
+    @Service
+    public static void run(NewAtomicQuestion atomicQuestion, Predicate predicate, Integer percentage)
+	    throws FenixServiceException {
 	new NewCorrector(atomicQuestion, predicate, percentage);
     }
 }

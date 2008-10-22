@@ -15,7 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSite;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsByStudentGroupID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -69,15 +74,14 @@ public class SendMailToAllStudents extends FenixDispatchAction {
 	}
 	objectCode = new Integer(objectCodeString);
 	Object argsReadSiteView[] = { objectCode, null };
-	Object argsReadExecutionCourse[] = { objectCode };
 	InfoExecutionCourse infoExecutionCourse = null;
 	InfoSite infoSite = null;
 
 	siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("ReadStudentsByCurricularCourse",
 		argsReadSiteView);
-	infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService("ReadExecutionCourseByOID", argsReadExecutionCourse);
-	Object argsReadSite[] = { infoExecutionCourse };
-	infoSite = (InfoSite) ServiceManagerServiceFactory.executeService("ReadSite", argsReadSite);
+	infoExecutionCourse = ReadExecutionCourseByOID.run(objectCode);
+
+	infoSite = ReadSite.run(infoExecutionCourse);
 
 	DynaActionForm sendMailForm = (DynaActionForm) form;
 	sendMailForm.set("from", infoSite.getMail());
@@ -91,10 +95,10 @@ public class SendMailToAllStudents extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 	IUserView userView = getUserView(request);
 	TeacherAdministrationSiteView siteView = null;
-	Object argsReadPerson[] = { userView.getUtilizador() };
+
 	InfoPerson infoPerson = null;
 
-	infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ReadPersonByUsername", argsReadPerson);
+	infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
 
 	DynaActionForm sendMailForm = (DynaActionForm) form;
 	sendMailForm.set("from", infoPerson.getEmail());
@@ -240,8 +244,8 @@ public class SendMailToAllStudents extends FenixDispatchAction {
 		InfoStudent infoStudent = ((InfoCandidacyDetails) iter.next()).getStudent();
 		bccList.add(infoStudent.getInfoPerson().getEmail());
 	    }
-	    Object[] argsSendMails = { toList, ccList, bccList, fromName, from, subject, text };
-	    failedEmails = (List) ServiceManagerServiceFactory.executeService("commons.SendMail", argsSendMails);
+
+	    failedEmails = (List) SendMail.run(toList, ccList, bccList, fromName, from, subject, text);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    throw new FenixActionException(e);
@@ -306,9 +310,8 @@ public class SendMailToAllStudents extends FenixDispatchAction {
 	    infoSiteStudents.setStudents(shiftStudents);
 	}
 	if (groupCode != null) {
-	    Object[] argsReadGroupStudents = { objectCode, groupCode };
-	    groupStudents = (List) ServiceManagerServiceFactory.executeService("teacher.ReadStudentsByStudentGroupID",
-		    argsReadGroupStudents);
+
+	    groupStudents = ReadStudentsByStudentGroupID.run(objectCode, groupCode);
 	    infoSiteStudents.setStudents(groupStudents);
 	}
 	Collections.sort(infoSiteStudents.getStudents(), new BeanComparator("number"));
@@ -323,8 +326,8 @@ public class SendMailToAllStudents extends FenixDispatchAction {
 	    InfoStudent infoStudent = (InfoStudent) iter.next();
 	    bccList.add(infoStudent.getInfoPerson().getEmail());
 	}
-	Object[] argsSendMails = { toList, ccList, bccList, fromName, from, subject, text };
-	failedEmails = (List) ServiceManagerServiceFactory.executeService("commons.SendMail", argsSendMails);
+
+	failedEmails = (List) SendMail.run(toList, ccList, bccList, fromName, from, subject, text);
 
 	getFailedMails(request, infoSiteStudents.getStudents(), failedEmails);
 	return mapping.findForward("mailSent");

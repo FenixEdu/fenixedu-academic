@@ -8,11 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllCountries extends FenixService {
 
-    public Object run() throws ExcepcaoInexistente, FenixServiceException {
+    @Service
+    public static Object run() throws ExcepcaoInexistente, FenixServiceException {
 	List<InfoCountry> result = new ArrayList<InfoCountry>();
 
 	List<Country> countries = rootDomainObject.getCountrys();

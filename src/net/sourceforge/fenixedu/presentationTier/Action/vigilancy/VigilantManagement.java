@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddIncompatiblePerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ConfirmConvoke;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveIncompatiblePerson;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -62,7 +65,7 @@ public class VigilantManagement extends FenixDispatchAction {
 	OtherCourseVigilancy vigilancy = (OtherCourseVigilancy) RootDomainObject.readDomainObjectByOID(
 		OtherCourseVigilancy.class, idInternal);
 
-	executeService("ConfirmConvoke", new Object[] { vigilancy });
+	ConfirmConvoke.run(vigilancy);
 
 	Person person = getLoggedPerson(request);
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
@@ -113,8 +116,7 @@ public class VigilantManagement extends FenixDispatchAction {
 	Vigilant vigilant = person.getVigilantForGivenExecutionYear(currentExecutionYear);
 	Person incompatiblePerson = (Person) RootDomainObject.readDomainObjectByOID(Person.class, idInternal);
 
-	Object[] args = { vigilant, incompatiblePerson };
-	executeService("AddIncompatiblePerson", args);
+	AddIncompatiblePerson.run(vigilant, incompatiblePerson);
 
 	List<VigilantGroup> groups;
 	groups = (vigilant != null) ? vigilant.getVigilantGroups() : new ArrayList<VigilantGroup>();
@@ -146,8 +148,8 @@ public class VigilantManagement extends FenixDispatchAction {
 	Person person = getLoggedPerson(request);
 
 	Vigilant vigilant = person.getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
-	Object[] args = { vigilant };
-	executeService("RemoveIncompatiblePerson", args);
+
+	RemoveIncompatiblePerson.run(vigilant);
 
 	List<VigilantGroup> groups;
 	groups = (vigilant != null) ? vigilant.getVigilantGroups() : new ArrayList<VigilantGroup>();

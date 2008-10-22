@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -25,6 +26,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChange
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadAllStudentsAndGroups;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadStudentsAndGroupsByShiftID;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadStudentsAndGroupsWithoutShift;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.PrepareEditGroupingMembers;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherResponsibleByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -234,10 +240,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	IUserView userView = getUserView(request);
 
 	// Filter if the cteacher is responsibles for the execution course
-	Object args[] = { userView.getUtilizador(), objectCode, curricularCourseCode };
+
 	Boolean isResponsible = null;
 	try {
-	    isResponsible = (Boolean) ServiceManagerServiceFactory.executeService("TeacherResponsibleByExecutionCourse", args);
+	    isResponsible = TeacherResponsibleByExecutionCourse.run(userView.getUtilizador(), objectCode, curricularCourseCode);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
@@ -324,10 +330,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	IUserView userView = getUserView(request);
 
 	// Filter if the cteacher is responsibles for the execution course
-	Object args[] = { userView.getUtilizador(), objectCode, curricularCourseCode };
+
 	Boolean isResponsible = null;
 	try {
-	    isResponsible = (Boolean) ServiceManagerServiceFactory.executeService("TeacherResponsibleByExecutionCourse", args);
+	    isResponsible = TeacherResponsibleByExecutionCourse.run(userView.getUtilizador(), objectCode, curricularCourseCode);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
@@ -864,16 +870,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	Integer objectCode = getObjectCode(request);
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-	Object args[] = { objectCode };
-	try {
-	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-		    "ReadExecutionCourseByOID", args);
-	    InfoExecutionPeriod infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException);
-	}
+
+	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(objectCode);
+	InfoExecutionPeriod infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();
+	request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
 	ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
 	readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
@@ -1583,11 +1584,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 	Boolean type = null;
-	Object args[] = { groupPropertiesCode, shiftCode };
+
 	Object args1[] = { objectCode, groupPropertiesCode, shiftCode };
 	try {
-	    infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentsAndGroupsByShiftID", args);
+	    infoSiteStudentsAndGroups = ReadStudentsAndGroupsByShiftID.run(groupPropertiesCode, shiftCode);
 
 	    type = (Boolean) ServiceManagerServiceFactory.executeService("VerifyIfCanEnrollStudentGroupsInShift", args1);
 
@@ -1619,10 +1619,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	Integer groupPropertiesCode = new Integer(groupPropertiesString);
 
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
-	Object args[] = { groupPropertiesCode };
+
 	try {
-	    infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentsAndGroupsWithoutShift", args);
+	    infoSiteStudentsAndGroups = ReadStudentsAndGroupsWithoutShift.run(groupPropertiesCode);
 	} catch (ExistingServiceException e) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    ActionError error = null;
@@ -1646,10 +1645,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	Integer groupPropertiesCode = new Integer(groupPropertiesString);
 
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
-	Object args[] = { groupPropertiesCode };
+
 	try {
-	    infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceManagerServiceFactory.executeService(
-		    "ReadAllStudentsAndGroups", args);
+	    infoSiteStudentsAndGroups = ReadAllStudentsAndGroups.run(groupPropertiesCode);
 	} catch (ExistingServiceException e) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    ActionError error = null;
@@ -2226,10 +2224,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    return prepareViewExecutionCourseProjects(mapping, form, request, response);
 	}
 
-	Object args[] = { objectCode, groupingID };
 	List infoStudentList = null;
 	try {
-	    infoStudentList = (List) ServiceManagerServiceFactory.executeService("PrepareEditGroupingMembers", args);
+	    infoStudentList = PrepareEditGroupingMembers.run(objectCode, groupingID);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -2287,10 +2284,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	readSiteView(request, null, null, null, null);
 
-	Object args[] = { objectCode, groupPropertiesCode };
 	List infoStudentList = null;
 	try {
-	    infoStudentList = (List) ServiceManagerServiceFactory.executeService("PrepareEditGroupingMembers", args);
+	    infoStudentList = PrepareEditGroupingMembers.run(objectCode, groupPropertiesCode);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

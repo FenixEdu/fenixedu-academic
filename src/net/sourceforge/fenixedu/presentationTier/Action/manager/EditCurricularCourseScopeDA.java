@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -95,12 +96,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 	// obtain execution periods to show in jsp
 	List<InfoExecutionPeriod> infoExecutionPeriods = null;
-	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoExecutionPeriods = ReadExecutionPeriods.run();
 
 	if (infoExecutionPeriods == null)
 	    throw new NonExistingActionException("message.insert.executionPeriods.error", mapping

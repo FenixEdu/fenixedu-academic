@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllDepartments extends FenixService {
 
-    public List<InfoDepartment> run() throws FenixServiceException {
+    @Service
+    public static List<InfoDepartment> run() throws FenixServiceException {
 	final List<InfoDepartment> result = new ArrayList<InfoDepartment>();
 	for (final Department department : rootDomainObject.getDepartments()) {
 	    result.add(InfoDepartment.newInfoFromDomain(department));

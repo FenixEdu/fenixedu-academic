@@ -4,10 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.BusinessArea;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateBusinessArea extends FenixService {
 
-    public BusinessArea run(final Integer level, final String code, final String description) throws FenixServiceException {
+    @Service
+    public static BusinessArea run(final Integer level, final String code, final String description) throws FenixServiceException {
 
 	try {
 	    return new BusinessArea(level, code, description);
@@ -17,7 +19,8 @@ public class CreateBusinessArea extends FenixService {
 	}
     }
 
-    public BusinessArea run(final Integer level, final String code, final String description, final BusinessArea parentArea)
+    @Service
+    public static BusinessArea run(final Integer level, final String code, final String description, final BusinessArea parentArea)
 	    throws FenixServiceException {
 
 	try {

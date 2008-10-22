@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.caseHandling;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.joda.time.DateTime;
 
 public class ProcessLog extends ProcessLog_Base {
 

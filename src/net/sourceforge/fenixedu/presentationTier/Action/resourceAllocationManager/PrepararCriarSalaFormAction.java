@@ -5,8 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -29,7 +29,7 @@ public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 
 	request.setAttribute("publico.buildings", edificios);
 	request.setAttribute("publico.types", tipos);
-	List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods", null);
+	List executionPeriods = (List) ReadNotClosedExecutionPeriods.run();
 	request.setAttribute("publico.executionPeriods", executionPeriods);
 
 	return mapping.findForward("PesquisarSalas");

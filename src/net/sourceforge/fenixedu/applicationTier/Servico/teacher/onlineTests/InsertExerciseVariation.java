@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import javax.mail.IllegalWriteException;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -20,12 +18,11 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
-import org.apache.struts.upload.FormFile;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 
 import com.sun.faces.el.impl.parser.ParseException;
 

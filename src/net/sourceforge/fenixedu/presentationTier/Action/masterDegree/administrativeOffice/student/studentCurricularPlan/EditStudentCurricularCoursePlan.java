@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -45,11 +46,11 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 	    throw new FenixActionException(e);
 	}
 
-	Object argsBranches[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal() };
 	List branchList = null;
 
 	try {
-	    branchList = (List) ServiceManagerServiceFactory.executeService("ReadBranchesByDegreeCurricularPlanId", argsBranches);
+	    branchList = (List) ReadBranchesByDegreeCurricularPlan.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
+		    .getIdInternal());
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

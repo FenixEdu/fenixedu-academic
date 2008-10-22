@@ -155,7 +155,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	final CycleType cycleType = ((DiplomaRequest) getDocumentRequest()).getWhatShouldBeRequestedCycle();
 	addEntriesParameters(registration, cycleType);
 	addParameter("weeksOfStudyPerYear", getResourceBundle().getString("diploma.supplement.weeksOfStudyPerYear." + cycleType));
-	//addParameter("ectsCredits", cycleType.getDefaultEcts());
+	// addParameter("ectsCredits", cycleType.getDefaultEcts());
 
 	final DegreeType degreeType = degree.getDegreeType();
 	addParameter("years", degreeType.getYears(cycleType));

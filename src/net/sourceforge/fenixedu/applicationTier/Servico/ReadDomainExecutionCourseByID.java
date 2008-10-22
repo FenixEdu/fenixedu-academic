@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *          lepc Exp $
  */
 public class ReadDomainExecutionCourseByID extends FenixService {
-    public ExecutionCourse run(Integer idInternal) throws FenixServiceException {
+    @Service
+    public static ExecutionCourse run(Integer idInternal) throws FenixServiceException {
 
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
 	if (executionCourse == null) {

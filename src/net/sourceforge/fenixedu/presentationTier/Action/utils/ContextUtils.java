@@ -15,7 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularYearByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.SelectRooms;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadClassByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -34,9 +44,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -53,7 +61,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class ContextUtils {
 
-    public static final void setExecutionPeriodContext(HttpServletRequest request) {
+    public static final void setExecutionPeriodContext(HttpServletRequest request) throws FenixServiceException {
 	String executionPeriodOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID);
 	if (executionPeriodOIDString == null) {
 	    executionPeriodOIDString = request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
@@ -66,26 +74,9 @@ public class ContextUtils {
 
 	InfoExecutionPeriod infoExecutionPeriod = null;
 	if (executionPeriodOID != null) {
-	    // Read from database
-	    try {
-		Object[] args = { executionPeriodOID };
-		infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID", args);
-	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-	    } catch (FenixFilterException e) {
-		e.printStackTrace();
-	    }
+	    infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodOID);
 	} else {
-
-	    // Read current execution period from database
-	    try {
-		infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod",
-			new Object[0]);
-	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-	    } catch (FenixFilterException e) {
-		e.printStackTrace();
-	    }
+	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 	}
 	if (infoExecutionPeriod != null) {
 	    // Place it in request
@@ -100,7 +91,7 @@ public class ContextUtils {
     /**
      * @param request
      */
-    public static void setExecutionDegreeContext(HttpServletRequest request) {
+    public static void setExecutionDegreeContext(HttpServletRequest request) throws FenixServiceException {
 	String executionDegreeOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
 
 	if ((executionDegreeOIDString == null) || (executionDegreeOIDString.length() == 0)) {
@@ -124,15 +115,7 @@ public class ContextUtils {
 	InfoExecutionDegree infoExecutionDegree = null;
 
 	if (executionDegreeOID != null) {
-	    // Read from database
-	    try {
-		Object[] args = { executionDegreeOID };
-		infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService("ReadExecutionDegreeByOID", args);
-	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-	    } catch (FenixFilterException e) {
-		e.printStackTrace();
-	    }
+	    infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeOID);
 
 	    if (infoExecutionDegree != null) {
 		// Place it in request
@@ -161,11 +144,9 @@ public class ContextUtils {
 	if (curricularYearOID != null) {
 	    // Read from database
 	    try {
-		Object[] args = { curricularYearOID };
-		infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService("ReadCurricularYearByOID", args);
+
+		infoCurricularYear = ReadCurricularYearByOID.run(curricularYearOID);
 	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-	    } catch (FenixFilterException e) {
 		e.printStackTrace();
 	    }
 
@@ -259,15 +240,7 @@ public class ContextUtils {
 	InfoExecutionCourse infoExecutionCourse = null;
 
 	if (executionCourseOID != null) {
-	    // Read from database
-	    try {
-		Object[] args = { executionCourseOID };
-		infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService("ReadExecutionCourseByOID", args);
-	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-	    } catch (FenixFilterException e) {
-		e.printStackTrace();
-	    }
+	    infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseOID);
 
 	    if (infoExecutionCourse != null) {
 		// Place it in request
@@ -293,15 +266,7 @@ public class ContextUtils {
 	InfoShift infoShift = null;
 
 	if (shiftOID != null) {
-	    // Read from database
-	    try {
-		Object[] args = { shiftOID };
-		infoShift = (InfoShift) ServiceUtils.executeService("ReadShiftByOID", args);
-	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-	    } catch (FenixFilterException e) {
-		e.printStackTrace();
-	    }
+	    infoShift = ReadShiftByOID.run(shiftOID);
 
 	    if (infoShift != null) {
 		// Place it in request
@@ -329,11 +294,9 @@ public class ContextUtils {
 	if (classOID != null) {
 	    // Read from database
 	    try {
-		Object[] args = { classOID };
-		infoClass = (InfoClass) ServiceUtils.executeService("ReadClassByOID", args);
+
+		infoClass = ReadClassByOID.run(classOID);
 	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-	    } catch (FenixFilterException e) {
 		e.printStackTrace();
 	    }
 
@@ -359,15 +322,7 @@ public class ContextUtils {
 	InfoLesson infoLesson = null;
 
 	if (lessonOID != null) {
-	    // Read from database
-	    try {
-		Object[] args = { lessonOID };
-		infoLesson = (InfoLesson) ServiceUtils.executeService("ReadLessonByOID", args);
-	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-	    } catch (FenixFilterException e) {
-		e.printStackTrace();
-	    }
+	    infoLesson = ReadLessonByOID.run(lessonOID);
 
 	    // Place it in request
 	    request.setAttribute(SessionConstants.LESSON, infoLesson);
@@ -376,20 +331,12 @@ public class ContextUtils {
 
     public static void setSelectedRoomsContext(HttpServletRequest request) throws FenixActionException {
 
-	Object argsSelectRooms[] = { new InfoRoomEditor(readRequestValue(request, "selectRoomCriteria_Name"), readRequestValue(
-		request, "selectRoomCriteria_Building"), readIntegerRequestValue(request, "selectRoomCriteria_Floor"),
-		readTypeRoomRequestValue(request, "selectRoomCriteria_Type"), readIntegerRequestValue(request,
-			"selectRoomCriteria_CapacityNormal"),
-		readIntegerRequestValue(request, "selectRoomCriteria_CapacityExame")) };
-
 	List selectedRooms = null;
-	try {
-	    selectedRooms = (List) ServiceManagerServiceFactory.executeService("SelectRooms", argsSelectRooms);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	} catch (FenixFilterException e) {
-	    throw new FenixActionException(e);
-	}
+	selectedRooms = (List) SelectRooms.run(new InfoRoomEditor(readRequestValue(request, "selectRoomCriteria_Name"),
+		readRequestValue(request, "selectRoomCriteria_Building"), readIntegerRequestValue(request,
+			"selectRoomCriteria_Floor"), readTypeRoomRequestValue(request, "selectRoomCriteria_Type"),
+		readIntegerRequestValue(request, "selectRoomCriteria_CapacityNormal"), readIntegerRequestValue(request,
+			"selectRoomCriteria_CapacityExame")));
 	if (selectedRooms != null && !selectedRooms.isEmpty()) {
 	    Collections.sort(selectedRooms);
 	}
@@ -610,10 +557,8 @@ public class ContextUtils {
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
-	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils
-		.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
 	List licenciaturas = new ArrayList();
 

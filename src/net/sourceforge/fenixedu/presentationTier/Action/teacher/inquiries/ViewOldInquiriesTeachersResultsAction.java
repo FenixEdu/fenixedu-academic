@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
@@ -44,7 +45,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
 	request.setAttribute("infoTeacher", it);
 
-	List executionPeriodList = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
+	List executionPeriodList = ReadExecutionPeriods.run();
 
 	Object[] args = { it.getTeacherNumber() };
 	List teachersRes = (List) ServiceUtils.executeService("ReadOldInquiriesTeachersResByTeacherNumber", args);
@@ -156,14 +157,12 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 	}
 
 	// Get the execution course information
-	// Object argsIep[] = { executionPeriodId };
 	// InfoExecutionPeriod iep = (InfoExecutionPeriod)
-	// ServiceUtils.executeService("ReadExecutionPeriodByOID", argsIep);
+	// ReadExecutionPeriodByOID.run(executionPeriodID);
 	//
-	// Object argsIec[] = { executionPeriodId, courseCode };
 	// InfoExecutionCourse iec = (InfoExecutionCourse)
-	// ServiceUtils.executeService
-	// ("teacher.ReadExecutionCourseByCodeAndExecutionPeriodId", argsIec);
+	// ReadExecutionCourseByCodeAndExecutionPeriodId.run(executionPeriodId,
+	// courseCode);
 
 	return actionMapping.findForward("showOldInquiriesTeacherRes");
     }

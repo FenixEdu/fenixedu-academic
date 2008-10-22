@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
@@ -22,7 +22,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesByExecutionYearAndType extends FenixService {
 
-    public List run(Integer executionYearOID, HashSet<DegreeType> degreeTypes) {
+    @Service
+    public static List run(Integer executionYearOID, Set<DegreeType> degreeTypes) {
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearOID);
 
 	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
@@ -32,7 +33,8 @@ public class ReadExecutionDegreesByExecutionYearAndType extends FenixService {
 	return getInfoExecutionDegrees(executionDegrees);
     }
 
-    public List run(final DegreeType typeOfCourse) {
+    @Service
+    public static List run(final DegreeType typeOfCourse) {
 
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	final List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
@@ -46,13 +48,14 @@ public class ReadExecutionDegreesByExecutionYearAndType extends FenixService {
 	return infoExecutionDegrees;
     }
 
-    public List run(Degree degree, ExecutionYear executionYear, String tmp) {
+    @Service
+    public static List run(Degree degree, ExecutionYear executionYear, String tmp) {
 	final List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByDegreeAndExecutionYear(degree, executionYear
 		.getYear());
 	return getInfoExecutionDegrees(executionDegrees);
     }
 
-    private List getInfoExecutionDegrees(final List executionDegrees) {
+    private static List getInfoExecutionDegrees(final List executionDegrees) {
 	final List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>(executionDegrees.size());
 	for (int i = 0; i < executionDegrees.size(); i++) {
 	    final ExecutionDegree executionDegree = (ExecutionDegree) executionDegrees.get(i);
@@ -62,7 +65,7 @@ public class ReadExecutionDegreesByExecutionYearAndType extends FenixService {
 	return infoExecutionDegrees;
     }
 
-    private InfoExecutionDegree getInfoExecutionDegree(final ExecutionDegree executionDegree) {
+    private static InfoExecutionDegree getInfoExecutionDegree(final ExecutionDegree executionDegree) {
 	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 

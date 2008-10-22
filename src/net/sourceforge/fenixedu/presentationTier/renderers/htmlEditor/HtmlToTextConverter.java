@@ -169,7 +169,7 @@ public class HtmlToTextConverter extends TidyConverter {
 	}
 
 	if (!source.matches(".*?smiley-[^.]+\\.gif")) { // TODO: check this
-							// convention
+	    // convention
 	    return;
 	}
 

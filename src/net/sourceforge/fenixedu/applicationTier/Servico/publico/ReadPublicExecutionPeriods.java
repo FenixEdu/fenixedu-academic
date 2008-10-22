@@ -10,14 +10,15 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
 public class ReadPublicExecutionPeriods extends FenixService {
 
-    public List<InfoExecutionPeriod> run() throws FenixServiceException {
+    @Service
+    public static List<InfoExecutionPeriod> run() throws FenixServiceException {
 	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
 	for (final ExecutionSemester executionSemester : ExecutionSemester.readPublicExecutionPeriods()) {
 	    result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));

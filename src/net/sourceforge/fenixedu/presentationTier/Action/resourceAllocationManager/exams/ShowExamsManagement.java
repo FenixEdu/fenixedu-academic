@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
@@ -118,8 +119,8 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
 	ContextUtils.setExecutionPeriodContext(request);
 
 	Integer examID = new Integer(request.getParameter(SessionConstants.EXAM_OID));
-	Object[] args = { examID };
-	InfoExam infoExam = (InfoExam) ServiceUtils.executeService("ReadExamByOID", args);
+
+	InfoExam infoExam = (InfoExam) ReadExamByOID.run(examID);
 	request.setAttribute(SessionConstants.EXAM, infoExam);
 	request.setAttribute(SessionConstants.EXAM_OID, infoExam.getIdInternal());
 	return mapping.findForward("editExam");

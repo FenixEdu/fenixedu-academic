@@ -7,13 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadCurricularCoursesByDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
@@ -76,18 +75,8 @@ public class StudentListDispatchAction extends FenixDispatchAction {
 	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
-	Object args[] = { degreeCurricularPlanID };
-	List result = null;
 
-	try {
-
-	    result = (List) ServiceManagerServiceFactory.executeService("ReadCurricularCoursesByDegree", args);
-
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("error.exception.noStudents", "");
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+	List result = ReadCurricularCoursesByDegree.run(degreeCurricularPlanID);
 
 	BeanComparator nameComparator = new BeanComparator("name");
 	Collections.sort(result, nameComparator);

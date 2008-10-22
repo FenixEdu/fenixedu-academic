@@ -16,8 +16,7 @@ public class VigilantGroupsOfExamCoordinator implements DataProvider {
 	VigilantGroupBean bean = (VigilantGroupBean) source;
 
 	ExamCoordinator coordinator = bean.getExamCoordinator();
-	List<VigilantGroup> vigilantGroups = (coordinator == null) ? bean.getVigilantGroups() : coordinator
-		.getVigilantGroups();
+	List<VigilantGroup> vigilantGroups = (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroups();
 
 	return vigilantGroups;
     }

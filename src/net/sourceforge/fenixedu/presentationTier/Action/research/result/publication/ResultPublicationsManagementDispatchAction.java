@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.DeleteResultPublication;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
@@ -212,8 +215,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	    if (issueBean.getIssueAlreadyChosen()) {
 		ResearchResultPublication publication;
 		try {
-		    Object[] args = { issueBean };
-		    JournalIssue issue = (JournalIssue) executeService("CreateJournalIssue", args);
+
+		    JournalIssue issue = (JournalIssue) CreateJournalIssue.run(issueBean);
 		    ArticleBean articleBean = (ArticleBean) bean;
 		    articleBean.setJournalIssue(issue);
 		    articleBean.setCreateJournal(false);
@@ -378,8 +381,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	}
 	if (getFromRequest(request, "confirm") != null) {
 	    try {
-		final Object[] args = { resultId };
-		executeService("DeleteResultPublication", args);
+
+		DeleteResultPublication.run(resultId);
 	    } catch (FileManagerException e) {
 		e.printStackTrace();
 		addActionMessage(request, "label.communicationError");
@@ -477,9 +480,9 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	ResearchResultPublication publication = null;
 
 	try {
-	    final Object[] args = { eventBean };
-	    EventEdition eventEdition = (eventBean.getEventEdition() == null ? (EventEdition) executeService("CreateResearchEventEdition",
-		    args) : eventBean.getEventEdition());
+
+	    EventEdition eventEdition = (eventBean.getEventEdition() == null ? (EventEdition) CreateResearchEventEdition
+		    .run(eventBean) : eventBean.getEventEdition());
 	    ((ConferenceArticlesBean) publicationBean).setEventEdition(eventEdition);
 	    final Object[] args2 = { publicationBean };
 	    publication = (ResearchResultPublication) executeService(service, args2);

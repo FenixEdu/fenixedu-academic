@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurma;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurma;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -68,10 +70,8 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
 		InfoClass infoClass = null;
 
-		Object argsCriarTurma[] = { className, curricularYear, infoExecutionDegree, infoExecutionPeriod };
-
 		try {
-		    infoClass = (InfoClass) ServiceUtils.executeService("CriarTurma", argsCriarTurma);
+		    infoClass = (InfoClass) CriarTurma.run(className, curricularYear, infoExecutionDegree, infoExecutionPeriod);
 		    request.setAttribute(SessionConstants.CLASS_VIEW, infoClass);
 		} catch (ExistingServiceException e) {
 		    throw new ExistingActionException("A SchoolClass", e);
@@ -188,9 +188,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 	    }
 	}
 
-	Object argsApagarTurma[] = { infoClass };
-
-	List lessonList = (ArrayList) ServiceUtils.executeService("LerAulasDeTurma", argsApagarTurma);
+	List lessonList = (ArrayList) LerAulasDeTurma.run(infoClass);
 
 	request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
 

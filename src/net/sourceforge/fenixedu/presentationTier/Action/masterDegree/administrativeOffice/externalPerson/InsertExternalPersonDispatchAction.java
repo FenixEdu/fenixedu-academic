@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -19,7 +21,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.Globals;
@@ -66,9 +67,8 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 	List institutions = null;
 
-	Object args[] = {};
 	try {
-	    institutions = (ArrayList) ServiceUtils.executeService("ReadAllInstitutions", args);
+	    institutions = (ArrayList) ReadAllInstitutions.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -121,10 +121,8 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("start");
 	}
 
-	Object args[] = { name, sex, address, institutionID, phone, mobile, homepage, email };
-
 	try {
-	    ServiceUtils.executeService("InsertExternalPerson", args);
+	    InsertExternalPerson.run(name, sex, address, institutionID, phone, mobile, homepage, email);
 	} catch (ExistingServiceException e) {
 	    request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
 		    .getAttribute(Globals.LOCALE_KEY)));

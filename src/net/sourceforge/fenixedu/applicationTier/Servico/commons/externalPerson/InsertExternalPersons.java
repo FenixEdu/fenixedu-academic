@@ -16,9 +16,13 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class InsertExternalPersons extends FenixService {
 
-    public List<ExternalContract> run(final List<InfoExternalPersonEditor> infoExternalPersons) throws FenixServiceException {
+    @Service
+    public static List<ExternalContract> run(final List<InfoExternalPersonEditor> infoExternalPersons)
+	    throws FenixServiceException {
 
 	final List<ExternalContract> externalPersons = new ArrayList<ExternalContract>();
 	for (final InfoExternalPersonEditor infoExternalPerson : infoExternalPersons) {

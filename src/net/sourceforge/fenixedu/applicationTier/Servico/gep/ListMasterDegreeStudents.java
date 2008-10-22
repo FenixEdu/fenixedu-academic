@@ -12,10 +12,11 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -24,7 +25,8 @@ import org.apache.commons.collections.Predicate;
  */
 public class ListMasterDegreeStudents extends FenixService {
 
-    public Collection run(String executionYearName) {
+    @Service
+    public static Collection run(String executionYearName) {
 	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
 	final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();

@@ -4,10 +4,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-/**
- * @author Luis Cruz & Sara Ribeiro
- * 
- */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -20,11 +16,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExamsMap extends FenixService {
 
-    public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears, InfoExecutionPeriod infoExecutionPeriod) {
+    @Service
+    public static InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
+	    InfoExecutionPeriod infoExecutionPeriod) {
 
 	// Object to be returned
 	InfoExamsMap infoExamsMap = new InfoExamsMap();

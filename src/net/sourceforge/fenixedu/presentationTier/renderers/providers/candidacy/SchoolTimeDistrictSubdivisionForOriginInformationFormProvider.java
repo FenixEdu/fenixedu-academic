@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

@@ -22,7 +22,8 @@ public class CreateSitesAction extends FenixAction {
 	final IUserView userView = UserView.getUser();
 
 	final Integer executionCourseId = Integer.valueOf((request.getParameter("executionPeriodID")));
-	final Integer numberCreatedSites = (Integer) ServiceManagerServiceFactory.executeService("CreateSites", new Object[] { executionCourseId });
+	final Integer numberCreatedSites = (Integer) ServiceManagerServiceFactory.executeService("CreateSites",
+		new Object[] { executionCourseId });
 
 	request.setAttribute("numberCreatedSites", numberCreatedSites);
 

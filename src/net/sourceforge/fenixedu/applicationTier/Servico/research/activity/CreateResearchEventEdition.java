@@ -8,9 +8,12 @@ import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreateResearchEventEdition extends FenixService {
 
-    public EventEdition run(ResultEventAssociationBean eventBean) {
+    @Service
+    public static EventEdition run(ResultEventAssociationBean eventBean) {
 
 	ResearchEvent event = null;
 	if (eventBean.getEvent() == null) {
@@ -25,7 +28,8 @@ public class CreateResearchEventEdition extends FenixService {
 		eventBean.getOrganization(), eventBean.getEventEditionUrl());
     }
 
-    public EventEdition run(ResearchEvent event, String edition, String eventLocation, YearMonthDay startDate,
+    @Service
+    public static EventEdition run(ResearchEvent event, String edition, String eventLocation, YearMonthDay startDate,
 	    YearMonthDay endDate, String organization, String url) {
 
 	EventEdition eventEdition = new EventEdition(event);
@@ -39,7 +43,8 @@ public class CreateResearchEventEdition extends FenixService {
 	return eventEdition;
     }
 
-    public EventEdition run(ResearchEvent event, ResearchEventEditionCreationBean bean) {
+    @Service
+    public static EventEdition run(ResearchEvent event, ResearchEventEditionCreationBean bean) {
 	return run(event, bean.getEventEditionName(), bean.getEventLocation(), bean.getStartDate(), bean.getEndDate(), bean
 		.getOrganization(), bean.getEditionUrl());
     }

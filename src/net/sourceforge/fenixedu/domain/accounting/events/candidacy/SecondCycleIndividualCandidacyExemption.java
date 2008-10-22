@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.domain.accounting.events.candidacy;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
+
 import dml.runtime.RelationAdapter;
 
 public class SecondCycleIndividualCandidacyExemption extends SecondCycleIndividualCandidacyExemption_Base {

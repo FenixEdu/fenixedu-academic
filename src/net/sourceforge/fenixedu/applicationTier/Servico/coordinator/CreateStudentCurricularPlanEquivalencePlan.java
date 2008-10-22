@@ -5,10 +5,12 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateStudentCurricularPlanEquivalencePlan extends FenixService {
 
-    public StudentCurricularPlanEquivalencePlan run(final Student student) {
+    @Service
+    public static StudentCurricularPlanEquivalencePlan run(final Student student) {
 	for (final Registration registration : student.getRegistrations()) {
 	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null && studentCurricularPlan.isBoxStructure()

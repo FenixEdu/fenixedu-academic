@@ -7,10 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.SelectRooms;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -25,22 +24,16 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class SelectRoomsFormAction extends FenixAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 
 	DynaActionForm roomForm = (DynaActionForm) form;
 
-	Object argsSelectRooms[] = { new InfoRoomEditor(readFormValue(roomForm, "name"), readFormValue(roomForm, "building"),
-		readIntegerFormValue(roomForm, "floor"), readTypeRoomFormValue(roomForm, "type"), readIntegerFormValue(roomForm,
-			"capacityNormal"), readIntegerFormValue(roomForm, "capacityExame")), };
-
 	Integer executionPeriodId = (Integer) roomForm.get("executionPeriodId");
-	List infoRooms;
-	try {
-	    infoRooms = (List) ServiceManagerServiceFactory.executeService("SelectRooms", argsSelectRooms);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException("Problemas a seleccionar salas", e);
-	}
+	List infoRooms = (List) SelectRooms.run(new InfoRoomEditor(readFormValue(roomForm, "name"), readFormValue(roomForm,
+		"building"), readIntegerFormValue(roomForm, "floor"), readTypeRoomFormValue(roomForm, "type"),
+		readIntegerFormValue(roomForm, "capacityNormal"), readIntegerFormValue(roomForm, "capacityExame")));
 
 	if (infoRooms != null && !infoRooms.isEmpty()) {
 	    Collections.sort(infoRooms);

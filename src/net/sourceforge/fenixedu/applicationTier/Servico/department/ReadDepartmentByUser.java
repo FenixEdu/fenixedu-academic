@@ -11,14 +11,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author jpvl
  */
 public class ReadDepartmentByUser extends FenixService {
 
-    public InfoDepartment run(String username) throws FenixServiceException {
+    @Service
+    public static InfoDepartment run(String username) throws FenixServiceException {
 	InfoDepartment infoDepartment = null;
 
 	final Person person = Person.readPersonByUsername(username);

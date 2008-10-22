@@ -16,9 +16,10 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 

@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTestQuestionImage;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadQuestionImage;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
@@ -401,23 +403,24 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    if (feedbackCode == null) {
 		feedbackCode = "";
 	    }
-	    Object[] args = { studentCode, testCode, exerciseCode, imgCode, feedbackCode, itemIndex, path };
+
 	    try {
-		img = (String) ServiceUtils.executeService("ReadStudentTestQuestionImage", args);
+		img = (String) ReadStudentTestQuestionImage.run(studentCode, testCode, exerciseCode, imgCode, feedbackCode,
+			itemIndex, path);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
 	} else if (optionShuffle != null) {
-	    Object[] args = { testCode, exerciseCode, optionShuffle, imgCode, path };
+
 	    try {
-		img = (String) ServiceUtils.executeService("ReadQuestionImage", args);
+		img = (String) ReadQuestionImage.run(testCode, exerciseCode, optionShuffle, imgCode, path);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
 	} else {
-	    Object[] args = { exerciseCode, metadataCode, imgCode, itemIndex, path };
+
 	    try {
-		img = (String) ServiceUtils.executeService("ReadQuestionImage", args);
+		img = (String) ReadQuestionImage.run(exerciseCode, metadataCode, imgCode, itemIndex, path);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }

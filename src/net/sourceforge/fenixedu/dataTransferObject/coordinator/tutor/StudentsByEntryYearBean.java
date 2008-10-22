@@ -148,12 +148,12 @@ public class StudentsByEntryYearBean implements Serializable {
 	    }
 	}
 	setNumberOfStudentsToCreateTutorship(this.studentsToCreateTutorshipList.size());// subtract
-											// students
-											// without
-											// active
-											// registration
-											// state
-											// type
+	// students
+	// without
+	// active
+	// registration
+	// state
+	// type
     }
 
     public void clearSelectedStudentsToCreateTutorshipList() {

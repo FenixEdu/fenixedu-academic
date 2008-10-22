@@ -1,12 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-/**
- * Servico LerSalas
- * 
- * @author tfc130
- * @version
- */
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,11 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreesByExecutionYearId extends FenixService {
 
-    public List run(Integer executionYearId) {
+    @Service
+    public static List run(Integer executionYearId) {
 
 	List<InfoExecutionDegree> infoExecutionDegreeList = null;
 

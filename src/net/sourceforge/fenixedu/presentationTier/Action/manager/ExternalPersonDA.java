@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean;
 import net.sourceforge.fenixedu.domain.Person.ExternalPersonBeanFactoryCreator;
@@ -87,8 +88,8 @@ public class ExternalPersonDA extends FenixDispatchAction {
 	    person = (Person) request.getAttribute("person");
 	}
 	if (person != null) {
-	    final Object[] args = { person };
-	    executeService("CreateParkingParty", args);
+
+	    CreateParkingParty.run(person);
 	    final ActionForward actionForward = new ActionForward("/parking.do?plateNumber=&partyID=" + person.getIdInternal()
 		    + "&method=showParkingPartyRequests");
 	    return actionForward;

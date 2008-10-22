@@ -111,7 +111,7 @@ public class PhysicalAddressData implements Serializable {
 	this.countryOfResidence = (countryOfResidence != null) ? new DomainReference<Country>(countryOfResidence) : null;
 	return this;
     }
-    
+
     public boolean isEmpty() {
 	return StringUtils.isEmpty(address) && StringUtils.isEmpty(areaCode) && StringUtils.isEmpty(areaOfAreaCode)
 		&& StringUtils.isEmpty(area) && StringUtils.isEmpty(parishOfResidence)

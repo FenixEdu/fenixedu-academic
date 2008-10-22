@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -12,7 +13,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
  */
 public class InsertInstitution extends FenixService {
 
-    public Unit run(String institutionName) throws FenixServiceException {
+    @Service
+    public static Unit run(String institutionName) throws FenixServiceException {
 	if (UnitUtils.readExternalInstitutionUnitByName(institutionName) != null) {
 	    throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
 	}

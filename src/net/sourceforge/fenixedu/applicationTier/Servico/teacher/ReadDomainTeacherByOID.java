@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -14,7 +14,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadDomainTeacherByOID extends FenixService {
 
-    public Teacher run(Integer teacherID) {
+    @Service
+    public static Teacher run(Integer teacherID) {
 	return rootDomainObject.readTeacherByOID(teacherID);
     }
 }

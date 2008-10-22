@@ -9,10 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadNotClosedPublicExecutionPeriodsByExecutionYear extends FenixService {
 
-    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
+    @Service
+    public static List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
 	final ExecutionYear executionYear;
 	if (infoExecutionYear == null) {

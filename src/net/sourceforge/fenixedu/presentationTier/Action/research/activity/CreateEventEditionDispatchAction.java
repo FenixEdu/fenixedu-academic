@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -88,7 +89,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 	ResearchEventEditionCreationBean bean = (ResearchEventEditionCreationBean) getEventEditionBean(request);
 	ResearchEvent event = bean.getEvent();
 	try {
-	    EventEdition edition = (EventEdition) executeService("CreateResearchEventEdition", new Object[] { event, bean });
+	    EventEdition edition = (EventEdition) CreateResearchEventEdition.run(event, bean);
 	    bean.setEvent(event);
 	    bean.setEventEdition(edition);
 	} catch (DomainException e) {
@@ -110,7 +111,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 	try {
 	    ResearchEvent event = (ResearchEvent) executeService("CreateResearchEvent", new Object[] { bean.getEventName(),
 		    bean.getEventType(), bean.getLocationType(), bean.getUrl() });
-	    EventEdition edition = (EventEdition) executeService("CreateResearchEventEdition", new Object[] { event, bean });
+	    EventEdition edition = (EventEdition) CreateResearchEventEdition.run(event, bean);
 	    bean.setEvent(event);
 	    bean.setEventEdition(edition);
 	} catch (DomainException e) {

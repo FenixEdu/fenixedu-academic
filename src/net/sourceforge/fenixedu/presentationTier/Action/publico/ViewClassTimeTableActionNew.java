@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ClassSiteComponentService;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -39,9 +39,14 @@ public class ViewClassTimeTableActionNew extends FenixAction {
      * Constructor for ViewClassTimeTableAction.
      */
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
-	ContextUtils.setExecutionPeriodContext(request);
+	try {
+	    ContextUtils.setExecutionPeriodContext(request);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
 	try {
 	    super.execute(mapping, form, request, response);
@@ -74,15 +79,13 @@ public class ViewClassTimeTableActionNew extends FenixAction {
 
 	}
 	final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(classId);
-	// Object[] args = { infoExecutionPeriod.getInfoExecutionYear(),
-	// degreeInitials,
-	// nameDegreeCurricularPlan };
 	InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreesByExecutionYearAndDegreeInitials
 		.getInfoExecutionDegree(schoolClass.getExecutionDegree());
 	// try {
 	// infoExecutionDegree = (InfoExecutionDegree)
-	// ServiceUtils.executeService(
-	// "ReadExecutionDegreesByExecutionYearAndDegreeInitials", args);
+	// ReadExecutionDegreesByExecutionYearAndDegreeInitials
+	// .run(infoExecutionPeriod
+	// .getInfoExecutionYear(), degreeInitials, nameDegreeCurricularPlan);
 	// } catch (FenixServiceException e1) {
 	// throw new FenixActionException(e1);
 	// }
@@ -91,12 +94,11 @@ public class ViewClassTimeTableActionNew extends FenixAction {
 
 	InfoSiteTimetable component = new InfoSiteTimetable();
 
-	Object[] args1 = { component, infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getName(), null,
-		null, className, null, classId };
 	SiteView siteView = null;
 
 	try {
-	    siteView = (SiteView) ServiceUtils.executeService("ClassSiteComponentService", args1);
+	    siteView = (SiteView) ClassSiteComponentService.run(component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
+		    infoExecutionPeriod.getName(), null, null, className, null, classId);
 	} catch (FenixServiceException e1) {
 	    throw new FenixActionException(e1);
 	}

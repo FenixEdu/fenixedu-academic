@@ -4,11 +4,12 @@ import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJustificationByDispatch_Base {
 

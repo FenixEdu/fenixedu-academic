@@ -4,11 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -24,6 +22,7 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class VisualizeCandidateAction extends FenixAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
@@ -32,14 +31,7 @@ public class VisualizeCandidateAction extends FenixAction {
 	Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
 	request.setAttribute("candidateID", candidateID);
 
-	InfoMasterDegreeCandidate masterDegreeCandidate = null;
-	try {
-	    Object args[] = { candidateID };
-	    masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceUtils
-		    .executeService("ReadMasterDegreeCandidateByID", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	InfoMasterDegreeCandidate masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
 
 	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
 

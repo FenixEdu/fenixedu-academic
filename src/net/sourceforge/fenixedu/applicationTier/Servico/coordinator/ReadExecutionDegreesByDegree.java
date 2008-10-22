@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreesByDegree extends FenixService {
 
-    public List run(Integer idDegree) throws FenixServiceException {
+    @Service
+    public static List run(Integer idDegree) throws FenixServiceException {
 
 	Degree degree = rootDomainObject.readDegreeByOID(idDegree);
 

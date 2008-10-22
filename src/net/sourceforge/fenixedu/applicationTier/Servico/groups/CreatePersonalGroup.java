@@ -5,10 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonalGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreatePersonalGroup extends FenixService {
 
-    public PersonalGroup run(Person person, String name, String description, Group group) throws FenixServiceException {
+    @Service
+    public static PersonalGroup run(Person person, String name, String description, Group group) throws FenixServiceException {
 	PersonalGroup personalGroup = new PersonalGroup();
 
 	if (person == null) {

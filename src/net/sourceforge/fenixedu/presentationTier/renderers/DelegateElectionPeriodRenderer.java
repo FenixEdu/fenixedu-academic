@@ -184,8 +184,8 @@ public class DelegateElectionPeriodRenderer extends OutputRenderer {
 		    String periodResume = getPeriodResume(period, postLabel, true);
 		    link.setBody(new HtmlText(periodResume, false));
 		    link.setClasses(getCurrentPeriodClasses()); // Classes for
-								// current
-								// periods
+		    // current
+		    // periods
 		    container.addChild(link);
 		    return container;
 		} else {

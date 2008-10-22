@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranchEditor;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class GetBranchListByCandidateID extends FenixService {
 

@@ -15,7 +15,7 @@ public class LoginPeriod extends LoginPeriod_Base {
 	    final int c = o1.getBeginDate().compareTo(o2.getBeginDate());
 	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}
-	
+
     };
 
     public LoginPeriod(YearMonthDay begin, YearMonthDay end, Login login) {

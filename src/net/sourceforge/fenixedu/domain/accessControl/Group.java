@@ -22,10 +22,11 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentLis
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilderRegistry;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.set.UnmodifiableSet;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * A <code>Group</code> is a dynamic aggregation of persons. It works as a

@@ -4,6 +4,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserAlreadyHasEmailException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserDoesNotExistException;
@@ -27,8 +28,8 @@ public class SetEmailDA extends FenixDispatchAction {
 	String message = "ko";
 
 	try {
-	    final Object[] args = new Object[] { host, ip, password, userUId, email };
-	    executeService("SetEmail", args);
+
+	    SetEmail.run(host, ip, password, userUId, email);
 	    message = "ok";
 	} catch (NotAuthorizedException ex) {
 	    message = "Not authorized";

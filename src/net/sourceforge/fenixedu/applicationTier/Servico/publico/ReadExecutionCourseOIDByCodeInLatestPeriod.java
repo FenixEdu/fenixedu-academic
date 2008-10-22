@@ -3,14 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
  */
 public class ReadExecutionCourseOIDByCodeInLatestPeriod extends FenixService {
 
-    public Integer run(String executionCourseCode) {
+    @Service
+    public static Integer run(String executionCourseCode) {
 	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseCode);
 

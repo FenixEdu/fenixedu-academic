@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCou
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Fialho & Rita Ferreira

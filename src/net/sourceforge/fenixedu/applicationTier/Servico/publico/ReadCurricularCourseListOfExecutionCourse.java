@@ -11,14 +11,15 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author tfc130
  */
 public class ReadCurricularCourseListOfExecutionCourse extends FenixService {
 
-    public Object run(InfoExecutionCourse infoExecCourse) {
+    @Service
+    public static Object run(InfoExecutionCourse infoExecCourse) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecCourse
 		.getInfoExecutionPeriod().getIdInternal());
 	ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(infoExecCourse.getSigla());

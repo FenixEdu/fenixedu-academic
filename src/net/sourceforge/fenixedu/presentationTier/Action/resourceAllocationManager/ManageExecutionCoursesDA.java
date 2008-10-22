@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseScopesByExecutionCourseID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -19,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
@@ -56,9 +58,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 	InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
 		.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-	Object argsReadExecutionPeriods[] = {};
-	List executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService("ReadExecutionPeriods",
-		argsReadExecutionPeriods);
+	List executionPeriods = ReadExecutionPeriods.run();
 
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -87,16 +87,11 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
 
 	/* Obtain a list of degrees for the specified execution year */
-	Object argsLerLicenciaturas[] = { selectedExecutionPeriod.getInfoExecutionYear() };
-	List executionDegreeList = null;
-	try {
-	    executionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
-	    /* Sort the list of degrees */
-	    Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-	} catch (FenixServiceException e) {
-	    e.printStackTrace();
-	}
+	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(selectedExecutionPeriod.getInfoExecutionYear());
+
+	/* Sort the list of degrees */
+	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
 	MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
 	/* Generate a label list for the above list of degrees */
@@ -344,11 +339,9 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 	IUserView userView = getUserView(request);
 
 	Integer executionCourceOId = new Integer(request.getParameter("executionCourseOID"));
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-		"ReadExecutionCourseByOID", new Object[] { executionCourceOId });
+	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourceOId);
 
-	List scopes = (List) ServiceManagerServiceFactory.executeService("ReadCurricularCourseScopesByExecutionCourseID",
-		new Object[] { executionCourceOId });
+	List scopes = ReadCurricularCourseScopesByExecutionCourseID.run(executionCourceOId);
 
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 	request.setAttribute("curricularCourses", scopes);

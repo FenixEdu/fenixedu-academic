@@ -70,7 +70,7 @@ public class Phone extends Phone_Base {
     public String getPresentationValue() {
 	return getNumber();
     }
-    
+
     public boolean hasNumber() {
 	return getNumber() != null && !getNumber().isEmpty();
     }

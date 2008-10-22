@@ -5,10 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestBean;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EnableExternalLoginWithKerberos extends FenixService {
 
-    public void run(LoginRequestBean bean) throws FenixServiceException {
+    @Service
+    public static void run(LoginRequestBean bean) throws FenixServiceException {
 	Person person = bean.getPerson();
 	if (person.getUser().getLoginRequest() != null) {
 	    // try {

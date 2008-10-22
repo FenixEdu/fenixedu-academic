@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
@@ -34,10 +35,10 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 	IUserView userView = UserView.getUser();
-	Object[] args = {};
+
 	List<InfoDepartment> infoDepartments;
 	try {
-	    infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", args);
+	    infoDepartments = ReadAllDepartments.run();
 	} catch (FenixServiceException fse) {
 	    throw new FenixActionException(fse.getMessage());
 	}
@@ -57,7 +58,6 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	Integer departmentID = (departmentString != null && StringUtils.isNumeric(departmentString)) ? Integer
 		.valueOf(departmentString) : null;
 
-	Object[] args = {};
 	Object[] args2 = { departmentID };
 	List<InfoDepartment> infoDepartments;
 	List<InfoCompetenceCourse> infoCompetenceCourses;
@@ -65,7 +65,7 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	try {
 	    infoCompetenceCourses = (List<InfoCompetenceCourse>) ServiceUtils.executeService("ReadCompetenceCoursesByDepartment",
 		    args2);
-	    infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", args);
+	    infoDepartments = ReadAllDepartments.run();
 	} catch (FenixServiceException fse) {
 	    throw new FenixActionException(fse.getMessage());
 	}
@@ -97,10 +97,10 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
     public ActionForward chooseDepartment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	IUserView userView = UserView.getUser();
-	Object[] args = {};
+
 	List<InfoDepartment> infoDepartments;
 	try {
-	    infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", args);
+	    infoDepartments = ReadAllDepartments.run();
 	} catch (FenixServiceException fse) {
 	    throw new FenixActionException(fse.getMessage());
 	}
@@ -135,7 +135,7 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	IUserView userView = UserView.getUser();
 
-	Integer competenceCourseID = Integer.valueOf((String) request.getParameter("competenceCourseID"));
+	Integer competenceCourseID = Integer.valueOf(request.getParameter("competenceCourseID"));
 	Object[] args = { competenceCourseID };
 	InfoCompetenceCourse competenceCourse = null;
 	try {
@@ -153,10 +153,10 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 	IUserView userView = UserView.getUser();
-	Object[] args = {};
+
 	List<InfoDepartment> departmentList = null;
 	try {
-	    departmentList = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", args);
+	    departmentList = ReadAllDepartments.run();
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}

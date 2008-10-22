@@ -699,7 +699,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
     }
-    
+
     public DegreeType getDegreeType() {
 	return getDegree().getDegreeType();
     }

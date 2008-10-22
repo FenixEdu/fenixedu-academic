@@ -5,8 +5,6 @@
 package net.sourceforge.fenixedu.domain.onlineTests;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;

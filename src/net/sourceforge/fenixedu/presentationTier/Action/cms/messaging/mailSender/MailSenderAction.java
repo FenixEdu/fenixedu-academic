@@ -18,13 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail.SendEMailParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailAddress;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.SendMailReport;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.SendStatus;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.StartHiddenActionMessages;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -224,8 +224,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
     protected void sendMail(HttpServletRequest request, MessageResources resources, IUserView userView,
 	    SendEMailParameters parameters, Map previousRequestParameters) throws FenixActionException {
 	try {
-	    SendMailReport result = (SendMailReport) ServiceManagerServiceFactory.executeService("SendEMail",
-		    new Object[] { parameters });
+	    SendMailReport result = (SendMailReport) SendEMail.run(parameters);
 	    processReport(request, resources, result);
 	} catch (Exception e) {
 	    throw new FenixActionException(e);

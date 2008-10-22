@@ -17,7 +17,7 @@ public class RolePredicates {
 	    return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 	};
     };
-    
+
     public static final AccessControlPredicate<Object> GRANT_OWNER_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
 	public boolean evaluate(Object domainObject) {
 	    return hasRole(RoleType.GRANT_OWNER_MANAGER);
@@ -41,11 +41,11 @@ public class RolePredicates {
 	    return hasRole(RoleType.TEACHER);
 	};
     };
-    
+
     public static final AccessControlPredicate<Object> MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
 	public boolean evaluate(Object domainObject) {
 	    return MANAGER_PREDICATE.evaluate(domainObject) || ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE.evaluate(domainObject)
-	    || GRANT_OWNER_MANAGER_PREDICATE.evaluate(domainObject);
+		    || GRANT_OWNER_MANAGER_PREDICATE.evaluate(domainObject);
 	};
     };
 

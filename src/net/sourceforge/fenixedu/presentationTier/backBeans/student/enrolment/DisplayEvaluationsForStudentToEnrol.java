@@ -11,6 +11,8 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -20,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -205,22 +206,15 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
     private List<InfoExecutionPeriod> getExecutionPeriods() {
 	try {
-	    final Object args[] = {};
-	    return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService("ReadNotClosedExecutionPeriods", args);
-	} catch (FenixFilterException e) {
+
+	    return ReadNotClosedExecutionPeriods.run();
 	} catch (FenixServiceException e) {
 	}
 	return new ArrayList();
     }
 
     private InfoExecutionPeriod getCurrentExecutionPeriod() {
-	try {
-	    final Object args[] = {};
-	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionPeriod", args);
-	} catch (FenixFilterException e) {
-	} catch (FenixServiceException e) {
-	}
-	return null;
+	return ReadCurrentExecutionPeriod.run();
     }
 
     protected ExecutionSemester getExecutionPeriod() {

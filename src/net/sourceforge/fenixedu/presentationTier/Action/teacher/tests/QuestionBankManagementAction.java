@@ -12,6 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.AssociateParent;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.ChooseCorrector;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.ChoosePreCondition;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.ChooseValidator;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateAtomicQuestion;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateChoice;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateQuestionBank;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteChoice;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteCorrector;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteGrade;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeletePermissionUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeletePreCondition;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteQuestion;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteValidator;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DisassociateParent;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.SwitchPosition;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewChoice;
@@ -25,7 +41,6 @@ import net.sourceforge.fenixedu.domain.tests.NewTestElement;
 import net.sourceforge.fenixedu.domain.tests.predicates.CompositePredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean.Action;
 
 import org.apache.struts.action.ActionForm;
@@ -87,7 +102,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 	NewQuestionBank questionBank = person.getQuestionBank();
 
 	if (questionBank == null) {
-	    questionBank = (NewQuestionBank) ServiceUtils.executeService("CreateQuestionBank", new Object[] { person });
+	    questionBank = CreateQuestionBank.run(person);
 	}
 
 	return questionBank;
@@ -143,8 +158,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("associateParent");
 
-	ServiceUtils
-		.executeService("AssociateParent", new Object[] { groupElementBean.getParent(), groupElementBean.getChild() });
+	AssociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
 
 	request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
 
@@ -155,8 +169,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("disassociateParent");
 
-	ServiceUtils.executeService("DisassociateParent", new Object[] { groupElementBean.getParent(),
-		groupElementBean.getChild() });
+	DisassociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
 
 	request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
 
@@ -286,8 +299,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-	ServiceUtils.executeService("ChooseCorrector", new Object[] { bean.getQuestion(), bean.getChoosenPredicate(),
-		bean.getPercentage() });
+	ChooseCorrector.run((NewAtomicQuestion) bean.getQuestion(), bean.getChoosenPredicate(), bean.getPercentage());
 
 	bean = new PredicateBean(bean);
 
@@ -302,7 +314,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-	ServiceUtils.executeService("ChooseValidator", new Object[] { bean.getQuestion(), bean.getChoosenPredicate() });
+	ChooseValidator.run((NewAtomicQuestion) bean.getQuestion(), bean.getChoosenPredicate());
 
 	bean = new PredicateBean(bean);
 
@@ -317,7 +329,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-	ServiceUtils.executeService("ChoosePreCondition", new Object[] { bean.getQuestion(), bean.getChoosenPredicate() });
+	ChoosePreCondition.run(bean.getQuestion(), bean.getChoosenPredicate());
 
 	bean = new PredicateBean(bean);
 
@@ -411,8 +423,8 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	AtomicQuestionBean atomicQuestionTypeBean = (AtomicQuestionBean) getMetaObject("edit-atomic-question-type-bean");
 
-	NewQuestion atomicQuestion = (NewQuestion) ServiceUtils.executeService("CreateAtomicQuestion", new Object[] {
-		atomicQuestionTypeBean.getParentQuestionGroup(), atomicQuestionTypeBean.getQuestionType() });
+	NewQuestion atomicQuestion = CreateAtomicQuestion.run(atomicQuestionTypeBean.getParentQuestionGroup(),
+		atomicQuestionTypeBean.getQuestionType());
 
 	request.setAttribute("oid", atomicQuestion.getIdInternal());
 
@@ -436,7 +448,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 	NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) rootDomainObject
 		.readNewTestElementByOID(multipleChoiceQuestionId);
 
-	NewChoice choice = (NewChoice) ServiceUtils.executeService("CreateChoice", new Object[] { multipleChoiceQuestion });
+	NewChoice choice = CreateChoice.run(multipleChoiceQuestion);
 
 	request.setAttribute("oid", multipleChoiceQuestionId);
 
@@ -451,7 +463,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	NewAtomicQuestion atomicQuestion = corrector.getAtomicQuestion();
 
-	ServiceUtils.executeService("DeleteCorrector", new Object[] { corrector });
+	DeleteCorrector.run(corrector);
 
 	request.setAttribute("oid", atomicQuestion.getIdInternal());
 
@@ -486,7 +498,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
 
-	ServiceUtils.executeService("DeleteValidator", new Object[] { atomicQuestion });
+	DeleteValidator.run(atomicQuestion);
 
 	request.setAttribute("oid", atomicQuestion.getIdInternal());
 
@@ -499,7 +511,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
 
-	ServiceUtils.executeService("DeletePreCondition", new Object[] { question });
+	DeletePreCondition.run(question);
 
 	request.setAttribute("oid", question.getIdInternal());
 
@@ -514,7 +526,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	request.setAttribute("question", permissionUnit.getQuestion());
 
-	ServiceUtils.executeService("DeletePermissionUnit", new Object[] { permissionUnit });
+	DeletePermissionUnit.run(permissionUnit);
 
 	return mapping.findForward("managePermissionUnits");
     }
@@ -527,7 +539,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
 
-	ServiceUtils.executeService("DeleteChoice", new Object[] { choice });
+	DeleteChoice.run(choice);
 
 	return this.editTestElement(mapping, form, request, response);
     }
@@ -538,7 +550,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
 
-	ServiceUtils.executeService("DeleteGrade", new Object[] { question });
+	DeleteGrade.run(question);
 
 	request.setAttribute("oid", question.getIdInternal());
 
@@ -567,7 +579,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	List<NewQuestionGroup> parentQuestionGroups = question.getParentQuestionGroups();
 
-	ServiceUtils.executeService("DeleteQuestion", new Object[] { question });
+	DeleteQuestion.run(question);
 
 	Integer parentQuestionGroupId = getCodeFromRequest(request, "parentQuestionGroupOid");
 
@@ -590,7 +602,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-	ServiceUtils.executeService("SwitchPosition", new Object[] { choice, relativePosition });
+	SwitchPosition.run(choice, relativePosition);
 
 	request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
 	return this.editTestElement(mapping, form, request, response);
@@ -603,7 +615,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 	Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-	ServiceUtils.executeService("SwitchPosition", new Object[] { corrector, relativePosition });
+	SwitchPosition.run(corrector, relativePosition);
 
 	request.setAttribute("oid", corrector.getAtomicQuestion().getIdInternal());
 	return this.editTestElement(mapping, form, request, response);

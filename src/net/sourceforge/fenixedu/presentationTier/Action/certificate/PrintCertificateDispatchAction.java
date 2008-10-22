@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
@@ -77,7 +78,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 	    String anoLectivo = new String();
 	    InfoExecutionYear infoExecutionYear = null;
 	    try {
-		infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionYear", null);
+		infoExecutionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
 	    } catch (RuntimeException e) {
 
 		throw new RuntimeException("Error", e);

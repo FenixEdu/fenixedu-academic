@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -25,7 +26,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class ReadStudentsByStudentGroupID extends FenixService {
 
-    public List run(Integer executionCourseId, Integer groupId) throws FenixServiceException {
+    @Service
+    public static List run(Integer executionCourseId, Integer groupId) throws FenixServiceException {
 
 	List infoStudents = new LinkedList();
 

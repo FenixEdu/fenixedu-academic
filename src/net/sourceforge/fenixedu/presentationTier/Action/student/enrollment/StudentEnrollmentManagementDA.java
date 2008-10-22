@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -244,9 +245,9 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
 	try {
-	    final Registration registration = (Registration) executeService("EnrolInAffinityCycle", new Object[] {
-		    getLoggedPerson(request), cycleEnrolmentBean.getStudentCurricularPlan(),
-		    cycleEnrolmentBean.getCycleCourseGroupToEnrol(), cycleEnrolmentBean.getExecutionPeriod() });
+	    final Registration registration = (Registration) EnrolInAffinityCycle.run(getLoggedPerson(request),
+		    cycleEnrolmentBean.getStudentCurricularPlan(), cycleEnrolmentBean.getCycleCourseGroupToEnrol(),
+		    cycleEnrolmentBean.getExecutionPeriod());
 
 	    request.setAttribute("registration", registration);
 

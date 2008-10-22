@@ -8,11 +8,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExportGroupingsByGrouping extends FenixService {
 
-    public List<InfoExportGrouping> run(Integer groupingOID) {
+    @Service
+    public static List<InfoExportGrouping> run(Integer groupingOID) {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingOID);
 	final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
 

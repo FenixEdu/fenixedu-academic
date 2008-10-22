@@ -14,6 +14,8 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -88,8 +90,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
 	if (this.selectedExecutionYearID == null) {
 
-	    InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadCurrentExecutionYear",
-		    new Object[] {});
+	    InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
 
 	    if (infoExecutionYear != null) {
 		this.selectedExecutionYearID = infoExecutionYear.getIdInternal();
@@ -150,8 +151,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
 	if (this.executionYearItems == null) {
 
-	    List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
-		    .executeService("ReadNotClosedExecutionYears", null);
+	    List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
 
 	    List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
 	    for (InfoExecutionYear executionYear : executionYears) {

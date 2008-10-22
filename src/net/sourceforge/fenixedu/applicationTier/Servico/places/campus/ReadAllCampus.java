@@ -7,11 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllCampus extends FenixService {
 
-    public List run() throws FenixServiceException {
+    @Service
+    public static List run() throws FenixServiceException {
 	List<InfoCampus> result = new ArrayList<InfoCampus>();
 
 	for (Campus campus : Campus.getAllActiveCampus()) {

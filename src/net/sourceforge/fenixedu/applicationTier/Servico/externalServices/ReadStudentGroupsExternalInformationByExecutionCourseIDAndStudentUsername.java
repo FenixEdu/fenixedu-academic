@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -27,7 +28,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *         Created at 11:23, February the 28th, 2005
  */
 public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername extends FenixService {
-    public Collection run(Integer executionCourseID, String username) {
+    @Service
+    public static Collection run(Integer executionCourseID, String username) {
 	Collection result = new ArrayList();
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
@@ -35,7 +37,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 
 	for (Iterator iter = groupProperties.iterator(); iter.hasNext();) {
 	    Grouping group = (Grouping) iter.next();
-	    InfoExternalStudentGroup foundGroup = this.searchForStudentInGrouping(group, username);
+	    InfoExternalStudentGroup foundGroup = searchForStudentInGrouping(group, username);
 	    if (foundGroup != null) {
 		InfoExternalGroupPropertiesInfo infoGroupProperties = new InfoExternalGroupPropertiesInfo();
 		infoGroupProperties.setGroup(foundGroup);
@@ -50,7 +52,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 
     }
 
-    private InfoExternalStudentGroup searchForStudentInGrouping(Grouping group, String username) {
+    private static InfoExternalStudentGroup searchForStudentInGrouping(Grouping group, String username) {
 	InfoExternalStudentGroup result = null;
 	Collection studentGroups = group.getStudentGroups();
 
@@ -61,8 +63,8 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 		Attends attend = (Attends) iterator.next();
 		if (attend.getRegistration().getPerson().hasUsername(username)) {
 		    InfoExternalStudentGroup info = new InfoExternalStudentGroup();
-		    info.setInfoGroup(this.buildInfoExternalGroupInfo(studentGroup));
-		    info.setStudents(this.buildStudentInfos(attends.iterator()));
+		    info.setInfoGroup(buildInfoExternalGroupInfo(studentGroup));
+		    info.setStudents(buildStudentInfos(attends.iterator()));
 		    result = info;
 		    break;
 		}
@@ -77,11 +79,11 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private Collection buildStudentInfos(Iterator iterator) {
+    private static Collection buildStudentInfos(Iterator iterator) {
 	Collection result = new ArrayList();
 	for (Iterator iter = iterator; iter.hasNext();) {
 	    Attends attend = (Attends) iter.next();
-	    InfoExternalStudentInfo student = this.getStudentInformation(attend);
+	    InfoExternalStudentInfo student = getStudentInformation(attend);
 	    result.add(student);
 	}
 
@@ -95,7 +97,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
      * @throws ExcepcaoPersistencia
      * @throws ExcepcaoPersistencia
      */
-    private InfoExternalStudentInfo getStudentInformation(Attends attend) {
+    private static InfoExternalStudentInfo getStudentInformation(Attends attend) {
 	InfoExternalStudentInfo student = new InfoExternalStudentInfo();
 	student.setCourse(InfoExternalExecutionCourseInfo.newFromExecutionCourse(attend.getExecutionCourse()));
 	student.setDegree(InfoExternalDegreeCurricularPlanInfo.newFromDegreeCurricularPlan(attend.getRegistration()
@@ -103,8 +105,8 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 	student.setName(new String(attend.getRegistration().getPerson().getName()));
 	student.setNumber(new Integer(attend.getRegistration().getNumber().intValue()));
 
-	Collection shifts = this.findShifts(attend.getRegistration(), attend.getExecutionCourse());
-	student.setShifts(this.buildShiftsInfo(shifts));
+	Collection shifts = findShifts(attend.getRegistration(), attend.getExecutionCourse());
+	student.setShifts(buildShiftsInfo(shifts));
 
 	return student;
     }
@@ -113,7 +115,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
      * @param shifts
      * @param student
      */
-    private Collection buildShiftsInfo(Collection shifts) {
+    private static Collection buildShiftsInfo(Collection shifts) {
 	ArrayList result = new ArrayList();
 	for (Iterator iter = shifts.iterator(); iter.hasNext();) {
 	    Shift shift = (Shift) iter.next();
@@ -123,7 +125,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 	return result;
     }
 
-    private Collection findShifts(Registration aluno, ExecutionCourse disciplinaExecucao) {
+    private static Collection findShifts(Registration aluno, ExecutionCourse disciplinaExecucao) {
 	List<Shift> shifts = aluno.getShifts();
 	List result = new ArrayList();
 	for (Shift shift : shifts) {
@@ -139,11 +141,11 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
      * @param studentGroupAttend
      * @return
      */
-    private InfoExternalGroupInfo buildInfoExternalGroupInfo(StudentGroup studentGroup) {
+    private static InfoExternalGroupInfo buildInfoExternalGroupInfo(StudentGroup studentGroup) {
 	InfoExternalGroupInfo infoExternalGroupInfo = new InfoExternalGroupInfo();
 	infoExternalGroupInfo.setNumber(Integer.valueOf(studentGroup.getGroupNumber().intValue()));
 	infoExternalGroupInfo.setShift(InfoExternalShiftInfo.newFromShift(studentGroup.getShift()));
-	infoExternalGroupInfo.setExecutionCourses(this.buildExecutionCoursesCollection(studentGroup.getGrouping()
+	infoExternalGroupInfo.setExecutionCourses(buildExecutionCoursesCollection(studentGroup.getGrouping()
 		.getExecutionCourses()));
 
 	return infoExternalGroupInfo;
@@ -153,7 +155,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
      * @param executionCourses
      * @return
      */
-    private Collection buildExecutionCoursesCollection(List executionCourses) {
+    private static Collection buildExecutionCoursesCollection(List executionCourses) {
 	Collection result = new ArrayList();
 	for (Iterator iter = executionCourses.iterator(); iter.hasNext();) {
 	    ExecutionCourse course = (ExecutionCourse) iter.next();

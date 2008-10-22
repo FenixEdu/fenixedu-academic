@@ -196,8 +196,8 @@ public class RichTextInputRenderer extends InputRenderer {
 			.getResourceString("renderers.rich-text.editor.remove")), "disable");
 
 		radioList.setClasses("liinline nobullet mbottom05"); // TODO:
-								     // use
-								     // style?
+		// use
+		// style?
 		useEditor.setChecked(true);
 
 		useEditor.setOnClick(String.format("fenix_addEditor(['%s']);", editor.getId()));

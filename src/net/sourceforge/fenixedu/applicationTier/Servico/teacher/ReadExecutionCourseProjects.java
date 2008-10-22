@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -33,7 +33,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 // student package net.sourceforge.fenixedu.(ReadExecutionCourseProjects)
 public class ReadExecutionCourseProjects extends FenixService {
 
-    public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
+    @Service
+    public static ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
 
 	InfoSiteProjects infoSiteProjects = null;
 

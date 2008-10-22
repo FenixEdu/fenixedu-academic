@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ListPayedInsurancesByDates;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -33,7 +33,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -80,9 +79,8 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
 	YearMonthDay beginDate = (beginDateDay > 0 && beginDateMonth > 0 && beginDateYear > 0) ? new YearMonthDay(beginDateYear,
 		beginDateMonth, beginDateDay) : null;
 
-	Object[] args = { executionYear, beginDate, endDate };
-	List<InsuranceTransaction> payedInsurances = (List<InsuranceTransaction>) ServiceUtils.executeService(
-		"ListPayedInsurancesByDates", args);
+	List<InsuranceTransaction> payedInsurances = (List<InsuranceTransaction>) ListPayedInsurancesByDates.run(executionYear,
+		beginDate, endDate);
 
 	ResourceBundle rb = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	String functionalityName = rb.getString("link.masterDegree.administrativeOffice.gratuity.listPayedInsurances");

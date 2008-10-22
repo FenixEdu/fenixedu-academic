@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEdit
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCurricularCourseScope extends FenixService {
 

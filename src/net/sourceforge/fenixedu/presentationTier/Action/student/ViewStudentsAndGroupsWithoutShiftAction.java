@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadStudentsAndGroupsWithoutShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -37,10 +37,9 @@ public class ViewStudentsAndGroupsWithoutShiftAction extends FenixContextAction 
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
-	Object[] args = { groupPropertiesCode };
+
 	try {
-	    infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceUtils.executeService(
-		    "ReadStudentsAndGroupsWithoutShift", args);
+	    infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ReadStudentsAndGroupsWithoutShift.run(groupPropertiesCode);
 
 	} catch (InvalidSituationServiceException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();

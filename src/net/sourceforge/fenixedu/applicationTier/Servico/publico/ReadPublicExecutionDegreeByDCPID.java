@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadPublicExecutionDegreeByDCPID extends FenixService {
 
-    public List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    @Service
+    public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException {
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
 	List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
@@ -28,7 +29,8 @@ public class ReadPublicExecutionDegreeByDCPID extends FenixService {
 	return result;
     }
 
-    public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) {
+    @Service
+    public static InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) {
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
@@ -41,7 +43,7 @@ public class ReadPublicExecutionDegreeByDCPID extends FenixService {
 	return copyExecutionDegree2InfoExecutionDegree(executionDegree);
     }
 
-    protected InfoExecutionDegree copyExecutionDegree2InfoExecutionDegree(ExecutionDegree executionDegree) {
+    protected static InfoExecutionDegree copyExecutionDegree2InfoExecutionDegree(ExecutionDegree executionDegree) {
 	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 

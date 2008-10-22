@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.ReadCurricularCourseByOIdService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBasicCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourses;
@@ -193,10 +194,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
 	String curricularCourseIdString = request.getParameter("index");
 
-	Object[] args = { new Integer(curricularCourseIdString) };
 	SiteView siteView = null;
 	try {
-	    siteView = (SiteView) ServiceUtils.executeService("ReadCurricularCourseByOIdService", args);
+	    siteView = (SiteView) ReadCurricularCourseByOIdService.run(new Integer(curricularCourseIdString));
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

@@ -26,9 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/studentStatistics", module = "directiveCouncil")
-@Forwards( {
-    @Forward(name = "show.student.statistics", path = "df.page.student.statistics")
-})
+@Forwards( { @Forward(name = "show.student.statistics", path = "df.page.student.statistics") })
 public class StudentStatisticsDA extends FenixDispatchAction {
 
     public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {
@@ -103,7 +101,8 @@ public class StudentStatisticsDA extends FenixDispatchAction {
 	}
 
 	public Boolean getShowResult() {
-	    return (contextBean.getDegreeType() != null && contextBean.getExecutionYear() != null) || contextBean.getExecutionDegree() != null;
+	    return (contextBean.getDegreeType() != null && contextBean.getExecutionYear() != null)
+		    || contextBean.getExecutionDegree() != null;
 	}
     }
 

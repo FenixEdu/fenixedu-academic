@@ -6,9 +6,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 import org.apache.commons.beanutils.BeanComparator;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class TSDProcessPhase extends TSDProcessPhase_Base {
 
