@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -55,9 +56,13 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	});
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     protected AdministrativeOfficeFeeAndInsuranceEvent() {
 	super();
+	check();
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    private void check() {
     }
 
     public AdministrativeOfficeFeeAndInsuranceEvent(AdministrativeOffice administrativeOffice, Person person,
@@ -182,7 +187,14 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     @Override
     public boolean isInDebt() {
-	return isOpen() && (getPaymentEndDate() == null || getPaymentEndDate().isBefore(new YearMonthDay()));
+	return isOpen()
+		&& ((getPaymentEndDate() != null && getPaymentEndDate().isBefore(new YearMonthDay())) || getSpecificPostingRule()
+			.getWhenToApplyFixedAmountPenalty().isBefore(new YearMonthDay()));
+    }
+
+    private AdministrativeOfficeFeePR getSpecificPostingRule() {
+	return (AdministrativeOfficeFeePR) getServiceAgreementTemplate().findPostingRuleBy(EventType.ADMINISTRATIVE_OFFICE_FEE,
+		getStartDate(), getEndDate());
     }
 
     private List<EntryDTO> buildEntryDTOsFrom(final Money amountToPay) {
@@ -325,4 +337,5 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
 	return result;
     }
+
 }
