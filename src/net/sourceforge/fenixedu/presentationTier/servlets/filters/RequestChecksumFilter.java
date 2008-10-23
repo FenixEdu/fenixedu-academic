@@ -42,6 +42,10 @@ public class RequestChecksumFilter extends pt.ist.fenixWebFramework.servlets.fil
 	if (uri.indexOf("/student/fillInquiries.do") >= 0) {
 	    return false;
 	}
+	if ((uri.indexOf("/teacher/executionCourseForumManagement.do") >= 0  || uri.indexOf("/student/viewExecutionCourseForuns.do") >= 0) && httpServletRequest
+		.getQueryString().indexOf("method=viewThread") >= 0) {
+	    return false;
+	}
 	if (FileUpload.isMultipartContent(httpServletRequest)) {
 	    return false;
 	}

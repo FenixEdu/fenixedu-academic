@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +25,8 @@ import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
+import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -106,8 +109,12 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
 
+	if (getLoggedPerson(request) == null) {
+	    RequestUtils.sendLoginRedirect(request, response);
+	    return null;
+	}
 	return viewThreadOnPage(mapping, actionForm, request, response, getPageNumber(request));
     }
 
