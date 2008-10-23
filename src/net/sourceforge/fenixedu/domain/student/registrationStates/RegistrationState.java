@@ -138,7 +138,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	super.deleteDomainObject();
     }
 
-    protected RegistrationState getNext() {
+    public RegistrationState getNext() {
 	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistration()
 		.getRegistrationStates());
 	Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
