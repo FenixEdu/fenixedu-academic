@@ -46,7 +46,8 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     public CandidacySituationType getActiveCandidacySituationType() {
-	return getActiveCandidacySituation().getCandidacySituationType();
+	final CandidacySituation situation = getActiveCandidacySituation();
+	return (situation != null) ? situation.getCandidacySituationType() : null;
     }
 
     private CandidacySituation getFirstCandidacySituation() {
@@ -226,10 +227,11 @@ public abstract class Candidacy extends Candidacy_Base {
 		&& person.getCountry() != null && person.getParishOfBirth() != null
 		&& person.getDistrictSubdivisionOfBirth() != null && person.getDistrictOfBirth() != null
 		&& person.getCountryOfBirth() != null && person.getNameOfFather() != null && person.getNameOfMother() != null
-		&& person.hasDefaultPhysicalAddress() && person.getEmail() != null);
+		&& person.hasDefaultPhysicalAddress() && person.getInstitutionalOrDefaultEmailAddressValue() != null);
     }
 
     public boolean isActive() {
-	return getActiveCandidacySituationType().isActive();
+	final CandidacySituationType situationType = getActiveCandidacySituationType();
+	return situationType != null && situationType.isActive();
     }
 }
