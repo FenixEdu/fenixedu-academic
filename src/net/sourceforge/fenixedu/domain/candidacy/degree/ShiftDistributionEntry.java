@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -69,14 +70,8 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 	super.setShift(newShift);
     }
 
-    public static List<ShiftDistributionEntry> readByAbstractNumber(Integer abstractNumber) {
-	List<ShiftDistributionEntry> result = new ArrayList<ShiftDistributionEntry>();
-	for (ShiftDistributionEntry entry : RootDomainObject.getInstance().getShiftDistributionEntries()) {
-	    if (entry.getAbstractStudentNumber().equals(abstractNumber)) {
-		result.add(entry);
-	    }
-	}
-	return result;
+    private boolean isFor(final ExecutionYear executionYear) {
+	return getShiftDistribution().getExecutionYear() == executionYear;
     }
 
     @Override
@@ -101,6 +96,16 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 
     public boolean alreadyDistributed() {
 	return getDistributed().booleanValue();
+    }
+
+    static public List<ShiftDistributionEntry> readByAbstractNumber(Integer abstractNumber, final ExecutionYear executionYear) {
+	final List<ShiftDistributionEntry> result = new ArrayList<ShiftDistributionEntry>();
+	for (final ShiftDistributionEntry entry : RootDomainObject.getInstance().getShiftDistributionEntries()) {
+	    if (entry.getAbstractStudentNumber().equals(abstractNumber) && entry.isFor(executionYear)) {
+		result.add(entry);
+	    }
+	}
+	return result;
     }
 
 }

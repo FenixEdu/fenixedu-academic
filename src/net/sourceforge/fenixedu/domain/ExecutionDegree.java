@@ -780,7 +780,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	for (final ShiftDistributionEntry shiftDistributionEntry : entries) {
 	    if (!shiftDistributionEntry.getDistributed()) {
-		return ShiftDistributionEntry.readByAbstractNumber(shiftDistributionEntry.getAbstractStudentNumber());
+		return ShiftDistributionEntry.readByAbstractNumber(shiftDistributionEntry.getAbstractStudentNumber(),
+			getExecutionYear());
 	    }
 	}
 
