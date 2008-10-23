@@ -106,7 +106,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	}
 
 	if (personHasDegree(getPerson(), selectedDegree)) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", selectedDegree.getName());
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
+		    getCandidacyExecutionInterval()).getContent());
 	}
 
 	if (precedentDegreeInformation == null) {

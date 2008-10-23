@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeTransferCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -105,6 +106,16 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public boolean hasDegreeTransferCandidacyPeriod() {
 	return hasCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
     }
+
+    public List<StandaloneCandidacyPeriod> getStandaloneCandidacyPeriods() {
+	return (List<StandaloneCandidacyPeriod>) getCandidacyPeriods(StandaloneCandidacyPeriod.class);
+    }
+
+    public boolean hasAnyStandaloneCandidacyPeriod() {
+	return hasCandidacyPeriods(StandaloneCandidacyPeriod.class);
+    }
+    
+    abstract public String getQualifiedName();
 
     // static information
 

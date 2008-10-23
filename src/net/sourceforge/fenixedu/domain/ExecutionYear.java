@@ -81,6 +81,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	super.setName(year);
     }
 
+    @Override
+    public String getQualifiedName() {
+	return getName();
+    }
+
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
 	return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
 	    public boolean evaluate(Object arg0) {
@@ -276,6 +281,29 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return result;
     }
 
+    private Set<AccountingTransaction> getPaymentsFor(final Class<? extends AnnualEvent> eventClass) {
+	final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
+	for (final AnnualEvent each : getAnnualEvents()) {
+	    if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
+		result.addAll(each.getNonAdjustingTransactions());
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<AccountingTransaction> getDFAGratuityPayments() {
+	return getPaymentsFor(DfaGratuityEvent.class);
+    }
+
+    public List<StudentCandidacy> getStudentCandidacies() {
+	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
+	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+	    result.addAll(executionDegree.getStudentCandidacies());
+	}
+	return result;
+    }
+
     private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionSemester> {
 	@Override
 	public void beforeAdd(ExecutionYear executionYear, ExecutionSemester executionSemester) {
@@ -462,26 +490,4 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return null;
     }
 
-    private Set<AccountingTransaction> getPaymentsFor(final Class<? extends AnnualEvent> eventClass) {
-	final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
-	for (final AnnualEvent each : getAnnualEvents()) {
-	    if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
-		result.addAll(each.getNonAdjustingTransactions());
-	    }
-	}
-
-	return result;
-    }
-
-    public Set<AccountingTransaction> getDFAGratuityPayments() {
-	return getPaymentsFor(DfaGratuityEvent.class);
-    }
-
-    public List<StudentCandidacy> getStudentCandidacies() {
-	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
-	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-	    result.addAll(executionDegree.getStudentCandidacies());
-	}
-	return result;
-    }
 }

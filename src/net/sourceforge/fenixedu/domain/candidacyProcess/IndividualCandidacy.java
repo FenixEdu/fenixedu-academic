@@ -176,11 +176,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	return registration;
     }
 
-    private boolean hasActiveRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
+    protected boolean hasActiveRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getPerson().hasStudent() && getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
     }
 
-    private Student getStudent() {
+    protected Student getStudent() {
 	return getPerson().hasStudent() ? getPerson().getStudent() : null;
     }
 

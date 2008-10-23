@@ -1458,6 +1458,9 @@ class DomainObject {
 			
 			class accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
+			
+			class accounting.events.candidacy.StandaloneIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
+			}
 
 	class accounting.Exemption extends DomainObject {
 		DateTime whenCreated;
@@ -5062,6 +5065,9 @@ class period.CandidacyPeriod extends DomainObject {
 	class period.DegreeTransferCandidacyPeriod extends period.CandidacyPeriod {
 	}
 	
+	class period.StandaloneCandidacyPeriod extends period.CandidacyPeriod {
+	}
+
 class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	CandidacyProcessState state;
 }
@@ -5081,6 +5087,9 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	class candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess extends candidacyProcess.CandidacyProcess {
 	}
 	
+	class candidacyProcess.standalone.StandaloneCandidacyProcess extends candidacyProcess.CandidacyProcess {
+	}
+	
 class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 }
 
@@ -5097,6 +5106,9 @@ class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 	}
 	
 	class candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
+	}
+	
+	class candidacyProcess.standalone.StandaloneIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
 		
 class candidacyProcess.IndividualCandidacy extends DomainObject {
@@ -5144,6 +5156,9 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 		BigDecimal approvedEctsRate;
 		BigDecimal gradeRate;
 		BigDecimal seriesCandidacyGrade;
+	}
+	
+	class candidacyProcess.standalone.StandaloneIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
 	}
 
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
@@ -13232,6 +13247,15 @@ relation DegreeChangeIndividualCandidacySelectedDegree {
 relation DegreeTransferIndividualCandidacySelectedDegree {
 	Degree playsRole selectedDegree;
 	candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacy playsRole selectedDegreeTransferIndividualCandidacies {
+		multiplicity *;
+	}
+}
+
+relation StandaloneIndividualCandidacyCurricularCourses {
+	CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+	candidacyProcess.standalone.StandaloneIndividualCandidacy playsRole standaloneIndividualCandidacies {
 		multiplicity *;
 	}
 }

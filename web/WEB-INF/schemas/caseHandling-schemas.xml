@@ -10,7 +10,7 @@
 
 <!-- Candidacies -->
 <schema name="CandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyExecutionInterval.name" key="label.executionInterval">
+	<slot name="candidacyExecutionInterval.qualifiedName" key="label.executionInterval">
 		<property name="classes" value="bold" />
 	</slot>
 	<slot name="candidacyStart" key="label.begin">
@@ -23,7 +23,7 @@
 </schema>
 
 <schema name="CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="executionInterval.name" key="label.executionInterval" read-only="true">
+	<slot name="executionInterval.qualifiedName" key="label.executionInterval" read-only="true">
 		<property name="classes" value="bold" />
 	</slot>
 	<slot name="start" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -987,5 +987,75 @@
 
 <schema name="DegreeTransferCandidacyProcess.candidacyDegreeBean" 
 		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeTransfer.DegreeTransferCandidacyProcessDA$DegreeTransferCandidacyDegreeBean"
+		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<!-- Standalone -->
+
+<schema name="StandaloneCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean"
+		extends="CandidacyProcessBean.manage" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="StandaloneIndividualCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyDate" key="label.candidacy.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="StandaloneIndividualCandidacyProcessBean.add.curricularCourse" type="net.sourceforge.fenixedu.dataTransferObject.commons.SearchCurricularCourseByDegree" bundle="APPLICATION_RESOURCES">
+	<slot name="executionSemester.qualifiedName" key="label.executionPeriod" read-only="true" />
+	<slot name="degreeBean" key="label.Degree" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.commons.SearchCurricularCourseByDegree$SearchCurricularCourseBolonhaDegreesProvider" />
+		<property name="format" value="${degreePresentationName}" />
+		<property name="destination" value="searchCurricularCourseByDegreePostBack"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.commons.SearchCurricularCourseByDegree$SearchCurricularCourseDegreeCurricularPlansProvider" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="searchCurricularCourseByDegreePostBack"/>
+	</slot>
+	<slot name="curricularCourseBean" key="label.curricularCourse" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.commons.SearchCurricularCourseByDegree$SearchCurricularCourseCurricularCoursesProvider" />
+		<property name="format" value="${curricularCourseName}" />
+	</slot>
+</schema>
+
+<schema name="StandaloneIndividualCandidacyProcess.view.curricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExecutionSemesterBean" bundle="APPLICATION_RESOURCES">
+	<slot name="curricularCourseName" >
+		<property name="classes" value="nowrap" />
+	</slot>
+	<slot name="curricularCourseEcts"  />
+	<slot name="degreeName">
+		<property name="classes" value="nowrap" />
+	</slot>
+</schema>
+
+<schema name="StandaloneIndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES"
+		extends="IndividualCandidacyProcess.view">
+	<slot name="curricularCourseBeans" key="label.curricularCourses">
+		<property name="eachLayout" value="values-comma" />
+		<property name="eachSchema" value="StandaloneIndividualCandidacyProcess.view.curricularCourses" />
+	</slot>
+</schema>
+
+<schema name="StandaloneIndividualCandidacyResultBean.introduce.result" type="net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true">
+		<property name="classes" value="nowrap" />
+	</slot>
+	<slot name="state" key="label.candidacy.individual.state">
+		<property name="excludedValues" value="STAND_BY, CANCELLED" />
+	</slot>
+</schema>
+
+<schema name="StandaloneIndividualCandidacyResultBean.manage.all.students" type="net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyProcess.candidacyPerson.documentIdNumber" read-only="true" key="label.identificationNumber" />
+	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true">
+		<property name="classes" value="nowrap" />
+	</slot>
+	<slot name="state" key="label.candidacy.individual.state">
+		<property name="excludedValues" value="STAND_BY, CANCELLED" />
+	</slot>
+</schema>
+
+<schema name="StandaloneCandidacyProcess.candidacyDegreeBean" 
+		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneCandidacyProcessDA$StandaloneCandidacyDegreeBean"
 		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
 </schema>

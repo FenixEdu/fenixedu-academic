@@ -275,7 +275,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private void checkIfCurricularCoursesBelongToApprovedCompetenceCourses() {
 	final List<String> notApprovedCompetenceCourses = new ArrayList<String>();
-	for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, null)) {
+	for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
 	    if (!curricularCourse.isOptional() && !curricularCourse.getCompetenceCourse().isApproved()) {
 		notApprovedCompetenceCourses.add(curricularCourse.getCompetenceCourse().getDepartmentUnit().getName() + " > "
@@ -982,8 +982,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
     }
 
+    public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz) {
+	return getDcpDegreeModules(clazz, (ExecutionYear) null);
+    }
+
     public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
 	return hasRoot() ? new ArrayList<DegreeModule>(getRoot().collectAllChildDegreeModules(clazz, executionYear))
+		: Collections.EMPTY_LIST;
+    }
+
+    public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz,
+	    final ExecutionSemester executionSemester) {
+	return hasRoot() ? new ArrayList<DegreeModule>(getRoot().collectAllChildDegreeModules(clazz, executionSemester))
 		: Collections.EMPTY_LIST;
     }
 

@@ -43,7 +43,9 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
     }
 
     private boolean intercept(final DateTime start, final DateTime end) {
-	assert start.isBefore(end);
+	if (start.isAfter(end)) {
+	    throw new DomainException("error.CandidacyPeriod.begin.cannot.be.after.end");
+	}
 	return contains(start) || contains(end);
     }
 

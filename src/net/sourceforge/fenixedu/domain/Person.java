@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTra
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacy;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
@@ -2996,6 +2997,10 @@ public class Person extends Person_Base {
 
     public boolean hasValidDegreeTransferIndividualCandidacy(final ExecutionInterval executionInterval) {
 	return hasValidIndividualCandidacy(DegreeTransferIndividualCandidacy.class, executionInterval);
+    }
+
+    public boolean hasValidStandaloneIndividualCandidacy(final ExecutionInterval executionInterval) {
+	return hasValidIndividualCandidacy(StandaloneIndividualCandidacy.class, executionInterval);
     }
 
     public List<Formation> getFormations() {

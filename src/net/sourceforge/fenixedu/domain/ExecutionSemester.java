@@ -169,6 +169,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR.compare(this, object);
     }
 
+    @Override
     public String getQualifiedName() {
 	return new StringBuilder().append(this.getName()).append(" ").append(this.getExecutionYear().getYear()).toString();
     }

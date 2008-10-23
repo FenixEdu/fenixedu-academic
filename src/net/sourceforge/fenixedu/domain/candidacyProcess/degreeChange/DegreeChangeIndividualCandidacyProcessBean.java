@@ -47,7 +47,7 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
     }
 
     @Override
-    protected ExecutionYear getCandidacyExecutionInterval() {
+    public ExecutionYear getCandidacyExecutionInterval() {
 	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
