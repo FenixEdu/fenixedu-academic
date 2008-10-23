@@ -27,7 +27,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     public DegreeFinalizationCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
-	bean.setExecutionYear(null);
 	super.init(bean);
 
 	checkParameters(bean);

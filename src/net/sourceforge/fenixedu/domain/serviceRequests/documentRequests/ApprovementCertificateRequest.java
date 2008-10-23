@@ -25,8 +25,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     public ApprovementCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
-	bean.setExecutionYear(null);
-	bean.setFreeProcessed(Boolean.FALSE);
 	super.init(bean);
 
 	checkParameters(bean);

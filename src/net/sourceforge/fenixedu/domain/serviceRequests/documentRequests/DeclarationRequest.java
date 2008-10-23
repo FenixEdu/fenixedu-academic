@@ -24,7 +24,6 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
     final protected void init(final DocumentRequestCreateBean bean) {
 	bean.setRequestDate(new DateTime());
 	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-	bean.setUrgentRequest(Boolean.FALSE);
 	super.init(bean);
 
 	super.checkParameters(bean);

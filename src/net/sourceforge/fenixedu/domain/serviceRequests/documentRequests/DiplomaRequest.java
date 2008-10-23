@@ -28,8 +28,6 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	if (bean.getRequestDate() == null) {
 	    bean.setRequestDate(new DateTime());
 	}
-	bean.setUrgentRequest(Boolean.FALSE);
-	bean.setFreeProcessed(Boolean.FALSE);
 	super.init(bean);
 
 	checkParameters(bean);

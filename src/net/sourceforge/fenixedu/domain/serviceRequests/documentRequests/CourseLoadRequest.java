@@ -21,7 +21,6 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
     public CourseLoadRequest(final DocumentRequestCreateBean bean) {
 	this();
-	bean.setFreeProcessed(Boolean.FALSE);
 	super.init(bean);
 
 	checkParameters(bean);

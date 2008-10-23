@@ -18,7 +18,6 @@ public class ExternalProgramCertificateRequest extends ExternalProgramCertificat
 
     public ExternalProgramCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
-	bean.setFreeProcessed(Boolean.FALSE);
 	super.init(bean);
 
 	checkParameters(bean);

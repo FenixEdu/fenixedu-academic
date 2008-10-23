@@ -18,7 +18,6 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
 
     public ExternalCourseLoadRequest(final DocumentRequestCreateBean bean) {
 	this();
-	bean.setFreeProcessed(Boolean.FALSE);
 	super.init(bean);
 
 	checkParameters(bean);

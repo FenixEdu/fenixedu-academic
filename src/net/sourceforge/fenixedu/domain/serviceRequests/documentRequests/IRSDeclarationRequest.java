@@ -16,7 +16,6 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 
     public IRSDeclarationRequest(final DocumentRequestCreateBean bean) {
 	this();
-	bean.setExecutionYear(null);
 	super.init(bean);
 
 	checkParameters(bean);
