@@ -1,11 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-
-import org.joda.time.DateTime;
 
 public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCertificateRequest_Base {
 
@@ -13,22 +10,19 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	super();
     }
 
-    public SchoolRegistrationCertificateRequest(Registration registration, DateTime requestDate,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-	    ExecutionYear executionYear) {
-
+    public SchoolRegistrationCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
-	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
-	checkRulesToCreate(registration, executionYear);
+	super.init(bean);
+
+	checkRulesToCreate(bean);
     }
 
-    private void checkRulesToCreate(final Registration registration, final ExecutionYear executionYear) {
-	if (executionYear == null) {
+    private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
+	if (bean.getExecutionYear() == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
 
-	} else if (!registration.isInRegisteredState(executionYear)) {
+	} else if (!bean.getRegistration().isInRegisteredState(bean.getExecutionYear())) {
 	    throw new DomainException(
 		    "SchoolRegistrationCertificateRequest.registration.not.in.registered.state.in.given.executionYear");
 	}

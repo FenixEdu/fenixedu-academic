@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDeclarationRequest_Base {
 
@@ -11,21 +11,19 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
 	super();
     }
 
-    public SchoolRegistrationDeclarationRequest(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
+    public SchoolRegistrationDeclarationRequest(final DocumentRequestCreateBean bean) {
 	this();
-	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
+	super.init(bean);
+
+	checkRulesToCreate(bean);
     }
 
-    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
-
+    private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	if (!registration.isInRegisteredState(currentExecutionYear)) {
+	if (!bean.getRegistration().isInRegisteredState(currentExecutionYear)) {
 	    throw new DomainException(
 		    "SchoolRegistrationDeclarationRequest.registration.not.in.registered.state.in.current.executionYear");
 	}
-	super.init(registration, currentExecutionYear, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
     }
 
     @Override

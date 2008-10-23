@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.YearMonthDay;
 
@@ -14,40 +14,33 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 	super();
     }
 
-    public IRSDeclarationRequest(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Integer year, Boolean freeProcessed) {
-
+    public IRSDeclarationRequest(final DocumentRequestCreateBean bean) {
 	this();
-	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, year, freeProcessed);
+	bean.setExecutionYear(null);
+	super.init(bean);
+
+	checkParameters(bean);
+	super.setYear(bean.getYear());
     }
 
-    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Integer year, Boolean freeProcessed) {
-
-	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
-
-	if (!registration.isActive()) {
-	    throw new DomainException("IRSDeclarationRequest.registration.is.not.active");
-	}
-
-	if (!registration.isBolonha()) {
-	    throw new DomainException("IRSDeclarationRequest.only.available.for.bolonha.registrations");
-	}
-
-	checkParameters(year);
-	super.setYear(year);
-    }
-
-    private void checkParameters(Integer year) {
-	if (year == null) {
+    @Override
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
+	if (bean.getYear() == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest.year.cannot.be.null");
 	}
 
-	if (new YearMonthDay(year, 1, 1).isBefore(new YearMonthDay(FIRST_VALID_YEAR, 1, 1))) {
-	    throw new DomainException("IRSDeclarationRequest.only.available.after.first.valid.year");
+	if (!bean.getRegistration().isActive()) {
+	    throw new DomainException("IRSDeclarationRequest.registration.is.not.active");
 	}
 
+	if (!bean.getRegistration().isBolonha()) {
+	    throw new DomainException("IRSDeclarationRequest.only.available.for.bolonha.registrations");
+	}
+
+	if (new YearMonthDay(bean.getYear(), 1, 1).isBefore(new YearMonthDay(FIRST_VALID_YEAR, 1, 1))) {
+	    throw new DomainException("IRSDeclarationRequest.only.available.after.first.valid.year");
+	}
     }
 
     @Override

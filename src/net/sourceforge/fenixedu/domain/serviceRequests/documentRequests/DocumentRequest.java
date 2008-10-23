@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -14,9 +16,13 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	super();
     }
 
-    final protected void checkParameters(final DocumentPurposeType documentPurposeType,
-	    final String otherDocumentPurposeTypeDescription) {
-	if (documentPurposeType == DocumentPurposeType.OTHER && otherDocumentPurposeTypeDescription == null) {
+    protected void init(final DocumentRequestCreateBean bean) {
+	super.init(bean.getRegistration(), bean.getExecutionYear(), bean.getRequestDate(), bean.getUrgentRequest(), bean
+		.getFreeProcessed());
+    }
+
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
+	if (bean.getChosenDocumentPurposeType() == DocumentPurposeType.OTHER && bean.getOtherPurpose() == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
 	}
@@ -57,17 +63,14 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	}
 
 	public Object execute() {
-
 	    if (getChosenDocumentRequestType().isCertificate()) {
 		return CertificateRequest.create(this);
 
 	    } else if (getChosenDocumentRequestType().isDeclaration()) {
-		return DeclarationRequest.create(getRegistration(), getChosenDocumentRequestType(),
-			getChosenDocumentPurposeType(), getOtherPurpose(), getAverage(), getDetailed(), getYear(),
-			getFreeProcessed());
+		return DeclarationRequest.create(this);
 
 	    } else if (getChosenDocumentRequestType().isDiploma()) {
-		return new DiplomaRequest(getRegistration(), getRequestedCycle());
+		return new DiplomaRequest(this);
 	    }
 
 	    return null;
@@ -122,6 +125,10 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     public boolean hasNumberOfPages() {
 	return getNumberOfPages() != null && getNumberOfPages().intValue() != 0;
+    }
+
+    public Locale getLocale() {
+	return null;
     }
 
 }

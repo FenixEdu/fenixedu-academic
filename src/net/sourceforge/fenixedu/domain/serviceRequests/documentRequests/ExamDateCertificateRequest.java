@@ -4,18 +4,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.util.Season;
-
-import org.joda.time.DateTime;
 
 public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base {
 
@@ -26,42 +22,28 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 	super();
     }
 
-    public ExamDateCertificateRequest(Registration registration, DateTime requestDate, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Collection<Enrolment> enrolments,
-	    Collection<Exam> exams, ExecutionSemester executionSemester) {
-
+    public ExamDateCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
-	init(registration, requestDate, executionSemester.getExecutionYear(), documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest, enrolments, exams, executionSemester);
+	super.init(bean);
+
+	checkParameters(bean);
+	checkRulesToCreate(bean);
+	super.getEnrolments().addAll(bean.getEnrolments());
+	super.getExams().addAll(bean.getExams());
+	super.setExecutionPeriod(bean.getExecutionPeriod());
     }
 
-    protected void init(Registration registration, DateTime requestDate, ExecutionYear executionYear,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-	    Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionSemester executionSemester) {
-
-	checkParameters(executionYear, enrolments, executionSemester);
-	checkRulesToCreate(enrolments, exams, executionSemester);
-	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
-	super.getEnrolments().addAll(enrolments);
-	super.getExams().addAll(exams);
-	super.setExecutionPeriod(executionSemester);
-
-    }
-
-    private void checkRulesToCreate(Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionSemester executionSemester) {
-
-	for (final Exam exam : exams) {
+    private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
+	for (final Exam exam : bean.getExams()) {
 	    if (exam.isForSeason(Season.SPECIAL_SEASON_OBJ)
-		    && !getEnrolmentFor(enrolments, exam).isSpecialSeasonEnroled(executionSemester.getExecutionYear())) {
+		    && !getEnrolmentFor(bean.getEnrolments(), exam).isSpecialSeasonEnroled(
+			    bean.getExecutionPeriod().getExecutionYear())) {
 
 		throw new DomainExceptionWithLabelFormatter(
 			"error.serviceRequests.documentRequests.ExamDateCertificateRequest.special.season.exam.requires.student.to.be.enroled",
 			exam.getSeason().getDescription());
 	    }
-
 	}
-
     }
 
     private Enrolment getEnrolmentFor(final Collection<Enrolment> enrolments, final Exam exam) {
@@ -76,19 +58,19 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 
     }
 
-    private void checkParameters(ExecutionYear executionYear, Collection<Enrolment> enrolments,
-	    ExecutionSemester executionSemester) {
-	if (executionYear == null) {
+    @Override
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
+	if (bean.getExecutionYear() == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.ExamDateCertificateRequest.executionYear.cannot.be.null");
 	}
 
-	if (enrolments == null || enrolments.isEmpty()) {
+	if (bean.getEnrolments() == null || bean.getEnrolments().isEmpty()) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.ExamDateCertificateRequest.enrolments.cannot.be.null.and.must.have.size.greater.than.zero");
 	}
 
-	if (executionSemester == null) {
+	if (bean.getExecutionPeriod() == null) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest.executionPeriod.cannot.be.null");
 	}

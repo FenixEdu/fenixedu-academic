@@ -6,9 +6,6 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-
-import org.joda.time.DateTime;
 
 public abstract class CertificateRequest extends CertificateRequest_Base {
 
@@ -17,68 +14,42 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    final protected void init(Registration registration, DateTime requestDate, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean freeProcessed) {
-	init(registration, requestDate, null, freeProcessed, documentPurposeType, otherDocumentPurposeTypeDescription,
-		urgentRequest);
-    }
+    @Override
+    final protected void init(final DocumentRequestCreateBean bean) {
+	super.init(bean);
 
-    final protected void init(Registration registration, DateTime requestDate, final ExecutionYear executionYear,
-	    Boolean freeProcessed, DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest) {
-
-	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
-
-	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
-	super.setDocumentPurposeType(documentPurposeType);
-	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
+	super.checkParameters(bean);
+	super.setDocumentPurposeType(bean.getChosenDocumentPurposeType());
+	super.setOtherDocumentPurposeTypeDescription(bean.getOtherPurpose());
     }
 
     static final public CertificateRequest create(final DocumentRequestCreateBean bean) {
-
 	switch (bean.getChosenDocumentRequestType()) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
-	    return new SchoolRegistrationCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
-		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getExecutionYear());
+	    return new SchoolRegistrationCertificateRequest(bean);
 
 	case ENROLMENT_CERTIFICATE:
-	    return new EnrolmentCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
-		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getDetailed(), bean
-		    .getExecutionYear());
+	    return new EnrolmentCertificateRequest(bean);
 
 	case APPROVEMENT_CERTIFICATE:
-	    return new ApprovementCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
-		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getMobilityProgram());
+	    return new ApprovementCertificateRequest(bean);
 
 	case DEGREE_FINALIZATION_CERTIFICATE:
-	    return new DegreeFinalizationCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
-		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getAverage(), bean
-		    .getDetailed(), bean.getMobilityProgram(), bean.getRequestedCycle(), bean.getFreeProcessed(), bean
-		    .getTechnicalEngineer(), bean.getInternshipAbolished(), bean.getInternshipApproved(), bean.getStudyPlan(),
-		    bean.getExceptionalConclusionDate());
+	    return new DegreeFinalizationCertificateRequest(bean);
 
 	case EXAM_DATE_CERTIFICATE:
-	    return new ExamDateCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
-		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getEnrolments(), bean
-		    .getExams(), bean.getExecutionPeriod());
+	    return new ExamDateCertificateRequest(bean);
 	case COURSE_LOAD:
-	    return new CourseLoadRequest(bean.getRegistration(), bean.getRequestDate(), ExecutionYear.readCurrentExecutionYear(),
-		    bean.getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getEnrolments(), bean.getUrgentRequest());
+	    return new CourseLoadRequest(bean);
 
 	case EXTERNAL_COURSE_LOAD:
-	    return new ExternalCourseLoadRequest(bean.getRegistration(), bean.getRequestDate(), bean.getExecutionYear(), bean
-		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getNumberOfCourseLoads(),
-		    bean.getInstitution(), bean.getUrgentRequest());
+	    return new ExternalCourseLoadRequest(bean);
 
 	case PROGRAM_CERTIFICATE:
-	    return new ProgramCertificateRequest(bean.getRegistration(), bean.getRequestDate(), ExecutionYear
-		    .readCurrentExecutionYear(), bean.getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean
-		    .getEnrolments(), bean.getUrgentRequest());
+	    return new ProgramCertificateRequest(bean);
 
 	case EXTERNAL_PROGRAM_CERTIFICATE:
-	    return new ExternalProgramCertificateRequest(bean.getRegistration(), bean.getRequestDate(), ExecutionYear
-		    .readCurrentExecutionYear(), bean.getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean
-		    .getNumberOfPrograms(), bean.getInstitution(), bean.getUrgentRequest());
+	    return new ExternalProgramCertificateRequest(bean);
 	}
 
 	return null;

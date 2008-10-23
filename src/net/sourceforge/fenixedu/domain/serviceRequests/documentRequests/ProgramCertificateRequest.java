@@ -1,17 +1,13 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
-
-import org.joda.time.DateTime;
 
 public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 
@@ -23,22 +19,21 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 	setNumberOfPages(0);
     }
 
-    public ProgramCertificateRequest(final Registration registration, DateTime requestDate, final ExecutionYear executionYear,
-	    final DocumentPurposeType purposeType, final String otherPurposeTypeDescription,
-	    final Collection<Enrolment> enrolments, final Boolean urgentRequest) {
+    public ProgramCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
-	super.init(registration, requestDate, executionYear, Boolean.FALSE, purposeType, otherPurposeTypeDescription,
-		urgentRequest);
-	checkParameters(enrolments);
-	super.getEnrolments().addAll(enrolments);
+	super.init(bean);
+
+	checkParameters(bean);
+	super.getEnrolments().addAll(bean.getEnrolments());
     }
 
-    private void checkParameters(final Collection<Enrolment> enrolments) {
-	if (enrolments.isEmpty()) {
+    @Override
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
+	if (bean.getEnrolments().isEmpty()) {
 	    throw new DomainException("error.CourseLoadRequest.invalid.number.of.enrolments");
 	}
 
-	for (final Enrolment enrolment : enrolments) {
+	for (final Enrolment enrolment : bean.getEnrolments()) {
 	    if (!enrolment.isApproved()) {
 		throw new DomainException("error.ProgramCertificateRequest.cannot.add.not.approved.enrolments");
 	    }

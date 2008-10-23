@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.Collection;
 import java.util.HashSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
@@ -17,36 +17,25 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
-import org.joda.time.DateTime;
-
 public class ApprovementCertificateRequest extends ApprovementCertificateRequest_Base {
 
     private ApprovementCertificateRequest() {
 	super();
     }
 
-    public ApprovementCertificateRequest(Registration registration, DateTime requestDate,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-	    MobilityProgram mobilityProgram) {
-
+    public ApprovementCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
+	bean.setExecutionYear(null);
+	bean.setFreeProcessed(Boolean.FALSE);
+	super.init(bean);
 
-	this.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		mobilityProgram);
+	checkParameters(bean);
+	super.setMobilityProgram(bean.getMobilityProgram());
     }
 
-    final protected void init(final Registration registration, DateTime requestDate,
-	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
-	    final Boolean urgentRequest, final MobilityProgram mobilityProgram) {
-
-	super.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		Boolean.FALSE);
-	checkParameters(mobilityProgram);
-	super.setMobilityProgram(mobilityProgram);
-    }
-
-    final private void checkParameters(final MobilityProgram mobilityProgram) {
-	if (mobilityProgram == null && hasAnyExternalEntriesToReport()) {
+    @Override
+    final protected void checkParameters(final DocumentRequestCreateBean bean) {
+	if (bean.getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
 	    throw new DomainException("ApprovementCertificateRequest.mobility.program.cannot.be.null");
 	}
     }

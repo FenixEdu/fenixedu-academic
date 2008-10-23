@@ -11,7 +11,7 @@ import org.joda.time.DateTime;
 
 public class PhotocopyRequest extends PhotocopyRequest_Base {
 
-    protected PhotocopyRequest() {
+    private PhotocopyRequest() {
 	super();
 	setNumberOfPages(0);
     }

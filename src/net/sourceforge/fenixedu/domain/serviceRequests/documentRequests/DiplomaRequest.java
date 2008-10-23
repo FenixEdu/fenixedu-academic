@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
@@ -22,39 +23,35 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	super();
     }
 
-    public DiplomaRequest(final Registration registration, final CycleType requestedCycle) {
-	this(registration, new DateTime(), requestedCycle);
-    }
-
-    public DiplomaRequest(final Registration registration, final DateTime requestDate, final CycleType requestedCycle) {
+    public DiplomaRequest(final DocumentRequestCreateBean bean) {
 	this();
+	if (bean.getRequestDate() == null) {
+	    bean.setRequestDate(new DateTime());
+	}
+	bean.setUrgentRequest(Boolean.FALSE);
+	bean.setFreeProcessed(Boolean.FALSE);
+	super.init(bean);
 
-	this.init(registration, requestDate, requestedCycle);
-    }
-
-    final private void init(final Registration registration, DateTime requestDate, final CycleType requestedCycle) {
-	super.init(registration, requestDate, Boolean.FALSE, Boolean.FALSE);
-
-	this.checkParameters(requestedCycle);
-
+	checkParameters(bean);
 	if (isPayedUponCreation() && !isFree()) {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
     }
 
-    final private void checkParameters(final CycleType requestedCycle) {
+    @Override
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
 	if (getDegreeType().isComposite()) {
-	    if (requestedCycle == null) {
+	    if (bean.getRequestedCycle() == null) {
 		throw new DomainException("DiplomaRequest.diploma.requested.cycle.must.be.given");
-	    } else if (!getDegreeType().getCycleTypes().contains(requestedCycle)) {
+	    } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
 		throw new DomainException(
 			"DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
 	    }
 
-	    super.setRequestedCycle(requestedCycle);
+	    super.setRequestedCycle(bean.getRequestedCycle());
 	}
 
-	checkForDuplicate(requestedCycle);
+	checkForDuplicate(bean.getRequestedCycle());
     }
 
     private void checkForDuplicate(final CycleType requestedCycle) {

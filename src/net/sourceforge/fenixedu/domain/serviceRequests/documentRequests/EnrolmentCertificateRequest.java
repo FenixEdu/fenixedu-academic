@@ -3,13 +3,10 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.Collection;
 import java.util.HashSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-
-import org.joda.time.DateTime;
 
 public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Base {
 
@@ -17,33 +14,24 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	super();
     }
 
-    public EnrolmentCertificateRequest(Registration registration, DateTime requestDate, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
-
+    public EnrolmentCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
-	init(registration, requestDate, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		detailed);
+	super.init(bean);
+
+	checkParameters(bean);
+	super.setDetailed(bean.getDetailed());
     }
 
-    protected void init(Registration registration, DateTime requestDate, ExecutionYear executionYear,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-	    Boolean detailed) {
-
-	checkParameters(registration, detailed, executionYear);
-	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
-	super.setDetailed(detailed);
-    }
-
-    private void checkParameters(final Registration registration, final Boolean detailed, final ExecutionYear executionYear) {
-	if (detailed == null) {
+    @Override
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
+	if (bean.getDetailed() == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.detailed.cannot.be.null");
 	}
-	if (executionYear == null) {
+	if (bean.getExecutionYear() == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-	} else if (!registration.hasAnyEnrolmentsIn(executionYear)) {
+	} else if (!bean.getRegistration().hasAnyEnrolmentsIn(bean.getExecutionYear())) {
 	    throw new DomainException("EnrolmentCertificateRequest.no.enrolments.for.registration.in.given.executionYear");
 	}
     }

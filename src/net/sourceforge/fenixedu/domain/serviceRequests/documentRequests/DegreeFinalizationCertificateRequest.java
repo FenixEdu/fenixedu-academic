@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.Collection;
 import java.util.HashSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
@@ -26,70 +25,52 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super();
     }
 
-    public DegreeFinalizationCertificateRequest(final Registration registration, DateTime requestDate,
-	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
-	    final Boolean urgentRequest, final Boolean average, final Boolean detailed, MobilityProgram mobilityProgram,
-	    final CycleType requestedCyle, final Boolean freeProcessed, final Boolean technicalEngineer,
-	    final Boolean internshipAbolished, final Boolean internshipApproved, final Boolean studyPlan,
-	    final YearMonthDay exceptionalConclusionDate) {
+    public DegreeFinalizationCertificateRequest(final DocumentRequestCreateBean bean) {
 	this();
+	bean.setExecutionYear(null);
+	super.init(bean);
 
-	this.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, average,
-		detailed, mobilityProgram, requestedCyle, freeProcessed, technicalEngineer, internshipAbolished,
-		internshipApproved, studyPlan, exceptionalConclusionDate);
+	checkParameters(bean);
+	super.setAverage(bean.getAverage());
+	super.setDetailed(bean.getDetailed());
+	super.setMobilityProgram(bean.getMobilityProgram());
+	super.setTechnicalEngineer(bean.getTechnicalEngineer());
+	super.setInternshipAbolished(bean.getInternshipAbolished());
+	super.setInternshipApproved(bean.getInternshipApproved());
+	super.setStudyPlan(bean.getStudyPlan());
+	super.setExceptionalConclusionDate(bean.getExceptionalConclusionDate());
+	// super.setLanguage(bean.getLanguage());
     }
 
-    final protected void init(final Registration registration, DateTime requestDate,
-	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
-	    final Boolean urgentRequest, final Boolean average, final Boolean detailed, final MobilityProgram mobilityProgram,
-	    final CycleType requestedCycle, final Boolean freeProcessed, final Boolean technicalEngineer,
-	    final Boolean internshipAbolished, final Boolean internshipApproved, final Boolean studyPlan,
-	    final YearMonthDay exceptionalConclusionDate) {
-
-	super.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		freeProcessed);
-
-	this.checkParameters(average, detailed, mobilityProgram, requestedCycle, internshipAbolished, internshipApproved,
-		studyPlan, exceptionalConclusionDate);
-	super.setAverage(average);
-	super.setDetailed(detailed);
-	super.setMobilityProgram(mobilityProgram);
-	super.setTechnicalEngineer(technicalEngineer);
-	super.setInternshipAbolished(internshipAbolished);
-	super.setInternshipApproved(internshipApproved);
-	super.setStudyPlan(studyPlan);
-	super.setExceptionalConclusionDate(exceptionalConclusionDate);
-    }
-
-    final private void checkParameters(final Boolean average, final Boolean detailed, final MobilityProgram mobilityProgram,
-	    final CycleType requestedCycle, final Boolean internshipAbolished, final Boolean internshipApproved,
-	    final Boolean studyPlan, final YearMonthDay exceptionalConclusionDate) {
-	if (average == null) {
+    @Override
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
+	if (bean.getAverage() == null) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.average.cannot.be.null");
 	}
 
-	if (detailed == null) {
+	if (bean.getDetailed() == null) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
 	}
 
-	if (mobilityProgram == null && hasAnyExternalEntriesToReport()) {
+	if (bean.getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null");
 	}
 
-	if ((internshipAbolished || internshipApproved || studyPlan) && exceptionalConclusionDate == null) {
+	if ((bean.getInternshipAbolished() || bean.getInternshipApproved() || bean.getStudyPlan())
+		&& bean.getExceptionalConclusionDate() == null) {
 	    throw new DomainException(
 		    "DegreeFinalizationCertificateRequest.must.indicate.date.for.exceptional.conclusion.situation");
 	}
 
 	if (getDegreeType().isComposite()) {
-	    if (requestedCycle == null) {
+	    if (bean.getRequestedCycle() == null) {
 		throw new DomainException("DegreeFinalizationCertificateRequest.requested.cycle.must.be.given");
-	    } else if (!getDegreeType().getCycleTypes().contains(requestedCycle)) {
+	    } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
 		throw new DomainException(
 			"DegreeFinalizationCertificateRequest.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
 	    }
 
-	    super.setRequestedCycle(requestedCycle);
+	    super.setRequestedCycle(bean.getRequestedCycle());
 	}
 
 	checkSpecificConditions();

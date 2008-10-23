@@ -5,37 +5,33 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.student.Registration;
-
-import org.joda.time.DateTime;
 
 public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
 
-    private ExternalCourseLoadRequest() {
+    protected ExternalCourseLoadRequest() {
 	super();
     }
 
-    public ExternalCourseLoadRequest(final Registration registration, DateTime requestDate, final ExecutionYear executionYear,
-	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
-	    final Integer numberOfCourseLoads, final Unit institution, final Boolean urgentRequest) {
+    public ExternalCourseLoadRequest(final DocumentRequestCreateBean bean) {
 	this();
-	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
-	checkParameters(numberOfCourseLoads, institution);
-	setNumberOfCourseLoads(numberOfCourseLoads);
-	setInstitution(institution);
+	bean.setFreeProcessed(Boolean.FALSE);
+	super.init(bean);
+
+	checkParameters(bean);
+	super.setNumberOfCourseLoads(bean.getNumberOfCourseLoads());
+	super.setInstitution(bean.getInstitution());
     }
 
-    private void checkParameters(final Integer numberOfCourseLoads, final Unit institution) {
-	if (numberOfCourseLoads == null || numberOfCourseLoads.intValue() == 0) {
+    @Override
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
+	if (bean.getNumberOfCourseLoads() == null || bean.getNumberOfCourseLoads().intValue() == 0) {
 	    throw new DomainException("error.ExternalCourseLoadRequest.invalid.numberOfCourseLoads");
 	}
-	if (institution == null) {
+	if (bean.getInstitution() == null) {
 	    throw new DomainException("error.ExternalCourseLoadRequest.invalid.institution");
 	}
     }
