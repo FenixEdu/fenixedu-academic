@@ -131,7 +131,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	    int count = 1;
 	    String degrees = "";
 	    for (final Degree degree : candidacy.getSelectedDegreesSortedByOrder()) {
-		degrees += count++ + " - " + degree.getName() + "\n";
+		degrees += count++ + " - " + degree.getNameFor(candidacy.getCandidacyExecutionInterval()) + "\n";
 	    }
 	    row.setCell(degrees);
 	}
