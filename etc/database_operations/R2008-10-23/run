@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update db to Standalone candidacy process" updates14102008.sql
