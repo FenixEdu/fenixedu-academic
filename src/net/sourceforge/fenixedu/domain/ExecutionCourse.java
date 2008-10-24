@@ -120,8 +120,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setAvailableForInquiries(Boolean.TRUE);
 
 	setNome(nome);
-	setSigla(sigla);
 	setExecutionPeriod(executionSemester);
+	setSigla(sigla);
 	setComment("");
 
 	createSite();
@@ -1896,7 +1896,27 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public void setSigla(String sigla) {
-	super.setSigla(sigla.replace(' ', '_').replace('/', '-'));
+	final String code = sigla.replace(' ', '_').replace('/', '-');
+	final String uniqueCode = findUniqueCode(code);
+	super.setSigla(uniqueCode);
+    }
+
+    private String findUniqueCode(final String code) {
+	if (!existsMatchingCode(code)) {
+	    return code;
+	}
+	int c;
+	for (c = 0; existsMatchingCode(code + "-" + c); c++);
+	return code + "-" + c;
+    }
+
+    private boolean existsMatchingCode(final String code) {
+	for (final ExecutionCourse executionCourse : getExecutionPeriod().getAssociatedExecutionCoursesSet()) {
+	     if (executionCourse != this && executionCourse.getSigla().equalsIgnoreCase(code)) {
+		 return true;
+	     }
+	}
+	return false;
     }
 
     public Collection<MarkSheet> getAssociatedMarkSheets() {
