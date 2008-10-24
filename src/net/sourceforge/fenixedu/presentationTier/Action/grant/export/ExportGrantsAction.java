@@ -8,6 +8,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
 import net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
@@ -31,11 +34,12 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportGrantsAction extends FenixDispatchAction {
 
+    private static final String separtor = " - ";
     final static DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
 
     public ActionForward searchGrants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	GrantSearch grantSearch = (GrantSearch) getRenderedObject("grantSearch");
+	GrantSearch grantSearch = (GrantSearch) getRenderedObject();
 	if (grantSearch == null) {
 	    grantSearch = new GrantSearch();
 	} else {
@@ -44,6 +48,14 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	if (request.getParameter("export") != null) {
 	    return exportGrants(mapping, form, request, response, grantSearch);
 	}
+	RenderUtils.invalidateViewState();
+	request.setAttribute("grantSearch", grantSearch);
+	return mapping.findForward("search-grants");
+    }
+
+    public ActionForward choicesPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	GrantSearch grantSearch = (GrantSearch) getRenderedObject();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("grantSearch", grantSearch);
 	return mapping.findForward("search-grants");
@@ -93,8 +105,12 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	    }
 	}
 	spreadsheet.addCell(endDate.toString());
-	spreadsheet.addCell(grantContractRegime.getTeacher().getTeacherNumber() + " - "
-		+ grantContractRegime.getTeacher().getPerson().getName());
+	if (grantContractRegime.getTeacher() != null) {
+	    spreadsheet.addCell(grantContractRegime.getTeacher().getTeacherNumber() + separtor
+		    + grantContractRegime.getTeacher().getPerson().getName());
+	} else {
+	    spreadsheet.addCell(separtor);
+	}
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantType().getSigla());
 
 	GrantSubsidy grantSubsidy = grantContractRegime.getGrantSubsidy();
@@ -109,7 +125,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 		    if (stringBuilder.length() != 0) {
 			stringBuilder.append("; ");
 		    }
-		    stringBuilder.append(grantPart.getGrantPaymentEntity().getNumber()).append(" - ").append(
+		    stringBuilder.append(grantPart.getGrantPaymentEntity().getNumber()).append(separtor).append(
 			    grantPart.getGrantPaymentEntity().getDesignation());
 		}
 	    }
@@ -134,12 +150,10 @@ public class ExportGrantsAction extends FenixDispatchAction {
 		    grantContractRegime.getGrantContract().getGrantInsurance().get$dateEndInsuranceYearMonthDay()).getDays();
 	    spreadsheet.addCell(totalDays, 15);
 	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue(), 16);
-	    spreadsheet
-		    .addCell(
-			    grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getNumber()
-				    + " - "
-				    + grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity()
-					    .getDesignation(), 17, true);
+	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getNumber()
+		    + separtor
+		    + grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getDesignation(), 17,
+		    true);
 	    if (betweenDates) {
 		LocalDate beginLocalDate = grantContractRegime.getGrantContract().getGrantInsurance()
 			.getDateBeginInsuranceYearMonthDay().toLocalDate();

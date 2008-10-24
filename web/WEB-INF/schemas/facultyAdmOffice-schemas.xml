@@ -1,15 +1,19 @@
-<schema name="search.grants.contract" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
-	<slot name="beginDate" key="label.grant.subsidy.dateBeginSubsidy"> 
+<schema name="search.grants.contract.dateInterval" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="datesTypeChoice" key="label.grant.searchChoice" layout="radio-postback"> 
+		<property name="destination" value="datesTypeChoicePostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="beginDate" key="label.grant.betweenDate"> 
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
-		<property name="size" value="10"/>
+		<property name="size" value="5"/>
 		</validator>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
-	<slot name="endDate" key="label.grant.subsidy.dateEndSubsidy"> 
+	<slot name="endDate" key="label.grant.andDate"> 
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
-		<property name="size" value="10"/>
+		<property name="size" value="5"/>
 		</validator>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
@@ -25,24 +29,69 @@
 		<property name="minChars" value="3"/>
 		<property name="errorStyleClass" value="error0"/>
 	</slot>
-	<slot name="active" key="label.grant.contract.regime.active" layout="option-select"/>
-	<slot name="inactive" key="label.grant.contract.regime.desactive" layout="option-select"/>
+	<slot name="activityChoice" key="label.grant.searchChoice" layout="radio-postback"> 
+		<property name="destination" value="datesTypeChoicePostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+</schema>
+
+<schema name="search.grants.contract.activityChoise" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="active" key="label.grant.active" layout="option-select"/>
+	<slot name="inactive" key="label.grant.inactive" layout="option-select"/>
+</schema>
+
+<schema name="search.grants.contract.date" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="datesTypeChoice" key="label.grant.searchChoice" layout="radio-postback"> 
+		<property name="destination" value="datesTypeChoicePostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="beginDate" key="label.grant.date"> 
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="responsible" layout="autoComplete" key="label.grant.paymententity.teacher">
+		<property name="size" value="80"/>
+		<property name="labelField" value="person.name"/>	
+		<property name="rawSlotName" value="responsibleName"/>
+		<property name="format" value="${person.name}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<slot name="activityChoice" key="label.grant.searchChoice" layout="radio-postback"> 
+		<property name="destination" value="datesTypeChoicePostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+</schema>
+
+<schema name="search.grants.subsidy.typeChoice" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="subsidyCostCenterOrProjectChoice" key="label.grant.owner.infoperson.documentIdType" layout="radio-postback">
+       <property name="destination" value="subsidyTypeChoicePostBack"/>
+       <property name="classes" value="nobullet liinline"/>
+    </slot>
 </schema>
 
 <schema name="search.grants.subsidy" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
-	<slot name="isSubsidyCostCenter" key="label.grant.owner.infoperson.documentIdType" layout="radio">
-        <property name="trueLabel" value="label.grant.part.paymentEntity.costCenter"/>
-        <property name="falseLabel" value="label.grant.part.paymentEntity.project"/>
-        <property name="classes" value="nobullet liinline"/>
+	<slot name="subsidyCostCenterOrProjectChoice" key="label.grant.owner.infoperson.documentIdType" layout="radio-postback">
+       <property name="destination" value="subsidyTypeChoicePostBack"/>
+       <property name="classes" value="nobullet liinline"/>
     </slot>
 	<slot name="subsidyCostCenterOrProject" key="label.list.byCriteria.grant.owner.numberCostCenter"/>
 </schema>
 
+<schema name="search.grants.insurance.typeChoice" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="insuranceCostCenterOrProjectChoice" key="label.grant.owner.infoperson.documentIdType" layout="radio-postback">
+       <property name="destination" value="insuranceTypeChoicePostBack"/>
+       <property name="classes" value="nobullet liinline"/>
+    </slot>
+</schema>
+
 <schema name="search.grants.insurance" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
-	<slot name="isInsuranceCostCenter" key="label.grant.owner.infoperson.documentIdType" layout="radio">
-        <property name="trueLabel" value="label.grant.part.paymentEntity.costCenter"/>
-        <property name="falseLabel" value="label.grant.part.paymentEntity.project"/>
-        <property name="classes" value="nobullet liinline"/>
+	<slot name="insuranceCostCenterOrProjectChoice" key="label.grant.owner.infoperson.documentIdType" layout="radio-postback">
+       <property name="destination" value="insuranceTypeChoicePostBack"/>
+       <property name="classes" value="nobullet liinline"/>
     </slot>
 	<slot name="insuranceCostCenterOrProject" key="label.list.byCriteria.grant.owner.numberCostCenter"/>
 </schema>
