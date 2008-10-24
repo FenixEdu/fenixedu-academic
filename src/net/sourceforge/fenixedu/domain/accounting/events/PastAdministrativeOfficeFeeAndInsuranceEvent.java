@@ -56,4 +56,10 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
 	return Collections.singleton(EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
     }
+
+    @Override
+    public boolean isInDebt() {
+	return isOpen();
+    }
+
 }
