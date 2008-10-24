@@ -91,7 +91,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	    }
 	}
 
-	if (parkingParty.canRequestUnlimitedCard()) {
+	if (parkingParty.hasRolesToRequestUnlimitedCard()) {
 	    if (ParkingRequestPeriod.getCurrentRequestPeriod() != null) {
 		request.setAttribute("allowToChoose", "true");
 	    } else {

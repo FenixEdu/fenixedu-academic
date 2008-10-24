@@ -720,13 +720,18 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean canRequestUnlimitedCard(ParkingRequestPeriod parkingRequestPeriod) {
-	List<RoleType> roles = getSubmitAsRoles();
 	if (!alreadyRequestParkingRequestTypeInPeriod(ParkingRequestType.RENEW, parkingRequestPeriod)) {
-	    if (roles.contains(RoleType.GRANT_OWNER)) {
-		return Boolean.TRUE;
-	    } else if (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
-		return Boolean.TRUE;
-	    }
+	    return hasRolesToRequestUnlimitedCard();
+	}
+	return Boolean.FALSE;
+    }
+
+    public boolean hasRolesToRequestUnlimitedCard() {
+	List<RoleType> roles = getSubmitAsRoles();
+	if (roles.contains(RoleType.GRANT_OWNER)) {
+	    return Boolean.TRUE;
+	} else if (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
+	    return Boolean.TRUE;
 	}
 	return Boolean.FALSE;
     }
