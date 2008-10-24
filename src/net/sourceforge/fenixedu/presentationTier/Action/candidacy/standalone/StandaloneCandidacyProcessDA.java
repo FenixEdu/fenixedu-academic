@@ -106,6 +106,15 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 		setCandidacyProcessInformation(request, candidacyProcess);
 		setCandidacyProcessInformation(actionForm, getProcess(request));
 	    } else {
+		final List<StandaloneCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+
+		if (candidacyProcesses.size() == 1) {
+		    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+		    setCandidacyProcessInformation(actionForm, getProcess(request));
+		    request.setAttribute("candidacyProcesses", candidacyProcesses);
+		    return;
+		}
+		
 		request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
 		request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
 	    }

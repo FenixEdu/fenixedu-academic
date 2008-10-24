@@ -51,7 +51,8 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	}
 
 	if (personHasDegree(person, selectedDegree)) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.existing.degree", selectedDegree.getName());
+	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.existing.degree", selectedDegree.getNameFor(
+		    getCandidacyExecutionInterval()).getContent());
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -119,8 +120,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
 	    Ingression ingression) {
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
-	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
-		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
     }
 

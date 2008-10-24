@@ -107,6 +107,8 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	final Registration registration = new Registration(person, degreeCurricularPlan);
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
+	registration.setRegistrationYear(getCandidacyExecutionInterval().getExecutionYear());
+
 	setRegistration(registration);
 
 	person.addPersonRoleByRoleType(RoleType.PERSON);

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess;
@@ -84,9 +83,17 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     @Override
     protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	if (!hasExecutionInterval(request)) {
-	    request.setAttribute("executionInterval", ExecutionYear.readCurrentExecutionYear());
+	    final List<ExecutionInterval> executionIntervals = ExecutionInterval
+		    .readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+	    if (executionIntervals.size() == 1) {
+		setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
+	    } else {
+		request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+		request.setAttribute("executionIntervals", executionIntervals);
+	    }
+	} else {
+	    setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
 	}
-	setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
     }
 
     public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,

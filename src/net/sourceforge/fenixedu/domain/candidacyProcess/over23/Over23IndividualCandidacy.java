@@ -154,8 +154,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
 	    Ingression ingression) {
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
-	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
-		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
     }
 

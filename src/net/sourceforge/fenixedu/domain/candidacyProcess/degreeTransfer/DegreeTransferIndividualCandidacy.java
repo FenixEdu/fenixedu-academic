@@ -57,7 +57,8 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	}
 
 	if (personHasDegree(person, selectedDegree)) {
-	    throw new DomainException("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getName());
+	    throw new DomainException("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
+		    getCandidacyExecutionInterval()).getContent());
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -101,8 +102,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
 	    Ingression ingression) {
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
-	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
-		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	createInternalAbandonStateInPreviousRegistration();
 	return registration;
     }
@@ -139,7 +139,8 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	}
 
 	if (personHasDegree(getPerson(), selectedDegree)) {
-	    throw new DomainException("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getName());
+	    throw new DomainException("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
+		    getCandidacyExecutionInterval()).getContent());
 	}
 
 	if (precedentDegreeInformation == null) {

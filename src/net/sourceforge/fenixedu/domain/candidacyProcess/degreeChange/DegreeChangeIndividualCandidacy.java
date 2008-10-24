@@ -57,7 +57,8 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	}
 
 	if (personHasDegree(person, selectedDegree)) {
-	    throw new DomainException("error.DegreeChangeIndividualCandidacy.existing.degree", selectedDegree.getName());
+	    throw new DomainException("error.DegreeChangeIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
+		    getCandidacyExecutionInterval()).getContent());
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -123,7 +124,8 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	}
 
 	if (personHasDegree(getPerson(), selectedDegree)) {
-	    throw new DomainException("error.DegreeChangeIndividualCandidacy.existing.degree", selectedDegree.getName());
+	    throw new DomainException("error.DegreeChangeIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
+		    getCandidacyExecutionInterval()).getContent());
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -156,8 +158,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
 	    Ingression ingression) {
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
-	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
-		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	createInternalAbandonStateInPreviousRegistration();
 	return registration;
     }

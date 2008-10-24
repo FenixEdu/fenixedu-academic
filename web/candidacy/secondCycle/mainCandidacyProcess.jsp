@@ -31,7 +31,7 @@
 					<td>
 						<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" onchange="this.form.submit();">
 							<html:option value=""><!-- w3c complient --></html:option>
-							<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+							<html:options collection="executionIntervals" property="idInternal" labelProperty="qualifiedName"/>
 						</html:select>
 					</td>
 				</tr>
@@ -71,38 +71,41 @@
 		</html:link>
 	</logic:equal>
 
-	<logic:greaterThan name="candidacyProcessesSize" value="1">
-		<br/>
-		<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
-			<table class="tstyle4 thlight thright mtop025">
-				<tr>
-					<th><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" /></th>
-					<td>
-						<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" onchange="this.form.submit();">
-							<html:option value=""><!-- w3c complient --></html:option>
-							<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
-						</html:select>
-					</td>
-				</tr>
-				<logic:notEmpty name="candidacyProcesses">
-				<tr>
-					<th><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES" /></th>
-					<td>
-						<html:select bundle="HTMLALT_RESOURCES" property="selectedProcessId">
-							<html:option value=""><!-- w3c complient --></html:option>
-							<html:options collection="candidacyProcesses" property="idInternal" labelProperty="candidacyPeriod.presentationName"/>
-						</html:select>
-					</td>
-				</tr>
-				</logic:notEmpty>
-				<tr>
-					<td> </td>
-					<td><html:submit><bean:message key="label.choose"/> </html:submit></td>
-				</tr>
-			</table>
-		</html:form>
-		<br/>
-	</logic:greaterThan>
+	<br/>
+	<br/>
+
+	<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
+		<table class="tstyle4 thlight thright mtop025">
+			<tr>
+				<th><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" /></th>
+				<td>
+					<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" onchange="this.form.submit();">
+						<html:option value=""><!-- w3c complient --></html:option>
+						<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+					</html:select>
+				</td>
+			</tr>
+			<logic:notEmpty name="candidacyProcesses">
+				<logic:greaterThan name="candidacyProcessesSize" value="1">
+					<tr>
+						<th><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES" /></th>
+						<td>
+							<html:select bundle="HTMLALT_RESOURCES" property="selectedProcessId">
+								<html:option value=""><!-- w3c complient --></html:option>
+								<html:options collection="candidacyProcesses" property="idInternal" labelProperty="candidacyPeriod.presentationName"/>
+							</html:select>
+						</td>
+					</tr>
+				</logic:greaterThan>
+			</logic:notEmpty>
+			<tr>
+				<td> </td>
+				<td><html:submit><bean:message key="label.choose"/> </html:submit></td>
+			</tr>
+		</table>
+	</html:form>
+	<br/>
+
 
 	<%-- show main process information --%>
 	<fr:view name="process" schema="CandidacyProcess.view">
@@ -145,7 +148,6 @@
 				<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
 				<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
-				<fr:property name="visibleIfNot(viewProcess)" value="candidacyCancelled" />
 							
 				<fr:property name="sortParameter" value="sortBy"/>
 	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'/>

@@ -146,8 +146,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
 	    final CycleType cycleType, final Ingression ingression) {
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
-	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
-		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
     }
 

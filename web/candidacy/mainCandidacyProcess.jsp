@@ -39,6 +39,13 @@
 
 	<bean:define id="processId" name="process" property="idInternal" />
 	<bean:define id="childProcessName" name="childProcessName" />
+
+	<logic:equal name="canCreateProcess" value="true">
+		<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareCreateNewProcess"%>'>
+		<bean:message key='<%= "link.create.new.process." + processName.toString()%>' bundle="APPLICATION_RESOURCES"/>	
+		</html:link>
+	</logic:equal>
+	<br/>
 	
 	<%-- show execution intervals  --%>
 	<bean:define id="executionIntervalId" name="executionIntervalId" />
