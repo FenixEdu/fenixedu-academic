@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <h2>
-	<bean:message key="link.manage.finalWork"/>
+	<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.finalWork"/>
 </h2>
 
 <p>
@@ -15,7 +15,7 @@
 <logic:present name="infoScheduleing">
 	<p>
 		<span class="error0"><!-- Error messages go here -->
-			<bean:message key="finalDegreeWorkProposal.ProposalPeriod.interval"/>
+			<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.ProposalPeriod.interval"/>
 			<dt:format pattern="dd/MM/yyyy HH:mm">
 				<bean:write name="infoScheduleing" property="startOfProposalPeriod.time"/>
 			</dt:format>
@@ -33,7 +33,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.responsibleCreditsPercentage" property="responsibleCreditsPercentage"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage"/>
 
-	<p class="mtop15 mbottom05"><strong><bean:message key="label.teacher.finalWork.chooseDegreeAndYear"/>:</strong></p>
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.chooseDegreeAndYear"/>:</strong></p>
 	
 	<table class="tstyle5 mtop05">
 		<tr>
@@ -44,7 +44,7 @@
 					<html:options collection="infoExecutionYears" property="idInternal" labelProperty="nextExecutionYearYear" />
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="button.submit"/>
 				</html:submit>
 			</td>
 			<td>
@@ -54,16 +54,16 @@
 					<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.presentationName" />
 				</html:select>
 				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="button.submit"/>
 				</html:submit>
 			</td>
 		</tr>
 	</table>
 	
-	<p class="mbottom05"><strong><bean:message key="label.teacher.finalWork.role" />:</strong></p>
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="responsable" /><bean:message key="label.teacher.finalWork.responsable"/><br/>
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="coResponsable" /><bean:message key="label.teacher.finalWork.coResponsable"/><br/>
-	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.create"/></html:submit></p>
+	<p class="mbottom05"><strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.role" />:</strong></p>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="responsable" /><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.responsable"/><br/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="coResponsable" /><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.coResponsable"/><br/>
+	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="APPLICATION_RESOURCES" key="button.create"/></html:submit></p>
 </html:form>
 
 
@@ -74,16 +74,16 @@
 				<th class="listClasses-header" rowspan="2" colspan="2">
 				</th>
 				<th class="listClasses-header" rowspan="2">
-					<bean:message key="finalDegreeWorkProposalHeader.number"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.number"/>
 				</th>
 				<th class="listClasses-header" rowspan="2">
-					<bean:message key="finalDegreeWorkProposalHeader.title"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.title"/>
 				</th>
 				<th class="listClasses-header">
-					<bean:message key="finalDegreeWorkProposalHeader.orientatorName"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.orientatorName"/>
 				</th>
 				<th class="listClasses-header" rowspan="2">
-					<bean:message key="finalDegreeWorkProposalHeader.companyLink"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.companyLink"/>
 				</th>
 				<th class="listClasses-header" rowspan="2">
 				</th>
@@ -92,7 +92,7 @@
 			</tr>
 			<tr>
 		        <th class="listClasses-header">
-		        	<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
+		        	<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.coorientatorName"/>
 	    	    </th>
 			</tr>
 			<% java.util.Set processedExecutionDegreeIds = new java.util.HashSet(); %>
@@ -102,7 +102,7 @@
 				<logic:equal name="executionDegreeId"value="<%= degree.toString() %>">
 					<tr>
 						<th class="listClasses-header" rowspan="2" colspan="2">
-							<bean:message key="finalDegreeWorkProposalHeader.proposal"/>
+							<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.proposal"/>
 						</th>				
 						<td class="listClasses" rowspan="2">
 							<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/> 
@@ -129,7 +129,7 @@
 						</td>
 						<td class="listClasses" rowspan="2">
 				        	<html:link target="_blank" page="<%= "/finalWorkManagement.do?method=print&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
-								<bean:message key="print"/>
+								<bean:message bundle="APPLICATION_RESOURCES" key="print"/>
 					        </html:link>
 						</td>
 					</tr>
@@ -152,25 +152,25 @@
 						
 							<tr>
 								<td bgcolor="#a2aebc" align="center" rowspan="<%= total %>">
-									<bean:message key="finalDegreeWorkProposalHeader.candidates"/>
+									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidates"/>
 								</td>
 								<td bgcolor="#a2aebc" align="center">
-									<bean:message key="finalDegreeWorkProposalHeader.teacher.attribute"/>
+									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.teacher.attribute"/>
 								</td>
 								<td bgcolor="#a2aebc" align="center">
-									<bean:message key="finalDegreeWorkProposalHeader.candidacies.student.preference"/>
+									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.preference"/>
 								</td>
 								<td bgcolor="#a2aebc" align="center">
-									<bean:message key="finalDegreeWorkProposalHeader.candidacies.student.number"/>
+									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.number"/>
 								</td>
 								<td bgcolor="#a2aebc" align="center">
-									<bean:message key="finalDegreeWorkProposalHeader.candidacies.student.name"/>
+									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.name"/>
 								</td>
 								<td bgcolor="#a2aebc" align="center">
-									<bean:message key="finalDegreeWorkProposalHeader.candidacies.student.email"/>
+									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.email"/>
 								</td>
 								<td bgcolor="#a2aebc" align="center">
-									<bean:message key="finalDegreeWorkProposalHeader.candidacies.student.phone"/>
+									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.phone"/>
 								</td>
 								<td bgcolor="#a2aebc" align="center">
 								</td>
@@ -210,7 +210,7 @@
 								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
 								<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedGroupProposals" property="selectedGroupProposals" onclick="this.form.submit();"><bean:write name="groupProposal" property="idInternal"/></html:multibox>
 								<html:submit styleClass="switchNone" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-								<bean:message key="button.submit"/>
+								<bean:message bundle="APPLICATION_RESOURCES" key="button.submit"/>
 								</html:submit>															
 									</html:form>									
 
@@ -251,7 +251,7 @@
 												<logic:notEmpty name="groupStudent" property="finalDegreeWorkProposalConfirmation">
 													<bean:define id="proposalID" name="finalDegreeWorkProposalHeader" property="idInternal"/>
 													<logic:equal name="groupStudent" property="finalDegreeWorkProposalConfirmation.idInternal" value="<%= proposalID.toString() %>">
-														<bean:message key="label.attribution.confirmed"/>
+														<bean:message bundle="APPLICATION_RESOURCES" key="label.attribution.confirmed"/>
 													</logic:equal>
 												</logic:notEmpty>
 											</td>											
@@ -291,7 +291,7 @@
 												<logic:notEmpty name="groupStudent" property="finalDegreeWorkProposalConfirmation">
 													<bean:define id="proposalID" name="finalDegreeWorkProposalHeader" property="idInternal"/>
 													<logic:equal name="groupStudent" property="finalDegreeWorkProposalConfirmation.idInternal" value="<%= proposalID.toString() %>">
-														<bean:message key="label.attribution.confirmed"/>
+														<bean:message bundle="APPLICATION_RESOURCES" key="label.attribution.confirmed"/>
 													</logic:equal>
 												</logic:notEmpty>
 											</td>
@@ -306,12 +306,12 @@
 		</table>
 	</logic:greaterEqual>
 	<logic:lessThan name="finalDegreeWorkProposalHeaders" value="1">
-		<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 	</logic:lessThan>
 </logic:present>
 
 <logic:notPresent name="finalDegreeWorkProposalHeaders">
-	<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 </logic:notPresent>
 
 <script type="text/javascript" language="javascript">

@@ -11,7 +11,7 @@
 	<table>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.title"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.title"/>
 			</td>
 		</tr>
 		<tr>
@@ -21,23 +21,23 @@
 		</tr>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.responsable"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.responsable"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.number"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>
 			</th>
 			<th class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.name"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.name"/>
 			</th>
 			<th class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.credits.short"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.credits.short"/>
 			</th>
 		</tr>
 		<tr>
 			<td class="listClasses">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.person.teacher.teacherNumber"/>
+				<bean:write name="finalDegreeWorkProposal" property="orientator.person.employee.employeeNumber"/>
 			</td>
 			<td class="listClasses">
 				<bean:write name="finalDegreeWorkProposal" property="orientator.person.name"/>
@@ -49,24 +49,24 @@
 		<logic:present name="finalDegreeWorkProposal" property="coorientator">
 			<tr>
 				<td class="listClasses-supheader" colspan="3">
-					<bean:message key="label.teacher.finalWork.coResponsable"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.coResponsable"/>
 				</td>
 			</tr>
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.number"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>
 				</th>
 				<th class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.name"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.name"/>
 				</th>
 				<th class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.credits.short"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.credits.short"/>
 				</th>
 			</tr>
 			<tr>
 				<td class="listClasses">
 					<logic:present name="finalDegreeWorkProposal" property="coorientator.person.teacher">
-						<bean:write name="finalDegreeWorkProposal" property="coorientator.person.teacher.teacherNumber"/>
+						<bean:write name="finalDegreeWorkProposal" property="coorientator.person.employee.employeeNumber"/>
 					</logic:present>
 					<logic:notPresent name="finalDegreeWorkProposal" property="coorientator.person.teacher">
 						<logic:present name="finalDegreeWorkProposal" property="coorientator.person.employee">
@@ -85,12 +85,12 @@
 		<logic:present name="finalDegreeWorkProposal" property="companionName">
 			<tr>
 				<td class="listClasses-supheader" colspan="3">
-					<bean:message key="label.teacher.finalWork.companion"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.companion"/>
 				</td>
 			</tr>
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.name"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.name"/>
 				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companionName"/>
@@ -98,7 +98,7 @@
 			</tr>			
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.mail"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.mail"/>
 				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companionMail"/>
@@ -106,7 +106,7 @@
 			</tr>			
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.phone"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.phone"/>
 				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companionPhone"/>
@@ -114,7 +114,7 @@
 			</tr>			
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.companyName"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.companyName"/>
 				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companyName"/>
@@ -122,7 +122,7 @@
 			</tr>			
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.companyAdress"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.companyAdress"/>
 				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companyAdress"/>
@@ -131,7 +131,7 @@
 		</logic:present>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.framing"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.framing"/>
 			</td>
 		</tr>
 		<tr>
@@ -141,7 +141,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.objectives"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.objectives"/>
 			</td>
 		</tr>
 		<tr>
@@ -151,7 +151,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.description"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.description"/>
 			</td>
 		</tr>
 		<tr>
@@ -161,7 +161,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.requirements"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.requirements"/>
 			</td>
 		</tr>
 		<tr>
@@ -171,7 +171,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses-supheader" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.deliverable"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.deliverable"/>
 			</td>
 		</tr>
 		<tr>
@@ -181,7 +181,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.url"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.url"/>
 			</td>
 		</tr>
 		<tr>
@@ -194,7 +194,7 @@
 		<logic:present name="finalDegreeWorkProposal" property="branches">
 			<tr>
 				<td class="listClasses-supheader" colspan="3">
-					<bean:message key="label.teacher.finalWork.priority.info"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.priority.info"/>
 				</td>
 			</tr>
 			<logic:iterate id="branch" name="finalDegreeWorkProposal" property="branches">
@@ -209,12 +209,12 @@
 <!--
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.numberOfGroupElements"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.numberOfGroupElements"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.minimumNumberGroupElements"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.minimumNumberGroupElements"/>
 			</th>
 			<td class="listClasses" colspan="2">
 				<bean:write name="finalDegreeWorkProposal" property="minimumNumberOfGroupElements"/>
@@ -222,7 +222,7 @@
 		</tr>
 		<tr>
 			<th class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.maximumNumberGroupElements"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.maximumNumberGroupElements"/>
 			</th>
 			<td class="listClasses" colspan="2">
 				<bean:write name="finalDegreeWorkProposal" property="maximumNumberOfGroupElements"/>
@@ -232,7 +232,7 @@
 <!--
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.degreeType"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.degreeType"/>
 			</td>
 		</tr>
 		<tr>
@@ -243,7 +243,7 @@
 -->
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.observations"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.observations"/>
 			</td>
 		</tr>
 		<tr>
@@ -253,7 +253,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.location"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.location"/>
 			</td>
 		</tr>
 		<tr>
@@ -264,5 +264,5 @@
 	</table>
 </logic:present>
 <logic:notPresent name="finalDegreeWorkProposal">
-	<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposal.notPresent"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.notPresent"/></span>
 </logic:notPresent>

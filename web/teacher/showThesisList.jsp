@@ -6,24 +6,24 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<h2><bean:message key="label.thesis.document.confirmation"/></h2>
+<h2><bean:message bundle="APPLICATION_RESOURCES" key="label.thesis.document.confirmation"/></h2>
 
 
 	<div class="color888">
-	    <p class="mvert0"><bean:message key="ThesisPresentationState.UNEXISTING.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.UNEXISTING.label"/></p>
-	    <p class="mvert0"><bean:message key="ThesisPresentationState.DRAFT.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.DRAFT.label"/></p>
-	    <p class="mvert0"><bean:message key="ThesisPresentationState.SUBMITTED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.SUBMITTED.label"/></p>
-	    <p class="mvert0"><bean:message key="ThesisPresentationState.REJECTED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.REJECTED.label"/></p>
-	    <p class="mvert0"><bean:message key="ThesisPresentationState.APPROVED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.APPROVED.label"/></p>
-	    <p class="mvert0"><bean:message key="ThesisPresentationState.DOCUMENTS_SUBMITTED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.DOCUMENTS_SUBMITTED.label"/></p>
-        <p class="mvert0"><bean:message key="ThesisPresentationState.DOCUMENTS_CONFIRMED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.DOCUMENTS_CONFIRMED.label"/></p>
-	    <p class="mvert0"><bean:message key="ThesisPresentationState.CONFIRMED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.CONFIRMED.label"/></p>
-	    <p class="mvert0"><bean:message key="ThesisPresentationState.EVALUATED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.EVALUATED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.UNEXISTING.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.UNEXISTING.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.DRAFT.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.DRAFT.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.SUBMITTED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.SUBMITTED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.REJECTED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.REJECTED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.APPROVED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.APPROVED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.DOCUMENTS_SUBMITTED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.DOCUMENTS_SUBMITTED.label"/></p>
+        <p class="mvert0"><bean:message key="ThesisPresentationState.DOCUMENTS_CONFIRMED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.DOCUMENTS_CONFIRMED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.CONFIRMED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.CONFIRMED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.EVALUATED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.EVALUATED.label"/></p>
     </div>
 
 	<br/>
 
-	<bean:message key="label.thesis.teacher.oriented"/>:
+	<bean:message bundle="APPLICATION_RESOURCES" key="label.thesis.teacher.oriented"/>:
     <fr:view name="orientedTheses" schema="teacher.thesis.table">
         <fr:layout name="tabular-sortable">
             <fr:property name="classes" value="tstyle1"/>
@@ -46,7 +46,7 @@
 
 	<br/>
 
-	<bean:message key="label.thesis.teacher.cooriented"/>:
+	<bean:message bundle="APPLICATION_RESOURCES" key="label.thesis.teacher.cooriented"/>:
     <fr:view name="coorientedTheses" schema="teacher.thesis.table">
         <fr:layout name="tabular-sortable">
             <fr:property name="classes" value="tstyle1"/>

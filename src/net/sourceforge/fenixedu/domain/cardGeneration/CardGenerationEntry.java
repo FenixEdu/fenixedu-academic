@@ -206,7 +206,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	if (degreeName.length() > 42) {
 	    throw new Error("Degree name exceeds max length: " + degreeName + " has length: " + degreeName.length());
 	}
-	return degreeName;
+	return degreeName.replace(',', ' ');
     }
 
     public static String normalize(final String string) {

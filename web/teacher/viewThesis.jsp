@@ -8,7 +8,7 @@
 
 <html:xhtml/>
 
-<em><bean:message key="label.thesis.document.confirmation"/></em>
+<em><bean:message bundle="APPLICATION_RESOURCES" key="label.thesis.document.confirmation"/></em>
 <h2><bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="title.scientificCouncil.thesis.evaluated.view"/></h2>
 
 <ul>
@@ -20,7 +20,7 @@
 	<logic:equal name="thesisPresentationState" property="name" value="DOCUMENTS_SUBMITTED">
     	<li>
         	<html:link page="/thesisDocumentConfirmation.do?method=showConfirmationPage" paramId="thesisID" paramName="thesis" paramProperty="idInternal">
-            	<bean:message key="link.thesis.confirm.documents"/>
+            	<bean:message bundle="APPLICATION_RESOURCES" key="link.thesis.confirm.documents"/>
         	</html:link>
     	</li>
     </logic:equal>
@@ -29,16 +29,16 @@
 <logic:present name="showConfirmationPage">
     <div class="warning0" style="padding: 1em;">
         <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
-        <bean:message key="label.teacher.thesis.confirm.documents"/>
+        <bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.thesis.confirm.documents"/>
         <div class="mtop1 forminline">
         <fr:form action="<%= String.format("/thesisDocumentConfirmation.do?method=confirmDocuments&amp;thesisID=%s", thesisId) %>">
                 <html:submit>
-                    <bean:message key="button.thesis.confirm.documents"/>
+                    <bean:message bundle="APPLICATION_RESOURCES" key="button.thesis.confirm.documents"/>
                 </html:submit>
             </fr:form>
         <fr:form action="<%= String.format("/thesisDocumentConfirmation.do?method=viewThesis&amp;thesisID=%s", thesisId) %>">
                 <html:cancel>
-                    <bean:message key="button.cancel"/>
+                    <bean:message bundle="APPLICATION_RESOURCES" key="button.cancel"/>
                 </html:cancel>
             </fr:form>
         </div>
@@ -66,10 +66,10 @@
 <%-- general process information --%>
 <div class="infoop2 mtop1">
 	<p class="mvert0">
-		<strong><bean:message key="label.comments"/>:</strong>
+		<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.comments"/>:</strong>
 		<logic:empty name="thesis" property="comment">
 			<logic:empty name="thesis" property="rejectionComment">
-				<bean:message key="message.no.comments"/>
+				<bean:message bundle="APPLICATION_RESOURCES" key="message.no.comments"/>
 			</logic:empty>
 		</logic:empty>
 		<bean:write name="thesis" property="comment"/>
@@ -80,7 +80,7 @@
 <div class="infoop2 mtop1">
 	<bean:define id="stateKey" type="java.lang.String">ThesisPresentationState.<bean:write name="thesisPresentationState" property="name"/>.label</bean:define>
 	<p class="mvert0">
-		<strong><bean:message key="<%= stateKey %>"/></strong>
+		<strong><bean:message bundle="APPLICATION_RESOURCES" key="<%= stateKey %>"/></strong>
 	</p>
 </div>
 

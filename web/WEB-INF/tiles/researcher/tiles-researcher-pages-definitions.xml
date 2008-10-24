@@ -254,4 +254,37 @@
     <definition name="browse-researchers-results" extends="researcher.masterPage">
        <put name="body" value="/researcher/expertDetails/browserResearchers.jsp"/>  
     </definition>
+
+	<definition name="df.page.tfcSubmit" extends="researcher.masterPage">
+		<put name="body" value="/teacher/submitTFC_bd.jsp"></put>		
+	</definition>
+	<definition name="df.page.chooseDegreeForFinalWorkProposal" extends="researcher.masterPage">
+		<put name="body" value="/teacher/chooseDegreeForFinalWorkProposal_bd.jsp"/>
+	</definition>
+	<definition name="df.page.finalWorkSubmit" extends="researcher.masterPage">
+		<put name="body" value="/teacher/submitFinalWorkProposal_bd.jsp"></put>
+	</definition>
+	<definition name="df.page.viewfinalDegreeWorkProposal" extends="researcher.masterPage">
+		<put name="body" value="/teacher/viewFinalDegreeWorkProposal_bd.jsp"></put>
+	</definition>	
+	<definition name="df.page.final.degree.work.print" extends="df.layout.print">
+		<put name="body" value="/teacher/printFinalDegreeWorkProposal_bd.jsp"></put>
+	</definition>
+	<definition name="df.page.showStudentCurricularPlans" extends="researcher.masterPage">
+		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp"/>
+	</definition>
+	<definition name="df.page.showStudentCurriculum" extends="researcher.masterPage" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>
+	<definition name="df.page.notAuthorized" extends="researcher.masterPage" >
+		<put name="body" value="/student/notAuthorized_bd.jsp" />
+	</definition>
+
+	<definition name="df.page.showThesisList" extends="researcher.masterPage">
+		<put name="body" value="/teacher/showThesisList.jsp" />
+	</definition>
+	<definition name="df.page.viewThesis" extends="researcher.masterPage">
+		<put name="body" value="/teacher/viewThesis.jsp"/>
+	</definition>
+
 </tiles-definitions>
