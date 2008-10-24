@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EmailBean implements Serializable {
 
@@ -90,7 +92,21 @@ public class EmailBean implements Serializable {
 
     @Service
     public Message send() {
-	return new Message(getSender(), getRecipients(), getSubject(), getMessage(), getBccs());
+	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+
+	final StringBuilder message = new StringBuilder();
+	message.append(getMessage());
+	message.append("\n\n---\n");
+	message.append(resourceBundle.getString("message.email.footer.prefix"));
+	message.append(getSender().getFromName());
+	message.append(resourceBundle.getString("message.email.footer.prefix.suffix"));
+	for (final Recipient recipient : getRecipients()) {
+	    message.append("\n\t");
+	    message.append(recipient.getToName());
+	}
+	message.append("\n");
+
+	return new Message(getSender(), getRecipients(), getSubject(), message.toString(), getBccs());
     }
 
 }
