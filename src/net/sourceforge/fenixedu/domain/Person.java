@@ -2991,14 +2991,6 @@ public class Person extends Person_Base {
 	return hasValidIndividualCandidacy(DegreeCandidacyForGraduatedPerson.class, executionInterval);
     }
 
-    public boolean hasValidDegreeChangeIndividualCandidacy(final ExecutionInterval executionInterval) {
-	return hasValidIndividualCandidacy(DegreeChangeIndividualCandidacy.class, executionInterval);
-    }
-
-    public boolean hasValidDegreeTransferIndividualCandidacy(final ExecutionInterval executionInterval) {
-	return hasValidIndividualCandidacy(DegreeTransferIndividualCandidacy.class, executionInterval);
-    }
-
     public boolean hasValidStandaloneIndividualCandidacy(final ExecutionInterval executionInterval) {
 	return hasValidIndividualCandidacy(StandaloneIndividualCandidacy.class, executionInterval);
     }
