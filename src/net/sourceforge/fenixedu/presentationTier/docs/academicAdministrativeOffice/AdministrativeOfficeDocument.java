@@ -141,6 +141,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	result.append(new DateTime().toString(YYYYMMMDD, getLocale()));
 	result.append("-");
 	result.append(getDocumentRequest().getDescription().replace(":", EMPTY_STR).replace(SINGLE_SPACE, EMPTY_STR));
+	result.append("-");
+	result.append(getLanguage().toString());
 
 	return result.toString();
     }
