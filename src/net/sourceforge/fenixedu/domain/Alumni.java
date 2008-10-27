@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -133,7 +134,9 @@ public class Alumni extends Alumni_Base {
     }
 
     public List<Job> getJobs() {
-	return getStudent().getPerson().getJobs();
+	ArrayList<Job> jobs = new ArrayList<Job>(getStudent().getPerson().getJobs());
+	Collections.sort(jobs, Job.REVERSE_COMPARATOR_BY_BEGIN_DATE);
+	return jobs;
     }
 
     public Job getLastJob() {
@@ -163,7 +166,9 @@ public class Alumni extends Alumni_Base {
     }
 
     public List<Formation> getFormations() {
-	return getStudent().getPerson().getFormations();
+	ArrayList<Formation> formations = new ArrayList<Formation>(getStudent().getPerson().getFormations());
+	Collections.sort(formations, Formation.COMPARATOR_BY_BEGIN_YEAR);
+	return formations;
     }
 
     public PhysicalAddress getUpdatableAddress() {
@@ -276,5 +281,9 @@ public class Alumni extends Alumni_Base {
 
     public String getName() {
 	return getStudent().getPerson().getName();
+    }
+    
+    public boolean getAlumniConditions() {
+	return isRegistered() || hasFinishedPublicRegistry();
     }
 }

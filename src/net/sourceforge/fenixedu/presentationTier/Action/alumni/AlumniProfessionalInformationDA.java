@@ -21,7 +21,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
     public ActionForward innerProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	request.setAttribute("alumniPerson", getLoggedPerson(request));
+	request.setAttribute("alumniJobs", getLoggedPerson(request).getStudent().getAlumni().getJobs());
 	return mapping.findForward("innerProfessionalInformation");
     }
 

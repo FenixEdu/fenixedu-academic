@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
@@ -7,6 +9,12 @@ import org.joda.time.LocalDate;
 
 public class Job extends Job_Base {
 
+    static final public Comparator<Job> REVERSE_COMPARATOR_BY_BEGIN_DATE = new Comparator<Job>() {
+	public int compare(final Job o1, final Job o2) {
+	    return o2.getBeginDate().compareTo(o1.getBeginDate());
+	}
+    };
+    
     public Job(Person person, String employerName, String city, Country country, BusinessArea businessArea, String position,
 	    LocalDate beginDate, LocalDate endDate, ContractType contractType) {
 	super();

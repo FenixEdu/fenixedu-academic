@@ -1,13 +1,21 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
 
 import org.apache.commons.lang.StringUtils;
 
 public class Formation extends Formation_Base {
+
+    static final public Comparator<Formation> COMPARATOR_BY_BEGIN_YEAR = new Comparator<Formation>() {
+	public int compare(final Formation f1, final Formation f2) {
+	    return f1.getBeginYear().compareTo(f2.getBeginYear());
+	}
+    };
 
     public Formation() {
 	super();

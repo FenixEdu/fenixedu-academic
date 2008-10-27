@@ -14,7 +14,7 @@
 	<p><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<logic:empty name="alumniPerson" property="jobs">
+<logic:empty name="alumniJobs">
 	<p>
 		<em><bean:message key="alumni.no.professional.information" bundle="ALUMNI_RESOURCES" />.</em>
 	</p>
@@ -29,8 +29,8 @@
 </ul>
 
 
-<logic:notEmpty name="alumniPerson" property="jobs">
-	<logic:iterate id="eachJob" indexId="jobIndex" name="alumniPerson" property="jobs">
+<logic:notEmpty name="alumniJobs">
+	<logic:iterate id="eachJob" indexId="jobIndex" name="alumniJobs">
 		<bean:define id="jobID" name="eachJob" property="idInternal" />
 		<fr:view name="eachJob" layout="tabular" schema="alumni.professional.information.job">
 			<fr:layout>
