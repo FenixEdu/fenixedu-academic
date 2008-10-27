@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
 import org.joda.time.DateTime;
@@ -187,6 +188,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     final public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
+    }
+
+    final public Student getStudent() {
+	return getRegistration().getStudent();
     }
 
     public boolean isConcluded() {

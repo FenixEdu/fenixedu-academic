@@ -108,6 +108,10 @@ public class Student extends Student_Base {
 	return null;
     }
 
+    public String getName() {
+	return getPerson().getName();
+    }
+
     public Collection<Registration> getRegistrationsByDegreeType(DegreeType degreeType) {
 	List<Registration> result = new ArrayList<Registration>();
 	for (Registration registration : getRegistrations()) {
