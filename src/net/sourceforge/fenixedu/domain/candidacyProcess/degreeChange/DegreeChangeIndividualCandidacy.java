@@ -111,7 +111,9 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     }
 
     void editCandidacyCurricularCoursesInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
-	getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
+	if (getPrecedentDegreeInformation().isExternal()) {
+	    getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
+	}
     }
 
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,

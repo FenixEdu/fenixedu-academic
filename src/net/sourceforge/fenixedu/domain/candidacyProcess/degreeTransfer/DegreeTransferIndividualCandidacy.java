@@ -149,7 +149,9 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     }
 
     public void editCandidacyCurricularCoursesInformation(final DegreeTransferIndividualCandidacyProcessBean bean) {
-	getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
+	if (getPrecedentDegreeInformation().isExternal()) {
+	    getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
+	}
     }
 
     void editCandidacyResult(final DegreeTransferIndividualCandidacyResultBean bean) {

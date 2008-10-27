@@ -51,10 +51,6 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
-    private ExecutionYear getStartExecutionYear() {
-	return getCandidacyExecutionInterval().getNextExecutionYear();
-    }
-
     @Override
     public List<StudentCurricularPlan> getPrecedentStudentCurricularPlans() {
 	final Student student = getStudent();
@@ -63,7 +59,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 	}
 
 	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-	for (final Registration registration : student.getActiveRegistrations(getStartExecutionYear())) {
+	for (final Registration registration : student.getRegistrations()) {
 	    if (registration.isBolonha()) {
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 

@@ -23,7 +23,7 @@
 <bean:define id="processName" name="processName" />
 
 <fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>'>
- 	<html:hidden property="method" value="executeEditCandidacyInformation" />
+ 	<html:hidden property="method" value="executeEditCandidacyCurricularCoursesInformation" />
 
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 		

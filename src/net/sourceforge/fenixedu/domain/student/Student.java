@@ -193,16 +193,6 @@ public class Student extends Student_Base {
 	return result;
     }
 
-    public List<Registration> getActiveRegistrations(final ExecutionYear executionYear) {
-	final List<Registration> result = new ArrayList<Registration>();
-	for (final Registration registration : getRegistrationsSet()) {
-	    if (registration.isActive() && registration.isInRegisteredState(executionYear)) {
-		result.add(registration);
-	    }
-	}
-	return result;
-    }
-
     public Registration getLastActiveRegistration() {
 	List<Registration> activeRegistrations = getActiveRegistrations();
 	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
