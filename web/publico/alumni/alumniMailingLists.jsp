@@ -156,7 +156,7 @@
                 <a href="mailto:alumni-leec@mlists.ist.utl.pt">Engenharia Electrotécnica e Computadores</a>
             </td>
             <td>
-                Paula Queluz
+                Paulo Oliveira
             </td>
             <td>
                 GEP
