@@ -69,7 +69,7 @@ public class GrantSearch implements Serializable {
 
     public GrantSearch() {
 	super();
-	setDatesTypeChoice(DatesTypeChoice.DATE);
+	setDatesTypeChoice(DatesTypeChoice.DATE_INTERVAL);
 	setActive(true);
 	setInactive(false);
 	LocalDate today = new LocalDate();
