@@ -1,20 +1,19 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public abstract class CertificateRequest extends CertificateRequest_Base {
+abstract public class CertificateRequest extends CertificateRequest_Base {
 
     protected CertificateRequest() {
 	super();
 	super.setNumberOfPages(0);
     }
 
-    @Override
     final protected void init(final DocumentRequestCreateBean bean) {
 	super.init(bean);
 

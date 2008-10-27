@@ -31,7 +31,7 @@
 
 <fr:form action="/documentRequest.do?method=create">
 <fr:edit schema="DocumentRequestCreateBean.chooseDocumentRequestType" name="documentRequestCreateBean" visible="false"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" >
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1"/>
       	<fr:property name="columnClasses" value="listClasses,,"/>
@@ -41,11 +41,11 @@
 <logic:present name="additionalInformationSchemaName">
 	<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
 	<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName + ".view" %>" visible="false"
-		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" />
+		type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" />
 </logic:present>
 
 <fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes"  visible="false"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" />
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" />
 
 <fr:view schema="DocumentRequestCreateBean.chooseDocumentRequestType" name="documentRequestCreateBean" >
 	<fr:layout name="tabular">
@@ -58,7 +58,7 @@
 <logic:present name="additionalInformationSchemaName">
 	<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>	
 	<fr:view name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName + ".view" %>" 
-		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" >
+		type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thright thlight mvert0"/>
 			<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
@@ -68,7 +68,7 @@
 
 
 <fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" 
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thright thlight mvert0"/>
 		<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>

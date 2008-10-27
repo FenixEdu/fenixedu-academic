@@ -2,14 +2,12 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
-import org.joda.time.DateTime;
 
 abstract public class DeclarationRequest extends DeclarationRequest_Base {
 
@@ -20,10 +18,7 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    @Override
     final protected void init(final DocumentRequestCreateBean bean) {
-	bean.setRequestDate(new DateTime());
-	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	super.init(bean);
 
 	super.checkParameters(bean);
@@ -31,7 +26,7 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
 	super.setOtherDocumentPurposeTypeDescription(bean.getOtherPurpose());
     }
 
-    static final protected DeclarationRequest create(final DocumentRequestCreateBean bean) {
+    static final public DeclarationRequest create(final DocumentRequestCreateBean bean) {
 	switch (bean.getChosenDocumentRequestType()) {
 	case SCHOOL_REGISTRATION_DECLARATION:
 	    return new SchoolRegistrationDeclarationRequest(bean);

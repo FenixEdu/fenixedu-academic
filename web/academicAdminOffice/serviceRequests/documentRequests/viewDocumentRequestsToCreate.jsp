@@ -33,7 +33,7 @@
 	<fr:edit 
 		visible="false"
 		name="documentRequestCreateBean" 
-		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean"
+		type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean"
 		schema="DocumentRequestCreateBean.chooseDocumentRequestType"/>
 
 	<fr:view schema="DocumentRequestCreateBean.chooseDocumentRequestType" name="documentRequestCreateBean">
@@ -46,7 +46,7 @@
 	<logic:present name="additionalInformationSchemaName">
 		<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>	
 		<fr:view name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName + ".view" %>" 
-			type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" >
+			type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" >
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
 				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
@@ -57,7 +57,7 @@
 	<logic:notEqual name="documentRequestCreateBean" property="chosenDocumentRequestType" value="<%=DocumentRequestType.DIPLOMA_REQUEST.name()%>">	
 	
 		<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" 
-			type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+			type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
 				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
@@ -68,7 +68,7 @@
 	
 	<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
 		<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" 
-			type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+			type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
 				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>

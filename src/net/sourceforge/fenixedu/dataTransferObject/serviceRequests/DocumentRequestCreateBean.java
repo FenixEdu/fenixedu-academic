@@ -1,11 +1,10 @@
-package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest;
+package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -19,22 +18,15 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBean {
-
-    private DateTime requestDate;
+public class DocumentRequestCreateBean extends RegistrationAcademicServiceRequestCreateBean {
 
     private DocumentRequestType chosenDocumentRequestType;
 
     private DocumentPurposeType chosenDocumentPurposeType;
 
     private String otherPurpose;
-
-    private Boolean urgentRequest = Boolean.FALSE;
-
-    private Boolean freeProcessed = Boolean.FALSE;
 
     private Boolean average = Boolean.FALSE;
 
@@ -78,17 +70,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
-	this.requestDate = new DateTime();
 	this.enrolments = new ArrayList<DomainReference<Enrolment>>();
 	this.exams = new ArrayList<DomainReference<Exam>>();
-    }
-
-    public DateTime getRequestDate() {
-	return requestDate;
-    }
-
-    public void setRequestDate(DateTime requestDate) {
-	this.requestDate = requestDate;
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
@@ -113,22 +96,6 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public void setOtherPurpose(String otherPurpose) {
 	this.otherPurpose = otherPurpose;
-    }
-
-    public Boolean getUrgentRequest() {
-	return urgentRequest;
-    }
-
-    public void setUrgentRequest(Boolean urgentRequest) {
-	this.urgentRequest = urgentRequest;
-    }
-
-    public Boolean getFreeProcessed() {
-	return freeProcessed;
-    }
-
-    public void setFreeProcessed(Boolean freeProcessed) {
-	this.freeProcessed = freeProcessed;
     }
 
     public Boolean getAverage() {
