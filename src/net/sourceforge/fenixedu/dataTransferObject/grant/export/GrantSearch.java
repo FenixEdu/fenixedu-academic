@@ -18,11 +18,8 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 public class GrantSearch implements Serializable {
 
@@ -56,6 +53,10 @@ public class GrantSearch implements Serializable {
 
     private Boolean inactive;
 
+    private Boolean withRenewals;
+
+    private Boolean withoutRenewals;
+
     // datas do subsidio
 
     private CostCenterOrProjectChoice subsidyCostCenterOrProjectChoice;
@@ -79,6 +80,8 @@ public class GrantSearch implements Serializable {
 	setSubsidyCostCenterOrProjectChoice(CostCenterOrProjectChoice.ANY);
 	setInsuranceCostCenterOrProjectChoice(CostCenterOrProjectChoice.ANY);
 	setActivityChoice(ActivityChoice.ACTIVITY);
+	setWithRenewals(false);
+	setWithoutRenewals(true);
     }
 
     public LocalDate getBeginDate() {
@@ -217,26 +220,25 @@ public class GrantSearch implements Serializable {
 
     private boolean satisfiedActive(GrantContractRegime grantContractRegime) {
 	if (getActive() || getInactive() || getActivityChoice() == ActivityChoice.TERM) {
-	    LocalDate endDate = new LocalDate(grantContractRegime.getDateEndContractYearMonthDay());
-	    if (!StringUtils.isEmpty(grantContractRegime.getGrantContract().getEndContractMotive())) {
-		DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
-		try {
-		    LocalDate rescissionDate = dateFormat.parseDateTime(
-			    grantContractRegime.getGrantContract().getEndContractMotive()).toLocalDate();
-		    endDate = endDate.isBefore(rescissionDate) ? endDate : rescissionDate;
-		} catch (IllegalArgumentException e) {
-		}
-	    }
+	    LocalDate endDate = grantContractRegime.getEndDateOrRescissionDate();
 	    if ((getActivityChoice() == ActivityChoice.ACTIVITY
 		    && (getActive() && belongsToPeriod(new LocalDate(grantContractRegime.getDateBeginContractYearMonthDay()),
 			    endDate)) || (getInactive() && !belongsToPeriod(new LocalDate(grantContractRegime
 		    .getDateBeginContractYearMonthDay()), endDate)))
-		    || (getActivityChoice() == ActivityChoice.TERM && belongsToPeriod(endDate))) {
+		    || (getActivityChoice() == ActivityChoice.TERM && belongsToPeriod(endDate) && ((getWithRenewals() && hasRenewedContract(grantContractRegime)) || (getWithoutRenewals() && !hasRenewedContract(grantContractRegime))))) {
 		return true;
 	    }
 	    return false;
 	}
 	return false;
+    }
+
+    private boolean hasRenewedContract(GrantContractRegime grantContractRegime) {
+	List<GrantContractRegime> contracts = new ArrayList<GrantContractRegime>(grantContractRegime.getGrantContract()
+		.getContractRegimes());
+	Collections.sort(contracts, new BeanComparator("endDateOrRescissionDate"));
+	int thisContractIndex = contracts.indexOf(grantContractRegime) + 1;
+	return contracts.size() > thisContractIndex;
     }
 
     private boolean satisfiedResponsible(GrantContractRegime grantContractRegime) {
@@ -277,6 +279,22 @@ public class GrantSearch implements Serializable {
 
     public void setActivityChoice(ActivityChoice activityChoice) {
 	this.activityChoice = activityChoice;
+    }
+
+    public Boolean getWithRenewals() {
+	return withRenewals;
+    }
+
+    public void setWithRenewals(Boolean withRenewals) {
+	this.withRenewals = withRenewals;
+    }
+
+    public Boolean getWithoutRenewals() {
+	return withoutRenewals;
+    }
+
+    public void setWithoutRenewals(Boolean withoutRenewals) {
+	this.withoutRenewals = withoutRenewals;
     }
 
 }

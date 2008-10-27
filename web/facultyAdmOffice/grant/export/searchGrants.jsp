@@ -29,7 +29,15 @@
 		</fr:edit>
 		<logic:notEmpty name="grantSearch" property="activityChoice">
 			<logic:equal name="grantSearch" property="activityChoice" value="ACTIVITY">
-				<fr:edit id="grantSearch.activityChoice" name="grantSearch" schema="search.grants.contract.activityChoise">
+				<fr:edit id="grantSearch.activityChoice" name="grantSearch" schema="search.grants.contract.activityChoise.activity">
+					<fr:layout>
+						<fr:property name="classes" value="tstyle5 thlight thmiddle thright mvert0" />
+						<fr:property name="columnClasses" value="width12em,inobullet width20em,tdclear tderror1" />
+					</fr:layout>
+				</fr:edit>
+			</logic:equal>
+			<logic:equal name="grantSearch" property="activityChoice" value="TERM">
+				<fr:edit id="grantSearch.activityChoice" name="grantSearch" schema="search.grants.contract.activityChoise.term">
 					<fr:layout>
 						<fr:property name="classes" value="tstyle5 thlight thmiddle thright mvert0" />
 						<fr:property name="columnClasses" value="width12em,inobullet width20em,tdclear tderror1" />

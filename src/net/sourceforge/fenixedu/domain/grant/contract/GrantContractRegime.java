@@ -13,8 +13,12 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class GrantContractRegime extends GrantContractRegime_Base {
 
@@ -126,5 +130,18 @@ public class GrantContractRegime extends GrantContractRegime_Base {
 	    }
 	}
 	return null;
+    }
+
+    public LocalDate getEndDateOrRescissionDate() {
+	LocalDate endDate = new LocalDate(getDateEndContractYearMonthDay());
+	if (!StringUtils.isEmpty(getGrantContract().getEndContractMotive())) {
+	    DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+	    try {
+		LocalDate rescissionDate = dateFormat.parseDateTime(getGrantContract().getEndContractMotive()).toLocalDate();
+		endDate = endDate.isBefore(rescissionDate) ? endDate : rescissionDate;
+	    } catch (IllegalArgumentException e) {
+	    }
+	}
+	return endDate;
     }
 }

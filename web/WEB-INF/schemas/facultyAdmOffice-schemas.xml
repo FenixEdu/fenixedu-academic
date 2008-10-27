@@ -35,9 +35,13 @@
 	</slot>
 </schema>
 
-<schema name="search.grants.contract.activityChoise" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+<schema name="search.grants.contract.activityChoise.activity" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
 	<slot name="active" key="label.grant.active" layout="option-select"/>
 	<slot name="inactive" key="label.grant.inactive" layout="option-select"/>
+</schema>
+<schema name="search.grants.contract.activityChoise.term" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="withRenewals" key="label.grant.withRenewals" layout="option-select"/>
+	<slot name="withoutRenewals" key="label.grant.withoutRenewals" layout="option-select"/>
 </schema>
 
 <schema name="search.grants.contract.date" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
