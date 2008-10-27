@@ -2,23 +2,16 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 public abstract class DocumentRequest extends DocumentRequest_Base {
 
     protected DocumentRequest() {
 	super();
-    }
-
-    protected void init(final DocumentRequestCreateBean bean) {
-	super.init(bean.getRegistration(), bean.getExecutionYear(), bean.getRequestDate(), bean.getUrgentRequest(), bean
-		.getFreeProcessed());
     }
 
     protected void checkParameters(final DocumentRequestCreateBean bean) {
@@ -54,28 +47,6 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     final public boolean isDiploma() {
 	return getDocumentRequestType().isDiploma();
-    }
-
-    final public static class DocumentRequestCreator extends DocumentRequestCreateBean implements FactoryExecutor {
-
-	public DocumentRequestCreator(Registration registration) {
-	    super(registration);
-	}
-
-	public Object execute() {
-	    if (getChosenDocumentRequestType().isCertificate()) {
-		return CertificateRequest.create(this);
-
-	    } else if (getChosenDocumentRequestType().isDeclaration()) {
-		return DeclarationRequest.create(this);
-
-	    } else if (getChosenDocumentRequestType().isDiploma()) {
-		return new DiplomaRequest(this);
-	    }
-
-	    return null;
-	}
-
     }
 
     @Override
