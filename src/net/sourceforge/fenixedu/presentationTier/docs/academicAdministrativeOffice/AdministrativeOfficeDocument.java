@@ -205,10 +205,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     final protected void addIntroParameters(final Employee employee) {
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
-	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
+	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getPartyName().getContent(getLanguage()));
 
-	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
+	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent(
+		getLanguage()));
+	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent(getLanguage()));
     }
 
     @SuppressWarnings("static-access")
