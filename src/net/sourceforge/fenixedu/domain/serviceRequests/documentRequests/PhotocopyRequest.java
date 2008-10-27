@@ -1,29 +1,21 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhotocopyRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-
-import org.joda.time.DateTime;
 
 public class PhotocopyRequest extends PhotocopyRequest_Base {
 
-    private PhotocopyRequest() {
+    protected PhotocopyRequest() {
 	super();
 	setNumberOfPages(0);
     }
 
-    public PhotocopyRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
-	this(registration, executionYear, requestDate, false, false);
-    }
-
-    public PhotocopyRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate,
-	    final Boolean urgentRequest, final Boolean freeProcessed) {
+    public PhotocopyRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
-	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
+	super.init(bean);
     }
 
     @Override

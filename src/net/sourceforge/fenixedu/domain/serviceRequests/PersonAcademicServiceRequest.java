@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
-import org.joda.time.DateTime;
 
 abstract public class PersonAcademicServiceRequest extends PersonAcademicServiceRequest_Base {
 
@@ -11,10 +10,11 @@ abstract public class PersonAcademicServiceRequest extends PersonAcademicService
 	super();
     }
 
-    protected void init(final Person person, final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+    protected void init(final Person person, final AcademicServiceRequestCreateBean bean) {
 	checkParameters(person);
 	super.setPerson(person);
-	super.init(requestDate, urgentRequest, freeProcessed);
+
+	super.init(bean);
     }
 
     private void checkParameters(final Person person) {
@@ -38,4 +38,5 @@ abstract public class PersonAcademicServiceRequest extends PersonAcademicService
 	super.setPerson(null);
 	super.delete();
     }
+
 }

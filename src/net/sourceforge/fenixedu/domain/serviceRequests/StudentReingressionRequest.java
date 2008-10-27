@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -21,30 +22,28 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     static final public List<RegistrationStateType> ALLOWED_TYPES = Arrays.asList(RegistrationStateType.FLUNKED,
 	    RegistrationStateType.EXTERNAL_ABANDON);
 
-    private StudentReingressionRequest() {
+    protected StudentReingressionRequest() {
 	super();
     }
 
-    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear,
-	    final DateTime requestDate) {
-	this(registration, executionYear, requestDate, false, false);
-    }
-
-    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear,
-	    final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+    public StudentReingressionRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
-	checkParameters(executionYear);
-	checkRulesToCreate(registration, executionYear, requestDate);
-	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
+	super.init(bean);
+
+	checkParameters(bean);
+	checkRulesToCreate(bean);
     }
 
-    private void checkParameters(final ExecutionYear executionYear) {
-	if (executionYear == null) {
+    private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+	if (bean.getExecutionYear() == null) {
 	    throw new DomainException("error.StudentReingressionRequest.executionYear.cannot.be.null");
 	}
     }
 
-    private void checkRulesToCreate(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
+    private void checkRulesToCreate(final RegistrationAcademicServiceRequestCreateBean bean) {
+	final Registration registration = bean.getRegistration();
+	final ExecutionYear executionYear = bean.getExecutionYear();
+	final DateTime requestDate = bean.getRequestDate();
 
 	if (!hasValidState(registration)) {
 	    throw new DomainException("error.StudentReingressionRequest.registration.with.invalid.state");

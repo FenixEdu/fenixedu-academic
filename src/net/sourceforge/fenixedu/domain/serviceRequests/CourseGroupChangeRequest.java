@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -10,7 +11,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 
 public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 
@@ -18,23 +18,21 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 	super();
     }
 
-    public CourseGroupChangeRequest(final Registration registration, final CurriculumGroup curriculumGroup,
-	    final CourseGroup newCourseGroup, final ExecutionYear executionYear, final DateTime requestDate) {
-	this(registration, curriculumGroup, newCourseGroup, executionYear, requestDate, false, false);
-    }
-
-    public CourseGroupChangeRequest(final Registration registration, final CurriculumGroup curriculumGroup,
-	    final CourseGroup newCourseGroup, final ExecutionYear executionYear, final DateTime requestDate,
-	    final Boolean urgentRequest, final Boolean freeProcessed) {
+    public CourseGroupChangeRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
-	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
-	checkParameters(registration, curriculumGroup, newCourseGroup, executionYear);
-	super.setOldCourseGroup(curriculumGroup.getDegreeModule());
-	super.setNewCourseGroup(newCourseGroup);
+	super.init(bean);
+
+	checkParameters(bean);
+	super.setOldCourseGroup(bean.getCurriculumGroup().getDegreeModule());
+	super.setNewCourseGroup(bean.getCourseGroup());
     }
 
-    private void checkParameters(final Registration registration, final CurriculumGroup curriculumGroup,
-	    final CourseGroup newCourseGroup, final ExecutionYear executionYear) {
+    private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+	final CurriculumGroup curriculumGroup = bean.getCurriculumGroup();
+	final CourseGroup newCourseGroup = bean.getCourseGroup();
+	final ExecutionYear executionYear = bean.getExecutionYear();
+	final Registration registration = bean.getRegistration();
+
 	if (curriculumGroup == null) {
 	    throw new DomainException("error.CourseGroupChangeRequest.curriculumGroup.cannot.be.null");
 	}

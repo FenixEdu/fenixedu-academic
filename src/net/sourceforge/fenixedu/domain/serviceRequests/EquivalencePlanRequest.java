@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-
-import org.joda.time.DateTime;
 
 public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
@@ -16,19 +13,15 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 	super();
     }
 
-    public EquivalencePlanRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
-	this(registration, executionYear, requestDate, false, false);
-    }
-
-    public EquivalencePlanRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate,
-	    final Boolean urgentRequest, final Boolean freeProcessed) {
+    public EquivalencePlanRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
-	checkParameters(executionYear);
-	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
+	super.init(bean);
+
+	checkParameters(bean);
     }
 
-    private void checkParameters(final ExecutionYear executionYear) {
-	if (executionYear == null) {
+    private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+	if (bean.getExecutionYear() == null) {
 	    throw new DomainException("error.EquivalencePlanRequest.executionYear.cannot.be.null");
 	}
     }

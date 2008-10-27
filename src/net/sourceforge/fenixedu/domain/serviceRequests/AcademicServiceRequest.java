@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -71,31 +72,25 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setCreationDate(new DateTime());
     }
 
-    protected void init(final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
-	init(null, requestDate, urgentRequest, freeProcessed);
-    }
-
-    protected void init(final ExecutionYear executionYear, final DateTime requestDate, final Boolean urgentRequest,
-	    final Boolean freeProcessed) {
-
+    protected void init(final AcademicServiceRequestCreateBean bean) {
 	final AdministrativeOffice administrativeOffice = findAdministrativeOffice();
-	checkParameters(administrativeOffice, requestDate, urgentRequest, freeProcessed);
+	checkParameters(administrativeOffice, bean);
 
-	super.setServiceRequestYear(requestDate.year().get());
+	super.setServiceRequestYear(bean.getRequestDate().year().get());
 	super.setAcademicServiceRequestYear(generateAcademicServiceRequestYear());
 	super.setServiceRequestNumber(getAcademicServiceRequestYear().generateServiceRequestNumber());
-	super.setRequestDate(requestDate);
+	super.setRequestDate(bean.getRequestDate());
 
 	super.setAdministrativeOffice(administrativeOffice);
-	super.setUrgentRequest(urgentRequest);
-	super.setFreeProcessed(freeProcessed);
-	super.setExecutionYear(executionYear);
+	super.setUrgentRequest(bean.getUrgentRequest());
+	super.setFreeProcessed(bean.getFreeProcessed());
+	super.setExecutionYear(bean.getExecutionYear());
+	super.setLanguage(bean.getLanguage());
 
-	final AcademicServiceRequestBean bean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
+	final AcademicServiceRequestBean situationBean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
 		getEmployee());
-	bean.setSituationDate(requestDate.toYearMonthDay());
-
-	createAcademicServiceRequestSituations(bean);
+	situationBean.setSituationDate(getRequestDate().toYearMonthDay());
+	createAcademicServiceRequestSituations(situationBean);
     }
 
     private AcademicServiceRequestYear generateAcademicServiceRequestYear() {
@@ -113,21 +108,22 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return person != null ? person.getEmployeeAdministrativeOffice() : null;
     }
 
-    private void checkParameters(final AdministrativeOffice administrativeOffice, final DateTime requestDate,
-	    final Boolean urgentRequest, final Boolean freeProcessed) {
-
+    private void checkParameters(final AdministrativeOffice administrativeOffice, final AcademicServiceRequestCreateBean bean) {
 	if (administrativeOffice == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.administrativeOffice.cannot.be.null");
 	}
 
-	if (requestDate == null || requestDate.isAfterNow()) {
+	if (bean.getRequestDate() == null || bean.getRequestDate().isAfterNow()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.invalid.requestDate");
 	}
-	if (urgentRequest == null) {
+	if (bean.getUrgentRequest() == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.urgentRequest.cannot.be.null");
 	}
-	if (freeProcessed == null) {
+	if (bean.getFreeProcessed() == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.freeProcessed.cannot.be.null");
+	}
+	if (bean.getLanguage() == null) {
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.language.cannot.be.null");
 	}
     }
 
@@ -417,7 +413,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    return getConcludedSituationAcceptedSituationsTypes();
 
 	default:
-	    return Collections.EMPTY_LIST;
+	    return Collections.emptyList();
 	}
     }
 

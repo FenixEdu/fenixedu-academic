@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 
 public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicRequest_Base {
 
@@ -16,23 +14,17 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
 	super();
     }
 
-    public FreeSolicitationAcademicRequest(final Registration registration, final ExecutionYear executionYear,
-	    final DateTime requestDate, final String subject, final String purpose) {
-	this(registration, executionYear, subject, purpose, requestDate, false, false);
-    }
-
-    public FreeSolicitationAcademicRequest(final Registration registration, final ExecutionYear executionYear,
-	    final String subject, final String purpose, final DateTime requestDate, final Boolean urgentRequest,
-	    final Boolean freeProcessed) {
+    public FreeSolicitationAcademicRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
-	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
-	checkParameters(subject);
-	super.setSubject(subject);
-	super.setPurpose(purpose);
+	super.init(bean);
+
+	checkParameters(bean);
+	super.setSubject(bean.getSubject());
+	super.setPurpose(bean.getPurpose());
     }
 
-    private void checkParameters(final String subject) {
-	if (StringUtils.isEmpty(subject)) {
+    private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+	if (StringUtils.isEmpty(bean.getSubject())) {
 	    throw new DomainException("error.FreeSolicitationAcademicRequest.invalid.subject");
 	}
     }

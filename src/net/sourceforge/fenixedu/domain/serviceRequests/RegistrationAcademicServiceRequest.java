@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -13,32 +14,23 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-import org.joda.time.DateTime;
-
 abstract public class RegistrationAcademicServiceRequest extends RegistrationAcademicServiceRequest_Base {
 
     protected RegistrationAcademicServiceRequest() {
 	super();
     }
 
-    protected void init(final Registration registration, final DateTime requestDate, final Boolean urgentRequest,
-	    final Boolean freeProcessed) {
-	init(registration, null, requestDate, urgentRequest, freeProcessed);
+    protected void init(final RegistrationAcademicServiceRequestCreateBean bean) {
+	checkParameters(bean);
+	super.setRegistration(bean.getRegistration());
+
+	super.init(bean);
     }
 
-    protected void init(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate,
-	    final Boolean urgentRequest, final Boolean freeProcessed) {
-	// first set own parameters because of findAdministrativeOffice
-	checkParameters(registration);
-	super.setRegistration(registration);
-	// then set super parameters
-	super.init(executionYear, requestDate, urgentRequest, freeProcessed);
-    }
-
-    private void checkParameters(final Registration registration) {
-	if (registration == null) {
+    private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+	if (bean.getRegistration() == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.registration.cannot.be.null");
-	} else if (!isAvailableForTransitedRegistrations() && registration.isTransited()) {
+	} else if (!isAvailableForTransitedRegistrations() && bean.getRegistration().isTransited()) {
 	    throw new DomainException("RegistrationAcademicServiceRequest.registration.cannot.be.transited");
 	}
     }

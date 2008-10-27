@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -15,7 +16,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 
 public class ExtraExamRequest extends ExtraExamRequest_Base {
 
@@ -25,20 +25,19 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 	super();
     }
 
-    public ExtraExamRequest(final Registration registration, final Enrolment enrolment, final ExecutionYear executionYear,
-	    final DateTime requestDate) {
-	this(registration, enrolment, executionYear, requestDate, false, false);
-    }
-
-    public ExtraExamRequest(final Registration registration, final Enrolment enrolment, final ExecutionYear executionYear,
-	    final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+    public ExtraExamRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
-	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
-	checkParameters(registration, enrolment, executionYear);
-	super.setEnrolment(enrolment);
+	super.init(bean);
+
+	checkParameters(bean);
+	super.setEnrolment(bean.getEnrolment());
     }
 
-    private void checkParameters(final Registration registration, final Enrolment enrolment, final ExecutionYear executionYear) {
+    private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+	final Registration registration = bean.getRegistration();
+	final ExecutionYear executionYear = bean.getExecutionYear();
+	final Enrolment enrolment = bean.getEnrolment();
+
 	if (executionYear == null) {
 	    throw new DomainException("error.ExtraExamRequest.executionYear.cannot.be.null");
 	}

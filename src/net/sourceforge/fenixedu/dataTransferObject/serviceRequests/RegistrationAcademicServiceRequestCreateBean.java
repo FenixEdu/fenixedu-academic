@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -9,9 +8,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
-import org.joda.time.YearMonthDay;
-
-public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSelectExecutionYearBean {
+public class RegistrationAcademicServiceRequestCreateBean extends AcademicServiceRequestCreateBean {
 
     private AcademicServiceRequestType academicServiceRequestType;
     private DomainReference<CurriculumGroup> curriculumGroup;
@@ -20,75 +17,66 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
     private DomainReference<EquivalencePlanRequest> equivalencePlanRequest;
     private String subject;
     private String purpose;
-    private YearMonthDay requestDate;
 
     public RegistrationAcademicServiceRequestCreateBean(final Registration registration) {
 	super(registration);
     }
 
-    public AcademicServiceRequestType getAcademicServiceRequestType() {
+    final public AcademicServiceRequestType getAcademicServiceRequestType() {
 	return academicServiceRequestType;
     }
 
-    public void setAcademicServiceRequestType(AcademicServiceRequestType academicServiceRequestType) {
+    final public void setAcademicServiceRequestType(AcademicServiceRequestType academicServiceRequestType) {
 	this.academicServiceRequestType = academicServiceRequestType;
     }
 
-    public CurriculumGroup getCurriculumGroup() {
+    final public CurriculumGroup getCurriculumGroup() {
 	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
     }
 
-    public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
+    final public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
 	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
     }
 
-    public CourseGroup getCourseGroup() {
+    final public CourseGroup getCourseGroup() {
 	return (this.courseGroup != null) ? this.courseGroup.getObject() : null;
     }
 
-    public void setCourseGroup(CourseGroup courseGroup) {
+    final public void setCourseGroup(CourseGroup courseGroup) {
 	this.courseGroup = (courseGroup != null) ? new DomainReference<CourseGroup>(courseGroup) : null;
     }
 
-    public Enrolment getEnrolment() {
+    final public Enrolment getEnrolment() {
 	return (this.enrolment != null) ? this.enrolment.getObject() : null;
     }
 
-    public void setEnrolment(Enrolment enrolment) {
+    final public void setEnrolment(Enrolment enrolment) {
 	this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
     }
 
-    public EquivalencePlanRequest getEquivalencePlanRequest() {
+    final public EquivalencePlanRequest getEquivalencePlanRequest() {
 	return (this.equivalencePlanRequest != null) ? this.equivalencePlanRequest.getObject() : null;
     }
 
-    public void setEquivalencePlanRequest(EquivalencePlanRequest equivalencePlanRequest) {
+    final public void setEquivalencePlanRequest(EquivalencePlanRequest equivalencePlanRequest) {
 	this.equivalencePlanRequest = (equivalencePlanRequest != null) ? new DomainReference<EquivalencePlanRequest>(
 		equivalencePlanRequest) : null;
     }
 
-    public String getSubject() {
+    final public String getSubject() {
 	return subject;
     }
 
-    public void setSubject(String subject) {
+    final public void setSubject(String subject) {
 	this.subject = subject;
     }
 
-    public String getPurpose() {
+    final public String getPurpose() {
 	return purpose;
     }
 
-    public void setPurpose(String purpose) {
+    final public void setPurpose(String purpose) {
 	this.purpose = purpose;
-    }
-
-    public YearMonthDay getRequestDate() {
-	return requestDate;
-    }
-
-    public void setRequestDate(YearMonthDay requestDate) {
-	this.requestDate = requestDate;
     }
 
 }

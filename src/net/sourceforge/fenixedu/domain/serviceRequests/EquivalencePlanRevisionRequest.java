@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
-
-import org.joda.time.DateTime;
 
 public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionRequest_Base {
 
@@ -14,25 +13,23 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
 	super();
     }
 
-    public EquivalencePlanRevisionRequest(final EquivalencePlanRequest equivalencePlanRequest, final ExecutionYear executionYear,
-	    final DateTime requestDate) {
-	this(equivalencePlanRequest, executionYear, requestDate, false, false);
-    }
-
-    public EquivalencePlanRevisionRequest(final EquivalencePlanRequest equivalencePlanRequest, final ExecutionYear executionYear,
-	    final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+    public EquivalencePlanRevisionRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
-	checkParameters(equivalencePlanRequest, executionYear);
-	super.init(equivalencePlanRequest.getRegistration(), executionYear, requestDate, urgentRequest, freeProcessed);
-	super.setEquivalencePlanRequest(equivalencePlanRequest);
+	super.init(bean);
+
+	checkParameters(bean);
+	super.setEquivalencePlanRequest(bean.getEquivalencePlanRequest());
     }
 
     @Override
-    public void setEquivalencePlanRequest(EquivalencePlanRequest equivalencePlanRequest) {
+    public void setEquivalencePlanRequest(final EquivalencePlanRequest equivalencePlanRequest) {
 	throw new DomainException("error.EquivalencePlanRevisionRequest.cannot.modify.equivalencePlanRequest");
     }
 
-    private void checkParameters(final EquivalencePlanRequest equivalencePlanRequest, final ExecutionYear executionYear) {
+    private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+	final EquivalencePlanRequest equivalencePlanRequest = bean.getEquivalencePlanRequest();
+	final ExecutionYear executionYear = bean.getExecutionYear();
+
 	if (equivalencePlanRequest == null) {
 	    throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.cannot.be.null");
 	}

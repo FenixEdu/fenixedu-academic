@@ -11,9 +11,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionReques
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-
-import org.joda.time.DateTime;
-
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements
@@ -28,35 +25,36 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	final Object result;
 	switch (getAcademicServiceRequestType()) {
 	case REINGRESSION:
-	    result = new StudentReingressionRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear(),
-		    getFinalRequestDate());
+	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	    result = new StudentReingressionRequest(this);
 	    break;
 
 	case EQUIVALENCE_PLAN:
-	    result = new EquivalencePlanRequest(getRegistration(), getExecutionYear(), getFinalRequestDate());
+	    result = new EquivalencePlanRequest(this);
 	    break;
 
 	case REVISION_EQUIVALENCE_PLAN:
-	    result = new EquivalencePlanRevisionRequest(getEquivalencePlanRequest(), getExecutionYear(), getFinalRequestDate());
+	    result = new EquivalencePlanRevisionRequest(this);
 	    break;
 
 	case COURSE_GROUP_CHANGE_REQUEST:
-	    result = new CourseGroupChangeRequest(getRegistration(), getCurriculumGroup(), getCourseGroup(), ExecutionYear
-		    .readCurrentExecutionYear(), getFinalRequestDate());
+	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	    result = new CourseGroupChangeRequest(this);
 	    break;
 
 	case EXTRA_EXAM_REQUEST:
-	    result = new ExtraExamRequest(getRegistration(), getEnrolment(), ExecutionYear.readCurrentExecutionYear(),
-		    getFinalRequestDate());
+	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	    result = new ExtraExamRequest(this);
 	    break;
 
 	case FREE_SOLICITATION_ACADEMIC_REQUEST:
-	    result = new FreeSolicitationAcademicRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear(),
-		    getFinalRequestDate(), getSubject(), getPurpose());
+	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	    result = new FreeSolicitationAcademicRequest(this);
 	    break;
 
 	case PHOTOCOPY_REQUEST:
-	    result = new PhotocopyRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear(), getFinalRequestDate());
+	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	    result = new PhotocopyRequest(this);
 	    break;
 
 	default:
@@ -66,7 +64,4 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	return result;
     }
 
-    private DateTime getFinalRequestDate() {
-	return getRequestDate().toDateTimeAtCurrentTime();
-    }
 }
