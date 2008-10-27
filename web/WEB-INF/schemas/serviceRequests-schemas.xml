@@ -2,7 +2,10 @@
 	<slot name="requestDate" read-only="true" key="label.requestDate" layout="no-time" />
 	<slot name="activeSituationDate" read-only="true" key="last.modification" layout="no-time" />
 	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>	
-	<slot name="campus.name" key="campus" />
+	<slot name="campus" key="campus" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="spaceInformation-presentationName-label" />
+	</slot>	    
 	<slot name="serviceRequestNumberYear"  />
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
 	<slot name="executionYear" layout="null-as-label">
@@ -10,7 +13,8 @@
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
 	</slot>
-	<slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />	
+	<slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />
+	<slot name="language"/>	
 </schema>
 
 <schema name="AcademicServiceRequest.view-short" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -187,14 +191,14 @@
 
 
 
-<schema name="DocumentRequestEditBean" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestEditBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="DocumentRequestEditBean" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestEditBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.justification" layout="longText"/>
 	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestType"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeProvider" />
 		<property name="eachLayout" value=""/>
@@ -203,7 +207,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestQuickType"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestQuickTypeProvider" />
 		<property name="eachLayout" value=""/>
@@ -212,7 +216,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.SCHOOL_REGISTRATION_CERTIFICATE.AdditionalInformation" 
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider" />
 		<property name="format" value="${year}" />
@@ -221,7 +225,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.SCHOOL_REGISTRATION_CERTIFICATE.AdditionalInformation.view" 
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
@@ -229,7 +233,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.ENROLMENT_CERTIFICATE.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider" />
 		<property name="format" value="${year}" />
@@ -239,7 +243,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.ENROLMENT_CERTIFICATE.AdditionalInformation.view"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="format" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="format" value="${year}" />
 	</slot>
@@ -248,17 +252,17 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation.view"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed"></slot>
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average"></slot>
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
@@ -267,10 +271,13 @@
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
+    <slot name="language" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation.view"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average" />
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
@@ -282,7 +289,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" layout="option-select-postback">
 		<property name="destination" value="useAllPostBack"/>
@@ -296,7 +303,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation.view"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" />
     <slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
@@ -306,7 +313,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.EXTERNAL_COURSE_LOAD.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 	<slot name="numberOfCourseLoads" key="label.ExternalCourseLoad.numberOfCourseLoads" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="3"/>
@@ -324,7 +331,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.EXTERNAL_COURSE_LOAD.AdditionalInformation.view"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 	<slot name="numberOfCourseLoads" key="label.ExternalCourseLoad.numberOfCourseLoads" />
 	<slot name="institutionName" layout="format" key="label.institutionUnitName">
@@ -333,7 +340,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.PROGRAM_CERTIFICATE.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" layout="option-select-postback">
 		<property name="destination" value="useAllPostBack"/>
@@ -347,7 +354,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.PROGRAM_CERTIFICATE.AdditionalInformation.view"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" />
     <slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
@@ -357,7 +364,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.EXTERNAL_PROGRAM_CERTIFICATE.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 	<slot name="numberOfPrograms" key="label.ExternalProgramCertificate.numberOfPrograms" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="3"/>
@@ -375,7 +382,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.EXTERNAL_PROGRAM_CERTIFICATE.AdditionalInformation.view"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 	<slot name="numberOfPrograms" key="label.ExternalProgramCertificate.numberOfPrograms" />
 	<slot name="institutionName" layout="format" key="label.institutionUnitName">
@@ -384,7 +391,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.EXAM_DATE_CERTIFICATE.AdditionalInformation" 
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider" />
 		<property name="format" value="${year}" />
@@ -405,7 +412,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.EXAM_DATE_CERTIFICATE.AdditionalInformation.view" 
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="format" >
 		<property name="format" value="${year}" />
 	</slot>
@@ -425,28 +432,28 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="year" key="label.year"/>
 </schema>
 
 <schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation.view"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="year" key="label.year"/>
 </schema>
 
 <schema name="DocumentRequestCreateBean.requestedCycle"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="requestedCycle" key="label.cycleType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="THIRD_CYCLE" />	
 	</slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.mobilityProgram"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="mobilityProgram" key="label.mobilityProgram" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentPurposeType" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose"/>
 	<slot name="otherPurpose" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose">
 		<property name="size" value="50"/>
@@ -454,11 +461,11 @@
 	<setter signature="setPurpose(chosenDocumentPurposeType,otherPurpose)"/>
 </schema>
 
-<schema name="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed"/>
 </schema>
 
-<schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
 	<slot name="chosenDocumentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose"/>
 	<slot name="otherPurpose" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose"/>	
@@ -485,7 +492,7 @@
 	<slot name="activeSituationDate" read-only="true" key="last.modification.withLineBreak"/>
 </schema>
 
-<schema name="DocumentRequestSearchBean.view" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="DocumentRequestSearchBean.view" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType"  key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"/>
@@ -501,7 +508,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeForStudentTypeProvider" />
 		<property name="eachLayout" value=""/>

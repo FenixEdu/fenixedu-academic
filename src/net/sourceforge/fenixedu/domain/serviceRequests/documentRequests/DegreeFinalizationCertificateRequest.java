@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.Collection;
 import java.util.HashSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -21,7 +21,7 @@ import org.joda.time.YearMonthDay;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
 
-    private DegreeFinalizationCertificateRequest() {
+    protected DegreeFinalizationCertificateRequest() {
 	super();
     }
 
@@ -38,7 +38,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super.setInternshipApproved(bean.getInternshipApproved());
 	super.setStudyPlan(bean.getStudyPlan());
 	super.setExceptionalConclusionDate(bean.getExceptionalConclusionDate());
-	// super.setLanguage(bean.getLanguage());
+	super.setLanguage(bean.getLanguage());
     }
 
     @Override
@@ -59,6 +59,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 		&& bean.getExceptionalConclusionDate() == null) {
 	    throw new DomainException(
 		    "DegreeFinalizationCertificateRequest.must.indicate.date.for.exceptional.conclusion.situation");
+	}
+
+	if (bean.getLanguage() == null) {
+	    throw new DomainException("DegreeFinalizationCertificateRequest.missing.language");
 	}
 
 	if (getDegreeType().isComposite()) {

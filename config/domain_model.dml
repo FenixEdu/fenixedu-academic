@@ -1458,7 +1458,7 @@ class DomainObject {
 			
 			class accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
-			
+
 			class accounting.events.candidacy.StandaloneIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
 
@@ -3717,6 +3717,7 @@ class DomainObject {
 		Integer serviceRequestYear;
 		DateTime creationDate;
 		DateTime requestDate;
+		Language language;
 	}
 		
 		class serviceRequests.RegistrationAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
@@ -5067,7 +5068,7 @@ class period.CandidacyPeriod extends DomainObject {
 	
 	class period.StandaloneCandidacyPeriod extends period.CandidacyPeriod {
 	}
-
+	
 class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	CandidacyProcessState state;
 }
