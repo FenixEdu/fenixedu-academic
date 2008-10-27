@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 
 public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
@@ -21,6 +23,11 @@ public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
 
     @Override
     public int getPoints() {
+
+	DateTime currentDate = new DateTime();
+	if (currentDate.isBefore(this.getBeginDate()))
+	    return POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
+
 	if (isActive() && !isStatusUndefined()) {
 	    return isAttended() ? getAssociatedVigilantGroup().getPointsForTeacher()
 		    : (isDismissed() ? getAssociatedVigilantGroup().getPointsForDismissedTeacher() : (getWrittenEvaluation()

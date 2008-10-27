@@ -67,7 +67,9 @@ public abstract class Vigilancy extends Vigilancy_Base {
 	if (this.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
 	    throw new DomainException("vigilancy.error.notAuthorized");
 	} else {
-	    getWrittenEvaluation().fillVigilancyReport();
+	    if (AttendingStatus.ATTENDED.equals(status)) {
+		getWrittenEvaluation().fillVigilancyReport();
+	    }
 	    super.setStatus(status);
 	}
     }

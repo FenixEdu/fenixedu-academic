@@ -26,7 +26,6 @@
 
 <h3><fr:view name="evaluation" property="name"/> (<fr:view name="evaluation" property="dayDateYearMonthDay"/> - <fr:view name="evaluation" property="beginningDateHourMinuteSecond"/>)</h3>
 
-
 <logic:notEmpty name="ownVigilancies">
 
 <script type="text/javascript">
@@ -39,7 +38,7 @@
 	}
 </script>
 	
-<form id="convokeForm" action="<%= request.getContextPath() + "/teacher/evaluation/vigilancy/vigilantsForEvaluation.do"%>">
+<form id="convokeForm" action="<%= request.getContextPath() + "/teacher/evaluation/vigilancy/vigilantsForEvaluation.do"%>" method="post">
 	<input type="hidden" name="evaluationOID" value="<%= evaluationId %>"/>
 	<input type="hidden" name="executionCourseID" value="<%= executionCourseId %>"/>
 	<input type="hidden" name="method" value=""/>
