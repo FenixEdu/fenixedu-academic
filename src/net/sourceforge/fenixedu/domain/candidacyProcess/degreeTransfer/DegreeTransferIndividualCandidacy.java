@@ -47,11 +47,6 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 
 	checkParameters(person, process, candidacyDate);
 
-	if (person.hasValidDegreeTransferIndividualCandidacy(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.DegreeTransferIndividualCandidacy.person.already.has.candidacy", process
-		    .getCandidacyExecutionInterval().getName());
-	}
-
 	if (selectedDegree == null) {
 	    throw new DomainException("error.DegreeTransferIndividualCandidacy.invalid.degree");
 	}
@@ -99,6 +94,36 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     }
 
     @Override
+    public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
+	    final Ingression ingression) {
+
+	if (hasRegistration()) {
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
+		    .getPresentationName());
+	}
+
+	if (hasRegistration(degreeCurricularPlan)) {
+	    final Registration registration = getStudent().getRegistrationFor(degreeCurricularPlan);
+	    setRegistration(registration);
+
+	    if (!registration.isActive()) {
+		RegistrationState.createState(registration, AccessControl.getPerson(), new DateTime(),
+			RegistrationStateType.REGISTERED);
+	    }
+
+	    createInternalAbandonStateInPreviousRegistration();
+
+	    return registration;
+	}
+
+	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+    }
+
+    private boolean hasRegistration(DegreeCurricularPlan degreeCurricularPlan) {
+	return getPerson().hasStudent() && getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
+    }
+
+    @Override
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
 	    Ingression ingression) {
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
@@ -110,7 +135,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     private void createInternalAbandonStateInPreviousRegistration() {
 	if (getPrecedentDegreeInformation().isInternal()) {
 	    final InstitutionPrecedentDegreeInformation information = (InstitutionPrecedentDegreeInformation) getPrecedentDegreeInformation();
-	    if (information.getRegistration().isActive()) {
+	    if (!information.getRegistration().isInternalAbandon()) {
 		RegistrationState.createState(information.getRegistration(), AccessControl.getPerson(), new DateTime(),
 			RegistrationStateType.INTERNAL_ABANDON);
 	    }

@@ -47,11 +47,6 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
 	checkParameters(person, process, candidacyDate);
 
-	if (person.hasValidDegreeChangeIndividualCandidacy(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.DegreeChangeIndividualCandidacy.person.already.has.candidacy", process
-		    .getCandidacyExecutionInterval().getName());
-	}
-
 	if (selectedDegree == null) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.invalid.degree");
 	}
@@ -157,6 +152,36 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     }
 
     @Override
+    public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
+	    final Ingression ingression) {
+
+	if (hasRegistration()) {
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
+		    .getPresentationName());
+	}
+
+	if (hasRegistration(degreeCurricularPlan)) {
+	    final Registration registration = getStudent().getRegistrationFor(degreeCurricularPlan);
+	    setRegistration(registration);
+
+	    if (!registration.isActive()) {
+		RegistrationState.createState(registration, AccessControl.getPerson(), new DateTime(),
+			RegistrationStateType.REGISTERED);
+	    }
+	    
+	    createInternalAbandonStateInPreviousRegistration();
+	    
+	    return registration;
+	}
+
+	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+    }
+
+    private boolean hasRegistration(DegreeCurricularPlan degreeCurricularPlan) {
+	return getPerson().hasStudent() && getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
+    }
+
+    @Override
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
 	    Ingression ingression) {
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
@@ -168,7 +193,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     private void createInternalAbandonStateInPreviousRegistration() {
 	if (getPrecedentDegreeInformation().isInternal()) {
 	    final InstitutionPrecedentDegreeInformation information = (InstitutionPrecedentDegreeInformation) getPrecedentDegreeInformation();
-	    if (information.getRegistration().isActive()) {
+	    if (!information.getRegistration().isInternalAbandon()) {
 		RegistrationState.createState(information.getRegistration(), AccessControl.getPerson(), new DateTime(),
 			RegistrationStateType.INTERNAL_ABANDON);
 	    }
