@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.Collection;
 import java.util.HashSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class ApprovementCertificateRequest extends ApprovementCertificateRequest_Base {
 
-    private ApprovementCertificateRequest() {
+    protected ApprovementCertificateRequest() {
 	super();
     }
 

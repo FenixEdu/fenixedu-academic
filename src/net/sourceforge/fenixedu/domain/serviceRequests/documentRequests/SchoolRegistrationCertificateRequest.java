@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCertificateRequest_Base {
 
-    private SchoolRegistrationCertificateRequest() {
+    protected SchoolRegistrationCertificateRequest() {
 	super();
     }
 

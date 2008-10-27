@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -15,19 +15,14 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
-import org.joda.time.DateTime;
-
 public class DiplomaRequest extends DiplomaRequest_Base {
 
-    private DiplomaRequest() {
+    protected DiplomaRequest() {
 	super();
     }
 
     public DiplomaRequest(final DocumentRequestCreateBean bean) {
 	this();
-	if (bean.getRequestDate() == null) {
-	    bean.setRequestDate(new DateTime());
-	}
 	super.init(bean);
 
 	checkParameters(bean);

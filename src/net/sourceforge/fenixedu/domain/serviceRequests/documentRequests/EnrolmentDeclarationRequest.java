@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Base {
 
-    private EnrolmentDeclarationRequest() {
+    protected EnrolmentDeclarationRequest() {
 	super();
     }
 

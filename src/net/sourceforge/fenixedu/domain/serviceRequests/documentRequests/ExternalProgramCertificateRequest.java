@@ -5,14 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ExternalProgramCertificateRequest extends ExternalProgramCertificateRequest_Base {
 
-    private ExternalProgramCertificateRequest() {
+    protected ExternalProgramCertificateRequest() {
 	super();
     }
 
