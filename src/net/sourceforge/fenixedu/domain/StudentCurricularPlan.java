@@ -912,8 +912,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public ExecutionSemester getStartExecutionPeriod() {
-	return getStartDateYearMonthDay() != null ? ExecutionSemester.readByDateTime(getStartDateYearMonthDay()
-		.toDateTimeAtMidnight()) : getFirstExecutionPeriod();
+	ExecutionSemester result = null;
+
+	final YearMonthDay startDate = getStartDateYearMonthDay();
+	if (startDate != null) {
+	    result = ExecutionSemester.readByDateTime(startDate.toDateTimeAtMidnight());
+
+	    if (result == null) {
+		result = ExecutionYear.readByDateTime(startDate.toDateTimeAtMidnight()).getFirstExecutionPeriod();
+	    }
+	}
+
+	return result != null ? result : getFirstExecutionPeriod();
     }
 
     final public ExecutionSemester getFirstExecutionPeriod() {
