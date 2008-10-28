@@ -325,7 +325,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["      " + $P{administrativeOfficeCoordinator}.getName() + ", Coordenador" + ($P{administrativeOfficeCoordinator}.isMale() ? "" : "a") + " do " + $P{administrativeOfficeName}.toUpperCase() + " do " + $P{institutionName}.toUpperCase() + " da " + $P{universityName}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["      " + $P{administrativeOfficeCoordinator}.getName() + ", Coordenador" + ($P{administrativeOfficeCoordinator}.isMale() ? "" : "a") + " do " + $P{administrativeOfficeName}.toUpperCase() + " do " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
