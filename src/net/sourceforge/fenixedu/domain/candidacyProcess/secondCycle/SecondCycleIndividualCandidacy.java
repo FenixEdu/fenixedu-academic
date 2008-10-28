@@ -128,6 +128,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	setNotes(bean.getNotes());
 	if (isCandidacyResultStateValid(bean.getState())) {
 	    setState(bean.getState());
+	} else if (bean.getState() == null) {
+	    setState(IndividualCandidacyState.STAND_BY);
 	}
     }
 
