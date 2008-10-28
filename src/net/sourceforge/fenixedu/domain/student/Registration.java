@@ -3259,4 +3259,9 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    public boolean hasActiveLastState(final ExecutionSemester executionSemester) {
+	final Set<RegistrationState> states = getRegistrationStates(executionSemester);
+	return states.isEmpty() ? false : Collections.max(states, RegistrationState.DATE_COMPARATOR).isActive();
+    }
+
 }
