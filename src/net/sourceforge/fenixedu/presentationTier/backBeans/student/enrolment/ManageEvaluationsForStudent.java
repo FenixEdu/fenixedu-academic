@@ -59,7 +59,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
 	this.evaluationsWithEnrolmentPeriodOpened = new ArrayList();
 
 	final String evaluationType = getEvaluationTypeString();
-	for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+	for (final Registration registration : getStudent().getStudent().getActiveRegistrationsIn(getExecutionPeriod())) {
 	    for (final WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(getExecutionPeriod())) {
 		if (writtenEvaluation instanceof Exam) {
 		    final Exam exam = (Exam) writtenEvaluation;
