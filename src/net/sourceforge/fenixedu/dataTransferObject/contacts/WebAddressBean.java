@@ -32,6 +32,6 @@ public class WebAddressBean extends PartyContactBean {
     @Override
     public void createNewContact() {
 	new WebAddress(getParty(), getType(), getVisibleToPublic(), getVisibleToStudents(), getVisibleToTeachers(),
-		getVisibleToEmployees(), getDefaultContact(), getValue());
+		getVisibleToEmployees(), getVisibleToAlumni(), getDefaultContact(), getValue());
     }
 }

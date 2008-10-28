@@ -1,0 +1,2 @@
+alter table PARTY_CONTACT add column VISIBLE_TO_ALUMNI tinyint(1) not null;
+update PARTY_CONTACT set VISIBLE_TO_ALUMNI=VISIBLE_TO_STUDENTS;

@@ -32,6 +32,6 @@ public class PhoneBean extends PartyContactBean {
     @Override
     public void createNewContact() {
 	new Phone(getParty(), getType(), getVisibleToPublic(), getVisibleToStudents(), getVisibleToTeachers(),
-		getVisibleToEmployees(), getDefaultContact(), getValue());
+		getVisibleToEmployees(), getVisibleToAlumni(), getDefaultContact(), getValue());
     }
 }

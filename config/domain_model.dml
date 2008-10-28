@@ -2206,6 +2206,7 @@ class DomainObject {
 		Boolean visibleToStudents (REQUIRED);
         Boolean visibleToTeachers (REQUIRED);
         Boolean visibleToEmployees (REQUIRED);
+        Boolean visibleToAlumni (REQUIRED);
 	}
 
 		class contacts.EmailAddress extends contacts.PartyContact {

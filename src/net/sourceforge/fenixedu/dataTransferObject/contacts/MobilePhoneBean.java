@@ -32,6 +32,6 @@ public class MobilePhoneBean extends PartyContactBean {
     @Override
     public void createNewContact() {
 	new MobilePhone(getParty(), getType(), getVisibleToPublic(), getVisibleToStudents(), getVisibleToTeachers(),
-		getVisibleToEmployees(), getDefaultContact(), getValue());
+		getVisibleToEmployees(), getVisibleToAlumni(), getDefaultContact(), getValue());
     }
 }

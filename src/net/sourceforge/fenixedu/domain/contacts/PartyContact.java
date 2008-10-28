@@ -24,6 +24,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	setVisibleToStudents(Boolean.FALSE);
 	setVisibleToTeachers(Boolean.FALSE);
 	setVisibleToEmployees(Boolean.FALSE);
+	setVisibleToAlumni(Boolean.FALSE);
     }
 
     protected void init(final Party party, final PartyContactType type, final boolean defaultContact) {
@@ -46,7 +47,7 @@ public abstract class PartyContact extends PartyContact_Base {
 
     protected void init(final Party party, final PartyContactType type, final boolean visibleToPublic,
 	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
-	    final boolean defaultContact) {
+	    final boolean visibleToAlumni, final boolean defaultContact) {
 	checkParameters(party, type);
 	super.setParty(party);
 	super.setType(type);
@@ -54,6 +55,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	setVisibleToStudents(new Boolean(visibleToStudents));
 	setVisibleToTeachers(new Boolean(visibleToTeachers));
 	setVisibleToEmployees(new Boolean(visibleToEmployees));
+	setVisibleToAlumni(new Boolean(visibleToAlumni));
 	setDefaultContactInformation(defaultContact);
     }
 
@@ -62,6 +64,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	super.setVisibleToStudents(Boolean.TRUE);
 	super.setVisibleToTeachers(Boolean.TRUE);
 	super.setVisibleToEmployees(Boolean.TRUE);
+	super.setVisibleToAlumni(Boolean.TRUE);
     }
 
     @Override
@@ -71,6 +74,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	    super.setVisibleToStudents(Boolean.TRUE);
 	    super.setVisibleToTeachers(Boolean.TRUE);
 	    super.setVisibleToEmployees(Boolean.TRUE);
+	    super.setVisibleToAlumni(Boolean.TRUE);
 	}
     }
 

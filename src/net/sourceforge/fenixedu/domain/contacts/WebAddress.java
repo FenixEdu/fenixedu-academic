@@ -38,9 +38,9 @@ public class WebAddress extends WebAddress_Base {
 
     public WebAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
 	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
-	    final boolean defaultContact, final String url) {
+	    final boolean visibleToAlumni, final boolean defaultContact, final String url) {
 	this();
-	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, defaultContact);
+	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni, defaultContact);
 	checkParameters(url);
 	super.setUrl(url);
     }

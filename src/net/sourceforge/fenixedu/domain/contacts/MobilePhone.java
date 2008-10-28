@@ -38,9 +38,10 @@ public class MobilePhone extends MobilePhone_Base {
 
     public MobilePhone(final Party party, final PartyContactType type, final boolean visibleToPublic,
 	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
-	    final boolean defaultContact, final String number) {
+	    final boolean visibleToAlumni, final boolean defaultContact, final String number) {
 	this();
-	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, defaultContact);
+	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni,
+		defaultContact);
 	checkParameters(number);
 	super.setNumber(number);
     }

@@ -39,9 +39,10 @@ public class EmailAddress extends EmailAddress_Base {
 
     public EmailAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
 	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
-	    final boolean defaultContact, final String value) {
+	    final boolean visibleToAlumni, final boolean defaultContact, final String value) {
 	this();
-	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, defaultContact);
+	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni,
+		defaultContact);
 	checkParameters(value);
 	super.setValue(value);
     }

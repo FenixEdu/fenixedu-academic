@@ -34,7 +34,7 @@
 		<bean:size id="size" name="emailAddresses" />
 		<logic:notEmpty name="emailAddresses">
 			<logic:iterate id="email" name="emailAddresses">
-				<bean:define id="isAvailable" name="email" property="visibleToStudents" />
+				<bean:define id="isAvailable" name="email" property="visibleToAlumni" />
 				<logic:equal name="isAvailable" value="true">
 					<tr>
 						<th>

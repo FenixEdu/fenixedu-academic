@@ -32,6 +32,6 @@ public class EmailAddressBean extends PartyContactBean {
     @Override
     public void createNewContact() {
 	new EmailAddress(getParty(), getType(), getVisibleToPublic(), getVisibleToStudents(), getVisibleToTeachers(),
-		getVisibleToEmployees(), getDefaultContact(), getValue());
+		getVisibleToEmployees(), getVisibleToAlumni(), getDefaultContact(), getValue());
     }
 }
