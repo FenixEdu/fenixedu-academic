@@ -192,6 +192,17 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
+    
+    public List<Registration> getActiveRegistrationsIn(final ExecutionSemester executionSemester) {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.hasActiveLastState(executionSemester)) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
+
 
     public Registration getLastActiveRegistration() {
 	List<Registration> activeRegistrations = getActiveRegistrations();
