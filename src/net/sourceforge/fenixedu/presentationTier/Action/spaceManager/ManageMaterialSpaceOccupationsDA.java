@@ -33,7 +33,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
 	IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterial");
 	if (viewState != null) {
 	    MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
-	    if (materialTypeBean.getMaterial() == null) {
+	    if (materialTypeBean.getMaterialType() == null) {
 		addActionMessage(request, "error.material.not.found");
 	    }
 	}
