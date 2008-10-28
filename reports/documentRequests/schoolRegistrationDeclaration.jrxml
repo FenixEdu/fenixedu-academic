@@ -359,23 +359,6 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Registo Nº " + $P{documentRequest}.getServiceRequestNumber().toString().trim()]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement
-						x="80"
-						y="34"
-						width="271"
-						height="11"
-						key="staticText-11"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement lineSpacing="Single">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
-					</textElement>
-				<text><![CDATA[Conferido por: _______________________________]]></text>
-				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="81"
