@@ -3250,4 +3250,13 @@ public class Registration extends Registration_Base {
 	return Campus.getUniversityCode(getCampus(executionYear)) + getDegree().getMinistryCode();
     }
 
+    public boolean hasAnyActiveState(final ExecutionYear executionYear) {
+	for (RegistrationState registrationState : getRegistrationStates(executionYear)) {
+	    if (registrationState.isActive()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }
