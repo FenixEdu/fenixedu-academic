@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alterTableAcademicServiceRequestAddLanguage.sql" alterTableAcademicServiceRequestAddLanguage.sql
+execute "alterTablePartyContact.sql" alterTablePartyContact.sql
