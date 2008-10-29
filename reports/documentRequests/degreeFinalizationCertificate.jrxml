@@ -107,7 +107,7 @@
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.coordinator." + ($P{administrativeOfficeCoordinator}.isMale() ? "male" : "female")) + " " + $P{bundle}.getString("label.of.male") + " " + $P{administrativeOfficeName}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.coordinator." + ($P{administrativeOfficeCoordinator}.isMale() ? "male" : "female")) + " " + $P{bundle}.getString("label.of.the.male") + " " + $P{administrativeOfficeName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -334,7 +334,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["      " + $P{administrativeOfficeCoordinator}.getName() + ", " + $P{bundle}.getString("label.coordinator." + ($P{administrativeOfficeCoordinator}.isMale() ? "male" : "female")) + " " + $P{bundle}.getString("label.of.male") + " " + $P{administrativeOfficeName}.toUpperCase() + " " + $P{bundle}.getString("label.of.male") + " " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["      " + $P{administrativeOfficeCoordinator}.getName() + ", " + $P{bundle}.getString("label.coordinator." + ($P{administrativeOfficeCoordinator}.isMale() ? "male" : "female")) + " " + $P{bundle}.getString("label.of.the.male") + " " + $P{administrativeOfficeName}.toUpperCase() + " " + $P{bundle}.getString("label.of.male") + " " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
