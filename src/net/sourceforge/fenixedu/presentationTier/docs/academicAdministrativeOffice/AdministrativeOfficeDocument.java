@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AdministrativeOfficeDocument extends FenixReport {
@@ -112,7 +111,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     @SuppressWarnings("static-access")
     protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
-	this(documentRequest, Language.getLocale());
+	this(documentRequest, new Locale(documentRequest.getLanguage().name()));
     }
 
     public AdministrativeOfficeDocument(final DocumentRequest documentRequest, final Locale locale) {
