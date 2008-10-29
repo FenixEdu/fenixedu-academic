@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Country extends Country_Base {
 
@@ -31,10 +33,18 @@ public class Country extends Country_Base {
 	setDefaultCountry(false);
     }
 
+    @Deprecated
     public Country(final String name, final String nationality, final String code) {
 	this();
 	setCode(code);
-	setNationality(nationality);
+	setCountryNationality(new MultiLanguageString(Language.getDefaultLanguage(), nationality));
+	setName(name);
+    }
+
+    public Country(final String name, final MultiLanguageString nationality, final String code) {
+	this();
+	setCode(code);
+	setCountryNationality(nationality);
 	setName(name);
     }
 
@@ -83,14 +93,23 @@ public class Country extends Country_Base {
 	}
 
 	return result;
-
     }
 
-    public String getFilteredNationality() {
-	final String nationality = getNationality();
-	final String nationalitySpecialCase = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale())
-		.getString("label.person.portugueseNationality").toUpperCase();
-	return nationality.trim().contains(nationalitySpecialCase) ? nationalitySpecialCase : nationality;
+    /**
+     * This method is (yet another) hack in Country due to strange values for
+     * the Portuguese nationality.
+     * 
+     */
+    @Deprecated
+    public String getFilteredNationality(final Locale locale) {
+	final String nationality = getCountryNationality().getContent(Language.valueOf(locale.getLanguage()));
+	if (this != readDefault()) {
+	    return nationality;
+	}
+
+	final String specialCase = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(
+		"label.person.portugueseNationality").toUpperCase();
+	return nationality.trim().contains(specialCase) ? specialCase : nationality;
     }
 
     public boolean isDefaultCountry() {
@@ -105,7 +124,7 @@ public class Country extends Country_Base {
 
 	// TODO: Hack to remove, when we no longer have 4(!!) Portugal countries
 	// with same code (pt)
-	Country defaultCountry = readDefault();
+	final Country defaultCountry = readDefault();
 	if (defaultCountry.getCode().equalsIgnoreCase(code)) {
 	    return defaultCountry;
 	}
@@ -137,6 +156,16 @@ public class Country extends Country_Base {
 	    }
 	}
 	return null;
+    }
+
+    @Deprecated
+    public String getNationality() {
+	return getCountryNationality().getPreferedContent();
+    }
+
+    @Deprecated
+    public void setNationality(final String nationality) {
+	getCountryNationality().setContent(Language.getDefaultLanguage(), nationality);
     }
 
 }

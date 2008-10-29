@@ -220,8 +220,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
 
 	StringBuilder builder = new StringBuilder();
-	builder.append(getResourceBundle().getString("label.bearer." + (person.isMale() ? "male" : "female")));
-	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("label.of.male"));
+	builder.append(getResourceBundle().getString("label.with"));
 	builder.append(SINGLE_SPACE).append(person.getIdDocumentType().getLocalizedName(getLocale()));
 	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("label.number.short"));
 	builder.append(SINGLE_SPACE).append(person.getDocumentIdNumber());
@@ -235,7 +234,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	builder = new StringBuilder();
 	builder.append(getResourceBundle().getString("documents.nationality.one"));
-	final String nationality = person.getCountry().getFilteredNationality();
+	final String nationality = person.getCountry().getFilteredNationality(getLocale());
 	builder.append(SINGLE_SPACE).append(nationality.toUpperCase());
 	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.nationality.two"));
 	addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));

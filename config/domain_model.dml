@@ -326,7 +326,7 @@ class DomainObject {
 		String code;
 		String threeLetterCode;
 		String name;
-		String nationality;
+		MultiLanguageString countryNationality;
 		Boolean defaultCountry;
 	}
 

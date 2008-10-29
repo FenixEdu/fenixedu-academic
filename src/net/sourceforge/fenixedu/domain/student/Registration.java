@@ -1805,29 +1805,28 @@ public class Registration extends Registration_Base {
     }
 
     final public String getDegreeDescription(final CycleType cycleType, final Locale locale) {
-	final StringBuilder result = new StringBuilder();
+	final StringBuilder res = new StringBuilder();
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
 
 	final Degree degree = getDegree();
 	final DegreeType degreeType = degree.getDegreeType();
 	if (getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
-	    result.append(cycleType.getDescription(locale));
-	    result.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.male"));
-	    result.append(StringUtils.SINGLE_SPACE);
+	    res.append(cycleType.getDescription(locale));
+	    res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.the.male"));
+	    res.append(StringUtils.SINGLE_SPACE);
 	}
 
-	result.append(degreeType.getPrefix(locale));
-	result.append(degreeType.getFilteredName(locale).toUpperCase());
+	res.append(degreeType.getPrefix(locale));
+	res.append(degreeType.getFilteredName(locale).toUpperCase());
 
 	if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
-	    result.append(" (").append(cycleType.getDescription(locale)).append(")");
+	    res.append(" (").append(cycleType.getDescription(locale)).append(")");
 	}
-	result.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.in"));
-	result.append(StringUtils.SINGLE_SPACE)
-		.append(degree.getFilteredName(this.getStartExecutionYear(), locale).toUpperCase());
+	res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.in"));
+	res.append(StringUtils.SINGLE_SPACE).append(degree.getFilteredName(this.getStartExecutionYear(), locale).toUpperCase());
 
-	return result.toString();
+	return res.toString();
     }
 
     @Override
