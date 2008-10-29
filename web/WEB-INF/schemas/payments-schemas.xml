@@ -1,6 +1,5 @@
 <schema name="entryDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="selected"/>
-	<slot name="event.whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description"/>
 	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 	<slot name="payedAmount" read-only="true"  />
@@ -13,7 +12,6 @@
 
 <schema name="entryDTO.edit-with-installments" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="selected"/>
-	<slot name="event.whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description"/>
 	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 	<slot name="amountToPay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -185,7 +183,6 @@
 </schema>
 
 <schema name="AccountingEvent.view" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
-	<slot name="whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
 </schema>
 
@@ -417,7 +414,6 @@
 
 <schema name="CancelEventBean.editJustification" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CancelEventBean" bundle="APPLICATION_RESOURCES">
 	<slot name="event.description" read-only="true" />
-	<slot name="event.whenOccured" read-only="true"/>
 	<slot name="justification" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="4" />
 		<property name="columns" value="40" />
