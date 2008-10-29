@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -21,8 +22,9 @@ public class GraduationDegreeCurricularPlansProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object currentValue) {
 	final Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
-	result.addAll(DegreeCurricularPlan.readByDegreeTypesAndState(DegreeType
-		.getDegreeTypesFor(AdministrativeOfficeType.DEGREE), DegreeCurricularPlanState.ACTIVE));
+	result.addAll(DegreeCurricularPlan.readByDegreeTypesAndStateWithExecutionDegreeForYear(DegreeType
+		.getDegreeTypesFor(AdministrativeOfficeType.DEGREE), DegreeCurricularPlanState.ACTIVE, ExecutionYear
+		.readCurrentExecutionYear()));
 	result.add(DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
 
 	return result;

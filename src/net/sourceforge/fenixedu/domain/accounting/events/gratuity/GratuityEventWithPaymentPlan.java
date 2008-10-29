@@ -107,20 +107,49 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
+	return createMissingPaymentCodes();
+    }
+
+    private List<AccountingEventPaymentCode> createMissingPaymentCodes() {
 	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
 	for (final EntryDTO entryDTO : calculateEntries()) {
 
-	    if (entryDTO instanceof EntryWithInstallmentDTO) {
-		result.add(createInstallmentPaymentCode((EntryWithInstallmentDTO) entryDTO, getPerson().getStudent()));
-	    } else {
-		result.add(createAccountingEventPaymentCode(entryDTO, getPerson().getStudent()));
+	    if (!hasAnyNonProcessedPaymentCodeFor(entryDTO)) {
+		if (entryDTO instanceof EntryWithInstallmentDTO) {
+		    result.add(createInstallmentPaymentCode((EntryWithInstallmentDTO) entryDTO, getPerson().getStudent()));
+		} else {
+		    result.add(createAccountingEventPaymentCode(entryDTO, getPerson().getStudent()));
+		}
 	    }
+
 	}
 	return result;
     }
 
+    private boolean hasAnyNonProcessedPaymentCodeFor(final EntryDTO entryDTO) {
+	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
+	    if (paymentCode instanceof InstallmentPaymentCode) {
+		if (entryDTO instanceof EntryWithInstallmentDTO) {
+		    final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
+
+		    if (installmentPaymentCode.getInstallment() == ((EntryWithInstallmentDTO) entryDTO).getInstallment()) {
+			return true;
+		    }
+		}
+	    } else {
+		if (!(entryDTO instanceof EntryWithInstallmentDTO)) {
+		    return true;
+		}
+	    }
+	}
+
+	return false;
+    }
+
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+	createMissingPaymentCodes();
+
 	final List<EntryDTO> entryDTOs = calculateEntries();
 	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
 

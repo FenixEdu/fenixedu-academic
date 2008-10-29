@@ -1804,4 +1804,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
     }
 
+    public static List<DegreeCurricularPlan> readByDegreeTypesAndStateWithExecutionDegreeForYear(Set<DegreeType> degreeTypes,
+	    DegreeCurricularPlanState state, ExecutionYear executionYear) {
+
+	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : readByDegreeTypesAndState(degreeTypes, state)) {
+	    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {
+		result.add(degreeCurricularPlan);
+	    }
+	}
+
+	return result;
+
+    }
+
 }

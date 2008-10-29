@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.util;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -14,6 +15,20 @@ import org.apache.commons.lang.StringUtils;
  * 
  */
 public class PaymentCodeGenerator {
+
+    public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_CODE_CONTROL_DIGITS = new Comparator<PaymentCode>() {
+	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
+	    final String leftCodeControlDigits = leftPaymentCode.getCode().substring(
+		    leftPaymentCode.getCode().length() - CONTROL_DIGITS_LENGTH);
+	    final String rightCodeControlDigits = rightPaymentCode.getCode().substring(
+		    rightPaymentCode.getCode().length() - CONTROL_DIGITS_LENGTH);
+
+	    int comparationResult = leftCodeControlDigits.compareTo(rightCodeControlDigits);
+
+	    return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal())
+		    : comparationResult;
+	}
+    };
 
     private static final int CONTROL_DIGITS_LENGTH = 2;
 
@@ -41,7 +56,7 @@ public class PaymentCodeGenerator {
 
     private static PaymentCode findLastPaymentCode(final PaymentCodeType paymentCodeType, Student student) {
 	final List<PaymentCode> paymentCodes = student.getPaymentCodesBy(paymentCodeType);
-	return paymentCodes.isEmpty() ? null : Collections.max(paymentCodes, PaymentCode.COMPARATOR_BY_CODE);
+	return paymentCodes.isEmpty() ? null : Collections.max(paymentCodes, COMPARATOR_BY_PAYMENT_CODE_CONTROL_DIGITS);
     }
 
     private static String generateFirstCodeForType(final PaymentCodeType paymentCodeType, final Student student) {

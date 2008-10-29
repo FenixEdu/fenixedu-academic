@@ -624,7 +624,7 @@ public abstract class Event extends Event_Base {
     }
 
     public Money getReimbursableAmount() {
-	if (!isClosed()) {
+	if (!isClosed() || !hasEventCloseDate()) {
 	    return Money.ZERO;
 	}
 

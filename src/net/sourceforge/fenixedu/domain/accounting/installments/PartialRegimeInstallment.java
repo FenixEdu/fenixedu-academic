@@ -85,8 +85,12 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 	}
 
 	final BigDecimal proporcionToPay = enroledEcts.divide(getEctsForAmount());
+	// TODO: Fix Money limitation of scale = 2 to prevent this type of
+	// coding
+	final BigDecimal amount = getAmount().getAmount().setScale(10);
 
-	return getAmount().multiply(new BigDecimal("0.5")).multiply(BigDecimal.ONE.add(proporcionToPay));
+	return new Money(amount.multiply(new BigDecimal("0.5")).multiply(BigDecimal.ONE.add(proporcionToPay)));
+
     }
 
     @Override
