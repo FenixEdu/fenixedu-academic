@@ -191,6 +191,8 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 
 	if (isCandidacyResultStateValid(bean.getState())) {
 	    setState(bean.getState());
+	} else if (bean.getState() == null) {
+	    setState(IndividualCandidacyState.STAND_BY);
 	}
     }
 

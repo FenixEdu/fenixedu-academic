@@ -142,6 +142,8 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
 	if (isCandidacyResultStateValid(bean.getState())) {
 	    setState(bean.getState());
+	} else if (bean.getState() == null) {
+	    setState(IndividualCandidacyState.STAND_BY);
 	}
     }
 
@@ -168,9 +170,9 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 		RegistrationState.createState(registration, AccessControl.getPerson(), new DateTime(),
 			RegistrationStateType.REGISTERED);
 	    }
-	    
+
 	    createInternalAbandonStateInPreviousRegistration();
-	    
+
 	    return registration;
 	}
 
