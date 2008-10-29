@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
 
@@ -53,7 +54,8 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 	result.append(StringUtils.SINGLE_SPACE).append(
 		ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
 
-	final String suffix = getGraduateTitleSuffix().getContent(Language.valueOf(locale.getLanguage()));
+	final MultiLanguageString mls = getGraduateTitleSuffix();
+	final String suffix = mls == null ? null : mls.getContent(Language.valueOf(locale.getLanguage()));
 	if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
 	    result.append(StringUtils.SINGLE_SPACE).append(suffix);
 	    result.append(StringUtils.SINGLE_SPACE).append("-");
