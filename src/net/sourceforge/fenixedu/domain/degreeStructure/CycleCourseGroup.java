@@ -53,9 +53,9 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 	result.append(StringUtils.SINGLE_SPACE).append(
 		ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
 
-	final String graduateTitleSuffix = getGraduateTitleSuffix();
-	if (!StringUtils.isEmpty(graduateTitleSuffix) && !degreeFilteredName.contains(graduateTitleSuffix.trim())) {
-	    result.append(StringUtils.SINGLE_SPACE).append(graduateTitleSuffix);
+	final String suffix = getGraduateTitleSuffix().getContent(Language.valueOf(locale.getLanguage()));
+	if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
+	    result.append(StringUtils.SINGLE_SPACE).append(suffix);
 	    result.append(StringUtils.SINGLE_SPACE).append("-");
 	}
 
