@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
@@ -25,7 +26,7 @@ public enum MobilityProgram {
     COVENANT_WITH_INSTITUTION {
 
 	@Override
-	public String getSpecificDescription() {
+	protected String getSpecificDescription(final Locale locale) {
 	    return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName())
 		    + UniversityUnit.getInstitutionsUniversityUnit().getName();
 	}
@@ -41,12 +42,16 @@ public enum MobilityProgram {
 	return enumClass.getSimpleName() + "." + name();
     }
 
-    public String getSpecificDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+    protected String getSpecificDescription(final Locale locale) {
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
 
     public String getDescription() {
-	return getSpecificDescription();
+	return getSpecificDescription(Language.getLocale());
+    }
+
+    public String getDescription(final Locale locale) {
+	return getSpecificDescription(locale);
     }
 
 }
