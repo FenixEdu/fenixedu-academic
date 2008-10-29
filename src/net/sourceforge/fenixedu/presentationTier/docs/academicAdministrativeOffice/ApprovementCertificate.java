@@ -103,7 +103,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 		    result.append(generateEndLine()).append(LINE_BREAK);
 		}
 
-		result.append(cycle.getName().getContent()).append(":").append(LINE_BREAK);
+		result.append(getMLSTextContent(cycle.getName())).append(":").append(LINE_BREAK);
 
 		reportEntries(result, ApprovementCertificateRequest.filterEntries(entries, cycle.getCurriculum()
 			.getCurriculumEntries()), academicUnitIdentifiers);

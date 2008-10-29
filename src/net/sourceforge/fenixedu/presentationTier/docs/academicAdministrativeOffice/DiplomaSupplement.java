@@ -132,7 +132,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	    return;
 	}
 
-	final String content = mls.hasContent(getLanguage()) ? mls.getContent(getLanguage()) : mls.getContent();
+	final String content = getMLSTextContent(mls);
 	for (String ahref : content.split("<a href")) {
 	    if (ahref.contains("</a>")) {
 		ahref = "<a href" + ahref.substring(0, ahref.indexOf("</a>")) + "</a>";
