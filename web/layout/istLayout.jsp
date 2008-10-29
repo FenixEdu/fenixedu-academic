@@ -74,6 +74,8 @@
 <!-- DEGREE SITE -->
 <td width="100%" colspan="3" id="main">
 
+<tiles:useAttribute id="hideLanguage" name="hideLanguage" ignore="true"/>
+<logic:notPresent name="hideLanguage">
 	 <div id="version">
 				<html:form action="/changeLocaleTo.do">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
@@ -97,6 +99,7 @@
 		
 			</html:form>
 	</div> 
+</logic:notPresent>
 
 <tiles:insert attribute="body-context" ignore="true"/>
 <tiles:insert attribute="body" ignore="true"/>

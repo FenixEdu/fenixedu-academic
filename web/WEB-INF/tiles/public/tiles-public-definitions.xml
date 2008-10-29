@@ -195,8 +195,8 @@
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
        
-    <definition name="definition.public.alumni" page="/layout/istLayout.jsp" >
-		<put name="title" value=".Instituto Superior Técnico" />	
+    <definition name="definition.public.alumni" page="/layout/alumniTempLayout.jsp" >
+		<put name="title" value="Alumni | IST" />	
         <put name="serviceName" value="Instituto Superior Técnico" />                 	
         <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
         <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
@@ -204,6 +204,7 @@
 		<put name="body" value="/commons/blank.jsp" />
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
   		<put name="css-headers" value="/publico/alumni/alumniCSSHeader.jsp" />
+  		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="show-result" page="/layout/secondaryIstLayout.jsp">
