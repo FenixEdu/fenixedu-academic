@@ -2232,20 +2232,20 @@ public class Registration extends Registration_Base {
     }
 
     final public String getGraduateTitle() {
-	if (isConcluded()) {
-	    return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear());
-	}
-
-	throw new DomainException("Registration.is.not.concluded");
+	return getGraduateTitle((CycleType) null, Language.getLocale());
     }
 
-    final public String getGraduateTitle(final CycleType cycleType) {
+    final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
 	if (cycleType == null) {
-	    return getGraduateTitle();
+	    if (isConcluded()) {
+		return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear(), locale);
+	    }
+
+	    throw new DomainException("Registration.is.not.concluded");
 	}
 
 	if (hasConcludedCycle(cycleType)) {
-	    return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear(), cycleType);
+	    return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear(), cycleType, locale);
 	}
 
 	throw new DomainException("Registration.hasnt.concluded.requested.cycle");

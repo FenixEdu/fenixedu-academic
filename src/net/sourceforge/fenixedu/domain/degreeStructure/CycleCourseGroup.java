@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -9,9 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
-import org.apache.commons.lang.StringUtils;
-
+import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
@@ -42,25 +41,25 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     }
 
     final public String getGraduateTitle() {
-	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear());
+	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
     }
 
-    final public String getGraduateTitle(ExecutionYear executionYear) {
+    final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
 	final StringBuilder result = new StringBuilder();
 
-	result.append(getDegreeType().getGraduateTitle(getCycleType()));
+	result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
 
-	final String degreeFilteredName = getDegree().getFilteredName(executionYear);
-	final String in = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString("label.in");
-	result.append(" ").append(in);
+	final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
+	result.append(StringUtils.SINGLE_SPACE).append(
+		ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
 
 	final String graduateTitleSuffix = getGraduateTitleSuffix();
 	if (!StringUtils.isEmpty(graduateTitleSuffix) && !degreeFilteredName.contains(graduateTitleSuffix.trim())) {
-	    result.append(" ").append(graduateTitleSuffix);
-	    result.append(" -");
+	    result.append(StringUtils.SINGLE_SPACE).append(graduateTitleSuffix);
+	    result.append(StringUtils.SINGLE_SPACE).append("-");
 	}
 
-	result.append(" ").append(degreeFilteredName);
+	result.append(StringUtils.SINGLE_SPACE).append(degreeFilteredName);
 
 	return result.toString();
     }

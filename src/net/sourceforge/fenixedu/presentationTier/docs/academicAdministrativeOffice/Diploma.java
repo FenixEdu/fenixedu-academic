@@ -57,7 +57,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	addParameter("degreeFilteredName", registration.getDegree().getFilteredName(executionYear));
 
 	final CycleType cycleToInspect = diplomaRequest.getWhatShouldBeRequestedCycle();
-	addParameter("graduateTitle", registration.getGraduateTitle(cycleToInspect));
+	addParameter("graduateTitle", registration.getGraduateTitle(cycleToInspect, getLocale()));
 
     }
 

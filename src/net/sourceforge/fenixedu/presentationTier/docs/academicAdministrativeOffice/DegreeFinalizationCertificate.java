@@ -133,7 +133,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	final DegreeType degreeType = getDocumentRequest().getDegreeType();
 	if (degreeType.getQualifiesForGraduateTitle()) {
 	    res.append(", ").append(getResourceBundle().getString("documents.DegreeFinalizationCertificate.graduateTitleInfo"));
-	    res.append(SINGLE_SPACE).append(registration.getGraduateTitle(requestedCycle));
+	    res.append(SINGLE_SPACE).append(registration.getGraduateTitle(requestedCycle, getLocale()));
 	}
 
 	return res.toString();

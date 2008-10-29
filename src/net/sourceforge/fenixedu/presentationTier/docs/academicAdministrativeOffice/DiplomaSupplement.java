@@ -184,7 +184,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     private void addDegreeTypeParameters(final CycleType cycleType, final DegreeType degreeType) {
-	final String graduateTitle = degreeType.getGraduateTitle(cycleType);
+	final String graduateTitle = degreeType.getGraduateTitle(cycleType, getLocale());
 	addParameter("graduateTitle", graduateTitle);
 
 	final StringBuilder access = new StringBuilder();

@@ -578,6 +578,8 @@ public enum DegreeType {
 
     };
 
+    private static final String GRADUATE_TITLE_SUFFIX = ".graduate.title";
+
     public static final Set<DegreeType> NOT_EMPTY_VALUES;
     static {
 	final Set<DegreeType> result = new HashSet<DegreeType>();
@@ -824,19 +826,19 @@ public enum DegreeType {
     }
 
     final public String getGraduateTitle() {
-	if (getQualifiesForGraduateTitle()) {
-	    return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
-		    qualifiedName() + ".graduate.title");
-	}
-
-	return StringUtils.EMPTY;
+	return getGraduateTitle(Language.getLocale());
     }
 
-    final public String getGraduateTitle(final CycleType cycleType) {
+    final public String getGraduateTitle(final Locale locale) {
+	return getGraduateTitle((CycleType) null, locale);
+    }
+
+    final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
 	if (getQualifiesForGraduateTitle()) {
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
 
 	    if (cycleType == null) {
-		return getGraduateTitle();
+		return bundle.getString(qualifiedName() + GRADUATE_TITLE_SUFFIX);
 	    }
 
 	    if (cycleTypes().isEmpty()) {
@@ -847,11 +849,8 @@ public enum DegreeType {
 		throw new DomainException("DegreeType.doesnt.have.such.cycle.type");
 	    }
 
-	    if (getQualifiesForGraduateTitle()) {
-		return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
-			qualifiedName() + (isComposite() ? "." + cycleType.name() : "") + ".graduate.title");
-	    }
-
+	    return bundle.getString(qualifiedName() + (isComposite() ? "." + cycleType.name() : StringUtils.EMPTY)
+		    + GRADUATE_TITLE_SUFFIX);
 	}
 
 	return StringUtils.EMPTY;

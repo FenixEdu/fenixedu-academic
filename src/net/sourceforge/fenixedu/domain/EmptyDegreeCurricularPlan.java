@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -457,23 +458,8 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public String getGraduateTitle(ExecutionYear executionYear) {
-	return getGraduateTitle();
-    }
-
-    @Override
-    final public String getGraduateTitle() {
+    public String getGraduateTitle(final ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
 	throw new DomainException("EmptyDegreeCurricularPlan.not.available");
-    }
-
-    @Override
-    final public String getGraduateTitle(final CycleType cycleType) {
-	return getGraduateTitle();
-    }
-
-    @Override
-    final public String getGraduateTitle(ExecutionYear executionYear, final CycleType cycleType) {
-	return getGraduateTitle();
     }
 
     @Override

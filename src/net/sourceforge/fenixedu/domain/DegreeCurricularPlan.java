@@ -1473,31 +1473,25 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastOrderedCycleType()) : null;
     }
 
-    public String getGraduateTitle(ExecutionYear executionYear) {
-	if (isBolonhaDegree()) {
-	    return getLastOrderedCycleCourseGroup().getGraduateTitle(executionYear);
-	} else {
-	    final StringBuilder result = new StringBuilder(getDegreeType().getGraduateTitle());
-	    final String in = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(
-		    "label.in");
-	    result.append(" ").append(in);
-	    result.append(" ").append(getDegree().getFilteredName(executionYear));
-
-	    return result.toString();
-	}
-    }
-
     public String getGraduateTitle() {
-	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear());
+	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
     }
 
-    public String getGraduateTitle(final CycleType cycleType) {
-	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), cycleType);
+    public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
+	return getGraduateTitle(executionYear, (CycleType) null, locale);
     }
 
-    public String getGraduateTitle(ExecutionYear executionYear, final CycleType cycleType) {
+    public String getGraduateTitle(final ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
 	if (cycleType == null) {
-	    return getGraduateTitle();
+	    if (isBolonhaDegree()) {
+		return getLastOrderedCycleCourseGroup().getGraduateTitle(executionYear, locale);
+	    } else {
+		final StringBuilder res = new StringBuilder(getDegreeType().getGraduateTitle(locale));
+		res.append(" ").append(ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
+		res.append(" ").append(getDegree().getFilteredName(executionYear));
+
+		return res.toString();
+	    }
 	}
 
 	if (getDegreeType().getCycleTypes().isEmpty()) {
@@ -1508,7 +1502,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    throw new DomainException("DegreeCurricularPlan.doesnt.have.such.cycle.type");
 	}
 
-	return getCycleCourseGroup(cycleType).getGraduateTitle(executionYear);
+	return getCycleCourseGroup(cycleType).getGraduateTitle(executionYear, locale);
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses(ExecutionYear year) {
