@@ -41,8 +41,6 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
-import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy;
-import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
@@ -2204,26 +2202,21 @@ public class Person extends Person_Base {
 	    this.name = name;
 	}
 
-	private boolean matchesAnyCriteria(final String[] nameValues, final String[] documentIdNumberValues, final Person person) {
-	    return matchesAnyCriteriaField(nameValues, name, person.getName())
-		    || matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, person.getDocumentIdNumber());
-	}
-
 	private boolean matchesAnyCriteriaField(final String[] nameValues, final String string, final String stringFromPerson) {
 	    return isSpecified(string) && areNamesPresent(stringFromPerson, nameValues);
 	}
 
 	public SortedSet<Person> search() {
-	    final String[] nameValues = name == null ? null : StringNormalizer.normalize(name).toLowerCase().split("\\p{Space}+");
-	    final String[] documentIdNumberValues = documentIdNumber == null ? null : StringNormalizer
-		    .normalize(documentIdNumber).toLowerCase().split("\\p{Space}+");
-
 	    final SortedSet<Person> people = new TreeSet<Person>(Party.COMPARATOR_BY_NAME_AND_ID);
-	    for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
-		if (party.isPerson()) {
-		    final Person person = (Person) party;
-		    if (matchesAnyCriteria(nameValues, documentIdNumberValues, person)) {
-			people.add(person);
+	    if (isSpecified(name)) {
+		people.addAll(findPerson(name));
+	    }
+	    if (isSpecified(documentIdNumber)) {
+		for (final IdDocument idDocument : RootDomainObject.getInstance().getIdDocumentsSet()) {
+		    final String[] documentIdNumberValues = documentIdNumber == null ? null : StringNormalizer
+			    .normalize(documentIdNumber).toLowerCase().split("\\p{Space}+");
+		    if (matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, idDocument.getValue())) {
+			people.add(idDocument.getPerson());
 		    }
 		}
 	    }
