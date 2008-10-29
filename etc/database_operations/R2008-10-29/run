@@ -41,4 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "alterCountryAlterNationalityToMultiLanguageString" alterCountryAlterNationalityToMultiLanguageString.sql IST
+execute "alterDegreeModuleChangeGraduateSuffixToMultiLanguageString.sql" alterDegreeModuleChangeGraduateSuffixToMultiLanguageString.sql IST
