@@ -37,7 +37,7 @@
 	<h:outputText value="#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}"/>
 	<h:outputText value="</div>" escape="false"/>
 	
-	<h:outputFormat value="<h1>#{CurricularCourseManagement.degree.presentationName}</h1>" escape="false"/>
+	<h:outputFormat value="<h1>#{CurricularCourseManagement.degreePresentationName}</h1>" escape="false"/>
 
 	<h:outputFormat value="<h2 class='greytxt'>#{publicDegreeInfoBundle['public.degree.information.label.curricularPlan']}" escape="false"/>
 	<h:outputFormat value="#{CurricularCourseManagement.degreeCurricularPlan.name}"/>

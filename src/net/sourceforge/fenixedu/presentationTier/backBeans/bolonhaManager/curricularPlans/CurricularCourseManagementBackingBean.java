@@ -6,10 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curri
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -45,8 +43,6 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
@@ -715,10 +711,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 	return getDegreeCurricularPlan().getDegree();
     }
 
-    public String getDegreeLocaleSensitiveName() {
-	final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-	return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameFor(getExecutionYear()).getContent(
-		Language.en) : getDegree().getNameFor(getExecutionYear()).getContent(Language.pt);
+    public String getDegreePresentationName() {
+	return getDegree().getPresentationName(getExecutionYear());
     }
 
     public List<CompetenceCourse> getDegreeCurricularPlanCompetenceCourses() {
