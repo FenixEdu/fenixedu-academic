@@ -241,8 +241,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 	}
 
 	private void createRegistration(final StandaloneIndividualCandidacyProcess process) {
-	    process.getCandidacy().createRegistration(DegreeCurricularPlan.readEmptyDegreeCurricularPlan(), null,
-		    Ingression.CNA01);
+	    process.getCandidacy().createRegistration(DegreeCurricularPlan.readEmptyDegreeCurricularPlan(), null, Ingression.STC);
 	}
     }
 

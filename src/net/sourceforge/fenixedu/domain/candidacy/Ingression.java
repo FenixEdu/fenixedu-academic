@@ -88,7 +88,9 @@ public enum Ingression {
 
     CM23("Maiores de 23"),
 
-    TRF("Transferência");
+    TRF("Transferência"),
+    
+    STC("Candidatura Unidades Curriculares Isolados");
 
     String description;
 
