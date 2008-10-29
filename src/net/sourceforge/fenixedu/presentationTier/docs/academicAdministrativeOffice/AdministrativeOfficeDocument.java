@@ -207,11 +207,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     final protected void addIntroParameters(final Employee employee) {
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
-	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getPartyName().getContent(getLanguage()));
+	addParameter("administrativeOfficeName", getMLSTextContent(employee.getCurrentWorkingPlace().getPartyName()));
 
-	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent(
-		getLanguage()));
-	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent(getLanguage()));
+	addParameter("institutionName", getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()));
+	addParameter("universityName", getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName()));
     }
 
     @SuppressWarnings("static-access")
@@ -335,14 +334,14 @@ public class AdministrativeOfficeDocument extends FenixReport {
     final protected String getAcademicUnitInfo(final Map<Unit, String> unitIDs, final MobilityProgram mobilityProgram) {
 	final StringBuilder result = new StringBuilder();
 
-	for (final Entry<Unit, String> academicUnitIdentifier : unitIDs.entrySet()) {
+	for (final Entry<Unit, String> academicUnitId : unitIDs.entrySet()) {
 	    final StringBuilder unit = new StringBuilder();
 
-	    unit.append(academicUnitIdentifier.getValue());
+	    unit.append(academicUnitId.getValue());
 	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.program"));
-	    unit.append(SINGLE_SPACE).append(mobilityProgram.getDescription().toUpperCase());
+	    unit.append(SINGLE_SPACE).append(mobilityProgram.getDescription(getLocale()).toUpperCase());
 	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("in.feminine"));
-	    unit.append(SINGLE_SPACE).append(academicUnitIdentifier.getKey().getName().toUpperCase());
+	    unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()));
 
 	    result.append(StringUtils.multipleLineRightPad(unit.toString(), LINE_LENGTH, END_CHAR));
 	    result.append(LINE_BREAK);
