@@ -11,6 +11,10 @@
 		<param-value>client</param-value>
 	</context-param>
 	<filter>
+	    <filter-name>RequestIgnorer</filter-name>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestIgnorerFilter</filter-class>
+	</filter>
+	<filter>
 	    <filter-name>MultipartFilter</filter-name>
 	    <filter-class>org.apache.myfaces.component.html.util.MultipartFilter</filter-class>
 		<init-param>
@@ -136,6 +140,10 @@
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.UncaughtExceptionFilter</filter-class>
 	</filter>
 	<!-- Filter Mapping -->
+	<filter-mapping>
+ 		 <filter-name>RequestIgnorer</filter-name>
+ 		 <url-pattern>/favicon.ico</url-pattern>
+	</filter-mapping>
 	<filter-mapping>
  		 <filter-name>LoginPageFilter</filter-name>
  		 <url-pattern>/login</url-pattern>
