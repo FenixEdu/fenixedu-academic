@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.g
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 
@@ -11,8 +12,8 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
     private Integer teacherNumber;
     private Date evaluationDate;
     private MarkSheetType markSheetType;
-    private Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans;
-    private Collection<MarkSheetEnrolmentEvaluationBean> impossibleEnrolmentEvaluationBeans;
+    private Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans = new HashSet<MarkSheetEnrolmentEvaluationBean>();
+    private Collection<MarkSheetEnrolmentEvaluationBean> impossibleEnrolmentEvaluationBeans = new HashSet<MarkSheetEnrolmentEvaluationBean>();
 
     public MarkSheetType getMarkSheetType() {
 	return markSheetType;

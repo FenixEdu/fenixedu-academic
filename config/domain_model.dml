@@ -892,6 +892,13 @@ class DomainObject {
 		String publishedMark;
 	}
 
+		class FinalMark extends Mark {
+			Integer gradeListVersion;
+			YearMonthDay submitDateYearMonthDay;
+			String submitedMark;
+			YearMonthDay whenSubmitedYearMonthDay;
+		}
+		
 	class MarkSheet extends DomainObject {
 		String archiveInformation;
 		String checkSum;
@@ -905,13 +912,8 @@ class DomainObject {
 		Boolean submittedByTeacher;
 	}
 
-		class FinalMark extends Mark {
-			Integer gradeListVersion;
-			YearMonthDay submitDateYearMonthDay;
-			String submitedMark;
-			YearMonthDay whenSubmitedYearMonthDay;
+		class OldMarkSheet extends MarkSheet {
 		}
-
 
 	class MasterDegreeCandidate extends DomainObject {
 		Double average;

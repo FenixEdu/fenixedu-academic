@@ -378,6 +378,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	});
     }
 
+    public EnrolmentEvaluation getEnrolmentEvaluation(pt.utl.ist.fenix.tools.predicates.Predicate<EnrolmentEvaluation> predicate) {
+	for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
+	    if (predicate.eval(enrolmentEvaluation)) {
+		return enrolmentEvaluation;
+	    }
+	}
+	return null;
+    }
+
     final public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationState(
 	    final EnrolmentEvaluationState evaluationState) {
 	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
@@ -1416,5 +1425,22 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public int getNumberOfAllApprovedEnrolments(ExecutionSemester executionSemester) {
 	return isValid(executionSemester) && isApproved() ? 1 : 0;
+    }
+
+    public boolean canBeSubmittedForOldMarkSheet(EnrolmentEvaluationType enrolmentEvaluationType) {
+	if (enrolmentEvaluationType == EnrolmentEvaluationType.NORMAL && !hasAnyEvaluations()) {
+	    return true;
+	}
+
+	for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
+	    if (enrolmentEvaluation.getEnrolmentEvaluationType() == enrolmentEvaluationType
+		    && !enrolmentEvaluation.hasMarkSheet()
+		    && (enrolmentEvaluation.isTemporary() || (enrolmentEvaluation.isNotEvaluated() && enrolmentEvaluation
+			    .getExamDateYearMonthDay() == null))) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 }

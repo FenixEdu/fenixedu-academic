@@ -6975,6 +6975,15 @@
         </filterChains>
     </service>
     <service>
+        <name>CreateOldMarkSheet</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateOldMarkSheet</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CreateMarkSheetAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>EditMarkSheet</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.EditMarkSheet</implementationClass>
         <description />
@@ -7004,6 +7013,15 @@
     <service>
         <name>CreateRectificationMarkSheet</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateRectificationMarkSheet</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CreateRectificationMarkSheetAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>CreateRectificationOldMarkSheet</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateRectificationOldMarkSheet</implementationClass>
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>

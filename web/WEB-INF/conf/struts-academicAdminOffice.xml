@@ -526,7 +526,79 @@
 	     		<forward name="prepareMarkSheetsToConfirmSendMail" path="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail"/>
 	     		<forward name="prepareGradesToSubmitSendMail" path="show.markSheetSendMail.prepareGradesToSubmitSendMail"/>
 	     		
-	</action>      
+	</action>
+	
+	<!-- ==================== Old MarkSheet Management ================== -->
+	<action path="/oldMarkSheetManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.OldMarkSheetSearchDispatchAction"
+			input="show.oldMarkSheetManagement.search.page"
+			parameter="method"
+			name="markSheetManagementForm"
+			scope="request">
+			
+	     		<forward name="searchMarkSheet" path="show.oldMarkSheetManagement.search.page"/>
+	     		<forward name="viewMarkSheet" path="oldMarkSheetManagement.viewMarkSheet"/>
+	     		<forward name="removeMarkSheet" path="show.oldMarkSheetManagement.remove"/>
+	     		<forward name="searchMarkSheetFilled" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"/>       		
+	     		<forward name="confirmMarkSheet" path="show.oldMarkSheetManagement.confirm.page"/>       		       		       		
+	     		<forward name="choosePrinter" path="/printMarkSheet.do?method=choosePrinterMarkSheet"/>       		
+	</action>
+	
+	<action path="/oldCreateMarkSheet"
+			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.OldMarkSheetCreateDispatchAction"
+			input="show.oldMarkSheetManagement.create.page.step1"
+			parameter="method"
+			name="markSheetManagementForm"
+			scope="request">
+			
+	     		<forward name="createMarkSheetStep1" path="show.oldMarkSheetManagement.create.page.step1"/>
+	     		<forward name="createMarkSheetStep2" path="show.oldMarkSheetManagement.create.page.step2"/>
+	     		<forward name="searchMarkSheetFilled" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
+				<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>
+	     		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>
+	     		<forward name="viewMarkSheet" path="oldMarkSheetManagement.viewMarkSheet"/>
+	</action>
+	
+	<action path="/printOldMarkSheet"
+			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction"
+			input="/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0"
+			parameter="method"
+			name="printMarkSheetForm"
+			scope="request">
+	     		<forward name="choosePrinterMarkSheet" path="show.printMarkSheet.choosePrinterMarkSheet"/>       		       		
+	     		<forward name="searchMarkSheetFilled" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
+	     		<forward name="searchMarkSheet" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheet"/>       		
+	</action>		
+	
+	<action path="/editOldMarkSheet"
+			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.OldMarkSheetEditDispatchAction"
+			input="/markSheetManagement.do?method=prepareSearchMarkSheet"
+			parameter="method"
+			name="markSheetManagementForm"
+			scope="request">
+			
+	     		<forward name="editMarkSheet" path="show.oldMarkSheetManagement.edit.page"/>
+				<forward name="editArchiveInformation" path="show.markSheetManagement.edit.archiveInformation"/>
+	     		<forward name="searchMarkSheetFilled" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
+	</action>
+	
+	<action path="/rectifyOldMarkSheet"
+			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.OldMarkSheetRectifyDispatchAction"
+			input="show.oldMarkSheetManagement.rectify.page.step1"
+			parameter="method"
+			name="markSheetManagementForm"
+			scope="request">
+	     		<forward name="rectifyMarkSheetStep1" path="show.oldMarkSheetManagement.rectify.page.step1"/>
+	     		<forward name="rectifyMarkSheetStep2" path="show.oldMarkSheetManagement.rectify.page.step2"/>
+				<forward name="searchMarkSheet" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheet"/>
+	     		<forward name="searchMarkSheetFilled" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
+	     		<forward name="showRectificationHistoric" path="show.markSheetManagement.showRectificationHistoric"/>
+	     		<forward name="rectifyMarkSheetStepOneByEvaluation" path="show.oldMarkSheetManagement.rectify.evaluation"/>
+	</action>		
+	
+	
+	<!-- ================================================================= -->
+	      
 
 	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
        		name="executionYearDegreeCurricularPlanForm"

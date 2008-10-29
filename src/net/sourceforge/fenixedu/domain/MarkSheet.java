@@ -62,6 +62,14 @@ public class MarkSheet extends MarkSheet_Base {
 		MarkSheetState.NOT_CONFIRMED, submittedByTeacher, evaluationBeans, employee);
     }
 
+    public static MarkSheet createOldNormal(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
+	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
+
+	return new OldMarkSheet(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType,
+		MarkSheetState.NOT_CONFIRMED, evaluationBeans, employee);
+    }
+
     public static MarkSheet createRectification(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, String reason,
 	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
@@ -69,6 +77,19 @@ public class MarkSheet extends MarkSheet_Base {
 	MarkSheet markSheet = new MarkSheet(curricularCourse, executionSemester, responsibleTeacher, evaluationDate,
 		markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, Boolean.FALSE, (evaluationBean != null) ? Collections
 			.singletonList(evaluationBean) : null, employee);
+	markSheet.setReason(reason);
+	return markSheet;
+    }
+
+    public static MarkSheet createOldRectification(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
+	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, String reason,
+	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
+
+	Collection<MarkSheetEnrolmentEvaluationBean> beans = (evaluationBean != null) ? Collections.singletonList(evaluationBean)
+		: null;
+
+	MarkSheet markSheet = new OldMarkSheet(curricularCourse, executionSemester, responsibleTeacher, evaluationDate,
+		markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, beans, employee);
 	markSheet.setReason(reason);
 	return markSheet;
     }
@@ -89,8 +110,8 @@ public class MarkSheet extends MarkSheet_Base {
 		executionSemester, evaluationDate, markSheetType);
     }
 
-    private void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
-	    Teacher responsibleTeacher, MarkSheetType markSheetType) throws DomainException {
+    protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
+	    ExecutionSemester executionSemester, Teacher responsibleTeacher, MarkSheetType markSheetType) throws DomainException {
 
 	if (curricularCourse.isDissertation()) {
 	    if (responsibleTeacher.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
@@ -127,7 +148,7 @@ public class MarkSheet extends MarkSheet_Base {
 
     }
 
-    private void checkIfEvaluationDateIsInExamsPeriod(CurricularCourse curricularCourse, ExecutionDegree executionDegree,
+    protected void checkIfEvaluationDateIsInExamsPeriod(CurricularCourse curricularCourse, ExecutionDegree executionDegree,
 	    ExecutionSemester executionSemester, Date evaluationDate, MarkSheetType markSheetType) throws DomainException {
 
 	if (executionDegree == null) {
@@ -154,7 +175,7 @@ public class MarkSheet extends MarkSheet_Base {
 	return curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(executionSemester.getExecutionYear());
     }
 
-    private void init(CurricularCourse curricularCourse, ExecutionSemester executionSemester, Teacher responsibleTeacher,
+    protected void init(CurricularCourse curricularCourse, ExecutionSemester executionSemester, Teacher responsibleTeacher,
 	    Date evaluationDate, MarkSheetType markSheetType, MarkSheetState markSheetState, Boolean submittedByTeacher,
 	    Employee employee) {
 
@@ -234,7 +255,7 @@ public class MarkSheet extends MarkSheet_Base {
 	addEnrolmentEvaluations(enrolmentEvaluation);
     }
 
-    private boolean hasMarkSheetState(MarkSheetState markSheetState) {
+    protected boolean hasMarkSheetState(MarkSheetState markSheetState) {
 	return (getMarkSheetState() == markSheetState);
     }
 
@@ -340,7 +361,7 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     @Checked("MarkSheetPredicates.editPredicate")
-    private void editEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit) {
+    protected void editEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit) {
 
 	final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
 
@@ -369,7 +390,7 @@ public class MarkSheet extends MarkSheet_Base {
 	}
     }
 
-    private void appendEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToAppend) {
+    protected void appendEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToAppend) {
 	addEnrolmentEvaluationsWithResctrictions(getResponsibleTeacher(), evaluationBeansToAppend,
 		EnrolmentEvaluationState.TEMPORARY_OBJ);
     }
@@ -404,7 +425,7 @@ public class MarkSheet extends MarkSheet_Base {
 	}
     }
 
-    private MarkSheetState getMarkSheetStateToConfirm() {
+    protected MarkSheetState getMarkSheetStateToConfirm() {
 	if (this.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
 	    return MarkSheetState.CONFIRMED;
 	} else {
@@ -412,7 +433,7 @@ public class MarkSheet extends MarkSheet_Base {
 	}
     }
 
-    private EnrolmentEvaluationState getEnrolmentEvaluationStateToConfirm() {
+    protected EnrolmentEvaluationState getEnrolmentEvaluationStateToConfirm() {
 	if (this.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
 	    return EnrolmentEvaluationState.FINAL_OBJ;
 	} else {

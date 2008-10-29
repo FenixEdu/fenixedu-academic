@@ -1551,6 +1551,32 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
+    public Set<Enrolment> getEnrolmentsNotInAnyMarkSheetForOldMarkSheets(MarkSheetType markSheetType,
+	    ExecutionSemester executionSemester) {
+
+	final Set<Enrolment> result = new HashSet<Enrolment>();
+	for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
+
+	    if (curriculumModule.isEnrolment()) {
+		final Enrolment enrolment = (Enrolment) curriculumModule;
+
+		if (isInSamePeriod(enrolment, executionSemester)
+			&& markSheetType.getEnrolmentEvaluationType() == enrolment.getEnrolmentEvaluationType()) {
+		    if (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION
+			    || enrolment.canBeSubmittedForOldMarkSheet(markSheetType.getEnrolmentEvaluationType())) {
+			result.add(enrolment);
+		    }
+		} else if (markSheetType == MarkSheetType.IMPROVEMENT) {
+		    if (enrolment.hasImprovementFor(executionSemester)
+			    && enrolment.canBeSubmittedForOldMarkSheet(markSheetType.getEnrolmentEvaluationType())) {
+			result.add(enrolment);
+		    }
+		}
+	    }
+	}
+	return result;
+    }
+
     private boolean isInSamePeriod(Enrolment enrolment, ExecutionSemester executionSemester) {
 	if (isAnual()) {
 	    return enrolment.getExecutionYear() == executionSemester.getExecutionYear();
@@ -1588,6 +1614,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 		submittedByTeacher, evaluationBeans, employee);
     }
 
+    public MarkSheet createOldNormalMarkSheet(ExecutionSemester executionSemester, Teacher responsibleTeacher,
+	    Date evaluationDate, MarkSheetType markSheetType, Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans,
+	    Employee employee) {
+
+	return MarkSheet.createOldNormal(this, executionSemester, responsibleTeacher, evaluationDate, markSheetType,
+		evaluationBeans, employee);
+    }
+
     public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation,
 	    Date evaluationDate, Grade grade, String reason, Employee employee) {
 
@@ -1620,12 +1654,44 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return rectificationMarkSheet;
     }
 
+    public MarkSheet rectifyOldEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation, MarkSheetType markSheetType,
+	    Date evaluationDate, Grade newGrade, String reason, Employee employee) {
+
+	if (enrolmentEvaluation == null || evaluationDate == null || newGrade.isEmpty()) {
+	    throw new DomainException("error.markSheet.invalid.arguments");
+	}
+
+	if (enrolmentEvaluation.hasRectification()) {
+	    throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation.getEnrolment()
+		    .getStudentCurricularPlan().getRegistration().getNumber().toString());
+	}
+
+	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+
+	MarkSheet rectificationMarkSheet = createRectificationOldMarkSheet(enrolmentEvaluation.getExecutionPeriod(),
+		evaluationDate, enrolmentEvaluation.getPersonResponsibleForGrade().getTeacher(), markSheetType, reason,
+		new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, newGrade), employee);
+
+	// Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
+	rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
+	return rectificationMarkSheet;
+
+    }
+
     public MarkSheet createRectificationMarkSheet(ExecutionSemester executionSemester, Date evaluationDate,
 	    Teacher responsibleTeacher, MarkSheetType markSheetType, String reason,
 	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
 
 	return MarkSheet.createRectification(this, executionSemester, responsibleTeacher, evaluationDate, markSheetType, reason,
 		evaluationBean, employee);
+    }
+
+    public MarkSheet createRectificationOldMarkSheet(ExecutionSemester executionSemester, Date evaluationDate,
+	    Teacher responsibleTeacher, MarkSheetType markSheetType, String reason,
+	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
+
+	return MarkSheet.createOldRectification(this, executionSemester, responsibleTeacher, evaluationDate, markSheetType,
+		reason, evaluationBean, employee);
     }
 
     public Collection<MarkSheet> searchMarkSheets(ExecutionSemester executionSemester, Teacher teacher, Date evaluationDate,
@@ -1943,5 +2009,32 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean hasCompetenceCourseLevel() {
 	return getCompetenceCourseLevel() != null;
+    }
+
+    public List<EnrolmentEvaluation> getEnrolmentEvaluationsForOldMarkSheet(final ExecutionSemester executionSemester,
+	    final MarkSheetType markSheetType) {
+	final List<EnrolmentEvaluation> res = new ArrayList<EnrolmentEvaluation>();
+	for (Enrolment enrolment : getEnrolments()) {
+	    if (markSheetType == MarkSheetType.IMPROVEMENT) {
+		EnrolmentEvaluation latestEnrolmentEvaluationBy = enrolment.getLatestEnrolmentEvaluationBy(markSheetType
+			.getEnrolmentEvaluationType());
+		if (latestEnrolmentEvaluationBy != null
+			&& latestEnrolmentEvaluationBy.getExecutionPeriod().equals(executionSemester)
+			&& latestEnrolmentEvaluationBy.isFinal() && latestEnrolmentEvaluationBy.getExamDateYearMonthDay() != null) {
+		    res.add(latestEnrolmentEvaluationBy);
+		}
+	    } else {
+		if (enrolment.isValid(executionSemester)) {
+		    EnrolmentEvaluation latestEnrolmentEvaluationBy = enrolment.getLatestEnrolmentEvaluationBy(markSheetType
+			    .getEnrolmentEvaluationType());
+		    if (latestEnrolmentEvaluationBy != null && latestEnrolmentEvaluationBy.isFinal()
+			    && latestEnrolmentEvaluationBy.getExamDateYearMonthDay() != null) {
+			res.add(latestEnrolmentEvaluationBy);
+		    }
+		}
+	    }
+
+	}
+	return res;
     }
 }

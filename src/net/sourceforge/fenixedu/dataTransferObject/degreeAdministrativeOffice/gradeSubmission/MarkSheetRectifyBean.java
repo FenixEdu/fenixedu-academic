@@ -6,11 +6,13 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.MarkSheetType;
 
 public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
 
     private DomainReference<MarkSheet> markSheet;
     private DomainReference<EnrolmentEvaluation> enrolmentEvaluation;
+    private MarkSheetType markSheetType;
 
     private Integer studentNumber;
     private String newGrade;
@@ -68,6 +70,14 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
     public void setEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation) {
 	this.enrolmentEvaluation = (enrolmentEvaluation != null) ? new DomainReference<EnrolmentEvaluation>(enrolmentEvaluation)
 		: null;
+    }
+
+    public void setMarkSheetType(MarkSheetType markSheetType) {
+	this.markSheetType = markSheetType;
+    }
+
+    public MarkSheetType getMarkSheetType() {
+	return markSheetType;
     }
 
 }

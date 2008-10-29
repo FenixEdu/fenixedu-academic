@@ -49,6 +49,10 @@ public class CurricularCourseMarksheetManagementBean implements Serializable {
 	return getCurricularCourse().getName(getExecutionSemester());
     }
 
+    public String getCode() {
+	return getCurricularCourse().getCode();
+    }
+
     @Override
     public boolean equals(Object obj) {
 	if (obj instanceof CurricularCourseMarksheetManagementBean) {

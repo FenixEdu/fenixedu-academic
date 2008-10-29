@@ -302,7 +302,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	    if (!grade.isNotEvaluated()) {
 		final RegistrationState state = getRegistration().getLastRegistrationState(
 			getExecutionPeriod().getExecutionYear());
-		if (state == null || !(state.isActive() || state.getStateType() == RegistrationStateType.TRANSITED)) {
+		if (state == null
+			|| !(getRegistration().hasAnyActiveState(getExecutionPeriod().getExecutionYear()) || state.getStateType() == RegistrationStateType.TRANSITED)) {
 		    final Enrolment enrolment = getEnrolment();
 		    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
 		    final Registration registration = studentCurricularPlan.getRegistration();

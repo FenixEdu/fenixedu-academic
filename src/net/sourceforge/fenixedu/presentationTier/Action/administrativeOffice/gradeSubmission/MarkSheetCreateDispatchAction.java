@@ -92,7 +92,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 	}
     }
 
-    private void prepareCreateEnrolmentEvaluationsForMarkSheet(MarkSheetManagementCreateBean createBean,
+    protected void prepareCreateEnrolmentEvaluationsForMarkSheet(MarkSheetManagementCreateBean createBean,
 	    HttpServletRequest request, ActionMessages actionMessages) {
 
 	final Collection<Enrolment> enrolments = createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(
@@ -130,8 +130,8 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 	ActionMessages actionMessages = createActionMessages();
 	IUserView userView = getUserView(request);
 	try {
-	    MarkSheet markSheet = (MarkSheet) ServiceUtils.executeService("CreateMarkSheet", new Object[] { createBean,
-		    userView.getPerson().getEmployee() });
+	    MarkSheet markSheet = (MarkSheet) ServiceUtils.executeService(getCreateMarkSheetServiceName(), new Object[] {
+		    createBean, userView.getPerson().getEmployee() });
 	    ((DynaActionForm) actionForm).set("msID", markSheet.getIdInternal());
 	    return viewMarkSheet(mapping, actionForm, request, response);
 
@@ -283,4 +283,9 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
 	return mapping.findForward("showRectificationHistoric");
     }
+
+    protected String getCreateMarkSheetServiceName() {
+	return "CreateMarkSheet";
+    }
+
 }

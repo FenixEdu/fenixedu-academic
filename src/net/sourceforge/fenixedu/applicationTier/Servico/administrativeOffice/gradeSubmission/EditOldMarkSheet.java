@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
 
 import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -11,25 +9,11 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gr
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementEditBean;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
-import net.sourceforge.fenixedu.domain.OldMarkSheet;
-import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class EditMarkSheet extends FenixService {
-
-    public void run(MarkSheet markSheet, Teacher responsibleTeacher, Date evaluationDate) throws FenixServiceException {
-
-	if (markSheet == null) {
-	    throw new InvalidArgumentsServiceException("error.noMarkSheet");
-	}
-	markSheet.editNormal(responsibleTeacher, evaluationDate);
-    }
-
-    public void run(OldMarkSheet markSheet, Teacher responsibleTeacher, Date evaluationDate) throws FenixServiceException {
-	run((MarkSheet) markSheet, responsibleTeacher, evaluationDate);
-    }
+public class EditOldMarkSheet extends FenixService {
 
     public void run(MarkSheetManagementEditBean markSheetManagementEditBean) throws FenixServiceException {
 
@@ -42,23 +26,11 @@ public class EditMarkSheet extends FenixService {
 	    editNormalMarkSheet(markSheetManagementEditBean);
 
 	} else if (markSheet.getMarkSheetState() == MarkSheetState.RECTIFICATION_NOT_CONFIRMED) {
-	    editRectificationMarkSheet(markSheetManagementEditBean);
+	    // editRectificationMarkSheet(markSheetManagementEditBean);
 
 	} else {
 	    throw new InvalidArgumentsServiceException("error.markSheet.invalid.state");
 	}
-    }
-
-    private void editRectificationMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
-
-	Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList = getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean
-		.getEnrolmentEvaluationBeansToEdit());
-
-	/*
-	 * Rectification MarkSheet MUST have ONLY ONE EnrolmentEvaluation
-	 */
-	Iterator<MarkSheetEnrolmentEvaluationBean> iterator = filteredEnrolmentEvaluationBeansToEditList.iterator();
-	markSheetManagementEditBean.getMarkSheet().editRectification(iterator.hasNext() ? iterator.next() : null);
     }
 
     private void editNormalMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
