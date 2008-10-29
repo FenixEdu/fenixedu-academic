@@ -439,6 +439,49 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	return mapping.findForward("editVigilantGroupPoints");
     }
 
+    public ActionForward selectPreviousPointsSchema(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+    	
+    	VigilantGroupBean bean = new VigilantGroupBean();
+        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        bean.setExamCoordinator(coordinator);
+        request.setAttribute("bean", bean);
+
+        return mapping.findForward("selectPreviousPointsSchema");
+    }
+
+    public ActionForward changeYearForPoints(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+    	
+    	VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectVigilantGroup").getMetaObject().getObject();
+    	VigilantGroup group = bean.getSelectedVigilantGroup();
+    	request.setAttribute("group", group);
+    	request.setAttribute("bean", bean);
+    	
+    	return mapping.findForward("selectPreviousPointsSchema");
+    }
+    
+    public ActionForward copySchemaPoints(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    	    HttpServletResponse response) throws Exception {
+
+    	String previousGroupID = request.getParameter("selectedGroupID");
+    	VigilantGroup previousGroup = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer
+        		.valueOf(previousGroupID));
+    	String groupId = request.getParameter("oid");
+    	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer
+    		.valueOf(groupId));
+    	
+    	group.copyPointsFromVigilantGroup(previousGroup);
+    	
+    	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+    	prepareManagementBean(request, executionYear);
+    	
+    	String parameter = request.getParameter("show");
+    	request.setAttribute("show", parameter);
+    	request.setAttribute("group", group);
+    	return mapping.findForward("manageVigilantGroups");
+    }
+    
     public ActionForward prepareStartPointsPropertyEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

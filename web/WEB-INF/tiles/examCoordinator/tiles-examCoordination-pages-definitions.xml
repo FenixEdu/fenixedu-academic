@@ -91,6 +91,10 @@
 
     <definition name="show-stats" extends="examCoordinator.masterPage" >
 		<put name="body" value="/examCoordinator/vigilancy/showGroupStats.jsp"/>
+    </definition>
+    
+    <definition name="select-Previous-Points-Schema" extends="examCoordinator.masterPage" >
+    	<put name="body" value="/examCoordinator/vigilancy/selectPreviousPointsSchema.jsp" />
     </definition>       
     
     <definition name="export-table" page="/examCoordinator/vigilancy/export-table.jsp"/>

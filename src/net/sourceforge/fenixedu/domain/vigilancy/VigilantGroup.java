@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class VigilantGroup extends VigilantGroup_Base {
 
     public VigilantGroup() {
@@ -303,4 +305,15 @@ public class VigilantGroup extends VigilantGroup_Base {
 	}
 	return new ArrayList<WrittenEvaluation>(evaluations);
     }
+
+    @Service
+	public void copyPointsFromVigilantGroup(VigilantGroup previousGroup) {
+    	this.setPointsForTeacher(previousGroup.getPointsForTeacher());
+    	this.setPointsForConvoked(previousGroup.getPointsForConvoked());
+    	this.setPointsForDisconvoked(previousGroup.getPointsForDisconvoked());
+    	this.setPointsForDismissed(previousGroup.getPointsForDismissed());
+    	this.setPointsForDismissedTeacher(previousGroup.getPointsForDismissedTeacher());
+    	this.setPointsForMissing(previousGroup.getPointsForMissing());
+    	this.setPointsForMissingTeacher(previousGroup.getPointsForMissingTeacher());
+	}
 }

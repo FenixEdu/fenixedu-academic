@@ -53,6 +53,7 @@
 			<forward name="editVigilantStartPoints" path="edit-Vigilant-StartPoints"/>
 			<forward name="editVigilantsInGroups" path="edit-Vigilants-In-Group"/>
 			<forward name="editVigilantGroupPoints" path="edit-VigilantGroup-Points"/>
+			<forward name="selectPreviousPointsSchema" path="select-Previous-Points-Schema"/>
 			<forward name="showStats" path="show-stats"/>
 			
 		</action>

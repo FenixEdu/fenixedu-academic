@@ -115,6 +115,14 @@
 		</slot>
 </schema>
 
+<schema name="selectVigilantGroupForPoints" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+        <slot name="selectedVigilantGroup" key="label.vigilancy.vigilantGroup" layout="menu-select-postback">
+        	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsForPoints" />
+            <property name="format" value="${name} - ${executionYear.year}"/>
+            <property name="sortBy" value="executionYear.year"/>
+        </slot>
+</schema>
+
 <!--  
 <schema name="addVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
 		<slot name="employees" key="label.vigilancy.employees" layout="option-select">
@@ -250,6 +258,16 @@
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
+</schema>
+
+<schema name="previousPointsForGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
+	<slot name="pointsForTeacher"/>
+	<slot name="pointsForConvoked"/>
+	<slot name="pointsForDismissed"/>
+	<slot name="pointsForDismissedTeacher"/>
+	<slot name="pointsForMissing"/>
+	<slot name="pointsForMissingTeacher"/>
+	<slot name="pointsForDisconvoked"/>
 </schema>
 
 <!--  Convokes Schemas -->
