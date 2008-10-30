@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add OJB_CONCRETE_CLASS column to MarkSheet" addOJBConcreteClassToMarkSheet.sql
+
