@@ -101,7 +101,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
     private List<Spreadsheet> buildReport(boolean fullReport) {
 
 	final Spreadsheet curriculumData = new Spreadsheet("ALUMNI_CURRICULUM_DATA");
-	curriculumData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "CURSO", "INICIO", "CONCLUSAO" });
+	curriculumData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "CURSO", "INICIO", "CONCLUSAO", "DESCRICAO" });
 
 	final Spreadsheet personalData = new Spreadsheet("ALUMNI_PERSONAL_DATA");
 	personalData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "LOCALIDADE", "PAIS", "EMAIL",
@@ -161,9 +161,9 @@ public class AlumniInformationAction extends FenixDispatchAction {
 		    row.setCell(registration.getDegreeName());
 		    row.setCell(registration.getStartDate().toString("dd/MM/yyyy"));
 		    final CycleCurriculumGroup lastConcludedCycle = concludeCycles.last();
-		    row.setCell("bolonha => "
-			    + (lastConcludedCycle.isConclusionProcessed() ? lastConcludedCycle.getConclusionDate().toString(
-				    "dd/MM/yyyy") : lastConcludedCycle.calculateConclusionDate().toString("dd/MM/yyyy")));
+		    row.setCell(lastConcludedCycle.isConclusionProcessed() ? lastConcludedCycle.getConclusionDate().toString(
+				    "dd/MM/yyyy") : lastConcludedCycle.calculateConclusionDate().toString("dd/MM/yyyy"));
+		    row.setCell("Bolonha");
 		}
 
 	    } else {
@@ -174,10 +174,8 @@ public class AlumniInformationAction extends FenixDispatchAction {
 		    row.setCell(studentNumber);
 		    row.setCell(registration.getDegreeName());
 		    row.setCell(registration.getStartDate().toString("dd/MM/yyyy"));
-		    row.setCell("pre-bolonha => "
-			    + (registration.getConclusionDate() != null ? registration.getConclusionDate().toString("dd/MM/yyyy")
-				    : "n/a"));
-
+		    row.setCell(registration.getConclusionDate() != null ? registration.getConclusionDate().toString("dd/MM/yyyy") : "n/a");
+		    row.setCell("Pre-Bolonha");
 		}
 	    }
 	}
