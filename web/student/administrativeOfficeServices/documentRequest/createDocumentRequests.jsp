@@ -58,8 +58,10 @@
 <logic:equal name="documentRequestCreateBean" property="registration.hasGratuityDebtsCurrently" value="false">
 	<fr:form action="/documentRequest.do?method=viewDocumentRequestToCreate" >
 		
-	<p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
-	
+		<p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
+		
+		<p class="mbottom025 warning0"><bean:message key="message.warning.urgent.request" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+		
 		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 			<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequest.do?method=documentRequestTypeChoosedPostBack"/>	
 			<fr:layout name="tabular">
