@@ -184,15 +184,6 @@
 
 <schema name="functionalities.filter.select.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.TestFilterBean"
         bundle="FUNCTIONALITY_RESOURCES">
-    <slot name="person" layout="autoComplete">
-    		<property name="size" value="70"/>
-        <property name="rawSlotName" value="personName"/>
-    		<property name="labelField" value="name"/>
-    		<property name="indicatorShown" value="true"/>
-    		<property name="serviceName" value="SearchObjects"/>
-    		<property name="serviceArgs" value="slot=name"/>
-    		<property name="minChars" value="3"/>
-    </slot>
     <slot name="personId">
          <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
      </slot>
