@@ -269,6 +269,8 @@ public class Registration extends Registration_Base {
 	    ;
 	for (; hasAnyRegistrationRegimes(); getRegistrationRegimes().get(0).delete())
 	    ;
+	for (; hasAnyEnrolmentLogs(); getEnrolmentLogs().get(0).delete())
+	    ;
 
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();
