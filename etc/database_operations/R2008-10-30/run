@@ -43,3 +43,5 @@ function executeWithTempFile() {
 
 execute "Add OJB_CONCRETE_CLASS column to MarkSheet" addOJBConcreteClassToMarkSheet.sql
 
+execute "Creating Teaching Inquiries Tables..." teachingInquiryTables.sql
+execute "Create new CostCenterCode table and index parties." updates.sql
