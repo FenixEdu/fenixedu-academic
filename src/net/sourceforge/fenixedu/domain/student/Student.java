@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationR
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -192,7 +193,7 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
-    
+
     public List<Registration> getActiveRegistrationsIn(final ExecutionSemester executionSemester) {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : getRegistrations()) {
@@ -202,7 +203,6 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
-
 
     public Registration getLastActiveRegistration() {
 	List<Registration> activeRegistrations = getActiveRegistrations();
@@ -750,7 +750,7 @@ public class Student extends Student_Base {
     }
 
     public boolean isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() {
-	final InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod();
+	final InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
 	return openPeriod == null ? false : isWeeklySpentHoursSubmittedForPeriod(openPeriod.getExecutionPeriod());
     }
 
@@ -768,7 +768,7 @@ public class Student extends Student_Base {
     }
 
     public InquiriesStudentExecutionPeriod getOpenInquiriesStudentExecutionPeriod() {
-	final InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod();
+	final InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
 	return openPeriod == null ? null : getInquiriesStudentExecutionPeriod(openPeriod.getExecutionPeriod());
     }
 
@@ -1284,11 +1284,12 @@ public class Student extends Student_Base {
     }
 
     public boolean hasInquiriesToRespond() {
-	if (!InquiryResponsePeriod.hasOpenPeriod()) {
+	if (!InquiryResponsePeriod.hasOpenPeriod(InquiryResponsePeriodType.STUDENT)) {
 	    return false;
 	}
 
-	final ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod().getExecutionPeriod();
+	final ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT)
+		.getExecutionPeriod();
 
 	for (Registration registration : getRegistrations()) {
 	    if (!registration.isAvailableDegreeTypeForInquiries()) {

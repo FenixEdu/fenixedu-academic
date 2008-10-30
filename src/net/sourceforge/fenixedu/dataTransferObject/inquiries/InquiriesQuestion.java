@@ -63,8 +63,9 @@ public abstract class InquiriesQuestion implements Serializable {
 	return header;
     }
 
-    public void setHeader(QuestionHeader header) {
+    public InquiriesQuestion setHeader(QuestionHeader header) {
 	this.header = header;
+	return this;
     }
 
     public boolean hasHeader() {

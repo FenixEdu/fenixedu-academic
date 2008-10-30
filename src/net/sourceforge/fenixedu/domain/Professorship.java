@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -178,4 +179,14 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	supportLessons.addAll(getSupportLessonsSet());
 	return supportLessons;
     }
+
+    public TeachingInquiry getTeachingInquiry(final ExecutionDegree executionDegree) {
+	for (final TeachingInquiry teachingInquiry : getTeachingInquiries()) {
+	    if (teachingInquiry.getExecutionDegree() == executionDegree) {
+		return teachingInquiry;
+	    }
+	}
+	return null;
+    }
+    
 }

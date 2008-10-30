@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
@@ -645,4 +647,22 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	}
 	return null;
     }
+    
+    public InquiryResponsePeriod getInquiryResponsePeriod(final InquiryResponsePeriodType type) {
+	for (InquiryResponsePeriod inquiryResponsePeriod : getInquiryResponsePeriods()) {
+	    if (inquiryResponsePeriod.getType() == type) {
+		return inquiryResponsePeriod;
+	    }
+	}
+	return null;
+    }
+
+    public InquiryResponsePeriod getInquiryResponsePeriod() {
+	return getInquiryResponsePeriod(InquiryResponsePeriodType.STUDENT);
+    }
+
+    public InquiryResponsePeriod getTeachingInquiryResponsePeriod() {
+	return getInquiryResponsePeriod(InquiryResponsePeriodType.TEACHING);
+    }
+    
 }

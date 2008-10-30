@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -52,7 +53,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
     public ActionForward showCoursesToAnswer(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod();
+	final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
 	if (lastPeriod == null) {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
@@ -87,7 +88,8 @@ public class StudentInquiryDA extends FenixDispatchAction {
     public ActionForward submitWeeklySpentHours(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod().getExecutionPeriod();
+	ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT)
+		.getExecutionPeriod();
 
 	List<CurricularCourseInquiriesRegistryDTO> courses = (List<CurricularCourseInquiriesRegistryDTO>) getRenderedObject("hoursAndDaysByCourse");
 	VariantBean weeklySpentHours = (VariantBean) getRenderedObject("weeklySpentHours");
@@ -124,7 +126,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    addActionMessage(request, "error.inquiries.notAnsweredFillAtLeastOneField");
 	    return handleDontRespondError(actionMapping, request, inquiriesRegistry);
 	}
-
+	
 	if (inquiriesRegistry.getStudent().getPerson() != AccessControl.getPerson()) {
 	    // FIXME: ERROR MESSAGE
 	    return null;
@@ -132,12 +134,12 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
 	InquiryNotAnsweredJustification justification = InquiryNotAnsweredJustification.valueOf(notAnsweredJustification);
 	String notAnsweredOtherJustification = (String) form.get("notAnsweredOtherJustification");
-
-	if (justification == InquiryNotAnsweredJustification.OTHER) {
-	    if (StringUtils.isEmpty(notAnsweredOtherJustification)) {
+	
+	if(justification == InquiryNotAnsweredJustification.OTHER ){
+	    if(StringUtils.isEmpty(notAnsweredOtherJustification)){
 		addActionMessage(request, "error.inquiries.fillOtherJustification");
 		return handleDontRespondError(actionMapping, request, inquiriesRegistry);
-	    } else if (notAnsweredOtherJustification.length() > 200) {
+	    } else if(notAnsweredOtherJustification.length() > 200){
 		addActionMessage(request, "error.inquiries.fillOtherJustificationLengthOversized");
 		return handleDontRespondError(actionMapping, request, inquiriesRegistry);
 	    }

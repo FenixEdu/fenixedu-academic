@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -33,6 +34,9 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 	final String executionPeriodIDString = dynaActionForm.getString("executionPeriodID");
 	final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer.valueOf(executionPeriodIDString) : null;
+	final String periodTypeString = dynaActionForm.getString("periodType");
+	final InquiryResponsePeriodType periodType = StringUtils.isEmpty(periodTypeString) ? InquiryResponsePeriodType.STUDENT
+		: InquiryResponsePeriodType.valueOf(periodTypeString);
 
 	final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
 
@@ -42,15 +46,20 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	    final String label = executionSemester.getName() + " " + executionSemester.getExecutionYear().getYear();
 	    executionPeriodLVBs.add(new LabelValueBean(label, executionSemester.getIdInternal().toString()));
 
-	    if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
+	    if (executionPeriodID == null && executionSemester.isCurrent()) {
 		selectedExecutionPeriod = executionSemester;
 		dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
 	    } else if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
 		selectedExecutionPeriod = executionSemester;
+		InquiryResponsePeriod inquiryResponsePeriod = selectedExecutionPeriod.getInquiryResponsePeriod(periodType);
+		if(inquiryResponsePeriod != null){
+		    request.setAttribute("inquiryResponsePeriod", inquiryResponsePeriod);
+		}
 	    }
 	}
 
 	request.setAttribute("executionPeriodLVBs", executionPeriodLVBs);
+	request.setAttribute("periodType", periodType);
 
 	request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
 

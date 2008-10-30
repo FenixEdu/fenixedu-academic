@@ -98,7 +98,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		RenderKit kit = RenderKit.getInstance();
 		HtmlFormComponent formComponent = null;
 
-		final int scaleHeadersCount = block.getHeader().getScaleHeadersCount();
+		final int scaleHeadersCount = block.hasHeader() ? block.getHeader().getScaleHeadersCount() : 0;
 		if (inquiriesQuestion instanceof TextBoxQuestion) {
 		    final TextBoxQuestion textBoxQuestion = (TextBoxQuestion) inquiriesQuestion;
 

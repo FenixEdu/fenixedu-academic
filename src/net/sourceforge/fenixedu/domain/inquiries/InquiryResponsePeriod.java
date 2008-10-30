@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 
 import org.joda.time.DateTime;
 
@@ -46,22 +47,22 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 	return !getBegin().isAfterNow() && !getEnd().isBeforeNow();
     }
 
-    public static InquiryResponsePeriod readLastPeriod() {
-	List<InquiryResponsePeriod> inquiryResponsePeriods = RootDomainObject.getInstance().getInquiryResponsePeriods();
-	return Collections.max(inquiryResponsePeriods, PERIOD_COMPARATOR);
-    }
-
-    public static InquiryResponsePeriod readOpenPeriod() {
+    public static InquiryResponsePeriod readOpenPeriod(final InquiryResponsePeriodType type) {
 	final List<InquiryResponsePeriod> inquiryResponsePeriods = RootDomainObject.getInstance().getInquiryResponsePeriods();
 	for (final InquiryResponsePeriod inquiryResponsePeriod : inquiryResponsePeriods) {
-	    if (inquiryResponsePeriod.getBegin().isBeforeNow() && inquiryResponsePeriod.getEnd().isAfterNow()) {
+	    if (inquiryResponsePeriod.getType() == type && inquiryResponsePeriod.isOpen()) {
 		return inquiryResponsePeriod;
 	    }
 	}
 	return null;
     }
 
-    static public boolean hasOpenPeriod() {
-	return readOpenPeriod() != null;
+    public boolean isOpen() {
+	return getBegin().isBeforeNow() && getEnd().isAfterNow();
     }
+
+    static public boolean hasOpenPeriod(final InquiryResponsePeriodType type) {
+	return readOpenPeriod(type) != null;
+    }
+    
 }

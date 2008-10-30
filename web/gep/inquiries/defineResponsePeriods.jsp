@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <html:xhtml/>
 
 <h3>
@@ -20,6 +21,11 @@
 				<td>
 				</td>
 				<td>
+					<e:labelValues id="responsePeriodTypes"	enumeration="net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType" bundle="ENUMERATION_RESOURCES" /> 
+					<html:select property="periodType">
+						<html:options collection="responsePeriodTypes" property="value" labelProperty="label" />
+					</html:select>
+					<br/>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" size="1" onchange="this.form.submit()">
 				    	<html:options collection="executionPeriodLVBs" labelProperty="label" property="value"/>
 				    </html:select>
@@ -48,9 +54,8 @@
 <logic:present name="selectedExecutionPeriod">
 	<bean:message key="link.inquiries.define.response.period.information" bundle="INQUIRIES_RESOURCES"/>
 	<br/><br/>
-	<logic:present name="selectedExecutionPeriod" property="inquiryResponsePeriod">
-		<fr:edit name="selectedExecutionPeriod" property="inquiryResponsePeriod"
-				action="/defineResponsePeriods.do?method=prepare"
+	<logic:present name="inquiryResponsePeriod" >
+		<fr:edit name="inquiryResponsePeriod" action="/defineResponsePeriods.do?method=prepare"
 				schema="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.edit">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
@@ -59,12 +64,12 @@
 		   	</fr:layout>	    	
 		</fr:edit>	
 	</logic:present>
-	<logic:notPresent name="selectedExecutionPeriod" property="inquiryResponsePeriod">
-		<fr:create id="selectedExecutionPeriod"
-				action="/defineResponsePeriods.do?method=prepare"
+	<logic:notPresent name="inquiryResponsePeriod">
+		<fr:create action="/defineResponsePeriods.do?method=prepare"
 				type="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod"
 				schema="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.create">
 			<fr:hidden slot="executionPeriod" name="selectedExecutionPeriod"/>
+			<fr:hidden slot="type" name="periodType" />
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
   				<fr:property name="columnClasses" value=",,tdclear tderror1"/>

@@ -52,8 +52,9 @@ public class RadioGroupQuestion extends InquiriesQuestion {
 	this(label, enumClass, showValues, null);
     }
 
-    private void addChoice(String value, String label) {
+    public RadioGroupQuestion addChoice(String value, String label) {
 	this.choices.add(new QuestionChoice(value, label, this.showValues));
+	return this;
     }
 
     public boolean isShowValues() {

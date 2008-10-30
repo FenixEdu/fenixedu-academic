@@ -127,7 +127,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/teachingReport.do?method=prepareEdit&amp;page=0" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/teachingInquiry.do?method=showDegreesToAnswer" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.teachingReportManagement"/>
 			</html:link>
 		</li>
@@ -136,6 +136,5 @@
 				<bean:message key="link.weekly.work.load"/>
 			</html:link>
 		</li>
-		
 	</ul>	
 </logic:present>

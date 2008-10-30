@@ -24,10 +24,13 @@ public class InquiriesBlock implements Serializable {
 
     private Map<String, InquiriesQuestion> questionsMap = new HashMap<String, InquiriesQuestion>();
 
+    public InquiriesBlock(Boolean required) {
+	this.required = required;
+    }
+    
     public InquiriesBlock(String title, Boolean required) {
 	this.header = new QuestionHeader(title);
 	this.required = required;
-
     }
 
     public InquiriesBlock(String title, Boolean required, String... scaleHeaders) {

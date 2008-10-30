@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -76,7 +77,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	final String fromName = form.getString("fromAddress");
 	final String fromAddress = form.getString("fromAddress");
 
-	InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod();
+	InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
 	if (openPeriod == null) {
 	    return null;
 	}

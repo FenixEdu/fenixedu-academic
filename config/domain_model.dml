@@ -213,6 +213,7 @@ enum 	  net.sourceforge.fenixedu.domain.ProfessionType															 as Profess
 enum 	  net.sourceforge.fenixedu.domain.GrantOwnerType															 as GrantOwnerType;
 enum 	  net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType										 as ProfessionalSituationConditionType;
 enum	  net.sourceforge.fenixedu.domain.student.RegistrationRegimeType											 as RegistrationRegimeType;
+enum	  net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType								 as InquiryResponsePeriodType;
 
 /*
 *
@@ -582,17 +583,16 @@ class DomainObject {
 			DateTime projectEndDateTime;
 		}
 
-
-        class WrittenEvaluation extends Evaluation {
-            HourMinuteSecond beginningDateHourMinuteSecond;
-            YearMonthDay dayDateYearMonthDay;
-            HourMinuteSecond endDateHourMinuteSecond;
-            YearMonthDay enrollmentBeginDayDateYearMonthDay;
-            HourMinuteSecond enrollmentBeginTimeDateHourMinuteSecond;
-            YearMonthDay enrollmentEndDayDateYearMonthDay;
-            HourMinuteSecond enrollmentEndTimeDateHourMinuteSecond;
+		class WrittenEvaluation extends Evaluation {
+			HourMinuteSecond beginningDateHourMinuteSecond;
+			YearMonthDay dayDateYearMonthDay;
+			HourMinuteSecond endDateHourMinuteSecond;
+			YearMonthDay enrollmentBeginDayDateYearMonthDay;
+			HourMinuteSecond enrollmentBeginTimeDateHourMinuteSecond;
+			YearMonthDay enrollmentEndDayDateYearMonthDay;
+			HourMinuteSecond enrollmentEndTimeDateHourMinuteSecond;
             Boolean vigilantsReport;
-        }
+		}
 
 			class Exam extends WrittenEvaluation {
 				Season season;
@@ -914,6 +914,7 @@ class DomainObject {
 
 		class OldMarkSheet extends MarkSheet {
 		}
+
 
 	class MasterDegreeCandidate extends DomainObject {
 		Double average;
@@ -1334,7 +1335,7 @@ class DomainObject {
 
 				class accounting.events.gratuity.DfaGratuityEvent extends accounting.events.gratuity.GratuityEvent {
 				}
-				
+
 				class accounting.events.gratuity.StandaloneEnrolmentGratuityEvent extends accounting.events.gratuity.GratuityEvent {
 				}
 
@@ -1510,7 +1511,7 @@ class DomainObject {
 				Integer maxMonthsToApplyPenalty;
 				YearMonthDay whenStartToApplyPenalty;
 			}
-			
+
 			class accounting.installments.PartialRegimeInstallment extends accounting.installments.InstallmentWithMonthlyPenalty {
 				Boolean penaltyAppliable;
 				BigDecimal ectsForAmount;
@@ -1736,7 +1737,6 @@ class DomainObject {
 			class accounting.postingRules.ResidencePR extends accounting.postingRules.GenericSingleEntryTypePR {
 				Money penaltyPerDay;
 			}
-			
 			
 	class accounting.Receipt extends DomainObject {
 		Integer number;
@@ -2761,11 +2761,61 @@ class DomainObject {
 		Integer teacherGlobalClassification;		
 		
 	}
+	
+	class inquiries.teacher.TeachingInquiry extends DomainObject {
+		Long answerDuration;
+		DateTime responseDateTime;
+		
+		Integer loadAndClassTypeContributionToFullfilmentOfCUProgram;
+		Integer teacherNumberSuitableForCUOperation;
+		Integer establishedScheduleSuitable;
+		String establishedScheduleNotSuitableReason;
+		Integer studentsReadyForFollowingCU;
+		Integer evaluationMethodSuitableForCUTeachingTypeAndObjective;
+		Integer disturbingEventsInClasses;
+		String disturbingEventsInClassesDescription;
+		Integer theoricalClassesAttendsOscillation;
+		Integer problemsClassesAttendsOscillation;
+		Integer labsClassesAttendsOscillation;
+		Integer seminarClassesAttendsOscillation;
+		Integer projectClassesAttendsOscillation;
+		Integer activeAndInteressedStudentsRatio;
+		Integer studentsPerformance;
+		Integer classesAndOtherActivitiesFrequency;
+		Integer classesAndOtherActivitiesPonctuality;
+		Integer globalQualityOfTeachingInCU;
+		Integer pedagogicalActivitiesDeveloped;
+		String relativePedagogicalInitiatives;
+		
+		Integer numberOfExams;
+		Integer numberOfTests;
+		Integer numberOfQuizzesAndMiniTests;
+		Integer numberOfElectronicQuizzes;
+		Integer numberOfStudyVisitsOrOtherActivitiesReports;
+		Integer numberOfWorksOrProjects;
+		Integer workLoadClassification;
+		String workLoadClassificationReasons;
+		Integer positionOfCUInStudentCurricularPlan;
+		Integer comprehensionAndKnowledgeOfCU;
+		Integer comprehensionApplicationOfCU;
+		Integer criticalSenseAndReflexiveSpirit;
+		Integer cooperationAndCommunicationCapacity;
+		Integer globalClassificationOfThisCU;
+		String weakAndStrongPointsOfCUTeachingProcess;
+		String finalCommentsAndImproovements;
+		String negativeResultsResolutionAndImproovementPlanOfAction;
+		
+	}
+	
+	class inquiries.StudentInquiriesTeachingResult extends DomainObject {
+	
+	}	
 
 	class inquiries.InquiryResponsePeriod extends DomainObject {
 		DateTime begin;
 		DateTime end;
 		String introduction;
+		InquiryResponsePeriodType type;
 	}
 
 	class inquiries.OldInquiriesCoursesRes extends DomainObject {
@@ -5111,7 +5161,7 @@ class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 	
 	class candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
-	
+		
 	class candidacyProcess.standalone.StandaloneIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
 		
@@ -5161,7 +5211,7 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 		BigDecimal gradeRate;
 		BigDecimal seriesCandidacyGrade;
 	}
-	
+
 	class candidacyProcess.standalone.StandaloneIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
 	}
 
@@ -7627,7 +7677,9 @@ relation InquiriesTeacherNonAffiliatedTeacher {
 }
 
 relation InquiryResponsePeriodExecutionPeriod {
-	inquiries.InquiryResponsePeriod playsRole inquiryResponsePeriod;
+	inquiries.InquiryResponsePeriod playsRole inquiryResponsePeriods {
+		multiplicity *;
+	}
 	ExecutionSemester playsRole executionPeriod;
 }
 
@@ -13537,7 +13589,6 @@ relation RootDomainObjectResidenceManagementUnitHack {
 	RootDomainObject playsRole rootDomainObjectForResidenceUnit;
 }
 
-
 relation RootDomainObjectUtilEmailMessage {
 	RootDomainObject playsRole rootDomainObject;
 	util.email.Message playsRole utilEmailMessages {
@@ -13598,6 +13649,47 @@ relation RootDomainObjectPendingUtilEmailMessage {
 	}
 }
 
+relation RootDomainObjectTeachingInquiry {
+	RootDomainObject playsRole rootDomainObject;
+	inquiries.teacher.TeachingInquiry playsRole teachingInquiries {
+		multiplicity *;
+	}
+}
+
+relation TeachingInquiryExecutionDegree {
+	inquiries.teacher.TeachingInquiry playsRole teachingInquiries {
+		multiplicity *;
+	}
+	ExecutionDegree playsRole executionDegree;
+}
+
+relation TeachingInquiryProfessorship {
+	inquiries.teacher.TeachingInquiry playsRole teachingInquiries {
+		multiplicity *;
+	}
+	Professorship playsRole professorship;
+}
+
+relation RootDomainObjectStudentInquiriesTeachingResult {
+	RootDomainObject playsRole rootDomainObject;
+	inquiries.StudentInquiriesTeachingResult playsRole studentInquiriesTeachingResults {
+		multiplicity *;
+	}
+}
+
+relation ProfessorshipStudentInquiriesTeachingResult {
+	Professorship playsRole professorship;
+	inquiries.StudentInquiriesTeachingResult playsRole studentInquiriesTeachingResults {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreeStudentInquiriesTeachingResult {
+	ExecutionDegree playsRole executionDegree;
+	inquiries.StudentInquiriesTeachingResult playsRole studentInquiriesTeachingResults {
+		multiplicity *;
+	}
+}
 
 relation PartialRegimeInstallmentExecutionSemester {
 	accounting.installments.PartialRegimeInstallment playsRole partialRegimeInstallments {

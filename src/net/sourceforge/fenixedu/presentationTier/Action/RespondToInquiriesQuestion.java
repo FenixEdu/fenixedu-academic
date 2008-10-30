@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 
@@ -16,7 +17,7 @@ public class RespondToInquiriesQuestion extends FenixDispatchAction {
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod();
+	final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
 	request.setAttribute("executionPeriod", lastPeriod == null ? null : lastPeriod.getExecutionPeriod());
 
 	return mapping.findForward("respondToInquiriesQuestion");
