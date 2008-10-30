@@ -9893,4 +9893,20 @@
         <filterChains />
     </service>
 
+    <service>
+        <name>SearchPartiesBySocialSecurityNumber</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartiesBySocialSecurityNumber</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+
+    <service>
+        <name>SearchPeople</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeople</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+
 </serviceDefinitions>

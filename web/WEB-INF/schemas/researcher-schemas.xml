@@ -90,7 +90,7 @@
 		<property name="rawSlotName" value="personName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchPeople"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
 		<property name="minChars" value="4"/>
@@ -105,7 +105,7 @@
 		<property name="labelField" value="person.name"/>
 		<property name="format" value="${person.name} - ${person.externalPerson.institutionUnit.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchExternalPersons"/>
 		<property name="serviceArgs" value="slot=person.name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.ExternalPerson"/>				
 		<property name="minChars" value="4"/>

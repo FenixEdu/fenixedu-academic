@@ -377,7 +377,7 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchPartiesBySocialSecurityNumber"/>
 		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
 		<property name="minChars" value="1"/>
