@@ -209,7 +209,14 @@ public class Registration extends Registration_Base {
 
 	    if (studentCandidacy.getIngression() == Ingression.RI) {
 		final Degree sourceDegree = studentCandidacy.getDegreeCurricularPlan().getEquivalencePlan().getSourceDegree();
-		setSourceRegistration(getStudent().readRegistrationByDegree(sourceDegree));
+		Registration registration = getStudent().readRegistrationByDegree(sourceDegree);
+		if (registration == null) {
+		    final Collection<Registration> registrations = getStudent().getRegistrationsByDegreeType(DegreeType.DEGREE);
+		    registrations.remove(this);
+		    registration = registrations.size() == 1 ? registrations.iterator().next() : null;
+		}
+		
+		setSourceRegistration(registration);
 	    }
 	}
     }
@@ -1762,9 +1769,17 @@ public class Registration extends Registration_Base {
 	    if (person == null || !person.hasStudent()) {
 		throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
 	    }
-	    if (degreeCurricularPlan.getEquivalencePlan() != null) {
-		Degree sourceDegree = degreeCurricularPlan.getEquivalencePlan().getSourceDegreeCurricularPlan().getDegree();
-		final Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
+	    if (degreeCurricularPlan.hasEquivalencePlan()) {
+		final Student student = person.getStudent();
+		final Degree sourceDegree = degreeCurricularPlan.getEquivalencePlan().getSourceDegreeCurricularPlan().getDegree();
+
+		Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
+		if (sourceRegistration == null) {
+		    final Collection<Registration> registrations = student.getRegistrationsByDegreeType(DegreeType.DEGREE);
+		    registrations.remove(student.getRegistrationFor(degreeCurricularPlan));
+		    sourceRegistration = registrations.size() == 1 ? registrations.iterator().next() : null;
+		}
+
 		if (sourceRegistration == null) {
 		    throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
 		} else if (!sourceRegistration.getActiveStateType().canReingress()) {
