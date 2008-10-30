@@ -1317,8 +1317,7 @@
 		<property name="destination" value="postBack"/>
 	</slot>
 	<slot name="degree" key="label.degree"
-		layout="menu-select-postback"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		layout="menu-select-postback">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesForExecutionYear" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Degree" />

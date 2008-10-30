@@ -9,7 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -28,9 +30,13 @@ public class SearchStudents extends FenixService {
 
 	final Set<Registration> registrations = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
 
+	final Degree degree = searchbean.getDegree();
 	final ExecutionYear executionYear = searchbean.getExecutionYear();
-	for (DegreeCurricularPlan degreeCurricularPlan : searchbean.getDegree().getDegreeCurricularPlansForYear(executionYear)) {
-	    degreeCurricularPlan.getRegistrations(executionYear, registrations);
+	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+	    if (degree == null || degreeCurricularPlan.getDegree() == degree) {
+		degreeCurricularPlan.getRegistrations(executionYear, registrations);
+	    }
 	}
 
 	return filterResults(searchbean, registrations, executionYear);

@@ -15,6 +15,7 @@
 
 <fr:form action="<%= "/studentsListByDegree.do" %>">
 <html:hidden property="method" value="searchByDegree"/>
+<html:hidden property="extendedInfo" value="false"/>
 	<fr:edit name="searchParametersBean" schema="student.list.searchByDegree.chooseDegree" id="chooseDegree">
 		<fr:destination name="postBack" path="/studentsListByDegree.do?method=postBack"/>
 		<fr:layout name="tabular">
@@ -23,24 +24,19 @@
 		</fr:layout>
 	</fr:edit>
 
-	<logic:notEmpty name="searchParametersBean" property="degree">
-		<fr:edit id="chooseParameters" name="searchParametersBean" schema="student.list.searchByDegree.parameters">
-			<fr:layout name="tabular-row">
-				<fr:property name="classes" value="tdtop ulnomargin"/>
-			</fr:layout>
-		</fr:edit>
-		<p class="mtop1">
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='searchByDegree';this.form.submit();">
-				<bean:message key="button.search" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:submit>
-		</p>
-	</logic:notEmpty>
+	<fr:edit id="chooseParameters" name="searchParametersBean" schema="student.list.searchByDegree.parameters">
+		<fr:layout name="tabular-row">
+			<fr:property name="classes" value="tdtop ulnomargin"/>
+		</fr:layout>
+	</fr:edit>
+	<p class="mtop1">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='searchByDegree';this.form.submit();">
+			<bean:message key="button.search" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:submit>
+	</p>
 
 <logic:present name="studentCurricularPlanList">
-
 	<bean:size id="studentCurricularPlanListSize" name="studentCurricularPlanList" />
-	
-
 	<p class="mtop2">
 		 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total"/>: <%= studentCurricularPlanListSize %>
 	</p>
@@ -51,8 +47,12 @@
 	</fr:view>
 	<logic:greaterThan name="studentCurricularPlanListSize" value="0">
 		<p class="mtop15 mbottom15">
-			<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>
+			<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.extendedInfo.value='false';this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>
 			<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</p>
+		<p class="mtop15 mbottom15">
+			<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.extendedInfo.value='true';this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>
+			<bean:message key="link.lists.xlsFileToDownload.extended.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</p>
 	</logic:greaterThan>
 </logic:present>

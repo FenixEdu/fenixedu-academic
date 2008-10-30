@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.Se
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -79,13 +80,20 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 		String filename;
 
 		ExecutionYear executionYear = searchBean.getExecutionYear();
-		filename = searchBean.getDegree().getNameFor(executionYear) + "_" + executionYear.getNextYearsYearString();
+		if (searchBean.getDegree() == null) {
+		    filename = executionYear.getNextYearsYearString();
+		} else {
+		    filename = searchBean.getDegree().getNameFor(executionYear) + "_" + executionYear.getNextYearsYearString();
+		}
 
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
 		ServletOutputStream writer = response.getOutputStream();
 
-		exportToXls(registrations, writer, searchBean.getExecutionYear(), searchBean.getDegree());
+		final String param = request.getParameter("extendedInfo");
+		boolean extendedInfo = param != null && param.length() > 0 && Boolean.valueOf(param).booleanValue();
+
+		exportToXls(registrations, writer, searchBean.getExecutionYear(), searchBean.getDegree(), extendedInfo);
 		writer.flush();
 		response.flushBuffer();
 
@@ -97,40 +105,61 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
     }
 
     private void exportToXls(List<RegistrationWithStateForExecutionYearBean> registrationWithStateForExecutionYearBean,
-	    OutputStream outputStream, ExecutionYear executionYear, Degree degree) throws IOException {
+	    OutputStream outputStream, ExecutionYear executionYear, Degree degree, boolean extendedInfo) throws IOException {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("AlunosPorCurso");
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear());
+	if (degree == null) {
+	    spreadsheet.addHeader(executionYear.getYear());
+	} else {
+	    spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear());
+	}
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " Alunos");
-	fillSpreadSheet(registrationWithStateForExecutionYearBean, spreadsheet, executionYear);
+	fillSpreadSheet(registrationWithStateForExecutionYearBean, spreadsheet, executionYear, extendedInfo);
 	spreadsheet.getWorkbook().write(outputStream);
     }
 
     private void fillSpreadSheet(List<RegistrationWithStateForExecutionYearBean> registrations,
-	    final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear) {
-	setHeaders(spreadsheet);
+	    final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear, boolean extendedInfo) {
+	setHeaders(spreadsheet, extendedInfo);
 	for (RegistrationWithStateForExecutionYearBean registrationWithStateForExecutionYearBean : registrations) {
 	    Registration registration = registrationWithStateForExecutionYearBean.getRegistration();
 	    spreadsheet.newRow();
+	    spreadsheet.addCell(registration.getDegree().getSigla());
 	    spreadsheet.addCell(registration.getNumber().toString());
-	    spreadsheet.addCell(registration.getPerson().getName());
+	    final Person person = registration.getPerson();
+	    spreadsheet.addCell(person.getName());
 	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
 
 	    spreadsheet.addCell(lastRegistrationState.getStateType().getDescription());
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
+
+	    if (extendedInfo) {
+		spreadsheet.addCell(person.getGender().toLocalizedString());
+		spreadsheet.addCell(person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd"));
+		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
+		spreadsheet.addCell(registration.getCurricularYear(executionYear));
+		spreadsheet.addCell(registration.getEnrolments(executionYear).size());
+	    }
 	}
     }
 
-    private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
+    private void setHeaders(final StyledExcelSpreadsheet spreadsheet, final boolean extendedInfo) {
 	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader("Curso");
 	spreadsheet.addHeader("Número");
 	spreadsheet.addHeader("Nome");
 	spreadsheet.addHeader("Estado da Matrícula");
 	spreadsheet.addHeader("Acordo");
-
+	if (extendedInfo) {
+	    spreadsheet.addHeader("Género");
+	    spreadsheet.addHeader("Data Nascimento");
+	    spreadsheet.addHeader("Nº inscrições");
+	    spreadsheet.addHeader("Ano académico");
+	    spreadsheet.addHeader("Nº disciplinas inscritas");
+	}
     }
 
 }
