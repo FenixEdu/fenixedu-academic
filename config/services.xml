@@ -9885,6 +9885,7 @@
         <filterChains />
     </service>
 
+<!--
     <service>
         <name>SearchTeachersByName</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByName</implementationClass>
@@ -9908,5 +9909,6 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
+-->
 
 </serviceDefinitions>
