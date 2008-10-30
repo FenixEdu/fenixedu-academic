@@ -12,65 +12,32 @@
 	<p><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-
 <em><bean:message key="label.portal.alumni" bundle="ALUMNI_RESOURCES" /></em>
 <h2><bean:message key="link.search.alumni" bundle="ALUMNI_RESOURCES" /></h2>
 
+<bean:define id="schema" value="alumni.search.bean" />
+<logic:notEmpty name="searchAlumniBean" property="degreeType" >
+	<bean:define id="schema" value="alumni.search.bean.full" />
+</logic:notEmpty>
 
-<fr:form id="searchForm"
-	action="<%="/searchAlumni.do?&method=showAlumniList" %>">
-	<fr:edit id="searchAlumniBean" name="searchAlumniBean" visible="false" />
 
-	<table class="tstyle5 thlight thright mbottom05 thmiddle">
-		<tr>
-			<th><bean:message key="label.name" bundle="ALUMNI_RESOURCES" />:</th>
-			<td><fr:edit id="name" name="searchAlumniBean" slot="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:layout name="default">
-					<fr:property name="size" value="40"/>
-				</fr:layout>
-			</fr:edit></td>
-			<td class="tdclear tderror1"><span><fr:message for="name" /></span></td>
-		</tr>
-		<tr>
-			<th><bean:message key="label.degreeType" bundle="ALUMNI_RESOURCES" />:</th>
-			<td><fr:edit id="degreeType" name="searchAlumniBean" slot="degreeType">
-				<fr:layout name="default" />
-			</fr:edit><span class="color888 smalltxt">(<bean:message key="label.notRequired" bundle="ALUMNI_RESOURCES" />)</span>
-			</td>
-			<td class="tdclear tderror1"><span><fr:message for="degreeType" /></span></td>
-		</tr>
-		<tr>
-			<th><bean:message key="label.registration.year" bundle="ALUMNI_RESOURCES" />:</th>
-			<td>
-				<bean:message key="label.date.from" bundle="ALUMNI_RESOURCES" />
-				<fr:edit id="firstYear" name="searchAlumniBean" slot="firstExecutionYear">
-					<fr:layout name="menu-select">
-						<fr:property name="providerClass"
-							value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-						<fr:property name="format" value="${year}" />
-						<fr:property name="class" value="dinline" />
-					</fr:layout>
-				</fr:edit>
-				<bean:message key="label.date.to" bundle="ALUMNI_RESOURCES" />
-				<fr:edit id="finalYear" name="searchAlumniBean" slot="finalExecutionYear">
-					<fr:layout name="menu-select">
-						<fr:property name="providerClass"
-							value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-						<fr:property name="format" value="${year}" />
-						<fr:property name="class" value="dinline" />
-					</fr:layout>
-				</fr:edit>
-				<span class="color888 smalltxt">(<bean:message key="label.notRequired" bundle="ALUMNI_RESOURCES" />)</span>
-			</td>
-			<td class="tdclear tderror1"><span><fr:message for="firstYear"/></span></td>
-		</tr>
-	</table>
+<fr:form id="searchAlumniForm" action="/searchAlumni.do?method=showAlumniList">
+	
+	<fr:edit id="searchAlumniBean" name="searchAlumniBean" schema="<%= schema.toString() %>" >
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle5 thlight thright mbottom05 thmiddle"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+		<fr:destination name="degreeTypePostback" path="/searchAlumni.do?method=degreeTypePostback"/>
+		<fr:destination name="success" path="/searchAlumni.do?method=showAlumniList"/>
+		<fr:destination name="invalid" path="/searchAlumni.do?method=showAlumniList"/>
+	</fr:edit>
 	<p class="mtop05">
 		<html:submit>
 			<bean:message key="label.filter" bundle="ALUMNI_RESOURCES" />
 		</html:submit>
 	</p>
-</fr:form>
+</fr:form>	
 
 <logic:present name="searchAlumniBean" property="alumni">
 	<logic:notEmpty name="searchAlumniBean" property="alumni">

@@ -1,3 +1,73 @@
+	<schema name="alumni.search.bean" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean" bundle="ALUMNI_RESOURCES">
+		<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="40"/>
+		</slot>
+		<slot name="degreeType" key="label.degreeType" layout="menu-postback">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.degree.DegreeType" />
+			<property name="destination" value="degreeTypePostback" />
+	        <property name="key" value="true" />
+	        <property name="defaultText" value="label.dropDown.all" />
+	        <property name="bundle" value="ENUMERATION_RESOURCES" />
+		</slot>
+		<slot name="firstExecutionYear" key="label.registration.year.from" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+			<property name="format" value="${year}" />
+			<property name="class" value="dinline" />
+			<property name="required" value="false"/>
+		</slot>
+		<slot name="finalExecutionYear" key="label.date.to" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+			<property name="format" value="${year}" />
+			<property name="class" value="dinline" />
+			<property name="required" value="false"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.search.bean.full" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean" bundle="ALUMNI_RESOURCES">
+		<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="40"/>
+		</slot>
+		<slot name="degreeType" key="label.degreeType" layout="menu-postback">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.degree.DegreeType" />
+			<property name="destination" value="degreeTypePostback" />
+	        <property name="key" value="true" />
+	        <property name="defaultText" value="label.dropDown.all" />
+	        <property name="bundle" value="ENUMERATION_RESOURCES" />
+		</slot>
+		<slot name="degree" key="label.degree.name" layout="menu-select" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniSearchDegreeProvider" />
+			<property name="format" value="${presentationName}"/>
+			<property name="sortBy" value="presentationName"/>
+		</slot>
+		<slot name="firstExecutionYear" key="label.registration.year.from" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+			<property name="format" value="${year}" />
+			<property name="class" value="dinline" />
+			<property name="required" value="false"/>
+		</slot>
+		<slot name="finalExecutionYear" key="label.date.to" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+			<property name="format" value="${year}" />
+			<property name="class" value="dinline" />
+			<property name="required" value="false"/>
+		</slot>
+	</schema>
+
+
+	<schema name="alumni.degreeType.search" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean" bundle="ALUMNI_RESOURCES">
+		<slot name="degreeType" key="label.degree.type" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.degree.DegreeType" />
+			<property name="destination" value="degreeTypePostback" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.degree.search" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean" bundle="ALUMNI_RESOURCES">
+		<slot name="degree" key="label.degree" layout="menu-select" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniSearchDegreeProvider" />
+			<property name="format" value="${presentationName}"/>
+			<property name="sortBy" value="presentationName"/>
+		</slot>
+	</schema>
 
 	<schema name="alumni.registration.search.list" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ALUMNI_RESOURCES">
 		<slot name="student.person.name" layout="link" key="list.column.name" >
@@ -8,6 +78,9 @@
 		</slot> 
 		<slot name="degreeName" key="list.column.degree" />
 		<slot name="startExecutionYear.year" key="list.column.year" />
+<!--
+		<slot name="student.alumni.alumniConditions" layout="boolean" key="list.column.registered" />
+-->
 	</schema>
 
 	<schema name="alumni.professional.information.job" type="net.sourceforge.fenixedu.domain.Job" bundle="ALUMNI_RESOURCES">

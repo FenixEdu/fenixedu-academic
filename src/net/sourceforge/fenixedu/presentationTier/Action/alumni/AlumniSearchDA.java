@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadAllDegreesByType;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -40,6 +42,15 @@ public class AlumniSearchDA extends FenixDispatchAction {
 	    searchBean.setTotalItems(resultRegistrations.size());
 	}
 
+	request.setAttribute("searchAlumniBean", searchBean);
+	return mapping.findForward("showAlumniList");
+    }
+
+    public ActionForward degreeTypePostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	AlumniSearchBean searchBean = reconstructBeanFromRequest(request);
+	RenderUtils.invalidateViewState();
 	request.setAttribute("searchAlumniBean", searchBean);
 	return mapping.findForward("showAlumniList");
     }

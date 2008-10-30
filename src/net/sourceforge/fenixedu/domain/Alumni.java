@@ -219,8 +219,17 @@ public class Alumni extends Alumni_Base {
 	    if (person.hasStudent()) {
 		for (Registration registration : (searchBean.getDegreeType() == null ? person.getStudent().getRegistrations()
 			: person.getStudent().getRegistrationsByDegreeType(searchBean.getDegreeType()))) {
-		    if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)) {
-			resultRegistrations.add(registration);
+
+		    if (searchBean.getDegree() != null) {
+			if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)
+				&& registration.getDegree().equals(searchBean.getDegree())) {
+			    resultRegistrations.add(registration);
+			}
+		    } else {
+
+			if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)) {
+			    resultRegistrations.add(registration);
+			}
 		    }
 		}
 	    }
@@ -282,7 +291,7 @@ public class Alumni extends Alumni_Base {
     public String getName() {
 	return getStudent().getPerson().getName();
     }
-    
+
     public boolean getAlumniConditions() {
 	return isRegistered() || hasFinishedPublicRegistry();
     }

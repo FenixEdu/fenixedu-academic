@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -18,6 +19,7 @@ public class AlumniSearchBean implements Serializable {
     private DomainReference<ExecutionYear> finalExecutionYear;
     private String name;
     private DegreeType degreeType;
+    private DomainReference<Degree> degree;
     private List<DomainReference<Registration>> alumni;
 
     public AlumniSearchBean() {
@@ -121,4 +123,13 @@ public class AlumniSearchBean implements Serializable {
     public void setTotalItems(int totalItems) {
 	this.totalItems = totalItems;
     }
+
+    public Degree getDegree() {
+	return (this.degree != null) ? this.degree.getObject() : null;
+    }
+
+    public void setDegree(Degree degree) {
+	this.degree = new DomainReference<Degree>(degree);
+    }
+
 }
