@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.Person;
 
-public abstract class SearchPeople extends FenixService implements AutoCompleteSearchService {
+public class SearchPeople extends FenixService implements AutoCompleteSearchService {
 
     protected Collection search(final String value, final int size) {
 	return Person.findPerson(value, size);
