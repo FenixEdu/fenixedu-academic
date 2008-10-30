@@ -9875,5 +9875,14 @@
         <description />
         <isTransactional>true</isTransactional>
         <filterChains />
-    </service>         
+    </service>
+
+    <service>
+        <name>SearchUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchUnits</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+
 </serviceDefinitions>

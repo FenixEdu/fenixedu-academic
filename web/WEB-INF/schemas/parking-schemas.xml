@@ -413,13 +413,13 @@
 </schema>
 
 <schema name="search.party.autocomplete" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean" bundle="PARKING_RESOURCES">
-	<slot name="party" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.name">
+	<slot name="party" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.name">
+		<property name="serviceName" value="SearchUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
-		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
 		<property name="minChars" value="3"/>
 		<property name="maxCount" value="100"/>		

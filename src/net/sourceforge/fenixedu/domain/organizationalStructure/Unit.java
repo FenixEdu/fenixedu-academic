@@ -880,13 +880,14 @@ public class Unit extends Unit_Base {
 	return null;
     }
 
-    public static Unit findFirstUnitByName(final String unitName) {
-	if (StringUtils.isEmpty(unitName)) {
+    public static Unit findFirstUnitByName(final String unitNameString) {
+	if (StringUtils.isEmpty(unitNameString)) {
 	    return null;
 	}
-	for (final Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party.isUnit() && unitName.equalsIgnoreCase(party.getName())) {
-		final Unit unit = (Unit) party;
+	final Collection<UnitName> unitNames = UnitName.find(unitNameString, Integer.MAX_VALUE);
+	for (final UnitName unitName : unitNames) {
+	    final Unit unit = unitName.getUnit();
+	    if (unitNameString.equalsIgnoreCase(unit.getName())) {
 		return unit;
 	    }
 	}

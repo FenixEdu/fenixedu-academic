@@ -2419,17 +2419,6 @@ public class Person extends Person_Base {
 	return hasHomepage() && getHomepage().getActivated();
     }
 
-    public static Collection<Person> searchPersons(String[] personName) {
-	Collection<Person> result = new ArrayList<Person>();
-	for (Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party.isPerson() && party.verifyNameEquality(personName)) {
-		result.add((Person) party);
-	    }
-	}
-
-	return result;
-    }
-
     public boolean isAdministrativeOfficeEmployee() {
 	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
     }
