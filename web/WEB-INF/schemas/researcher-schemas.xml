@@ -127,10 +127,11 @@
 		<property name="rawSlotName" value="unitName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" Eventvalue="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
-		<property name="serviceArgs" value="slot=name"/>
+		<property name="serviceName" value="SearchUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="5"/>
+		<property name="maxCount" value="100"/>		
 	</slot>
 	<slot name="role" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
