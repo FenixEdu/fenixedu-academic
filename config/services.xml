@@ -9885,4 +9885,12 @@
         <filterChains />
     </service>
 
+    <service>
+        <name>SearchTeachersByName</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByName</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+
 </serviceDefinitions>

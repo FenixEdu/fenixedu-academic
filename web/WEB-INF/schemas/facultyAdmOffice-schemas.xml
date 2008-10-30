@@ -23,7 +23,7 @@
 		<property name="rawSlotName" value="responsibleName"/>
 		<property name="format" value="${person.name}"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchTeachersByName"/>
 		<property name="serviceArgs" value="slot=person.name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
 		<property name="minChars" value="3"/>
@@ -58,7 +58,7 @@
 		<property name="rawSlotName" value="responsibleName"/>
 		<property name="format" value="${person.name}"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchTeachersByName"/>
 		<property name="serviceArgs" value="slot=person.name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
 		<property name="minChars" value="3"/>
