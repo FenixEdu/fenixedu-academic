@@ -17,8 +17,7 @@ public class VoteYearDelegateElections extends FenixService {
 	    throws FenixServiceException {
 
 	try {
-	    if (!student.hasAlreadyVotedForYearDelegateElection(yearDelegateElection.getExecutionYear())
-		    && !yearDelegateElection.getVotingStudents().contains(student)) {
+	    if (!yearDelegateElection.getVotingStudents().contains(student)) {
 		final String msg = "A sua votação para a eleição de Delegado de Ano encontra-se registada. Obrigado pela sua participação.";
 		final Person person = student.getPerson();
 		DelegateElectionVote vote = new DelegateElectionVote(yearDelegateElection, votedStudent);
