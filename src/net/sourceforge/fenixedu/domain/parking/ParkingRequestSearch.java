@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.parking;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainListReference;
@@ -9,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ParkingRequestSearch implements Serializable {
@@ -55,13 +57,31 @@ public class ParkingRequestSearch implements Serializable {
     }
 
     public void doSearch() {
-	List<ParkingRequest> parkingRequests = new ArrayList<ParkingRequest>();
-	for (ParkingRequest request : RootDomainObject.getInstance().getParkingRequests()) {
-	    if (satisfiedPersonClassification(request) && satisfiedPersonName(request) && satisfiedRequestState(request)
-		    && satisfiedCarPlateNumber(request)) {
-		parkingRequests.add(request);
+	final List<ParkingRequest> parkingRequests = new ArrayList<ParkingRequest>();
+
+	if (personName != null && !personName.isEmpty()) {
+	    final Collection<Person> people = Person.findPerson(personName);
+	    for (final Person person : people) {
+		final ParkingParty parkingParty = person.getParkingParty();
+		if (parkingParty != null) {
+		    for (final ParkingRequest parkingRequest : parkingParty.getParkingRequestsSet()) {
+			if (satisfiedPersonClassification(parkingRequest)
+				&& satisfiedRequestState(parkingRequest)
+				&& satisfiedCarPlateNumber(parkingRequest)) {
+			    parkingRequests.add(parkingRequest);
+			}			
+		    }
+		}
 	    }
+	} else if (parkingRequestState != null || partyClassification != null || carPlateNumber != null) {
+	    for (ParkingRequest request : RootDomainObject.getInstance().getParkingRequests()) {
+		if (satisfiedPersonClassification(request) && satisfiedPersonName(request) && satisfiedRequestState(request)
+			&& satisfiedCarPlateNumber(request)) {
+		    parkingRequests.add(request);
+		}
+	    }	    
 	}
+
 	setSearchResult(parkingRequests);
     }
 
@@ -77,13 +97,13 @@ public class ParkingRequestSearch implements Serializable {
     }
 
     private boolean satisfiedPersonClassification(ParkingRequest request) {
+	final ParkingParty parkingParty = request.getParkingParty();
 	if (getPartyClassification() == null
-		|| request.getParkingParty().getParty().getPartyClassification() == getPartyClassification()) {
+		|| parkingParty.getParty().getPartyClassification() == getPartyClassification()) {
 	    if (getPartyClassification() == PartyClassification.TEACHER) {
-		Person person = (Person) request.getParkingParty().getParty();
-		if (person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
-		    return false;
-		}
+		final Person person = (Person) parkingParty.getParty();
+		final Teacher teacher = person.getTeacher();
+		return teacher == null || !teacher.isMonitor(ExecutionSemester.readActualExecutionSemester());
 	    }
 	    return true;
 	}

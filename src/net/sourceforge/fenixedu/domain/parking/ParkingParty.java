@@ -562,36 +562,49 @@ public class ParkingParty extends ParkingParty_Base {
 	    if (getPhdNumber() != null) {
 		return getPhdNumber();
 	    }
-	    Person person = (Person) getParty();
-	    if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		    && !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
+	    final Person person = (Person) getParty();
+	    final Teacher teacher = person.getTeacher();
+
+	    final boolean isTeachre = teacher != null && teacher.getCurrentWorkingDepartment() != null;
+	    final boolean isMonitor = isTeachre && teacher.isMonitor(ExecutionSemester.readActualExecutionSemester());
+
+	    if (isTeachre && !isMonitor) {
 		return person.getTeacher().getTeacherNumber();
 	    }
-	    if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null
+
+	    final Employee employee = person.getEmployee();
+
+	    if (employee != null && employee.getCurrentWorkingContract() != null
 		    && person.getPersonRole(RoleType.TEACHER) == null) {
-		return person.getEmployee().getEmployeeNumber();
+		return employee.getEmployeeNumber();
 	    }
-	    if (getPartyClassification().equals(PartyClassification.RESEARCHER) && person.getEmployee() != null) {
-		return person.getEmployee().getEmployeeNumber();
+	    if (employee != null && getPartyClassification().equals(PartyClassification.RESEARCHER)) {
+		return employee.getEmployeeNumber();
 	    }
-	    if (person.getStudent() != null) {
-		DegreeType degreeType = person.getStudent().getMostSignificantDegreeType();
-		Collection<Registration> registrations = person.getStudent().getRegistrationsByDegreeType(degreeType);
+
+	    final Student student = person.getStudent();
+
+	    if (student != null) {
+		DegreeType degreeType = student.getMostSignificantDegreeType();
+		Collection<Registration> registrations = student.getRegistrationsByDegreeType(degreeType);
 		for (Registration registration : registrations) {
 		    StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
 		    if (scp != null) {
-			return person.getStudent().getNumber();
+			return student.getNumber();
 		    }
 		}
 	    }
-	    if (person.getGrantOwner() != null && person.getGrantOwner().hasCurrentContract()) {
-		return person.getGrantOwner().getNumber();
+
+	    final GrantOwner grantOwner = person.getGrantOwner();
+
+	    if (grantOwner != null && grantOwner.hasCurrentContract()) {
+		return grantOwner.getNumber();
 	    }
-	    if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		    && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
-		return person.getTeacher().getTeacherNumber();
+	    if (isTeachre && isMonitor) {
+		return teacher.getTeacherNumber();
 	    }
 	}
+
 	return 0;
     }
 
