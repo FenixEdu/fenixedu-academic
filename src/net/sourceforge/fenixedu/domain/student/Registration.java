@@ -3263,4 +3263,14 @@ public class Registration extends Registration_Base {
 	return states.isEmpty() ? false : Collections.max(states, RegistrationState.DATE_COMPARATOR).isActive();
     }
 
+    public boolean hasRegistrationState(final RegistrationStateType stateType) {
+	for (final RegistrationState state : getRegistrationStatesSet()) {
+	    if (state.getStateType() == stateType) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
 }
