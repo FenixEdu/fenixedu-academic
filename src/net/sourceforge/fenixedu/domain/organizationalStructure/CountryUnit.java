@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -120,4 +121,10 @@ public class CountryUnit extends CountryUnit_Base {
 		Language.getLocale()).getString("default.country.code"), PartyTypeEnum.COUNTRY);
 	return defaultCountry;
     }
+
+    public static Set<CountryUnit> readAllCountryUnits() {
+	final PartyType partyType = PartyType.readPartyTypeByType(PartyTypeEnum.COUNTRY);
+	return (Set) partyType.getPartiesSet();
+    }
+
 }

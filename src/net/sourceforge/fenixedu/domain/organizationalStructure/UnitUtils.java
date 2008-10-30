@@ -143,10 +143,11 @@ public class UnitUtils {
 	if (unitName == null) {
 	    return Collections.emptySet();
 	}
-	final String nameToSearch = unitName.replaceAll("%", ".*").toLowerCase();
+	final Collection<UnitName> units = UnitName.findExternalUnit(unitName.replace('%', ' '), Integer.MAX_VALUE);
 	final Set<Unit> result = new HashSet<Unit>();
-	for (final Unit unit : Unit.readAllUnits()) {
-	    if (types.contains(unit.getType()) && unit.getName().toLowerCase().matches(nameToSearch) && !unit.isInternal()) {
+	for (final UnitName un : units) {
+	    final Unit unit = un.getUnit();
+	    if (types.contains(unit.getType())) {
 		result.add(unit);
 	    }
 	}

@@ -3154,7 +3154,6 @@ class DomainObject {
 			YearMonthDay beginDateYearMonthDay;
 			Boolean canBeResponsibleOfSpaces;
 			UnitClassification classification;
-			Integer costCenterCode;
 			YearMonthDay endDateYearMonthDay;						
 		}
 
@@ -3211,6 +3210,10 @@ class DomainObject {
 
 				class organizationalStructure.UniversityUnit extends organizationalStructure.AcademicalInstitutionUnit {
 			}
+
+	class organizationalStructure.UnitCostCenterCode extends DomainObject {
+		Integer costCenterCode;
+	}
 
 	class organizationalStructure.UnitName extends DomainObject {
 		Boolean isExternalUnit;
@@ -13699,4 +13702,16 @@ relation PartialRegimeInstallmentExecutionSemester {
 	ExecutionSemester playsRole executionSemesters {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectUnitCostCenterCode {
+	RootDomainObject playsRole rootDomainObject;
+	organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCodes {
+		multiplicity *;
+	}
+}
+
+relation UnitUnitCostCenterCode {
+	organizationalStructure.Unit playsRole unit;
+	organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCode;
 }

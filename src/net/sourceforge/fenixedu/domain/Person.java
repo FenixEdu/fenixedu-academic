@@ -1551,24 +1551,19 @@ public class Person extends Person_Base {
 	return allPersons;
     }
 
-    public static List<Person> readAllExternalPersons() {
-	List<Person> allPersons = new ArrayList<Person>();
-	for (Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party.isPerson() && ((Person) party).hasExternalContract()) {
-		allPersons.add((Person) party);
-	    }
-	}
-	return allPersons;
-    }
-
     public static List<Person> readPersonsByRoleType(RoleType roleType) {
 	return new ArrayList<Person>(Role.getRoleByRoleType(roleType).getAssociatedPersonsSet());
     }
 
-    public static List<Person> readPersonsByNameAndRoleType(final String name, RoleType roleType) {
-	Set<Person> filteredPersons = new HashSet<Person>(readPersonsByRoleType(roleType));
-	filteredPersons.retainAll(Person.findInternalPerson(name));
-	return new ArrayList<Person>(filteredPersons);
+    public static Collection<Person> readPersonsByNameAndRoleType(final String name, RoleType roleType) {
+	final Collection<Person> people = findPerson(name);
+	for (final Iterator<Person> iter = people.iterator(); iter.hasNext(); ) {
+	    final Person person = iter.next();
+	    if (!person.hasRole(roleType)) {
+		iter.remove();
+	    }
+	}
+	return people;
     }
 
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {

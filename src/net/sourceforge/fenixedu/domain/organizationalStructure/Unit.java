@@ -146,13 +146,24 @@ public class Unit extends Unit_Base {
 	super.setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces != null ? canBeResponsibleOfSpaces : Boolean.FALSE);
     }
 
-    @Override
     public void setCostCenterCode(Integer costCenterCode) {
-	Unit unit = readByCostCenterCode(costCenterCode);
-	if (unit != null && !unit.equals(this)) {
+	final UnitCostCenterCode otherUnitCostCenterCode = UnitCostCenterCode.find(costCenterCode);
+	if (otherUnitCostCenterCode != null && otherUnitCostCenterCode.getUnit() != this) {
 	    throw new DomainException("error.costCenter.alreadyExists");
 	}
-	super.setCostCenterCode(costCenterCode);
+	final UnitCostCenterCode unitCostCenterCode = getUnitCostCenterCode();
+	if (unitCostCenterCode == null && costCenterCode != null) {
+	    new UnitCostCenterCode(this, costCenterCode);
+	} else if (unitCostCenterCode != null && costCenterCode != null) {
+	    unitCostCenterCode.setCostCenterCode(costCenterCode);
+	} else if (unitCostCenterCode != null && costCenterCode == null) {
+	    unitCostCenterCode.delete();
+	}
+    }
+
+    public Integer getCostCenterCode() {
+	final UnitCostCenterCode unitCostCenterCode = getUnitCostCenterCode();
+	return unitCostCenterCode == null ? null : unitCostCenterCode.getCostCenterCode();
     }
 
     @jvstm.cps.ConsistencyPredicate
@@ -785,15 +796,8 @@ public class Unit extends Unit_Base {
     }
 
     public static Unit readByCostCenterCode(Integer costCenterCode) {
-	if (costCenterCode != null) {
-	    for (Party party : RootDomainObject.getInstance().getPartys()) {
-		if (party.isUnit() && ((Unit) party).getCostCenterCode() != null
-			&& ((Unit) party).getCostCenterCode().equals(costCenterCode)) {
-		    return (Unit) party;
-		}
-	    }
-	}
-	return null;
+	final UnitCostCenterCode unitCostCenterCode = UnitCostCenterCode.find(costCenterCode);
+	return unitCostCenterCode == null ? null : unitCostCenterCode.getUnit();
     }
 
     public Collection<Unit> getParentUnitsByOrganizationalStructureAccountabilityType() {
@@ -1624,10 +1628,10 @@ public class Unit extends Unit_Base {
 	    return null;
 	}
 
-	for (final Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party.isUnit() && party.getClass().equals(clazz)
-		    && unitNormalizedName.equalsIgnoreCase(StringNormalizer.normalize(party.getName()))) {
-		return (Unit) party;
+	for (final UnitName unitName : UnitName.find(unitNormalizedName, Integer.MAX_VALUE)) {
+	    final Unit unit = unitName.getUnit();
+	    if (unit.getClass().equals(clazz)) {
+		return unit;
 	    }
 	}
 	return null;
