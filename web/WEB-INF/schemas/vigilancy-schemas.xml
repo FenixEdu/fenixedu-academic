@@ -119,7 +119,7 @@
         <slot name="selectedVigilantGroup" key="label.vigilancy.vigilantGroup" layout="menu-select-postback">
         	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsForPoints" />
             <property name="format" value="${name} - ${executionYear.year}"/>
-            <property name="sortBy" value="executionYear.year"/>
+            <property name="sortBy" value="executionYear.year=desc"/>
         </slot>
 </schema>
 
