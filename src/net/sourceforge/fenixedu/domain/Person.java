@@ -1505,10 +1505,18 @@ public class Person extends Person_Base {
 
     // used by grant owner
     public static List<Person> readPersonsByName(final String name, final Integer startIndex, final Integer numberOfElementsInSpan) {
-	final List<Person> personsList = readPersonsByName(name, Integer.MAX_VALUE);
+	final Collection<Person> personsList = readPersonsByName(name, Integer.MAX_VALUE);
 	if (startIndex != null && numberOfElementsInSpan != null && !personsList.isEmpty()) {
 	    int finalIndex = Math.min(personsList.size(), startIndex + numberOfElementsInSpan);
-	    return personsList.subList(startIndex, finalIndex);
+	    final List<Person> result = new ArrayList<Person>(finalIndex - startIndex);
+	    final Iterator<Person> iter = personsList.iterator();
+	    for (int i = 0; i < finalIndex && iter.hasNext(); i++) {
+		final Person person = iter.next();
+		if (i > startIndex) {
+		    result.add(person);
+		}
+	    }
+	    return result;
 	}
 	return Collections.EMPTY_LIST;
     }
@@ -1517,31 +1525,20 @@ public class Person extends Person_Base {
 	return readPersonsByName(name, Integer.MAX_VALUE).size();
     }
 
-    public static List<Person> readPersonsByName(final String name, final int size) {
-	final List<Person> result = new ArrayList<Person>();
-	if (name != null) {
-	    final String nameToMatch = name.replaceAll("%", "").toLowerCase();
-	    for (PersonName personName : PersonName.find(nameToMatch, size)) {
-		result.add(personName.getPerson());
-	    }
-	}
-	return result;
+    public static Collection<Person> readPersonsByName(final String name, final int size) {
+	return findPerson(name.replace('%', ' '), size);
     }
 
-    public static List<Person> readPersonsByName(final String name) {
-	final List<Person> result = new ArrayList<Person>();
-	if (name != null) {
-	    final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
-	    for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
-		if (party.isPerson()) {
-		    final Person person = (Person) party;
-		    if (person.getName().toLowerCase().matches(nameToMatch)) {
-			result.add(person);
-		    }
-		}
-	    }
+    public static Collection<Person> findPerson(final String name, final int size) {
+	final Collection<Person> people = new ArrayList<Person>();
+	for (final PersonName personName : PersonName.findPerson(name, size)) {
+	    people.add(personName.getPerson());
 	}
-	return result;
+	return people;
+    }
+
+    public static Collection<Person> readPersonsByName(final String name) {
+	return findPerson(name.replace('%', ' '));
     }
 
     public static List<Person> readAllPersons() {
