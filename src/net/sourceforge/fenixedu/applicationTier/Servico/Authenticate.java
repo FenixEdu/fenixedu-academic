@@ -222,6 +222,7 @@ public class Authenticate extends FenixService implements Serializable {
 
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
 	if (person == null) {
+	    System.out.println("Attempted login of non-existent user: " + username);
 	    throw new ExcepcaoAutenticacao("error.Exception");
 	}
 
