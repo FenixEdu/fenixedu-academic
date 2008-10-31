@@ -101,6 +101,8 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
 		return true;
 	    if (reader.hasRole(RoleType.ALUMNI).booleanValue() && contact.getVisibleToAlumni().booleanValue())
 		return true;
+	    if (contact.getVisibleToPublic())
+		return true;
 	}
 	return false;
     }
