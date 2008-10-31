@@ -77,6 +77,11 @@
 			</html:link>
 		</li>
 		<li>
+			<html:link page="/sendEmailToStudents.do?method=prepare">
+				<bean:message key="link.sendEmailToStudents" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
+		<li>
 			<html:link page="/delegatesManagement.do?method=prepare">
 				<bean:message key="link.delegatesManagement" bundle="PEDAGOGICAL_COUNCIL"/>
 			</html:link>

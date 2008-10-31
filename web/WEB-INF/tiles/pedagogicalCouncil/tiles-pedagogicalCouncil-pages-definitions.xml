@@ -55,6 +55,10 @@
        <put name="body" value="/pedagogicalCouncil/elections/showCandidacyPeriods.jsp"/>  
     </definition>
     
+	<definition name="showDegrees" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/sendEmailToStudents.jsp"/>  
+    </definition>
+    
     <definition name="showVotingPeriods" extends="pedagogicalCouncil.masterPage">
        <put name="body" value="/pedagogicalCouncil/elections/showVotingPeriods.jsp"/>  
     </definition>
@@ -94,7 +98,7 @@
     <definition name="evaluationMethodControl" extends="pedagogicalCouncil.masterPage">
        <put name="body" value="/pedagogicalCouncil/control/evaluationMethodControl.jsp"/>  
     </definition>
-
+    
      <definition name="df.page.send.email.redirect" extends="pedagogicalCouncil.masterPage">
         <put name="body" value="/email/sendEmailRedirect.jsp"/>
     </definition>

@@ -68,4 +68,9 @@ public class Recipient extends Recipient_Base {
 	super.setToName(toName);
     }
 
+    @Service
+    public static Recipient createNewRecipient(final String toName, final Group members) {
+	return new Recipient(toName, members);
+    }
+
 }

@@ -105,6 +105,15 @@
 			 <forward name="showVotingResults" path="showVotingResults"/>
 			 <forward name="showPossibleDelegates" path="showPossibleDelegates"/>
 		 </action>
+		 
+		 <action path="/sendEmailToStudents"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.SendEmailToStudents">
+			 <forward name="showDegrees" path="showDegrees"/>
+			 <forward name="sendEmail" path="/messaging/newEmail.jsp" />
+		 </action>
+		 
 
 		 <action path="/createElectionsPeriods"
 		  scope="request" 

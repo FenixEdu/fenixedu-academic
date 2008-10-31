@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.accessControl.TeachersAndInstitutionSiteM
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsByDegreeAndCurricularYear;
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTypeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException;
@@ -208,6 +209,8 @@ public class GroupBuilderRegistry {
 	register("allEmployeesByCampus", AllEmployeesByCampus.class, new AllEmployeesByCampus.Builder());
 	register("studentsFromDegreeType", StudentsFromDegreeTypeGroup.class, new StudentsFromDegreeTypeGroup.Builder());
 	register("delegates", DelegatesGroup.class, new DelegatesGroup.Builder());
+	register("studentsByDegreeAndCurricularYear", StudentsByDegreeAndCurricularYear.class,
+		new StudentsByDegreeAndCurricularYear.Builder());
 
 	registerGroupsWithNoArguments();
     }

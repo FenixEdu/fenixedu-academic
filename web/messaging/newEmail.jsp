@@ -8,7 +8,8 @@
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.send.mail"/></h2>
 <br/>
 
-<fr:form action="/emails.do?method=sendEmail">
+<form action="<%= request.getContextPath() + "/messaging/emails.do" %>" method="post">
+	<html:hidden property="method" value="sendEmail"/>
 
 	<fr:edit id="emailBean" name="emailBean" schema="net.sourceforge.fenixedu.domain.util.email.EmailBean.Create">
 		<fr:layout name="tabular">
@@ -16,10 +17,7 @@
 		</fr:layout>
 
 		<fr:destination name="selectSender" path="/emails.do?method=newEmail"/>
+		<fr:destination name="cancel" path="/index.do"/>
 	</fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='moveEnrolments';">
-		<bean:message bundle="MANAGER_RESOURCES" key="button.send" />
-	</html:submit>
-
-</fr:form>
+</form>
