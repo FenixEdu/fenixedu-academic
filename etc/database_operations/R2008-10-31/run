@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create EmailSender extentions." updates.sql
