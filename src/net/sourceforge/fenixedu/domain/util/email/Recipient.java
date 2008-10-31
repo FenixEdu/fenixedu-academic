@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
+import java.util.Comparator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -8,6 +9,16 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class Recipient extends Recipient_Base {
+
+    public static final Comparator<Recipient> COMPARATOR_BY_NAME = new Comparator<Recipient>() {
+
+	@Override
+	public int compare(Recipient r1, Recipient r2) {
+	    final int c = r1.getToName().compareTo(r2.getToName());
+	    return c == 0 ? COMPARATOR_BY_ID.compare(r1, r2) : c;
+	}
+	
+    };
 
     public Recipient() {
 	super();
