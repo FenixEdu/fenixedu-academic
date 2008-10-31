@@ -8,10 +8,6 @@
 		<put name="body" value="/pedagogicalCouncil/weeklyWorkLoad.jsp" />
 	</definition>
 	
-    <definition name="pedagogical.communication.sendMail" extends="pedagogicalCouncil.masterPage">
-       <put name="body" value="/pedagogicalCouncil/communication/sendEmail.jsp"/>
-    </definition>
-	
     <definition name="pedagogicalCouncil.communication" extends="pedagogicalCouncil.masterPage">
     	<put name="body-context" value="/pedagogicalCouncil/communication/context.jsp"/>
     </definition>

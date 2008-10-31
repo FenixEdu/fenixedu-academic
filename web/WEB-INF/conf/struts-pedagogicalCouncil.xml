@@ -70,13 +70,6 @@
 
 		<action path="/sendEmailRedirect" forward="df.page.send.email.redirect"/>
 
-  		<action path="/sendEmail" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.SendEmailDA"
-  		        parameter="method">
-			<forward name="compose-mail" path="pedagogical.communication.sendMail"/>
-       		<forward name="success" path="pedagogical.communication.sendMail"/>
-   	    	<forward name="problem" path="pedagogical.communication.sendMail"/>
- 	    </action>
-
 		<action path="/pedagogicalCouncilFiles"
 		  scope="request" 
 		  parameter="method"

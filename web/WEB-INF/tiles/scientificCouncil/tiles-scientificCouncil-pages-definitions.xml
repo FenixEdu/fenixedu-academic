@@ -243,10 +243,6 @@
         <put name="body" value="/protocols/viewProtocolDetails.jsp"/>
     </definition> 
     
-    <definition name="scientific.communication.sendMail" extends="scientificCouncil.masterPage">
-       <put name="body" value="/scientificCouncil/communication/sendEmail.jsp"/>
-    </definition>
-	
     <definition name="scientificCouncil.communication" extends="scientificCouncil.masterPage">
     	<put name="body-context" value="/scientificCouncil/communication/context.jsp"/>
     </definition>
