@@ -295,5 +295,9 @@
     <definition name="list-versions-requests" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/bolonha/listVersions.jsp"/>
     </definition>     
-    
+
+     <definition name="df.page.send.email.redirect" extends="scientificCouncil.masterPage">
+        <put name="body" value="/email/sendEmailRedirect.jsp"/>
+    </definition>
+
 </tiles-definitions>

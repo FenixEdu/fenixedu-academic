@@ -98,5 +98,9 @@
     <definition name="evaluationMethodControl" extends="pedagogicalCouncil.masterPage">
        <put name="body" value="/pedagogicalCouncil/control/evaluationMethodControl.jsp"/>  
     </definition>
-    
+
+     <definition name="df.page.send.email.redirect" extends="pedagogicalCouncil.masterPage">
+        <put name="body" value="/email/sendEmailRedirect.jsp"/>
+    </definition>
+
 </tiles-definitions>

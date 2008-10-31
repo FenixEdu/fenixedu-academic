@@ -4726,6 +4726,9 @@ class DomainObject {
 		Group members;
 	}
 
+		class util.email.UnitBasedSender extends util.email.Sender {
+		}
+
 	class util.FunctionalityPrinters extends DomainObject {
 		String functionality;
 		String keyPrinters;
@@ -13714,4 +13717,11 @@ relation RootDomainObjectUnitCostCenterCode {
 relation UnitUnitCostCenterCode {
 	organizationalStructure.Unit playsRole unit;
 	organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCode;
+}
+
+relation UnitUnitBasedSender {
+	organizationalStructure.Unit playsRole unit;
+	util.email.UnitBasedSender playsRole unitBasedSender {
+		multiplicity *;
+	}
 }

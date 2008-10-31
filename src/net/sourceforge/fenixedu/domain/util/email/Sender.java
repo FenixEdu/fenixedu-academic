@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.security.UserView;
 
 public class Sender extends Sender_Base {
@@ -28,7 +29,6 @@ public class Sender extends Sender_Base {
 
     public Sender(final String fromName, final String fromAddress, final Group members) {
 	this();
-	setRootDomainObject(RootDomainObject.getInstance());
 	setFromName(fromName);
 	setFromAddress(fromAddress);
 	setMembers(members);
@@ -54,7 +54,7 @@ public class Sender extends Sender_Base {
 
 	final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
 	for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
-	    if (sender.getMembers().allows(userView)) {
+	    if (sender.getMembers().allows(userView) || (userView != null && userView.hasRoleType(RoleType.MANAGER))) {
 		senders.add(sender);
 	    }
 	}

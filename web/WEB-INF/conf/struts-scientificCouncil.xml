@@ -547,12 +547,7 @@
 		   <forward name="view-protocol" path="view-protocol"/> 	       
 	    </action>
 
-  		<action path="/sendEmail" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.SendEmailDA"
-  		        parameter="method">
-			<forward name="compose-mail" path="scientific.communication.sendMail"/>
-       		<forward name="success" path="scientific.communication.sendMail"/>
-   	    	<forward name="problem" path="scientific.communication.sendMail"/>
- 	    </action>
+		<action path="/sendEmail" forward="df.page.send.email.redirect"/>
 
 		<action path="/scientificCouncilFiles"
 		  scope="request" 

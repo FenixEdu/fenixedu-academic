@@ -36,7 +36,7 @@
 		</li>
 		<bean:define id="unitId" name="unit" property="idInternal"/>
 		<li>
-			<html:link page="<%= "/sendEmail.do?method=prepare&unitId=" + unitId %>">
+			<html:link page="<%= "/sendEmailRedirect.do?method=prepare&unitId=" + unitId %>">
 				<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 			</html:link>
 		</li>	

@@ -21,6 +21,7 @@ public class Recipient extends Recipient_Base {
 	setMembers(members);
     }
 
+    @Service
     public void delete() {
 	for (final Sender sender : getSendersSet()) {
 	    removeSenders(sender);
