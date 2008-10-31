@@ -27,6 +27,11 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 
     public AssiduousnessStatusHistory(Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus, LocalDate beginDate,
 	    LocalDate endDate, Employee modifiedBy) {
+	if (endDate != null) {
+	    if (!endDate.isAfter(beginDate)) {
+		throw new DomainException("error.invalidDateInterval");
+	    }
+	}
 	AssiduousnessStatusHistory lastAssiduousnessStatusHistory = assiduousness.getLastAssiduousnessStatusHistory();
 	if (lastAssiduousnessStatusHistory != null) {
 	    if (lastAssiduousnessStatusHistory.getAssiduousnessStatus().equals(assiduousnessStatus)) {

@@ -480,9 +480,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	AssiduousnessStatusHistory assiduousnessStatusHistory = (AssiduousnessStatusHistory) rootDomainObject
 		.readAssiduousnessStatusHistoryByOID(new Integer(getFromRequest(request, "idInternal").toString()));
+	request.setAttribute("employee", assiduousnessStatusHistory.getAssiduousness().getEmployee());
 	ServiceUtils.executeService("DeleteAssiduousnessStatusHistory", new Object[] { assiduousnessStatusHistory });
 	request.setAttribute("yearMonth", getYearMonth(request, null));
-	request.setAttribute("employee", assiduousnessStatusHistory.getAssiduousness().getEmployee());
 	return mapping.findForward("show-status");
     }
 
