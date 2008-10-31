@@ -28,10 +28,11 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     public StudentReingressionRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
-	super.init(bean);
 
 	checkParameters(bean);
 	checkRulesToCreate(bean);
+
+	super.init(bean);
     }
 
     private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {

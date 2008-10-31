@@ -266,7 +266,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     protected void deleteInformation() {
-	// TODO: falta ver se é dos antigos enrolments ou dos novos
+
+	final Iterator<Thesis> theses = getThesesIterator();
+	while (theses.hasNext()) {
+	    theses.next().delete();
+	}
+
 	final Registration registration = getRegistration();
 
 	removeExecutionPeriod();
@@ -318,11 +323,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    CreditsInScientificArea credits = creditsInScientificAreaIterator.next();
 	    creditsInScientificAreaIterator.remove();
 	    credits.delete();
-	}
-
-	Iterator<Thesis> theses = getThesesIterator();
-	while (theses.hasNext()) {
-	    theses.next().delete();
 	}
     }
 
