@@ -6,6 +6,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -13,7 +14,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class VariantBean implements Serializable {
 
     public static enum Type {
-	INTEGER, STRING, DATE, MULTI_LANGUAGE_STRING, DOMAIN_REFERENCE, YEAR_MONTH_DAY
+	INTEGER, STRING, DATE, MULTI_LANGUAGE_STRING, DOMAIN_REFERENCE, YEAR_MONTH_DAY, LOCAL_DATE
     };
 
     /**
@@ -89,4 +90,14 @@ public class VariantBean implements Serializable {
     public YearMonthDay getYearMonthDay() {
 	return Type.YEAR_MONTH_DAY.equals(getType()) ? (YearMonthDay) this.value : null;
     }
+
+    public void setLocalDate(LocalDate date) {
+	this.value = date;
+	setType(Type.LOCAL_DATE);
+    }
+
+    public LocalDate getLocalDate() {
+	return Type.LOCAL_DATE.equals(getType()) ? (LocalDate) this.value : null;
+    }
+
 }
