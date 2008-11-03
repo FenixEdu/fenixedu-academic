@@ -329,6 +329,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getSituationByType(AcademicServiceRequestSituationType.NEW);
     }
 
+    final public AcademicServiceRequestSituation getConclusionSituation() {
+	return getSituationByType(AcademicServiceRequestSituationType.CONCLUDED);
+    }
+
     final public AcademicServiceRequestSituation getSituationByType(final AcademicServiceRequestSituationType type) {
 	for (final AcademicServiceRequestSituation situation : getAcademicServiceRequestSituationsSet()) {
 	    if (situation.getAcademicServiceRequestSituationType().equals(type)) {
@@ -547,6 +551,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     @Override
     final public DateTime getCreationDate() {
 	return getCreationSituation().getCreationDate();
+    }
+
+    final public DateTime getRequestConclusionDate() {
+	AcademicServiceRequestSituation conclusionSituation = getConclusionSituation();
+	return conclusionSituation != null ? conclusionSituation.getCreationDate() : null;
     }
 
     public boolean isAvailableForEmployeeToActUpon() {
