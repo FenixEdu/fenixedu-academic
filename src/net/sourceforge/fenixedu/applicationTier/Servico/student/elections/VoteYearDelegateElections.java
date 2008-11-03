@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.elections;
 
 import java.util.Collections;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -10,21 +11,25 @@ import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.Email;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class VoteYearDelegateElections extends FenixService {
 
     public void run(YearDelegateElection yearDelegateElection, Student student, Student votedStudent)
 	    throws FenixServiceException {
 
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.DelegateResources", Language.getLocale());
 	try {
 	    if (!yearDelegateElection.getVotingStudents().contains(student)) {
-		final String msg = "A sua votação para a eleição de Delegado de Ano encontra-se registada. Obrigado pela sua participação.";
+		final String fromName = bundle.getString("VoteYearDelegateElections.email.fromName");
+		final String fromAddress = bundle.getString("VoteYearDelegateElections.email.fromAddrees");
+		final String subject = bundle.getString("VoteYearDelegateElections.email.subject");
+		final String msg = bundle.getString("VoteYearDelegateElections.email.message");
 		final Person person = student.getPerson();
 		DelegateElectionVote vote = new DelegateElectionVote(yearDelegateElection, votedStudent);
 		yearDelegateElection.addVotingStudents(student);
 		yearDelegateElection.addVotes(vote);
-		new Email("Comissão Eleitoral de Delegados de Ano", "ce-delegados-ano@mlists.ist.utl.pt", null, Collections
-			.singletonList(person.getEmail()), null, null, "Eleição de Delegado de Ano", msg);
+		new Email(fromName, fromAddress, null, Collections.singletonList(person.getEmail()), null, null, subject, msg);
 	    } else {
 		throw new FenixServiceException("error.student.elections.voting.studentAlreadyVoted");
 	    }
