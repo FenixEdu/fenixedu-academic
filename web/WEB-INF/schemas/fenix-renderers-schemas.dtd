@@ -104,6 +104,7 @@
 	default CDATA #IMPLIED
 	read-only NMTOKEN #IMPLIED
 	hidden NMTOKEN #IMPLIED
+	help NMTOKEN #IMPLIED
 >
 
 <!--
