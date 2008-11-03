@@ -72,7 +72,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    }
 	    registrationSelectExecutionYearBean.setExecutionYear(executionYear);
 	    request.setAttribute("registrationSelectExecutionYearBean", registrationSelectExecutionYearBean);
-	    List<ExecutionCourse> studentExecutionCoursesList = (List<ExecutionCourse>) ServiceUtils.executeService(
+	    Set<ExecutionCourse> studentExecutionCoursesList = (Set<ExecutionCourse>) ServiceUtils.executeService(
 		    "ReadExecutionCoursesByStudentTests", new Object[] { student, executionYear });
 	    request.setAttribute("studentExecutionCoursesList", studentExecutionCoursesList);
 	} catch (FenixServiceException e) {

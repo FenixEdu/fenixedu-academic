@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class ReadExecutionCoursesByStudentTests extends FenixService {
 
-    public List<ExecutionCourse> run(final Student student, final ExecutionYear executionYear) {
-	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+    public Set<ExecutionCourse> run(final Student student, final ExecutionYear executionYear) {
+	final Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
 	for (final Registration registration : student.getRegistrationsSet()) {
 	    for (Attends attend : registration.getAssociatedAttendsSet()) {
 		final ExecutionCourse executionCourse = attend.getExecutionCourse();
