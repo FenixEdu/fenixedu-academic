@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -28,6 +30,8 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     }
 
     final private String getApprovementsInfo() {
+	final ApprovementCertificateRequest request = (ApprovementCertificateRequest) getDocumentRequest();
+
 	final StringBuilder result = new StringBuilder();
 
 	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(
@@ -36,27 +40,27 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	final Registration registration = getRegistration();
 	final Map<Unit, String> academicUnitIdentifiers = new HashMap<Unit, String>();
 	if (registration.isBolonha()) {
-	    reportCycles(result, entries, academicUnitIdentifiers, registration);
+	    reportCycles(result, entries, academicUnitIdentifiers);
 	} else {
-	    reportEntries(result, ApprovementCertificateRequest.filterEntries(entries, registration.getCurriculum()
-		    .getCurriculumEntries()), academicUnitIdentifiers);
+	    final ICurriculum curriculum = registration.getCurriculum(request.getFilteringDate());
+	    ApprovementCertificateRequest.filterEntries(entries, curriculum);
+	    reportEntries(result, entries, academicUnitIdentifiers);
 	}
 
-	final ApprovementCertificateRequest approvementCertificateRequest = (ApprovementCertificateRequest) getDocumentRequest();
 	entries.clear();
-	entries.addAll(approvementCertificateRequest.getExtraCurricularEntriesToReport());
+	entries.addAll(request.getExtraCurricularEntriesToReport());
 	if (!entries.isEmpty()) {
 	    reportRemainingEntries(result, entries, academicUnitIdentifiers, "Extra-Curriculares");
 	}
 
 	entries.clear();
-	entries.addAll(approvementCertificateRequest.getPropaedeuticEntriesToReport());
+	entries.addAll(request.getPropaedeuticEntriesToReport());
 	if (!entries.isEmpty()) {
 	    reportRemainingEntries(result, entries, academicUnitIdentifiers, "Propedêuticas");
 	}
 
 	if (getDocumentRequest().isToShowCredits()) {
-	    result.append(getRemainingCreditsInfo(approvementCertificateRequest.getCurriculum()));
+	    result.append(getRemainingCreditsInfo(request.getRegistration().getCurriculum()));
 	}
 
 	result.append(generateEndLine());
@@ -89,10 +93,10 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     }
 
     final private void reportCycles(final StringBuilder result, final SortedSet<ICurriculumEntry> entries,
-	    final Map<Unit, String> academicUnitIdentifiers, final Registration registration) {
+	    final Map<Unit, String> academicUnitIdentifiers) {
 	final Collection<CycleCurriculumGroup> cycles = new TreeSet<CycleCurriculumGroup>(
 		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
-	cycles.addAll(registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
+	cycles.addAll(getRegistration().getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
 
 	CycleCurriculumGroup lastReported = null;
 	for (final CycleCurriculumGroup cycle : cycles) {
@@ -105,8 +109,10 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
 		result.append(getMLSTextContent(cycle.getName())).append(":").append(LINE_BREAK);
 
-		reportEntries(result, ApprovementCertificateRequest.filterEntries(entries, cycle.getCurriculum()
-			.getCurriculumEntries()), academicUnitIdentifiers);
+		final ApprovementCertificateRequest request = ((ApprovementCertificateRequest) getDocumentRequest());
+		final Curriculum curriculum = cycle.getCurriculum(request.getFilteringDate());
+		ApprovementCertificateRequest.filterEntries(entries, curriculum);
+		reportEntries(result, entries, academicUnitIdentifiers);
 
 		entries.clear();
 	    }

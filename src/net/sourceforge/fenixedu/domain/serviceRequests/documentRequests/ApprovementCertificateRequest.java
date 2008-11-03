@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
+import org.joda.time.DateTime;
+
 public class ApprovementCertificateRequest extends ApprovementCertificateRequest_Base {
 
     protected ApprovementCertificateRequest() {
@@ -103,31 +105,39 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	throw new DomainException("error.ApprovementCertificateRequest.cannot.modify.numberOfUnits");
     }
 
-    final public ICurriculum getCurriculum() {
-	return getRegistration().getCurriculum();
+    @Override
+    public boolean isToPrint() {
+	final Integer units = super.getNumberOfUnits();
+	return !hasConcluded() || (units != null && units.intValue() == calculateNumberOfUnits());
     }
 
     final private Collection<ICurriculumEntry> getEntriesToReport() {
 	final HashSet<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
 	final Registration registration = getRegistration();
+	ICurriculum curriculum;
 	if (registration.isBolonha()) {
 	    for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
 		if (cycle.hasAnyApprovedCurriculumLines() && !cycle.isConclusionProcessed()) {
-		    filterEntries(result, cycle.getCurriculum().getCurriculumEntries());
+		    curriculum = cycle.getCurriculum(getFilteringDate());
+		    filterEntries(result, curriculum);
 		}
 	    }
-
-	    return result;
 	} else {
-	    return filterEntries(result, getCurriculum().getCurriculumEntries());
+	    curriculum = getRegistration().getCurriculum(getFilteringDate());
+	    filterEntries(result, curriculum);
 	}
+
+	return result;
     }
 
-    static final public Collection<ICurriculumEntry> filterEntries(final Collection<ICurriculumEntry> result,
-	    final Collection<ICurriculumEntry> entries) {
+    public DateTime getFilteringDate() {
+	return hasConcluded() ? getRequestConclusionDate() : new DateTime();
+    }
 
-	for (final ICurriculumEntry entry : entries) {
+    static final public void filterEntries(final Collection<ICurriculumEntry> result, final ICurriculum curriculum) {
+
+	for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
 		if (dismissal.getCredits().isEquivalence()
@@ -143,8 +153,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	    result.add(entry);
 	}
-
-	return result;
     }
 
     final public Collection<ICurriculumEntry> getExtraCurricularEntriesToReport() {
@@ -161,7 +169,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	}
 
 	for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan().getExternalCurriculumGroups()) {
-	    result.addAll(filterEntries(result, group.getCurriculumInAdvance().getCurriculumEntries()));
+	    filterEntries(result, group.getCurriculumInAdvance(getFilteringDate()));
 	}
 
 	return result;
