@@ -39,6 +39,10 @@ public class InfoDegree extends InfoObject implements Comparable {
 	return showEnVersion && !StringUtils.isEmpty(getNameEn()) ? getNameEn() : getDegree().getNome();
     }
 
+    public String getPresentationName() {
+	return getDegree().getPresentationName();
+    }
+
     public String getNameEn() {
 	return getDegree().getNameEn();
     }
