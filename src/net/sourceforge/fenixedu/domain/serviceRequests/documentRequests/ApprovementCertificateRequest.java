@@ -67,6 +67,10 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 		}
 	    }
 	}
+
+	if (academicServiceRequestBean.isToConclude()) {
+	    super.setNumberOfUnits(calculateNumberOfUnits());
+	}
     }
 
     @Override
@@ -86,7 +90,17 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     final public Integer getNumberOfUnits() {
+	final Integer res = super.getNumberOfUnits();
+	return res == null ? calculateNumberOfUnits() : res;
+    }
+
+    private int calculateNumberOfUnits() {
 	return getEntriesToReport().size() + getExtraCurricularEntriesToReport().size() + getPropaedeuticEntriesToReport().size();
+    }
+
+    @Override
+    final public void setNumberOfUnits(final Integer numberOfUnits) {
+	throw new DomainException("error.ApprovementCertificateRequest.cannot.modify.numberOfUnits");
     }
 
     final public ICurriculum getCurriculum() {

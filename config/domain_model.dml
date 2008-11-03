@@ -3790,6 +3790,7 @@ class DomainObject {
 	
 					class serviceRequests.documentRequests.ApprovementCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 						MobilityProgram mobilityProgram;
+						Integer numberOfUnits;
 					}
 	
 					class serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
