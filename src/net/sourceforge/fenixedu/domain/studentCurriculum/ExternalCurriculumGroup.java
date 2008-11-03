@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -107,12 +108,16 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+    final public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
 	return Curriculum.createEmpty(this, executionYear);
     }
 
-    public Curriculum getCurriculumInAdvance() {
-	return super.getCurriculum(null);
+    final public Curriculum getCurriculumInAdvance() {
+	return getCurriculum(new DateTime());
+    }
+
+    final public Curriculum getCurriculumInAdvance(final DateTime when) {
+	return super.getCurriculum(when, (ExecutionYear) null);
     }
 
     @Override

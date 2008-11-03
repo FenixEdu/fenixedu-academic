@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -185,7 +186,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     final public BigDecimal getAverage(final ExecutionYear executionYear) {
 	return executionYear == null && isConcluded() && isConclusionProcessed() ? BigDecimal.valueOf(getFinalAverage())
-		: getCurriculum(executionYear).getAverage();
+		: getCurriculum(new DateTime(), executionYear).getAverage();
     }
 
     public boolean hasFinalAverage() {

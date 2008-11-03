@@ -387,12 +387,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return cycleCurriculumGroup != null && cycleCurriculumGroup.isConclusionProcessed();
     }
 
-    final public Curriculum getCurriculum(final ExecutionYear executionYear) {
+    final public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
 	final RootCurriculumGroup rootCurriculumGroup = getRoot();
 	if (rootCurriculumGroup == null) {
 	    return Curriculum.createEmpty(executionYear);
 	} else {
-	    return rootCurriculumGroup.getCurriculum(executionYear);
+	    return rootCurriculumGroup.getCurriculum(when, executionYear);
 	}
     }
 

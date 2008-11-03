@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.DateTime;
 
 /**
  * 
@@ -262,16 +263,19 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
      * 
      */
     @Override
-    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+    public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
 	final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
+	if (!wasCreated(when)) {
+	    return curriculum;
+	}
 
 	final DegreeType degreeType = getDegreeType();
 	if (degreeType.hasAnyCycleTypes()) {
 	    for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGroups()) {
-		curriculum.add(cycleCurriculumGroup.getCurriculum(executionYear));
+		curriculum.add(cycleCurriculumGroup.getCurriculum(when, executionYear));
 	    }
 	} else {
-	    curriculum.add(super.getCurriculum(executionYear));
+	    curriculum.add(super.getCurriculum(when, executionYear));
 	}
 
 	return curriculum;

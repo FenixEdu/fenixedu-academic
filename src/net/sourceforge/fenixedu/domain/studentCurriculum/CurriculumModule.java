@@ -236,8 +236,27 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	return getLastApprovement().getExecutionYear();
     }
 
-    public Curriculum getCurriculum() {
-	return getCurriculum(null);
+    protected boolean wasCreated(final DateTime when) {
+	boolean res = (getCreationDateDateTime() == null || getCreationDateDateTime().isBefore(when));
+
+	if (!res) {
+	    System.out.println("DESCARTEI\t" + getClass().getSimpleName() + "\t" + getCreationDateDateTime() + "\t"
+		    + getName().getPreferedContent());
+	}
+
+	return res;
+    }
+
+    final public Curriculum getCurriculum() {
+	return getCurriculum(new DateTime(), (ExecutionYear) null);
+    }
+
+    final public Curriculum getCurriculum(final DateTime when) {
+	return wasCreated(when) ? getCurriculum(when, (ExecutionYear) null) : Curriculum.createEmpty(this, (ExecutionYear) null);
+    }
+
+    final public Curriculum getCurriculum(final ExecutionYear executionYear) {
+	return getCurriculum(new DateTime(), executionYear);
     }
 
     public BigDecimal calculateAverage() {
@@ -298,7 +317,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     public abstract YearMonthDay calculateConclusionDate();
 
-    abstract public Curriculum getCurriculum(final ExecutionYear executionYear);
+    abstract public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear);
 
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
 

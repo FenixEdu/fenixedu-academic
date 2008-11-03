@@ -215,7 +215,7 @@ public class Registration extends Registration_Base {
 		    registrations.remove(this);
 		    registration = registrations.size() == 1 ? registrations.iterator().next() : null;
 		}
-		
+
 		setSourceRegistration(registration);
 	    }
 	}
@@ -557,18 +557,26 @@ public class Registration extends Registration_Base {
     }
 
     final public ICurriculum getCurriculum() {
-	return getCurriculum((ExecutionYear) null, (CycleType) null);
+	return getCurriculum(new DateTime(), (ExecutionYear) null, (CycleType) null);
+    }
+
+    final public ICurriculum getCurriculum(final DateTime when) {
+	return getCurriculum(when, (ExecutionYear) null, (CycleType) null);
     }
 
     final public ICurriculum getCurriculum(final ExecutionYear executionYear) {
-	return getCurriculum(executionYear, (CycleType) null);
+	return getCurriculum(new DateTime(), executionYear, (CycleType) null);
     }
 
     final public ICurriculum getCurriculum(final CycleType cycleType) {
-	return getCurriculum((ExecutionYear) null, cycleType);
+	return getCurriculum(new DateTime(), (ExecutionYear) null, cycleType);
     }
 
     final public ICurriculum getCurriculum(final ExecutionYear executionYear, final CycleType cycleType) {
+	return getCurriculum(new DateTime(), executionYear, cycleType);
+    }
+
+    final public ICurriculum getCurriculum(final DateTime when, final ExecutionYear executionYear, final CycleType cycleType) {
 	if (!hasAnyStudentCurricularPlans()) {
 	    return Curriculum.createEmpty(executionYear);
 	}
@@ -580,7 +588,7 @@ public class Registration extends Registration_Base {
 	    }
 
 	    if (cycleType == null) {
-		return studentCurricularPlan.getCurriculum(executionYear);
+		return studentCurricularPlan.getCurriculum(when, executionYear);
 	    }
 
 	    final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(cycleType);
@@ -588,21 +596,20 @@ public class Registration extends Registration_Base {
 		return Curriculum.createEmpty(executionYear);
 	    }
 
-	    return cycleCurriculumGroup.getCurriculum(executionYear);
+	    return cycleCurriculumGroup.getCurriculum(when, executionYear);
 	} else {
-	    final List<StudentCurricularPlan> sortedStudentCurricularPlans = getSortedStudentCurricularPlans();
-	    final ListIterator<StudentCurricularPlan> sortedSCPsIterator = sortedStudentCurricularPlans
-		    .listIterator(sortedStudentCurricularPlans.size());
+	    final List<StudentCurricularPlan> sortedSCPs = getSortedStudentCurricularPlans();
+	    final ListIterator<StudentCurricularPlan> sortedSCPsIterator = sortedSCPs.listIterator(sortedSCPs.size());
 	    final StudentCurricularPlan lastStudentCurricularPlan = sortedSCPsIterator.previous();
 
 	    final ICurriculum curriculum;
 	    if (lastStudentCurricularPlan.isBoxStructure()) {
-		curriculum = lastStudentCurricularPlan.getCurriculum(executionYear);
+		curriculum = lastStudentCurricularPlan.getCurriculum(when, executionYear);
 
 		for (; sortedSCPsIterator.hasPrevious();) {
 		    final StudentCurricularPlan studentCurricularPlan = sortedSCPsIterator.previous();
 		    if (executionYear == null || studentCurricularPlan.getStartExecutionYear().isBeforeOrEquals(executionYear)) {
-			((Curriculum) curriculum).add(studentCurricularPlan.getCurriculum(executionYear));
+			((Curriculum) curriculum).add(studentCurricularPlan.getCurriculum(when, executionYear));
 		    }
 		}
 

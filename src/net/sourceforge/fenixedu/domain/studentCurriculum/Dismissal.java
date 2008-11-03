@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
@@ -256,8 +257,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Curriculum getCurriculum(final ExecutionYear year) {
-	if ((year == null || !hasExecutionPeriod() || getExecutionYear().isBeforeOrEquals(year))) {
+    final public Curriculum getCurriculum(final DateTime when, final ExecutionYear year) {
+	if (wasCreated(when) && (year == null || !hasExecutionPeriod() || getExecutionYear().isBeforeOrEquals(year))) {
 
 	    final Collection<ICurriculumEntry> averageEntries = getAverageEntries(year);
 	    if (!averageEntries.isEmpty() || getCredits().isCredits()) {

@@ -46,7 +46,7 @@ import org.joda.time.YearMonthDay;
 /**
  * @author dcs-rjao
  * 
- *         24/Mar/2003
+ * 24/Mar/2003
  */
 
 public class Enrolment extends Enrolment_Base implements IEnrolment {
@@ -725,11 +725,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Curriculum getCurriculum(final ExecutionYear executionYear) {
-	return (executionYear == null || getExecutionYear().isBefore(executionYear)) && isApproved()
-		&& !getCurriculumGroup().isPropaedeutic() && !getCurriculumGroup().isExtraCurriculum() ? new Curriculum(this,
-		executionYear, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET, Collections
-			.singleton((ICurriculumEntry) this)) : Curriculum.createEmpty(this, executionYear);
+    final public Curriculum getCurriculum(final DateTime when, final ExecutionYear year) {
+	if (wasCreated(when) && (year == null || getExecutionYear().isBefore(year)) && isApproved() && !isPropaedeutic()
+		&& !isExtraCurricular()) {
+	    return new Curriculum(this, year, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET, Collections
+		    .singleton((ICurriculumEntry) this));
+	}
+
+	return Curriculum.createEmpty(this, year);
     }
 
     final public Grade getGrade() {
@@ -1362,8 +1365,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      * ExamDateCertificateRequests)
      * 
      * @param optionalEnrolment
-     * @param curriculumGroup
-     *            : new CurriculumGroup for Enrolment
+     * @param curriculumGroup :
+     *                new CurriculumGroup for Enrolment
      * @return Enrolment
      */
     static Enrolment createBasedOn(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {

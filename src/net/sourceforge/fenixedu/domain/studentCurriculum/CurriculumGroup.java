@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -819,11 +820,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+    public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
 	final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
+	if (!wasCreated(when)) {
+	    return curriculum;
+	}
 
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    curriculum.add(curriculumModule.getCurriculum(executionYear));
+	    curriculum.add(curriculumModule.getCurriculum(when, executionYear));
 	}
 
 	return curriculum;
