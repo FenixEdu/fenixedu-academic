@@ -393,14 +393,12 @@
 			<arg value="${build.home.webinf.libs}/struts.jar" />
 			<arg value="lib/servlet-api-2.3.jar" />
 		</java>
-		<!--
 		<parallel threadsperprocessor="1" threadcount="2">
 			<antcall target="compile-reports" />
 			<sequential>
 				<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code" />
 			</sequential>
 		</parallel>
-		-->
 		<antcall target="post-compile"/>
 	</target>
 
