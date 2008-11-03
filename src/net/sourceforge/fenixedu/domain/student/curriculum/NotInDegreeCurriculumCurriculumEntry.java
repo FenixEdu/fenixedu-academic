@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
 
+import org.joda.time.DateTime;
+
 public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 
     private final DomainReference<Enrolment> enrolmentDomainReference;
@@ -45,6 +47,11 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 
     public Integer getIdInternal() {
 	return getEnrolment().getIdInternal();
+    }
+
+    @Override
+    public DateTime getCreationDateDateTime() {
+	return getEnrolment().getCreationDateDateTime();
     }
 
 }

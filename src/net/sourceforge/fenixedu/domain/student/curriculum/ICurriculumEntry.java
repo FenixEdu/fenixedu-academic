@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -118,5 +119,7 @@ public interface ICurriculumEntry {
     boolean hasExecutionPeriod();
 
     ExecutionYear getExecutionYear();
+
+    DateTime getCreationDateDateTime();
 
 }
