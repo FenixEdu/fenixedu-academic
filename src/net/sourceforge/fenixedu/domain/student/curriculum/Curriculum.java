@@ -306,30 +306,33 @@ public class Curriculum implements Serializable, ICurriculum {
 	result.append("\n[CURRICULUM_MODULE][ID] " + curriculumModule.getIdInternal() + "\t[NAME]"
 		+ curriculumModule.getName().getContent());
 	result.append("\n[SUM ENTRIES] " + (enrolmentRelatedEntries.size() + dismissalRelatedEntries.size()));
-	result.append("\n[SUM PiCi] " + sumPiCi.toString());
-	result.append("\n[SUM Pi] " + sumPi.toString());
-	result.append("\n[AVERAGE] " + average);
-	result.append("\n[SUM ECTS CREDITS] " + sumEctsCredits.toString());
-	result.append("\n[CURRICULAR YEAR] " + curricularYear);
+	result.append("\n[SUM PiCi] " + getSumPiCi().toString());
+	result.append("\n[SUM Pi] " + getSumPi().toString());
+	result.append("\n[AVERAGE] " + getAverage());
+	result.append("\n[SUM ECTS CREDITS] " + getSumEctsCredits().toString());
+	result.append("\n[CURRICULAR YEAR] " + getCurricularYear());
 
 	result.append("\n[ENTRIES]");
 	for (final ICurriculumEntry entry : enrolmentRelatedEntries) {
-	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[GRADE] " + entry.getGrade().getNumericValue()
-		    + "\t[WEIGHT] " + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum()
-		    + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
+	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
+		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] "
+		    + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] "
+		    + entry.getClass().getSimpleName());
 	}
 
 	result.append("\n[DISMISSAL RELATED ENTRIES]");
 	for (final ICurriculumEntry entry : dismissalRelatedEntries) {
-	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[GRADE] " + entry.getGrade().getNumericValue()
-		    + "\t[WEIGHT] " + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum()
-		    + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
+	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
+		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] "
+		    + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] "
+		    + entry.getClass().getSimpleName());
 	}
 
 	result.append("\n[CURRICULAR YEAR ENTRIES]");
 	for (final ICurriculumEntry entry : curricularYearEntries) {
-	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum()
-		    + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
+	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
+		    + entry.getCreationDateDateTime() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] "
+		    + entry.getClass().getSimpleName());
 	}
 
 	return result.toString();
