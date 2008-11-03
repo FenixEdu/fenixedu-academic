@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alterTableAcademicServiceRequestAddNumberOfUnits.sql" alterTableAcademicServiceRequestAddNumberOfUnits.sql
+execute "multiple sql updates" updates.sql
