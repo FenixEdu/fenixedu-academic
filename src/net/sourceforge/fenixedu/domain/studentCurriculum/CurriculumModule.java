@@ -236,15 +236,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	return getLastApprovement().getExecutionYear();
     }
 
-    protected boolean wasCreated(final DateTime when) {
-	boolean res = (getCreationDateDateTime() == null || getCreationDateDateTime().isBefore(when));
-
-	if (!res) {
-	    System.out.println("DESCARTEI\t" + getClass().getSimpleName() + "\t" + getCreationDateDateTime() + "\t"
-		    + getName().getPreferedContent());
-	}
-
-	return res;
+    final protected boolean wasCreated(final DateTime when) {
+	return getCreationDateDateTime() == null || getCreationDateDateTime().isBefore(when);
     }
 
     final public Curriculum getCurriculum() {
