@@ -56,7 +56,7 @@ public abstract class File extends File_Base {
 	// For performance reasons...
 	PreparedStatement stmt = null;
 	try {
-	    final Connection connection = Transaction.getNewJdbcConnection();
+	    final Connection connection = Transaction.getCurrentJdbcConnection();
 	    stmt = connection.prepareStatement("SELECT ID_INTERNAL FROM FILE WHERE EXTERNAL_STORAGE_IDENTIFICATION = ?");
 
 	    stmt.setString(1, externalStorageIdentification);
