@@ -20,7 +20,7 @@ public class StandaloneCurriculumGroup extends StandaloneCurriculumGroup_Base {
 
     @Override
     public boolean canAdd(CurriculumLine curriculumLine) {
-	return true;
+	return curriculumLine.isEnrolment();
     }
 
     @Override
@@ -40,5 +40,10 @@ public class StandaloneCurriculumGroup extends StandaloneCurriculumGroup_Base {
 	    result += curriculumModule.getNumberOfAllApprovedEnrolments(executionSemester);
 	}
 	return result;
+    }
+
+    @Override
+    public boolean allowAccumulatedEctsCredits() {
+	return true;
     }
 }

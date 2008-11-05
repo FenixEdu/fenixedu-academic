@@ -337,7 +337,11 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    final HtmlTableCell titleCell = groupHeaderRow.createCell();
 	    if (studentCurriculumGroupBean.getCurriculumModule().isRoot()) {
-		titleCell.setBody(createDegreeCurricularPlanLink(studentCurriculumGroupBean));
+		if (studentCurriculumGroupBean.getCurriculumModule().getDegreeCurricularPlanOfStudent().isEmpty()) {
+		    titleCell.setBody(new HtmlText(studentCurriculumGroupBean.getCurriculumModule().getName().getContent()));
+		} else {
+		    titleCell.setBody(createDegreeCurricularPlanLink(studentCurriculumGroupBean));
+		}
 	    } else {
 		titleCell.setBody(new HtmlText(buildCurriculumGroupLabel(studentCurriculumGroupBean.getCurriculumModule(),
 			executionSemester), false));

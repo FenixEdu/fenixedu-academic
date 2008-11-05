@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneInd
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -248,6 +249,11 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    executeActivity(getProcess(request), "CreateRegistration");
+	} catch (EnrollmentDomainException ex) {
+	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
+	    request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
+	    return mapping.findForward("create-registration");
+
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());

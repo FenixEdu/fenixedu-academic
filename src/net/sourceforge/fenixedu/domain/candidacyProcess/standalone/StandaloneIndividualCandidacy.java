@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.candidacy.StandaloneInd
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -34,12 +35,25 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	final Person person = bean.getOrCreatePersonFromBean();
 	checkParameters(person, process, bean.getCandidacyDate());
 	init(person, process, bean.getCandidacyDate());
-	addSelectedCurricularCourses(bean.getCurricularCourses());
+	addSelectedCurricularCourses(bean.getCurricularCourses(), bean.getCandidacyExecutionInterval());
 	createDebt(person);
     }
 
-    private void addSelectedCurricularCourses(final List<CurricularCourse> curricularCourses) {
+    private void addSelectedCurricularCourses(final List<CurricularCourse> curricularCourses,
+	    final ExecutionSemester executionSemester) {
+	checkEctsCredits(curricularCourses, executionSemester);
 	getCurricularCourses().addAll(curricularCourses);
+    }
+
+    private void checkEctsCredits(List<CurricularCourse> curricularCourses, ExecutionSemester executionSemester) {
+	double total = 0.0d;
+	for (final CurricularCourse curricularCourse : curricularCourses) {
+	    total += curricularCourse.getEctsCredits(executionSemester);
+	}
+
+	if (!MaximumNumberOfEctsInStandaloneCurriculumGroup.allowEctsCheckingDefaultValue(total)) {
+	    throw new DomainException("error.StandaloneIndividualCandidacy.ects.credits.above.maximum", String.valueOf(total));
+	}
     }
 
     @Override
@@ -60,7 +74,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	super.checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
 	setCandidacyDate(candidacyDate);
 	getCurricularCourses().clear();
-	addSelectedCurricularCourses(curricularCourses);
+	addSelectedCurricularCourses(curricularCourses, getCandidacyExecutionInterval());
     }
 
     public void editCandidacyResult(final StandaloneIndividualCandidacyResultBean bean) {

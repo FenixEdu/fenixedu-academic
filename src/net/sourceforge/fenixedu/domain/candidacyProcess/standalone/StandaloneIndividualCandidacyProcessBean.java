@@ -74,4 +74,11 @@ public class StandaloneIndividualCandidacyProcessBean extends IndividualCandidac
 	this.curricularCourseBeans.remove(bean);
     }
 
+    public String getTotalEctsCredits() {
+	double total = 0d;
+	for (final CurricularCourseByExecutionSemesterBean bean : curricularCourseBeans) {
+	    total += bean.getCurricularCourseEcts().doubleValue();
+	}
+	return String.valueOf(total);
+    }
 }

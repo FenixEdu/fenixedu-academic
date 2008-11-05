@@ -62,6 +62,9 @@
 					</td>
 				</tr>
 			</logic:iterate>
+			<tr align="right">
+				<td colspan="4"><em><strong><bean:message key="label.total.ects" bundle="APPLICATION_RESOURCES" />:</strong> <bean:write name="individualCandidacyProcessBean" property="totalEctsCredits" /></em></td>
+			</tr>
 		</table>
 	</logic:notEmpty>
 	<logic:empty name="individualCandidacyProcessBean" property="curricularCourseBeans">

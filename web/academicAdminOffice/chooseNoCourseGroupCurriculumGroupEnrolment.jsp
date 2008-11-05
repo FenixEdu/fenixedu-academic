@@ -31,9 +31,15 @@
 	</fr:form>
 </logic:notPresent>
 
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
 	<br/>
 	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+	<br/>
+</html:messages>
+
+<html:messages id="error" message="true" bundle="APPLICATION_RESOURCES" property="enrolmentError" >
+	<br/>
+	<span class="error"><!-- Error messages go here --><bean:write name="error" /></span>
 	<br/>
 </html:messages>
 

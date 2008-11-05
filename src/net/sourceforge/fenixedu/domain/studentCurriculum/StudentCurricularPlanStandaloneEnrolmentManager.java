@@ -11,11 +11,19 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment;
 
 public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurricularPlanEnrolment {
 
@@ -61,7 +69,31 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 
     @Override
     protected void addEnroled() {
-	// nothing to be done
+	if (!isEmptyDegree()) {
+	    addEnroledFromStudentCurricularPlan();
+	}
+	addEnroledFromStandaloneGroup();
+	changeCurricularRuleLevel();
+    }
+
+    private void changeCurricularRuleLevel() {
+	enrolmentContext.setCurricularRuleLevel(CurricularRuleLevel.ENROLMENT_WITH_RULES);
+    }
+
+    private void addEnroledFromStudentCurricularPlan() {
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan().getDegreeModulesToEvaluate(
+		getExecutionSemester())) {
+	    enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
+	}
+    }
+
+    private void addEnroledFromStandaloneGroup() {
+	final StandaloneCurriculumGroup group = getStudentCurricularPlan().getStandaloneCurriculumGroup();
+	for (final CurriculumLine curriculumLine : group.getChildCurriculumLines()) {
+	    for (final IDegreeModuleToEvaluate module : curriculumLine.getDegreeModulesToEvaluate(getExecutionSemester())) {
+		enrolmentContext.addDegreeModuleToEvaluate(module);
+	    }
+	}
     }
 
     @Override
@@ -71,13 +103,43 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	}
 
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
-
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (degreeModuleToEvaluate.isEnroling() && degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
 		result.put(degreeModuleToEvaluate, Collections.EMPTY_SET);
 	    }
 	}
+
+	if (!isEmptyDegree()) {
+	    result.put(getEnroledCurriculumGroup(), getRoot().getCurricularRules(getExecutionSemester()));
+	}
+
 	return result;
+    }
+
+    @Override
+    protected RuleResult evaluateExtraRules(RuleResult actualResult) {
+	if (actualResult.isFalse()) {
+	    return actualResult;
+	}
+
+	if (isEmptyDegree()) {
+	    return actualResult.and(new MaximumNumberOfEctsInStandaloneCurriculumGroup(getStandaloneCurriculumGroup()).evaluate(
+		    getEnroledCurriculumGroup(), enrolmentContext));
+	} else {
+	    return actualResult;
+	}
+    }
+
+    private boolean isEmptyDegree() {
+	return getStudentCurricularPlan().isEmptyDegree();
+    }
+
+    private IDegreeModuleToEvaluate getEnroledCurriculumGroup() {
+	return new EnroledCurriculumModuleWrapper(getRoot(), getExecutionSemester());
+    }
+
+    private StandaloneCurriculumGroup getStandaloneCurriculumGroup() {
+	return getStudentCurricularPlan().getStandaloneCurriculumGroup();
     }
 
     @Override
@@ -113,7 +175,6 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 		curriculumModule.delete();
 	    }
 	}
-
     }
 
 }

@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -97,23 +98,31 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	try {
 	    ServiceUtils.executeService("CreateExtraEnrolment", new Object[] { studentCurricularPlan, executionPeriod,
 		    curricularCourse, groupType });
+
+	} catch (EnrollmentDomainException ex) {
+	    addRuleResultMessagesToActionMessages("enrolmentError", request, ex.getFalseResult());
+	    setExtraEnrolmentInformation(request, studentCurricularPlan, executionPeriod);
+	    return mapping.findForward("chooseExtraEnrolment");
+
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-
-	    final NoCourseGroupEnrolmentBean enrolmentBean = createNoCourseGroupEnrolmentBean(studentCurricularPlan,
-		    executionPeriod);
-	    enrolmentBean.setDegreeType(DegreeType.valueOf(request.getParameter("degreeType")));
-	    enrolmentBean.setDegree(rootDomainObject.readDegreeByOID(Integer.valueOf(request.getParameter("degreeID"))));
-	    enrolmentBean.setDegreeCurricularPlan(rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(request
-		    .getParameter("dcpID"))));
-
-	    request.setAttribute("enrolmentBean", enrolmentBean);
-
+	    addActionMessage("error", request, e.getMessage(), e.getArgs());
+	    setExtraEnrolmentInformation(request, studentCurricularPlan, executionPeriod);
 	    return mapping.findForward("chooseExtraEnrolment");
 	}
 
 	final NoCourseGroupEnrolmentBean bean = createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionPeriod);
 	return showExtraEnrolments(bean, mapping, actionForm, request, response);
+    }
+
+    private void setExtraEnrolmentInformation(HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionSemester executionPeriod) {
+	final NoCourseGroupEnrolmentBean enrolmentBean = createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionPeriod);
+	enrolmentBean.setDegreeType(DegreeType.valueOf(request.getParameter("degreeType")));
+	enrolmentBean.setDegree(rootDomainObject.readDegreeByOID(Integer.valueOf(request.getParameter("degreeID"))));
+	enrolmentBean.setDegreeCurricularPlan(rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(request
+		.getParameter("dcpID"))));
+
+	request.setAttribute("enrolmentBean", enrolmentBean);
     }
 
     private CurricularCourse getOptionalCurricularCourse(HttpServletRequest request) {
@@ -130,7 +139,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	try {
 	    ExecuteFactoryMethod.run(new Enrolment.DeleteEnrolmentExecutor(enrolment));
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+	    addActionMessage("error", request, e.getMessage());
 	}
 
 	return showExtraEnrolments(createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionSemester), mapping,

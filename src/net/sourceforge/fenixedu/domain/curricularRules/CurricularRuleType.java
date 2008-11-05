@@ -37,7 +37,9 @@ public enum CurricularRuleType {
 
     CREDITS_LIMIT_IN_EXTERNAL_CYCLE,
 
-    EVEN_ODD;
+    EVEN_ODD,
+    
+    MAXIMUM_NUMBER_OF_ECTS_IN_STANDALONE_CURRICULUM_GROUP;
 
     public String getName() {
 	return name();

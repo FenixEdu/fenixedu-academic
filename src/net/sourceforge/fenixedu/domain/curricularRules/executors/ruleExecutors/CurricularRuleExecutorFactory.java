@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
+import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
 import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
@@ -47,6 +48,8 @@ public class CurricularRuleExecutorFactory {
 		new MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor());
 	executors.put(CreditsLimitInExternalCycle.class, new CreditsLimitInExternalCycleExecutor());
 	executors.put(EvenOddRule.class, new EvenOddExecuter());
+	executors.put(MaximumNumberOfEctsInStandaloneCurriculumGroup.class,
+		new MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor());
     }
 
     public static CurricularRuleExecutor findExecutor(final ICurricularRule curricularRule) {

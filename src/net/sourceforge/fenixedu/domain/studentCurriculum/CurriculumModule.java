@@ -151,6 +151,11 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	return hasCurriculumGroup() && getCurriculumGroup().isNoCourseGroupCurriculumGroup();
     }
 
+    public boolean parentAllowAccumulatedEctsCredits() {
+	return !parentCurriculumGroupIsNoCourseGroupCurriculumGroup()
+		|| ((NoCourseGroupCurriculumGroup) getCurriculumGroup()).allowAccumulatedEctsCredits();
+    }
+
     public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
 	final Set<ICurricularRule> result = hasCurriculumGroup() ? getCurriculumGroup().getCurricularRules(executionSemester)
 		: new HashSet<ICurricularRule>();

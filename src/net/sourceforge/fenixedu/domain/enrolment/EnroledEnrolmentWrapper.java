@@ -16,6 +16,11 @@ public class EnroledEnrolmentWrapper extends EnroledCurriculumModuleWrapper {
     }
 
     @Override
+    public boolean canCollectRules() {
+	return getCurriculumModule().parentCurriculumGroupIsNoCourseGroupCurriculumGroup() ? false : super.canCollectRules();
+    }
+
+    @Override
     public Enrolment getCurriculumModule() {
 	return (Enrolment) super.getCurriculumModule();
     }

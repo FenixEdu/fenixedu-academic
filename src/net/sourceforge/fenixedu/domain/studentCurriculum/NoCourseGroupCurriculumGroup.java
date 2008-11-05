@@ -210,4 +210,12 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public int getNumberOfAllApprovedEnrolments(ExecutionSemester executionSemester) {
 	return 0;
     }
+
+    /**
+     * Used to check if enrolment childs can give accumulated ects credits
+     * correct value
+     */
+    public boolean allowAccumulatedEctsCredits() {
+	return false;
+    }
 }

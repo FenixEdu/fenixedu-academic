@@ -61,7 +61,7 @@ public class StudentStandaloneEnrolmentsDA extends NoCourseGroupCurriculumGroupE
 		    NoCourseGroupCurriculumGroupType.STANDALONE, AccessControl.getPerson());
 
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+	    addActionMessage("error", request, e.getMessage());
 	}
 
 	return showExtraEnrolments(createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionSemester), mapping,
