@@ -20,7 +20,7 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
 
     private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	if (!bean.getRegistration().isInRegisteredState(currentExecutionYear)) {
+	if (!bean.getRegistration().isRegistered(currentExecutionYear)) {
 	    throw new DomainException(
 		    "SchoolRegistrationDeclarationRequest.registration.not.in.registered.state.in.current.executionYear");
 	}

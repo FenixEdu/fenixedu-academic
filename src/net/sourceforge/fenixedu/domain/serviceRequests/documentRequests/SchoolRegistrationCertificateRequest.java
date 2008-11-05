@@ -22,7 +22,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
 
-	} else if (!bean.getRegistration().isInRegisteredState(bean.getExecutionYear())) {
+	} else if (!bean.getRegistration().isRegistered(bean.getExecutionYear())) {
 	    throw new DomainException(
 		    "SchoolRegistrationCertificateRequest.registration.not.in.registered.state.in.given.executionYear");
 	}

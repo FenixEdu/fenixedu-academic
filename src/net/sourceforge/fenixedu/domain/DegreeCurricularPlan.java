@@ -1611,7 +1611,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	for (Registration registration : this.getActiveRegistrations()) {
 	    if (registration.getStartDate() != null && registration.getStartExecutionYear().equals(entryYear)
-		    && registration.isInRegisteredState(currentExecutionYear)) {
+		    && registration.isRegistered(currentExecutionYear)) {
 		studentsGivenEntryYear.add(registration.getActiveStudentCurricularPlan());
 	    }
 	}

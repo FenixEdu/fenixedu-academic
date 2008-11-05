@@ -25,7 +25,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void assertEnrolmentPreConditions() {
-	if (!isResponsiblePersonManager() && !getRegistration().isInRegisteredState(getExecutionSemester())) {
+	if (!isResponsiblePersonManager() && !getRegistration().isRegistered(getExecutionSemester())) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 

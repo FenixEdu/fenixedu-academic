@@ -689,7 +689,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    if (degree.getDegreeType() == degreeType) {
 		if (isActive(degree, executionYear)) {
 		    for (final Registration registration : degree.getRegistrationsSet()) {
-			if (registration.isInRegisteredState(executionYear)) {
+			if (registration.isRegistered(executionYear)) {
 			    final EnrolmentAndAprovalCounterMap map = new EnrolmentAndAprovalCounterMap(firstExecutionSemester,
 				    lastExecutionSemester, registration);
 			    for (final Entry<ExecutionSemester, EnrolmentAndAprovalCounter> entry : map.entrySet()) {
@@ -859,7 +859,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    if (degree.getDegreeType() == degreeType) {
 		if (isActive(degree, executionYear)) {
 		    for (final Registration registration : degree.getRegistrationsSet()) {
-			if (registration.isInRegisteredState(executionYear)) {
+			if (registration.isRegistered(executionYear)) {
 			    final Row row = spreadsheet.addRow();
 			    row.setCell(registration.getNumber());
 			    setDegreeColumns(row, degree);

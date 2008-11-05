@@ -93,7 +93,7 @@ public class StudentStatisticsDA extends FenixDispatchAction {
 	private int countDegreeRegistrations(final ExecutionYear executionYear, final Degree degree) {
 	    int counter = 0;
 	    for (final Registration registration : degree.getRegistrationsSet()) {
-		if (registration.isInRegisteredState(executionYear)) {
+		if (registration.isRegistered(executionYear)) {
 		    counter++;
 		}
 	    }
