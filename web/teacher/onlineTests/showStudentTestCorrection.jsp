@@ -68,6 +68,7 @@
 		<jsp:param name="correctionType" value="studentCorrection"/>
 		<jsp:param name="testCode" value="<%=testCode%>"/>
  	</jsp:include>
+
 	<br/>
 	<br/>
 	<table align="center">

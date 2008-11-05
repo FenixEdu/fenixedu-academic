@@ -55,8 +55,8 @@ public class CorrectionAvailability extends FenixUtil {
 	this.availability = availability;
     }
 
-    public List getAllAvailabilities() {
-	List result = new ArrayList();
+    public List<LabelValueBean> getAllAvailabilities() {
+	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 	result.add(new LabelValueBean(NEVER_STRING, new Integer(NEVER).toString()));
 	result.add(new LabelValueBean(ALWAYS_STRING, new Integer(ALWAYS).toString()));
 	result.add(new LabelValueBean(AFTER_CLOSING_STRING, new Integer(AFTER_CLOSING).toString()));

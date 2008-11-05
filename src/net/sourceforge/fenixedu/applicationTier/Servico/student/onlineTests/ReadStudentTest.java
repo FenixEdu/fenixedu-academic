@@ -28,13 +28,13 @@ public class ReadStudentTest extends FenixService {
 	return run(registration, distributedTest, log, path);
     }
 
-    public List<StudentTestQuestion> run(Registration someRegistration, DistributedTest distributedTest, Boolean log, String path)
+    public List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log, String path)
 	    throws FenixServiceException {
 	if (distributedTest == null) {
 	    throw new InvalidArgumentsServiceException();
 	}
 	List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
-	Set<StudentTestQuestion> studentTestQuestions = findStudentTestQuestions(someRegistration.getStudent(), distributedTest);
+	Set<StudentTestQuestion> studentTestQuestions = findStudentTestQuestions(registration, distributedTest);
 	for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
 	    ParseSubQuestion parse = new ParseSubQuestion();
 	    try {
@@ -48,15 +48,14 @@ public class ReadStudentTest extends FenixService {
 	    studentTestQuestionList.add(studentTestQuestion);
 	}
 	if (log.booleanValue()) {
-	    final Registration registration = studentTestQuestions.iterator().next().getStudent();
 	    StudentTestLog studentTestLog = new StudentTestLog(distributedTest, registration, "Ler Ficha de Trabalho");
 	}
 	return studentTestQuestionList;
     }
 
-    private Set<StudentTestQuestion> findStudentTestQuestions(Student student, DistributedTest distributedTest)
+    private Set<StudentTestQuestion> findStudentTestQuestions(Registration registration, DistributedTest distributedTest)
 	    throws InvalidArgumentsServiceException {
-	final Set<StudentTestQuestion> studentTestQuestions = StudentTestQuestion.findStudentTestQuestions(student,
+	final Set<StudentTestQuestion> studentTestQuestions = StudentTestQuestion.findStudentTestQuestions(registration,
 		distributedTest);
 	if (studentTestQuestions.size() == 0) {
 	    throw new InvalidArgumentsServiceException();

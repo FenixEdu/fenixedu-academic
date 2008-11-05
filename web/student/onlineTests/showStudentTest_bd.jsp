@@ -24,6 +24,7 @@
 		<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="net.sourceforge.fenixedu.util.tests.CorrectionAvailability"/>
 		<bean:define id="formula" name="testQuestion" property="correctionFormula.formula"/>
 		<bean:define id="testType" name="testQuestion" property="distributedTest.testType.type"/>
+		<bean:define id="student" name="testQuestion" property="student.idInternal"/>
 
 	<logic:iterate id="subQuestion" name="testQuestion" property="studentSubQuestions" type="net.sourceforge.fenixedu.domain.onlineTests.SubQuestion" indexId="itemIndex">
 	<bean:define id="item" value="<%=itemIndex.toString()%>"/>
@@ -46,7 +47,7 @@
 			<bean:define id="questionLabel" name="questionPresentation" property="label"/>	
 			<%if (((String)questionLabel).startsWith("image/")){%>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-				<html:img bundle="HTMLALT_RESOURCES" altKey="img.img" align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()%>"/>
+				<html:img bundle="HTMLALT_RESOURCES" altKey="img.img" align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()+"&amp;student="+student.toString()%>"/>
 				<logic:equal name="imageLabel" value="true">
 					</td><td>
 				</logic:equal>
@@ -97,7 +98,7 @@
 			<bean:define id="questionLabel" name="questionBody" property="label"/>	
 			<%if (((String)questionLabel).startsWith("image/")){%>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()%>" altKey="questionLabel" bundle="IMAGE_RESOURCES"/>
+				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()+"&amp;student="+student.toString()%>" altKey="questionLabel" bundle="IMAGE_RESOURCES"/>
 				<logic:equal name="imageLabel" value="true">
 					</td><td>
 				</logic:equal>
@@ -132,7 +133,7 @@
 			<bean:define id="optionLabel" name="optionBody" property="label"/>
 			<%if (((String)optionLabel).startsWith("image/")){ %>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()+"&amp;item="+item.toString()%>" altKey="optionLabel" bundle="IMAGE_RESOURCES"/>
+				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()+"&amp;item="+item.toString()+"&amp;student="+student.toString()%>" altKey="optionLabel" bundle="IMAGE_RESOURCES"/>
 				<logic:equal name="imageLabel" value="true">
 					</td><td>
 				</logic:equal>
@@ -349,11 +350,11 @@
 		<%if(testQuestion.getStudentSubQuestions().size()>1){%>
 			<logic:empty name="testQuestion" property="response">
 				<tr><td>
-					<html:link page="<%= "/studentTests.do?method=prepareToGiveUp&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
+					<html:link page="<%= "/studentTests.do?method=prepareToGiveUp&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()+"&amp;student="+student.toString()%>">
 					<bean:message key="link.giveUp" />
 					</html:link>
 				</td></tr><tr><td>
-					<html:link page="<%= "/studentTests.do?method=cleanSubQuestions&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
+					<html:link page="<%= "/studentTests.do?method=cleanSubQuestions&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()+"&amp;student="+student.toString()%>">
 					<bean:message key="link.cleanResponses" />
 					</html:link>
 				</td></tr>
@@ -361,11 +362,11 @@
 			<logic:notEmpty name="testQuestion" property="response">
 				<logic:equal name="testQuestion" property="response.responsed" value="false">
 					<tr><td>
-						<html:link page="<%= "/studentTests.do?method=prepareToGiveUp&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
+						<html:link page="<%= "/studentTests.do?method=prepareToGiveUp&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()+"&amp;student="+student.toString()%>">
 						<bean:message key="link.giveUp" />
 						</html:link>
 					</td></tr><tr><td>
-						<html:link page="<%= "/studentTests.do?method=cleanSubQuestions&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
+						<html:link page="<%= "/studentTests.do?method=cleanSubQuestions&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()+"&amp;student="+student.toString()%>">
 						<bean:message key="link.cleanResponses" />
 						</html:link>
 					</td></tr>
@@ -443,7 +444,7 @@
 											<bean:define id="feedbackLabel" name="feedback" property="label"/>
 											<%if (((String)feedbackLabel).startsWith("image/")){%>
 												<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-												<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+responseProcessingIndex.toString() +" &amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
+												<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+responseProcessingIndex.toString() +" &amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()+"&amp;student="+student.toString()%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
 												<logic:equal name="imageLabel" value="true">
 													</td><td>
 												</logic:equal>

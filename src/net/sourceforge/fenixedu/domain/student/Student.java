@@ -645,15 +645,20 @@ public class Student extends Student_Base {
 	return result;
     }
 
-    public Set<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
-	Set<DistributedTest> result = new HashSet<DistributedTest>();
+    public Map<Registration, Set<DistributedTest>> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
+	Map<Registration, Set<DistributedTest>> result = new HashMap<Registration, Set<DistributedTest>>();
 	for (final Registration registration : getRegistrationsSet()) {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
 			.equals(ExecutionCourse.class.getName())
 			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
 				executionCourse.getIdInternal())) {
-		    result.add(studentTestQuestion.getDistributedTest());
+		    Set<DistributedTest> tests = result.get(registration);
+		    if (tests == null) {
+			tests = new HashSet<DistributedTest>();
+		    }
+		    tests.add(studentTestQuestion.getDistributedTest());
+		    result.put(registration, tests);
 		}
 	    }
 	}

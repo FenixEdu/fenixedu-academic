@@ -28,6 +28,7 @@ response.setDateHeader ("Expires", 0);
 	<bean:define id="objectCode" name="domainObject" property="idInternal"/>
 	<bean:define id="student" name="testQuestion" property="student"/>
 	<bean:define id="studentCode" name="student" property="number"/>
+	<bean:define id="registration" name="testQuestion" property="student.idInternal"/>
 	
 	<html:form action="/studentTests">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doTest"/>
@@ -57,6 +58,7 @@ response.setDateHeader ("Expires", 0);
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%= testCode.toString() %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.student" property="registration" value="<%= registration.toString() %>"/>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" styleClass="inputbutton" property="back"><bean:message key="button.back"/></html:submit></td></html:form>
 		</tr>
 	</table>	

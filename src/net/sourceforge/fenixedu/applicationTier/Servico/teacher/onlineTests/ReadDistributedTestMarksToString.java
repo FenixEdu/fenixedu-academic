@@ -45,7 +45,7 @@ public class ReadDistributedTestMarksToString extends FenixService {
 	    result.append("\t");
 	}
 	result.append("Nota");
-	Set<StudentTestQuestion> studentTestQuestionList = distributedTest
+	List<StudentTestQuestion> studentTestQuestionList = distributedTest
 		.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
 	if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
 	    throw new FenixServiceException();

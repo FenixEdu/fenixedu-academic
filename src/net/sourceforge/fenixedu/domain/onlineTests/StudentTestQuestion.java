@@ -91,22 +91,14 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 	super.deleteDomainObject();
     }
 
-    public static boolean hasStudentTestQuestions(final Student student, final DistributedTest distributedTest) {
-	Set<StudentTestQuestion> studentTestQuestions = findStudentTestQuestions(student, distributedTest);
+    public static boolean hasStudentTestQuestions(final Registration registration, final DistributedTest distributedTest) {
+	Set<StudentTestQuestion> studentTestQuestions = findStudentTestQuestions(registration, distributedTest);
 	return (studentTestQuestions == null || studentTestQuestions.size() == 0) ? false : true;
-    }
-
-    public static Set<StudentTestQuestion> findStudentTestQuestions(final Student student, final DistributedTest distributedTest) {
-	final Set<StudentTestQuestion> studentTestQuestions = new HashSet<StudentTestQuestion>();
-	for (final Registration registration : student.getRegistrationsSet()) {
-	    studentTestQuestions.addAll(registration.getStudentTestsQuestionsSet());
-	}
-	return findStudentTestQuestions(studentTestQuestions, distributedTest);
     }
 
     public static Set<StudentTestQuestion> findStudentTestQuestions(final Registration registration,
 	    final DistributedTest distributedTest) {
-	return findStudentTestQuestions(registration.getStudent(), distributedTest);
+	return findStudentTestQuestions(registration.getStudentTestsQuestionsSet(), distributedTest);
     }
 
     public static Set<StudentTestQuestion> findStudentTestQuestions(final Question question, final DistributedTest distributedTest) {

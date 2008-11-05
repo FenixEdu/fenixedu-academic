@@ -41,14 +41,14 @@ public class ReadDistributedTestMarks extends FenixService {
 	    throw new InvalidArgumentsServiceException();
 	}
 
-	Set<StudentTestQuestion> studentTestQuestionList = distributedTest
+	List<StudentTestQuestion> studentTestQuestionList = distributedTest
 		.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
 
 	HashMap<Integer, InfoStudentTestQuestionMark> infoStudentTestQuestionMarkList = new HashMap<Integer, InfoStudentTestQuestionMark>();
 	for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-	    if (infoStudentTestQuestionMarkList.containsKey(studentTestQuestion.getStudent().getNumber())) {
+	    if (infoStudentTestQuestionMarkList.containsKey(studentTestQuestion.getStudent().getIdInternal())) {
 		InfoStudentTestQuestionMark infoStudentTestQuestionMark = infoStudentTestQuestionMarkList.get(studentTestQuestion
-			.getStudent().getNumber());
+			.getStudent().getIdInternal());
 		ParseSubQuestion parse = new ParseSubQuestion();
 		Question question = studentTestQuestion.getQuestion();
 		try {
@@ -66,12 +66,13 @@ public class ReadDistributedTestMarks extends FenixService {
 		}
 		infoStudentTestQuestionMark.addToMaximumMark(studentTestQuestion.getTestQuestionValue());
 	    } else {
-		infoStudentTestQuestionMarkList.put(studentTestQuestion.getStudent().getNumber(), InfoStudentTestQuestionMark
+		infoStudentTestQuestionMarkList.put(studentTestQuestion.getStudent().getIdInternal(), InfoStudentTestQuestionMark
 			.newInfoFromDomain(studentTestQuestion));
 	    }
 	}
 
-	List infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestionMark>(infoStudentTestQuestionMarkList.values());
+	List<InfoStudentTestQuestionMark> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestionMark>(
+		infoStudentTestQuestionMarkList.values());
 	Collections.sort(infoStudentTestQuestionList, new BeanComparator("studentNumber"));
 	infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
 	infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) distributedTest

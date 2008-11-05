@@ -61,6 +61,7 @@
 	  <form-bean name="studentTestForm" 
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
         <form-property name="testCode" type="java.lang.String"/>
+        <form-property name="student" type="java.lang.String"/>
       </form-bean>
 
 <!--

@@ -19,7 +19,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTestQuestionImage;
@@ -72,6 +71,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 import org.apache.util.Base64;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -105,7 +105,6 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward createTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-	final IUserView userView = getUserView(request);
 	final String title = request.getParameter("title");
 	final String information = request.getParameter("information");
 	final Object[] args = { executionCourseId, title, information };
@@ -123,7 +122,6 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward editAsNewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-	final IUserView userView = getUserView(request);
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	final Object[] args = { executionCourseId, testCode };
 	Integer newTestCode = null;
@@ -138,7 +136,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward showAvailableQuestions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	Test test = null;
@@ -170,7 +167,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareInsertTestQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	final Integer metadataCode = getCodeFromRequest(request, "metadataCode");
@@ -216,7 +212,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    testQuestionValues.add(new Integer(i));
 	}
 
-	List formulas = CorrectionFormula.getFormulas();
+	List<LabelValueBean> formulas = CorrectionFormula.getFormulas();
 	request.setAttribute("order", request.getParameter("order"));
 	request.setAttribute("asc", request.getParameter("asc"));
 	request.setAttribute("testQuestionNames", testQuestionNames);
@@ -231,7 +227,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward insertTestQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	final String[] metadataCodes = request.getParameterValues("metadataCode");
 	final Integer questionOrder = getCodeFromRequest(request, "questionOrder");
@@ -261,7 +256,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareEditTestQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	final Integer questionCode = getCodeFromRequest(request, "questionCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
@@ -290,7 +284,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		testQuestionValues.add(new Integer(i));
 	    }
 	}
-	List formulas = CorrectionFormula.getFormulas();
+	List<LabelValueBean> formulas = CorrectionFormula.getFormulas();
 	((DynaActionForm) form).set("formula", testQuestion.getCorrectionFormula().getFormula().toString());
 	request.setAttribute("formulas", formulas);
 	request.setAttribute("testQuestionNames", testQuestionNames);
@@ -304,7 +298,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward editTestQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	final Integer testQuestionCode = getCodeFromRequest(request, "testQuestionCode");
@@ -327,7 +320,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward deleteTestQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	final Integer questionCode = getCodeFromRequest(request, "questionCode");
@@ -355,7 +347,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareDeleteTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	request.setAttribute("objectCode", objectCode);
@@ -372,7 +363,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward deleteTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	Object[] args = { executionCourseCode, testCode };
@@ -387,7 +377,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward showImage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer exerciseCode = getCodeFromRequest(request, "exerciseCode");
 	final Integer imgCode = getCodeFromRequest(request, "imgCode");
 	final String imgTypeString = request.getParameter("imgType");
@@ -447,7 +436,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    throws FenixActionException, FenixFilterException {
 	final Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
-	final IUserView userView = getUserView(request);
 	Test test = null;
 	try {
 	    test = (Test) ServiceUtils.executeService("ReadTest", new Object[] { executionCourseCode, testCode });
@@ -477,7 +465,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareEditTestHeader(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	Test test = null;
@@ -496,7 +483,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	final Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
-	final IUserView userView = getUserView(request);
 	final String title = request.getParameter("title");
 	final String information = request.getParameter("information");
 	final Object[] args = { executionCourseCode, testCode, title, information };
@@ -510,7 +496,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareDistributeTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 
@@ -522,9 +507,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	}
 	request.setAttribute("objectCode", objectCode);
 	if (test.getTestQuestions().size() >= 1) {
-	    List testTypeList = (new TestType()).getAllTypes();
+	    List<LabelValueBean> testTypeList = (new TestType()).getAllTypes();
 	    request.setAttribute("testTypeList", testTypeList);
-	    List correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
+	    List<LabelValueBean> correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
 	    request.setAttribute("correctionAvailabilityList", correctionAvailabilityList);
 	    if ((((DynaActionForm) form).get("testType")).equals(""))
 		((DynaActionForm) form).set("testType", "1");
@@ -603,7 +588,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
 	final List<Registration> studentList = new ArrayList<Registration>();
 	for (final Attends attends : executionCourse.getAttends()) {
-	    studentList.add(attends.getRegistration());
+	    if (!studentList.contains(attends.getRegistration())) {
+		studentList.add(attends.getRegistration());
+	    }
 	}
 	Collections.sort(studentList, new BeanComparator("number"));
 	request.setAttribute("studentList", studentList);
@@ -614,7 +601,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward distributeTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	final String testInformation = request.getParameter("testInformation");
@@ -697,9 +683,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	if (distributedTest == null) {
 	    throw new FenixActionException();
 	}
-	final List testTypeList = (new TestType()).getAllTypes();
+	final List<LabelValueBean> testTypeList = (new TestType()).getAllTypes();
 	request.setAttribute("testTypeList", testTypeList);
-	final List correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
+	final List<LabelValueBean> correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
 	request.setAttribute("correctionAvailabilityList", correctionAvailabilityList);
 	((DynaActionForm) form).set("distributedTestCode", distributedTest.getIdInternal());
 	((DynaActionForm) form).set("title", distributedTest.getTitle());
@@ -788,7 +774,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward editDistributedTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	final String testInformation = request.getParameter("testInformation");
@@ -871,7 +856,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward deleteDistributedTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	final Object[] args = { objectCode, distributedTestCode };
@@ -888,7 +872,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward showStudentTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	final Integer studentCode = getCodeFromRequest(request, "studentCode");
@@ -1026,7 +1009,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward showTestMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	final String path = getServlet().getServletContext().getRealPath("/");
@@ -1045,7 +1027,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward showTestMarksStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	SiteView siteView = null;
@@ -1063,7 +1044,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward showTestStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	List<InfoInquiryStatistics> infoInquiryStatisticsList = null;
@@ -1081,7 +1061,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward downloadTestMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	String result = null;
@@ -1115,9 +1094,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
 	request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));
 	request.setAttribute("studentCode", getCodeFromRequest(request, "studentCode"));
-	List changesTypeList = (new TestQuestionChangesType()).getAllTypes();
+	List<LabelValueBean> changesTypeList = (new TestQuestionChangesType()).getAllTypes();
 	request.setAttribute("changesTypeList", changesTypeList);
-	List studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
+	List<LabelValueBean> studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
 	request.setAttribute("studentsTypeList", studentsTypeList);
 	((DynaActionForm) form).set("changesType", "1");
 	((DynaActionForm) form).set("deleteVariation", "true");
@@ -1147,7 +1126,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward changeStudentTestQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	final Integer questionId = getCodeFromRequest(request, "questionCode");
 	final Integer distributedTestId = getCodeFromRequest(request, "distributedTestCode");
@@ -1189,7 +1167,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
 	request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));
 	request.setAttribute("studentCode", getCodeFromRequest(request, "studentCode"));
-	List studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
+	List<LabelValueBean> studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
 	request.setAttribute("studentsTypeList", studentsTypeList);
 	((DynaActionForm) form).set("studentsType", "1");
 	((DynaActionForm) form).set("questionValue", request.getParameter("questionValue"));
@@ -1198,7 +1176,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward changeStudentTestQuestionValue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	final Integer studentCode = getCodeFromRequest(request, "studentCode");
@@ -1226,7 +1203,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
 	request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));
 	request.setAttribute("studentCode", getCodeFromRequest(request, "studentCode"));
-	List studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
+	List<LabelValueBean> studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
 	request.setAttribute("studentsTypeList", studentsTypeList);
 	((DynaActionForm) form).set("studentsType", "1");
 	((DynaActionForm) form).set("questionValue", request.getParameter("questionValue"));
@@ -1235,7 +1212,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward changeStudentTestQuestionMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
 	final Integer studentCode = getCodeFromRequest(request, "studentCode");
@@ -1259,7 +1235,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward chooseTestSimulationOptions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer objectCode = getCodeFromRequest(request, "objectCode");
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	request.setAttribute("objectCode", objectCode);
@@ -1270,9 +1245,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    throw new FenixActionException(e);
 	}
 	if (test.getTestQuestions().size() >= 1) {
-	    List testTypeList = (new TestType()).getAllTypes();
+	    List<LabelValueBean> testTypeList = (new TestType()).getAllTypes();
 	    request.setAttribute("testTypeList", testTypeList);
-	    List correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
+	    List<LabelValueBean> correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
 	    request.setAttribute("correctionAvailabilityList", correctionAvailabilityList);
 	    if ((((DynaActionForm) form).get("testType")).equals(""))
 		((DynaActionForm) form).set("testType", "1");
@@ -1295,7 +1270,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareSimulateTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	Integer testId = getCodeFromRequest(request, "testCode");
 	if (testId == null)
@@ -1315,7 +1289,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    imsFeedbackArg = new Boolean(imsFeedback);
 	}
 
-	List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList();
+	List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 	try {
 	    infoStudentTestQuestionList = (List) ServiceUtils.executeService("GenetareStudentTestForSimulation", new Object[] {
 		    executionCourseId, testId, getServlet().getServletContext().getRealPath("/"), testTypeArg,
@@ -1349,7 +1323,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward simulateTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	final Integer distributedTestId = getCodeFromRequest(request, "distributedTestCode");
 

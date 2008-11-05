@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -27,9 +28,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.Read
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.RegistrationDistributedTests;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -89,18 +92,25 @@ public class StudentTestsAction extends FenixDispatchAction {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
 
 	final Student student = userView.getPerson().getStudent();
-	Set<DistributedTest> distributedTestList = student.getDistributedTestsByExecutionCourse(executionCourse);
-	List<DistributedTest> testToDoList = new ArrayList<DistributedTest>();
-	List<DistributedTest> doneTestsList = new ArrayList<DistributedTest>();
-	for (DistributedTest distributedTest : distributedTestList) {
-	    if (testsToDo(distributedTest)) {
-		testToDoList.add(distributedTest);
-	    } else if (doneTests(distributedTest)) {
-		doneTestsList.add(distributedTest);
+	Map<Registration, Set<DistributedTest>> distributedTestList = student
+		.getDistributedTestsByExecutionCourse(executionCourse);
+
+	List<RegistrationDistributedTests> tests = new ArrayList<RegistrationDistributedTests>();
+	for (Registration registration : distributedTestList.keySet()) {
+	    List<DistributedTest> testToDoList = new ArrayList<DistributedTest>();
+	    List<DistributedTest> doneTestsList = new ArrayList<DistributedTest>();
+
+	    Set<DistributedTest> distributedTests = distributedTestList.get(registration);
+	    for (DistributedTest distributedTest : distributedTests) {
+		if (testsToDo(distributedTest)) {
+		    testToDoList.add(distributedTest);
+		} else if (doneTests(distributedTest)) {
+		    doneTestsList.add(distributedTest);
+		}
 	    }
+	    tests.add(new RegistrationDistributedTests(registration, testToDoList, doneTestsList));
 	}
-	request.setAttribute("testToDoList", testToDoList);
-	request.setAttribute("doneTestsList", doneTestsList);
+	request.setAttribute("tests", tests);
 	request.setAttribute("objectCode", objectCode);
 	return mapping.findForward("testsFirstPage");
     }
@@ -146,8 +156,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward prepareToDoTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
-
 	Integer testCode = null;
 	try {
 	    testCode = new Integer(request.getParameter("testCode"));
@@ -161,7 +169,11 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    return mapping.findForward("testError");
 	}
 
-	final Registration registration = Registration.readByUsername(userView.getUtilizador());
+	final Registration registration = getRegistration(request);
+	if (registration == null) {
+	    request.setAttribute("invalidTest", new Boolean(true));
+	    return mapping.findForward("testError");
+	}
 
 	List<StudentTestQuestion> studentTestQuestionList = null;
 	try {
@@ -225,8 +237,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward showImage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
-
 	final String testCode = request.getParameter("testCode");
 	final String exerciseIdString = request.getParameter("exerciseCode");
 	final String imgCodeString = request.getParameter("imgCode");
@@ -240,8 +250,11 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    request.setAttribute("invalidTest", new Boolean(true));
 	    return mapping.findForward("testError");
 	}
-	final Registration registration = Registration.readByUsername(userView.getUtilizador());
-
+	final Registration registration = getRegistration(request);
+	if (registration == null) {
+	    request.setAttribute("invalidTest", new Boolean(true));
+	    return mapping.findForward("testError");
+	}
 	String img = null;
 	try {
 	    if (feedbackId == null) {
@@ -273,7 +286,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward doTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final String objectCode = request.getParameter("objectCode");
 	final Integer studentCode = new Integer(request.getParameter("studentCode"));
 	final String path = getServlet().getServletContext().getRealPath("/");
@@ -294,11 +306,15 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    return mapping.findForward("testError");
 	}
 	request.setAttribute("distributedTest", distributedTest);
-	final Registration registration = Registration.readByUsername(userView.getUtilizador());
 
-	List studentTestQuestionList;
+	final Registration registration = getRegistration(request);
+	if (registration == null) {
+	    request.setAttribute("invalidTest", new Boolean(true));
+	    return mapping.findForward("testError");
+	}
+
+	List<StudentTestQuestion> studentTestQuestionList;
 	try {
-
 	    studentTestQuestionList = (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration,
 		    testCode, new Boolean(false), path });
 	} catch (NotAuthorizedFilterException e) {
@@ -415,24 +431,21 @@ public class StudentTestsAction extends FenixDispatchAction {
 	final IUserView userView = getUserView(request);
 	if (logId != null && logId.length() != 0) {
 	    StudentTestLog studentTestLog = rootDomainObject.readStudentTestLogByOID(new Integer(logId));
-	    for (Registration someRegistration : Registration.readByNumber(studentTestLog.getStudent().getNumber())) {
-		if (someRegistration.getPerson().equals(userView.getPerson())) {
-		    List<StudentTestLog> studentTestLogs = new ArrayList<StudentTestLog>();
-		    studentTestLogs.add(studentTestLog);
-		    byte[] data = ReportsUtils.exportToPdfFileAsByteArray(
-			    "net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog.checksumReport", null, null,
-			    studentTestLogs);
-		    response.setContentType("application/pdf");
-		    response.addHeader("Content-Disposition", "attachment; filename=" + studentTestLog.getStudent().getNumber()
-			    + ".pdf");
-		    response.setContentLength(data.length);
-		    ServletOutputStream writer = response.getOutputStream();
-		    writer.write(data);
-		    writer.flush();
-		    writer.close();
-		    response.flushBuffer();
-		    return mapping.findForward("");
-		}
+	    if (studentTestLog.getStudent().getPerson().equals(userView.getPerson())) {
+		List<StudentTestLog> studentTestLogs = new ArrayList<StudentTestLog>();
+		studentTestLogs.add(studentTestLog);
+		byte[] data = ReportsUtils.exportToPdfFileAsByteArray(
+			"net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog.checksumReport", null, null, studentTestLogs);
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "attachment; filename=" + studentTestLog.getStudent().getNumber()
+			+ ".pdf");
+		response.setContentLength(data.length);
+		ServletOutputStream writer = response.getOutputStream();
+		writer.write(data);
+		writer.flush();
+		writer.close();
+		response.flushBuffer();
+		return mapping.findForward("");
 	    }
 	}
 	return null;
@@ -491,7 +504,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
 	request.setAttribute("item", request.getParameter("item"));
-	final IUserView userView = getUserView(request);
 
 	Integer testCode = null;
 	Integer exerciseCode = null;
@@ -510,7 +522,11 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    return mapping.findForward("testError");
 	}
 
-	Registration registration = Registration.readByUsername(userView.getUtilizador());
+	final Registration registration = getRegistration(request);
+	if (registration == null) {
+	    request.setAttribute("invalidTest", new Boolean(true));
+	    return mapping.findForward("testError");
+	}
 
 	List<StudentTestQuestion> studentTestQuestionList = null;
 	try {
@@ -531,7 +547,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward showTestCorrection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	final IUserView userView = getUserView(request);
 	final String path = getServlet().getServletContext().getRealPath("/");
 
 	Integer testCode = null;
@@ -546,7 +561,11 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    request.setAttribute("invalidTest", new Boolean(true));
 	    return mapping.findForward("testError");
 	}
-	final Registration registration = Registration.readByUsername(userView.getUtilizador());
+	final Registration registration = getRegistration(request);
+	if (registration == null) {
+	    request.setAttribute("invalidTest", new Boolean(true));
+	    return mapping.findForward("testError");
+	}
 
 	List<StudentTestQuestion> studentTestQuestionList = null;
 	try {
@@ -631,5 +650,24 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    result += "0";
 	result += calendar.get(Calendar.SECOND);
 	return result;
+    }
+
+    private Registration getRegistration(HttpServletRequest request) {
+	Integer registrationCode = null;
+	try {
+	    registrationCode = new Integer(request.getParameter("student"));
+	} catch (NumberFormatException e) {
+	    return null;
+	}
+	final Registration registration = rootDomainObject.readRegistrationByOID(registrationCode);
+	if (registration == null) {
+	    return null;
+	}
+
+	Person person = Person.readPersonByUsername(getUserView(request).getUtilizador());
+	if (!person.getStudent().equals(registration.getStudent())) {
+	    return null;
+	}
+	return registration;
     }
 }

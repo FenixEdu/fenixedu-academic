@@ -62,8 +62,8 @@ public class TestQuestionStudentsChangesType extends FenixUtil {
 	this.type = type;
     }
 
-    public List getAllTypes() {
-	List result = new ArrayList();
+    public List<LabelValueBean> getAllTypes() {
+	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 	result.add(new LabelValueBean(THIS_STUDENT_STRING, new Integer(THIS_STUDENT).toString()));
 	result.add(new LabelValueBean(STUDENTS_FROM_TEST_VARIATION_STRING, new Integer(STUDENTS_FROM_TEST_VARIATION).toString()));
 	result.add(new LabelValueBean(STUDENTS_FROM_TEST_STRING, new Integer(STUDENTS_FROM_TEST).toString()));

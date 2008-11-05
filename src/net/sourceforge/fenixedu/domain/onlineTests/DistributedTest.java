@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -132,21 +133,10 @@ public class DistributedTest extends DistributedTest_Base {
 	setEndHourDate(date);
     }
 
-    public StudentTestLog getLastStudentTestLog(final Integer studentNumber) {
-	Student student = Student.readStudentByNumber(studentNumber);
+    public StudentTestLog getLastSubmissionStudentTestLog(final Integer registrationId) {
+	Registration registration = RootDomainObject.getInstance().readRegistrationByOID(registrationId);
 	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
-	    if (student.getRegistrations().contains(studentTestLog.getStudent())) {
-		return studentTestLog;
-	    }
-	}
-	return null;
-    }
-
-    public StudentTestLog getLastSubmissionStudentTestLog(final Integer studentNumber) {
-	Student student = Student.readStudentByNumber(studentNumber);
-	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
-	    if (studentTestLog.getEvent().startsWith("Submeter Teste;")
-		    && student.getRegistrations().contains(studentTestLog.getStudent())) {
+	    if (studentTestLog.getEvent().startsWith("Submeter Teste;") && registration.equals(studentTestLog.getStudent())) {
 		return studentTestLog;
 	    }
 	}
@@ -156,17 +146,17 @@ public class DistributedTest extends DistributedTest_Base {
     public List<StudentTestLog> getStudentTestLogs(final Registration registration) {
 	List<StudentTestLog> result = new ArrayList<StudentTestLog>();
 	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
-	    if (studentTestLog.getStudent().getStudent().equals(registration.getStudent())) {
+	    if (studentTestLog.getStudent().equals(registration)) {
 		result.add(studentTestLog);
 	    }
 	}
 	return result;
     }
 
-    public SortedSet<StudentTestQuestion> getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder() {
-	final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(
-		StudentTestQuestion.COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER);
-	studentTestQuestions.addAll(getDistributedTestQuestionsSet());
+    public List<StudentTestQuestion> getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder() {
+	final List<StudentTestQuestion> studentTestQuestions = new ArrayList<StudentTestQuestion>(
+		getDistributedTestQuestionsSet());
+	Collections.sort(studentTestQuestions, StudentTestQuestion.COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER);
 	return studentTestQuestions;
     }
 

@@ -55,8 +55,8 @@ public class TestType extends FenixUtil {
 	this.type = type;
     }
 
-    public List getAllTypes() {
-	List result = new ArrayList();
+    public List<LabelValueBean> getAllTypes() {
+	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 	result.add(new LabelValueBean(EVALUATION_STRING, new Integer(EVALUATION).toString()));
 	result.add(new LabelValueBean(STUDY_STRING, new Integer(STUDY).toString()));
 	result.add(new LabelValueBean(INQUIRY_STRING, new Integer(INQUIRY).toString()));

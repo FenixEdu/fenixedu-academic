@@ -48,8 +48,8 @@ public class CorrectionFormula extends FenixUtil {
 	this.formula = formula;
     }
 
-    public static List getFormulas() {
-	List result = new ArrayList();
+    public static List<LabelValueBean> getFormulas() {
+	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 	result.add(new LabelValueBean(IMS_STRING, new Integer(IMS).toString()));
 	// + LID_SIMPLE_FORMULA + LID_MULTIPLE_FORMULA,
 	result.add(new LabelValueBean(FENIX_STRING, new Integer(FENIX).toString()));

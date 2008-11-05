@@ -84,8 +84,8 @@ public class ReadStudentsByIdArray extends FenixService {
 	    for (Registration registration : studentList) {
 		InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
 		if (!infoStudentList.contains(infoStudent)
-			&& (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(registration.getStudent(),
-				distributedTest))) {
+			&& (distributedTest == null || !StudentTestQuestion
+				.hasStudentTestQuestions(registration, distributedTest))) {
 		    infoStudentList.add(infoStudent);
 		}
 	    }
@@ -106,8 +106,8 @@ public class ReadStudentsByIdArray extends FenixService {
 		for (Attends attend : attendList) {
 		    InfoStudent infoStudent = InfoStudent.newInfoFromDomain(attend.getRegistration());
 		    if (!studentsList.contains(infoStudent)
-			    && (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(attend.getRegistration()
-				    .getStudent(), distributedTest))) {
+			    && (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(attend.getRegistration(),
+				    distributedTest))) {
 			studentsList.add(infoStudent);
 		    }
 		}
