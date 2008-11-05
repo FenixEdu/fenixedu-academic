@@ -2401,7 +2401,7 @@ public class Registration extends Registration_Base {
 	    }
 
 	    final CycleType last = concludedCycles.last();
-	    return last.hasNext() ? last.getNext() : last;
+	    return last.hasNext() && getDegreeType().hasCycleTypes(last.getNext()) ? last.getNext() : last;
 	}
     }
 
