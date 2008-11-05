@@ -117,8 +117,8 @@ public class ReadStudentsByIdArray extends FenixService {
 	    InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
 	    if (!studentsList.contains(infoStudent)) {
 		if (!studentsList.contains(infoStudent)
-			&& (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(registration.getStudent(),
-				distributedTest))) {
+			&& (distributedTest == null || !StudentTestQuestion
+				.hasStudentTestQuestions(registration, distributedTest))) {
 		    studentsList.add(infoStudent);
 		}
 	    }
