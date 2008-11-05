@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.DateTime;
@@ -125,6 +126,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public boolean hasCandidacyStudent() {
 	return getCandidacyStudent() != null;
+    }
+
+    public Registration getCandidacyRegistration() {
+	return getCandidacy().getRegistration();
     }
 
     public boolean hasRegistrationForCandidacy() {
