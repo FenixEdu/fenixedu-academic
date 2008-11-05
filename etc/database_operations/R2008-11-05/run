@@ -42,3 +42,5 @@ function executeWithTempFile() {
 }
 
 execute "Correct OnlineTests" correctOnlineTests.sql IST
+execute "Teaching Inquiries..." teachingInquiriesChanges.sql
+
