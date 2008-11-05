@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -57,6 +58,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
+	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
+		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
 	    } else if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
 		return handleSessionRestoreAndGetForward(request, userView, session);
 	    } else {
@@ -65,6 +68,18 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	} catch (ExcepcaoAutenticacao e) {
 	    return getAuthenticationFailedForward(mapping, request, "invalidAuthentication", "errors.invalidAuthentication");
 	}
+    }
+
+    private ActionForward handleSessionCreationAndForwardToGratuityPaymentsReminder(HttpServletRequest request,
+	    IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/gratuityPaymentsReminder.do?method=showReminder");
+    }
+
+    private boolean isStudentAndHasGratuityDebtsToPay(final IUserView userView) {
+	return userView.hasRoleType(RoleType.STUDENT)
+		&& userView.getPerson().hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(
+			ExecutionYear.readCurrentExecutionYear());
     }
 
     private boolean isStudentAndHasInquiriesToRespond(final IUserView userView) {
