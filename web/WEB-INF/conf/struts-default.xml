@@ -158,7 +158,13 @@
         		parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToInquiriesQuestion">
             <forward name="respondToInquiriesQuestion" path="/respondToInquiriesQuestion.jsp"/>
-        </action>		
+        </action>
+        
+        <action path="/respondToTeachingInquiriesQuestion"
+        		parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToTeachingInquiriesQuestion">
+            <forward name="respondToInquiriesQuestion" path="/respondToTeachingInquiriesQuestion.jsp"/>
+        </action>		        
 
     </action-mappings>
 

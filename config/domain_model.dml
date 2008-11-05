@@ -2779,7 +2779,7 @@ class DomainObject {
 		Integer labsClassesAttendsOscillation;
 		Integer seminarClassesAttendsOscillation;
 		Integer projectClassesAttendsOscillation;
-		Integer activeAndInteressedStudentsRatio;
+		String activeAndInteressedStudentsRatio;
 		Integer studentsPerformance;
 		Integer classesAndOtherActivitiesFrequency;
 		Integer classesAndOtherActivitiesPonctuality;
@@ -2793,6 +2793,7 @@ class DomainObject {
 		Integer numberOfElectronicQuizzes;
 		Integer numberOfStudyVisitsOrOtherActivitiesReports;
 		Integer numberOfWorksOrProjects;
+		String teachingLanguage;
 		Integer workLoadClassification;
 		String workLoadClassificationReasons;
 		Integer positionOfCUInStudentCurricularPlan;
@@ -2801,7 +2802,8 @@ class DomainObject {
 		Integer criticalSenseAndReflexiveSpirit;
 		Integer cooperationAndCommunicationCapacity;
 		Integer globalClassificationOfThisCU;
-		String weakAndStrongPointsOfCUTeachingProcess;
+		String weakPointsOfCUTeachingProcess;
+		String strongPointsOfCUTeachingProcess;
 		String finalCommentsAndImproovements;
 		String negativeResultsResolutionAndImproovementPlanOfAction;
 		
@@ -13668,17 +13670,8 @@ relation RootDomainObjectTeachingInquiry {
 	}
 }
 
-relation TeachingInquiryExecutionDegree {
-	inquiries.teacher.TeachingInquiry playsRole teachingInquiries {
-		multiplicity *;
-	}
-	ExecutionDegree playsRole executionDegree;
-}
-
 relation TeachingInquiryProfessorship {
-	inquiries.teacher.TeachingInquiry playsRole teachingInquiries {
-		multiplicity *;
-	}
+	inquiries.teacher.TeachingInquiry playsRole teachingInquiry;
 	Professorship playsRole professorship;
 }
 
@@ -13712,7 +13705,6 @@ relation PartialRegimeInstallmentExecutionSemester {
 		multiplicity *;
 	}
 }
-
 relation RootDomainObjectUnitCostCenterCode {
 	RootDomainObject playsRole rootDomainObject;
 	organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCodes {

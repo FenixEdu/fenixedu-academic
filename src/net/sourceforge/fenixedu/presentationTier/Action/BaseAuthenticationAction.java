@@ -58,6 +58,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
+	    } else if (isTeacherAndHasInquiriesToRespond(userView)) {
+		return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session);
 	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
 		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
 	    } else if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
@@ -80,6 +82,13 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return userView.hasRoleType(RoleType.STUDENT)
 		&& userView.getPerson().hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(
 			ExecutionYear.readCurrentExecutionYear());
+    }
+
+    private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
+	if (userView.hasRoleType(RoleType.TEACHER)) {
+	    return userView.getPerson().getTeacher().hasTeachingInquiriesToAnswer();
+	}
+	return false;
     }
 
     private boolean isStudentAndHasInquiriesToRespond(final IUserView userView) {
@@ -108,6 +117,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
 	return new ActionForward("/respondToInquiriesQuestion.do?method=showQuestion");
+    }
+
+    private ActionForward handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(HttpServletRequest request,
+	    IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/respondToTeachingInquiriesQuestion.do?method=showQuestion");
     }
 
     private ActionForward checkExpirationDate(ActionMapping mapping, HttpServletRequest request, IUserView userView,

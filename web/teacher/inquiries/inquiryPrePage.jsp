@@ -16,12 +16,6 @@
 	</logic:notEmpty>
 </logic:present>
 
-<c:forEach items="${degreesWithoutTeachingInquiry}" var="degree">
-
-<bean:define id="executionDegreeID" name="degree" property="idInternal" />
-<html:link page="<%= "/teachingInquiry.do?method=showInquiries1stPage&executionDegreeID=" + executionDegreeID %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-	<c:out value="${degree.presentationName}" />
+<html:link page="/teachingInquiry.do?method=showInquiries1stPage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+	<bean:message key="link.inquiries.answerNow" bundle="INQUIRIES_RESOURCES"/>
 </html:link>
-<br/>
-
-</c:forEach>

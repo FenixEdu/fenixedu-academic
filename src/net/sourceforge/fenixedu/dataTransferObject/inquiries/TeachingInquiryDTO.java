@@ -4,12 +4,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -18,8 +20,6 @@ import org.apache.commons.lang.StringUtils;
 public class TeachingInquiryDTO implements Serializable {
 
     private DomainReference<Professorship> professorship;
-
-    private DomainReference<ExecutionDegree> executionDegree;
 
     private InquiriesBlock firstPageFirstBlock;
 
@@ -33,28 +33,63 @@ public class TeachingInquiryDTO implements Serializable {
 
     private InquiriesBlock firstPageThirdBlock;
 
-    private InquiriesBlock firstPageFourthBlock;
+    private InquiriesBlock secondPageFourthBlock;
 
-    private InquiriesBlock secondPageFifthBlock;
+    private InquiriesBlock secondPageFifthBlockFirstPart;
 
-    private InquiriesBlock secondPageSixthBlockFirstPart;
+    private InquiriesBlock secondPageFifthBlockSecondPart;
 
-    private InquiriesBlock secondPageSixthBlockSecondPart;
+    private InquiriesBlock secondPageSixthBlock;
 
     private InquiriesBlock secondPageSeventhBlock;
 
     private InquiriesBlock secondPageEighthBlock;
 
-    private InquiriesBlock secondPageNinthBlock;
+    private InquiriesBlock thirdPageNinthBlock;
 
-    private InquiriesBlock secondPageTenthBlock;
+    private InquiriesBlock secondPageFourthBlockThirdPart;
 
-    private InquiriesBlock secondPageEleventhBlock;
+    private DateTime startDateTime;
 
-    public TeachingInquiryDTO(Professorship professorship, ExecutionDegree executionDegree) {
+    public TeachingInquiryDTO(Professorship professorship) {
 	setProfessorship(professorship);
-	setExecutionDegree(executionDegree);
+	this.startDateTime = new DateTime();
 	buildQuestionBlocks();
+    }
+
+    public long getAnswerDuration() {
+	return this.startDateTime == null ? 0 : new DateTime().getMillis() - this.startDateTime.getMillis();
+    }
+
+    public Map<String, InquiriesQuestion> buildAnswersMap(boolean fullLabels) {
+	final Map<String, InquiriesQuestion> answers = new HashMap<String, InquiriesQuestion>();
+	retrieveAnswersFromBlock(answers, firstPageFirstBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, firstPageSecondBlockFirstPart, fullLabels);
+	retrieveAnswersFromBlock(answers, firstPageSecondBlockSecondPart, fullLabels);
+	retrieveAnswersFromBlock(answers, firstPageSecondBlockThirdPart, fullLabels);
+	retrieveAnswersFromBlock(answers, firstPageSecondBlockFourthPart, fullLabels);
+	retrieveAnswersFromBlock(answers, firstPageThirdBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageFourthBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageFifthBlockFirstPart, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageFifthBlockSecondPart, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageSixthBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageSeventhBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageEighthBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, thirdPageNinthBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageFourthBlockThirdPart, fullLabels);
+	return answers;
+    }
+
+    static void retrieveAnswersFromBlock(final Map<String, InquiriesQuestion> answers, InquiriesBlock inquiriesBlock,
+	    boolean fullLabels) {
+	for (final InquiriesQuestion inquiriesQuestion : inquiriesBlock.getQuestions()) {
+	    if (fullLabels) {
+		answers.put(inquiriesQuestion.getLabel(), inquiriesQuestion);
+	    } else {
+		final String label = inquiriesQuestion.getLabel();
+		answers.put(label.substring(label.lastIndexOf('.') + 1), inquiriesQuestion);
+	    }
+	}
     }
 
     private void buildQuestionBlocks() {
@@ -70,7 +105,7 @@ public class TeachingInquiryDTO implements Serializable {
 	this.firstPageFirstBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.establishedScheduleSuitable", 1, 9,
 		false));
 	this.firstPageFirstBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.establishedScheduleNotSuitableReason",
-		false));
+		false).setRequired(false));
 
 	this.firstPageSecondBlockFirstPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.totallyDisagree", "header.teachingInquiries.two", "header.teachingInquiries.disagree",
@@ -84,7 +119,7 @@ public class TeachingInquiryDTO implements Serializable {
 	this.firstPageSecondBlockFirstPart.addQuestion(new RadioGroupQuestion(
 		"label.teachingInquiries.disturbingEventsInClasses", 1, 9, false));
 	this.firstPageSecondBlockFirstPart.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.disturbingEventsInClassesDescription", false));
+		"label.teachingInquiries.disturbingEventsInClassesDescription", false).setRequired(false));
 
 	this.firstPageSecondBlockSecondPart = new InquiriesBlock("title.teachingInquiries.attendsOscillation", true,
 		"header.teachingInquiries.notAppliable", "header.teachingInquiries.totallyDisagree",
@@ -127,72 +162,78 @@ public class TeachingInquiryDTO implements Serializable {
 		false));
 	this.firstPageThirdBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.pedagogicalActivitiesDeveloped", 1,
 		4, false));
+	this.firstPageThirdBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.relativePedagogicalInitiatives", true)
+		.setRequired(false));
 
-	this.firstPageFourthBlock = new InquiriesBlock(true);
-	this.firstPageFourthBlock
-		.addQuestion(new TextBoxQuestion("label.teachingInquiries.relativePedagogicalInitiatives", true));
-
-	this.secondPageFifthBlock = new InquiriesBlock("title.teachingInquiries.cuEvaluationMethod.writtenProofs", true,
+	this.secondPageFourthBlock = new InquiriesBlock("title.teachingInquiries.cuEvaluationMethod.writtenProofs", true,
 		"header.teachingInquiries.number");
-	this.secondPageFifthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfExams", false)
-		.setToolTip("tooltip.teachingInquiries.numberOfExams"));
-	this.secondPageFifthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfTests", false)
-		.setToolTip("tooltip.teachingInquiries.numberOfTests"));
-	this.secondPageFifthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfQuizzesAndMiniTests", false)
-		.setToolTip("tooltip.teachingInquiries.numberOfQuizzesAndMiniTests"));
-	this.secondPageFifthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfElectronicQuizzes", false)
-		.setToolTip("tooltip.teachingInquiries.numberOfElectronicQuizzes"));
+	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfExams", false).setInteger(
+		true).setToolTip("tooltip.teachingInquiries.numberOfExams"));
+	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfTests", false).setInteger(
+		true).setToolTip("tooltip.teachingInquiries.numberOfTests"));
+	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfQuizzesAndMiniTests", false)
+		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfQuizzesAndMiniTests"));
+	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfElectronicQuizzes", false)
+		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfElectronicQuizzes"));
+	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.numberOfStudyVisitsOrOtherActivitiesReports", false).setInteger(true).setHeader(
+		new QuestionHeader("title.teachingInquiries.cuEvaluationMethod.worksOrProjects",
+			"header.teachingInquiries.number")));
+	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfWorksOrProjects", false)
+		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfWorksOrProjects"));
 
-	this.secondPageFifthBlock.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.numberOfStudyVisitsOrOtherActivitiesReports", false).setHeader(new QuestionHeader(
-		"title.teachingInquiries.cuEvaluationMethod.worksOrProjects", "header.teachingInquiries.number")));
-	this.secondPageFifthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfWorksOrProjects", false)
-		.setToolTip("tooltip.teachingInquiries.numberOfWorksOrProjects"));
+	this.secondPageFourthBlockThirdPart = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.language.pt",
+		"header.teachingInquiries.language.en", "header.teachingInquiries.language.both",
+		"header.teachingInquiries.language.others");
+	this.secondPageFourthBlockThirdPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.teachingLanguage", false)
+		.addChoice("PT", StringUtils.EMPTY).addChoice("EN", StringUtils.EMPTY).addChoice("BOTH", StringUtils.EMPTY)
+		.addChoice("OTHER", StringUtils.EMPTY));
 
-	this.secondPageSixthBlockFirstPart = new InquiriesBlock(StringUtils.EMPTY, true,
+	this.secondPageFifthBlockFirstPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.belowExpected", "header.teachingInquiries.expected",
 		"header.teachingInquiries.aboveExpected");
-	this.secondPageSixthBlockFirstPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.workLoadClassification",
+	this.secondPageFifthBlockFirstPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.workLoadClassification",
 		1, 3, false));
-	this.secondPageSixthBlockFirstPart.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.workLoadClassificationReasons", false));
+	this.secondPageFifthBlockFirstPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.workLoadClassificationReasons", false).setRequired(false));
 
-	this.secondPageSixthBlockSecondPart = new InquiriesBlock(StringUtils.EMPTY, true,
+	this.secondPageFifthBlockSecondPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.totallyDisagree", "header.teachingInquiries.two", "header.teachingInquiries.disagree",
 		"header.teachingInquiries.four", "header.teachingInquiries.neitherAgreeOrDisagree",
 		"header.teachingInquiries.six", "header.teachingInquiries.agree", "header.teachingInquiries.eight",
 		"header.teachingInquiries.totallyAgree");
-	this.secondPageSixthBlockSecondPart.addQuestion(new RadioGroupQuestion(
+	this.secondPageFifthBlockSecondPart.addQuestion(new RadioGroupQuestion(
 		"label.teachingInquiries.positionOfCUInStudentCurricularPlan", 1, 9, false));
 
-	this.secondPageSeventhBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.notAppliable",
+	this.secondPageSixthBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.notAppliable",
 		"header.teachingInquiries.withDifficulty", "header.teachingInquiries.withEase",
 		"header.teachingInquiries.withQuiteEase");
-	this.secondPageSeventhBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.comprehensionAndKnowledgeOfCU",
-		0, 3, false));
-	this.secondPageSeventhBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.comprehensionApplicationOfCU", 0,
+	this.secondPageSixthBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.comprehensionAndKnowledgeOfCU", 0,
 		3, false));
-	this.secondPageSeventhBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.criticalSenseAndReflexiveSpirit",
+	this.secondPageSixthBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.comprehensionApplicationOfCU", 0,
+		3, false));
+	this.secondPageSixthBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.criticalSenseAndReflexiveSpirit",
 		0, 3, false));
-	this.secondPageSeventhBlock.addQuestion(new RadioGroupQuestion(
+	this.secondPageSixthBlock.addQuestion(new RadioGroupQuestion(
 		"label.teachingInquiries.cooperationAndCommunicationCapacity", 0, 3, false));
 
-	this.secondPageEighthBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.veryBad",
+	this.secondPageSeventhBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.veryBad",
 		"header.teachingInquiries.two", "header.teachingInquiries.bad", "header.teachingInquiries.four",
 		"header.teachingInquiries.neitherGoodOrBad", "header.teachingInquiries.six", "header.teachingInquiries.good",
 		"header.teachingInquiries.eight", "header.teachingInquiries.veryGood");
-	this.secondPageEighthBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.globalClassificationOfThisCU", 1,
+	this.secondPageSeventhBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.globalClassificationOfThisCU", 1,
 		9, false));
 
-	this.secondPageNinthBlock = new InquiriesBlock(true);
-	this.secondPageNinthBlock.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.weakAndStrongPointsOfCUTeachingProcess", true));
+	this.secondPageEighthBlock = new InquiriesBlock(true);
+	this.secondPageEighthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.strongPointsOfCUTeachingProcess",
+		true));
+	this.secondPageEighthBlock
+		.addQuestion(new TextBoxQuestion("label.teachingInquiries.weakPointsOfCUTeachingProcess", true));
+	this.secondPageEighthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.finalCommentsAndImproovements", true)
+		.setRequired(false));
 
-	this.secondPageTenthBlock = new InquiriesBlock(true);
-	this.secondPageTenthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.finalCommentsAndImproovements", true));
-
-	this.secondPageEleventhBlock = new InquiriesBlock(true);
-	this.secondPageEleventhBlock.addQuestion(new TextBoxQuestion(
+	this.thirdPageNinthBlock = new InquiriesBlock(true);
+	this.thirdPageNinthBlock.addQuestion(new TextBoxQuestion(
 		"label.teachingInquiries.negativeResultsResolutionAndImproovementPlanOfAction", true));
 
     }
@@ -203,14 +244,6 @@ public class TeachingInquiryDTO implements Serializable {
 
     public void setProfessorship(Professorship professorship) {
 	this.professorship = new DomainReference<Professorship>(professorship);
-    }
-
-    public ExecutionDegree getExecutionDegree() {
-	return executionDegree == null ? null : executionDegree.getObject();
-    }
-
-    public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = new DomainReference<ExecutionDegree>(executionDegree);
     }
 
     public InquiriesBlock getFirstPageFirstBlock() {
@@ -261,36 +294,28 @@ public class TeachingInquiryDTO implements Serializable {
 	this.firstPageThirdBlock = firstPageThirdBlock;
     }
 
-    public InquiriesBlock getFirstPageFourthBlock() {
-	return firstPageFourthBlock;
+    public InquiriesBlock getSecondPageFourthBlock() {
+	return secondPageFourthBlock;
     }
 
-    public void setFirstPageFourthBlock(InquiriesBlock firstPageFourthBlock) {
-	this.firstPageFourthBlock = firstPageFourthBlock;
+    public void setSecondPageFourthBlock(InquiriesBlock secondPageFifthBlock) {
+	this.secondPageFourthBlock = secondPageFifthBlock;
     }
 
-    public InquiriesBlock getSecondPageFifthBlock() {
-	return secondPageFifthBlock;
+    public InquiriesBlock getSecondPageFifthBlockFirstPart() {
+	return secondPageFifthBlockFirstPart;
     }
 
-    public void setSecondPageFifthBlock(InquiriesBlock secondPageFifthBlock) {
-	this.secondPageFifthBlock = secondPageFifthBlock;
+    public void setSecondPageFifthBlockFirstPart(InquiriesBlock secondPageSixthBlockFirstPart) {
+	this.secondPageFifthBlockFirstPart = secondPageSixthBlockFirstPart;
     }
 
-    public InquiriesBlock getSecondPageSixthBlockFirstPart() {
-	return secondPageSixthBlockFirstPart;
+    public InquiriesBlock getSecondPageFifthBlockSecondPart() {
+	return secondPageFifthBlockSecondPart;
     }
 
-    public void setSecondPageSixthBlockFirstPart(InquiriesBlock secondPageSixthBlockFirstPart) {
-	this.secondPageSixthBlockFirstPart = secondPageSixthBlockFirstPart;
-    }
-
-    public InquiriesBlock getSecondPageSixthBlockSecondPart() {
-	return secondPageSixthBlockSecondPart;
-    }
-
-    public void setSecondPageSixthBlockSecondPart(InquiriesBlock secondPageSixthBlockSecondPart) {
-	this.secondPageSixthBlockSecondPart = secondPageSixthBlockSecondPart;
+    public void setSecondPageFifthBlockSecondPart(InquiriesBlock secondPageSixthBlockSecondPart) {
+	this.secondPageFifthBlockSecondPart = secondPageSixthBlockSecondPart;
     }
 
     public InquiriesBlock getSecondPageSeventhBlock() {
@@ -309,28 +334,28 @@ public class TeachingInquiryDTO implements Serializable {
 	this.secondPageEighthBlock = secondPageEighthBlock;
     }
 
-    public InquiriesBlock getSecondPageNinthBlock() {
-	return secondPageNinthBlock;
+    public InquiriesBlock getThirdPageNinthBlock() {
+	return thirdPageNinthBlock;
     }
 
-    public void setSecondPageNinthBlock(InquiriesBlock secondPageNinthBlock) {
-	this.secondPageNinthBlock = secondPageNinthBlock;
+    public void setThirdPageNinthBlock(InquiriesBlock secondPageNinthBlock) {
+	this.thirdPageNinthBlock = secondPageNinthBlock;
     }
 
-    public InquiriesBlock getSecondPageTenthBlock() {
-	return secondPageTenthBlock;
+    public InquiriesBlock getSecondPageSixthBlock() {
+	return secondPageSixthBlock;
     }
 
-    public void setSecondPageTenthBlock(InquiriesBlock secondPageTenthBlock) {
-	this.secondPageTenthBlock = secondPageTenthBlock;
+    public void setSecondPageSixthBlock(InquiriesBlock secondPageSixthBlock) {
+	this.secondPageSixthBlock = secondPageSixthBlock;
     }
 
-    public InquiriesBlock getSecondPageEleventhBlock() {
-	return secondPageEleventhBlock;
+    public InquiriesBlock getSecondPageFourthBlockThirdPart() {
+	return secondPageFourthBlockThirdPart;
     }
 
-    public void setSecondPageEleventhBlock(InquiriesBlock secondPageEleventhBlock) {
-	this.secondPageEleventhBlock = secondPageEleventhBlock;
+    public void setSecondPageFourthBlockThirdPart(InquiriesBlock secondPageFourthBlockThirdPart) {
+	this.secondPageFourthBlockThirdPart = secondPageFourthBlockThirdPart;
     }
 
 }

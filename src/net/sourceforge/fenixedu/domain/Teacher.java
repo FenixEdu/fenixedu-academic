@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -1272,4 +1274,21 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
+    public boolean hasTeachingInquiriesToAnswer() {
+	return !getExecutionCoursesWithTeachingInquiriesToAnswer().isEmpty();
+    }
+
+    public Collection<ExecutionCourse> getExecutionCoursesWithTeachingInquiriesToAnswer() {
+	Collection<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	InquiryResponsePeriod responsePeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.TEACHING);
+	if (responsePeriod != null) {
+	    for (final Professorship professorship : getProfessorships(responsePeriod.getExecutionPeriod())) {
+		if (!professorship.hasTeachingInquiry() && professorship.getExecutionCourse().getAvailableForInquiries()) {
+		    result.add(professorship.getExecutionCourse());
+		}
+	    }
+	}
+	return result;
+    }
+    
 }

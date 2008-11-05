@@ -127,7 +127,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/teachingInquiry.do?method=showDegreesToAnswer" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/teachingInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.teachingReportManagement"/>
 			</html:link>
 		</li>

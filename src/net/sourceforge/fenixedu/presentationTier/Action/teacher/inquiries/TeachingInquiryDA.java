@@ -3,21 +3,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -36,51 +27,27 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 @Mapping(path = "/teachingInquiry", module = "teacher")
-@Forwards( { @Forward(name = "chooseDegree", path = "teaching-inquiries.chooseDegree"),
+@Forwards( { @Forward(name = "inquiryPrePage", path = "teaching-inquiries.inquiryPrePage"),
 	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),
 	@Forward(name = "showInquiry1stPage", path = "teaching-inquiries.showInquiry1stPage"),
-	@Forward(name = "showInquiry2ndPage", path = "teaching-inquiries.showInquiry2ndPage") })
+	@Forward(name = "showInquiry2ndPage", path = "teaching-inquiries.showInquiry2ndPage"),
+	@Forward(name = "showInquiry3rdPage", path = "teaching-inquiries.showInquiry3rdPage"),
+	@Forward(name = "confirmSubmission", path = "teaching-inquiries.confirmSubmission") })
 public class TeachingInquiryDA extends FenixDispatchAction {
 
-    public ActionForward showDegreesToAnswer(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	ExecutionCourse executionCourse = readAndSaveExecutionCourse(request);
+	Professorship professorship = getProfessorship(executionCourse);
 
-	InquiryResponsePeriod responsePeriod = executionCourse.getExecutionPeriod().getInquiryResponsePeriod(
-		InquiryResponsePeriodType.TEACHING);
-	if (responsePeriod == null || !responsePeriod.isOpen()) {
+	if (!professorship.hasTeachingInquiriesToAnswer()) {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 
-	List<ExecutionDegree> degreesWithoutTeachingInquiry = new ArrayList<ExecutionDegree>();
-
-	Professorship professorship = getProfessorship(executionCourse);
-	for (final StudentInquiriesTeachingResult studentInquiriesTeachingResult : professorship
-		.getStudentInquiriesTeachingResults()) {
-	    final ExecutionDegree executionDegree = studentInquiriesTeachingResult.getExecutionDegree();
-	    TeachingInquiry teachingInquiry = professorship.getTeachingInquiry(executionDegree);
-	    if (teachingInquiry == null) {
-		degreesWithoutTeachingInquiry.add(executionDegree);
-	    }
-	}
-
-	// TEMP HACK
-	if (degreesWithoutTeachingInquiry.isEmpty()) {
-	    Collection<DegreeCurricularPlan> degreeCurricularPlans = executionCourse.getAssociatedDegreeCurricularPlans();
-	    for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-		ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionCourse
-			.getExecutionYear());
-		if (executionDegree != null) {
-		    degreesWithoutTeachingInquiry.add(executionDegree);
-		}
-	    }
-	}
-
 	request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
-	request.setAttribute("degreesWithoutTeachingInquiry", degreesWithoutTeachingInquiry);
 
-	return actionMapping.findForward("chooseDegree");
+	return actionMapping.findForward("inquiryPrePage");
     }
 
     public ActionForward showInquiries1stPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -89,9 +56,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
 	if (teachingInquiry == null) {
 	    Professorship professorship = getProfessorship(readAndSaveExecutionCourse(request));
-	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(getIntegerFromRequest(request,
-		    "executionDegreeID"));
-	    teachingInquiry = new TeachingInquiryDTO(professorship, executionDegree);
+	    teachingInquiry = new TeachingInquiryDTO(professorship);
 	}
 
 	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
@@ -101,33 +66,106 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiries2ndPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+
 	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+
+	if (!teachingInquiry.getProfessorship().isResponsibleFor()) {
+	    return prepareConfirm(actionMapping, actionForm, request, response);
+	}
+
 	request.setAttribute("teachingInquiry", teachingInquiry);
+	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
 	RenderUtils.invalidateViewState();
 
+	if (!teachingInquiry.getFirstPageFirstBlock().validate()
+		|| !teachingInquiry.getFirstPageSecondBlockFirstPart().validate()
+		|| !teachingInquiry.getFirstPageSecondBlockSecondPart().validate()
+		|| !teachingInquiry.getFirstPageSecondBlockThirdPart().validate()
+		|| !teachingInquiry.getFirstPageSecondBlockFourthPart().validate()
+		|| !teachingInquiry.getFirstPageThirdBlock().validate()) {
+
+	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    return actionMapping.findForward("showInquiry1stPage");
+	}
+
+	return actionMapping.findForward("showInquiry2ndPage");
+    }
+
+    public ActionForward showInquiries3rdPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	request.setAttribute("teachingInquiry", teachingInquiry);
 	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
 
-	// if (teachingInquiry.getFirstPageThirdBlock().validate() &&
-	// teachingInquiry.getFirstPageFourthBlock().validate()
-	// && teachingInquiry.getFirstPageFifthBlock().validate()) {
-	return actionMapping.findForward("showInquiry2ndPage");
-	// }
+	if (!teachingInquiry.getSecondPageFourthBlock().validate()
+		|| !teachingInquiry.getSecondPageFourthBlockThirdPart().validate()
+		|| !teachingInquiry.getSecondPageFifthBlockFirstPart().validate()
+		|| !teachingInquiry.getSecondPageFifthBlockSecondPart().validate()
+		|| !teachingInquiry.getSecondPageSixthBlock().validate()
+		|| !teachingInquiry.getSecondPageSeventhBlock().validate()
+		|| !teachingInquiry.getSecondPageEighthBlock().validate()) {
 
-	// addActionMessage(request, "error.inquiries.fillAllRequiredFields");
-	// return actionMapping.findForward("showInquiry1stPage");
+	    RenderUtils.invalidateViewState();
+	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    return actionMapping.findForward("showInquiry2ndPage");
+	}
+
+	if (false) {// check unsatisfactory results
+	    return prepareConfirm(actionMapping, actionForm, request, response);
+	}
+
+	RenderUtils.invalidateViewState();
+	return actionMapping.findForward("showInquiry3rdPage");
+    }
+
+    public ActionForward submitInquiries3rdPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	if (!teachingInquiry.getThirdPageNinthBlock().validate()) {
+	    request.setAttribute("teachingInquiry", teachingInquiry);
+	    request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
+	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    return actionMapping.findForward("showInquiry3rdPage");
+	}
+	return prepareConfirm(actionMapping, actionForm, request, response);
     }
 
     public ActionForward prepareConfirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
 	request.setAttribute("teachingInquiry", teachingInquiry);
-	return null;
+	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
+	return actionMapping.findForward("confirmSubmission");
+    }
 
+    public ActionForward backFromPrepareConfirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	if (!teachingInquiry.getProfessorship().isResponsibleFor()) {
+	    return showInquiries1stPage(actionMapping, actionForm, request, response);
+	} else {
+	    if (false) {// check unsatisfactory results
+		return showInquiries2ndPage(actionMapping, actionForm, request, response);
+	    } else {
+		return showInquiries3rdPage(actionMapping, actionForm, request, response);
+	    }
+	}
+    }
+
+    public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final TeachingInquiryDTO teachingInquiryDTO = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	TeachingInquiry.makeNew(teachingInquiryDTO);
+	request.setAttribute("executionCourse", teachingInquiryDTO.getProfessorship().getExecutionCourse());
+	return showInquiriesPrePage(actionMapping, actionForm, request, response);
     }
 
     private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getIntegerFromRequest(request,
 		"executionCourseID"));
+	if (executionCourse == null) {
+	    return (ExecutionCourse) request.getAttribute("executionCourse");
+	}
 	request.setAttribute("executionCourse", executionCourse);
 	return executionCourse;
     }
