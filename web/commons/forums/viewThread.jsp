@@ -8,6 +8,7 @@
 
 <logic:present name="forum">
 	<bean:define id="forumId" name="forum" property="idInternal" />
+	<bean:define id="module" name="module"/>
 	<logic:present name="thread">
 	<bean:define id="prefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="contextPrefix" value="<%= prefix + (prefix.contains("?") ? "&amp;" : "?") %>" type="java.lang.String"/>
@@ -63,7 +64,7 @@
  
    				    <p class="mbottom0">
 						<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>: 
-						<cp:collectionPages url="<%= "/teacher" + contextPrefix + "method=viewThread&amp;forumId=" + forumId.toString() +"&amp;threadId=" + threadId %>" 
+						<cp:collectionPages url="<%= module + contextPrefix + "method=viewThread&amp;forumId=" + forumId.toString() +"&amp;threadId=" + threadId %>" 
 										pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="pageNumbers" numberOfVisualizedPages="10"/>
 					</p>
 					
