@@ -302,7 +302,7 @@ extends="eventCreation">
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
-		<property name="hasChecksum" value="false"/>
+		<property name="hasChecksum" value="true"/>
 	</slot>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
@@ -322,7 +322,7 @@ extends="eventCreation">
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
-		<property name="hasChecksum" value="false"/>
+		<property name="hasChecksum" value="true"/>
 	</slot>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
@@ -345,7 +345,7 @@ extends="eventCreation">
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
-		<property name="hasChecksum" value="false"/>
+		<property name="hasChecksum" value="true"/>
 	</slot>
 	<slot name="publisher"/>
 	<slot name="participations" layout="show-participation-list">
@@ -366,7 +366,7 @@ extends="eventCreation">
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
-		<property name="hasChecksum" value="false"/>
+		<property name="hasChecksum" value="true"/>
 	</slot>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
@@ -387,7 +387,7 @@ extends="eventCreation">
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 		<property name="hasContext" value="false"/>
-		<property name="hasChecksum" value="false"/>
+		<property name="hasChecksum" value="true"/>
 	</slot>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
