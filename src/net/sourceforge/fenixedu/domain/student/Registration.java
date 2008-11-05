@@ -1930,7 +1930,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isRegistered(final DateTime when) {
-	return isRegistered(ExecutionSemester.readByDateTime(when));
+	return getStateInDate(when).isActive() || hasAnyEnrolmentsIn(ExecutionSemester.readByDateTime(when));
     }
 
     public boolean isRegistered(final ExecutionSemester executionSemester) {
