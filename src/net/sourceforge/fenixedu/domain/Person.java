@@ -1557,7 +1557,7 @@ public class Person extends Person_Base {
 
     public static Collection<Person> readPersonsByNameAndRoleType(final String name, RoleType roleType) {
 	final Collection<Person> people = findPerson(name);
-	for (final Iterator<Person> iter = people.iterator(); iter.hasNext(); ) {
+	for (final Iterator<Person> iter = people.iterator(); iter.hasNext();) {
 	    final Person person = iter.next();
 	    if (!person.hasRole(roleType)) {
 		iter.remove();
@@ -2205,8 +2205,8 @@ public class Person extends Person_Base {
 	    }
 	    if (isSpecified(documentIdNumber)) {
 		for (final IdDocument idDocument : RootDomainObject.getInstance().getIdDocumentsSet()) {
-		    final String[] documentIdNumberValues = documentIdNumber == null ? null : StringNormalizer
-			    .normalize(documentIdNumber).toLowerCase().split("\\p{Space}+");
+		    final String[] documentIdNumberValues = documentIdNumber == null ? null : StringNormalizer.normalize(
+			    documentIdNumber).toLowerCase().split("\\p{Space}+");
 		    if (matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, idDocument.getValue())) {
 			people.add(idDocument.getPerson());
 		    }
@@ -2977,6 +2977,19 @@ public class Person extends Person_Base {
 	    }
 	}
 	return formations;
+    }
+
+    public boolean hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(final ExecutionYear executionYear) {
+	for (final AnnualEvent annualEvent : getAnnualEventsFor(executionYear)) {
+	    if (annualEvent instanceof GratuityEvent || annualEvent instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
+		if (annualEvent.isOpen()) {
+		    return true;
+		}
+	    }
+	}
+
+	return false;
+
     }
 
 }
