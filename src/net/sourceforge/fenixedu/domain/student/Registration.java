@@ -822,6 +822,16 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    final public boolean hasAnyCurriculumLines() {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyCurriculumLines()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     final public Collection<Enrolment> getEnrolments(final ExecutionYear executionYear) {
 	return getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
     }
@@ -1930,7 +1940,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isRegistered(final DateTime when) {
-	return getStateInDate(when).isActive() || hasAnyEnrolmentsIn(ExecutionSemester.readByDateTime(when));
+	final RegistrationState stateInDate = getStateInDate(when);
+	return (stateInDate != null && stateInDate.isActive()) || hasAnyEnrolmentsIn(ExecutionSemester.readByDateTime(when));
     }
 
     public boolean isRegistered(final ExecutionSemester executionSemester) {
