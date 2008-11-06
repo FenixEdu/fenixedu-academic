@@ -28,8 +28,10 @@
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.studentsEvaluation" bundle="INQUIRIES_RESOURCES"/></h4>
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockFirstPart" />
 			
+			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.attendsOscillation" bundle="INQUIRIES_RESOURCES"/></h4>
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockSecondPart" />
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockThirdPart" />
+			
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockFourthPart" />
 
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.autoEvaluation" bundle="INQUIRIES_RESOURCES"/></h4>

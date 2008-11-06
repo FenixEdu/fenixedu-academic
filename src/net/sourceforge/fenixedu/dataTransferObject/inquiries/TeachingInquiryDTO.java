@@ -121,7 +121,7 @@ public class TeachingInquiryDTO implements Serializable {
 	this.firstPageSecondBlockFirstPart.addQuestion(new TextBoxQuestion(
 		"label.teachingInquiries.disturbingEventsInClassesDescription", false).setRequired(false));
 
-	this.firstPageSecondBlockSecondPart = new InquiriesBlock("title.teachingInquiries.attendsOscillation", true,
+	this.firstPageSecondBlockSecondPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.notAppliable", "header.teachingInquiries.totallyDisagree",
 		"header.teachingInquiries.two", "header.teachingInquiries.disagree", "header.teachingInquiries.four",
 		"header.teachingInquiries.neitherAgreeOrDisagree", "header.teachingInquiries.six",
@@ -147,8 +147,8 @@ public class TeachingInquiryDTO implements Serializable {
 		StringUtils.EMPTY));
 
 	this.firstPageSecondBlockFourthPart = new InquiriesBlock("title.teachingInquiries.rateFromNonSatisfatoryToExcellent",
-		true, "header.teachingInquiries.nonSatisfatory", "header.teachingInquiries.two",
-		"header.teachingInquiries.three", "header.teachingInquiries.excellent");
+		true, "header.teachingInquiries.one", "header.teachingInquiries.two",
+		"header.teachingInquiries.three", "header.teachingInquiries.four");
 	this.firstPageSecondBlockFourthPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.studentsPerformance", 1,
 		4, false));
 
