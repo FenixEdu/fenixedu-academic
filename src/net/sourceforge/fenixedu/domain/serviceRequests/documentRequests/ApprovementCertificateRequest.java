@@ -136,7 +136,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     static final public void filterEntries(final Collection<ICurriculumEntry> result, final ICurriculum curriculum) {
-
 	for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
@@ -158,30 +157,34 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     final public Collection<ICurriculumEntry> getExtraCurricularEntriesToReport() {
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
-	for (final CurriculumLine curriculumLine : getRegistration().getExtraCurricularCurriculumLines()) {
-	    if (curriculumLine.isApproved()) {
-		if (curriculumLine.isEnrolment()) {
-		    result.add((IEnrolment) curriculumLine);
-		} else if (curriculumLine.isDismissal() && ((Dismissal) curriculumLine).getCredits().isSubstitution()) {
-		    result.addAll(((Dismissal) curriculumLine).getSourceIEnrolments());
+	reportApprovedCurriculumLines(result, getRegistration().getExtraCurricularCurriculumLines());
+	reportExternalGroups(result);
+
+	return result;
+    }
+
+    private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {
+	for (final CurriculumLine line : lines) {
+	    if (line.isApproved()) {
+		if (line.isEnrolment()) {
+		    result.add((IEnrolment) line);
+		} else if (line.isDismissal() && ((Dismissal) line).getCredits().isSubstitution()) {
+		    result.addAll(((Dismissal) line).getSourceIEnrolments());
 		}
 	    }
 	}
+    }
 
+    private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
 	for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan().getExternalCurriculumGroups()) {
 	    filterEntries(result, group.getCurriculumInAdvance(getFilteringDate()));
 	}
-
-	return result;
     }
 
     final public Collection<ICurriculumEntry> getPropaedeuticEntriesToReport() {
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
-	// TODO report propaedeutic curriculum lines identically to extra
-	// curricular ones
-	// must run migration script first!! talk to lmre and naat
-	result.addAll(getRegistration().getPropaedeuticEnrolments());
+	reportApprovedCurriculumLines(result, getRegistration().getPropaedeuticCurriculumLines());
 
 	return result;
     }
