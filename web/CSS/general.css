@@ -1188,7 +1188,12 @@ tr td.tdhl1 { background-color: #fdfbdd; } /* amarelo */
 tr.tdhl1 td { background-color: #fdfbdd; } /* amarelo */
 
 
-
+div.photocontainer { /* when right floated */
+float: right;
+background: #fff;
+padding-left: 1em;
+margin: 1em 0 1em 1em;
+}
 
 img.showphoto {
 border: 1px solid #ddd;
