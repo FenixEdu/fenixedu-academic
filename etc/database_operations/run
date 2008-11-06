@@ -41,5 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "student inquiries tables" updates.sql
+execute "student inquiries tables" inquiriesResults.sql
 execute "data fix regarding residence events" dataFix.sql IST
