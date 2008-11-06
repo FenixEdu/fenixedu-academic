@@ -383,6 +383,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public void getCurriculumModules(final ResultCollection<CurriculumModule> collection);
 
+    public boolean hasAnyCurriculumModules(final Predicate<CurriculumModule> predicate) {
+	return predicate.eval(this);
+    }
+
     static public class CurriculumModulePredicateByType extends Predicate<CurriculumModule> {
 
 	private Class<? extends CurriculumModule> clazz;

@@ -30,6 +30,8 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.predicates.AndPredicate;
+import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
@@ -168,8 +170,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     final public boolean hasAnyEnrolments() {
+	return hasAnyCurriculumModules(new CurriculumModulePredicateByType(Enrolment.class));
+    }
+
+    @Override
+    public boolean hasAnyCurriculumModules(final Predicate<CurriculumModule> predicate) {
+	if (super.hasAnyCurriculumModules(predicate)) {
+	    return true;
+	}
+
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (curriculumModule.hasAnyEnrolments()) {
+	    if (curriculumModule.hasAnyCurriculumModules(predicate)) {
 		return true;
 	    }
 	}
@@ -449,13 +460,11 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     final public boolean hasAnyApprovedCurriculumLines() {
-	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (curriculumModule.hasAnyApprovedCurriculumLines()) {
-		return true;
-	    }
-	}
+	final AndPredicate<CurriculumModule> andPredicate = new AndPredicate<CurriculumModule>();
+	andPredicate.add(new CurriculumModulePredicateByType(CurriculumLine.class));
+	andPredicate.add(new CurriculumModulePredicateByApproval());
 
-	return false;
+	return hasAnyCurriculumModules(andPredicate);
     }
 
     final public Set<CurriculumGroup> getCurriculumGroups() {
@@ -923,22 +932,20 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     public boolean hasEnrolment(ExecutionYear executionYear) {
-	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (curriculumModule.hasEnrolment(executionYear)) {
-		return true;
-	    }
-	}
-	return false;
+	final AndPredicate<CurriculumModule> andPredicate = new AndPredicate<CurriculumModule>();
+	andPredicate.add(new CurriculumModulePredicateByType(Enrolment.class));
+	andPredicate.add(new CurriculumModulePredicateByExecutionYear(executionYear));
+
+	return hasAnyCurriculumModules(andPredicate);
     }
 
     @Override
     public boolean hasEnrolment(ExecutionSemester executionSemester) {
-	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (curriculumModule.hasEnrolment(executionSemester)) {
-		return true;
-	    }
-	}
-	return false;
+	final AndPredicate<CurriculumModule> andPredicate = new AndPredicate<CurriculumModule>();
+	andPredicate.add(new CurriculumModulePredicateByType(Enrolment.class));
+	andPredicate.add(new CurriculumModulePredicateByExecutionSemester(executionSemester));
+
+	return hasAnyCurriculumModules(andPredicate);
     }
 
     public boolean isEnroledInSpecialSeason(final ExecutionSemester executionSemester) {
