@@ -85,6 +85,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
+import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 
 /**
@@ -503,6 +504,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return hasRoot() ? getRoot().hasAnyEnrolments() : super.hasAnyEnrolments();
     }
 
+    final public boolean hasAnyCurriculumLines() {
+	if (hasRoot()) {
+	    return hasAnyCurriculumModules(new CurriculumModulePredicateByType(CurriculumLine.class));
+	}
+
+	return super.hasAnyEnrolments();
+    }
+
     @Override
     final public boolean hasEnrolments(final Enrolment enrolment) {
 	return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : super.hasEnrolments(enrolment);
@@ -712,6 +721,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	if (hasRoot()) {
 	    getRoot().getCurriculumModules(collection);
 	    return collection.getResult();
+	} else {
+	    throw new DomainException("not.supported");
+	}
+    }
+
+    public boolean hasAnyCurriculumModules(final Predicate<CurriculumModule> predicate) {
+	if (hasRoot()) {
+	    return getRoot().hasAnyCurriculumModules(predicate);
 	} else {
 	    throw new DomainException("not.supported");
 	}
