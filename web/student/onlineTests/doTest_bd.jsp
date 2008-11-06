@@ -36,6 +36,7 @@ response.setDateHeader ("Expires", 0);
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%= testCode.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCode" property="studentCode" value="<%= studentCode.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.student" property="student" value="<%= registration.toString() %>"/>
 	
 		<h2><bean:write name="distributedTest" property="title"/></h2>
 		<b><bean:write name="distributedTest" property="testInformation"/></b>
@@ -58,7 +59,7 @@ response.setDateHeader ("Expires", 0);
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%= testCode.toString() %>"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.student" property="registration" value="<%= registration.toString() %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.student" property="student" value="<%= registration.toString() %>"/>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" styleClass="inputbutton" property="back"><bean:message key="button.back"/></html:submit></td></html:form>
 		</tr>
 	</table>	
