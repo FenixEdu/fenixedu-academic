@@ -2810,8 +2810,319 @@ class DomainObject {
 	}
 	
 	class inquiries.StudentInquiriesTeachingResult extends DomainObject {
-	
+		ShiftType shiftType;
+		Integer numberOfAnswers;
+		Boolean internalDisclosure;
+		Boolean publicDisclosure;
+		Boolean internalDegreeDisclosure;
+		Boolean publicDegreeDisclosure;
+		Boolean unsatisfactoryResultsAssiduity;
+		Boolean unsatisfactoryResultsPresencialLearning;
+		Boolean unsatisfactoryResultsPedagogicalCapacity;
+		Boolean unsatisfactoryResultsStudentInteraction;
+		Boolean unsatisfactoryResultsAuditable;
+		Integer number_P6_1;
+		Double average_P6_1;
+		Double standardDeviation_P6_1;
+		Double p6_1_greater_3;
+		Double perc_P6_1_1;
+		Double perc_P6_1_2;
+		Double perc_P6_1_3;
+		Double perc_P6_1_4;
+		Double perc_P6_1_5;
+		Double perc_P6_1_6;
+		Double perc_P6_1_7;
+		Double p6_1_1_a;
+		Double p6_1_1_b;
+		Double p6_1_1_c;
+		Double p6_1_1_d;
+		Double p6_1_1_e;
+		Integer number_P6_1_values;
+		Double perc_P6_1_a;
+		Double perc_P6_1_b;
+		Double perc_P6_1_c;
+		Double perc_P6_1_d;
+		Double perc_P6_1_e;
+		Integer number_P6_2;
+		Double average_P6_2;
+		Double standardDeviation_P6_2;
+		Double perc_P6_2_1;
+		Double perc_P6_2_2;
+		Double perc_P6_2_3;
+		Double perc_P6_2_4;
+		Double perc_P6_2_5;
+		Double perc_P6_2_6;
+		Double perc_P6_2_7;
+		Double perc_P6_2_8;
+		Double perc_P6_2_9;
+		Integer number_P6_3;
+		Double average_P6_3;
+		Double standardDeviation_P6_3;
+		Double perc_P6_3_1;
+		Double perc_P6_3_2;
+		Double perc_P6_3_3;
+		Double perc_P6_3_4;
+		Double perc_P6_3_5;
+		Double perc_P6_3_6;
+		Double perc_P6_3_7;
+		Double perc_P6_3_8;
+		Double perc_P6_3_9;
+		Integer number_P7_1;
+		Double average_P7_1;
+		Double standardDeviation_P7_1;
+		Double perc_P7_1_1;
+		Double perc_P7_1_2;
+		Double perc_P7_1_3;
+		Double perc_P7_1_4;
+		Double perc_P7_1_5;
+		Double perc_P7_1_6;
+		Double perc_P7_1_7;
+		Double perc_P7_1_8;
+		Double perc_P7_1_9;
+		Integer number_P7_2;
+		Double average_P7_2;
+		Double standardDeviation_P7_2;
+		Double perc_P7_2_1;
+		Double perc_P7_2_2;
+		Double perc_P7_2_3;
+		Double perc_P7_2_4;
+		Double perc_P7_2_5;
+		Double perc_P7_2_6;
+		Double perc_P7_2_7;
+		Double perc_P7_2_8;
+		Double perc_P7_2_9;
+		Integer number_P7_3;
+		Double average_P7_3;
+		Double standardDeviation_P7_3;
+		Double perc_P7_3_1;
+		Double perc_P7_3_2;
+		Double perc_P7_3_3;
+		Double perc_P7_3_4;
+		Double perc_P7_3_5;
+		Double perc_P7_3_6;
+		Double perc_P7_3_7;
+		Double perc_P7_3_8;
+		Double perc_P7_3_9;
+		Integer number_P7_4;
+		Double average_P7_4;
+		Double standardDeviation_P7_4;
+		Double perc_P7_4_1;
+		Double perc_P7_4_2;
+		Double perc_P7_4_3;
+		Double perc_P7_4_4;
+		Double perc_P7_4_5;
+		Double perc_P7_4_6;
+		Double perc_P7_4_7;
+		Double perc_P7_4_8;
+		Double perc_P7_4_9;
+		Integer number_P8_1;
+		Double average_P8_1;
+		Double standardDeviation_P8_1;
+		Double perc_P8_1_1;
+		Double perc_P8_1_2;
+		Double perc_P8_1_3;
+		Double perc_P8_1_4;
+		Double perc_P8_1_5;
+		Double perc_P8_1_6;
+		Double perc_P8_1_7;
+		Double perc_P8_1_8;
+		Double perc_P8_1_9;
+		Integer number_P8_2;
+		Double average_P8_2;
+		Double standardDeviation_P8_2;
+		Double perc_P8_2_1;
+		Double perc_P8_2_2;
+		Double perc_P8_2_3;
+		Double perc_P8_2_4;
+		Double perc_P8_2_5;
+		Double perc_P8_2_6;
+		Double perc_P8_2_7;
+		Double perc_P8_2_8;
+		Double perc_P8_2_9;
+		Integer number_P9;
+		Double average_P9;
+		Double standardDeviation_P9;
+		Double perc_P9_1;
+		Double perc_P9_2;
+		Double perc_P9_3;
 	}	
+
+	class inquiries.StudentInquiriesCourseResult extends DomainObject {
+		Integer numberOfEnrolled;
+		Double evaluatedRatio;
+		Double approvedRatio;
+		Boolean availableToInquiry;
+		Double validInitialFormAnswersNumber;
+		Double validInitialFormAnswersRatio;
+		Double validInquiryAnswersNumber;
+		Double validInquiryAnswersRatio;
+		Double noInquiryAnswersNumber;
+		Double noInquiryAnswersRatio;
+		Double invalidInquiryAnswersNumber;
+		Double invalidInquiryAnswersRatio;
+		Double gradeAverage;
+		Boolean internalDisclosure;
+		Boolean publicDisclosure;
+		Boolean unsatisfactoryResultsEsfECTSCU;
+		Boolean unsatisfactoryResultsCUOrganization;
+		Boolean unsatisfactoryResultsCUEvaluation;
+		Boolean auditCU;
+		Double scheduleLoad;
+		Double ects;
+		Integer estimatedEctsNumber;
+		Double estimatedEctsAverage;
+		Double estimatedEctsStandardDeviation;
+		Integer number_NHTA;
+		Double average_NHTA;
+		Double standardDeviation_NHTA;
+		Integer number_perc_NHTA;
+		Double average_perc_weeklyHours;
+		Double standardDeviation_perc_NHTA;
+		Integer number_NDE;
+		Double average_NDE;
+		Double standardDeviation_NDE;
+		Double number_P1_1;
+		Double perc_10_12;
+		Double perc_13_14;
+		Double perc_15_16;
+		Double perc_17_18;
+		Double perc_19_20;
+		Double perc_flunked;
+		Double perc_nonEvaluated;
+		Double number_P1_2_a;
+		Double perc__P1_2_a;
+		Double number_P1_2_b;
+		Double perc__P1_2_b;
+		Double number_P1_2_c;
+		Double perc__P1_2_c;
+		Double number_P1_2_d;
+		Double perc__P1_2_d;
+		Double number_P1_2_e;
+		Double perc__P1_2_e;
+		Double number_P_1_2_f;
+		Double perc__P1_2_f;
+		Double number_P1_2_g;
+		Double perc__P1_2_g;
+		Integer number_P1_3;
+		Double average_P1_3;
+		Double standardDeviation_P1_3;
+		Double perc_P1_3_1;
+		Double perc_P1_3_2;
+		Double perc_P1_3_3;
+		Double perc_P1_3_4;
+		Double perc_P1_3_5;
+		Double perc_P1_3_6;
+		Double perc_P1_3_7;
+		Double perc_P1_3_8;
+		Double perc_P1_3_9;
+		Integer number_P1_4;
+		Double average_P1_4;
+		Double standardDeviation_P1_4;
+		Double perc_P1_4_1;
+		Double perc_P1_4_2;
+		Double perc_P1_4_3;
+		Integer number_P2_1;
+		Double average_P2_1;
+		Double standardDeviation_P2_1;
+		Double perc_P2_1_0;
+		Double perc_P2_1_1;
+		Double perc_P2_1_2;
+		Double perc_P2_1_3;
+		Integer number_P2_2;
+		Double average_P2_2;
+		Double standardDeviation_P2_2;
+		Double perc_P2_2_0;
+		Double perc_P2_2_1;
+		Double perc_P2_2_2;
+		Double perc_P2_2_3;
+		Integer number_P2_3;
+		Double average_P2_3;
+		Double standardDeviation_P2_3;
+		Double perc_P2_3_0;
+		Double perc_P2_3_1;
+		Double perc_P2_3_2;
+		Double perc_P2_3_3;
+		Integer number_P2_4;
+		Double average_P2_4;
+		Double standardDeviation_P2_4;
+		Double perc_P2_4_0;
+		Double perc_P2_4_1;
+		Double perc_P2_4_2;
+		Double perc_P2_4_3;
+		Integer number_P3_1;
+		Double average_P3_1;
+		Double standardDeviation_P3_1;
+		Double perc_P3_1_1;
+		Double perc_P3_1_2;
+		Double perc_P3_1_3;
+		Double perc_P3_1_4;
+		Double perc_P3_1_5;
+		Double perc_P3_1_6;
+		Double perc_P3_1_7;
+		Double perc_P3_1_8;
+		Double perc_P3_1_9;
+		Integer number_P3_2;
+		Double average_P3_2;
+		Double standardDeviation_P3_2;
+		Double perc_P3_2_1;
+		Double perc_P3_2_2;
+		Double perc_P3_2_3;
+		Double perc_P3_2_4;
+		Double perc_P3_2_5;
+		Double perc_P3_2_6;
+		Double perc_P3_2_7;
+		Double perc_P3_2_8;
+		Double perc_P3_2_9;
+		Integer number_P3_3;
+		Double average_P3_3;
+		Double standardDeviation_P3_3;
+		Double perc_P3_3_1;
+		Double perc_P3_3_2;
+		Double perc_P3_3_3;
+		Double perc_P3_3_4;
+		Double perc_P3_3_5;
+		Double perc_P3_3_6;
+		Double perc_P3_3_7;
+		Double perc_P3_3_8;
+		Double perc_P3_3_9;
+		Integer number_P3_4;
+		Double average_P3_4;
+		Double standardDeviation_P3_4;
+		Double perc_P3_4_1;
+		Double perc_P3_4_2;
+		Double perc_P3_4_3;
+		Double perc_P3_4_4;
+		Double perc_P3_4_5;
+		Double perc_P3_4_6;
+		Double perc_P3_4_7;
+		Double perc_P3_4_8;
+		Double perc_P3_4_9;
+		Integer number_P4;
+		Double average_P4;
+		Double standardDeviation_P4;
+		Double perc_P4_1;
+		Double perc_P4_2;
+		Double perc_P4_3;
+		Double perc_P4_4;
+		Double perc_P4_5;
+		Double perc_P4_6;
+		Double perc_P4_7;
+		Double perc_P4_8;
+		Double perc_P4_9;
+		Integer number_P5;
+		Double average_P5;
+		Double standardDeviation_P5;
+		Double perc_P5_1;
+		Double perc_P5_2;
+		Double perc_P5_3;
+		Double perc_P5_4;
+		Double perc_P5_5;
+		Double perc_P5_6;
+		Double perc_P5_7;
+		Double perc_P5_8;
+		Double perc_P5_9;
+	}
+
 
 	class inquiries.InquiryResponsePeriod extends DomainObject {
 		DateTime begin;
@@ -13696,6 +14007,27 @@ relation ExecutionDegreeStudentInquiriesTeachingResult {
 	}
 }
 
+relation RootDomainObjectStudentInquiriesCourseResult {
+	RootDomainObject playsRole rootDomainObject;
+	inquiries.StudentInquiriesCourseResult playsRole studentInquiriesCourseResults {
+		multiplicity *;
+	}
+}
+
+relation ExecutionCourseStudentInquiriesCourseResult {
+	ExecutionCourse playsRole executionCourse;
+	inquiries.StudentInquiriesCourseResult playsRole studentInquiriesCourseResults {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreeStudentInquiriesCourseResult {
+	ExecutionDegree playsRole executionDegree;
+	inquiries.StudentInquiriesCourseResult playsRole studentInquiriesCourseResults {
+		multiplicity *;
+	}
+}
+
 relation PartialRegimeInstallmentExecutionSemester {
 	accounting.installments.PartialRegimeInstallment playsRole partialRegimeInstallments {
 		multiplicity *;
@@ -13705,6 +14037,7 @@ relation PartialRegimeInstallmentExecutionSemester {
 		multiplicity *;
 	}
 }
+
 relation RootDomainObjectUnitCostCenterCode {
 	RootDomainObject playsRole rootDomainObject;
 	organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCodes {
@@ -13723,7 +14056,6 @@ relation UnitUnitBasedSender {
 		multiplicity *;
 	}
 }
-
 relation RootDomainObjectProfilingLogs {
 	RootDomainObject playsRole rootDomainObject;
 	log.profiling.ProfileReport playsRole profilingLogs {
